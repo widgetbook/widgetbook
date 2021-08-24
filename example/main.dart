@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // TODO these are too many imports. An export file is required.
-import 'package:widgetbook/flutter_firebook.dart';
+import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook/models/app_info.dart';
 import 'package:widgetbook/models/organizers/category.dart';
 import 'package:widgetbook/models/organizers/story.dart';
