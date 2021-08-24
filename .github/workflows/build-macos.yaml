@@ -1,0 +1,35 @@
+on: [ pull_request ]
+name: Build (MacOS)
+jobs:
+  build:
+    name: Build
+    runs-on: self-hosted 
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        lfs: true
+    - name: Checkout LFS objects
+      run: git lfs checkout
+
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: stable
+    - name: Enable MacOS desktop support
+      run: flutter config --enable-macos-desktop
+    - run: flutter pub get
+    - run: |
+        cd meal_app
+        flutter pub get
+    - run: | 
+        cd meal_app
+        flutter build -t stories/main.dart -d macos
+    - name: Create tar archive
+      run: |
+        cd meal_app/build/macos/Build/Products/Release/meal_app.app
+        tar -cf app.tar.gz 'meal_app.app'
+    - uses: actions/upload-artifact@v2
+      with:
+        name: AppMacOS
+        path: meal_app/build/macos/Build/Products/Release/app.tar.gz
+        retention-days: 3
+        if-no-files-found: error

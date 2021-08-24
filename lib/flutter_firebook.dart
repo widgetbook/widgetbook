@@ -15,7 +15,7 @@ import 'routing/router.dart';
 import 'styled_widgets/styled_widgets.dart';
 import 'utils/utils.dart';
 
-class Firebook extends StatefulWidget {
+class Widgetbook extends StatefulWidget {
   /// Categories that can contain folders or components that can display states.
   /// States will have widgets which you may click on and display the widget in
   /// the editor.
@@ -32,7 +32,7 @@ class Firebook extends StatefulWidget {
   /// The `ThemeData` used when the dark theme is enabled.
   final ThemeData? darkTheme;
 
-  const Firebook({
+  const Widgetbook({
     required this.categories,
     this.devices = const [
       Apple.iPhone11,
@@ -48,10 +48,10 @@ class Firebook extends StatefulWidget {
   });
 
   @override
-  _FirebookState createState() => _FirebookState();
+  _WidgetbookState createState() => _WidgetbookState();
 }
 
-class _FirebookState extends State<Firebook> {
+class _WidgetbookState extends State<Widgetbook> {
   late OrganizerCubit storiesCubit;
   late DeviceCubit deviceCubit;
   late InjectedThemeCubit injectedThemeCubit;
@@ -68,7 +68,7 @@ class _FirebookState extends State<Firebook> {
   }
 
   @override
-  void didUpdateWidget(covariant Firebook oldWidget) {
+  void didUpdateWidget(covariant Widgetbook oldWidget) {
     // This is done to adjust the state of the cubit
     // when the widgetbook is hot reloaded
     //

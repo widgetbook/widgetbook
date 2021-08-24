@@ -16,8 +16,8 @@ import 'package:meal_app/widgets/rotated_image.dart';
 class Storyboard extends StatelessWidget {
   const Storyboard({Key? key}) : super(key: key);
 
-  Widget original(BuildContext context) {
-    return Firebook(
+  Widget buildStorybook(BuildContext context) {
+    return Widgetbook(
       devices: [
         Apple.iPhone11,
         Apple.iPhone12,
@@ -180,6 +180,6 @@ class Storyboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return original(context);
+    return buildStorybook(context);
   }
 }

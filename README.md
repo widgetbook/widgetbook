@@ -1,4 +1,4 @@
-# flutter_firebook
+# widgetbook
 
 A new Flutter package project.
 
