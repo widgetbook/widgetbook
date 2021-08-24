@@ -25,8 +25,7 @@ jobs:
         flutter build macos -t stories/main.dart
     - name: Create tar archive
       run: |
-        cd meal_app/build/macos/Build/Products/Release/meal_app.app
-        tar -cf app.tar.gz 'meal_app.app'
+        cd meal_app/build/macos/Build/Products/Release
     - uses: actions/upload-artifact@v2
       with:
         name: AppMacOS
