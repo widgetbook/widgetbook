@@ -1,6 +1,6 @@
 # widgetbook
 
-A new Flutter package project.
+The flutter storybook.
 
 ## Getting Started
 
