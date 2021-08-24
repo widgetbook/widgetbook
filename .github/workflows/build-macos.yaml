@@ -22,7 +22,7 @@ jobs:
         flutter pub get
     - run: | 
         cd meal_app
-        flutter build -t stories/main.dart -d macos
+        flutter build macos -t stories/main.dart
     - name: Create tar archive
       run: |
         cd meal_app/build/macos/Build/Products/Release/meal_app.app
