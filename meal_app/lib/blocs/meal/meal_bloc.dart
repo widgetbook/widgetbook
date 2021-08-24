@@ -13,7 +13,9 @@ class MealBloc extends Bloc<MealEvent, MealState> {
 
   MealBloc({
     required this.mealRepository,
-  }) : super(MealState(),);
+  }) : super(
+          MealState(),
+        );
 
   @override
   Stream<MealState> mapEventToState(

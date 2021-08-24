@@ -5,7 +5,6 @@ import 'package:widgetbook/cubit/organizer/organizer_cubit.dart';
 import 'package:widgetbook/models/app_info.dart';
 import 'package:widgetbook/navigation/navigation.dart';
 import 'package:widgetbook/widgets/wrapper.dart';
-import 'package:provider/provider.dart';
 import 'package:widgetbook/models/organizers/organizers.dart' as models;
 
 ModalRoute<void> generateRoute(

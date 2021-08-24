@@ -1,6 +1,5 @@
 part of 'canvas_cubit.dart';
 
-@immutable
 class CanvasState {
   final Story? selectedStory;
 

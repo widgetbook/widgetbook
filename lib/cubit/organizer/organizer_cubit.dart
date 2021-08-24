@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:widgetbook/models/organizers/organizers.dart';
-import 'package:meta/meta.dart';
 
 part 'organizer_state.dart';
 

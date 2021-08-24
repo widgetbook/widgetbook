@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:widgetbook/models/device.dart';
-import 'package:meta/meta.dart';
 
 part 'device_state.dart';
 

@@ -1,6 +1,5 @@
 part of 'injected_theme_cubit.dart';
 
-@immutable
 class InjectedThemeState {
   final ThemeData? lightTheme;
   final ThemeData? darkTheme;

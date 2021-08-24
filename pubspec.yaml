@@ -1,7 +1,10 @@
 name: widgetbook
 description: A new Flutter package project.
 version: 0.0.1
-homepage: null
+homepage: https://firecrown.pro
+repository: https://github.com/firecrownpro/widgetbook
+issue_tracker: https://github.com/firecrownpro/widgetbook/issues 
+# documentation: https://firecrown.pro 
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -17,6 +20,7 @@ dependencies:
   google_fonts: ^2.1.0
   recase: ^4.0.0
   url_launcher: ^6.0.9
+  vector_math: ^2.1.0
 
 dev_dependencies:
   flutter_test:

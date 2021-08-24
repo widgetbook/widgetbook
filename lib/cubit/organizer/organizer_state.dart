@@ -1,6 +1,5 @@
 part of 'organizer_cubit.dart';
 
-@immutable
 class OrganizerState {
   final List<Category> allCategories;
   final List<Category> filteredCategories;
