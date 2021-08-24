@@ -1,14 +1,9 @@
-import 'dart:io' show Platform;
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:widgetbook/models/app_info.dart';
 import 'package:widgetbook/models/organizers/organizers.dart';
 import 'package:widgetbook/navigation/ui/tiles/category_tile.dart';
 import 'package:widgetbook/widgets/header.dart';
-
-import '../../styled_widgets/smooth_scroll.dart';
 
 class NavigationPanel extends StatefulWidget {
   const NavigationPanel({
@@ -60,47 +55,15 @@ class _NavigationPanelState extends State<NavigationPanel> {
               padding: EdgeInsets.all(16),
               child: Builder(
                 builder: (context) {
-                  if (kIsWeb) {
-                    // If web, we just disable smooth scrolling.
-                    return ListView.separated(
-                      controller: controller,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      itemCount: widget.categories.length,
-                      itemBuilder: _buildCategory,
-                      padding: const EdgeInsets.only(bottom: 8),
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 8),
-                    );
-                  } else {
-                    // If windows or macos we can allow smooth scrolling.
-                    if (Platform.isMacOS || Platform.isWindows) {
-                      return SmoothScroll(
-                        controller: controller,
-                        curve: Curves.easeOutExpo,
-                        scrollSpeed: 50,
-                        child: ListView.separated(
-                          controller: controller,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: widget.categories.length,
-                          itemBuilder: _buildCategory,
-                          padding: const EdgeInsets.only(bottom: 8),
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(height: 8),
-                        ),
-                      );
-                    } else {
-                      // If it's mobile then we're not using smooth scrolling.
-                      return ListView.separated(
-                        controller: controller,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        itemCount: widget.categories.length,
-                        itemBuilder: _buildCategory,
-                        padding: const EdgeInsets.only(bottom: 8),
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 8),
-                      );
-                    }
-                  }
+                  return ListView.separated(
+                    controller: controller,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: widget.categories.length,
+                    itemBuilder: _buildCategory,
+                    padding: const EdgeInsets.only(bottom: 8),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 8),
+                  );
                 },
               ),
             ),
