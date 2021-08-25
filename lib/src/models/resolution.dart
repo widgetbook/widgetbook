@@ -1,4 +1,5 @@
 class Resolution {
+  // TODO check if this makes sense
   final double width;
   final double height;
   double get widthInPt => width / scaleFactor;

@@ -13,8 +13,8 @@ class CustomWidget extends StatelessWidget {
   }
 }
 
-class Storybook extends StatelessWidget {
-  const Storybook({Key? key}) : super(key: key);
+class HotReload extends StatelessWidget {
+  const HotReload({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,25 @@ class Storybook extends StatelessWidget {
                   builder: (context) => CustomWidget(),
                 ),
               ],
-            )
+            ),
+          ],
+          folders: [
+            Folder(
+              name: 'Texts',
+              widgets: [
+                WidgetElement(
+                  name: 'Normal Text',
+                  stories: [
+                    Story(
+                      name: 'Default',
+                      builder: (context) => Text(
+                        'The brown fox ...',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
       ],
@@ -43,5 +61,5 @@ class Storybook extends StatelessWidget {
 }
 
 void main() {
-  runApp(Storybook());
+  runApp(HotReload());
 }

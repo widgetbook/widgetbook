@@ -1,4 +1,5 @@
 class BrandConstants {
-  static String url = 'https://quicklapp.com';
-  static String email = 'contact@$url';
+  static String domain = 'firecrown.pro';
+  static String url = 'https://$domain';
+  static String email = 'contact@$domain';
 }
