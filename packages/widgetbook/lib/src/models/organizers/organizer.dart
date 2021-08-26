@@ -1,7 +1,8 @@
 import 'package:widgetbook/src/models/organizers/organizer_base.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 
-/// Organizers help to structure WidgetElements and Stories in the folder tree.
+/// Organizers is an abstract model which helps to
+/// structure Categories, WidgetElements and Stories in the folder tree.
 abstract class Organizer extends OrganizerBase {
   /// Used to implement collapsing and expanding of the folder tree.
   bool isExpanded;
@@ -11,7 +12,7 @@ abstract class Organizer extends OrganizerBase {
   final List<Folder> folders;
 
   /// The widgets of one level in the folder tree.
-  /// Widget will be shown below folders;
+  /// Widgets will be shown below folders;
   final List<WidgetElement> widgets;
 
   Organizer? parent;

@@ -2,7 +2,7 @@ import 'package:widgetbook/src/models/organizers/folder.dart';
 import 'package:widgetbook/src/models/organizers/organizer.dart';
 import 'package:widgetbook/src/models/organizers/widget_element.dart';
 
-/// Categories help to organize WidgetElements and Stories into different areas of interest.
+/// Categories help to organize WidgetElements and Stories into different areas.
 class Category extends Organizer {
   Category({
     required String name,

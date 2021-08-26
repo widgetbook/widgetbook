@@ -12,7 +12,7 @@ enum DeviceType {
 
 /// A virtual device that will rendered when a story is previewed
 class Device {
-  /// For Instance iPhone 12 or Samsung S10.
+  /// For example 'iPhone 12' or 'Samsung S10'.
   final String name;
 
   /// Specifies the native resolution (of the device screen)

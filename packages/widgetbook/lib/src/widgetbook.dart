@@ -25,10 +25,10 @@ class Widgetbook extends StatefulWidget {
   /// Information about the app that is catalogued in the Widgetbook.
   final AppInfo appInfo;
 
-  /// The `ThemeData` that is defaulted when the project is opened.
+  /// The `ThemeData` that is shown when the light theme is active.
   final ThemeData? lightTheme;
 
-  /// The `ThemeData` used when the dark theme is enabled.
+  /// The `ThemeData` that is shown when the dark theme is active.
   final ThemeData? darkTheme;
 
   const Widgetbook({
