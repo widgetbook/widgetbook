@@ -90,7 +90,7 @@ List<models.Story> recursiveRetrievalOfStates(
     if (current is models.WidgetElement) {
       states.addAll(current.stories);
     } else {
-      // TODO
+      // TODO this need to be fixed
       // states.addAll(recursiveRetrievalOfStates(current.organizers));
     }
   }
