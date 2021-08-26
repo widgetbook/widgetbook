@@ -1,4 +1,8 @@
-on: [ pull_request ]
+on: 
+  pull_request:
+    paths:
+      - "packages/widgetbook/**"
+      - ".github/workflows/build-macos.yaml"
 name: Build (MacOS)
 jobs:
   build:
