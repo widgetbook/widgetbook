@@ -1,6 +1,7 @@
 import 'package:widgetbook/src/models/organizers/organizer.dart';
 import 'package:widgetbook/src/models/organizers/widget_element.dart';
 
+/// A folder in the folder tree.
 class Folder extends Organizer {
   Folder({
     required String name,

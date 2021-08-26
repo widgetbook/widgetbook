@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/resolution.dart';
 
+/// Category of different device types.
 enum DeviceType {
   watch,
   mobile,
@@ -10,8 +11,16 @@ enum DeviceType {
 }
 
 class Device {
+  /// For Instance iPhone 12 or Samsung S10.
   final String name;
+
+  /// Specifies the native resolution (of the device screen)
+  /// and the logical resolution (for rendering a preview on the device).
   final Resolution resolution;
+
+  /// Categorizes the Device.
+  /// For instance mobile or tablet.
+  /// This is used to display an appropriate icon in the device bar.
   final DeviceType type;
 
   const Device({
@@ -32,6 +41,7 @@ class Device {
   }
 }
 
+/// Collection of Samsung devices
 class Samsung {
   static const Device s21ultra = Device(
     name: 'S21 Ultra',
@@ -54,6 +64,8 @@ class Samsung {
 
 // For apple phone sizes and layout see:
 // https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout/
+
+/// Collection of Apple devices
 class Apple {
   static const Device iPadPro12inch = Device(
     name: '12.9" iPad Pro',

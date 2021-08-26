@@ -20,12 +20,13 @@ class Widgetbook extends StatefulWidget {
   /// the editor.
   final List<Category> categories;
 
+  /// The devices on which Stories are previewed.
   final List<Device> devices;
 
+  /// Information about the app that is catalogued in the Widgetbook.
   final AppInfo appInfo;
 
-  /// The `ThemeData` that is defaulted when the project is opened. This should
-  /// be considered as the light theme.
+  /// The `ThemeData` that is defaulted when the project is opened.
   final ThemeData? lightTheme;
 
   /// The `ThemeData` used when the dark theme is enabled.
