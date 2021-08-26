@@ -6,6 +6,9 @@ on:
 name: Build (MacOS)
 jobs:
   build:
+    defaults:
+      run:
+        working-directory: packages/widgetbook
     name: Build
     runs-on: macos-latest 
     steps:
