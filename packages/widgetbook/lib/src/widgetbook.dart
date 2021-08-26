@@ -15,9 +15,8 @@ import 'package:widgetbook/src/styled_widgets/styled_scaffold.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 
 class Widgetbook extends StatefulWidget {
-  /// Categories that can contain folders or components that can display states.
-  /// States will have widgets which you may click on and display the widget in
-  /// the editor.
+  /// Categories which host Folders and WidgetElements.
+  /// This can be used to organize the structure of the Widgetbook on a large scale.
   final List<Category> categories;
 
   /// The devices on which Stories are previewed.

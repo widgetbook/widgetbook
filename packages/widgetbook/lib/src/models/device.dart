@@ -10,6 +10,7 @@ enum DeviceType {
   unknown,
 }
 
+/// A virtual device that will rendered when a story is previewed
 class Device {
   /// For Instance iPhone 12 or Samsung S10.
   final String name;
