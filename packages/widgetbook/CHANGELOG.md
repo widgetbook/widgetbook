@@ -1,3 +1,8 @@
-## 0.0.1
+# 0.0.2
 
-* TODO: Describe initial release.
+- Added docs to public API
+
+# 0.0.1
+
+- Initial release
+
