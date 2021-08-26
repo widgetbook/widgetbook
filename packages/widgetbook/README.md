@@ -134,3 +134,19 @@ Widgetbook(
 ```
 
 Right now there is a predefinied short list of devices but let us know which you need in our [Discord](https://discord.gg/zT4AMStAJA). We will extend the list of predefinied devices in the future!
+
+### Define own device
+
+You can also define your own device by using the `Device` class:
+
+```dart
+Device(
+  name: 'Custom Device',
+  resolution: Resolution.dimensions(
+    width: 500,
+    height: 500,
+    scaleFactor: 2,
+  ),
+  type: DeviceType.tablet,
+),
+```
