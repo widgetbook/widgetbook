@@ -12,13 +12,12 @@ dependencies:
   bloc: ^7.0.0
   cupertino_icons: ^1.0.2
   equatable: ^2.0.3
-  flow_builder: ^0.0.4
   flutter:
     sdk: flutter
   flutter_bloc: ^7.1.0
+  font_awesome_flutter: ^9.1.0
   widgetbook:
     path: ..
-  font_awesome_flutter: ^9.1.0
 
 dev_dependencies:
   flutter_test:

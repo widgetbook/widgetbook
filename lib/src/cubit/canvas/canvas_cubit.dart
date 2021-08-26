@@ -1,0 +1,19 @@
+import 'package:bloc/bloc.dart';
+import 'package:widgetbook/src/models/organizers/story.dart';
+
+part 'canvas_state.dart';
+
+class CanvasCubit extends Cubit<CanvasState> {
+  CanvasCubit()
+      : super(
+          CanvasState.unselected(),
+        );
+
+  void selectStory(Story? story) {
+    emit(
+      CanvasState(
+        selectedStory: story,
+      ),
+    );
+  }
+}
