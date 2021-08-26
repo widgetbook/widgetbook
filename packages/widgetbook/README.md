@@ -1,14 +1,12 @@
 <p align="center">
 <a href="https://discord.gg/zT4AMStAJA"><img src="https://img.shields.io/discord/879618555560218625?color=blue&logo=discord&style=flat-square" alt="Discord"></a>
-<a href="https://github.com/firecrownpro/widgetbook"><img src="https://img.shields.io/github/checks-status/firecrownpro/widgetbook/master?logo=github&style=flat-square" alt="Github"></a>
-</p>
 
 ___
 
 A flutter package that helps cataloguing widgets. Inspired by Storybook.js and flutterbook.
 
 <p align="center">
-<img src="https://media.githubusercontent.com/media/firecrownpro/widgetbook/pub-dev-release/docs/assets/Screenshot.png" alt="Widgetbook Screenshot" />
+<img src="https://media.githubusercontent.com/media/firecrownpro/widgetbook/main/docs/assets/Screenshot.png" alt="Widgetbook Screenshot" />
 </p>
 
 ## Let us know how you feel about Widgetbook
@@ -136,3 +134,19 @@ Widgetbook(
 ```
 
 Right now there is a predefinied short list of devices but let us know which you need in our [Discord](https://discord.gg/zT4AMStAJA). We will extend the list of predefinied devices in the future!
+
+### Define own device
+
+You can also define your own device by using the `Device` class:
+
+```dart
+Device(
+  name: 'Custom Device',
+  resolution: Resolution.dimensions(
+    width: 500,
+    height: 500,
+    scaleFactor: 2,
+  ),
+  type: DeviceType.tablet,
+),
+```

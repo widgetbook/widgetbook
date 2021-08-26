@@ -1,7 +1,14 @@
-on: [ pull_request ]
+on: 
+  pull_request:
+    paths:
+      - "packages/widgetbook/**"
+      - ".github/workflows/build-macos.yaml"
 name: Build (MacOS)
 jobs:
   build:
+    defaults:
+      run:
+        working-directory: packages/widgetbook
     name: Build
     runs-on: macos-latest 
     steps:
@@ -30,6 +37,6 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: AppMacOS
-        path: meal_app/build/macos/Build/Products/Release/app.tar.gz
+        path: packages/widgetbook/meal_app/build/macos/Build/Products/Release/app.tar.gz
         retention-days: 3
         if-no-files-found: error

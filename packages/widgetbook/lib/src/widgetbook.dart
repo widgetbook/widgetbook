@@ -15,20 +15,20 @@ import 'package:widgetbook/src/styled_widgets/styled_scaffold.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 
 class Widgetbook extends StatefulWidget {
-  /// Categories that can contain folders or components that can display states.
-  /// States will have widgets which you may click on and display the widget in
-  /// the editor.
+  /// Categories which host Folders and WidgetElements.
+  /// This can be used to organize the structure of the Widgetbook on a large scale.
   final List<Category> categories;
 
+  /// The devices on which Stories are previewed.
   final List<Device> devices;
 
+  /// Information about the app that is catalogued in the Widgetbook.
   final AppInfo appInfo;
 
-  /// The `ThemeData` that is defaulted when the project is opened. This should
-  /// be considered as the light theme.
+  /// The `ThemeData` that is shown when the light theme is active.
   final ThemeData? lightTheme;
 
-  /// The `ThemeData` used when the dark theme is enabled.
+  /// The `ThemeData` that is shown when the dark theme is active.
   final ThemeData? darkTheme;
 
   const Widgetbook({

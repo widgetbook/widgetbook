@@ -16,6 +16,15 @@ class Storyboard extends StatelessWidget {
   Widget buildStorybook(BuildContext context) {
     return Widgetbook(
       devices: [
+        Device(
+          name: 'Custom Device',
+          resolution: Resolution.dimensions(
+            width: 500,
+            height: 500,
+            scaleFactor: 2,
+          ),
+          type: DeviceType.tablet,
+        ),
         Apple.iPhone11,
         Apple.iPhone12,
         Samsung.s10,
