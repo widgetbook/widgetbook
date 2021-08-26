@@ -13,11 +13,11 @@ A flutter package that helps cataloguing widgets. Inspired by Storybook.js and f
 
 ## Let us know how you feel about Widgetbook
 
-We are funded and aim to shape `Widgetbook` to your (and your team's) needs. If you have questions, feature requests or issues let us know on [Discord](https://discord.gg/zT4AMStAJA) or [GitHub](https://github.com/firecrownpro/widgetbook). We're looking forward to build a community and discuss your feedback on our channel! 💙
+We are funded and aim to shape `Widgetbook` to your (and your team's) needs. If you have questions, feature requests or issues let us know on [Discord](https://discord.gg/zT4AMStAJA) or [GitHub](https://github.com/firecrownpro/widgetbook) or book a call with the founders via [Calendly](https://calendly.com/firecrown/call). We're looking forward to build a community and discuss your feedback on our channel! 💙
 
 ## Getting Started
 
-This package provides a flutter widget `Widgetbook` in which custom widgets from your app can be injected.
+This package provides a flutter widget called `Widgetbook` in which custom widgets from your app can be injected.
 
 ### Enabling Hot Reload
 
@@ -100,7 +100,7 @@ class HotReload extends StatelessWidget {
 
 ## Set storybook name
 
-Customize `Widgetbook`'s name regarding to the project by using appInfo:
+Customize `Widgetbook`'s name according to the project by using appInfo:
 
 ```dart
 Widgetbook(
@@ -135,12 +135,4 @@ Widgetbook(
 )
 ```
 
-Right now there is a predefinied short list of devices but let us know what you need in your [Discord](https://discord.gg/zT4AMStAJA). We will expand the list of predefinied devices in the future!
-
-# Upcoming features
-
-◼ Search bar
-
-◼ More predefined devices
-
-As already said: Let us know if you need anything! 
+Right now there is a predefinied short list of devices but let us know which you need in our [Discord](https://discord.gg/zT4AMStAJA). We will extend the list of predefinied devices in the future!
