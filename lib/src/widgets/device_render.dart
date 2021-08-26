@@ -51,8 +51,8 @@ class DeviceRender extends StatelessWidget {
                   width: 1,
                 ),
               ),
-              width: resolution.widthInPt,
-              height: resolution.heightInPt,
+              width: resolution.logicalSize.width,
+              height: resolution.logicalSize.height,
               child: BlocBuilder<InjectedThemeCubit, InjectedThemeState>(
                 builder: (context, state) {
                   return MaterialApp(

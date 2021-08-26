@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/resolution.dart';
 
 enum DeviceType {
@@ -36,8 +37,7 @@ class Samsung {
     name: 'S21 Ultra',
     type: DeviceType.mobile,
     resolution: Resolution(
-      height: 3200,
-      width: 1440,
+      nativeSize: Size(1440, 3200),
       scaleFactor: 3.75,
     ),
   );
@@ -46,8 +46,7 @@ class Samsung {
     name: 'S10',
     type: DeviceType.mobile,
     resolution: Resolution(
-      height: 3050,
-      width: 1440,
+      nativeSize: Size(1440, 3050),
       scaleFactor: 4,
     ),
   );
@@ -60,8 +59,7 @@ class Apple {
     name: '12.9" iPad Pro',
     type: DeviceType.tablet,
     resolution: Resolution(
-      height: 2732,
-      width: 2048,
+      nativeSize: Size(2048, 2732),
       scaleFactor: 2,
     ),
   );
@@ -70,8 +68,7 @@ class Apple {
     name: '11" iPad Pro',
     type: DeviceType.tablet,
     resolution: Resolution(
-      height: 2388,
-      width: 1668,
+      nativeSize: Size(1668, 2388),
       scaleFactor: 2,
     ),
   );
@@ -80,8 +77,7 @@ class Apple {
     name: '10.5" iPad Pro',
     type: DeviceType.tablet,
     resolution: Resolution(
-      height: 2388,
-      width: 1668,
+      nativeSize: Size(1668, 2388),
       scaleFactor: 2,
     ),
   );
@@ -90,8 +86,7 @@ class Apple {
     name: '9.7" iPad Pro',
     type: DeviceType.tablet,
     resolution: Resolution(
-      height: 1024,
-      width: 768,
+      nativeSize: Size(768, 1024),
       scaleFactor: 2,
     ),
   );
@@ -100,8 +95,7 @@ class Apple {
     name: '7.9" iPad mini',
     type: DeviceType.tablet,
     resolution: Resolution(
-      height: 1024,
-      width: 768,
+      nativeSize: Size(768, 1024),
       scaleFactor: 2,
     ),
   );
@@ -110,8 +104,7 @@ class Apple {
     name: '10.5" iPad Air',
     type: DeviceType.tablet,
     resolution: Resolution(
-      height: 2224,
-      width: 1668,
+      nativeSize: Size(1668, 2224),
       scaleFactor: 2,
     ),
   );
@@ -120,8 +113,7 @@ class Apple {
     name: '9.7" iPad Air',
     type: DeviceType.tablet,
     resolution: Resolution(
-      height: 2048,
-      width: 1536,
+      nativeSize: Size(1536, 2048),
       scaleFactor: 2,
     ),
   );
@@ -130,8 +122,7 @@ class Apple {
     name: 'iPhone 11',
     type: DeviceType.mobile,
     resolution: Resolution(
-      height: 1792,
-      width: 828,
+      nativeSize: Size(828, 1792),
       scaleFactor: 2,
     ),
   );
@@ -140,8 +131,7 @@ class Apple {
     name: 'iPhone 12',
     type: DeviceType.mobile,
     resolution: Resolution(
-      height: 2532,
-      width: 1170,
+      nativeSize: Size(1170, 2532),
       scaleFactor: 3,
     ),
   );
@@ -150,8 +140,7 @@ class Apple {
     name: 'iPhone 12 Pro',
     type: DeviceType.mobile,
     resolution: Resolution(
-      height: 2532,
-      width: 1170,
+      nativeSize: Size(1170, 2532),
       scaleFactor: 3,
     ),
   );
@@ -160,8 +149,7 @@ class Apple {
     name: 'iPhone 12 Mini',
     type: DeviceType.mobile,
     resolution: Resolution(
-      height: 2436,
-      width: 1125,
+      nativeSize: Size(1125, 2436),
       scaleFactor: 3,
     ),
   );
