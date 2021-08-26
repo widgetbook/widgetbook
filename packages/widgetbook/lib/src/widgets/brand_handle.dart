@@ -20,8 +20,8 @@ class BrandHandle extends StatelessWidget {
             // TODO make sure the onPresses is triggered on the text as well
             TextButton(
               onPressed: () async {
-                if (await canLaunch(BrandConstants.url)) {
-                  await launch(BrandConstants.url);
+                if (await canLaunch(BrandConstants.discord)) {
+                  await launch(BrandConstants.discord);
                 }
               },
               style: TextButton.styleFrom(
@@ -32,7 +32,7 @@ class BrandHandle extends StatelessWidget {
                 padding: const EdgeInsets.all(12),
               ),
               child: Icon(
-                FontAwesomeIcons.bell,
+                FontAwesomeIcons.discord,
                 color: context.read<ThemeCubit>().state == ThemeMode.light
                     ? context.theme.hintColor
                     : context.colorScheme.primary,
@@ -42,7 +42,7 @@ class BrandHandle extends StatelessWidget {
             SizedBox(
               width: 4,
             ),
-            Text('news'),
+            Text('discord'),
           ],
         );
       },
