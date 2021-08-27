@@ -16,15 +16,6 @@ class Storyboard extends StatelessWidget {
   Widget buildStorybook(BuildContext context) {
     return Widgetbook(
       devices: [
-        Device(
-          name: 'Custom Device',
-          resolution: Resolution.dimensions(
-            width: 500,
-            height: 500,
-            scaleFactor: 2,
-          ),
-          type: DeviceType.tablet,
-        ),
         Apple.iPhone11,
         Apple.iPhone12,
         Samsung.s10,
@@ -155,21 +146,23 @@ class Storyboard extends StatelessWidget {
                   ),
                 ),
                 Story(
-                  name: 'Long name',
-                  builder: (context) => MealDetail(
-                    meal: Meal(
-                      title: 'Bacon Burger with cheese and onions',
-                      imagePath: 'assets/burger.jpg',
-                      ingredients: [
-                        'tomato',
-                        'beef',
-                        'onion',
-                      ],
-                      price: 8.5,
-                      weight: 320,
-                    ),
-                  ),
-                ),
+                    name: 'Long name',
+                    builder: (context) {
+                      print('2');
+                      return MealDetail(
+                        meal: Meal(
+                          title: 'Bacon Burger with cheese and onions',
+                          imagePath: 'assets/burger.jpg',
+                          ingredients: [
+                            'tomato',
+                            'beef',
+                            'onion',
+                          ],
+                          price: 8.5,
+                          weight: 320,
+                        ),
+                      );
+                    }),
               ],
             ),
           ],

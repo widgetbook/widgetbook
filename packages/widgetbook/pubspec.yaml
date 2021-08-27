@@ -15,7 +15,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^7.1.0
-  flutter_treeview: ^1.0.6+1
   font_awesome_flutter: ^9.1.0
   google_fonts: ^2.1.0
   recase: ^4.0.0
