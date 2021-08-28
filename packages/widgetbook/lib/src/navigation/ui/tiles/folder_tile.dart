@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/cubit/organizer/organizer_cubit.dart';
+import 'package:widgetbook/src/cubit/categories/categories_cubit.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/navigation/ui/tiles/tile_helper_methods.dart';
 import 'package:widgetbook/src/navigation/ui/tiles/spaced_tile.dart';
@@ -39,7 +39,7 @@ class _FolderTileState extends State<FolderTile> {
           iconColor: context.colorScheme.primary,
           onClicked: () {
             setState(() {
-              context.read<OrganizerCubit>().toggleExpander(widget.folder);
+              context.read<CategoriesCubit>().toggleExpander(widget.folder);
             });
           },
         ),
