@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/src/models/model.dart';
 import 'package:widgetbook/src/models/organizers/organizer.dart';
 import 'package:widgetbook/src/models/organizers/organizer_base.dart';
 import 'package:widgetbook/src/models/organizers/widget_element.dart';
 import 'package:recase/recase.dart';
 
 /// Stories represent a specific configuration of a widget.
-class Story extends OrganizerBase {
+class Story extends OrganizerBase implements Model {
   final Widget Function(BuildContext) builder;
   WidgetElement? parent;
 
@@ -40,4 +41,7 @@ class Story extends OrganizerBase {
       builder: (_) => child,
     );
   }
+
+  @override
+  String get id => path;
 }
