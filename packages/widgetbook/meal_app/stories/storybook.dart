@@ -146,23 +146,21 @@ class Storyboard extends StatelessWidget {
                   ),
                 ),
                 Story(
-                    name: 'Long name',
-                    builder: (context) {
-                      print('2');
-                      return MealDetail(
-                        meal: Meal(
-                          title: 'Bacon Burger with cheese and onions',
-                          imagePath: 'assets/burger.jpg',
-                          ingredients: [
-                            'tomato',
-                            'beef',
-                            'onion',
-                          ],
-                          price: 8.5,
-                          weight: 320,
-                        ),
-                      );
-                    }),
+                  name: 'Long name',
+                  builder: (context) => MealDetail(
+                    meal: Meal(
+                      title: 'Bacon Burger with cheese and onions',
+                      imagePath: 'assets/burger.jpg',
+                      ingredients: [
+                        'tomato',
+                        'beef',
+                        'onion',
+                      ],
+                      price: 8.5,
+                      weight: 320,
+                    ),
+                  ),
+                ),
               ],
             ),
           ],

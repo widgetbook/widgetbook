@@ -27,8 +27,6 @@ class CategoriesCubit extends Cubit<OrganizerState> {
 
     var stories = getAllStoriesFromCategories(categories);
 
-    // TODO this is unawaited
-    print('Update scheduled');
     storyRepository.deleteAll();
     storyRepository.addAll(stories);
   }

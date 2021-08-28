@@ -13,23 +13,22 @@ class CanvasCubit extends Cubit<CanvasState> {
         ) {
     storyRepository.getStreamOfItems().forEach(
       (_) {
-        print('$CanvasState received notification');
-        for (var item in _) {
-          print(item.path);
-        }
-        if (state.isStorySelected) {
-          var currentStoryPath = state.selectedStory!.path;
-          if (storyRepository.doesItemExist(currentStoryPath)) {
-            print('Looking up new story');
-            emit(
-              CanvasState(
-                selectedStory: storyRepository.getItem(currentStoryPath),
-              ),
-            );
-          }
-        }
+        _updateStory();
       },
     );
+  }
+
+  void _updateStory() {
+    if (state.isStorySelected) {
+      var currentStoryPath = state.selectedStory!.path;
+      if (storyRepository.doesItemExist(currentStoryPath)) {
+        emit(
+          CanvasState(
+            selectedStory: storyRepository.getItem(currentStoryPath),
+          ),
+        );
+      }
+    }
   }
 
   void selectStory(Story? story) {

@@ -81,14 +81,12 @@ class MemoryRepository<Item extends Model> extends Repository<Item> {
 
   @override
   void deleteAll() {
-    print('DeleteAll');
     _memory.clear();
     _emitChangesToStream();
   }
 
   @override
   void addAll(Iterable<Item> items) {
-    print('AddAll');
     var map = HashMap<String, Item>.fromIterable(
       items,
       key: (k) => k.id,
