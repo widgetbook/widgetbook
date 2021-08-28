@@ -8,9 +8,6 @@ import 'package:widgetbook/src/cubit/zoom/zoom_cubit.dart';
 import 'package:widgetbook/src/widgets/theme_handle.dart';
 import 'package:widgetbook/src/widgets/zoom_handle.dart';
 
-// TODO device bar overflows when starting the app
-// This issue is tracked here:
-// https://github.com/firecrownpro/widgetbook/issues/10
 class ControlsBar extends StatelessWidget {
   const ControlsBar({Key? key}) : super(key: key);
 

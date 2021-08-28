@@ -1,3 +1,9 @@
+# 0.0.3 
+
+- fixed hot reloading not working for the selected story
+- fixed ControlBar overflow
+- removed unused package from pubspec
+
 # 0.0.2
 
 - Added docs to public API
