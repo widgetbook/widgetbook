@@ -17,7 +17,10 @@ class CategoriesCubit extends Cubit<OrganizerState> {
 
   void update(List<Category> categories) {
     // TODO when categories get updated expanded elements are getting collapsed
-    // This could be implemented by comparing the 'path' of organizers and copying
+    // This problem is tracked here:
+    // https://github.com/firecrownpro/widgetbook/issues/5
+    //
+    // This could be improved by comparing the 'path' of organizers and copying
     // the property isExpanded if the path matches.
     // comparing paths is probably the best way since the closure
     // might change between hot reloads

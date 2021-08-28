@@ -10,7 +10,6 @@ class DeviceBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO device bar overflows when starting the app
     return BlocBuilder<DeviceCubit, DeviceState>(
       builder: (context, state) {
         return Row(children: [
