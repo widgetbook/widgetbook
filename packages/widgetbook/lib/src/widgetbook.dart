@@ -4,12 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:widgetbook/src/cubit/canvas/canvas_cubit.dart';
 import 'package:widgetbook/src/cubit/device/device_cubit.dart';
 import 'package:widgetbook/src/cubit/injected_theme/injected_theme_cubit.dart';
-import 'package:widgetbook/src/cubit/organizer/organizer_cubit.dart';
+import 'package:widgetbook/src/cubit/categories/categories_cubit.dart';
 import 'package:widgetbook/src/cubit/theme/theme_cubit.dart';
 import 'package:widgetbook/src/cubit/zoom/zoom_cubit.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
+import 'package:widgetbook/src/repository/story_repository.dart';
 import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook/src/styled_widgets/styled_scaffold.dart';
 import 'package:widgetbook/src/utils/utils.dart';
@@ -51,13 +52,18 @@ class Widgetbook extends StatefulWidget {
 }
 
 class _WidgetbookState extends State<Widgetbook> {
-  late OrganizerCubit storiesCubit;
+  late CategoriesCubit categoriesCubit;
   late DeviceCubit deviceCubit;
   late InjectedThemeCubit injectedThemeCubit;
+  late StoryRepository storyRepository;
 
   @override
   void initState() {
-    storiesCubit = OrganizerCubit(categories: widget.categories);
+    storyRepository = StoryRepository();
+    categoriesCubit = CategoriesCubit(
+      categories: widget.categories,
+      storyRepository: storyRepository,
+    );
     deviceCubit = DeviceCubit(devices: widget.devices);
     injectedThemeCubit = InjectedThemeCubit(
       lightTheme: widget.lightTheme,
@@ -72,7 +78,7 @@ class _WidgetbookState extends State<Widgetbook> {
     // when the widgetbook is hot reloaded
     //
     // TODO check if this is the best way to do this
-    storiesCubit.update(widget.categories);
+    categoriesCubit.update(widget.categories);
     deviceCubit.update(widget.devices);
     injectedThemeCubit.themesChanged(
       lightTheme: widget.lightTheme,
@@ -83,58 +89,67 @@ class _WidgetbookState extends State<Widgetbook> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiRepositoryProvider(
       providers: [
-        BlocProvider(
-          create: (context) => CanvasCubit(),
-        ),
-        BlocProvider(
-          create: (context) => ThemeCubit(),
-        ),
-        BlocProvider(
-          create: (context) => ZoomCubit(),
-        ),
-        BlocProvider(
-          create: (context) => storiesCubit,
-        ),
-        BlocProvider(
-          create: (context) => deviceCubit,
-        ),
-        BlocProvider(
-          create: (context) => injectedThemeCubit,
+        RepositoryProvider(
+          create: (context) => storyRepository,
         ),
       ],
-      child: BlocBuilder<ThemeCubit, ThemeMode>(
-        builder: (context, themeMode) {
-          return BlocBuilder<OrganizerCubit, OrganizerState>(
-            builder: (context, storiesState) {
-              return MaterialApp(
-                title: 'Firebook',
-                debugShowCheckedModeBanner: false,
-                themeMode: themeMode,
-                darkTheme: Styles.darkTheme,
-                theme: Styles.lightTheme,
-                builder: (context, child) {
-                  return StyledScaffold(
-                    body: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Navigator(
-                        reportsRouteUpdateToEngine: true,
-                        initialRoute: '/',
-                        onGenerateRoute: (settings) => generateRoute(
-                          context,
-                          widget.appInfo,
-                          settings.name,
-                          settings: settings,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => CanvasCubit(
+              storyRepository: context.read<StoryRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => ThemeCubit(),
+          ),
+          BlocProvider(
+            create: (context) => ZoomCubit(),
+          ),
+          BlocProvider(
+            create: (context) => categoriesCubit,
+          ),
+          BlocProvider(
+            create: (context) => deviceCubit,
+          ),
+          BlocProvider(
+            create: (context) => injectedThemeCubit,
+          ),
+        ],
+        child: BlocBuilder<ThemeCubit, ThemeMode>(
+          builder: (context, themeMode) {
+            return BlocBuilder<CategoriesCubit, OrganizerState>(
+              builder: (context, storiesState) {
+                return MaterialApp(
+                  title: 'Firebook',
+                  debugShowCheckedModeBanner: false,
+                  themeMode: themeMode,
+                  darkTheme: Styles.darkTheme,
+                  theme: Styles.lightTheme,
+                  builder: (context, child) {
+                    return StyledScaffold(
+                      body: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Navigator(
+                          reportsRouteUpdateToEngine: true,
+                          initialRoute: '/',
+                          onGenerateRoute: (settings) => generateRoute(
+                            context,
+                            widget.appInfo,
+                            settings.name,
+                            settings: settings,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
-              );
-            },
-          );
-        },
+                    );
+                  },
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

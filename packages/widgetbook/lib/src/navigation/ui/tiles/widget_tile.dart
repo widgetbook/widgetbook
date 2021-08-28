@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/cubit/organizer/organizer_cubit.dart';
+import 'package:widgetbook/src/cubit/categories/categories_cubit.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/navigation/ui/tiles/spaced_tile.dart';
 import 'package:widgetbook/src/navigation/ui/tiles/story_tile.dart';
@@ -48,7 +48,9 @@ class _WidgetTileState extends State<WidgetTile> {
           iconData: FontAwesomeIcons.cubes,
           iconColor: context.colorScheme.secondary,
           onClicked: () {
-            context.read<OrganizerCubit>().toggleExpander(widget.widgetElement);
+            context
+                .read<CategoriesCubit>()
+                .toggleExpander(widget.widgetElement);
           },
         ),
         if (widget.widgetElement.isExpanded) ..._buildStories(widget.level + 1),

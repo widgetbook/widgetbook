@@ -1,4 +1,4 @@
-part of 'organizer_cubit.dart';
+part of 'categories_cubit.dart';
 
 class OrganizerState {
   final List<Category> allCategories;

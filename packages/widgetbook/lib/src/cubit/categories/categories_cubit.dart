@@ -1,11 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
+import 'package:widgetbook/src/repository/story_repository.dart';
 
-part 'organizer_state.dart';
+part 'categories_state.dart';
 
-class OrganizerCubit extends Cubit<OrganizerState> {
-  OrganizerCubit({
+class CategoriesCubit extends Cubit<OrganizerState> {
+  final StoryRepository storyRepository;
+  CategoriesCubit({
     required List<Category> categories,
+    required this.storyRepository,
   }) : super(
           OrganizerState.unfiltered(
             categories: categories,
@@ -14,13 +17,60 @@ class OrganizerCubit extends Cubit<OrganizerState> {
 
   void update(List<Category> categories) {
     // TODO when categories get updated expanded elements are getting collapsed
-    // This could be implemented by comparing the 'path' of organizers and copying
+    // This problem is tracked here:
+    // https://github.com/firecrownpro/widgetbook/issues/5
+    //
+    // This could be improved by comparing the 'path' of organizers and copying
     // the property isExpanded if the path matches.
     // comparing paths is probably the best way since the closure
     // might change between hot reloads
     emit(
       OrganizerState.unfiltered(categories: categories),
     );
+
+    var stories = getAllStoriesFromCategories(categories);
+
+    storyRepository.deleteAll();
+    storyRepository.addAll(stories);
+  }
+
+  List<Story> getAllStoriesFromCategories(List<Category> categories) {
+    List<Story> stories = List<Story>.empty(growable: true);
+    for (var category in categories) {
+      stories.addAll(
+        getAllStoriesFromFolders(category.folders),
+      );
+      stories.addAll(
+        getAllStoriesFromWidgets(category.widgets),
+      );
+    }
+    return stories;
+  }
+
+  List<Story> getAllStoriesFromFolders(List<Folder> folders) {
+    List<Story> stories = List<Story>.empty(growable: true);
+    for (var folder in folders) {
+      stories.addAll(
+        getAllStoriesFromFolder(folder),
+      );
+    }
+    return stories;
+  }
+
+  List<Story> getAllStoriesFromFolder(Folder folder) {
+    List<Story> stories = getAllStoriesFromFolders(folder.folders);
+    stories.addAll(
+      getAllStoriesFromWidgets(folder.widgets),
+    );
+    return stories;
+  }
+
+  List<Story> getAllStoriesFromWidgets(List<WidgetElement> widgets) {
+    List<Story> stories = List<Story>.empty(growable: true);
+    for (var widget in widgets) {
+      stories.addAll(widget.stories);
+    }
+    return stories;
   }
 
   void resetFilter() {
