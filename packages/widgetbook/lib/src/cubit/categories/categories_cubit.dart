@@ -1,11 +1,16 @@
+import 'dart:collection';
+
 import 'package:bloc/bloc.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
+import 'package:widgetbook/src/repository/story_repository.dart';
 
 part 'categories_state.dart';
 
 class CategoriesCubit extends Cubit<OrganizerState> {
+  final StoryRepository storyRepository;
   CategoriesCubit({
     required List<Category> categories,
+    required this.storyRepository,
   }) : super(
           OrganizerState.unfiltered(
             categories: categories,
@@ -21,6 +26,52 @@ class CategoriesCubit extends Cubit<OrganizerState> {
     emit(
       OrganizerState.unfiltered(categories: categories),
     );
+
+    var stories = getAllStoriesFromCategories(categories);
+
+    // TODO this is unawaited
+    print('Update scheduled');
+    storyRepository.deleteAll();
+    storyRepository.addAll(stories);
+  }
+
+  List<Story> getAllStoriesFromCategories(List<Category> categories) {
+    List<Story> stories = List<Story>.empty(growable: true);
+    for (var category in categories) {
+      stories.addAll(
+        getAllStoriesFromFolders(category.folders),
+      );
+      stories.addAll(
+        getAllStoriesFromWidgets(category.widgets),
+      );
+    }
+    return stories;
+  }
+
+  List<Story> getAllStoriesFromFolders(List<Folder> folders) {
+    List<Story> stories = List<Story>.empty(growable: true);
+    for (var folder in folders) {
+      stories.addAll(
+        getAllStoriesFromFolder(folder),
+      );
+    }
+    return stories;
+  }
+
+  List<Story> getAllStoriesFromFolder(Folder folder) {
+    List<Story> stories = getAllStoriesFromFolders(folder.folders);
+    stories.addAll(
+      getAllStoriesFromWidgets(folder.widgets),
+    );
+    return stories;
+  }
+
+  List<Story> getAllStoriesFromWidgets(List<WidgetElement> widgets) {
+    List<Story> stories = List<Story>.empty(growable: true);
+    for (var widget in widgets) {
+      stories.addAll(widget.stories);
+    }
+    return stories;
   }
 
   void resetFilter() {

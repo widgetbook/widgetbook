@@ -1,10 +1,16 @@
 import 'package:widgetbook/src/models/model.dart';
 
 abstract class Repository<Item extends Model> {
-  Future<String> addItem(Item item);
-  Future<void> setItem(Item item);
-  Future<Item> getItem(String id);
-  Future<void> updateItem(Item item);
-  Future<void> deleteItem(Item item);
+  // Item operations
+  String addItem(Item item);
+  void setItem(Item item);
+  Item getItem(String id);
+  bool doesItemExist(String id);
+  void updateItem(Item item);
+  void deleteItem(Item item);
+
+  // List operations
   Stream<List<Item>> getStreamOfItems();
+  void deleteAll();
+  void addAll(Iterable<Item> items);
 }

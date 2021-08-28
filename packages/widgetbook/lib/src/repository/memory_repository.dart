@@ -19,33 +19,33 @@ class MemoryRepository<Item extends Model> extends Repository<Item> {
     _streamController.add(_memory.values.toList());
   }
 
-  Future<String> _addItemAndEmitChangesToStream(Item item) async {
-    String id = await _addItem(item);
+  String _addItemAndEmitChangesToStream(Item item) {
+    String id = _addItem(item);
     _emitChangesToStream();
     return id;
   }
 
-  Future<String> _addItem(Item item) async {
+  String _addItem(Item item) {
     _memory.putIfAbsent(item.id, () => item);
     return item.id;
   }
 
   @override
-  Future<String> addItem(Item item) async {
+  String addItem(Item item) {
     return _addItemAndEmitChangesToStream(item);
   }
 
-  Future<void> deleteItemAndEmitChangesToStream(Item item) async {
-    await _deleteItem(item);
+  void deleteItemAndEmitChangesToStream(Item item) {
+    _deleteItem(item);
     _emitChangesToStream();
   }
 
-  Future<void> _deleteItem(Item item) async {
+  void _deleteItem(Item item) {
     _memory.remove(item.id);
   }
 
   @override
-  Future<void> deleteItem(Item item) async {
+  void deleteItem(Item item) {
     deleteItemAndEmitChangesToStream(item);
   }
 
@@ -55,7 +55,7 @@ class MemoryRepository<Item extends Model> extends Repository<Item> {
   }
 
   @override
-  Future<void> setItem(Item item) async {
+  void setItem(Item item) {
     if (!_memory.containsKey(item.id)) {
       _addItemAndEmitChangesToStream(item);
     } else {
@@ -64,13 +64,37 @@ class MemoryRepository<Item extends Model> extends Repository<Item> {
   }
 
   @override
-  Future<void> updateItem(Item item) async {
+  void updateItem(Item item) {
     _memory[item.id] = item;
     _emitChangesToStream();
   }
 
   @override
-  Future<Item> getItem(String id) async {
-    return Future.value(_memory[id]);
+  bool doesItemExist(String id) {
+    return _memory.containsKey(id);
+  }
+
+  @override
+  Item getItem(String id) {
+    return _memory[id]!;
+  }
+
+  @override
+  void deleteAll() {
+    print('DeleteAll');
+    _memory.clear();
+    _emitChangesToStream();
+  }
+
+  @override
+  void addAll(Iterable<Item> items) {
+    print('AddAll');
+    var map = HashMap<String, Item>.fromIterable(
+      items,
+      key: (k) => k.id,
+      value: (v) => v,
+    );
+    _memory.addAll(map);
+    _emitChangesToStream();
   }
 }

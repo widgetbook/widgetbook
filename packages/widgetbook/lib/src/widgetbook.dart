@@ -52,7 +52,7 @@ class Widgetbook extends StatefulWidget {
 }
 
 class _WidgetbookState extends State<Widgetbook> {
-  late CategoriesCubit storiesCubit;
+  late CategoriesCubit categoriesCubit;
   late DeviceCubit deviceCubit;
   late InjectedThemeCubit injectedThemeCubit;
   late StoryRepository storyRepository;
@@ -60,7 +60,10 @@ class _WidgetbookState extends State<Widgetbook> {
   @override
   void initState() {
     storyRepository = StoryRepository();
-    storiesCubit = CategoriesCubit(categories: widget.categories);
+    categoriesCubit = CategoriesCubit(
+      categories: widget.categories,
+      storyRepository: storyRepository,
+    );
     deviceCubit = DeviceCubit(devices: widget.devices);
     injectedThemeCubit = InjectedThemeCubit(
       lightTheme: widget.lightTheme,
@@ -75,7 +78,7 @@ class _WidgetbookState extends State<Widgetbook> {
     // when the widgetbook is hot reloaded
     //
     // TODO check if this is the best way to do this
-    storiesCubit.update(widget.categories);
+    categoriesCubit.update(widget.categories);
     deviceCubit.update(widget.devices);
     injectedThemeCubit.themesChanged(
       lightTheme: widget.lightTheme,
@@ -86,58 +89,67 @@ class _WidgetbookState extends State<Widgetbook> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiRepositoryProvider(
       providers: [
-        BlocProvider(
-          create: (context) => CanvasCubit(),
-        ),
-        BlocProvider(
-          create: (context) => ThemeCubit(),
-        ),
-        BlocProvider(
-          create: (context) => ZoomCubit(),
-        ),
-        BlocProvider(
-          create: (context) => storiesCubit,
-        ),
-        BlocProvider(
-          create: (context) => deviceCubit,
-        ),
-        BlocProvider(
-          create: (context) => injectedThemeCubit,
+        RepositoryProvider(
+          create: (context) => storyRepository,
         ),
       ],
-      child: BlocBuilder<ThemeCubit, ThemeMode>(
-        builder: (context, themeMode) {
-          return BlocBuilder<CategoriesCubit, OrganizerState>(
-            builder: (context, storiesState) {
-              return MaterialApp(
-                title: 'Firebook',
-                debugShowCheckedModeBanner: false,
-                themeMode: themeMode,
-                darkTheme: Styles.darkTheme,
-                theme: Styles.lightTheme,
-                builder: (context, child) {
-                  return StyledScaffold(
-                    body: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Navigator(
-                        reportsRouteUpdateToEngine: true,
-                        initialRoute: '/',
-                        onGenerateRoute: (settings) => generateRoute(
-                          context,
-                          widget.appInfo,
-                          settings.name,
-                          settings: settings,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => CanvasCubit(
+              storyRepository: context.read<StoryRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => ThemeCubit(),
+          ),
+          BlocProvider(
+            create: (context) => ZoomCubit(),
+          ),
+          BlocProvider(
+            create: (context) => categoriesCubit,
+          ),
+          BlocProvider(
+            create: (context) => deviceCubit,
+          ),
+          BlocProvider(
+            create: (context) => injectedThemeCubit,
+          ),
+        ],
+        child: BlocBuilder<ThemeCubit, ThemeMode>(
+          builder: (context, themeMode) {
+            return BlocBuilder<CategoriesCubit, OrganizerState>(
+              builder: (context, storiesState) {
+                return MaterialApp(
+                  title: 'Firebook',
+                  debugShowCheckedModeBanner: false,
+                  themeMode: themeMode,
+                  darkTheme: Styles.darkTheme,
+                  theme: Styles.lightTheme,
+                  builder: (context, child) {
+                    return StyledScaffold(
+                      body: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Navigator(
+                          reportsRouteUpdateToEngine: true,
+                          initialRoute: '/',
+                          onGenerateRoute: (settings) => generateRoute(
+                            context,
+                            widget.appInfo,
+                            settings.name,
+                            settings: settings,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
-              );
-            },
-          );
-        },
+                    );
+                  },
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
