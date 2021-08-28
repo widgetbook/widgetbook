@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:widgetbook/src/cubit/canvas/canvas_cubit.dart';
-import 'package:widgetbook/src/cubit/organizer/organizer_cubit.dart';
+import 'package:widgetbook/src/cubit/categories/categories_cubit.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook/src/widgets/wrapper.dart';
@@ -14,7 +14,7 @@ ModalRoute<void> generateRoute(
   RouteSettings? settings,
 }) {
   var stories = recursiveRetrievalOfStates(
-    context.read<OrganizerCubit>().state.allCategories,
+    context.read<CategoriesCubit>().state.allCategories,
   );
   var selectedStory = selectStoryFromPath(name, stories);
   context.read<CanvasCubit>().selectStory(selectedStory);
@@ -25,7 +25,7 @@ ModalRoute<void> generateRoute(
       return Builder(
         builder: (context) => Row(
           children: [
-            BlocBuilder<OrganizerCubit, OrganizerState>(
+            BlocBuilder<CategoriesCubit, OrganizerState>(
               builder: (context, state) {
                 return NavigationPanel(
                   appInfo: appInfo,
