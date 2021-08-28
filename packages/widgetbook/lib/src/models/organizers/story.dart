@@ -14,7 +14,7 @@ class Story extends OrganizerBase implements Model {
     String path = ReCase(name).paramCase;
     Organizer? current = parent;
     while (current?.parent != null) {
-      path = '${ReCase(current!.parent!.name).paramCase}${'/$path'}';
+      path = '${ReCase(current!.name).paramCase}${'/$path'}';
       current = current.parent;
     }
     return path;
