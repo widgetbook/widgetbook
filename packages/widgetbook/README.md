@@ -150,3 +150,7 @@ Device(
   type: DeviceType.tablet,
 ),
 ```
+
+# Known Issues
+
+- Hot reloading on web is currently not working properly. This is due to the fact that hot reloading is actually a restart. The problem is tracked in [widgetbook/issues/4](https://github.com/firecrownpro/widgetbook/issues/4). For now we recommended to use MacOS or Windows as a platform for development.

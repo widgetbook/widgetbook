@@ -1,3 +1,7 @@
+# 0.0.4
+
+- added known issue to documentation
+
 # 0.0.3 
 
 - fixed hot reloading not working for the selected story
