@@ -74,10 +74,6 @@ class _WidgetbookState extends State<Widgetbook> {
 
   @override
   void didUpdateWidget(covariant Widgetbook oldWidget) {
-    // This is done to adjust the state of the cubit
-    // when the widgetbook is hot reloaded
-    //
-    // TODO check if this is the best way to do this
     categoriesCubit.update(widget.categories);
     deviceCubit.update(widget.devices);
     injectedThemeCubit.themesChanged(

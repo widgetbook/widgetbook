@@ -166,7 +166,7 @@ class Storyboard extends StatelessWidget {
           ],
         ),
         Category(
-          name: 'pages 1',
+          name: 'pages 12',
         ),
       ],
       appInfo: AppInfo(name: 'Meal App'),
