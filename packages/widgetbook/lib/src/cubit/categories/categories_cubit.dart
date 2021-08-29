@@ -1,4 +1,7 @@
+import 'dart:collection';
+
 import 'package:bloc/bloc.dart';
+import 'package:widgetbook/src/models/organizers/organizer_helper.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/repository/story_repository.dart';
 
@@ -16,14 +19,25 @@ class CategoriesCubit extends Cubit<OrganizerState> {
         );
 
   void update(List<Category> categories) {
-    // TODO when categories get updated expanded elements are getting collapsed
-    // This problem is tracked here:
-    // https://github.com/firecrownpro/widgetbook/issues/5
-    //
-    // This could be improved by comparing the 'path' of organizers and copying
-    // the property isExpanded if the path matches.
-    // comparing paths is probably the best way since the closure
-    // might change between hot reloads
+    var oldFolders = OrganizerFolderHelper.getAllFoldersFromCategories(
+      state.allCategories,
+    );
+    var newFolders = OrganizerFolderHelper.getAllFoldersFromCategories(
+      categories,
+    );
+    var oldFolderMap = HashMap<String, Folder>.fromIterable(
+      oldFolders,
+      key: (k) => k.path,
+      value: (v) => v,
+    );
+
+    for (var folder in newFolders) {
+      var path = folder.path;
+      if (oldFolderMap.containsKey(path)) {
+        folder.isExpanded = oldFolderMap[path]!.isExpanded;
+      }
+    }
+
     emit(
       OrganizerState.unfiltered(categories: categories),
     );
