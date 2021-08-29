@@ -1,6 +1,6 @@
 import 'package:widgetbook/widgetbook.dart';
 
-class OrganizerFolderHelper {
+class FolderHelper {
   static List<Folder> getAllFoldersFromCategories(List<Category> categories) {
     List<Folder> folders = [];
     for (Category category in categories) {

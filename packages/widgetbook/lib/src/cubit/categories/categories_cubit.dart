@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:bloc/bloc.dart';
-import 'package:widgetbook/src/models/organizers/organizer_helper.dart';
+import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/repository/story_repository.dart';
 
@@ -18,11 +18,11 @@ class CategoriesCubit extends Cubit<OrganizerState> {
           ),
         );
 
-  void update(List<Category> categories) {
-    var oldFolders = OrganizerFolderHelper.getAllFoldersFromCategories(
+  void _updateFolders(List<Category> categories) {
+    var oldFolders = FolderHelper.getAllFoldersFromCategories(
       state.allCategories,
     );
-    var newFolders = OrganizerFolderHelper.getAllFoldersFromCategories(
+    var newFolders = FolderHelper.getAllFoldersFromCategories(
       categories,
     );
     var oldFolderMap = HashMap<String, Folder>.fromIterable(
@@ -37,54 +37,39 @@ class CategoriesCubit extends Cubit<OrganizerState> {
         folder.isExpanded = oldFolderMap[path]!.isExpanded;
       }
     }
+  }
 
+  void _updateWidgets(List<Category> categories) {
+    var oldWidgets = WidgetHelper.getAllWidgetElementsFromCategories(
+      state.allCategories,
+    );
+    var newWidgets = WidgetHelper.getAllWidgetElementsFromCategories(
+      categories,
+    );
+    var oldFolderMap = HashMap<String, WidgetElement>.fromIterable(
+      oldWidgets,
+      key: (k) => k.path,
+      value: (v) => v,
+    );
+
+    for (var widget in newWidgets) {
+      var path = widget.path;
+      if (oldFolderMap.containsKey(path)) {
+        widget.isExpanded = oldFolderMap[path]!.isExpanded;
+      }
+    }
+  }
+
+  void update(List<Category> categories) {
+    _updateFolders(categories);
+    _updateWidgets(categories);
     emit(
       OrganizerState.unfiltered(categories: categories),
     );
 
-    var stories = getAllStoriesFromCategories(categories);
-
+    var stories = StoryHelper.getAllStoriesFromCategories(categories);
     storyRepository.deleteAll();
     storyRepository.addAll(stories);
-  }
-
-  List<Story> getAllStoriesFromCategories(List<Category> categories) {
-    List<Story> stories = List<Story>.empty(growable: true);
-    for (var category in categories) {
-      stories.addAll(
-        getAllStoriesFromFolders(category.folders),
-      );
-      stories.addAll(
-        getAllStoriesFromWidgets(category.widgets),
-      );
-    }
-    return stories;
-  }
-
-  List<Story> getAllStoriesFromFolders(List<Folder> folders) {
-    List<Story> stories = List<Story>.empty(growable: true);
-    for (var folder in folders) {
-      stories.addAll(
-        getAllStoriesFromFolder(folder),
-      );
-    }
-    return stories;
-  }
-
-  List<Story> getAllStoriesFromFolder(Folder folder) {
-    List<Story> stories = getAllStoriesFromFolders(folder.folders);
-    stories.addAll(
-      getAllStoriesFromWidgets(folder.widgets),
-    );
-    return stories;
-  }
-
-  List<Story> getAllStoriesFromWidgets(List<WidgetElement> widgets) {
-    List<Story> stories = List<Story>.empty(growable: true);
-    for (var widget in widgets) {
-      stories.addAll(widget.stories);
-    }
-    return stories;
   }
 
   void resetFilter() {

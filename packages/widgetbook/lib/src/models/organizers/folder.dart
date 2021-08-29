@@ -4,7 +4,7 @@ import 'package:widgetbook/src/models/organizers/widget_element.dart';
 
 /// A folder in the folder tree.
 class Folder extends Organizer {
-  // TODO this was copy pasted and need refactoring
+  // TODO this was copy pasted and needs refactoring
   String get path {
     String path = ReCase(name).paramCase;
     Organizer? current = parent;
