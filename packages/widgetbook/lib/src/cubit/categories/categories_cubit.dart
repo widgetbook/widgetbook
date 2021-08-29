@@ -109,14 +109,15 @@ class CategoriesCubit extends Cubit<OrganizerState> {
     return matchingOrganizers;
   }
 
-  Organizer? filterOrganizer(RegExp regExp, Organizer organizer) {
+  ExpandableOrganizer? filterOrganizer(
+      RegExp regExp, ExpandableOrganizer organizer) {
     if (organizer.name.contains(regExp)) {
       return organizer;
     }
 
     List<Folder> matchingFolders = <Folder>[];
     for (var subOrganizer in organizer.folders) {
-      Organizer? result = filterOrganizer(regExp, subOrganizer);
+      ExpandableOrganizer? result = filterOrganizer(regExp, subOrganizer);
       if (isMatch(result)) {
         matchingFolders.add(result! as Folder);
       }
@@ -124,7 +125,7 @@ class CategoriesCubit extends Cubit<OrganizerState> {
 
     List<WidgetElement> matchingWidgets = <WidgetElement>[];
     for (var subOrganizer in organizer.widgets) {
-      Organizer? result = filterOrganizer(regExp, subOrganizer);
+      ExpandableOrganizer? result = filterOrganizer(regExp, subOrganizer);
       if (isMatch(result)) {
         matchingWidgets.add(result! as WidgetElement);
       }
@@ -141,8 +142,8 @@ class CategoriesCubit extends Cubit<OrganizerState> {
     return null;
   }
 
-  Organizer createFilteredSubtree(
-    Organizer organizer,
+  ExpandableOrganizer createFilteredSubtree(
+    ExpandableOrganizer organizer,
     List<Folder> folders,
     List<WidgetElement> widgets,
   ) {
@@ -166,7 +167,7 @@ class CategoriesCubit extends Cubit<OrganizerState> {
     }
   }
 
-  void toggleExpander(Organizer organizer) {
+  void toggleExpander(ExpandableOrganizer organizer) {
     organizer.isExpanded = !organizer.isExpanded;
     emit(
       OrganizerState(
@@ -177,7 +178,7 @@ class CategoriesCubit extends Cubit<OrganizerState> {
     );
   }
 
-  bool isMatch(Organizer? organizer) {
+  bool isMatch(ExpandableOrganizer? organizer) {
     return organizer != null;
   }
 }

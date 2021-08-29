@@ -1,5 +1,6 @@
 import 'package:widgetbook/widgetbook.dart';
 
+/// Helper to navigate the folder tree.
 class FolderHelper {
   static List<Folder> getAllFoldersFromCategories(List<Category> categories) {
     List<Folder> folders = [];

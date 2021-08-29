@@ -1,5 +1,6 @@
 import 'package:widgetbook/widgetbook.dart';
 
+/// helper to obtain all WidgetElements in the navigation tree.
 class WidgetHelper {
   static List<WidgetElement> getAllWidgetElementsFromCategories(
       List<Category> categories) {
