@@ -1,3 +1,7 @@
+# 0.0.5
+
+- fixed navigation tree elements collapsing on hot reloads
+
 # 0.0.4
 
 - added known issue to documentation
@@ -15,4 +19,3 @@
 # 0.0.1
 
 - Initial release
-

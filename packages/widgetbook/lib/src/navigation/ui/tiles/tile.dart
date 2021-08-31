@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:widgetbook/src/constants/border_radius_constants.dart';
 import 'package:widgetbook/src/cubit/canvas/canvas_cubit.dart';
-import 'package:widgetbook/src/models/organizers/organizer_base.dart';
+import 'package:widgetbook/src/models/organizers/organizer.dart';
 import 'package:widgetbook/src/utils/styles.dart';
 import '../../../utils/utils.dart';
 
 class Tile extends StatefulWidget {
   final IconData iconData;
   final Color iconColor;
-  final OrganizerBase organizer;
+  final Organizer organizer;
   final VoidCallback? onClicked;
 
   static const double spacing = 8;

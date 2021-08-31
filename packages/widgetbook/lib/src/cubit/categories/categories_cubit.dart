@@ -1,4 +1,7 @@
+import 'dart:collection';
+
 import 'package:bloc/bloc.dart';
+import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/repository/story_repository.dart';
 
@@ -15,62 +18,58 @@ class CategoriesCubit extends Cubit<OrganizerState> {
           ),
         );
 
+  void _updateFolders(List<Category> categories) {
+    var oldFolders = FolderHelper.getAllFoldersFromCategories(
+      state.allCategories,
+    );
+    var newFolders = FolderHelper.getAllFoldersFromCategories(
+      categories,
+    );
+    var oldFolderMap = HashMap<String, Folder>.fromIterable(
+      oldFolders,
+      key: (k) => k.path,
+      value: (v) => v,
+    );
+
+    for (var folder in newFolders) {
+      var path = folder.path;
+      if (oldFolderMap.containsKey(path)) {
+        folder.isExpanded = oldFolderMap[path]!.isExpanded;
+      }
+    }
+  }
+
+  void _updateWidgets(List<Category> categories) {
+    var oldWidgets = WidgetHelper.getAllWidgetElementsFromCategories(
+      state.allCategories,
+    );
+    var newWidgets = WidgetHelper.getAllWidgetElementsFromCategories(
+      categories,
+    );
+    var oldFolderMap = HashMap<String, WidgetElement>.fromIterable(
+      oldWidgets,
+      key: (k) => k.path,
+      value: (v) => v,
+    );
+
+    for (var widget in newWidgets) {
+      var path = widget.path;
+      if (oldFolderMap.containsKey(path)) {
+        widget.isExpanded = oldFolderMap[path]!.isExpanded;
+      }
+    }
+  }
+
   void update(List<Category> categories) {
-    // TODO when categories get updated expanded elements are getting collapsed
-    // This problem is tracked here:
-    // https://github.com/firecrownpro/widgetbook/issues/5
-    //
-    // This could be improved by comparing the 'path' of organizers and copying
-    // the property isExpanded if the path matches.
-    // comparing paths is probably the best way since the closure
-    // might change between hot reloads
+    _updateFolders(categories);
+    _updateWidgets(categories);
     emit(
       OrganizerState.unfiltered(categories: categories),
     );
 
-    var stories = getAllStoriesFromCategories(categories);
-
+    var stories = StoryHelper.getAllStoriesFromCategories(categories);
     storyRepository.deleteAll();
     storyRepository.addAll(stories);
-  }
-
-  List<Story> getAllStoriesFromCategories(List<Category> categories) {
-    List<Story> stories = List<Story>.empty(growable: true);
-    for (var category in categories) {
-      stories.addAll(
-        getAllStoriesFromFolders(category.folders),
-      );
-      stories.addAll(
-        getAllStoriesFromWidgets(category.widgets),
-      );
-    }
-    return stories;
-  }
-
-  List<Story> getAllStoriesFromFolders(List<Folder> folders) {
-    List<Story> stories = List<Story>.empty(growable: true);
-    for (var folder in folders) {
-      stories.addAll(
-        getAllStoriesFromFolder(folder),
-      );
-    }
-    return stories;
-  }
-
-  List<Story> getAllStoriesFromFolder(Folder folder) {
-    List<Story> stories = getAllStoriesFromFolders(folder.folders);
-    stories.addAll(
-      getAllStoriesFromWidgets(folder.widgets),
-    );
-    return stories;
-  }
-
-  List<Story> getAllStoriesFromWidgets(List<WidgetElement> widgets) {
-    List<Story> stories = List<Story>.empty(growable: true);
-    for (var widget in widgets) {
-      stories.addAll(widget.stories);
-    }
-    return stories;
   }
 
   void resetFilter() {
@@ -110,14 +109,15 @@ class CategoriesCubit extends Cubit<OrganizerState> {
     return matchingOrganizers;
   }
 
-  Organizer? filterOrganizer(RegExp regExp, Organizer organizer) {
+  ExpandableOrganizer? filterOrganizer(
+      RegExp regExp, ExpandableOrganizer organizer) {
     if (organizer.name.contains(regExp)) {
       return organizer;
     }
 
     List<Folder> matchingFolders = <Folder>[];
     for (var subOrganizer in organizer.folders) {
-      Organizer? result = filterOrganizer(regExp, subOrganizer);
+      ExpandableOrganizer? result = filterOrganizer(regExp, subOrganizer);
       if (isMatch(result)) {
         matchingFolders.add(result! as Folder);
       }
@@ -125,7 +125,7 @@ class CategoriesCubit extends Cubit<OrganizerState> {
 
     List<WidgetElement> matchingWidgets = <WidgetElement>[];
     for (var subOrganizer in organizer.widgets) {
-      Organizer? result = filterOrganizer(regExp, subOrganizer);
+      ExpandableOrganizer? result = filterOrganizer(regExp, subOrganizer);
       if (isMatch(result)) {
         matchingWidgets.add(result! as WidgetElement);
       }
@@ -142,8 +142,8 @@ class CategoriesCubit extends Cubit<OrganizerState> {
     return null;
   }
 
-  Organizer createFilteredSubtree(
-    Organizer organizer,
+  ExpandableOrganizer createFilteredSubtree(
+    ExpandableOrganizer organizer,
     List<Folder> folders,
     List<WidgetElement> widgets,
   ) {
@@ -167,7 +167,7 @@ class CategoriesCubit extends Cubit<OrganizerState> {
     }
   }
 
-  void toggleExpander(Organizer organizer) {
+  void toggleExpander(ExpandableOrganizer organizer) {
     organizer.isExpanded = !organizer.isExpanded;
     emit(
       OrganizerState(
@@ -178,7 +178,7 @@ class CategoriesCubit extends Cubit<OrganizerState> {
     );
   }
 
-  bool isMatch(Organizer? organizer) {
+  bool isMatch(ExpandableOrganizer? organizer) {
     return organizer != null;
   }
 }

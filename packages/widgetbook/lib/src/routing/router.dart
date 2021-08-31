@@ -83,10 +83,10 @@ models.Story? selectStoryFromPath(String? path, List<models.Story> stories) {
 }
 
 List<models.Story> recursiveRetrievalOfStates(
-  List<models.Organizer> organizers,
+  List<models.ExpandableOrganizer> organizers,
 ) {
   final List<models.Story> states = [];
-  for (final models.Organizer current in organizers) {
+  for (final models.ExpandableOrganizer current in organizers) {
     if (current is models.WidgetElement) {
       states.addAll(current.stories);
     } else {

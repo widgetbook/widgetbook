@@ -1,8 +1,9 @@
-import 'package:widgetbook/src/models/organizers/organizer.dart';
+import 'package:widgetbook/src/models/organizers/expandable_organizer.dart';
+import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/models/organizers/widget_element.dart';
 
 /// A folder in the folder tree.
-class Folder extends Organizer {
+class Folder extends ExpandableOrganizer {
   Folder({
     required String name,
     List<Folder>? folders,
@@ -12,7 +13,7 @@ class Folder extends Organizer {
           folders: folders,
           widgets: widgets,
         ) {
-    for (final Organizer organizer in this.folders) {
+    for (final ExpandableOrganizer organizer in this.folders) {
       organizer.parent = this;
     }
     for (final WidgetElement organizer in this.widgets) {

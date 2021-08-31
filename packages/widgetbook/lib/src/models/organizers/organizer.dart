@@ -1,29 +1,24 @@
-import 'package:widgetbook/src/models/organizers/organizer_base.dart';
-import 'package:widgetbook/src/models/organizers/organizers.dart';
+import 'package:recase/recase.dart';
 
-/// Organizers is an abstract model which helps to
+/// Organizer is an abstract model which helps to
 /// structure Categories, WidgetElements and Stories in the folder tree.
-abstract class Organizer extends OrganizerBase {
-  /// Used to implement collapsing and expanding of the folder tree.
-  bool isExpanded;
+abstract class Organizer {
+  /// Used to display the name of the Folder or WidgetElement
+  final String name;
 
-  /// The folders of one level in the folder tree.
-  /// Folders will be shown above widgets.
-  final List<Folder> folders;
+  /// Used for navigation and matching hot reloaded elements with existing
+  String get path {
+    String path = ReCase(name).paramCase;
+    Organizer? current = parent;
+    while (current?.parent != null) {
+      path = '${ReCase(current!.name).paramCase}${'/$path'}';
+      current = current.parent;
+    }
+    return path;
+  }
 
-  /// The widgets of one level in the folder tree.
-  /// Widgets will be shown below folders;
-  final List<WidgetElement> widgets;
-
+  /// The Organizer hosting this element.
   Organizer? parent;
 
-  /// Abstract class for organizer panel in the left.
-  Organizer({
-    required String name,
-    this.isExpanded = false,
-    List<Folder>? folders,
-    List<WidgetElement>? widgets,
-  })  : this.folders = folders ?? List<Folder>.empty(),
-        this.widgets = widgets ?? List<WidgetElement>.empty(),
-        super(name);
+  Organizer(this.name);
 }
