@@ -1,4 +1,4 @@
 class BorderConstants {
-  static double borderRadius = 12;
-  static double buttonRadius = 8;
+  static const double borderRadius = 12;
+  static const double buttonRadius = 8;
 }
