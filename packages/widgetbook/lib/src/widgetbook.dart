@@ -54,6 +54,7 @@ class Widgetbook extends StatefulWidget {
 }
 
 class _WidgetbookState extends State<Widgetbook> {
+  late CanvasCubit canvasCubit;
   late CategoriesCubit categoriesCubit;
   late DeviceCubit deviceCubit;
   late InjectedThemeCubit injectedThemeCubit;
@@ -63,9 +64,13 @@ class _WidgetbookState extends State<Widgetbook> {
   void initState() {
     configureApp();
     storyRepository = StoryRepository();
+    canvasCubit = CanvasCubit(
+      storyRepository: storyRepository,
+    );
     categoriesCubit = CategoriesCubit(
       categories: widget.categories,
       storyRepository: storyRepository,
+      canvasCubit: canvasCubit,
     );
     deviceCubit = DeviceCubit(devices: widget.devices);
     injectedThemeCubit = InjectedThemeCubit(
@@ -97,9 +102,7 @@ class _WidgetbookState extends State<Widgetbook> {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => CanvasCubit(
-              storyRepository: context.read<StoryRepository>(),
-            ),
+            create: (context) => canvasCubit,
           ),
           BlocProvider(
             create: (context) => ThemeCubit(),
