@@ -1,3 +1,7 @@
+# 0.0.6
+
+- fixed navigation not working for web
+
 # 0.0.5
 
 - fixed navigation tree elements collapsing on hot reloads
