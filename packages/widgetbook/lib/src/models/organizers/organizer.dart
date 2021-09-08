@@ -1,5 +1,3 @@
-import 'package:recase/recase.dart';
-
 /// Organizer is an abstract model which helps to
 /// structure Categories, WidgetElements and Stories in the folder tree.
 abstract class Organizer {
@@ -8,10 +6,11 @@ abstract class Organizer {
 
   /// Used for navigation and matching hot reloaded elements with existing
   String get path {
-    String path = ReCase(name).paramCase;
+    // TODO this param recase implementation makes the URL really weird
+    String path = name.replaceAll(' ', '-').toLowerCase();
     Organizer? current = parent;
     while (current?.parent != null) {
-      path = '${ReCase(current!.name).paramCase}${'/$path'}';
+      path = '${current!.name.replaceAll(' ', '-').toLowerCase()}${'/$path'}';
       current = current.parent;
     }
     return path;

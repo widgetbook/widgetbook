@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:bloc/bloc.dart';
+import 'package:widgetbook/src/cubit/canvas/canvas_cubit.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/repository/story_repository.dart';
@@ -8,15 +9,33 @@ import 'package:widgetbook/src/repository/story_repository.dart';
 part 'categories_state.dart';
 
 class CategoriesCubit extends Cubit<OrganizerState> {
+  final CanvasCubit canvasCubit;
   final StoryRepository storyRepository;
   CategoriesCubit({
     required List<Category> categories,
     required this.storyRepository,
+    required this.canvasCubit,
   }) : super(
           OrganizerState.unfiltered(
             categories: categories,
           ),
-        );
+        ) {
+    canvasCubit.stream.forEach((CanvasState state) {
+      _openStory(state.selectedStory);
+    });
+  }
+
+  void _openStory(Story? story) {
+    if (story == null) {
+      return;
+    }
+    ExpandableOrganizer? currentOrganizer =
+        story.parent as ExpandableOrganizer?;
+    while (currentOrganizer != null) {
+      currentOrganizer.isExpanded = true;
+      currentOrganizer = currentOrganizer.parent as ExpandableOrganizer?;
+    }
+  }
 
   void _updateFolders(List<Category> categories) {
     var oldFolders = FolderHelper.getAllFoldersFromCategories(

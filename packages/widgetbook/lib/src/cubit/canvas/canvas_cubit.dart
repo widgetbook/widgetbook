@@ -38,4 +38,10 @@ class CanvasCubit extends Cubit<CanvasState> {
       ),
     );
   }
+
+  void deselectStory() {
+    emit(
+      CanvasState.unselected(),
+    );
+  }
 }

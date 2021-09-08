@@ -30,8 +30,6 @@ class _StoryTileState extends State<StoryTile> {
       iconData: FontAwesomeIcons.file,
       iconColor: Styles.storyColor,
       onClicked: () {
-        Navigator.of(context)
-            .pushReplacementNamed('/stories/${widget.story.path}');
         context.read<CanvasCubit>().selectStory(widget.story);
       },
     );

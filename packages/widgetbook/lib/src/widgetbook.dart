@@ -9,11 +9,13 @@ import 'package:widgetbook/src/cubit/theme/theme_cubit.dart';
 import 'package:widgetbook/src/cubit/zoom/zoom_cubit.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/device.dart';
+import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/repository/story_repository.dart';
-import 'package:widgetbook/src/routing/router.dart';
-import 'package:widgetbook/src/styled_widgets/styled_scaffold.dart';
+import 'package:widgetbook/src/routing/route_information_parser.dart';
+import 'package:widgetbook/src/routing/story_router_delegate.dart';
 import 'package:widgetbook/src/utils/utils.dart';
+import 'configure_non_web.dart' if (dart.library.html) 'configure_web.dart';
 
 class Widgetbook extends StatefulWidget {
   /// Categories which host Folders and WidgetElements.
@@ -52,6 +54,7 @@ class Widgetbook extends StatefulWidget {
 }
 
 class _WidgetbookState extends State<Widgetbook> {
+  late CanvasCubit canvasCubit;
   late CategoriesCubit categoriesCubit;
   late DeviceCubit deviceCubit;
   late InjectedThemeCubit injectedThemeCubit;
@@ -59,10 +62,15 @@ class _WidgetbookState extends State<Widgetbook> {
 
   @override
   void initState() {
+    configureApp();
     storyRepository = StoryRepository();
+    canvasCubit = CanvasCubit(
+      storyRepository: storyRepository,
+    );
     categoriesCubit = CategoriesCubit(
       categories: widget.categories,
       storyRepository: storyRepository,
+      canvasCubit: canvasCubit,
     );
     deviceCubit = DeviceCubit(devices: widget.devices);
     injectedThemeCubit = InjectedThemeCubit(
@@ -94,9 +102,7 @@ class _WidgetbookState extends State<Widgetbook> {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => CanvasCubit(
-              storyRepository: context.read<StoryRepository>(),
-            ),
+            create: (context) => canvasCubit,
           ),
           BlocProvider(
             create: (context) => ThemeCubit(),
@@ -116,29 +122,32 @@ class _WidgetbookState extends State<Widgetbook> {
         ],
         child: BlocBuilder<ThemeCubit, ThemeMode>(
           builder: (context, themeMode) {
-            return BlocBuilder<CategoriesCubit, OrganizerState>(
-              builder: (context, storiesState) {
-                return MaterialApp(
-                  title: 'Firebook',
-                  debugShowCheckedModeBanner: false,
-                  themeMode: themeMode,
-                  darkTheme: Styles.darkTheme,
-                  theme: Styles.lightTheme,
-                  builder: (context, child) {
-                    return StyledScaffold(
-                      body: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Navigator(
-                          reportsRouteUpdateToEngine: true,
-                          initialRoute: '/',
-                          onGenerateRoute: (settings) => generateRoute(
-                            context,
-                            widget.appInfo,
-                            settings.name,
-                            settings: settings,
-                          ),
-                        ),
+            return BlocBuilder<CanvasCubit, CanvasState>(
+              builder: (context, canvasState) {
+                return BlocBuilder<CategoriesCubit, OrganizerState>(
+                  builder: (context, storiesState) {
+                    return MaterialApp.router(
+                      routeInformationParser: StoryRouteInformationParser(
+                        onRoute: (path) {
+                          var stories = StoryHelper.getAllStoriesFromCategories(
+                            storiesState.allCategories,
+                          );
+                          var selectedStory =
+                              selectStoryFromPath(path, stories);
+                          context
+                              .read<CanvasCubit>()
+                              .selectStory(selectedStory);
+                        },
                       ),
+                      routerDelegate: StoryRouterDelegate(
+                        canvasState: canvasState,
+                        appInfo: widget.appInfo,
+                      ),
+                      title: 'Firebook',
+                      debugShowCheckedModeBanner: false,
+                      themeMode: themeMode,
+                      darkTheme: Styles.darkTheme,
+                      theme: Styles.lightTheme,
                     );
                   },
                 );
@@ -148,5 +157,19 @@ class _WidgetbookState extends State<Widgetbook> {
         ),
       ),
     );
+  }
+
+  Story? selectStoryFromPath(
+    String? path,
+    List<Story> stories,
+  ) {
+    String storyPath = path?.replaceFirst('/stories/', '') ?? '';
+    Story? story;
+    for (final element in stories) {
+      if (element.path == storyPath) {
+        story = element;
+      }
+    }
+    return story;
   }
 }
