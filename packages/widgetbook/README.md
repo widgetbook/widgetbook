@@ -1,6 +1,6 @@
 <p align="center">
 <a href="https://discord.gg/zT4AMStAJA"><img src="https://img.shields.io/discord/879618555560218625?color=blue&logo=discord&style=flat-square" alt="Discord"></a>
-<a href="https://github.com/firecrownpro/widgetbook/actions"><img src="https://img.shields.io/github/checks-status/firecrownpro/widgetbook/main?style=flat-square" alt="build"></a>
+<a href="https://github.com/firecrownpro/widgetbook/actions"><img src="https://img.shields.io/github/workflow/status/firecrownpro/widgetbook/ci?style=flat-square" alt="build"></a>
 </p>
 
 ___
