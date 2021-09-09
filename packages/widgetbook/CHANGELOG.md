@@ -1,7 +1,3 @@
-# 0.0.8
-
-- added CI/CD badge
-
 # 0.0.7
 
 - removed example app from package
