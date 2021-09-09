@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "Widgetbook (meal_app)",
-            "cwd": "packages/widgetbook/meal_app",
+            "cwd": "example/meal_app",
             "request": "launch",
             "program": "stories/main.dart",
             "type": "dart"

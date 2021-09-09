@@ -8,7 +8,7 @@ jobs:
   build:
     defaults:
       run:
-        working-directory: packages/widgetbook
+        working-directory: example/meal_app
     name: Build
     runs-on: macos-latest 
     steps:
@@ -24,19 +24,15 @@ jobs:
     - name: Enable MacOS desktop support
       run: flutter config --enable-macos-desktop
     - run: flutter pub get
-    - run: |
-        cd meal_app
-        flutter pub get
     - run: | 
-        cd meal_app
         flutter build macos -t stories/main.dart
     - name: Create tar archive
       run: |
-        cd meal_app/build/macos/Build/Products/Release
+        cd build/macos/Build/Products/Release
         tar -cf app.tar.gz meal_app.app
     - uses: actions/upload-artifact@v2
       with:
         name: AppMacOS
-        path: packages/widgetbook/meal_app/build/macos/Build/Products/Release/app.tar.gz
+        path: example/meal_app/build/macos/Build/Products/Release/app.tar.gz
         retention-days: 3
         if-no-files-found: error
