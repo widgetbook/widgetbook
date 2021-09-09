@@ -1,3 +1,7 @@
+# 0.0.7
+
+- removed example app from package
+
 # 0.0.6
 
 - fixed navigation not working for web
