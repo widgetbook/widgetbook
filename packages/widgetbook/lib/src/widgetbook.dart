@@ -143,7 +143,7 @@ class _WidgetbookState extends State<Widgetbook> {
                         canvasState: canvasState,
                         appInfo: widget.appInfo,
                       ),
-                      title: 'Firebook',
+                      title: widget.appInfo.name,
                       debugShowCheckedModeBanner: false,
                       themeMode: themeMode,
                       darkTheme: Styles.darkTheme,

@@ -17,7 +17,7 @@ dependencies:
   flutter_bloc: ^7.1.0
   font_awesome_flutter: ^9.1.0
   widgetbook:
-    path: ..
+    path: ../../packages/widgetbook
 
 dev_dependencies:
   flutter_test:
