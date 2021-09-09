@@ -9,6 +9,11 @@ A flutter package that helps cataloguing widgets. Inspired by Storybook.js and f
 <img src="https://media.githubusercontent.com/media/firecrownpro/widgetbook/main/docs/assets/Screenshot.png" alt="Widgetbook Screenshot" />
 </p>
 
+## See it in action!
+
+Check out the `Widgetbook` with the example app on our [github page](https://firecrownpro.github.io).
+Furthermore, you can [check out the code of the app at github](https://github.com/firecrownpro/widgetbook/tree/main/example). 
+
 ## Let us know how you feel about Widgetbook
 
 We are funded and aim to shape `Widgetbook` to your (and your team's) needs. If you have questions, feature requests or issues let us know on [Discord](https://discord.gg/zT4AMStAJA) or [GitHub](https://github.com/firecrownpro/widgetbook) or book a call with the founders via [Calendly](https://calendly.com/firecrown/call). We're looking forward to build a community and discuss your feedback on our channel! 💙
