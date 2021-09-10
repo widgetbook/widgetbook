@@ -41,7 +41,7 @@ class _NavigationPanelState extends State<NavigationPanel> {
           Header(
             appInfo: widget.appInfo,
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Expanded(
@@ -52,7 +52,7 @@ class _NavigationPanelState extends State<NavigationPanel> {
                   8,
                 ),
               ),
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Builder(
                 builder: (context) {
                   return ListView.separated(

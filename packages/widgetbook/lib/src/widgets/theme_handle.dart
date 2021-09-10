@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:widgetbook/src/cubit/theme/theme_cubit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../utils/extensions.dart';
 
 class ThemeHandle extends StatelessWidget {
@@ -26,17 +25,16 @@ class ThemeHandle extends StatelessWidget {
                 padding: const EdgeInsets.all(12),
               ),
               child: Icon(
-                FontAwesomeIcons.moon,
+                Icons.dark_mode,
                 color: context.read<ThemeCubit>().state == ThemeMode.light
                     ? context.theme.hintColor
                     : context.colorScheme.primary,
-                size: 16,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 4,
             ),
-            Text('theme'),
+            const Text('theme'),
           ],
         );
       },

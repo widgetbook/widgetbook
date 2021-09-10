@@ -9,7 +9,7 @@ class Typography {
     fontWeight: FontWeight.bold,
   );
 
-  static TextTheme textTheme = TextTheme(
+  static TextTheme textTheme = const TextTheme(
     subtitle1: subtitle1,
     subtitle2: subtitle2,
   );

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/src/cubit/canvas/canvas_cubit.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/navigation/ui/tiles/spaced_tile.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../utils/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,7 +26,7 @@ class _StoryTileState extends State<StoryTile> {
     return SpacedTile(
       level: widget.level,
       organizer: widget.story,
-      iconData: FontAwesomeIcons.file,
+      iconData: Icons.auto_stories,
       iconColor: Styles.storyColor,
       onClicked: () {
         context.read<CanvasCubit>().selectStory(widget.story);

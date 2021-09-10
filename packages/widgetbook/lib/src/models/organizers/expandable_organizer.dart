@@ -21,8 +21,8 @@ abstract class ExpandableOrganizer extends Organizer {
     this.isExpanded = false,
     List<Folder>? folders,
     List<WidgetElement>? widgets,
-  })  : this.folders = folders ?? List<Folder>.empty(),
-        this.widgets = widgets ?? List<WidgetElement>.empty(),
+  })  : folders = folders ?? List<Folder>.empty(),
+        widgets = widgets ?? List<WidgetElement>.empty(),
         super(
           name,
         );

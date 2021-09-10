@@ -21,7 +21,6 @@ class _StatefulAnimatedSizeState extends State<StatefulAnimatedSize>
   @override
   Widget build(BuildContext context) {
     return AnimatedSize(
-      vsync: this,
       duration: widget.duration,
       curve: widget.curve,
       child: widget.child,

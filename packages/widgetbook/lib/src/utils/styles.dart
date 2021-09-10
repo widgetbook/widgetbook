@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/utils/typography.dart' as util;
-import 'package:google_fonts/google_fonts.dart';
 
 class Styles {
   static const Color storyColor = Color(0xFF6C6A71);
@@ -8,8 +6,8 @@ class Styles {
 
   static Color getHighlightColor(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light
-        ? Color(0xFFE9E8EA)
-        : Color(0xFF39383C);
+        ? const Color(0xFFE9E8EA)
+        : const Color(0xFF39383C);
   }
 
   static const Color primary = Color(0xFFFF5610);
@@ -17,7 +15,7 @@ class Styles {
 
   static ThemeData lightTheme = ThemeData(
     colorScheme: const ColorScheme.light(
-      surface: const Color(0xffF2F1F5),
+      surface: Color(0xffF2F1F5),
       onSurface: Color(0xff222222),
       primary: primary,
       onPrimary: Colors.black,
@@ -29,9 +27,7 @@ class Styles {
       onBackground: Color(0xff222222),
     ),
     shadowColor: const Color(0xff222222).withOpacity(0.05),
-    textTheme: GoogleFonts.nunitoTextTheme(
-      util.Typography.textTheme,
-    ),
+    fontFamily: 'Nunito',
     dividerColor: const Color(0xff6C6F8D),
     canvasColor: const Color(0x7fc3e8f3),
     scaffoldBackgroundColor: Colors.white,
@@ -51,9 +47,7 @@ class Styles {
       background: Colors.yellow,
       onBackground: Colors.green,
     ),
-    textTheme: GoogleFonts.nunitoTextTheme(
-      lightTheme.textTheme,
-    ).apply(
+    textTheme: lightTheme.textTheme.apply(
       bodyColor: notCompletelyWhite,
       displayColor: notCompletelyWhite,
       decorationColor: notCompletelyWhite,

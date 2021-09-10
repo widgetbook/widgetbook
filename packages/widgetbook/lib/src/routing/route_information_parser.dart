@@ -14,12 +14,12 @@ class StoryRouteInformationParser
     RouteInformation routeInformation,
   ) async {
     final uri = Uri.parse(routeInformation.location ?? '');
-    this.onRoute(uri.path);
+    onRoute(uri.path);
     return StoryRoutePath(path: uri.path);
   }
 
   @override
-  RouteInformation restoreRouteInformation(StoryRoutePath path) {
-    return RouteInformation(location: path.path);
+  RouteInformation restoreRouteInformation(StoryRoutePath configuration) {
+    return RouteInformation(location: configuration.path);
   }
 }

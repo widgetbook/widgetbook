@@ -39,7 +39,7 @@ class DeviceRender extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(device.name),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Container(
@@ -58,7 +58,7 @@ class DeviceRender extends StatelessWidget {
                   return MaterialApp(
                     debugShowCheckedModeBanner: false,
                     theme: getInjectedTheme(context, state).copyWith(
-                      pageTransitionsTheme: PageTransitionsTheme(
+                      pageTransitionsTheme: const PageTransitionsTheme(
                         builders: {
                           TargetPlatform.iOS:
                               FadeUpwardsPageTransitionsBuilder(),

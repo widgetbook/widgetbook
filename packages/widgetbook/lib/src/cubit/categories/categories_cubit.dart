@@ -181,6 +181,7 @@ class CategoriesCubit extends Cubit<OrganizerState> {
       );
     } else {
       // TODO remove this when tested
+      // ignore: avoid_print
       print('This message should never appear - BUG!');
       return Folder(name: 'If you see this, you have found a bug');
     }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:widgetbook/src/cubit/zoom/zoom_cubit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../utils/extensions.dart';
 
 class ZoomHandle extends StatelessWidget {
@@ -23,9 +22,8 @@ class ZoomHandle extends StatelessWidget {
                 padding: const EdgeInsets.all(12),
               ),
               child: Icon(
-                FontAwesomeIcons.minus,
+                Icons.remove,
                 color: context.theme.hintColor,
-                size: 16,
               ),
             ),
             const SizedBox(width: 8),
@@ -37,10 +35,10 @@ class ZoomHandle extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 4,
                 ),
-                Text('zoom'),
+                const Text('zoom'),
               ],
             ),
             const SizedBox(width: 8),
@@ -54,9 +52,8 @@ class ZoomHandle extends StatelessWidget {
                 padding: const EdgeInsets.all(12),
               ),
               child: Icon(
-                FontAwesomeIcons.plus,
+                Icons.add,
                 color: context.theme.hintColor,
-                size: 16,
               ),
             ),
             const SizedBox(width: 8),
@@ -70,9 +67,8 @@ class ZoomHandle extends StatelessWidget {
                 padding: const EdgeInsets.all(12),
               ),
               child: Icon(
-                FontAwesomeIcons.redoAlt,
+                Icons.replay,
                 color: context.theme.hintColor,
-                size: 16,
               ),
             ),
           ],
