@@ -1,3 +1,11 @@
+# 0.0.9
+
+Increased package compatibility by
+
+- replacing [font_awesome_flutter](https://pub.dev/packages/font_awesome_flutter) package with Material icons
+- removing [google_fonts](https://pub.dev/packages/google_fonts) package
+- removing [recase](https://pub.dev/packages/recase) package
+
 # 0.0.8
 
 - added CI/CD badge
