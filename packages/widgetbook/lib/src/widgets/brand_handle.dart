@@ -37,10 +37,10 @@ class BrandHandle extends StatelessWidget {
                     : context.colorScheme.primary,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 4,
             ),
-            Text('discord'),
+            const Text('discord'),
           ],
         );
       },

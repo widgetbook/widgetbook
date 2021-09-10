@@ -11,6 +11,7 @@ import '../../widgetbook.dart';
 
 class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<StoryRoutePath> {
+  @override
   final GlobalKey<NavigatorState> navigatorKey;
 
   final AppInfo appInfo;
@@ -41,10 +42,10 @@ class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
                         );
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     ),
-                    Expanded(
+                    const Expanded(
                       child: Editor(),
                     ),
                   ],
@@ -75,5 +76,5 @@ class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
       );
 
   @override
-  Future<void> setNewRoutePath(StoryRoutePath path) async {}
+  Future<void> setNewRoutePath(StoryRoutePath configuration) async {}
 }

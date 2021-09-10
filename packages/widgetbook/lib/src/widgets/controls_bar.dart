@@ -19,7 +19,7 @@ class ControlsBar extends StatelessWidget {
           return SizedBox(
             height: Constants.controlBarHeight,
             child: Row(children: [
-              SizedBox(
+              const SizedBox(
                 width: 16,
               ),
               Expanded(
@@ -27,7 +27,7 @@ class ControlsBar extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: [
+                    children: const [
                       ZoomHandle(),
                       SizedBox(
                         width: 40,
@@ -41,8 +41,8 @@ class ControlsBar extends StatelessWidget {
                   ),
                 ),
               ),
-              BrandHandle(),
-              SizedBox(
+              const BrandHandle(),
+              const SizedBox(
                 width: 16,
               ),
             ]),

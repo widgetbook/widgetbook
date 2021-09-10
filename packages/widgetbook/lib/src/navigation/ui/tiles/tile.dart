@@ -42,7 +42,7 @@ class _TileState extends State<Tile> {
             color: hovered ? context.colorScheme.onPrimary : widget.iconColor,
             size: 16,
           ),
-          SizedBox(
+          const SizedBox(
             width: Tile.spacing,
           ),
           Text(widget.organizer.name),
@@ -55,7 +55,7 @@ class _TileState extends State<Tile> {
   Widget build(BuildContext context) {
     return BlocBuilder<CanvasCubit, CanvasState>(
       builder: (context, state) {
-        bool isSelected = state.selectedStory == this.widget.organizer;
+        bool isSelected = state.selectedStory == widget.organizer;
         return GestureDetector(
           onTap: () {
             widget.onClicked?.call();

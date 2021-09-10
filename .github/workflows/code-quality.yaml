@@ -1,0 +1,25 @@
+on: 
+  pull_request:
+    paths:
+      - "packages/widgetbook/**"
+      - ".github/workflows/code-quality.yaml"
+name: Code Quality
+jobs:
+  build:
+    defaults:
+      run:
+        working-directory: packages/widgetbook
+    name: Check
+    runs-on: ubuntu-latest 
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        lfs: true
+    - name: Checkout LFS objects
+      run: git lfs checkout
+
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: dev
+    - run: flutter pub get
+    - run: flutter analyze

@@ -51,7 +51,7 @@ class _StoryState extends State<StoryRender> {
           },
           builder: (context, state) {
             return InteractiveViewer(
-              boundaryMargin: EdgeInsets.all(double.infinity),
+              boundaryMargin: const EdgeInsets.all(double.infinity),
               minScale: 0.25,
               maxScale: 5,
               constrained: false,
@@ -61,10 +61,8 @@ class _StoryState extends State<StoryRender> {
                     .read<ZoomCubit>()
                     .setScale(controller.value.getMaxScaleOnAxis());
               },
-              child: Container(
-                child: DeviceRender(
-                  story: story,
-                ),
+              child: DeviceRender(
+                story: story,
               ),
             );
           },

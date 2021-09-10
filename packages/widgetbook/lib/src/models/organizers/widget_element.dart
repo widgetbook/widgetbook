@@ -7,6 +7,8 @@ class WidgetElement extends ExpandableOrganizer {
   // TODO Maybe passing a type makes more sense than passing a name
   // that has the benefit that the WidgetElement's name will change when the
   // class name changes
+  //
+  // This could be avoided alltogether by using annotations
   final List<Story> stories;
 
   WidgetElement({

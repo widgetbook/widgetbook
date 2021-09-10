@@ -35,10 +35,10 @@ class ZoomHandle extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 4,
                 ),
-                Text('zoom'),
+                const Text('zoom'),
               ],
             ),
             const SizedBox(width: 8),

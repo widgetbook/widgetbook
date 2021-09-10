@@ -31,10 +31,10 @@ class ThemeHandle extends StatelessWidget {
                     : context.colorScheme.primary,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 4,
             ),
-            Text('theme'),
+            const Text('theme'),
           ],
         );
       },

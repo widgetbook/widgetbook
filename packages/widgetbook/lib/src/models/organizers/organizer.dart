@@ -6,7 +6,6 @@ abstract class Organizer {
 
   /// Used for navigation and matching hot reloaded elements with existing
   String get path {
-    // TODO this param recase implementation makes the URL really weird
     String path = name.replaceAll(' ', '-').toLowerCase();
     Organizer? current = parent;
     while (current?.parent != null) {

@@ -35,6 +35,7 @@ class Widgetbook extends StatefulWidget {
   final ThemeData? darkTheme;
 
   const Widgetbook({
+    Key? key,
     required this.categories,
     this.devices = const [
       Apple.iPhone11,
@@ -47,7 +48,7 @@ class Widgetbook extends StatefulWidget {
     required this.appInfo,
     this.lightTheme,
     this.darkTheme,
-  });
+  }) : super(key: key);
 
   @override
   _WidgetbookState createState() => _WidgetbookState();

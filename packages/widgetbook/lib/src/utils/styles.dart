@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/utils/typography.dart' as util;
 
 class Styles {
   static const Color storyColor = Color(0xFF6C6A71);
@@ -7,8 +6,8 @@ class Styles {
 
   static Color getHighlightColor(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light
-        ? Color(0xFFE9E8EA)
-        : Color(0xFF39383C);
+        ? const Color(0xFFE9E8EA)
+        : const Color(0xFF39383C);
   }
 
   static const Color primary = Color(0xFFFF5610);
@@ -16,7 +15,7 @@ class Styles {
 
   static ThemeData lightTheme = ThemeData(
     colorScheme: const ColorScheme.light(
-      surface: const Color(0xffF2F1F5),
+      surface: Color(0xffF2F1F5),
       onSurface: Color(0xff222222),
       primary: primary,
       onPrimary: Colors.black,

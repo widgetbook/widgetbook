@@ -14,8 +14,8 @@ class Editor extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ControlsBar(),
-        SizedBox(
+        const ControlsBar(),
+        const SizedBox(
           height: 16,
         ),
         Expanded(
@@ -24,7 +24,7 @@ class Editor extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               color: context.colorScheme.surface,
             ),
-            child: StoryRender(),
+            child: const StoryRender(),
           ),
         ),
       ],

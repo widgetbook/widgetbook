@@ -12,8 +12,8 @@ class DeviceBar extends StatelessWidget {
     return BlocBuilder<DeviceCubit, DeviceState>(
       builder: (context, state) {
         return Row(children: [
-          Text('Device'),
-          SizedBox(
+          const Text('Device'),
+          const SizedBox(
             width: 12,
           ),
           TextButton(
@@ -39,7 +39,7 @@ class DeviceBar extends StatelessWidget {
               );
             },
             separatorBuilder: (context, index) {
-              return SizedBox(
+              return const SizedBox(
                 width: 8,
               );
             },
