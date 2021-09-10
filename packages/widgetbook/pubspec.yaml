@@ -17,7 +17,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^7.1.0
-  font_awesome_flutter: ^9.1.0
   google_fonts: ^2.1.0
   recase: ^4.0.0
   url_launcher: ^6.0.9

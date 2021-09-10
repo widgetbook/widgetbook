@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:widgetbook/src/widgets/device_item.dart';
 import 'package:widgetbook/src/cubit/device/device_cubit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../utils/extensions.dart';
 
 class DeviceBar extends StatelessWidget {
@@ -27,9 +26,8 @@ class DeviceBar extends StatelessWidget {
               padding: const EdgeInsets.all(12),
             ),
             child: Icon(
-              FontAwesomeIcons.chevronLeft,
+              Icons.chevron_left,
               color: context.theme.hintColor,
-              size: 16,
             ),
           ),
           ListView.separated(
@@ -57,9 +55,8 @@ class DeviceBar extends StatelessWidget {
               padding: const EdgeInsets.all(12),
             ),
             child: Icon(
-              FontAwesomeIcons.chevronRight,
+              Icons.chevron_right,
               color: context.theme.hintColor,
-              size: 16,
             ),
           ),
         ]);

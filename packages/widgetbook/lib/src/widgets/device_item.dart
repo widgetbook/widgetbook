@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/cubit/device/device_cubit.dart';
 import 'package:widgetbook/src/models/device.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../utils/extensions.dart';
 
@@ -47,27 +46,27 @@ class DeviceItem extends StatelessWidget {
     switch (type) {
       case DeviceType.watch:
         return Icon(
-          FontAwesomeIcons.clock,
+          Icons.watch,
           color: color,
         );
       case DeviceType.mobile:
         return Icon(
-          FontAwesomeIcons.mobile,
+          Icons.smartphone,
           color: color,
         );
       case DeviceType.tablet:
         return Icon(
-          FontAwesomeIcons.tablet,
+          Icons.tablet,
           color: color,
         );
       case DeviceType.desktop:
         return Icon(
-          FontAwesomeIcons.desktop,
+          Icons.desktop_windows,
           color: color,
         );
       case DeviceType.unknown:
         return Icon(
-          FontAwesomeIcons.question,
+          Icons.quiz,
           color: color,
         );
     }
