@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/utils/typography.dart' as util;
-import 'package:google_fonts/google_fonts.dart';
 
 class Styles {
   static const Color storyColor = Color(0xFF6C6A71);
@@ -29,9 +28,7 @@ class Styles {
       onBackground: Color(0xff222222),
     ),
     shadowColor: const Color(0xff222222).withOpacity(0.05),
-    textTheme: GoogleFonts.nunitoTextTheme(
-      util.Typography.textTheme,
-    ),
+    fontFamily: 'Nunito',
     dividerColor: const Color(0xff6C6F8D),
     canvasColor: const Color(0x7fc3e8f3),
     scaffoldBackgroundColor: Colors.white,
@@ -51,9 +48,7 @@ class Styles {
       background: Colors.yellow,
       onBackground: Colors.green,
     ),
-    textTheme: GoogleFonts.nunitoTextTheme(
-      lightTheme.textTheme,
-    ).apply(
+    textTheme: lightTheme.textTheme.apply(
       bodyColor: notCompletelyWhite,
       displayColor: notCompletelyWhite,
       decorationColor: notCompletelyWhite,

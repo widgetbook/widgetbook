@@ -1,6 +1,6 @@
 name: widgetbook
 description: A flutter storybook that helps professionals and teams to catalogue their widgets.
-version: 0.0.8
+version: 0.0.9
 homepage: https://firecrown.pro?utm_source=pub.dev&utm_medium=link&utm_campaign=package_widgetbook
 repository: https://github.com/firecrownpro/widgetbook
 issue_tracker: https://github.com/firecrownpro/widgetbook/issues 
@@ -17,8 +17,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^7.1.0
-  google_fonts: ^2.1.0
-  recase: ^4.0.0
   url_launcher: ^6.0.9
   vector_math: ^2.1.0
 
@@ -29,3 +27,21 @@ dev_dependencies:
 flutter:
   assets:
     - google_fonts/
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: google_fonts/Nunito-Black.ttf
+        - asset: google_fonts/Nunito-BlackItalic.ttf
+        - asset: google_fonts/Nunito-Bold.ttf
+        - asset: google_fonts/Nunito-BoldItalic.ttf
+        - asset: google_fonts/Nunito-ExtraBold.ttf
+        - asset: google_fonts/Nunito-ExtraBoldItalic.ttf
+        - asset: google_fonts/Nunito-ExtraLight.ttf
+        - asset: google_fonts/Nunito-ExtraLightItalic.ttf
+        - asset: google_fonts/Nunito-Italic.ttf
+        - asset: google_fonts/Nunito-Light.ttf
+        - asset: google_fonts/Nunito-LightItalic.ttf
+        - asset: google_fonts/Nunito-Regular.ttf
+        - asset: google_fonts/Nunito-SemiBold.ttf
+        - asset: google_fonts/Nunito-SemiBoldItalic.ttf
+
