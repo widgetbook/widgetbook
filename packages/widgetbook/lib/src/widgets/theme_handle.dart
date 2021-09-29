@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:widgetbook/src/cubit/theme/theme_cubit.dart';
+import 'package:widgetbook/src/providers/theme_provider.dart';
 import '../utils/extensions.dart';
 
 class ThemeHandle extends StatelessWidget {
@@ -8,36 +7,33 @@ class ThemeHandle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeCubit, ThemeMode>(
-      builder: (context, state) {
-        return Row(
-          children: [
-            // TODO add an own widget for this
-            // or style the text button.icon appropriately
-            // TODO make sure the onPresses is triggered on the text as well
-            TextButton(
-              onPressed: context.read<ThemeCubit>().toggleTheme,
-              style: TextButton.styleFrom(
-                splashFactory: InkRipple.splashFactory,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(90)),
-                minimumSize: Size.zero,
-                padding: const EdgeInsets.all(12),
-              ),
-              child: Icon(
-                Icons.dark_mode,
-                color: context.read<ThemeCubit>().state == ThemeMode.light
-                    ? context.theme.hintColor
-                    : context.colorScheme.primary,
-              ),
-            ),
-            const SizedBox(
-              width: 4,
-            ),
-            const Text('theme'),
-          ],
-        );
-      },
+    var themeProvider = ThemeProvider.of(context)!;
+    return Row(
+      children: [
+        // TODO add an own widget for this
+        // or style the text button.icon appropriately
+        // TODO make sure the onPresses is triggered on the text as well
+        TextButton(
+          onPressed: themeProvider.toggleTheme,
+          style: TextButton.styleFrom(
+            splashFactory: InkRipple.splashFactory,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
+            minimumSize: Size.zero,
+            padding: const EdgeInsets.all(12),
+          ),
+          child: Icon(
+            Icons.dark_mode,
+            color: themeProvider.state == ThemeMode.light
+                ? context.theme.hintColor
+                : context.colorScheme.primary,
+          ),
+        ),
+        const SizedBox(
+          width: 4,
+        ),
+        const Text('theme'),
+      ],
     );
   }
 }

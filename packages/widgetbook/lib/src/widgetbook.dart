@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:widgetbook/src/cubit/device/device_cubit.dart';
 import 'package:widgetbook/src/cubit/injected_theme/injected_theme_cubit.dart';
-import 'package:widgetbook/src/cubit/theme/theme_cubit.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
@@ -12,6 +11,7 @@ import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/providers/canvas_state.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/providers/organizer_state.dart';
+import 'package:widgetbook/src/providers/theme_provider.dart';
 import 'package:widgetbook/src/providers/zoom_provider.dart';
 import 'package:widgetbook/src/providers/zoom_state.dart';
 import 'package:widgetbook/src/repository/selected_story_repository.dart';
@@ -70,6 +70,7 @@ class _WidgetbookState extends State<Widgetbook> {
 
   ZoomState zoomState = ZoomState.normal();
   CanvasState canvasState = CanvasState.unselected();
+  ThemeMode themeMode = ThemeMode.dark;
   late OrganizerState organizerState;
 
   @override
@@ -108,9 +109,6 @@ class _WidgetbookState extends State<Widgetbook> {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => ThemeCubit(),
-          ),
-          BlocProvider(
             create: (context) => deviceCubit,
           ),
           BlocProvider(
@@ -142,8 +140,14 @@ class _WidgetbookState extends State<Widgetbook> {
                   zoomState = state;
                 });
               },
-              child: BlocBuilder<ThemeCubit, ThemeMode>(
-                builder: (context, themeMode) {
+              child: ThemeProvider(
+                state: themeMode,
+                onStateChanged: (ThemeMode mode) {
+                  setState(() {
+                    themeMode = mode;
+                  });
+                },
+                child: Builder(builder: (context) {
                   contextWithProviders = context;
                   var canvasState = CanvasProvider.of(context)!.state;
                   var storiesState = OrganizerProvider.of(context)!.state;
@@ -167,7 +171,7 @@ class _WidgetbookState extends State<Widgetbook> {
                     darkTheme: Styles.darkTheme,
                     theme: Styles.lightTheme,
                   );
-                },
+                }),
               ),
             ),
           ),

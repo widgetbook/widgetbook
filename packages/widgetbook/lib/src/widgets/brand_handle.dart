@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:widgetbook/src/constants/brand_constants.dart';
-import 'package:widgetbook/src/cubit/theme/theme_cubit.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:widgetbook/src/providers/theme_provider.dart';
 import '../utils/extensions.dart';
 
 class BrandHandle extends StatelessWidget {
@@ -10,40 +9,37 @@ class BrandHandle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeCubit, ThemeMode>(
-      builder: (context, state) {
-        return Row(
-          children: [
-            // TODO add an own widget for this
-            // or style the text button.icon appropriately
-            // TODO make sure the onPresses is triggered on the text as well
-            TextButton(
-              onPressed: () async {
-                if (await canLaunch(BrandConstants.discord)) {
-                  await launch(BrandConstants.discord);
-                }
-              },
-              style: TextButton.styleFrom(
-                splashFactory: InkRipple.splashFactory,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(90)),
-                minimumSize: Size.zero,
-                padding: const EdgeInsets.all(12),
-              ),
-              child: Icon(
-                Icons.question_answer,
-                color: context.read<ThemeCubit>().state == ThemeMode.light
-                    ? context.theme.hintColor
-                    : context.colorScheme.primary,
-              ),
-            ),
-            const SizedBox(
-              width: 4,
-            ),
-            const Text('discord'),
-          ],
-        );
-      },
+    var themeProvider = ThemeProvider.of(context)!;
+    return Row(
+      children: [
+        // TODO add an own widget for this
+        // or style the text button.icon appropriately
+        // TODO make sure the onPresses is triggered on the text as well
+        TextButton(
+          onPressed: () async {
+            if (await canLaunch(BrandConstants.discord)) {
+              await launch(BrandConstants.discord);
+            }
+          },
+          style: TextButton.styleFrom(
+            splashFactory: InkRipple.splashFactory,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
+            minimumSize: Size.zero,
+            padding: const EdgeInsets.all(12),
+          ),
+          child: Icon(
+            Icons.question_answer,
+            color: themeProvider.state == ThemeMode.light
+                ? context.theme.hintColor
+                : context.colorScheme.primary,
+          ),
+        ),
+        const SizedBox(
+          width: 4,
+        ),
+        const Text('discord'),
+      ],
     );
   }
 }
