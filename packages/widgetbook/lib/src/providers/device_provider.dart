@@ -1,17 +1,24 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/device.dart';
+import 'package:widgetbook/src/providers/device_state.dart';
+import 'package:widgetbook/src/providers/provider.dart';
 
-part 'device_state.dart';
-
-class DeviceCubit extends Cubit<DeviceState> {
-  DeviceCubit({
-    required List<Device> devices,
+class DeviceProvider extends Provider<DeviceState> {
+  const DeviceProvider({
+    required DeviceState state,
+    required ValueChanged<DeviceState> onStateChanged,
+    required Widget child,
+    Key? key,
   }) : super(
-          DeviceState(
-            availableDevices: devices,
-            currentDevice: devices.first,
-          ),
+          state: state,
+          onStateChanged: onStateChanged,
+          child: child,
+          key: key,
         );
+
+  static DeviceProvider? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<DeviceProvider>();
+  }
 
   void update(List<Device> devices) {
     emit(

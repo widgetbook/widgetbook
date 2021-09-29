@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/cubit/device/device_cubit.dart';
 import 'package:widgetbook/src/models/device.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:widgetbook/src/providers/device_provider.dart';
 import '../utils/extensions.dart';
 
 class DeviceItem extends StatelessWidget {
@@ -13,21 +12,19 @@ class DeviceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DeviceCubit, DeviceState>(
-      builder: (context, state) {
-        bool isCurrent = device == state.currentDevice;
-        return GestureDetector(
-          onTap: () {
-            context.read<DeviceCubit>().selectDevice(
-                  device,
-                );
-          },
-          child: buildTooltip(
-            context: context,
-            isCurrent: isCurrent,
-          ),
+    var deviceProvider = DeviceProvider.of(context)!;
+    var state = deviceProvider.state;
+    bool isCurrent = device == state.currentDevice;
+    return GestureDetector(
+      onTap: () {
+        deviceProvider.selectDevice(
+          device,
         );
       },
+      child: buildTooltip(
+        context: context,
+        isCurrent: isCurrent,
+      ),
     );
   }
 

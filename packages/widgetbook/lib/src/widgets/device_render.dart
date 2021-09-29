@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:widgetbook/src/cubit/device/device_cubit.dart';
 import 'package:widgetbook/src/cubit/injected_theme/injected_theme_cubit.dart';
 import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/models/resolution.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
+import 'package:widgetbook/src/providers/device_provider.dart';
 
 class DeviceRender extends StatelessWidget {
   final Story story;
@@ -31,54 +31,53 @@ class DeviceRender extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DeviceCubit, DeviceState>(
-      builder: (context, state) {
-        Device device = state.currentDevice;
-        Resolution resolution = device.resolution;
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(device.name),
-            const SizedBox(
-              height: 16,
+    var deviceProvider = DeviceProvider.of(context)!;
+    var state = deviceProvider.state;
+
+    Device device = state.currentDevice;
+    Resolution resolution = device.resolution;
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(device.name),
+        const SizedBox(
+          height: 16,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : Colors.black,
+              width: 1,
             ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? Colors.white
-                      : Colors.black,
-                  width: 1,
+          ),
+          width: resolution.logicalSize.width,
+          height: resolution.logicalSize.height,
+          child: BlocBuilder<InjectedThemeCubit, InjectedThemeState>(
+            builder: (context, state) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                theme: getInjectedTheme(context, state).copyWith(
+                  pageTransitionsTheme: const PageTransitionsTheme(
+                    builders: {
+                      TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
+                      TargetPlatform.android:
+                          FadeUpwardsPageTransitionsBuilder(),
+                    },
+                  ),
                 ),
-              ),
-              width: resolution.logicalSize.width,
-              height: resolution.logicalSize.height,
-              child: BlocBuilder<InjectedThemeCubit, InjectedThemeState>(
-                builder: (context, state) {
-                  return MaterialApp(
-                    debugShowCheckedModeBanner: false,
-                    theme: getInjectedTheme(context, state).copyWith(
-                      pageTransitionsTheme: const PageTransitionsTheme(
-                        builders: {
-                          TargetPlatform.iOS:
-                              FadeUpwardsPageTransitionsBuilder(),
-                          TargetPlatform.android:
-                              FadeUpwardsPageTransitionsBuilder(),
-                        },
-                      ),
-                    ),
-                    home: Scaffold(
-                      body: story.builder(
-                        context,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        );
-      },
+                home: Scaffold(
+                  body: story.builder(
+                    context,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

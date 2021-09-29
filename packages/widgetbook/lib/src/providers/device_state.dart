@@ -1,4 +1,4 @@
-part of 'device_cubit.dart';
+import 'package:widgetbook/src/models/device.dart';
 
 class DeviceState {
   final List<Device> availableDevices;

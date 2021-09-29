@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:widgetbook/src/cubit/device/device_cubit.dart';
 import 'package:widgetbook/src/cubit/injected_theme/injected_theme_cubit.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/device.dart';
@@ -9,6 +8,8 @@ import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_help
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/providers/canvas_state.dart';
+import 'package:widgetbook/src/providers/device_provider.dart';
+import 'package:widgetbook/src/providers/device_state.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/providers/organizer_state.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
@@ -59,7 +60,6 @@ class Widgetbook extends StatefulWidget {
 }
 
 class _WidgetbookState extends State<Widgetbook> {
-  late DeviceCubit deviceCubit;
   late InjectedThemeCubit injectedThemeCubit;
 
   // TODO ugly hack
@@ -71,15 +71,19 @@ class _WidgetbookState extends State<Widgetbook> {
   ZoomState zoomState = ZoomState.normal();
   CanvasState canvasState = CanvasState.unselected();
   ThemeMode themeMode = ThemeMode.dark;
+  late DeviceState deviceState;
   late OrganizerState organizerState;
 
   @override
   void initState() {
     configureApp();
 
+    deviceState = DeviceState(
+      availableDevices: widget.devices,
+      currentDevice: widget.devices.first,
+    );
     organizerState = OrganizerState.unfiltered(categories: widget.categories);
     storyRepository = StoryRepository();
-    deviceCubit = DeviceCubit(devices: widget.devices);
     injectedThemeCubit = InjectedThemeCubit(
       lightTheme: widget.lightTheme,
       darkTheme: widget.darkTheme,
@@ -89,8 +93,9 @@ class _WidgetbookState extends State<Widgetbook> {
 
   @override
   void didUpdateWidget(covariant Widgetbook oldWidget) {
-    OrganizerProvider.of(contextWithProviders)?.update(widget.categories);
-    deviceCubit.update(widget.devices);
+    OrganizerProvider.of(contextWithProviders)!.update(widget.categories);
+    DeviceProvider.of(contextWithProviders)!.update(widget.devices);
+
     injectedThemeCubit.themesChanged(
       lightTheme: widget.lightTheme,
       darkTheme: widget.darkTheme,
@@ -108,9 +113,6 @@ class _WidgetbookState extends State<Widgetbook> {
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create: (context) => deviceCubit,
-          ),
           BlocProvider(
             create: (context) => injectedThemeCubit,
           ),
@@ -147,31 +149,41 @@ class _WidgetbookState extends State<Widgetbook> {
                     themeMode = mode;
                   });
                 },
-                child: Builder(builder: (context) {
-                  contextWithProviders = context;
-                  var canvasState = CanvasProvider.of(context)!.state;
-                  var storiesState = OrganizerProvider.of(context)!.state;
-                  return MaterialApp.router(
-                    routeInformationParser: StoryRouteInformationParser(
-                      onRoute: (path) {
-                        var stories = StoryHelper.getAllStoriesFromCategories(
-                          storiesState.allCategories,
-                        );
-                        var selectedStory = selectStoryFromPath(path, stories);
-                        CanvasProvider.of(context)!.selectStory(selectedStory);
-                      },
-                    ),
-                    routerDelegate: StoryRouterDelegate(
-                      canvasState: canvasState,
-                      appInfo: widget.appInfo,
-                    ),
-                    title: widget.appInfo.name,
-                    debugShowCheckedModeBanner: false,
-                    themeMode: themeMode,
-                    darkTheme: Styles.darkTheme,
-                    theme: Styles.lightTheme,
-                  );
-                }),
+                child: DeviceProvider(
+                  state: deviceState,
+                  onStateChanged: (DeviceState state) {
+                    setState(() {
+                      deviceState = state;
+                    });
+                  },
+                  child: Builder(builder: (context) {
+                    contextWithProviders = context;
+                    var canvasState = CanvasProvider.of(context)!.state;
+                    var storiesState = OrganizerProvider.of(context)!.state;
+                    return MaterialApp.router(
+                      routeInformationParser: StoryRouteInformationParser(
+                        onRoute: (path) {
+                          var stories = StoryHelper.getAllStoriesFromCategories(
+                            storiesState.allCategories,
+                          );
+                          var selectedStory =
+                              selectStoryFromPath(path, stories);
+                          CanvasProvider.of(context)!
+                              .selectStory(selectedStory);
+                        },
+                      ),
+                      routerDelegate: StoryRouterDelegate(
+                        canvasState: canvasState,
+                        appInfo: widget.appInfo,
+                      ),
+                      title: widget.appInfo.name,
+                      debugShowCheckedModeBanner: false,
+                      themeMode: themeMode,
+                      darkTheme: Styles.darkTheme,
+                      theme: Styles.lightTheme,
+                    );
+                  }),
+                ),
               ),
             ),
           ),
