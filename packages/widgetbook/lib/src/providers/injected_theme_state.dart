@@ -1,4 +1,4 @@
-part of 'injected_theme_cubit.dart';
+import 'package:flutter/material.dart';
 
 class InjectedThemeState {
   final ThemeData? lightTheme;

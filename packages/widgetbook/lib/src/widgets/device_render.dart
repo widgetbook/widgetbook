@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:widgetbook/src/cubit/injected_theme/injected_theme_cubit.dart';
 import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/models/resolution.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/device_provider.dart';
+import 'package:widgetbook/src/providers/injected_theme_provider.dart';
+import 'package:widgetbook/src/providers/injected_theme_state.dart';
 
 class DeviceRender extends StatelessWidget {
   final Story story;
@@ -37,6 +37,8 @@ class DeviceRender extends StatelessWidget {
     Device device = state.currentDevice;
     Resolution resolution = device.resolution;
 
+    var themeState = InjectedThemeProvider.of(context)!.state;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -55,26 +57,21 @@ class DeviceRender extends StatelessWidget {
           ),
           width: resolution.logicalSize.width,
           height: resolution.logicalSize.height,
-          child: BlocBuilder<InjectedThemeCubit, InjectedThemeState>(
-            builder: (context, state) {
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                theme: getInjectedTheme(context, state).copyWith(
-                  pageTransitionsTheme: const PageTransitionsTheme(
-                    builders: {
-                      TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
-                      TargetPlatform.android:
-                          FadeUpwardsPageTransitionsBuilder(),
-                    },
-                  ),
-                ),
-                home: Scaffold(
-                  body: story.builder(
-                    context,
-                  ),
-                ),
-              );
-            },
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: getInjectedTheme(context, themeState).copyWith(
+              pageTransitionsTheme: const PageTransitionsTheme(
+                builders: {
+                  TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
+                  TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+                },
+              ),
+            ),
+            home: Scaffold(
+              body: story.builder(
+                context,
+              ),
+            ),
           ),
         ),
       ],

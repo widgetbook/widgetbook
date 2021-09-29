@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:widgetbook/src/cubit/injected_theme/injected_theme_cubit.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
@@ -10,6 +8,8 @@ import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/providers/canvas_state.dart';
 import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/providers/device_state.dart';
+import 'package:widgetbook/src/providers/injected_theme_provider.dart';
+import 'package:widgetbook/src/providers/injected_theme_state.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/providers/organizer_state.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
@@ -60,8 +60,6 @@ class Widgetbook extends StatefulWidget {
 }
 
 class _WidgetbookState extends State<Widgetbook> {
-  late InjectedThemeCubit injectedThemeCubit;
-
   // TODO ugly hack
   late BuildContext contextWithProviders;
 
@@ -73,6 +71,7 @@ class _WidgetbookState extends State<Widgetbook> {
   ThemeMode themeMode = ThemeMode.dark;
   late DeviceState deviceState;
   late OrganizerState organizerState;
+  late InjectedThemeState injectedThemeState;
 
   @override
   void initState() {
@@ -83,11 +82,12 @@ class _WidgetbookState extends State<Widgetbook> {
       currentDevice: widget.devices.first,
     );
     organizerState = OrganizerState.unfiltered(categories: widget.categories);
-    storyRepository = StoryRepository();
-    injectedThemeCubit = InjectedThemeCubit(
-      lightTheme: widget.lightTheme,
+    injectedThemeState = InjectedThemeState(
       darkTheme: widget.darkTheme,
+      lightTheme: widget.lightTheme,
     );
+
+    storyRepository = StoryRepository();
     super.initState();
   }
 
@@ -95,95 +95,87 @@ class _WidgetbookState extends State<Widgetbook> {
   void didUpdateWidget(covariant Widgetbook oldWidget) {
     OrganizerProvider.of(contextWithProviders)!.update(widget.categories);
     DeviceProvider.of(contextWithProviders)!.update(widget.devices);
-
-    injectedThemeCubit.themesChanged(
+    InjectedThemeProvider.of(contextWithProviders)!.themesChanged(
       lightTheme: widget.lightTheme,
       darkTheme: widget.darkTheme,
     );
+
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider(
-          create: (context) => storyRepository,
-        ),
-      ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => injectedThemeCubit,
-          ),
-        ],
-        child: OrganizerProvider(
-          selectedStoryRepository: selectedStoryRepository,
-          storyRepository: storyRepository,
-          state: organizerState,
-          onStateChanged: (OrganizerState state) {
+    return OrganizerProvider(
+      selectedStoryRepository: selectedStoryRepository,
+      storyRepository: storyRepository,
+      state: organizerState,
+      onStateChanged: (OrganizerState state) {
+        setState(() {
+          organizerState = state;
+        });
+      },
+      child: CanvasProvider(
+        selectedStoryRepository: selectedStoryRepository,
+        storyRepository: storyRepository,
+        state: canvasState,
+        onStateChanged: (CanvasState state) {
+          setState(() {
+            canvasState = state;
+          });
+        },
+        child: ZoomProvider(
+          state: zoomState,
+          onStateChanged: (ZoomState state) {
             setState(() {
-              organizerState = state;
+              zoomState = state;
             });
           },
-          child: CanvasProvider(
-            selectedStoryRepository: selectedStoryRepository,
-            storyRepository: storyRepository,
-            state: canvasState,
-            onStateChanged: (CanvasState state) {
+          child: ThemeProvider(
+            state: themeMode,
+            onStateChanged: (ThemeMode mode) {
               setState(() {
-                canvasState = state;
+                themeMode = mode;
               });
             },
-            child: ZoomProvider(
-              state: zoomState,
-              onStateChanged: (ZoomState state) {
+            child: DeviceProvider(
+              state: deviceState,
+              onStateChanged: (DeviceState state) {
                 setState(() {
-                  zoomState = state;
+                  deviceState = state;
                 });
               },
-              child: ThemeProvider(
-                state: themeMode,
-                onStateChanged: (ThemeMode mode) {
+              child: InjectedThemeProvider(
+                state: injectedThemeState,
+                onStateChanged: (InjectedThemeState state) {
                   setState(() {
-                    themeMode = mode;
+                    injectedThemeState = state;
                   });
                 },
-                child: DeviceProvider(
-                  state: deviceState,
-                  onStateChanged: (DeviceState state) {
-                    setState(() {
-                      deviceState = state;
-                    });
-                  },
-                  child: Builder(builder: (context) {
-                    contextWithProviders = context;
-                    var canvasState = CanvasProvider.of(context)!.state;
-                    var storiesState = OrganizerProvider.of(context)!.state;
-                    return MaterialApp.router(
-                      routeInformationParser: StoryRouteInformationParser(
-                        onRoute: (path) {
-                          var stories = StoryHelper.getAllStoriesFromCategories(
-                            storiesState.allCategories,
-                          );
-                          var selectedStory =
-                              selectStoryFromPath(path, stories);
-                          CanvasProvider.of(context)!
-                              .selectStory(selectedStory);
-                        },
-                      ),
-                      routerDelegate: StoryRouterDelegate(
-                        canvasState: canvasState,
-                        appInfo: widget.appInfo,
-                      ),
-                      title: widget.appInfo.name,
-                      debugShowCheckedModeBanner: false,
-                      themeMode: themeMode,
-                      darkTheme: Styles.darkTheme,
-                      theme: Styles.lightTheme,
-                    );
-                  }),
-                ),
+                child: Builder(builder: (context) {
+                  contextWithProviders = context;
+                  var canvasState = CanvasProvider.of(context)!.state;
+                  var storiesState = OrganizerProvider.of(context)!.state;
+                  return MaterialApp.router(
+                    routeInformationParser: StoryRouteInformationParser(
+                      onRoute: (path) {
+                        var stories = StoryHelper.getAllStoriesFromCategories(
+                          storiesState.allCategories,
+                        );
+                        var selectedStory = selectStoryFromPath(path, stories);
+                        CanvasProvider.of(context)!.selectStory(selectedStory);
+                      },
+                    ),
+                    routerDelegate: StoryRouterDelegate(
+                      canvasState: canvasState,
+                      appInfo: widget.appInfo,
+                    ),
+                    title: widget.appInfo.name,
+                    debugShowCheckedModeBanner: false,
+                    themeMode: themeMode,
+                    darkTheme: Styles.darkTheme,
+                    theme: Styles.lightTheme,
+                  );
+                }),
               ),
             ),
           ),
