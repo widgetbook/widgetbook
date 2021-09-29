@@ -6,11 +6,12 @@ import 'package:widgetbook/src/cubit/device/device_cubit.dart';
 import 'package:widgetbook/src/cubit/injected_theme/injected_theme_cubit.dart';
 import 'package:widgetbook/src/cubit/categories/categories_cubit.dart';
 import 'package:widgetbook/src/cubit/theme/theme_cubit.dart';
-import 'package:widgetbook/src/cubit/zoom/zoom_cubit.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
+import 'package:widgetbook/src/providers/zoom_provider.dart';
+import 'package:widgetbook/src/providers/zoom_state.dart';
 import 'package:widgetbook/src/repository/story_repository.dart';
 import 'package:widgetbook/src/routing/route_information_parser.dart';
 import 'package:widgetbook/src/routing/story_router_delegate.dart';
@@ -61,6 +62,8 @@ class _WidgetbookState extends State<Widgetbook> {
   late InjectedThemeCubit injectedThemeCubit;
   late StoryRepository storyRepository;
 
+  ZoomState zoomState = ZoomState.normal();
+
   @override
   void initState() {
     configureApp();
@@ -108,9 +111,9 @@ class _WidgetbookState extends State<Widgetbook> {
           BlocProvider(
             create: (context) => ThemeCubit(),
           ),
-          BlocProvider(
-            create: (context) => ZoomCubit(),
-          ),
+          // BlocProvider(
+          //   create: (context) => ZoomCubit(),
+          // ),
           BlocProvider(
             create: (context) => categoriesCubit,
           ),
@@ -121,40 +124,49 @@ class _WidgetbookState extends State<Widgetbook> {
             create: (context) => injectedThemeCubit,
           ),
         ],
-        child: BlocBuilder<ThemeCubit, ThemeMode>(
-          builder: (context, themeMode) {
-            return BlocBuilder<CanvasCubit, CanvasState>(
-              builder: (context, canvasState) {
-                return BlocBuilder<CategoriesCubit, OrganizerState>(
-                  builder: (context, storiesState) {
-                    return MaterialApp.router(
-                      routeInformationParser: StoryRouteInformationParser(
-                        onRoute: (path) {
-                          var stories = StoryHelper.getAllStoriesFromCategories(
-                            storiesState.allCategories,
-                          );
-                          var selectedStory =
-                              selectStoryFromPath(path, stories);
-                          context
-                              .read<CanvasCubit>()
-                              .selectStory(selectedStory);
-                        },
-                      ),
-                      routerDelegate: StoryRouterDelegate(
-                        canvasState: canvasState,
-                        appInfo: widget.appInfo,
-                      ),
-                      title: widget.appInfo.name,
-                      debugShowCheckedModeBanner: false,
-                      themeMode: themeMode,
-                      darkTheme: Styles.darkTheme,
-                      theme: Styles.lightTheme,
-                    );
-                  },
-                );
-              },
-            );
+        child: ZoomProvider(
+          state: zoomState,
+          onStateChanged: (ZoomState state) {
+            setState(() {
+              zoomState = state;
+            });
           },
+          child: BlocBuilder<ThemeCubit, ThemeMode>(
+            builder: (context, themeMode) {
+              return BlocBuilder<CanvasCubit, CanvasState>(
+                builder: (context, canvasState) {
+                  return BlocBuilder<CategoriesCubit, OrganizerState>(
+                    builder: (context, storiesState) {
+                      return MaterialApp.router(
+                        routeInformationParser: StoryRouteInformationParser(
+                          onRoute: (path) {
+                            var stories =
+                                StoryHelper.getAllStoriesFromCategories(
+                              storiesState.allCategories,
+                            );
+                            var selectedStory =
+                                selectStoryFromPath(path, stories);
+                            context
+                                .read<CanvasCubit>()
+                                .selectStory(selectedStory);
+                          },
+                        ),
+                        routerDelegate: StoryRouterDelegate(
+                          canvasState: canvasState,
+                          appInfo: widget.appInfo,
+                        ),
+                        title: widget.appInfo.name,
+                        debugShowCheckedModeBanner: false,
+                        themeMode: themeMode,
+                        darkTheme: Styles.darkTheme,
+                        theme: Styles.lightTheme,
+                      );
+                    },
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );

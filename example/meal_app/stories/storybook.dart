@@ -23,7 +23,7 @@ class Storyboard extends StatelessWidget {
       ],
       categories: [
         Category(
-          name: 'widgets',
+          name: 'widgets test',
           folders: [
             Folder(
               name: 'attributes',

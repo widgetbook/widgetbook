@@ -1,5 +1,3 @@
-part of 'zoom_cubit.dart';
-
 class ZoomState {
   final double zoomLevel;
 
