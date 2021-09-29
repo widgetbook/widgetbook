@@ -11,12 +11,10 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  bloc: ^7.0.0
   flutter_web_plugins:
     sdk: flutter
   flutter:
     sdk: flutter
-  flutter_bloc: ^7.1.0
   url_launcher: ^6.0.9
   vector_math: ^2.1.0
 

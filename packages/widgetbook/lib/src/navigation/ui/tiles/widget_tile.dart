@@ -4,7 +4,6 @@ import 'package:widgetbook/src/navigation/ui/tiles/spaced_tile.dart';
 import 'package:widgetbook/src/navigation/ui/tiles/story_tile.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import '../../../utils/utils.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WidgetTile extends StatefulWidget {
   final WidgetElement widgetElement;
