@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/cubit/categories/categories_cubit.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/navigation/ui/tiles/spaced_tile.dart';
 import 'package:widgetbook/src/navigation/ui/tiles/story_tile.dart';
+import 'package:widgetbook/src/providers/organizer_provider.dart';
 import '../../../utils/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,9 +47,7 @@ class _WidgetTileState extends State<WidgetTile> {
           iconData: Icons.style,
           iconColor: context.colorScheme.secondary,
           onClicked: () {
-            context
-                .read<CategoriesCubit>()
-                .toggleExpander(widget.widgetElement);
+            OrganizerProvider.of(context)!.toggleExpander(widget.widgetElement);
           },
         ),
         if (widget.widgetElement.isExpanded) ..._buildStories(widget.level + 1),

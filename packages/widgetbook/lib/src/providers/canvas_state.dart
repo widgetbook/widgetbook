@@ -1,4 +1,4 @@
-part of 'canvas_cubit.dart';
+import 'package:widgetbook/src/models/organizers/story.dart';
 
 class CanvasState {
   final Story? selectedStory;

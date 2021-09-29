@@ -1,4 +1,4 @@
-part of 'categories_cubit.dart';
+import 'package:widgetbook/src/models/models.dart';
 
 class OrganizerState {
   final List<Category> allCategories;

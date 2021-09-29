@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/cubit/categories/categories_cubit.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/navigation/ui/tiles/tile_helper_methods.dart';
 import 'package:widgetbook/src/navigation/ui/tiles/spaced_tile.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:widgetbook/src/providers/organizer_provider.dart';
 import '../../../utils/utils.dart';
 
 class FolderTile extends StatefulWidget {
@@ -36,7 +35,7 @@ class _FolderTileState extends State<FolderTile> {
           iconColor: context.colorScheme.primary,
           onClicked: () {
             setState(() {
-              context.read<CategoriesCubit>().toggleExpander(widget.folder);
+              OrganizerProvider.of(context)!.toggleExpander(widget.folder);
             });
           },
         ),

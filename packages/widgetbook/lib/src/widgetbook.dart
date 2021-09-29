@@ -1,17 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:widgetbook/src/cubit/canvas/canvas_cubit.dart';
 import 'package:widgetbook/src/cubit/device/device_cubit.dart';
 import 'package:widgetbook/src/cubit/injected_theme/injected_theme_cubit.dart';
-import 'package:widgetbook/src/cubit/categories/categories_cubit.dart';
 import 'package:widgetbook/src/cubit/theme/theme_cubit.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
+import 'package:widgetbook/src/providers/canvas_provider.dart';
+import 'package:widgetbook/src/providers/canvas_state.dart';
+import 'package:widgetbook/src/providers/organizer_provider.dart';
+import 'package:widgetbook/src/providers/organizer_state.dart';
 import 'package:widgetbook/src/providers/zoom_provider.dart';
 import 'package:widgetbook/src/providers/zoom_state.dart';
+import 'package:widgetbook/src/repository/selected_story_repository.dart';
 import 'package:widgetbook/src/repository/story_repository.dart';
 import 'package:widgetbook/src/routing/route_information_parser.dart';
 import 'package:widgetbook/src/routing/story_router_delegate.dart';
@@ -56,26 +59,25 @@ class Widgetbook extends StatefulWidget {
 }
 
 class _WidgetbookState extends State<Widgetbook> {
-  late CanvasCubit canvasCubit;
-  late CategoriesCubit categoriesCubit;
   late DeviceCubit deviceCubit;
   late InjectedThemeCubit injectedThemeCubit;
+
+  // TODO ugly hack
+  late BuildContext contextWithProviders;
+
+  SelectedStoryRepository selectedStoryRepository = SelectedStoryRepository();
   late StoryRepository storyRepository;
 
   ZoomState zoomState = ZoomState.normal();
+  CanvasState canvasState = CanvasState.unselected();
+  late OrganizerState organizerState;
 
   @override
   void initState() {
     configureApp();
+
+    organizerState = OrganizerState.unfiltered(categories: widget.categories);
     storyRepository = StoryRepository();
-    canvasCubit = CanvasCubit(
-      storyRepository: storyRepository,
-    );
-    categoriesCubit = CategoriesCubit(
-      categories: widget.categories,
-      storyRepository: storyRepository,
-      canvasCubit: canvasCubit,
-    );
     deviceCubit = DeviceCubit(devices: widget.devices);
     injectedThemeCubit = InjectedThemeCubit(
       lightTheme: widget.lightTheme,
@@ -86,7 +88,7 @@ class _WidgetbookState extends State<Widgetbook> {
 
   @override
   void didUpdateWidget(covariant Widgetbook oldWidget) {
-    categoriesCubit.update(widget.categories);
+    OrganizerProvider.of(contextWithProviders)?.update(widget.categories);
     deviceCubit.update(widget.devices);
     injectedThemeCubit.themesChanged(
       lightTheme: widget.lightTheme,
@@ -106,16 +108,7 @@ class _WidgetbookState extends State<Widgetbook> {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => canvasCubit,
-          ),
-          BlocProvider(
             create: (context) => ThemeCubit(),
-          ),
-          // BlocProvider(
-          //   create: (context) => ZoomCubit(),
-          // ),
-          BlocProvider(
-            create: (context) => categoriesCubit,
           ),
           BlocProvider(
             create: (context) => deviceCubit,
@@ -124,48 +117,59 @@ class _WidgetbookState extends State<Widgetbook> {
             create: (context) => injectedThemeCubit,
           ),
         ],
-        child: ZoomProvider(
-          state: zoomState,
-          onStateChanged: (ZoomState state) {
+        child: OrganizerProvider(
+          selectedStoryRepository: selectedStoryRepository,
+          storyRepository: storyRepository,
+          state: organizerState,
+          onStateChanged: (OrganizerState state) {
             setState(() {
-              zoomState = state;
+              organizerState = state;
             });
           },
-          child: BlocBuilder<ThemeCubit, ThemeMode>(
-            builder: (context, themeMode) {
-              return BlocBuilder<CanvasCubit, CanvasState>(
-                builder: (context, canvasState) {
-                  return BlocBuilder<CategoriesCubit, OrganizerState>(
-                    builder: (context, storiesState) {
-                      return MaterialApp.router(
-                        routeInformationParser: StoryRouteInformationParser(
-                          onRoute: (path) {
-                            var stories =
-                                StoryHelper.getAllStoriesFromCategories(
-                              storiesState.allCategories,
-                            );
-                            var selectedStory =
-                                selectStoryFromPath(path, stories);
-                            context
-                                .read<CanvasCubit>()
-                                .selectStory(selectedStory);
-                          },
-                        ),
-                        routerDelegate: StoryRouterDelegate(
-                          canvasState: canvasState,
-                          appInfo: widget.appInfo,
-                        ),
-                        title: widget.appInfo.name,
-                        debugShowCheckedModeBanner: false,
-                        themeMode: themeMode,
-                        darkTheme: Styles.darkTheme,
-                        theme: Styles.lightTheme,
-                      );
-                    },
+          child: CanvasProvider(
+            selectedStoryRepository: selectedStoryRepository,
+            storyRepository: storyRepository,
+            state: canvasState,
+            onStateChanged: (CanvasState state) {
+              setState(() {
+                canvasState = state;
+              });
+            },
+            child: ZoomProvider(
+              state: zoomState,
+              onStateChanged: (ZoomState state) {
+                setState(() {
+                  zoomState = state;
+                });
+              },
+              child: BlocBuilder<ThemeCubit, ThemeMode>(
+                builder: (context, themeMode) {
+                  contextWithProviders = context;
+                  var canvasState = CanvasProvider.of(context)!.state;
+                  var storiesState = OrganizerProvider.of(context)!.state;
+                  return MaterialApp.router(
+                    routeInformationParser: StoryRouteInformationParser(
+                      onRoute: (path) {
+                        var stories = StoryHelper.getAllStoriesFromCategories(
+                          storiesState.allCategories,
+                        );
+                        var selectedStory = selectStoryFromPath(path, stories);
+                        CanvasProvider.of(context)!.selectStory(selectedStory);
+                      },
+                    ),
+                    routerDelegate: StoryRouterDelegate(
+                      canvasState: canvasState,
+                      appInfo: widget.appInfo,
+                    ),
+                    title: widget.appInfo.name,
+                    debugShowCheckedModeBanner: false,
+                    themeMode: themeMode,
+                    darkTheme: Styles.darkTheme,
+                    theme: Styles.lightTheme,
                   );
                 },
-              );
-            },
+              ),
+            ),
           ),
         ),
       ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:widgetbook/src/cubit/canvas/canvas_cubit.dart';
-import 'package:widgetbook/src/cubit/categories/categories_cubit.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
+import 'package:widgetbook/src/providers/canvas_provider.dart';
+import 'package:widgetbook/src/providers/canvas_state.dart';
+import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/routing/story_route_path.dart';
 import 'package:widgetbook/src/styled_widgets/styled_scaffold.dart';
 import 'package:widgetbook/src/widgets/wrapper.dart';
@@ -31,16 +31,13 @@ class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
           child: StyledScaffold(
             body: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Builder(
-                builder: (context) => Row(
+              child: Builder(builder: (context) {
+                var state = OrganizerProvider.of(context)!.state;
+                return Row(
                   children: [
-                    BlocBuilder<CategoriesCubit, OrganizerState>(
-                      builder: (context, state) {
-                        return NavigationPanel(
-                          appInfo: appInfo,
-                          categories: state.filteredCategories,
-                        );
-                      },
+                    NavigationPanel(
+                      appInfo: appInfo,
+                      categories: state.filteredCategories,
                     ),
                     const SizedBox(
                       width: 16,
@@ -49,8 +46,8 @@ class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
                       child: Editor(),
                     ),
                   ],
-                ),
-              ),
+                );
+              }),
             ),
           ),
         )
@@ -60,7 +57,8 @@ class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
           return false;
         }
 
-        context.read<CanvasCubit>().deselectStory();
+        CanvasProvider.of(context)!.deselectStory();
+
         notifyListeners();
 
         return true;

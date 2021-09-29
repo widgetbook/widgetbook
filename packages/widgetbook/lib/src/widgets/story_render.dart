@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:widgetbook/src/cubit/canvas/canvas_cubit.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
+import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/providers/zoom_provider.dart';
 import 'package:widgetbook/src/widgets/device_render.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
@@ -19,15 +19,14 @@ class _StoryState extends State<StoryRender> {
   );
 
   Widget _buildStory() {
-    return BlocBuilder<CanvasCubit, CanvasState>(builder: (context, state) {
-      if (state.selectedStory != null) {
-        return _buildCanvas(state.selectedStory!);
-      }
+    var state = CanvasProvider.of(context)!.state;
+    if (state.selectedStory != null) {
+      return _buildCanvas(state.selectedStory!);
+    }
 
-      return Center(
-        child: Container(),
-      );
-    });
+    return Center(
+      child: Container(),
+    );
   }
 
   void _updateController() {
@@ -49,23 +48,19 @@ class _StoryState extends State<StoryRender> {
   Widget _buildCanvas(Story story) {
     _updateController();
 
-    return BlocBuilder<CanvasCubit, CanvasState>(
-      builder: (context, state) {
-        return InteractiveViewer(
-          boundaryMargin: const EdgeInsets.all(double.infinity),
-          minScale: 0.25,
-          maxScale: 5,
-          constrained: false,
-          transformationController: controller,
-          onInteractionUpdate: (ScaleUpdateDetails details) {
-            ZoomProvider.of(context)!
-                .setScale(controller.value.getMaxScaleOnAxis());
-          },
-          child: DeviceRender(
-            story: story,
-          ),
-        );
+    return InteractiveViewer(
+      boundaryMargin: const EdgeInsets.all(double.infinity),
+      minScale: 0.25,
+      maxScale: 5,
+      constrained: false,
+      transformationController: controller,
+      onInteractionUpdate: (ScaleUpdateDetails details) {
+        ZoomProvider.of(context)!
+            .setScale(controller.value.getMaxScaleOnAxis());
       },
+      child: DeviceRender(
+        story: story,
+      ),
     );
   }
 

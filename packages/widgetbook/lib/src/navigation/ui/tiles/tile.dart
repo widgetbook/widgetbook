@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:widgetbook/src/constants/border_radius_constants.dart';
-import 'package:widgetbook/src/cubit/canvas/canvas_cubit.dart';
 import 'package:widgetbook/src/models/organizers/organizer.dart';
+import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/utils/styles.dart';
 import '../../../utils/utils.dart';
 
@@ -53,34 +52,32 @@ class _TileState extends State<Tile> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CanvasCubit, CanvasState>(
-      builder: (context, state) {
-        bool isSelected = state.selectedStory == widget.organizer;
-        return GestureDetector(
-          onTap: () {
-            widget.onClicked?.call();
-          },
-          child: MouseRegion(
-            onEnter: (e) {
-              setState(() => hovered = true);
-            },
-            onExit: (e) {
-              setState(() => hovered = false);
-            },
-            cursor: SystemMouseCursors.click,
-            child: AnimatedContainer(
-              decoration: BoxDecoration(
-                color: hovered || isSelected
-                    ? Styles.getHighlightColor(context)
-                    : null,
-                borderRadius: BorderRadiusConstants.tileBorderRadius,
-              ),
-              duration: const Duration(milliseconds: 100),
-              child: _buildTile(context),
-            ),
-          ),
-        );
+    var state = CanvasProvider.of(context)!.state;
+
+    bool isSelected = state.selectedStory == widget.organizer;
+    return GestureDetector(
+      onTap: () {
+        widget.onClicked?.call();
       },
+      child: MouseRegion(
+        onEnter: (e) {
+          setState(() => hovered = true);
+        },
+        onExit: (e) {
+          setState(() => hovered = false);
+        },
+        cursor: SystemMouseCursors.click,
+        child: AnimatedContainer(
+          decoration: BoxDecoration(
+            color: hovered || isSelected
+                ? Styles.getHighlightColor(context)
+                : null,
+            borderRadius: BorderRadiusConstants.tileBorderRadius,
+          ),
+          duration: const Duration(milliseconds: 100),
+          child: _buildTile(context),
+        ),
+      ),
     );
   }
 }

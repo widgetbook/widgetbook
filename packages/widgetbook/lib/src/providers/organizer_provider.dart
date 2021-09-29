@@ -1,27 +1,38 @@
 import 'dart:collection';
 
-import 'package:bloc/bloc.dart';
-import 'package:widgetbook/src/cubit/canvas/canvas_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:widgetbook/src/models/models.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
-import 'package:widgetbook/src/models/organizers/organizers.dart';
+import 'package:widgetbook/src/providers/organizer_state.dart';
+import 'package:widgetbook/src/providers/provider.dart';
+import 'package:widgetbook/src/repository/selected_story_repository.dart';
 import 'package:widgetbook/src/repository/story_repository.dart';
 
-part 'categories_state.dart';
-
-class CategoriesCubit extends Cubit<OrganizerState> {
-  final CanvasCubit canvasCubit;
+class OrganizerProvider extends Provider<OrganizerState> {
+  final SelectedStoryRepository selectedStoryRepository;
   final StoryRepository storyRepository;
-  CategoriesCubit({
-    required List<Category> categories,
+
+  const OrganizerProvider({
+    required this.selectedStoryRepository,
     required this.storyRepository,
-    required this.canvasCubit,
+    required OrganizerState state,
+    required ValueChanged<OrganizerState> onStateChanged,
+    required Widget child,
+    Key? key,
   }) : super(
-          OrganizerState.unfiltered(
-            categories: categories,
-          ),
-        ) {
-    canvasCubit.stream.forEach((CanvasState state) {
-      _openStory(state.selectedStory);
+          state: state,
+          onStateChanged: onStateChanged,
+          child: child,
+          key: key,
+        );
+
+  static OrganizerProvider? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<OrganizerProvider>();
+  }
+
+  void initialize() {
+    selectedStoryRepository.getStream().forEach((Story? story) {
+      _openStory(story);
     });
   }
 
