@@ -3,7 +3,7 @@ on:
     paths:
       - "packages/widgetbook/**"
       - ".github/workflows/unit-test.yaml"
-name: Unit test (MacOS)
+name: Unit test
 jobs:
   build:
     defaults:
