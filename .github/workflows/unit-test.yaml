@@ -2,14 +2,14 @@ on:
   pull_request:
     paths:
       - "packages/widgetbook/**"
-      - ".github/workflows/build-macos.yaml"
+      - ".github/workflows/unit-test.yaml"
 name: Unit test (MacOS)
 jobs:
   build:
     defaults:
       run:
         working-directory: packages/widgetbook
-    name: Build
+    name: Unit test
     runs-on: ubunutu-latest 
     steps:
     - uses: actions/checkout@v2
