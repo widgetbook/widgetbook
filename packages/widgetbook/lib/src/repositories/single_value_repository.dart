@@ -1,32 +1,38 @@
 import 'dart:async';
 
-class SingleValueRepository<Item> {
-  SingleValueRepository()
-      : _streamController = StreamController<Item?>.broadcast();
+import 'package:meta/meta.dart';
 
-  Item? _item;
+class SingleValueRepository<Item> {
+  SingleValueRepository({
+    this.item,
+  }) : _streamController = StreamController<Item?>.broadcast() {
+    _emitItemToStream();
+  }
+
+  @internal
+  Item? item;
   final StreamController<Item?> _streamController;
 
   void _emitItemToStream() {
-    _streamController.add(_item);
+    _streamController.add(item);
   }
 
-  void setItem(Item? item) {
-    _item = item;
+  void setItem(Item? value) {
+    item = value;
     _emitItemToStream();
   }
 
   Item? getItem() {
-    return _item;
+    return item;
   }
 
   void deleteItem() {
-    _item = null;
+    item = null;
     _emitItemToStream();
   }
 
   bool isSet() {
-    return _item != null;
+    return item != null;
   }
 
   Stream<Item?> getStream() {

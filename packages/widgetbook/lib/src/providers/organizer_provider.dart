@@ -5,8 +5,8 @@ import 'package:widgetbook/src/models/models.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
 import 'package:widgetbook/src/providers/organizer_state.dart';
 import 'package:widgetbook/src/providers/provider.dart';
-import 'package:widgetbook/src/repository/selected_story_repository.dart';
-import 'package:widgetbook/src/repository/story_repository.dart';
+import 'package:widgetbook/src/repositories/selected_story_repository.dart';
+import 'package:widgetbook/src/repositories/story_repository.dart';
 
 class OrganizerProvider extends Provider<OrganizerState> {
   final SelectedStoryRepository selectedStoryRepository;

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:widgetbook/src/models/model.dart';
-import 'package:widgetbook/src/repository/repository.dart';
+import 'package:widgetbook/src/repositories/repository.dart';
 
 class MemoryRepository<Item extends Model> extends Repository<Item> {
   final Map<String, Item> _memory;

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/organizers/story.dart';
 import 'package:widgetbook/src/providers/canvas_state.dart';
 import 'package:widgetbook/src/providers/provider.dart';
-import 'package:widgetbook/src/repository/selected_story_repository.dart';
-import 'package:widgetbook/src/repository/story_repository.dart';
+import 'package:widgetbook/src/repositories/selected_story_repository.dart';
+import 'package:widgetbook/src/repositories/story_repository.dart';
 
 class CanvasProvider extends Provider<CanvasState> {
   final StoryRepository storyRepository;
