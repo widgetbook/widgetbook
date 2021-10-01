@@ -1,4 +1,4 @@
-import 'package:widgetbook/src/repositories/single_value_repository.dart';
+import 'package:widgetbook/src/repositories/value_repository.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-class SelectedStoryRepository extends SingleValueRepository<Story> {}
+class SelectedStoryRepository extends ValueRepository<Story> {}
