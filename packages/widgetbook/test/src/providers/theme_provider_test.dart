@@ -11,17 +11,12 @@ void main() {
       testWidgets(
         'emits [${ThemeMode.light}, ${ThemeMode.dark}, ${ThemeMode.light}] when toggleTheme is called',
         (WidgetTester tester) async {
-          await tester.pumpWidgetWithMaterialApp(
+          ThemeProvider themeProvider =
+              await tester.pumpBuilderAndReturnProvider(
             ThemeBuilder(
               child: Container(),
             ),
           );
-
-          var themeProviderFinder = find.byType(ThemeProvider);
-          expect(themeProviderFinder, findsOneWidget);
-
-          var themeProvider =
-              tester.firstWidget(themeProviderFinder) as ThemeProvider;
 
           Future invokeToggle() async {
             themeProvider =
@@ -71,17 +66,12 @@ void main() {
       testWidgets(
         '.state defaults to ${ThemeMode.dark}',
         (WidgetTester tester) async {
-          await tester.pumpWidgetWithMaterialApp(
+          ThemeProvider themeProvider =
+              await tester.pumpBuilderAndReturnProvider(
             ThemeBuilder(
               child: Container(),
             ),
           );
-
-          var themeProviderFinder = find.byType(ThemeProvider);
-          expect(themeProviderFinder, findsOneWidget);
-
-          var themeProvider =
-              tester.firstWidget(themeProviderFinder) as ThemeProvider;
 
           expect(
             themeProvider.state,

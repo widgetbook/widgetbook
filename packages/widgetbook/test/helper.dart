@@ -12,6 +12,15 @@ extension WidgetTesterExtension on WidgetTester {
     );
   }
 
+  Future<Provider> pumpBuilderAndReturnProvider<Provider>(Widget widget) async {
+    await pumpWidgetWithMaterialApp(widget);
+    var providerFinder = find.byType(Provider);
+    expect(providerFinder, findsOneWidget);
+
+    var provider = this.firstWidget(providerFinder) as Provider;
+    return provider;
+  }
+
   Future<T> invokeMethodAndReturnPumpedProvider<T>(
     VoidCallback method,
   ) async {

@@ -11,17 +11,12 @@ void main() {
       testWidgets(
         'emits 1.25 when zoomIn is called',
         (WidgetTester tester) async {
-          await tester.pumpWidgetWithMaterialApp(
+          ZoomProvider themeProvider =
+              await tester.pumpBuilderAndReturnProvider(
             ZoomBuilder(
               child: Container(),
             ),
           );
-
-          var themeProviderFinder = find.byType(ZoomProvider);
-          expect(themeProviderFinder, findsOneWidget);
-
-          var themeProvider =
-              tester.firstWidget(themeProviderFinder) as ZoomProvider;
 
           themeProvider = await tester.invokeMethodAndReturnPumpedProvider(() {
             themeProvider.zoomIn();
@@ -39,17 +34,12 @@ void main() {
       testWidgets(
         'emits 0.75 when zoomOut is called',
         (WidgetTester tester) async {
-          await tester.pumpWidgetWithMaterialApp(
+          ZoomProvider themeProvider =
+              await tester.pumpBuilderAndReturnProvider(
             ZoomBuilder(
               child: Container(),
             ),
           );
-
-          var themeProviderFinder = find.byType(ZoomProvider);
-          expect(themeProviderFinder, findsOneWidget);
-
-          var themeProvider =
-              tester.firstWidget(themeProviderFinder) as ZoomProvider;
 
           themeProvider = await tester.invokeMethodAndReturnPumpedProvider(() {
             themeProvider.zoomOut();
@@ -67,17 +57,12 @@ void main() {
       testWidgets(
         'emits State.normal() when resetToNormal is called',
         (WidgetTester tester) async {
-          await tester.pumpWidgetWithMaterialApp(
+          ZoomProvider themeProvider =
+              await tester.pumpBuilderAndReturnProvider(
             ZoomBuilder(
               child: Container(),
             ),
           );
-
-          var themeProviderFinder = find.byType(ZoomProvider);
-          expect(themeProviderFinder, findsOneWidget);
-
-          var themeProvider =
-              tester.firstWidget(themeProviderFinder) as ZoomProvider;
 
           themeProvider = await tester.invokeMethodAndReturnPumpedProvider(() {
             themeProvider.resetToNormal();
@@ -99,17 +84,12 @@ void main() {
           testWidgets(
             '$scaleToTest when setScale is called with scale = $scaleToTest',
             (WidgetTester tester) async {
-              await tester.pumpWidgetWithMaterialApp(
+              ZoomProvider themeProvider =
+                  await tester.pumpBuilderAndReturnProvider(
                 ZoomBuilder(
                   child: Container(),
                 ),
               );
-
-              var themeProviderFinder = find.byType(ZoomProvider);
-              expect(themeProviderFinder, findsOneWidget);
-
-              var themeProvider =
-                  tester.firstWidget(themeProviderFinder) as ZoomProvider;
 
               themeProvider =
                   await tester.invokeMethodAndReturnPumpedProvider(() {
