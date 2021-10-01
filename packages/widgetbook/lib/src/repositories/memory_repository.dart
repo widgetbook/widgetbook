@@ -2,21 +2,24 @@ import 'dart:async';
 
 import 'dart:collection';
 
+import 'package:meta/meta.dart';
 import 'package:widgetbook/src/models/model.dart';
 import 'package:widgetbook/src/repositories/repository.dart';
 
 class MemoryRepository<Item extends Model> extends Repository<Item> {
-  final Map<String, Item> _memory;
+  @internal
+  final Map<String, Item> memory;
+
   final StreamController<List<Item>> _streamController;
 
   MemoryRepository({Map<String, Item>? initialConfiguration})
-      : _memory = initialConfiguration ?? HashMap(),
+      : memory = initialConfiguration ?? HashMap(),
         _streamController = StreamController<List<Item>>.broadcast() {
     _streamController.onListen = _emitChangesToStream;
   }
 
   void _emitChangesToStream() {
-    _streamController.add(_memory.values.toList());
+    _streamController.add(memory.values.toList());
   }
 
   String _addItemAndEmitChangesToStream(Item item) {
@@ -26,7 +29,7 @@ class MemoryRepository<Item extends Model> extends Repository<Item> {
   }
 
   String _addItem(Item item) {
-    _memory.putIfAbsent(item.id, () => item);
+    memory.putIfAbsent(item.id, () => item);
     return item.id;
   }
 
@@ -41,7 +44,7 @@ class MemoryRepository<Item extends Model> extends Repository<Item> {
   }
 
   void _deleteItem(Item item) {
-    _memory.remove(item.id);
+    memory.remove(item.id);
   }
 
   @override
@@ -56,7 +59,7 @@ class MemoryRepository<Item extends Model> extends Repository<Item> {
 
   @override
   void setItem(Item item) {
-    if (!_memory.containsKey(item.id)) {
+    if (!memory.containsKey(item.id)) {
       _addItemAndEmitChangesToStream(item);
     } else {
       updateItem(item);
@@ -65,23 +68,23 @@ class MemoryRepository<Item extends Model> extends Repository<Item> {
 
   @override
   void updateItem(Item item) {
-    _memory[item.id] = item;
+    memory[item.id] = item;
     _emitChangesToStream();
   }
 
   @override
   bool doesItemExist(String id) {
-    return _memory.containsKey(id);
+    return memory.containsKey(id);
   }
 
   @override
   Item getItem(String id) {
-    return _memory[id]!;
+    return memory[id]!;
   }
 
   @override
   void deleteAll() {
-    _memory.clear();
+    memory.clear();
     _emitChangesToStream();
   }
 
@@ -92,7 +95,12 @@ class MemoryRepository<Item extends Model> extends Repository<Item> {
       key: (k) => k.id,
       value: (v) => v,
     );
-    _memory.addAll(map);
+    memory.addAll(map);
     _emitChangesToStream();
+  }
+
+  @override
+  Future<void> closeStream() {
+    return _streamController.close();
   }
 }

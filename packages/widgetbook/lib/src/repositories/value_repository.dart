@@ -38,4 +38,8 @@ class ValueRepository<Item> {
   Stream<Item?> getStream() {
     return _streamController.stream;
   }
+
+  Future<void> closeStream() {
+    return _streamController.close();
+  }
 }

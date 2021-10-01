@@ -11,6 +11,8 @@ abstract class Repository<Item extends Model> {
 
   // List operations
   Stream<List<Item>> getStreamOfItems();
+  void closeStream();
+
   void deleteAll();
   void addAll(Iterable<Item> items);
 }

@@ -100,20 +100,17 @@ void main() {
     );
 
     test(
-      'returns a stream with a null value when getStream is called',
+      'returns done when getStream is called and then closed',
       () async {
         var repository = _ValueRepository();
         var stream = repository.getStream();
 
         expect(
-          stream,
-          isNotEmpty,
+          await stream,
+          emitsDone,
         );
 
-        expect(
-          await stream.first,
-          isNull,
-        );
+        repository.closeStream();
       },
     );
 
@@ -122,31 +119,38 @@ void main() {
       () async {
         var repository = _ValueRepository();
         var stream = repository.getStream();
-        repository.setItem(0);
 
         expect(
           stream,
-          contains(0),
+          emitsInOrder([
+            0,
+            emitsDone,
+          ]),
         );
+
+        repository.setItem(0);
+        repository.closeStream();
       },
     );
 
     test(
-      '.getStream emits value when deleteItem is called',
+      '.getStream emits null when deleteItem is called',
       () async {
         var repository = _ValueRepository(item: 0);
         var stream = repository.getStream();
-        repository.deleteItem();
 
         expect(
           stream,
-          containsAllInOrder(
+          emitsInOrder(
             [
-              0,
               null,
+              emitsDone,
             ],
           ),
         );
+
+        repository.deleteItem();
+        repository.closeStream();
       },
     );
   });
