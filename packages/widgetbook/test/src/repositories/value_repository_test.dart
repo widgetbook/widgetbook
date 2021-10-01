@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/repositories/single_value_repository.dart';
+import 'package:widgetbook/src/repositories/value_repository.dart';
 
-class _SingleValueTestRepository extends SingleValueRepository<int> {
-  _SingleValueTestRepository({
+class _ValueRepository extends ValueRepository<int> {
+  _ValueRepository({
     int? item,
   }) : super(item: item);
 
@@ -12,11 +12,11 @@ class _SingleValueTestRepository extends SingleValueRepository<int> {
 }
 
 void main() {
-  group('$SingleValueRepository', () {
+  group('$ValueRepository', () {
     test(
       'has no value when created with empty constructor',
       () {
-        var repository = _SingleValueTestRepository();
+        var repository = _ValueRepository();
 
         expect(
           repository.getCurrentValue(),
@@ -28,7 +28,7 @@ void main() {
     test(
       'has initial when created with named constructor',
       () {
-        var repository = _SingleValueTestRepository(item: 0);
+        var repository = _ValueRepository(item: 0);
 
         expect(
           repository.getCurrentValue(),
@@ -40,7 +40,7 @@ void main() {
     test(
       'sets item when setItem is called',
       () {
-        var repository = _SingleValueTestRepository();
+        var repository = _ValueRepository();
         repository.setItem(0);
 
         expect(
@@ -53,7 +53,7 @@ void main() {
     test(
       'gets item when getItem is called',
       () {
-        var repository = _SingleValueTestRepository(item: 0);
+        var repository = _ValueRepository(item: 0);
 
         expect(
           repository.getItem(),
@@ -65,7 +65,7 @@ void main() {
     test(
       'sets item to null when deleteItem is called',
       () {
-        var repository = _SingleValueTestRepository(item: 0);
+        var repository = _ValueRepository(item: 0);
         repository.deleteItem();
 
         expect(
@@ -78,7 +78,7 @@ void main() {
     test(
       'returns true when isSet is called with a set value',
       () {
-        var repository = _SingleValueTestRepository(item: 0);
+        var repository = _ValueRepository(item: 0);
 
         expect(
           repository.isSet(),
@@ -90,7 +90,7 @@ void main() {
     test(
       'returns true when isSet is called with a set value',
       () {
-        var repository = _SingleValueTestRepository();
+        var repository = _ValueRepository();
 
         expect(
           repository.isSet(),
@@ -102,7 +102,7 @@ void main() {
     test(
       'returns a stream with a null value when getStream is called',
       () async {
-        var repository = _SingleValueTestRepository();
+        var repository = _ValueRepository();
         var stream = repository.getStream();
 
         expect(
@@ -120,7 +120,7 @@ void main() {
     test(
       '.getStream emits value when setItem is called',
       () async {
-        var repository = _SingleValueTestRepository();
+        var repository = _ValueRepository();
         var stream = repository.getStream();
         repository.setItem(0);
 
@@ -134,7 +134,7 @@ void main() {
     test(
       '.getStream emits value when deleteItem is called',
       () async {
-        var repository = _SingleValueTestRepository(item: 0);
+        var repository = _ValueRepository(item: 0);
         var stream = repository.getStream();
         repository.deleteItem();
 
