@@ -23,9 +23,9 @@ void main() {
           var themeProvider =
               tester.firstWidget(themeProviderFinder) as ZoomProvider;
 
-          themeProvider.zoomIn();
-          await tester.pump();
-          themeProvider = getProvider(tester);
+          themeProvider = await tester.invokeAndPumpProvider(() {
+            themeProvider.zoomIn();
+          });
 
           expect(
             themeProvider.state,
@@ -51,9 +51,9 @@ void main() {
           var themeProvider =
               tester.firstWidget(themeProviderFinder) as ZoomProvider;
 
-          themeProvider.zoomOut();
-          await tester.pump();
-          themeProvider = getProvider(tester);
+          themeProvider = await tester.invokeAndPumpProvider(() {
+            themeProvider.zoomOut();
+          });
 
           expect(
             themeProvider.state,
@@ -79,9 +79,9 @@ void main() {
           var themeProvider =
               tester.firstWidget(themeProviderFinder) as ZoomProvider;
 
-          themeProvider.resetToNormal();
-          await tester.pump();
-          themeProvider = getProvider(tester);
+          themeProvider = await tester.invokeAndPumpProvider(() {
+            themeProvider.resetToNormal();
+          });
 
           expect(
             themeProvider.state,
@@ -111,9 +111,9 @@ void main() {
               var themeProvider =
                   tester.firstWidget(themeProviderFinder) as ZoomProvider;
 
-              themeProvider.setScale(scaleToTest);
-              await tester.pump();
-              themeProvider = getProvider(tester);
+              themeProvider = await tester.invokeAndPumpProvider(() {
+                themeProvider.setScale(scaleToTest);
+              });
 
               expect(
                 themeProvider.state,
