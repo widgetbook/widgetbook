@@ -3,6 +3,48 @@ import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/providers/device_state.dart';
 import 'package:widgetbook/src/providers/provider.dart';
 
+class DeviceBuilder extends StatefulWidget {
+  final Widget child;
+  final List<Device> availableDevices;
+  final Device currentDevice;
+
+  const DeviceBuilder({
+    Key? key,
+    required this.child,
+    required this.availableDevices,
+    required this.currentDevice,
+  }) : super(key: key);
+
+  @override
+  _DeviceBuilderState createState() => _DeviceBuilderState();
+}
+
+class _DeviceBuilderState extends State<DeviceBuilder> {
+  late DeviceState state;
+
+  @override
+  initState() {
+    state = DeviceState(
+      availableDevices: widget.availableDevices,
+      currentDevice: widget.currentDevice,
+    );
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DeviceProvider(
+      state: state,
+      onStateChanged: (DeviceState state) {
+        setState(() {
+          this.state = state;
+        });
+      },
+      child: widget.child,
+    );
+  }
+}
+
 class DeviceProvider extends Provider<DeviceState> {
   const DeviceProvider({
     required DeviceState state,
@@ -21,6 +63,14 @@ class DeviceProvider extends Provider<DeviceState> {
   }
 
   void update(List<Device> devices) {
+    if (devices.isEmpty) {
+      throw ArgumentError.value(
+        devices,
+        'update',
+        'Cannot be empty',
+      );
+    }
+
     emit(
       DeviceState(
         availableDevices: devices,

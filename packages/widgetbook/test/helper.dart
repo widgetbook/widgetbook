@@ -21,6 +21,7 @@ extension WidgetTesterExtension on WidgetTester {
   }
 }
 
+// TODO T has to be a provider
 T getProvider<T>(
   WidgetTester tester,
 ) {

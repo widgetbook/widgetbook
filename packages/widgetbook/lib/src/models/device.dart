@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:widgetbook/src/models/resolution.dart';
 
 /// Category of different device types.
@@ -40,6 +41,19 @@ class Device {
       type: DeviceType.unknown,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Device &&
+        other.name == name &&
+        other.resolution == resolution &&
+        other.type == type;
+  }
+
+  @override
+  int get hashCode => name.hashCode ^ resolution.hashCode ^ type.hashCode;
 }
 
 /// Collection of Samsung devices
