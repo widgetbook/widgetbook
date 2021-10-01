@@ -2,42 +2,92 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
 
-main() {
-  group('$ThemeProvider', () {
-    test('emits ${ThemeMode.dark} when called on ${ThemeMode.light}', () {
-      var state = ThemeMode.light;
-      var provider = ThemeProvider(
-        state: state,
-        onStateChanged: (ThemeMode mode) {
-          state = mode;
+import '../../helper.dart';
+
+void main() {
+  group(
+    '$ThemeProvider',
+    () {
+      testWidgets(
+        'emits correct state when toggleTheme is called',
+        (WidgetTester tester) async {
+          await tester.pumpWidgetWithMaterialApp(
+            ThemeBuilder(
+              child: Container(),
+            ),
+          );
+
+          var themeProviderFinder = find.byType(ThemeProvider);
+          expect(themeProviderFinder, findsOneWidget);
+
+          var themeProvider =
+              tester.firstWidget(themeProviderFinder) as ThemeProvider;
+
+          themeProvider.toggleTheme();
+          await tester.pump();
+          themeProvider = getProvider(tester);
+          expect(
+            themeProvider.state,
+            equals(ThemeMode.light),
+          );
+
+          themeProvider.toggleTheme();
+          await tester.pump();
+          themeProvider = getProvider(tester);
+          expect(
+            themeProvider.state,
+            equals(ThemeMode.dark),
+          );
+
+          themeProvider.toggleTheme();
+          await tester.pump();
+          themeProvider = getProvider(tester);
+          expect(
+            themeProvider.state,
+            equals(ThemeMode.light),
+          );
         },
-        child: Text(''),
       );
 
-      provider.toggleTheme();
-      expect(
-        state,
-        equals(ThemeMode.dark),
-      );
-    });
+      testWidgets(
+        '.of returns $ThemeProvider instance',
+        (WidgetTester tester) async {
+          await tester.pumpWidgetWithMaterialApp(
+            ThemeBuilder(
+              child: Container(),
+            ),
+          );
 
-    test('emits ${ThemeMode.light} when called on ${ThemeMode.dark}', () {
-      var state = ThemeMode.dark;
-      var provider = ThemeProvider(
-        state: state,
-        onStateChanged: (ThemeMode mode) {
-          state = mode;
+          final BuildContext context = tester.element(find.byType(Container));
+          var themeProvider = ThemeProvider.of(context);
+          expect(
+            themeProvider,
+            isNot(null),
+          );
         },
-        child: Text(''),
       );
 
-      provider.toggleTheme();
-      expect(
-        state,
-        equals(
-          ThemeMode.light,
-        ),
+      testWidgets(
+        '.state defaults to ${ThemeMode.dark}',
+        (WidgetTester tester) async {
+          await tester.pumpWidgetWithMaterialApp(
+            ThemeBuilder(
+              child: Container(),
+            ),
+          );
+
+          var themeProviderFinder = find.byType(ThemeProvider);
+          expect(themeProviderFinder, findsOneWidget);
+
+          var themeProvider =
+              tester.firstWidget(themeProviderFinder) as ThemeProvider;
+
+          expect(
+            themeProvider.state,
+            equals(ThemeMode.dark),
+          );
+        },
       );
-    });
-  });
+    },
+  );
 }

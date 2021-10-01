@@ -1,6 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/providers/provider.dart';
 
+class ThemeBuilder extends StatefulWidget {
+  final Widget child;
+
+  const ThemeBuilder({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+
+  @override
+  _ThemeBuilderState createState() => _ThemeBuilderState();
+}
+
+class _ThemeBuilderState extends State<ThemeBuilder> {
+  ThemeMode state = ThemeMode.dark;
+
+  @override
+  Widget build(BuildContext context) {
+    return ThemeProvider(
+      state: state,
+      onStateChanged: (ThemeMode state) {
+        setState(() {
+          this.state = state;
+        });
+      },
+      child: widget.child,
+    );
+  }
+}
+
 class ThemeProvider extends Provider<ThemeMode> {
   const ThemeProvider({
     required ThemeMode state,
