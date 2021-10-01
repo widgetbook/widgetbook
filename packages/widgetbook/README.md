@@ -10,7 +10,7 @@ ___
 A flutter package that helps cataloguing widgets. Inspired by Storybook.js and flutterbook.
 
 <p align="center">
-<img src="https://media.githubusercontent.com/media/firecrownpro/widgetbook/main/docs/assets/Screenshot.png" alt="Widgetbook Screenshot" />
+<img src="https://media.githubusercontent.com/media/widgetbook/widgetbook/main/docs/assets/Screenshot.png" alt="Widgetbook Screenshot" />
 </p>
 
 ## See it in action!
