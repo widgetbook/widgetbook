@@ -6,6 +6,22 @@ import 'package:widgetbook/src/models/device.dart';
 
 import '../../helper.dart';
 
+extension _WidgetTesterProviderExtension on WidgetTester {
+  Future<DeviceProvider> pumpProvider({
+    required List<Device> availableDevices,
+    required Device currentDevice,
+  }) async {
+    DeviceProvider themeProvider = await this.pumpBuilderAndReturnProvider(
+      DeviceBuilder(
+        availableDevices: availableDevices,
+        currentDevice: currentDevice,
+        child: Container(),
+      ),
+    );
+    return themeProvider;
+  }
+}
+
 void main() {
   group(
     '$DeviceProvider',
@@ -25,21 +41,17 @@ void main() {
             Apple.iPhone11,
           ];
 
-          DeviceProvider themeProvider =
-              await tester.pumpBuilderAndReturnProvider(
-            DeviceBuilder(
-              availableDevices: availableDevices,
-              currentDevice: currentDevice,
-              child: Container(),
-            ),
+          DeviceProvider provider = await tester.pumpProvider(
+            availableDevices: availableDevices,
+            currentDevice: currentDevice,
           );
 
-          themeProvider = await tester.invokeMethodAndReturnPumpedProvider(() {
-            themeProvider.update(reversedAvailableDevices);
+          provider = await tester.invokeMethodAndReturnPumpedProvider(() {
+            provider.update(reversedAvailableDevices);
           });
 
           expect(
-            themeProvider.state,
+            provider.state,
             equals(
               DeviceState(
                 availableDevices: reversedAvailableDevices,
@@ -53,17 +65,13 @@ void main() {
       testWidgets(
         'emits error message when update is called with <Device>[]',
         (WidgetTester tester) async {
-          DeviceProvider themeProvider =
-              await tester.pumpBuilderAndReturnProvider(
-            DeviceBuilder(
-              availableDevices: availableDevices,
-              currentDevice: currentDevice,
-              child: Container(),
-            ),
+          DeviceProvider provider = await tester.pumpProvider(
+            availableDevices: availableDevices,
+            currentDevice: currentDevice,
           );
 
           expect(
-            () => themeProvider.update([]),
+            () => provider.update([]),
             throwsA(
               TypeMatcher<ArgumentError>(),
             ),
@@ -74,21 +82,17 @@ void main() {
       testWidgets(
         'emits DeviceState(<Device>[...], ${Samsung.s10}) when selectDevice is called with ${Samsung.s10}',
         (WidgetTester tester) async {
-          DeviceProvider themeProvider =
-              await tester.pumpBuilderAndReturnProvider(
-            DeviceBuilder(
-              availableDevices: availableDevices,
-              currentDevice: currentDevice,
-              child: Container(),
-            ),
+          DeviceProvider provider = await tester.pumpProvider(
+            availableDevices: availableDevices,
+            currentDevice: currentDevice,
           );
 
-          themeProvider = await tester.invokeMethodAndReturnPumpedProvider(() {
-            themeProvider.selectDevice(Samsung.s10);
+          provider = await tester.invokeMethodAndReturnPumpedProvider(() {
+            provider.selectDevice(Samsung.s10);
           });
 
           expect(
-            themeProvider.state,
+            provider.state,
             equals(
               DeviceState(
                 availableDevices: availableDevices,
@@ -102,21 +106,17 @@ void main() {
       testWidgets(
         'emits DeviceState(<Device>[...], ${Samsung.s10}) when nextDevice is called',
         (WidgetTester tester) async {
-          DeviceProvider themeProvider =
-              await tester.pumpBuilderAndReturnProvider(
-            DeviceBuilder(
-              availableDevices: availableDevices,
-              currentDevice: currentDevice,
-              child: Container(),
-            ),
+          DeviceProvider provider = await tester.pumpProvider(
+            availableDevices: availableDevices,
+            currentDevice: currentDevice,
           );
 
-          themeProvider = await tester.invokeMethodAndReturnPumpedProvider(() {
-            themeProvider.nextDevice();
+          provider = await tester.invokeMethodAndReturnPumpedProvider(() {
+            provider.nextDevice();
           });
 
           expect(
-            themeProvider.state,
+            provider.state,
             equals(
               DeviceState(
                 availableDevices: availableDevices,
@@ -132,21 +132,17 @@ void main() {
       testWidgets(
         'emits DeviceState(<Device>[...], ${Apple.iPhone11}) when nextDevice is called',
         (WidgetTester tester) async {
-          DeviceProvider themeProvider =
-              await tester.pumpBuilderAndReturnProvider(
-            DeviceBuilder(
-              availableDevices: availableDevices,
-              currentDevice: Samsung.s10,
-              child: Container(),
-            ),
+          DeviceProvider provider = await tester.pumpProvider(
+            availableDevices: availableDevices,
+            currentDevice: Samsung.s10,
           );
 
-          themeProvider = await tester.invokeMethodAndReturnPumpedProvider(() {
-            themeProvider.nextDevice();
+          provider = await tester.invokeMethodAndReturnPumpedProvider(() {
+            provider.nextDevice();
           });
 
           expect(
-            themeProvider.state,
+            provider.state,
             equals(
               DeviceState(
                 availableDevices: availableDevices,
@@ -160,21 +156,17 @@ void main() {
       testWidgets(
         'emits DeviceState(<Device>[...], ${Apple.iPhone11}) when previousDevice is called',
         (WidgetTester tester) async {
-          DeviceProvider themeProvider =
-              await tester.pumpBuilderAndReturnProvider(
-            DeviceBuilder(
-              availableDevices: availableDevices,
-              currentDevice: Samsung.s10,
-              child: Container(),
-            ),
+          DeviceProvider provider = await tester.pumpProvider(
+            availableDevices: availableDevices,
+            currentDevice: Samsung.s10,
           );
 
-          themeProvider = await tester.invokeMethodAndReturnPumpedProvider(() {
-            themeProvider.previousDevice();
+          provider = await tester.invokeMethodAndReturnPumpedProvider(() {
+            provider.previousDevice();
           });
 
           expect(
-            themeProvider.state,
+            provider.state,
             equals(
               DeviceState(
                 availableDevices: availableDevices,
@@ -190,21 +182,17 @@ void main() {
       testWidgets(
         'emits DeviceState(<Device>[...], ${Apple.iPhone11}) when previousDevice is called',
         (WidgetTester tester) async {
-          DeviceProvider themeProvider =
-              await tester.pumpBuilderAndReturnProvider(
-            DeviceBuilder(
-              availableDevices: availableDevices,
-              currentDevice: currentDevice,
-              child: Container(),
-            ),
+          DeviceProvider provider = await tester.pumpProvider(
+            availableDevices: availableDevices,
+            currentDevice: currentDevice,
           );
 
-          themeProvider = await tester.invokeMethodAndReturnPumpedProvider(() {
-            themeProvider.previousDevice();
+          provider = await tester.invokeMethodAndReturnPumpedProvider(() {
+            provider.previousDevice();
           });
 
           expect(
-            themeProvider.state,
+            provider.state,
             equals(
               DeviceState(
                 availableDevices: availableDevices,

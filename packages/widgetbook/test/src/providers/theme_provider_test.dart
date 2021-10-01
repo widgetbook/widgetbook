@@ -4,6 +4,17 @@ import 'package:widgetbook/src/providers/theme_provider.dart';
 
 import '../../helper.dart';
 
+extension _WidgetTesterProviderExtension on WidgetTester {
+  Future<ThemeProvider> pumpProvider() async {
+    ThemeProvider themeProvider = await this.pumpBuilderAndReturnProvider(
+      ThemeBuilder(
+        child: Container(),
+      ),
+    );
+    return themeProvider;
+  }
+}
+
 void main() {
   group(
     '$ThemeProvider',
@@ -11,35 +22,29 @@ void main() {
       testWidgets(
         'emits [${ThemeMode.light}, ${ThemeMode.dark}, ${ThemeMode.light}] when toggleTheme is called',
         (WidgetTester tester) async {
-          ThemeProvider themeProvider =
-              await tester.pumpBuilderAndReturnProvider(
-            ThemeBuilder(
-              child: Container(),
-            ),
-          );
+          ThemeProvider provider = await tester.pumpProvider();
 
           Future invokeToggle() async {
-            themeProvider =
-                await tester.invokeMethodAndReturnPumpedProvider(() {
-              themeProvider.toggleTheme();
+            provider = await tester.invokeMethodAndReturnPumpedProvider(() {
+              provider.toggleTheme();
             });
           }
 
           await invokeToggle();
           expect(
-            themeProvider.state,
+            provider.state,
             equals(ThemeMode.light),
           );
 
           await invokeToggle();
           expect(
-            themeProvider.state,
+            provider.state,
             equals(ThemeMode.dark),
           );
 
           await invokeToggle();
           expect(
-            themeProvider.state,
+            provider.state,
             equals(ThemeMode.light),
           );
         },
@@ -66,15 +71,10 @@ void main() {
       testWidgets(
         '.state defaults to ${ThemeMode.dark}',
         (WidgetTester tester) async {
-          ThemeProvider themeProvider =
-              await tester.pumpBuilderAndReturnProvider(
-            ThemeBuilder(
-              child: Container(),
-            ),
-          );
+          ThemeProvider provider = await tester.pumpProvider();
 
           expect(
-            themeProvider.state,
+            provider.state,
             equals(ThemeMode.dark),
           );
         },
