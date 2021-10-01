@@ -1,17 +1,17 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/providers/injected_theme_state.dart';
+import 'package:widgetbook/src/providers/device_state.dart';
+import 'package:widgetbook/src/models/device.dart';
 
 void main() {
   group(
-    '$InjectedThemeState',
+    '$DeviceState',
     () {
       test(
         'returns true when instance is the same',
         () {
-          var instance = InjectedThemeState(
-            lightTheme: ThemeData(),
-            darkTheme: ThemeData(),
+          var instance = DeviceState(
+            availableDevices: [],
+            currentDevice: Apple.iPhone11,
           );
 
           expect(
@@ -27,14 +27,14 @@ void main() {
           test(
             'two instances with the same values are compared',
             () {
-              var instance1 = InjectedThemeState(
-                lightTheme: ThemeData(),
-                darkTheme: ThemeData(),
+              var instance1 = DeviceState(
+                availableDevices: [],
+                currentDevice: Apple.iPhone11,
               );
 
-              var instance2 = InjectedThemeState(
-                lightTheme: ThemeData(),
-                darkTheme: ThemeData(),
+              var instance2 = DeviceState(
+                availableDevices: [],
+                currentDevice: Apple.iPhone11,
               );
 
               expect(
@@ -47,14 +47,15 @@ void main() {
           test(
             'the hashCodes of two instances with the same values are compared',
             () {
-              var instance1 = InjectedThemeState(
-                lightTheme: ThemeData(),
-                darkTheme: ThemeData(),
+              List<Device> list = [];
+              var instance1 = DeviceState(
+                availableDevices: list,
+                currentDevice: Apple.iPhone11,
               );
 
-              var instance2 = InjectedThemeState(
-                lightTheme: ThemeData(),
-                darkTheme: ThemeData(),
+              var instance2 = DeviceState(
+                availableDevices: list,
+                currentDevice: Apple.iPhone11,
               );
 
               expect(
