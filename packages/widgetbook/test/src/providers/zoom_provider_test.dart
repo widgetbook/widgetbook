@@ -23,7 +23,7 @@ void main() {
           var themeProvider =
               tester.firstWidget(themeProviderFinder) as ZoomProvider;
 
-          themeProvider = await tester.invokeAndPumpProvider(() {
+          themeProvider = await tester.invokeMethodAndReturnPumpedProvider(() {
             themeProvider.zoomIn();
           });
 
@@ -51,7 +51,7 @@ void main() {
           var themeProvider =
               tester.firstWidget(themeProviderFinder) as ZoomProvider;
 
-          themeProvider = await tester.invokeAndPumpProvider(() {
+          themeProvider = await tester.invokeMethodAndReturnPumpedProvider(() {
             themeProvider.zoomOut();
           });
 
@@ -79,7 +79,7 @@ void main() {
           var themeProvider =
               tester.firstWidget(themeProviderFinder) as ZoomProvider;
 
-          themeProvider = await tester.invokeAndPumpProvider(() {
+          themeProvider = await tester.invokeMethodAndReturnPumpedProvider(() {
             themeProvider.resetToNormal();
           });
 
@@ -111,7 +111,8 @@ void main() {
               var themeProvider =
                   tester.firstWidget(themeProviderFinder) as ZoomProvider;
 
-              themeProvider = await tester.invokeAndPumpProvider(() {
+              themeProvider =
+                  await tester.invokeMethodAndReturnPumpedProvider(() {
                 themeProvider.setScale(scaleToTest);
               });
 

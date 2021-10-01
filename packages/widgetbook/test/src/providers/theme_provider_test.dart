@@ -24,7 +24,8 @@ void main() {
               tester.firstWidget(themeProviderFinder) as ThemeProvider;
 
           Future invokeToggle() async {
-            themeProvider = await tester.invokeAndPumpProvider(() {
+            themeProvider =
+                await tester.invokeMethodAndReturnPumpedProvider(() {
               themeProvider.toggleTheme();
             });
           }
