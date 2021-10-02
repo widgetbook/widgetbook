@@ -38,7 +38,7 @@ class MemoryRepository<Item extends Model> extends Repository<Item> {
     return _addItemAndEmitChangesToStream(item);
   }
 
-  void deleteItemAndEmitChangesToStream(Item item) {
+  void _deleteItemAndEmitChangesToStream(Item item) {
     _deleteItem(item);
     _emitChangesToStream();
   }
@@ -49,7 +49,7 @@ class MemoryRepository<Item extends Model> extends Repository<Item> {
 
   @override
   void deleteItem(Item item) {
-    deleteItemAndEmitChangesToStream(item);
+    _deleteItemAndEmitChangesToStream(item);
   }
 
   @override
