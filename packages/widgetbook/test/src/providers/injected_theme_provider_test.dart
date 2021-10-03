@@ -77,9 +77,9 @@ void main() {
           );
 
           final BuildContext context = tester.element(find.byType(Container));
-          var themeProvider = InjectedThemeProvider.of(context);
+          var provider = InjectedThemeProvider.of(context);
           expect(
-            themeProvider,
+            provider,
             isNot(null),
           );
         },
