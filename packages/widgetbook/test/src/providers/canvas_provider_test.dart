@@ -38,11 +38,6 @@ void main() {
     builder: (context) => Container(),
   );
 
-  var story3 = Story(
-    name: '3',
-    builder: (context) => Container(),
-  );
-
   setUp(
     () {
       storyRepository = StoryRepository(

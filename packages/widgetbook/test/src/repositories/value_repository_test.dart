@@ -106,7 +106,7 @@ void main() {
         var stream = repository.getStream();
 
         expect(
-          await stream,
+          stream,
           emitsDone,
         );
 

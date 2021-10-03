@@ -153,7 +153,7 @@ class OrganizerProvider extends Provider<OrganizerState> {
   }
 
   // The filter methods are used to implement a search of organizer elements
-  // since no UI element and no tests exist, this functionality
+  // since no UI element for searching and no tests exist, this functionality
   // is currently disabled
   //
   // void resetFilter() {

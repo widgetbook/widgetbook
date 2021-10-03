@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/organizers/story.dart';
 import 'package:widgetbook/src/providers/canvas_state.dart';
