@@ -64,7 +64,7 @@ class _WidgetbookState extends State<Widgetbook> {
   late BuildContext contextWithProviders;
 
   SelectedStoryRepository selectedStoryRepository = SelectedStoryRepository();
-  late StoryRepository storyRepository;
+  StoryRepository storyRepository = StoryRepository();
 
   ZoomState zoomState = ZoomState.normal();
   CanvasState canvasState = CanvasState.unselected();
@@ -86,8 +86,6 @@ class _WidgetbookState extends State<Widgetbook> {
       darkTheme: widget.darkTheme,
       lightTheme: widget.lightTheme,
     );
-
-    storyRepository = StoryRepository();
     super.initState();
   }
 

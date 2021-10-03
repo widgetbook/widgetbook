@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 import 'package:widgetbook/src/models/organizers/organizer.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 
@@ -26,4 +28,18 @@ abstract class ExpandableOrganizer extends Organizer {
         super(
           name,
         );
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    final listEquals = const DeepCollectionEquality().equals;
+
+    return other is ExpandableOrganizer &&
+        other.isExpanded == isExpanded &&
+        listEquals(other.folders, folders) &&
+        listEquals(other.widgets, widgets);
+  }
+
+  @override
+  int get hashCode => isExpanded.hashCode ^ folders.hashCode ^ widgets.hashCode;
 }

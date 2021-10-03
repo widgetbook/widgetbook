@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 import 'package:widgetbook/src/models/models.dart';
 
 class OrganizerState {
@@ -20,4 +22,21 @@ class OrganizerState {
     required this.filteredCategories,
     required this.searchTerm,
   });
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    final listEquals = const DeepCollectionEquality().equals;
+
+    return other is OrganizerState &&
+        listEquals(other.allCategories, allCategories) &&
+        listEquals(other.filteredCategories, filteredCategories) &&
+        other.searchTerm == searchTerm;
+  }
+
+  @override
+  int get hashCode =>
+      allCategories.hashCode ^
+      filteredCategories.hashCode ^
+      searchTerm.hashCode;
 }

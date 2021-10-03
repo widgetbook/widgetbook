@@ -8,6 +8,62 @@ import 'package:widgetbook/src/providers/provider.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 
+class OrganizerBuilder extends StatefulWidget {
+  final Widget child;
+  final List<Category> categories;
+  final StoryRepository storyRepository;
+  final SelectedStoryRepository selectedStoryRepository;
+
+  const OrganizerBuilder({
+    Key? key,
+    required this.child,
+    required this.categories,
+    required this.storyRepository,
+    required this.selectedStoryRepository,
+  }) : super(key: key);
+
+  @override
+  _OrganizerBuilderState createState() => _OrganizerBuilderState();
+}
+
+class _OrganizerBuilderState extends State<OrganizerBuilder> {
+  late OrganizerState state;
+  late OrganizerProvider provider;
+  @override
+  void initState() {
+    state = OrganizerState.unfiltered(
+      categories: widget.categories,
+    );
+    setProvider();
+
+    widget.selectedStoryRepository.getStream().forEach((Story? story) {
+      provider.openStory(story);
+    });
+
+    super.initState();
+  }
+
+  void setProvider() {
+    provider = OrganizerProvider(
+      selectedStoryRepository: widget.selectedStoryRepository,
+      storyRepository: widget.storyRepository,
+      state: state,
+      onStateChanged: (OrganizerState state) {
+        setState(() {
+          this.state = state;
+          setProvider();
+        });
+      },
+      child: widget.child,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return provider;
+  }
+}
+
 class OrganizerProvider extends Provider<OrganizerState> {
   final SelectedStoryRepository selectedStoryRepository;
   final StoryRepository storyRepository;
@@ -30,13 +86,7 @@ class OrganizerProvider extends Provider<OrganizerState> {
     return context.dependOnInheritedWidgetOfExactType<OrganizerProvider>();
   }
 
-  void initialize() {
-    selectedStoryRepository.getStream().forEach((Story? story) {
-      _openStory(story);
-    });
-  }
-
-  void _openStory(Story? story) {
+  void openStory(Story? story) {
     if (story == null) {
       return;
     }
@@ -102,101 +152,109 @@ class OrganizerProvider extends Provider<OrganizerState> {
     storyRepository.addAll(stories);
   }
 
-  void resetFilter() {
-    emit(
-      OrganizerState.unfiltered(
-        categories: state.allCategories,
-      ),
-    );
-  }
+  // The filter methods are used to implement a search of organizer elements
+  // since no UI element and no tests exist, this functionality
+  // is currently disabled
+  //
+  // void resetFilter() {
+  //   emit(
+  //     OrganizerState.unfiltered(
+  //       categories: state.allCategories,
+  //     ),
+  //   );
+  // }
 
-  void filter(RegExp regExp) {
-    var categories = filterCategories(
-      regExp,
-      state.allCategories,
-    );
+  // void filter(RegExp regExp) {
+  //   var categories = _filterCategories(
+  //     regExp,
+  //     state.allCategories,
+  //   );
 
-    emit(
-      OrganizerState(
-        allCategories: state.allCategories,
-        filteredCategories: categories,
-        searchTerm: regExp.pattern,
-      ),
-    );
-  }
+  //   emit(
+  //     OrganizerState(
+  //       allCategories: state.allCategories,
+  //       filteredCategories: categories,
+  //       searchTerm: regExp.pattern,
+  //     ),
+  //   );
+  // }
 
-  List<Category> filterCategories(
-    RegExp regExp,
-    List<Category> categories,
-  ) {
-    List<Category> matchingOrganizers = <Category>[];
-    for (var category in categories) {
-      Category? result = filterOrganizer(regExp, category) as Category?;
-      if (isMatch(result)) {
-        matchingOrganizers.add(result!);
-      }
-    }
-    return matchingOrganizers;
-  }
+  // List<Category> _filterCategories(
+  //   RegExp regExp,
+  //   List<Category> categories,
+  // ) {
+  //   List<Category> matchingOrganizers = <Category>[];
+  //   for (var category in categories) {
+  //     Category? result = _filterOrganizer(regExp, category) as Category?;
+  //     if (_isMatch(result)) {
+  //       matchingOrganizers.add(result!);
+  //     }
+  //   }
+  //   return matchingOrganizers;
+  // }
 
-  ExpandableOrganizer? filterOrganizer(
-      RegExp regExp, ExpandableOrganizer organizer) {
-    if (organizer.name.contains(regExp)) {
-      return organizer;
-    }
+  // ExpandableOrganizer? _filterOrganizer(
+  //     RegExp regExp, ExpandableOrganizer organizer) {
+  //   if (organizer.name.contains(regExp)) {
+  //     return organizer;
+  //   }
 
-    List<Folder> matchingFolders = <Folder>[];
-    for (var subOrganizer in organizer.folders) {
-      ExpandableOrganizer? result = filterOrganizer(regExp, subOrganizer);
-      if (isMatch(result)) {
-        matchingFolders.add(result! as Folder);
-      }
-    }
+  //   List<Folder> matchingFolders = <Folder>[];
+  //   for (var subOrganizer in organizer.folders) {
+  //     ExpandableOrganizer? result = _filterOrganizer(regExp, subOrganizer);
+  //     if (_isMatch(result)) {
+  //       matchingFolders.add(result! as Folder);
+  //     }
+  //   }
 
-    List<WidgetElement> matchingWidgets = <WidgetElement>[];
-    for (var subOrganizer in organizer.widgets) {
-      ExpandableOrganizer? result = filterOrganizer(regExp, subOrganizer);
-      if (isMatch(result)) {
-        matchingWidgets.add(result! as WidgetElement);
-      }
-    }
+  //   List<WidgetElement> matchingWidgets = <WidgetElement>[];
+  //   for (var subOrganizer in organizer.widgets) {
+  //     ExpandableOrganizer? result = _filterOrganizer(regExp, subOrganizer);
+  //     if (_isMatch(result)) {
+  //       matchingWidgets.add(result! as WidgetElement);
+  //     }
+  //   }
 
-    if (matchingFolders.isNotEmpty) {
-      return createFilteredSubtree(
-        organizer,
-        matchingFolders,
-        matchingWidgets,
-      );
-    }
+  //   if (matchingFolders.isNotEmpty) {
+  //     return _createFilteredSubtree(
+  //       organizer,
+  //       matchingFolders,
+  //       matchingWidgets,
+  //     );
+  //   }
 
-    return null;
-  }
+  //   return null;
+  // }
 
-  ExpandableOrganizer createFilteredSubtree(
-    ExpandableOrganizer organizer,
-    List<Folder> folders,
-    List<WidgetElement> widgets,
-  ) {
-    if (organizer is Category) {
-      return Category(
-        name: organizer.name,
-        widgets: widgets,
-        folders: folders,
-      );
-    }
-    if (organizer is Folder) {
-      return Folder(
-        name: organizer.name,
-        widgets: widgets,
-        folders: folders,
-      );
-    } else {
-      // TODO remove this when tested
-      // ignore: avoid_print
-      print('This message should never appear - BUG!');
-      return Folder(name: 'If you see this, you have found a bug');
-    }
-  }
+  // ExpandableOrganizer _createFilteredSubtree(
+  //   ExpandableOrganizer organizer,
+  //   List<Folder> folders,
+  //   List<WidgetElement> widgets,
+  // ) {
+  //   if (organizer is Category) {
+  //     return Category(
+  //       name: organizer.name,
+  //       widgets: widgets,
+  //       folders: folders,
+  //     );
+  //   }
+  //   if (organizer is Folder) {
+  //     return Folder(
+  //       name: organizer.name,
+  //       widgets: widgets,
+  //       folders: folders,
+  //     );
+  //   } else {
+  //     // TODO remove this when tested
+  //     // ignore: avoid_print
+  //     print('This message should never appear - BUG!');
+  //     return Folder(name: 'If you see this, you have found a bug');
+  //   }
+  // }
+
+  // bool _isMatch(ExpandableOrganizer? organizer) {
+  //   return organizer != null;
+  // }
 
   void toggleExpander(ExpandableOrganizer organizer) {
     organizer.isExpanded = !organizer.isExpanded;
@@ -207,9 +265,5 @@ class OrganizerProvider extends Provider<OrganizerState> {
         searchTerm: state.searchTerm,
       ),
     );
-  }
-
-  bool isMatch(ExpandableOrganizer? organizer) {
-    return organizer != null;
   }
 }

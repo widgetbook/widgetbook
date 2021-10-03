@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/organizers/story.dart';
 import 'package:widgetbook/src/providers/canvas_state.dart';
@@ -23,20 +25,36 @@ class CanvasBuilder extends StatefulWidget {
 
 class _CanvasBuilderState extends State<CanvasBuilder> {
   CanvasState state = CanvasState.unselected();
+  late CanvasProvider provider;
 
-  @override
-  Widget build(BuildContext context) {
-    return CanvasProvider(
+  void setProvider() {
+    provider = CanvasProvider(
       storyRepository: widget.storyRepository,
       selectedStoryRepository: widget.selectedStoryRepository,
       state: state,
       onStateChanged: (CanvasState state) {
         setState(() {
           this.state = state;
+          setProvider();
         });
       },
       child: widget.child,
     );
+  }
+
+  @override
+  void initState() {
+    setProvider();
+    widget.storyRepository.getStreamOfItems().forEach((_) {
+      provider.updateStory();
+    });
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return provider;
   }
 }
 
@@ -62,20 +80,14 @@ class CanvasProvider extends Provider<CanvasState> {
     return context.dependOnInheritedWidgetOfExactType<CanvasProvider>();
   }
 
-  void initialize() {
-    storyRepository.getStreamOfItems().forEach(
-      (_) {
-        _updateStory();
-      },
-    );
-  }
-
-  void _updateStory() {
+  void updateStory() {
     if (state.isStorySelected) {
       var currentStoryPath = state.selectedStory!.path;
       if (storyRepository.doesItemExist(currentStoryPath)) {
         var story = storyRepository.getItem(currentStoryPath);
         selectStory(story);
+      } else {
+        deselectStory();
       }
     }
   }

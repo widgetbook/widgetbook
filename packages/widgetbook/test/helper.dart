@@ -25,15 +25,13 @@ extension WidgetTesterExtension on WidgetTester {
     VoidCallback method,
   ) async {
     method();
-    await this.pump();
-    return getProvider<T>(this);
+    await this.pumpAndSettle();
+    return getProvider<T>();
   }
-}
 
-// TODO T has to be a provider
-T getProvider<T>(
-  WidgetTester tester,
-) {
-  var providerFinder = find.byType(T);
-  return tester.firstWidget(providerFinder) as T;
+  // TODO T has to be a provider
+  T getProvider<T>() {
+    var providerFinder = find.byType(T);
+    return this.firstWidget(providerFinder) as T;
+  }
 }

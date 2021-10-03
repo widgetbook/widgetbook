@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 import 'package:widgetbook/src/models/organizers/expandable_organizer.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/models/organizers/story.dart';
@@ -14,11 +16,24 @@ class WidgetElement extends ExpandableOrganizer {
   WidgetElement({
     required String name,
     required this.stories,
+    bool isExpanded = false,
   }) : super(
           name: name,
+          isExpanded: isExpanded,
         ) {
     for (final Story state in stories) {
       state.parent = this;
     }
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    final listEquals = const DeepCollectionEquality().equals;
+
+    return other is WidgetElement && listEquals(other.stories, stories);
+  }
+
+  @override
+  int get hashCode => stories.hashCode;
 }

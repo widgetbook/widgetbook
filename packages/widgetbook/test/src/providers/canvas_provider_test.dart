@@ -65,7 +65,6 @@ void main() {
             selectedStoryRepository: selectedStoryRepository,
             storyRepository: storyRepository,
           );
-          provider.initialize();
 
           provider = await tester.invokeMethodAndReturnPumpedProvider(
             () {
@@ -89,7 +88,6 @@ void main() {
             selectedStoryRepository: selectedStoryRepository,
             storyRepository: storyRepository,
           );
-          provider.initialize();
 
           // TODO would be better to inject the state instead of calling
           // selectStory
@@ -121,7 +119,6 @@ void main() {
             selectedStoryRepository: selectedStoryRepository,
             storyRepository: storyRepository,
           );
-          provider.initialize();
 
           provider = await tester.invokeMethodAndReturnPumpedProvider(
             () {
@@ -129,21 +126,57 @@ void main() {
             },
           );
 
-          // TODO test is not working properly
+          var newStory = Story(
+            name: story1.name,
+            builder: (context) {
+              return Text('');
+            },
+          );
+
           provider = await tester.invokeMethodAndReturnPumpedProvider(
             () {
-              storyRepository.addItem(story3);
+              storyRepository.setItem(newStory);
             },
           );
 
           expect(
             provider.state,
             equals(
-              CanvasState(selectedStory: story1),
+              CanvasState(
+                selectedStory: newStory,
+              ),
             ),
           );
         },
-        skip: true,
+      );
+
+      testWidgets(
+        'emits $Story $SelectedStoryRepository emits new $Story',
+        (WidgetTester tester) async {
+          CanvasProvider provider = await tester.pumpProvider(
+            selectedStoryRepository: selectedStoryRepository,
+            storyRepository: storyRepository,
+          );
+
+          provider = await tester.invokeMethodAndReturnPumpedProvider(
+            () {
+              provider.selectStory(story1);
+            },
+          );
+
+          provider = await tester.invokeMethodAndReturnPumpedProvider(
+            () {
+              storyRepository.deleteItem(story1);
+            },
+          );
+
+          expect(
+            provider.state,
+            equals(
+              CanvasState.unselected(),
+            ),
+          );
+        },
       );
 
       testWidgets(
