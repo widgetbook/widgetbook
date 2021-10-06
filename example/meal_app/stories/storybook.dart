@@ -146,7 +146,7 @@ class Storyboard extends StatelessWidget {
                   ),
                 ),
                 Story(
-                  name: 'Long name 12',
+                  name: 'Long name',
                   builder: (context) => MealDetail(
                     meal: Meal(
                       title: 'Bacon Burger with cheese and onions',
