@@ -16,7 +16,7 @@ void main() {
     test(
       'has no value when created with empty constructor',
       () {
-        var repository = _ValueRepository();
+        final repository = _ValueRepository();
 
         expect(
           repository.getCurrentValue(),
@@ -28,7 +28,7 @@ void main() {
     test(
       'has initial when created with named constructor',
       () {
-        var repository = _ValueRepository(item: 0);
+        final repository = _ValueRepository(item: 0);
 
         expect(
           repository.getCurrentValue(),
@@ -40,8 +40,7 @@ void main() {
     test(
       'sets item when setItem is called',
       () {
-        var repository = _ValueRepository();
-        repository.setItem(0);
+        final repository = _ValueRepository()..setItem(0);
 
         expect(
           repository.getCurrentValue(),
@@ -53,7 +52,7 @@ void main() {
     test(
       'gets item when getItem is called',
       () {
-        var repository = _ValueRepository(item: 0);
+        final repository = _ValueRepository(item: 0);
 
         expect(
           repository.getItem(),
@@ -65,8 +64,7 @@ void main() {
     test(
       'sets item to null when deleteItem is called',
       () {
-        var repository = _ValueRepository(item: 0);
-        repository.deleteItem();
+        final repository = _ValueRepository(item: 0)..deleteItem();
 
         expect(
           repository.getCurrentValue(),
@@ -78,7 +76,7 @@ void main() {
     test(
       'returns true when isSet is called with a set value',
       () {
-        var repository = _ValueRepository(item: 0);
+        final repository = _ValueRepository(item: 0);
 
         expect(
           repository.isSet(),
@@ -90,7 +88,7 @@ void main() {
     test(
       'returns true when isSet is called with a set value',
       () {
-        var repository = _ValueRepository();
+        final repository = _ValueRepository();
 
         expect(
           repository.isSet(),
@@ -102,23 +100,23 @@ void main() {
     test(
       'returns done when getStream is called and then closed',
       () async {
-        var repository = _ValueRepository();
-        var stream = repository.getStream();
+        final repository = _ValueRepository();
+        final stream = repository.getStream();
 
         expect(
           stream,
           emitsDone,
         );
 
-        repository.closeStream();
+        await repository.closeStream();
       },
     );
 
     test(
       '.getStream emits value when setItem is called',
       () async {
-        var repository = _ValueRepository();
-        var stream = repository.getStream();
+        final repository = _ValueRepository();
+        final stream = repository.getStream();
 
         expect(
           stream,
@@ -131,7 +129,7 @@ void main() {
         );
 
         repository.setItem(0);
-        repository.closeStream();
+        await repository.closeStream();
       },
     );
 
@@ -152,7 +150,7 @@ void main() {
         );
 
         repository.deleteItem();
-        repository.closeStream();
+        await repository.closeStream();
       },
     );
   });

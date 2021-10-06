@@ -13,9 +13,10 @@ class DeviceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var deviceProvider = DeviceProvider.of(context)!;
-    var state = deviceProvider.state;
-    bool isCurrent = device == state.currentDevice;
+    final deviceProvider = DeviceProvider.of(context)!;
+    final state = deviceProvider.state;
+    final isCurrent = device == state.currentDevice;
+
     return GestureDetector(
       onTap: () {
         deviceProvider.selectDevice(

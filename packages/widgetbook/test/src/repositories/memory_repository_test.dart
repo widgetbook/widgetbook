@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/repositories/memory_repository.dart';
 import 'package:widgetbook/src/models/model.dart';
+import 'package:widgetbook/src/repositories/memory_repository.dart';
 
 class _Item extends Model {
   final int value;
@@ -34,8 +34,8 @@ class _MemoryRepository extends MemoryRepository<_Item> {
 }
 
 void main() {
-  String defaultId = '1';
-  String alternateId = '2';
+  const defaultId = '1';
+  const alternateId = '2';
 
   group(
     '$MemoryRepository',

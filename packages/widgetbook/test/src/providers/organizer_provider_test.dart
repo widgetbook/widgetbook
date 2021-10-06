@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/src/models/models.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/providers/organizer_state.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
-import 'package:widgetbook/src/models/models.dart';
 
 import '../../helper.dart';
 
@@ -14,12 +14,12 @@ extension _WidgetTesterProviderExtension on WidgetTester {
     required StoryRepository storyRepository,
     required SelectedStoryRepository selectedStoryRepository,
   }) async {
-    OrganizerProvider provider = await this.pumpBuilderAndReturnProvider(
+    final provider = await pumpBuilderAndReturnProvider<OrganizerProvider>(
       OrganizerBuilder(
-        child: Container(),
         categories: categories,
         storyRepository: storyRepository,
         selectedStoryRepository: selectedStoryRepository,
+        child: Container(),
       ),
     );
     return provider;
@@ -30,12 +30,12 @@ void main() {
   late StoryRepository storyRepository;
   late SelectedStoryRepository selectedStoryRepository;
 
-  var story1 = Story(
+  final story1 = Story(
     name: '1',
     builder: (context) => Container(),
   );
 
-  var story2 = Story(
+  final story2 = Story(
     name: '2',
     builder: (context) => Container(),
   );
@@ -92,7 +92,7 @@ void main() {
       testWidgets(
         'togglesExpander of $WidgetElement',
         (WidgetTester tester) async {
-          var widgetElement = WidgetElement(
+          final widgetElement = WidgetElement(
             name: 'Widget 1',
             stories: [],
           );

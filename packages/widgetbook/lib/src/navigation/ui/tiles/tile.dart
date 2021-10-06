@@ -52,9 +52,9 @@ class _TileState extends State<Tile> {
 
   @override
   Widget build(BuildContext context) {
-    var state = CanvasProvider.of(context)!.state;
+    final state = CanvasProvider.of(context)!.state;
+    final isSelected = state.selectedStory == widget.organizer;
 
-    bool isSelected = state.selectedStory == widget.organizer;
     return GestureDetector(
       onTap: () {
         widget.onClicked?.call();

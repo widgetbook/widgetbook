@@ -89,9 +89,9 @@ class DeviceProvider extends Provider<DeviceState> {
   }
 
   void nextDevice() {
-    int index = state.availableDevices.indexOf(state.currentDevice);
-    int nextIndex = (index + 1) % state.availableDevices.length;
-    Device nextDevice = state.availableDevices[nextIndex];
+    final index = state.availableDevices.indexOf(state.currentDevice);
+    final nextIndex = (index + 1) % state.availableDevices.length;
+    final nextDevice = state.availableDevices[nextIndex];
     emit(
       DeviceState(
         availableDevices: state.availableDevices,
@@ -101,10 +101,10 @@ class DeviceProvider extends Provider<DeviceState> {
   }
 
   void previousDevice() {
-    int index = state.availableDevices.indexOf(state.currentDevice);
-    int previousIndex =
+    final index = state.availableDevices.indexOf(state.currentDevice);
+    final previousIndex =
         index == 0 ? state.availableDevices.length - 1 : index - 1;
-    Device previousDevice = state.availableDevices[previousIndex];
+    final previousDevice = state.availableDevices[previousIndex];
     emit(
       DeviceState(
         availableDevices: state.availableDevices,

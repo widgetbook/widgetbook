@@ -6,12 +6,12 @@ import '../../helper.dart';
 
 extension _WidgetTesterProviderExtension on WidgetTester {
   Future<ZoomProvider> pumpProvider() async {
-    ZoomProvider themeProvider = await this.pumpBuilderAndReturnProvider(
+    final provider = await pumpBuilderAndReturnProvider<ZoomProvider>(
       ZoomBuilder(
         child: Container(),
       ),
     );
-    return themeProvider;
+    return provider;
   }
 }
 
@@ -22,7 +22,7 @@ void main() {
       testWidgets(
         'emits 1.25 when zoomIn is called',
         (WidgetTester tester) async {
-          ZoomProvider provider = await tester.pumpProvider();
+          var provider = await tester.pumpProvider();
 
           provider = await tester.invokeMethodAndReturnPumpedProvider(() {
             provider.zoomIn();
@@ -40,7 +40,7 @@ void main() {
       testWidgets(
         'emits 0.75 when zoomOut is called',
         (WidgetTester tester) async {
-          ZoomProvider provider = await tester.pumpProvider();
+          var provider = await tester.pumpProvider();
 
           provider = await tester.invokeMethodAndReturnPumpedProvider(() {
             provider.zoomOut();
@@ -58,7 +58,7 @@ void main() {
       testWidgets(
         'emits State.normal() when resetToNormal is called',
         (WidgetTester tester) async {
-          ZoomProvider provider = await tester.pumpProvider();
+          var provider = await tester.pumpProvider();
 
           provider = await tester.invokeMethodAndReturnPumpedProvider(() {
             provider.resetToNormal();
@@ -76,11 +76,11 @@ void main() {
       group(
         'emits',
         () {
-          double scaleToTest = 2.00;
+          const scaleToTest = 2.00;
           testWidgets(
             '$scaleToTest when setScale is called with scale = $scaleToTest',
             (WidgetTester tester) async {
-              ZoomProvider provider = await tester.pumpProvider();
+              var provider = await tester.pumpProvider();
 
               provider = await tester.invokeMethodAndReturnPumpedProvider(() {
                 provider.setScale(scaleToTest);
@@ -107,9 +107,9 @@ void main() {
           );
 
           final BuildContext context = tester.element(find.byType(Container));
-          var themeProvider = ZoomProvider.of(context);
+          final provider = ZoomProvider.of(context);
           expect(
-            themeProvider,
+            provider,
             isNot(null),
           );
         },
@@ -118,7 +118,7 @@ void main() {
       testWidgets(
         '.state defaults to ZoomState.normal()',
         (WidgetTester tester) async {
-          ZoomProvider provider = await tester.pumpProvider();
+          final provider = await tester.pumpProvider();
 
           expect(
             provider.state,

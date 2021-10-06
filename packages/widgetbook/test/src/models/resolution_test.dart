@@ -16,7 +16,7 @@ void main() {
         expect(
           instance.logicalSize,
           equals(
-            Size(
+            const Size(
               200,
               200,
             ),

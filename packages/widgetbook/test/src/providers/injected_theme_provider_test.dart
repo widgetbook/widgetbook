@@ -10,15 +10,14 @@ extension _WidgetTesterProviderExtension on WidgetTester {
     ThemeData? lightTheme,
     ThemeData? darkTheme,
   }) async {
-    InjectedThemeProvider themeProvider =
-        await this.pumpBuilderAndReturnProvider(
+    final provider = await pumpBuilderAndReturnProvider<InjectedThemeProvider>(
       InjectedThemeBuilder(
         lightTheme: lightTheme,
         darkTheme: darkTheme,
         child: Container(),
       ),
     );
-    return themeProvider;
+    return provider;
   }
 }
 
@@ -26,23 +25,23 @@ void main() {
   group(
     '$InjectedThemeProvider',
     () {
-      ThemeData initialLightTheme = ThemeData();
-      ThemeData initialDarkTheme = ThemeData();
+      final initialLightTheme = ThemeData();
+      final initialDarkTheme = ThemeData();
 
       testWidgets(
         'emits $InjectedThemeState(newTheme, newTheme) when themesChanged is called',
         (WidgetTester tester) async {
-          InjectedThemeProvider provider = await tester.pumpProvider(
+          var provider = await tester.pumpProvider(
             lightTheme: initialLightTheme,
             darkTheme: initialDarkTheme,
           );
 
           // Setting of any ThemeData property is required because otherwise
           // the onStateChanged provider method is never called
-          ThemeData newLightTheme = ThemeData(
+          final newLightTheme = ThemeData(
             scaffoldBackgroundColor: Colors.yellow,
           );
-          ThemeData newDarkTheme = ThemeData(
+          final newDarkTheme = ThemeData(
             scaffoldBackgroundColor: Colors.yellow,
           );
 
@@ -77,7 +76,7 @@ void main() {
           );
 
           final BuildContext context = tester.element(find.byType(Container));
-          var provider = InjectedThemeProvider.of(context);
+          final provider = InjectedThemeProvider.of(context);
           expect(
             provider,
             isNot(null),
@@ -88,7 +87,7 @@ void main() {
       testWidgets(
         '.state defaults to ${InjectedThemeState()}',
         (WidgetTester tester) async {
-          InjectedThemeProvider provider = await tester.pumpProvider();
+          final provider = await tester.pumpProvider();
 
           expect(
             provider.state,

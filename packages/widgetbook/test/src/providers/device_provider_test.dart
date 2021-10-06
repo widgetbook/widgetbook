@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/providers/device_state.dart';
-import 'package:widgetbook/src/models/device.dart';
 
 import '../../helper.dart';
 
@@ -11,7 +11,7 @@ extension _WidgetTesterProviderExtension on WidgetTester {
     required List<Device> availableDevices,
     required Device currentDevice,
   }) async {
-    DeviceProvider themeProvider = await this.pumpBuilderAndReturnProvider(
+    final themeProvider = await pumpBuilderAndReturnProvider<DeviceProvider>(
       DeviceBuilder(
         availableDevices: availableDevices,
         currentDevice: currentDevice,
@@ -26,22 +26,22 @@ void main() {
   group(
     '$DeviceProvider',
     () {
-      List<Device> availableDevices = [
+      final availableDevices = [
         Apple.iPhone11,
         Samsung.s10,
       ];
 
-      Device currentDevice = availableDevices.first;
+      final currentDevice = availableDevices.first;
 
       testWidgets(
         'emits DeviceState(<Device>[...], Samsung.s10) when update is called with a new list <Device>[...]',
         (WidgetTester tester) async {
-          List<Device> reversedAvailableDevices = [
+          final reversedAvailableDevices = [
             Samsung.s10,
             Apple.iPhone11,
           ];
 
-          DeviceProvider provider = await tester.pumpProvider(
+          var provider = await tester.pumpProvider(
             availableDevices: availableDevices,
             currentDevice: currentDevice,
           );
@@ -65,7 +65,7 @@ void main() {
       testWidgets(
         'emits error message when update is called with <Device>[]',
         (WidgetTester tester) async {
-          DeviceProvider provider = await tester.pumpProvider(
+          final provider = await tester.pumpProvider(
             availableDevices: availableDevices,
             currentDevice: currentDevice,
           );
@@ -73,7 +73,7 @@ void main() {
           expect(
             () => provider.update([]),
             throwsA(
-              TypeMatcher<ArgumentError>(),
+              const TypeMatcher<ArgumentError>(),
             ),
           );
         },
@@ -82,7 +82,7 @@ void main() {
       testWidgets(
         'emits DeviceState(<Device>[...], ${Samsung.s10}) when selectDevice is called with ${Samsung.s10}',
         (WidgetTester tester) async {
-          DeviceProvider provider = await tester.pumpProvider(
+          var provider = await tester.pumpProvider(
             availableDevices: availableDevices,
             currentDevice: currentDevice,
           );
@@ -106,7 +106,7 @@ void main() {
       testWidgets(
         'emits DeviceState(<Device>[...], ${Samsung.s10}) when nextDevice is called',
         (WidgetTester tester) async {
-          DeviceProvider provider = await tester.pumpProvider(
+          var provider = await tester.pumpProvider(
             availableDevices: availableDevices,
             currentDevice: currentDevice,
           );
@@ -132,7 +132,7 @@ void main() {
       testWidgets(
         'emits DeviceState(<Device>[...], ${Apple.iPhone11}) when nextDevice is called',
         (WidgetTester tester) async {
-          DeviceProvider provider = await tester.pumpProvider(
+          var provider = await tester.pumpProvider(
             availableDevices: availableDevices,
             currentDevice: Samsung.s10,
           );
@@ -156,7 +156,7 @@ void main() {
       testWidgets(
         'emits DeviceState(<Device>[...], ${Apple.iPhone11}) when previousDevice is called',
         (WidgetTester tester) async {
-          DeviceProvider provider = await tester.pumpProvider(
+          var provider = await tester.pumpProvider(
             availableDevices: availableDevices,
             currentDevice: Samsung.s10,
           );
@@ -182,7 +182,7 @@ void main() {
       testWidgets(
         'emits DeviceState(<Device>[...], ${Apple.iPhone11}) when previousDevice is called',
         (WidgetTester tester) async {
-          DeviceProvider provider = await tester.pumpProvider(
+          var provider = await tester.pumpProvider(
             availableDevices: availableDevices,
             currentDevice: currentDevice,
           );
@@ -215,9 +215,9 @@ void main() {
           );
 
           final BuildContext context = tester.element(find.byType(Container));
-          var themeProvider = DeviceProvider.of(context);
+          final provider = DeviceProvider.of(context);
           expect(
-            themeProvider,
+            provider,
             isNot(null),
           );
         },

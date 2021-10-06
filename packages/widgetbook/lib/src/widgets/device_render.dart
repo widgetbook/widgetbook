@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/device.dart';
-import 'package:widgetbook/src/models/resolution.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
+import 'package:widgetbook/src/models/resolution.dart';
 import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/providers/injected_theme_provider.dart';
 import 'package:widgetbook/src/providers/injected_theme_state.dart';
@@ -32,13 +32,13 @@ class DeviceRender extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var deviceProvider = DeviceProvider.of(context)!;
-    var state = deviceProvider.state;
+    final deviceProvider = DeviceProvider.of(context)!;
+    final state = deviceProvider.state;
 
-    Device device = state.currentDevice;
-    Resolution resolution = device.resolution;
+    final device = state.currentDevice;
+    final resolution = device.resolution;
 
-    var themeState = InjectedThemeProvider.of(context)!.state;
+    final themeState = InjectedThemeProvider.of(context)!.state;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

@@ -6,12 +6,12 @@ import '../../helper.dart';
 
 extension _WidgetTesterProviderExtension on WidgetTester {
   Future<ThemeProvider> pumpProvider() async {
-    ThemeProvider themeProvider = await this.pumpBuilderAndReturnProvider(
+    final provider = await pumpBuilderAndReturnProvider<ThemeProvider>(
       ThemeBuilder(
         child: Container(),
       ),
     );
-    return themeProvider;
+    return provider;
   }
 }
 
@@ -22,7 +22,7 @@ void main() {
       testWidgets(
         'emits [${ThemeMode.light}, ${ThemeMode.dark}, ${ThemeMode.light}] when toggleTheme is called',
         (WidgetTester tester) async {
-          ThemeProvider provider = await tester.pumpProvider();
+          var provider = await tester.pumpProvider();
 
           Future invokeToggle() async {
             provider = await tester.invokeMethodAndReturnPumpedProvider(() {
@@ -60,7 +60,7 @@ void main() {
           );
 
           final BuildContext context = tester.element(find.byType(Container));
-          var themeProvider = ThemeProvider.of(context);
+          final themeProvider = ThemeProvider.of(context);
           expect(
             themeProvider,
             isNot(null),
@@ -71,7 +71,7 @@ void main() {
       testWidgets(
         '.state defaults to ${ThemeMode.dark}',
         (WidgetTester tester) async {
-          ThemeProvider provider = await tester.pumpProvider();
+          final provider = await tester.pumpProvider();
 
           expect(
             provider.state,

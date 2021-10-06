@@ -14,7 +14,7 @@ class WidgetElement extends ExpandableOrganizer {
           name: name,
           isExpanded: isExpanded,
         ) {
-    for (final Story state in stories) {
+    for (final state in stories) {
       state.parent = this;
     }
   }

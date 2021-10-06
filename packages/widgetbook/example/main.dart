@@ -8,7 +8,7 @@ class CustomWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.green,
-      child: Text('hello world'),
+      child: const Text('hello world'),
     );
   }
 }
@@ -28,7 +28,7 @@ class HotReload extends StatelessWidget {
               stories: [
                 Story(
                   name: 'Default',
-                  builder: (context) => CustomWidget(),
+                  builder: (context) => const CustomWidget(),
                 ),
               ],
             ),
@@ -42,7 +42,7 @@ class HotReload extends StatelessWidget {
                   stories: [
                     Story(
                       name: 'Default',
-                      builder: (context) => Text(
+                      builder: (context) => const Text(
                         'The brown fox ...',
                       ),
                     ),
@@ -61,5 +61,5 @@ class HotReload extends StatelessWidget {
 }
 
 void main() {
-  runApp(HotReload());
+  runApp(const HotReload());
 }

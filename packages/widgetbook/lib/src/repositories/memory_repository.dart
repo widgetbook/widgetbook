@@ -23,7 +23,7 @@ class MemoryRepository<Item extends Model> extends Repository<Item> {
   }
 
   String _addItemAndEmitChangesToStream(Item item) {
-    String id = _addItem(item);
+    final id = _addItem(item);
     _emitChangesToStream();
     return id;
   }

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/providers/device_state.dart';
 import 'package:widgetbook/src/models/device.dart';
+import 'package:widgetbook/src/providers/device_state.dart';
 
 void main() {
   group(
@@ -9,7 +9,7 @@ void main() {
       test(
         'returns true when instance is the same',
         () {
-          var instance = DeviceState(
+          final instance = DeviceState(
             availableDevices: [],
             currentDevice: Apple.iPhone11,
           );
@@ -27,12 +27,12 @@ void main() {
           test(
             'two instances with the same values are compared',
             () {
-              var instance1 = DeviceState(
+              final instance1 = DeviceState(
                 availableDevices: [],
                 currentDevice: Apple.iPhone11,
               );
 
-              var instance2 = DeviceState(
+              final instance2 = DeviceState(
                 availableDevices: [],
                 currentDevice: Apple.iPhone11,
               );
@@ -47,13 +47,13 @@ void main() {
           test(
             'the hashCodes of two instances with the same values are compared',
             () {
-              List<Device> list = [];
-              var instance1 = DeviceState(
+              final list = <Device>[];
+              final instance1 = DeviceState(
                 availableDevices: list,
                 currentDevice: Apple.iPhone11,
               );
 
-              var instance2 = DeviceState(
+              final instance2 = DeviceState(
                 availableDevices: list,
                 currentDevice: Apple.iPhone11,
               );

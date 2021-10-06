@@ -27,7 +27,7 @@ class _NavigationPanelState extends State<NavigationPanel> {
   String query = '';
 
   Widget _buildCategory(BuildContext context, int i) {
-    final Category item = widget.categories[i];
+    final item = widget.categories[i];
     return CategoryTile(category: item);
   }
 

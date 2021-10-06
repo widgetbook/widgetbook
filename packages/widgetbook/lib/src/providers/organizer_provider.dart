@@ -90,8 +90,7 @@ class OrganizerProvider extends Provider<OrganizerState> {
     if (story == null) {
       return;
     }
-    ExpandableOrganizer? currentOrganizer =
-        story.parent as ExpandableOrganizer?;
+    var currentOrganizer = story.parent as ExpandableOrganizer?;
     while (currentOrganizer != null) {
       currentOrganizer.isExpanded = true;
       currentOrganizer = currentOrganizer.parent as ExpandableOrganizer?;

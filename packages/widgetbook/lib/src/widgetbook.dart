@@ -137,7 +137,7 @@ class _WidgetbookState extends State<Widgetbook> {
     String? path,
     List<Story> stories,
   ) {
-    String storyPath = path?.replaceFirst('/stories/', '') ?? '';
+    final storyPath = path?.replaceFirst('/stories/', '') ?? '';
     Story? story;
     for (final element in stories) {
       if (element.path == storyPath) {
