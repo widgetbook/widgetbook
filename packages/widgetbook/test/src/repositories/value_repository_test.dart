@@ -122,10 +122,12 @@ void main() {
 
         expect(
           stream,
-          emitsInOrder([
-            0,
-            emitsDone,
-          ]),
+          emitsInOrder(
+            <dynamic>[
+              0,
+              emitsDone,
+            ],
+          ),
         );
 
         repository.setItem(0);
@@ -142,7 +144,7 @@ void main() {
         expect(
           stream,
           emitsInOrder(
-            [
+            <dynamic>[
               null,
               emitsDone,
             ],

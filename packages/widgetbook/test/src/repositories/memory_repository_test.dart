@@ -43,13 +43,13 @@ void main() {
       test(
         'adds item when addItem is called',
         () async {
-          var repository = _MemoryRepository();
-          var stream = repository.getStreamOfItems();
+          final repository = _MemoryRepository();
+          final stream = repository.getStreamOfItems();
 
           expect(
             stream,
             emitsInOrder(
-              [
+              <dynamic>[
                 <_Item>[],
                 <_Item>[
                   _Item(
@@ -100,7 +100,7 @@ void main() {
           expect(
             stream,
             emitsInOrder(
-              [
+              <dynamic>[
                 <_Item>[
                   _Item(
                     id: defaultId,
@@ -146,7 +146,7 @@ void main() {
           expect(
             stream,
             emitsInOrder(
-              [
+              <dynamic>[
                 <_Item>[
                   _Item(
                     id: defaultId,
@@ -195,7 +195,7 @@ void main() {
           expect(
             stream,
             emitsInOrder(
-              [
+              <dynamic>[
                 <_Item>[],
                 <_Item>[
                   _Item(
@@ -308,7 +308,7 @@ void main() {
           expect(
             stream,
             emitsInOrder(
-              [
+              <dynamic>[
                 <_Item>[
                   _Item(
                     id: defaultId,
@@ -346,7 +346,7 @@ void main() {
           expect(
             stream,
             emitsInOrder(
-              [
+              <dynamic>[
                 <_Item>[],
                 <_Item>[
                   _Item(
