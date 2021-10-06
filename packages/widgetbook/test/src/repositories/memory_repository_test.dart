@@ -87,7 +87,7 @@ void main() {
       test(
         'removes item when deleteItem is called',
         () async {
-          var repository = _MemoryRepository(
+          final repository = _MemoryRepository(
             initialConfiguration: <String, _Item>{
               defaultId: _Item(
                 id: defaultId,
@@ -95,7 +95,7 @@ void main() {
               ),
             },
           );
-          var stream = repository.getStreamOfItems();
+          final stream = repository.getStreamOfItems();
 
           expect(
             stream,
@@ -133,7 +133,7 @@ void main() {
       test(
         'changes existing item when setItem is called',
         () async {
-          var repository = _MemoryRepository(
+          final repository = _MemoryRepository(
             initialConfiguration: <String, _Item>{
               defaultId: _Item(
                 id: defaultId,
@@ -141,7 +141,7 @@ void main() {
               ),
             },
           );
-          var stream = repository.getStreamOfItems();
+          final stream = repository.getStreamOfItems();
 
           expect(
             stream,
@@ -189,8 +189,8 @@ void main() {
       test(
         'adds item when setItem is called',
         () async {
-          var repository = _MemoryRepository();
-          var stream = repository.getStreamOfItems();
+          final repository = _MemoryRepository();
+          final stream = repository.getStreamOfItems();
 
           expect(
             stream,
@@ -233,7 +233,7 @@ void main() {
       test(
         'returns true when doesItemExist is called with item in memory',
         () async {
-          var repository = _MemoryRepository(
+          final repository = _MemoryRepository(
             initialConfiguration: <String, _Item>{
               defaultId: _Item(
                 id: defaultId,
@@ -242,7 +242,7 @@ void main() {
             },
           );
 
-          var result = repository.doesItemExist(defaultId);
+          final result = repository.doesItemExist(defaultId);
           expect(
             result,
             isTrue,
@@ -253,9 +253,9 @@ void main() {
       test(
         'returns false when doesItemExist is called with item not in memory',
         () async {
-          var repository = _MemoryRepository();
+          final repository = _MemoryRepository();
 
-          var result = repository.doesItemExist(defaultId);
+          final result = repository.doesItemExist(defaultId);
           expect(
             result,
             false,
@@ -266,7 +266,7 @@ void main() {
       test(
         'returns item when getItem is called',
         () async {
-          var repository = _MemoryRepository(
+          final repository = _MemoryRepository(
             initialConfiguration: <String, _Item>{
               defaultId: _Item(
                 id: defaultId,
@@ -275,7 +275,7 @@ void main() {
             },
           );
 
-          var result = repository.getItem(defaultId);
+          final result = repository.getItem(defaultId);
           expect(
             result,
             equals(
@@ -291,7 +291,7 @@ void main() {
       test(
         'removes all items when deleteAll is called',
         () async {
-          var repository = _MemoryRepository(
+          final repository = _MemoryRepository(
             initialConfiguration: <String, _Item>{
               defaultId: _Item(
                 id: defaultId,
@@ -303,7 +303,7 @@ void main() {
               ),
             },
           );
-          var stream = repository.getStreamOfItems();
+          final stream = repository.getStreamOfItems();
 
           expect(
             stream,
@@ -340,8 +340,8 @@ void main() {
       test(
         'removes all items when deleteAll is called',
         () async {
-          var repository = _MemoryRepository();
-          var stream = repository.getStreamOfItems();
+          final repository = _MemoryRepository();
+          final stream = repository.getStreamOfItems();
 
           expect(
             stream,

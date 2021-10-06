@@ -136,8 +136,8 @@ void main() {
     test(
       '.getStream emits null when deleteItem is called',
       () async {
-        var repository = _ValueRepository(item: 0);
-        var stream = repository.getStream();
+        final repository = _ValueRepository(item: 0);
+        final stream = repository.getStream();
 
         expect(
           stream,

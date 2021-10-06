@@ -7,7 +7,7 @@ class ThemeHandle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeProvider = ThemeProvider.of(context)!;
+    final themeProvider = ThemeProvider.of(context)!;
     return Row(
       children: [
         // TODO add an own widget for this

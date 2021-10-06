@@ -9,8 +9,8 @@ class DeviceBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var deviceProvider = DeviceProvider.of(context)!;
-    var state = deviceProvider.state;
+    final deviceProvider = DeviceProvider.of(context)!;
+    final state = deviceProvider.state;
     return Row(
       children: [
         const Text('Device'),

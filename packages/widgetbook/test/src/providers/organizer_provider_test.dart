@@ -233,7 +233,7 @@ void main() {
           );
 
           final BuildContext context = tester.element(find.byType(Container));
-          var provider = OrganizerProvider.of(context);
+          final provider = OrganizerProvider.of(context);
           expect(
             provider,
             isNot(null),

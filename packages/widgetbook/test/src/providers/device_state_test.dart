@@ -9,7 +9,7 @@ void main() {
       test(
         'returns true when instance is the same',
         () {
-          var instance = InjectedThemeState(
+          final instance = InjectedThemeState(
             lightTheme: ThemeData(),
             darkTheme: ThemeData(),
           );
@@ -27,12 +27,12 @@ void main() {
           test(
             'two instances with the same values are compared',
             () {
-              var instance1 = InjectedThemeState(
+              final instance1 = InjectedThemeState(
                 lightTheme: ThemeData(),
                 darkTheme: ThemeData(),
               );
 
-              var instance2 = InjectedThemeState(
+              final instance2 = InjectedThemeState(
                 lightTheme: ThemeData(),
                 darkTheme: ThemeData(),
               );
@@ -47,12 +47,12 @@ void main() {
           test(
             'the hashCodes of two instances with the same values are compared',
             () {
-              var instance1 = InjectedThemeState(
+              final instance1 = InjectedThemeState(
                 lightTheme: ThemeData(),
                 darkTheme: ThemeData(),
               );
 
-              var instance2 = InjectedThemeState(
+              final instance2 = InjectedThemeState(
                 lightTheme: ThemeData(),
                 darkTheme: ThemeData(),
               );

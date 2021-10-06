@@ -7,7 +7,7 @@ void main() {
     '$Resolution',
     () {
       test('returns Size(200, 200) when logicalSize is called', () {
-        var instance = Resolution.dimensions(
+        final instance = Resolution.dimensions(
           height: 400,
           width: 400,
           scaleFactor: 2,
@@ -27,7 +27,7 @@ void main() {
       test(
         'returns true when instance is the same',
         () {
-          var instance = Resolution.dimensions(
+          final instance = Resolution.dimensions(
             height: 1,
             width: 1,
             scaleFactor: 1,
@@ -46,12 +46,12 @@ void main() {
           test(
             'two instances with the same values are compared',
             () {
-              var instance1 = Resolution.dimensions(
+              final instance1 = Resolution.dimensions(
                 height: 1,
                 width: 1,
                 scaleFactor: 1,
               );
-              var instance2 = Resolution.dimensions(
+              final instance2 = Resolution.dimensions(
                 height: 1,
                 width: 1,
                 scaleFactor: 1,
@@ -67,12 +67,12 @@ void main() {
           test(
             'the hashCodes of two instances with the same values are compared',
             () {
-              var instance1 = Resolution.dimensions(
+              final instance1 = Resolution.dimensions(
                 height: 1,
                 width: 1,
                 scaleFactor: 1,
               );
-              var instance2 = Resolution.dimensions(
+              final instance2 = Resolution.dimensions(
                 height: 1,
                 width: 1,
                 scaleFactor: 1,

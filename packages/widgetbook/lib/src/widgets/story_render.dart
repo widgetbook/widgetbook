@@ -18,7 +18,7 @@ class _StoryState extends State<StoryRender> {
   );
 
   Widget _buildStory() {
-    var state = CanvasProvider.of(context)!.state;
+    final state = CanvasProvider.of(context)!.state;
     if (state.selectedStory != null) {
       return _buildCanvas(state.selectedStory!);
     }
@@ -29,13 +29,13 @@ class _StoryState extends State<StoryRender> {
   }
 
   void _updateController() {
-    var state = ZoomProvider.of(context)!.state;
+    final state = ZoomProvider.of(context)!.state;
 
-    var oldMatrix = controller.value;
+    final oldMatrix = controller.value;
 
-    var translation = oldMatrix.getTranslation();
+    final translation = oldMatrix.getTranslation();
 
-    var rotation = oldMatrix.getRotation();
+    final rotation = oldMatrix.getRotation();
     oldMatrix.setFromTranslationRotationScale(
       translation,
       vector.Quaternion.fromRotation(rotation),

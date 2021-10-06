@@ -15,7 +15,7 @@ class DeviceRender extends StatelessWidget {
   final Story story;
 
   ThemeData getInjectedTheme(BuildContext context, InjectedThemeState state) {
-    var brightness = Theme.of(context).brightness;
+    final brightness = Theme.of(context).brightness;
 
     if (brightness == Brightness.light && state.lightTheme != null) {
       return state.lightTheme!;

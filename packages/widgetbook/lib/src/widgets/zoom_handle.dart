@@ -12,7 +12,7 @@ class ZoomHandle extends StatefulWidget {
 class _ZoomHandleState extends State<ZoomHandle> {
   @override
   Widget build(BuildContext context) {
-    var state = ZoomProvider.of(context)!.state;
+    final state = ZoomProvider.of(context)!.state;
     return Row(
       children: [
         TextButton(

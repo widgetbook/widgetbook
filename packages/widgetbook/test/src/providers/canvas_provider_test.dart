@@ -121,7 +121,7 @@ void main() {
             },
           );
 
-          var newStory = Story(
+          final newStory = Story(
             name: story1.name,
             builder: (context) {
               return const Text('');

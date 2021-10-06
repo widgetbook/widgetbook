@@ -9,18 +9,18 @@ void main() {
       test(
         'and $Device.custom equal',
         () {
-          var resolution = Resolution.dimensions(
+          final resolution = Resolution.dimensions(
             width: 400,
             height: 400,
             scaleFactor: 2,
           );
-          var instance1 = Device(
+          final instance1 = Device(
             name: 'Device',
             resolution: resolution,
             type: DeviceType.unknown,
           );
 
-          var instance2 = Device.custom(
+          final instance2 = Device.custom(
             resolution: resolution,
             name: 'Device',
           );
@@ -35,7 +35,7 @@ void main() {
       test(
         'returns true when instance is the same',
         () {
-          var instance = Apple.iPhone11;
+          final instance = Apple.iPhone11;
 
           expect(
             instance == instance,
@@ -50,7 +50,7 @@ void main() {
           test(
             'two instances with the same values are compared',
             () {
-              var instance1 = Device(
+              final instance1 = Device(
                 name: 'Device',
                 resolution: Resolution.dimensions(
                   width: 400,
@@ -60,7 +60,7 @@ void main() {
                 type: DeviceType.unknown,
               );
 
-              var instance2 = Device(
+              final instance2 = Device(
                 name: 'Device',
                 resolution: Resolution.dimensions(
                   width: 400,
@@ -80,7 +80,7 @@ void main() {
           test(
             'the hashCodes of two instances with the same values are compared',
             () {
-              var instance1 = Device(
+              final instance1 = Device(
                 name: 'Device',
                 resolution: Resolution.dimensions(
                   width: 400,
@@ -90,7 +90,7 @@ void main() {
                 type: DeviceType.unknown,
               );
 
-              var instance2 = Device(
+              final instance2 = Device(
                 name: 'Device',
                 resolution: Resolution.dimensions(
                   width: 400,

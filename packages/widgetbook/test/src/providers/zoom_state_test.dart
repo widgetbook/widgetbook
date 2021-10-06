@@ -8,7 +8,7 @@ void main() {
       test(
         'returns true when instance is the same',
         () {
-          var instance = ZoomState.normal();
+          final instance = ZoomState.normal();
 
           expect(
             instance == instance,
@@ -23,8 +23,8 @@ void main() {
           test(
             'two instances with the same values are compared',
             () {
-              var instance1 = ZoomState.normal();
-              var instance2 = ZoomState.normal();
+              final instance1 = ZoomState.normal();
+              final instance2 = ZoomState.normal();
 
               expect(
                 instance1 == instance2,
@@ -36,8 +36,8 @@ void main() {
           test(
             'the hashCodes of two instances with the same values are compared',
             () {
-              var instance1 = ZoomState.normal();
-              var instance2 = ZoomState.normal();
+              final instance1 = ZoomState.normal();
+              final instance2 = ZoomState.normal();
 
               expect(
                 instance1.hashCode == instance2.hashCode,

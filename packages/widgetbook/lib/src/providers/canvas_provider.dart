@@ -80,9 +80,9 @@ class CanvasProvider extends Provider<CanvasState> {
 
   void updateStory() {
     if (state.isStorySelected) {
-      var currentStoryPath = state.selectedStory!.path;
+      final currentStoryPath = state.selectedStory!.path;
       if (storyRepository.doesItemExist(currentStoryPath)) {
-        var story = storyRepository.getItem(currentStoryPath);
+        final story = storyRepository.getItem(currentStoryPath);
         selectStory(story);
       } else {
         deselectStory();

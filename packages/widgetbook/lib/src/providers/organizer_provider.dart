@@ -98,20 +98,20 @@ class OrganizerProvider extends Provider<OrganizerState> {
   }
 
   void _updateFolders(List<Category> categories) {
-    var oldFolders = FolderHelper.getAllFoldersFromCategories(
+    final oldFolders = FolderHelper.getAllFoldersFromCategories(
       state.allCategories,
     );
-    var newFolders = FolderHelper.getAllFoldersFromCategories(
+    final newFolders = FolderHelper.getAllFoldersFromCategories(
       categories,
     );
-    var oldFolderMap = HashMap<String, Folder>.fromIterable(
+    final oldFolderMap = HashMap<String, Folder>.fromIterable(
       oldFolders,
       key: (dynamic k) => k.path as String,
       value: (dynamic v) => v as Folder,
     );
 
-    for (var folder in newFolders) {
-      var path = folder.path;
+    for (final folder in newFolders) {
+      final path = folder.path;
       if (oldFolderMap.containsKey(path)) {
         folder.isExpanded = oldFolderMap[path]!.isExpanded;
       }
@@ -146,7 +146,7 @@ class OrganizerProvider extends Provider<OrganizerState> {
       OrganizerState.unfiltered(categories: categories),
     );
 
-    var stories = StoryHelper.getAllStoriesFromCategories(categories);
+    final stories = StoryHelper.getAllStoriesFromCategories(categories);
     storyRepository.deleteAll();
     storyRepository.addAll(stories);
   }

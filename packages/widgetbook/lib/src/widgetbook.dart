@@ -101,16 +101,18 @@ class _WidgetbookState extends State<Widgetbook> {
                 darkTheme: widget.darkTheme,
                 child: Builder(builder: (context) {
                   contextWithProviders = context;
-                  var canvasState = CanvasProvider.of(context)!.state;
-                  var storiesState = OrganizerProvider.of(context)!.state;
-                  var themeMode = ThemeProvider.of(context)!.state;
+                  final canvasState = CanvasProvider.of(context)!.state;
+                  final storiesState = OrganizerProvider.of(context)!.state;
+                  final themeMode = ThemeProvider.of(context)!.state;
+
                   return MaterialApp.router(
                     routeInformationParser: StoryRouteInformationParser(
                       onRoute: (path) {
-                        var stories = StoryHelper.getAllStoriesFromCategories(
+                        final stories = StoryHelper.getAllStoriesFromCategories(
                           storiesState.allCategories,
                         );
-                        var selectedStory = selectStoryFromPath(path, stories);
+                        final selectedStory =
+                            selectStoryFromPath(path, stories);
                         CanvasProvider.of(context)!.selectStory(selectedStory);
                       },
                     ),
