@@ -1,3 +1,8 @@
+# 0.0.10
+
+- removed `bloc` and `flutter_bloc` dependency
+- removed `url_launcher` dependency
+
 # 0.0.9
 
 Increased package compatibility by
