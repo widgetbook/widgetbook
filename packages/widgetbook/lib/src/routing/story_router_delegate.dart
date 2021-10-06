@@ -62,13 +62,13 @@ class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
     return Navigator(
       transitionDelegate: NoAnimationTransitionDelegate(),
       pages: [
-        MaterialPage(
+        MaterialPage<dynamic>(
           key: ValueKey(currentConfiguration.path),
           child: StyledScaffold(
             body: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16),
               child: Builder(builder: (context) {
-                var state = OrganizerProvider.of(context)!.state;
+                final state = OrganizerProvider.of(context)!.state;
                 return Row(
                   children: [
                     NavigationPanel(
@@ -88,7 +88,7 @@ class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
           ),
         )
       ],
-      onPopPage: (route, result) {
+      onPopPage: (route, dynamic result) {
         if (!route.didPop(result)) {
           return false;
         }

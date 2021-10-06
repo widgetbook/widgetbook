@@ -90,10 +90,10 @@ class MemoryRepository<Item extends Model> extends Repository<Item> {
 
   @override
   void addAll(Iterable<Item> items) {
-    var map = HashMap<String, Item>.fromIterable(
+    final map = HashMap<String, Item>.fromIterable(
       items,
-      key: (k) => k.id,
-      value: (v) => v,
+      key: (dynamic k) => k.id as String,
+      value: (dynamic v) => v as Item,
     );
     memory.addAll(map);
     _emitChangesToStream();

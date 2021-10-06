@@ -107,8 +107,8 @@ class OrganizerProvider extends Provider<OrganizerState> {
     );
     var oldFolderMap = HashMap<String, Folder>.fromIterable(
       oldFolders,
-      key: (k) => k.path,
-      value: (v) => v,
+      key: (dynamic k) => k.path as String,
+      value: (dynamic v) => v as Folder,
     );
 
     for (var folder in newFolders) {
@@ -120,20 +120,20 @@ class OrganizerProvider extends Provider<OrganizerState> {
   }
 
   void _updateWidgets(List<Category> categories) {
-    var oldWidgets = WidgetHelper.getAllWidgetElementsFromCategories(
+    final oldWidgets = WidgetHelper.getAllWidgetElementsFromCategories(
       state.allCategories,
     );
-    var newWidgets = WidgetHelper.getAllWidgetElementsFromCategories(
+    final newWidgets = WidgetHelper.getAllWidgetElementsFromCategories(
       categories,
     );
-    var oldFolderMap = HashMap<String, WidgetElement>.fromIterable(
+    final oldFolderMap = HashMap<String, WidgetElement>.fromIterable(
       oldWidgets,
-      key: (k) => k.path,
-      value: (v) => v,
+      key: (dynamic k) => k.path as String,
+      value: (dynamic v) => v as WidgetElement,
     );
 
-    for (var widget in newWidgets) {
-      var path = widget.path;
+    for (final widget in newWidgets) {
+      final path = widget.path;
       if (oldFolderMap.containsKey(path)) {
         widget.isExpanded = oldFolderMap[path]!.isExpanded;
       }
