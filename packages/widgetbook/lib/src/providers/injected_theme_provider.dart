@@ -3,16 +3,16 @@ import 'package:widgetbook/src/providers/injected_theme_state.dart';
 import 'package:widgetbook/src/providers/provider.dart';
 
 class InjectedThemeBuilder extends StatefulWidget {
-  final Widget child;
-  final ThemeData? lightTheme;
-  final ThemeData? darkTheme;
-
   const InjectedThemeBuilder({
     Key? key,
     required this.child,
     this.lightTheme,
     this.darkTheme,
   }) : super(key: key);
+
+  final Widget child;
+  final ThemeData? lightTheme;
+  final ThemeData? darkTheme;
 
   @override
   _InjectedThemeBuilderState createState() => _InjectedThemeBuilderState();

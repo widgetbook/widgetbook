@@ -9,11 +9,6 @@ import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 
 class OrganizerBuilder extends StatefulWidget {
-  final Widget child;
-  final List<Category> categories;
-  final StoryRepository storyRepository;
-  final SelectedStoryRepository selectedStoryRepository;
-
   const OrganizerBuilder({
     Key? key,
     required this.child,
@@ -21,6 +16,11 @@ class OrganizerBuilder extends StatefulWidget {
     required this.storyRepository,
     required this.selectedStoryRepository,
   }) : super(key: key);
+
+  final Widget child;
+  final List<Category> categories;
+  final StoryRepository storyRepository;
+  final SelectedStoryRepository selectedStoryRepository;
 
   @override
   _OrganizerBuilderState createState() => _OrganizerBuilderState();
@@ -65,9 +65,6 @@ class _OrganizerBuilderState extends State<OrganizerBuilder> {
 }
 
 class OrganizerProvider extends Provider<OrganizerState> {
-  final SelectedStoryRepository selectedStoryRepository;
-  final StoryRepository storyRepository;
-
   const OrganizerProvider({
     required this.selectedStoryRepository,
     required this.storyRepository,
@@ -81,6 +78,9 @@ class OrganizerProvider extends Provider<OrganizerState> {
           child: child,
           key: key,
         );
+
+  final SelectedStoryRepository selectedStoryRepository;
+  final StoryRepository storyRepository;
 
   static OrganizerProvider? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<OrganizerProvider>();

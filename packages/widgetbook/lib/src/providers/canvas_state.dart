@@ -1,9 +1,6 @@
 import 'package:widgetbook/src/models/organizers/story.dart';
 
 class CanvasState {
-  final Story? selectedStory;
-  bool get isStorySelected => selectedStory != null;
-
   CanvasState({
     required this.selectedStory,
   });
@@ -11,6 +8,9 @@ class CanvasState {
   factory CanvasState.unselected() {
     return CanvasState(selectedStory: null);
   }
+
+  final Story? selectedStory;
+  bool get isStorySelected => selectedStory != null;
 
   @override
   bool operator ==(Object other) {

@@ -3,9 +3,11 @@ import 'package:collection/collection.dart';
 import 'package:widgetbook/src/models/models.dart';
 
 class OrganizerState {
-  final List<Category> allCategories;
-  final List<Category> filteredCategories;
-  final String searchTerm;
+  OrganizerState({
+    required this.allCategories,
+    required this.filteredCategories,
+    required this.searchTerm,
+  });
 
   factory OrganizerState.unfiltered({
     required List<Category> categories,
@@ -17,11 +19,9 @@ class OrganizerState {
     );
   }
 
-  OrganizerState({
-    required this.allCategories,
-    required this.filteredCategories,
-    required this.searchTerm,
-  });
+  final List<Category> allCategories;
+  final List<Category> filteredCategories;
+  final String searchTerm;
 
   @override
   bool operator ==(Object other) {

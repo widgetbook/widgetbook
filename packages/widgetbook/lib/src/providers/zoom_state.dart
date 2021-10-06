@@ -1,6 +1,4 @@
 class ZoomState {
-  final double zoomLevel;
-
   ZoomState({
     required this.zoomLevel,
   });
@@ -8,6 +6,8 @@ class ZoomState {
   factory ZoomState.normal() {
     return ZoomState(zoomLevel: 1);
   }
+
+  final double zoomLevel;
 
   @override
   bool operator ==(Object other) {

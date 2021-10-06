@@ -6,13 +6,6 @@ import 'package:widgetbook/src/utils/styles.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 
 class Tile extends StatefulWidget {
-  final IconData iconData;
-  final Color iconColor;
-  final Organizer organizer;
-  final VoidCallback? onClicked;
-
-  static const double spacing = 8;
-
   const Tile({
     Key? key,
     required this.iconData,
@@ -20,6 +13,13 @@ class Tile extends StatefulWidget {
     required this.organizer,
     this.onClicked,
   }) : super(key: key);
+
+  final IconData iconData;
+  final Color iconColor;
+  final Organizer organizer;
+  final VoidCallback? onClicked;
+
+  static const double spacing = 8;
 
   @override
   _TileState createState() => _TileState();

@@ -6,16 +6,16 @@ import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 
 class CanvasBuilder extends StatefulWidget {
-  final Widget child;
-  final StoryRepository storyRepository;
-  final SelectedStoryRepository selectedStoryRepository;
-
   const CanvasBuilder({
     Key? key,
     required this.child,
     required this.storyRepository,
     required this.selectedStoryRepository,
   }) : super(key: key);
+
+  final Widget child;
+  final StoryRepository storyRepository;
+  final SelectedStoryRepository selectedStoryRepository;
 
   @override
   _CanvasBuilderState createState() => _CanvasBuilderState();
@@ -57,9 +57,6 @@ class _CanvasBuilderState extends State<CanvasBuilder> {
 }
 
 class CanvasProvider extends Provider<CanvasState> {
-  final StoryRepository storyRepository;
-  final SelectedStoryRepository selectedStoryRepository;
-
   const CanvasProvider({
     required this.storyRepository,
     required this.selectedStoryRepository,
@@ -73,6 +70,9 @@ class CanvasProvider extends Provider<CanvasState> {
           child: child,
           key: key,
         );
+
+  final StoryRepository storyRepository;
+  final SelectedStoryRepository selectedStoryRepository;
 
   static CanvasProvider? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<CanvasProvider>();

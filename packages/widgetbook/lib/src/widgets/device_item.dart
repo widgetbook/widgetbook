@@ -4,11 +4,12 @@ import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/utils/extensions.dart';
 
 class DeviceItem extends StatelessWidget {
-  final Device device;
   const DeviceItem({
     Key? key,
     required this.device,
   }) : super(key: key);
+
+  final Device device;
 
   @override
   Widget build(BuildContext context) {

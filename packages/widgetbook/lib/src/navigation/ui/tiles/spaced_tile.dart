@@ -4,12 +4,6 @@ import 'package:widgetbook/src/navigation/ui/tiles/tile.dart';
 import 'package:widgetbook/src/navigation/ui/tiles/tile_spacer.dart';
 
 class SpacedTile extends StatelessWidget {
-  final int level;
-  final Organizer organizer;
-  final IconData iconData;
-  final Color iconColor;
-  final VoidCallback? onClicked;
-
   const SpacedTile({
     Key? key,
     required this.organizer,
@@ -18,6 +12,12 @@ class SpacedTile extends StatelessWidget {
     required this.iconColor,
     this.onClicked,
   }) : super(key: key);
+
+  final int level;
+  final Organizer organizer;
+  final IconData iconData;
+  final Color iconColor;
+  final VoidCallback? onClicked;
 
   @override
   Widget build(BuildContext context) {

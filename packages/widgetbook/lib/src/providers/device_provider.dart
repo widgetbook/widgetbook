@@ -4,16 +4,16 @@ import 'package:widgetbook/src/providers/device_state.dart';
 import 'package:widgetbook/src/providers/provider.dart';
 
 class DeviceBuilder extends StatefulWidget {
-  final Widget child;
-  final List<Device> availableDevices;
-  final Device currentDevice;
-
   const DeviceBuilder({
     Key? key,
     required this.child,
     required this.availableDevices,
     required this.currentDevice,
   }) : super(key: key);
+
+  final Widget child;
+  final List<Device> availableDevices;
+  final Device currentDevice;
 
   @override
   _DeviceBuilderState createState() => _DeviceBuilderState();

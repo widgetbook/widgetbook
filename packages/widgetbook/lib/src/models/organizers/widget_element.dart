@@ -6,13 +6,6 @@ import 'package:widgetbook/src/models/organizers/story.dart';
 
 ///
 class WidgetElement extends ExpandableOrganizer {
-  // TODO Maybe passing a type makes more sense than passing a name
-  // that has the benefit that the WidgetElement's name will change when the
-  // class name changes
-  //
-  // This could be avoided alltogether by using annotations
-  final List<Story> stories;
-
   WidgetElement({
     required String name,
     required this.stories,
@@ -25,6 +18,13 @@ class WidgetElement extends ExpandableOrganizer {
       state.parent = this;
     }
   }
+
+  // TODO Maybe passing a type makes more sense than passing a name
+  // that has the benefit that the WidgetElement's name will change when the
+  // class name changes
+  //
+  // This could be avoided alltogether by using annotations
+  final List<Story> stories;
 
   @override
   bool operator ==(Object other) {

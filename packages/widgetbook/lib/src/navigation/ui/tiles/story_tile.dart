@@ -6,14 +6,14 @@ import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 
 class StoryTile extends StatefulWidget {
-  final Story story;
-  final int level;
-
   const StoryTile({
     Key? key,
     required this.story,
     required this.level,
   }) : super(key: key);
+
+  final Story story;
+  final int level;
 
   @override
   _StoryTileState createState() => _StoryTileState();

@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:widgetbook/src/providers/zoom_state.dart';
 
 class ZoomBuilder extends StatefulWidget {
-  final Widget child;
-
   const ZoomBuilder({
     Key? key,
     required this.child,
   }) : super(key: key);
+
+  final Widget child;
 
   @override
   _ZoomBuilderState createState() => _ZoomBuilderState();
@@ -31,10 +31,6 @@ class _ZoomBuilderState extends State<ZoomBuilder> {
 }
 
 class ZoomProvider extends InheritedWidget {
-  final ZoomState state;
-  final ValueChanged<ZoomState> onStateChanged;
-  final double levelChange = 0.25;
-
   const ZoomProvider({
     required this.state,
     required this.onStateChanged,
@@ -44,6 +40,10 @@ class ZoomProvider extends InheritedWidget {
           child: child,
           key: key,
         );
+
+  final ZoomState state;
+  final ValueChanged<ZoomState> onStateChanged;
+  final double levelChange = 0.25;
 
   static ZoomProvider? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<ZoomProvider>();

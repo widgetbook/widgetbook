@@ -7,11 +7,12 @@ import 'package:widgetbook/src/providers/injected_theme_provider.dart';
 import 'package:widgetbook/src/providers/injected_theme_state.dart';
 
 class DeviceRender extends StatelessWidget {
-  final Story story;
   const DeviceRender({
     Key? key,
     required this.story,
   }) : super(key: key);
+
+  final Story story;
 
   ThemeData getInjectedTheme(BuildContext context, InjectedThemeState state) {
     var brightness = Theme.of(context).brightness;

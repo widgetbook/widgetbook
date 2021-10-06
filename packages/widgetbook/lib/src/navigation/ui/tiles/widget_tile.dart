@@ -6,14 +6,14 @@ import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 
 class WidgetTile extends StatefulWidget {
-  final WidgetElement widgetElement;
-  final int level;
-
   const WidgetTile({
     Key? key,
     required this.widgetElement,
     required this.level,
   }) : super(key: key);
+
+  final WidgetElement widgetElement;
+  final int level;
 
   @override
   _WidgetTileState createState() => _WidgetTileState();

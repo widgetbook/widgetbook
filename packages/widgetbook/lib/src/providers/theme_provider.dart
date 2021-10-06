@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/src/providers/provider.dart';
 
 class ThemeBuilder extends StatefulWidget {
-  final Widget child;
-
   const ThemeBuilder({
     Key? key,
     required this.child,
   }) : super(key: key);
+
+  final Widget child;
 
   @override
   _ThemeBuilderState createState() => _ThemeBuilderState();

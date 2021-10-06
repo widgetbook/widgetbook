@@ -20,22 +20,6 @@ import 'package:widgetbook/src/routing/story_router_delegate.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 
 class Widgetbook extends StatefulWidget {
-  /// Categories which host Folders and WidgetElements.
-  /// This can be used to organize the structure of the Widgetbook on a large scale.
-  final List<Category> categories;
-
-  /// The devices on which Stories are previewed.
-  final List<Device> devices;
-
-  /// Information about the app that is catalogued in the Widgetbook.
-  final AppInfo appInfo;
-
-  /// The `ThemeData` that is shown when the light theme is active.
-  final ThemeData? lightTheme;
-
-  /// The `ThemeData` that is shown when the dark theme is active.
-  final ThemeData? darkTheme;
-
   const Widgetbook({
     Key? key,
     required this.categories,
@@ -51,6 +35,22 @@ class Widgetbook extends StatefulWidget {
     this.lightTheme,
     this.darkTheme,
   }) : super(key: key);
+
+  /// Categories which host Folders and WidgetElements.
+  /// This can be used to organize the structure of the Widgetbook on a large scale.
+  final List<Category> categories;
+
+  /// The devices on which Stories are previewed.
+  final List<Device> devices;
+
+  /// Information about the app that is catalogued in the Widgetbook.
+  final AppInfo appInfo;
+
+  /// The `ThemeData` that is shown when the light theme is active.
+  final ThemeData? lightTheme;
+
+  /// The `ThemeData` that is shown when the dark theme is active.
+  final ThemeData? darkTheme;
 
   @override
   _WidgetbookState createState() => _WidgetbookState();

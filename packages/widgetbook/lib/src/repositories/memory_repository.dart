@@ -7,16 +7,16 @@ import 'package:widgetbook/src/models/model.dart';
 import 'package:widgetbook/src/repositories/repository.dart';
 
 class MemoryRepository<Item extends Model> extends Repository<Item> {
-  @internal
-  final Map<String, Item> memory;
-
-  final StreamController<List<Item>> _streamController;
-
   MemoryRepository({Map<String, Item>? initialConfiguration})
       : memory = initialConfiguration ?? HashMap(),
         _streamController = StreamController<List<Item>>.broadcast() {
     _streamController.onListen = _emitChangesToStream;
   }
+
+  @internal
+  final Map<String, Item> memory;
+
+  final StreamController<List<Item>> _streamController;
 
   void _emitChangesToStream() {
     _streamController.add(memory.values.toList());

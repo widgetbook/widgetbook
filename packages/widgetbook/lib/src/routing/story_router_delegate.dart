@@ -46,16 +46,16 @@ class NoAnimationTransitionDelegate extends TransitionDelegate<void> {
 
 class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<StoryRoutePath> {
+  StoryRouterDelegate({
+    required this.appInfo,
+    required this.canvasState,
+  }) : navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   final GlobalKey<NavigatorState> navigatorKey;
 
   final AppInfo appInfo;
   final CanvasState canvasState;
-
-  StoryRouterDelegate({
-    required this.appInfo,
-    required this.canvasState,
-  }) : navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
