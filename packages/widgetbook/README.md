@@ -7,7 +7,7 @@
 
 ___
 
-A flutter package that helps cataloguing widgets. Inspired by Storybook.js and flutterbook.
+A flutter package which helps developers cataloguing their widgets, test them quickly on multiple devices and themes, and share them easily with designers and clients. Inspired by Storybook.js and flutterbook.
 
 <p align="center">
 <img src="https://media.githubusercontent.com/media/widgetbook/widgetbook/main/docs/assets/Screenshot.png" alt="Widgetbook Screenshot" />
