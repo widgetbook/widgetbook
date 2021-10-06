@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:widgetbook/src/models/resolution.dart';
 
 /// Category of different device types.
+
 enum DeviceType {
   watch,
   mobile,
@@ -12,6 +12,7 @@ enum DeviceType {
 }
 
 /// A virtual device that will rendered when a story is previewed
+@immutable
 class Device {
   const Device({
     required this.name,

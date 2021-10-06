@@ -33,11 +33,11 @@ class DeviceItem extends StatelessWidget {
   Widget buildTooltip(
       {required BuildContext context, required bool isCurrent}) {
     return Tooltip(
+      message: device.name,
       child: buildIcon(
         device.type,
         isCurrent ? context.colorScheme.primary : context.theme.hintColor,
       ),
-      message: device.name,
     );
   }
 

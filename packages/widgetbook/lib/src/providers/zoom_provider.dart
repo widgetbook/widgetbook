@@ -43,7 +43,7 @@ class ZoomProvider extends InheritedWidget {
 
   final ZoomState state;
   final ValueChanged<ZoomState> onStateChanged;
-  final double levelChange = 0.25;
+  double get levelChange => 0.25;
 
   static ZoomProvider? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<ZoomProvider>();

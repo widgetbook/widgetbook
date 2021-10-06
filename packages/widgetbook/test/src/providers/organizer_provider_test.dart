@@ -225,7 +225,7 @@ void main() {
         (WidgetTester tester) async {
           await tester.pumpWidgetWithMaterialApp(
             OrganizerBuilder(
-              categories: [],
+              categories: const [],
               selectedStoryRepository: selectedStoryRepository,
               storyRepository: storyRepository,
               child: Container(),

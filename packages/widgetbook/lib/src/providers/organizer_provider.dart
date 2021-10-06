@@ -147,8 +147,9 @@ class OrganizerProvider extends Provider<OrganizerState> {
     );
 
     final stories = StoryHelper.getAllStoriesFromCategories(categories);
-    storyRepository.deleteAll();
-    storyRepository.addAll(stories);
+    storyRepository
+      ..deleteAll()
+      ..addAll(stories);
   }
 
   // The filter methods are used to implement a search of organizer elements

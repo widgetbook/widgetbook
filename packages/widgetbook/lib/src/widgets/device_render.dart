@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
-import 'package:widgetbook/src/models/resolution.dart';
 import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/providers/injected_theme_provider.dart';
 import 'package:widgetbook/src/providers/injected_theme_state.dart';
@@ -24,9 +22,11 @@ class DeviceRender extends StatelessWidget {
       return state.darkTheme!;
     }
 
-    // TODO a warning would probably be good because otherwise the rendering is not representative
+    // TODO a warning would probably be good because otherwise the rendering
+    // is not representative.
     // As an alternative at least one Theme has to be provided,
-    //and theme switching is disabled if no theme for light AND dark is provided.
+    // and theme switching is disabled if no theme for light AND dark is
+    // provided.
     return Theme.of(context);
   }
 
@@ -53,7 +53,6 @@ class DeviceRender extends StatelessWidget {
               color: Theme.of(context).brightness == Brightness.dark
                   ? Colors.white
                   : Colors.black,
-              width: 1,
             ),
           ),
           width: resolution.logicalSize.width,

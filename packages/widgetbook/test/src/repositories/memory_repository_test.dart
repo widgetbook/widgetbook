@@ -3,13 +3,14 @@ import 'package:widgetbook/src/models/model.dart';
 import 'package:widgetbook/src/repositories/memory_repository.dart';
 
 class _Item extends Model {
-  final int value;
   _Item({
     required String id,
     required this.value,
   }) : super(
           id: id,
         );
+
+  final int value;
 
   @override
   bool operator ==(Object other) {
@@ -68,7 +69,7 @@ void main() {
               value: 0,
             ),
           );
-          repository.closeStream();
+          await repository.closeStream();
 
           expect(
             repository.memory,
@@ -119,7 +120,7 @@ void main() {
               value: 0,
             ),
           );
-          repository.closeStream();
+          await repository.closeStream();
 
           expect(
             repository.memory,
@@ -170,7 +171,7 @@ void main() {
               value: 1,
             ),
           );
-          repository.closeStream();
+          await repository.closeStream();
 
           expect(
             repository.memory,
@@ -214,7 +215,7 @@ void main() {
               value: 0,
             ),
           );
-          repository.closeStream();
+          await repository.closeStream();
 
           expect(
             repository.memory,
@@ -326,7 +327,7 @@ void main() {
           );
 
           repository.deleteAll();
-          repository.closeStream();
+          await repository.closeStream();
 
           expect(
             repository.memory,
@@ -373,7 +374,7 @@ void main() {
               value: 1,
             ),
           ]);
-          repository.closeStream();
+          await repository.closeStream();
 
           expect(
             repository.memory,

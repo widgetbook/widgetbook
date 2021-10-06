@@ -35,7 +35,7 @@ void main() {
       test(
         'returns true when instance is the same',
         () {
-          final instance = Apple.iPhone11;
+          const instance = Apple.iPhone11;
 
           expect(
             instance == instance,

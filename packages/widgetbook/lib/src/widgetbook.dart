@@ -37,7 +37,8 @@ class Widgetbook extends StatefulWidget {
   }) : super(key: key);
 
   /// Categories which host Folders and WidgetElements.
-  /// This can be used to organize the structure of the Widgetbook on a large scale.
+  /// This can be used to organize the structure of the Widgetbook on a large
+  /// scale.
   final List<Category> categories;
 
   /// The devices on which Stories are previewed.

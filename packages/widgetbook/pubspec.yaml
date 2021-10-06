@@ -11,13 +11,13 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  flutter_web_plugins:
-    sdk: flutter
+  collection: ^1.15.0
   flutter:
     sdk: flutter
-  vector_math: ^2.1.0
+  flutter_web_plugins:
+    sdk: flutter
   meta: ^1.7.0
-  collection: ^1.15.0
+  vector_math: ^2.1.0
 
 dev_dependencies:
   flutter_test:
