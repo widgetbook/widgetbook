@@ -1,46 +1,77 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:widgetbook/src/cubit/canvas/canvas_cubit.dart';
-import 'package:widgetbook/src/cubit/categories/categories_cubit.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
+import 'package:widgetbook/src/providers/canvas_provider.dart';
+import 'package:widgetbook/src/providers/canvas_state.dart';
+import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/routing/story_route_path.dart';
 import 'package:widgetbook/src/styled_widgets/styled_scaffold.dart';
 import 'package:widgetbook/src/widgets/wrapper.dart';
 
-import '../../widgetbook.dart';
+import 'package:widgetbook/widgetbook.dart';
+
+class NoAnimationTransitionDelegate extends TransitionDelegate<void> {
+  @override
+  Iterable<RouteTransitionRecord> resolve({
+    required List<RouteTransitionRecord> newPageRouteHistory,
+    required Map<RouteTransitionRecord?, RouteTransitionRecord>
+        locationToExitingPageRoute,
+    required Map<RouteTransitionRecord?, List<RouteTransitionRecord>>
+        pageRouteToPagelessRoutes,
+  }) {
+    final results = <RouteTransitionRecord>[];
+
+    for (final pageRoute in newPageRouteHistory) {
+      if (pageRoute.isWaitingForEnteringDecision) {
+        pageRoute.markForAdd();
+      }
+      results.add(pageRoute);
+    }
+    for (final exitingPageRoute in locationToExitingPageRoute.values) {
+      if (exitingPageRoute.isWaitingForExitingDecision) {
+        exitingPageRoute.markForRemove();
+        final pagelessRoutes = pageRouteToPagelessRoutes[exitingPageRoute];
+        if (pagelessRoutes != null) {
+          for (final pagelessRoute in pagelessRoutes) {
+            pagelessRoute.markForRemove();
+          }
+        }
+      }
+      results.add(exitingPageRoute);
+    }
+    return results;
+  }
+}
 
 class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<StoryRoutePath> {
-  @override
-  final GlobalKey<NavigatorState> navigatorKey;
-
-  final AppInfo appInfo;
-  final CanvasState canvasState;
-
   StoryRouterDelegate({
     required this.appInfo,
     required this.canvasState,
   }) : navigatorKey = GlobalKey<NavigatorState>();
 
   @override
+  final GlobalKey<NavigatorState> navigatorKey;
+
+  final AppInfo appInfo;
+  final CanvasState canvasState;
+
+  @override
   Widget build(BuildContext context) {
     return Navigator(
+      transitionDelegate: NoAnimationTransitionDelegate(),
       pages: [
-        MaterialPage(
+        MaterialPage<dynamic>(
           key: ValueKey(currentConfiguration.path),
           child: StyledScaffold(
             body: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Builder(
-                builder: (context) => Row(
+              padding: const EdgeInsets.all(16),
+              child: Builder(builder: (context) {
+                final state = OrganizerProvider.of(context)!.state;
+                return Row(
                   children: [
-                    BlocBuilder<CategoriesCubit, OrganizerState>(
-                      builder: (context, state) {
-                        return NavigationPanel(
-                          appInfo: appInfo,
-                          categories: state.filteredCategories,
-                        );
-                      },
+                    NavigationPanel(
+                      appInfo: appInfo,
+                      categories: state.filteredCategories,
                     ),
                     const SizedBox(
                       width: 16,
@@ -49,18 +80,19 @@ class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
                       child: Editor(),
                     ),
                   ],
-                ),
-              ),
+                );
+              }),
             ),
           ),
         )
       ],
-      onPopPage: (route, result) {
+      onPopPage: (route, dynamic result) {
         if (!route.didPop(result)) {
           return false;
         }
 
-        context.read<CanvasCubit>().deselectStory();
+        CanvasProvider.of(context)!.deselectStory();
+
         notifyListeners();
 
         return true;

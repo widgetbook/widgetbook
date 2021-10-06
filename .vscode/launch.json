@@ -5,11 +5,19 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Widgetbook (meal_app)",
+            "name": "Debug Example App Widgetbook",
             "cwd": "example/meal_app",
             "request": "launch",
             "program": "stories/main.dart",
             "type": "dart"
+        },
+        {
+            "name": "Profile Example App Widgetbook",
+            "cwd": "example/meal_app",
+            "request": "launch",
+            "program": "stories/main.dart",
+            "type": "dart",
+            "flutterMode": "profile"
         },
         {
             "name": "Meal App",

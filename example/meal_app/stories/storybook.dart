@@ -23,7 +23,7 @@ class Storyboard extends StatelessWidget {
       ],
       categories: [
         Category(
-          name: 'widgets',
+          name: 'widgets test',
           folders: [
             Folder(
               name: 'attributes',
@@ -166,7 +166,7 @@ class Storyboard extends StatelessWidget {
           ],
         ),
         Category(
-          name: 'pages 12',
+          name: 'pages',
         ),
       ],
       appInfo: AppInfo(name: 'Meal App'),

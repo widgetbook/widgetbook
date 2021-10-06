@@ -1,5 +1,5 @@
-import 'package:widgetbook/src/models/organizers/folder.dart';
 import 'package:widgetbook/src/models/organizers/expandable_organizer.dart';
+import 'package:widgetbook/src/models/organizers/folder.dart';
 import 'package:widgetbook/src/models/organizers/widget_element.dart';
 
 /// Categories help to organize WidgetElements and Stories into different areas.

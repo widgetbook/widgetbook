@@ -3,11 +3,11 @@ import 'package:widgetbook/src/routing/story_route_path.dart';
 
 class StoryRouteInformationParser
     extends RouteInformationParser<StoryRoutePath> {
-  final Function(String path) onRoute;
-
   StoryRouteInformationParser({
     required this.onRoute,
   });
+
+  final Function(String path) onRoute;
 
   @override
   Future<StoryRoutePath> parseRouteInformation(

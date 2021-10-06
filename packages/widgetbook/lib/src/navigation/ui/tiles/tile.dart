@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:widgetbook/src/constants/border_radius_constants.dart';
-import 'package:widgetbook/src/cubit/canvas/canvas_cubit.dart';
 import 'package:widgetbook/src/models/organizers/organizer.dart';
+import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/utils/styles.dart';
-import '../../../utils/utils.dart';
+import 'package:widgetbook/src/utils/utils.dart';
 
 class Tile extends StatefulWidget {
-  final IconData iconData;
-  final Color iconColor;
-  final Organizer organizer;
-  final VoidCallback? onClicked;
-
-  static const double spacing = 8;
-
   const Tile({
     Key? key,
     required this.iconData,
@@ -21,6 +13,13 @@ class Tile extends StatefulWidget {
     required this.organizer,
     this.onClicked,
   }) : super(key: key);
+
+  final IconData iconData;
+  final Color iconColor;
+  final Organizer organizer;
+  final VoidCallback? onClicked;
+
+  static const double spacing = 8;
 
   @override
   _TileState createState() => _TileState();
@@ -53,34 +52,32 @@ class _TileState extends State<Tile> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CanvasCubit, CanvasState>(
-      builder: (context, state) {
-        bool isSelected = state.selectedStory == widget.organizer;
-        return GestureDetector(
-          onTap: () {
-            widget.onClicked?.call();
-          },
-          child: MouseRegion(
-            onEnter: (e) {
-              setState(() => hovered = true);
-            },
-            onExit: (e) {
-              setState(() => hovered = false);
-            },
-            cursor: SystemMouseCursors.click,
-            child: AnimatedContainer(
-              decoration: BoxDecoration(
-                color: hovered || isSelected
-                    ? Styles.getHighlightColor(context)
-                    : null,
-                borderRadius: BorderRadiusConstants.tileBorderRadius,
-              ),
-              duration: const Duration(milliseconds: 100),
-              child: _buildTile(context),
-            ),
-          ),
-        );
+    final state = CanvasProvider.of(context)!.state;
+    final isSelected = state.selectedStory == widget.organizer;
+
+    return GestureDetector(
+      onTap: () {
+        widget.onClicked?.call();
       },
+      child: MouseRegion(
+        onEnter: (e) {
+          setState(() => hovered = true);
+        },
+        onExit: (e) {
+          setState(() => hovered = false);
+        },
+        cursor: SystemMouseCursors.click,
+        child: AnimatedContainer(
+          decoration: BoxDecoration(
+            color: hovered || isSelected
+                ? Styles.getHighlightColor(context)
+                : null,
+            borderRadius: BorderRadiusConstants.tileBorderRadius,
+          ),
+          duration: const Duration(milliseconds: 100),
+          child: _buildTile(context),
+        ),
+      ),
     );
   }
 }

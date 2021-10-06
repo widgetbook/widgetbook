@@ -1,44 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/cubit/device/device_cubit.dart';
 import 'package:widgetbook/src/models/device.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../utils/extensions.dart';
+import 'package:widgetbook/src/providers/device_provider.dart';
+import 'package:widgetbook/src/utils/extensions.dart';
 
 class DeviceItem extends StatelessWidget {
-  final Device device;
   const DeviceItem({
     Key? key,
     required this.device,
   }) : super(key: key);
 
+  final Device device;
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DeviceCubit, DeviceState>(
-      builder: (context, state) {
-        bool isCurrent = device == state.currentDevice;
-        return GestureDetector(
-          onTap: () {
-            context.read<DeviceCubit>().selectDevice(
-                  device,
-                );
-          },
-          child: buildTooltip(
-            context: context,
-            isCurrent: isCurrent,
-          ),
+    final deviceProvider = DeviceProvider.of(context)!;
+    final state = deviceProvider.state;
+    final isCurrent = device == state.currentDevice;
+
+    return GestureDetector(
+      onTap: () {
+        deviceProvider.selectDevice(
+          device,
         );
       },
+      child: buildTooltip(
+        context: context,
+        isCurrent: isCurrent,
+      ),
     );
   }
 
   Widget buildTooltip(
       {required BuildContext context, required bool isCurrent}) {
     return Tooltip(
+      message: device.name,
       child: buildIcon(
         device.type,
         isCurrent ? context.colorScheme.primary : context.theme.hintColor,
       ),
-      message: device.name,
     );
   }
 

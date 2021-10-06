@@ -1,29 +1,29 @@
 name: widgetbook
 description: A flutter storybook that helps professionals and teams to catalogue their widgets.
-version: 0.0.9
-homepage: https://firecrown.pro?utm_source=pub.dev&utm_medium=link&utm_campaign=package_widgetbook
-repository: https://github.com/firecrownpro/widgetbook
-issue_tracker: https://github.com/firecrownpro/widgetbook/issues 
-# documentation: https://firecrown.pro 
+version: 0.0.10
+homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=pubspec
+repository: https://github.com/widgetbook/widgetbook
+issue_tracker: https://github.com/widgetbook/widgetbook/issues
+documentation: https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
-  bloc: ^7.0.0
-  flutter_web_plugins:
-    sdk: flutter
+  collection: ^1.15.0
   flutter:
     sdk: flutter
-  flutter_bloc: ^7.1.0
-  url_launcher: ^6.0.9
+  flutter_web_plugins:
+    sdk: flutter
+  meta: ^1.7.0
   vector_math: ^2.1.0
 
 dev_dependencies:
-  flutter_lints: ^1.0.4
   flutter_test:
     sdk: flutter
+  mocktail: ^0.1.4
+  very_good_analysis: ^2.3.0
 
 flutter:
   assets:

@@ -1,39 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:widgetbook/src/cubit/canvas/canvas_cubit.dart';
-import 'package:widgetbook/src/cubit/device/device_cubit.dart';
-import 'package:widgetbook/src/cubit/injected_theme/injected_theme_cubit.dart';
-import 'package:widgetbook/src/cubit/categories/categories_cubit.dart';
-import 'package:widgetbook/src/cubit/theme/theme_cubit.dart';
-import 'package:widgetbook/src/cubit/zoom/zoom_cubit.dart';
+
+import 'package:widgetbook/src/configure_non_web.dart'
+    if (dart.library.html) 'package:widgetbook/src/configure_web.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
-import 'package:widgetbook/src/repository/story_repository.dart';
+import 'package:widgetbook/src/providers/canvas_provider.dart';
+import 'package:widgetbook/src/providers/device_provider.dart';
+import 'package:widgetbook/src/providers/injected_theme_provider.dart';
+import 'package:widgetbook/src/providers/organizer_provider.dart';
+import 'package:widgetbook/src/providers/theme_provider.dart';
+import 'package:widgetbook/src/providers/zoom_provider.dart';
+import 'package:widgetbook/src/repositories/selected_story_repository.dart';
+import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/routing/route_information_parser.dart';
 import 'package:widgetbook/src/routing/story_router_delegate.dart';
 import 'package:widgetbook/src/utils/utils.dart';
-import 'configure_non_web.dart' if (dart.library.html) 'configure_web.dart';
 
 class Widgetbook extends StatefulWidget {
-  /// Categories which host Folders and WidgetElements.
-  /// This can be used to organize the structure of the Widgetbook on a large scale.
-  final List<Category> categories;
-
-  /// The devices on which Stories are previewed.
-  final List<Device> devices;
-
-  /// Information about the app that is catalogued in the Widgetbook.
-  final AppInfo appInfo;
-
-  /// The `ThemeData` that is shown when the light theme is active.
-  final ThemeData? lightTheme;
-
-  /// The `ThemeData` that is shown when the dark theme is active.
-  final ThemeData? darkTheme;
-
   const Widgetbook({
     Key? key,
     required this.categories,
@@ -50,111 +36,101 @@ class Widgetbook extends StatefulWidget {
     this.darkTheme,
   }) : super(key: key);
 
+  /// Categories which host Folders and WidgetElements.
+  /// This can be used to organize the structure of the Widgetbook on a large
+  /// scale.
+  final List<Category> categories;
+
+  /// The devices on which Stories are previewed.
+  final List<Device> devices;
+
+  /// Information about the app that is catalogued in the Widgetbook.
+  final AppInfo appInfo;
+
+  /// The `ThemeData` that is shown when the light theme is active.
+  final ThemeData? lightTheme;
+
+  /// The `ThemeData` that is shown when the dark theme is active.
+  final ThemeData? darkTheme;
+
   @override
   _WidgetbookState createState() => _WidgetbookState();
 }
 
 class _WidgetbookState extends State<Widgetbook> {
-  late CanvasCubit canvasCubit;
-  late CategoriesCubit categoriesCubit;
-  late DeviceCubit deviceCubit;
-  late InjectedThemeCubit injectedThemeCubit;
-  late StoryRepository storyRepository;
+  // TODO ugly hack
+  late BuildContext contextWithProviders;
+
+  SelectedStoryRepository selectedStoryRepository = SelectedStoryRepository();
+  StoryRepository storyRepository = StoryRepository();
 
   @override
   void initState() {
     configureApp();
-    storyRepository = StoryRepository();
-    canvasCubit = CanvasCubit(
-      storyRepository: storyRepository,
-    );
-    categoriesCubit = CategoriesCubit(
-      categories: widget.categories,
-      storyRepository: storyRepository,
-      canvasCubit: canvasCubit,
-    );
-    deviceCubit = DeviceCubit(devices: widget.devices);
-    injectedThemeCubit = InjectedThemeCubit(
-      lightTheme: widget.lightTheme,
-      darkTheme: widget.darkTheme,
-    );
+
     super.initState();
   }
 
   @override
   void didUpdateWidget(covariant Widgetbook oldWidget) {
-    categoriesCubit.update(widget.categories);
-    deviceCubit.update(widget.devices);
-    injectedThemeCubit.themesChanged(
+    OrganizerProvider.of(contextWithProviders)!.update(widget.categories);
+    DeviceProvider.of(contextWithProviders)!.update(widget.devices);
+    InjectedThemeProvider.of(contextWithProviders)!.themesChanged(
       lightTheme: widget.lightTheme,
       darkTheme: widget.darkTheme,
     );
+
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider(
-          create: (context) => storyRepository,
-        ),
-      ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => canvasCubit,
+    return OrganizerBuilder(
+      categories: widget.categories,
+      storyRepository: storyRepository,
+      selectedStoryRepository: selectedStoryRepository,
+      child: CanvasBuilder(
+        selectedStoryRepository: selectedStoryRepository,
+        storyRepository: storyRepository,
+        child: ZoomBuilder(
+          child: ThemeBuilder(
+            child: DeviceBuilder(
+              availableDevices: widget.devices,
+              currentDevice: widget.devices.first,
+              child: InjectedThemeBuilder(
+                lightTheme: widget.lightTheme,
+                darkTheme: widget.darkTheme,
+                child: Builder(builder: (context) {
+                  contextWithProviders = context;
+                  final canvasState = CanvasProvider.of(context)!.state;
+                  final storiesState = OrganizerProvider.of(context)!.state;
+                  final themeMode = ThemeProvider.of(context)!.state;
+
+                  return MaterialApp.router(
+                    routeInformationParser: StoryRouteInformationParser(
+                      onRoute: (path) {
+                        final stories = StoryHelper.getAllStoriesFromCategories(
+                          storiesState.allCategories,
+                        );
+                        final selectedStory =
+                            selectStoryFromPath(path, stories);
+                        CanvasProvider.of(context)!.selectStory(selectedStory);
+                      },
+                    ),
+                    routerDelegate: StoryRouterDelegate(
+                      canvasState: canvasState,
+                      appInfo: widget.appInfo,
+                    ),
+                    title: widget.appInfo.name,
+                    debugShowCheckedModeBanner: false,
+                    themeMode: themeMode,
+                    darkTheme: Styles.darkTheme,
+                    theme: Styles.lightTheme,
+                  );
+                }),
+              ),
+            ),
           ),
-          BlocProvider(
-            create: (context) => ThemeCubit(),
-          ),
-          BlocProvider(
-            create: (context) => ZoomCubit(),
-          ),
-          BlocProvider(
-            create: (context) => categoriesCubit,
-          ),
-          BlocProvider(
-            create: (context) => deviceCubit,
-          ),
-          BlocProvider(
-            create: (context) => injectedThemeCubit,
-          ),
-        ],
-        child: BlocBuilder<ThemeCubit, ThemeMode>(
-          builder: (context, themeMode) {
-            return BlocBuilder<CanvasCubit, CanvasState>(
-              builder: (context, canvasState) {
-                return BlocBuilder<CategoriesCubit, OrganizerState>(
-                  builder: (context, storiesState) {
-                    return MaterialApp.router(
-                      routeInformationParser: StoryRouteInformationParser(
-                        onRoute: (path) {
-                          var stories = StoryHelper.getAllStoriesFromCategories(
-                            storiesState.allCategories,
-                          );
-                          var selectedStory =
-                              selectStoryFromPath(path, stories);
-                          context
-                              .read<CanvasCubit>()
-                              .selectStory(selectedStory);
-                        },
-                      ),
-                      routerDelegate: StoryRouterDelegate(
-                        canvasState: canvasState,
-                        appInfo: widget.appInfo,
-                      ),
-                      title: widget.appInfo.name,
-                      debugShowCheckedModeBanner: false,
-                      themeMode: themeMode,
-                      darkTheme: Styles.darkTheme,
-                      theme: Styles.lightTheme,
-                    );
-                  },
-                );
-              },
-            );
-          },
         ),
       ),
     );
@@ -164,7 +140,7 @@ class _WidgetbookState extends State<Widgetbook> {
     String? path,
     List<Story> stories,
   ) {
-    String storyPath = path?.replaceFirst('/stories/', '') ?? '';
+    final storyPath = path?.replaceFirst('/stories/', '') ?? '';
     Story? story;
     for (final element in stories) {
       if (element.path == storyPath) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/resolution.dart';
 
 /// Category of different device types.
+
 enum DeviceType {
   watch,
   mobile,
@@ -11,19 +12,8 @@ enum DeviceType {
 }
 
 /// A virtual device that will rendered when a story is previewed
+@immutable
 class Device {
-  /// For example 'iPhone 12' or 'Samsung S10'.
-  final String name;
-
-  /// Specifies the native resolution (of the device screen)
-  /// and the logical resolution (for rendering a preview on the device).
-  final Resolution resolution;
-
-  /// Categorizes the Device.
-  /// For instance mobile or tablet.
-  /// This is used to display an appropriate icon in the device bar.
-  final DeviceType type;
-
   const Device({
     required this.name,
     required this.resolution,
@@ -40,6 +30,31 @@ class Device {
       type: DeviceType.unknown,
     );
   }
+
+  /// For example 'iPhone 12' or 'Samsung S10'.
+  final String name;
+
+  /// Specifies the native resolution (of the device screen)
+  /// and the logical resolution (for rendering a preview on the device).
+  final Resolution resolution;
+
+  /// Categorizes the Device.
+  /// For instance mobile or tablet.
+  /// This is used to display an appropriate icon in the device bar.
+  final DeviceType type;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Device &&
+        other.name == name &&
+        other.resolution == resolution &&
+        other.type == type;
+  }
+
+  @override
+  int get hashCode => name.hashCode ^ resolution.hashCode ^ type.hashCode;
 }
 
 /// Collection of Samsung devices

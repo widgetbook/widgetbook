@@ -3,11 +3,12 @@ import 'package:widgetbook/src/constants/constants.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 
 class Header extends StatelessWidget {
-  final AppInfo appInfo;
   const Header({
     Key? key,
     required this.appInfo,
   }) : super(key: key);
+
+  final AppInfo appInfo;
 
   @override
   Widget build(BuildContext context) {

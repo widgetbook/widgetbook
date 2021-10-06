@@ -1,26 +1,24 @@
-<p align="center">
-<a href="https://discord.gg/zT4AMStAJA"><img src="https://img.shields.io/discord/879618555560218625?color=blue&logo=discord&style=flat-square" alt="Discord"></a>
-<a href="https://pub.dev/packages/flutter_lints"><img src="https://img.shields.io/badge/style-flutter%20lints-40c4ff?style=flat-square" alt="build"></a>
-<a href="https://github.com/firecrownpro/widgetbook/actions"><img src="https://img.shields.io/github/workflow/status/firecrownpro/widgetbook/ci?style=flat-square" alt="build"></a>
-
-</p>
+![Discord](https://img.shields.io/discord/879618555560218625?color=blue&style=flat-square)
+[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?label=test&style=flat-square)
 
 ___
 
-A flutter package that helps cataloguing widgets. Inspired by Storybook.js and flutterbook.
+A flutter package which helps developers cataloguing their widgets, test them quickly on multiple devices and themes, and share them easily with designers and clients. Inspired by Storybook.js and flutterbook.
 
 <p align="center">
-<img src="https://media.githubusercontent.com/media/firecrownpro/widgetbook/main/docs/assets/Screenshot.png" alt="Widgetbook Screenshot" />
+<img src="https://media.githubusercontent.com/media/widgetbook/widgetbook/main/docs/assets/Screenshot.png" alt="Widgetbook Screenshot" />
 </p>
 
 ## See it in action!
 
-Check out the `Widgetbook` with the example app on our [github page](https://firecrownpro.github.io).
-Furthermore, you can [check out the code of the app at github](https://github.com/firecrownpro/widgetbook/tree/main/example). 
+Check out the `Widgetbook` with the example app on our [github page](https://widgetbook.github.io).
+Furthermore, you can [check out the code of the app at github](https://github.com/widgetbook/widgetbook/tree/main/example). 
 
 ## Let us know how you feel about Widgetbook
 
-We are funded and aim to shape `Widgetbook` to your (and your team's) needs. If you have questions, feature requests or issues let us know on [Discord](https://discord.gg/zT4AMStAJA) or [GitHub](https://github.com/firecrownpro/widgetbook) or book a call with the founders via [Calendly](https://calendly.com/firecrown/call). We're looking forward to build a community and discuss your feedback on our channel! 💙
+We are funded and aim to shape `Widgetbook` to your (and your team's) needs. If you have questions, feature requests or issues let us know on [Discord](https://discord.gg/zT4AMStAJA) or [GitHub](https://github.com/widgetbook/widgetbook) or book a call with the founders via [Calendly](https://calendly.com/widgetbook/call). We're looking forward to build a community and discuss your feedback on our channel! 💙
 
 ## Getting Started
 
@@ -162,4 +160,4 @@ Device(
 
 # Known Issues
 
-- Hot reloading on web is currently not working properly. This is due to the fact that hot reloading is actually a restart. The problem is tracked in [widgetbook/issues/4](https://github.com/firecrownpro/widgetbook/issues/4). For now we recommended to use MacOS or Windows as a platform for development.
+- Hot reloading on web is currently not working properly. This is due to the fact that hot reloading is actually a restart. The problem is tracked in [widgetbook/issues/4](https://github.com/widgetbook/widgetbook/issues/4). For now we recommended to use MacOS or Windows as a platform for development.

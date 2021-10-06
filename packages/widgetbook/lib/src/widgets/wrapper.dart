@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/widgets/story_render.dart';
 
-import '../utils/utils.dart';
-import 'controls_bar.dart';
+import 'package:widgetbook/src/utils/utils.dart';
+import 'package:widgetbook/src/widgets/controls_bar.dart';
+import 'package:widgetbook/src/widgets/story_render.dart';
 
 class Editor extends StatelessWidget {
   const Editor({

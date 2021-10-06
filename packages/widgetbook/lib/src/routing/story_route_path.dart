@@ -1,7 +1,7 @@
 class StoryRoutePath {
-  final String? path;
-
   StoryRoutePath({
     required this.path,
   });
+
+  final String? path;
 }
