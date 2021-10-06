@@ -4,7 +4,7 @@ version: 0.0.10
 homepage: https://widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=package_widgetbook
 repository: https://github.com/widgetbook/widgetbook
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
-# documentation: https://firecrown.pro 
+documentation: https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -19,10 +19,10 @@ dependencies:
   meta: ^1.7.0
 
 dev_dependencies:
-  flutter_lints: ^1.0.4
   flutter_test:
     sdk: flutter
   mocktail: ^0.1.4
+  very_good_analysis: ^2.3.0
 
 flutter:
   assets:
