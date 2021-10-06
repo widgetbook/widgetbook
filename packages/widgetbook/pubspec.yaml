@@ -15,7 +15,6 @@ dependencies:
     sdk: flutter
   flutter:
     sdk: flutter
-  url_launcher: ^6.0.9
   vector_math: ^2.1.0
   meta: ^1.7.0
 
