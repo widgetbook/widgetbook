@@ -66,26 +66,10 @@ class _WidgetbookState extends State<Widgetbook> {
   SelectedStoryRepository selectedStoryRepository = SelectedStoryRepository();
   StoryRepository storyRepository = StoryRepository();
 
-  ZoomState zoomState = ZoomState.normal();
-  CanvasState canvasState = CanvasState.unselected();
-  ThemeMode themeMode = ThemeMode.dark;
-  late DeviceState deviceState;
-  late OrganizerState organizerState;
-  late InjectedThemeState injectedThemeState;
-
   @override
   void initState() {
     configureApp();
 
-    deviceState = DeviceState(
-      availableDevices: widget.devices,
-      currentDevice: widget.devices.first,
-    );
-    organizerState = OrganizerState.unfiltered(categories: widget.categories);
-    injectedThemeState = InjectedThemeState(
-      darkTheme: widget.darkTheme,
-      lightTheme: widget.lightTheme,
-    );
     super.initState();
   }
 
@@ -103,56 +87,26 @@ class _WidgetbookState extends State<Widgetbook> {
 
   @override
   Widget build(BuildContext context) {
-    return OrganizerProvider(
-      selectedStoryRepository: selectedStoryRepository,
+    return OrganizerBuilder(
+      categories: widget.categories,
       storyRepository: storyRepository,
-      state: organizerState,
-      onStateChanged: (OrganizerState state) {
-        setState(() {
-          organizerState = state;
-        });
-      },
-      child: CanvasProvider(
+      selectedStoryRepository: selectedStoryRepository,
+      child: CanvasBuilder(
         selectedStoryRepository: selectedStoryRepository,
         storyRepository: storyRepository,
-        state: canvasState,
-        onStateChanged: (CanvasState state) {
-          setState(() {
-            canvasState = state;
-          });
-        },
-        child: ZoomProvider(
-          state: zoomState,
-          onStateChanged: (ZoomState state) {
-            setState(() {
-              zoomState = state;
-            });
-          },
-          child: ThemeProvider(
-            state: themeMode,
-            onStateChanged: (ThemeMode mode) {
-              setState(() {
-                themeMode = mode;
-              });
-            },
-            child: DeviceProvider(
-              state: deviceState,
-              onStateChanged: (DeviceState state) {
-                setState(() {
-                  deviceState = state;
-                });
-              },
-              child: InjectedThemeProvider(
-                state: injectedThemeState,
-                onStateChanged: (InjectedThemeState state) {
-                  setState(() {
-                    injectedThemeState = state;
-                  });
-                },
+        child: ZoomBuilder(
+          child: ThemeBuilder(
+            child: DeviceBuilder(
+              availableDevices: widget.devices,
+              currentDevice: widget.devices.first,
+              child: InjectedThemeBuilder(
+                lightTheme: widget.lightTheme,
+                darkTheme: widget.darkTheme,
                 child: Builder(builder: (context) {
                   contextWithProviders = context;
                   var canvasState = CanvasProvider.of(context)!.state;
                   var storiesState = OrganizerProvider.of(context)!.state;
+                  var themeMode = ThemeProvider.of(context)!.state;
                   return MaterialApp.router(
                     routeInformationParser: StoryRouteInformationParser(
                       onRoute: (path) {

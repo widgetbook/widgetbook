@@ -256,6 +256,11 @@ class OrganizerProvider extends Provider<OrganizerState> {
   //   return organizer != null;
   // }
 
+  @override
+  void emit(OrganizerState state) {
+    onStateChanged(state);
+  }
+
   void toggleExpander(ExpandableOrganizer organizer) {
     organizer.isExpanded = !organizer.isExpanded;
     emit(
