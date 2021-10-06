@@ -20,7 +20,7 @@ jobs:
 
     - uses: subosito/flutter-action@v1
       with:
-        channel: dev
+        channel: stable
 
     - name: Get flutter packages 
       run: flutter pub get
