@@ -7,7 +7,7 @@ import 'package:widgetbook/src/routing/story_route_path.dart';
 import 'package:widgetbook/src/styled_widgets/styled_scaffold.dart';
 import 'package:widgetbook/src/widgets/wrapper.dart';
 
-import '../../widgetbook.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 class NoAnimationTransitionDelegate extends TransitionDelegate<void> {
   @override

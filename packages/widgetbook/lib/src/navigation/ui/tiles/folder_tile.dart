@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+
 import 'package:widgetbook/src/models/organizers/organizers.dart';
-import 'package:widgetbook/src/navigation/ui/tiles/tile_helper_methods.dart';
 import 'package:widgetbook/src/navigation/ui/tiles/spaced_tile.dart';
+import 'package:widgetbook/src/navigation/ui/tiles/tile_helper_methods.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
-import '../../../utils/utils.dart';
+
+import 'package:widgetbook/src/utils/utils.dart';
 
 class FolderTile extends StatefulWidget {
-  final Folder folder;
-  final int level;
   const FolderTile({
     Key? key,
     required this.folder,
     required this.level,
   }) : super(key: key);
+
+  final Folder folder;
+  final int level;
 
   @override
   _FolderTileState createState() => _FolderTileState();
@@ -23,7 +26,7 @@ class _FolderTileState extends State<FolderTile> {
 
   @override
   Widget build(BuildContext context) {
-    Folder folder = widget.folder;
+    final folder = widget.folder;
     final isExpanded = widget.folder.isExpanded;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

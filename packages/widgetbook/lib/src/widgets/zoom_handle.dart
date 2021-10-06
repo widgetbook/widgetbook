@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/providers/zoom_provider.dart';
-import '../utils/extensions.dart';
+import 'package:widgetbook/src/utils/extensions.dart';
 
 class ZoomHandle extends StatefulWidget {
   const ZoomHandle({Key? key}) : super(key: key);

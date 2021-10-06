@@ -16,7 +16,7 @@ class Folder extends ExpandableOrganizer {
     for (final ExpandableOrganizer organizer in this.folders) {
       organizer.parent = this;
     }
-    for (final WidgetElement organizer in this.widgets) {
+    for (final organizer in this.widgets) {
       organizer.parent = this;
     }
   }

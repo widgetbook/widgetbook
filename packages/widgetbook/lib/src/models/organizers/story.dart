@@ -5,8 +5,6 @@ import 'package:widgetbook/src/models/organizers/organizer.dart';
 
 /// Stories represent a specific configuration of a widget.
 class Story extends Organizer implements Model {
-  final Widget Function(BuildContext) builder;
-
   Story({required String name, required this.builder}) : super(name);
 
   factory Story.center({
@@ -28,6 +26,8 @@ class Story extends Organizer implements Model {
       builder: (_) => child,
     );
   }
+
+  final Widget Function(BuildContext) builder;
 
   @override
   String get id => path;

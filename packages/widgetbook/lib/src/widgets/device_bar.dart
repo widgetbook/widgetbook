@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:widgetbook/src/providers/device_provider.dart';
+import 'package:widgetbook/src/utils/extensions.dart';
 import 'package:widgetbook/src/widgets/device_item.dart';
-import '../utils/extensions.dart';
 
 class DeviceBar extends StatelessWidget {
   const DeviceBar({Key? key}) : super(key: key);

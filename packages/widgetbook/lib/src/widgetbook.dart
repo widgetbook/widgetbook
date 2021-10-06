@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:widgetbook/src/configure_non_web.dart'
+    if (dart.library.html) 'package:widgetbook/src/configure_web.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
@@ -15,7 +18,6 @@ import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/routing/route_information_parser.dart';
 import 'package:widgetbook/src/routing/story_router_delegate.dart';
 import 'package:widgetbook/src/utils/utils.dart';
-import 'configure_non_web.dart' if (dart.library.html) 'configure_web.dart';
 
 class Widgetbook extends StatefulWidget {
   /// Categories which host Folders and WidgetElements.

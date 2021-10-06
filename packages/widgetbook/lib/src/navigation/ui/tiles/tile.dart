@@ -3,7 +3,7 @@ import 'package:widgetbook/src/constants/border_radius_constants.dart';
 import 'package:widgetbook/src/models/organizers/organizer.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/utils/styles.dart';
-import '../../../utils/utils.dart';
+import 'package:widgetbook/src/utils/utils.dart';
 
 class Tile extends StatefulWidget {
   final IconData iconData;

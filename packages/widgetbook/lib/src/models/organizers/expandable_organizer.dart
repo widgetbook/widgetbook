@@ -6,6 +6,17 @@ import 'package:widgetbook/src/models/organizers/organizers.dart';
 /// ExpandableOrganizer is an abstract model which can host
 /// WidgetElements and/or Folders
 abstract class ExpandableOrganizer extends Organizer {
+  ExpandableOrganizer({
+    required String name,
+    this.isExpanded = false,
+    List<Folder>? folders,
+    List<WidgetElement>? widgets,
+  })  : folders = folders ?? List<Folder>.empty(),
+        widgets = widgets ?? List<WidgetElement>.empty(),
+        super(
+          name,
+        );
+
   /// Used to implement collapsing and expanding of the folder tree.
   bool isExpanded;
 
@@ -18,16 +29,6 @@ abstract class ExpandableOrganizer extends Organizer {
   final List<WidgetElement> widgets;
 
   /// Abstract class for organizer panel in the left.
-  ExpandableOrganizer({
-    required String name,
-    this.isExpanded = false,
-    List<Folder>? folders,
-    List<WidgetElement>? widgets,
-  })  : folders = folders ?? List<Folder>.empty(),
-        widgets = widgets ?? List<WidgetElement>.empty(),
-        super(
-          name,
-        );
 
   @override
   bool operator ==(Object other) {

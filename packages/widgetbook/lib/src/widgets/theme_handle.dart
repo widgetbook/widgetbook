@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
-import '../utils/extensions.dart';
+import 'package:widgetbook/src/utils/extensions.dart';
 
 class ThemeHandle extends StatelessWidget {
   const ThemeHandle({Key? key}) : super(key: key);

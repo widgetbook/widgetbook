@@ -13,18 +13,6 @@ enum DeviceType {
 
 /// A virtual device that will rendered when a story is previewed
 class Device {
-  /// For example 'iPhone 12' or 'Samsung S10'.
-  final String name;
-
-  /// Specifies the native resolution (of the device screen)
-  /// and the logical resolution (for rendering a preview on the device).
-  final Resolution resolution;
-
-  /// Categorizes the Device.
-  /// For instance mobile or tablet.
-  /// This is used to display an appropriate icon in the device bar.
-  final DeviceType type;
-
   const Device({
     required this.name,
     required this.resolution,
@@ -41,6 +29,18 @@ class Device {
       type: DeviceType.unknown,
     );
   }
+
+  /// For example 'iPhone 12' or 'Samsung S10'.
+  final String name;
+
+  /// Specifies the native resolution (of the device screen)
+  /// and the logical resolution (for rendering a preview on the device).
+  final Resolution resolution;
+
+  /// Categorizes the Device.
+  /// For instance mobile or tablet.
+  /// This is used to display an appropriate icon in the device bar.
+  final DeviceType type;
 
   @override
   bool operator ==(Object other) {

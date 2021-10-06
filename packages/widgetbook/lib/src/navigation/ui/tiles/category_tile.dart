@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/navigation/ui/tiles/tile_helper_methods.dart';
-import '../../../utils/utils.dart';
+import 'package:widgetbook/src/utils/utils.dart';
 
 class CategoryTile extends StatelessWidget {
-  final Category category;
   const CategoryTile({Key? key, required this.category}) : super(key: key);
+
+  final Category category;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class CategoryTile extends StatelessWidget {
           ),
           child: Text(
             category.name,
-            style: context.textTheme.subtitle2!,
+            style: context.textTheme.subtitle2,
           ),
         ),
         ...buildFolders(
