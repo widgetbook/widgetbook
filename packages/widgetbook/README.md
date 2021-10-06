@@ -1,9 +1,7 @@
-<p align="center">
-<a href="https://discord.gg/773cqza4x5"><img src="https://img.shields.io/discord/879618555560218625?color=blue&logo=discord&style=flat-square" alt="Discord"></a>
-<a href="https://pub.dev/packages/flutter_lints"><img src="https://img.shields.io/badge/style-flutter%20lints-40c4ff?style=flat-square" alt="build"></a>
-<a href="https://github.com/widgetbook/widgetbook/actions"><img src="https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square" alt="build"></a>
-<a href="https://github.com/widgetbook/widgetbook/actions"><img src="https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square&label=test" alt="test"></a>
-</p>
+![Discord](https://img.shields.io/discord/879618555560218625?color=blue&style=flat-square)
+[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?label=test&style=flat-square)
 
 ___
 
