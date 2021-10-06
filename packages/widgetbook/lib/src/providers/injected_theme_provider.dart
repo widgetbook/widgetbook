@@ -22,7 +22,7 @@ class _InjectedThemeBuilderState extends State<InjectedThemeBuilder> {
   late InjectedThemeState state;
 
   @override
-  initState() {
+  void initState() {
     state = InjectedThemeState(
       lightTheme: widget.lightTheme,
       darkTheme: widget.darkTheme,

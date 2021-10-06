@@ -23,7 +23,7 @@ class _DeviceBuilderState extends State<DeviceBuilder> {
   late DeviceState state;
 
   @override
-  initState() {
+  void initState() {
     state = DeviceState(
       availableDevices: widget.availableDevices,
       currentDevice: widget.currentDevice,
