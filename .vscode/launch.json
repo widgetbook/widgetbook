@@ -5,14 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Example App",
+            "name": "Debug Example App Widgetbook",
             "cwd": "example/meal_app",
             "request": "launch",
             "program": "stories/main.dart",
             "type": "dart"
         },
         {
-            "name": "Profile Example App",
+            "name": "Profile Example App Widgetbook",
             "cwd": "example/meal_app",
             "request": "launch",
             "program": "stories/main.dart",
