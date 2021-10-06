@@ -1,16 +1,3 @@
-PODS:
-  - FlutterMacOS (1.0.0)
-
-DEPENDENCIES:
-  - FlutterMacOS (from `Flutter/ephemeral`)
-
-EXTERNAL SOURCES:
-  FlutterMacOS:
-    :path: Flutter/ephemeral
-
-SPEC CHECKSUMS:
-  FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
-
-PODFILE CHECKSUM: 6eac6b3292e5142cfc23bdeb71848a40ec51c14c
+PODFILE CHECKSUM: 145db09314730361a62c5d7f3d6085f6bbd43761
 
 COCOAPODS: 1.11.0
