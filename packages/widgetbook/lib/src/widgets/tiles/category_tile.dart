@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
-import 'package:widgetbook/src/navigation/ui/tiles/tile_helper_methods.dart';
 import 'package:widgetbook/src/utils/utils.dart';
+import 'package:widgetbook/src/widgets/tiles/tile_helper_methods.dart';
 
 class CategoryTile extends StatelessWidget {
   const CategoryTile({Key? key, required this.category}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
-import 'package:widgetbook/src/navigation/ui/tiles/spaced_tile.dart';
-import 'package:widgetbook/src/navigation/ui/tiles/story_tile.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
+import 'package:widgetbook/src/widgets/tiles/spaced_tile.dart';
+import 'package:widgetbook/src/widgets/tiles/story_tile.dart';
 
 class WidgetTile extends StatefulWidget {
   const WidgetTile({
