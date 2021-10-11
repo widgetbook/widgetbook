@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/widgets/search_bar.dart';
 
 import '../../helper/widget_test_helper.dart';

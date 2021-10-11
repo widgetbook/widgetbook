@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/navigation/ui/tiles/category_tile.dart';
@@ -56,9 +57,7 @@ class _NavigationPanelState extends State<NavigationPanel> {
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.circular(
-                  8,
-                ),
+                borderRadius: Radii.defaultRadius,
               ),
               padding: const EdgeInsets.all(16),
               child: Builder(

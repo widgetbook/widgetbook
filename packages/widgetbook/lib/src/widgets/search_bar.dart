@@ -19,14 +19,9 @@ class SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<SearchBar> {
   TextEditingController controller = TextEditingController();
-  late OrganizerProvider organizerProvider;
 
-  @override
-  void initState() {
-    organizerProvider =
-        widget.organizerProvider ?? OrganizerProvider.of(context)!;
-
-    super.initState();
+  OrganizerProvider _getProvider() {
+    return widget.organizerProvider ?? OrganizerProvider.of(context)!;
   }
 
   @override
@@ -63,7 +58,7 @@ class _SearchBarState extends State<SearchBar> {
       ),
       onChanged: (value) {
         setState(() {});
-        organizerProvider.filter(value);
+        _getProvider().filter(value);
       },
     );
   }
@@ -80,7 +75,7 @@ class _SearchBarState extends State<SearchBar> {
           },
         );
 
-        organizerProvider.resetFilter();
+        _getProvider().resetFilter();
       },
     );
   }
