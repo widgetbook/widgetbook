@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/navigation/navigation.dart';
+import 'package:widgetbook/src/navigation/ui/navigation_panel.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/providers/canvas_state.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
