@@ -24,6 +24,19 @@ jobs:
 
     - name: Get flutter packages 
       run: flutter pub get
+
+    - name: Run Tests
+      run: |
+        flutter pub global activate test_coverage
+        export PATH=$PATH:$HOME/.pub-cache/bin
+        test_coverage
+
+    - name: Check Code Coverage
+      uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
+      with:
+        path: packages/widgetbook/coverage/lcov.info
       
-    - name: Run unit tests
-      run: flutter test --coverage
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
