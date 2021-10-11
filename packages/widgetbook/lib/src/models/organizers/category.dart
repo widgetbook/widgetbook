@@ -12,6 +12,7 @@ class Category extends ExpandableOrganizer {
           name: name,
           folders: folders,
           widgets: widgets,
+          isExpanded: true,
         ) {
     for (final ExpandableOrganizer organizer in this.folders) {
       organizer.parent = this;

@@ -8,7 +8,7 @@ import 'package:widgetbook/src/models/organizers/organizers.dart';
 abstract class ExpandableOrganizer extends Organizer {
   ExpandableOrganizer({
     required String name,
-    this.isExpanded = false,
+    required this.isExpanded,
     List<Folder>? folders,
     List<WidgetElement>? widgets,
   })  : folders = folders ?? List<Folder>.empty(),
