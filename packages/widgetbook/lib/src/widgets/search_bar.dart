@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
@@ -25,7 +26,7 @@ class _SearchBarState extends State<SearchBar> {
       borderSide: BorderSide(
         color: Colors.transparent,
       ),
-      borderRadius: canvasBorderRadius,
+      borderRadius: Radii.defaultRadius,
     );
 
     return TextField(
