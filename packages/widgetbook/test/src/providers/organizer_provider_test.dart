@@ -7,6 +7,7 @@ import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 
 import '../../helper.dart';
+import '../../mocks/filter_service_mock.dart';
 
 extension _WidgetTesterProviderExtension on WidgetTester {
   Future<OrganizerProvider> pumpProvider({
@@ -14,11 +15,13 @@ extension _WidgetTesterProviderExtension on WidgetTester {
     required StoryRepository storyRepository,
     required SelectedStoryRepository selectedStoryRepository,
   }) async {
+    final mockedFilterService = FilterServiceMock();
     final provider = await pumpBuilderAndReturnProvider<OrganizerProvider>(
       OrganizerBuilder(
         categories: categories,
         storyRepository: storyRepository,
         selectedStoryRepository: selectedStoryRepository,
+        filterService: mockedFilterService,
         child: Container(),
       ),
     );
@@ -31,12 +34,12 @@ void main() {
   late SelectedStoryRepository selectedStoryRepository;
 
   final story1 = Story(
-    name: '1',
+    name: 'Story 1',
     builder: (context) => Container(),
   );
 
   final story2 = Story(
-    name: '2',
+    name: 'Story 2',
     builder: (context) => Container(),
   );
 
@@ -228,6 +231,7 @@ void main() {
               categories: const [],
               selectedStoryRepository: selectedStoryRepository,
               storyRepository: storyRepository,
+              filterService: FilterServiceMock(),
               child: Container(),
             ),
           );
