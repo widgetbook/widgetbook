@@ -8,7 +8,10 @@ class FilterService {
     List<Category> categories,
   ) {
     return _filterCategories(
-      RegExp(searchTerm),
+      RegExp(
+        searchTerm,
+        caseSensitive: false,
+      ),
       categories,
     );
   }
