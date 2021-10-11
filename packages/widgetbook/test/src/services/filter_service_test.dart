@@ -14,7 +14,6 @@ void main() {
     builder: (context) => Container(),
   );
 
-  // TODO rename test
   group(
     '$FilterService',
     () {

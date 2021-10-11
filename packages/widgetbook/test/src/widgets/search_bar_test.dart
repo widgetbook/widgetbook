@@ -42,7 +42,6 @@ void main() {
   group(
     '$SearchBar',
     () {
-      // TODO rename test
       testWidgets(
         'behaves correctly',
         (WidgetTester tester) async {
