@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/device_provider.dart';
@@ -22,11 +24,10 @@ class DeviceRender extends StatelessWidget {
       return state.darkTheme!;
     }
 
-    // TODO a warning would probably be good because otherwise the rendering
-    // is not representative.
-    // As an alternative at least one Theme has to be provided,
-    // and theme switching is disabled if no theme for light AND dark is
-    // provided.
+    log('''
+No theme was provided for the set brightness.
+ The theme of widgetbook is used to render your widgets.
+ This may cause your widgets to look different.''');
     return Theme.of(context);
   }
 
