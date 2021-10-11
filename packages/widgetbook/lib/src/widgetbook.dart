@@ -75,6 +75,7 @@ class _WidgetbookState extends State<Widgetbook> {
 
   @override
   void didUpdateWidget(covariant Widgetbook oldWidget) {
+    // TODO remove this and put into the Builders
     OrganizerProvider.of(contextWithProviders)!.update(widget.categories);
     DeviceProvider.of(contextWithProviders)!.update(widget.devices);
     InjectedThemeProvider.of(contextWithProviders)!.themesChanged(

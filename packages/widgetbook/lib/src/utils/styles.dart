@@ -13,10 +13,16 @@ class Styles {
   static const Color primary = Color(0xFFFF5610);
   static const Color secondary = Color(0xff0584FE);
 
+  static const Color darkSurface = Color(0xFF1D1B1D);
+  static const Color onDarkSurface = notCompletelyWhite;
+
+  static const Color lightSurface = Color(0xffF2F1F5);
+  static const Color onLightSurface = Color(0xff222222);
+
   static ThemeData lightTheme = ThemeData(
     colorScheme: const ColorScheme.light(
-      surface: Color(0xffF2F1F5),
-      onSurface: Color(0xff222222),
+      surface: lightSurface,
+      onSurface: onLightSurface,
       primary: primary,
       onPrimary: Colors.black,
       primaryVariant: Color(0xffe07356),
@@ -36,8 +42,8 @@ class Styles {
 
   static ThemeData darkTheme = ThemeData(
     colorScheme: const ColorScheme.dark(
-      surface: Color(0xFF1D1B1D),
-      onSurface: notCompletelyWhite,
+      surface: darkSurface,
+      onSurface: onDarkSurface,
       primary: primary,
       onPrimary: notCompletelyWhite,
       primaryVariant: Color(0xffe07356),

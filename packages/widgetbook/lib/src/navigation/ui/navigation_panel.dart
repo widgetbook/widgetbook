@@ -4,6 +4,7 @@ import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/navigation/ui/tiles/category_tile.dart';
 import 'package:widgetbook/src/widgets/header.dart';
+import 'package:widgetbook/src/widgets/search_bar.dart';
 
 class NavigationPanel extends StatefulWidget {
   const NavigationPanel({
@@ -41,6 +42,10 @@ class _NavigationPanelState extends State<NavigationPanel> {
           Header(
             appInfo: widget.appInfo,
           ),
+          const SizedBox(
+            height: 16,
+          ),
+          const SearchBar(),
           const SizedBox(
             height: 16,
           ),
