@@ -164,9 +164,9 @@ class OrganizerProvider extends Provider<OrganizerState> {
     );
   }
 
-  void filter(RegExp regExp) {
+  void filter(String searchTerm) {
     final categories = filterService.filter(
-      regExp,
+      searchTerm,
       state.allCategories,
     );
 
@@ -174,7 +174,7 @@ class OrganizerProvider extends Provider<OrganizerState> {
       OrganizerState(
         allCategories: state.allCategories,
         filteredCategories: categories,
-        searchTerm: regExp.pattern,
+        searchTerm: searchTerm,
       ),
     );
   }

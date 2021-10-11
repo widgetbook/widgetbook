@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/navigation/ui/tiles/category_tile.dart';
+import 'package:widgetbook/src/providers/theme_provider.dart';
 import 'package:widgetbook/src/widgets/header.dart';
 import 'package:widgetbook/src/widgets/search_bar.dart';
 
@@ -45,7 +46,9 @@ class _NavigationPanelState extends State<NavigationPanel> {
           const SizedBox(
             height: 16,
           ),
-          const SearchBar(),
+          SearchBar(
+            theme: ThemeProvider.of(context)!.state,
+          ),
           const SizedBox(
             height: 16,
           ),

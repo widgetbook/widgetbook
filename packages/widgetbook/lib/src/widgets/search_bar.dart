@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
-import 'package:widgetbook/src/providers/theme_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 
 class SearchBar extends StatefulWidget {
-  const SearchBar({Key? key}) : super(key: key);
+  const SearchBar({
+    Key? key,
+    required this.theme,
+    this.organizerProvider,
+  }) : super(key: key);
+
+  final ThemeMode theme;
+  final OrganizerProvider? organizerProvider;
 
   @override
   _SearchBarState createState() => _SearchBarState();
@@ -13,14 +19,24 @@ class SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<SearchBar> {
   TextEditingController controller = TextEditingController();
+  late OrganizerProvider organizerProvider;
+
+  @override
+  void initState() {
+    organizerProvider =
+        widget.organizerProvider ?? OrganizerProvider.of(context)!;
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final theme = ThemeProvider.of(context)!.state;
-    final fillColor =
-        theme == ThemeMode.light ? Styles.lightSurface : Styles.darkSurface;
-    final onFillColor =
-        theme == ThemeMode.light ? Styles.onLightSurface : Styles.onDarkSurface;
+    final fillColor = widget.theme == ThemeMode.light
+        ? Styles.lightSurface
+        : Styles.darkSurface;
+    final onFillColor = widget.theme == ThemeMode.light
+        ? Styles.onLightSurface
+        : Styles.onDarkSurface;
 
     const border = OutlineInputBorder(
       borderSide: BorderSide(
@@ -30,27 +46,15 @@ class _SearchBarState extends State<SearchBar> {
     );
 
     return TextField(
+      key: Key('$SearchBar.$TextField'),
       controller: controller,
       cursorWidth: 3,
       cursorColor: onFillColor,
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.search),
         hintText: 'search',
-        suffixIcon: controller.text.isNotEmpty
-            ? IconButton(
-                icon: const Icon(Icons.close),
-                splashRadius: 20,
-                onPressed: () {
-                  setState(
-                    () {
-                      controller = TextEditingController();
-                    },
-                  );
-
-                  OrganizerProvider.of(context)!.resetFilter();
-                },
-              )
-            : null,
+        suffixIcon:
+            controller.text.isNotEmpty ? _buildCancelSearchButton() : null,
         filled: true,
         fillColor: fillColor,
         border: border,
@@ -58,9 +62,25 @@ class _SearchBarState extends State<SearchBar> {
         focusedBorder: border,
       ),
       onChanged: (value) {
-        OrganizerProvider.of(context)!.filter(
-          RegExp(value),
+        setState(() {});
+        organizerProvider.filter(value);
+      },
+    );
+  }
+
+  Widget _buildCancelSearchButton() {
+    return IconButton(
+      key: Key('$SearchBar.CancelSearchButton'),
+      icon: const Icon(Icons.close),
+      splashRadius: 20,
+      onPressed: () {
+        setState(
+          () {
+            controller = TextEditingController();
+          },
         );
+
+        organizerProvider.resetFilter();
       },
     );
   }

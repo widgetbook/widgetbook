@@ -7,7 +7,9 @@ extension WidgetTesterExtension on WidgetTester {
   ) async {
     return pumpWidget(
       MaterialApp(
-        home: widget,
+        home: Scaffold(
+          body: widget,
+        ),
       ),
     );
   }

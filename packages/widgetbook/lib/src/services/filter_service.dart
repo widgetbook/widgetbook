@@ -4,11 +4,11 @@ class FilterService {
   const FilterService();
 
   List<Category> filter(
-    RegExp regExp,
+    String searchTerm,
     List<Category> categories,
   ) {
     return _filterCategories(
-      regExp,
+      RegExp(searchTerm),
       categories,
     );
   }

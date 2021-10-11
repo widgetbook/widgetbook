@@ -56,9 +56,7 @@ void main() {
 
           const service = FilterService();
           final result = service.filter(
-            RegExp(
-              searchTerm,
-            ),
+            searchTerm,
             [
               category,
             ],
@@ -119,9 +117,7 @@ void main() {
 
           const service = FilterService();
           final result = service.filter(
-            RegExp(
-              searchTerm,
-            ),
+            searchTerm,
             [
               category,
             ],

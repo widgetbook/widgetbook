@@ -320,14 +320,11 @@ void main() {
           );
 
           const searchTerm = 'does not really matter';
-          final regExp = RegExp(
-            searchTerm,
-          );
 
           final filterService = FilterServiceMock();
           when(
             () => filterService.filter(
-              regExp,
+              searchTerm,
               [
                 category,
               ],
@@ -350,14 +347,14 @@ void main() {
           provider = await tester.invokeMethodAndReturnPumpedProvider(
             () {
               provider.filter(
-                regExp,
+                searchTerm,
               );
             },
           );
 
           verify(
             () => filterService.filter(
-              regExp,
+              searchTerm,
               [
                 category,
               ],
