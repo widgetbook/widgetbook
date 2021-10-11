@@ -11,6 +11,7 @@ import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/providers/injected_theme_provider.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
+import 'package:widgetbook/src/providers/organizer_state.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
 import 'package:widgetbook/src/providers/zoom_provider.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
@@ -87,7 +88,9 @@ class _WidgetbookState extends State<Widgetbook> {
   @override
   Widget build(BuildContext context) {
     return OrganizerBuilder(
-      categories: widget.categories,
+      initialState: OrganizerState.unfiltered(
+        categories: widget.categories,
+      ),
       storyRepository: storyRepository,
       selectedStoryRepository: selectedStoryRepository,
       filterService: const FilterService(),

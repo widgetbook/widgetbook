@@ -74,6 +74,8 @@ class FilterService {
     }
 
     // otherwise it can only be a folder
+
+    // TODO isExpanded flag is lost
     return Folder(
       name: organizer.name,
       widgets: widgets,

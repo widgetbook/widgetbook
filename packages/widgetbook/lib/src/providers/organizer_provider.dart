@@ -12,16 +12,16 @@ import 'package:widgetbook/src/services/filter_service.dart';
 class OrganizerBuilder extends StatefulWidget {
   const OrganizerBuilder({
     Key? key,
+    required this.initialState,
     required this.child,
-    required this.categories,
     required this.storyRepository,
     required this.selectedStoryRepository,
     required this.filterService,
   }) : super(key: key);
 
   final Widget child;
-  final List<Category> categories;
   final StoryRepository storyRepository;
+  final OrganizerState initialState;
   final SelectedStoryRepository selectedStoryRepository;
   final FilterService filterService;
 
@@ -34,9 +34,7 @@ class _OrganizerBuilderState extends State<OrganizerBuilder> {
   late OrganizerProvider provider;
   @override
   void initState() {
-    state = OrganizerState.unfiltered(
-      categories: widget.categories,
-    );
+    state = widget.initialState;
     setProvider();
 
     widget.selectedStoryRepository.getStream().forEach((Story? story) {
