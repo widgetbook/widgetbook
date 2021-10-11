@@ -3,6 +3,9 @@ on:
     paths:
       - "packages/widgetbook/**"
       - ".github/workflows/unit-test.yaml"
+  push:
+    branches:
+      - main
 name: Unit test
 jobs:
   build:
