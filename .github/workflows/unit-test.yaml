@@ -26,10 +26,7 @@ jobs:
       run: flutter pub get
 
     - name: Run Tests
-      run: |
-        flutter pub global activate test_coverage
-        export PATH=$PATH:$HOME/.pub-cache/bin
-        test_coverage
+      run: flutter test --coverage
 
     - name: Check Code Coverage
       uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
@@ -40,3 +37,4 @@ jobs:
       uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
+        min_coverage: 50
