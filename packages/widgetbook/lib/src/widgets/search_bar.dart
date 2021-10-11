@@ -22,10 +22,11 @@ class _SearchBarState extends State<SearchBar> {
         theme == ThemeMode.light ? Styles.onLightSurface : Styles.onDarkSurface;
 
     const border = OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.transparent,
-        ),
-        borderRadius: canvasBorderRadius);
+      borderSide: BorderSide(
+        color: Colors.transparent,
+      ),
+      borderRadius: canvasBorderRadius,
+    );
 
     return TextField(
       controller: controller,
@@ -51,6 +52,7 @@ class _SearchBarState extends State<SearchBar> {
             : null,
         filled: true,
         fillColor: fillColor,
+        border: border,
         enabledBorder: border,
         focusedBorder: border,
       ),

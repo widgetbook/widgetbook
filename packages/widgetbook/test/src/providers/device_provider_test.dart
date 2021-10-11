@@ -4,7 +4,8 @@ import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/providers/device_state.dart';
 
-import '../../helper.dart';
+import '../../helper/provider_helper.dart';
+import '../../helper/widget_test_helper.dart';
 
 extension _WidgetTesterProviderExtension on WidgetTester {
   Future<DeviceProvider> pumpProvider({

@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/providers/injected_theme_provider.dart';
 import 'package:widgetbook/src/providers/injected_theme_state.dart';
 
-import '../../helper.dart';
+import '../../helper/provider_helper.dart';
+import '../../helper/widget_test_helper.dart';
 
 extension _WidgetTesterProviderExtension on WidgetTester {
   Future<InjectedThemeProvider> pumpProvider({

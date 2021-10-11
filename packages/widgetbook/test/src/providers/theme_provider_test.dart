@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
 
-import '../../helper.dart';
+import '../../helper/provider_helper.dart';
+import '../../helper/widget_test_helper.dart';
 
 extension _WidgetTesterProviderExtension on WidgetTester {
   Future<ThemeProvider> pumpProvider() async {

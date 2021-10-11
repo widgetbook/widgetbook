@@ -1,11 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/providers/organizer_state.dart';
 
+import '../../helper/model_helper.dart';
+
 void main() {
   group(
     '$OrganizerState',
     () {
-      // TODO this can be extracted into a function for less redundant code
       test(
         'the hashCodes of two instances with the same values are compared',
         () {
@@ -17,10 +18,7 @@ void main() {
             categories: [],
           );
 
-          expect(
-            instance1.hashCode == instance2.hashCode,
-            equals(true),
-          );
+          expectEqualHashCodes(instance1, instance2);
         },
       );
     },

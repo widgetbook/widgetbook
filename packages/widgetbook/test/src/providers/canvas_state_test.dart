@@ -3,11 +3,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/providers/canvas_state.dart';
 import 'package:widgetbook/widgetbook.dart';
 
+import '../../helper/model_helper.dart';
+
 void main() {
   group(
     '$CanvasState',
     () {
-      // TODO this can be extracted into a function for less redundant code
       test(
         'the hashCodes of two instances with the same values are compared',
         () {
@@ -24,10 +25,7 @@ void main() {
             selectedStory: story,
           );
 
-          expect(
-            instance1.hashCode == instance2.hashCode,
-            equals(true),
-          );
+          expectEqualHashCodes(instance1, instance2);
         },
       );
     },

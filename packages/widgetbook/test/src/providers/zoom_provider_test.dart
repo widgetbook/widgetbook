@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/providers/zoom_provider.dart';
 import 'package:widgetbook/src/providers/zoom_state.dart';
-import '../../helper.dart';
+import '../../helper/provider_helper.dart';
+import '../../helper/widget_test_helper.dart';
 
 extension _WidgetTesterProviderExtension on WidgetTester {
   Future<ZoomProvider> pumpProvider() async {

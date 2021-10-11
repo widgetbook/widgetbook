@@ -8,7 +8,8 @@ import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/services/filter_service.dart';
 
-import '../../helper.dart';
+import '../../helper/provider_helper.dart';
+import '../../helper/widget_test_helper.dart';
 import '../../mocks/filter_service_mock.dart';
 
 extension _WidgetTesterProviderExtension on WidgetTester {
