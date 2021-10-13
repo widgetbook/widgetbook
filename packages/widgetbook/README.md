@@ -5,7 +5,7 @@
 
 ___
 
-A flutter package which helps developers cataloguing their widgets, test them quickly on multiple devices and themes, and share them easily with designers and clients. Inspired by Storybook.js and flutterbook.
+A flutter package which helps developers cataloguing their widgets, testing them quickly on multiple devices and themes, and sharing them easily with designers and clients. Inspired by Storybook.js and flutterbook.
 
 <p align="center">
 <img src="https://media.githubusercontent.com/media/widgetbook/widgetbook/main/docs/assets/Screenshot.png" alt="Widgetbook Screenshot" />
@@ -68,7 +68,7 @@ Environment | Status | Annotation
 MacOS | ✅ | 
 Windows | ✅ |
 Web | ✅ | No hot reload, but hot restart (see [Issue 4](https://github.com/widgetbook/widgetbook/issues/4))
-iOS and Mobile | ➖ | Will run, but is not optimized. If you see a usecase for `Widgetbook` on mobile let us know. 
+Mobile | ➖ | Will run, but is not optimized. If you see a usecase for `Widgetbook` on mobile let us know. 
 
 See the [Desktop support for Flutter](https://flutter.dev/desktop) page for setup instructions.
 
