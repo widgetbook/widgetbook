@@ -1,3 +1,7 @@
+# 0.0.11
+
+- added a search bar to filter for widgets and folders
+
 # 0.0.10
 
 - removed `bloc` and `flutter_bloc` dependency
