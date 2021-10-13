@@ -1,24 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/models/models.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/providers/organizer_state.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
+import 'package:widgetbook/src/services/filter_service.dart';
 
-import '../../helper.dart';
+import '../../helper/provider_helper.dart';
+import '../../helper/widget_test_helper.dart';
+import '../../mocks/filter_service_mock.dart';
 
 extension _WidgetTesterProviderExtension on WidgetTester {
   Future<OrganizerProvider> pumpProvider({
-    required List<Category> categories,
+    required OrganizerState initialState,
     required StoryRepository storyRepository,
     required SelectedStoryRepository selectedStoryRepository,
+    FilterService? filterService,
   }) async {
+    final mockedFilterService = filterService ?? FilterServiceMock();
     final provider = await pumpBuilderAndReturnProvider<OrganizerProvider>(
       OrganizerBuilder(
-        categories: categories,
+        initialState: initialState,
         storyRepository: storyRepository,
         selectedStoryRepository: selectedStoryRepository,
+        filterService: mockedFilterService,
         child: Container(),
       ),
     );
@@ -31,12 +38,12 @@ void main() {
   late SelectedStoryRepository selectedStoryRepository;
 
   final story1 = Story(
-    name: '1',
+    name: 'Story 1',
     builder: (context) => Container(),
   );
 
   final story2 = Story(
-    name: '2',
+    name: 'Story 2',
     builder: (context) => Container(),
   );
 
@@ -59,19 +66,21 @@ void main() {
         'expands $WidgetElement when the selected story changes',
         (WidgetTester tester) async {
           var provider = await tester.pumpProvider(
-            categories: [
-              Category(
-                name: 'Category 1',
-                widgets: [
-                  WidgetElement(
-                    name: 'Widget 1',
-                    stories: [
-                      story1,
-                    ],
-                  ),
-                ],
-              ),
-            ],
+            initialState: OrganizerState.unfiltered(
+              categories: [
+                Category(
+                  name: 'Category 1',
+                  widgets: [
+                    WidgetElement(
+                      name: 'Widget 1',
+                      stories: [
+                        story1,
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
             storyRepository: storyRepository,
             selectedStoryRepository: selectedStoryRepository,
           );
@@ -97,12 +106,14 @@ void main() {
             stories: [],
           );
           var provider = await tester.pumpProvider(
-            categories: [
-              Category(
-                name: 'Category 1',
-                widgets: [widgetElement],
-              ),
-            ],
+            initialState: OrganizerState.unfiltered(
+              categories: [
+                Category(
+                  name: 'Category 1',
+                  widgets: [widgetElement],
+                ),
+              ],
+            ),
             storyRepository: storyRepository,
             selectedStoryRepository: selectedStoryRepository,
           );
@@ -139,23 +150,25 @@ void main() {
         'expands $WidgetElement when the selected story changes',
         (WidgetTester tester) async {
           var provider = await tester.pumpProvider(
-            categories: [
-              Category(
-                name: 'Category 1',
-                folders: [
-                  Folder(
-                    name: 'Folder 1',
-                  ),
-                ],
-                widgets: [
-                  WidgetElement(
-                    name: 'Widget 1',
-                    isExpanded: true,
-                    stories: [story1, story2],
-                  ),
-                ],
-              ),
-            ],
+            initialState: OrganizerState.unfiltered(
+              categories: [
+                Category(
+                  name: 'Category 1',
+                  folders: [
+                    Folder(
+                      name: 'Folder 1',
+                    ),
+                  ],
+                  widgets: [
+                    WidgetElement(
+                      name: 'Widget 1',
+                      isExpanded: true,
+                      stories: [story1, story2],
+                    ),
+                  ],
+                ),
+              ],
+            ),
             storyRepository: storyRepository,
             selectedStoryRepository: selectedStoryRepository,
           );
@@ -221,13 +234,159 @@ void main() {
       );
 
       testWidgets(
+        'resets filter when resetFilter is called',
+        (WidgetTester tester) async {
+          final folder = Folder(
+            name: 'Folder 1',
+          );
+          final category = Category(
+            name: 'Category 1',
+            folders: [
+              folder,
+            ],
+            widgets: [
+              WidgetElement(
+                name: 'Widget 1',
+                isExpanded: true,
+                stories: [
+                  story1,
+                  story2,
+                ],
+              ),
+            ],
+          );
+
+          final filteredCategory = Category(
+            name: 'Category 1',
+            folders: [
+              folder,
+            ],
+          );
+
+          var provider = await tester.pumpProvider(
+            initialState: OrganizerState(
+              allCategories: [
+                category,
+              ],
+              filteredCategories: [
+                filteredCategory,
+              ],
+              searchTerm: 'does not really matter',
+            ),
+            storyRepository: storyRepository,
+            selectedStoryRepository: selectedStoryRepository,
+          );
+
+          provider = await tester.invokeMethodAndReturnPumpedProvider(
+            () {
+              provider.resetFilter();
+            },
+          );
+
+          expect(
+            provider.state,
+            equals(
+              OrganizerState.unfiltered(
+                categories: [
+                  category,
+                ],
+              ),
+            ),
+          );
+        },
+      );
+
+      testWidgets(
+        'invokes $FilterService when filter is called',
+        (WidgetTester tester) async {
+          final folder = Folder(
+            name: 'Folder 1',
+          );
+          final category = Category(
+            name: 'Category 1',
+            folders: [
+              folder,
+            ],
+            widgets: [
+              WidgetElement(
+                name: 'Widget 1',
+                isExpanded: true,
+                stories: [
+                  story1,
+                  story2,
+                ],
+              ),
+            ],
+          );
+
+          const searchTerm = 'does not really matter';
+
+          final filterService = FilterServiceMock();
+          when(
+            () => filterService.filter(
+              searchTerm,
+              [
+                category,
+              ],
+            ),
+          ).thenReturn(
+            [
+              category,
+            ],
+          );
+
+          var provider = await tester.pumpProvider(
+            initialState: OrganizerState.unfiltered(categories: [
+              category,
+            ]),
+            storyRepository: storyRepository,
+            selectedStoryRepository: selectedStoryRepository,
+            filterService: filterService,
+          );
+
+          provider = await tester.invokeMethodAndReturnPumpedProvider(
+            () {
+              provider.filter(
+                searchTerm,
+              );
+            },
+          );
+
+          verify(
+            () => filterService.filter(
+              searchTerm,
+              [
+                category,
+              ],
+            ),
+          ).called(1);
+
+          expect(
+            provider.state,
+            equals(
+              OrganizerState(
+                allCategories: [
+                  category,
+                ],
+                filteredCategories: [category],
+                searchTerm: searchTerm,
+              ),
+            ),
+          );
+        },
+      );
+
+      testWidgets(
         '.of returns $OrganizerProvider instance',
         (WidgetTester tester) async {
           await tester.pumpWidgetWithMaterialApp(
             OrganizerBuilder(
-              categories: const [],
+              initialState: OrganizerState.unfiltered(
+                categories: const [],
+              ),
               selectedStoryRepository: selectedStoryRepository,
               storyRepository: storyRepository,
+              filterService: FilterServiceMock(),
               child: Container(),
             ),
           );

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/providers/injected_theme_state.dart';
 
+import '../../helper/model_helper.dart';
+
 void main() {
   group(
     '$InjectedThemeState',
@@ -57,10 +59,7 @@ void main() {
                 darkTheme: ThemeData(),
               );
 
-              expect(
-                instance1.hashCode == instance2.hashCode,
-                equals(true),
-              );
+              expectEqualHashCodes(instance1, instance2);
             },
           );
         },

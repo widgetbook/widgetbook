@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-extension WidgetTesterExtension on WidgetTester {
-  Future<void> pumpWidgetWithMaterialApp(
-    Widget widget,
-  ) async {
-    return pumpWidget(
-      MaterialApp(
-        home: widget,
-      ),
-    );
-  }
+import 'widget_test_helper.dart';
 
+extension ProviderTesterExtension on WidgetTester {
   Future<Provider> pumpBuilderAndReturnProvider<Provider>(Widget widget) async {
     await pumpWidgetWithMaterialApp(widget);
     final providerFinder = find.byType(Provider);

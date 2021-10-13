@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
-import 'package:widgetbook/src/navigation/ui/tiles/category_tile.dart';
+import 'package:widgetbook/src/providers/theme_provider.dart';
 import 'package:widgetbook/src/widgets/header.dart';
+import 'package:widgetbook/src/widgets/search_bar.dart';
+import 'package:widgetbook/src/widgets/tiles/category_tile.dart';
 
 class NavigationPanel extends StatefulWidget {
   const NavigationPanel({
@@ -44,13 +47,17 @@ class _NavigationPanelState extends State<NavigationPanel> {
           const SizedBox(
             height: 16,
           ),
+          SearchBar(
+            theme: ThemeProvider.of(context)!.state,
+          ),
+          const SizedBox(
+            height: 16,
+          ),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.circular(
-                  8,
-                ),
+                borderRadius: Radii.defaultRadius,
               ),
               padding: const EdgeInsets.all(16),
               child: Builder(

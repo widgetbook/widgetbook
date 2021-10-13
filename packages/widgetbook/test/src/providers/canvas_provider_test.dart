@@ -6,7 +6,8 @@ import 'package:widgetbook/src/providers/canvas_state.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 
-import '../../helper.dart';
+import '../../helper/provider_helper.dart';
+import '../../helper/widget_test_helper.dart';
 
 extension _WidgetTesterProviderExtension on WidgetTester {
   Future<CanvasProvider> pumpProvider({

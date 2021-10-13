@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/providers/zoom_state.dart';
 
+import '../../helper/model_helper.dart';
+
 void main() {
   group(
     '$ZoomState',
@@ -39,10 +41,7 @@ void main() {
               final instance1 = ZoomState.normal();
               final instance2 = ZoomState.normal();
 
-              expect(
-                instance1.hashCode == instance2.hashCode,
-                equals(true),
-              );
+              expectEqualHashCodes(instance1, instance2);
             },
           );
         },

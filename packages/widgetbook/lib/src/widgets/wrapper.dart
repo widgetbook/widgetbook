@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/src/constants/radii.dart';
 
 import 'package:widgetbook/src/utils/utils.dart';
 import 'package:widgetbook/src/widgets/controls_bar.dart';
@@ -21,7 +22,7 @@ class Editor extends StatelessWidget {
         Expanded(
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: Radii.defaultRadius,
               color: context.colorScheme.surface,
             ),
             child: const StoryRender(),

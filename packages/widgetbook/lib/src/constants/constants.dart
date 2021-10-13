@@ -1,4 +1,3 @@
 class Constants {
-  static double controlBarHeight = 40;
-  static double tileBorderRadius = 6;
+  static const double controlBarHeight = 40;
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/organizers/organizer.dart';
-import 'package:widgetbook/src/navigation/ui/tiles/tile.dart';
-import 'package:widgetbook/src/navigation/ui/tiles/tile_spacer.dart';
+import 'package:widgetbook/src/widgets/tiles/tile.dart';
+import 'package:widgetbook/src/widgets/tiles/tile_spacer.dart';
 
 class SpacedTile extends StatelessWidget {
   const SpacedTile({

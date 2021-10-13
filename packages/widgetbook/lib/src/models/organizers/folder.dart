@@ -8,10 +8,12 @@ class Folder extends ExpandableOrganizer {
     required String name,
     List<Folder>? folders,
     List<WidgetElement>? widgets,
+    bool isExpanded = false,
   }) : super(
           name: name,
           folders: folders,
           widgets: widgets,
+          isExpanded: isExpanded,
         ) {
     for (final ExpandableOrganizer organizer in this.folders) {
       organizer.parent = this;

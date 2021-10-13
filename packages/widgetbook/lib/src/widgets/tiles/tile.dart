@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/constants/border_radius_constants.dart';
+import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/models/organizers/organizer.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/utils/styles.dart';
@@ -72,7 +72,7 @@ class _TileState extends State<Tile> {
             color: hovered || isSelected
                 ? Styles.getHighlightColor(context)
                 : null,
-            borderRadius: BorderRadiusConstants.tileBorderRadius,
+            borderRadius: Radii.defaultRadius,
           ),
           duration: const Duration(milliseconds: 100),
           child: _buildTile(context),

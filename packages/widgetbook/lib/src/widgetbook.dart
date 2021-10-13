@@ -11,12 +11,14 @@ import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/providers/injected_theme_provider.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
+import 'package:widgetbook/src/providers/organizer_state.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
 import 'package:widgetbook/src/providers/zoom_provider.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/routing/route_information_parser.dart';
 import 'package:widgetbook/src/routing/story_router_delegate.dart';
+import 'package:widgetbook/src/services/filter_service.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 
 class Widgetbook extends StatefulWidget {
@@ -73,6 +75,7 @@ class _WidgetbookState extends State<Widgetbook> {
 
   @override
   void didUpdateWidget(covariant Widgetbook oldWidget) {
+    // TODO remove this and put into the Builders
     OrganizerProvider.of(contextWithProviders)!.update(widget.categories);
     DeviceProvider.of(contextWithProviders)!.update(widget.devices);
     InjectedThemeProvider.of(contextWithProviders)!.themesChanged(
@@ -86,9 +89,12 @@ class _WidgetbookState extends State<Widgetbook> {
   @override
   Widget build(BuildContext context) {
     return OrganizerBuilder(
-      categories: widget.categories,
+      initialState: OrganizerState.unfiltered(
+        categories: widget.categories,
+      ),
       storyRepository: storyRepository,
       selectedStoryRepository: selectedStoryRepository,
+      filterService: const FilterService(),
       child: CanvasBuilder(
         selectedStoryRepository: selectedStoryRepository,
         storyRepository: storyRepository,

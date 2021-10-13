@@ -7,20 +7,23 @@ import 'package:widgetbook/src/providers/organizer_state.dart';
 import 'package:widgetbook/src/providers/provider.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
+import 'package:widgetbook/src/services/filter_service.dart';
 
 class OrganizerBuilder extends StatefulWidget {
   const OrganizerBuilder({
     Key? key,
+    required this.initialState,
     required this.child,
-    required this.categories,
     required this.storyRepository,
     required this.selectedStoryRepository,
+    required this.filterService,
   }) : super(key: key);
 
   final Widget child;
-  final List<Category> categories;
   final StoryRepository storyRepository;
+  final OrganizerState initialState;
   final SelectedStoryRepository selectedStoryRepository;
+  final FilterService filterService;
 
   @override
   _OrganizerBuilderState createState() => _OrganizerBuilderState();
@@ -31,9 +34,7 @@ class _OrganizerBuilderState extends State<OrganizerBuilder> {
   late OrganizerProvider provider;
   @override
   void initState() {
-    state = OrganizerState.unfiltered(
-      categories: widget.categories,
-    );
+    state = widget.initialState;
     setProvider();
 
     widget.selectedStoryRepository.getStream().forEach((Story? story) {
@@ -47,6 +48,7 @@ class _OrganizerBuilderState extends State<OrganizerBuilder> {
     provider = OrganizerProvider(
       selectedStoryRepository: widget.selectedStoryRepository,
       storyRepository: widget.storyRepository,
+      filterService: widget.filterService,
       state: state,
       onStateChanged: (OrganizerState state) {
         setState(() {
@@ -68,6 +70,7 @@ class OrganizerProvider extends Provider<OrganizerState> {
   const OrganizerProvider({
     required this.selectedStoryRepository,
     required this.storyRepository,
+    required this.filterService,
     required OrganizerState state,
     required ValueChanged<OrganizerState> onStateChanged,
     required Widget child,
@@ -81,6 +84,7 @@ class OrganizerProvider extends Provider<OrganizerState> {
 
   final SelectedStoryRepository selectedStoryRepository;
   final StoryRepository storyRepository;
+  final FilterService filterService;
 
   static OrganizerProvider? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<OrganizerProvider>();
@@ -152,109 +156,28 @@ class OrganizerProvider extends Provider<OrganizerState> {
       ..addAll(stories);
   }
 
-  // The filter methods are used to implement a search of organizer elements
-  // since no UI element for searching and no tests exist, this functionality
-  // is currently disabled
-  //
-  // void resetFilter() {
-  //   emit(
-  //     OrganizerState.unfiltered(
-  //       categories: state.allCategories,
-  //     ),
-  //   );
-  // }
+  void resetFilter() {
+    emit(
+      OrganizerState.unfiltered(
+        categories: state.allCategories,
+      ),
+    );
+  }
 
-  // void filter(RegExp regExp) {
-  //   var categories = _filterCategories(
-  //     regExp,
-  //     state.allCategories,
-  //   );
+  void filter(String searchTerm) {
+    final categories = filterService.filter(
+      searchTerm,
+      state.allCategories,
+    );
 
-  //   emit(
-  //     OrganizerState(
-  //       allCategories: state.allCategories,
-  //       filteredCategories: categories,
-  //       searchTerm: regExp.pattern,
-  //     ),
-  //   );
-  // }
-
-  // List<Category> _filterCategories(
-  //   RegExp regExp,
-  //   List<Category> categories,
-  // ) {
-  //   List<Category> matchingOrganizers = <Category>[];
-  //   for (var category in categories) {
-  //     Category? result = _filterOrganizer(regExp, category) as Category?;
-  //     if (_isMatch(result)) {
-  //       matchingOrganizers.add(result!);
-  //     }
-  //   }
-  //   return matchingOrganizers;
-  // }
-
-  // ExpandableOrganizer? _filterOrganizer(
-  //     RegExp regExp, ExpandableOrganizer organizer) {
-  //   if (organizer.name.contains(regExp)) {
-  //     return organizer;
-  //   }
-
-  //   List<Folder> matchingFolders = <Folder>[];
-  //   for (var subOrganizer in organizer.folders) {
-  //     ExpandableOrganizer? result = _filterOrganizer(regExp, subOrganizer);
-  //     if (_isMatch(result)) {
-  //       matchingFolders.add(result! as Folder);
-  //     }
-  //   }
-
-  //   List<WidgetElement> matchingWidgets = <WidgetElement>[];
-  //   for (var subOrganizer in organizer.widgets) {
-  //     ExpandableOrganizer? result = _filterOrganizer(regExp, subOrganizer);
-  //     if (_isMatch(result)) {
-  //       matchingWidgets.add(result! as WidgetElement);
-  //     }
-  //   }
-
-  //   if (matchingFolders.isNotEmpty) {
-  //     return _createFilteredSubtree(
-  //       organizer,
-  //       matchingFolders,
-  //       matchingWidgets,
-  //     );
-  //   }
-
-  //   return null;
-  // }
-
-  // ExpandableOrganizer _createFilteredSubtree(
-  //   ExpandableOrganizer organizer,
-  //   List<Folder> folders,
-  //   List<WidgetElement> widgets,
-  // ) {
-  //   if (organizer is Category) {
-  //     return Category(
-  //       name: organizer.name,
-  //       widgets: widgets,
-  //       folders: folders,
-  //     );
-  //   }
-  //   if (organizer is Folder) {
-  //     return Folder(
-  //       name: organizer.name,
-  //       widgets: widgets,
-  //       folders: folders,
-  //     );
-  //   } else {
-  //     // TODO remove this when tested
-  //     // ignore: avoid_print
-  //     print('This message should never appear - BUG!');
-  //     return Folder(name: 'If you see this, you have found a bug');
-  //   }
-  // }
-
-  // bool _isMatch(ExpandableOrganizer? organizer) {
-  //   return organizer != null;
-  // }
+    emit(
+      OrganizerState(
+        allCategories: state.allCategories,
+        filteredCategories: categories,
+        searchTerm: searchTerm,
+      ),
+    );
+  }
 
   @override
   void emit(OrganizerState state) {

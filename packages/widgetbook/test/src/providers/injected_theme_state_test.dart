@@ -2,6 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/providers/device_state.dart';
 
+import '../../helper/model_helper.dart';
+
 void main() {
   group(
     '$DeviceState',
@@ -58,10 +60,7 @@ void main() {
                 currentDevice: Apple.iPhone11,
               );
 
-              expect(
-                instance1.hashCode == instance2.hashCode,
-                equals(true),
-              );
+              expectEqualHashCodes(instance1, instance2);
             },
           );
         },

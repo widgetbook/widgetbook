@@ -63,18 +63,21 @@ class _ZoomHandleState extends State<ZoomHandle> {
           ),
         ),
         const SizedBox(width: 8),
-        TextButton(
-          onPressed: ZoomProvider.of(context)!.resetToNormal,
-          style: TextButton.styleFrom(
-            splashFactory: InkRipple.splashFactory,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
-            minimumSize: Size.zero,
-            padding: const EdgeInsets.all(12),
-          ),
-          child: Icon(
-            Icons.replay,
-            color: context.theme.hintColor,
+        Tooltip(
+          message: 'Reset zoom',
+          child: TextButton(
+            onPressed: ZoomProvider.of(context)!.resetToNormal,
+            style: TextButton.styleFrom(
+              splashFactory: InkRipple.splashFactory,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(90)),
+              minimumSize: Size.zero,
+              padding: const EdgeInsets.all(12),
+            ),
+            child: Icon(
+              Icons.replay,
+              color: context.theme.hintColor,
+            ),
           ),
         ),
       ],
