@@ -11,22 +11,36 @@ A flutter package which helps developers cataloguing their widgets, test them qu
 <img src="https://media.githubusercontent.com/media/widgetbook/widgetbook/main/docs/assets/Screenshot.png" alt="Widgetbook Screenshot" />
 </p>
 
-## See it in action!
+# See it in action!
 
 Check out the `Widgetbook` with the example app on our [github page](https://widgetbook.github.io).
 Furthermore, you can [check out the code of the app at github](https://github.com/widgetbook/widgetbook/tree/main/example). 
 
-## Let us know how you feel about Widgetbook
+# Let us know how you feel about Widgetbook
 
 We are funded and aim to shape `Widgetbook` to your (and your team's) needs. If you have questions, feature requests or issues let us know on [Discord](https://discord.gg/zT4AMStAJA) or [GitHub](https://github.com/widgetbook/widgetbook) or book a call with the founders via [Calendly](https://calendly.com/widgetbook/call). We're looking forward to build a community and discuss your feedback on our channel! 💙
 
-## Getting Started
+# Getting Started
 
 This package provides a flutter widget called `Widgetbook` in which custom widgets from your app can be injected.
 
-### Enabling Hot Reload
 
-Wrap the `Widgetbook` into a stateless widget to enable hot reloading whenever changes are made to the `Widgetbook`'s parameters. 
+## Setting up
+
+Since the Widgetbook is launched as a separate app, it is recommended to create another main method. This enables you to switch between your app and the `Widgetbook` at any time. You can even launch your app and `Widgetbook` simultaneously.
+
+The folder structure might look like this:
+```
+example_app
++ lib
++--- main.dart
++ stories
++--- main.dart
++--- widgetbook.dart
+```
+
+The `stories/widgetbook.dart` file contains the `Widgetbook` wrapped within a stateless widget that enables hot reloading. The code looks like this: 
+
 ```dart
 class HotReload extends StatelessWidget {
   const HotReload({Key? key}) : super(key: key);
@@ -38,9 +52,7 @@ class HotReload extends StatelessWidget {
 }
 ```
 
-### Running the Widgetbook
-
-To run the `Widgetbook` create a new main method, e.g. in `stories/main.dart`:
+In the `stories/main.dart` run the `HotReload` widget:
 
 ```dart
 void main() {
@@ -48,9 +60,22 @@ void main() {
 }
 ```
 
+## Run the Widgetbook
+
+`Widgetbook` is supported on the following environments.
+
+Environment | Status | Annotation
+------------ | ------------- | ------------- 
+MacOS | ✅ | 
+Windows | ✅ |
+Web | ✅ | No hot reload, but hot restart (see [Issue 4](https://github.com/widgetbook/widgetbook/issues/4))
+iOS and Mobile | ➖ | Will run, but is not optimized. If you see a usecase for `Widgetbook` on mobile let us know. 
+
+See the [Desktop support for Flutter](https://flutter.dev/desktop) page for setup instructions.
+
 Run the `Widgetbook` main method by executing `flutter run -t stories/main.dart`.
 
-### Inject your widgets
+# Inject your widgets
 
 Your widgets can be organized into different areas of interest by using `Category`, `Folder`, `WidgetElement` and `Story`.
 
