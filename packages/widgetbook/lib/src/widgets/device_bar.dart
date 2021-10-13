@@ -13,10 +13,6 @@ class DeviceBar extends StatelessWidget {
     final state = deviceProvider.state;
     return Row(
       children: [
-        const Text('Device'),
-        const SizedBox(
-          width: 12,
-        ),
         TextButton(
           onPressed: deviceProvider.previousDevice,
           style: TextButton.styleFrom(

@@ -24,7 +24,6 @@ We are funded and aim to shape `Widgetbook` to your (and your team's) needs. If 
 
 This package provides a flutter widget called `Widgetbook` in which custom widgets from your app can be injected.
 
-
 ## Setting up
 
 Since the Widgetbook is launched as a separate app, it is recommended to create another main method. This enables you to switch between your app and the `Widgetbook` at any time. You can even launch your app and `Widgetbook` simultaneously.
