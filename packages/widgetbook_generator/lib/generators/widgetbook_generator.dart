@@ -10,6 +10,7 @@ import 'package:widgetbook_generator/extensions/list_extension.dart';
 import 'package:widgetbook_generator/generators/app_generator.dart';
 import 'package:widgetbook_generator/generators/imports_generator.dart';
 import 'package:widgetbook_generator/generators/main_generator.dart';
+import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 
 class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
@@ -26,6 +27,12 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
       (map) => WidgetbookThemeData.fromMap(map),
     );
 
+    final stories = await loadDataFromJson<WidgetbookStoryData>(
+      buildStep,
+      '**.story.widgetbook.json',
+      (map) => WidgetbookStoryData.fromMap(map),
+    );
+
     String name = getName(annotation);
     WidgetbookThemeData? lightTheme =
         themeData.firstWhereOrDefault((element) => !element.isDarkTheme);
@@ -37,6 +44,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
       generateImports(
         [
           ...themeData,
+          ...stories,
         ],
       ),
     );
@@ -48,6 +56,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
         name: name,
         lightTheme: lightTheme,
         darkTheme: darkTheme,
+        stories: stories,
       ),
     );
 

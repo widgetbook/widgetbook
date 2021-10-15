@@ -5,6 +5,41 @@ import 'package:meal_app/widgets/attributes/weight_attribute.dart';
 import 'package:meal_app/widgets/ingredients.dart';
 import 'package:meal_app/widgets/new_tag.dart';
 import 'package:meal_app/widgets/rotated_image.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@WidgetbookStory(name: 'short name', type: MealDetail)
+Widget mealDetailShort(BuildContext context) {
+  return MealDetail(
+    meal: Meal(
+      title: 'Bacon Burger',
+      imagePath: 'assets/burger.jpg',
+      ingredients: [
+        'tomato',
+        'beef',
+        'onion',
+      ],
+      price: 8.5,
+      weight: 320,
+    ),
+  );
+}
+
+@WidgetbookStory(name: 'long name', type: MealDetail)
+Widget mealDetailLong(BuildContext context) {
+  return MealDetail(
+    meal: Meal(
+      title: 'Bacon Burger with onion rings and bacon',
+      imagePath: 'assets/burger.jpg',
+      ingredients: [
+        'tomato',
+        'beef',
+        'onion',
+      ],
+      price: 8.5,
+      weight: 320,
+    ),
+  );
+}
 
 class MealDetail extends StatelessWidget {
   final Meal meal;

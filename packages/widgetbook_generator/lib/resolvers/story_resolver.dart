@@ -3,9 +3,9 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/json_formatter.dart';
-import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
+import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 
-class ThemeResolver extends GeneratorForAnnotation<WidgetbookTheme> {
+class StoryResolver extends GeneratorForAnnotation<WidgetbookStory> {
   @override
   String generateForAnnotatedElement(
     Element element,
@@ -19,13 +19,17 @@ class ThemeResolver extends GeneratorForAnnotation<WidgetbookTheme> {
       );
     }
 
-    final isDarkTheme = annotation.read('isDarkTheme').boolValue;
+    final storyName = annotation.read('name').stringValue;
+    final widgetName = annotation.read('type').typeValue.getDisplayString(
+          withNullability: false,
+        );
 
-    final themeData = WidgetbookThemeData.fromResolver(
+    final data = WidgetbookStoryData.fromResolver(
       element,
-      isDarkTheme,
+      storyName,
+      widgetName,
     );
 
-    return [themeData].toJson();
+    return [data].toJson();
   }
 }

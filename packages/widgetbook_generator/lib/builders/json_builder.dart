@@ -13,11 +13,12 @@ class JsonLibraryBuilder extends Builder {
   JsonLibraryBuilder(
     this.generator, {
     required this.formatOutput,
-  }) : _generatedExtension = '.theme.widgetbook.json';
+    required this.generatedExtension,
+  });
 
   final Generator generator;
   final String Function(String) formatOutput;
-  final String _generatedExtension;
+  final String generatedExtension;
 
   @override
   Future build(BuildStep buildStep) async {
@@ -35,7 +36,7 @@ class JsonLibraryBuilder extends Builder {
         await _generate(library, generator, buildStep).toList();
 
     if (generatedOutputs.isEmpty) return;
-    final outputId = buildStep.inputId.changeExtension(_generatedExtension);
+    final outputId = buildStep.inputId.changeExtension(generatedExtension);
 
     final contentBuffer = StringBuffer();
 
@@ -78,7 +79,7 @@ class JsonLibraryBuilder extends Builder {
   @override
   Map<String, List<String>> get buildExtensions => {
         '.dart': [
-          _generatedExtension,
+          generatedExtension,
         ]
       };
 }
