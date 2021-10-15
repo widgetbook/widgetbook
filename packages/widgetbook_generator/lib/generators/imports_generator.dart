@@ -10,6 +10,7 @@ String generateImports(
     set.addAll(data.dependencies);
   }
 
+  set.add('package:flutter/material.dart');
   set.add('package:widgetbook/widgetbook.dart');
 
   return set.map(_generateImportStatement).join('\n');

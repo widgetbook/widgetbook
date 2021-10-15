@@ -13,8 +13,7 @@ class JsonLibraryBuilder extends Builder {
   JsonLibraryBuilder(
     this.generator, {
     required this.formatOutput,
-    String generatedExtension = '.g.dart',
-  }) : _generatedExtension = '.json.dart';
+  }) : _generatedExtension = '.theme.widgetbook.json';
 
   final Generator generator;
   final String Function(String) formatOutput;

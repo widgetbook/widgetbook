@@ -3,7 +3,7 @@ import 'package:meal_app/themes/dark_theme.dart';
 import 'package:meal_app/widgets/dashboard.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@WidgetbookApp()
+@WidgetbookApp(name: 'Meal App')
 class App extends StatelessWidget {
   // This widget is the root of your application.
   @override

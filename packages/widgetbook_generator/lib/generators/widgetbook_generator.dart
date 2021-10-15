@@ -26,6 +26,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
       (map) => WidgetbookThemeData.fromMap(map),
     );
 
+    String name = getName(annotation);
     WidgetbookThemeData? lightTheme =
         themeData.firstWhereOrDefault((element) => !element.isDarkTheme);
     WidgetbookThemeData? darkTheme =
@@ -44,6 +45,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
     );
     buffer.writeln(
       generateWidgetbook(
+        name: name,
         lightTheme: lightTheme,
         darkTheme: darkTheme,
       ),
@@ -51,6 +53,10 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
 
     return buffer.toString();
   }
+}
+
+String getName(ConstantReader annotation) {
+  return annotation.read('name').stringValue;
 }
 
 Future<List<T>> loadDataFromJson<T>(

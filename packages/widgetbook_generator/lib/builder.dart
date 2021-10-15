@@ -9,7 +9,6 @@ Builder themeBuilder(BuilderOptions options) {
   return JsonLibraryBuilder(
     ThemeResolver(),
     formatOutput: formatOutput,
-    generatedExtension: '.theme.widgetbook.json',
   );
 }
 

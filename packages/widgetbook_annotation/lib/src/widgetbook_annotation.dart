@@ -20,7 +20,12 @@ class WidgetbookTheme {
 class WidgetbookApp {
   final List<Device> devices;
 
+  /// The name of the widgetbook.
+  /// This information will be displayed at the top left corner in the UI.
+  final String name;
+
   const WidgetbookApp({
-    required this.devices,
+    required this.name,
+    this.devices = const <Device>[],
   });
 }
