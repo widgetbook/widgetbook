@@ -32,10 +32,6 @@ String generateStoryValues(List<WidgetbookStoryData> stories) {
   for (final story in stories) {
     var folder = service.addFolderByImport(story.importStatement);
     service.addStoryToFolder(folder, story);
-
-    var folders = regExp.allMatches(story.importStatement).toList();
-
-    int t = 0;
   }
 
   List<String> foldersCode =
@@ -45,9 +41,29 @@ String generateStoryValues(List<WidgetbookStoryData> stories) {
   return code;
 }
 
+String generateStory(WidgetbookStoryData story) {
+  return """Story(
+  name: '${story.storyName}',
+  builder: (context) => ${story.name}(context),
+)""";
+}
+
+String generateWidget(Widget widget) {
+  var stories = widget.stories.map(generateStory).toList();
+
+  return """WidgetElement(
+  name: '${widget.name}',
+  stories: [${stories.join(',')},],
+)""";
+}
+
 String generateFolder(Folder folder) {
+  List<String> widgetsCode = folder.widgets.values.map(generateWidget).toList();
   if (folder.subFolders.isEmpty) {
-    return "Folder(name: '${folder.name}')";
+    return """Folder(
+  name: '${folder.name}', 
+  widgets: [${widgetsCode.join(',')},],
+)""";
   }
 
   List<String> foldersCode = folder.subFolders.values
@@ -56,7 +72,11 @@ String generateFolder(Folder folder) {
       )
       .toList();
 
-  return "Folder(name: '${folder.name}', folders: [${foldersCode.join(',')}],)";
+  return """Folder(
+  name: '${folder.name}', 
+  folders: [${foldersCode.join(',')},],
+  widgets: [${widgetsCode.join(',')},],
+)""";
 }
 
 String generateAppInfo({
