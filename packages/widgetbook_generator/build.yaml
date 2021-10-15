@@ -1,0 +1,14 @@
+builders:
+  theme_builder:
+    import: "package:widgetbook_generator/builder.dart"
+    builder_factories: ["themeBuilder"]
+    build_extensions: { ".dart": [".theme.widgetbook.json"] }
+    auto_apply: dependents
+    runs_before: [":widgetbook_builder"]
+    build_to: cache
+  widgetbook_builder:
+    import: "package:widgetbook_generator/builder.dart"
+    builder_factories: ["widgetbookBuilder"]
+    build_extensions: { ".dart": [".widgetbook.dart"] }
+    auto_apply: dependents
+    build_to: source

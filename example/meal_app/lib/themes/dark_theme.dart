@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/constants/border.dart';
 import 'package:meal_app/constants/color.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@WidgetbookTheme.dark()
+ThemeData getDarkThemeData() => ThemeData(
+      primarySwatch: Colors.blue,
+    );
 
 ThemeData getDarkTheme(BuildContext context) {
   return ThemeData(

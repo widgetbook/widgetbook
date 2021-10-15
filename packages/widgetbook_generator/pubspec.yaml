@@ -1,0 +1,19 @@
+name: widgetbook_generator
+description: A new Flutter package project.
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  widgetbook_annotation:
+    path: ../widgetbook_annotation
+  analyzer: ^2.2.0
+  build: ^2.1.0
+  source_gen: ^1.1.0
+
+dev_dependencies:
+  flutter_lints: ^1.0.0
+  build_runner: ^2.1.2
+
