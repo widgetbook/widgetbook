@@ -1,10 +1,13 @@
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
+import 'package:widgetbook_generator/writer/device_writer.dart';
+import 'package:widgetbook_models/widgetbook_models.dart';
 
 String generateWidgetbook({
   required String name,
   required List<WidgetbookStoryData> stories,
+  required List<Device> devices,
   WidgetbookThemeData? lightTheme,
   WidgetbookThemeData? darkTheme,
 }) {
@@ -17,10 +20,30 @@ class HotReload extends StatelessWidget {
       lightTheme: ${generateThemeDataValue(lightTheme)},
       darkTheme: ${generateThemeDataValue(darkTheme)},
       categories: ${generateStoryValues(stories)},
+      ${generateDevicesLine(devices)}
     );
   }
 }
 ''';
+}
+
+String generateDevicesLine(List<Device> devices) {
+  String code;
+  if (devices.isEmpty) {
+    code = '';
+  } else {
+    List<String> devicesCode = <String>[];
+    for (final device in devices) {
+      devicesCode.add(
+        DeviceWriter().write(device),
+      );
+    }
+
+    code = devicesCode.join(',');
+    code = 'devices: [$code,],';
+  }
+
+  return code;
 }
 
 String generateStoryValues(List<WidgetbookStoryData> stories) {

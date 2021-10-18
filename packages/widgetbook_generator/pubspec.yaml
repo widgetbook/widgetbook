@@ -9,6 +9,8 @@ environment:
 dependencies:
   widgetbook_annotation:
     path: ../widgetbook_annotation
+  widgetbook_models:
+    path: ../widgetbook_models
   analyzer: ^2.2.0
   build: ^2.1.0
   source_gen: ^1.1.0

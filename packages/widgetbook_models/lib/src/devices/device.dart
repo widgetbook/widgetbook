@@ -1,10 +1,17 @@
+import 'package:meta/meta.dart';
 import 'package:widgetbook_models/src/devices/device_type.dart';
 import 'package:widgetbook_models/src/devices/resolution.dart';
-import 'package:meta/meta.dart';
 
 /// A virtual device that will rendered when a story is previewed
 @immutable
 class Device {
+  /// Creates a new device with [name], [resolution], and [type].
+  const Device({
+    required this.name,
+    required this.resolution,
+    required this.type,
+  });
+
   /// Creates a new watch device
   const Device.watch({
     required this.name,

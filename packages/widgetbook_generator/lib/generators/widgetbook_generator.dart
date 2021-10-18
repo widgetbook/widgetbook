@@ -10,8 +10,10 @@ import 'package:widgetbook_generator/extensions/list_extension.dart';
 import 'package:widgetbook_generator/generators/app_generator.dart';
 import 'package:widgetbook_generator/generators/imports_generator.dart';
 import 'package:widgetbook_generator/generators/main_generator.dart';
+import 'package:widgetbook_generator/readers/device_reader.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
+import 'package:widgetbook_models/widgetbook_models.dart';
 
 class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
   @override
@@ -34,7 +36,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
     );
 
     String name = getName(annotation);
-    var devices = getDevices(annotation);
+    List<Device> devices = getDevices(annotation);
     WidgetbookThemeData? lightTheme =
         themeData.firstWhereOrDefault((element) => !element.isDarkTheme);
     WidgetbookThemeData? darkTheme =
@@ -58,6 +60,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
         lightTheme: lightTheme,
         darkTheme: darkTheme,
         stories: stories,
+        devices: devices,
       ),
     );
 
@@ -65,8 +68,15 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
   }
 }
 
-dynamic getDevices(ConstantReader annotation) {
-  int t = 0;
+List<Device> getDevices(ConstantReader annotation) {
+  final devices = <Device>[];
+
+  for (final deviceObject in annotation.read('devices').listValue) {
+    final device = DeviceReader().read(deviceObject);
+    devices.add(device);
+  }
+
+  return devices;
 }
 
 String getName(ConstantReader annotation) {
