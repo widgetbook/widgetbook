@@ -1,4 +1,4 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:widgetbook_models/src/devices/apple_devices.dart';
 import 'package:widgetbook_models/src/devices/device.dart';
 import 'package:widgetbook_models/src/devices/device_type.dart';
