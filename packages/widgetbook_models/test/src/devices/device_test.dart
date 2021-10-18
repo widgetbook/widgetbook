@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/models/device.dart';
-import 'package:widgetbook/src/models/resolution.dart';
+import 'package:widgetbook_models/src/devices/apple_devices.dart';
+import 'package:widgetbook_models/src/devices/device.dart';
+import 'package:widgetbook_models/src/devices/resolution.dart';
 
 void main() {
   group(
@@ -10,17 +11,16 @@ void main() {
         'and $Device.custom equal',
         () {
           final resolution = Resolution.dimensions(
-            width: 400,
-            height: 400,
+            nativeWidth: 400,
+            nativeHeight: 400,
             scaleFactor: 2,
           );
-          final instance1 = Device(
+          final instance1 = Device.mobile(
             name: 'Device',
             resolution: resolution,
-            type: DeviceType.unknown,
           );
 
-          final instance2 = Device.custom(
+          final instance2 = Device.mobile(
             resolution: resolution,
             name: 'Device',
           );
@@ -50,24 +50,22 @@ void main() {
           test(
             'two instances with the same values are compared',
             () {
-              final instance1 = Device(
+              final instance1 = Device.mobile(
                 name: 'Device',
                 resolution: Resolution.dimensions(
-                  width: 400,
-                  height: 400,
+                  nativeWidth: 400,
+                  nativeHeight: 400,
                   scaleFactor: 2,
                 ),
-                type: DeviceType.unknown,
               );
 
-              final instance2 = Device(
+              final instance2 = Device.mobile(
                 name: 'Device',
                 resolution: Resolution.dimensions(
-                  width: 400,
-                  height: 400,
+                  nativeWidth: 400,
+                  nativeHeight: 400,
                   scaleFactor: 2,
                 ),
-                type: DeviceType.unknown,
               );
 
               expect(
@@ -80,24 +78,22 @@ void main() {
           test(
             'the hashCodes of two instances with the same values are compared',
             () {
-              final instance1 = Device(
+              final instance1 = Device.mobile(
                 name: 'Device',
                 resolution: Resolution.dimensions(
-                  width: 400,
-                  height: 400,
+                  nativeWidth: 400,
+                  nativeHeight: 400,
                   scaleFactor: 2,
                 ),
-                type: DeviceType.unknown,
               );
 
-              final instance2 = Device(
+              final instance2 = Device.mobile(
                 name: 'Device',
                 resolution: Resolution.dimensions(
-                  width: 400,
-                  height: 400,
+                  nativeWidth: 400,
+                  nativeHeight: 400,
                   scaleFactor: 2,
                 ),
-                type: DeviceType.unknown,
               );
 
               expect(

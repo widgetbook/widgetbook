@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/utils/extensions.dart';
+import 'package:widgetbook_models/widgetbook_models.dart';
 
 class DeviceItem extends StatelessWidget {
   const DeviceItem({

@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 
-import 'package:widgetbook/src/models/device.dart';
+import 'package:widgetbook_models/widgetbook_models.dart';
 
 class DeviceState {
   DeviceState({

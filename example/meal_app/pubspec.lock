@@ -497,6 +497,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  widgetbook_models:
+    dependency: transitive
+    description:
+      path: "../../packages/widgetbook_models"
+      relative: true
+    source: path
+    version: "0.0.1"
   yaml:
     dependency: transitive
     description:

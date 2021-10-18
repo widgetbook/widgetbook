@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/src/configure_non_web.dart'
     if (dart.library.html) 'package:widgetbook/src/configure_web.dart';
 import 'package:widgetbook/src/models/app_info.dart';
-import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
@@ -20,6 +19,7 @@ import 'package:widgetbook/src/routing/route_information_parser.dart';
 import 'package:widgetbook/src/routing/story_router_delegate.dart';
 import 'package:widgetbook/src/services/filter_service.dart';
 import 'package:widgetbook/src/utils/utils.dart';
+import 'package:widgetbook_models/widgetbook_models.dart';
 
 class Widgetbook extends StatefulWidget {
   const Widgetbook({

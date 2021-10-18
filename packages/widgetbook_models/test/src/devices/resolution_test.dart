@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/models/resolution.dart';
+import 'package:widgetbook_models/src/devices/resolution.dart';
 
 void main() {
   group(
@@ -8,8 +8,8 @@ void main() {
     () {
       test('returns Size(200, 200) when logicalSize is called', () {
         final instance = Resolution.dimensions(
-          height: 400,
-          width: 400,
+          nativeHeight: 400,
+          nativeWidth: 400,
           scaleFactor: 2,
         );
 
@@ -28,8 +28,8 @@ void main() {
         'returns true when instance is the same',
         () {
           final instance = Resolution.dimensions(
-            height: 1,
-            width: 1,
+            nativeHeight: 1,
+            nativeWidth: 1,
             scaleFactor: 1,
           );
 
@@ -47,13 +47,13 @@ void main() {
             'two instances with the same values are compared',
             () {
               final instance1 = Resolution.dimensions(
-                height: 1,
-                width: 1,
+                nativeHeight: 1,
+                nativeWidth: 1,
                 scaleFactor: 1,
               );
               final instance2 = Resolution.dimensions(
-                height: 1,
-                width: 1,
+                nativeHeight: 1,
+                nativeWidth: 1,
                 scaleFactor: 1,
               );
 
@@ -68,13 +68,13 @@ void main() {
             'the hashCodes of two instances with the same values are compared',
             () {
               final instance1 = Resolution.dimensions(
-                height: 1,
-                width: 1,
+                nativeHeight: 1,
+                nativeWidth: 1,
                 scaleFactor: 1,
               );
               final instance2 = Resolution.dimensions(
-                height: 1,
-                width: 1,
+                nativeHeight: 1,
+                nativeWidth: 1,
                 scaleFactor: 1,
               );
 
