@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:widgetbook_models/src/devices/device_type.dart';
 import 'package:widgetbook_models/src/devices/resolution.dart';
+import 'package:meta/meta.dart';
 
 /// A virtual device that will rendered when a story is previewed
 @immutable

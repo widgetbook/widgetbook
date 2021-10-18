@@ -1,4 +1,4 @@
-import 'package:widgetbook_annotation/src/replace_soon.dart';
+import 'package:widgetbook_models/widgetbook_models.dart';
 
 class WidgetbookStory {
   final String name;

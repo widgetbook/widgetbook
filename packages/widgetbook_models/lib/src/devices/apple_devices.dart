@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:widgetbook_models/src/devices/device.dart';
+import 'package:widgetbook_models/src/devices/device_size.dart';
 import 'package:widgetbook_models/src/devices/resolution.dart';
 
 /// Collection of Apple devices
@@ -11,7 +11,10 @@ class Apple {
   static const Device iPadPro12inch = Device.tablet(
     name: '12.9" iPad Pro',
     resolution: Resolution(
-      nativeSize: Size(2048, 2732),
+      nativeSize: DeviceSize(
+        width: 2048,
+        height: 2732,
+      ),
       scaleFactor: 2,
     ),
   );
@@ -20,7 +23,7 @@ class Apple {
   static const Device iPadPro11inch = Device.tablet(
     name: '11" iPad Pro',
     resolution: Resolution(
-      nativeSize: Size(1668, 2388),
+      nativeSize: DeviceSize(width: 1668, height: 2388),
       scaleFactor: 2,
     ),
   );
@@ -29,7 +32,7 @@ class Apple {
   static const Device iPadPro10inch = Device.tablet(
     name: '10.5" iPad Pro',
     resolution: Resolution(
-      nativeSize: Size(1668, 2388),
+      nativeSize: DeviceSize(width: 1668, height: 2388),
       scaleFactor: 2,
     ),
   );
@@ -38,7 +41,7 @@ class Apple {
   static const Device iPadPro9inch = Device.tablet(
     name: '9.7" iPad Pro',
     resolution: Resolution(
-      nativeSize: Size(768, 1024),
+      nativeSize: DeviceSize(width: 768, height: 1024),
       scaleFactor: 2,
     ),
   );
@@ -47,7 +50,7 @@ class Apple {
   static const Device iPadMini = Device.tablet(
     name: '7.9" iPad mini',
     resolution: Resolution(
-      nativeSize: Size(768, 1024),
+      nativeSize: DeviceSize(width: 768, height: 1024),
       scaleFactor: 2,
     ),
   );
@@ -56,7 +59,7 @@ class Apple {
   static const Device iPadAir10Inch = Device.tablet(
     name: '10.5" iPad Air',
     resolution: Resolution(
-      nativeSize: Size(1668, 2224),
+      nativeSize: DeviceSize(width: 1668, height: 2224),
       scaleFactor: 2,
     ),
   );
@@ -65,7 +68,7 @@ class Apple {
   static const Device iPadAir9Inch = Device.tablet(
     name: '9.7" iPad Air',
     resolution: Resolution(
-      nativeSize: Size(1536, 2048),
+      nativeSize: DeviceSize(width: 1536, height: 2048),
       scaleFactor: 2,
     ),
   );
@@ -74,7 +77,7 @@ class Apple {
   static const Device iPhone11 = Device.mobile(
     name: 'iPhone 11',
     resolution: Resolution(
-      nativeSize: Size(828, 1792),
+      nativeSize: DeviceSize(width: 828, height: 1792),
       scaleFactor: 2,
     ),
   );
@@ -83,7 +86,7 @@ class Apple {
   static const Device iPhone12 = Device.mobile(
     name: 'iPhone 12',
     resolution: Resolution(
-      nativeSize: Size(1170, 2532),
+      nativeSize: DeviceSize(width: 1170, height: 2532),
       scaleFactor: 3,
     ),
   );
@@ -92,7 +95,7 @@ class Apple {
   static const Device iPhone12pro = Device.mobile(
     name: 'iPhone 12 Pro',
     resolution: Resolution(
-      nativeSize: Size(1170, 2532),
+      nativeSize: DeviceSize(width: 1170, height: 2532),
       scaleFactor: 3,
     ),
   );
@@ -101,7 +104,7 @@ class Apple {
   static const Device iPhone12mini = Device.mobile(
     name: 'iPhone 12 Mini',
     resolution: Resolution(
-      nativeSize: Size(1125, 2436),
+      nativeSize: DeviceSize(width: 1125, height: 2436),
       scaleFactor: 3,
     ),
   );

@@ -34,6 +34,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
     );
 
     String name = getName(annotation);
+    var devices = getDevices(annotation);
     WidgetbookThemeData? lightTheme =
         themeData.firstWhereOrDefault((element) => !element.isDarkTheme);
     WidgetbookThemeData? darkTheme =
@@ -62,6 +63,10 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
 
     return buffer.toString();
   }
+}
+
+dynamic getDevices(ConstantReader annotation) {
+  int t = 0;
 }
 
 String getName(ConstantReader annotation) {

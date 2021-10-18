@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
+import 'package:widgetbook_models/src/devices/device_size.dart';
 
 /// The resolution of a device defined by the nativeSize of the Device
 /// and its scaling factor.
@@ -17,9 +18,9 @@ class Resolution {
     required double scaleFactor,
   }) {
     return Resolution(
-      nativeSize: Size(
-        nativeWidth,
-        nativeHeight,
+      nativeSize: DeviceSize(
+        width: nativeWidth,
+        height: nativeHeight,
       ),
       scaleFactor: scaleFactor,
     );
@@ -28,13 +29,13 @@ class Resolution {
   /// The logicalSize defines the number of pixels in the render engine.
   /// It is calculated by using the following formula:
   /// logicalSize = nativeSize / scaleFactor
-  Size get logicalSize => nativeSize / scaleFactor;
+  DeviceSize get logicalSize => nativeSize / scaleFactor;
 
   /// The nativeSize defines the number of pixels of the device screen.
   /// It is used to calculate the logical size of the device by
   /// using the following formula:
   /// logicalSize = nativeSize / scaleFactor
-  final Size nativeSize;
+  final DeviceSize nativeSize;
 
   /// The scaleFactor is used to calculate the logical size of the device by
   /// using the following formula:

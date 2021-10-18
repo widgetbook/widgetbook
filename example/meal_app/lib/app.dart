@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/themes/dark_theme.dart';
 import 'package:meal_app/widgets/dashboard.dart';
+import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@WidgetbookApp(name: 'Meal App')
+@WidgetbookApp(
+  name: 'Meal App',
+  devices: [
+    Apple.iPhone11,
+    Apple.iPhone12pro,
+  ],
+)
 class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
