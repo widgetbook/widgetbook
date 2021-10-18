@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook_models/src/devices/apple_devices.dart';
 import 'package:widgetbook_models/src/devices/device.dart';
+import 'package:widgetbook_models/src/devices/device_type.dart';
 import 'package:widgetbook_models/src/devices/resolution.dart';
 
 void testEquals({
@@ -76,6 +77,18 @@ void main() {
         'returns true when',
         () {
           group('two instances with the same values are compared:', () {
+            test(
+              'Device',
+              () {
+                testEquals(
+                  createInstance: (resolution) => Device(
+                      name: 'Device',
+                      resolution: resolution,
+                      type: DeviceType.desktop),
+                );
+              },
+            );
+
             test(
               'Device.watch',
               () {

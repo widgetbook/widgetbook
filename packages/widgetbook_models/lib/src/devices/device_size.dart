@@ -34,4 +34,16 @@ class DeviceSize {
         width: width / operand,
         height: height / operand,
       );
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is DeviceSize &&
+        other.width == width &&
+        other.height == height;
+  }
+
+  @override
+  int get hashCode => width.hashCode ^ height.hashCode;
 }

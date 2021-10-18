@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook_models/src/devices/device_size.dart';
 import 'package:widgetbook_models/src/devices/resolution.dart';
 
 void main() {
@@ -16,9 +16,9 @@ void main() {
         expect(
           instance.logicalSize,
           equals(
-            const Size(
-              200,
-              200,
+            const DeviceSize(
+              width: 200,
+              height: 200,
             ),
           ),
         );
