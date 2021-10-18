@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
@@ -26,7 +24,6 @@ class HotReload extends StatelessWidget {
 }
 
 String generateStoryValues(List<WidgetbookStoryData> stories) {
-  var regExp = RegExp('\/.+(?=\/)', caseSensitive: false);
   var service = TreeService();
 
   for (final story in stories) {
