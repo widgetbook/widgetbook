@@ -3,7 +3,7 @@ import 'package:widgetbook_models/widgetbook_models.dart';
 /// Annotates a code element to create the widgetbook main file in the same
 /// folder in which the annotated element is defined.
 class WidgetbookApp {
-  /// Create a new annotation with [name] and optional [devices].
+  /// Creates a new annotation with [name] and optional [devices].
   /// If devices is not set or set to an empty list, no code for the
   /// Widgetbook.devices property will be generated.
   /// Therefore, the default of Widgetbook will be used.

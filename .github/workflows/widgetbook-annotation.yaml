@@ -1,18 +1,18 @@
 on: 
   pull_request:
     paths:
-      - "packages/widgetbook_models/**"
+      - "packages/widgetbook_annotation/**"
       - ".github/workflows/widgetbook-models.yaml"
   push:
     branches:
       - main
-name: widgetbook_models
+name: widgetbook_annotation
 jobs:
   test:
     name: test
     defaults:
       run:
-        working-directory: packages/widgetbook_models
+        working-directory: packages/widgetbook_annotation
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -36,18 +36,18 @@ jobs:
     - name: Check Code Coverage
       uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
       with:
-        path: packages/widgetbook_models/coverage/lcov.info
+        path: packages/widgetbook_annotation/coverage/lcov.info
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        directory: ./packages/widgetbook_models/coverage/
+        directory: ./packages/widgetbook_annotation/coverage/
 
   code-quality:
     defaults:
       run:
-        working-directory: packages/widgetbook_models
+        working-directory: packages/widgetbook_annotation
     name: code quality
     runs-on: ubuntu-latest 
     steps:
