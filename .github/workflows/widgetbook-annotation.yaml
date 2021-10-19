@@ -2,7 +2,7 @@ on:
   pull_request:
     paths:
       - "packages/widgetbook_annotation/**"
-      - ".github/workflows/widgetbook-models.yaml"
+      - ".github/workflows/widgetbook-annotation.yaml"
   push:
     branches:
       - main

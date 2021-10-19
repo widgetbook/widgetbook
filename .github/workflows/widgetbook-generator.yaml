@@ -2,7 +2,7 @@ on:
   pull_request:
     paths:
       - "packages/widgetbook_generator/**"
-      - ".github/workflows/widgetbook-models.yaml"
+      - ".github/workflows/widgetbook-generator.yaml"
   push:
     branches:
       - main
@@ -37,6 +37,7 @@ jobs:
       uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
       with:
         path: packages/widgetbook_generator/coverage/lcov.info
+        min_coverage: 52
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
