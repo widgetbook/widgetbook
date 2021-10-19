@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
-
 import 'package:glob/glob.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
@@ -10,9 +9,9 @@ import 'package:widgetbook_generator/extensions/list_extension.dart';
 import 'package:widgetbook_generator/generators/app_generator.dart';
 import 'package:widgetbook_generator/generators/imports_generator.dart';
 import 'package:widgetbook_generator/generators/main_generator.dart';
-import 'package:widgetbook_generator/readers/device_reader.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
+import 'package:widgetbook_generator/readers/device_reader.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
 
 class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
@@ -23,52 +22,52 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
     BuildStep buildStep,
   ) async {
     // Verification that only one light and one dark theme exist
-    final themeData = await loadDataFromJson<WidgetbookThemeData>(
+    final themeData = await _loadDataFromJson<WidgetbookThemeData>(
       buildStep,
       '**.theme.widgetbook.json',
       (map) => WidgetbookThemeData.fromMap(map),
     );
 
-    final stories = await loadDataFromJson<WidgetbookStoryData>(
+    final stories = await _loadDataFromJson<WidgetbookStoryData>(
       buildStep,
       '**.story.widgetbook.json',
       (map) => WidgetbookStoryData.fromMap(map),
     );
 
-    String name = getName(annotation);
-    List<Device> devices = getDevices(annotation);
-    WidgetbookThemeData? lightTheme =
+    final name = _getName(annotation);
+    final devices = _getDevices(annotation);
+    final lightTheme =
         themeData.firstWhereOrDefault((element) => !element.isDarkTheme);
-    WidgetbookThemeData? darkTheme =
+    final darkTheme =
         themeData.firstWhereOrDefault((element) => element.isDarkTheme);
 
-    final buffer = StringBuffer();
-    buffer.writeln(
-      generateImports(
-        [
-          ...themeData,
-          ...stories,
-        ],
-      ),
-    );
-    buffer.writeln(
-      generateMain(),
-    );
-    buffer.writeln(
-      generateWidgetbook(
-        name: name,
-        lightTheme: lightTheme,
-        darkTheme: darkTheme,
-        stories: stories,
-        devices: devices,
-      ),
-    );
+    final buffer = StringBuffer()
+      ..writeln(
+        generateImports(
+          [
+            ...themeData,
+            ...stories,
+          ],
+        ),
+      )
+      ..writeln(
+        generateMain(),
+      )
+      ..writeln(
+        generateWidgetbook(
+          name: name,
+          lightTheme: lightTheme,
+          darkTheme: darkTheme,
+          stories: stories,
+          devices: devices,
+        ),
+      );
 
     return buffer.toString();
   }
 }
 
-List<Device> getDevices(ConstantReader annotation) {
+List<Device> _getDevices(ConstantReader annotation) {
   final devices = <Device>[];
 
   for (final deviceObject in annotation.read('devices').listValue) {
@@ -79,11 +78,11 @@ List<Device> getDevices(ConstantReader annotation) {
   return devices;
 }
 
-String getName(ConstantReader annotation) {
+String _getName(ConstantReader annotation) {
   return annotation.read('name').stringValue;
 }
 
-Future<List<T>> loadDataFromJson<T>(
+Future<List<T>> _loadDataFromJson<T>(
   BuildStep buildStep,
   String extension,
   T Function(Map<String, dynamic>) fromMap,
@@ -91,8 +90,9 @@ Future<List<T>> loadDataFromJson<T>(
   final glob = Glob(extension);
   final widgetbookData = <T>[];
   await for (final id in buildStep.findAssets(glob)) {
-    List jsons = jsonDecode(await buildStep.readAsString(id)) as List;
-    List<T> something = jsons.map<T>((json) {
+    final decodedJson = jsonDecode(await buildStep.readAsString(id)) as List;
+    final jsons = decodedJson.cast<Map<String, dynamic>>();
+    final something = jsons.map<T>((Map<String, dynamic> json) {
       return fromMap(json);
     }).toList();
 

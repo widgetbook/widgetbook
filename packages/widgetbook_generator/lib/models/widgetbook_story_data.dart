@@ -3,9 +3,6 @@ import 'package:widgetbook_generator/extensions/element_extensions.dart';
 import 'package:widgetbook_generator/models/widgetbook_data.dart';
 
 class WidgetbookStoryData extends WidgetbookData {
-  final String storyName;
-  final String widgetName;
-
   WidgetbookStoryData({
     required String name,
     required String importStatement,
@@ -32,24 +29,27 @@ class WidgetbookStoryData extends WidgetbookData {
     );
   }
 
+  factory WidgetbookStoryData.fromMap(Map<String, dynamic> map) {
+    return WidgetbookStoryData(
+      name: map['name'] as String,
+      importStatement: map['importStatement'] as String,
+      dependencies: List<String>.from(map['dependencies'] as Iterable),
+      storyName: map['storyName'] as String,
+      widgetName: map['widgetName'] as String,
+    );
+  }
+
+  final String storyName;
+  final String widgetName;
+
   @override
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'name': name,
       'importStatement': importStatement,
       'dependencies': dependencies,
       'storyName': storyName,
       'widgetName': widgetName,
     };
-  }
-
-  factory WidgetbookStoryData.fromMap(Map<String, dynamic> map) {
-    return WidgetbookStoryData(
-      name: map['name'],
-      importStatement: map['importStatement'],
-      dependencies: List<String>.from(map['dependencies']),
-      storyName: map['storyName'],
-      widgetName: map['widgetName'],
-    );
   }
 }

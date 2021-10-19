@@ -3,15 +3,17 @@ import 'package:widgetbook_generator/models/widgetbook_data.dart';
 String generateImports(
   List<WidgetbookData> datas,
 ) {
-  final set = Set<String>();
+  final set = <String>{};
 
   for (final data in datas) {
-    set.add(data.importStatement);
-    set.addAll(data.dependencies);
+    set
+      ..add(data.importStatement)
+      ..addAll(data.dependencies);
   }
 
-  set.add('package:flutter/material.dart');
-  set.add('package:widgetbook/widgetbook.dart');
+  set
+    ..add('package:flutter/material.dart')
+    ..add('package:widgetbook/widgetbook.dart');
 
   return set.map(_generateImportStatement).join('\n');
 }

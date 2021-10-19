@@ -3,13 +3,6 @@ import 'dart:convert';
 import 'package:source_gen/source_gen.dart';
 
 class GeneratedOutput {
-  final String output;
-  final Generator generator;
-  final dynamic error;
-  final StackTrace? stackTrace;
-
-  bool get isError => error != null;
-
   GeneratedOutput(
     this.generator,
     this.output,
@@ -22,7 +15,14 @@ class GeneratedOutput {
     this.generator,
     this.error,
     this.stackTrace,
-  ) : output = _outputFromError(error);
+  ) : output = _outputFromError(error as Object);
+
+  final String output;
+  final Generator generator;
+  final dynamic error;
+  final StackTrace? stackTrace;
+
+  bool get isError => error != null;
 
   @override
   String toString() {
@@ -65,7 +65,7 @@ void _commentWithHeader(
 
   buffer
     ..writeAll(
-      [
+      <String>[
         _commentPrefix,
         header,
         lines.first,
@@ -73,11 +73,11 @@ void _commentWithHeader(
     )
     ..writeln();
 
-  final blankPrefix = ''.padLeft(header.length, ' ');
+  final blankPrefix = ''.padLeft(header.length);
   for (var i = 1; i < lines.length; i++) {
     buffer
       ..writeAll(
-        [
+        <String>[
           _commentPrefix,
           blankPrefix,
           lines[i],

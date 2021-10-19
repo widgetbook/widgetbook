@@ -4,10 +4,10 @@ import 'package:widgetbook_generator/readers/device_size_reader.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
 
 class ResolutioReader extends AnnotationReader<Resolution> {
-  final DeviceSizeReader deviceSizeReader;
-
   ResolutioReader({DeviceSizeReader? deviceSizeReader})
       : deviceSizeReader = deviceSizeReader ?? DeviceSizeReader();
+
+  final DeviceSizeReader deviceSizeReader;
 
   @override
   Resolution read(DartObject object) {

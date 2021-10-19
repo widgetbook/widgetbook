@@ -16,9 +16,9 @@ class HotReload extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook(
-      appInfo: ${generateAppInfo(name: name)},
-      lightTheme: ${generateThemeDataValue(lightTheme)},
-      darkTheme: ${generateThemeDataValue(darkTheme)},
+      appInfo: ${_generateAppInfo(name: name)},
+      lightTheme: ${_generateThemeDataValue(lightTheme)},
+      darkTheme: ${_generateThemeDataValue(darkTheme)},
       categories: ${generateStoryValues(stories)},
       ${generateDevicesLine(devices)}
     );
@@ -32,7 +32,7 @@ String generateDevicesLine(List<Device> devices) {
   if (devices.isEmpty) {
     code = '';
   } else {
-    List<String> devicesCode = <String>[];
+    final devicesCode = <String>[];
     for (final device in devices) {
       devicesCode.add(
         DeviceWriter().write(device),
@@ -47,64 +47,63 @@ String generateDevicesLine(List<Device> devices) {
 }
 
 String generateStoryValues(List<WidgetbookStoryData> stories) {
-  var service = TreeService();
+  final service = TreeService();
 
   for (final story in stories) {
-    var folder = service.addFolderByImport(story.importStatement);
+    final folder = service.addFolderByImport(story.importStatement);
     service.addStoryToFolder(folder, story);
   }
 
-  List<String> foldersCode =
-      service.folders.values.map(generateFolder).toList();
-  String code =
+  final foldersCode = service.folders.values.map(_generateFolder).toList();
+  final code =
       "[Category(name: 'stories', folders: [${foldersCode.join(',')}],),]";
   return code;
 }
 
-String generateStory(WidgetbookStoryData story) {
-  return """Story(
+String _generateStory(WidgetbookStoryData story) {
+  return """
+Story(
   name: '${story.storyName}',
   builder: (context) => ${story.name}(context),
 )""";
 }
 
-String generateWidget(Widget widget) {
-  var stories = widget.stories.map(generateStory).toList();
+String _generateWidget(Widget widget) {
+  final stories = widget.stories.map(_generateStory).toList();
 
-  return """WidgetElement(
+  return """
+WidgetElement(
   name: '${widget.name}',
   stories: [${stories.join(',')},],
 )""";
 }
 
-String generateFolder(Folder folder) {
-  List<String> widgetsCode = folder.widgets.values.map(generateWidget).toList();
+String _generateFolder(Folder folder) {
+  final widgetsCode = folder.widgets.values.map(_generateWidget).toList();
   if (folder.subFolders.isEmpty) {
-    return """Folder(
+    return """
+Folder(
   name: '${folder.name}', 
   widgets: [${widgetsCode.join(',')},],
 )""";
   }
 
-  List<String> foldersCode = folder.subFolders.values
-      .map(
-        (folder) => generateFolder(folder),
-      )
-      .toList();
+  final foldersCode = folder.subFolders.values.map(_generateFolder).toList();
 
-  return """Folder(
+  return """
+Folder(
   name: '${folder.name}', 
   folders: [${foldersCode.join(',')},],
   widgets: [${widgetsCode.join(',')},],
 )""";
 }
 
-String generateAppInfo({
+String _generateAppInfo({
   required String name,
 }) {
   return "AppInfo(name: '$name')";
 }
 
-String generateThemeDataValue(WidgetbookThemeData? themeData) {
+String _generateThemeDataValue(WidgetbookThemeData? themeData) {
   return themeData == null ? 'null' : '${themeData.name}()';
 }

@@ -3,8 +3,6 @@ import 'package:widgetbook_generator/extensions/element_extensions.dart';
 import 'package:widgetbook_generator/models/widgetbook_data.dart';
 
 class WidgetbookThemeData extends WidgetbookData {
-  final bool isDarkTheme;
-
   WidgetbookThemeData({
     required String name,
     required String importStatement,
@@ -28,22 +26,24 @@ class WidgetbookThemeData extends WidgetbookData {
     );
   }
 
+  factory WidgetbookThemeData.fromMap(Map<String, dynamic> map) {
+    return WidgetbookThemeData(
+      name: map['name'] as String,
+      importStatement: map['importStatement'] as String,
+      dependencies: List<String>.from(map['dependencies'] as Iterable),
+      isDarkTheme: map['isDarkTheme'] as bool,
+    );
+  }
+
+  final bool isDarkTheme;
+
   @override
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'name': name,
       'importStatement': importStatement,
       'dependencies': dependencies,
       'isDarkTheme': isDarkTheme,
     };
-  }
-
-  factory WidgetbookThemeData.fromMap(Map<String, dynamic> map) {
-    return WidgetbookThemeData(
-      name: map['name'],
-      importStatement: map['importStatement'],
-      dependencies: List<String>.from(map['dependencies']),
-      isDarkTheme: map['isDarkTheme'],
-    );
   }
 }

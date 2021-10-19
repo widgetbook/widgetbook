@@ -40,7 +40,7 @@ class JsonLibraryBuilder extends Builder {
 
     final contentBuffer = StringBuffer();
 
-    for (var item in generatedOutputs) {
+    for (final item in generatedOutputs) {
       contentBuffer.writeln(item.output);
     }
 

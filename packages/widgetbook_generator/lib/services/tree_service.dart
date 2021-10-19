@@ -3,20 +3,20 @@ import 'dart:collection';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 
 class Widget {
+  Widget(this.name);
+
   final String name;
   List<WidgetbookStoryData> stories = <WidgetbookStoryData>[];
-
-  Widget(this.name);
 }
 
 class Folder {
-  final String name;
-  Map<String, Folder> subFolders = HashMap();
-  Map<String, Widget> widgets = HashMap();
-
   Folder({
     required this.name,
   });
+
+  final String name;
+  Map<String, Folder> subFolders = HashMap();
+  Map<String, Widget> widgets = HashMap();
 }
 
 class TreeService {
@@ -37,15 +37,15 @@ class TreeService {
     return addFolder(null, elements);
   }
 
-  addStoryToFolder(
+  void addStoryToFolder(
     Folder? folder,
     WidgetbookStoryData story,
   ) {
-    var widgetName = story.widgetName;
+    final widgetName = story.widgetName;
 
     folder ??= rootFolder;
 
-    var widgets = folder.widgets;
+    final widgets = folder.widgets;
     if (!widgets.containsKey(widgetName)) {
       widgets.putIfAbsent(
         widgetName,
@@ -63,8 +63,8 @@ class TreeService {
       return folder;
     }
 
-    var folderName = paths.first;
-    var subFolders = paths.skip(1).toList();
+    final folderName = paths.first;
+    final subFolders = paths.skip(1).toList();
 
     if (folder == null) {
       if (!folders.containsKey(folderName)) {
