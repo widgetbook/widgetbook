@@ -1,39 +1,75 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Introduction 
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+This package features the models for the Widgetbook `Device` class. The `device` class is used in the following packages:
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
+- [package:widgetbook](https://pub.dev/packages/widgetbook)
+- [package:widgetbook_annotation](https://pub.dev/packages/widgetbook_annotation)
+- [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator)
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Furthermore, the package contains predefined and commonly used devices.
 
-## Features
+# Classes
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Currently the package contains the `Device` class with its required subsclasses and collections of various devices.
 
-## Getting started
+## Resolution
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+A device's screen resolution is defined by the number of distinct pixels in each dimension that can be displayed. Furthermore, on Apple and Android devices, this resolution is divided into logical and native resolution by a scaling factor. Therefore, to define a resolution, the native amount of pixels in each dimension and a scaling factor is required. 
 
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+A `Resolution` instance is created by using
 
 ```dart
-const like = 'sample';
+Resolution(
+    nativeSize: DeviceSize(width: 1668, height: 2388),
+    scaleFactor: 2,
+),
 ```
 
-## Additional information
+`DeviceSize` is similar to `Size` from the flutter SDK and contains properties for `width` and `height`.
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+## Device
+
+The device class specifies a device like the iPhone 12 based on a name, its resolution and its type. The type is primarily used for better iconization in [package:widgetbook](https://pub.dev/packages/widgetbook)'s user interface.
+
+An Apple iPhone 12 can be defined by using
+
+```dart
+Device iPhone12 = Device.mobile(
+    name: 'iPhone 12',
+    resolution: Resolution(
+        nativeSize: DeviceSize(width: 1170, height: 2532),
+        scaleFactor: 3,
+    ),
+);
+```
+
+### Device Types
+
+The following device types exist and can be accessed with the respective `Device` constructor:
+
+- `Device.watch( ... )`
+- `Device.mobile( ... )`
+- `Device.tablet( ... )`
+- `Device.desktop( ... )`
+- `Device.special( ... )`
+    - used for screens with unusual apsect ratios.
+
+# Collections
+
+This package also features commonly used devices like various iPads, iPhone and Macs as well as Android devices like the Samsung Galaxy Series. 
+
+The collections can be accessed by using the respective collection identifier. For instance:
+
+```dart
+Device iPhone11 = Apple.iPhone11;
+```
+
+The following collections exist:
+
+Collection | Annotation
+------------ | -------------
+Apple | iPhone, iPad, iMac, MacBook, Pro Display XDR  
+Samsung | Galaxy Series
+Desktop | HD (1080p), 2K (1440p), 4K (2180p)
+
+The specifid identifiers of the collections are easily accessible via IntelliSense. 
