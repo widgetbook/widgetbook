@@ -1,7 +1,10 @@
+import 'package:meta/meta.dart';
+
 /// Defines the size of a device
 ///
 /// This is implemented since build_runner does not work with flutter
 /// dependencies. Therefore, Size from flutter material cannot be used.
+@immutable
 class DeviceSize {
   /// Creates a new instance of DeviceSize by specifying width and height.
   const DeviceSize({
