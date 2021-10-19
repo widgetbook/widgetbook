@@ -21,15 +21,17 @@ jobs:
     - name: Checkout LFS objects
       run: git lfs checkout
 
-    - uses: subosito/flutter-action@v1
-      with:
-        channel: stable
+    - name: Setup dart
+      uses: dart-lang/setup-dart@v1
 
-    - name: Get flutter packages 
-      run: flutter pub get
+    - name: Get packages 
+      run: pub get
 
     - name: Run Tests
-      run: flutter test --coverage
+      run: |
+        pub global activate test_coverage
+        export PATH=$PATH:$HOME/.pub-cache/bin
+        test_coverage
 
     - name: Check Code Coverage
       uses: VeryGoodOpenSource/very_good_coverage@v1.2.0

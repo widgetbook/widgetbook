@@ -11,4 +11,5 @@ dependencies:
     path: ../widgetbook_models
 
 dev_dependencies:
-  flutter_lints: ^1.0.0
+  test: ^1.18.2
+  very_good_analysis: ^2.3.0
