@@ -2,18 +2,18 @@ on:
   pull_request:
     paths:
       - "packages/widgetbook/**"
-      - ".github/workflows/models.yaml"
+      - ".github/workflows/widgetbook.yaml"
   push:
     branches:
       - main
-name: widgetbook_models
+name: widgetbook
 jobs:
-  test:
-    name: test
+  build:
     defaults:
       run:
-        working-directory: packages/widgetbook_models
-    runs-on: ubuntu-latest
+        working-directory: packages/widgetbook
+    name: test
+    runs-on: ubuntu-latest 
     steps:
     - uses: actions/checkout@v2
       with:
@@ -34,19 +34,19 @@ jobs:
     - name: Check Code Coverage
       uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
       with:
-        path: packages/widgetbook_models/coverage/lcov.info
-        min_coverage: 54
-
+        path: packages/widgetbook/coverage/lcov.info
+        min_coverage: 52
+      
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        directory: ./packages/widgetbook_models/coverage/
+        directory: ./packages/widgetbook/coverage/
 
   code-quality:
     defaults:
       run:
-        working-directory: packages/widgetbook_models
+        working-directory: packages/widgetbook
     name: code quality
     runs-on: ubuntu-latest 
     steps:
@@ -56,9 +56,8 @@ jobs:
     - name: Checkout LFS objects
       run: git lfs checkout
 
-    - uses: dart-lang/setup-dart@v1
-
-    - name: Get flutter packages 
-      run: dart pub get
-    - name: Run flutter analyze
-      run: dart analyze
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: stable
+    - run: flutter pub get
+    - run: flutter analyze
