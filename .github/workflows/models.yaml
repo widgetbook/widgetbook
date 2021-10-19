@@ -34,11 +34,11 @@ jobs:
     - name: Check Code Coverage
       uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
       with:
-        path: packages/widgetbook/coverage/lcov.info
+        path: packages/widgetbook_models/coverage/lcov.info
         min_coverage: 55
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        directory: ./packages/widgetbook/coverage/
+        directory: ./packages/widgetbook_models/coverage/
