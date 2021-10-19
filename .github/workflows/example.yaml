@@ -3,13 +3,13 @@ on:
     paths:
       - "packages/widgetbook/**"
       - ".github/workflows/build-macos.yaml"
-name: Build (MacOS)
+name: example 
 jobs:
   build:
     defaults:
       run:
         working-directory: example/meal_app
-    name: Build
+    name: build macOS
     runs-on: macos-latest 
     steps:
     - uses: actions/checkout@v2
