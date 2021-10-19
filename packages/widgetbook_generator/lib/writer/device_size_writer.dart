@@ -9,6 +9,6 @@ $DeviceSize(
   width: ${type.width},
   height: ${type.height},
 )
-    ''';
+''';
   }
 }
