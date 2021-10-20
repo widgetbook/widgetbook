@@ -1,5 +1,3 @@
-// ignore_for_file: type_annotate_public_apis
-
 import 'package:widgetbook_models/widgetbook_models.dart';
 
 Device iPhone = Apple.iPhone12;
