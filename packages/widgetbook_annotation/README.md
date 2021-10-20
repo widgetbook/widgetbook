@@ -6,30 +6,46 @@
 
 # Introduction 
 
-This package contains annotations for [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) with which the generator will create the widgetbook defined in [package:widgetbook](https://pub.dev/packages/widgetbook). Therefore, this package is a part of making [package:widgetbook](https://pub.dev/packages/widgetbook) easier to maintain. Furthermore, setting up [package:widgetbook](https://pub.dev/packages/widgetbook) is simplified by code generation. 
+This package contains annotations for [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) with which the generator will create the Widgetbook defined in [package:widgetbook](https://pub.dev/packages/widgetbook). Therefore, this package is a part of making [package:widgetbook](https://pub.dev/packages/widgetbook) easier to maintain. Furthermore, setting up and maintaining [package:widgetbook](https://pub.dev/packages/widgetbook) is simplified by code generation. 
 
 # Installing this package
+This package requires the following dependencies: 
 
-Add [package:widgetbook_annotation](https://pub.dev/packages/widgetbook_annotation) as a production dependency to your pubspec file. 
+| Package           | Pub |
+| ----------------- | --------------------------------- |
+| [package:widgetbook](https://pub.dev/packages/widgetbook) | [![Pub Version](https://img.shields.io/pub/v/widgetbook?style=flat-square)](https://pub.dev/packages/widgetbook) |
+| [package:widgetbook_annotation](https://pub.dev/packages/widgetbook_annotation) | [![Pub Version](https://img.shields.io/pub/v/widgetbook_annotation?style=flat-square)](https://pub.dev/packages/widgetbook_annotation) |
 
-Furthermore, add the following packages as develoment dependencies:
+and the following dev dependencies:
 
-- [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator)
-- [package:build_runner](https://pub.dev/packages/build_runner)
+| Package           | Pub |
+| ----------------- | --------------------------------- |
+| [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) | [![Pub Version](https://img.shields.io/pub/v/widgetbook_generator?style=flat-square)](https://pub.dev/packages/widgetbook_generator) |
+| [package:build_runner](https://pub.dev/packages/build_runner) | [![Pub Version](https://img.shields.io/pub/v/build_runner?style=flat-square)](https://pub.dev/packages/build_runner) |
 
-For documentation on how to setup and use the packages mentioned above, see their corresponding [pub.dev](https://pub.dev/) pages.
+The `pubspec.yaml` file could look like this:
+
+```
+dependencies:
+  widgetbook:
+  widgetbook_annotation:
+
+dev_dependencies:
+  build_runner:
+  widgetbook_generator:
+```
 
 # Avaialble annotations
 
-This package features the annotations `WidgetbookApp`, `WidgetbookStory`, and `WidgetbookTheme`. The annotations and their usage are explained below.
+This package defines the annotations `WidgetbookApp`, `WidgetbookStory`, and `WidgetbookTheme`. The annotations and their usage are explained below.
 
 ## WidgetbookApp
 
-The annotation `WidgetbookApp` defines two things and can be added to any code element. However, the location of the file in which `WidgetbookApp` is used defines the folder in which [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) will create the file in which the Widgetbook is created. 
+The annotation `WidgetbookApp` has to be set only once and is mandatory for the code generation process. It not not important which element is annotated, but the location of the file in which `WidgetbookApp` is used defines the folder in which [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) will create the file `app.widgetbook.main` file. The `app.widgetbook.main` file requires all the code to run the Widgetbook. 
 
 ### Parameters
 
-The annotation `WidgetbookApp` has one required parameter `name` and one optional parameter `devices` 
+The annotation `WidgetbookApp` has one required parameter `name` and one optional parameter `devices`.
 
 From the `name` parameter, the generator will create the `AppInfo` property of [package:widgetbook](https://pub.dev/packages/widgetbook). Therefore, this value will show in the upper left corner of the Widgetbook. 
 
@@ -49,10 +65,10 @@ app
 ├─ pubspec.yaml
 ```
 
-one might add `WidgetbookApp` to the `App` Widget defined in app.dart
+one might add `WidgetbookApp` to the `App` Widget defined in `app.dart`.
 
 ```dart 
-@WidgetbookApp('Example App')
+@WidgetbookApp('Example App', devices: [ Apple.iPhone12 ])
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -76,21 +92,27 @@ app
 
 ## WidgetbookStory
 
-`WidgetbookStory` allows developers to mark functions as a story. The `WidgetbookStory` expect a story of the format 
+`WidgetbookStory` allows developers to mark functions as a story. The `WidgetbookStory` must be applied to a function 
 
 ```dart
 Widget name(BuildContext context) {  
-  ...
+  return YourWidget()
 }
-```
+``` 
+
+or a lambda expression
+
+```dart
+Widget name(BuildContext context) => YourWidget();
+``` 
 
 ### Parameters
 
 `WidgetbookStory` requires the two parameters `name` and `type`. 
 
-The `name` parameter specifies how the story will be displayed in the Widgetbook.
+The `name` parameter specifies how the story will be displayed in the navigation panel in the Widgetbook.
 
-The `type` parameter specifies to which type of Widget the Story belongs. From this information and the location of the file in which the annotation is used, [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) will create the Organizer elements shown on the left side of the Widgetbook.
+The `type` parameter specifies to which type of Widget the Story belongs. From this information and the location of the file in which the annotation is used, [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) will create the navigation panel shown on the left side of the Widgetbook.
 
 ### Example 
 
@@ -109,7 +131,7 @@ app
 ├─ pubspec.yaml
 ```
 
-A story for AwesomeTile located in `/lib/tiles/awesome_tile.dart` can be defined in that exact file by implementing the following
+A story for `AwesomeTile` located in `/lib/tiles/awesome_tile.dart` can be defined in that file by implementing the following
 
 ```dart 
 @WidgetbookStory(name: 'Default', type: AwesomeTile)

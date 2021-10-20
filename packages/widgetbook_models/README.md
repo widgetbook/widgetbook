@@ -14,6 +14,8 @@ This package features the models for the Widgetbook `Device` class. The `device`
 
 Furthermore, the package contains predefined and commonly used devices.
 
+> **NOTE**: It is not required to add this package to your project. [package:widgetbook_models](https://pub.dev/packages/widgetbook_models) was designed to make the classes defined accessible to the other packages. [package:widgetbook](https://pub.dev/packages/widgetbook) exports the classes defined in the package so you can use them without needing to import anything else than [package:widgetbook](https://pub.dev/packages/widgetbook). 
+
 # Classes
 
 Currently the package contains the `Device` class with its required subsclasses and collections of various devices.
@@ -31,21 +33,22 @@ Resolution(
 ),
 ```
 
-`DeviceSize` is similar to `Size` from the flutter SDK and contains properties for `width` and `height`.
+`DeviceSize` is similar to `Size` from the Flutter SDK and contains properties for `width` and `height`.
 
 ## Device
 
-The device class specifies a device like the iPhone 12 based on a name, its resolution and its type. The type is primarily used for better iconization in [package:widgetbook](https://pub.dev/packages/widgetbook)'s user interface.
+The device class specifies a device like the *iPhone 12* based on a `name`, its `resolution` and its `type`. `type` is primarily used for better iconization in [package:widgetbook](https://pub.dev/packages/widgetbook)'s user interface.
 
 An Apple iPhone 12 can be defined by using
 
 ```dart
-Device iPhone12 = Device.mobile(
+Device iPhone12 = Device(
     name: 'iPhone 12',
     resolution: Resolution(
         nativeSize: DeviceSize(width: 1170, height: 2532),
         scaleFactor: 3,
     ),
+    type, DeviceType.mobile,
 );
 ```
 

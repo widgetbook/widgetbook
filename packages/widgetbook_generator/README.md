@@ -3,9 +3,11 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?label=test&style=flat-square)
 
+# Introduction 
+
 [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) allows to generate and setup code for [package:widgetbook](https://pub.dev/packages/widgetbook) which makes using and maintaining Widgetbook easier.
 
-# Before you start
+## Before you start
 
 We recommend reading the documentation of [package:widgetbook](https://pub.dev/packages/widgetbook) before you start with this package. 
 
@@ -41,15 +43,15 @@ dev_dependencies:
 
 The generator works with the annotations documented at [package:widgetbook_annotation](https://pub.dev/packages/widgetbook_annotation). 
 
-# How to run the generator
+# Run the generator
 
 The generator defined in this package uses [package:build_runner](https://pub.dev/packages/build_runner) to generate the desired code.
 
-You can run the generator by running `flutter pub run build_runner build`. 
+You can execute the generator by running `flutter pub run build_runner build`. 
 
 If you are making a lot of changes while developing you can also run `flutter pub run build_runner watch` so [package:build_runner](https://pub.dev/packages/build_runner) will listen for changes in the file system and update Widgetbook accordingly.
 
-# How to start the generated app
+# Start the generated app
 
 The generator will create the `app.widgetbook.dart` file in the same directory as the file in which `@WidgetbookApp` is used. For details about this see the documentation of [package:widgetbook_annotation](https://pub.dev/packages/widgetbook_annotation).
 
@@ -57,4 +59,4 @@ Start the app by running `flutter run lib/app.widgetbook.dart`.
 
 # Hot reloading
 
-Hot reloading of changes in Widgetbook work out of the box. For limitations see [package:widgetbook](https://pub.dev/packages/widgetbook). 
+Hot reloading of changes in Widgetbook works out of the box. For limitations see [package:widgetbook](https://pub.dev/packages/widgetbook).

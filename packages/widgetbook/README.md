@@ -73,7 +73,7 @@ void main() {
 
 `Widgetbook` is supported on the following environments.
 
-Environment | Status | Annotation
+Environment | Status | Comment
 ------------ | ------------- | ------------- 
 MacOS | ✅ | 
 Windows | ✅ |
@@ -83,6 +83,8 @@ Mobile | ➖ | Will run, but is not optimized. If you see a usecase for `Widgetb
 See the [Desktop support for Flutter](https://flutter.dev/desktop) page for setup instructions.
 
 Run the `Widgetbook` main method by executing `flutter run -t stories/main.dart`.
+
+> **NOTE:** If you are using [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) see the documentation on how to run Widgetbook.
 
 # Inject your widgets
 
@@ -176,7 +178,7 @@ Widgetbook(
 
 Right now there is a predefinied short list of devices but let us know which you need in our [Discord](https://discord.gg/zT4AMStAJA). We will extend the list of predefinied devices in the future!
 
-### Define own device
+### Define your own device
 
 You can also define your own device by using the `Device` class:
 
