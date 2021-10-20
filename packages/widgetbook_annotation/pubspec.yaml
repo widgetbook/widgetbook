@@ -1,7 +1,10 @@
 name: widgetbook_annotation
-description: A new Flutter package project.
+description: A package featuring the annotations used by widgetbook_generator.
 version: 0.0.1
-homepage:
+homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=widgetbook_annotation
+repository: https://github.com/widgetbook/widgetbook
+issue_tracker: https://github.com/widgetbook/widgetbook/issues
+documentation: https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_annotation
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

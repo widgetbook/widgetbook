@@ -1,7 +1,10 @@
 name: widgetbook_generator
-description: A new Flutter package project.
+description: A package to automate setup and maintanance of the widgetbook package by using code generation.
 version: 0.0.1
-homepage:
+homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=widgetbook_generator
+repository: https://github.com/widgetbook/widgetbook
+issue_tracker: https://github.com/widgetbook/widgetbook/issues
+documentation: https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_generator
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
