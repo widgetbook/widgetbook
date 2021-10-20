@@ -75,7 +75,7 @@ Device iPhone11 = Apple.iPhone11;
 
 The following collections exist:
 
-Collection | Annotation
+Collection | Featured devices and screens
 ------------ | -------------
 Apple | iPhone, iPad, iMac, MacBook, Pro Display XDR  
 Samsung | Galaxy Series

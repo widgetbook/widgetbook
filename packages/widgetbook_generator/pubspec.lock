@@ -177,12 +177,12 @@ packages:
     source: hosted
     version: "2.1.2"
   glob:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: glob
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   graphs:
     dependency: transitive
     description:
@@ -466,16 +466,16 @@ packages:
   widgetbook_annotation:
     dependency: "direct main"
     description:
-      path: "../widgetbook_annotation"
-      relative: true
-    source: path
+      name: widgetbook_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.1"
   widgetbook_models:
     dependency: "direct main"
     description:
-      path: "../widgetbook_models"
-      relative: true
-    source: path
+      name: widgetbook_models
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.1"
   yaml:
     dependency: transitive

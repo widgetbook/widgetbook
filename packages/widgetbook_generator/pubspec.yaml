@@ -12,11 +12,17 @@ environment:
 dependencies:
   analyzer: ^2.2.0
   build: ^2.1.0
+  glob: ^2.0.2
   source_gen: ^1.1.0
-  widgetbook_annotation:
-    path: ../widgetbook_annotation
-  widgetbook_models:
-    path: ../widgetbook_models
+  widgetbook_annotation: ^0.0.1
+  widgetbook_models: ^0.0.1
+
+# for development
+# dependency_override:
+#   widgetbook_models:
+#     path: ../widgetbook_models
+#   widgetbook_annotation:
+#     path: ../widgetbook_annotation
 
 dev_dependencies:
   build_runner: ^2.1.2
