@@ -1,39 +1,60 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+[![Discord](https://img.shields.io/discord/879618555560218625?color=blue&style=flat-square)](https://discord.com/invite/zT4AMStAJA)
+[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?label=test&style=flat-square)
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+[package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) allows to generate and setup code for [package:widgetbook](https://pub.dev/packages/widgetbook) which makes using and maintaining Widgetbook easier.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
+# Before you start
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+We recommend reading the documentation of [package:widgetbook](https://pub.dev/packages/widgetbook) before you start with this package. 
 
-## Features
+# Packages 
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+This package requires the following dependencies: 
 
-## Getting started
+| Package           | Pub |
+| ----------------- | --------------------------------- |
+| [package:widgetbook](https://pub.dev/packages/widgetbook) | [![Pub Version](https://img.shields.io/pub/v/widgetbook?style=flat-square)](https://pub.dev/packages/widgetbook) |
+| [package:widgetbook_annotation](https://pub.dev/packages/widgetbook_annotation) | [![Pub Version](https://img.shields.io/pub/v/widgetbook_annotation?style=flat-square)](https://pub.dev/packages/widgetbook_annotation) |
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+and the following dev dependencies:
 
-## Usage
+| Package           | Pub |
+| ----------------- | --------------------------------- |
+| [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) | [![Pub Version](https://img.shields.io/pub/v/widgetbook_generator?style=flat-square)](https://pub.dev/packages/widgetbook_generator) |
+| [package:build_runner](https://pub.dev/packages/build_runner) | [![Pub Version](https://img.shields.io/pub/v/build_runner?style=flat-square)](https://pub.dev/packages/build_runner) |
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+The `pubspec.yaml` file could look like this:
 
-```dart
-const like = 'sample';
+```
+dependencies:
+  widgetbook:
+  widgetbook_annotation:
+
+dev_dependencies:
+  build_runner:
+  widgetbook_generator:
 ```
 
-## Additional information
+# Annotations
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+The generator works with the annotations documented at [package:widgetbook_annotation](https://pub.dev/packages/widgetbook_annotation). 
+
+# How to run the generator
+
+The generator defined in this package uses [package:build_runner](https://pub.dev/packages/build_runner) to generate the desired code.
+
+You can run the generator by running `flutter pub run build_runner build`. 
+
+If you are making a lot of changes while developing you can also run `flutter pub run build_runner watch` so [package:build_runner](https://pub.dev/packages/build_runner) will listen for changes in the file system and update Widgetbook accordingly.
+
+# How to start the generated app
+
+The generator will create the `app.widgetbook.dart` file in the same directory as the file in which `@WidgetbookApp` is used. For details about this see the documentation of [package:widgetbook_annotation](https://pub.dev/packages/widgetbook_annotation).
+
+Start the app by running `flutter run lib/app.widgetbook.dart`.
+
+# Hot reloading
+
+Hot reloading of changes in Widgetbook work out of the box. For limitations see [package:widgetbook](https://pub.dev/packages/widgetbook). 
