@@ -1,14 +1,14 @@
 on: 
   pull_request:
     paths:
-      - "packages/widgetbook/**"
-      - ".github/workflows/build-macos.yaml"
+      - "examples/**"
+      - ".github/workflows/example.yaml"
 name: example 
 jobs:
   build:
     defaults:
       run:
-        working-directory: example/meal_app
+        working-directory: examples/widgetbook_example
     name: build macOS
     runs-on: macos-latest 
     steps:
