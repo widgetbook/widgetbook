@@ -30,7 +30,7 @@ Examples on how to use [package:widgetbook](https://pub.dev/packages/widgetbook)
 
 # Contributions
 
-We love the community and we'd even love it more if you'd like to contribute to one or all Widgetbook packages. Feel free to open a pull-request at any time 💙
+We love the community and we'd love it even more if you'd like to contribute to one or all Widgetbook packages. Feel free to open a pull-request at any time 💙
 
 # Questions or Issues? 
 
