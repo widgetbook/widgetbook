@@ -1,8 +1,9 @@
-![Discord](https://img.shields.io/discord/879618555560218625?color=blue&style=flat-square)
-[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis)
+<img height=40 src="https://media.githubusercontent.com/media/widgetbook/widgetbook/main/docs/assets/Widgetbook_Logo.png">
+
+[![Discord](https://img.shields.io/discord/879618555560218625?color=blue&style=flat-square)](https://discord.com/invite/zT4AMStAJA)
+[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis) 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?label=test&style=flat-square)
-
 # Packages
 
 The widgetbook repository contains of the Widgetbook packages which are located at [/widgetbook/packages/](https://github.com/widgetbook/widgetbook/tree/main/packages).
@@ -42,8 +43,8 @@ You can run the example apps in VS Code by using the predefined launch configura
 
 # Contributions
 
-We love the community and we'd love it even more if you'd like to contribute to one or all Widgetbook packages. Feel free to open a pull-request at any time 💙
+We love the open source flutter community!💙 If you'd like to contribute to one or all Widgetbook packages, feel free to open a pull-request at any time. To give new contributors exciting first challenges, we're labelling some easy-to-fix issues "good first issue".
 
 # Questions or Issues? 
 
-If something does not feel right or if you have questions feel free to contact us. You can do so by [creating an issue](https://github.com/widgetbook/widgetbook/issues), [contacting us on discord](https://discord.gg/zT4AMStAJA) or [booking a call with us via calendly](https://calendly.com/widgetbook/call).
+If something does not feel right or if you have questions, feel free to contact us. You can do so by [creating an issue](https://github.com/widgetbook/widgetbook/issues), [contacting us on discord](https://discord.gg/zT4AMStAJA) or [booking a call with us via calendly](https://calendly.com/widgetbook/call).

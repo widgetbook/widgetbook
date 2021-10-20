@@ -1,12 +1,12 @@
+<img height=40 src="https://media.githubusercontent.com/media/widgetbook/widgetbook/main/docs/assets/Widgetbook_Logo.png">
+
 [![Discord](https://img.shields.io/discord/879618555560218625?color=blue&style=flat-square)](https://discord.com/invite/zT4AMStAJA)
-[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis)
+[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis) 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?label=test&style=flat-square)
 
 
-# Introduction 
-
-This package contains annotations for [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) with which the generator will create the Widgetbook defined in [package:widgetbook](https://pub.dev/packages/widgetbook). Therefore, this package is a part of making [package:widgetbook](https://pub.dev/packages/widgetbook) easier to maintain. Furthermore, setting up and maintaining [package:widgetbook](https://pub.dev/packages/widgetbook) is simplified by code generation. 
+This package contains annotations for [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) with which the generator will create the Widgetbook defined in [package:widgetbook](https://pub.dev/packages/widgetbook). Therefore, this package is a part of making [package:widgetbook](https://pub.dev/packages/widgetbook) easier to setup and maintain.
 
 # Installing this package
 This package requires the following dependencies: 
@@ -35,17 +35,17 @@ dev_dependencies:
   widgetbook_generator:
 ```
 
-# Avaialble annotations
+# Available annotations
 
-This package defines the annotations `WidgetbookApp`, `WidgetbookStory`, and `WidgetbookTheme`. The annotations and their usage are explained below.
+This package defines the annotations `@WidgetbookApp`, `@WidgetbookStory`, and `@WidgetbookTheme`. The annotations and their usage are explained below.
 
-## WidgetbookApp
+## @WidgetbookApp
 
-The annotation `WidgetbookApp` has to be set only once and is mandatory for the code generation process. It not not important which element is annotated, but the location of the file in which `WidgetbookApp` is used defines the folder in which [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) will create the file `app.widgetbook.main` file. The `app.widgetbook.main` file requires all the code to run the Widgetbook. 
+The annotation `@WidgetbookApp` has to be set only once and is mandatory for the code generation process. It is not important which element is annotated, but the location of the file in which `@WidgetbookApp` is used, defines the folder in which [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) will create the file `app.widgetbook.main`. The `app.widgetbook.main` file contains all the code to run the Widgetbook. 
 
 ### Parameters
 
-The annotation `WidgetbookApp` has one required parameter `name` and one optional parameter `devices`.
+The annotation `@WidgetbookApp` has one required parameter `name` and one optional parameter `devices`.
 
 From the `name` parameter, the generator will create the `AppInfo` property of [package:widgetbook](https://pub.dev/packages/widgetbook). Therefore, this value will show in the upper left corner of the Widgetbook. 
 
@@ -65,7 +65,7 @@ app
 ├─ pubspec.yaml
 ```
 
-one might add `WidgetbookApp` to the `App` Widget defined in `app.dart`.
+one might add `@WidgetbookApp` to the `App` Widget defined in `app.dart`.
 
 ```dart 
 @WidgetbookApp('Example App', devices: [ Apple.iPhone12 ])
@@ -77,7 +77,7 @@ class App extends StatelessWidget {
 }
 ```
 
-[package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) will then create a new file `app.widgetbook.dart` next to the `app.dart` file. the resulting app structure will look like this:
+[package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) will then create a new file `app.widgetbook.dart` next to the `app.dart` file. The resulting app structure will look like this:
 
 ```
 app
@@ -90,9 +90,9 @@ app
 ├─ pubspec.yaml
 ```
 
-## WidgetbookStory
+## @WidgetbookStory
 
-`WidgetbookStory` allows developers to mark functions as a story. The `WidgetbookStory` must be applied to a function 
+`@WidgetbookStory` allows developers to mark functions as a story. The `@WidgetbookStory` must be applied to a function 
 
 ```dart
 Widget name(BuildContext context) {  
@@ -108,7 +108,7 @@ Widget name(BuildContext context) => YourWidget();
 
 ### Parameters
 
-`WidgetbookStory` requires the two parameters `name` and `type`. 
+`@WidgetbookStory` requires the two parameters `name` and `type`. 
 
 The `name` parameter specifies how the story will be displayed in the navigation panel in the Widgetbook.
 
@@ -149,9 +149,9 @@ class AwesomeTile extends StatelessWidget {
 }
 ```
 
-It often happens that your widget is more complex. In such a case feel free to wrap the widget with whatever you need. This can also be a Provider, Bloc or other state management Widget. 
+It often happens that your widget is more complex. In such case, feel free to wrap the widget with whatever you need. This can also be a Provider, Bloc or other state management Widget. 
 
-After generating the code for the Widgetbook you will find a navigation panel with the following content.
+After generating the code for the Widgetbook, you will find a navigation panel with the following content
 
 ```
 stories (Category)
@@ -160,15 +160,15 @@ stories (Category)
 │  │  ├─ Default (Story)
 ```
 
-If you require multiple stories for a Widget feel free to define multiple `WidgetbookStory`s per Widget. The additional Stories will be located in the navigation panel similar to the showcased Story. 
+If you require multiple stories for a Widget, feel free to define multiple `@WidgetbookStory`s per Widget. The additional Stories will be located in the navigation panel similar to the showcased Story. 
 
 ## WidgetbookTheme
 
-`WidgetbookTheme` allows developers to annotate the light and dark theme of their app. Similar to `WidgetbookStory`, `WidgetbookTheme` is used on methods returning a `ThemeData` object. 
+`@WidgetbookTheme` allows developers to annotate the light and dark theme of their app. Similar to `@WidgetbookStory`, `@WidgetbookTheme` is used on methods returning a `ThemeData` object. 
 
 ### Constructors
 
-`WidgetbookTheme` features two constructors `WidgetbookTheme.light()` and `WidgetbookTheme.dark()` for differentiation between the light and dark theme of the app. 
+`@WidgetbookTheme` features two constructors `@WidgetbookTheme.light()` and `@WidgetbookTheme.dark()` for differentiation between the light and dark theme of the app. 
 
 ### Example
 
@@ -178,3 +178,7 @@ ThemeData getDarkTheme() => ThemeData(
       primarySwatch: Colors.blue,
     );
 ```
+
+# Let us know how you feel about Widgetbook
+
+We are funded and aim to shape `Widgetbook` to your (and your team's) needs. If you have questions, feature requests or issues let us know on [Discord](https://discord.gg/zT4AMStAJA) or [GitHub](https://github.com/widgetbook/widgetbook) or book a call with the founders via [Calendly](https://calendly.com/widgetbook/call). We're looking forward to build a community and discuss your feedback on our channel! 💙
