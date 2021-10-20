@@ -20,6 +20,16 @@ Furthermore, you can [check out the code of the app at github](https://github.co
 
 We are funded and aim to shape `Widgetbook` to your (and your team's) needs. If you have questions, feature requests or issues let us know on [Discord](https://discord.gg/zT4AMStAJA) or [GitHub](https://github.com/widgetbook/widgetbook) or book a call with the founders via [Calendly](https://calendly.com/widgetbook/call). We're looking forward to build a community and discuss your feedback on our channel! 💙
 
+# Other packages
+
+[package:widgetbook](https://pub.dev/packages/widgetbook) can be used with [package:widgetbook_annotation](https://pub.dev/packages/widgetbook_annotation) and [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) to make setting up and maintaining Widgetbook easier. Check out the other packages:
+
+| Package           | Pub |
+| ----------------- | --------------------------------- |
+| [package:widgetbook](https://pub.dev/packages/widgetbook) | [![Pub Version](https://img.shields.io/pub/v/widgetbook?style=flat-square)](https://pub.dev/packages/widgetbook) |
+| [package:widgetbook_annotation](https://pub.dev/packages/widgetbook_annotation) | [![Pub Version](https://img.shields.io/pub/v/widgetbook_annotation?style=flat-square)](https://pub.dev/packages/widgetbook_annotation) |
+| [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) | [![Pub Version](https://img.shields.io/pub/v/widgetbook_generator?style=flat-square)](https://pub.dev/packages/widgetbook_generator) |
+
 # Getting Started
 
 This package provides a flutter widget called `Widgetbook` in which custom widgets from your app can be injected.
