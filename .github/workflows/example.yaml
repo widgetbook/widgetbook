@@ -33,6 +33,6 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: AppMacOS
-        path: example/meal_app/build/macos/Build/Products/Release/app.tar.gz
+        path: examples/widgetbook_example/build/macos/Build/Products/Release/app.tar.gz
         retention-days: 3
         if-no-files-found: error
