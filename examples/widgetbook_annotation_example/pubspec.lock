@@ -479,31 +479,31 @@ packages:
   widgetbook:
     dependency: "direct main"
     description:
-      path: "../../packages/widgetbook"
-      relative: true
-    source: path
-    version: "0.0.11"
+      name: widgetbook
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.13"
   widgetbook_annotation:
     dependency: "direct main"
     description:
-      path: "../../packages/widgetbook_annotation"
-      relative: true
-    source: path
-    version: "0.0.1"
+      name: widgetbook_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   widgetbook_generator:
     dependency: "direct dev"
     description:
-      path: "../../packages/widgetbook_generator"
-      relative: true
-    source: path
-    version: "0.0.1"
+      name: widgetbook_generator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   widgetbook_models:
     dependency: transitive
     description:
-      path: "../../packages/widgetbook_models"
-      relative: true
-    source: path
-    version: "0.0.1"
+      name: widgetbook_models
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   yaml:
     dependency: transitive
     description:

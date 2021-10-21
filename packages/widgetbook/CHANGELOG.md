@@ -1,3 +1,7 @@
+## 0.0.13
+
+- updated readme
+
 ## 0.0.12
 
 - added dependency to [package:widgetbook_models](https://pub.dev/packages/widgetbook_models) which defines the `Device` class.

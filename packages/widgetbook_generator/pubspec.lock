@@ -469,14 +469,14 @@ packages:
       name: widgetbook_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.2"
+    version: "0.0.3"
   widgetbook_models:
     dependency: "direct main"
     description:
       name: widgetbook_models
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1"
+    version: "0.0.2"
   yaml:
     dependency: transitive
     description:
