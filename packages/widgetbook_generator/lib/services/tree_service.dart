@@ -54,7 +54,7 @@ class TreeService {
     }
 
     // TODO do we need to check if a story with that name already exist?
-    // if might happen by copy and pasting that stories are dublicated.
+    // it might happen by copy and pasting that stories are duplicated.
     widgets[widgetName]!.stories.add(story);
   }
 
