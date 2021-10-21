@@ -68,7 +68,7 @@ app
 one might add `@WidgetbookApp` to the `App` Widget defined in `app.dart`.
 
 ```dart 
-@WidgetbookApp('Example App', devices: [ Apple.iPhone12 ])
+@WidgetbookApp(name: 'Example App', devices: [ Apple.iPhone12 ])
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

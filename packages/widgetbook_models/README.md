@@ -17,7 +17,7 @@ Furthermore, the package contains predefined and commonly used devices.
 
 # Classes
 
-Currently the package contains the `Device` class with its required subsclasses and collections of various devices.
+Currently the package contains the `Device` class with its required subclasses and collections of various devices.
 
 ## Resolution
 
@@ -47,7 +47,7 @@ Device iPhone12 = Device(
         nativeSize: DeviceSize(width: 1170, height: 2532),
         scaleFactor: 3,
     ),
-    type, DeviceType.mobile,
+    type: DeviceType.mobile,
 );
 ```
 
@@ -55,12 +55,14 @@ Device iPhone12 = Device(
 
 The following device types exist and can be accessed with the respective `Device` constructor:
 
-- `Device.watch( ... )`
 - `Device.mobile( ... )`
 - `Device.tablet( ... )`
 - `Device.desktop( ... )`
+- `Device.watch( ... )`
 - `Device.special( ... )`
     - used for screens with unusual apsect ratios.
+
+These constructors allow you to create your own devices in case there is something missing in our collection of devices.
 
 # Collections
 
