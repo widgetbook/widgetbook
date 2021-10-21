@@ -80,23 +80,31 @@ WidgetElement(
 }
 
 String _generateFolder(Folder folder) {
+  final stringBuffer = StringBuffer()
+    ..writeln('Folder(')
+    ..write("name: '")
+    ..write(folder.name)
+    ..writeln("',");
+
   final widgetsCode = folder.widgets.values.map(_generateWidget).toList();
-  if (folder.subFolders.isEmpty) {
-    return """
-Folder(
-  name: '${folder.name}', 
-  widgets: [${widgetsCode.join(',')},],
-)""";
+  if (widgetsCode.isNotEmpty) {
+    stringBuffer
+      ..write('widgets: [')
+      ..write(widgetsCode.join(','))
+      ..writeln(',],');
   }
 
   final foldersCode = folder.subFolders.values.map(_generateFolder).toList();
+  if (foldersCode.isNotEmpty) {
+    stringBuffer
+      ..write('folders: [')
+      ..write(foldersCode.join(','))
+      ..writeln(',],');
+  }
 
-  return """
-Folder(
-  name: '${folder.name}', 
-  folders: [${foldersCode.join(',')},],
-  widgets: [${widgetsCode.join(',')},],
-)""";
+  stringBuffer.writeln(')');
+  final code = stringBuffer.toString();
+  return code;
 }
 
 String _generateAppInfo({
