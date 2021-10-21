@@ -15,7 +15,7 @@ dependencies:
   glob: ^2.0.2
   source_gen: ^1.1.0
   widgetbook_annotation: ^0.0.3
-  widgetbook_models: ^0.0.2
+  widgetbook_models: ^0.0.2 
 
 # for development
 # dependency_override:
