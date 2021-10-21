@@ -1,3 +1,7 @@
+## 0.0.12-beta.1
+
+- added dependency to [package:widgetbook_models](https://pub.dev/packages/widgetbook_models) which defines the `Device` class.
+
 ## 0.0.11
 
 - added a search bar to filter for widgets and folders
