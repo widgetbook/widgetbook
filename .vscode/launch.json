@@ -1,29 +1,49 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Example App Widgetbook",
-            "cwd": "example/meal_app",
+            "name": "Debug widgetbook_example",
+            "cwd": "examples/widgetbook_example",
             "request": "launch",
             "program": "stories/main.dart",
             "type": "dart"
         },
         {
-            "name": "Profile Example App Widgetbook",
-            "cwd": "example/meal_app",
+            "name": "Profile widgetbook_example",
+            "cwd": "examples/widgetbook_example",
             "request": "launch",
             "program": "stories/main.dart",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "Meal App",
-            "cwd": "packages/widgetbook/meal_app",
+            "name": "Debug widgetbook_annotation_example",
+            "cwd": "examples/widgetbook_annotation_example",
+            "request": "launch",
+            "program": "lib/app.widgetbook.dart",
+            "type": "dart"
+        },
+        {
+            "name": "Profile widgetbook_annotation_example",
+            "cwd": "examples/widgetbook_annotation_example",
+            "request": "launch",
+            "program": "lib/app.widgetbook.dart",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "Debug Example App",
+            "cwd": "examples/widgetbook_annotation_example",
             "request": "launch",
             "type": "dart"
+        },
+        {
+            "name": "Debug widgetbook_generator",
+            "cwd": "examples/widgetbook_annotation_example",
+            "request": "launch",
+            "program": ".dart_tool/build/entrypoint/build.dart",
+            "type": "dart",
+            "args": ["build"]
         }        
     ]
 }

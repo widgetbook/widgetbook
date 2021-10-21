@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/models/device.dart';
 import 'package:widgetbook/src/providers/device_state.dart';
 import 'package:widgetbook/src/providers/provider.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 class DeviceBuilder extends StatefulWidget {
   const DeviceBuilder({
