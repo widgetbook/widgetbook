@@ -4,6 +4,7 @@ import 'package:widgetbook_generator/services/tree_service.dart';
 import 'package:widgetbook_generator/writer/device_writer.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
 
+/// Generates the code of the Widgetbook
 String generateWidgetbook({
   required String name,
   required List<WidgetbookStoryData> stories,
@@ -19,15 +20,15 @@ class HotReload extends StatelessWidget {
       appInfo: ${_generateAppInfo(name: name)},
       lightTheme: ${_generateThemeDataValue(lightTheme)},
       darkTheme: ${_generateThemeDataValue(darkTheme)},
-      categories: ${generateStoryValues(stories)},
-      ${generateDevicesLine(devices)}
+      categories: ${_generateStoryValues(stories)},
+      ${_generateDevicesLine(devices)}
     );
   }
 }
 ''';
 }
 
-String generateDevicesLine(List<Device> devices) {
+String _generateDevicesLine(List<Device> devices) {
   String code;
   if (devices.isEmpty) {
     code = '';
@@ -46,7 +47,7 @@ String generateDevicesLine(List<Device> devices) {
   return code;
 }
 
-String generateStoryValues(List<WidgetbookStoryData> stories) {
+String _generateStoryValues(List<WidgetbookStoryData> stories) {
   final service = TreeService();
 
   for (final story in stories) {

@@ -1,5 +1,9 @@
 import 'package:widgetbook_generator/models/widgetbook_data.dart';
 
+/// generates the imports for all the types used in app.widgetbook.dart
+///
+/// the code returned likely contains unneccesary imports
+/// but this implementation is simple in comparison to a complex approach
 String generateImports(
   List<WidgetbookData> datas,
 ) {

@@ -2,7 +2,16 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:widgetbook_generator/extensions/element_extensions.dart';
 import 'package:widgetbook_generator/models/widgetbook_data.dart';
 
+/// Contains the data of a Theme
 class WidgetbookThemeData extends WidgetbookData {
+  /// Creates a new instance of [WidgetbookThemeData]
+  ///
+  /// [name] is defined as the identifier of the annotated element
+  /// [importStatement] is the statement required to include the annotated
+  /// element in the Widgetbook
+  /// [dependencies] are the import statements defined in the file in which the
+  /// annotation is used
+  /// [isDarkTheme] specified whether the theme is dark or light
   WidgetbookThemeData({
     required String name,
     required String importStatement,
@@ -14,6 +23,8 @@ class WidgetbookThemeData extends WidgetbookData {
           dependencies: dependencies,
         );
 
+  /// Obtains a [WidgetbookThemeData] object from classes provided by the
+  /// ThemeResolver
   factory WidgetbookThemeData.fromResolver(
     Element element,
     bool isDarkTheme,
@@ -26,6 +37,7 @@ class WidgetbookThemeData extends WidgetbookData {
     );
   }
 
+  /// transforms the serializable map into a [WidgetbookThemeData] object.
   factory WidgetbookThemeData.fromMap(Map<String, dynamic> map) {
     return WidgetbookThemeData(
       name: map['name'] as String,
@@ -35,6 +47,7 @@ class WidgetbookThemeData extends WidgetbookData {
     );
   }
 
+  /// indicates whether the Theme is dark or light
   final bool isDarkTheme;
 
   @override

@@ -2,7 +2,18 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:widgetbook_generator/extensions/element_extensions.dart';
 import 'package:widgetbook_generator/models/widgetbook_data.dart';
 
+/// Contains the data of a Story
 class WidgetbookStoryData extends WidgetbookData {
+  /// Creates a new instance of [WidgetbookStoryData]
+  ///
+  /// [name] is defined as the identifier of the annotated element
+  /// [importStatement] is the statement required to include the annotated
+  /// element in the Widgetbook
+  /// [dependencies] are the import statements defined in the file in which the
+  /// annotation is used
+  /// [storyName] is the name of the Story provided as a parameter of the
+  /// WidgetbookStory annotation
+  /// [widgetName] is the String version of the Widget type
   WidgetbookStoryData({
     required String name,
     required String importStatement,
@@ -15,6 +26,8 @@ class WidgetbookStoryData extends WidgetbookData {
           dependencies: dependencies,
         );
 
+  /// Obtains a [WidgetbookStoryData] object from classes provided by the
+  /// StoryResolver
   factory WidgetbookStoryData.fromResolver(
     Element element,
     String storyName,
@@ -29,6 +42,7 @@ class WidgetbookStoryData extends WidgetbookData {
     );
   }
 
+  /// transforms the serializable map into a [WidgetbookStoryData] object.
   factory WidgetbookStoryData.fromMap(Map<String, dynamic> map) {
     return WidgetbookStoryData(
       name: map['name'] as String,
@@ -39,7 +53,13 @@ class WidgetbookStoryData extends WidgetbookData {
     );
   }
 
+  /// The name of the story.
+  /// This name will be displayed in the navigation panel of the Widgetbook
+  /// user interface
   final String storyName;
+
+  /// The String version of the Widget's type
+  /// [widgetName] will be displayed as a WidgetElement in the Widgetbook.
   final String widgetName;
 
   @override

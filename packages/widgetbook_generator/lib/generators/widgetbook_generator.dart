@@ -14,6 +14,10 @@ import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 import 'package:widgetbook_generator/readers/device_reader.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
 
+/// Generates the code for Widgetbook
+///
+/// The code is located at the same location in which the [WidgetbookApp]
+/// annotation is used.
 class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
   @override
   Future<String> generateForAnnotatedElement(
