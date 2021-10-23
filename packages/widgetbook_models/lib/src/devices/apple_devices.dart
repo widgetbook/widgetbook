@@ -108,4 +108,13 @@ class Apple {
       scaleFactor: 3,
     ),
   );
+
+  /// Test
+  static const Device test = Device.mobile(
+    name: 'iPhone Test',
+    resolution: Resolution(
+      nativeSize: DeviceSize(width: 1125, height: 2436),
+      scaleFactor: 3,
+    ),
+  );
 }
