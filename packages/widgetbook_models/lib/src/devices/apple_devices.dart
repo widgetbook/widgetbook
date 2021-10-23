@@ -254,8 +254,8 @@ class Apple {
   );
 
   /// A 4.7 Inch iPhone SE
-  static const Device iPhoneSE4Point7Inch = Device.mobile(
-    name: 'iPhone SE 4.7"',
+  static const Device iPhoneSE2020 = Device.mobile(
+    name: 'iPhone SE (2020)',
     resolution: Resolution(
       nativeSize: DeviceSize(width: 750, height: 1334),
       scaleFactor: 2,
@@ -282,7 +282,7 @@ class Apple {
 
   /// A 13.3 Inch MacBook
   static const Device macBook13Inch = Device.desktop(
-    name: 'MacBook 13.3"',
+    name: 'MacBook 13"',
     resolution: Resolution(
       nativeSize: DeviceSize(width: 2560, height: 1600),
       scaleFactor: 2,
@@ -291,7 +291,7 @@ class Apple {
 
   /// A 14.2 Inch MacBook
   static const Device macBook14Inch = Device.desktop(
-    name: 'MacBook 14.2"',
+    name: 'MacBook 14"',
     resolution: Resolution(
       nativeSize: DeviceSize(width: 3024, height: 1964),
       scaleFactor: 2,
@@ -300,7 +300,7 @@ class Apple {
 
   /// A 15.4 Inch MacBook
   static const Device macBook15Inch = Device.desktop(
-    name: 'MacBook 15.4"',
+    name: 'MacBook 15"',
     resolution: Resolution(
       nativeSize: DeviceSize(width: 2880, height: 1800),
       scaleFactor: 2,
@@ -309,7 +309,7 @@ class Apple {
 
   /// A 16.2 Inch MacBook
   static const Device macBook16Inch = Device.desktop(
-    name: 'MacBook 16.2"',
+    name: 'MacBook 16"',
     resolution: Resolution(
       nativeSize: DeviceSize(width: 3456, height: 2234),
       scaleFactor: 2,
