@@ -263,7 +263,7 @@ class Apple {
   );
 
   /// A 4 Inch iPhone SE
-  static const Device iPhoneSE4Inch = Device.mobile(
+  static const Device iPhoneSE2016 = Device.mobile(
     name: 'iPhone SE (2016)',
     resolution: Resolution(
       nativeSize: DeviceSize(width: 640, height: 1136),
