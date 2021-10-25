@@ -28,8 +28,8 @@ class Widgetbook extends StatefulWidget {
     this.devices = const [
       Apple.iPhone11,
       Apple.iPhone12,
-      Apple.iPhone12mini,
-      Apple.iPhone12pro,
+      Apple.iPhone12Mini,
+      Apple.iPhone12Pro,
       Samsung.s10,
       Samsung.s21ultra,
     ],

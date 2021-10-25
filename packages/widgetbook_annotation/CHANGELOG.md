@@ -1,6 +1,10 @@
+## 0.0.4
+
+- bumped version of `widgetbook_models` to `0.0.3`
+
 ## 0.0.3
 
-- updated changelog
+- updated readme
 
 ## 0.0.2
 
