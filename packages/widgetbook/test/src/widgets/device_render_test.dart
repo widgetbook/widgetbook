@@ -4,6 +4,7 @@ import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/providers/device_state.dart';
 import 'package:widgetbook/src/providers/injected_theme_provider.dart';
 import 'package:widgetbook/src/providers/injected_theme_state.dart';
+import 'package:widgetbook/src/providers/theme_provider.dart';
 import 'package:widgetbook/src/widgets/device_render.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -38,19 +39,26 @@ Widget getMaterialApp(Brightness brightness) {
 
   return MaterialApp(
     theme: ThemeData(brightness: brightness),
-    home: DeviceProvider(
-      state: DeviceState(
-        availableDevices: [Apple.iPhone11],
-        currentDevice: Apple.iPhone11,
-      ),
+    home: ThemeProvider(
+      state: brightness == Brightness.light ? ThemeMode.light : ThemeMode.dark,
       onStateChanged: (_) {},
-      child: InjectedThemeProvider(
-        state: InjectedThemeState(),
+      child: DeviceProvider(
+        state: DeviceState(
+          availableDevices: [Apple.iPhone11],
+          currentDevice: Apple.iPhone11,
+        ),
         onStateChanged: (_) {},
-        child: DeviceRender(
-          story: Story(
-            name: storyName,
-            builder: (context) => const ThemedWidget(),
+        child: InjectedThemeProvider(
+          state: InjectedThemeState(
+            lightTheme: ThemeData(),
+            darkTheme: ThemeData(),
+          ),
+          onStateChanged: (_) {},
+          child: DeviceRender(
+            story: Story(
+              name: storyName,
+              builder: (context) => const ThemedWidget(),
+            ),
           ),
         ),
       ),
