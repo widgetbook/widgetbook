@@ -1,3 +1,7 @@
+## 0.0.15
+
+- Fixed brightness not being inherited to the rendered `Story`
+
 ## 0.0.14
 
 - bumped version of `widgetbook_models` to `0.0.3`

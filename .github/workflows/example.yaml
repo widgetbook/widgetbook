@@ -2,6 +2,7 @@ on:
   pull_request:
     paths:
       - "examples/**"
+      - "packages/widgetbook/**"
       - ".github/workflows/example.yaml"
 name: example 
 jobs:
