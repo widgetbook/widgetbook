@@ -60,7 +60,11 @@ No theme was provided for the set brightness.
           height: resolution.logicalSize.height,
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
+            themeMode: Theme.of(context).brightness == Brightness.light
+                ? ThemeMode.light
+                : ThemeMode.dark,
             theme: getInjectedTheme(context, themeState).copyWith(
+              brightness: Theme.of(context).brightness,
               pageTransitionsTheme: const PageTransitionsTheme(
                 builders: {
                   TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
