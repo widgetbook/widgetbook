@@ -18,7 +18,7 @@ void main() {
           );
 
           expect(
-            instance.name,
+            instance.instanceName,
             equals(
               'Story',
             ),
@@ -29,11 +29,11 @@ void main() {
             equals(
               [
                 StringProperty(
-                  name: 'name',
+                  key: 'name',
                   value: storyName,
                 ),
                 FunctionProperty(
-                  name: 'builder',
+                  key: 'builder',
                   functionName: storyBuilder,
                   parameters: const [
                     'context',

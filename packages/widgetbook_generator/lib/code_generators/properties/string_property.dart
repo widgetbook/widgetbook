@@ -4,10 +4,10 @@ import 'package:widgetbook_generator/code_generators/properties/property.dart';
 @immutable
 class StringProperty extends Property {
   StringProperty({
-    required String name,
+    required String key,
     required this.value,
   }) : super(
-          name: name,
+          key: key,
         );
 
   final String value;
@@ -21,11 +21,9 @@ class StringProperty extends Property {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is StringProperty &&
-        other.value == value &&
-        other.name == name;
+    return other is StringProperty && other.value == value && other.key == key;
   }
 
   @override
-  int get hashCode => value.hashCode ^ name.hashCode;
+  int get hashCode => value.hashCode ^ key.hashCode;
 }

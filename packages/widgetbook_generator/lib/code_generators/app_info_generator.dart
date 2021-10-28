@@ -5,10 +5,10 @@ class AppInfoGenerator extends CodeGenerator {
   AppInfoGenerator({
     required String name,
   }) : super(
-          name: 'AppInfo',
+          instanceName: 'AppInfo',
           properties: [
             StringProperty(
-              name: 'name',
+              key: 'name',
               value: name,
             ),
           ],

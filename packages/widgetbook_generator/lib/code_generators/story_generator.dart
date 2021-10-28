@@ -7,15 +7,15 @@ class StoryGenerator extends CodeGenerator {
     required String name,
     required String functionName,
   }) : super(
-          name: 'Story',
+          instanceName: 'Story',
           properties: [
             StringProperty(
-              name: 'name',
+              key: 'name',
               value: name,
             ),
             FunctionProperty(
-              name: 'builder',
-              parameters: [
+              key: 'builder',
+              parameters: const [
                 'context',
               ],
               functionName: functionName,

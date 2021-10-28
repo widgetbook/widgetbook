@@ -12,7 +12,7 @@ void main() {
         '0 parameters',
         () {
           final instance = FunctionProperty(
-            name: propertyKey,
+            key: propertyKey,
             functionName: functionName,
           );
 
@@ -29,9 +29,12 @@ void main() {
         '2 parameters',
         () {
           final instance = FunctionProperty(
-            name: propertyKey,
+            key: propertyKey,
             functionName: functionName,
-            parameters: ['context', 'index'],
+            parameters: const [
+              'context',
+              'index',
+            ],
           );
 
           expect(

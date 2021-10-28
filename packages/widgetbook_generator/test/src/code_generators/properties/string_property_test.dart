@@ -12,7 +12,7 @@ void main() {
         '.toCode',
         () {
           final instance = StringProperty(
-            name: 'name',
+            key: 'name',
             value: stringValue,
           );
 

@@ -13,7 +13,7 @@ void main() {
           final instance = AppInfoGenerator(name: appInfoName);
 
           expect(
-            instance.name,
+            instance.instanceName,
             equals(
               'AppInfo',
             ),
@@ -24,7 +24,7 @@ void main() {
             equals(
               [
                 StringProperty(
-                  name: 'name',
+                  key: 'name',
                   value: appInfoName,
                 ),
               ],

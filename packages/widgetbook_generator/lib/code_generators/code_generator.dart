@@ -2,13 +2,12 @@ import 'package:widgetbook_generator/code_generators/properties/property.dart';
 
 abstract class CodeGenerator {
   CodeGenerator({
-    required this.name,
+    required this.instanceName,
     this.trailingComma = true,
     this.properties = const <Property>[],
   });
 
-  // TODO rename this to instanceName
-  final String name;
+  final String instanceName;
   final bool trailingComma;
   final List<Property> properties;
 
@@ -25,7 +24,7 @@ abstract class CodeGenerator {
 
   String toCode() {
     final stringBuffer = StringBuffer()
-      ..write(name)
+      ..write(instanceName)
       ..write('(')
       ..write(
         propertiesToCode(),
