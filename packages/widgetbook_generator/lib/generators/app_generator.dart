@@ -1,3 +1,4 @@
+import 'package:widgetbook_generator/code_generators/app_info_generator.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
@@ -110,7 +111,7 @@ String _generateFolder(Folder folder) {
 String _generateAppInfo({
   required String name,
 }) {
-  return "AppInfo(name: '$name')";
+  return AppInfoGenerator(name: name).toCode();
 }
 
 String _generateThemeDataValue(WidgetbookThemeData? themeData) {

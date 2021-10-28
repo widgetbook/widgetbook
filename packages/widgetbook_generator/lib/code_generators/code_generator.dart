@@ -7,6 +7,7 @@ abstract class CodeGenerator {
     this.properties = const <Property>[],
   });
 
+  // TODO rename this to instanceName
   final String name;
   final bool trailingComma;
   final List<Property> properties;

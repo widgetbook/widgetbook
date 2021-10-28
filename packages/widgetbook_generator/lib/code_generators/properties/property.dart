@@ -1,4 +1,7 @@
 abstract class Property {
+  // TODO rename name to key,
+  // introduce a PropertyKey
+  // and a PropertyValue since name is hella confusing
   Property({
     required this.name,
   });
