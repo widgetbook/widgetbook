@@ -1,25 +1,23 @@
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
-import 'package:widgetbook_generator/code_generators/properties/function_property.dart';
+import 'package:widgetbook_generator/code_generators/instances/function_instance.dart';
 
 void main() {
   group(
-    '$FunctionProperty',
+    '$FunctionInstance',
     () {
       const functionName = 'testMethod';
-      const propertyKey = 'builder';
       test(
         '0 parameters',
         () {
-          final instance = FunctionProperty(
-            key: propertyKey,
-            functionName: functionName,
+          const instance = FunctionInstance(
+            name: functionName,
           );
 
           expect(
             instance.toCode(),
             equals(
-              '$propertyKey: () => $functionName()',
+              '() => $functionName()',
             ),
           );
         },
@@ -28,10 +26,9 @@ void main() {
       test(
         '2 parameters',
         () {
-          final instance = FunctionProperty(
-            key: propertyKey,
-            functionName: functionName,
-            parameters: const [
+          const instance = FunctionInstance(
+            name: functionName,
+            parameters: [
               'context',
               'index',
             ],
@@ -40,7 +37,7 @@ void main() {
           expect(
             instance.toCode(),
             equals(
-              '$propertyKey: (context, index) => $functionName(context, index)',
+              '(context, index) => $functionName(context, index)',
             ),
           );
         },

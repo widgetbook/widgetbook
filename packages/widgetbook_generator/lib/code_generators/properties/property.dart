@@ -1,23 +1,52 @@
+import 'package:meta/meta.dart';
+
+import 'package:widgetbook_generator/code_generators/instances/base_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/double_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/string_instance.dart';
+
 /// A property which is set when a new instance is created
-abstract class Property {
-  // TODO rename name to key,
-  // introduce a PropertyKey
-  // and a PropertyValue since name is hella confusing
-  Property({
+@immutable
+class Property {
+  const Property({
     required this.key,
+    required this.instance,
   });
 
-  final String key;
+  Property.string({
+    required this.key,
+    required String value,
+  }) : instance = StringInstance.value(value);
 
-  String valueToCode();
+  Property.double({
+    required this.key,
+    required double value,
+  }) : instance = DoubleInstance.value(value);
+
+  final String key;
+  final BaseInstance instance;
+
+  String _instanceToCode() => instance.toCode();
 
   String _nameToCode() {
     return key;
   }
 
   String toCode() {
-    final value = valueToCode();
+    final value = _instanceToCode();
     final name = _nameToCode();
     return '$name: $value';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Property && other.key == key && other.instance == instance;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ instance.hashCode;
+
+  @override
+  String toString() => 'Property(key: $key, instance: $instance)';
 }

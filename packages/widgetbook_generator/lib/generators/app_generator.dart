@@ -1,5 +1,5 @@
-import 'package:widgetbook_generator/code_generators/app_info_generator.dart';
-import 'package:widgetbook_generator/code_generators/story_generator.dart';
+import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/story_instance.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
@@ -64,8 +64,8 @@ String _generateStoryValues(List<WidgetbookStoryData> stories) {
 }
 
 String _generateStory(WidgetbookStoryData story) {
-  return StoryGenerator(
-    name: story.storyName,
+  return StoryInstance(
+    storyName: story.storyName,
     functionName: story.name,
   ).toCode();
 }
@@ -111,7 +111,7 @@ String _generateFolder(Folder folder) {
 String _generateAppInfo({
   required String name,
 }) {
-  return AppInfoGenerator(name: name).toCode();
+  return AppInfoInstance(name: name).toCode();
 }
 
 String _generateThemeDataValue(WidgetbookThemeData? themeData) {

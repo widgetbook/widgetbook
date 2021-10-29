@@ -1,40 +1,15 @@
-import 'package:widgetbook_generator/code_generators/properties/property.dart';
+import 'package:widgetbook_generator/code_generators/instances/base_instance.dart';
 
 abstract class CodeGenerator {
   CodeGenerator({
-    required this.instanceName,
     this.trailingComma = true,
-    this.properties = const <Property>[],
+    required this.instance,
   });
 
-  final String instanceName;
   final bool trailingComma;
-  final List<Property> properties;
-
-  void addProperty(Property property) {
-    properties.add(property);
-  }
-
-  String propertiesToCode() {
-    final codeForProperties =
-        properties.map((property) => property.toCode()).toList();
-
-    return codeForProperties.join(',\n');
-  }
+  final BaseInstance instance;
 
   String toCode() {
-    final stringBuffer = StringBuffer()
-      ..write(instanceName)
-      ..write('(')
-      ..write(
-        propertiesToCode(),
-      );
-
-    if (trailingComma && properties.isNotEmpty) {
-      stringBuffer.write(',');
-    }
-
-    stringBuffer.write(')');
-    return stringBuffer.toString();
+    return instance.toCode();
   }
 }
