@@ -9,6 +9,7 @@ class Widget {
   List<WidgetbookStoryData> stories = <WidgetbookStoryData>[];
 }
 
+// TODO this is a bit sketchy
 class Folder {
   Folder({
     required this.name,
@@ -17,6 +18,16 @@ class Folder {
   final String name;
   Map<String, Folder> subFolders = HashMap();
   Map<String, Widget> widgets = HashMap();
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Folder && other.name == name;
+  }
+
+  @override
+  int get hashCode => name.hashCode;
 }
 
 class TreeService {

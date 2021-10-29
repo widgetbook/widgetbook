@@ -45,4 +45,8 @@ class ListInstance<T extends BaseInstance> extends BaseInstance {
 
   @override
   int get hashCode => instances.hashCode ^ trailingComma.hashCode;
+
+  @override
+  String toString() =>
+      'ListInstance(instances: $instances, trailingComma: $trailingComma)';
 }

@@ -1,7 +1,7 @@
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/folder_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/story_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widget_element_instance.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
@@ -63,32 +63,8 @@ WidgetElementInstance _generateWidget(Widget widget) {
   );
 }
 
-String _generateFolder(Folder folder) {
-  final stringBuffer = StringBuffer()
-    ..writeln('Folder(')
-    ..write("name: '")
-    ..write(folder.name)
-    ..writeln("',");
-
-  final widgetsCode = folder.widgets.values.map(_generateWidget).toList();
-  if (widgetsCode.isNotEmpty) {
-    stringBuffer
-      ..write('widgets: [')
-      ..write(widgetsCode.join(','))
-      ..writeln(',],');
-  }
-
-  final foldersCode = folder.subFolders.values.map(_generateFolder).toList();
-  if (foldersCode.isNotEmpty) {
-    stringBuffer
-      ..write('folders: [')
-      ..write(foldersCode.join(','))
-      ..writeln(',],');
-  }
-
-  stringBuffer.writeln(')');
-  final code = stringBuffer.toString();
-  return code;
+FolderInstance _generateFolder(Folder folder) {
+  return FolderInstance(folder: folder);
 }
 
 String _generateAppInfo({
