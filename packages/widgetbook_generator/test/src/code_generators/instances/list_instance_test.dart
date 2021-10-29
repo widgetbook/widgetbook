@@ -10,8 +10,8 @@ void main() {
       test(
         'empty list',
         () {
-          final instance = ListInstance(
-            instances: const [],
+          const instance = ListInstance<StringInstance>(
+            instances: [],
           );
 
           expect(
@@ -26,8 +26,8 @@ void main() {
       test(
         'with values',
         () {
-          final instance = ListInstance(
-            instances: const [
+          const instance = ListInstance<StringInstance>(
+            instances: [
               StringInstance.value(
                 'value1',
               ),

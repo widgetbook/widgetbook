@@ -1,12 +1,14 @@
+import 'package:collection/collection.dart';
+
 import 'package:widgetbook_generator/code_generators/instances/base_instance.dart';
 
-class ListInstance extends BaseInstance {
-  ListInstance({
+class ListInstance<T extends BaseInstance> extends BaseInstance {
+  const ListInstance({
     required this.instances,
     this.trailingComma = true,
   });
 
-  final List<BaseInstance> instances;
+  final List<T> instances;
   final bool trailingComma;
 
   @override
@@ -30,4 +32,17 @@ class ListInstance extends BaseInstance {
     stringBuffer.write(']');
     return stringBuffer.toString();
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    final listEquals = const DeepCollectionEquality().equals;
+
+    return other is ListInstance<T> &&
+        listEquals(other.instances, instances) &&
+        other.trailingComma == trailingComma;
+  }
+
+  @override
+  int get hashCode => instances.hashCode ^ trailingComma.hashCode;
 }

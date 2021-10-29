@@ -8,8 +8,8 @@ class DeviceSizeInstance extends Instance {
   }) : super(
           name: 'DeviceSize',
           properties: [
-            Property.double(key: 'width', value: deviceSize.width),
             Property.double(key: 'height', value: deviceSize.height),
+            Property.double(key: 'width', value: deviceSize.width),
           ],
         );
 }

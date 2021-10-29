@@ -1,9 +1,11 @@
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/story_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/widget_element_instance.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
-import 'package:widgetbook_generator/writer/device_writer.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
 
 /// Generates the code of the Widgetbook
@@ -30,23 +32,14 @@ class HotReload extends StatelessWidget {
 ''';
 }
 
-String _generateDevicesLine(List<Device> devices) {
-  String code;
-  if (devices.isEmpty) {
-    code = '';
-  } else {
-    final devicesCode = <String>[];
-    for (final device in devices) {
-      devicesCode.add(
-        DeviceWriter().write(device),
-      );
-    }
-
-    code = devicesCode.join(',');
-    code = 'devices: [$code,],';
-  }
-
-  return code;
+ListInstance<DeviceInstance> _generateDevicesLine(List<Device> devices) {
+  return ListInstance(
+    instances: devices
+        .map(
+          (device) => DeviceInstance(device: device),
+        )
+        .toList(),
+  );
 }
 
 String _generateStoryValues(List<WidgetbookStoryData> stories) {
@@ -63,21 +56,11 @@ String _generateStoryValues(List<WidgetbookStoryData> stories) {
   return code;
 }
 
-String _generateStory(WidgetbookStoryData story) {
-  return StoryInstance(
-    storyName: story.storyName,
-    functionName: story.name,
-  ).toCode();
-}
-
-String _generateWidget(Widget widget) {
-  final stories = widget.stories.map(_generateStory).toList();
-
-  return """
-WidgetElement(
-  name: '${widget.name}',
-  stories: [${stories.join(',')},],
-)""";
+WidgetElementInstance _generateWidget(Widget widget) {
+  return WidgetElementInstance(
+    name: widget.name,
+    stories: widget.stories,
+  );
 }
 
 String _generateFolder(Folder folder) {
