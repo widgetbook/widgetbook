@@ -17,7 +17,7 @@ String generateWidgetbook({
   WidgetbookThemeData? darkTheme,
 }) {
   final category = _generateCategoryInstance(stories);
-  return WidgetbookInstance(
+  final widgetbookInstanceCode = WidgetbookInstance(
     appInfoInstance: AppInfoInstance(name: name),
     lightThemeInstance:
         lightTheme != null ? ThemeInstance(name: lightTheme.name) : null,
@@ -28,13 +28,24 @@ String generateWidgetbook({
       category,
     ],
   ).toCode();
+
+  return '''
+class HotReload extends StatelessWidget {
+  const HotReload({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return $widgetbookInstanceCode;
+  }
+}
+  ''';
 }
 
 CategoryInstance _generateCategoryInstance(List<WidgetbookStoryData> stories) {
   final service = TreeService();
 
   for (final story in stories) {
-    final folder = service.addFolderByImport(story.importStatement);
+    final folder = service.addFolderByImport(story.typeDefinition);
     service.addStoryToFolder(folder, story);
   }
 

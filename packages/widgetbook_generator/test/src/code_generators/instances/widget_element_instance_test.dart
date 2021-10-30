@@ -1,6 +1,4 @@
 import 'package:test/test.dart';
-import 'package:widgetbook_generator/code_generators/instances/function_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/story_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widget_element_instance.dart';
@@ -21,6 +19,7 @@ void main() {
           WidgetbookStoryData(
             name: 'story1',
             importStatement: '',
+            typeDefinition: '',
             dependencies: [],
             storyName: 'Story1',
             widgetName: widgetName,
@@ -28,6 +27,7 @@ void main() {
           WidgetbookStoryData(
             name: 'story2',
             importStatement: '',
+            typeDefinition: '',
             dependencies: [],
             storyName: 'Story2',
             widgetName: widgetName,
