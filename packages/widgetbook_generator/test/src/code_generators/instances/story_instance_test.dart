@@ -1,6 +1,5 @@
 import 'package:test/test.dart';
 import 'package:widgetbook_generator/code_generators/instances/lambda_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/story_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
 
@@ -13,7 +12,7 @@ void main() {
       const storyName = 'Test';
       const storyBuilder = 'someStory';
 
-      Instance instance = StoryInstance(
+      final instance = StoryInstance(
         storyName: storyName,
         functionName: storyBuilder,
       );

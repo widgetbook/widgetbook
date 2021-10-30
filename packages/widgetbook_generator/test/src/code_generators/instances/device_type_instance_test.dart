@@ -9,7 +9,7 @@ void main() {
     () {
       const value = DeviceType.mobile;
 
-      final instance = DeviceTypeInstance(deviceType: value);
+      const instance = DeviceTypeInstance(deviceType: value);
 
       test('is of type $PrimaryInstance', () {
         expect(instance, isA<PrimaryInstance<DeviceType>>());

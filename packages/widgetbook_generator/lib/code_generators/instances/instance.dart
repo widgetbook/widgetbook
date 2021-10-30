@@ -76,6 +76,8 @@ abstract class Instance extends BaseInstance {
       name.hashCode ^ properties.hashCode ^ trailingComma.hashCode;
 
   @override
-  String toString() =>
-      'Instance(name: $name, properties: $properties, trailingComma: $trailingComma)';
+  String toString() => 'Instance('
+      'name: $name, properties: $properties, '
+      'trailingComma: $trailingComma'
+      ')';
 }

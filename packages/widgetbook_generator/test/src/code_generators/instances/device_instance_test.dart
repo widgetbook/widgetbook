@@ -1,7 +1,6 @@
 import 'package:test/test.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/device_size_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/device_type_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/resolution_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
