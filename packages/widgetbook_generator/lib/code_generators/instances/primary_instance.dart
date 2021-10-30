@@ -1,7 +1,12 @@
 import 'package:widgetbook_generator/code_generators/instances/base_instance.dart';
 
+/// An abstract representation of a instance creating a primary datatype like
+/// int, double, num, String or enums
 abstract class PrimaryInstance<T> extends BaseInstance {
+  /// Creates a new instance of [PrimaryInstance]
   const PrimaryInstance({required this.value});
+
+  /// The value of the [PrimaryInstance]
   final T value;
 
   @override

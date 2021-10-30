@@ -1,16 +1,16 @@
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
-import 'package:widgetbook_generator/code_generators/instances/function_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/lambda_instance.dart';
 
 void main() {
   group(
-    '$FunctionInstance',
+    '$LambdaInstance',
     () {
       const functionName = 'testMethod';
       test(
         '0 parameters',
         () {
-          const instance = FunctionInstance(
+          const instance = LambdaInstance(
             name: functionName,
           );
 
@@ -26,7 +26,7 @@ void main() {
       test(
         '2 parameters',
         () {
-          const instance = FunctionInstance(
+          const instance = LambdaInstance(
             name: functionName,
             parameters: [
               'context',

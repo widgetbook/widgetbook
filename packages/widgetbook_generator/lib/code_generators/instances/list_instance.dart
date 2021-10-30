@@ -2,13 +2,24 @@ import 'package:collection/collection.dart';
 
 import 'package:widgetbook_generator/code_generators/instances/base_instance.dart';
 
+/// An instance that allows to define multiple types of [BaseInstance]s as a
+/// List.
+///
+/// [ListInstance] generates code of the form `[Instance1, Instance2, ...]
 class ListInstance<T extends BaseInstance> extends BaseInstance {
+  /// Creates a new instance of [ListInstance]
+  ///
+  /// [instances] specifies the instances injected into the list.
   const ListInstance({
     required this.instances,
     this.trailingComma = true,
   });
 
+  /// Specifies the instances injected into the list.
   final List<T> instances;
+
+  /// Specifies if a trailing comma should be inserted into the code.
+  /// This leads to better code formatting.
   final bool trailingComma;
 
   @override

@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 import 'package:widgetbook_generator/code_generators/instances/folder_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/function_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/lambda_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/story_instance.dart';

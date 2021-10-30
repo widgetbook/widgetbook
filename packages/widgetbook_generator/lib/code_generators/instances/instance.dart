@@ -4,16 +4,36 @@ import 'package:meta/meta.dart';
 import 'package:widgetbook_generator/code_generators/instances/base_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
 
+/// An [Instance] specifies a code element like `Container()`.
+/// [Instance] is used to specify and generate code structures so the Widgetbook
+/// can be created an tested easily.
 @immutable
 abstract class Instance extends BaseInstance {
+  /// Create a new instance of [Instance]
+  ///
+  /// [name] specifies the name of the runtime instance which will be create
+  /// for the Flutter instance of class `Container`, [name] would be `Container`
+  /// as well
+  ///
+  /// [properties] specifies the properties set for the instance. e.g.,
+  /// the instance `SizedBox(width: 20)`, would have one [Property] `width`.
   const Instance({
     required this.name,
     required this.properties,
     this.trailingComma = true,
   });
 
+  /// The name for the instance.
+  /// This is basically the class name of the instance.
+  ///
+  /// For example: `Container`, `Text` or `SizedBox`
   final String name;
+
+  /// The properties which are defined by the instance.
   final List<Property> properties;
+
+  /// Specifies if a trailing comma should be inserted into the code.
+  /// This leads to better code formatting.
   final bool trailingComma;
 
   String _propertiesToCode() {

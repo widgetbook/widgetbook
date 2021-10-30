@@ -5,7 +5,9 @@ import 'package:widgetbook_generator/code_generators/instances/widget_element_in
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
 
+/// An instance for Category
 class CategoryInstance extends Instance {
+  /// Creates a new instance of [CategoryInstance]
   CategoryInstance({
     required String name,
     List<Folder> folders = const <Folder>[],

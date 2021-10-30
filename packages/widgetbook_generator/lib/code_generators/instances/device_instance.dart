@@ -6,7 +6,10 @@ import 'package:widgetbook_generator/code_generators/instances/resolution_instan
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
 
 @immutable
+
+/// An instance of [Device]
 class DeviceInstance extends Instance {
+  /// Creates a new instance of [DeviceInstance]
   DeviceInstance({
     required Device device,
   }) : super(

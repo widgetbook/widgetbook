@@ -1,5 +1,6 @@
 import 'package:widgetbook_generator/code_generators/instances/primary_instance.dart';
 
+/// Implements a [String] instance
 class StringInstance extends PrimaryInstance<String> {
   const StringInstance.value(
     String value,

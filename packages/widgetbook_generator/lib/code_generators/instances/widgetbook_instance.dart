@@ -6,7 +6,9 @@ import 'package:widgetbook_generator/code_generators/instances/list_instance.dar
 import 'package:widgetbook_generator/code_generators/instances/theme_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
 
+/// An instance for Widgetbook
 class WidgetbookInstance extends Instance {
+  /// Creates a new instance of [WidgetbookInstance]
   WidgetbookInstance({
     required AppInfoInstance appInfoInstance,
     required List<CategoryInstance> categories,
