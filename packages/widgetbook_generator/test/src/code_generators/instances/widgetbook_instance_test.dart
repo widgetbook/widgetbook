@@ -1,0 +1,99 @@
+import 'package:test/expect.dart';
+import 'package:test/scaffolding.dart';
+import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/category_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/theme_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/widgetbook_instance.dart';
+import 'package:widgetbook_generator/code_generators/properties/property.dart';
+import 'package:widgetbook_models/widgetbook_models.dart';
+
+import '../instance_helper.dart';
+
+void main() {
+  group('$WidgetbookInstance', () {
+    const appInfoName = 'Recipe App';
+
+    testName(
+      'Widgetbook',
+      instance: WidgetbookInstance(
+        appInfoInstance: AppInfoInstance(name: appInfoName),
+        categories: const [],
+      ),
+    );
+
+    final expectedAppInfoProperty = Property(
+      key: 'appInfo',
+      instance: AppInfoInstance(
+        name: appInfoName,
+      ),
+    );
+
+    const expectedCategoryInstance = Property(
+      key: 'categories',
+      instance: ListInstance<CategoryInstance>(
+        instances: [],
+      ),
+    );
+
+    test(
+      '.properties returns $AppInfoInstance and List<$CategoryInstance>',
+      () {
+        final instance = WidgetbookInstance(
+          appInfoInstance: AppInfoInstance(name: appInfoName),
+          categories: const [],
+        );
+
+        expect(
+          instance.properties,
+          equals([
+            expectedAppInfoProperty,
+            expectedCategoryInstance,
+          ]),
+        );
+      },
+    );
+
+    test(
+      '.properties returns all properties',
+      () {
+        final instance = WidgetbookInstance(
+          appInfoInstance: AppInfoInstance(name: appInfoName),
+          lightThemeInstance: const ThemeInstance(name: 'lightTheme'),
+          darkThemeInstance: const ThemeInstance(name: 'darkTheme'),
+          devices: [
+            DeviceInstance(device: Apple.iPhone11),
+            DeviceInstance(device: Apple.iPhone12),
+          ],
+          categories: const [],
+        );
+
+        expect(
+          instance.properties,
+          equals([
+            expectedAppInfoProperty,
+            const Property(
+              key: 'lightTheme',
+              instance: ThemeInstance(name: 'lightTheme'),
+            ),
+            const Property(
+              key: 'darkTheme',
+              instance: ThemeInstance(name: 'darkTheme'),
+            ),
+            Property(
+              key: 'devices',
+              instance: ListInstance(
+                instances: [
+                  DeviceInstance(device: Apple.iPhone11),
+                  DeviceInstance(device: Apple.iPhone12)
+                ],
+              ),
+            ),
+            expectedCategoryInstance,
+          ]),
+        );
+      },
+    );
+  });
+}

@@ -1,8 +1,8 @@
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/category_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/folder_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widget_element_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/theme_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/widgetbook_instance.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
@@ -16,33 +16,21 @@ String generateWidgetbook({
   WidgetbookThemeData? lightTheme,
   WidgetbookThemeData? darkTheme,
 }) {
-  return '''
-class HotReload extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      appInfo: ${_generateAppInfo(name: name)},
-      lightTheme: ${_generateThemeDataValue(lightTheme)},
-      darkTheme: ${_generateThemeDataValue(darkTheme)},
-      categories: ${_generateStoryValues(stories)},
-      ${_generateDevicesLine(devices)}
-    );
-  }
-}
-''';
+  final category = _generateCategoryInstance(stories);
+  return WidgetbookInstance(
+    appInfoInstance: AppInfoInstance(name: name),
+    lightThemeInstance:
+        lightTheme != null ? ThemeInstance(name: lightTheme.name) : null,
+    darkThemeInstance:
+        darkTheme != null ? ThemeInstance(name: darkTheme.name) : null,
+    devices: devices.map((device) => DeviceInstance(device: device)).toList(),
+    categories: [
+      category,
+    ],
+  ).toCode();
 }
 
-ListInstance<DeviceInstance> _generateDevicesLine(List<Device> devices) {
-  return ListInstance(
-    instances: devices
-        .map(
-          (device) => DeviceInstance(device: device),
-        )
-        .toList(),
-  );
-}
-
-String _generateStoryValues(List<WidgetbookStoryData> stories) {
+CategoryInstance _generateCategoryInstance(List<WidgetbookStoryData> stories) {
   final service = TreeService();
 
   for (final story in stories) {
@@ -50,29 +38,9 @@ String _generateStoryValues(List<WidgetbookStoryData> stories) {
     service.addStoryToFolder(folder, story);
   }
 
-  final foldersCode = service.folders.values.map(_generateFolder).toList();
-  final code =
-      "[Category(name: 'stories', folders: [${foldersCode.join(',')}],),]";
-  return code;
-}
-
-WidgetElementInstance _generateWidget(Widget widget) {
-  return WidgetElementInstance(
-    name: widget.name,
-    stories: widget.stories,
+  return CategoryInstance(
+    name: 'stories',
+    folders: service.folders.values.toList(),
+    widgets: service.rootFolder.widgets.values.toList(),
   );
-}
-
-FolderInstance _generateFolder(Folder folder) {
-  return FolderInstance(folder: folder);
-}
-
-String _generateAppInfo({
-  required String name,
-}) {
-  return AppInfoInstance(name: name).toCode();
-}
-
-String _generateThemeDataValue(WidgetbookThemeData? themeData) {
-  return themeData == null ? 'null' : '${themeData.name}()';
 }
