@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/providers/injected_theme_provider.dart';
 import 'package:widgetbook/src/providers/injected_theme_state.dart';
+import 'package:widgetbook/src/providers/theme_provider.dart';
 
 class DeviceRender extends StatelessWidget {
   const DeviceRender({
@@ -15,20 +14,15 @@ class DeviceRender extends StatelessWidget {
   final Story story;
 
   ThemeData getInjectedTheme(BuildContext context, InjectedThemeState state) {
-    final brightness = Theme.of(context).brightness;
+    final brightness = ThemeProvider.of(context)!.state;
 
-    if (brightness == Brightness.light && state.lightTheme != null) {
+    if (brightness == ThemeMode.light && state.lightTheme != null) {
       return state.lightTheme!;
     }
-    if (brightness == Brightness.dark && state.darkTheme != null) {
+    if (brightness == ThemeMode.dark && state.darkTheme != null) {
       return state.darkTheme!;
     }
-
-    log('''
-No theme was provided for the set brightness.
- The theme of widgetbook is used to render your widgets.
- This may cause your widgets to look different.''');
-    return Theme.of(context);
+    return state.lightTheme ?? state.darkTheme!;
   }
 
   @override
@@ -63,18 +57,21 @@ No theme was provided for the set brightness.
             themeMode: Theme.of(context).brightness == Brightness.light
                 ? ThemeMode.light
                 : ThemeMode.dark,
-            theme: getInjectedTheme(context, themeState).copyWith(
-              brightness: Theme.of(context).brightness,
-              pageTransitionsTheme: const PageTransitionsTheme(
-                builders: {
-                  TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
-                  TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-                },
+            home: AnimatedTheme(
+              duration: Duration.zero,
+              data: getInjectedTheme(context, themeState).copyWith(
+                brightness: Theme.of(context).brightness,
+                pageTransitionsTheme: const PageTransitionsTheme(
+                  builders: {
+                    TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
+                    TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+                  },
+                ),
               ),
-            ),
-            home: Scaffold(
-              body: story.builder(
-                context,
+              child: Scaffold(
+                body: story.builder(
+                  context,
+                ),
               ),
             ),
           ),

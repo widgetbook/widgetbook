@@ -1,6 +1,11 @@
+## 0.0.16
+
+- fixed error thrown when switching to a theme that is not defined
+- added a widget indicating that the current theme is not defined
+
 ## 0.0.15
 
-- Fixed brightness not being inherited to the rendered `Story`
+- fixed brightness not being inherited to the rendered `Story`
 
 ## 0.0.14
 

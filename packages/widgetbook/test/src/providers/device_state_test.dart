@@ -1,19 +1,19 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/providers/injected_theme_state.dart';
+import 'package:widgetbook/src/providers/device_state.dart';
+import 'package:widgetbook_models/widgetbook_models.dart';
 
 import '../../helper/model_helper.dart';
 
 void main() {
   group(
-    '$InjectedThemeState',
+    '$DeviceState',
     () {
       test(
         'returns true when instance is the same',
         () {
-          final instance = InjectedThemeState(
-            lightTheme: ThemeData(),
-            darkTheme: ThemeData(),
+          final instance = DeviceState(
+            availableDevices: [],
+            currentDevice: Apple.iPhone11,
           );
 
           expect(
@@ -29,14 +29,14 @@ void main() {
           test(
             'two instances with the same values are compared',
             () {
-              final instance1 = InjectedThemeState(
-                lightTheme: ThemeData(),
-                darkTheme: ThemeData(),
+              final instance1 = DeviceState(
+                availableDevices: [],
+                currentDevice: Apple.iPhone11,
               );
 
-              final instance2 = InjectedThemeState(
-                lightTheme: ThemeData(),
-                darkTheme: ThemeData(),
+              final instance2 = DeviceState(
+                availableDevices: [],
+                currentDevice: Apple.iPhone11,
               );
 
               expect(
@@ -49,14 +49,15 @@ void main() {
           test(
             'the hashCodes of two instances with the same values are compared',
             () {
-              final instance1 = InjectedThemeState(
-                lightTheme: ThemeData(),
-                darkTheme: ThemeData(),
+              final list = <Device>[];
+              final instance1 = DeviceState(
+                availableDevices: list,
+                currentDevice: Apple.iPhone11,
               );
 
-              final instance2 = InjectedThemeState(
-                lightTheme: ThemeData(),
-                darkTheme: ThemeData(),
+              final instance2 = DeviceState(
+                availableDevices: list,
+                currentDevice: Apple.iPhone11,
               );
 
               expectEqualHashCodes(instance1, instance2);
