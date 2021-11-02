@@ -1,3 +1,8 @@
+## 0.0.6
+
+- refactored code
+- added tests
+
 ## 0.0.5
 
 - bumped version of `widgetbook_annotation` to `0.0.4`
