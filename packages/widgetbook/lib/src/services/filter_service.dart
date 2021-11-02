@@ -3,9 +3,9 @@ import 'package:widgetbook/src/models/models.dart';
 class FilterService {
   const FilterService();
 
-  List<Category> filter(
+  List<WidgetbookCategory> filter(
     String searchTerm,
-    List<Category> categories,
+    List<WidgetbookCategory> categories,
   ) {
     return _filterCategories(
       RegExp(
@@ -16,13 +16,13 @@ class FilterService {
     );
   }
 
-  List<Category> _filterCategories(
+  List<WidgetbookCategory> _filterCategories(
     RegExp regExp,
-    List<Category> categories,
+    List<WidgetbookCategory> categories,
   ) {
-    final matchingOrganizers = <Category>[];
+    final matchingOrganizers = <WidgetbookCategory>[];
     for (final category in categories) {
-      final result = _filterOrganizer(regExp, category) as Category?;
+      final result = _filterOrganizer(regExp, category) as WidgetbookCategory?;
       if (_isMatch(result)) {
         matchingOrganizers.add(result!);
       }
@@ -36,19 +36,19 @@ class FilterService {
       return organizer;
     }
 
-    final matchingFolders = <Folder>[];
+    final matchingFolders = <WidgetbookFolder>[];
     for (final subOrganizer in organizer.folders) {
       final result = _filterOrganizer(regExp, subOrganizer);
       if (_isMatch(result)) {
-        matchingFolders.add(result! as Folder);
+        matchingFolders.add(result! as WidgetbookFolder);
       }
     }
 
-    final matchingWidgets = <WidgetElement>[];
+    final matchingWidgets = <WidgetbookWidget>[];
     for (final subOrganizer in organizer.widgets) {
       final result = _filterOrganizer(regExp, subOrganizer);
       if (_isMatch(result)) {
-        matchingWidgets.add(result! as WidgetElement);
+        matchingWidgets.add(result! as WidgetbookWidget);
       }
     }
 
@@ -65,11 +65,11 @@ class FilterService {
 
   ExpandableOrganizer _createFilteredSubtree(
     ExpandableOrganizer organizer,
-    List<Folder> folders,
-    List<WidgetElement> widgets,
+    List<WidgetbookFolder> folders,
+    List<WidgetbookWidget> widgets,
   ) {
-    if (organizer is Category) {
-      return Category(
+    if (organizer is WidgetbookCategory) {
+      return WidgetbookCategory(
         name: organizer.name,
         widgets: widgets,
         folders: folders,
@@ -77,7 +77,7 @@ class FilterService {
     }
 
     // otherwise it can only be a folder
-    return Folder(
+    return WidgetbookFolder(
       name: organizer.name,
       widgets: widgets,
       folders: folders,

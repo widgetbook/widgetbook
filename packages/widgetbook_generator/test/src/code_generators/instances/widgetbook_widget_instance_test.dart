@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/story_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widget_element_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/widgetbook_use_case_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/widgetbook_widget_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 
@@ -9,11 +9,11 @@ import '../instance_helper.dart';
 
 void main() {
   group(
-    '$WidgetElementInstance',
+    '$WidgetbookWidgetInstance',
     () {
       const widgetName = 'CustomWidget';
 
-      final instance = WidgetElementInstance(
+      final instance = WidgetbookWidgetInstance(
         name: widgetName,
         stories: [
           WidgetbookStoryData(
@@ -35,7 +35,7 @@ void main() {
         ],
       );
 
-      testName('WidgetElement', instance: instance);
+      testName('WidgetbookWidget', instance: instance);
 
       test(
         '.properties returns a StringProperty and Property containing a list',

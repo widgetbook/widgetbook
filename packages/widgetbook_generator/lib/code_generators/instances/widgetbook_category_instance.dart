@@ -1,26 +1,26 @@
-import 'package:widgetbook_generator/code_generators/instances/folder_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/widgetbook_folder_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widget_element_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/widgetbook_widget_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
 
 /// An instance for Category
-class CategoryInstance extends Instance {
-  /// Creates a new instance of [CategoryInstance]
-  CategoryInstance({
+class WidgetbookCategoryInstance extends Instance {
+  /// Creates a new instance of [WidgetbookCategoryInstance]
+  WidgetbookCategoryInstance({
     required String name,
     List<Folder> folders = const <Folder>[],
     List<Widget> widgets = const <Widget>[],
   }) : super(
-          name: 'Category',
+          name: 'WidgetbookCategory',
           properties: [
             Property.string(key: 'name', value: name),
             Property(
               key: 'folders',
               instance: ListInstance(
                 instances: folders
-                    .map((folder) => FolderInstance(folder: folder))
+                    .map((folder) => WidgetbookFolderInstance(folder: folder))
                     .toList(),
               ),
             ),
@@ -28,7 +28,7 @@ class CategoryInstance extends Instance {
               key: 'widgets',
               instance: ListInstance(
                 instances: widgets
-                    .map((widget) => WidgetElementInstance(
+                    .map((widget) => WidgetbookWidgetInstance(
                           name: widget.name,
                           stories: widget.stories,
                         ))

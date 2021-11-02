@@ -4,12 +4,12 @@ import 'package:widgetbook/src/models/models.dart';
 import 'package:widgetbook/src/services/filter_service.dart';
 
 void main() {
-  final story1 = Story(
+  final story1 = WidgetbookUseCase(
     name: 'Story 1',
     builder: (context) => Container(),
   );
 
-  final story2 = Story(
+  final story2 = WidgetbookUseCase(
     name: 'Story 2',
     builder: (context) => Container(),
   );
@@ -18,9 +18,9 @@ void main() {
     '$FilterService',
     () {
       test(
-        'filters $WidgetElement',
+        'filters $WidgetbookWidget',
         () async {
-          final widget1 = WidgetElement(
+          final widget1 = WidgetbookWidget(
             name: 'Widget 1',
             isExpanded: true,
             stories: [
@@ -29,7 +29,7 @@ void main() {
             ],
           );
 
-          final widget2 = WidgetElement(
+          final widget2 = WidgetbookWidget(
             name: 'Widget 2',
             isExpanded: true,
             stories: [
@@ -38,10 +38,10 @@ void main() {
             ],
           );
 
-          final category = Category(
+          final category = WidgetbookCategory(
             name: 'Category 1',
             folders: [
-              Folder(
+              WidgetbookFolder(
                 name: 'Folder 1',
               ),
             ],
@@ -65,7 +65,7 @@ void main() {
             result,
             equals(
               [
-                Category(
+                WidgetbookCategory(
                   name: 'Category 1',
                   folders: [],
                   widgets: [
@@ -79,20 +79,20 @@ void main() {
       );
 
       test(
-        'filters $Folder',
+        'filters $WidgetbookFolder',
         () async {
-          final folder1_1 = Folder(name: 'Folder1.1');
-          final folder1_2 = Folder(name: 'Folder1.2');
-          final folder1 = Folder(
+          final folder1_1 = WidgetbookFolder(name: 'Folder1.1');
+          final folder1_2 = WidgetbookFolder(name: 'Folder1.2');
+          final folder1 = WidgetbookFolder(
             name: 'Folder 1',
             folders: [
               folder1_1,
               folder1_2,
             ],
           );
-          final folder2 = Folder(name: 'Folder 2');
+          final folder2 = WidgetbookFolder(name: 'Folder 2');
 
-          final widget1 = WidgetElement(
+          final widget1 = WidgetbookWidget(
             name: 'Widget 1',
             isExpanded: true,
             stories: [
@@ -101,7 +101,7 @@ void main() {
             ],
           );
 
-          final category = Category(
+          final category = WidgetbookCategory(
             name: 'Category 1',
             folders: [
               folder1,
@@ -126,10 +126,10 @@ void main() {
             result,
             equals(
               [
-                Category(
+                WidgetbookCategory(
                   name: 'Category 1',
                   folders: [
-                    Folder(
+                    WidgetbookFolder(
                       name: 'Folder 1',
                       folders: [
                         folder1_1,

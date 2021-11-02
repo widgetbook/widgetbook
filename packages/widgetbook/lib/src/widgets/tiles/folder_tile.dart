@@ -14,7 +14,7 @@ class FolderTile extends StatefulWidget {
     required this.level,
   }) : super(key: key);
 
-  final Folder folder;
+  final WidgetbookFolder folder;
   final int level;
 
   @override

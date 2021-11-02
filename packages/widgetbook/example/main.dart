@@ -20,13 +20,13 @@ class HotReload extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook(
       categories: [
-        Category(
+        WidgetbookCategory(
           name: 'widgets',
           widgets: [
-            WidgetElement(
+            WidgetbookWidget(
               name: '$CustomWidget',
               stories: [
-                Story(
+                WidgetbookUseCase(
                   name: 'Default',
                   builder: (context) => const CustomWidget(),
                 ),
@@ -34,13 +34,13 @@ class HotReload extends StatelessWidget {
             ),
           ],
           folders: [
-            Folder(
+            WidgetbookFolder(
               name: 'Texts',
               widgets: [
-                WidgetElement(
+                WidgetbookWidget(
                   name: 'Normal Text',
                   stories: [
-                    Story(
+                    WidgetbookUseCase(
                       name: 'Default',
                       builder: (context) => const Text(
                         'The brown fox ...',

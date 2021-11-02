@@ -2,11 +2,11 @@ import 'package:collection/collection.dart';
 
 import 'package:widgetbook/src/models/organizers/expandable_organizer.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
-import 'package:widgetbook/src/models/organizers/story.dart';
+import 'package:widgetbook/src/models/organizers/widgetbook_use_case.dart';
 
 ///
-class WidgetElement extends ExpandableOrganizer {
-  WidgetElement({
+class WidgetbookWidget extends ExpandableOrganizer {
+  WidgetbookWidget({
     required String name,
     required this.stories,
     bool isExpanded = false,
@@ -24,14 +24,14 @@ class WidgetElement extends ExpandableOrganizer {
   // class name changes
   //
   // This could be avoided alltogether by using annotations
-  final List<Story> stories;
+  final List<WidgetbookUseCase> stories;
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     final listEquals = const DeepCollectionEquality().equals;
 
-    return other is WidgetElement && listEquals(other.stories, stories);
+    return other is WidgetbookWidget && listEquals(other.stories, stories);
   }
 
   @override

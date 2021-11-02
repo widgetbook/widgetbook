@@ -13,7 +13,7 @@ void main() {
         'the hashCodes of two instances with the same values are compared',
         () {
           const name = 'Name';
-          final story = Story.child(
+          final story = WidgetbookUseCase.child(
             name: name,
             child: Container(),
           );

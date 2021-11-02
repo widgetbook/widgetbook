@@ -9,7 +9,7 @@ class StoryInstance extends Instance {
     required String storyName,
     required String functionName,
   }) : super(
-          name: 'Story',
+          name: 'WidgetbookUseCase',
           properties: [
             Property.string(
               key: 'name',

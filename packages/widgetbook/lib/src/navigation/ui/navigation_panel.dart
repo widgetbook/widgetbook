@@ -16,7 +16,7 @@ class NavigationPanel extends StatefulWidget {
   }) : super(key: key);
 
   final AppInfo appInfo;
-  final List<Category> categories;
+  final List<WidgetbookCategory> categories;
 
   @override
   _NavigationPanelState createState() => _NavigationPanelState();
@@ -24,7 +24,7 @@ class NavigationPanel extends StatefulWidget {
 
 class _NavigationPanelState extends State<NavigationPanel> {
   final ScrollController controller = ScrollController();
-  Story? selectedComponent;
+  WidgetbookUseCase? selectedComponent;
 
   final TextEditingController search = TextEditingController();
   String query = '';

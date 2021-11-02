@@ -4,12 +4,12 @@ import 'package:widgetbook/src/widgets/tiles/folder_tile.dart';
 import 'package:widgetbook/src/widgets/tiles/widget_tile.dart';
 
 List<Widget> buildFolders({
-  required List<Folder> folders,
+  required List<WidgetbookFolder> folders,
   required int currentLevel,
 }) {
   return folders
       .map(
-        (Folder folder) => FolderTile(
+        (WidgetbookFolder folder) => FolderTile(
           folder: folder,
           level: currentLevel,
         ),
@@ -18,12 +18,12 @@ List<Widget> buildFolders({
 }
 
 List<Widget> buildWidgets({
-  required List<WidgetElement> widgets,
+  required List<WidgetbookWidget> widgets,
   required int currentLevel,
 }) {
   return widgets
       .map(
-        (WidgetElement widgetElement) => WidgetTile(
+        (WidgetbookWidget widgetElement) => WidgetTile(
           widgetElement: widgetElement,
           level: currentLevel,
         ),

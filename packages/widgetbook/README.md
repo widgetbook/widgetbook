@@ -84,7 +84,7 @@ Run the `Widgetbook` main method by executing `flutter run -t stories/main.dart`
 
 # Inject your widgets
 
-Your widgets can be organized into different areas of interest by using `Category`, `Folder`, `WidgetElement` and `Story`.
+Your widgets can be organized into different areas of interest by using `WidgetbookCategory`, `WidgetbookFolder`, `WidgetbookWidget` and `WidgetbookUseCase`.
 
 ```dart
 class HotReload extends StatelessWidget {
@@ -94,13 +94,13 @@ class HotReload extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook(
       categories: [
-        Category(
+        WidgetbookCategory(
           name: 'widgets',
           widgets: [
-            WidgetElement(
+            WidgetbookWidget(
               name: '$CustomWidget',
               stories: [
-                Story(
+                WidgetbookUseCase(
                   name: 'Default',
                   builder: (context) => CustomWidget(),
                 ),
@@ -108,13 +108,13 @@ class HotReload extends StatelessWidget {
             ),
           ],
           folders: [
-            Folder(
+            WidgetbookFolder(
               name: 'Texts',
               widgets: [
-                WidgetElement(
+                WidgetbookWidget(
                   name: 'Normal Text',
                   stories: [
-                    Story(
+                    WidgetbookUseCase(
                       name: 'Default',
                       builder: (context) => Text(
                         'The brown fox ...',
@@ -156,6 +156,10 @@ Widgetbook(
   darkTheme: darkTheme,
 )
 ```
+
+A preview in Widgetbook's light or dark mode is only shown when the appropriate theme is set. 
+
+If you are in development and haven't defined a theme yet, you can use `ThemeData.light()` or `ThemeData.dark()` to use a default theme.
 
 ## Add devices
 

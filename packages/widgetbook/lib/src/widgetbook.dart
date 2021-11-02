@@ -41,7 +41,7 @@ class Widgetbook extends StatefulWidget {
   /// Categories which host Folders and WidgetElements.
   /// This can be used to organize the structure of the Widgetbook on a large
   /// scale.
-  final List<Category> categories;
+  final List<WidgetbookCategory> categories;
 
   /// The devices on which Stories are previewed.
   final List<Device> devices;
@@ -142,12 +142,12 @@ class _WidgetbookState extends State<Widgetbook> {
     );
   }
 
-  Story? selectStoryFromPath(
+  WidgetbookUseCase? selectStoryFromPath(
     String? path,
-    List<Story> stories,
+    List<WidgetbookUseCase> stories,
   ) {
     final storyPath = path?.replaceFirst('/stories/', '') ?? '';
-    Story? story;
+    WidgetbookUseCase? story;
     for (final element in stories) {
       if (element.path == storyPath) {
         story = element;

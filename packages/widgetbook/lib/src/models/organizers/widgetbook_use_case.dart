@@ -3,25 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/model.dart';
 import 'package:widgetbook/src/models/organizers/organizer.dart';
 
-/// Stories represent a specific configuration of a widget.
-class Story extends Organizer implements Model {
-  Story({required String name, required this.builder}) : super(name);
+/// UseCases represent a specific configuration of a widget and can be used
+/// to check edge cases of a Widget.
+class WidgetbookUseCase extends Organizer implements Model {
+  WidgetbookUseCase({required String name, required this.builder})
+      : super(name);
 
-  factory Story.center({
+  factory WidgetbookUseCase.center({
     required String name,
     required Widget child,
   }) {
-    return Story(
+    return WidgetbookUseCase(
       name: name,
       builder: (_) => Center(child: child),
     );
   }
 
-  factory Story.child({
+  factory WidgetbookUseCase.child({
     required String name,
     required Widget child,
   }) {
-    return Story(
+    return WidgetbookUseCase(
       name: name,
       builder: (_) => child,
     );
@@ -36,7 +38,7 @@ class Story extends Organizer implements Model {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Story && other.builder == builder;
+    return other is WidgetbookUseCase && other.builder == builder;
   }
 
   @override

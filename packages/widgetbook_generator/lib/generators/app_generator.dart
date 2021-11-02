@@ -1,5 +1,5 @@
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/category_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/theme_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_instance.dart';
@@ -41,7 +41,8 @@ class HotReload extends StatelessWidget {
   ''';
 }
 
-CategoryInstance _generateCategoryInstance(List<WidgetbookStoryData> stories) {
+WidgetbookCategoryInstance _generateCategoryInstance(
+    List<WidgetbookStoryData> stories) {
   final service = TreeService();
 
   for (final story in stories) {
@@ -49,7 +50,7 @@ CategoryInstance _generateCategoryInstance(List<WidgetbookStoryData> stories) {
     service.addStoryToFolder(folder, story);
   }
 
-  return CategoryInstance(
+  return WidgetbookCategoryInstance(
     name: 'stories',
     folders: service.folders.values.toList(),
     widgets: service.rootFolder.widgets.values.toList(),

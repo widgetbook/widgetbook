@@ -12,7 +12,7 @@ class StoryTile extends StatefulWidget {
     required this.level,
   }) : super(key: key);
 
-  final Story story;
+  final WidgetbookUseCase story;
   final int level;
 
   @override

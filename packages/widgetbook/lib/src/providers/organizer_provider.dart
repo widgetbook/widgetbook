@@ -37,7 +37,9 @@ class _OrganizerBuilderState extends State<OrganizerBuilder> {
     state = widget.initialState;
     setProvider();
 
-    widget.selectedStoryRepository.getStream().forEach((Story? story) {
+    widget.selectedStoryRepository
+        .getStream()
+        .forEach((WidgetbookUseCase? story) {
       provider.openStory(story);
     });
 
@@ -90,7 +92,7 @@ class OrganizerProvider extends Provider<OrganizerState> {
     return context.dependOnInheritedWidgetOfExactType<OrganizerProvider>();
   }
 
-  void openStory(Story? story) {
+  void openStory(WidgetbookUseCase? story) {
     if (story == null) {
       return;
     }
@@ -101,17 +103,17 @@ class OrganizerProvider extends Provider<OrganizerState> {
     }
   }
 
-  void _updateFolders(List<Category> categories) {
+  void _updateFolders(List<WidgetbookCategory> categories) {
     final oldFolders = FolderHelper.getAllFoldersFromCategories(
       state.allCategories,
     );
     final newFolders = FolderHelper.getAllFoldersFromCategories(
       categories,
     );
-    final oldFolderMap = HashMap<String, Folder>.fromIterable(
+    final oldFolderMap = HashMap<String, WidgetbookFolder>.fromIterable(
       oldFolders,
       key: (dynamic k) => k.path as String,
-      value: (dynamic v) => v as Folder,
+      value: (dynamic v) => v as WidgetbookFolder,
     );
 
     for (final folder in newFolders) {
@@ -122,17 +124,17 @@ class OrganizerProvider extends Provider<OrganizerState> {
     }
   }
 
-  void _updateWidgets(List<Category> categories) {
+  void _updateWidgets(List<WidgetbookCategory> categories) {
     final oldWidgets = WidgetHelper.getAllWidgetElementsFromCategories(
       state.allCategories,
     );
     final newWidgets = WidgetHelper.getAllWidgetElementsFromCategories(
       categories,
     );
-    final oldFolderMap = HashMap<String, WidgetElement>.fromIterable(
+    final oldFolderMap = HashMap<String, WidgetbookWidget>.fromIterable(
       oldWidgets,
       key: (dynamic k) => k.path as String,
-      value: (dynamic v) => v as WidgetElement,
+      value: (dynamic v) => v as WidgetbookWidget,
     );
 
     for (final widget in newWidgets) {
@@ -143,7 +145,7 @@ class OrganizerProvider extends Provider<OrganizerState> {
     }
   }
 
-  void update(List<Category> categories) {
+  void update(List<WidgetbookCategory> categories) {
     _updateFolders(categories);
     _updateWidgets(categories);
     emit(

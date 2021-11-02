@@ -1,4 +1,4 @@
-import 'package:widgetbook/src/models/organizers/story.dart';
+import 'package:widgetbook/src/models/organizers/widgetbook_use_case.dart';
 
 class CanvasState {
   CanvasState({
@@ -9,7 +9,7 @@ class CanvasState {
     return CanvasState(selectedStory: null);
   }
 
-  final Story? selectedStory;
+  final WidgetbookUseCase? selectedStory;
   bool get isStorySelected => selectedStory != null;
 
   @override
