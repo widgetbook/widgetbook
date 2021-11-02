@@ -1,4 +1,4 @@
-## 1.0.0
+## 1.0.0-beta.1
 
 renamed organizer elements to make them less generic. Renamed to the following:
 
