@@ -482,7 +482,7 @@ packages:
       name: widgetbook
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-beta.1"
+    version: "1.0.0"
   widgetbook_annotation:
     dependency: "direct main"
     description:
@@ -496,7 +496,7 @@ packages:
       name: widgetbook_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-beta.1"
+    version: "1.0.0"
   widgetbook_models:
     dependency: transitive
     description:
