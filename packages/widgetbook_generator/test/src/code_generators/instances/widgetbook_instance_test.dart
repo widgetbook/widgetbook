@@ -1,10 +1,10 @@
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/theme_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
@@ -38,7 +38,8 @@ void main() {
     );
 
     test(
-      '.properties returns $AppInfoInstance and List<$WidgetbookCategoryInstance>',
+      '.properties returns $AppInfoInstance and '
+      'List<$WidgetbookCategoryInstance>',
       () {
         final instance = WidgetbookInstance(
           appInfoInstance: AppInfoInstance(name: appInfoName),

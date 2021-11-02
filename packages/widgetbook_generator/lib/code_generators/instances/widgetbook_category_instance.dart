@@ -1,6 +1,6 @@
-import 'package:widgetbook_generator/code_generators/instances/widgetbook_folder_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/widgetbook_folder_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_widget_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
