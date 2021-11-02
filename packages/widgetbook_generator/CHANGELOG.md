@@ -1,4 +1,4 @@
-## 0.0.6
+## 0.0.6-beta.1
 
 - refactored code
 - added tests
