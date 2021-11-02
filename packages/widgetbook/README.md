@@ -135,7 +135,7 @@ class HotReload extends StatelessWidget {
 }
 ```
 
-## Set storybook name
+## Set Widgetbook name
 
 Customize `Widgetbook`'s name according to the project by using appInfo:
 
