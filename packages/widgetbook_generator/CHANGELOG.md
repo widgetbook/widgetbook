@@ -1,4 +1,4 @@
-## 1.0.0-beta.1
+## 1.0.0
 
 - changed generator to create code for Widgetbook 1.0.0
 
