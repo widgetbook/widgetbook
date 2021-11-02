@@ -20,12 +20,14 @@ class StoryResolver extends GeneratorForAnnotation<WidgetbookStory> {
     }
 
     final storyName = annotation.read('name').stringValue;
+    final typeElement = annotation.read('type').typeValue.element!;
     final widgetName = annotation.read('type').typeValue.getDisplayString(
           withNullability: false,
         );
 
     final data = WidgetbookStoryData.fromResolver(
       element,
+      typeElement,
       storyName,
       widgetName,
     );

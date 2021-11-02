@@ -40,13 +40,14 @@ class Editor extends StatelessWidget {
         ),
         Expanded(
           child: Container(
-              decoration: BoxDecoration(
-                borderRadius: Radii.defaultRadius,
-                color: context.colorScheme.surface,
-              ),
-              child: isSelectedThemeDefined(context)
-                  ? const StoryRender()
-                  : const NoTheme()),
+            decoration: BoxDecoration(
+              borderRadius: Radii.defaultRadius,
+              color: context.colorScheme.surface,
+            ),
+            child: isSelectedThemeDefined(context)
+                ? const StoryRender()
+                : const NoTheme(),
+          ),
         ),
       ],
     );

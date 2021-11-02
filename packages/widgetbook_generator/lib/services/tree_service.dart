@@ -1,5 +1,5 @@
 import 'dart:collection';
-
+import 'package:meta/meta.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 
 class Widget {
@@ -9,14 +9,25 @@ class Widget {
   List<WidgetbookStoryData> stories = <WidgetbookStoryData>[];
 }
 
+@immutable
 class Folder {
   Folder({
     required this.name,
   });
 
   final String name;
-  Map<String, Folder> subFolders = HashMap();
-  Map<String, Widget> widgets = HashMap();
+  final Map<String, Folder> subFolders = HashMap();
+  final Map<String, Widget> widgets = HashMap();
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Folder && other.name == name;
+  }
+
+  @override
+  int get hashCode => name.hashCode;
 }
 
 class TreeService {

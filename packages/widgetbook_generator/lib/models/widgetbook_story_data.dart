@@ -17,6 +17,7 @@ class WidgetbookStoryData extends WidgetbookData {
   WidgetbookStoryData({
     required String name,
     required String importStatement,
+    required this.typeDefinition,
     required List<String> dependencies,
     required this.storyName,
     required this.widgetName,
@@ -30,13 +31,15 @@ class WidgetbookStoryData extends WidgetbookData {
   /// StoryResolver
   factory WidgetbookStoryData.fromResolver(
     Element element,
+    Element typeElement,
     String storyName,
     String widgetName,
   ) {
     return WidgetbookStoryData(
       name: element.name!,
       importStatement: element.importStatement,
-      dependencies: element.dependencies,
+      typeDefinition: typeElement.importStatement,
+      dependencies: typeElement.dependencies,
       storyName: storyName,
       widgetName: widgetName,
     );
@@ -47,6 +50,7 @@ class WidgetbookStoryData extends WidgetbookData {
     return WidgetbookStoryData(
       name: map['name'] as String,
       importStatement: map['importStatement'] as String,
+      typeDefinition: map['typeDefinition'] as String,
       dependencies: List<String>.from(map['dependencies'] as Iterable),
       storyName: map['storyName'] as String,
       widgetName: map['widgetName'] as String,
@@ -62,11 +66,14 @@ class WidgetbookStoryData extends WidgetbookData {
   /// [widgetName] will be displayed as a WidgetElement in the Widgetbook.
   final String widgetName;
 
+  final String typeDefinition;
+
   @override
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
       'importStatement': importStatement,
+      'typeDefinition': typeDefinition,
       'dependencies': dependencies,
       'storyName': storyName,
       'widgetName': widgetName,
