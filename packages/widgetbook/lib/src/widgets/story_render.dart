@@ -44,7 +44,7 @@ class _StoryState extends State<StoryRender> {
     controller = TransformationController(oldMatrix);
   }
 
-  Widget _buildCanvas(Story story) {
+  Widget _buildCanvas(WidgetbookUseCase story) {
     _updateController();
 
     return InteractiveViewer(

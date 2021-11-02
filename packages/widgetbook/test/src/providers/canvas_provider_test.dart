@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/models/organizers/story.dart';
+import 'package:widgetbook/src/models/organizers/widgetbook_use_case.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/providers/canvas_state.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
@@ -29,12 +29,12 @@ void main() {
   late StoryRepository storyRepository;
   late SelectedStoryRepository selectedStoryRepository;
 
-  final story1 = Story(
+  final story1 = WidgetbookUseCase(
     name: '1',
     builder: (context) => Container(),
   );
 
-  final story2 = Story(
+  final story2 = WidgetbookUseCase(
     name: '2',
     builder: (context) => Container(),
   );
@@ -42,7 +42,7 @@ void main() {
   setUp(
     () {
       storyRepository = StoryRepository(
-        initialConfiguration: <String, Story>{
+        initialConfiguration: <String, WidgetbookUseCase>{
           story1.name: story1,
           story2.name: story2,
         },
@@ -55,7 +55,7 @@ void main() {
     '$CanvasProvider',
     () {
       testWidgets(
-        'emits $Story when selectStory is called',
+        'emits $WidgetbookUseCase when selectStory is called',
         (WidgetTester tester) async {
           var provider = await tester.pumpProvider(
             selectedStoryRepository: selectedStoryRepository,
@@ -109,7 +109,7 @@ void main() {
       );
 
       testWidgets(
-        'emits $Story $SelectedStoryRepository emits new $Story',
+        'emits $WidgetbookUseCase $SelectedStoryRepository emits new $WidgetbookUseCase',
         (WidgetTester tester) async {
           var provider = await tester.pumpProvider(
             selectedStoryRepository: selectedStoryRepository,
@@ -122,7 +122,7 @@ void main() {
             },
           );
 
-          final newStory = Story(
+          final newStory = WidgetbookUseCase(
             name: story1.name,
             builder: (context) {
               return const Text('');
@@ -147,7 +147,7 @@ void main() {
       );
 
       testWidgets(
-        'emits $Story $SelectedStoryRepository emits new $Story',
+        'emits $WidgetbookUseCase $SelectedStoryRepository emits new $WidgetbookUseCase',
         (WidgetTester tester) async {
           var provider = await tester.pumpProvider(
             selectedStoryRepository: selectedStoryRepository,

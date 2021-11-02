@@ -9,10 +9,10 @@ abstract class ExpandableOrganizer extends Organizer {
   ExpandableOrganizer({
     required String name,
     required this.isExpanded,
-    List<Folder>? folders,
-    List<WidgetElement>? widgets,
-  })  : folders = folders ?? List<Folder>.empty(),
-        widgets = widgets ?? List<WidgetElement>.empty(),
+    List<WidgetbookFolder>? folders,
+    List<WidgetbookWidget>? widgets,
+  })  : folders = folders ?? List<WidgetbookFolder>.empty(),
+        widgets = widgets ?? List<WidgetbookWidget>.empty(),
         super(
           name,
         );
@@ -22,11 +22,11 @@ abstract class ExpandableOrganizer extends Organizer {
 
   /// The folders of one level in the folder tree.
   /// Folders will be shown above widgets.
-  final List<Folder> folders;
+  final List<WidgetbookFolder> folders;
 
   /// The widgets of one level in the folder tree.
   /// Widgets will be shown below folders;
-  final List<WidgetElement> widgets;
+  final List<WidgetbookWidget> widgets;
 
   /// Abstract class for organizer panel in the left.
 

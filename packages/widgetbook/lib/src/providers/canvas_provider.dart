@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/models/organizers/story.dart';
+import 'package:widgetbook/src/models/organizers/widgetbook_use_case.dart';
 import 'package:widgetbook/src/providers/canvas_state.dart';
 import 'package:widgetbook/src/providers/provider.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
@@ -90,7 +90,7 @@ class CanvasProvider extends Provider<CanvasState> {
     }
   }
 
-  void selectStory(Story? story) {
+  void selectStory(WidgetbookUseCase? story) {
     selectedStoryRepository.setItem(story);
     emit(
       CanvasState(

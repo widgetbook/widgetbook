@@ -12,7 +12,7 @@ class WidgetTile extends StatefulWidget {
     required this.level,
   }) : super(key: key);
 
-  final WidgetElement widgetElement;
+  final WidgetbookWidget widgetElement;
   final int level;
 
   @override
@@ -28,7 +28,7 @@ class _WidgetTileState extends State<WidgetTile> {
 
     return stories
         .map(
-          (Story story) => StoryTile(
+          (WidgetbookUseCase story) => StoryTile(
             story: story,
             level: level,
           ),

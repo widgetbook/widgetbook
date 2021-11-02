@@ -10,7 +10,7 @@ class OrganizerState {
   });
 
   factory OrganizerState.unfiltered({
-    required List<Category> categories,
+    required List<WidgetbookCategory> categories,
   }) {
     return OrganizerState(
       allCategories: categories,
@@ -19,8 +19,8 @@ class OrganizerState {
     );
   }
 
-  final List<Category> allCategories;
-  final List<Category> filteredCategories;
+  final List<WidgetbookCategory> allCategories;
+  final List<WidgetbookCategory> filteredCategories;
   final String searchTerm;
 
   @override

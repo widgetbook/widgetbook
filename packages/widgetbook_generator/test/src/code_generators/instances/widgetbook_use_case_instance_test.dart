@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 import 'package:widgetbook_generator/code_generators/instances/lambda_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/story_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/widgetbook_use_case_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
 
 import '../instance_helper.dart';
@@ -17,7 +17,7 @@ void main() {
         functionName: storyBuilder,
       );
 
-      testName('Story', instance: instance);
+      testName('WidgetbookUseCase', instance: instance);
 
       test(
         ".properties returns a name and a function 'builder'",

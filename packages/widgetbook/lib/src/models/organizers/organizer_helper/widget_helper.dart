@@ -2,9 +2,9 @@ import 'package:widgetbook/widgetbook.dart';
 
 /// helper to obtain all WidgetElements in the navigation tree.
 class WidgetHelper {
-  static List<WidgetElement> getAllWidgetElementsFromCategories(
-      List<Category> categories) {
-    final widgets = <WidgetElement>[];
+  static List<WidgetbookWidget> getAllWidgetElementsFromCategories(
+      List<WidgetbookCategory> categories) {
+    final widgets = <WidgetbookWidget>[];
     for (final category in categories) {
       widgets.addAll(
         getAllWidgetElementsFromCategory(category),
@@ -13,9 +13,9 @@ class WidgetHelper {
     return widgets;
   }
 
-  static List<WidgetElement> getAllWidgetElementsFromCategory(
-      Category category) {
-    final widgetList = List<WidgetElement>.from(
+  static List<WidgetbookWidget> getAllWidgetElementsFromCategory(
+      WidgetbookCategory category) {
+    final widgetList = List<WidgetbookWidget>.from(
       category.widgets,
     )..addAll(
         getAllWidgetElementsFromFolders(category.folders),
@@ -23,9 +23,9 @@ class WidgetHelper {
     return widgetList;
   }
 
-  static List<WidgetElement> getAllWidgetElementsFromFolders(
-      List<Folder> folders) {
-    final widgetList = <WidgetElement>[];
+  static List<WidgetbookWidget> getAllWidgetElementsFromFolders(
+      List<WidgetbookFolder> folders) {
+    final widgetList = <WidgetbookWidget>[];
     for (final folder in folders) {
       widgetList.addAll(
         getAllWidgetElementsFromFolder(folder),
@@ -34,8 +34,9 @@ class WidgetHelper {
     return widgetList;
   }
 
-  static List<WidgetElement> getAllWidgetElementsFromFolder(Folder folder) {
-    final widgetList = List<WidgetElement>.from(folder.widgets)
+  static List<WidgetbookWidget> getAllWidgetElementsFromFolder(
+      WidgetbookFolder folder) {
+    final widgetList = List<WidgetbookWidget>.from(folder.widgets)
       ..addAll(
         getAllWidgetElementsFromFolders(folder.folders),
       );

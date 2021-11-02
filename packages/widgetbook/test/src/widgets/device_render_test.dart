@@ -55,7 +55,7 @@ Widget getMaterialApp(Brightness brightness) {
           ),
           onStateChanged: (_) {},
           child: DeviceRender(
-            story: Story(
+            story: WidgetbookUseCase(
               name: storyName,
               builder: (context) => const ThemedWidget(),
             ),
@@ -93,7 +93,7 @@ void main() {
     '$DeviceRender',
     () {
       testWidgets(
-        'renders $Story with lightColor when brightness is set to ${Brightness.light}',
+        'renders $WidgetbookUseCase with lightColor when brightness is set to ${Brightness.light}',
         (tester) async {
           await expectColorForSetBrightness(
             tester: tester,
@@ -104,7 +104,7 @@ void main() {
       );
 
       testWidgets(
-        'renders $Story with darkColor when brightness is set to ${Brightness.dark}',
+        'renders $WidgetbookUseCase with darkColor when brightness is set to ${Brightness.dark}',
         (tester) async {
           await expectColorForSetBrightness(
             tester: tester,

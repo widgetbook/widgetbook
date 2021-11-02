@@ -20,37 +20,38 @@ class Storyboard extends StatelessWidget {
         Apple.iPhone12,
         Samsung.s10,
         Samsung.s21ultra,
+        Apple.iMacM1,
       ],
       categories: [
-        Category(
+        WidgetbookCategory(
           name: 'widgets test',
           folders: [
-            Folder(
+            WidgetbookFolder(
               name: 'attributes',
               widgets: [
-                WidgetElement(
+                WidgetbookWidget(
                   name: 'PriceAttribute',
                   stories: [
-                    Story(
+                    WidgetbookUseCase(
                       name: 'Short price',
                       builder: (context) => PriceAttribute(price: 8.5),
                     ),
-                    Story(
+                    WidgetbookUseCase(
                       name: 'Long price',
                       builder: (context) => PriceAttribute(price: 108.5),
                     ),
                   ],
                 ),
-                WidgetElement(
+                WidgetbookWidget(
                   name: 'WeightAttribute',
                   stories: [
-                    Story(
+                    WidgetbookUseCase(
                       name: 'Short weight',
                       builder: (context) => WeightAttribute(
                         weight: 320,
                       ),
                     ),
-                    Story(
+                    WidgetbookUseCase(
                       name: 'Long weight',
                       builder: (context) => WeightAttribute(
                         weight: 1050,
@@ -62,10 +63,10 @@ class Storyboard extends StatelessWidget {
             ),
           ],
           widgets: [
-            WidgetElement(
+            WidgetbookWidget(
               name: 'Ingredients',
               stories: [
-                Story(
+                WidgetbookUseCase(
                   name: 'Short list',
                   builder: (context) => Ingredients(
                     ingredients: [
@@ -75,7 +76,7 @@ class Storyboard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Story(
+                WidgetbookUseCase(
                   name: 'Medium list',
                   builder: (context) => Ingredients(
                     ingredients: [
@@ -88,7 +89,7 @@ class Storyboard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Story(
+                WidgetbookUseCase(
                   name: 'Long list',
                   builder: (context) => Ingredients(
                     ingredients: [
@@ -106,19 +107,19 @@ class Storyboard extends StatelessWidget {
                 ),
               ],
             ),
-            WidgetElement(
+            WidgetbookWidget(
               name: 'New tag',
               stories: [
-                Story(
+                WidgetbookUseCase(
                   name: 'Default',
                   builder: (context) => NewTag(),
                 ),
               ],
             ),
-            WidgetElement(
+            WidgetbookWidget(
               name: 'Rotated image',
               stories: [
-                Story(
+                WidgetbookUseCase(
                   name: 'Default',
                   builder: (context) => RotatedImage(
                     assetPath: 'assets/burger.jpg',
@@ -126,10 +127,10 @@ class Storyboard extends StatelessWidget {
                 ),
               ],
             ),
-            WidgetElement(
+            WidgetbookWidget(
               name: 'MealDetail',
               stories: [
-                Story(
+                WidgetbookUseCase(
                   name: 'Short name',
                   builder: (context) => MealDetail(
                     meal: Meal(
@@ -145,7 +146,7 @@ class Storyboard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Story(
+                WidgetbookUseCase(
                   name: 'Long name',
                   builder: (context) => MealDetail(
                     meal: Meal(
@@ -165,7 +166,7 @@ class Storyboard extends StatelessWidget {
             ),
           ],
         ),
-        Category(
+        WidgetbookCategory(
           name: 'pages',
         ),
       ],

@@ -1,8 +1,8 @@
 import 'package:test/test.dart';
-import 'package:widgetbook_generator/code_generators/instances/category_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/folder_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widget_element_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/widgetbook_folder_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/widgetbook_widget_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
 
@@ -10,7 +10,7 @@ import '../instance_helper.dart';
 
 void main() {
   group(
-    '$CategoryInstance',
+    '$WidgetbookCategoryInstance',
     () {
       final folder = Folder(name: 'Folder');
       final folder1 = Folder(
@@ -47,12 +47,15 @@ void main() {
 
       const categoryName = 'stories';
 
-      testName('Category', instance: CategoryInstance(name: categoryName));
+      testName(
+        'WidgetbookCategory',
+        instance: WidgetbookCategoryInstance(name: categoryName),
+      );
 
       test(
         ".name returns 'stories'",
         () {
-          final instance = CategoryInstance(
+          final instance = WidgetbookCategoryInstance(
             name: categoryName,
             folders: folders,
             widgets: widgets,
@@ -64,22 +67,22 @@ void main() {
                   Property.string(key: 'name', value: categoryName),
                   Property(
                     key: 'folders',
-                    instance: ListInstance<FolderInstance>(
+                    instance: ListInstance<WidgetbookFolderInstance>(
                       instances: [
-                        FolderInstance(folder: folder1),
-                        FolderInstance(folder: folder2),
+                        WidgetbookFolderInstance(folder: folder1),
+                        WidgetbookFolderInstance(folder: folder2),
                       ],
                     ),
                   ),
                   Property(
                     key: 'widgets',
-                    instance: ListInstance<WidgetElementInstance>(
+                    instance: ListInstance<WidgetbookWidgetInstance>(
                       instances: [
-                        WidgetElementInstance(
+                        WidgetbookWidgetInstance(
                           name: widget1.name,
                           stories: widget1.stories,
                         ),
-                        WidgetElementInstance(
+                        WidgetbookWidgetInstance(
                           name: widget2.name,
                           stories: widget2.stories,
                         ),

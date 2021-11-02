@@ -1,13 +1,13 @@
 import 'package:widgetbook/src/models/organizers/expandable_organizer.dart';
-import 'package:widgetbook/src/models/organizers/folder.dart';
-import 'package:widgetbook/src/models/organizers/widget_element.dart';
+import 'package:widgetbook/src/models/organizers/widgetbook_folder.dart';
+import 'package:widgetbook/src/models/organizers/widgetbook_widget.dart';
 
 /// Categories help to organize WidgetElements and Stories into different areas.
-class Category extends ExpandableOrganizer {
-  Category({
+class WidgetbookCategory extends ExpandableOrganizer {
+  WidgetbookCategory({
     required String name,
-    List<Folder>? folders,
-    List<WidgetElement>? widgets,
+    List<WidgetbookFolder>? folders,
+    List<WidgetbookWidget>? widgets,
   }) : super(
           name: name,
           folders: folders,

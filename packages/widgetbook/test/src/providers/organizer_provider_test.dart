@@ -37,12 +37,12 @@ void main() {
   late StoryRepository storyRepository;
   late SelectedStoryRepository selectedStoryRepository;
 
-  final story1 = Story(
+  final story1 = WidgetbookUseCase(
     name: 'Story 1',
     builder: (context) => Container(),
   );
 
-  final story2 = Story(
+  final story2 = WidgetbookUseCase(
     name: 'Story 2',
     builder: (context) => Container(),
   );
@@ -50,7 +50,7 @@ void main() {
   setUp(
     () {
       storyRepository = StoryRepository(
-        initialConfiguration: <String, Story>{
+        initialConfiguration: <String, WidgetbookUseCase>{
           story1.name: story1,
           story2.name: story2,
         },
@@ -63,15 +63,15 @@ void main() {
     '$OrganizerProvider',
     () {
       testWidgets(
-        'expands $WidgetElement when the selected story changes',
+        'expands $WidgetbookWidget when the selected story changes',
         (WidgetTester tester) async {
           var provider = await tester.pumpProvider(
             initialState: OrganizerState.unfiltered(
               categories: [
-                Category(
+                WidgetbookCategory(
                   name: 'Category 1',
                   widgets: [
-                    WidgetElement(
+                    WidgetbookWidget(
                       name: 'Widget 1',
                       stories: [
                         story1,
@@ -99,16 +99,16 @@ void main() {
       );
 
       testWidgets(
-        'togglesExpander of $WidgetElement',
+        'togglesExpander of $WidgetbookWidget',
         (WidgetTester tester) async {
-          final widgetElement = WidgetElement(
+          final widgetElement = WidgetbookWidget(
             name: 'Widget 1',
             stories: [],
           );
           var provider = await tester.pumpProvider(
             initialState: OrganizerState.unfiltered(
               categories: [
-                Category(
+                WidgetbookCategory(
                   name: 'Category 1',
                   widgets: [widgetElement],
                 ),
@@ -129,10 +129,10 @@ void main() {
             equals(
               OrganizerState.unfiltered(
                 categories: [
-                  Category(
+                  WidgetbookCategory(
                     name: 'Category 1',
                     widgets: [
-                      WidgetElement(
+                      WidgetbookWidget(
                         name: 'Widget 1',
                         isExpanded: true,
                         stories: [],
@@ -147,20 +147,20 @@ void main() {
       );
 
       testWidgets(
-        'expands $WidgetElement when the selected story changes',
+        'expands $WidgetbookWidget when the selected story changes',
         (WidgetTester tester) async {
           var provider = await tester.pumpProvider(
             initialState: OrganizerState.unfiltered(
               categories: [
-                Category(
+                WidgetbookCategory(
                   name: 'Category 1',
                   folders: [
-                    Folder(
+                    WidgetbookFolder(
                       name: 'Folder 1',
                     ),
                   ],
                   widgets: [
-                    WidgetElement(
+                    WidgetbookWidget(
                       name: 'Widget 1',
                       isExpanded: true,
                       stories: [story1, story2],
@@ -177,17 +177,17 @@ void main() {
             () {
               provider.update(
                 [
-                  Category(
+                  WidgetbookCategory(
                     name: 'Category 1',
                     folders: [
-                      Folder(
+                      WidgetbookFolder(
                         name: 'Folder 1',
                       ),
                     ],
                     widgets: [
                       // Note that this WidgetElement does not have the isExpanded
                       // property set to true
-                      WidgetElement(
+                      WidgetbookWidget(
                         name: 'Widget 1',
                         stories: [
                           story1,
@@ -207,17 +207,17 @@ void main() {
             equals(
               OrganizerState.unfiltered(
                 categories: [
-                  Category(
+                  WidgetbookCategory(
                     name: 'Category 1',
                     folders: [
-                      Folder(
+                      WidgetbookFolder(
                         name: 'Folder 1',
                       ),
                     ],
                     widgets: [
                       // Note that this WidgetElement does have the isExpanded
                       // property set to true
-                      WidgetElement(
+                      WidgetbookWidget(
                         name: 'Widget 1',
                         isExpanded: true,
                         stories: [
@@ -236,16 +236,16 @@ void main() {
       testWidgets(
         'resets filter when resetFilter is called',
         (WidgetTester tester) async {
-          final folder = Folder(
+          final folder = WidgetbookFolder(
             name: 'Folder 1',
           );
-          final category = Category(
+          final category = WidgetbookCategory(
             name: 'Category 1',
             folders: [
               folder,
             ],
             widgets: [
-              WidgetElement(
+              WidgetbookWidget(
                 name: 'Widget 1',
                 isExpanded: true,
                 stories: [
@@ -256,7 +256,7 @@ void main() {
             ],
           );
 
-          final filteredCategory = Category(
+          final filteredCategory = WidgetbookCategory(
             name: 'Category 1',
             folders: [
               folder,
@@ -299,16 +299,16 @@ void main() {
       testWidgets(
         'invokes $FilterService when filter is called',
         (WidgetTester tester) async {
-          final folder = Folder(
+          final folder = WidgetbookFolder(
             name: 'Folder 1',
           );
-          final category = Category(
+          final category = WidgetbookCategory(
             name: 'Category 1',
             folders: [
               folder,
             ],
             widgets: [
-              WidgetElement(
+              WidgetbookWidget(
                 name: 'Widget 1',
                 isExpanded: true,
                 stories: [

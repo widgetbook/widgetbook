@@ -6,7 +6,7 @@ import 'package:widgetbook/src/widgets/tiles/tile_helper_methods.dart';
 class CategoryTile extends StatelessWidget {
   const CategoryTile({Key? key, required this.category}) : super(key: key);
 
-  final Category category;
+  final WidgetbookCategory category;
 
   @override
   Widget build(BuildContext context) {
