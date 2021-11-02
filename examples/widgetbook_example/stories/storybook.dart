@@ -20,6 +20,7 @@ class Storyboard extends StatelessWidget {
         Apple.iPhone12,
         Samsung.s10,
         Samsung.s21ultra,
+        Apple.iMacM1,
       ],
       categories: [
         WidgetbookCategory(
