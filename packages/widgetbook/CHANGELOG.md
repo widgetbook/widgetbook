@@ -1,3 +1,12 @@
+## 1.0.0
+
+renamed organizer elements to make them less generic. Renamed to the following:
+
+- `Category` renamed to `WidgetbookCategory`
+- `Folder` renamed to `WidgetbookFolder`
+- `WidgetElement` renamed to `WidgetbookWidget`
+- `Story` renamed to `WidgetbookUseCase`
+
 ## 0.0.16
 
 - fixed error thrown when switching to a theme that is not defined
