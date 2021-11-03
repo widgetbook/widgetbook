@@ -1,3 +1,7 @@
+## 1.0.0-beta.1
+
+- changed `WidgetbookStory` to `WidgetbookUseCase`
+
 ## 0.0.4
 
 - bumped version of `widgetbook_models` to `0.0.3`
