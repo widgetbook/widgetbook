@@ -1,3 +1,8 @@
+## 1.0.1-beta.2
+
+- adjusted to renamed properties of `widgetbook` package
+- bumped `widgetbook_annotation` version
+
 ## 1.0.0
 
 - changed generator to create code for Widgetbook 1.0.0

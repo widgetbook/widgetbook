@@ -7,13 +7,13 @@ import '../instance_helper.dart';
 
 void main() {
   group(
-    '$StoryInstance',
+    '$WidgetbookUseCaseInstance',
     () {
       const storyName = 'Test';
       const storyBuilder = 'someStory';
 
-      final instance = StoryInstance(
-        storyName: storyName,
+      final instance = WidgetbookUseCaseInstance(
+        useCaseName: storyName,
         functionName: storyBuilder,
       );
 

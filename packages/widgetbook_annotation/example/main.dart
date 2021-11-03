@@ -4,7 +4,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 @WidgetbookTheme.dark()
 ThemeData darkTheme() => ThemeData.dark();
 
-@WidgetbookStory(name: 'Default', type: CustomPadding)
+@WidgetbookUseCase(name: 'Default', type: CustomPadding)
 Widget customPaddingStory(BuildContext context) {
   return Container(
     color: Colors.green,

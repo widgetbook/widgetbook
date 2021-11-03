@@ -25,7 +25,7 @@ class HotReload extends StatelessWidget {
           widgets: [
             WidgetbookWidget(
               name: '$CustomWidget',
-              stories: [
+              useCases: [
                 WidgetbookUseCase(
                   name: 'Default',
                   builder: (context) => const CustomWidget(),
@@ -39,7 +39,7 @@ class HotReload extends StatelessWidget {
               widgets: [
                 WidgetbookWidget(
                   name: 'Normal Text',
-                  stories: [
+                  useCases: [
                     WidgetbookUseCase(
                       name: 'Default',
                       builder: (context) => const Text(

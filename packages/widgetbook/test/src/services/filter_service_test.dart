@@ -23,7 +23,7 @@ void main() {
           final widget1 = WidgetbookWidget(
             name: 'Widget 1',
             isExpanded: true,
-            stories: [
+            useCases: [
               story1,
               story2,
             ],
@@ -32,7 +32,7 @@ void main() {
           final widget2 = WidgetbookWidget(
             name: 'Widget 2',
             isExpanded: true,
-            stories: [
+            useCases: [
               story1,
               story2,
             ],
@@ -95,7 +95,7 @@ void main() {
           final widget1 = WidgetbookWidget(
             name: 'Widget 1',
             isExpanded: true,
-            stories: [
+            useCases: [
               story1,
               story2,
             ],

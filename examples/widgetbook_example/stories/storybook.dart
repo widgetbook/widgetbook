@@ -31,7 +31,7 @@ class Storyboard extends StatelessWidget {
               widgets: [
                 WidgetbookWidget(
                   name: 'PriceAttribute',
-                  stories: [
+                  useCases: [
                     WidgetbookUseCase(
                       name: 'Short price',
                       builder: (context) => PriceAttribute(price: 8.5),
@@ -44,7 +44,7 @@ class Storyboard extends StatelessWidget {
                 ),
                 WidgetbookWidget(
                   name: 'WeightAttribute',
-                  stories: [
+                  useCases: [
                     WidgetbookUseCase(
                       name: 'Short weight',
                       builder: (context) => WeightAttribute(
@@ -65,7 +65,7 @@ class Storyboard extends StatelessWidget {
           widgets: [
             WidgetbookWidget(
               name: 'Ingredients',
-              stories: [
+              useCases: [
                 WidgetbookUseCase(
                   name: 'Short list',
                   builder: (context) => Ingredients(
@@ -109,7 +109,7 @@ class Storyboard extends StatelessWidget {
             ),
             WidgetbookWidget(
               name: 'New tag',
-              stories: [
+              useCases: [
                 WidgetbookUseCase(
                   name: 'Default',
                   builder: (context) => NewTag(),
@@ -118,7 +118,7 @@ class Storyboard extends StatelessWidget {
             ),
             WidgetbookWidget(
               name: 'Rotated image',
-              stories: [
+              useCases: [
                 WidgetbookUseCase(
                   name: 'Default',
                   builder: (context) => RotatedImage(
@@ -129,7 +129,7 @@ class Storyboard extends StatelessWidget {
             ),
             WidgetbookWidget(
               name: 'MealDetail',
-              stories: [
+              useCases: [
                 WidgetbookUseCase(
                   name: 'Short name',
                   builder: (context) => MealDetail(

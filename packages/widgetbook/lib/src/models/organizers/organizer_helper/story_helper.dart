@@ -11,7 +11,7 @@ class StoryHelper {
 
     final stories = List<WidgetbookUseCase>.empty(growable: true);
     for (final widget in widgets) {
-      stories.addAll(widget.stories);
+      stories.addAll(widget.useCases);
     }
 
     return stories;
