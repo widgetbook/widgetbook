@@ -154,13 +154,13 @@ It often happens that your widget is more complex. In such case, feel free to wr
 After generating the code for the Widgetbook, you will find a navigation panel with the following content
 
 ```
-stories (Category)
+use cases (Category)
 ├─ tiles (Folder)
 │  ├─ AwesomeTile (WidgetElement)
 │  │  ├─ Default (Use Case)
 ```
 
-If you require multiple stories for a Widget, feel free to define multiple `@WidgetbookUseCase`s per Widget. The additional Stories will be located in the navigation panel similar to the showcased use case. 
+If you require multiple use cases for a Widget, feel free to define multiple `@WidgetbookUseCase`s per Widget. The additional use cases will be located in the navigation panel similar to the showcased use case. 
 
 ## WidgetbookTheme
 
