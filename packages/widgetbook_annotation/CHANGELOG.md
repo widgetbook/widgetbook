@@ -1,4 +1,4 @@
-## 1.0.0-beta.3
+## 1.0.0
 
 - changed `WidgetbookStory` to `WidgetbookUseCase`
 

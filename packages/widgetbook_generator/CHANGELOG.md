@@ -1,4 +1,4 @@
-## 1.0.1-beta.2
+## 1.0.1
 
 - adjusted to renamed properties of `widgetbook` package
 - bumped `widgetbook_annotation` version

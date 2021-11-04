@@ -1,4 +1,4 @@
-## 1.0.1-beta.1
+## 1.0.1
 
 - renamed property `stories` of `WidgetbookWidget` to `useCases`
 
