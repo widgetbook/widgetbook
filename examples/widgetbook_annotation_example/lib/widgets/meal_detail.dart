@@ -7,7 +7,7 @@ import 'package:meal_app/widgets/new_tag.dart';
 import 'package:meal_app/widgets/rotated_image.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@WidgetbookStory(name: 'short name', type: MealDetail)
+@WidgetbookUseCase(name: 'short name', type: MealDetail)
 Widget mealDetailShort(BuildContext context) {
   return MealDetail(
     meal: Meal(
@@ -24,7 +24,7 @@ Widget mealDetailShort(BuildContext context) {
   );
 }
 
-@WidgetbookStory(name: 'long name', type: MealDetail)
+@WidgetbookUseCase(name: 'long name', type: MealDetail)
 Widget mealDetailLong(BuildContext context) {
   return MealDetail(
     meal: Meal(

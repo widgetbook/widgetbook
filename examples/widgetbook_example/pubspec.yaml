@@ -16,7 +16,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^7.1.0
   font_awesome_flutter: ^9.1.0
-  widgetbook: ^1.0.0
+  widgetbook: ^1.0.1-beta.1
 
 dev_dependencies:
   flutter_test:

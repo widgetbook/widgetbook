@@ -37,7 +37,7 @@ dev_dependencies:
 
 # Available annotations
 
-This package defines the annotations `@WidgetbookApp`, `@WidgetbookStory`, and `@WidgetbookTheme`. The annotations and their usage are explained below.
+This package defines the annotations `@WidgetbookApp`, `@WidgetbookUseCase`, and `@WidgetbookTheme`. The annotations and their usage are explained below.
 
 ## @WidgetbookApp
 
@@ -90,9 +90,9 @@ app
 ├─ pubspec.yaml
 ```
 
-## @WidgetbookStory
+## @WidgetbookUseCase
 
-`@WidgetbookStory` allows developers to mark functions as a story. The `@WidgetbookStory` must be applied to a function 
+`@WidgetbookUseCase` allows developers to mark functions as a use case. The `@WidgetbookUseCase` must be applied to a function 
 
 ```dart
 Widget name(BuildContext context) {  
@@ -108,11 +108,11 @@ Widget name(BuildContext context) => YourWidget();
 
 ### Parameters
 
-`@WidgetbookStory` requires the two parameters `name` and `type`. 
+`@WidgetbookUseCase` requires the two parameters `name` and `type`. 
 
-The `name` parameter specifies how the story will be displayed in the navigation panel in the Widgetbook.
+The `name` parameter specifies how the use case will be displayed in the navigation panel in the Widgetbook.
 
-The `type` parameter specifies to which type of Widget the Story belongs. From this information and the location of the file in which the annotation is used, [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) will create the navigation panel shown on the left side of the Widgetbook.
+The `type` parameter specifies to which type of Widget the use case belongs. From this information and the location of the file in which the annotation is used, [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) will create the navigation panel shown on the left side of the Widgetbook.
 
 ### Example 
 
@@ -131,11 +131,11 @@ app
 ├─ pubspec.yaml
 ```
 
-A story for `AwesomeTile` located in `/lib/tiles/awesome_tile.dart` can be defined in that file by implementing the following
+A use case for `AwesomeTile` located in `/lib/tiles/awesome_tile.dart` can be defined in that file by implementing the following
 
 ```dart 
-@WidgetbookStory(name: 'Default', type: AwesomeTile)
-Widget awesomeTileStory(BuildContext context) {
+@WidgetbookUseCase(name: 'Default', type: AwesomeTile)
+Widget awesomeTileUseCase(BuildContext context) {
   return AwesomeTile();
 }
 
@@ -154,17 +154,17 @@ It often happens that your widget is more complex. In such case, feel free to wr
 After generating the code for the Widgetbook, you will find a navigation panel with the following content
 
 ```
-stories (Category)
+use cases (Category)
 ├─ tiles (Folder)
 │  ├─ AwesomeTile (WidgetElement)
-│  │  ├─ Default (Story)
+│  │  ├─ Default (Use Case)
 ```
 
-If you require multiple stories for a Widget, feel free to define multiple `@WidgetbookStory`s per Widget. The additional Stories will be located in the navigation panel similar to the showcased Story. 
+If you require multiple use cases for a Widget, feel free to define multiple `@WidgetbookUseCase`s per Widget. The additional use cases will be located in the navigation panel similar to the showcased use case. 
 
 ## WidgetbookTheme
 
-`@WidgetbookTheme` allows developers to annotate the light and dark theme of their app. Similar to `@WidgetbookStory`, `@WidgetbookTheme` is used on methods returning a `ThemeData` object. 
+`@WidgetbookTheme` allows developers to annotate the light and dark theme of their app. Similar to `@WidgetbookUseCase`, `@WidgetbookTheme` is used on methods returning a `ThemeData` object. 
 
 ### Constructors
 

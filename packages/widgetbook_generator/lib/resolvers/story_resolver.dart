@@ -5,7 +5,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/json_formatter.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 
-class StoryResolver extends GeneratorForAnnotation<WidgetbookStory> {
+class StoryResolver extends GeneratorForAnnotation<WidgetbookUseCase> {
   @override
   String generateForAnnotatedElement(
     Element element,

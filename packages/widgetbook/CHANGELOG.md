@@ -1,3 +1,7 @@
+## 1.0.1
+
+- renamed property `stories` of `WidgetbookWidget` to `useCases`
+
 ## 1.0.0
 
 renamed organizer elements to make them less generic. Renamed to the following:

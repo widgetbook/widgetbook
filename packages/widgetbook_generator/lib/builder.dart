@@ -16,7 +16,7 @@ Builder themeBuilder(BuilderOptions options) {
   );
 }
 
-/// Builder for the WidgetbookStory annotation.
+/// Builder for the WidgetbookUseCase annotation.
 /// Creates a .story.widgetbook.json file for each .dart file containing a
 /// WidgetbookStory annotation
 Builder storyBuilder(BuilderOptions options) {

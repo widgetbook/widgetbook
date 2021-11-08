@@ -73,7 +73,7 @@ void main() {
                   widgets: [
                     WidgetbookWidget(
                       name: 'Widget 1',
-                      stories: [
+                      useCases: [
                         story1,
                       ],
                     ),
@@ -103,7 +103,7 @@ void main() {
         (WidgetTester tester) async {
           final widgetElement = WidgetbookWidget(
             name: 'Widget 1',
-            stories: [],
+            useCases: [],
           );
           var provider = await tester.pumpProvider(
             initialState: OrganizerState.unfiltered(
@@ -135,7 +135,7 @@ void main() {
                       WidgetbookWidget(
                         name: 'Widget 1',
                         isExpanded: true,
-                        stories: [],
+                        useCases: [],
                       )
                     ],
                   ),
@@ -163,7 +163,7 @@ void main() {
                     WidgetbookWidget(
                       name: 'Widget 1',
                       isExpanded: true,
-                      stories: [story1, story2],
+                      useCases: [story1, story2],
                     ),
                   ],
                 ),
@@ -189,7 +189,7 @@ void main() {
                       // property set to true
                       WidgetbookWidget(
                         name: 'Widget 1',
-                        stories: [
+                        useCases: [
                           story1,
                         ],
                       ),
@@ -220,7 +220,7 @@ void main() {
                       WidgetbookWidget(
                         name: 'Widget 1',
                         isExpanded: true,
-                        stories: [
+                        useCases: [
                           story1,
                         ],
                       ),
@@ -248,7 +248,7 @@ void main() {
               WidgetbookWidget(
                 name: 'Widget 1',
                 isExpanded: true,
-                stories: [
+                useCases: [
                   story1,
                   story2,
                 ],
@@ -311,7 +311,7 @@ void main() {
               WidgetbookWidget(
                 name: 'Widget 1',
                 isExpanded: true,
-                stories: [
+                useCases: [
                   story1,
                   story2,
                 ],

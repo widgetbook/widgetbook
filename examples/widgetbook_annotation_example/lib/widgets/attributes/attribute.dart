@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@WidgetbookStory(name: 'weight', type: Attribute)
+@WidgetbookUseCase(name: 'weight', type: Attribute)
 Widget attributeStory(BuildContext context) {
   return Attribute(
     attribute: 'Weight',

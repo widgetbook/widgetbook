@@ -49,10 +49,12 @@ void main() {
                   value: widgetName,
                 ),
                 Property(
-                  key: 'stories',
+                  key: 'useCases',
                   instance: ListInstance(instances: [
-                    StoryInstance(storyName: 'Story1', functionName: 'story1'),
-                    StoryInstance(storyName: 'Story2', functionName: 'story2'),
+                    WidgetbookUseCaseInstance(
+                        useCaseName: 'Story1', functionName: 'story1'),
+                    WidgetbookUseCaseInstance(
+                        useCaseName: 'Story2', functionName: 'story2'),
                   ]),
                 ),
               ],

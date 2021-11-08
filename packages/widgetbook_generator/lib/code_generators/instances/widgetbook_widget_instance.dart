@@ -15,11 +15,11 @@ class WidgetbookWidgetInstance extends Instance {
           properties: [
             Property.string(key: 'name', value: name),
             Property(
-              key: 'stories',
-              instance: ListInstance<StoryInstance>(
+              key: 'useCases',
+              instance: ListInstance<WidgetbookUseCaseInstance>(
                 instances: stories
-                    .map((story) => StoryInstance(
-                          storyName: story.storyName,
+                    .map((story) => WidgetbookUseCaseInstance(
+                          useCaseName: story.storyName,
                           functionName: story.name,
                         ))
                     .toList(),

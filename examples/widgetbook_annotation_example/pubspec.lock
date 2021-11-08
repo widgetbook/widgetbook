@@ -477,26 +477,26 @@ packages:
     source: hosted
     version: "2.1.0"
   widgetbook:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: widgetbook
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   widgetbook_annotation:
     dependency: "direct main"
     description:
       name: widgetbook_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.4"
+    version: "1.0.0"
   widgetbook_generator:
     dependency: "direct dev"
     description:
       name: widgetbook_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   widgetbook_models:
     dependency: transitive
     description:

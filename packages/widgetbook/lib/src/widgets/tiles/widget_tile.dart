@@ -24,7 +24,7 @@ class _WidgetTileState extends State<WidgetTile> {
   bool hover = false;
 
   List<Widget> _buildStories(int level) {
-    final stories = widget.widgetElement.stories;
+    final stories = widget.widgetElement.useCases;
 
     return stories
         .map(

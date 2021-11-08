@@ -51,7 +51,7 @@ WidgetbookCategoryInstance _generateCategoryInstance(
   }
 
   return WidgetbookCategoryInstance(
-    name: 'stories',
+    name: 'use cases',
     folders: service.folders.values.toList(),
     widgets: service.rootFolder.widgets.values.toList(),
   );
