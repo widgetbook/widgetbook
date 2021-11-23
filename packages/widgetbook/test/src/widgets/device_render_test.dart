@@ -11,6 +11,7 @@ import 'package:widgetbook/widgetbook.dart';
 const lightColor = Colors.green;
 const darkColor = Colors.yellow;
 const key = ValueKey('colored-container');
+const key2 = ValueKey('sized-container');
 
 class ThemedWidget extends StatelessWidget {
   const ThemedWidget({Key? key}) : super(key: key);
@@ -21,6 +22,19 @@ class ThemedWidget extends StatelessWidget {
     return Container(
       key: key,
       color: brightness == Brightness.light ? lightColor : darkColor,
+    );
+  }
+}
+
+class DeviceWidthWidget extends StatelessWidget {
+  const DeviceWidthWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return Container(
+      key: key2,
+      width: width,
     );
   }
 }
@@ -66,6 +80,38 @@ Widget getMaterialApp(Brightness brightness) {
   );
 }
 
+Widget getMaterialAppWithDevice(Device device) {
+  const storyName = 'Not important';
+
+  return MaterialApp(
+    theme: ThemeData(brightness: Brightness.light),
+    home: ThemeProvider(
+      state: ThemeMode.light,
+      onStateChanged: (_) {},
+      child: DeviceProvider(
+        state: DeviceState(
+          availableDevices: [device],
+          currentDevice: device,
+        ),
+        onStateChanged: (_) {},
+        child: InjectedThemeProvider(
+          state: InjectedThemeState(
+            lightTheme: ThemeData(),
+            darkTheme: ThemeData(),
+          ),
+          onStateChanged: (_) {},
+          child: DeviceRender(
+            story: WidgetbookUseCase(
+              name: storyName,
+              builder: (context) => const DeviceWidthWidget(),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
 Future<void> expectColorForSetBrightness({
   required WidgetTester tester,
   required Brightness brightness,
@@ -85,6 +131,29 @@ Future<void> expectColorForSetBrightness({
   expect(
     container.color,
     equals(expectedColor),
+  );
+}
+
+Future<void> expectWidthForDevice({
+  required WidgetTester tester,
+  required Device device,
+  required double expectedWidth,
+}) async {
+  _setSize(tester);
+  await tester.pumpWidget(getMaterialAppWithDevice(device));
+
+  final containerWidgetFinder = find.byKey(key2);
+
+  expect(
+    containerWidgetFinder,
+    findsOneWidget,
+  );
+
+  final container = tester.firstWidget(containerWidgetFinder) as Container;
+
+  expect(
+    container.constraints!.maxWidth,
+    equals(expectedWidth),
   );
 }
 
@@ -110,6 +179,28 @@ void main() {
             tester: tester,
             brightness: Brightness.dark,
             expectedColor: darkColor,
+          );
+        },
+      );
+
+      testWidgets(
+        'renders $WidgetbookUseCase with iPhone 12 width ${Apple.iPhone12.resolution.logicalSize.width}',
+        (tester) async {
+          await expectWidthForDevice(
+            tester: tester,
+            device: Apple.iPhone12,
+            expectedWidth: Apple.iPhone12.resolution.logicalSize.width,
+          );
+        },
+      );
+
+      testWidgets(
+        'renders $WidgetbookUseCase with Samsung S21 Ultra width ${Samsung.s21ultra.resolution.logicalSize.width}',
+        (tester) async {
+          await expectWidthForDevice(
+            tester: tester,
+            device: Samsung.s21ultra,
+            expectedWidth: Samsung.s21ultra.resolution.logicalSize.width,
           );
         },
       );
