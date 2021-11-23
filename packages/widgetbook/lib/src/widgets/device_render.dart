@@ -42,39 +42,37 @@ class DeviceRender extends StatelessWidget {
         const SizedBox(
           height: 16,
         ),
-        MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            size: Size(
-              resolution.logicalSize.width,
-              resolution.logicalSize.height,
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : Colors.black,
             ),
           ),
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? Colors.white
-                    : Colors.black,
+          width: resolution.logicalSize.width,
+          height: resolution.logicalSize.height,
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            themeMode: Theme.of(context).brightness == Brightness.light
+                ? ThemeMode.light
+                : ThemeMode.dark,
+            home: AnimatedTheme(
+              duration: Duration.zero,
+              data: getInjectedTheme(context, themeState).copyWith(
+                brightness: Theme.of(context).brightness,
+                pageTransitionsTheme: const PageTransitionsTheme(
+                  builders: {
+                    TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
+                    TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+                  },
+                ),
               ),
-            ),
-            width: resolution.logicalSize.width,
-            height: resolution.logicalSize.height,
-            child: MaterialApp(
-              useInheritedMediaQuery: true,
-              debugShowCheckedModeBanner: false,
-              themeMode: Theme.of(context).brightness == Brightness.light
-                  ? ThemeMode.light
-                  : ThemeMode.dark,
-              home: AnimatedTheme(
-                duration: Duration.zero,
-                data: getInjectedTheme(context, themeState).copyWith(
-                  brightness: Theme.of(context).brightness,
-                  pageTransitionsTheme: const PageTransitionsTheme(
-                    builders: {
-                      TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
-                      TargetPlatform.android:
-                          FadeUpwardsPageTransitionsBuilder(),
-                    },
+              child: MediaQuery(
+                data: MediaQuery.of(context).copyWith(
+                  size: Size(
+                    resolution.logicalSize.width,
+                    resolution.logicalSize.height,
                   ),
                 ),
                 child: Scaffold(
