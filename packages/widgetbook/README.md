@@ -4,8 +4,9 @@
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis) 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?label=test&style=flat-square)
-[![youtube: How to](https://img.shields.io/badge/YouTube-What%20is%20Widgetbook%3F-d05454?style=flat-square)](https://www.youtube.com/watch?v=vs3ocjMsl7s) 
-[![youtube: How to](https://img.shields.io/badge/YouTube-How%20to%20%20use%20Widgetbook-d05454?style=flat-square)](https://www.youtube.com/watch?v=qcTZxJDLEAE) 
+[![youtube: How to](https://img.shields.io/badge/YouTube-What%20is%20Widgetbook%3F-d05454?style=flat-square)](https://www.youtube.com/watch?v=vs3ocjMsl7s)
+[![youtube: How to](https://img.shields.io/badge/YouTube-How%20to%20%20use%20Widgetbook%3F-d05454?style=flat-square)](https://www.youtube.com/watch?v=qcTZxJDLEAE) 
+[![youtube: How to](https://img.shields.io/badge/YouTube-How%20to%20%20use%20Widgetbook%20Generator%3F-d05454?style=flat-square)](https://www.youtube.com/watch?v=dh8hxgtbjtk) 
 
 A flutter package which helps developers cataloguing their widgets, testing them quickly on multiple devices and themes, and sharing them easily with designers and clients. Inspired by Storybook.js and flutterbook.
 
@@ -15,7 +16,7 @@ A flutter package which helps developers cataloguing their widgets, testing them
 
 # See it in action!
 
-Check out the `Widgetbook` with the example app on our [github page](https://widgetbook.github.io). We also have introduction videos for [What is Widgetbook](https://www.youtube.com/watch?v=vs3ocjMsl7s) and [How to use Widgetbook](https://www.youtube.com/watch?v=qcTZxJDLEAE).
+Check out the `Widgetbook` with the example app on our [github page](https://widgetbook.github.io). We also have introduction videos for [What is Widgetbook?](https://www.youtube.com/watch?v=vs3ocjMsl7s), [How to use Widgetbook generator?](https://www.youtube.com/watch?v=qcTZxJDLEAE) and [How to use Widgetbook?](https://www.youtube.com/watch?v=qcTZxJDLEAE).
 Furthermore, you can [check out the code of the app at github](https://github.com/widgetbook/widgetbook/tree/main/example). 
 
 # Other packages
