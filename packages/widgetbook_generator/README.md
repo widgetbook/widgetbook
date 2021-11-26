@@ -4,12 +4,15 @@
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis) 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?label=test&style=flat-square)
+[![youtube: How to](https://img.shields.io/badge/YouTube-What%20is%20Widgetbook%3F-d05454?style=flat-square)](https://www.youtube.com/watch?v=vs3ocjMsl7s)
+[![youtube: How to](https://img.shields.io/badge/YouTube-How%20to%20%20use%20Widgetbook%3F-d05454?style=flat-square)](https://www.youtube.com/watch?v=qcTZxJDLEAE) 
+[![youtube: How to](https://img.shields.io/badge/YouTube-How%20to%20%20use%20Widgetbook%20Generator%3F-d05454?style=flat-square)](https://www.youtube.com/watch?v=dh8hxgtbjtk) 
 
 [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) allows to generate and setup code for [package:widgetbook](https://pub.dev/packages/widgetbook) which simplifies using and maintaining Widgetbook.
 
 ## Before you start
 
-We recommend reading the documentation of [package:widgetbook](https://pub.dev/packages/widgetbook) before you start with this package. 
+Before you start with this package, we recommend to read the documentation of [package:widgetbook](https://pub.dev/packages/widgetbook) or watch the videos [What is Widgetbook](https://www.youtube.com/watch?v=vs3ocjMsl7s) and [How to use Widgetbook](https://www.youtube.com/watch?v=qcTZxJDLEAE).
 
 # Packages 
 

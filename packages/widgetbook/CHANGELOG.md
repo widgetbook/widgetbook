@@ -1,3 +1,7 @@
+## 1.0.2
+
+- added videos to documentation
+
 ## 1.0.1
 
 - renamed property `stories` of `WidgetbookWidget` to `useCases`
