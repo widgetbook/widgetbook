@@ -4,6 +4,9 @@
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis) 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?label=test&style=flat-square)
+[![youtube: How to](https://img.shields.io/badge/YouTube-What%20is%20Widgetbook%3F-d05454?style=flat-square)](https://www.youtube.com/watch?v=vs3ocjMsl7s)
+[![youtube: How to](https://img.shields.io/badge/YouTube-How%20to%20%20use%20Widgetbook-d05454?style=flat-square)](https://www.youtube.com/watch?v=qcTZxJDLEAE) 
+[![youtube: How to](https://img.shields.io/badge/YouTube-How%20to%20%20use%20Widgetbook%20Generator-d05454?style=flat-square)](https://www.youtube.com/watch?v=dh8hxgtbjtk) 
 # Packages
 
 The widgetbook repository contains of the Widgetbook packages which are located at [/widgetbook/packages/](https://github.com/widgetbook/widgetbook/tree/main/packages).
