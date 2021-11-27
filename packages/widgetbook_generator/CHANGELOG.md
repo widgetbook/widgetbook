@@ -1,3 +1,7 @@
+## 1.0.2
+
+- added videos to documentation
+
 ## 1.0.1
 
 - adjusted to renamed properties of `widgetbook` package

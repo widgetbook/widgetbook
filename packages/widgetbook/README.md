@@ -4,6 +4,9 @@
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis) 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?label=test&style=flat-square)
+[![youtube: How to](https://img.shields.io/badge/YouTube-What%20is%20Widgetbook%3F-d05454?style=flat-square)](https://www.youtube.com/watch?v=vs3ocjMsl7s)
+[![youtube: How to](https://img.shields.io/badge/YouTube-How%20to%20%20use%20Widgetbook%3F-d05454?style=flat-square)](https://www.youtube.com/watch?v=qcTZxJDLEAE) 
+[![youtube: How to](https://img.shields.io/badge/YouTube-How%20to%20%20use%20Widgetbook%20Generator%3F-d05454?style=flat-square)](https://www.youtube.com/watch?v=dh8hxgtbjtk) 
 
 A flutter package which helps developers cataloguing their widgets, testing them quickly on multiple devices and themes, and sharing them easily with designers and clients. Inspired by Storybook.js and flutterbook.
 
@@ -13,7 +16,7 @@ A flutter package which helps developers cataloguing their widgets, testing them
 
 # See it in action!
 
-Check out the `Widgetbook` with the example app on our [github page](https://widgetbook.github.io).
+Check out the `Widgetbook` with the example app on our [github page](https://widgetbook.github.io). We also have introduction videos for [What is Widgetbook?](https://www.youtube.com/watch?v=vs3ocjMsl7s), [How to use Widgetbook generator?](https://www.youtube.com/watch?v=qcTZxJDLEAE) and [How to use Widgetbook?](https://www.youtube.com/watch?v=qcTZxJDLEAE).
 Furthermore, you can [check out the code of the app at github](https://github.com/widgetbook/widgetbook/tree/main/example). 
 
 # Other packages
@@ -39,12 +42,12 @@ The folder structure might look like this:
 example_app
 + lib
 +--- main.dart
-+ stories
++ widgetbook
 +--- main.dart
 +--- widgetbook.dart
 ```
 
-The `stories/widgetbook.dart` file contains the `Widgetbook` wrapped within a stateless widget that enables hot reloading. The code looks like this: 
+The `widgetbook/widgetbook.dart` file contains the `Widgetbook` wrapped within a stateless widget that enables hot reloading. The code looks like this: 
 
 ```dart
 class HotReload extends StatelessWidget {
@@ -57,7 +60,7 @@ class HotReload extends StatelessWidget {
 }
 ```
 
-In the `stories/main.dart` run the `HotReload` widget:
+In the `widgetbook/main.dart` run the `HotReload` widget:
 
 ```dart
 void main() {
@@ -78,7 +81,7 @@ Mobile | ➖ | Will run, but is not optimized. If you see a usecase for `Widgetb
 
 See the [Desktop support for Flutter](https://flutter.dev/desktop) page for setup instructions.
 
-Run the `Widgetbook` main method by executing `flutter run -t stories/main.dart`.
+Run the `Widgetbook` main method by executing `flutter run -t widgetbook/main.dart`.
 
 > **NOTE:** If you are using [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) see the documentation on how to run Widgetbook.
 
@@ -99,7 +102,7 @@ class HotReload extends StatelessWidget {
           widgets: [
             WidgetbookWidget(
               name: '$CustomWidget',
-              stories: [
+              useCases: [
                 WidgetbookUseCase(
                   name: 'Default',
                   builder: (context) => CustomWidget(),
@@ -113,7 +116,7 @@ class HotReload extends StatelessWidget {
               widgets: [
                 WidgetbookWidget(
                   name: 'Normal Text',
-                  stories: [
+                  useCases: [
                     WidgetbookUseCase(
                       name: 'Default',
                       builder: (context) => Text(
