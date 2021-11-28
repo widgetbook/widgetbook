@@ -16,11 +16,11 @@ class Storyboard extends StatelessWidget {
   Widget buildStorybook(BuildContext context) {
     return Widgetbook(
       devices: [
-        Apple.iPhone11,
-        Apple.iPhone12,
-        Samsung.s10,
-        Samsung.s21ultra,
-        Apple.iMacM1,
+        Devices.ios.iPhone12,
+        Devices.ios.iPhone12Mini,
+        Devices.ios.iPhone12ProMax,
+        Devices.android.samsungS20,
+        Devices.linux.laptop,
       ],
       categories: [
         WidgetbookCategory(

@@ -92,6 +92,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  device_frame:
+    dependency: "direct main"
+    description:
+      name: device_frame
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.1"
   fake_async:
     dependency: transitive
     description:
@@ -121,6 +128,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  freezed_annotation:
+    dependency: transitive
+    description:
+      name: freezed_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.15.0"
   frontend_server_client:
     dependency: transitive
     description:
@@ -163,6 +177,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3"
+  json_annotation:
+    dependency: transitive
+    description:
+      name: json_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.3.0"
   logging:
     dependency: transitive
     description:
@@ -392,13 +413,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  widgetbook_models:
-    dependency: "direct main"
-    description:
-      name: widgetbook_models
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.3"
   yaml:
     dependency: transitive
     description:
