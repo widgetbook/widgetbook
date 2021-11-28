@@ -1,3 +1,4 @@
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,20 +20,12 @@ import 'package:widgetbook/src/routing/route_information_parser.dart';
 import 'package:widgetbook/src/routing/story_router_delegate.dart';
 import 'package:widgetbook/src/services/filter_service.dart';
 import 'package:widgetbook/src/utils/utils.dart';
-import 'package:widgetbook_models/widgetbook_models.dart';
 
 class Widgetbook extends StatefulWidget {
   const Widgetbook({
     Key? key,
     required this.categories,
-    this.devices = const [
-      Apple.iPhone11,
-      Apple.iPhone12,
-      Apple.iPhone12Mini,
-      Apple.iPhone12Pro,
-      Samsung.s10,
-      Samsung.s21ultra,
-    ],
+    required this.devices,
     required this.appInfo,
     this.lightTheme,
     this.darkTheme,
@@ -44,7 +37,7 @@ class Widgetbook extends StatefulWidget {
   final List<WidgetbookCategory> categories;
 
   /// The devices on which Stories are previewed.
-  final List<Device> devices;
+  final List<DeviceInfo> devices;
 
   /// Information about the app that is catalogued in the Widgetbook.
   final AppInfo appInfo;

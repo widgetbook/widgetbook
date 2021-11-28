@@ -56,6 +56,77 @@ class DeviceBar extends StatelessWidget {
             color: context.theme.hintColor,
           ),
         ),
+        const SizedBox(
+          width: 40,
+        ),
+        Tooltip(
+          message: 'Change Orientation',
+          child: TextButton(
+            onPressed: deviceProvider.toggleOrientation,
+            style: TextButton.styleFrom(
+              splashFactory: InkRipple.splashFactory,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(90)),
+              minimumSize: Size.zero,
+              padding: const EdgeInsets.all(12),
+            ),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Icon(
+                  Icons.sync,
+                  color: state.orientation == Orientation.landscape
+                      ? context.colorScheme.primary
+                      : context.theme.hintColor,
+                  size: 30,
+                ),
+                Icon(
+                  state.orientation == Orientation.portrait
+                      ? Icons.stay_current_portrait
+                      : Icons.stay_current_landscape,
+                  color: state.orientation == Orientation.landscape
+                      ? context.colorScheme.primary
+                      : context.theme.hintColor,
+                  size: 12,
+                ),
+              ],
+            ),
+          ),
+        ),
+        Tooltip(
+          message: 'Show Keyboard',
+          child: TextButton(
+            onPressed: deviceProvider.toggleKeyBoard,
+            style: TextButton.styleFrom(
+              splashFactory: InkRipple.splashFactory,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(90),
+              ),
+              minimumSize: Size.zero,
+              padding: const EdgeInsets.all(12),
+            ),
+            child: Icon(
+              Icons.keyboard,
+              color: state.showKeyboard
+                  ? context.colorScheme.primary
+                  : context.theme.hintColor,
+            ),
+          ),
+        ),
+        Tooltip(
+          message: 'Show Device Frame',
+          child: Column(
+            children: [
+              Switch(
+                activeColor: context.colorScheme.primary,
+                value: state.isFrameVisible,
+                onChanged: (_) {
+                  deviceProvider.toggleFrameVisibility();
+                },
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

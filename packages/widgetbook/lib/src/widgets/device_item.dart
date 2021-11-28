@@ -1,7 +1,7 @@
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/utils/extensions.dart';
-import 'package:widgetbook_models/widgetbook_models.dart';
 
 class DeviceItem extends StatelessWidget {
   const DeviceItem({
@@ -9,7 +9,7 @@ class DeviceItem extends StatelessWidget {
     required this.device,
   }) : super(key: key);
 
-  final Device device;
+  final DeviceInfo device;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class DeviceItem extends StatelessWidget {
     return Tooltip(
       message: device.name,
       child: buildIcon(
-        device.type,
+        device.identifier.type,
         isCurrent ? context.colorScheme.primary : context.theme.hintColor,
       ),
     );
@@ -43,16 +43,16 @@ class DeviceItem extends StatelessWidget {
 
   Widget buildIcon(DeviceType type, Color color) {
     switch (type) {
-      case DeviceType.watch:
-        return Icon(
-          Icons.watch,
-          color: color,
-        );
-      case DeviceType.mobile:
-        return Icon(
-          Icons.smartphone,
-          color: color,
-        );
+      // case DeviceType.watch:
+      //   return Icon(
+      //     Icons.watch,
+      //     color: color,
+      //   );
+      // case DeviceType.mobile:
+      //   return Icon(
+      //     Icons.smartphone,
+      //     color: color,
+      //   );
       case DeviceType.tablet:
         return Icon(
           Icons.tablet,
@@ -66,6 +66,21 @@ class DeviceItem extends StatelessWidget {
       case DeviceType.unknown:
         return Icon(
           Icons.quiz,
+          color: color,
+        );
+      case DeviceType.phone:
+        return Icon(
+          Icons.phone_android,
+          color: color,
+        );
+      case DeviceType.tv:
+        return Icon(
+          Icons.tv,
+          color: color,
+        );
+      case DeviceType.laptop:
+        return Icon(
+          Icons.laptop,
           color: color,
         );
     }

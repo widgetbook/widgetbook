@@ -1,3 +1,4 @@
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/device_provider.dart';
@@ -31,48 +32,33 @@ class DeviceRender extends StatelessWidget {
     final state = deviceProvider.state;
 
     final device = state.currentDevice;
-    final resolution = device.resolution;
 
     final themeState = InjectedThemeProvider.of(context)!.state;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(device.name),
-        const SizedBox(
-          height: 16,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? Colors.white
-                  : Colors.black,
-            ),
-          ),
-          width: resolution.logicalSize.width,
-          height: resolution.logicalSize.height,
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            themeMode: Theme.of(context).brightness == Brightness.light
-                ? ThemeMode.light
-                : ThemeMode.dark,
-            home: AnimatedTheme(
-              duration: Duration.zero,
-              data: getInjectedTheme(context, themeState).copyWith(
-                brightness: Theme.of(context).brightness,
-                pageTransitionsTheme: const PageTransitionsTheme(
-                  builders: {
-                    TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
-                    TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-                  },
-                ),
-              ),
-              child: MediaQuery(
-                data: MediaQuery.of(context).copyWith(
-                  size: Size(
-                    resolution.logicalSize.width,
-                    resolution.logicalSize.height,
+    final app = DeviceFrame(
+      device: device,
+      orientation: state.orientation,
+      isFrameVisible: state.isFrameVisible,
+      screen: VirtualKeyboard(
+        isEnabled: state.showKeyboard,
+        child: Builder(
+          builder: (context) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              useInheritedMediaQuery: true,
+              themeMode: Theme.of(context).brightness == Brightness.light
+                  ? ThemeMode.light
+                  : ThemeMode.dark,
+              home: AnimatedTheme(
+                duration: Duration.zero,
+                data: getInjectedTheme(context, themeState).copyWith(
+                  brightness: Theme.of(context).brightness,
+                  pageTransitionsTheme: const PageTransitionsTheme(
+                    builders: {
+                      TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
+                      TargetPlatform.android:
+                          FadeUpwardsPageTransitionsBuilder(),
+                    },
                   ),
                 ),
                 child: Scaffold(
@@ -81,9 +67,33 @@ class DeviceRender extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         ),
+      ),
+    );
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(device.name),
+        const SizedBox(
+          height: 16,
+        ),
+        if (!state.isFrameVisible)
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).backgroundColor,
+              border: Border.all(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black,
+              ),
+            ),
+            child: app,
+          )
+        else
+          app
       ],
     );
   }

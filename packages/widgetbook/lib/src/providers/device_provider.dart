@@ -1,3 +1,4 @@
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/providers/device_state.dart';
 import 'package:widgetbook/src/providers/provider.dart';
@@ -12,8 +13,8 @@ class DeviceBuilder extends StatefulWidget {
   }) : super(key: key);
 
   final Widget child;
-  final List<Device> availableDevices;
-  final Device currentDevice;
+  final List<DeviceInfo> availableDevices;
+  final DeviceInfo currentDevice;
 
   @override
   _DeviceBuilderState createState() => _DeviceBuilderState();
@@ -27,6 +28,9 @@ class _DeviceBuilderState extends State<DeviceBuilder> {
     state = DeviceState(
       availableDevices: widget.availableDevices,
       currentDevice: widget.currentDevice,
+      orientation: Orientation.portrait,
+      showKeyboard: false,
+      isFrameVisible: true,
     );
     super.initState();
   }
@@ -62,7 +66,7 @@ class DeviceProvider extends Provider<DeviceState> {
     return context.dependOnInheritedWidgetOfExactType<DeviceProvider>();
   }
 
-  void update(List<Device> devices) {
+  void update(List<DeviceInfo> devices) {
     if (devices.isEmpty) {
       throw ArgumentError.value(
         devices,
@@ -75,15 +79,21 @@ class DeviceProvider extends Provider<DeviceState> {
       DeviceState(
         availableDevices: devices,
         currentDevice: devices.first,
+        orientation: state.orientation,
+        showKeyboard: state.showKeyboard,
+        isFrameVisible: state.isFrameVisible,
       ),
     );
   }
 
-  void selectDevice(Device device) {
+  void selectDevice(DeviceInfo device) {
     emit(
       DeviceState(
         availableDevices: state.availableDevices,
         currentDevice: device,
+        orientation: state.orientation,
+        showKeyboard: state.showKeyboard,
+        isFrameVisible: state.isFrameVisible,
       ),
     );
   }
@@ -96,6 +106,9 @@ class DeviceProvider extends Provider<DeviceState> {
       DeviceState(
         availableDevices: state.availableDevices,
         currentDevice: nextDevice,
+        orientation: state.orientation,
+        showKeyboard: state.showKeyboard,
+        isFrameVisible: state.isFrameVisible,
       ),
     );
   }
@@ -109,6 +122,51 @@ class DeviceProvider extends Provider<DeviceState> {
       DeviceState(
         availableDevices: state.availableDevices,
         currentDevice: previousDevice,
+        orientation: state.orientation,
+        showKeyboard: state.showKeyboard,
+        isFrameVisible: state.isFrameVisible,
+      ),
+    );
+  }
+
+  void toggleKeyBoard() {
+    final currentState = state.showKeyboard;
+
+    emit(
+      DeviceState(
+        availableDevices: state.availableDevices,
+        currentDevice: state.currentDevice,
+        orientation: state.orientation,
+        showKeyboard: !currentState,
+        isFrameVisible: state.isFrameVisible,
+      ),
+    );
+  }
+
+  void toggleOrientation() {
+    final orientation = state.orientation == Orientation.portrait
+        ? Orientation.landscape
+        : Orientation.portrait;
+
+    emit(
+      DeviceState(
+        availableDevices: state.availableDevices,
+        currentDevice: state.currentDevice,
+        orientation: orientation,
+        showKeyboard: state.showKeyboard,
+        isFrameVisible: state.isFrameVisible,
+      ),
+    );
+  }
+
+  void toggleFrameVisibility() {
+    emit(
+      DeviceState(
+        availableDevices: state.availableDevices,
+        currentDevice: state.currentDevice,
+        orientation: state.orientation,
+        showKeyboard: state.showKeyboard,
+        isFrameVisible: !state.isFrameVisible,
       ),
     );
   }
