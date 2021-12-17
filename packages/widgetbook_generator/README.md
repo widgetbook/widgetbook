@@ -16,17 +16,17 @@ Before you start with this package, we recommend to read the documentation of [p
 
 # Packages 
 
-This package requires the following dependencies: 
+This package requires the following dependency: 
 
 | Package           | Pub |
 | ----------------- | --------------------------------- |
-| [package:widgetbook](https://pub.dev/packages/widgetbook) | [![Pub Version](https://img.shields.io/pub/v/widgetbook?style=flat-square)](https://pub.dev/packages/widgetbook) |
 | [package:widgetbook_annotation](https://pub.dev/packages/widgetbook_annotation) | [![Pub Version](https://img.shields.io/pub/v/widgetbook_annotation?style=flat-square)](https://pub.dev/packages/widgetbook_annotation) |
 
 and the following dev dependencies:
 
 | Package           | Pub |
 | ----------------- | --------------------------------- |
+| [package:widgetbook](https://pub.dev/packages/widgetbook) | [![Pub Version](https://img.shields.io/pub/v/widgetbook?style=flat-square)](https://pub.dev/packages/widgetbook) |
 | [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) | [![Pub Version](https://img.shields.io/pub/v/widgetbook_generator?style=flat-square)](https://pub.dev/packages/widgetbook_generator) |
 | [package:build_runner](https://pub.dev/packages/build_runner) | [![Pub Version](https://img.shields.io/pub/v/build_runner?style=flat-square)](https://pub.dev/packages/build_runner) |
 
@@ -34,10 +34,10 @@ The `pubspec.yaml` file could look like this:
 
 ```
 dependencies:
-  widgetbook:
   widgetbook_annotation:
 
 dev_dependencies:
+  widgetbook:
   build_runner:
   widgetbook_generator:
 ```
