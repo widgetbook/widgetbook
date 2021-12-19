@@ -45,6 +45,10 @@ class TreeService {
     // TODO improve
     // This skips the last element
     elements = elements.reversed.skip(1).toList().reversed.toList();
+    if (elements.isNotEmpty && elements[0] == 'src') {
+      elements = elements.skip(1).toList();
+    }
+
     return addFolder(null, elements);
   }
 

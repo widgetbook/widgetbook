@@ -165,6 +165,8 @@ use cases (Category)
 
 If you require multiple use cases for a Widget, feel free to define multiple `@WidgetbookUseCase`s per Widget. The additional use cases will be located in the navigation panel similar to the showcased use case. 
 
+Generator skips top root `src` folder from navigation panel. Many Flutter projects have its source code under a `src` folder, so keep it as a top-level category is unnecessary. If you have the same folder name under `lib` and `src` that folders will be merged. 
+
 ## WidgetbookTheme
 
 `@WidgetbookTheme` allows developers to annotate the light and dark theme of their app. Similar to `@WidgetbookUseCase`, `@WidgetbookTheme` is used on methods returning a `ThemeData` object. 
