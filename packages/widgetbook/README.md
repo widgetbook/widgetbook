@@ -35,6 +35,14 @@ This package provides a flutter widget called `Widgetbook` in which custom widge
 
 ## Setting up
 
+First, add the dependency to your pubspec.yaml file:
+
+```yaml
+# pubspec.yaml
+dev_dependencies:
+  widgetbook:
+```
+
 Since the Widgetbook is launched as a separate app, it is recommended to create another main method. This enables you to switch between your app and the `Widgetbook` at any time. You can even launch your app and `Widgetbook` simultaneously.
 
 The folder structure might look like this:
