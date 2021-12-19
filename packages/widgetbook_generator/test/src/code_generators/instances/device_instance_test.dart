@@ -11,7 +11,7 @@ void main() {
   group(
     '$DeviceInstance',
     () {
-      final phone = Apple.iPhone11;
+      const phone = Apple.iPhone11;
       final instance = DeviceInstance(device: phone);
 
       testName('$Device', instance: instance);

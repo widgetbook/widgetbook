@@ -1,4 +1,3 @@
-import 'package:test/expect.dart';
 import 'package:test/test.dart';
 import 'package:widgetbook_generator/code_generators/instances/instance.dart';
 

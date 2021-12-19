@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:glob/glob.dart';
@@ -13,7 +12,6 @@ import 'package:widgetbook_generator/generators/main_generator.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 import 'package:widgetbook_generator/readers/device_reader.dart';
-import 'package:widgetbook_models/widgetbook_models.dart';
 
 /// Generates the code for Widgetbook
 ///

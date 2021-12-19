@@ -1,11 +1,5 @@
 import 'package:test/test.dart';
-import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widgetbook_folder_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widgetbook_widget_instance.dart';
-import 'package:widgetbook_generator/code_generators/properties/property.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
-
-import '../instance_helper.dart';
 
 void main() {
   group('$TreeService', () {

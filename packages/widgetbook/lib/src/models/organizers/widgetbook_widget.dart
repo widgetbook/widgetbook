@@ -1,8 +1,5 @@
 import 'package:collection/collection.dart';
-
-import 'package:widgetbook/src/models/organizers/expandable_organizer.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
-import 'package:widgetbook/src/models/organizers/widgetbook_use_case.dart';
 
 ///
 class WidgetbookWidget extends ExpandableOrganizer {

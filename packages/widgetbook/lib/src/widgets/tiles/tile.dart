@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/models/organizers/organizer.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
-import 'package:widgetbook/src/utils/styles.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 
 class Tile extends StatefulWidget {
