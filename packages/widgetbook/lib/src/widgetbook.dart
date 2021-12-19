@@ -36,6 +36,7 @@ class Widgetbook extends StatefulWidget {
     required this.appInfo,
     this.lightTheme,
     this.darkTheme,
+    this.defaultTheme = ThemeMode.system,
   }) : super(key: key);
 
   /// Categories which host Folders and WidgetElements.
@@ -54,6 +55,9 @@ class Widgetbook extends StatefulWidget {
 
   /// The `ThemeData` that is shown when the dark theme is active.
   final ThemeData? darkTheme;
+
+  /// The default theme mode Widgetbook starts with
+  final ThemeMode defaultTheme;
 
   @override
   _WidgetbookState createState() => _WidgetbookState();
@@ -100,6 +104,7 @@ class _WidgetbookState extends State<Widgetbook> {
         storyRepository: storyRepository,
         child: ZoomBuilder(
           child: ThemeBuilder(
+            themeMode: widget.defaultTheme,
             child: DeviceBuilder(
               availableDevices: widget.devices,
               currentDevice: widget.devices.first,

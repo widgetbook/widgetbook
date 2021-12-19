@@ -4,10 +4,12 @@ import 'package:widgetbook/src/providers/provider.dart';
 class ThemeBuilder extends StatefulWidget {
   const ThemeBuilder({
     Key? key,
+    this.themeMode = ThemeMode.system,
     required this.child,
   }) : super(key: key);
 
   final Widget child;
+  final ThemeMode themeMode;
 
   @override
   _ThemeBuilderState createState() => _ThemeBuilderState();
@@ -15,6 +17,12 @@ class ThemeBuilder extends StatefulWidget {
 
 class _ThemeBuilderState extends State<ThemeBuilder> {
   ThemeMode state = ThemeMode.dark;
+
+  @override
+  void initState() {
+    state = widget.themeMode;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

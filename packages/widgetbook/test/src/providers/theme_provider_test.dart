@@ -70,13 +70,13 @@ void main() {
       );
 
       testWidgets(
-        '.state defaults to ${ThemeMode.dark}',
+        '.state defaults to ${ThemeMode.system}',
         (WidgetTester tester) async {
           final provider = await tester.pumpProvider();
 
           expect(
             provider.state,
-            equals(ThemeMode.dark),
+            equals(ThemeMode.system),
           );
         },
       );
