@@ -44,6 +44,8 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
     final darkTheme =
         themeData.firstWhereOrDefault((element) => element.isDarkTheme);
     final defaultThemeIsDark = _getDefaultTheme(annotation);
+    final foldersExpanded = _getFoldersExpanded(annotation);
+    final widgetsExpanded = _getWidgetsExpanded(annotation);
 
     final buffer = StringBuffer()
       ..writeln(
@@ -65,6 +67,8 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
           defaultThemeIsDark: defaultThemeIsDark,
           stories: stories,
           devices: devices,
+          foldersExpanded: foldersExpanded,
+          widgetsExpanded: widgetsExpanded,
         ),
       );
 
@@ -92,6 +96,14 @@ bool? _getDefaultTheme(ConstantReader annotation) {
   return defaultTheme.isNull
       ? null
       : defaultTheme.objectValue.getField('isDarkTheme')?.toBoolValue();
+}
+
+bool _getFoldersExpanded(ConstantReader annotation) {
+  return annotation.read('foldersExpanded').boolValue;
+}
+
+bool _getWidgetsExpanded(ConstantReader annotation) {
+  return annotation.read('widgetsExpanded').boolValue;
 }
 
 Future<List<T>> _loadDataFromJson<T>(

@@ -10,6 +10,7 @@ class WidgetbookWidgetInstance extends Instance {
   WidgetbookWidgetInstance({
     required String name,
     required List<WidgetbookStoryData> stories,
+    bool isExpanded = false,
   }) : super(
           name: 'WidgetbookWidget',
           properties: [
@@ -25,6 +26,7 @@ class WidgetbookWidgetInstance extends Instance {
                     .toList(),
               ),
             ),
+            if (isExpanded) Property.bool(key: 'isExpanded', value: true),
           ],
         );
 }

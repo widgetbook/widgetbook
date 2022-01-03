@@ -1,11 +1,16 @@
 import 'dart:collection';
+
 import 'package:meta/meta.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 
 class Widget {
-  Widget(this.name);
+  Widget(
+    this.name, {
+    this.isExpanded = false,
+  });
 
   final String name;
+  final bool isExpanded;
   List<WidgetbookStoryData> stories = <WidgetbookStoryData>[];
 }
 
@@ -13,9 +18,11 @@ class Widget {
 class Folder {
   Folder({
     required this.name,
+    this.isExpanded = false,
   });
 
   final String name;
+  final bool isExpanded;
   final Map<String, Folder> subFolders = HashMap();
   final Map<String, Widget> widgets = HashMap();
 
@@ -31,9 +38,15 @@ class Folder {
 }
 
 class TreeService {
+  TreeService([this.foldersExpanded = false, this.widgetsExpanded = false])
+      : rootFolder = Folder(name: 'root', isExpanded: foldersExpanded);
+
+  final bool foldersExpanded;
+  final bool widgetsExpanded;
+
   Map<String, Folder> folders = HashMap();
   // TODO This is a bit weird but (likely) works
-  Folder rootFolder = Folder(name: 'root');
+  final Folder rootFolder;
 
   // Returns the lowest folder in the tree
   // might return null if the file is located in lib folder
@@ -64,7 +77,7 @@ class TreeService {
     if (!widgets.containsKey(widgetName)) {
       widgets.putIfAbsent(
         widgetName,
-        () => Widget(widgetName),
+        () => Widget(widgetName, isExpanded: widgetsExpanded),
       );
     }
 
@@ -85,7 +98,10 @@ class TreeService {
       if (!folders.containsKey(folderName)) {
         folders.putIfAbsent(
           folderName,
-          () => Folder(name: folderName),
+          () => Folder(
+            name: folderName,
+            isExpanded: foldersExpanded,
+          ),
         );
       }
 
@@ -99,7 +115,10 @@ class TreeService {
       if (!folder.subFolders.containsKey(folderName)) {
         folder.subFolders.putIfAbsent(
           folderName,
-          () => Folder(name: folderName),
+          () => Folder(
+            name: folderName,
+            isExpanded: foldersExpanded,
+          ),
         );
       }
 
