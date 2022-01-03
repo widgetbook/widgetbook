@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:widgetbook/src/constants/constants.dart';
 import 'package:widgetbook/src/widgets/device_bar.dart';
 import 'package:widgetbook/src/widgets/theme_handle.dart';

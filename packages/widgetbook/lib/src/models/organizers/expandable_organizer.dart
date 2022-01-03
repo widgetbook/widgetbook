@@ -1,6 +1,4 @@
 import 'package:collection/collection.dart';
-
-import 'package:widgetbook/src/models/organizers/organizer.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 
 /// ExpandableOrganizer is an abstract model which can host

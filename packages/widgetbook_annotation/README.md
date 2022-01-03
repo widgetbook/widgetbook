@@ -51,6 +51,9 @@ From the `name` parameter, the generator will create the `AppInfo` property of [
 
 From the `devices` parameter, the generator will create the devices in which one can preview the widgets. 
 
+You can set default theme mode by `defaultTheme` parameter. If not specified, system theme mode is used. 
+Valid values are `WidgetbookTheme.dark()` and `WidgetbookTheme.light()`.
+
 ### Example
 
 For the following app structure 

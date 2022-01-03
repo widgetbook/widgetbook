@@ -1,3 +1,4 @@
+import 'package:widgetbook_annotation/src/widgetbook_theme.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
 
 /// Annotates a code element to create the widgetbook main file in the same
@@ -10,6 +11,7 @@ class WidgetbookApp {
   const WidgetbookApp({
     required this.name,
     this.devices = const <Device>[],
+    this.defaultTheme,
   });
 
   /// The devices shown in the Widgetbook
@@ -18,4 +20,7 @@ class WidgetbookApp {
   /// The name of the widgetbook.
   /// This information will be displayed at the top left corner in the UI.
   final String name;
+
+  /// Set default theme mode. If not specified, system theme mode is used.
+  final WidgetbookTheme? defaultTheme;
 }

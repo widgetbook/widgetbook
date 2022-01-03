@@ -12,7 +12,6 @@ import 'package:widgetbook_generator/generators/main_generator.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 import 'package:widgetbook_generator/readers/device_reader.dart';
-import 'package:widgetbook_models/widgetbook_models.dart';
 
 /// Generates the code for Widgetbook
 ///
@@ -44,6 +43,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
         themeData.firstWhereOrDefault((element) => !element.isDarkTheme);
     final darkTheme =
         themeData.firstWhereOrDefault((element) => element.isDarkTheme);
+    final defaultThemeIsDark = _getDefaultTheme(annotation);
 
     final buffer = StringBuffer()
       ..writeln(
@@ -62,6 +62,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
           name: name,
           lightTheme: lightTheme,
           darkTheme: darkTheme,
+          defaultThemeIsDark: defaultThemeIsDark,
           stories: stories,
           devices: devices,
         ),
@@ -84,6 +85,13 @@ List<Device> _getDevices(ConstantReader annotation) {
 
 String _getName(ConstantReader annotation) {
   return annotation.read('name').stringValue;
+}
+
+bool? _getDefaultTheme(ConstantReader annotation) {
+  final defaultTheme = annotation.read('defaultTheme');
+  return defaultTheme.isNull
+      ? null
+      : defaultTheme.objectValue.getField('isDarkTheme')?.toBoolValue();
 }
 
 Future<List<T>> _loadDataFromJson<T>(

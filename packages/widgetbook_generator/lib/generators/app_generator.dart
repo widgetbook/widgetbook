@@ -1,6 +1,7 @@
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/theme_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/theme_mode_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_instance.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
@@ -15,6 +16,7 @@ String generateWidgetbook({
   required List<Device> devices,
   WidgetbookThemeData? lightTheme,
   WidgetbookThemeData? darkTheme,
+  bool? defaultThemeIsDark,
 }) {
   final category = _generateCategoryInstance(stories);
   final widgetbookInstanceCode = WidgetbookInstance(
@@ -23,6 +25,9 @@ String generateWidgetbook({
         lightTheme != null ? ThemeInstance(name: lightTheme.name) : null,
     darkThemeInstance:
         darkTheme != null ? ThemeInstance(name: darkTheme.name) : null,
+    defaultThemeInstance: defaultThemeIsDark != null
+        ? ThemeModeInstance(name: defaultThemeIsDark ? 'dark' : 'light')
+        : null,
     devices: devices.map((device) => DeviceInstance(device: device)).toList(),
     categories: [
       category,
