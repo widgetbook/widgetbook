@@ -29,7 +29,7 @@ class _TileState extends State<Tile> {
 
   Widget _buildTile(BuildContext context) {
     return Tooltip(
-      waitDuration: const Duration(milliseconds: 600),
+      waitDuration: const Duration(milliseconds: 700),
       message: widget.organizer.name,
       child: Padding(
         padding: const EdgeInsets.symmetric(
