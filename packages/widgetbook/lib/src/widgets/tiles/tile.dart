@@ -46,8 +46,7 @@ class _TileState extends State<Tile> {
             const SizedBox(
               width: Tile.spacing,
             ),
-            Container(
-              constraints: const BoxConstraints(minWidth: 25, maxWidth: 300),
+            Expanded(
               child: Text(
                 widget.organizer.name,
                 overflow: TextOverflow.ellipsis,
