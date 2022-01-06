@@ -14,11 +14,14 @@ String generateWidgetbook({
   required String name,
   required List<WidgetbookStoryData> stories,
   required List<Device> devices,
+  required bool foldersExpanded,
+  required bool widgetsExpanded,
   WidgetbookThemeData? lightTheme,
   WidgetbookThemeData? darkTheme,
   bool? defaultThemeIsDark,
 }) {
-  final category = _generateCategoryInstance(stories);
+  final category =
+      _generateCategoryInstance(stories, foldersExpanded, widgetsExpanded);
   final widgetbookInstanceCode = WidgetbookInstance(
     appInfoInstance: AppInfoInstance(name: name),
     lightThemeInstance:
@@ -47,8 +50,11 @@ class HotReload extends StatelessWidget {
 }
 
 WidgetbookCategoryInstance _generateCategoryInstance(
-    List<WidgetbookStoryData> stories) {
-  final service = TreeService();
+  List<WidgetbookStoryData> stories,
+  bool foldersExpanded,
+  bool widgetsExpanded,
+) {
+  final service = TreeService(foldersExpanded, widgetsExpanded);
 
   for (final story in stories) {
     final folder = service.addFolderByImport(story.typeDefinition);

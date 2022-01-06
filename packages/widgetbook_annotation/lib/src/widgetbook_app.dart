@@ -12,6 +12,8 @@ class WidgetbookApp {
     required this.name,
     this.devices = const <Device>[],
     this.defaultTheme,
+    this.foldersExpanded = false,
+    this.widgetsExpanded = false,
   });
 
   /// The devices shown in the Widgetbook
@@ -23,4 +25,10 @@ class WidgetbookApp {
 
   /// Set default theme mode. If not specified, system theme mode is used.
   final WidgetbookTheme? defaultTheme;
+
+  /// Determines folders are expanded by default
+  final bool foldersExpanded;
+
+  /// Determines widgets are expanded by default
+  final bool widgetsExpanded;
 }

@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
-
 import 'package:widgetbook_generator/code_generators/instances/base_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/boolean_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/double_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/string_instance.dart';
 
@@ -21,6 +21,11 @@ class Property {
     required this.key,
     required double value,
   }) : instance = DoubleInstance.value(value);
+
+  Property.bool({
+    required this.key,
+    required bool value,
+  }) : instance = BooleanInstance.value(value);
 
   final String key;
   final BaseInstance instance;

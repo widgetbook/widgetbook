@@ -17,9 +17,13 @@ void main() {
       );
       final folder2 = Folder(
         name: 'Folder2',
+        isExpanded: true,
       );
       final widget1 = Widget('Widget1');
-      final widget2 = Widget('Widget2');
+      final widget2 = Widget(
+        'Widget2',
+        isExpanded: true,
+      );
       folder.subFolders
         ..putIfAbsent(
           folder1.name,
@@ -59,6 +63,7 @@ void main() {
                       WidgetbookWidgetInstance(
                         name: widget2.name,
                         stories: widget2.stories,
+                        isExpanded: true,
                       ),
                       WidgetbookWidgetInstance(
                         name: widget1.name,

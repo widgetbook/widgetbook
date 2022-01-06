@@ -20,6 +20,7 @@ class WidgetbookFolderInstance extends Instance {
                       (widget) => WidgetbookWidgetInstance(
                         name: widget.name,
                         stories: widget.stories,
+                        isExpanded: widget.isExpanded,
                       ),
                     )
                     .toList(),
@@ -33,6 +34,8 @@ class WidgetbookFolderInstance extends Instance {
                     .toList(),
               ),
             ),
+            if (folder.isExpanded)
+              Property.bool(key: 'isExpanded', value: true),
           ],
         );
 }
