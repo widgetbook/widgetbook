@@ -28,23 +28,33 @@ class _TileState extends State<Tile> {
   bool hovered = false;
 
   Widget _buildTile(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 4,
-        horizontal: 8,
-      ),
-      child: Row(
-        children: [
-          Icon(
-            widget.iconData,
-            color: hovered ? context.colorScheme.onPrimary : widget.iconColor,
-            size: 16,
-          ),
-          const SizedBox(
-            width: Tile.spacing,
-          ),
-          Text(widget.organizer.name),
-        ],
+    return Tooltip(
+      waitDuration: const Duration(milliseconds: 600),
+      message: widget.organizer.name,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 4,
+          horizontal: 8,
+        ),
+        child: Row(
+          children: [
+            Icon(
+              widget.iconData,
+              color: hovered ? context.colorScheme.onPrimary : widget.iconColor,
+              size: 16,
+            ),
+            const SizedBox(
+              width: Tile.spacing,
+            ),
+            Container(
+              constraints: const BoxConstraints(minWidth: 25, maxWidth: 300),
+              child: Text(
+                widget.organizer.name,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
