@@ -16,7 +16,7 @@ A flutter package which helps developers cataloguing their widgets, testing them
 
 # See it in action!
 
-Check out the `Widgetbook` with the example app on our [github page](https://widgetbook.github.io). We also have introduction videos for [What is Widgetbook?](https://www.youtube.com/watch?v=vs3ocjMsl7s), [How to use Widgetbook generator?](https://www.youtube.com/watch?v=qcTZxJDLEAE) and [How to use Widgetbook?](https://www.youtube.com/watch?v=qcTZxJDLEAE).
+Check out the `Widgetbook` with the example app on our [github page](https://widgetbook.github.io). We also have introduction videos for [What is Widgetbook?](https://www.youtube.com/watch?v=vs3ocjMsl7s), [How to use Widgetbook?](https://www.youtube.com/watch?v=qcTZxJDLEAE) and [How to use Widgetbook generator?](https://www.youtube.com/watch?v=dh8hxgtbjtk).
 Furthermore, you can [check out the code of the app at github](https://github.com/widgetbook/widgetbook/tree/main/example). 
 
 # Other packages
@@ -84,6 +84,7 @@ Environment | Status | Comment
 ------------ | ------------- | ------------- 
 MacOS | ✅ | 
 Windows | ✅ |
+Linux | ✅ |
 Web | ✅ | No hot reload, but hot restart (see [Issue 4](https://github.com/widgetbook/widgetbook/issues/4))
 Mobile | ➖ | Will run, but is not optimized. If you see a usecase for `Widgetbook` on mobile let us know. 
 
