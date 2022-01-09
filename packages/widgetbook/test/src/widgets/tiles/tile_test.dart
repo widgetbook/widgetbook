@@ -10,7 +10,15 @@ import 'package:widgetbook/widgetbook.dart';
 
 import '../../../helper/widget_test_helper.dart';
 
+const longString =
+    'This is some text text text text text text text text text text text '
+    'This is some text text text text text text text text text text text '
+    'This is some text text text text text text text text text text text '
+    'This is some text text text text text text text text text text text '
+    'This is some text text text text text text text text text text text ';
+
 void _testEllipses() {
+  // Tests that rendering does not throw an exception
   testWidgets('Ellipses display', (WidgetTester tester) async {
     await tester.pumpWidgetWithMaterialApp(
       CanvasProvider(
@@ -18,24 +26,34 @@ void _testEllipses() {
         selectedStoryRepository: SelectedStoryRepository(),
         state: CanvasState.unselected(),
         storyRepository: StoryRepository(),
-        child: SizedBox(
-          width: 0,
-          child: Tile(
-            organizer: WidgetbookFolder(
-              name:
-                  'this is a very long nasfmasifai dufgnid sngauisdgu asdugh uhiuy ygk yyhjb hajgh sdfjgsdfjlkj lsk asudg',
+        child: Row(
+          children: [
+            const SizedBox(
+              width: 20,
             ),
-            iconData: Icons.style,
-            iconColor: Colors.blue,
-          ),
+            Expanded(
+              child: Row(
+                children: [
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: Tile(
+                      organizer: WidgetbookFolder(
+                        name: longString,
+                      ),
+                      iconData: Icons.style,
+                      iconColor: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
-
-    // passes but shouldnt
-    //expect(find.textContaining('asudg'), findsOneWidget);
-    expect(find.textContaining('...'), findsOneWidget);
-  }, skip: true);
+  }, skip: false);
 }
 
 void main() {
