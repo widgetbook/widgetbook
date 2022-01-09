@@ -19,7 +19,7 @@ const longString =
 
 void _testEllipses() {
   // Tests that rendering does not throw an exception
-  testWidgets('Ellipses display', (WidgetTester tester) async {
+  testWidgets('Tile does not throw exception', (WidgetTester tester) async {
     await tester.pumpWidgetWithMaterialApp(
       CanvasProvider(
         onStateChanged: (_) {},
@@ -58,7 +58,7 @@ void _testEllipses() {
 
 void main() {
   group(
-    '$TileSpacer',
+    'Test rendering',
     _testEllipses,
   );
 }
