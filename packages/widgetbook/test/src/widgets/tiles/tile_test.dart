@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/src/navigation/ui/navigation_panel.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/providers/canvas_state.dart';
+import 'package:widgetbook/src/providers/theme_provider.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
-import 'package:widgetbook/src/widgets/tiles/tile.dart';
-import 'package:widgetbook/src/widgets/tiles/tile_spacer.dart';
 import 'package:widgetbook/widgetbook.dart';
-
 import '../../../helper/widget_test_helper.dart';
 
 const longString =
@@ -22,34 +21,32 @@ void _testEllipses() {
   testWidgets('Tile does not throw exception', (WidgetTester tester) async {
     await tester.pumpWidgetWithMaterialApp(
       CanvasProvider(
-        onStateChanged: (_) {},
-        selectedStoryRepository: SelectedStoryRepository(),
-        state: CanvasState.unselected(),
         storyRepository: StoryRepository(),
-        child: Row(
-          children: [
-            const SizedBox(
-              width: 20,
-            ),
-            Expanded(
-              child: Row(
-                children: [
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: Tile(
-                      organizer: WidgetbookFolder(
+        onStateChanged: (_) {},
+        state: CanvasState.unselected(),
+        selectedStoryRepository: SelectedStoryRepository(),
+        child: ThemeProvider(
+          state: ThemeMode.dark,
+          onStateChanged: (_) {},
+          child: NavigationPanel(
+            appInfo: AppInfo(name: 'test app'),
+            categories: [
+              WidgetbookCategory(
+                name: 'category',
+                widgets: [
+                  WidgetbookWidget(
+                    name: longString,
+                    useCases: [
+                      WidgetbookUseCase.child(
                         name: longString,
+                        child: const Text('hi'),
                       ),
-                      iconData: Icons.style,
-                      iconColor: Colors.blue,
-                    ),
+                    ],
                   ),
                 ],
-              ),
-            ),
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
