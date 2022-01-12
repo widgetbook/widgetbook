@@ -24,11 +24,13 @@ class SpacedTile extends StatelessWidget {
     return Row(
       children: [
         TileSpacer(level: level),
-        Tile(
-          iconData: iconData,
-          iconColor: iconColor,
-          organizer: organizer,
-          onClicked: onClicked,
+        Expanded(
+          child: Tile(
+            iconData: iconData,
+            iconColor: iconColor,
+            organizer: organizer,
+            onClicked: onClicked,
+          ),
         ),
       ],
     );
