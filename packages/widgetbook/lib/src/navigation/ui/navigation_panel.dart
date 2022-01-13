@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
+import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
 import 'package:widgetbook/src/widgets/header.dart';
 import 'package:widgetbook/src/widgets/search_bar.dart';
@@ -51,6 +52,13 @@ class _NavigationPanelState extends State<NavigationPanel> {
           ),
           const SizedBox(
             height: 16,
+          ),
+          TextButton(
+            onPressed: () {
+              OrganizerProvider.of(context)
+                  ?.toggleExpanderRecursive(widget.categories);
+            },
+            child: const Text('sup'),
           ),
           Expanded(
             child: Container(
