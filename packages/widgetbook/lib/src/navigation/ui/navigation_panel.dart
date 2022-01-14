@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
+import 'package:widgetbook/src/widgets/expanders/expander_row.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
 import 'package:widgetbook/src/widgets/header.dart';
@@ -56,19 +57,9 @@ class _NavigationPanelState extends State<NavigationPanel> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              IconButton(
-                icon: const Icon(Icons.expand_more),
-                onPressed: () {
-                  OrganizerProvider.of(context)
-                      ?.setExpandedRecursive(widget.categories, true);
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.expand_less),
-                onPressed: () {
-                  OrganizerProvider.of(context)
-                      ?.setExpandedRecursive(widget.categories, false);
-                },
+              ExpanderRow(
+                organizers: widget.categories,
+                size: 30,
               ),
             ],
           ),
