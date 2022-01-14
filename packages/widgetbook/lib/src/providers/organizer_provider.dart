@@ -209,19 +209,12 @@ class OrganizerProvider extends Provider<OrganizerState> {
     }
   }
 
-  /// Toggle expandable oragnizers. If one folder is not expanded, expand all
-  /// folders. IF all folders are expanded, close all of them
-  void toggleExpanderRecursive(List<ExpandableOrganizer> organizers) {
-    var toggleState = false;
-    for (final org in organizers) {
-      if (!_findToggleState(org)) {
-        toggleState = true;
-        break;
-      }
-    }
-
-    for (final organizer in organizers) {
-      _setExpandedRecursive(organizer, toggleState);
+  /// Set isExpanded an [ExpandableOrganizer] and its nested organizer to
+  /// the `expanded`
+  void setExpandedRecursive(
+      List<ExpandableOrganizer> organizers, bool expanded) {
+    for (final e in organizers) {
+      _setExpandedRecursive(e, expanded);
     }
     emit(
       OrganizerState(
@@ -230,20 +223,5 @@ class OrganizerProvider extends Provider<OrganizerState> {
         searchTerm: state.searchTerm,
       ),
     );
-  }
-
-  /// Checks to see if this organizer or a folder or widget is expanded.
-  bool _findToggleState(ExpandableOrganizer organizer) {
-    var ret = organizer.isExpanded;
-
-    for (final folder in organizer.folders) {
-      ret = ret && _findToggleState(folder);
-    }
-
-    for (final widget in organizer.widgets) {
-      ret = ret && _findToggleState(widget);
-    }
-
-    return ret;
   }
 }

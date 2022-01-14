@@ -56,7 +56,14 @@ class _NavigationPanelState extends State<NavigationPanel> {
           TextButton(
             onPressed: () {
               OrganizerProvider.of(context)
-                  ?.toggleExpanderRecursive(widget.categories);
+                  ?.setExpandedRecursive(widget.categories, false);
+            },
+            child: const Text('stup'),
+          ),
+          TextButton(
+            onPressed: () {
+              OrganizerProvider.of(context)
+                  ?.setExpandedRecursive(widget.categories, true);
             },
             child: const Text('sup'),
           ),
