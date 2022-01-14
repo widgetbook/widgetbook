@@ -4,7 +4,7 @@ import 'package:widgetbook/src/models/organizers/organizer.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
-import 'package:widgetbook/src/widgets/expand_button.dart';
+import 'package:widgetbook/src/widgets/expanders/expand_button.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 class Tile extends StatefulWidget {
