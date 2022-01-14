@@ -90,7 +90,8 @@ class CanvasProvider extends Provider<CanvasState> {
     }
   }
 
-  void selectStory(WidgetbookUseCase? story) {
+  Future<void> selectStory(WidgetbookUseCase? story) async {
+    await Future<void>.delayed(const Duration(milliseconds: 100));
     selectedStoryRepository.setItem(story);
     emit(
       CanvasState(

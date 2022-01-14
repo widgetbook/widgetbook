@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:widgetbook/src/configure_non_web.dart'
     if (dart.library.html) 'package:widgetbook/src/configure_web.dart';
 import 'package:widgetbook/src/models/app_info.dart';
@@ -124,7 +125,8 @@ class _WidgetbookState extends State<Widgetbook> {
                         );
                         final selectedStory =
                             selectStoryFromPath(path, stories);
-                        CanvasProvider.of(context)!.selectStory(selectedStory);
+                        unawaited(CanvasProvider.of(context)!
+                            .selectStory(selectedStory));
                       },
                     ),
                     routerDelegate: StoryRouterDelegate(
