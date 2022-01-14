@@ -22,7 +22,7 @@ class _ExpandButtonState extends State<ExpandButton> {
   @override
   Widget build(BuildContext context) {
     final icon = widget.expandTo ? Icons.expand_more : Icons.expand_less;
-    return GestureDetector(
+    return InkWell(
       child: Icon(
         icon,
         size: widget.size,
