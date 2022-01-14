@@ -53,19 +53,24 @@ class _NavigationPanelState extends State<NavigationPanel> {
           const SizedBox(
             height: 16,
           ),
-          TextButton(
-            onPressed: () {
-              OrganizerProvider.of(context)
-                  ?.setExpandedRecursive(widget.categories, false);
-            },
-            child: const Text('stup'),
-          ),
-          TextButton(
-            onPressed: () {
-              OrganizerProvider.of(context)
-                  ?.setExpandedRecursive(widget.categories, true);
-            },
-            child: const Text('sup'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.expand_more),
+                onPressed: () {
+                  OrganizerProvider.of(context)
+                      ?.setExpandedRecursive(widget.categories, true);
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.expand_less),
+                onPressed: () {
+                  OrganizerProvider.of(context)
+                      ?.setExpandedRecursive(widget.categories, false);
+                },
+              ),
+            ],
           ),
           Expanded(
             child: Container(
