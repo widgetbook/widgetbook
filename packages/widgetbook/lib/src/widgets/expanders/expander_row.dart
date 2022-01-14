@@ -3,7 +3,7 @@ import 'package:widgetbook/src/models/organizers/organizers.dart';
 
 import 'package:widgetbook/src/widgets/expanders/expand_button.dart';
 
-class ExpanderRow extends StatefulWidget {
+class ExpanderRow extends StatelessWidget {
   const ExpanderRow({
     Key? key,
     this.size,
@@ -14,21 +14,18 @@ class ExpanderRow extends StatefulWidget {
   final List<ExpandableOrganizer> organizers;
 
   @override
-  _ExpanderRowState createState() => _ExpanderRowState();
-}
-
-class _ExpanderRowState extends State<ExpanderRow> {
-  @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         ExpandButton(
-          organizers: widget.organizers,
+          organizers: organizers,
           expandTo: true,
+          size: size,
         ),
         ExpandButton(
-          organizers: widget.organizers,
+          organizers: organizers,
           expandTo: false,
+          size: size,
         ),
       ],
     );
