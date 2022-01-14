@@ -5,6 +5,7 @@ import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 import 'package:widgetbook/src/widgets/expanders/expand_button.dart';
+import 'package:widgetbook/src/widgets/expanders/expander_row.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 class Tile extends StatefulWidget {
@@ -56,17 +57,8 @@ class _TileState extends State<Tile> {
               ),
             ),
             if (hovered && widget.organizer is ExpandableOrganizer)
-              Row(
-                children: [
-                  ExpandButton(
-                    organizers: [widget.organizer as ExpandableOrganizer],
-                    expandTo: true,
-                  ),
-                  ExpandButton(
-                    organizers: [widget.organizer as ExpandableOrganizer],
-                    expandTo: false,
-                  ),
-                ],
+              ExpanderRow(
+                organizers: [widget.organizer as ExpandableOrganizer],
               )
           ],
         ),

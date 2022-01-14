@@ -7,10 +7,12 @@ class ExpandButton extends StatefulWidget {
     Key? key,
     required this.organizers,
     required this.expandTo,
+    this.size = 17,
   }) : super(key: key);
 
   final List<ExpandableOrganizer> organizers;
   final bool expandTo;
+  final double? size;
 
   @override
   _ExpandButtonState createState() => _ExpandButtonState();
@@ -23,7 +25,7 @@ class _ExpandButtonState extends State<ExpandButton> {
     return GestureDetector(
       child: Icon(
         icon,
-        size: 17,
+        size: widget.size,
       ),
       onTap: () {
         OrganizerProvider.of(context)
