@@ -16,11 +16,17 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^7.1.0
   font_awesome_flutter: ^9.1.0
+  widgetbook: any
+
+dependency_overrides:
+  widgetbook:
+    path:
+      ../../packages/widgetbook
+  widgetbook_models:
+    path:
+      ../../packages/widgetbook_models
 
 dev_dependencies:
-  widgetbook: 
-    path: 
-      ../../packages/widgetbook/
   flutter_test:
     sdk: flutter
 

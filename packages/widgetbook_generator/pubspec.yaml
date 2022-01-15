@@ -16,15 +16,15 @@ dependencies:
   glob: ^2.0.2
   meta: ^1.7.0
   source_gen: ^1.1.0
-  widgetbook_annotation: ^1.0.0
-  widgetbook_models: ^0.0.3
+  widgetbook_annotation: any
+  widgetbook_models: any
 
 # for development
-# dependency_override:
-#   widgetbook_models:
-#     path: ../widgetbook_models
-#   widgetbook_annotation:
-#     path: ../widgetbook_annotation
+dependency_overrides:
+  widgetbook_annotation:
+    path: ../widgetbook_annotation
+  widgetbook_models:
+    path: ../widgetbook_models
 
 dev_dependencies:
   build_runner: ^2.1.2

@@ -18,12 +18,12 @@ dependencies:
     sdk: flutter
   meta: ^1.7.0
   vector_math: ^2.1.0
-  widgetbook_models: ^0.0.3
+  widgetbook_models: any
 
 # for development
-# dependency_override:
-#   widgetbook_models:
-#     path: ../widgetbook_models
+dependency_overrides:
+  widgetbook_models:
+    path: ../widgetbook_models
 
 dev_dependencies:
   flutter_test:

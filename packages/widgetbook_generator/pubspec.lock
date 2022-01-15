@@ -466,16 +466,16 @@ packages:
   widgetbook_annotation:
     dependency: "direct main"
     description:
-      name: widgetbook_annotation
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../widgetbook_annotation"
+      relative: true
+    source: path
     version: "1.0.0"
   widgetbook_models:
     dependency: "direct main"
     description:
-      name: widgetbook_models
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../widgetbook_models"
+      relative: true
+    source: path
     version: "0.0.3"
   yaml:
     dependency: transitive

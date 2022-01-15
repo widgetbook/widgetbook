@@ -10,12 +10,12 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  widgetbook_models: ^0.0.3
+  widgetbook_models: any
 
 # For development
-# depedency_overrides:
-#   widgetbook_models:
-#     path: ../widgetbook_models
+depedency_overrides:
+  widgetbook_models:
+    path: ../widgetbook_models
 
 dev_dependencies:
   test: ^1.18.2
