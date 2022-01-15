@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
-import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/providers/zoom_provider.dart';
