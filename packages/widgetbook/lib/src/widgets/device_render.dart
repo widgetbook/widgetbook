@@ -74,9 +74,7 @@ class DeviceRender extends StatelessWidget {
     );
 
     if (device.type == DeviceType.responsive) {
-      return Expanded(
-        child: content,
-      );
+      return content;
     } else {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
