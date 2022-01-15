@@ -4,6 +4,7 @@ import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/providers/injected_theme_provider.dart';
 import 'package:widgetbook/src/providers/injected_theme_state.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
+import 'package:widgetbook_models/widgetbook_models.dart';
 
 class DeviceRender extends StatelessWidget {
   const DeviceRender({
@@ -72,7 +73,7 @@ class DeviceRender extends StatelessWidget {
       ),
     );
 
-    if (resolution == null) {
+    if (device.type == DeviceType.responsive) {
       return Expanded(
         child: content,
       );
