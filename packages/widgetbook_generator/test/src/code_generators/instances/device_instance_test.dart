@@ -27,7 +27,7 @@ void main() {
                 Property(
                   key: 'resolution',
                   instance: ResolutionInstance(
-                    resolution: phone.resolution,
+                    resolution: phone.resolution!,
                   ),
                 ),
                 Property(

@@ -13,6 +13,9 @@ enum DeviceType {
   /// A desktop screen
   desktop,
 
+  /// Responsive device
+  responsive,
+
   /// Undefined device type
   /// Ofen used for custom devices with very specific dimensions
   unknown,

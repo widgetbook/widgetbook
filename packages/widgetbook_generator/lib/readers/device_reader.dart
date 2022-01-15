@@ -32,9 +32,12 @@ class DeviceReader extends AnnotationReader<Device> {
       object.getField('type')!,
     );
 
-    final resolution = resolutioReader.read(
-      object.getField('resolution')!,
-    );
+    Resolution? resolution;
+    final resolutionField = object.getField('resolution')!;
+
+    if (!resolutionField.isNull) {
+      resolution = resolutioReader.read(resolutionField);
+    }
 
     return Device(
       name: name,

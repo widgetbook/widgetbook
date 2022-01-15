@@ -35,48 +35,58 @@ class DeviceRender extends StatelessWidget {
 
     final themeState = InjectedThemeProvider.of(context)!.state;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(device.name),
-        const SizedBox(
-          height: 16,
+    final content = Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Colors.white
+              : Colors.black,
         ),
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? Colors.white
-                  : Colors.black,
-            ),
-          ),
-          width: resolution.logicalSize.width,
-          height: resolution.logicalSize.height,
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            themeMode: Theme.of(context).brightness == Brightness.light
-                ? ThemeMode.light
-                : ThemeMode.dark,
-            home: AnimatedTheme(
-              duration: Duration.zero,
-              data: getInjectedTheme(context, themeState).copyWith(
-                brightness: Theme.of(context).brightness,
-                pageTransitionsTheme: const PageTransitionsTheme(
-                  builders: {
-                    TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
-                    TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-                  },
-                ),
+      ),
+      width: resolution?.logicalSize.width,
+      height: resolution?.logicalSize.height,
+      child: ClipRect(
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          themeMode: Theme.of(context).brightness == Brightness.light
+              ? ThemeMode.light
+              : ThemeMode.dark,
+          home: AnimatedTheme(
+            duration: Duration.zero,
+            data: getInjectedTheme(context, themeState).copyWith(
+              brightness: Theme.of(context).brightness,
+              pageTransitionsTheme: const PageTransitionsTheme(
+                builders: {
+                  TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
+                  TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+                },
               ),
-              child: Scaffold(
-                body: story.builder(
-                  context,
-                ),
+            ),
+            child: Scaffold(
+              body: story.builder(
+                context,
               ),
             ),
           ),
         ),
-      ],
+      ),
     );
+
+    if (resolution == null) {
+      return Expanded(
+        child: content,
+      );
+    } else {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(device.name),
+          const SizedBox(
+            height: 16,
+          ),
+          content,
+        ],
+      );
+    }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/utils/extensions.dart';
+import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
 
 class DeviceItem extends StatelessWidget {
@@ -61,6 +62,11 @@ class DeviceItem extends StatelessWidget {
       case DeviceType.desktop:
         return Icon(
           Icons.desktop_windows,
+          color: color,
+        );
+      case DeviceType.responsive:
+        return Icon(
+          Icons.zoom_out_map,
           color: color,
         );
       case DeviceType.unknown:

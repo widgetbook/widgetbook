@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
+import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/providers/zoom_provider.dart';
 import 'package:widgetbook/src/widgets/device_render.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 class StoryRender extends StatefulWidget {
   const StoryRender({Key? key}) : super(key: key);
@@ -47,20 +49,23 @@ class _StoryState extends State<StoryRender> {
   Widget _buildCanvas(WidgetbookUseCase story) {
     _updateController();
 
-    return InteractiveViewer(
-      boundaryMargin: const EdgeInsets.all(double.infinity),
-      minScale: 0.25,
-      maxScale: 5,
-      constrained: false,
-      transformationController: controller,
-      onInteractionUpdate: (ScaleUpdateDetails details) {
-        ZoomProvider.of(context)!
-            .setScale(controller.value.getMaxScaleOnAxis());
-      },
-      child: DeviceRender(
-        story: story,
-      ),
-    );
+    final deviceProvider = DeviceProvider.of(context)!;
+    if (deviceProvider.state.currentDevice.type == DeviceType.responsive) {
+      return DeviceRender(story: story);
+    } else {
+      return InteractiveViewer(
+        boundaryMargin: const EdgeInsets.all(double.infinity),
+        minScale: 0.25,
+        maxScale: 5,
+        constrained: false,
+        transformationController: controller,
+        onInteractionUpdate: (ScaleUpdateDetails details) {
+          ZoomProvider.of(context)!
+              .setScale(controller.value.getMaxScaleOnAxis());
+        },
+        child: DeviceRender(story: story),
+      );
+    }
   }
 
   @override

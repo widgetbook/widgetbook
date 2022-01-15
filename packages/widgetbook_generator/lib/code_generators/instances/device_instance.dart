@@ -19,12 +19,13 @@ class DeviceInstance extends Instance {
               key: 'name',
               value: device.name,
             ),
-            Property(
-              key: 'resolution',
-              instance: ResolutionInstance(
-                resolution: device.resolution,
+            if (device.resolution != null)
+              Property(
+                key: 'resolution',
+                instance: ResolutionInstance(
+                  resolution: device.resolution!,
+                ),
               ),
-            ),
             Property(
               key: 'type',
               instance: DeviceTypeInstance(
