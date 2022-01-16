@@ -21,16 +21,28 @@ class ExpandButton extends StatefulWidget {
 class _ExpandButtonState extends State<ExpandButton> {
   @override
   Widget build(BuildContext context) {
-    final icon = widget.expandTo ? Icons.expand_more : Icons.expand_less;
-    return InkWell(
-      child: Icon(
-        icon,
-        size: widget.size,
+    IconData icon;
+    String tooltip;
+    if (widget.expandTo) {
+      icon = Icons.expand_more;
+      tooltip = 'Expand';
+    } else {
+      icon = Icons.expand_less;
+      tooltip = 'Collapse';
+    }
+    return Tooltip(
+      message: tooltip,
+      waitDuration: const Duration(milliseconds: 500),
+      child: InkWell(
+        child: Icon(
+          icon,
+          size: widget.size,
+        ),
+        onTap: () {
+          OrganizerProvider.of(context)
+              ?.setExpandedRecursive(widget.organizers, widget.expandTo);
+        },
       ),
-      onTap: () {
-        OrganizerProvider.of(context)
-            ?.setExpandedRecursive(widget.organizers, widget.expandTo);
-      },
     );
   }
 }
