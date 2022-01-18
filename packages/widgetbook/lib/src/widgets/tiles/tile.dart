@@ -54,9 +54,8 @@ class _TileState extends State<Tile> {
               ),
             ),
             if (hovered && widget.organizer is ExpandableOrganizer)
-              ExpanderRow(
+              ExpanderRow.small(
                 organizers: [widget.organizer as ExpandableOrganizer],
-                size: 17,
               )
           ],
         ),

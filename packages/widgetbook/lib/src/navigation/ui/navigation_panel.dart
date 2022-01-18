@@ -56,9 +56,8 @@ class _NavigationPanelState extends State<NavigationPanel> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              ExpanderRow(
+              ExpanderRow.large(
                 organizers: widget.categories,
-                size: 30,
               ),
             ],
           ),

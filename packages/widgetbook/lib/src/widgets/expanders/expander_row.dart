@@ -10,6 +10,28 @@ class ExpanderRow extends StatelessWidget {
     required this.organizers,
   }) : super(key: key);
 
+  factory ExpanderRow.large({
+    Key? key,
+    required List<ExpandableOrganizer> organizers,
+  }) {
+    return ExpanderRow(
+      key: key,
+      size: 32,
+      organizers: organizers,
+    );
+  }
+
+  factory ExpanderRow.small({
+    Key? key,
+    required List<ExpandableOrganizer> organizers,
+  }) {
+    return ExpanderRow(
+      key: key,
+      size: 16,
+      organizers: organizers,
+    );
+  }
+
   final double? size;
   final List<ExpandableOrganizer> organizers;
 
