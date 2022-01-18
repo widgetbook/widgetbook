@@ -54,8 +54,11 @@ class _TileState extends State<Tile> {
               ),
             ),
             if (hovered && widget.organizer is ExpandableOrganizer)
-              ExpanderRow.small(
-                organizers: [widget.organizer as ExpandableOrganizer],
+              Padding(
+                  padding: const EdgeInsets.only(right: 4),
+                child: ExpanderRow.small(
+                  organizers: [widget.organizer as ExpandableOrganizer],
+                ),
               )
           ],
         ),
