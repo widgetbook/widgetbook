@@ -1,3 +1,9 @@
+## 1.0.3
+
+- changed documentation to be consistent with the existing videos
+- changed generator to skip the `src` folder for packages
+- changed theme to default to `ThemeMode.system` instead of `ThemeMode.dark`
+
 ## 1.0.2
 
 - added videos to documentation
