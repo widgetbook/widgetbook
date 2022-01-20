@@ -5,6 +5,9 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 @WidgetbookApp(
   name: 'Meal App',
+  defaultTheme: WidgetbookTheme.dark(),
+  foldersExpanded: true,
+  widgetsExpanded: true,
 )
 class App extends StatelessWidget {
   // This widget is the root of your application.

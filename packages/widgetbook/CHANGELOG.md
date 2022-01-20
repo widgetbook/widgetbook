@@ -1,3 +1,9 @@
+## 1.0.3
+
+- changed documentation to be consistent with the existing videos
+- changed theme to default to `ThemeMode.system` instead of `ThemeMode.dark`
+- fixed `Tile`s overflowing on long names
+
 ## 1.0.2
 
 - added videos to documentation

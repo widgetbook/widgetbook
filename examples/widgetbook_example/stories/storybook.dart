@@ -15,6 +15,7 @@ class Storyboard extends StatelessWidget {
 
   Widget buildStorybook(BuildContext context) {
     return Widgetbook(
+      defaultTheme: ThemeMode.dark,
       devices: [
         Apple.iPhone11,
         Apple.iPhone12,

@@ -1,3 +1,7 @@
+## 0.0.4
+
+- added desktop screens to export
+
 ## 0.0.3
 
 added additional devices:

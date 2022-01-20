@@ -27,10 +27,10 @@ The `pubspec.yaml` file could look like this:
 
 ```
 dependencies:
-  widgetbook:
   widgetbook_annotation:
 
 dev_dependencies:
+  widgetbook:
   build_runner:
   widgetbook_generator:
 ```

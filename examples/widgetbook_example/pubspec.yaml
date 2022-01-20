@@ -18,9 +18,7 @@ dependencies:
   font_awesome_flutter: ^9.1.0
 
 dev_dependencies:
-  widgetbook: 
-    path: 
-      ../../packages/widgetbook/
+  widgetbook: ^1.0.3 
   flutter_test:
     sdk: flutter
 
