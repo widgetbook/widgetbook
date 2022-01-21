@@ -231,7 +231,6 @@ void main() {
             ),
           ],
         );
-        print(widgetCategory);
         var provider = await tester.pumpProvider(
           initialState: OrganizerState.unfiltered(
             categories: [widgetCategory],
