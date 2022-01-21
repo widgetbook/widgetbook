@@ -224,4 +224,5 @@ class OrganizerProvider extends Provider<OrganizerState> {
       ),
     );
   }
+
 }

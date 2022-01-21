@@ -21,4 +21,9 @@ class WidgetbookCategory extends ExpandableOrganizer {
       organizer.parent = this;
     }
   }
+
+  @override
+  String toString() {
+      return '$folders, $widgets';
+  }
 }
