@@ -231,6 +231,7 @@ void main() {
             ),
           ],
         );
+        print(widgetCategory);
         var provider = await tester.pumpProvider(
           initialState: OrganizerState.unfiltered(
             categories: [widgetCategory],
@@ -255,8 +256,10 @@ void main() {
                   folders: [
                     WidgetbookFolder(
                       name: 'Folder 1-1',
+                      isExpanded: true,
                       folders: [
                         WidgetbookFolder(
+                          isExpanded: true,
                           name: 'Folder 1-2',
                           widgets: [
                             WidgetbookWidget(
@@ -270,8 +273,10 @@ void main() {
                     ),
                     WidgetbookFolder(
                       name: 'Folder 2-1',
+                      isExpanded: true,
                       folders: [
                         WidgetbookFolder(
+                          isExpanded: true,
                           name: 'Folder 2-2',
                           widgets: [
                             WidgetbookWidget(
@@ -289,7 +294,7 @@ void main() {
             ),
           ),
         );
-      }, skip: true);
+      }, skip: false);
 
       testWidgets(
         'expands $WidgetbookWidget when the selected story changes',
