@@ -295,6 +295,99 @@ void main() {
         );
       }, skip: false);
 
+      testWidgets('recursive expander of $WidgetbookWidget to false',
+          (WidgetTester tester) async {
+        final widgetCategory = WidgetbookCategory(
+          name: 'Category 1',
+          folders: [
+            WidgetbookFolder(
+              name: 'Folder 1-1',
+              folders: [
+                WidgetbookFolder(
+                  name: 'Folder 1-2',
+                  widgets: [
+                    WidgetbookWidget(
+                      name: 'Widget 1-2',
+                      useCases: [],
+                    ),
+                  ],
+                )
+              ],
+            ),
+            WidgetbookFolder(
+              name: 'Folder 2-1',
+              folders: [
+                WidgetbookFolder(
+                  name: 'Folder 2-2',
+                  widgets: [
+                    WidgetbookWidget(
+                      name: 'Widget 2-2',
+                      useCases: [],
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ],
+        );
+        var provider = await tester.pumpProvider(
+          initialState: OrganizerState.unfiltered(
+            categories: [widgetCategory],
+          ),
+          storyRepository: storyRepository,
+          selectedStoryRepository: selectedStoryRepository,
+        );
+
+        provider = await tester.invokeMethodAndReturnPumpedProvider(
+          () {
+            provider.setExpandedRecursive([widgetCategory], false);
+          },
+        );
+
+        expect(
+          provider.state,
+          equals(
+            OrganizerState.unfiltered(
+              categories: [
+                WidgetbookCategory(
+                  name: 'Category 1',
+                  folders: [
+                    WidgetbookFolder(
+                      name: 'Folder 1-1',
+                      folders: [
+                        WidgetbookFolder(
+                          name: 'Folder 1-2',
+                          widgets: [
+                            WidgetbookWidget(
+                              name: 'Widget 1-2',
+                              useCases: [],
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    WidgetbookFolder(
+                      name: 'Folder 2-1',
+                      folders: [
+                        WidgetbookFolder(
+                          name: 'Folder 2-2',
+                          widgets: [
+                            WidgetbookWidget(
+                              name: 'Widget 2-2',
+                              useCases: [],
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      }, skip: false);
+
       testWidgets(
         'expands $WidgetbookWidget when the selected story changes',
         (WidgetTester tester) async {
