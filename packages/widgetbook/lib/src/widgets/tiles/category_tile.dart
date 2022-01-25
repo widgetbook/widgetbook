@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
-import 'package:widgetbook/src/utils/utils.dart';
+import 'package:widgetbook/src/providers/organizer_provider.dart';
+import 'package:widgetbook/src/widgets/tiles/spaced_tile.dart';
 import 'package:widgetbook/src/widgets/tiles/tile_helper_methods.dart';
 
 class CategoryTile extends StatelessWidget {
@@ -13,24 +14,25 @@ class CategoryTile extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 4,
-            horizontal: 8,
+        SpacedTile(
+          organizer: category,
+          level: 0,
+          iconData: Icons.category,
+          iconColor: Colors.red,
+          onClicked: () {
+            OrganizerProvider.of(context)!.toggleExpander(category);
+          },
+        ),
+        if (category.isExpanded) ...[
+          ...buildFolders(
+            folders: category.folders,
+            currentLevel: 1,
           ),
-          child: Text(
-            category.name,
-            style: context.textTheme.subtitle2,
+          ...buildWidgets(
+            widgets: category.widgets,
+            currentLevel: 1,
           ),
-        ),
-        ...buildFolders(
-          folders: category.folders,
-          currentLevel: 0,
-        ),
-        ...buildWidgets(
-          widgets: category.widgets,
-          currentLevel: 0,
-        ),
+        ]
       ],
     );
   }
