@@ -302,6 +302,7 @@ void main() {
           folders: [
             WidgetbookFolder(
               name: 'Folder 1-1',
+              isExpanded: true,
               folders: [
                 WidgetbookFolder(
                   name: 'Folder 1-2',
@@ -316,6 +317,7 @@ void main() {
             ),
             WidgetbookFolder(
               name: 'Folder 2-1',
+              isExpanded: true,
               folders: [
                 WidgetbookFolder(
                   name: 'Folder 2-2',
