@@ -8,11 +8,12 @@ class WidgetbookCategory extends ExpandableOrganizer {
     required String name,
     List<WidgetbookFolder>? folders,
     List<WidgetbookWidget>? widgets,
+    bool isExpanded = true,
   }) : super(
           name: name,
           folders: folders,
           widgets: widgets,
-          isExpanded: true,
+          isExpanded: isExpanded,
         ) {
     for (final ExpandableOrganizer organizer in this.folders) {
       organizer.parent = this;
@@ -24,6 +25,6 @@ class WidgetbookCategory extends ExpandableOrganizer {
 
   @override
   String toString() {
-      return '$folders, $widgets';
+    return 'isExpanded: $isExpanded, folders: $folders, widgets: $widgets';
   }
 }
