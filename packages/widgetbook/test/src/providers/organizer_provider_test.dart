@@ -353,6 +353,7 @@ void main() {
               categories: [
                 WidgetbookCategory(
                   name: 'Category 1',
+                  isExpanded: false,
                   folders: [
                     WidgetbookFolder(
                       name: 'Folder 1-1',
