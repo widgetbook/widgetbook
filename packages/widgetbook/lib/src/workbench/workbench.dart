@@ -166,7 +166,7 @@ class Workbench extends StateNotifier<WorkbenchState> {
     final nextDevice = _getNext(state.device, devices);
     state = state.copyWith(
       device: nextDevice,
-      multiRender: state.multiRender == MultiRender.themes
+      multiRender: state.multiRender == MultiRender.devices
           ? MultiRender.none
           : state.multiRender,
     );
@@ -176,7 +176,7 @@ class Workbench extends StateNotifier<WorkbenchState> {
     final previousDevice = _getPrevious(state.device, devices);
     state = state.copyWith(
       device: previousDevice,
-      multiRender: state.multiRender == MultiRender.themes
+      multiRender: state.multiRender == MultiRender.devices
           ? MultiRender.none
           : state.multiRender,
     );
