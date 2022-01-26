@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:widgetbook/src/localization/localization_provider.dart';
+import 'package:widgetbook/src/localization/localization.dart';
 import 'package:widgetbook/src/multi_render_handle.dart';
 import 'package:widgetbook/src/workbench/multi_render.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';

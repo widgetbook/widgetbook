@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:widgetbook/src/localization/localization_provider.dart';
+import 'package:widgetbook/src/localization/localization.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
-import 'package:widgetbook/src/providers/device_provider.dart';
-import 'package:widgetbook/src/providers/injected_theme_provider.dart';
-import 'package:widgetbook/src/providers/injected_theme_state.dart';
-import 'package:widgetbook/src/providers/theme_provider.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 
 class DeviceRender extends ConsumerWidget {
@@ -18,11 +14,7 @@ class DeviceRender extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deviceProvider = DeviceProvider.of(context)!;
-    final state = deviceProvider.state;
-
-    final device = state.currentDevice;
-    final resolution = device.resolution;
+    final device = ref.watch(workbenchProvider).device!;
 
     final workbenchState = ref.watch(workbenchProvider);
     final localizationState = ref.watch(localizationProvider);
@@ -41,8 +33,8 @@ class DeviceRender extends ConsumerWidget {
                   : Colors.black,
             ),
           ),
-          width: resolution.logicalSize.width,
-          height: resolution.logicalSize.height,
+          width: device.resolution.logicalSize.width,
+          height: device.resolution.logicalSize.height,
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             locale: workbenchState.locale,

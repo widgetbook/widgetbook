@@ -43,9 +43,6 @@ class Renderer extends StatelessWidget {
             supportedLocales: [
               locale,
             ],
-            themeMode: Theme.of(context).brightness == Brightness.light
-                ? ThemeMode.light
-                : ThemeMode.dark,
             home: AnimatedTheme(
               duration: Duration.zero,
               data: theme,

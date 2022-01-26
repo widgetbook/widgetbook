@@ -3,13 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:widgetbook/src/configure_non_web.dart'
     if (dart.library.html) 'package:widgetbook/src/configure_web.dart';
-import 'package:widgetbook/src/localization/localization_provider.dart';
+import 'package:widgetbook/src/devices/devices.dart';
+import 'package:widgetbook/src/localization/localization.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
-import 'package:widgetbook/src/providers/device_provider.dart';
-import 'package:widgetbook/src/providers/injected_theme_provider.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/providers/organizer_state.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
@@ -41,6 +40,8 @@ class Widgetbook extends StatelessWidget {
     this.localizationsDelegates,
     required this.themes,
     this.defaultTheme = ThemeMode.system,
+    this.builder,
+    this.themeBuilder,
     // TODO check if this works
   })  : assert(
           themes.length > 0,
@@ -68,6 +69,19 @@ class Widgetbook extends StatelessWidget {
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
 
   final List<WidgetbookTheme> themes;
+
+  final Widget Function(
+    BuildContext context,
+    Locale? locale,
+    Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates,
+    Iterable<Locale> supportedLocales,
+    Widget child,
+  )? builder;
+
+  final Widget Function(
+    BuildContext context,
+    WidgetbookTheme theme,
+  )? themeBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -156,9 +170,12 @@ class _WidgetbookState extends ConsumerState<WidgetbookWrapper> {
           localizationsDelegates: widget.localizationsDelegates?.toList(),
           supportedLocales: widget.supportedLocales.toList(),
         );
-    ref
-        .read(themingProvider.notifier)
-        .hotReloadUpdate(themes: widget.themes.toList());
+    ref.read(themingProvider.notifier).hotReloadUpdate(
+          themes: widget.themes.toList(),
+        );
+    ref.read(devicesProvider.notifier).hotReloadUpdate(
+          devices: widget.devices,
+        );
   }
 
   @override
@@ -169,7 +186,6 @@ class _WidgetbookState extends ConsumerState<WidgetbookWrapper> {
 
     // TODO remove this and put into the Builders
     OrganizerProvider.of(contextWithProviders)!.update(widget.categories);
-    DeviceProvider.of(contextWithProviders)!.update(widget.devices);
   }
 
   @override
@@ -189,41 +205,37 @@ class _WidgetbookState extends ConsumerState<WidgetbookWrapper> {
             child: ZoomBuilder(
               child: ThemeBuilder(
                 themeMode: widget.defaultTheme,
-                child: DeviceBuilder(
-                  availableDevices: widget.devices,
-                  currentDevice: widget.devices.first,
-                  child: Builder(
-                    builder: (context) {
-                      contextWithProviders = context;
-                      final canvasState = CanvasProvider.of(context)!.state;
-                      final storiesState = OrganizerProvider.of(context)!.state;
-                      final themeMode = ThemeProvider.of(context)!.state;
+                child: Builder(
+                  builder: (context) {
+                    contextWithProviders = context;
+                    final canvasState = CanvasProvider.of(context)!.state;
+                    final storiesState = OrganizerProvider.of(context)!.state;
+                    final themeMode = ThemeProvider.of(context)!.state;
 
-                      return MaterialApp.router(
-                        routeInformationParser: StoryRouteInformationParser(
-                          onRoute: (path) {
-                            final stories =
-                                StoryHelper.getAllStoriesFromCategories(
-                              storiesState.allCategories,
-                            );
-                            final selectedStory =
-                                selectStoryFromPath(path, stories);
-                            CanvasProvider.of(context)!
-                                .selectStory(selectedStory);
-                          },
-                        ),
-                        routerDelegate: StoryRouterDelegate(
-                          canvasState: canvasState,
-                          appInfo: widget.appInfo,
-                        ),
-                        title: widget.appInfo.name,
-                        debugShowCheckedModeBanner: false,
-                        themeMode: themeMode,
-                        darkTheme: Styles.darkTheme,
-                        theme: Styles.lightTheme,
-                      );
-                    },
-                  ),
+                    return MaterialApp.router(
+                      routeInformationParser: StoryRouteInformationParser(
+                        onRoute: (path) {
+                          final stories =
+                              StoryHelper.getAllStoriesFromCategories(
+                            storiesState.allCategories,
+                          );
+                          final selectedStory =
+                              selectStoryFromPath(path, stories);
+                          CanvasProvider.of(context)!
+                              .selectStory(selectedStory);
+                        },
+                      ),
+                      routerDelegate: StoryRouterDelegate(
+                        canvasState: canvasState,
+                        appInfo: widget.appInfo,
+                      ),
+                      title: widget.appInfo.name,
+                      debugShowCheckedModeBanner: false,
+                      themeMode: themeMode,
+                      darkTheme: Styles.darkTheme,
+                      theme: Styles.lightTheme,
+                    );
+                  },
                 ),
               ),
             ),

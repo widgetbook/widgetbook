@@ -19,7 +19,7 @@ class Storyboard extends StatelessWidget {
     return Widgetbook(
       defaultTheme: ThemeMode.dark,
       localizationsDelegates: [
-        AppLocalizations.delegate, // Add this line
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

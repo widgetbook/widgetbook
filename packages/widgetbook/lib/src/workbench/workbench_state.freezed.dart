@@ -20,11 +20,13 @@ class _$WorkbenchStateTearOff {
   _WorkbenchState call(
       {MultiRender multiRender = MultiRender.none,
       WidgetbookTheme? theme,
-      Locale? locale}) {
+      Locale? locale,
+      Device? device}) {
     return _WorkbenchState(
       multiRender: multiRender,
       theme: theme,
       locale: locale,
+      device: device,
     );
   }
 }
@@ -37,6 +39,7 @@ mixin _$WorkbenchState {
   MultiRender get multiRender => throw _privateConstructorUsedError;
   WidgetbookTheme? get theme => throw _privateConstructorUsedError;
   Locale? get locale => throw _privateConstructorUsedError;
+  Device? get device => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WorkbenchStateCopyWith<WorkbenchState> get copyWith =>
@@ -48,7 +51,11 @@ abstract class $WorkbenchStateCopyWith<$Res> {
   factory $WorkbenchStateCopyWith(
           WorkbenchState value, $Res Function(WorkbenchState) then) =
       _$WorkbenchStateCopyWithImpl<$Res>;
-  $Res call({MultiRender multiRender, WidgetbookTheme? theme, Locale? locale});
+  $Res call(
+      {MultiRender multiRender,
+      WidgetbookTheme? theme,
+      Locale? locale,
+      Device? device});
 
   $WidgetbookThemeCopyWith<$Res>? get theme;
 }
@@ -67,6 +74,7 @@ class _$WorkbenchStateCopyWithImpl<$Res>
     Object? multiRender = freezed,
     Object? theme = freezed,
     Object? locale = freezed,
+    Object? device = freezed,
   }) {
     return _then(_value.copyWith(
       multiRender: multiRender == freezed
@@ -81,6 +89,10 @@ class _$WorkbenchStateCopyWithImpl<$Res>
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
               as Locale?,
+      device: device == freezed
+          ? _value.device
+          : device // ignore: cast_nullable_to_non_nullable
+              as Device?,
     ));
   }
 
@@ -103,7 +115,11 @@ abstract class _$WorkbenchStateCopyWith<$Res>
           _WorkbenchState value, $Res Function(_WorkbenchState) then) =
       __$WorkbenchStateCopyWithImpl<$Res>;
   @override
-  $Res call({MultiRender multiRender, WidgetbookTheme? theme, Locale? locale});
+  $Res call(
+      {MultiRender multiRender,
+      WidgetbookTheme? theme,
+      Locale? locale,
+      Device? device});
 
   @override
   $WidgetbookThemeCopyWith<$Res>? get theme;
@@ -125,6 +141,7 @@ class __$WorkbenchStateCopyWithImpl<$Res>
     Object? multiRender = freezed,
     Object? theme = freezed,
     Object? locale = freezed,
+    Object? device = freezed,
   }) {
     return _then(_WorkbenchState(
       multiRender: multiRender == freezed
@@ -139,6 +156,10 @@ class __$WorkbenchStateCopyWithImpl<$Res>
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
               as Locale?,
+      device: device == freezed
+          ? _value.device
+          : device // ignore: cast_nullable_to_non_nullable
+              as Device?,
     ));
   }
 }
@@ -147,7 +168,10 @@ class __$WorkbenchStateCopyWithImpl<$Res>
 
 class _$_WorkbenchState implements _WorkbenchState {
   _$_WorkbenchState(
-      {this.multiRender = MultiRender.none, this.theme, this.locale});
+      {this.multiRender = MultiRender.none,
+      this.theme,
+      this.locale,
+      this.device});
 
   @JsonKey()
   @override
@@ -156,10 +180,12 @@ class _$_WorkbenchState implements _WorkbenchState {
   final WidgetbookTheme? theme;
   @override
   final Locale? locale;
+  @override
+  final Device? device;
 
   @override
   String toString() {
-    return 'WorkbenchState(multiRender: $multiRender, theme: $theme, locale: $locale)';
+    return 'WorkbenchState(multiRender: $multiRender, theme: $theme, locale: $locale, device: $device)';
   }
 
   @override
@@ -170,7 +196,8 @@ class _$_WorkbenchState implements _WorkbenchState {
             const DeepCollectionEquality()
                 .equals(other.multiRender, multiRender) &&
             const DeepCollectionEquality().equals(other.theme, theme) &&
-            const DeepCollectionEquality().equals(other.locale, locale));
+            const DeepCollectionEquality().equals(other.locale, locale) &&
+            const DeepCollectionEquality().equals(other.device, device));
   }
 
   @override
@@ -178,7 +205,8 @@ class _$_WorkbenchState implements _WorkbenchState {
       runtimeType,
       const DeepCollectionEquality().hash(multiRender),
       const DeepCollectionEquality().hash(theme),
-      const DeepCollectionEquality().hash(locale));
+      const DeepCollectionEquality().hash(locale),
+      const DeepCollectionEquality().hash(device));
 
   @JsonKey(ignore: true)
   @override
@@ -190,7 +218,8 @@ abstract class _WorkbenchState implements WorkbenchState {
   factory _WorkbenchState(
       {MultiRender multiRender,
       WidgetbookTheme? theme,
-      Locale? locale}) = _$_WorkbenchState;
+      Locale? locale,
+      Device? device}) = _$_WorkbenchState;
 
   @override
   MultiRender get multiRender;
@@ -198,6 +227,8 @@ abstract class _WorkbenchState implements WorkbenchState {
   WidgetbookTheme? get theme;
   @override
   Locale? get locale;
+  @override
+  Device? get device;
   @override
   @JsonKey(ignore: true)
   _$WorkbenchStateCopyWith<_WorkbenchState> get copyWith =>

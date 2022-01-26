@@ -3,14 +3,14 @@ import 'package:riverpod/riverpod.dart';
 import 'package:widgetbook/src/localization/localization_state.dart';
 
 final localizationProvider =
-    StateNotifierProvider<LocalizationProvider, LocalizationState>(
+    StateNotifierProvider<Localization, LocalizationState>(
   (ref) {
-    return LocalizationProvider();
+    return Localization();
   },
 );
 
-class LocalizationProvider extends StateNotifier<LocalizationState> {
-  LocalizationProvider({
+class Localization extends StateNotifier<LocalizationState> {
+  Localization({
     LocalizationState? state,
   }) : super(
           state ??
