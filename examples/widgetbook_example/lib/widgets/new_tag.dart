@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/constants/color.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewTag extends StatelessWidget {
   const NewTag({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class NewTag extends StatelessWidget {
         vertical: 4,
       ),
       child: Text(
-        'New',
+        AppLocalizations.of(context)!.newTag,
         style: TextStyle(
           color: Colors.white,
         ),

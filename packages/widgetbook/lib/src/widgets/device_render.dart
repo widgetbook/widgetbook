@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:widgetbook/src/localization/localization_provider.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/device_provider.dart';
 import 'package:widgetbook/src/providers/injected_theme_provider.dart';
 import 'package:widgetbook/src/providers/injected_theme_state.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
+import 'package:widgetbook/src/workbench/workbench.dart';
 
-class DeviceRender extends StatelessWidget {
+class DeviceRender extends ConsumerWidget {
   const DeviceRender({
     Key? key,
     required this.story,
@@ -26,7 +29,7 @@ class DeviceRender extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final deviceProvider = DeviceProvider.of(context)!;
     final state = deviceProvider.state;
 
@@ -35,6 +38,8 @@ class DeviceRender extends StatelessWidget {
 
     final themeState = InjectedThemeProvider.of(context)!.state;
 
+    final workbenchState = ref.watch(workbenchProvider);
+    final localizationState = ref.watch(localizationProvider);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -54,6 +59,9 @@ class DeviceRender extends StatelessWidget {
           height: resolution.logicalSize.height,
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
+            locale: workbenchState.locale,
+            localizationsDelegates: localizationState.localizationsDelegates,
+            supportedLocales: localizationState.supportedLocales,
             themeMode: Theme.of(context).brightness == Brightness.light
                 ? ThemeMode.light
                 : ThemeMode.dark,

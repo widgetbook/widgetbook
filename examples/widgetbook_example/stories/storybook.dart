@@ -9,6 +9,8 @@ import 'package:meal_app/widgets/ingredients.dart';
 import 'package:meal_app/widgets/meal_detail.dart';
 import 'package:meal_app/widgets/new_tag.dart';
 import 'package:meal_app/widgets/rotated_image.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class Storyboard extends StatelessWidget {
   const Storyboard({Key? key}) : super(key: key);
@@ -16,12 +18,22 @@ class Storyboard extends StatelessWidget {
   Widget buildStorybook(BuildContext context) {
     return Widgetbook(
       defaultTheme: ThemeMode.dark,
+      localizationsDelegates: [
+        AppLocalizations.delegate, // Add this line
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en'),
+        Locale('de'),
+        Locale('fr'),
+      ],
       devices: [
         Apple.iPhone11,
         Apple.iPhone12,
         Samsung.s10,
         Samsung.s21ultra,
-        Apple.iMacM1,
       ],
       categories: [
         WidgetbookCategory(

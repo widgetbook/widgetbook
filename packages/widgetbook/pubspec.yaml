@@ -14,15 +14,20 @@ dependencies:
   collection: ^1.15.0
   flutter:
     sdk: flutter
+  flutter_riverpod: ^1.0.3
   flutter_web_plugins:
     sdk: flutter
+  freezed_annotation: ^1.1.0
   meta: ^1.7.0
+  riverpod: ^1.0.3
   vector_math: ^2.1.0
   widgetbook_models: ^0.0.4
 
 dev_dependencies:
+  build_runner: ^2.1.7
   flutter_test:
     sdk: flutter
+  freezed: ^1.1.0
   mocktail: ^0.1.4
   very_good_analysis: ^2.3.0
 

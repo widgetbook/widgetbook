@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:widgetbook/src/configure_non_web.dart'
     if (dart.library.html) 'package:widgetbook/src/configure_web.dart';
+import 'package:widgetbook/src/localization/localization_provider.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
@@ -20,7 +22,7 @@ import 'package:widgetbook/src/services/filter_service.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
 
-class Widgetbook extends StatefulWidget {
+class Widgetbook extends StatelessWidget {
   const Widgetbook({
     Key? key,
     required this.categories,
@@ -33,6 +35,8 @@ class Widgetbook extends StatefulWidget {
       Samsung.s21ultra,
     ],
     required this.appInfo,
+    this.supportedLocales = const <Locale>[Locale('en', 'US')],
+    this.localizationsDelegates,
     this.lightTheme,
     this.darkTheme,
     this.defaultTheme = ThemeMode.system,
@@ -58,11 +62,77 @@ class Widgetbook extends StatefulWidget {
   /// The default theme mode Widgetbook starts with
   final ThemeMode defaultTheme;
 
+  final Iterable<Locale> supportedLocales;
+
+  final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
+
+  @override
+  Widget build(BuildContext context) {
+    return UncontrolledProviderScope(
+      container: ProviderContainer(),
+      child: WidgetbookWrapper(
+        categories: categories,
+        appInfo: appInfo,
+        lightTheme: lightTheme,
+        darkTheme: darkTheme,
+        devices: devices,
+        defaultTheme: defaultTheme,
+        supportedLocales: supportedLocales,
+        localizationsDelegates: localizationsDelegates,
+      ),
+    );
+  }
+}
+
+class WidgetbookWrapper extends ConsumerStatefulWidget {
+  const WidgetbookWrapper({
+    Key? key,
+    required this.categories,
+    this.devices = const [
+      Apple.iPhone11,
+      Apple.iPhone12,
+      Apple.iPhone12Mini,
+      Apple.iPhone12Pro,
+      Samsung.s10,
+      Samsung.s21ultra,
+    ],
+    required this.appInfo,
+    this.supportedLocales = const <Locale>[Locale('en', 'US')],
+    this.localizationsDelegates,
+    this.lightTheme,
+    this.darkTheme,
+    this.defaultTheme = ThemeMode.system,
+  }) : super(key: key);
+
+  /// Categories which host Folders and WidgetElements.
+  /// This can be used to organize the structure of the Widgetbook on a large
+  /// scale.
+  final List<WidgetbookCategory> categories;
+
+  /// The devices on which Stories are previewed.
+  final List<Device> devices;
+
+  /// Information about the app that is catalogued in the Widgetbook.
+  final AppInfo appInfo;
+
+  /// The `ThemeData` that is shown when the light theme is active.
+  final ThemeData? lightTheme;
+
+  /// The `ThemeData` that is shown when the dark theme is active.
+  final ThemeData? darkTheme;
+
+  /// The default theme mode Widgetbook starts with
+  final ThemeMode defaultTheme;
+
+  final Iterable<Locale> supportedLocales;
+
+  final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
+
   @override
   _WidgetbookState createState() => _WidgetbookState();
 }
 
-class _WidgetbookState extends State<Widgetbook> {
+class _WidgetbookState extends ConsumerState<WidgetbookWrapper> {
   // TODO ugly hack
   late BuildContext contextWithProviders;
 
@@ -72,12 +142,24 @@ class _WidgetbookState extends State<Widgetbook> {
   @override
   void initState() {
     configureApp();
+    _onHotReload();
 
     super.initState();
   }
 
+  void _onHotReload() {
+    ref.read(localizationProvider.notifier).hotReloadUpdate(
+          localizationsDelegates: widget.localizationsDelegates?.toList(),
+          supportedLocales: widget.supportedLocales.toList(),
+        );
+  }
+
   @override
-  void didUpdateWidget(covariant Widgetbook oldWidget) {
+  void didUpdateWidget(covariant WidgetbookWrapper oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // TODO(jenshor): this is not working and throws errors
+    _onHotReload();
+
     // TODO remove this and put into the Builders
     OrganizerProvider.of(contextWithProviders)!.update(widget.categories);
     DeviceProvider.of(contextWithProviders)!.update(widget.devices);
@@ -85,64 +167,71 @@ class _WidgetbookState extends State<Widgetbook> {
       lightTheme: widget.lightTheme,
       darkTheme: widget.darkTheme,
     );
-
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
   Widget build(BuildContext context) {
-    return OrganizerBuilder(
-      initialState: OrganizerState.unfiltered(
-        categories: widget.categories,
-      ),
-      storyRepository: storyRepository,
-      selectedStoryRepository: selectedStoryRepository,
-      filterService: const FilterService(),
-      child: CanvasBuilder(
-        selectedStoryRepository: selectedStoryRepository,
-        storyRepository: storyRepository,
-        child: ZoomBuilder(
-          child: ThemeBuilder(
-            themeMode: widget.defaultTheme,
-            child: DeviceBuilder(
-              availableDevices: widget.devices,
-              currentDevice: widget.devices.first,
-              child: InjectedThemeBuilder(
-                lightTheme: widget.lightTheme,
-                darkTheme: widget.darkTheme,
-                child: Builder(builder: (context) {
-                  contextWithProviders = context;
-                  final canvasState = CanvasProvider.of(context)!.state;
-                  final storiesState = OrganizerProvider.of(context)!.state;
-                  final themeMode = ThemeProvider.of(context)!.state;
+    return Consumer(
+      builder: (context, ref, child) {
+        return OrganizerBuilder(
+          initialState: OrganizerState.unfiltered(
+            categories: widget.categories,
+          ),
+          storyRepository: storyRepository,
+          selectedStoryRepository: selectedStoryRepository,
+          filterService: const FilterService(),
+          child: CanvasBuilder(
+            selectedStoryRepository: selectedStoryRepository,
+            storyRepository: storyRepository,
+            child: ZoomBuilder(
+              child: ThemeBuilder(
+                themeMode: widget.defaultTheme,
+                child: DeviceBuilder(
+                  availableDevices: widget.devices,
+                  currentDevice: widget.devices.first,
+                  child: InjectedThemeBuilder(
+                    lightTheme: widget.lightTheme,
+                    darkTheme: widget.darkTheme,
+                    child: Builder(
+                      builder: (context) {
+                        contextWithProviders = context;
+                        final canvasState = CanvasProvider.of(context)!.state;
+                        final storiesState =
+                            OrganizerProvider.of(context)!.state;
+                        final themeMode = ThemeProvider.of(context)!.state;
 
-                  return MaterialApp.router(
-                    routeInformationParser: StoryRouteInformationParser(
-                      onRoute: (path) {
-                        final stories = StoryHelper.getAllStoriesFromCategories(
-                          storiesState.allCategories,
+                        return MaterialApp.router(
+                          routeInformationParser: StoryRouteInformationParser(
+                            onRoute: (path) {
+                              final stories =
+                                  StoryHelper.getAllStoriesFromCategories(
+                                storiesState.allCategories,
+                              );
+                              final selectedStory =
+                                  selectStoryFromPath(path, stories);
+                              CanvasProvider.of(context)!
+                                  .selectStory(selectedStory);
+                            },
+                          ),
+                          routerDelegate: StoryRouterDelegate(
+                            canvasState: canvasState,
+                            appInfo: widget.appInfo,
+                          ),
+                          title: widget.appInfo.name,
+                          debugShowCheckedModeBanner: false,
+                          themeMode: themeMode,
+                          darkTheme: Styles.darkTheme,
+                          theme: Styles.lightTheme,
                         );
-                        final selectedStory =
-                            selectStoryFromPath(path, stories);
-                        CanvasProvider.of(context)!.selectStory(selectedStory);
                       },
                     ),
-                    routerDelegate: StoryRouterDelegate(
-                      canvasState: canvasState,
-                      appInfo: widget.appInfo,
-                    ),
-                    title: widget.appInfo.name,
-                    debugShowCheckedModeBanner: false,
-                    themeMode: themeMode,
-                    darkTheme: Styles.darkTheme,
-                    theme: Styles.lightTheme,
-                  );
-                }),
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 

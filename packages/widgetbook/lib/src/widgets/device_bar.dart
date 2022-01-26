@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:widgetbook/src/providers/device_provider.dart';
-import 'package:widgetbook/src/utils/extensions.dart';
 import 'package:widgetbook/src/widgets/device_item.dart';
+import 'package:widgetbook/src/workbench/iteration_button.dart';
+import 'package:widgetbook/src/workbench/multiselect_button.dart';
 
 class DeviceBar extends StatelessWidget {
   const DeviceBar({Key? key}) : super(key: key);
@@ -13,19 +14,8 @@ class DeviceBar extends StatelessWidget {
     final state = deviceProvider.state;
     return Row(
       children: [
-        TextButton(
+        IterationButton.left(
           onPressed: deviceProvider.previousDevice,
-          style: TextButton.styleFrom(
-            splashFactory: InkRipple.splashFactory,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
-            minimumSize: Size.zero,
-            padding: const EdgeInsets.all(12),
-          ),
-          child: Icon(
-            Icons.chevron_left,
-            color: context.theme.hintColor,
-          ),
         ),
         ListView.separated(
           shrinkWrap: true,
@@ -42,19 +32,8 @@ class DeviceBar extends StatelessWidget {
           },
           itemCount: state.availableDevices.length,
         ),
-        TextButton(
+        IterationButton.right(
           onPressed: deviceProvider.nextDevice,
-          style: TextButton.styleFrom(
-            splashFactory: InkRipple.splashFactory,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
-            minimumSize: Size.zero,
-            padding: const EdgeInsets.all(12),
-          ),
-          child: Icon(
-            Icons.chevron_right,
-            color: context.theme.hintColor,
-          ),
         ),
       ],
     );
