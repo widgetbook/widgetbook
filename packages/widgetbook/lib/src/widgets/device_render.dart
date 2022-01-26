@@ -16,18 +16,6 @@ class DeviceRender extends ConsumerWidget {
 
   final WidgetbookUseCase story;
 
-  ThemeData getInjectedTheme(BuildContext context, InjectedThemeState state) {
-    final brightness = ThemeProvider.of(context)!.state;
-
-    if (brightness == ThemeMode.light && state.lightTheme != null) {
-      return state.lightTheme!;
-    }
-    if (brightness == ThemeMode.dark && state.darkTheme != null) {
-      return state.darkTheme!;
-    }
-    return state.lightTheme ?? state.darkTheme!;
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final deviceProvider = DeviceProvider.of(context)!;
@@ -35,8 +23,6 @@ class DeviceRender extends ConsumerWidget {
 
     final device = state.currentDevice;
     final resolution = device.resolution;
-
-    final themeState = InjectedThemeProvider.of(context)!.state;
 
     final workbenchState = ref.watch(workbenchProvider);
     final localizationState = ref.watch(localizationProvider);
@@ -62,20 +48,9 @@ class DeviceRender extends ConsumerWidget {
             locale: workbenchState.locale,
             localizationsDelegates: localizationState.localizationsDelegates,
             supportedLocales: localizationState.supportedLocales,
-            themeMode: Theme.of(context).brightness == Brightness.light
-                ? ThemeMode.light
-                : ThemeMode.dark,
             home: AnimatedTheme(
               duration: Duration.zero,
-              data: getInjectedTheme(context, themeState).copyWith(
-                brightness: Theme.of(context).brightness,
-                pageTransitionsTheme: const PageTransitionsTheme(
-                  builders: {
-                    TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
-                    TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-                  },
-                ),
-              ),
+              data: workbenchState.theme!.data,
               child: Scaffold(
                 body: story.builder(
                   context,

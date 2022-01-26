@@ -19,7 +19,7 @@ class _$WorkbenchStateTearOff {
 
   _WorkbenchState call(
       {MultiRender multiRender = MultiRender.none,
-      WidgetbookTheme<dynamic>? theme,
+      WidgetbookTheme? theme,
       Locale? locale}) {
     return _WorkbenchState(
       multiRender: multiRender,
@@ -35,7 +35,7 @@ const $WorkbenchState = _$WorkbenchStateTearOff();
 /// @nodoc
 mixin _$WorkbenchState {
   MultiRender get multiRender => throw _privateConstructorUsedError;
-  WidgetbookTheme<dynamic>? get theme => throw _privateConstructorUsedError;
+  WidgetbookTheme? get theme => throw _privateConstructorUsedError;
   Locale? get locale => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -48,12 +48,9 @@ abstract class $WorkbenchStateCopyWith<$Res> {
   factory $WorkbenchStateCopyWith(
           WorkbenchState value, $Res Function(WorkbenchState) then) =
       _$WorkbenchStateCopyWithImpl<$Res>;
-  $Res call(
-      {MultiRender multiRender,
-      WidgetbookTheme<dynamic>? theme,
-      Locale? locale});
+  $Res call({MultiRender multiRender, WidgetbookTheme? theme, Locale? locale});
 
-  $WidgetbookThemeCopyWith<dynamic, $Res>? get theme;
+  $WidgetbookThemeCopyWith<$Res>? get theme;
 }
 
 /// @nodoc
@@ -79,7 +76,7 @@ class _$WorkbenchStateCopyWithImpl<$Res>
       theme: theme == freezed
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
-              as WidgetbookTheme<dynamic>?,
+              as WidgetbookTheme?,
       locale: locale == freezed
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
@@ -88,12 +85,12 @@ class _$WorkbenchStateCopyWithImpl<$Res>
   }
 
   @override
-  $WidgetbookThemeCopyWith<dynamic, $Res>? get theme {
+  $WidgetbookThemeCopyWith<$Res>? get theme {
     if (_value.theme == null) {
       return null;
     }
 
-    return $WidgetbookThemeCopyWith<dynamic, $Res>(_value.theme!, (value) {
+    return $WidgetbookThemeCopyWith<$Res>(_value.theme!, (value) {
       return _then(_value.copyWith(theme: value));
     });
   }
@@ -106,13 +103,10 @@ abstract class _$WorkbenchStateCopyWith<$Res>
           _WorkbenchState value, $Res Function(_WorkbenchState) then) =
       __$WorkbenchStateCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {MultiRender multiRender,
-      WidgetbookTheme<dynamic>? theme,
-      Locale? locale});
+  $Res call({MultiRender multiRender, WidgetbookTheme? theme, Locale? locale});
 
   @override
-  $WidgetbookThemeCopyWith<dynamic, $Res>? get theme;
+  $WidgetbookThemeCopyWith<$Res>? get theme;
 }
 
 /// @nodoc
@@ -140,7 +134,7 @@ class __$WorkbenchStateCopyWithImpl<$Res>
       theme: theme == freezed
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
-              as WidgetbookTheme<dynamic>?,
+              as WidgetbookTheme?,
       locale: locale == freezed
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
@@ -159,7 +153,7 @@ class _$_WorkbenchState implements _WorkbenchState {
   @override
   final MultiRender multiRender;
   @override
-  final WidgetbookTheme<dynamic>? theme;
+  final WidgetbookTheme? theme;
   @override
   final Locale? locale;
 
@@ -195,13 +189,13 @@ class _$_WorkbenchState implements _WorkbenchState {
 abstract class _WorkbenchState implements WorkbenchState {
   factory _WorkbenchState(
       {MultiRender multiRender,
-      WidgetbookTheme<dynamic>? theme,
+      WidgetbookTheme? theme,
       Locale? locale}) = _$_WorkbenchState;
 
   @override
   MultiRender get multiRender;
   @override
-  WidgetbookTheme<dynamic>? get theme;
+  WidgetbookTheme? get theme;
   @override
   Locale? get locale;
   @override

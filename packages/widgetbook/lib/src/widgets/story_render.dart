@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/providers/zoom_provider.dart';
 import 'package:widgetbook/src/widgets/device_render.dart';
+import 'package:widgetbook/src/widgets/multi_device_renderer.dart';
+import 'package:widgetbook/src/workbench/multi_render.dart';
+import 'package:widgetbook/src/workbench/workbench.dart';
 
-class StoryRender extends StatefulWidget {
+class StoryRender extends ConsumerStatefulWidget {
   const StoryRender({Key? key}) : super(key: key);
 
   @override
   _StoryState createState() => _StoryState();
 }
 
-class _StoryState extends State<StoryRender> {
+class _StoryState extends ConsumerState<StoryRender> {
   TransformationController controller = TransformationController(
     Matrix4.identity(),
   );
@@ -47,24 +51,33 @@ class _StoryState extends State<StoryRender> {
   Widget _buildCanvas(WidgetbookUseCase story) {
     _updateController();
 
-    return InteractiveViewer(
-      boundaryMargin: const EdgeInsets.all(double.infinity),
-      minScale: 0.25,
-      maxScale: 5,
-      constrained: false,
-      transformationController: controller,
-      onInteractionUpdate: (ScaleUpdateDetails details) {
-        ZoomProvider.of(context)!
-            .setScale(controller.value.getMaxScaleOnAxis());
-      },
-      child: DeviceRender(
-        story: story,
-      ),
-    );
+    final workkbenchState = ref.watch(workbenchProvider);
+
+    return workkbenchState.multiRender == MultiRender.none
+        ? InteractiveViewer(
+            boundaryMargin: const EdgeInsets.all(double.infinity),
+            minScale: 0.25,
+            maxScale: 5,
+            constrained: false,
+            transformationController: controller,
+            onInteractionUpdate: (ScaleUpdateDetails details) {
+              ZoomProvider.of(context)!
+                  .setScale(controller.value.getMaxScaleOnAxis());
+            },
+            child: DeviceRender(
+              story: story,
+            ),
+          )
+        : const SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: MultiRenderer(),
+          );
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     return _buildStory();
   }
 }

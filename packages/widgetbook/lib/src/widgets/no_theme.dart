@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/utils/extensions.dart';
 
+// TODO delete this
 class NoTheme extends StatelessWidget {
   const NoTheme({Key? key}) : super(key: key);
 

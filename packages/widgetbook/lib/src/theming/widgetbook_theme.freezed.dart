@@ -17,9 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$WidgetbookThemeTearOff {
   const _$WidgetbookThemeTearOff();
 
-  _WidgetbookTheme<T> call<T>(
-      {required String name, required IconData icon, required T data}) {
-    return _WidgetbookTheme<T>(
+  _WidgetbookTheme call(
+      {required String name, required IconData icon, required ThemeData data}) {
+    return _WidgetbookTheme(
       name: name,
       icon: icon,
       data: data,
@@ -31,32 +31,33 @@ class _$WidgetbookThemeTearOff {
 const $WidgetbookTheme = _$WidgetbookThemeTearOff();
 
 /// @nodoc
-mixin _$WidgetbookTheme<T> {
+mixin _$WidgetbookTheme {
   String get name => throw _privateConstructorUsedError;
-  IconData get icon => throw _privateConstructorUsedError;
-  T get data => throw _privateConstructorUsedError;
+  IconData get icon =>
+      throw _privateConstructorUsedError; // TODO This should be a generic type
+  ThemeData get data => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $WidgetbookThemeCopyWith<T, WidgetbookTheme<T>> get copyWith =>
+  $WidgetbookThemeCopyWith<WidgetbookTheme> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $WidgetbookThemeCopyWith<T, $Res> {
+abstract class $WidgetbookThemeCopyWith<$Res> {
   factory $WidgetbookThemeCopyWith(
-          WidgetbookTheme<T> value, $Res Function(WidgetbookTheme<T>) then) =
-      _$WidgetbookThemeCopyWithImpl<T, $Res>;
-  $Res call({String name, IconData icon, T data});
+          WidgetbookTheme value, $Res Function(WidgetbookTheme) then) =
+      _$WidgetbookThemeCopyWithImpl<$Res>;
+  $Res call({String name, IconData icon, ThemeData data});
 }
 
 /// @nodoc
-class _$WidgetbookThemeCopyWithImpl<T, $Res>
-    implements $WidgetbookThemeCopyWith<T, $Res> {
+class _$WidgetbookThemeCopyWithImpl<$Res>
+    implements $WidgetbookThemeCopyWith<$Res> {
   _$WidgetbookThemeCopyWithImpl(this._value, this._then);
 
-  final WidgetbookTheme<T> _value;
+  final WidgetbookTheme _value;
   // ignore: unused_field
-  final $Res Function(WidgetbookTheme<T>) _then;
+  final $Res Function(WidgetbookTheme) _then;
 
   @override
   $Res call({
@@ -76,31 +77,31 @@ class _$WidgetbookThemeCopyWithImpl<T, $Res>
       data: data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as T,
+              as ThemeData,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$WidgetbookThemeCopyWith<T, $Res>
-    implements $WidgetbookThemeCopyWith<T, $Res> {
+abstract class _$WidgetbookThemeCopyWith<$Res>
+    implements $WidgetbookThemeCopyWith<$Res> {
   factory _$WidgetbookThemeCopyWith(
-          _WidgetbookTheme<T> value, $Res Function(_WidgetbookTheme<T>) then) =
-      __$WidgetbookThemeCopyWithImpl<T, $Res>;
+          _WidgetbookTheme value, $Res Function(_WidgetbookTheme) then) =
+      __$WidgetbookThemeCopyWithImpl<$Res>;
   @override
-  $Res call({String name, IconData icon, T data});
+  $Res call({String name, IconData icon, ThemeData data});
 }
 
 /// @nodoc
-class __$WidgetbookThemeCopyWithImpl<T, $Res>
-    extends _$WidgetbookThemeCopyWithImpl<T, $Res>
-    implements _$WidgetbookThemeCopyWith<T, $Res> {
+class __$WidgetbookThemeCopyWithImpl<$Res>
+    extends _$WidgetbookThemeCopyWithImpl<$Res>
+    implements _$WidgetbookThemeCopyWith<$Res> {
   __$WidgetbookThemeCopyWithImpl(
-      _WidgetbookTheme<T> _value, $Res Function(_WidgetbookTheme<T>) _then)
-      : super(_value, (v) => _then(v as _WidgetbookTheme<T>));
+      _WidgetbookTheme _value, $Res Function(_WidgetbookTheme) _then)
+      : super(_value, (v) => _then(v as _WidgetbookTheme));
 
   @override
-  _WidgetbookTheme<T> get _value => super._value as _WidgetbookTheme<T>;
+  _WidgetbookTheme get _value => super._value as _WidgetbookTheme;
 
   @override
   $Res call({
@@ -108,7 +109,7 @@ class __$WidgetbookThemeCopyWithImpl<T, $Res>
     Object? icon = freezed,
     Object? data = freezed,
   }) {
-    return _then(_WidgetbookTheme<T>(
+    return _then(_WidgetbookTheme(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -120,14 +121,14 @@ class __$WidgetbookThemeCopyWithImpl<T, $Res>
       data: data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as T,
+              as ThemeData,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_WidgetbookTheme<T> implements _WidgetbookTheme<T> {
+class _$_WidgetbookTheme implements _WidgetbookTheme {
   _$_WidgetbookTheme(
       {required this.name, required this.icon, required this.data});
 
@@ -135,19 +136,19 @@ class _$_WidgetbookTheme<T> implements _WidgetbookTheme<T> {
   final String name;
   @override
   final IconData icon;
-  @override
-  final T data;
+  @override // TODO This should be a generic type
+  final ThemeData data;
 
   @override
   String toString() {
-    return 'WidgetbookTheme<$T>(name: $name, icon: $icon, data: $data)';
+    return 'WidgetbookTheme(name: $name, icon: $icon, data: $data)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _WidgetbookTheme<T> &&
+            other is _WidgetbookTheme &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.icon, icon) &&
             const DeepCollectionEquality().equals(other.data, data));
@@ -162,24 +163,24 @@ class _$_WidgetbookTheme<T> implements _WidgetbookTheme<T> {
 
   @JsonKey(ignore: true)
   @override
-  _$WidgetbookThemeCopyWith<T, _WidgetbookTheme<T>> get copyWith =>
-      __$WidgetbookThemeCopyWithImpl<T, _WidgetbookTheme<T>>(this, _$identity);
+  _$WidgetbookThemeCopyWith<_WidgetbookTheme> get copyWith =>
+      __$WidgetbookThemeCopyWithImpl<_WidgetbookTheme>(this, _$identity);
 }
 
-abstract class _WidgetbookTheme<T> implements WidgetbookTheme<T> {
+abstract class _WidgetbookTheme implements WidgetbookTheme {
   factory _WidgetbookTheme(
       {required String name,
       required IconData icon,
-      required T data}) = _$_WidgetbookTheme<T>;
+      required ThemeData data}) = _$_WidgetbookTheme;
 
   @override
   String get name;
   @override
   IconData get icon;
-  @override
-  T get data;
+  @override // TODO This should be a generic type
+  ThemeData get data;
   @override
   @JsonKey(ignore: true)
-  _$WidgetbookThemeCopyWith<T, _WidgetbookTheme<T>> get copyWith =>
+  _$WidgetbookThemeCopyWith<_WidgetbookTheme> get copyWith =>
       throw _privateConstructorUsedError;
 }

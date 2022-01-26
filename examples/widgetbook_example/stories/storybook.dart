@@ -35,6 +35,18 @@ class Storyboard extends StatelessWidget {
         Samsung.s10,
         Samsung.s21ultra,
       ],
+      themes: [
+        WidgetbookTheme(
+          name: 'Light',
+          icon: Icons.light_mode,
+          data: getLightTheme(context),
+        ),
+        WidgetbookTheme(
+          name: 'Dark',
+          icon: Icons.dark_mode,
+          data: getDarkTheme(context),
+        )
+      ],
       categories: [
         WidgetbookCategory(
           name: 'widgets test',
@@ -184,8 +196,6 @@ class Storyboard extends StatelessWidget {
         ),
       ],
       appInfo: AppInfo(name: 'Meal App'),
-      lightTheme: getLightTheme(context),
-      darkTheme: getDarkTheme(context),
     );
   }
 

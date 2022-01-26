@@ -19,6 +19,8 @@ import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/routing/route_information_parser.dart';
 import 'package:widgetbook/src/routing/story_router_delegate.dart';
 import 'package:widgetbook/src/services/filter_service.dart';
+import 'package:widgetbook/src/theming/theming.dart';
+import 'package:widgetbook/src/theming/widgetbook_theme.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
 
@@ -37,10 +39,15 @@ class Widgetbook extends StatelessWidget {
     required this.appInfo,
     this.supportedLocales = const <Locale>[Locale('en', 'US')],
     this.localizationsDelegates,
-    this.lightTheme,
-    this.darkTheme,
+    required this.themes,
     this.defaultTheme = ThemeMode.system,
-  }) : super(key: key);
+    // TODO check if this works
+  })  : assert(
+          themes.length > 0,
+          'please provide a theme by using one of these properties: '
+          'lightTheme, darkTheme or themes',
+        ),
+        super(key: key);
 
   /// Categories which host Folders and WidgetElements.
   /// This can be used to organize the structure of the Widgetbook on a large
@@ -53,12 +60,6 @@ class Widgetbook extends StatelessWidget {
   /// Information about the app that is catalogued in the Widgetbook.
   final AppInfo appInfo;
 
-  /// The `ThemeData` that is shown when the light theme is active.
-  final ThemeData? lightTheme;
-
-  /// The `ThemeData` that is shown when the dark theme is active.
-  final ThemeData? darkTheme;
-
   /// The default theme mode Widgetbook starts with
   final ThemeMode defaultTheme;
 
@@ -66,20 +67,20 @@ class Widgetbook extends StatelessWidget {
 
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
 
+  final List<WidgetbookTheme> themes;
+
   @override
   Widget build(BuildContext context) {
     return UncontrolledProviderScope(
       container: ProviderContainer(),
       child: WidgetbookWrapper(
-        categories: categories,
-        appInfo: appInfo,
-        lightTheme: lightTheme,
-        darkTheme: darkTheme,
-        devices: devices,
-        defaultTheme: defaultTheme,
-        supportedLocales: supportedLocales,
-        localizationsDelegates: localizationsDelegates,
-      ),
+          categories: categories,
+          appInfo: appInfo,
+          devices: devices,
+          defaultTheme: defaultTheme,
+          supportedLocales: supportedLocales,
+          localizationsDelegates: localizationsDelegates,
+          themes: themes),
     );
   }
 }
@@ -97,6 +98,7 @@ class WidgetbookWrapper extends ConsumerStatefulWidget {
       Samsung.s21ultra,
     ],
     required this.appInfo,
+    required this.themes,
     this.supportedLocales = const <Locale>[Locale('en', 'US')],
     this.localizationsDelegates,
     this.lightTheme,
@@ -116,10 +118,10 @@ class WidgetbookWrapper extends ConsumerStatefulWidget {
   final AppInfo appInfo;
 
   /// The `ThemeData` that is shown when the light theme is active.
-  final ThemeData? lightTheme;
+  final WidgetbookTheme? lightTheme;
 
   /// The `ThemeData` that is shown when the dark theme is active.
-  final ThemeData? darkTheme;
+  final WidgetbookTheme? darkTheme;
 
   /// The default theme mode Widgetbook starts with
   final ThemeMode defaultTheme;
@@ -127,6 +129,8 @@ class WidgetbookWrapper extends ConsumerStatefulWidget {
   final Iterable<Locale> supportedLocales;
 
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
+
+  final Iterable<WidgetbookTheme> themes;
 
   @override
   _WidgetbookState createState() => _WidgetbookState();
@@ -152,6 +156,9 @@ class _WidgetbookState extends ConsumerState<WidgetbookWrapper> {
           localizationsDelegates: widget.localizationsDelegates?.toList(),
           supportedLocales: widget.supportedLocales.toList(),
         );
+    ref
+        .read(themingProvider.notifier)
+        .hotReloadUpdate(themes: widget.themes.toList());
   }
 
   @override
@@ -163,10 +170,6 @@ class _WidgetbookState extends ConsumerState<WidgetbookWrapper> {
     // TODO remove this and put into the Builders
     OrganizerProvider.of(contextWithProviders)!.update(widget.categories);
     DeviceProvider.of(contextWithProviders)!.update(widget.devices);
-    InjectedThemeProvider.of(contextWithProviders)!.themesChanged(
-      lightTheme: widget.lightTheme,
-      darkTheme: widget.darkTheme,
-    );
   }
 
   @override
@@ -189,42 +192,37 @@ class _WidgetbookState extends ConsumerState<WidgetbookWrapper> {
                 child: DeviceBuilder(
                   availableDevices: widget.devices,
                   currentDevice: widget.devices.first,
-                  child: InjectedThemeBuilder(
-                    lightTheme: widget.lightTheme,
-                    darkTheme: widget.darkTheme,
-                    child: Builder(
-                      builder: (context) {
-                        contextWithProviders = context;
-                        final canvasState = CanvasProvider.of(context)!.state;
-                        final storiesState =
-                            OrganizerProvider.of(context)!.state;
-                        final themeMode = ThemeProvider.of(context)!.state;
+                  child: Builder(
+                    builder: (context) {
+                      contextWithProviders = context;
+                      final canvasState = CanvasProvider.of(context)!.state;
+                      final storiesState = OrganizerProvider.of(context)!.state;
+                      final themeMode = ThemeProvider.of(context)!.state;
 
-                        return MaterialApp.router(
-                          routeInformationParser: StoryRouteInformationParser(
-                            onRoute: (path) {
-                              final stories =
-                                  StoryHelper.getAllStoriesFromCategories(
-                                storiesState.allCategories,
-                              );
-                              final selectedStory =
-                                  selectStoryFromPath(path, stories);
-                              CanvasProvider.of(context)!
-                                  .selectStory(selectedStory);
-                            },
-                          ),
-                          routerDelegate: StoryRouterDelegate(
-                            canvasState: canvasState,
-                            appInfo: widget.appInfo,
-                          ),
-                          title: widget.appInfo.name,
-                          debugShowCheckedModeBanner: false,
-                          themeMode: themeMode,
-                          darkTheme: Styles.darkTheme,
-                          theme: Styles.lightTheme,
-                        );
-                      },
-                    ),
+                      return MaterialApp.router(
+                        routeInformationParser: StoryRouteInformationParser(
+                          onRoute: (path) {
+                            final stories =
+                                StoryHelper.getAllStoriesFromCategories(
+                              storiesState.allCategories,
+                            );
+                            final selectedStory =
+                                selectStoryFromPath(path, stories);
+                            CanvasProvider.of(context)!
+                                .selectStory(selectedStory);
+                          },
+                        ),
+                        routerDelegate: StoryRouterDelegate(
+                          canvasState: canvasState,
+                          appInfo: widget.appInfo,
+                        ),
+                        title: widget.appInfo.name,
+                        debugShowCheckedModeBanner: false,
+                        themeMode: themeMode,
+                        darkTheme: Styles.darkTheme,
+                        theme: Styles.lightTheme,
+                      );
+                    },
                   ),
                 ),
               ),

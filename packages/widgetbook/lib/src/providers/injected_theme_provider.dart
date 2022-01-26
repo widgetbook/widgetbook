@@ -44,6 +44,7 @@ class _InjectedThemeBuilderState extends State<InjectedThemeBuilder> {
   }
 }
 
+// TODO remove this
 class InjectedThemeProvider extends Provider<InjectedThemeState> {
   const InjectedThemeProvider({
     required InjectedThemeState state,
