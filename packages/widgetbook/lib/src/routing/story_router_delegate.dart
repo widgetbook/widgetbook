@@ -5,7 +5,7 @@ import 'package:widgetbook/src/providers/canvas_state.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/routing/story_route_path.dart';
 import 'package:widgetbook/src/styled_widgets/styled_scaffold.dart';
-import 'package:widgetbook/src/widgets/wrapper.dart';
+import 'package:widgetbook/src/widgets/editor.dart';
 
 import 'package:widgetbook/widgetbook.dart';
 
@@ -42,7 +42,7 @@ class NoAnimationTransitionDelegate extends TransitionDelegate<void> {
   }
 }
 
-class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
+class StoryRouterDelegate<CustomTheme> extends RouterDelegate<StoryRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<StoryRoutePath> {
   StoryRouterDelegate({
     required this.appInfo,
@@ -76,8 +76,8 @@ class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
                     const SizedBox(
                       width: 16,
                     ),
-                    const Expanded(
-                      child: Editor(),
+                    Expanded(
+                      child: Editor<CustomTheme>(),
                     ),
                   ],
                 );

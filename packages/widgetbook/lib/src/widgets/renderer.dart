@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widgetbook/src/localization/localization.dart';
 import 'package:widgetbook/src/rendering/render_mode.dart';
-import 'package:widgetbook/src/rendering/rendering.dart';
+import 'package:widgetbook/src/rendering/rendering_provider.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-class Renderer extends ConsumerWidget {
+class Renderer<CustomTheme> extends ConsumerWidget {
   const Renderer({
     Key? key,
     required this.device,
@@ -19,13 +19,13 @@ class Renderer extends ConsumerWidget {
   final Device device;
   final Locale locale;
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
-  final ThemeData theme;
+  final CustomTheme theme;
   final RenderMode renderMode;
   final Widget Function(BuildContext) useCaseBuilder;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final rendering = ref.watch(renderingProvider);
+    final rendering = ref.watch(getRenderingProvider<CustomTheme>());
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -45,17 +45,17 @@ class Renderer extends ConsumerWidget {
               rendering.themeBuilder(
                 context,
                 theme,
-                Builder(builder: (context2) {
+                Builder(builder: (context) {
                   return rendering.deviceFrameBuilder(
-                    context2,
+                    context,
                     device,
                     renderMode,
                     rendering.scaffoldBuilder(
-                      context2,
+                      context,
                       renderMode,
                       rendering.useCaseBuilder(
-                        context2,
-                        useCaseBuilder(context2),
+                        context,
+                        useCaseBuilder(context),
                       ),
                     ),
                   );

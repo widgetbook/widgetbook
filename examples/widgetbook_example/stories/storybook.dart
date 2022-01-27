@@ -17,8 +17,7 @@ class Storyboard extends StatelessWidget {
   const Storyboard({Key? key}) : super(key: key);
 
   Widget buildStorybook(BuildContext context) {
-    return Widgetbook(
-      defaultTheme: ThemeMode.dark,
+    return MaterialWidgetbook(
       localizationsDelegates: [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

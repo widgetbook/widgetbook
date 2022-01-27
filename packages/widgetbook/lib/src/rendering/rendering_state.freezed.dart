@@ -17,14 +17,14 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$RenderingStateTearOff {
   const _$RenderingStateTearOff();
 
-  _RenderingState call(
+  _RenderingState<CustomTheme> call<CustomTheme>(
       {required List<RenderMode> renderModes,
       required DeviceFrameBuilderFunction deviceFrameBuilder,
       required LocalizationBuilderFunction localizationBuilder,
-      required ThemeBuilderFunction themeBuilder,
+      required ThemeBuilderFunction<CustomTheme> themeBuilder,
       required ScaffoldBuilderFunction scaffoldBuilder,
       required UseCaseBuilderFunction useCaseBuilder}) {
-    return _RenderingState(
+    return _RenderingState<CustomTheme>(
       renderModes: renderModes,
       deviceFrameBuilder: deviceFrameBuilder,
       localizationBuilder: localizationBuilder,
@@ -39,45 +39,46 @@ class _$RenderingStateTearOff {
 const $RenderingState = _$RenderingStateTearOff();
 
 /// @nodoc
-mixin _$RenderingState {
+mixin _$RenderingState<CustomTheme> {
   List<RenderMode> get renderModes => throw _privateConstructorUsedError;
   DeviceFrameBuilderFunction get deviceFrameBuilder =>
       throw _privateConstructorUsedError;
   LocalizationBuilderFunction get localizationBuilder =>
       throw _privateConstructorUsedError;
-  ThemeBuilderFunction get themeBuilder => throw _privateConstructorUsedError;
+  ThemeBuilderFunction<CustomTheme> get themeBuilder =>
+      throw _privateConstructorUsedError;
   ScaffoldBuilderFunction get scaffoldBuilder =>
       throw _privateConstructorUsedError;
   UseCaseBuilderFunction get useCaseBuilder =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $RenderingStateCopyWith<RenderingState> get copyWith =>
-      throw _privateConstructorUsedError;
+  $RenderingStateCopyWith<CustomTheme, RenderingState<CustomTheme>>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $RenderingStateCopyWith<$Res> {
-  factory $RenderingStateCopyWith(
-          RenderingState value, $Res Function(RenderingState) then) =
-      _$RenderingStateCopyWithImpl<$Res>;
+abstract class $RenderingStateCopyWith<CustomTheme, $Res> {
+  factory $RenderingStateCopyWith(RenderingState<CustomTheme> value,
+          $Res Function(RenderingState<CustomTheme>) then) =
+      _$RenderingStateCopyWithImpl<CustomTheme, $Res>;
   $Res call(
       {List<RenderMode> renderModes,
       DeviceFrameBuilderFunction deviceFrameBuilder,
       LocalizationBuilderFunction localizationBuilder,
-      ThemeBuilderFunction themeBuilder,
+      ThemeBuilderFunction<CustomTheme> themeBuilder,
       ScaffoldBuilderFunction scaffoldBuilder,
       UseCaseBuilderFunction useCaseBuilder});
 }
 
 /// @nodoc
-class _$RenderingStateCopyWithImpl<$Res>
-    implements $RenderingStateCopyWith<$Res> {
+class _$RenderingStateCopyWithImpl<CustomTheme, $Res>
+    implements $RenderingStateCopyWith<CustomTheme, $Res> {
   _$RenderingStateCopyWithImpl(this._value, this._then);
 
-  final RenderingState _value;
+  final RenderingState<CustomTheme> _value;
   // ignore: unused_field
-  final $Res Function(RenderingState) _then;
+  final $Res Function(RenderingState<CustomTheme>) _then;
 
   @override
   $Res call({
@@ -104,7 +105,7 @@ class _$RenderingStateCopyWithImpl<$Res>
       themeBuilder: themeBuilder == freezed
           ? _value.themeBuilder
           : themeBuilder // ignore: cast_nullable_to_non_nullable
-              as ThemeBuilderFunction,
+              as ThemeBuilderFunction<CustomTheme>,
       scaffoldBuilder: scaffoldBuilder == freezed
           ? _value.scaffoldBuilder
           : scaffoldBuilder // ignore: cast_nullable_to_non_nullable
@@ -118,31 +119,32 @@ class _$RenderingStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$RenderingStateCopyWith<$Res>
-    implements $RenderingStateCopyWith<$Res> {
-  factory _$RenderingStateCopyWith(
-          _RenderingState value, $Res Function(_RenderingState) then) =
-      __$RenderingStateCopyWithImpl<$Res>;
+abstract class _$RenderingStateCopyWith<CustomTheme, $Res>
+    implements $RenderingStateCopyWith<CustomTheme, $Res> {
+  factory _$RenderingStateCopyWith(_RenderingState<CustomTheme> value,
+          $Res Function(_RenderingState<CustomTheme>) then) =
+      __$RenderingStateCopyWithImpl<CustomTheme, $Res>;
   @override
   $Res call(
       {List<RenderMode> renderModes,
       DeviceFrameBuilderFunction deviceFrameBuilder,
       LocalizationBuilderFunction localizationBuilder,
-      ThemeBuilderFunction themeBuilder,
+      ThemeBuilderFunction<CustomTheme> themeBuilder,
       ScaffoldBuilderFunction scaffoldBuilder,
       UseCaseBuilderFunction useCaseBuilder});
 }
 
 /// @nodoc
-class __$RenderingStateCopyWithImpl<$Res>
-    extends _$RenderingStateCopyWithImpl<$Res>
-    implements _$RenderingStateCopyWith<$Res> {
-  __$RenderingStateCopyWithImpl(
-      _RenderingState _value, $Res Function(_RenderingState) _then)
-      : super(_value, (v) => _then(v as _RenderingState));
+class __$RenderingStateCopyWithImpl<CustomTheme, $Res>
+    extends _$RenderingStateCopyWithImpl<CustomTheme, $Res>
+    implements _$RenderingStateCopyWith<CustomTheme, $Res> {
+  __$RenderingStateCopyWithImpl(_RenderingState<CustomTheme> _value,
+      $Res Function(_RenderingState<CustomTheme>) _then)
+      : super(_value, (v) => _then(v as _RenderingState<CustomTheme>));
 
   @override
-  _RenderingState get _value => super._value as _RenderingState;
+  _RenderingState<CustomTheme> get _value =>
+      super._value as _RenderingState<CustomTheme>;
 
   @override
   $Res call({
@@ -153,7 +155,7 @@ class __$RenderingStateCopyWithImpl<$Res>
     Object? scaffoldBuilder = freezed,
     Object? useCaseBuilder = freezed,
   }) {
-    return _then(_RenderingState(
+    return _then(_RenderingState<CustomTheme>(
       renderModes: renderModes == freezed
           ? _value.renderModes
           : renderModes // ignore: cast_nullable_to_non_nullable
@@ -169,7 +171,7 @@ class __$RenderingStateCopyWithImpl<$Res>
       themeBuilder: themeBuilder == freezed
           ? _value.themeBuilder
           : themeBuilder // ignore: cast_nullable_to_non_nullable
-              as ThemeBuilderFunction,
+              as ThemeBuilderFunction<CustomTheme>,
       scaffoldBuilder: scaffoldBuilder == freezed
           ? _value.scaffoldBuilder
           : scaffoldBuilder // ignore: cast_nullable_to_non_nullable
@@ -184,7 +186,7 @@ class __$RenderingStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RenderingState implements _RenderingState {
+class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
   _$_RenderingState(
       {required this.renderModes,
       required this.deviceFrameBuilder,
@@ -200,7 +202,7 @@ class _$_RenderingState implements _RenderingState {
   @override
   final LocalizationBuilderFunction localizationBuilder;
   @override
-  final ThemeBuilderFunction themeBuilder;
+  final ThemeBuilderFunction<CustomTheme> themeBuilder;
   @override
   final ScaffoldBuilderFunction scaffoldBuilder;
   @override
@@ -208,14 +210,14 @@ class _$_RenderingState implements _RenderingState {
 
   @override
   String toString() {
-    return 'RenderingState(renderModes: $renderModes, deviceFrameBuilder: $deviceFrameBuilder, localizationBuilder: $localizationBuilder, themeBuilder: $themeBuilder, scaffoldBuilder: $scaffoldBuilder, useCaseBuilder: $useCaseBuilder)';
+    return 'RenderingState<$CustomTheme>(renderModes: $renderModes, deviceFrameBuilder: $deviceFrameBuilder, localizationBuilder: $localizationBuilder, themeBuilder: $themeBuilder, scaffoldBuilder: $scaffoldBuilder, useCaseBuilder: $useCaseBuilder)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _RenderingState &&
+            other is _RenderingState<CustomTheme> &&
             const DeepCollectionEquality()
                 .equals(other.renderModes, renderModes) &&
             (identical(other.deviceFrameBuilder, deviceFrameBuilder) ||
@@ -242,18 +244,21 @@ class _$_RenderingState implements _RenderingState {
 
   @JsonKey(ignore: true)
   @override
-  _$RenderingStateCopyWith<_RenderingState> get copyWith =>
-      __$RenderingStateCopyWithImpl<_RenderingState>(this, _$identity);
+  _$RenderingStateCopyWith<CustomTheme, _RenderingState<CustomTheme>>
+      get copyWith => __$RenderingStateCopyWithImpl<CustomTheme,
+          _RenderingState<CustomTheme>>(this, _$identity);
 }
 
-abstract class _RenderingState implements RenderingState {
+abstract class _RenderingState<CustomTheme>
+    implements RenderingState<CustomTheme> {
   factory _RenderingState(
-      {required List<RenderMode> renderModes,
-      required DeviceFrameBuilderFunction deviceFrameBuilder,
-      required LocalizationBuilderFunction localizationBuilder,
-      required ThemeBuilderFunction themeBuilder,
-      required ScaffoldBuilderFunction scaffoldBuilder,
-      required UseCaseBuilderFunction useCaseBuilder}) = _$_RenderingState;
+          {required List<RenderMode> renderModes,
+          required DeviceFrameBuilderFunction deviceFrameBuilder,
+          required LocalizationBuilderFunction localizationBuilder,
+          required ThemeBuilderFunction<CustomTheme> themeBuilder,
+          required ScaffoldBuilderFunction scaffoldBuilder,
+          required UseCaseBuilderFunction useCaseBuilder}) =
+      _$_RenderingState<CustomTheme>;
 
   @override
   List<RenderMode> get renderModes;
@@ -262,13 +267,13 @@ abstract class _RenderingState implements RenderingState {
   @override
   LocalizationBuilderFunction get localizationBuilder;
   @override
-  ThemeBuilderFunction get themeBuilder;
+  ThemeBuilderFunction<CustomTheme> get themeBuilder;
   @override
   ScaffoldBuilderFunction get scaffoldBuilder;
   @override
   UseCaseBuilderFunction get useCaseBuilder;
   @override
   @JsonKey(ignore: true)
-  _$RenderingStateCopyWith<_RenderingState> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$RenderingStateCopyWith<CustomTheme, _RenderingState<CustomTheme>>
+      get copyWith => throw _privateConstructorUsedError;
 }

@@ -7,7 +7,7 @@ import 'package:widgetbook/src/rendering/render_handle.dart';
 import 'package:widgetbook/src/theming/theme_handle.dart';
 import 'package:widgetbook/src/widgets/zoom_handle.dart';
 
-class ControlsBar extends ConsumerWidget {
+class ControlsBar<CustomTheme> extends ConsumerWidget {
   const ControlsBar({Key? key}) : super(key: key);
 
   @override
@@ -24,24 +24,24 @@ class ControlsBar extends ConsumerWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: const [
-                  ZoomHandle(),
-                  SizedBox(
+                children: [
+                  const ZoomHandle(),
+                  const SizedBox(
                     width: 40,
                   ),
-                  ThemeHandle(),
-                  SizedBox(
+                  ThemeHandle<CustomTheme>(),
+                  const SizedBox(
                     width: 40,
                   ),
-                  DeviceHandle(),
-                  SizedBox(
+                  DeviceHandle<CustomTheme>(),
+                  const SizedBox(
                     width: 40,
                   ),
-                  LocalizationHandle(),
-                  SizedBox(
+                  LocalizationHandle<CustomTheme>(),
+                  const SizedBox(
                     width: 40,
                   ),
-                  RenderHandle(),
+                  RenderHandle<CustomTheme>(),
                 ],
               ),
             ),

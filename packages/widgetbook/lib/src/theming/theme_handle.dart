@@ -7,19 +7,19 @@ import 'package:widgetbook/src/workbench/multi_render.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 
-class ThemeHandle extends ConsumerWidget {
+class ThemeHandle<CustomTheme> extends ConsumerWidget {
   const ThemeHandle({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workbench = ref.read(workbenchProvider.notifier);
-    return MultiRenderHandle<WidgetbookTheme>(
+    final workbench = ref.read(getWorkbenchProvider<CustomTheme>().notifier);
+    return MultiRenderHandle<WidgetbookTheme<CustomTheme>, CustomTheme>(
       multiRender: MultiRender.themes,
-      items: ref.read(themingProvider).themes,
-      buildItem: (WidgetbookTheme e) => SelectionItem(
+      items: ref.watch(getThemingProvider<CustomTheme>()).themes,
+      buildItem: (WidgetbookTheme<CustomTheme> e) => SelectionItem(
         iconData: e.icon,
         tooltip: e.name,
-        selectedItem: ref.watch(workbenchProvider).theme,
+        selectedItem: ref.watch(getWorkbenchProvider<CustomTheme>()).theme,
         item: e,
         onPressed: () {
           workbench.changedTheme(e);

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widgetbook/src/rendering/render_mode.dart';
-import 'package:widgetbook/src/rendering/rendering.dart';
+import 'package:widgetbook/src/rendering/rendering_provider.dart';
 import 'package:widgetbook/src/workbench/iteration_button.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 
-class RenderHandle extends ConsumerWidget {
+class RenderHandle<CustomTheme> extends ConsumerWidget {
   const RenderHandle({
     Key? key,
   }) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workbench = ref.watch(workbenchProvider.notifier);
-    final renderingState = ref.watch(renderingProvider);
+    final workbench = ref.watch(getWorkbenchProvider<CustomTheme>().notifier);
+    final renderingState = ref.watch(getRenderingProvider<CustomTheme>());
 
     return Row(
       children: [
@@ -23,7 +23,8 @@ class RenderHandle extends ConsumerWidget {
               (e) => SelectionItem<RenderMode>(
                 iconData: e.icon,
                 tooltip: e.name,
-                selectedItem: ref.watch(workbenchProvider).renderMode,
+                selectedItem:
+                    ref.watch(getWorkbenchProvider<CustomTheme>()).renderMode,
                 item: e,
                 onPressed: () {
                   workbench.changedRenderMode(e);

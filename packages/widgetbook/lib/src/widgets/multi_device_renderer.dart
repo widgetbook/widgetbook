@@ -8,11 +8,11 @@ import 'package:widgetbook/src/widgets/renderer.dart';
 import 'package:widgetbook/src/workbench/multi_render.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 
-class MultiRenderer extends ConsumerWidget {
+class MultiRenderer<CustomTheme> extends ConsumerWidget {
   const MultiRenderer({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workbenchState = ref.watch(workbenchProvider);
+    final workbenchState = ref.watch(getWorkbenchProvider<CustomTheme>());
     final localizationState = ref.watch(localizationProvider);
 
     switch (workbenchState.multiRender) {
@@ -20,7 +20,7 @@ class MultiRenderer extends ConsumerWidget {
         // This cannot happen
         break;
       case MultiRender.themes:
-        final themingState = ref.read(themingProvider);
+        final themingState = ref.read(getThemingProvider<CustomTheme>());
         return _buildRenderer(
           themingState.themes
               .map(

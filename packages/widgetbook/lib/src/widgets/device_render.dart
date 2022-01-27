@@ -5,7 +5,7 @@ import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/widgets/renderer.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 
-class DeviceRender extends ConsumerWidget {
+class DeviceRender<CustomTheme> extends ConsumerWidget {
   const DeviceRender({
     Key? key,
     required this.story,
@@ -15,7 +15,7 @@ class DeviceRender extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workbenchState = ref.watch(workbenchProvider);
+    final workbenchState = ref.watch(getWorkbenchProvider<CustomTheme>());
     final localizationState = ref.watch(localizationProvider);
     return Renderer(
       device: workbenchState.device!,

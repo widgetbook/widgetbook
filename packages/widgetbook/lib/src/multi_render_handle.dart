@@ -5,7 +5,7 @@ import 'package:widgetbook/src/workbench/multi_render.dart';
 import 'package:widgetbook/src/workbench/multiselect_button.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
 
-class MultiRenderHandle<T> extends ConsumerWidget {
+class MultiRenderHandle<T, CustomTheme> extends ConsumerWidget {
   const MultiRenderHandle({
     Key? key,
     required this.multiRender,
@@ -25,7 +25,7 @@ class MultiRenderHandle<T> extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
-        MultiselectButton(
+        MultiselectButton<CustomTheme>(
           value: multiRender,
         ),
         IterationButton.left(onPressed: onPreviousPressed),

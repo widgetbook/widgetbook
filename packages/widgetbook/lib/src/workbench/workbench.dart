@@ -2,37 +2,71 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widgetbook/src/devices/devices.dart';
 import 'package:widgetbook/src/localization/localization.dart';
-import 'package:widgetbook/src/rendering/render_mode.dart';
-import 'package:widgetbook/src/rendering/rendering.dart';
+import 'package:widgetbook/src/rendering/rendering_provider.dart';
 import 'package:widgetbook/src/theming/theming.dart';
 import 'package:widgetbook/src/workbench/multi_render.dart';
 import 'package:widgetbook/src/workbench/workbench_state.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-final workbenchProvider = StateNotifierProvider<Workbench, WorkbenchState>(
-  (ref) {
-    final localization = ref.watch(localizationProvider);
-    final theming = ref.watch(themingProvider);
-    final devices = ref.watch(devicesProvider);
-    final rendering = ref.watch(renderingProvider);
-    return Workbench(
-      state: WorkbenchState(
-        locale: localization.supportedLocales.first,
-        theme: theming.themes.first,
-        device: devices.devices.first,
-        renderMode: RenderMode.widgetbook(),
-      ),
-      locales: localization.supportedLocales,
-      themes: theming.themes,
-      devices: devices.devices,
-      renderModes: rendering.renderModes,
-    );
-  },
-);
+late Object _workbenchProvider;
 
-class Workbench extends StateNotifier<WorkbenchState> {
+StateNotifierProvider<Workbench<CustomTheme>, WorkbenchState<CustomTheme>>
+    getWorkbenchProvider<CustomTheme>() {
+  return _workbenchProvider as StateNotifierProvider<Workbench<CustomTheme>,
+      WorkbenchState<CustomTheme>>;
+}
+
+void initializeWorkbenchProvider<CustomTheme>() {
+  _workbenchProvider = StateNotifierProvider<Workbench<CustomTheme>,
+      WorkbenchState<CustomTheme>>(
+    (ref) {
+      final localization = ref.watch(localizationProvider);
+      final theming = ref.watch(getThemingProvider<CustomTheme>());
+      final devices = ref.watch(devicesProvider);
+      final rendering = ref.watch(getRenderingProvider<CustomTheme>());
+      return Workbench<CustomTheme>(
+        state: WorkbenchState<CustomTheme>(
+          locale: localization.supportedLocales.first,
+          theme: theming.themes.first,
+          device: devices.devices.first,
+          renderMode: RenderMode.widgetbook(),
+        ),
+        locales: localization.supportedLocales,
+        themes: theming.themes,
+        devices: devices.devices,
+        renderModes: rendering.renderModes,
+      );
+    },
+  );
+}
+
+// TODO remove if this is working
+// final workbenchProvider =
+//     StateNotifierProvider<Workbench<CustomTheme>, WorkbenchState<CustomTheme>>(
+//   (ref) {
+//     final localization = ref.watch(localizationProvider);
+//     final theming = ref.watch(themingProvider);
+//     final devices = ref.watch(devicesProvider);
+//     final rendering = ref.watch(renderingProvider);
+//     return Workbench<CustomTheme>(
+//       state: WorkbenchState<CustomTheme>(
+//         locale: localization.supportedLocales.first,
+//         theme: theming.themes.first,
+//         device: devices.devices.first,
+//         renderMode: RenderMode.widgetbook(),
+//       ),
+//       locales: localization.supportedLocales,
+//       themes: theming.themes,
+//       devices: devices.devices,
+//       renderModes: rendering.renderModes,
+//     );
+//   },
+// );
+
+class Workbench<CustomTheme>
+    extends StateNotifier<WorkbenchState<CustomTheme>> {
   Workbench({
-    required WorkbenchState state,
+    required WorkbenchState<CustomTheme> state,
     required this.locales,
     required this.themes,
     required this.devices,
@@ -40,7 +74,7 @@ class Workbench extends StateNotifier<WorkbenchState> {
   }) : super(state);
 
   final List<Locale> locales;
-  final List<WidgetbookTheme> themes;
+  final List<WidgetbookTheme<CustomTheme>> themes;
   final List<Device> devices;
   final List<RenderMode> renderModes;
 
@@ -94,7 +128,7 @@ class Workbench extends StateNotifier<WorkbenchState> {
     );
   }
 
-  void changedTheme(WidgetbookTheme? widgetbookTheme) {
+  void changedTheme(WidgetbookTheme<CustomTheme>? widgetbookTheme) {
     state = state.copyWith(
       theme: widgetbookTheme,
       multiRender: state.multiRender == MultiRender.themes

@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:widgetbook/src/configure_non_web.dart'
     if (dart.library.html) 'package:widgetbook/src/configure_web.dart';
 import 'package:widgetbook/src/devices/devices.dart';
 import 'package:widgetbook/src/localization/localization.dart';
 import 'package:widgetbook/src/models/app_info.dart';
-import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
+import 'package:widgetbook/src/models/organizers/organizer_helper/story_helper.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/providers/organizer_state.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
 import 'package:widgetbook/src/providers/zoom_provider.dart';
-import 'package:widgetbook/src/rendering/render_mode.dart';
 import 'package:widgetbook/src/rendering/rendering.dart';
-import 'package:widgetbook/src/rendering/rendering_state.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/routing/route_information_parser.dart';
@@ -23,23 +20,17 @@ import 'package:widgetbook/src/routing/story_router_delegate.dart';
 import 'package:widgetbook/src/services/filter_service.dart';
 import 'package:widgetbook/src/theming/theming.dart';
 import 'package:widgetbook/src/theming/widgetbook_theme.dart';
-import 'package:widgetbook/src/utils/utils.dart';
+import 'package:widgetbook/src/utils/styles.dart';
+import 'package:widgetbook/src/workbench/workbench.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
 
-class Widgetbook extends StatelessWidget {
+class Widgetbook<CustomTheme> extends StatelessWidget {
   const Widgetbook({
     Key? key,
     required this.categories,
-    this.devices = const [
-      Apple.iPhone11,
-      Apple.iPhone12,
-      Apple.iPhone12Mini,
-      Apple.iPhone12Pro,
-      Samsung.s10,
-      Samsung.s21ultra,
-    ],
+    this.devices,
     required this.appInfo,
-    this.supportedLocales = const <Locale>[Locale('en', 'US')],
+    this.supportedLocales,
     this.localizationsDelegates,
     required this.themes,
     this.defaultTheme = ThemeMode.system,
@@ -63,7 +54,7 @@ class Widgetbook extends StatelessWidget {
   final List<WidgetbookCategory> categories;
 
   /// The devices on which Stories are previewed.
-  final List<Device> devices;
+  final List<Device>? devices;
 
   /// Information about the app that is catalogued in the Widgetbook.
   final AppInfo appInfo;
@@ -71,11 +62,11 @@ class Widgetbook extends StatelessWidget {
   /// The default theme mode Widgetbook starts with
   final ThemeMode defaultTheme;
 
-  final Iterable<Locale> supportedLocales;
+  final Iterable<Locale>? supportedLocales;
 
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
 
-  final List<WidgetbookTheme> themes;
+  final List<WidgetbookTheme<CustomTheme>> themes;
 
   final List<RenderMode>? renderModes;
 
@@ -83,7 +74,7 @@ class Widgetbook extends StatelessWidget {
 
   final LocalizationBuilderFunction? localizationBuilder;
 
-  final ThemeBuilderFunction? themeBuilder;
+  final ThemeBuilderFunction<CustomTheme>? themeBuilder;
 
   final ScaffoldBuilderFunction? scaffoldBuilder;
 
@@ -93,7 +84,7 @@ class Widgetbook extends StatelessWidget {
   Widget build(BuildContext context) {
     return UncontrolledProviderScope(
       container: ProviderContainer(),
-      child: WidgetbookWrapper(
+      child: WidgetbookWrapper<CustomTheme>(
         categories: categories,
         appInfo: appInfo,
         devices: devices,
@@ -112,24 +103,15 @@ class Widgetbook extends StatelessWidget {
   }
 }
 
-class WidgetbookWrapper extends ConsumerStatefulWidget {
+class WidgetbookWrapper<CustomTheme> extends ConsumerStatefulWidget {
   const WidgetbookWrapper({
     Key? key,
     required this.categories,
-    this.devices = const [
-      Apple.iPhone11,
-      Apple.iPhone12,
-      Apple.iPhone12Mini,
-      Apple.iPhone12Pro,
-      Samsung.s10,
-      Samsung.s21ultra,
-    ],
+    List<Device>? devices,
     required this.appInfo,
     required this.themes,
-    this.supportedLocales = const <Locale>[Locale('en', 'US')],
+    Iterable<Locale>? supportedLocales,
     this.localizationsDelegates,
-    this.lightTheme,
-    this.darkTheme,
     this.defaultTheme = ThemeMode.system,
     this.renderModes,
     this.deviceFrameBuilder,
@@ -137,7 +119,19 @@ class WidgetbookWrapper extends ConsumerStatefulWidget {
     this.themeBuilder,
     this.scaffoldBuilder,
     this.useCaseBuilder,
-  }) : super(key: key);
+  })  : supportedLocales =
+            supportedLocales ?? const <Locale>[Locale('en', 'US')],
+        // TODO check that devices cannot be empty if not null
+        devices = devices ??
+            const [
+              Apple.iPhone11,
+              Apple.iPhone12,
+              Apple.iPhone12Mini,
+              Apple.iPhone12Pro,
+              Samsung.s10,
+              Samsung.s21ultra,
+            ],
+        super(key: key);
 
   /// Categories which host Folders and WidgetElements.
   /// This can be used to organize the structure of the Widgetbook on a large
@@ -150,12 +144,6 @@ class WidgetbookWrapper extends ConsumerStatefulWidget {
   /// Information about the app that is catalogued in the Widgetbook.
   final AppInfo appInfo;
 
-  /// The `ThemeData` that is shown when the light theme is active.
-  final WidgetbookTheme? lightTheme;
-
-  /// The `ThemeData` that is shown when the dark theme is active.
-  final WidgetbookTheme? darkTheme;
-
   /// The default theme mode Widgetbook starts with
   final ThemeMode defaultTheme;
 
@@ -163,7 +151,7 @@ class WidgetbookWrapper extends ConsumerStatefulWidget {
 
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
 
-  final Iterable<WidgetbookTheme> themes;
+  final Iterable<WidgetbookTheme<CustomTheme>> themes;
 
   final List<RenderMode>? renderModes;
 
@@ -171,17 +159,19 @@ class WidgetbookWrapper extends ConsumerStatefulWidget {
 
   final LocalizationBuilderFunction? localizationBuilder;
 
-  final ThemeBuilderFunction? themeBuilder;
+  final ThemeBuilderFunction<CustomTheme>? themeBuilder;
 
   final ScaffoldBuilderFunction? scaffoldBuilder;
 
   final UseCaseBuilderFunction? useCaseBuilder;
 
   @override
-  _WidgetbookState createState() => _WidgetbookState();
+  _WidgetbookState<CustomTheme> createState() =>
+      _WidgetbookState<CustomTheme>();
 }
 
-class _WidgetbookState extends ConsumerState<WidgetbookWrapper> {
+class _WidgetbookState<CustomTheme>
+    extends ConsumerState<WidgetbookWrapper<CustomTheme>> {
   // TODO ugly hack
   late BuildContext contextWithProviders;
 
@@ -191,9 +181,16 @@ class _WidgetbookState extends ConsumerState<WidgetbookWrapper> {
   @override
   void initState() {
     configureApp();
+    _initializeProviders();
     _onHotReload();
 
     super.initState();
+  }
+
+  void _initializeProviders() {
+    initializeThemingProvider<CustomTheme>();
+    initializeRenderingProvider<CustomTheme>();
+    initializeWorkbenchProvider<CustomTheme>();
   }
 
   void _onHotReload() {
@@ -201,14 +198,14 @@ class _WidgetbookState extends ConsumerState<WidgetbookWrapper> {
           localizationsDelegates: widget.localizationsDelegates?.toList(),
           supportedLocales: widget.supportedLocales.toList(),
         );
-    ref.read(themingProvider.notifier).hotReloadUpdate(
+    ref.read(getThemingProvider<CustomTheme>().notifier).hotReloadUpdate(
           themes: widget.themes.toList(),
         );
     ref.read(devicesProvider.notifier).hotReloadUpdate(
           devices: widget.devices,
         );
 
-    ref.read(renderingProvider.notifier)
+    ref.read(getRenderingProvider<CustomTheme>().notifier)
       ..renderModesChanged(widget.renderModes)
       ..deviceFrameBuilderChanged(widget.deviceFrameBuilder)
       ..localizationBuilderChanged(widget.localizationBuilder)
@@ -218,9 +215,8 @@ class _WidgetbookState extends ConsumerState<WidgetbookWrapper> {
   }
 
   @override
-  void didUpdateWidget(covariant WidgetbookWrapper oldWidget) {
+  void didUpdateWidget(covariant WidgetbookWrapper<CustomTheme> oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // TODO(jenshor): this is not working and throws errors
     _onHotReload();
 
     // TODO remove this and put into the Builders
@@ -264,7 +260,7 @@ class _WidgetbookState extends ConsumerState<WidgetbookWrapper> {
                               .selectStory(selectedStory);
                         },
                       ),
-                      routerDelegate: StoryRouterDelegate(
+                      routerDelegate: StoryRouterDelegate<CustomTheme>(
                         canvasState: canvasState,
                         appInfo: widget.appInfo,
                       ),

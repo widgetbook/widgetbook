@@ -4,7 +4,7 @@ import 'package:widgetbook/src/utils/extensions.dart';
 import 'package:widgetbook/src/workbench/multi_render.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 
-class MultiselectButton extends ConsumerWidget {
+class MultiselectButton<CustomTheme> extends ConsumerWidget {
   const MultiselectButton({
     Key? key,
     required this.value,
@@ -14,11 +14,14 @@ class MultiselectButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentValue = ref.watch(workbenchProvider).multiRender;
+    final currentValue =
+        ref.watch(getWorkbenchProvider<CustomTheme>()).multiRender;
     final areEqual = value == currentValue;
     return TextButton(
       onPressed: () {
-        ref.read(workbenchProvider.notifier).changedMultiRender(value);
+        ref
+            .read(getWorkbenchProvider<CustomTheme>().notifier)
+            .changedMultiRender(value);
       },
       style: TextButton.styleFrom(
         splashFactory: InkRipple.splashFactory,

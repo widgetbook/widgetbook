@@ -3,9 +3,9 @@ import 'package:widgetbook/src/constants/radii.dart';
 
 import 'package:widgetbook/src/utils/utils.dart';
 import 'package:widgetbook/src/widgets/controls_bar.dart';
-import 'package:widgetbook/src/widgets/story_render.dart';
+import 'package:widgetbook/src/widgets/use_case_render.dart';
 
-class Editor extends StatelessWidget {
+class Editor<CustomTheme> extends StatelessWidget {
   const Editor({
     Key? key,
   }) : super(key: key);
@@ -15,7 +15,7 @@ class Editor extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const ControlsBar(),
+        ControlsBar<CustomTheme>(),
         const SizedBox(
           height: 16,
         ),
@@ -25,7 +25,7 @@ class Editor extends StatelessWidget {
               borderRadius: Radii.defaultRadius,
               color: context.colorScheme.surface,
             ),
-            child: const StoryRender(),
+            child: UseCaseRender<CustomTheme>(),
           ),
         ),
       ],

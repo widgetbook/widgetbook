@@ -7,19 +7,19 @@ import 'package:widgetbook/src/workbench/selection_item.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-class DeviceHandle extends ConsumerWidget {
+class DeviceHandle<CustomTheme> extends ConsumerWidget {
   const DeviceHandle({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workbench = ref.read(workbenchProvider.notifier);
-    return MultiRenderHandle<Device>(
+    final workbench = ref.read(getWorkbenchProvider<CustomTheme>().notifier);
+    return MultiRenderHandle<Device, CustomTheme>(
       multiRender: MultiRender.devices,
       items: ref.read(devicesProvider).devices,
       buildItem: (Device e) => SelectionItem(
         iconData: buildIcon(e.type),
         tooltip: e.name,
-        selectedItem: ref.watch(workbenchProvider).device,
+        selectedItem: ref.watch(getWorkbenchProvider<CustomTheme>()).device,
         item: e,
         onPressed: () {
           workbench.changedDevice(e);

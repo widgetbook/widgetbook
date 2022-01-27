@@ -17,13 +17,13 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$WorkbenchStateTearOff {
   const _$WorkbenchStateTearOff();
 
-  _WorkbenchState call(
+  _WorkbenchState<CustomTheme> call<CustomTheme>(
       {MultiRender multiRender = MultiRender.none,
-      WidgetbookTheme? theme,
+      WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
       required RenderMode renderMode}) {
-    return _WorkbenchState(
+    return _WorkbenchState<CustomTheme>(
       multiRender: multiRender,
       theme: theme,
       locale: locale,
@@ -37,42 +37,42 @@ class _$WorkbenchStateTearOff {
 const $WorkbenchState = _$WorkbenchStateTearOff();
 
 /// @nodoc
-mixin _$WorkbenchState {
+mixin _$WorkbenchState<CustomTheme> {
   MultiRender get multiRender => throw _privateConstructorUsedError;
-  WidgetbookTheme? get theme => throw _privateConstructorUsedError;
+  WidgetbookTheme<CustomTheme>? get theme => throw _privateConstructorUsedError;
   Locale? get locale => throw _privateConstructorUsedError;
   Device? get device => throw _privateConstructorUsedError;
   RenderMode get renderMode => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $WorkbenchStateCopyWith<WorkbenchState> get copyWith =>
-      throw _privateConstructorUsedError;
+  $WorkbenchStateCopyWith<CustomTheme, WorkbenchState<CustomTheme>>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $WorkbenchStateCopyWith<$Res> {
-  factory $WorkbenchStateCopyWith(
-          WorkbenchState value, $Res Function(WorkbenchState) then) =
-      _$WorkbenchStateCopyWithImpl<$Res>;
+abstract class $WorkbenchStateCopyWith<CustomTheme, $Res> {
+  factory $WorkbenchStateCopyWith(WorkbenchState<CustomTheme> value,
+          $Res Function(WorkbenchState<CustomTheme>) then) =
+      _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>;
   $Res call(
       {MultiRender multiRender,
-      WidgetbookTheme? theme,
+      WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
       RenderMode renderMode});
 
-  $WidgetbookThemeCopyWith<$Res>? get theme;
+  $WidgetbookThemeCopyWith<CustomTheme, $Res>? get theme;
   $RenderModeCopyWith<$Res> get renderMode;
 }
 
 /// @nodoc
-class _$WorkbenchStateCopyWithImpl<$Res>
-    implements $WorkbenchStateCopyWith<$Res> {
+class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
+    implements $WorkbenchStateCopyWith<CustomTheme, $Res> {
   _$WorkbenchStateCopyWithImpl(this._value, this._then);
 
-  final WorkbenchState _value;
+  final WorkbenchState<CustomTheme> _value;
   // ignore: unused_field
-  final $Res Function(WorkbenchState) _then;
+  final $Res Function(WorkbenchState<CustomTheme>) _then;
 
   @override
   $Res call({
@@ -90,7 +90,7 @@ class _$WorkbenchStateCopyWithImpl<$Res>
       theme: theme == freezed
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
-              as WidgetbookTheme?,
+              as WidgetbookTheme<CustomTheme>?,
       locale: locale == freezed
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
@@ -107,12 +107,12 @@ class _$WorkbenchStateCopyWithImpl<$Res>
   }
 
   @override
-  $WidgetbookThemeCopyWith<$Res>? get theme {
+  $WidgetbookThemeCopyWith<CustomTheme, $Res>? get theme {
     if (_value.theme == null) {
       return null;
     }
 
-    return $WidgetbookThemeCopyWith<$Res>(_value.theme!, (value) {
+    return $WidgetbookThemeCopyWith<CustomTheme, $Res>(_value.theme!, (value) {
       return _then(_value.copyWith(theme: value));
     });
   }
@@ -126,35 +126,36 @@ class _$WorkbenchStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$WorkbenchStateCopyWith<$Res>
-    implements $WorkbenchStateCopyWith<$Res> {
-  factory _$WorkbenchStateCopyWith(
-          _WorkbenchState value, $Res Function(_WorkbenchState) then) =
-      __$WorkbenchStateCopyWithImpl<$Res>;
+abstract class _$WorkbenchStateCopyWith<CustomTheme, $Res>
+    implements $WorkbenchStateCopyWith<CustomTheme, $Res> {
+  factory _$WorkbenchStateCopyWith(_WorkbenchState<CustomTheme> value,
+          $Res Function(_WorkbenchState<CustomTheme>) then) =
+      __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>;
   @override
   $Res call(
       {MultiRender multiRender,
-      WidgetbookTheme? theme,
+      WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
       RenderMode renderMode});
 
   @override
-  $WidgetbookThemeCopyWith<$Res>? get theme;
+  $WidgetbookThemeCopyWith<CustomTheme, $Res>? get theme;
   @override
   $RenderModeCopyWith<$Res> get renderMode;
 }
 
 /// @nodoc
-class __$WorkbenchStateCopyWithImpl<$Res>
-    extends _$WorkbenchStateCopyWithImpl<$Res>
-    implements _$WorkbenchStateCopyWith<$Res> {
-  __$WorkbenchStateCopyWithImpl(
-      _WorkbenchState _value, $Res Function(_WorkbenchState) _then)
-      : super(_value, (v) => _then(v as _WorkbenchState));
+class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
+    extends _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
+    implements _$WorkbenchStateCopyWith<CustomTheme, $Res> {
+  __$WorkbenchStateCopyWithImpl(_WorkbenchState<CustomTheme> _value,
+      $Res Function(_WorkbenchState<CustomTheme>) _then)
+      : super(_value, (v) => _then(v as _WorkbenchState<CustomTheme>));
 
   @override
-  _WorkbenchState get _value => super._value as _WorkbenchState;
+  _WorkbenchState<CustomTheme> get _value =>
+      super._value as _WorkbenchState<CustomTheme>;
 
   @override
   $Res call({
@@ -164,7 +165,7 @@ class __$WorkbenchStateCopyWithImpl<$Res>
     Object? device = freezed,
     Object? renderMode = freezed,
   }) {
-    return _then(_WorkbenchState(
+    return _then(_WorkbenchState<CustomTheme>(
       multiRender: multiRender == freezed
           ? _value.multiRender
           : multiRender // ignore: cast_nullable_to_non_nullable
@@ -172,7 +173,7 @@ class __$WorkbenchStateCopyWithImpl<$Res>
       theme: theme == freezed
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
-              as WidgetbookTheme?,
+              as WidgetbookTheme<CustomTheme>?,
       locale: locale == freezed
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
@@ -191,7 +192,7 @@ class __$WorkbenchStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_WorkbenchState implements _WorkbenchState {
+class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
   _$_WorkbenchState(
       {this.multiRender = MultiRender.none,
       this.theme,
@@ -203,7 +204,7 @@ class _$_WorkbenchState implements _WorkbenchState {
   @override
   final MultiRender multiRender;
   @override
-  final WidgetbookTheme? theme;
+  final WidgetbookTheme<CustomTheme>? theme;
   @override
   final Locale? locale;
   @override
@@ -213,14 +214,14 @@ class _$_WorkbenchState implements _WorkbenchState {
 
   @override
   String toString() {
-    return 'WorkbenchState(multiRender: $multiRender, theme: $theme, locale: $locale, device: $device, renderMode: $renderMode)';
+    return 'WorkbenchState<$CustomTheme>(multiRender: $multiRender, theme: $theme, locale: $locale, device: $device, renderMode: $renderMode)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _WorkbenchState &&
+            other is _WorkbenchState<CustomTheme> &&
             const DeepCollectionEquality()
                 .equals(other.multiRender, multiRender) &&
             const DeepCollectionEquality().equals(other.theme, theme) &&
@@ -241,22 +242,24 @@ class _$_WorkbenchState implements _WorkbenchState {
 
   @JsonKey(ignore: true)
   @override
-  _$WorkbenchStateCopyWith<_WorkbenchState> get copyWith =>
-      __$WorkbenchStateCopyWithImpl<_WorkbenchState>(this, _$identity);
+  _$WorkbenchStateCopyWith<CustomTheme, _WorkbenchState<CustomTheme>>
+      get copyWith => __$WorkbenchStateCopyWithImpl<CustomTheme,
+          _WorkbenchState<CustomTheme>>(this, _$identity);
 }
 
-abstract class _WorkbenchState implements WorkbenchState {
+abstract class _WorkbenchState<CustomTheme>
+    implements WorkbenchState<CustomTheme> {
   factory _WorkbenchState(
       {MultiRender multiRender,
-      WidgetbookTheme? theme,
+      WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
-      required RenderMode renderMode}) = _$_WorkbenchState;
+      required RenderMode renderMode}) = _$_WorkbenchState<CustomTheme>;
 
   @override
   MultiRender get multiRender;
   @override
-  WidgetbookTheme? get theme;
+  WidgetbookTheme<CustomTheme>? get theme;
   @override
   Locale? get locale;
   @override
@@ -265,6 +268,6 @@ abstract class _WorkbenchState implements WorkbenchState {
   RenderMode get renderMode;
   @override
   @JsonKey(ignore: true)
-  _$WorkbenchStateCopyWith<_WorkbenchState> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$WorkbenchStateCopyWith<CustomTheme, _WorkbenchState<CustomTheme>>
+      get copyWith => throw _privateConstructorUsedError;
 }

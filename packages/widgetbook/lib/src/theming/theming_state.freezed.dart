@@ -17,9 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ThemingStateTearOff {
   const _$ThemingStateTearOff();
 
-  _ThemingState call(
-      {List<WidgetbookTheme> themes = const <WidgetbookTheme>[]}) {
-    return _ThemingState(
+  _ThemingState<T> call<T>({required List<WidgetbookTheme<T>> themes}) {
+    return _ThemingState<T>(
       themes: themes,
     );
   }
@@ -29,29 +28,30 @@ class _$ThemingStateTearOff {
 const $ThemingState = _$ThemingStateTearOff();
 
 /// @nodoc
-mixin _$ThemingState {
-  List<WidgetbookTheme> get themes => throw _privateConstructorUsedError;
+mixin _$ThemingState<T> {
+  List<WidgetbookTheme<T>> get themes => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $ThemingStateCopyWith<ThemingState> get copyWith =>
+  $ThemingStateCopyWith<T, ThemingState<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ThemingStateCopyWith<$Res> {
+abstract class $ThemingStateCopyWith<T, $Res> {
   factory $ThemingStateCopyWith(
-          ThemingState value, $Res Function(ThemingState) then) =
-      _$ThemingStateCopyWithImpl<$Res>;
-  $Res call({List<WidgetbookTheme> themes});
+          ThemingState<T> value, $Res Function(ThemingState<T>) then) =
+      _$ThemingStateCopyWithImpl<T, $Res>;
+  $Res call({List<WidgetbookTheme<T>> themes});
 }
 
 /// @nodoc
-class _$ThemingStateCopyWithImpl<$Res> implements $ThemingStateCopyWith<$Res> {
+class _$ThemingStateCopyWithImpl<T, $Res>
+    implements $ThemingStateCopyWith<T, $Res> {
   _$ThemingStateCopyWithImpl(this._value, this._then);
 
-  final ThemingState _value;
+  final ThemingState<T> _value;
   // ignore: unused_field
-  final $Res Function(ThemingState) _then;
+  final $Res Function(ThemingState<T>) _then;
 
   @override
   $Res call({
@@ -61,63 +61,63 @@ class _$ThemingStateCopyWithImpl<$Res> implements $ThemingStateCopyWith<$Res> {
       themes: themes == freezed
           ? _value.themes
           : themes // ignore: cast_nullable_to_non_nullable
-              as List<WidgetbookTheme>,
+              as List<WidgetbookTheme<T>>,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$ThemingStateCopyWith<$Res>
-    implements $ThemingStateCopyWith<$Res> {
+abstract class _$ThemingStateCopyWith<T, $Res>
+    implements $ThemingStateCopyWith<T, $Res> {
   factory _$ThemingStateCopyWith(
-          _ThemingState value, $Res Function(_ThemingState) then) =
-      __$ThemingStateCopyWithImpl<$Res>;
+          _ThemingState<T> value, $Res Function(_ThemingState<T>) then) =
+      __$ThemingStateCopyWithImpl<T, $Res>;
   @override
-  $Res call({List<WidgetbookTheme> themes});
+  $Res call({List<WidgetbookTheme<T>> themes});
 }
 
 /// @nodoc
-class __$ThemingStateCopyWithImpl<$Res> extends _$ThemingStateCopyWithImpl<$Res>
-    implements _$ThemingStateCopyWith<$Res> {
+class __$ThemingStateCopyWithImpl<T, $Res>
+    extends _$ThemingStateCopyWithImpl<T, $Res>
+    implements _$ThemingStateCopyWith<T, $Res> {
   __$ThemingStateCopyWithImpl(
-      _ThemingState _value, $Res Function(_ThemingState) _then)
-      : super(_value, (v) => _then(v as _ThemingState));
+      _ThemingState<T> _value, $Res Function(_ThemingState<T>) _then)
+      : super(_value, (v) => _then(v as _ThemingState<T>));
 
   @override
-  _ThemingState get _value => super._value as _ThemingState;
+  _ThemingState<T> get _value => super._value as _ThemingState<T>;
 
   @override
   $Res call({
     Object? themes = freezed,
   }) {
-    return _then(_ThemingState(
+    return _then(_ThemingState<T>(
       themes: themes == freezed
           ? _value.themes
           : themes // ignore: cast_nullable_to_non_nullable
-              as List<WidgetbookTheme>,
+              as List<WidgetbookTheme<T>>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_ThemingState implements _ThemingState {
-  _$_ThemingState({this.themes = const <WidgetbookTheme>[]});
+class _$_ThemingState<T> implements _ThemingState<T> {
+  _$_ThemingState({required this.themes});
 
-  @JsonKey()
   @override
-  final List<WidgetbookTheme> themes;
+  final List<WidgetbookTheme<T>> themes;
 
   @override
   String toString() {
-    return 'ThemingState(themes: $themes)';
+    return 'ThemingState<$T>(themes: $themes)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ThemingState &&
+            other is _ThemingState<T> &&
             const DeepCollectionEquality().equals(other.themes, themes));
   }
 
@@ -127,17 +127,18 @@ class _$_ThemingState implements _ThemingState {
 
   @JsonKey(ignore: true)
   @override
-  _$ThemingStateCopyWith<_ThemingState> get copyWith =>
-      __$ThemingStateCopyWithImpl<_ThemingState>(this, _$identity);
+  _$ThemingStateCopyWith<T, _ThemingState<T>> get copyWith =>
+      __$ThemingStateCopyWithImpl<T, _ThemingState<T>>(this, _$identity);
 }
 
-abstract class _ThemingState implements ThemingState {
-  factory _ThemingState({List<WidgetbookTheme> themes}) = _$_ThemingState;
+abstract class _ThemingState<T> implements ThemingState<T> {
+  factory _ThemingState({required List<WidgetbookTheme<T>> themes}) =
+      _$_ThemingState<T>;
 
   @override
-  List<WidgetbookTheme> get themes;
+  List<WidgetbookTheme<T>> get themes;
   @override
   @JsonKey(ignore: true)
-  _$ThemingStateCopyWith<_ThemingState> get copyWith =>
+  _$ThemingStateCopyWith<T, _ThemingState<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }

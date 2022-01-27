@@ -9,14 +9,14 @@ import 'package:widgetbook/src/widgets/multi_device_renderer.dart';
 import 'package:widgetbook/src/workbench/multi_render.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 
-class StoryRender extends ConsumerStatefulWidget {
-  const StoryRender({Key? key}) : super(key: key);
+class UseCaseRender<CustomTheme> extends ConsumerStatefulWidget {
+  const UseCaseRender({Key? key}) : super(key: key);
 
   @override
-  _StoryState createState() => _StoryState();
+  _StoryState createState() => _StoryState<CustomTheme>();
 }
 
-class _StoryState extends ConsumerState<StoryRender> {
+class _StoryState<CustomTheme> extends ConsumerState<UseCaseRender> {
   TransformationController controller = TransformationController(
     Matrix4.identity(),
   );
@@ -51,10 +51,10 @@ class _StoryState extends ConsumerState<StoryRender> {
   Widget _buildCanvas(WidgetbookUseCase story) {
     _updateController();
 
-    final workkbenchState = ref.watch(workbenchProvider);
+    final workkbenchState = ref.watch(getWorkbenchProvider<CustomTheme>());
 
     return workkbenchState.multiRender == MultiRender.none
-        ? DeviceRender(
+        ? DeviceRender<CustomTheme>(
             story: story,
           )
         // ? InteractiveViewer(
@@ -71,9 +71,9 @@ class _StoryState extends ConsumerState<StoryRender> {
         //       story: story,
         //     ),
         //   )
-        : const SingleChildScrollView(
+        : SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: MultiRenderer(),
+            child: MultiRenderer<CustomTheme>(),
           );
   }
 

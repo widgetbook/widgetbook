@@ -4,8 +4,8 @@ import 'package:widgetbook/src/theming/widgetbook_theme.dart';
 part 'theming_state.freezed.dart';
 
 @freezed
-class ThemingState with _$ThemingState {
+class ThemingState<T> with _$ThemingState<T> {
   factory ThemingState({
-    @Default(<WidgetbookTheme>[]) List<WidgetbookTheme> themes,
-  }) = _ThemingState;
+    required List<WidgetbookTheme<T>> themes,
+  }) = _ThemingState<T>;
 }

@@ -20,9 +20,9 @@ typedef LocalizationBuilderFunction = Widget Function(
   Widget child,
 );
 
-typedef ThemeBuilderFunction = Widget Function(
+typedef ThemeBuilderFunction<CustomTheme> = Widget Function(
   BuildContext context,
-  ThemeData theme,
+  CustomTheme theme,
   Widget child,
 );
 
@@ -38,12 +38,12 @@ typedef UseCaseBuilderFunction = Widget Function(
 );
 
 @freezed
-class RenderingState with _$RenderingState {
+class RenderingState<CustomTheme> with _$RenderingState<CustomTheme> {
   factory RenderingState({
     required List<RenderMode> renderModes,
     required DeviceFrameBuilderFunction deviceFrameBuilder,
     required LocalizationBuilderFunction localizationBuilder,
-    required ThemeBuilderFunction themeBuilder,
+    required ThemeBuilderFunction<CustomTheme> themeBuilder,
     required ScaffoldBuilderFunction scaffoldBuilder,
     required UseCaseBuilderFunction useCaseBuilder,
   }) = _RenderingState;
