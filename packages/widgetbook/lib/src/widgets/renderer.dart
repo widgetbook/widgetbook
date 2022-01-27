@@ -36,26 +36,26 @@ class Renderer extends ConsumerWidget {
         ),
         Expanded(
           child: Center(
-            child: rendering.deviceFrameBuilder(
+            child: rendering.localizationBuilder(
               context,
-              device,
-              renderMode,
-              rendering.localizationBuilder(
+              ref.watch(localizationProvider).supportedLocales,
+              // TODO this should not be nullable
+              localizationsDelegates!.toList(),
+              locale,
+              rendering.themeBuilder(
                 context,
-                ref.watch(localizationProvider).supportedLocales,
-                // TODO this should not be nullable
-                localizationsDelegates!.toList(),
-                locale,
-                Builder(builder: (context) {
-                  return rendering.themeBuilder(
-                    context,
-                    theme,
+                theme,
+                Builder(builder: (context2) {
+                  return rendering.deviceFrameBuilder(
+                    context2,
+                    device,
+                    renderMode,
                     rendering.scaffoldBuilder(
-                      context,
+                      context2,
                       renderMode,
                       rendering.useCaseBuilder(
-                        context,
-                        useCaseBuilder(context),
+                        context2,
+                        useCaseBuilder(context2),
                       ),
                     ),
                   );

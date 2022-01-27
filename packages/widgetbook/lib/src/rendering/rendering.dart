@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod/riverpod.dart';
+import 'package:widgetbook/src/devices/widgetbook_device_frame.dart';
 import 'package:widgetbook/src/rendering/render_mode.dart';
 import 'package:widgetbook/src/rendering/rendering_state.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -25,16 +26,8 @@ class Rendering extends StateNotifier<RenderingState> {
               Widget child,
             ) {
               if (renderMode == RenderMode.widgetbook()) {
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Theme.of(context).brightness == Brightness.dark
-                          ? Colors.white
-                          : Colors.black,
-                    ),
-                  ),
-                  width: device.resolution.logicalSize.width,
-                  height: device.resolution.logicalSize.height,
+                return WidgetbookDeviceFrame(
+                  device: device,
                   child: child,
                 );
               }
@@ -69,7 +62,8 @@ class Rendering extends StateNotifier<RenderingState> {
               RenderMode renderMode,
               Widget child,
             ) {
-              if (renderMode == RenderMode.widgetbook()) {
+              if (renderMode == RenderMode.widgetbook() ||
+                  renderMode == RenderMode.devicePreview()) {
                 return Scaffold(
                   body: child,
                 );
@@ -82,4 +76,50 @@ class Rendering extends StateNotifier<RenderingState> {
             },
           ),
         );
+
+  void renderModesChanged(List<RenderMode>? renderModes) {
+    if (renderModes != null) {
+      state = state.copyWith(renderModes: renderModes);
+    }
+  }
+
+  void deviceFrameBuilderChanged(
+    DeviceFrameBuilderFunction? deviceFrameBuilder,
+  ) {
+    if (deviceFrameBuilder != null) {
+      state = state.copyWith(deviceFrameBuilder: deviceFrameBuilder);
+    }
+  }
+
+  void localizationBuilderChanged(
+    LocalizationBuilderFunction? localizationBuilder,
+  ) {
+    if (localizationBuilder != null) {
+      state = state.copyWith(localizationBuilder: localizationBuilder);
+    }
+  }
+
+  void themeBuilderChanged(
+    ThemeBuilderFunction? themeBuilder,
+  ) {
+    if (themeBuilder != null) {
+      state = state.copyWith(themeBuilder: themeBuilder);
+    }
+  }
+
+  void scaffoldBuilderChanged(
+    ScaffoldBuilderFunction? scaffoldBuilder,
+  ) {
+    if (scaffoldBuilder != null) {
+      state = state.copyWith(scaffoldBuilder: scaffoldBuilder);
+    }
+  }
+
+  void useCaseBuilderChanged(
+    UseCaseBuilderFunction? useCaseBuilder,
+  ) {
+    if (useCaseBuilder != null) {
+      state = state.copyWith(useCaseBuilder: useCaseBuilder);
+    }
+  }
 }

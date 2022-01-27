@@ -13,6 +13,9 @@ import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/providers/organizer_state.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
 import 'package:widgetbook/src/providers/zoom_provider.dart';
+import 'package:widgetbook/src/rendering/render_mode.dart';
+import 'package:widgetbook/src/rendering/rendering.dart';
+import 'package:widgetbook/src/rendering/rendering_state.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/routing/route_information_parser.dart';
@@ -40,8 +43,12 @@ class Widgetbook extends StatelessWidget {
     this.localizationsDelegates,
     required this.themes,
     this.defaultTheme = ThemeMode.system,
-    this.builder,
+    this.deviceFrameBuilder,
+    this.localizationBuilder,
     this.themeBuilder,
+    this.scaffoldBuilder,
+    this.useCaseBuilder,
+    this.renderModes,
     // TODO check if this works
   })  : assert(
           themes.length > 0,
@@ -70,31 +77,37 @@ class Widgetbook extends StatelessWidget {
 
   final List<WidgetbookTheme> themes;
 
-  final Widget Function(
-    BuildContext context,
-    Locale? locale,
-    Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates,
-    Iterable<Locale> supportedLocales,
-    Widget child,
-  )? builder;
+  final List<RenderMode>? renderModes;
 
-  final Widget Function(
-    BuildContext context,
-    WidgetbookTheme theme,
-  )? themeBuilder;
+  final DeviceFrameBuilderFunction? deviceFrameBuilder;
+
+  final LocalizationBuilderFunction? localizationBuilder;
+
+  final ThemeBuilderFunction? themeBuilder;
+
+  final ScaffoldBuilderFunction? scaffoldBuilder;
+
+  final UseCaseBuilderFunction? useCaseBuilder;
 
   @override
   Widget build(BuildContext context) {
     return UncontrolledProviderScope(
       container: ProviderContainer(),
       child: WidgetbookWrapper(
-          categories: categories,
-          appInfo: appInfo,
-          devices: devices,
-          defaultTheme: defaultTheme,
-          supportedLocales: supportedLocales,
-          localizationsDelegates: localizationsDelegates,
-          themes: themes),
+        categories: categories,
+        appInfo: appInfo,
+        devices: devices,
+        defaultTheme: defaultTheme,
+        supportedLocales: supportedLocales,
+        localizationsDelegates: localizationsDelegates,
+        themes: themes,
+        renderModes: renderModes,
+        deviceFrameBuilder: deviceFrameBuilder,
+        localizationBuilder: localizationBuilder,
+        themeBuilder: themeBuilder,
+        scaffoldBuilder: scaffoldBuilder,
+        useCaseBuilder: useCaseBuilder,
+      ),
     );
   }
 }
@@ -118,6 +131,12 @@ class WidgetbookWrapper extends ConsumerStatefulWidget {
     this.lightTheme,
     this.darkTheme,
     this.defaultTheme = ThemeMode.system,
+    this.renderModes,
+    this.deviceFrameBuilder,
+    this.localizationBuilder,
+    this.themeBuilder,
+    this.scaffoldBuilder,
+    this.useCaseBuilder,
   }) : super(key: key);
 
   /// Categories which host Folders and WidgetElements.
@@ -145,6 +164,18 @@ class WidgetbookWrapper extends ConsumerStatefulWidget {
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
 
   final Iterable<WidgetbookTheme> themes;
+
+  final List<RenderMode>? renderModes;
+
+  final DeviceFrameBuilderFunction? deviceFrameBuilder;
+
+  final LocalizationBuilderFunction? localizationBuilder;
+
+  final ThemeBuilderFunction? themeBuilder;
+
+  final ScaffoldBuilderFunction? scaffoldBuilder;
+
+  final UseCaseBuilderFunction? useCaseBuilder;
 
   @override
   _WidgetbookState createState() => _WidgetbookState();
@@ -176,6 +207,14 @@ class _WidgetbookState extends ConsumerState<WidgetbookWrapper> {
     ref.read(devicesProvider.notifier).hotReloadUpdate(
           devices: widget.devices,
         );
+
+    ref.read(renderingProvider.notifier)
+      ..renderModesChanged(widget.renderModes)
+      ..deviceFrameBuilderChanged(widget.deviceFrameBuilder)
+      ..localizationBuilderChanged(widget.localizationBuilder)
+      ..themeBuilderChanged(widget.themeBuilder)
+      ..scaffoldBuilderChanged(widget.scaffoldBuilder)
+      ..useCaseBuilderChanged(widget.useCaseBuilder);
   }
 
   @override

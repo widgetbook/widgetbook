@@ -19,15 +19,11 @@ class _$RenderingStateTearOff {
 
   _RenderingState call(
       {required List<RenderMode> renderModes,
-      required Widget Function(BuildContext, Device, RenderMode, Widget)
-          deviceFrameBuilder,
-      required Widget Function(BuildContext, List<Locale>,
-              List<LocalizationsDelegate<dynamic>>, Locale, Widget)
-          localizationBuilder,
-      required Widget Function(BuildContext, ThemeData, Widget) themeBuilder,
-      required Widget Function(BuildContext, RenderMode, Widget)
-          scaffoldBuilder,
-      required Widget Function(BuildContext, Widget) useCaseBuilder}) {
+      required DeviceFrameBuilderFunction deviceFrameBuilder,
+      required LocalizationBuilderFunction localizationBuilder,
+      required ThemeBuilderFunction themeBuilder,
+      required ScaffoldBuilderFunction scaffoldBuilder,
+      required UseCaseBuilderFunction useCaseBuilder}) {
     return _RenderingState(
       renderModes: renderModes,
       deviceFrameBuilder: deviceFrameBuilder,
@@ -45,19 +41,14 @@ const $RenderingState = _$RenderingStateTearOff();
 /// @nodoc
 mixin _$RenderingState {
   List<RenderMode> get renderModes => throw _privateConstructorUsedError;
-  Widget Function(BuildContext, Device, RenderMode, Widget)
-      get deviceFrameBuilder => throw _privateConstructorUsedError;
-  Widget Function(
-      BuildContext,
-      List<Locale>,
-      List<LocalizationsDelegate<dynamic>>,
-      Locale,
-      Widget) get localizationBuilder => throw _privateConstructorUsedError;
-  Widget Function(BuildContext, ThemeData, Widget) get themeBuilder =>
+  DeviceFrameBuilderFunction get deviceFrameBuilder =>
       throw _privateConstructorUsedError;
-  Widget Function(BuildContext, RenderMode, Widget) get scaffoldBuilder =>
+  LocalizationBuilderFunction get localizationBuilder =>
       throw _privateConstructorUsedError;
-  Widget Function(BuildContext, Widget) get useCaseBuilder =>
+  ThemeBuilderFunction get themeBuilder => throw _privateConstructorUsedError;
+  ScaffoldBuilderFunction get scaffoldBuilder =>
+      throw _privateConstructorUsedError;
+  UseCaseBuilderFunction get useCaseBuilder =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -72,14 +63,11 @@ abstract class $RenderingStateCopyWith<$Res> {
       _$RenderingStateCopyWithImpl<$Res>;
   $Res call(
       {List<RenderMode> renderModes,
-      Widget Function(BuildContext, Device, RenderMode, Widget)
-          deviceFrameBuilder,
-      Widget Function(BuildContext, List<Locale>,
-              List<LocalizationsDelegate<dynamic>>, Locale, Widget)
-          localizationBuilder,
-      Widget Function(BuildContext, ThemeData, Widget) themeBuilder,
-      Widget Function(BuildContext, RenderMode, Widget) scaffoldBuilder,
-      Widget Function(BuildContext, Widget) useCaseBuilder});
+      DeviceFrameBuilderFunction deviceFrameBuilder,
+      LocalizationBuilderFunction localizationBuilder,
+      ThemeBuilderFunction themeBuilder,
+      ScaffoldBuilderFunction scaffoldBuilder,
+      UseCaseBuilderFunction useCaseBuilder});
 }
 
 /// @nodoc
@@ -108,24 +96,23 @@ class _$RenderingStateCopyWithImpl<$Res>
       deviceFrameBuilder: deviceFrameBuilder == freezed
           ? _value.deviceFrameBuilder
           : deviceFrameBuilder // ignore: cast_nullable_to_non_nullable
-              as Widget Function(BuildContext, Device, RenderMode, Widget),
+              as DeviceFrameBuilderFunction,
       localizationBuilder: localizationBuilder == freezed
           ? _value.localizationBuilder
           : localizationBuilder // ignore: cast_nullable_to_non_nullable
-              as Widget Function(BuildContext, List<Locale>,
-                  List<LocalizationsDelegate<dynamic>>, Locale, Widget),
+              as LocalizationBuilderFunction,
       themeBuilder: themeBuilder == freezed
           ? _value.themeBuilder
           : themeBuilder // ignore: cast_nullable_to_non_nullable
-              as Widget Function(BuildContext, ThemeData, Widget),
+              as ThemeBuilderFunction,
       scaffoldBuilder: scaffoldBuilder == freezed
           ? _value.scaffoldBuilder
           : scaffoldBuilder // ignore: cast_nullable_to_non_nullable
-              as Widget Function(BuildContext, RenderMode, Widget),
+              as ScaffoldBuilderFunction,
       useCaseBuilder: useCaseBuilder == freezed
           ? _value.useCaseBuilder
           : useCaseBuilder // ignore: cast_nullable_to_non_nullable
-              as Widget Function(BuildContext, Widget),
+              as UseCaseBuilderFunction,
     ));
   }
 }
@@ -139,14 +126,11 @@ abstract class _$RenderingStateCopyWith<$Res>
   @override
   $Res call(
       {List<RenderMode> renderModes,
-      Widget Function(BuildContext, Device, RenderMode, Widget)
-          deviceFrameBuilder,
-      Widget Function(BuildContext, List<Locale>,
-              List<LocalizationsDelegate<dynamic>>, Locale, Widget)
-          localizationBuilder,
-      Widget Function(BuildContext, ThemeData, Widget) themeBuilder,
-      Widget Function(BuildContext, RenderMode, Widget) scaffoldBuilder,
-      Widget Function(BuildContext, Widget) useCaseBuilder});
+      DeviceFrameBuilderFunction deviceFrameBuilder,
+      LocalizationBuilderFunction localizationBuilder,
+      ThemeBuilderFunction themeBuilder,
+      ScaffoldBuilderFunction scaffoldBuilder,
+      UseCaseBuilderFunction useCaseBuilder});
 }
 
 /// @nodoc
@@ -177,24 +161,23 @@ class __$RenderingStateCopyWithImpl<$Res>
       deviceFrameBuilder: deviceFrameBuilder == freezed
           ? _value.deviceFrameBuilder
           : deviceFrameBuilder // ignore: cast_nullable_to_non_nullable
-              as Widget Function(BuildContext, Device, RenderMode, Widget),
+              as DeviceFrameBuilderFunction,
       localizationBuilder: localizationBuilder == freezed
           ? _value.localizationBuilder
           : localizationBuilder // ignore: cast_nullable_to_non_nullable
-              as Widget Function(BuildContext, List<Locale>,
-                  List<LocalizationsDelegate<dynamic>>, Locale, Widget),
+              as LocalizationBuilderFunction,
       themeBuilder: themeBuilder == freezed
           ? _value.themeBuilder
           : themeBuilder // ignore: cast_nullable_to_non_nullable
-              as Widget Function(BuildContext, ThemeData, Widget),
+              as ThemeBuilderFunction,
       scaffoldBuilder: scaffoldBuilder == freezed
           ? _value.scaffoldBuilder
           : scaffoldBuilder // ignore: cast_nullable_to_non_nullable
-              as Widget Function(BuildContext, RenderMode, Widget),
+              as ScaffoldBuilderFunction,
       useCaseBuilder: useCaseBuilder == freezed
           ? _value.useCaseBuilder
           : useCaseBuilder // ignore: cast_nullable_to_non_nullable
-              as Widget Function(BuildContext, Widget),
+              as UseCaseBuilderFunction,
     ));
   }
 }
@@ -213,17 +196,15 @@ class _$_RenderingState implements _RenderingState {
   @override
   final List<RenderMode> renderModes;
   @override
-  final Widget Function(BuildContext, Device, RenderMode, Widget)
-      deviceFrameBuilder;
+  final DeviceFrameBuilderFunction deviceFrameBuilder;
   @override
-  final Widget Function(BuildContext, List<Locale>,
-      List<LocalizationsDelegate<dynamic>>, Locale, Widget) localizationBuilder;
+  final LocalizationBuilderFunction localizationBuilder;
   @override
-  final Widget Function(BuildContext, ThemeData, Widget) themeBuilder;
+  final ThemeBuilderFunction themeBuilder;
   @override
-  final Widget Function(BuildContext, RenderMode, Widget) scaffoldBuilder;
+  final ScaffoldBuilderFunction scaffoldBuilder;
   @override
-  final Widget Function(BuildContext, Widget) useCaseBuilder;
+  final UseCaseBuilderFunction useCaseBuilder;
 
   @override
   String toString() {
@@ -268,35 +249,24 @@ class _$_RenderingState implements _RenderingState {
 abstract class _RenderingState implements RenderingState {
   factory _RenderingState(
       {required List<RenderMode> renderModes,
-      required Widget Function(BuildContext, Device, RenderMode, Widget)
-          deviceFrameBuilder,
-      required Widget Function(BuildContext, List<Locale>,
-              List<LocalizationsDelegate<dynamic>>, Locale, Widget)
-          localizationBuilder,
-      required Widget Function(BuildContext, ThemeData, Widget) themeBuilder,
-      required Widget Function(BuildContext, RenderMode, Widget)
-          scaffoldBuilder,
-      required Widget Function(BuildContext, Widget)
-          useCaseBuilder}) = _$_RenderingState;
+      required DeviceFrameBuilderFunction deviceFrameBuilder,
+      required LocalizationBuilderFunction localizationBuilder,
+      required ThemeBuilderFunction themeBuilder,
+      required ScaffoldBuilderFunction scaffoldBuilder,
+      required UseCaseBuilderFunction useCaseBuilder}) = _$_RenderingState;
 
   @override
   List<RenderMode> get renderModes;
   @override
-  Widget Function(BuildContext, Device, RenderMode, Widget)
-      get deviceFrameBuilder;
+  DeviceFrameBuilderFunction get deviceFrameBuilder;
   @override
-  Widget Function(
-      BuildContext,
-      List<Locale>,
-      List<LocalizationsDelegate<dynamic>>,
-      Locale,
-      Widget) get localizationBuilder;
+  LocalizationBuilderFunction get localizationBuilder;
   @override
-  Widget Function(BuildContext, ThemeData, Widget) get themeBuilder;
+  ThemeBuilderFunction get themeBuilder;
   @override
-  Widget Function(BuildContext, RenderMode, Widget) get scaffoldBuilder;
+  ScaffoldBuilderFunction get scaffoldBuilder;
   @override
-  Widget Function(BuildContext, Widget) get useCaseBuilder;
+  UseCaseBuilderFunction get useCaseBuilder;
   @override
   @JsonKey(ignore: true)
   _$RenderingStateCopyWith<_RenderingState> get copyWith =>
