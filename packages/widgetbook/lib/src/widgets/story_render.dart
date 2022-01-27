@@ -54,20 +54,23 @@ class _StoryState extends ConsumerState<StoryRender> {
     final workkbenchState = ref.watch(workbenchProvider);
 
     return workkbenchState.multiRender == MultiRender.none
-        ? InteractiveViewer(
-            boundaryMargin: const EdgeInsets.all(double.infinity),
-            minScale: 0.25,
-            maxScale: 5,
-            constrained: false,
-            transformationController: controller,
-            onInteractionUpdate: (ScaleUpdateDetails details) {
-              ZoomProvider.of(context)!
-                  .setScale(controller.value.getMaxScaleOnAxis());
-            },
-            child: DeviceRender(
-              story: story,
-            ),
+        ? DeviceRender(
+            story: story,
           )
+        // ? InteractiveViewer(
+        //     boundaryMargin: const EdgeInsets.all(double.infinity),
+        //     minScale: 0.25,
+        //     maxScale: 5,
+        //     constrained: false,
+        //     transformationController: controller,
+        //     onInteractionUpdate: (ScaleUpdateDetails details) {
+        //       ZoomProvider.of(context)!
+        //           .setScale(controller.value.getMaxScaleOnAxis());
+        //     },
+        //     child: DeviceRender(
+        //       story: story,
+        //     ),
+        //   )
         : const SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: MultiRenderer(),

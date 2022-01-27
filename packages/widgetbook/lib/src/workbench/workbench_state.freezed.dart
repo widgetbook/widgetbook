@@ -21,12 +21,14 @@ class _$WorkbenchStateTearOff {
       {MultiRender multiRender = MultiRender.none,
       WidgetbookTheme? theme,
       Locale? locale,
-      Device? device}) {
+      Device? device,
+      required RenderMode renderMode}) {
     return _WorkbenchState(
       multiRender: multiRender,
       theme: theme,
       locale: locale,
       device: device,
+      renderMode: renderMode,
     );
   }
 }
@@ -40,6 +42,7 @@ mixin _$WorkbenchState {
   WidgetbookTheme? get theme => throw _privateConstructorUsedError;
   Locale? get locale => throw _privateConstructorUsedError;
   Device? get device => throw _privateConstructorUsedError;
+  RenderMode get renderMode => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WorkbenchStateCopyWith<WorkbenchState> get copyWith =>
@@ -55,9 +58,11 @@ abstract class $WorkbenchStateCopyWith<$Res> {
       {MultiRender multiRender,
       WidgetbookTheme? theme,
       Locale? locale,
-      Device? device});
+      Device? device,
+      RenderMode renderMode});
 
   $WidgetbookThemeCopyWith<$Res>? get theme;
+  $RenderModeCopyWith<$Res> get renderMode;
 }
 
 /// @nodoc
@@ -75,6 +80,7 @@ class _$WorkbenchStateCopyWithImpl<$Res>
     Object? theme = freezed,
     Object? locale = freezed,
     Object? device = freezed,
+    Object? renderMode = freezed,
   }) {
     return _then(_value.copyWith(
       multiRender: multiRender == freezed
@@ -93,6 +99,10 @@ class _$WorkbenchStateCopyWithImpl<$Res>
           ? _value.device
           : device // ignore: cast_nullable_to_non_nullable
               as Device?,
+      renderMode: renderMode == freezed
+          ? _value.renderMode
+          : renderMode // ignore: cast_nullable_to_non_nullable
+              as RenderMode,
     ));
   }
 
@@ -104,6 +114,13 @@ class _$WorkbenchStateCopyWithImpl<$Res>
 
     return $WidgetbookThemeCopyWith<$Res>(_value.theme!, (value) {
       return _then(_value.copyWith(theme: value));
+    });
+  }
+
+  @override
+  $RenderModeCopyWith<$Res> get renderMode {
+    return $RenderModeCopyWith<$Res>(_value.renderMode, (value) {
+      return _then(_value.copyWith(renderMode: value));
     });
   }
 }
@@ -119,10 +136,13 @@ abstract class _$WorkbenchStateCopyWith<$Res>
       {MultiRender multiRender,
       WidgetbookTheme? theme,
       Locale? locale,
-      Device? device});
+      Device? device,
+      RenderMode renderMode});
 
   @override
   $WidgetbookThemeCopyWith<$Res>? get theme;
+  @override
+  $RenderModeCopyWith<$Res> get renderMode;
 }
 
 /// @nodoc
@@ -142,6 +162,7 @@ class __$WorkbenchStateCopyWithImpl<$Res>
     Object? theme = freezed,
     Object? locale = freezed,
     Object? device = freezed,
+    Object? renderMode = freezed,
   }) {
     return _then(_WorkbenchState(
       multiRender: multiRender == freezed
@@ -160,6 +181,10 @@ class __$WorkbenchStateCopyWithImpl<$Res>
           ? _value.device
           : device // ignore: cast_nullable_to_non_nullable
               as Device?,
+      renderMode: renderMode == freezed
+          ? _value.renderMode
+          : renderMode // ignore: cast_nullable_to_non_nullable
+              as RenderMode,
     ));
   }
 }
@@ -171,7 +196,8 @@ class _$_WorkbenchState implements _WorkbenchState {
       {this.multiRender = MultiRender.none,
       this.theme,
       this.locale,
-      this.device});
+      this.device,
+      required this.renderMode});
 
   @JsonKey()
   @override
@@ -182,10 +208,12 @@ class _$_WorkbenchState implements _WorkbenchState {
   final Locale? locale;
   @override
   final Device? device;
+  @override
+  final RenderMode renderMode;
 
   @override
   String toString() {
-    return 'WorkbenchState(multiRender: $multiRender, theme: $theme, locale: $locale, device: $device)';
+    return 'WorkbenchState(multiRender: $multiRender, theme: $theme, locale: $locale, device: $device, renderMode: $renderMode)';
   }
 
   @override
@@ -197,7 +225,9 @@ class _$_WorkbenchState implements _WorkbenchState {
                 .equals(other.multiRender, multiRender) &&
             const DeepCollectionEquality().equals(other.theme, theme) &&
             const DeepCollectionEquality().equals(other.locale, locale) &&
-            const DeepCollectionEquality().equals(other.device, device));
+            const DeepCollectionEquality().equals(other.device, device) &&
+            const DeepCollectionEquality()
+                .equals(other.renderMode, renderMode));
   }
 
   @override
@@ -206,7 +236,8 @@ class _$_WorkbenchState implements _WorkbenchState {
       const DeepCollectionEquality().hash(multiRender),
       const DeepCollectionEquality().hash(theme),
       const DeepCollectionEquality().hash(locale),
-      const DeepCollectionEquality().hash(device));
+      const DeepCollectionEquality().hash(device),
+      const DeepCollectionEquality().hash(renderMode));
 
   @JsonKey(ignore: true)
   @override
@@ -219,7 +250,8 @@ abstract class _WorkbenchState implements WorkbenchState {
       {MultiRender multiRender,
       WidgetbookTheme? theme,
       Locale? locale,
-      Device? device}) = _$_WorkbenchState;
+      Device? device,
+      required RenderMode renderMode}) = _$_WorkbenchState;
 
   @override
   MultiRender get multiRender;
@@ -229,6 +261,8 @@ abstract class _WorkbenchState implements WorkbenchState {
   Locale? get locale;
   @override
   Device? get device;
+  @override
+  RenderMode get renderMode;
   @override
   @JsonKey(ignore: true)
   _$WorkbenchStateCopyWith<_WorkbenchState> get copyWith =>

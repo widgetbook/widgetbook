@@ -2,26 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widgetbook/src/devices/devices.dart';
 import 'package:widgetbook/src/localization/localization.dart';
+import 'package:widgetbook/src/rendering/render_mode.dart';
+import 'package:widgetbook/src/rendering/rendering.dart';
 import 'package:widgetbook/src/theming/theming.dart';
 import 'package:widgetbook/src/workbench/multi_render.dart';
 import 'package:widgetbook/src/workbench/workbench_state.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-final workbenchProvider =
-    StateNotifierProvider<Workbench, WorkbenchState>((ref) {
-  final localization = ref.watch(localizationProvider);
-  final theming = ref.watch(themingProvider);
-  final devices = ref.watch(devicesProvider);
-  return Workbench(
+final workbenchProvider = StateNotifierProvider<Workbench, WorkbenchState>(
+  (ref) {
+    final localization = ref.watch(localizationProvider);
+    final theming = ref.watch(themingProvider);
+    final devices = ref.watch(devicesProvider);
+    final rendering = ref.watch(renderingProvider);
+    return Workbench(
       state: WorkbenchState(
         locale: localization.supportedLocales.first,
         theme: theming.themes.first,
         device: devices.devices.first,
+        renderMode: RenderMode.widgetbook(),
       ),
       locales: localization.supportedLocales,
       themes: theming.themes,
-      devices: devices.devices);
-});
+      devices: devices.devices,
+      renderModes: rendering.renderModes,
+    );
+  },
+);
 
 class Workbench extends StateNotifier<WorkbenchState> {
   Workbench({
@@ -29,11 +36,13 @@ class Workbench extends StateNotifier<WorkbenchState> {
     required this.locales,
     required this.themes,
     required this.devices,
+    required this.renderModes,
   }) : super(state);
 
   final List<Locale> locales;
   final List<WidgetbookTheme> themes;
   final List<Device> devices;
+  final List<RenderMode> renderModes;
 
   void changedMultiRender(MultiRender multiRender) {
     if (state.multiRender == multiRender) {
@@ -101,6 +110,10 @@ class Workbench extends StateNotifier<WorkbenchState> {
           ? MultiRender.none
           : state.multiRender,
     );
+  }
+
+  void changedRenderMode(RenderMode renderMode) {
+    state = state.copyWith(renderMode: renderMode);
   }
 
   // TODO this can be an extension method on [List]
@@ -179,6 +192,20 @@ class Workbench extends StateNotifier<WorkbenchState> {
       multiRender: state.multiRender == MultiRender.devices
           ? MultiRender.none
           : state.multiRender,
+    );
+  }
+
+  void nextRenderMode() {
+    final nextRenderMode = _getNext(state.renderMode, renderModes);
+    state = state.copyWith(
+      renderMode: nextRenderMode,
+    );
+  }
+
+  void previousRenderMode() {
+    final previousDevice = _getPrevious(state.renderMode, renderModes);
+    state = state.copyWith(
+      renderMode: previousDevice,
     );
   }
 }

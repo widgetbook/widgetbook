@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widgetbook/src/constants/constants.dart';
+import 'package:widgetbook/src/devices/device_handle.dart';
 import 'package:widgetbook/src/localization/localization_handle.dart';
-import 'package:widgetbook/src/widgets/device_handle.dart';
-import 'package:widgetbook/src/widgets/theme_handle.dart';
+import 'package:widgetbook/src/rendering/render_handle.dart';
+import 'package:widgetbook/src/theming/theme_handle.dart';
 import 'package:widgetbook/src/widgets/zoom_handle.dart';
 
 class ControlsBar extends ConsumerWidget {
@@ -37,6 +38,10 @@ class ControlsBar extends ConsumerWidget {
                     width: 40,
                   ),
                   LocalizationHandle(),
+                  SizedBox(
+                    width: 40,
+                  ),
+                  RenderHandle(),
                 ],
               ),
             ),

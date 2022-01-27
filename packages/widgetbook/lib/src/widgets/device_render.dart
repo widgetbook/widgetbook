@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widgetbook/src/localization/localization.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
+import 'package:widgetbook/src/widgets/renderer.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 
 class DeviceRender extends ConsumerWidget {
@@ -14,44 +15,15 @@ class DeviceRender extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final device = ref.watch(workbenchProvider).device!;
-
     final workbenchState = ref.watch(workbenchProvider);
     final localizationState = ref.watch(localizationProvider);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(device.name),
-        const SizedBox(
-          height: 16,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? Colors.white
-                  : Colors.black,
-            ),
-          ),
-          width: device.resolution.logicalSize.width,
-          height: device.resolution.logicalSize.height,
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            locale: workbenchState.locale,
-            localizationsDelegates: localizationState.localizationsDelegates,
-            supportedLocales: localizationState.supportedLocales,
-            home: AnimatedTheme(
-              duration: Duration.zero,
-              data: workbenchState.theme!.data,
-              child: Scaffold(
-                body: story.builder(
-                  context,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
+    return Renderer(
+      device: workbenchState.device!,
+      locale: workbenchState.locale!,
+      localizationsDelegates: localizationState.localizationsDelegates,
+      theme: workbenchState.theme!.data,
+      renderMode: workbenchState.renderMode,
+      useCaseBuilder: story.builder,
     );
   }
 }

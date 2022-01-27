@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:widgetbook/src/localization/localization.dart';
+import 'package:widgetbook/src/rendering/render_mode.dart';
+import 'package:widgetbook/src/rendering/rendering.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-class Renderer extends StatelessWidget {
+class Renderer extends ConsumerWidget {
   const Renderer({
     Key? key,
     required this.device,
     required this.locale,
     required this.localizationsDelegates,
     required this.theme,
+    required this.renderMode,
     required this.useCaseBuilder,
   }) : super(key: key);
 
@@ -15,10 +20,13 @@ class Renderer extends StatelessWidget {
   final Locale locale;
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
   final ThemeData theme;
+  final RenderMode renderMode;
   final Widget Function(BuildContext) useCaseBuilder;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final rendering = ref.watch(renderingProvider);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -26,30 +34,32 @@ class Renderer extends StatelessWidget {
         const SizedBox(
           height: 16,
         ),
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? Colors.white
-                  : Colors.black,
-            ),
-          ),
-          width: device.resolution.logicalSize.width,
-          height: device.resolution.logicalSize.height,
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            locale: locale,
-            localizationsDelegates: localizationsDelegates,
-            supportedLocales: [
-              locale,
-            ],
-            home: AnimatedTheme(
-              duration: Duration.zero,
-              data: theme,
-              child: Scaffold(
-                body: useCaseBuilder(
-                  context,
-                ),
+        Expanded(
+          child: Center(
+            child: rendering.deviceFrameBuilder(
+              context,
+              device,
+              renderMode,
+              rendering.localizationBuilder(
+                context,
+                ref.watch(localizationProvider).supportedLocales,
+                // TODO this should not be nullable
+                localizationsDelegates!.toList(),
+                locale,
+                Builder(builder: (context) {
+                  return rendering.themeBuilder(
+                    context,
+                    theme,
+                    rendering.scaffoldBuilder(
+                      context,
+                      renderMode,
+                      rendering.useCaseBuilder(
+                        context,
+                        useCaseBuilder(context),
+                      ),
+                    ),
+                  );
+                }),
               ),
             ),
           ),
