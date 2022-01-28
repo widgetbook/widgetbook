@@ -17,7 +17,7 @@ class Storyboard extends StatelessWidget {
   const Storyboard({Key? key}) : super(key: key);
 
   Widget buildStorybook(BuildContext context) {
-    return MaterialWidgetbook(
+    return Widgetbook.material(
       localizationsDelegates: [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

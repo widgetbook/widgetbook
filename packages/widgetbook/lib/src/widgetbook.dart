@@ -113,6 +113,38 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
     );
   }
 
+  static Widgetbook<ThemeData> material({
+    required List<WidgetbookCategory> categories,
+    required List<WidgetbookTheme<ThemeData>> themes,
+    required AppInfo appInfo,
+    List<Device>? devices,
+    List<RenderMode>? renderModes,
+    Iterable<Locale>? supportedLocales,
+    Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates,
+    DeviceFrameBuilderFunction? deviceFrameBuilder,
+    LocalizationBuilderFunction? localizationBuilder,
+    ThemeBuilderFunction<ThemeData>? themeBuilder,
+    ScaffoldBuilderFunction? scaffoldBuilder,
+    UseCaseBuilderFunction? useCaseBuilder,
+    Key? key,
+  }) {
+    return Widgetbook<ThemeData>(
+      key: key,
+      categories: categories,
+      themes: themes,
+      appInfo: appInfo,
+      devices: devices,
+      supportedLocales: supportedLocales,
+      localizationsDelegates: localizationsDelegates,
+      deviceFrameBuilder: deviceFrameBuilder,
+      localizationBuilder: localizationBuilder,
+      themeBuilder: themeBuilder,
+      scaffoldBuilder: scaffoldBuilder,
+      useCaseBuilder: useCaseBuilder,
+      renderModes: renderModes,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return UncontrolledProviderScope(
