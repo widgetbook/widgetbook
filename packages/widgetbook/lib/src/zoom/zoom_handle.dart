@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/providers/zoom_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widgetbook/src/utils/extensions.dart';
 import 'package:widgetbook/src/workbench/workbench_button.dart';
+import 'package:widgetbook/src/zoom/zoom.dart';
 
-class ZoomHandle extends StatefulWidget {
-  const ZoomHandle({Key? key}) : super(key: key);
+class ZoomHandle extends ConsumerWidget {
+  const ZoomHandle({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  _ZoomHandleState createState() => _ZoomHandleState();
-}
-
-class _ZoomHandleState extends State<ZoomHandle> {
-  @override
-  Widget build(BuildContext context) {
-    final state = ZoomProvider.of(context)!.state;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(zoomProvider);
     return Row(
       children: [
         WorkbenchButton.icon(
-          onPressed: ZoomProvider.of(context)!.zoomOut,
+          onPressed: ref.read(zoomProvider.notifier).zoomOut,
           child: Icon(
             Icons.remove,
             color: context.theme.hintColor,
@@ -41,7 +39,7 @@ class _ZoomHandleState extends State<ZoomHandle> {
           ],
         ),
         WorkbenchButton.icon(
-          onPressed: ZoomProvider.of(context)!.zoomIn,
+          onPressed: ref.read(zoomProvider.notifier).zoomIn,
           child: Icon(
             Icons.add,
             color: context.theme.hintColor,
@@ -50,7 +48,7 @@ class _ZoomHandleState extends State<ZoomHandle> {
         Tooltip(
           message: 'Reset zoom',
           child: WorkbenchButton.icon(
-            onPressed: ZoomProvider.of(context)!.resetToNormal,
+            onPressed: ref.read(zoomProvider.notifier).resetToNormal,
             child: Icon(
               Icons.replay,
               color: context.theme.hintColor,

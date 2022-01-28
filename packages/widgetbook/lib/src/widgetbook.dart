@@ -12,7 +12,6 @@ import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/providers/organizer_state.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
-import 'package:widgetbook/src/providers/zoom_provider.dart';
 import 'package:widgetbook/src/rendering/rendering.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
@@ -302,41 +301,37 @@ class _WidgetbookState<CustomTheme>
           child: CanvasBuilder(
             selectedStoryRepository: selectedStoryRepository,
             storyRepository: storyRepository,
-            child: ZoomBuilder(
-              child: ThemeBuilder(
-                themeMode: widget.defaultTheme,
-                child: Builder(
-                  builder: (context) {
-                    contextWithProviders = context;
-                    final canvasState = CanvasProvider.of(context)!.state;
-                    final storiesState = OrganizerProvider.of(context)!.state;
-                    final themeMode = ThemeProvider.of(context)!.state;
+            child: ThemeBuilder(
+              themeMode: widget.defaultTheme,
+              child: Builder(
+                builder: (context) {
+                  contextWithProviders = context;
+                  final canvasState = CanvasProvider.of(context)!.state;
+                  final storiesState = OrganizerProvider.of(context)!.state;
+                  final themeMode = ThemeProvider.of(context)!.state;
 
-                    return MaterialApp.router(
-                      routeInformationParser: StoryRouteInformationParser(
-                        onRoute: (path) {
-                          final stories =
-                              StoryHelper.getAllStoriesFromCategories(
-                            storiesState.allCategories,
-                          );
-                          final selectedStory =
-                              selectStoryFromPath(path, stories);
-                          CanvasProvider.of(context)!
-                              .selectStory(selectedStory);
-                        },
-                      ),
-                      routerDelegate: StoryRouterDelegate<CustomTheme>(
-                        canvasState: canvasState,
-                        appInfo: widget.appInfo,
-                      ),
-                      title: widget.appInfo.name,
-                      debugShowCheckedModeBanner: false,
-                      themeMode: themeMode,
-                      darkTheme: Styles.darkTheme,
-                      theme: Styles.lightTheme,
-                    );
-                  },
-                ),
+                  return MaterialApp.router(
+                    routeInformationParser: StoryRouteInformationParser(
+                      onRoute: (path) {
+                        final stories = StoryHelper.getAllStoriesFromCategories(
+                          storiesState.allCategories,
+                        );
+                        final selectedStory =
+                            selectStoryFromPath(path, stories);
+                        CanvasProvider.of(context)!.selectStory(selectedStory);
+                      },
+                    ),
+                    routerDelegate: StoryRouterDelegate<CustomTheme>(
+                      canvasState: canvasState,
+                      appInfo: widget.appInfo,
+                    ),
+                    title: widget.appInfo.name,
+                    debugShowCheckedModeBanner: false,
+                    themeMode: themeMode,
+                    darkTheme: Styles.darkTheme,
+                    theme: Styles.lightTheme,
+                  );
+                },
               ),
             ),
           ),
