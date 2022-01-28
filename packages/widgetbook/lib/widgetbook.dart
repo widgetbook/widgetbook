@@ -1,4 +1,6 @@
+export 'package:widgetbook/src/cupertino_widgetbook.dart';
 export 'package:widgetbook/src/devices/widgetbook_device_frame.dart';
+export 'package:widgetbook/src/material_widgetbook.dart';
 export 'package:widgetbook/src/models/models.dart';
 export 'package:widgetbook/src/rendering/render_mode.dart';
 export 'package:widgetbook/src/theming/widgetbook_theme.dart';
