@@ -20,7 +20,6 @@ class LocalizationHandle<CustomTheme> extends ConsumerWidget {
       multiRender: MultiRender.localization,
       items: ref.read(localizationProvider).supportedLocales,
       buildItem: (Locale e) => SelectionItem(
-        iconData: Icons.g_translate,
         tooltip: e.toLanguageTag(),
         selectedItem: ref.watch(getWorkbenchProvider<CustomTheme>()).locale,
         item: e,

@@ -17,13 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$RenderModeTearOff {
   const _$RenderModeTearOff();
 
-  _RenderMode call(
-      {required String name,
-      required IconData icon,
-      required bool allowsDevices}) {
+  _RenderMode call({required String name, required bool allowsDevices}) {
     return _RenderMode(
       name: name,
-      icon: icon,
       allowsDevices: allowsDevices,
     );
   }
@@ -36,9 +32,6 @@ const $RenderMode = _$RenderModeTearOff();
 mixin _$RenderMode {
   /// The name displayed as a tooltip
   String get name => throw _privateConstructorUsedError;
-
-  /// The icon displayed in the workbench bar
-  IconData get icon => throw _privateConstructorUsedError;
 
   /// Indicators whether this mode supports specific devices e.g. iPhone 11
   bool get allowsDevices => throw _privateConstructorUsedError;
@@ -53,7 +46,7 @@ abstract class $RenderModeCopyWith<$Res> {
   factory $RenderModeCopyWith(
           RenderMode value, $Res Function(RenderMode) then) =
       _$RenderModeCopyWithImpl<$Res>;
-  $Res call({String name, IconData icon, bool allowsDevices});
+  $Res call({String name, bool allowsDevices});
 }
 
 /// @nodoc
@@ -67,7 +60,6 @@ class _$RenderModeCopyWithImpl<$Res> implements $RenderModeCopyWith<$Res> {
   @override
   $Res call({
     Object? name = freezed,
-    Object? icon = freezed,
     Object? allowsDevices = freezed,
   }) {
     return _then(_value.copyWith(
@@ -75,10 +67,6 @@ class _$RenderModeCopyWithImpl<$Res> implements $RenderModeCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      icon: icon == freezed
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
-              as IconData,
       allowsDevices: allowsDevices == freezed
           ? _value.allowsDevices
           : allowsDevices // ignore: cast_nullable_to_non_nullable
@@ -93,7 +81,7 @@ abstract class _$RenderModeCopyWith<$Res> implements $RenderModeCopyWith<$Res> {
           _RenderMode value, $Res Function(_RenderMode) then) =
       __$RenderModeCopyWithImpl<$Res>;
   @override
-  $Res call({String name, IconData icon, bool allowsDevices});
+  $Res call({String name, bool allowsDevices});
 }
 
 /// @nodoc
@@ -109,7 +97,6 @@ class __$RenderModeCopyWithImpl<$Res> extends _$RenderModeCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = freezed,
-    Object? icon = freezed,
     Object? allowsDevices = freezed,
   }) {
     return _then(_RenderMode(
@@ -117,10 +104,6 @@ class __$RenderModeCopyWithImpl<$Res> extends _$RenderModeCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      icon: icon == freezed
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
-              as IconData,
       allowsDevices: allowsDevices == freezed
           ? _value.allowsDevices
           : allowsDevices // ignore: cast_nullable_to_non_nullable
@@ -132,8 +115,7 @@ class __$RenderModeCopyWithImpl<$Res> extends _$RenderModeCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_RenderMode implements _RenderMode {
-  _$_RenderMode(
-      {required this.name, required this.icon, required this.allowsDevices});
+  _$_RenderMode({required this.name, required this.allowsDevices});
 
   @override
 
@@ -141,16 +123,12 @@ class _$_RenderMode implements _RenderMode {
   final String name;
   @override
 
-  /// The icon displayed in the workbench bar
-  final IconData icon;
-  @override
-
   /// Indicators whether this mode supports specific devices e.g. iPhone 11
   final bool allowsDevices;
 
   @override
   String toString() {
-    return 'RenderMode(name: $name, icon: $icon, allowsDevices: $allowsDevices)';
+    return 'RenderMode(name: $name, allowsDevices: $allowsDevices)';
   }
 
   @override
@@ -159,7 +137,6 @@ class _$_RenderMode implements _RenderMode {
         (other.runtimeType == runtimeType &&
             other is _RenderMode &&
             const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.icon, icon) &&
             const DeepCollectionEquality()
                 .equals(other.allowsDevices, allowsDevices));
   }
@@ -168,7 +145,6 @@ class _$_RenderMode implements _RenderMode {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(icon),
       const DeepCollectionEquality().hash(allowsDevices));
 
   @JsonKey(ignore: true)
@@ -178,19 +154,13 @@ class _$_RenderMode implements _RenderMode {
 }
 
 abstract class _RenderMode implements RenderMode {
-  factory _RenderMode(
-      {required String name,
-      required IconData icon,
-      required bool allowsDevices}) = _$_RenderMode;
+  factory _RenderMode({required String name, required bool allowsDevices}) =
+      _$_RenderMode;
 
   @override
 
   /// The name displayed as a tooltip
   String get name;
-  @override
-
-  /// The icon displayed in the workbench bar
-  IconData get icon;
   @override
 
   /// Indicators whether this mode supports specific devices e.g. iPhone 11

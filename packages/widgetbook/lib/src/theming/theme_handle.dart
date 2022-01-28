@@ -17,7 +17,6 @@ class ThemeHandle<CustomTheme> extends ConsumerWidget {
       multiRender: MultiRender.themes,
       items: ref.watch(getThemingProvider<CustomTheme>()).themes,
       buildItem: (WidgetbookTheme<CustomTheme> e) => SelectionItem(
-        iconData: e.icon,
         tooltip: e.name,
         selectedItem: ref.watch(getWorkbenchProvider<CustomTheme>()).theme,
         item: e,

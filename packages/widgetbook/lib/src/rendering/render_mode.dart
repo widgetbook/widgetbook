@@ -15,9 +15,6 @@ class RenderMode with _$RenderMode {
     /// The name displayed as a tooltip
     required String name,
 
-    /// The icon displayed in the workbench bar
-    required IconData icon,
-
     /// Indicators whether this mode supports specific devices e.g. iPhone 11
     required bool allowsDevices,
   }) = _RenderMode;
@@ -25,7 +22,6 @@ class RenderMode with _$RenderMode {
   factory RenderMode.widgetbook() {
     return RenderMode(
       name: 'Widgetbook',
-      icon: Icons.widgets,
       allowsDevices: true,
     );
   }
@@ -33,7 +29,6 @@ class RenderMode with _$RenderMode {
   factory RenderMode.none() {
     return RenderMode(
       name: 'None',
-      icon: Icons.opacity,
       allowsDevices: false,
     );
   }
@@ -41,7 +36,6 @@ class RenderMode with _$RenderMode {
   factory RenderMode.devicePreview() {
     return RenderMode(
       name: 'Device Preview',
-      icon: Icons.remove_red_eye,
       allowsDevices: true,
     );
   }

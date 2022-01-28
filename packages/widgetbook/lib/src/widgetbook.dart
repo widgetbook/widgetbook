@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widgetbook/src/configure_non_web.dart'
@@ -79,6 +80,38 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
   final ScaffoldBuilderFunction? scaffoldBuilder;
 
   final UseCaseBuilderFunction? useCaseBuilder;
+
+  static Widgetbook<CupertinoThemeData> cupertino({
+    required List<WidgetbookCategory> categories,
+    required List<WidgetbookTheme<CupertinoThemeData>> themes,
+    required AppInfo appInfo,
+    List<Device>? devices,
+    List<RenderMode>? renderModes,
+    Iterable<Locale>? supportedLocales,
+    Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates,
+    DeviceFrameBuilderFunction? deviceFrameBuilder,
+    LocalizationBuilderFunction? localizationBuilder,
+    ThemeBuilderFunction<CupertinoThemeData>? themeBuilder,
+    ScaffoldBuilderFunction? scaffoldBuilder,
+    UseCaseBuilderFunction? useCaseBuilder,
+    Key? key,
+  }) {
+    return Widgetbook<CupertinoThemeData>(
+      key: key,
+      categories: categories,
+      themes: themes,
+      appInfo: appInfo,
+      devices: devices,
+      supportedLocales: supportedLocales,
+      localizationsDelegates: localizationsDelegates,
+      deviceFrameBuilder: deviceFrameBuilder,
+      localizationBuilder: localizationBuilder,
+      themeBuilder: themeBuilder,
+      scaffoldBuilder: scaffoldBuilder,
+      useCaseBuilder: useCaseBuilder,
+      renderModes: renderModes,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

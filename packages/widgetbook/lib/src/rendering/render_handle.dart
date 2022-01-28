@@ -21,7 +21,6 @@ class RenderHandle<CustomTheme> extends ConsumerWidget {
         ...renderingState.renderModes
             .map(
               (e) => SelectionItem<RenderMode>(
-                iconData: e.icon,
                 tooltip: e.name,
                 selectedItem:
                     ref.watch(getWorkbenchProvider<CustomTheme>()).renderMode,

@@ -18,12 +18,9 @@ class _$WidgetbookThemeTearOff {
   const _$WidgetbookThemeTearOff();
 
   _WidgetbookTheme<CustomTheme> call<CustomTheme>(
-      {required String name,
-      required IconData icon,
-      required CustomTheme data}) {
+      {required String name, required CustomTheme data}) {
     return _WidgetbookTheme<CustomTheme>(
       name: name,
-      icon: icon,
       data: data,
     );
   }
@@ -35,7 +32,6 @@ const $WidgetbookTheme = _$WidgetbookThemeTearOff();
 /// @nodoc
 mixin _$WidgetbookTheme<CustomTheme> {
   String get name => throw _privateConstructorUsedError;
-  IconData get icon => throw _privateConstructorUsedError;
   CustomTheme get data => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -48,7 +44,7 @@ abstract class $WidgetbookThemeCopyWith<CustomTheme, $Res> {
   factory $WidgetbookThemeCopyWith(WidgetbookTheme<CustomTheme> value,
           $Res Function(WidgetbookTheme<CustomTheme>) then) =
       _$WidgetbookThemeCopyWithImpl<CustomTheme, $Res>;
-  $Res call({String name, IconData icon, CustomTheme data});
+  $Res call({String name, CustomTheme data});
 }
 
 /// @nodoc
@@ -63,7 +59,6 @@ class _$WidgetbookThemeCopyWithImpl<CustomTheme, $Res>
   @override
   $Res call({
     Object? name = freezed,
-    Object? icon = freezed,
     Object? data = freezed,
   }) {
     return _then(_value.copyWith(
@@ -71,10 +66,6 @@ class _$WidgetbookThemeCopyWithImpl<CustomTheme, $Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      icon: icon == freezed
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
-              as IconData,
       data: data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -90,7 +81,7 @@ abstract class _$WidgetbookThemeCopyWith<CustomTheme, $Res>
           $Res Function(_WidgetbookTheme<CustomTheme>) then) =
       __$WidgetbookThemeCopyWithImpl<CustomTheme, $Res>;
   @override
-  $Res call({String name, IconData icon, CustomTheme data});
+  $Res call({String name, CustomTheme data});
 }
 
 /// @nodoc
@@ -108,7 +99,6 @@ class __$WidgetbookThemeCopyWithImpl<CustomTheme, $Res>
   @override
   $Res call({
     Object? name = freezed,
-    Object? icon = freezed,
     Object? data = freezed,
   }) {
     return _then(_WidgetbookTheme<CustomTheme>(
@@ -116,10 +106,6 @@ class __$WidgetbookThemeCopyWithImpl<CustomTheme, $Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      icon: icon == freezed
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
-              as IconData,
       data: data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -131,19 +117,16 @@ class __$WidgetbookThemeCopyWithImpl<CustomTheme, $Res>
 /// @nodoc
 
 class _$_WidgetbookTheme<CustomTheme> implements _WidgetbookTheme<CustomTheme> {
-  _$_WidgetbookTheme(
-      {required this.name, required this.icon, required this.data});
+  _$_WidgetbookTheme({required this.name, required this.data});
 
   @override
   final String name;
-  @override
-  final IconData icon;
   @override
   final CustomTheme data;
 
   @override
   String toString() {
-    return 'WidgetbookTheme<$CustomTheme>(name: $name, icon: $icon, data: $data)';
+    return 'WidgetbookTheme<$CustomTheme>(name: $name, data: $data)';
   }
 
   @override
@@ -152,7 +135,6 @@ class _$_WidgetbookTheme<CustomTheme> implements _WidgetbookTheme<CustomTheme> {
         (other.runtimeType == runtimeType &&
             other is _WidgetbookTheme<CustomTheme> &&
             const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.icon, icon) &&
             const DeepCollectionEquality().equals(other.data, data));
   }
 
@@ -160,7 +142,6 @@ class _$_WidgetbookTheme<CustomTheme> implements _WidgetbookTheme<CustomTheme> {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(icon),
       const DeepCollectionEquality().hash(data));
 
   @JsonKey(ignore: true)
@@ -172,15 +153,11 @@ class _$_WidgetbookTheme<CustomTheme> implements _WidgetbookTheme<CustomTheme> {
 
 abstract class _WidgetbookTheme<CustomTheme>
     implements WidgetbookTheme<CustomTheme> {
-  factory _WidgetbookTheme(
-      {required String name,
-      required IconData icon,
-      required CustomTheme data}) = _$_WidgetbookTheme<CustomTheme>;
+  factory _WidgetbookTheme({required String name, required CustomTheme data}) =
+      _$_WidgetbookTheme<CustomTheme>;
 
   @override
   String get name;
-  @override
-  IconData get icon;
   @override
   CustomTheme get data;
   @override

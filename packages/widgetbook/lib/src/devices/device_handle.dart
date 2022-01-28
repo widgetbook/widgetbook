@@ -17,7 +17,6 @@ class DeviceHandle<CustomTheme> extends ConsumerWidget {
       multiRender: MultiRender.devices,
       items: ref.read(devicesProvider).devices,
       buildItem: (Device e) => SelectionItem(
-        iconData: buildIcon(e.type),
         tooltip: e.name,
         selectedItem: ref.watch(getWorkbenchProvider<CustomTheme>()).device,
         item: e,
