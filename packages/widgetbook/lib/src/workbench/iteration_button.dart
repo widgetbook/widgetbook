@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // TODO(dkbast): What do you think about this extension method.
 import 'package:widgetbook/src/utils/extensions.dart';
+import 'package:widgetbook/src/workbench/workbench_button.dart';
 
 class IterationButton extends StatelessWidget {
   const IterationButton._({
@@ -32,14 +33,8 @@ class IterationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return WorkbenchButton.icon(
       onPressed: onPressed,
-      style: TextButton.styleFrom(
-        splashFactory: InkRipple.splashFactory,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
-        minimumSize: Size.zero,
-        padding: const EdgeInsets.all(12),
-      ),
       child: Icon(
         iconData,
         color: context.theme.hintColor,

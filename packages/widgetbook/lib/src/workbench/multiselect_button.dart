@@ -18,32 +18,12 @@ class MultiselectButton<CustomTheme> extends ConsumerWidget {
     final currentValue =
         ref.watch(getWorkbenchProvider<CustomTheme>()).multiRender;
     final areEqual = value == currentValue;
-    return WorkbenchButton(
+    return WorkbenchButton.icon(
       onPressed: () {
         ref
             .read(getWorkbenchProvider<CustomTheme>().notifier)
             .changedMultiRender(value);
       },
-      child: Icon(
-        Icons.view_carousel,
-        color: areEqual ? context.colorScheme.primary : context.theme.hintColor,
-      ),
-    );
-  }
-
-  TextButton newMethod(WidgetRef ref, bool areEqual, BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        ref
-            .read(getWorkbenchProvider<CustomTheme>().notifier)
-            .changedMultiRender(value);
-      },
-      style: TextButton.styleFrom(
-        splashFactory: InkRipple.splashFactory,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
-        minimumSize: Size.zero,
-        padding: const EdgeInsets.all(12),
-      ),
       child: Icon(
         Icons.view_carousel,
         color: areEqual ? context.colorScheme.primary : context.theme.hintColor,

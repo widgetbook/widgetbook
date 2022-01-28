@@ -21,7 +21,7 @@ class SelectionItem<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WorkbenchButton(
+    return WorkbenchButton.text(
       onPressed: onPressed,
       color: _areEqual
           ? Theme.of(context).colorScheme.primary

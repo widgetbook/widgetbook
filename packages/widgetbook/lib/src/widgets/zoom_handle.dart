@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/providers/zoom_provider.dart';
 import 'package:widgetbook/src/utils/extensions.dart';
+import 'package:widgetbook/src/workbench/workbench_button.dart';
 
 class ZoomHandle extends StatefulWidget {
   const ZoomHandle({Key? key}) : super(key: key);
@@ -15,21 +16,13 @@ class _ZoomHandleState extends State<ZoomHandle> {
     final state = ZoomProvider.of(context)!.state;
     return Row(
       children: [
-        TextButton(
+        WorkbenchButton.icon(
           onPressed: ZoomProvider.of(context)!.zoomOut,
-          style: TextButton.styleFrom(
-            splashFactory: InkRipple.splashFactory,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
-            minimumSize: Size.zero,
-            padding: const EdgeInsets.all(12),
-          ),
           child: Icon(
             Icons.remove,
             color: context.theme.hintColor,
           ),
         ),
-        const SizedBox(width: 8),
         Row(
           children: [
             SizedBox(
@@ -47,33 +40,17 @@ class _ZoomHandleState extends State<ZoomHandle> {
             const Text('zoom'),
           ],
         ),
-        const SizedBox(width: 8),
-        TextButton(
+        WorkbenchButton.icon(
           onPressed: ZoomProvider.of(context)!.zoomIn,
-          style: TextButton.styleFrom(
-            splashFactory: InkRipple.splashFactory,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
-            minimumSize: Size.zero,
-            padding: const EdgeInsets.all(12),
-          ),
           child: Icon(
             Icons.add,
             color: context.theme.hintColor,
           ),
         ),
-        const SizedBox(width: 8),
         Tooltip(
           message: 'Reset zoom',
-          child: TextButton(
+          child: WorkbenchButton.icon(
             onPressed: ZoomProvider.of(context)!.resetToNormal,
-            style: TextButton.styleFrom(
-              splashFactory: InkRipple.splashFactory,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(90)),
-              minimumSize: Size.zero,
-              padding: const EdgeInsets.all(12),
-            ),
             child: Icon(
               Icons.replay,
               color: context.theme.hintColor,
