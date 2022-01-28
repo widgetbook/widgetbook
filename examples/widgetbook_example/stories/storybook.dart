@@ -60,12 +60,10 @@ class Storyboard extends StatelessWidget {
       themes: [
         WidgetbookTheme(
           name: 'Light',
-          icon: Icons.light_mode,
           data: getLightTheme(context),
         ),
         WidgetbookTheme(
           name: 'Dark',
-          icon: Icons.dark_mode,
           data: getDarkTheme(context),
         )
       ],
