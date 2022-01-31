@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 import 'package:widgetbook/src/localization/localization.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/widgets/renderer.dart';
@@ -15,14 +16,14 @@ class DeviceRender<CustomTheme> extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workbenchState = ref.watch(getWorkbenchProvider<CustomTheme>());
+    final state = context.watch<WorkbenchProvider<CustomTheme>>().state;
     final localizationState = ref.watch(localizationProvider);
     return Renderer(
-      device: workbenchState.device!,
-      locale: workbenchState.locale!,
+      device: state.device!,
+      locale: state.locale!,
       localizationsDelegates: localizationState.localizationsDelegates,
-      theme: workbenchState.theme!.data,
-      renderMode: workbenchState.renderMode,
+      theme: state.theme!.data,
+      renderMode: state.renderMode,
       useCaseBuilder: story.builder,
     );
   }

@@ -20,10 +20,12 @@ import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/routing/route_information_parser.dart';
 import 'package:widgetbook/src/routing/story_router_delegate.dart';
 import 'package:widgetbook/src/services/filter_service.dart';
-import 'package:widgetbook/src/theming/theming.dart';
+import 'package:widgetbook/src/theming/theming_provider.dart';
+import 'package:widgetbook/src/theming/theming_state.dart';
 import 'package:widgetbook/src/theming/widgetbook_theme.dart';
 import 'package:widgetbook/src/utils/styles.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
+import 'package:widgetbook/src/workbench/workbench_state.dart';
 import 'package:widgetbook/src/zoom/zoom_provider.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
 
@@ -31,9 +33,8 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
   const Widgetbook({
     Key? key,
     required this.categories,
-    this.devices,
+    List<Device>? devices,
     required this.appInfo,
-    this.supportedLocales,
     this.localizationsDelegates,
     required this.themes,
     this.defaultTheme = ThemeMode.system,
@@ -42,13 +43,36 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
     this.themeBuilder,
     this.scaffoldBuilder,
     this.useCaseBuilder,
-    this.renderModes,
+    List<Locale>? supportedLocales,
+    List<RenderMode>? renderModes,
     // TODO check if this works
   })  : assert(
           themes.length > 0,
           'please provide a theme by using one of these properties: '
           'lightTheme, darkTheme or themes',
         ),
+        supportedLocales = supportedLocales ??
+            const [
+              Locale('us'),
+            ],
+        renderModes = renderModes ??
+            const <RenderMode>[
+              // TODO how to use the factory constructors here?
+              RenderMode(
+                name: 'Widgetbook',
+                allowsDevices: true,
+              ),
+              RenderMode(
+                name: 'None',
+                allowsDevices: false,
+              )
+            ],
+        devices = devices ??
+            const [
+              Apple.iPhone11,
+              Apple.iPhone12,
+              Samsung.s21ultra,
+            ],
         super(key: key);
 
   /// Categories which host Folders and WidgetElements.
@@ -57,7 +81,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
   final List<WidgetbookCategory> categories;
 
   /// The devices on which Stories are previewed.
-  final List<Device>? devices;
+  final List<Device> devices;
 
   /// Information about the app that is catalogued in the Widgetbook.
   final AppInfo appInfo;
@@ -65,13 +89,13 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
   /// The default theme mode Widgetbook starts with
   final ThemeMode defaultTheme;
 
-  final Iterable<Locale>? supportedLocales;
+  final List<Locale> supportedLocales;
 
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
 
   final List<WidgetbookTheme<CustomTheme>> themes;
 
-  final List<RenderMode>? renderModes;
+  final List<RenderMode> renderModes;
 
   final DeviceFrameBuilderFunction? deviceFrameBuilder;
 
@@ -89,7 +113,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
     required AppInfo appInfo,
     List<Device>? devices,
     List<RenderMode>? renderModes,
-    Iterable<Locale>? supportedLocales,
+    List<Locale>? supportedLocales,
     Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     DeviceFrameBuilderFunction? deviceFrameBuilder,
     LocalizationBuilderFunction? localizationBuilder,
@@ -121,7 +145,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
     required AppInfo appInfo,
     List<Device>? devices,
     List<RenderMode>? renderModes,
-    Iterable<Locale>? supportedLocales,
+    List<Locale>? supportedLocales,
     Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     DeviceFrameBuilderFunction? deviceFrameBuilder,
     LocalizationBuilderFunction? localizationBuilder,
@@ -151,9 +175,26 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
   Widget build(BuildContext context) {
     return asdfasdf.MultiProvider(
       providers: [
-        asdfasdf.Provider(
+        // TODO this can be moved down the tree
+        asdfasdf.ChangeNotifierProvider(
           create: (_) => ZoomProvider(),
         ),
+        // TODO can this be removed and put into workbench provider?
+        asdfasdf.ChangeNotifierProvider(
+          create: (_) => ThemingProvider<CustomTheme>(
+            state: ThemingState<CustomTheme>(
+              themes: themes,
+            ),
+          ),
+        ),
+        asdfasdf.ChangeNotifierProvider(
+          create: (_) => WorkbenchProvider(
+            locales: supportedLocales,
+            themes: themes,
+            devices: devices,
+            renderModes: renderModes,
+          ),
+        )
       ],
       child: UncontrolledProviderScope(
         container: ProviderContainer(),
@@ -187,7 +228,7 @@ class WidgetbookWrapper<CustomTheme> extends ConsumerStatefulWidget {
     Iterable<Locale>? supportedLocales,
     this.localizationsDelegates,
     this.defaultTheme = ThemeMode.system,
-    this.renderModes,
+    required this.renderModes,
     this.deviceFrameBuilder,
     this.localizationBuilder,
     this.themeBuilder,
@@ -227,7 +268,7 @@ class WidgetbookWrapper<CustomTheme> extends ConsumerStatefulWidget {
 
   final Iterable<WidgetbookTheme<CustomTheme>> themes;
 
-  final List<RenderMode>? renderModes;
+  final List<RenderMode> renderModes;
 
   final DeviceFrameBuilderFunction? deviceFrameBuilder;
 
@@ -262,9 +303,7 @@ class _WidgetbookState<CustomTheme>
   }
 
   void _initializeProviders() {
-    initializeProvider<CustomTheme>();
     initializeRenderingProvider<CustomTheme>();
-    initializeWorkbenchProvider<CustomTheme>();
   }
 
   void _onHotReload() {
@@ -272,9 +311,7 @@ class _WidgetbookState<CustomTheme>
           localizationsDelegates: widget.localizationsDelegates?.toList(),
           supportedLocales: widget.supportedLocales.toList(),
         );
-    ref.read(getProvider<CustomTheme>().notifier).hotReloadUpdate(
-          themes: widget.themes.toList(),
-        );
+
     ref.read(devicesProvider.notifier).hotReloadUpdate(
           devices: widget.devices,
         );

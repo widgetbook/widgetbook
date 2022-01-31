@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 import 'package:widgetbook/src/devices/devices.dart';
 import 'package:widgetbook/src/multi_render_handle.dart';
 import 'package:widgetbook/src/workbench/multi_render.dart';
@@ -12,20 +13,20 @@ class DeviceHandle<CustomTheme> extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workbench = ref.read(getWorkbenchProvider<CustomTheme>().notifier);
+    final workbenchProvider = context.watch<WorkbenchProvider<CustomTheme>>();
     return MultiRenderHandle<Device, CustomTheme>(
       multiRender: MultiRender.devices,
       items: ref.read(devicesProvider).devices,
       buildItem: (Device e) => SelectionItem(
         name: e.name,
-        selectedItem: ref.watch(getWorkbenchProvider<CustomTheme>()).device,
+        selectedItem: workbenchProvider.state.device,
         item: e,
         onPressed: () {
-          workbench.changedDevice(e);
+          workbenchProvider.changedDevice(e);
         },
       ),
-      onPreviousPressed: workbench.previousDevice,
-      onNextPressed: workbench.nextDevice,
+      onPreviousPressed: workbenchProvider.previousDevice,
+      onNextPressed: workbenchProvider.nextDevice,
     );
   }
 

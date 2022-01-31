@@ -5,6 +5,7 @@ import 'package:widgetbook/src/rendering/rendering_provider.dart';
 import 'package:widgetbook/src/workbench/iteration_button.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
+import 'package:provider/provider.dart';
 
 class RenderHandle<CustomTheme> extends ConsumerWidget {
   const RenderHandle({
@@ -12,26 +13,27 @@ class RenderHandle<CustomTheme> extends ConsumerWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workbench = ref.watch(getWorkbenchProvider<CustomTheme>().notifier);
+    final workbenchProvider = context.watch<WorkbenchProvider<CustomTheme>>();
+    final workbenchState = workbenchProvider.state;
+
     final renderingState = ref.watch(getRenderingProvider<CustomTheme>());
 
     return Row(
       children: [
-        IterationButton.left(onPressed: workbench.previousRenderMode),
+        IterationButton.left(onPressed: workbenchProvider.previousRenderMode),
         ...renderingState.renderModes
             .map(
               (e) => SelectionItem<RenderMode>(
                 name: e.name,
-                selectedItem:
-                    ref.watch(getWorkbenchProvider<CustomTheme>()).renderMode,
+                selectedItem: workbenchState.renderMode,
                 item: e,
                 onPressed: () {
-                  workbench.changedRenderMode(e);
+                  workbenchProvider.changedRenderMode(e);
                 },
               ),
             )
             .toList(),
-        IterationButton.right(onPressed: workbench.nextRenderMode),
+        IterationButton.right(onPressed: workbenchProvider.nextRenderMode),
         const SizedBox(
           width: 8,
         ),

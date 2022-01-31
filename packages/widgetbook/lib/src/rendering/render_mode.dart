@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'render_mode.freezed.dart';
@@ -11,7 +10,7 @@ part 'render_mode.freezed.dart';
 ///   - The device_frame package
 @freezed
 class RenderMode with _$RenderMode {
-  factory RenderMode({
+  const factory RenderMode({
     /// The name displayed as a tooltip
     required String name,
 
@@ -20,21 +19,21 @@ class RenderMode with _$RenderMode {
   }) = _RenderMode;
 
   factory RenderMode.widgetbook() {
-    return RenderMode(
+    return const RenderMode(
       name: 'Widgetbook',
       allowsDevices: true,
     );
   }
 
   factory RenderMode.none() {
-    return RenderMode(
+    return const RenderMode(
       name: 'None',
       allowsDevices: false,
     );
   }
 
   factory RenderMode.devicePreview() {
-    return RenderMode(
+    return const RenderMode(
       name: 'Device Preview',
       allowsDevices: true,
     );

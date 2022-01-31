@@ -1,54 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:widgetbook/src/devices/devices.dart';
-import 'package:widgetbook/src/localization/localization.dart';
-import 'package:widgetbook/src/rendering/rendering_provider.dart';
-import 'package:widgetbook/src/theming/theming.dart';
+import 'package:widgetbook/src/extensions/list_extension.dart';
+import 'package:widgetbook/src/state_change_notifier.dart';
 import 'package:widgetbook/src/workbench/multi_render.dart';
 import 'package:widgetbook/src/workbench/workbench_state.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-late Object _workbenchProvider;
-
-StateNotifierProvider<Workbench<CustomTheme>, WorkbenchState<CustomTheme>>
-    getWorkbenchProvider<CustomTheme>() {
-  return _workbenchProvider as StateNotifierProvider<Workbench<CustomTheme>,
-      WorkbenchState<CustomTheme>>;
-}
-
-void initializeWorkbenchProvider<CustomTheme>() {
-  _workbenchProvider = StateNotifierProvider<Workbench<CustomTheme>,
-      WorkbenchState<CustomTheme>>(
-    (ref) {
-      final localization = ref.watch(localizationProvider);
-      final theming = ref.watch(getProvider<CustomTheme>());
-      final devices = ref.watch(devicesProvider);
-      final rendering = ref.watch(getRenderingProvider<CustomTheme>());
-      return Workbench<CustomTheme>(
-        state: WorkbenchState<CustomTheme>(
-          locale: localization.supportedLocales.first,
-          theme: theming.themes.first,
-          device: devices.devices.first,
-          renderMode: RenderMode.widgetbook(),
-        ),
-        locales: localization.supportedLocales,
-        themes: theming.themes,
-        devices: devices.devices,
-        renderModes: rendering.renderModes,
-      );
-    },
-  );
-}
-
-class Workbench<CustomTheme>
-    extends StateNotifier<WorkbenchState<CustomTheme>> {
-  Workbench({
-    required WorkbenchState<CustomTheme> state,
+class WorkbenchProvider<CustomTheme>
+    extends StateChangeNotifier<WorkbenchState<CustomTheme>> {
+  WorkbenchProvider({
+    WorkbenchState<CustomTheme>? state,
     required this.locales,
     required this.themes,
     required this.devices,
     required this.renderModes,
-  }) : super(state);
+  }) : super(
+          state: state ??
+              WorkbenchState(
+                renderMode: renderModes.first,
+                theme: themes.first,
+                device: devices.first,
+                locale: locales.first,
+              ),
+        );
 
   final List<Locale> locales;
   final List<WidgetbookTheme<CustomTheme>> themes;
@@ -127,27 +100,8 @@ class Workbench<CustomTheme>
     state = state.copyWith(renderMode: renderMode);
   }
 
-  // TODO this can be an extension method on [List]
-  T _getNext<T>(T? currentItem, List<T> items) {
-    final selectedItem = currentItem ?? items.last;
-    final index = items.indexOf(selectedItem);
-    final nextIndex = (index + 1) % items.length;
-    return items[nextIndex];
-  }
-
-  // TODO this can be an extension method on [List]
-  T _getPrevious<T>(T? currentItem, List<T> items) {
-    final selectedItem = currentItem ?? items.last;
-    final index = items.indexOf(selectedItem);
-    var previousIndex = index - 1;
-    if (previousIndex < 0) {
-      previousIndex = items.length - 1;
-    }
-    return items[previousIndex];
-  }
-
   void nextLocale() {
-    final nextLocale = _getNext(state.locale, locales);
+    final nextLocale = locales.getNext(state.locale);
     state = state.copyWith(
       locale: nextLocale,
       multiRender: state.multiRender == MultiRender.localization
@@ -157,7 +111,7 @@ class Workbench<CustomTheme>
   }
 
   void previousLocale() {
-    final previousLocale = _getPrevious(state.locale, locales);
+    final previousLocale = locales.getPrevious(state.locale);
     state = state.copyWith(
       locale: previousLocale,
       multiRender: state.multiRender == MultiRender.localization
@@ -167,7 +121,7 @@ class Workbench<CustomTheme>
   }
 
   void nextTheme() {
-    final nextTheme = _getNext(state.theme, themes);
+    final nextTheme = themes.getNext(state.theme);
     state = state.copyWith(
       theme: nextTheme,
       multiRender: state.multiRender == MultiRender.themes
@@ -177,7 +131,7 @@ class Workbench<CustomTheme>
   }
 
   void previousTheme() {
-    final previousTheme = _getPrevious(state.theme, themes);
+    final previousTheme = themes.getPrevious(state.theme);
     state = state.copyWith(
       theme: previousTheme,
       multiRender: state.multiRender == MultiRender.themes
@@ -187,7 +141,7 @@ class Workbench<CustomTheme>
   }
 
   void nextDevice() {
-    final nextDevice = _getNext(state.device, devices);
+    final nextDevice = devices.getNext(state.device);
     state = state.copyWith(
       device: nextDevice,
       multiRender: state.multiRender == MultiRender.devices
@@ -197,7 +151,7 @@ class Workbench<CustomTheme>
   }
 
   void previousDevice() {
-    final previousDevice = _getPrevious(state.device, devices);
+    final previousDevice = devices.getPrevious(state.device);
     state = state.copyWith(
       device: previousDevice,
       multiRender: state.multiRender == MultiRender.devices
@@ -207,14 +161,14 @@ class Workbench<CustomTheme>
   }
 
   void nextRenderMode() {
-    final nextRenderMode = _getNext(state.renderMode, renderModes);
+    final nextRenderMode = renderModes.getNext(state.renderMode);
     state = state.copyWith(
       renderMode: nextRenderMode,
     );
   }
 
   void previousRenderMode() {
-    final previousDevice = _getPrevious(state.renderMode, renderModes);
+    final previousDevice = renderModes.getPrevious(state.renderMode);
     state = state.copyWith(
       renderMode: previousDevice,
     );

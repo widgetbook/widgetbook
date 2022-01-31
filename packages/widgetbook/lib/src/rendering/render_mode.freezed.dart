@@ -115,7 +115,7 @@ class __$RenderModeCopyWithImpl<$Res> extends _$RenderModeCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_RenderMode implements _RenderMode {
-  _$_RenderMode({required this.name, required this.allowsDevices});
+  const _$_RenderMode({required this.name, required this.allowsDevices});
 
   @override
 
@@ -154,8 +154,8 @@ class _$_RenderMode implements _RenderMode {
 }
 
 abstract class _RenderMode implements RenderMode {
-  factory _RenderMode({required String name, required bool allowsDevices}) =
-      _$_RenderMode;
+  const factory _RenderMode(
+      {required String name, required bool allowsDevices}) = _$_RenderMode;
 
   @override
 

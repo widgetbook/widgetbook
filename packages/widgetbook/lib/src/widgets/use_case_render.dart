@@ -17,7 +17,8 @@ class UseCaseRender<CustomTheme> extends ConsumerWidget {
     WidgetbookUseCase story,
     WidgetRef ref,
   ) {
-    final workkbenchState = ref.watch(getWorkbenchProvider<CustomTheme>());
+    final workkbenchState =
+        context.watch<WorkbenchProvider<CustomTheme>>().state;
 
     return workkbenchState.multiRender == MultiRender.none
         ? ClipRect(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 import 'package:widgetbook/src/localization/localization.dart';
 import 'package:widgetbook/src/multi_render_handle.dart';
 import 'package:widgetbook/src/workbench/multi_render.dart';
@@ -15,20 +16,22 @@ class LocalizationHandle<CustomTheme> extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workbench = ref.read(getWorkbenchProvider<CustomTheme>().notifier);
+    final workbenchProvider = context.watch<WorkbenchProvider<CustomTheme>>();
+    final workbenchState = workbenchProvider.state;
+
     return MultiRenderHandle<Locale, CustomTheme>(
       multiRender: MultiRender.localization,
       items: ref.read(localizationProvider).supportedLocales,
       buildItem: (Locale e) => SelectionItem(
         name: e.toLanguageTag(),
-        selectedItem: ref.watch(getWorkbenchProvider<CustomTheme>()).locale,
+        selectedItem: workbenchState.locale,
         item: e,
         onPressed: () {
-          workbench.changedLocale(e);
+          workbenchProvider.changedLocale(e);
         },
       ),
-      onPreviousPressed: workbench.previousLocale,
-      onNextPressed: workbench.nextLocale,
+      onPreviousPressed: workbenchProvider.previousLocale,
+      onNextPressed: workbenchProvider.nextLocale,
     );
   }
 }
