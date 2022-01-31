@@ -20,7 +20,8 @@ class RenderHandle<CustomTheme> extends StatelessWidget {
 
     return Row(
       children: [
-        IterationButton.left(onPressed: workbenchProvider.previousDeviceFrame),
+        IterationButton.previous(
+            onPressed: workbenchProvider.previousDeviceFrame),
         ...renderingState.deviceFrames
             .map(
               (e) => SelectionItem<DeviceFrame>(
@@ -33,7 +34,7 @@ class RenderHandle<CustomTheme> extends StatelessWidget {
               ),
             )
             .toList(),
-        IterationButton.right(onPressed: workbenchProvider.nextDeviceFrame),
+        IterationButton.next(onPressed: workbenchProvider.nextDeviceFrame),
         const SizedBox(
           width: 8,
         ),

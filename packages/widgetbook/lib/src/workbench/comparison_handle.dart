@@ -4,6 +4,8 @@ import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/iteration_button.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
 
+/// The [ComparisonHandle] allows users to preview one specific setting of a
+/// collection or the whole collection at once.
 class ComparisonHandle<T, CustomTheme> extends StatelessWidget {
   const ComparisonHandle({
     Key? key,
@@ -27,9 +29,9 @@ class ComparisonHandle<T, CustomTheme> extends StatelessWidget {
         ComparisonButton<CustomTheme>(
           value: multiRender,
         ),
-        IterationButton.left(onPressed: onPreviousPressed),
+        IterationButton.previous(onPressed: onPreviousPressed),
         ...items.map(buildItem).toList(),
-        IterationButton.right(onPressed: onNextPressed),
+        IterationButton.next(onPressed: onNextPressed),
         const SizedBox(
           width: 8,
         ),

@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/constants/radii.dart';
 
+/// A custom button used in the Workbench which can be reused by all the
+/// clickable elements
+///
+/// [WorkbenchButton] has two styles:
+/// - [WorkbenchButton.icon] which is similar to an [IconButton].
+/// - [WorkbenchButton.text] for text.
 class WorkbenchButton extends StatelessWidget {
   const WorkbenchButton._({
     Key? key,
@@ -11,6 +17,7 @@ class WorkbenchButton extends StatelessWidget {
   })  : color = color ?? Colors.transparent,
         super(key: key);
 
+  /// Creates a new [WorkbenchButton] which can host [Icon]s.
   factory WorkbenchButton.icon({
     required VoidCallback onPressed,
     required Widget child,
@@ -22,6 +29,7 @@ class WorkbenchButton extends StatelessWidget {
     );
   }
 
+  /// Creates a new [WorkbenchButton] which can host [Text]s.
   factory WorkbenchButton.text({
     required VoidCallback onPressed,
     required Widget child,

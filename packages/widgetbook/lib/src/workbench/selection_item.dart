@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/workbench/workbench_button.dart';
 
+/// A [SelectionItem] represents on element in a collection. An element can be
+/// selected and will be displayed within the Workbench.
+///
+/// Selected elements change color to indicate that the element is active.
 class SelectionItem<T> extends StatelessWidget {
   const SelectionItem({
     Key? key,
