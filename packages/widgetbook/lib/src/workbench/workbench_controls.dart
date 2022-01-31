@@ -6,8 +6,8 @@ import 'package:widgetbook/src/rendering/render_handle.dart';
 import 'package:widgetbook/src/theming/theme_handle.dart';
 import 'package:widgetbook/src/zoom/zoom_handle.dart';
 
-class ControlsBar<CustomTheme> extends StatelessWidget {
-  const ControlsBar({Key? key}) : super(key: key);
+class WorkbenchControls<CustomTheme> extends StatelessWidget {
+  const WorkbenchControls({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

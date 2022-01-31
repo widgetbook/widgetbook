@@ -5,7 +5,7 @@ import 'package:widgetbook/src/providers/canvas_state.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/routing/story_route_path.dart';
 import 'package:widgetbook/src/styled_widgets/styled_scaffold.dart';
-import 'package:widgetbook/src/widgets/editor.dart';
+import 'package:widgetbook/src/workbench/workbench.dart';
 
 import 'package:widgetbook/widgetbook.dart';
 
@@ -77,7 +77,7 @@ class StoryRouterDelegate<CustomTheme> extends RouterDelegate<StoryRoutePath>
                       width: 16,
                     ),
                     Expanded(
-                      child: Editor<CustomTheme>(),
+                      child: Workbench<CustomTheme>(),
                     ),
                   ],
                 );

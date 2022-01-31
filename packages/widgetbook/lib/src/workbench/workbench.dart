@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/constants/radii.dart';
-
+import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
-import 'package:widgetbook/src/widgets/controls_bar.dart';
-import 'package:widgetbook/src/widgets/use_case_render.dart';
+import 'package:widgetbook/src/workbench/preview.dart';
+import 'package:widgetbook/src/workbench/workbench_controls.dart';
 
-class Editor<CustomTheme> extends StatelessWidget {
-  const Editor({
+class Workbench<CustomTheme> extends StatelessWidget {
+  const Workbench({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final state = CanvasProvider.of(context)!.state;
+    final useCase = state.selectedStory;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ControlsBar<CustomTheme>(),
+        WorkbenchControls<CustomTheme>(),
         const SizedBox(
           height: 16,
         ),
@@ -25,7 +27,9 @@ class Editor<CustomTheme> extends StatelessWidget {
               borderRadius: Radii.defaultRadius,
               color: context.colorScheme.surface,
             ),
-            child: UseCaseRender<CustomTheme>(),
+            child: useCase == null
+                ? Container()
+                : Preview<CustomTheme>(useCase: useCase),
           ),
         ),
       ],

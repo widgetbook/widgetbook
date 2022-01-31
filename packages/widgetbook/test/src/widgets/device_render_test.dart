@@ -55,7 +55,7 @@ Widget getMaterialApp(Brightness brightness) {
           ),
           onStateChanged: (_) {},
           child: DeviceRender(
-            story: WidgetbookUseCase(
+            useCase: WidgetbookUseCase(
               name: storyName,
               builder: (context) => const ThemedWidget(),
             ),

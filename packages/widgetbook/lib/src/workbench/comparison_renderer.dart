@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/localization/localization_provider.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
-import 'package:widgetbook/src/widgets/renderer.dart';
+import 'package:widgetbook/src/workbench/renderer.dart';
 import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
 
@@ -16,12 +16,23 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
 
     switch (workbenchState.comparisonSetting) {
       case ComparisonSetting.none:
-        // This cannot happen
-        break;
+        return Padding(
+          padding: const EdgeInsets.all(50),
+          child: Renderer<CustomTheme>(
+            device: workbenchState.device!,
+            locale: workbenchState.locale!,
+            localizationsDelegates: localizationState.localizationsDelegates,
+            theme: workbenchState.theme!.data,
+            deviceFrame: workbenchState.deviceFrame,
+            useCaseBuilder:
+                CanvasProvider.of(context)!.state.selectedStory!.builder,
+          ),
+        );
       case ComparisonSetting.themes:
         return _buildRenderer(
           workbenchState.themes
               .map(
+                // TODO redundant padding everywhere
                 (e) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
                   child: Renderer(
@@ -31,11 +42,10 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
                         localizationState.localizationsDelegates,
                     theme: e.data,
                     deviceFrame: workbenchState.deviceFrame,
-                    useCaseBuilder: (BuildContext context) =>
-                        CanvasProvider.of(context)!
-                            .state
-                            .selectedStory!
-                            .builder(context),
+                    useCaseBuilder: CanvasProvider.of(context)!
+                        .state
+                        .selectedStory!
+                        .builder,
                   ),
                 ),
               )
@@ -53,11 +63,10 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
                           localizationState.localizationsDelegates,
                       theme: workbenchState.theme!.data,
                       deviceFrame: workbenchState.deviceFrame,
-                      useCaseBuilder: (BuildContext context) =>
-                          CanvasProvider.of(context)!
-                              .state
-                              .selectedStory!
-                              .builder(context),
+                      useCaseBuilder: CanvasProvider.of(context)!
+                          .state
+                          .selectedStory!
+                          .builder,
                     ),
                   ))
               .toList(),
@@ -75,18 +84,15 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
                           localizationState.localizationsDelegates,
                       theme: workbenchState.theme!.data,
                       deviceFrame: workbenchState.deviceFrame,
-                      useCaseBuilder: (BuildContext context) =>
-                          CanvasProvider.of(context)!
-                              .state
-                              .selectedStory!
-                              .builder(context),
+                      useCaseBuilder: CanvasProvider.of(context)!
+                          .state
+                          .selectedStory!
+                          .builder,
                     ),
                   ))
               .toList(),
         );
     }
-
-    return Container();
   }
 
   Widget _buildRenderer(List<Widget> widgets) {

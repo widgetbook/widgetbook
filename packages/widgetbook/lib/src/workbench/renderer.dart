@@ -38,34 +38,32 @@ class Renderer<CustomTheme> extends StatelessWidget {
         const SizedBox(
           height: 16,
         ),
-        Expanded(
-          child: Center(
-            child: renderingState.localizationBuilder(
+        Center(
+          child: renderingState.localizationBuilder(
+            context,
+            workbenchProvider.locales,
+            // TODO this can be null!
+            localizationsDelegates!.toList(),
+            locale,
+            renderingState.themeBuilder(
               context,
-              workbenchProvider.locales,
-              // TODO this can be null!
-              localizationsDelegates!.toList(),
-              locale,
-              renderingState.themeBuilder(
-                context,
-                theme,
-                Builder(
-                  builder: (context) {
-                    return renderingState.deviceFrameBuilder(
+              theme,
+              Builder(
+                builder: (context) {
+                  return renderingState.deviceFrameBuilder(
+                    context,
+                    device,
+                    deviceFrame,
+                    renderingState.scaffoldBuilder(
                       context,
-                      device,
                       deviceFrame,
-                      renderingState.scaffoldBuilder(
+                      renderingState.useCaseBuilder(
                         context,
-                        deviceFrame,
-                        renderingState.useCaseBuilder(
-                          context,
-                          useCaseBuilder(context),
-                        ),
+                        useCaseBuilder(context),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ),
           ),
