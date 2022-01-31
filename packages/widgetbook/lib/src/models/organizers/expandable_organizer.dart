@@ -41,4 +41,9 @@ abstract class ExpandableOrganizer extends Organizer {
 
   @override
   int get hashCode => isExpanded.hashCode ^ folders.hashCode ^ widgets.hashCode;
+
+  @override
+  String toString() {
+    return 'Expanded: $isExpanded, Name: $name, Folders: $folders, Widgets: $widgets';
+  }
 }

@@ -147,6 +147,251 @@ void main() {
       );
 
       testWidgets(
+        'togglesExpander of $WidgetbookWidget',
+        (WidgetTester tester) async {
+          final widgetbookCategory = WidgetbookCategory(
+            name: 'Category 1',
+            widgets: [
+              WidgetbookWidget(
+                name: 'Widget 1',
+                useCases: [],
+              )
+            ],
+          );
+          var provider = await tester.pumpProvider(
+            initialState: OrganizerState.unfiltered(
+              categories: [
+                widgetbookCategory,
+              ],
+            ),
+            storyRepository: storyRepository,
+            selectedStoryRepository: selectedStoryRepository,
+          );
+
+          provider = await tester.invokeMethodAndReturnPumpedProvider(
+            () {
+              provider.setExpandedRecursive([widgetbookCategory], true);
+            },
+          );
+
+          expect(
+            provider.state,
+            equals(
+              OrganizerState.unfiltered(
+                categories: [
+                  WidgetbookCategory(
+                    name: 'Category 1',
+                    widgets: [
+                      WidgetbookWidget(
+                        name: 'Widget 1',
+                        isExpanded: true,
+                        useCases: [],
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+
+      testWidgets('recursive expander of $WidgetbookWidget',
+          (WidgetTester tester) async {
+        final widgetCategory = WidgetbookCategory(
+          name: 'Category 1',
+          folders: [
+            WidgetbookFolder(
+              name: 'Folder 1-1',
+              folders: [
+                WidgetbookFolder(
+                  name: 'Folder 1-2',
+                  widgets: [
+                    WidgetbookWidget(
+                      name: 'Widget 1-2',
+                      useCases: [],
+                    ),
+                  ],
+                )
+              ],
+            ),
+            WidgetbookFolder(
+              name: 'Folder 2-1',
+              folders: [
+                WidgetbookFolder(
+                  name: 'Folder 2-2',
+                  widgets: [
+                    WidgetbookWidget(
+                      name: 'Widget 2-2',
+                      useCases: [],
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ],
+        );
+        var provider = await tester.pumpProvider(
+          initialState: OrganizerState.unfiltered(
+            categories: [widgetCategory],
+          ),
+          storyRepository: storyRepository,
+          selectedStoryRepository: selectedStoryRepository,
+        );
+
+        provider = await tester.invokeMethodAndReturnPumpedProvider(
+          () {
+            provider.setExpandedRecursive([widgetCategory], true);
+          },
+        );
+
+        expect(
+          provider.state,
+          equals(
+            OrganizerState.unfiltered(
+              categories: [
+                WidgetbookCategory(
+                  name: 'Category 1',
+                  folders: [
+                    WidgetbookFolder(
+                      name: 'Folder 1-1',
+                      isExpanded: true,
+                      folders: [
+                        WidgetbookFolder(
+                          isExpanded: true,
+                          name: 'Folder 1-2',
+                          widgets: [
+                            WidgetbookWidget(
+                              name: 'Widget 1-2',
+                              useCases: [],
+                              isExpanded: true,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    WidgetbookFolder(
+                      name: 'Folder 2-1',
+                      isExpanded: true,
+                      folders: [
+                        WidgetbookFolder(
+                          isExpanded: true,
+                          name: 'Folder 2-2',
+                          widgets: [
+                            WidgetbookWidget(
+                              name: 'Widget 2-2',
+                              useCases: [],
+                              isExpanded: true,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      }, skip: false);
+
+      testWidgets('recursive expander of $WidgetbookWidget to false',
+          (WidgetTester tester) async {
+        final widgetCategory = WidgetbookCategory(
+          name: 'Category 1',
+          folders: [
+            WidgetbookFolder(
+              name: 'Folder 1-1',
+              isExpanded: true,
+              folders: [
+                WidgetbookFolder(
+                  name: 'Folder 1-2',
+                  widgets: [
+                    WidgetbookWidget(
+                      name: 'Widget 1-2',
+                      useCases: [],
+                    ),
+                  ],
+                )
+              ],
+            ),
+            WidgetbookFolder(
+              name: 'Folder 2-1',
+              isExpanded: true,
+              folders: [
+                WidgetbookFolder(
+                  name: 'Folder 2-2',
+                  widgets: [
+                    WidgetbookWidget(
+                      name: 'Widget 2-2',
+                      useCases: [],
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ],
+        );
+        var provider = await tester.pumpProvider(
+          initialState: OrganizerState.unfiltered(
+            categories: [widgetCategory],
+          ),
+          storyRepository: storyRepository,
+          selectedStoryRepository: selectedStoryRepository,
+        );
+
+        provider = await tester.invokeMethodAndReturnPumpedProvider(
+          () {
+            provider.setExpandedRecursive([widgetCategory], false);
+          },
+        );
+
+        expect(
+          provider.state,
+          equals(
+            OrganizerState.unfiltered(
+              categories: [
+                WidgetbookCategory(
+                  name: 'Category 1',
+                  isExpanded: false,
+                  folders: [
+                    WidgetbookFolder(
+                      name: 'Folder 1-1',
+                      folders: [
+                        WidgetbookFolder(
+                          name: 'Folder 1-2',
+                          widgets: [
+                            WidgetbookWidget(
+                              name: 'Widget 1-2',
+                              useCases: [],
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    WidgetbookFolder(
+                      name: 'Folder 2-1',
+                      folders: [
+                        WidgetbookFolder(
+                          name: 'Folder 2-2',
+                          widgets: [
+                            WidgetbookWidget(
+                              name: 'Widget 2-2',
+                              useCases: [],
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      }, skip: false);
+
+      testWidgets(
         'expands $WidgetbookWidget when the selected story changes',
         (WidgetTester tester) async {
           var provider = await tester.pumpProvider(

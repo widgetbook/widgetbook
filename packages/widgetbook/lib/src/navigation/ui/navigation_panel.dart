@@ -49,6 +49,14 @@ class _NavigationPanelState extends State<NavigationPanel> {
           const SizedBox(
             height: 16,
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ExpanderRow.large(
+                organizers: widget.categories,
+              ),
+            ],
+          ),
           Expanded(
             child: Container(
               decoration: BoxDecoration(

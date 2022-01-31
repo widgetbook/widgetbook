@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/constants/radii.dart';
-import 'package:widgetbook/src/models/organizers/organizer.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
+import 'package:widgetbook/src/widgets/expanders/expander_row.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 class Tile extends StatefulWidget {
   const Tile({
@@ -52,6 +53,13 @@ class _TileState extends State<Tile> {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
+            if (hovered && widget.organizer is ExpandableOrganizer)
+              Padding(
+                  padding: const EdgeInsets.only(right: 4),
+                child: ExpanderRow.small(
+                  organizers: [widget.organizer as ExpandableOrganizer],
+                ),
+              )
           ],
         ),
       ),
