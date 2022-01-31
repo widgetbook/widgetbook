@@ -64,11 +64,25 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
     this.useCaseBuilder,
     List<Locale>? supportedLocales,
     List<DeviceFrame>? deviceFrames,
-    // TODO check if this works
   })  : assert(
+          categories.length > 0,
+          'Please specify at least one $WidgetbookCategory.',
+        ),
+        assert(
+          devices == null || devices.length > 0,
+          'Please specify at least one $Device.',
+        ),
+        assert(
           themes.length > 0,
-          'please provide a theme by using one of these properties: '
-          'lightTheme, darkTheme or themes',
+          'Please specify at least one $WidgetbookTheme.',
+        ),
+        assert(
+          deviceFrames == null || deviceFrames.length > 0,
+          'Please specify at least one $DeviceFrame.',
+        ),
+        assert(
+          supportedLocales == null || supportedLocales.length > 0,
+          'Please specify at least one supported $Locale.',
         ),
         supportedLocales = supportedLocales ??
             const [
@@ -126,6 +140,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
 
   final UseCaseBuilderFunction? useCaseBuilder;
 
+  /// A [Widgetbook] which uses cupertino theming via [CupertinoThemeData].
   static Widgetbook<CupertinoThemeData> cupertino({
     required List<WidgetbookCategory> categories,
     required List<WidgetbookTheme<CupertinoThemeData>> themes,
@@ -158,6 +173,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
     );
   }
 
+  /// A [Widgetbook] which uses material theming via [ThemeData].
   static Widgetbook<ThemeData> material({
     required List<WidgetbookCategory> categories,
     required List<WidgetbookTheme<ThemeData>> themes,
@@ -195,8 +211,18 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
     return MultiProvider(
       key: ValueKey(
         themes.hashCode ^
+            key.hashCode ^
+            categories.hashCode ^
+            themes.hashCode ^
+            appInfo.hashCode ^
             devices.hashCode ^
-            deviceFrames.hashCode ^
+            supportedLocales.hashCode ^
+            localizationsDelegates.hashCode ^
+            deviceFrameBuilder.hashCode ^
+            localizationBuilder.hashCode ^
+            themeBuilder.hashCode ^
+            scaffoldBuilder.hashCode ^
+            useCaseBuilder.hashCode ^
             deviceFrames.hashCode,
       ),
       providers: [
