@@ -25,11 +25,35 @@ import 'package:widgetbook/src/theming/theming_state.dart';
 import 'package:widgetbook/src/theming/widgetbook_theme.dart';
 import 'package:widgetbook/src/utils/styles.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
-import 'package:widgetbook/src/workbench/workbench_state.dart';
 import 'package:widgetbook/src/zoom/zoom_provider.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
 
+/// Describes the configuration for your [Widget] library.
+///
+/// [Widgetbook] is the central element in organizing your widgets into
+/// Folders and UseCases.
+/// In addition, [Widgetbook] allows you to specify
+/// - the [Theme]s used by your application,
+/// - the [Device]s on which you'd like to preview the catalogued widgets
+/// - the [Locale]s used by your application
+///
+/// [Widgetbook] defines the following constructors for different themes
+/// - [Widgetbook]<[CustomTheme]> if you use a [CustomTheme] for your app
+/// - [Widgetbook.cupertino] if you use [CupertinoThemeData] for your app
+/// - [Widgetbook.material] if you use [ThemeData] for your app
+///
+/// Note: if you use for instance both [CupertinoThemeData] and [ThemeData] in
+/// your app, use the [Widgetbook]<[CustomTheme]> constructor with [CustomTheme]
+/// set to [dynamic] or [Object] and see [ThemeBuilderFunction] for how to
+/// render the themes correctly.
 class Widgetbook<CustomTheme> extends StatelessWidget {
+  /// The given `localizationDelegates` is required if you want to use the
+  /// Localization options of [Widgetbook]. Make sure to provide the following
+  /// delegates:
+  /// - `AppLocalizations.delegate`
+  /// - `GlobalMaterialLocalizations.delegate`
+  /// - `GlobalWidgetsLocalizations.delegate`
+  /// - `GlobalCupertinoLocalizations.delegate`
   const Widgetbook({
     Key? key,
     required this.categories,
@@ -174,6 +198,9 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return asdfasdf.MultiProvider(
+      key: ValueKey(
+        themes.hashCode ^ devices.hashCode ^ deviceFrames.hashCode,
+      ),
       providers: [
         // TODO this can be moved down the tree
         asdfasdf.ChangeNotifierProvider(
