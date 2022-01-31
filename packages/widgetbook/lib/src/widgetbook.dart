@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// TODO remove the alias
-import 'package:provider/provider.dart' as asdfasdf;
+import 'package:provider/provider.dart';
 import 'package:widgetbook/src/configure_non_web.dart'
     if (dart.library.html) 'package:widgetbook/src/configure_web.dart';
 import 'package:widgetbook/src/localization/localization_provider.dart';
@@ -193,7 +192,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return asdfasdf.MultiProvider(
+    return MultiProvider(
       key: ValueKey(
         themes.hashCode ^
             devices.hashCode ^
@@ -202,11 +201,10 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
       ),
       providers: [
         // TODO this can be moved down the tree
-        asdfasdf.ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (_) => ZoomProvider(),
         ),
-
-        asdfasdf.ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (_) => WorkbenchProvider(
             themes: themes,
             locales: supportedLocales,
@@ -214,12 +212,12 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
             deviceFrames: deviceFrames,
           ),
         ),
-        asdfasdf.ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (_) => LocalizationProvider(
             localizationsDelegates: localizationsDelegates,
           ),
         ),
-        asdfasdf.ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (_) => RenderingProvider(
             deviceFrames: deviceFrames,
             deviceFrameBuilder: deviceFrameBuilder ?? defaultDeviceFrameBuilder,
