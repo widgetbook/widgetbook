@@ -4,6 +4,7 @@ import 'package:widgetbook/src/localization/localization.dart';
 import 'package:widgetbook/src/rendering/device_frame.dart';
 import 'package:widgetbook/src/rendering/rendering_provider.dart';
 import 'package:widgetbook/widgetbook.dart';
+import 'package:provider/provider.dart';
 
 class Renderer<CustomTheme> extends ConsumerWidget {
   const Renderer({
@@ -25,7 +26,8 @@ class Renderer<CustomTheme> extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final rendering = ref.watch(getRenderingProvider<CustomTheme>());
+    final renderingState =
+        context.watch<RenderingProvider<CustomTheme>>().state;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -36,25 +38,25 @@ class Renderer<CustomTheme> extends ConsumerWidget {
         ),
         Expanded(
           child: Center(
-            child: rendering.localizationBuilder(
+            child: renderingState.localizationBuilder(
               context,
               ref.watch(localizationProvider).supportedLocales,
               // TODO this should not be nullable
               localizationsDelegates!.toList(),
               locale,
-              rendering.themeBuilder(
+              renderingState.themeBuilder(
                 context,
                 theme,
                 Builder(
                   builder: (context) {
-                    return rendering.deviceFrameBuilder(
+                    return renderingState.deviceFrameBuilder(
                       context,
                       device,
                       deviceFrame,
-                      rendering.scaffoldBuilder(
+                      renderingState.scaffoldBuilder(
                         context,
                         deviceFrame,
-                        rendering.useCaseBuilder(
+                        renderingState.useCaseBuilder(
                           context,
                           useCaseBuilder(context),
                         ),

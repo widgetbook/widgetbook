@@ -199,7 +199,10 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
   Widget build(BuildContext context) {
     return asdfasdf.MultiProvider(
       key: ValueKey(
-        themes.hashCode ^ devices.hashCode ^ deviceFrames.hashCode,
+        themes.hashCode ^
+            devices.hashCode ^
+            deviceFrames.hashCode ^
+            deviceFrames.hashCode,
       ),
       providers: [
         // TODO this can be moved down the tree
@@ -220,6 +223,17 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
             themes: themes,
             devices: devices,
             deviceFrames: deviceFrames,
+          ),
+        ),
+        asdfasdf.ChangeNotifierProvider(
+          create: (_) => RenderingProvider(
+            deviceFrames: deviceFrames,
+            deviceFrameBuilder: deviceFrameBuilder ?? defaultDeviceFrameBuilder,
+            localizationBuilder:
+                localizationBuilder ?? defaultLocalizationBuilder,
+            themeBuilder: themeBuilder ?? defaultThemeBuilder<CustomTheme>(),
+            scaffoldBuilder: scaffoldBuilder ?? defaultScaffoldBuilder,
+            useCaseBuilder: useCaseBuilder ?? defaultUseCaseBuilder,
           ),
         )
       ],
@@ -323,14 +337,10 @@ class _WidgetbookState<CustomTheme>
   @override
   void initState() {
     configureApp();
-    _initializeProviders();
+
     _onHotReload();
 
     super.initState();
-  }
-
-  void _initializeProviders() {
-    initializeRenderingProvider<CustomTheme>();
   }
 
   void _onHotReload() {
@@ -342,14 +352,6 @@ class _WidgetbookState<CustomTheme>
     ref.read(devicesProvider.notifier).hotReloadUpdate(
           devices: widget.devices,
         );
-
-    ref.read(getRenderingProvider<CustomTheme>().notifier)
-      ..deviceFramesChanged(widget.deviceFrames)
-      ..deviceFrameBuilderChanged(widget.deviceFrameBuilder)
-      ..localizationBuilderChanged(widget.localizationBuilder)
-      ..themeBuilderChanged(widget.themeBuilder)
-      ..scaffoldBuilderChanged(widget.scaffoldBuilder)
-      ..useCaseBuilderChanged(widget.useCaseBuilder);
   }
 
   @override

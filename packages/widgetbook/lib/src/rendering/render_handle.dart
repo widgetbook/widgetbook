@@ -16,7 +16,8 @@ class RenderHandle<CustomTheme> extends ConsumerWidget {
     final workbenchProvider = context.watch<WorkbenchProvider<CustomTheme>>();
     final workbenchState = workbenchProvider.state;
 
-    final renderingState = ref.watch(getRenderingProvider<CustomTheme>());
+    final renderingState =
+        context.watch<RenderingProvider<CustomTheme>>().state;
 
     return Row(
       children: [
