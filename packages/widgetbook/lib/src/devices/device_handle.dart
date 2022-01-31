@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/devices/devices.dart';
 import 'package:widgetbook/src/multi_render_handle.dart';
 import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
@@ -16,7 +15,7 @@ class DeviceHandle<CustomTheme> extends ConsumerWidget {
     final workbenchProvider = context.watch<WorkbenchProvider<CustomTheme>>();
     return ComparisonHandle<Device, CustomTheme>(
       multiRender: ComparisonSetting.devices,
-      items: ref.read(devicesProvider).devices,
+      items: workbenchProvider.state.devices,
       buildItem: (Device e) => SelectionItem(
         name: e.name,
         selectedItem: workbenchProvider.state.device,

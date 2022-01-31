@@ -6,11 +6,9 @@ import 'package:widgetbook/src/utils/utils.dart';
 class SearchBar extends StatefulWidget {
   const SearchBar({
     Key? key,
-    required this.theme,
     this.organizerProvider,
   }) : super(key: key);
 
-  final ThemeMode theme;
   final OrganizerProvider? organizerProvider;
 
   @override
@@ -26,10 +24,11 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    final fillColor = widget.theme == ThemeMode.light
+    // TODO how to handle dark and light theme of the app?
+    final fillColor = ThemeMode.dark == ThemeMode.light
         ? Styles.lightSurface
         : Styles.darkSurface;
-    final onFillColor = widget.theme == ThemeMode.light
+    final onFillColor = ThemeMode.dark == ThemeMode.light
         ? Styles.onLightSurface
         : Styles.onDarkSurface;
 

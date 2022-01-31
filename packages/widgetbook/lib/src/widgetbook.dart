@@ -5,23 +5,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart' as asdfasdf;
 import 'package:widgetbook/src/configure_non_web.dart'
     if (dart.library.html) 'package:widgetbook/src/configure_web.dart';
-import 'package:widgetbook/src/devices/devices.dart';
-import 'package:widgetbook/src/localization/localization.dart';
+import 'package:widgetbook/src/localization/localization_provider.dart';
+
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/story_helper.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/providers/organizer_provider.dart';
 import 'package:widgetbook/src/providers/organizer_state.dart';
-import 'package:widgetbook/src/providers/theme_provider.dart';
 import 'package:widgetbook/src/rendering/rendering.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/routing/route_information_parser.dart';
 import 'package:widgetbook/src/routing/story_router_delegate.dart';
 import 'package:widgetbook/src/services/filter_service.dart';
-import 'package:widgetbook/src/theming/theming_provider.dart';
-import 'package:widgetbook/src/theming/theming_state.dart';
 import 'package:widgetbook/src/theming/widgetbook_theme.dart';
 import 'package:widgetbook/src/utils/styles.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
@@ -115,7 +112,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
 
   final List<Locale> supportedLocales;
 
-  final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
+  final List<LocalizationsDelegate<dynamic>>? localizationsDelegates;
 
   final List<WidgetbookTheme<CustomTheme>> themes;
 
@@ -138,7 +135,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
     List<Device>? devices,
     List<DeviceFrame>? deviceFrames,
     List<Locale>? supportedLocales,
-    Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates,
+    List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     DeviceFrameBuilderFunction? deviceFrameBuilder,
     LocalizationBuilderFunction? localizationBuilder,
     ThemeBuilderFunction<CupertinoThemeData>? themeBuilder,
@@ -170,7 +167,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
     List<Device>? devices,
     List<DeviceFrame>? deviceFrames,
     List<Locale>? supportedLocales,
-    Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates,
+    List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     DeviceFrameBuilderFunction? deviceFrameBuilder,
     LocalizationBuilderFunction? localizationBuilder,
     ThemeBuilderFunction<ThemeData>? themeBuilder,
@@ -209,20 +206,18 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
         asdfasdf.ChangeNotifierProvider(
           create: (_) => ZoomProvider(),
         ),
-        // TODO can this be removed and put into workbench provider?
+
         asdfasdf.ChangeNotifierProvider(
-          create: (_) => ThemingProvider<CustomTheme>(
-            state: ThemingState<CustomTheme>(
-              themes: themes,
-            ),
+          create: (_) => WorkbenchProvider(
+            themes: themes,
+            locales: supportedLocales,
+            devices: devices,
+            deviceFrames: deviceFrames,
           ),
         ),
         asdfasdf.ChangeNotifierProvider(
-          create: (_) => WorkbenchProvider(
-            locales: supportedLocales,
-            themes: themes,
-            devices: devices,
-            deviceFrames: deviceFrames,
+          create: (_) => LocalizationProvider(
+            localizationsDelegates: localizationsDelegates,
           ),
         ),
         asdfasdf.ChangeNotifierProvider(
@@ -338,26 +333,12 @@ class _WidgetbookState<CustomTheme>
   void initState() {
     configureApp();
 
-    _onHotReload();
-
     super.initState();
-  }
-
-  void _onHotReload() {
-    ref.read(localizationProvider.notifier).hotReloadUpdate(
-          localizationsDelegates: widget.localizationsDelegates?.toList(),
-          supportedLocales: widget.supportedLocales.toList(),
-        );
-
-    ref.read(devicesProvider.notifier).hotReloadUpdate(
-          devices: widget.devices,
-        );
   }
 
   @override
   void didUpdateWidget(covariant WidgetbookWrapper<CustomTheme> oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _onHotReload();
 
     // TODO remove this and put into the Builders
     OrganizerProvider.of(contextWithProviders)!.update(widget.categories);
@@ -377,38 +358,32 @@ class _WidgetbookState<CustomTheme>
           child: CanvasBuilder(
             selectedStoryRepository: selectedStoryRepository,
             storyRepository: storyRepository,
-            child: ThemeBuilder(
-              themeMode: widget.defaultTheme,
-              child: Builder(
-                builder: (context) {
-                  contextWithProviders = context;
-                  final canvasState = CanvasProvider.of(context)!.state;
-                  final storiesState = OrganizerProvider.of(context)!.state;
-                  final themeMode = ThemeProvider.of(context)!.state;
+            child: Builder(
+              builder: (context) {
+                contextWithProviders = context;
+                final canvasState = CanvasProvider.of(context)!.state;
+                final storiesState = OrganizerProvider.of(context)!.state;
 
-                  return MaterialApp.router(
-                    routeInformationParser: StoryRouteInformationParser(
-                      onRoute: (path) {
-                        final stories = StoryHelper.getAllStoriesFromCategories(
-                          storiesState.allCategories,
-                        );
-                        final selectedStory =
-                            selectStoryFromPath(path, stories);
-                        CanvasProvider.of(context)!.selectStory(selectedStory);
-                      },
-                    ),
-                    routerDelegate: StoryRouterDelegate<CustomTheme>(
-                      canvasState: canvasState,
-                      appInfo: widget.appInfo,
-                    ),
-                    title: widget.appInfo.name,
-                    debugShowCheckedModeBanner: false,
-                    themeMode: themeMode,
-                    darkTheme: Styles.darkTheme,
-                    theme: Styles.lightTheme,
-                  );
-                },
-              ),
+                return MaterialApp.router(
+                  routeInformationParser: StoryRouteInformationParser(
+                    onRoute: (path) {
+                      final stories = StoryHelper.getAllStoriesFromCategories(
+                        storiesState.allCategories,
+                      );
+                      final selectedStory = selectStoryFromPath(path, stories);
+                      CanvasProvider.of(context)!.selectStory(selectedStory);
+                    },
+                  ),
+                  routerDelegate: StoryRouterDelegate<CustomTheme>(
+                    canvasState: canvasState,
+                    appInfo: widget.appInfo,
+                  ),
+                  title: widget.appInfo.name,
+                  debugShowCheckedModeBanner: false,
+                  darkTheme: Styles.darkTheme,
+                  theme: Styles.lightTheme,
+                );
+              },
             ),
           ),
         );

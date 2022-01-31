@@ -6,7 +6,6 @@ part 'localization_state.freezed.dart';
 @freezed
 class LocalizationState with _$LocalizationState {
   factory LocalizationState({
-    required List<Locale> supportedLocales,
     List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
   }) = _LocalizationState;
 }

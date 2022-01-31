@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/devices/devices.dart';
-import 'package:widgetbook/src/localization/localization.dart';
+import 'package:widgetbook/src/localization/localization_provider.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
-import 'package:widgetbook/src/theming/theming_provider.dart';
 import 'package:widgetbook/src/widgets/renderer.dart';
 import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
@@ -15,16 +13,15 @@ class ComparisonRenderer<CustomTheme> extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final workbenchState =
         context.watch<WorkbenchProvider<CustomTheme>>().state;
-    final localizationState = ref.watch(localizationProvider);
+    final localizationState = context.watch<LocalizationProvider>().state;
 
     switch (workbenchState.comparisonSetting) {
       case ComparisonSetting.none:
         // This cannot happen
         break;
       case ComparisonSetting.themes:
-        final themingProvider = context.watch<ThemingProvider<CustomTheme>>();
         return _buildRenderer(
-          themingProvider.state.themes
+          workbenchState.themes
               .map(
                 (e) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -46,9 +43,8 @@ class ComparisonRenderer<CustomTheme> extends ConsumerWidget {
               .toList(),
         );
       case ComparisonSetting.devices:
-        final devicesState = ref.read(devicesProvider);
         return _buildRenderer(
-          devicesState.devices
+          workbenchState.devices
               .map((e) => Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50),
                     child: Renderer(
@@ -70,7 +66,7 @@ class ComparisonRenderer<CustomTheme> extends ConsumerWidget {
 
       case ComparisonSetting.localization:
         return _buildRenderer(
-          localizationState.supportedLocales
+          workbenchState.locales
               .map((e) => Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50),
                     child: Renderer(

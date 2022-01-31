@@ -18,10 +18,8 @@ class _$LocalizationStateTearOff {
   const _$LocalizationStateTearOff();
 
   _LocalizationState call(
-      {required List<Locale> supportedLocales,
-      List<LocalizationsDelegate<dynamic>>? localizationsDelegates}) {
+      {List<LocalizationsDelegate<dynamic>>? localizationsDelegates}) {
     return _LocalizationState(
-      supportedLocales: supportedLocales,
       localizationsDelegates: localizationsDelegates,
     );
   }
@@ -32,7 +30,6 @@ const $LocalizationState = _$LocalizationStateTearOff();
 
 /// @nodoc
 mixin _$LocalizationState {
-  List<Locale> get supportedLocales => throw _privateConstructorUsedError;
   List<LocalizationsDelegate<dynamic>>? get localizationsDelegates =>
       throw _privateConstructorUsedError;
 
@@ -46,9 +43,7 @@ abstract class $LocalizationStateCopyWith<$Res> {
   factory $LocalizationStateCopyWith(
           LocalizationState value, $Res Function(LocalizationState) then) =
       _$LocalizationStateCopyWithImpl<$Res>;
-  $Res call(
-      {List<Locale> supportedLocales,
-      List<LocalizationsDelegate<dynamic>>? localizationsDelegates});
+  $Res call({List<LocalizationsDelegate<dynamic>>? localizationsDelegates});
 }
 
 /// @nodoc
@@ -62,14 +57,9 @@ class _$LocalizationStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? supportedLocales = freezed,
     Object? localizationsDelegates = freezed,
   }) {
     return _then(_value.copyWith(
-      supportedLocales: supportedLocales == freezed
-          ? _value.supportedLocales
-          : supportedLocales // ignore: cast_nullable_to_non_nullable
-              as List<Locale>,
       localizationsDelegates: localizationsDelegates == freezed
           ? _value.localizationsDelegates
           : localizationsDelegates // ignore: cast_nullable_to_non_nullable
@@ -85,9 +75,7 @@ abstract class _$LocalizationStateCopyWith<$Res>
           _LocalizationState value, $Res Function(_LocalizationState) then) =
       __$LocalizationStateCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {List<Locale> supportedLocales,
-      List<LocalizationsDelegate<dynamic>>? localizationsDelegates});
+  $Res call({List<LocalizationsDelegate<dynamic>>? localizationsDelegates});
 }
 
 /// @nodoc
@@ -103,14 +91,9 @@ class __$LocalizationStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? supportedLocales = freezed,
     Object? localizationsDelegates = freezed,
   }) {
     return _then(_LocalizationState(
-      supportedLocales: supportedLocales == freezed
-          ? _value.supportedLocales
-          : supportedLocales // ignore: cast_nullable_to_non_nullable
-              as List<Locale>,
       localizationsDelegates: localizationsDelegates == freezed
           ? _value.localizationsDelegates
           : localizationsDelegates // ignore: cast_nullable_to_non_nullable
@@ -122,17 +105,14 @@ class __$LocalizationStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LocalizationState implements _LocalizationState {
-  _$_LocalizationState(
-      {required this.supportedLocales, this.localizationsDelegates});
+  _$_LocalizationState({this.localizationsDelegates});
 
-  @override
-  final List<Locale> supportedLocales;
   @override
   final List<LocalizationsDelegate<dynamic>>? localizationsDelegates;
 
   @override
   String toString() {
-    return 'LocalizationState(supportedLocales: $supportedLocales, localizationsDelegates: $localizationsDelegates)';
+    return 'LocalizationState(localizationsDelegates: $localizationsDelegates)';
   }
 
   @override
@@ -141,16 +121,12 @@ class _$_LocalizationState implements _LocalizationState {
         (other.runtimeType == runtimeType &&
             other is _LocalizationState &&
             const DeepCollectionEquality()
-                .equals(other.supportedLocales, supportedLocales) &&
-            const DeepCollectionEquality()
                 .equals(other.localizationsDelegates, localizationsDelegates));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(supportedLocales),
-      const DeepCollectionEquality().hash(localizationsDelegates));
+      runtimeType, const DeepCollectionEquality().hash(localizationsDelegates));
 
   @JsonKey(ignore: true)
   @override
@@ -160,12 +136,9 @@ class _$_LocalizationState implements _LocalizationState {
 
 abstract class _LocalizationState implements LocalizationState {
   factory _LocalizationState(
-          {required List<Locale> supportedLocales,
-          List<LocalizationsDelegate<dynamic>>? localizationsDelegates}) =
+          {List<LocalizationsDelegate<dynamic>>? localizationsDelegates}) =
       _$_LocalizationState;
 
-  @override
-  List<Locale> get supportedLocales;
   @override
   List<LocalizationsDelegate<dynamic>>? get localizationsDelegates;
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/localization/localization.dart';
+import 'package:widgetbook/src/localization/localization_provider.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/widgets/renderer.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
@@ -17,7 +17,7 @@ class DeviceRender<CustomTheme> extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = context.watch<WorkbenchProvider<CustomTheme>>().state;
-    final localizationState = ref.watch(localizationProvider);
+    final localizationState = context.watch<LocalizationProvider>().state;
     return Renderer(
       device: state.device!,
       locale: state.locale!,

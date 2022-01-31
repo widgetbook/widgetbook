@@ -8,25 +8,22 @@ import 'package:widgetbook/widgetbook.dart';
 class WorkbenchProvider<CustomTheme>
     extends StateChangeNotifier<WorkbenchState<CustomTheme>> {
   WorkbenchProvider({
-    WorkbenchState<CustomTheme>? state,
-    required this.locales,
-    required this.themes,
-    required this.devices,
-    required this.deviceFrames,
+    required List<WidgetbookTheme<CustomTheme>> themes,
+    required List<Locale> locales,
+    required List<Device> devices,
+    required List<DeviceFrame> deviceFrames,
   }) : super(
-          state: state ??
-              WorkbenchState(
-                deviceFrame: deviceFrames.first,
-                theme: themes.first,
-                device: devices.first,
-                locale: locales.first,
-              ),
+          state: WorkbenchState(
+            deviceFrame: deviceFrames.first,
+            locale: locales.first,
+            device: devices.first,
+            theme: themes.first,
+            themes: themes,
+            locales: locales,
+            devices: devices,
+            deviceFrames: deviceFrames,
+          ),
         );
-
-  final List<Locale> locales;
-  final List<WidgetbookTheme<CustomTheme>> themes;
-  final List<Device> devices;
-  final List<DeviceFrame> deviceFrames;
 
   void changedComparisonSetting(ComparisonSetting comparisonSetting) {
     if (state.comparisonSetting == comparisonSetting) {
@@ -37,24 +34,24 @@ class WorkbenchProvider<CustomTheme>
       case ComparisonSetting.none:
         state = state.copyWith(
           comparisonSetting: comparisonSetting,
-          locale: state.locale ?? locales.first,
-          theme: state.theme ?? themes.first,
-          device: state.device ?? devices.first,
+          locale: state.locale ?? state.locales.first,
+          theme: state.theme ?? state.themes.first,
+          device: state.device ?? state.devices.first,
         );
         break;
       case ComparisonSetting.themes:
         state = state.copyWith(
           comparisonSetting: comparisonSetting,
-          locale: state.locale ?? locales.first,
+          locale: state.locale ?? state.locales.first,
           theme: null,
-          device: state.device ?? devices.first,
+          device: state.device ?? state.devices.first,
         );
         break;
       case ComparisonSetting.devices:
         state = state.copyWith(
           comparisonSetting: comparisonSetting,
-          locale: state.locale ?? locales.first,
-          theme: state.theme ?? themes.first,
+          locale: state.locale ?? state.locales.first,
+          theme: state.theme ?? state.themes.first,
           device: null,
         );
         break;
@@ -62,8 +59,8 @@ class WorkbenchProvider<CustomTheme>
         state = state.copyWith(
           comparisonSetting: comparisonSetting,
           locale: null,
-          theme: state.theme ?? themes.first,
-          device: state.device ?? devices.first,
+          theme: state.theme ?? state.themes.first,
+          device: state.device ?? state.devices.first,
         );
         break;
     }
@@ -102,7 +99,7 @@ class WorkbenchProvider<CustomTheme>
   }
 
   void nextLocale() {
-    final nextLocale = locales.getNext(state.locale);
+    final nextLocale = state.locales.getNext(state.locale);
     state = state.copyWith(
       locale: nextLocale,
       comparisonSetting:
@@ -113,7 +110,7 @@ class WorkbenchProvider<CustomTheme>
   }
 
   void previousLocale() {
-    final previousLocale = locales.getPrevious(state.locale);
+    final previousLocale = state.locales.getPrevious(state.locale);
     state = state.copyWith(
       locale: previousLocale,
       comparisonSetting:
@@ -124,7 +121,7 @@ class WorkbenchProvider<CustomTheme>
   }
 
   void nextTheme() {
-    final nextTheme = themes.getNext(state.theme);
+    final nextTheme = state.themes.getNext(state.theme);
     state = state.copyWith(
       theme: nextTheme,
       comparisonSetting: state.comparisonSetting == ComparisonSetting.themes
@@ -134,7 +131,7 @@ class WorkbenchProvider<CustomTheme>
   }
 
   void previousTheme() {
-    final previousTheme = themes.getPrevious(state.theme);
+    final previousTheme = state.themes.getPrevious(state.theme);
     state = state.copyWith(
       theme: previousTheme,
       comparisonSetting: state.comparisonSetting == ComparisonSetting.themes
@@ -144,7 +141,7 @@ class WorkbenchProvider<CustomTheme>
   }
 
   void nextDevice() {
-    final nextDevice = devices.getNext(state.device);
+    final nextDevice = state.devices.getNext(state.device);
     state = state.copyWith(
       device: nextDevice,
       comparisonSetting: state.comparisonSetting == ComparisonSetting.devices
@@ -154,7 +151,7 @@ class WorkbenchProvider<CustomTheme>
   }
 
   void previousDevice() {
-    final previousDevice = devices.getPrevious(state.device);
+    final previousDevice = state.devices.getPrevious(state.device);
     state = state.copyWith(
       device: previousDevice,
       comparisonSetting: state.comparisonSetting == ComparisonSetting.devices
@@ -164,14 +161,14 @@ class WorkbenchProvider<CustomTheme>
   }
 
   void nextDeviceFrame() {
-    final nextDeviceFrame = deviceFrames.getNext(state.deviceFrame);
+    final nextDeviceFrame = state.deviceFrames.getNext(state.deviceFrame);
     state = state.copyWith(
       deviceFrame: nextDeviceFrame,
     );
   }
 
   void previousDeviceFrame() {
-    final previousDevice = deviceFrames.getPrevious(state.deviceFrame);
+    final previousDevice = state.deviceFrames.getPrevious(state.deviceFrame);
     state = state.copyWith(
       deviceFrame: previousDevice,
     );

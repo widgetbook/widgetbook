@@ -13,5 +13,9 @@ class WorkbenchState<CustomTheme> with _$WorkbenchState<CustomTheme> {
     Locale? locale,
     Device? device,
     required DeviceFrame deviceFrame,
+    required List<WidgetbookTheme<CustomTheme>> themes,
+    required List<Locale> locales,
+    required List<Device> devices,
+    required List<DeviceFrame> deviceFrames,
   }) = _WorkbenchState;
 }

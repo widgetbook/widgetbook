@@ -22,13 +22,21 @@ class _$WorkbenchStateTearOff {
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
-      required DeviceFrame deviceFrame}) {
+      required DeviceFrame deviceFrame,
+      required List<WidgetbookTheme<CustomTheme>> themes,
+      required List<Locale> locales,
+      required List<Device> devices,
+      required List<DeviceFrame> deviceFrames}) {
     return _WorkbenchState<CustomTheme>(
       comparisonSetting: comparisonSetting,
       theme: theme,
       locale: locale,
       device: device,
       deviceFrame: deviceFrame,
+      themes: themes,
+      locales: locales,
+      devices: devices,
+      deviceFrames: deviceFrames,
     );
   }
 }
@@ -43,6 +51,11 @@ mixin _$WorkbenchState<CustomTheme> {
   Locale? get locale => throw _privateConstructorUsedError;
   Device? get device => throw _privateConstructorUsedError;
   DeviceFrame get deviceFrame => throw _privateConstructorUsedError;
+  List<WidgetbookTheme<CustomTheme>> get themes =>
+      throw _privateConstructorUsedError;
+  List<Locale> get locales => throw _privateConstructorUsedError;
+  List<Device> get devices => throw _privateConstructorUsedError;
+  List<DeviceFrame> get deviceFrames => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WorkbenchStateCopyWith<CustomTheme, WorkbenchState<CustomTheme>>
@@ -59,7 +72,11 @@ abstract class $WorkbenchStateCopyWith<CustomTheme, $Res> {
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
-      DeviceFrame deviceFrame});
+      DeviceFrame deviceFrame,
+      List<WidgetbookTheme<CustomTheme>> themes,
+      List<Locale> locales,
+      List<Device> devices,
+      List<DeviceFrame> deviceFrames});
 
   $WidgetbookThemeCopyWith<CustomTheme, $Res>? get theme;
   $DeviceFrameCopyWith<$Res> get deviceFrame;
@@ -81,6 +98,10 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
     Object? locale = freezed,
     Object? device = freezed,
     Object? deviceFrame = freezed,
+    Object? themes = freezed,
+    Object? locales = freezed,
+    Object? devices = freezed,
+    Object? deviceFrames = freezed,
   }) {
     return _then(_value.copyWith(
       comparisonSetting: comparisonSetting == freezed
@@ -103,6 +124,22 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
           ? _value.deviceFrame
           : deviceFrame // ignore: cast_nullable_to_non_nullable
               as DeviceFrame,
+      themes: themes == freezed
+          ? _value.themes
+          : themes // ignore: cast_nullable_to_non_nullable
+              as List<WidgetbookTheme<CustomTheme>>,
+      locales: locales == freezed
+          ? _value.locales
+          : locales // ignore: cast_nullable_to_non_nullable
+              as List<Locale>,
+      devices: devices == freezed
+          ? _value.devices
+          : devices // ignore: cast_nullable_to_non_nullable
+              as List<Device>,
+      deviceFrames: deviceFrames == freezed
+          ? _value.deviceFrames
+          : deviceFrames // ignore: cast_nullable_to_non_nullable
+              as List<DeviceFrame>,
     ));
   }
 
@@ -137,7 +174,11 @@ abstract class _$WorkbenchStateCopyWith<CustomTheme, $Res>
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
-      DeviceFrame deviceFrame});
+      DeviceFrame deviceFrame,
+      List<WidgetbookTheme<CustomTheme>> themes,
+      List<Locale> locales,
+      List<Device> devices,
+      List<DeviceFrame> deviceFrames});
 
   @override
   $WidgetbookThemeCopyWith<CustomTheme, $Res>? get theme;
@@ -164,6 +205,10 @@ class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
     Object? locale = freezed,
     Object? device = freezed,
     Object? deviceFrame = freezed,
+    Object? themes = freezed,
+    Object? locales = freezed,
+    Object? devices = freezed,
+    Object? deviceFrames = freezed,
   }) {
     return _then(_WorkbenchState<CustomTheme>(
       comparisonSetting: comparisonSetting == freezed
@@ -186,6 +231,22 @@ class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
           ? _value.deviceFrame
           : deviceFrame // ignore: cast_nullable_to_non_nullable
               as DeviceFrame,
+      themes: themes == freezed
+          ? _value.themes
+          : themes // ignore: cast_nullable_to_non_nullable
+              as List<WidgetbookTheme<CustomTheme>>,
+      locales: locales == freezed
+          ? _value.locales
+          : locales // ignore: cast_nullable_to_non_nullable
+              as List<Locale>,
+      devices: devices == freezed
+          ? _value.devices
+          : devices // ignore: cast_nullable_to_non_nullable
+              as List<Device>,
+      deviceFrames: deviceFrames == freezed
+          ? _value.deviceFrames
+          : deviceFrames // ignore: cast_nullable_to_non_nullable
+              as List<DeviceFrame>,
     ));
   }
 }
@@ -198,7 +259,11 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
       this.theme,
       this.locale,
       this.device,
-      required this.deviceFrame});
+      required this.deviceFrame,
+      required this.themes,
+      required this.locales,
+      required this.devices,
+      required this.deviceFrames});
 
   @JsonKey()
   @override
@@ -211,10 +276,18 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
   final Device? device;
   @override
   final DeviceFrame deviceFrame;
+  @override
+  final List<WidgetbookTheme<CustomTheme>> themes;
+  @override
+  final List<Locale> locales;
+  @override
+  final List<Device> devices;
+  @override
+  final List<DeviceFrame> deviceFrames;
 
   @override
   String toString() {
-    return 'WorkbenchState<$CustomTheme>(comparisonSetting: $comparisonSetting, theme: $theme, locale: $locale, device: $device, deviceFrame: $deviceFrame)';
+    return 'WorkbenchState<$CustomTheme>(comparisonSetting: $comparisonSetting, theme: $theme, locale: $locale, device: $device, deviceFrame: $deviceFrame, themes: $themes, locales: $locales, devices: $devices, deviceFrames: $deviceFrames)';
   }
 
   @override
@@ -228,7 +301,12 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
             const DeepCollectionEquality().equals(other.locale, locale) &&
             const DeepCollectionEquality().equals(other.device, device) &&
             const DeepCollectionEquality()
-                .equals(other.deviceFrame, deviceFrame));
+                .equals(other.deviceFrame, deviceFrame) &&
+            const DeepCollectionEquality().equals(other.themes, themes) &&
+            const DeepCollectionEquality().equals(other.locales, locales) &&
+            const DeepCollectionEquality().equals(other.devices, devices) &&
+            const DeepCollectionEquality()
+                .equals(other.deviceFrames, deviceFrames));
   }
 
   @override
@@ -238,7 +316,11 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
       const DeepCollectionEquality().hash(theme),
       const DeepCollectionEquality().hash(locale),
       const DeepCollectionEquality().hash(device),
-      const DeepCollectionEquality().hash(deviceFrame));
+      const DeepCollectionEquality().hash(deviceFrame),
+      const DeepCollectionEquality().hash(themes),
+      const DeepCollectionEquality().hash(locales),
+      const DeepCollectionEquality().hash(devices),
+      const DeepCollectionEquality().hash(deviceFrames));
 
   @JsonKey(ignore: true)
   @override
@@ -250,11 +332,16 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
 abstract class _WorkbenchState<CustomTheme>
     implements WorkbenchState<CustomTheme> {
   factory _WorkbenchState(
-      {ComparisonSetting comparisonSetting,
-      WidgetbookTheme<CustomTheme>? theme,
-      Locale? locale,
-      Device? device,
-      required DeviceFrame deviceFrame}) = _$_WorkbenchState<CustomTheme>;
+          {ComparisonSetting comparisonSetting,
+          WidgetbookTheme<CustomTheme>? theme,
+          Locale? locale,
+          Device? device,
+          required DeviceFrame deviceFrame,
+          required List<WidgetbookTheme<CustomTheme>> themes,
+          required List<Locale> locales,
+          required List<Device> devices,
+          required List<DeviceFrame> deviceFrames}) =
+      _$_WorkbenchState<CustomTheme>;
 
   @override
   ComparisonSetting get comparisonSetting;
@@ -266,6 +353,14 @@ abstract class _WorkbenchState<CustomTheme>
   Device? get device;
   @override
   DeviceFrame get deviceFrame;
+  @override
+  List<WidgetbookTheme<CustomTheme>> get themes;
+  @override
+  List<Locale> get locales;
+  @override
+  List<Device> get devices;
+  @override
+  List<DeviceFrame> get deviceFrames;
   @override
   @JsonKey(ignore: true)
   _$WorkbenchStateCopyWith<CustomTheme, _WorkbenchState<CustomTheme>>

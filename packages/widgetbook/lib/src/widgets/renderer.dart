@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:widgetbook/src/localization/localization.dart';
+import 'package:widgetbook/src/localization/localization_provider.dart';
 import 'package:widgetbook/src/rendering/device_frame.dart';
 import 'package:widgetbook/src/rendering/rendering_provider.dart';
+import 'package:widgetbook/src/workbench/workbench_provider.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +29,8 @@ class Renderer<CustomTheme> extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final renderingState =
         context.watch<RenderingProvider<CustomTheme>>().state;
+    final workbenchProvider =
+        context.watch<WorkbenchProvider<CustomTheme>>().state;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +43,7 @@ class Renderer<CustomTheme> extends ConsumerWidget {
           child: Center(
             child: renderingState.localizationBuilder(
               context,
-              ref.watch(localizationProvider).supportedLocales,
+              workbenchProvider.locales,
               // TODO this should not be nullable
               localizationsDelegates!.toList(),
               locale,
