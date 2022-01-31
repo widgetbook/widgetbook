@@ -65,10 +65,11 @@ class Storyboard extends StatelessWidget {
           ],
           widgets: [
             WidgetbookWidget(
-              name: 'Ingredients',
+              name:
+                  'Ingredients ajsifgjasdigasdi guiasd hgiu asduigh asdughu ashguh asudghas udghusahg ',
               useCases: [
                 WidgetbookUseCase(
-                  name: 'Short list',
+                  name: 'Shortl list ',
                   builder: (context) => Ingredients(
                     ingredients: [
                       'tomato',
@@ -169,6 +170,43 @@ class Storyboard extends StatelessWidget {
         ),
         WidgetbookCategory(
           name: 'pages',
+          folders: [
+            WidgetbookFolder(
+              name: 'attributes',
+              widgets: [
+                WidgetbookWidget(
+                  name: 'PriceAttribute',
+                  useCases: [
+                    WidgetbookUseCase(
+                      name: 'Short price',
+                      builder: (context) => PriceAttribute(price: 8.5),
+                    ),
+                    WidgetbookUseCase(
+                      name: 'Long price',
+                      builder: (context) => PriceAttribute(price: 108.5),
+                    ),
+                  ],
+                ),
+                WidgetbookWidget(
+                  name: 'WeightAttribute',
+                  useCases: [
+                    WidgetbookUseCase(
+                      name: 'Short weight',
+                      builder: (context) => WeightAttribute(
+                        weight: 320,
+                      ),
+                    ),
+                    WidgetbookUseCase(
+                      name: 'Long weight',
+                      builder: (context) => WeightAttribute(
+                        weight: 1050,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
         ),
       ],
       appInfo: AppInfo(name: 'Meal App'),

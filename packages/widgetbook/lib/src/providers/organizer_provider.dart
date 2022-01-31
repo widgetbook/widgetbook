@@ -196,4 +196,33 @@ class OrganizerProvider extends Provider<OrganizerState> {
       ),
     );
   }
+
+  /// Recursively set the expanded field for an organizer and it's nested widgets.
+  /// Does not emit after toggling.
+  void _setExpandedRecursive(ExpandableOrganizer organizer, bool value) {
+    organizer.isExpanded = value;
+    for (final folder in organizer.folders) {
+      _setExpandedRecursive(folder, value);
+    }
+    for (final folder in organizer.widgets) {
+      _setExpandedRecursive(folder, value);
+    }
+  }
+
+  /// Set isExpanded an [ExpandableOrganizer] and its nested organizer to
+  /// the `expanded`
+  void setExpandedRecursive(
+      List<ExpandableOrganizer> organizers, bool expanded) {
+    for (final e in organizers) {
+      _setExpandedRecursive(e, expanded);
+    }
+    emit(
+      OrganizerState(
+        allCategories: state.allCategories,
+        filteredCategories: state.filteredCategories,
+        searchTerm: state.searchTerm,
+      ),
+    );
+  }
+
 }

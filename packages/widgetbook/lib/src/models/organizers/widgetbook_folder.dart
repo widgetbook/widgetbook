@@ -20,4 +20,8 @@ class WidgetbookFolder extends ExpandableOrganizer {
       organizer.parent = this;
     }
   }
+  @override
+  String toString() {
+  return 'name: $name, expanded: $isExpanded, folders: $folders, widgets: $widgets';
+  }
 }

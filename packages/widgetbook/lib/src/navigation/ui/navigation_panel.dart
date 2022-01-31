@@ -3,6 +3,7 @@ import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/theme_provider.dart';
+import 'package:widgetbook/src/widgets/expanders/expander_row.dart';
 import 'package:widgetbook/src/widgets/header.dart';
 import 'package:widgetbook/src/widgets/search_bar.dart';
 import 'package:widgetbook/src/widgets/tiles/category_tile.dart';
@@ -51,6 +52,14 @@ class _NavigationPanelState extends State<NavigationPanel> {
           ),
           const SizedBox(
             height: 16,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ExpanderRow.large(
+                organizers: widget.categories,
+              ),
+            ],
           ),
           Expanded(
             child: Container(

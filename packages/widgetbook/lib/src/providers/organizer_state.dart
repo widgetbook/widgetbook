@@ -39,4 +39,9 @@ class OrganizerState {
       allCategories.hashCode ^
       filteredCategories.hashCode ^
       searchTerm.hashCode;
+
+  @override
+  String toString() {
+  return '$allCategories';
+  }
 }

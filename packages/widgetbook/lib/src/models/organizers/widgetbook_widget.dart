@@ -30,4 +30,9 @@ class WidgetbookWidget extends ExpandableOrganizer {
 
   @override
   int get hashCode => useCases.hashCode;
+
+  @override
+  String toString() {
+      return 'name: $name, expanded: $isExpanded';
+  }
 }
