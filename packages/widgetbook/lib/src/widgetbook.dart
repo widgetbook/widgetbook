@@ -292,7 +292,6 @@ class WidgetbookWrapper<CustomTheme> extends StatefulWidget {
     this.useCaseBuilder,
   })  : supportedLocales =
             supportedLocales ?? const <Locale>[Locale('en', 'US')],
-        // TODO check that devices cannot be empty if not null
         devices = devices ??
             const [
               Apple.iPhone11,
