@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:widgetbook/src/multi_render_handle.dart';
 import 'package:widgetbook/src/theming/theming_provider.dart';
 import 'package:widgetbook/src/theming/widgetbook_theme.dart';
-import 'package:widgetbook/src/workbench/multi_render.dart';
+import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
 
@@ -21,8 +21,8 @@ class ThemeHandle<CustomTheme> extends ConsumerWidget {
     final workbenchProvider = context.watch<WorkbenchProvider<CustomTheme>>();
     final workbenchState = workbenchProvider.state;
 
-    return MultiRenderHandle<WidgetbookTheme<CustomTheme>, CustomTheme>(
-      multiRender: MultiRender.themes,
+    return ComparisonHandle<WidgetbookTheme<CustomTheme>, CustomTheme>(
+      multiRender: ComparisonSetting.themes,
       items: themingState.themes,
       buildItem: (WidgetbookTheme<CustomTheme> e) => SelectionItem(
         name: e.name,

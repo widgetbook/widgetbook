@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/extensions/list_extension.dart';
-import 'package:widgetbook/src/rendering/device_frame.dart';
 import 'package:widgetbook/src/state_change_notifier.dart';
-import 'package:widgetbook/src/workbench/multi_render.dart';
+import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/workbench_state.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -29,39 +28,39 @@ class WorkbenchProvider<CustomTheme>
   final List<Device> devices;
   final List<DeviceFrame> deviceFrames;
 
-  void changedMultiRender(MultiRender multiRender) {
-    if (state.multiRender == multiRender) {
-      multiRender = MultiRender.none;
+  void changedComparisonSetting(ComparisonSetting comparisonSetting) {
+    if (state.comparisonSetting == comparisonSetting) {
+      comparisonSetting = ComparisonSetting.none;
     }
 
-    switch (multiRender) {
-      case MultiRender.none:
+    switch (comparisonSetting) {
+      case ComparisonSetting.none:
         state = state.copyWith(
-          multiRender: multiRender,
+          comparisonSetting: comparisonSetting,
           locale: state.locale ?? locales.first,
           theme: state.theme ?? themes.first,
           device: state.device ?? devices.first,
         );
         break;
-      case MultiRender.themes:
+      case ComparisonSetting.themes:
         state = state.copyWith(
-          multiRender: multiRender,
+          comparisonSetting: comparisonSetting,
           locale: state.locale ?? locales.first,
           theme: null,
           device: state.device ?? devices.first,
         );
         break;
-      case MultiRender.devices:
+      case ComparisonSetting.devices:
         state = state.copyWith(
-          multiRender: multiRender,
+          comparisonSetting: comparisonSetting,
           locale: state.locale ?? locales.first,
           theme: state.theme ?? themes.first,
           device: null,
         );
         break;
-      case MultiRender.localization:
+      case ComparisonSetting.localization:
         state = state.copyWith(
-          multiRender: multiRender,
+          comparisonSetting: comparisonSetting,
           locale: null,
           theme: state.theme ?? themes.first,
           device: state.device ?? devices.first,
@@ -73,27 +72,28 @@ class WorkbenchProvider<CustomTheme>
   void changedDevice(Device? device) {
     state = state.copyWith(
       device: device,
-      multiRender: state.multiRender == MultiRender.devices
-          ? MultiRender.none
-          : state.multiRender,
+      comparisonSetting: state.comparisonSetting == ComparisonSetting.devices
+          ? ComparisonSetting.none
+          : state.comparisonSetting,
     );
   }
 
   void changedTheme(WidgetbookTheme<CustomTheme>? widgetbookTheme) {
     state = state.copyWith(
       theme: widgetbookTheme,
-      multiRender: state.multiRender == MultiRender.themes
-          ? MultiRender.none
-          : state.multiRender,
+      comparisonSetting: state.comparisonSetting == ComparisonSetting.themes
+          ? ComparisonSetting.none
+          : state.comparisonSetting,
     );
   }
 
   void changedLocale(Locale? locale) {
     state = state.copyWith(
       locale: locale,
-      multiRender: state.multiRender == MultiRender.localization
-          ? MultiRender.none
-          : state.multiRender,
+      comparisonSetting:
+          state.comparisonSetting == ComparisonSetting.localization
+              ? ComparisonSetting.none
+              : state.comparisonSetting,
     );
   }
 
@@ -105,9 +105,10 @@ class WorkbenchProvider<CustomTheme>
     final nextLocale = locales.getNext(state.locale);
     state = state.copyWith(
       locale: nextLocale,
-      multiRender: state.multiRender == MultiRender.localization
-          ? MultiRender.none
-          : state.multiRender,
+      comparisonSetting:
+          state.comparisonSetting == ComparisonSetting.localization
+              ? ComparisonSetting.none
+              : state.comparisonSetting,
     );
   }
 
@@ -115,9 +116,10 @@ class WorkbenchProvider<CustomTheme>
     final previousLocale = locales.getPrevious(state.locale);
     state = state.copyWith(
       locale: previousLocale,
-      multiRender: state.multiRender == MultiRender.localization
-          ? MultiRender.none
-          : state.multiRender,
+      comparisonSetting:
+          state.comparisonSetting == ComparisonSetting.localization
+              ? ComparisonSetting.none
+              : state.comparisonSetting,
     );
   }
 
@@ -125,9 +127,9 @@ class WorkbenchProvider<CustomTheme>
     final nextTheme = themes.getNext(state.theme);
     state = state.copyWith(
       theme: nextTheme,
-      multiRender: state.multiRender == MultiRender.themes
-          ? MultiRender.none
-          : state.multiRender,
+      comparisonSetting: state.comparisonSetting == ComparisonSetting.themes
+          ? ComparisonSetting.none
+          : state.comparisonSetting,
     );
   }
 
@@ -135,9 +137,9 @@ class WorkbenchProvider<CustomTheme>
     final previousTheme = themes.getPrevious(state.theme);
     state = state.copyWith(
       theme: previousTheme,
-      multiRender: state.multiRender == MultiRender.themes
-          ? MultiRender.none
-          : state.multiRender,
+      comparisonSetting: state.comparisonSetting == ComparisonSetting.themes
+          ? ComparisonSetting.none
+          : state.comparisonSetting,
     );
   }
 
@@ -145,9 +147,9 @@ class WorkbenchProvider<CustomTheme>
     final nextDevice = devices.getNext(state.device);
     state = state.copyWith(
       device: nextDevice,
-      multiRender: state.multiRender == MultiRender.devices
-          ? MultiRender.none
-          : state.multiRender,
+      comparisonSetting: state.comparisonSetting == ComparisonSetting.devices
+          ? ComparisonSetting.none
+          : state.comparisonSetting,
     );
   }
 
@@ -155,9 +157,9 @@ class WorkbenchProvider<CustomTheme>
     final previousDevice = devices.getPrevious(state.device);
     state = state.copyWith(
       device: previousDevice,
-      multiRender: state.multiRender == MultiRender.devices
-          ? MultiRender.none
-          : state.multiRender,
+      comparisonSetting: state.comparisonSetting == ComparisonSetting.devices
+          ? ComparisonSetting.none
+          : state.comparisonSetting,
     );
   }
 

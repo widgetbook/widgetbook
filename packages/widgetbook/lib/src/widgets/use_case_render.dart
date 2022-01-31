@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
+import 'package:widgetbook/src/widgets/comparison_renderer.dart';
 import 'package:widgetbook/src/widgets/device_render.dart';
-import 'package:widgetbook/src/widgets/multi_device_renderer.dart';
-import 'package:widgetbook/src/workbench/multi_render.dart';
+import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
 import 'package:widgetbook/src/zoom/zoom_provider.dart';
 
@@ -20,7 +20,7 @@ class UseCaseRender<CustomTheme> extends ConsumerWidget {
     final workkbenchState =
         context.watch<WorkbenchProvider<CustomTheme>>().state;
 
-    return workkbenchState.multiRender == MultiRender.none
+    return workkbenchState.comparisonSetting == ComparisonSetting.none
         ? ClipRect(
             child: OverflowBox(
               child: Transform.scale(
@@ -33,7 +33,7 @@ class UseCaseRender<CustomTheme> extends ConsumerWidget {
           )
         : SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: MultiRenderer<CustomTheme>(),
+            child: ComparisonRenderer<CustomTheme>(),
           );
   }
 

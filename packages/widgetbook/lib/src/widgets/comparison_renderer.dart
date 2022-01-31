@@ -6,22 +6,22 @@ import 'package:widgetbook/src/localization/localization.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/theming/theming_provider.dart';
 import 'package:widgetbook/src/widgets/renderer.dart';
-import 'package:widgetbook/src/workbench/multi_render.dart';
+import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
 
-class MultiRenderer<CustomTheme> extends ConsumerWidget {
-  const MultiRenderer({Key? key}) : super(key: key);
+class ComparisonRenderer<CustomTheme> extends ConsumerWidget {
+  const ComparisonRenderer({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final workbenchState =
         context.watch<WorkbenchProvider<CustomTheme>>().state;
     final localizationState = ref.watch(localizationProvider);
 
-    switch (workbenchState.multiRender) {
-      case MultiRender.none:
+    switch (workbenchState.comparisonSetting) {
+      case ComparisonSetting.none:
         // This cannot happen
         break;
-      case MultiRender.themes:
+      case ComparisonSetting.themes:
         final themingProvider = context.watch<ThemingProvider<CustomTheme>>();
         return _buildRenderer(
           themingProvider.state.themes
@@ -45,7 +45,7 @@ class MultiRenderer<CustomTheme> extends ConsumerWidget {
               )
               .toList(),
         );
-      case MultiRender.devices:
+      case ComparisonSetting.devices:
         final devicesState = ref.read(devicesProvider);
         return _buildRenderer(
           devicesState.devices
@@ -68,7 +68,7 @@ class MultiRenderer<CustomTheme> extends ConsumerWidget {
               .toList(),
         );
 
-      case MultiRender.localization:
+      case ComparisonSetting.localization:
         return _buildRenderer(
           localizationState.supportedLocales
               .map((e) => Padding(

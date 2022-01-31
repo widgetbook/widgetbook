@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/localization/localization.dart';
 import 'package:widgetbook/src/multi_render_handle.dart';
-import 'package:widgetbook/src/workbench/multi_render.dart';
+import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
 
@@ -19,8 +19,8 @@ class LocalizationHandle<CustomTheme> extends ConsumerWidget {
     final workbenchProvider = context.watch<WorkbenchProvider<CustomTheme>>();
     final workbenchState = workbenchProvider.state;
 
-    return MultiRenderHandle<Locale, CustomTheme>(
-      multiRender: MultiRender.localization,
+    return ComparisonHandle<Locale, CustomTheme>(
+      multiRender: ComparisonSetting.localization,
       items: ref.read(localizationProvider).supportedLocales,
       buildItem: (Locale e) => SelectionItem(
         name: e.toLanguageTag(),

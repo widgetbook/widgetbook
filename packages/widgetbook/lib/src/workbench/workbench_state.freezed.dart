@@ -18,13 +18,13 @@ class _$WorkbenchStateTearOff {
   const _$WorkbenchStateTearOff();
 
   _WorkbenchState<CustomTheme> call<CustomTheme>(
-      {MultiRender multiRender = MultiRender.none,
+      {ComparisonSetting comparisonSetting = ComparisonSetting.none,
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
       required DeviceFrame deviceFrame}) {
     return _WorkbenchState<CustomTheme>(
-      multiRender: multiRender,
+      comparisonSetting: comparisonSetting,
       theme: theme,
       locale: locale,
       device: device,
@@ -38,7 +38,7 @@ const $WorkbenchState = _$WorkbenchStateTearOff();
 
 /// @nodoc
 mixin _$WorkbenchState<CustomTheme> {
-  MultiRender get multiRender => throw _privateConstructorUsedError;
+  ComparisonSetting get comparisonSetting => throw _privateConstructorUsedError;
   WidgetbookTheme<CustomTheme>? get theme => throw _privateConstructorUsedError;
   Locale? get locale => throw _privateConstructorUsedError;
   Device? get device => throw _privateConstructorUsedError;
@@ -55,7 +55,7 @@ abstract class $WorkbenchStateCopyWith<CustomTheme, $Res> {
           $Res Function(WorkbenchState<CustomTheme>) then) =
       _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>;
   $Res call(
-      {MultiRender multiRender,
+      {ComparisonSetting comparisonSetting,
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
@@ -76,17 +76,17 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
 
   @override
   $Res call({
-    Object? multiRender = freezed,
+    Object? comparisonSetting = freezed,
     Object? theme = freezed,
     Object? locale = freezed,
     Object? device = freezed,
     Object? deviceFrame = freezed,
   }) {
     return _then(_value.copyWith(
-      multiRender: multiRender == freezed
-          ? _value.multiRender
-          : multiRender // ignore: cast_nullable_to_non_nullable
-              as MultiRender,
+      comparisonSetting: comparisonSetting == freezed
+          ? _value.comparisonSetting
+          : comparisonSetting // ignore: cast_nullable_to_non_nullable
+              as ComparisonSetting,
       theme: theme == freezed
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
@@ -133,7 +133,7 @@ abstract class _$WorkbenchStateCopyWith<CustomTheme, $Res>
       __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>;
   @override
   $Res call(
-      {MultiRender multiRender,
+      {ComparisonSetting comparisonSetting,
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
@@ -159,17 +159,17 @@ class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
 
   @override
   $Res call({
-    Object? multiRender = freezed,
+    Object? comparisonSetting = freezed,
     Object? theme = freezed,
     Object? locale = freezed,
     Object? device = freezed,
     Object? deviceFrame = freezed,
   }) {
     return _then(_WorkbenchState<CustomTheme>(
-      multiRender: multiRender == freezed
-          ? _value.multiRender
-          : multiRender // ignore: cast_nullable_to_non_nullable
-              as MultiRender,
+      comparisonSetting: comparisonSetting == freezed
+          ? _value.comparisonSetting
+          : comparisonSetting // ignore: cast_nullable_to_non_nullable
+              as ComparisonSetting,
       theme: theme == freezed
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
@@ -194,7 +194,7 @@ class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
 
 class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
   _$_WorkbenchState(
-      {this.multiRender = MultiRender.none,
+      {this.comparisonSetting = ComparisonSetting.none,
       this.theme,
       this.locale,
       this.device,
@@ -202,7 +202,7 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
 
   @JsonKey()
   @override
-  final MultiRender multiRender;
+  final ComparisonSetting comparisonSetting;
   @override
   final WidgetbookTheme<CustomTheme>? theme;
   @override
@@ -214,7 +214,7 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
 
   @override
   String toString() {
-    return 'WorkbenchState<$CustomTheme>(multiRender: $multiRender, theme: $theme, locale: $locale, device: $device, deviceFrame: $deviceFrame)';
+    return 'WorkbenchState<$CustomTheme>(comparisonSetting: $comparisonSetting, theme: $theme, locale: $locale, device: $device, deviceFrame: $deviceFrame)';
   }
 
   @override
@@ -223,7 +223,7 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
         (other.runtimeType == runtimeType &&
             other is _WorkbenchState<CustomTheme> &&
             const DeepCollectionEquality()
-                .equals(other.multiRender, multiRender) &&
+                .equals(other.comparisonSetting, comparisonSetting) &&
             const DeepCollectionEquality().equals(other.theme, theme) &&
             const DeepCollectionEquality().equals(other.locale, locale) &&
             const DeepCollectionEquality().equals(other.device, device) &&
@@ -234,7 +234,7 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(multiRender),
+      const DeepCollectionEquality().hash(comparisonSetting),
       const DeepCollectionEquality().hash(theme),
       const DeepCollectionEquality().hash(locale),
       const DeepCollectionEquality().hash(device),
@@ -250,14 +250,14 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
 abstract class _WorkbenchState<CustomTheme>
     implements WorkbenchState<CustomTheme> {
   factory _WorkbenchState(
-      {MultiRender multiRender,
+      {ComparisonSetting comparisonSetting,
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
       required DeviceFrame deviceFrame}) = _$_WorkbenchState<CustomTheme>;
 
   @override
-  MultiRender get multiRender;
+  ComparisonSetting get comparisonSetting;
   @override
   WidgetbookTheme<CustomTheme>? get theme;
   @override

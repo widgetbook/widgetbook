@@ -2,27 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/utils/extensions.dart';
-import 'package:widgetbook/src/workbench/multi_render.dart';
+import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/workbench_button.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
 
-class MultiselectButton<CustomTheme> extends ConsumerWidget {
-  const MultiselectButton({
+class ComparisonButton<CustomTheme> extends ConsumerWidget {
+  const ComparisonButton({
     Key? key,
     required this.value,
   }) : super(key: key);
 
-  final MultiRender value;
+  final ComparisonSetting value;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = context.watch<WorkbenchProvider<CustomTheme>>();
     final state = provider.state;
-    final currentValue = state.multiRender;
-    final areEqual = value == currentValue;
+    final currentSetting = state.comparisonSetting;
+    final areEqual = value == currentSetting;
     return WorkbenchButton.icon(
       onPressed: () {
-        provider.changedMultiRender(value);
+        provider.changedComparisonSetting(value);
       },
       child: Icon(
         Icons.view_carousel,

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widgetbook/src/workbench/iteration_button.dart';
-import 'package:widgetbook/src/workbench/multi_render.dart';
-import 'package:widgetbook/src/workbench/multiselect_button.dart';
+import 'package:widgetbook/src/workbench/comparison_setting.dart';
+import 'package:widgetbook/src/workbench/comparison_button.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
 
-class MultiRenderHandle<T, CustomTheme> extends ConsumerWidget {
-  const MultiRenderHandle({
+class ComparisonHandle<T, CustomTheme> extends ConsumerWidget {
+  const ComparisonHandle({
     Key? key,
     required this.multiRender,
     required this.items,
@@ -15,7 +15,7 @@ class MultiRenderHandle<T, CustomTheme> extends ConsumerWidget {
     required this.onNextPressed,
   }) : super(key: key);
 
-  final MultiRender multiRender;
+  final ComparisonSetting multiRender;
   final List<T> items;
   final SelectionItem<T> Function(T item) buildItem;
   final VoidCallback onPreviousPressed;
@@ -25,7 +25,7 @@ class MultiRenderHandle<T, CustomTheme> extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
-        MultiselectButton<CustomTheme>(
+        ComparisonButton<CustomTheme>(
           value: multiRender,
         ),
         IterationButton.left(onPressed: onPreviousPressed),

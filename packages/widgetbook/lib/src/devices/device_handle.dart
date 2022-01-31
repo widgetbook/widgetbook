@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/devices/devices.dart';
 import 'package:widgetbook/src/multi_render_handle.dart';
-import 'package:widgetbook/src/workbench/multi_render.dart';
+import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -14,8 +14,8 @@ class DeviceHandle<CustomTheme> extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final workbenchProvider = context.watch<WorkbenchProvider<CustomTheme>>();
-    return MultiRenderHandle<Device, CustomTheme>(
-      multiRender: MultiRender.devices,
+    return ComparisonHandle<Device, CustomTheme>(
+      multiRender: ComparisonSetting.devices,
       items: ref.read(devicesProvider).devices,
       buildItem: (Device e) => SelectionItem(
         name: e.name,

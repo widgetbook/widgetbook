@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/workbench/multi_render.dart';
+import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
 import 'package:widgetbook/src/workbench/workbench_state.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -69,14 +69,14 @@ void main() {
         'changedMultiRender',
         () {
           test(
-            '(${MultiRender.none}) sets locale, theme and device',
+            '(${ComparisonSetting.none}) sets locale, theme and device',
             () {
               final provider = WorkbenchProvider<ThemeData>(
                 locales: locales,
                 themes: themes,
                 devices: devices,
                 deviceFrames: deviceFrames,
-              )..changedMultiRender(MultiRender.none);
+              )..changedComparisonSetting(ComparisonSetting.none);
 
               expect(
                 provider.state,
@@ -93,20 +93,20 @@ void main() {
           );
 
           test(
-            '(${MultiRender.themes}) sets $MultiRender to value and themes to null',
+            '(${ComparisonSetting.themes}) sets $ComparisonSetting to value and themes to null',
             () {
               final provider = WorkbenchProvider<ThemeData>(
                 locales: locales,
                 themes: themes,
                 devices: devices,
                 deviceFrames: deviceFrames,
-              )..changedMultiRender(MultiRender.themes);
+              )..changedComparisonSetting(ComparisonSetting.themes);
 
               expect(
                 provider.state,
                 equals(
                   WorkbenchState<ThemeData>(
-                    multiRender: MultiRender.themes,
+                    comparisonSetting: ComparisonSetting.themes,
                     deviceFrame: DeviceFrame.widgetbook(),
                     locale: usLocale,
                     device: iPhone,
@@ -117,20 +117,20 @@ void main() {
           );
 
           test(
-            '(${MultiRender.devices}) sets $MultiRender to value and devices to null',
+            '(${ComparisonSetting.devices}) sets $ComparisonSetting to value and devices to null',
             () {
               final provider = WorkbenchProvider<ThemeData>(
                 locales: locales,
                 themes: themes,
                 devices: devices,
                 deviceFrames: deviceFrames,
-              )..changedMultiRender(MultiRender.devices);
+              )..changedComparisonSetting(ComparisonSetting.devices);
 
               expect(
                 provider.state,
                 equals(
                   WorkbenchState<ThemeData>(
-                    multiRender: MultiRender.devices,
+                    comparisonSetting: ComparisonSetting.devices,
                     deviceFrame: DeviceFrame.widgetbook(),
                     theme: lightTheme,
                     locale: usLocale,
@@ -141,20 +141,20 @@ void main() {
           );
 
           test(
-            '(${MultiRender.localization}) sets locale, theme and device',
+            '(${ComparisonSetting.localization}) sets locale, theme and device',
             () {
               final provider = WorkbenchProvider<ThemeData>(
                 locales: locales,
                 themes: themes,
                 devices: devices,
                 deviceFrames: deviceFrames,
-              )..changedMultiRender(MultiRender.themes);
+              )..changedComparisonSetting(ComparisonSetting.themes);
 
               expect(
                 provider.state,
                 equals(
                   WorkbenchState<ThemeData>(
-                    multiRender: MultiRender.themes,
+                    comparisonSetting: ComparisonSetting.themes,
                     deviceFrame: DeviceFrame.widgetbook(),
                     locale: usLocale,
                     device: iPhone,
@@ -194,7 +194,7 @@ void main() {
           );
 
           test(
-            'sets active device to value if ${MultiRender.devices} is active',
+            'sets active device to value if ${ComparisonSetting.devices} is active',
             () {
               final provider = WorkbenchProvider<ThemeData>(
                 locales: locales,
@@ -207,7 +207,7 @@ void main() {
                 provider.state,
                 equals(
                   WorkbenchState<ThemeData>(
-                    multiRender: MultiRender.none,
+                    comparisonSetting: ComparisonSetting.none,
                     deviceFrame: DeviceFrame.widgetbook(),
                     theme: lightTheme,
                     locale: usLocale,
@@ -248,7 +248,7 @@ void main() {
           );
 
           test(
-            'sets active theme to value if ${MultiRender.themes} is active',
+            'sets active theme to value if ${ComparisonSetting.themes} is active',
             () {
               final provider = WorkbenchProvider<ThemeData>(
                 locales: locales,
@@ -261,7 +261,7 @@ void main() {
                 provider.state,
                 equals(
                   WorkbenchState<ThemeData>(
-                    multiRender: MultiRender.none,
+                    comparisonSetting: ComparisonSetting.none,
                     deviceFrame: DeviceFrame.widgetbook(),
                     theme: darkTheme,
                     locale: usLocale,
@@ -302,7 +302,7 @@ void main() {
           );
 
           test(
-            'sets active locale to value if ${MultiRender.localization} is active',
+            'sets active locale to value if ${ComparisonSetting.localization} is active',
             () {
               final provider = WorkbenchProvider<ThemeData>(
                 locales: locales,
@@ -315,7 +315,7 @@ void main() {
                 provider.state,
                 equals(
                   WorkbenchState<ThemeData>(
-                    multiRender: MultiRender.none,
+                    comparisonSetting: ComparisonSetting.none,
                     deviceFrame: DeviceFrame.widgetbook(),
                     theme: darkTheme,
                     locale: usLocale,
@@ -342,7 +342,7 @@ void main() {
             provider.state,
             equals(
               WorkbenchState<ThemeData>(
-                multiRender: MultiRender.none,
+                comparisonSetting: ComparisonSetting.none,
                 deviceFrame: DeviceFrame.none(),
                 theme: lightTheme,
                 locale: usLocale,
@@ -367,7 +367,7 @@ void main() {
             provider.state,
             equals(
               WorkbenchState<ThemeData>(
-                multiRender: MultiRender.none,
+                comparisonSetting: ComparisonSetting.none,
                 deviceFrame: DeviceFrame.widgetbook(),
                 theme: darkTheme,
                 locale: usLocale,
@@ -392,7 +392,7 @@ void main() {
             provider.state,
             equals(
               WorkbenchState<ThemeData>(
-                multiRender: MultiRender.none,
+                comparisonSetting: ComparisonSetting.none,
                 deviceFrame: DeviceFrame.widgetbook(),
                 theme: darkTheme,
                 locale: usLocale,
@@ -417,7 +417,7 @@ void main() {
             provider.state,
             equals(
               WorkbenchState<ThemeData>(
-                multiRender: MultiRender.none,
+                comparisonSetting: ComparisonSetting.none,
                 deviceFrame: DeviceFrame.widgetbook(),
                 theme: lightTheme,
                 locale: usLocale,
@@ -442,7 +442,7 @@ void main() {
             provider.state,
             equals(
               WorkbenchState<ThemeData>(
-                multiRender: MultiRender.none,
+                comparisonSetting: ComparisonSetting.none,
                 deviceFrame: DeviceFrame.widgetbook(),
                 theme: lightTheme,
                 locale: usLocale,
@@ -467,7 +467,7 @@ void main() {
             provider.state,
             equals(
               WorkbenchState<ThemeData>(
-                multiRender: MultiRender.none,
+                comparisonSetting: ComparisonSetting.none,
                 deviceFrame: DeviceFrame.none(),
                 theme: lightTheme,
                 locale: usLocale,
@@ -492,7 +492,7 @@ void main() {
             provider.state,
             equals(
               WorkbenchState<ThemeData>(
-                multiRender: MultiRender.none,
+                comparisonSetting: ComparisonSetting.none,
                 deviceFrame: DeviceFrame.none(),
                 theme: lightTheme,
                 locale: usLocale,

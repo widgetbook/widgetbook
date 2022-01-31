@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:widgetbook/src/rendering/device_frame.dart';
-import 'package:widgetbook/src/workbench/multi_render.dart';
+import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 part 'workbench_state.freezed.dart';
@@ -9,7 +8,7 @@ part 'workbench_state.freezed.dart';
 @freezed
 class WorkbenchState<CustomTheme> with _$WorkbenchState<CustomTheme> {
   factory WorkbenchState({
-    @Default(MultiRender.none) MultiRender multiRender,
+    @Default(ComparisonSetting.none) ComparisonSetting comparisonSetting,
     WidgetbookTheme<CustomTheme>? theme,
     Locale? locale,
     Device? device,
