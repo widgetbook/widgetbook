@@ -4,7 +4,7 @@ import 'package:widgetbook/src/devices/devices.dart';
 import 'package:widgetbook/src/multi_render_handle.dart';
 import 'package:widgetbook/src/workbench/multi_render.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
-import 'package:widgetbook/src/workbench/workbench.dart';
+import 'package:widgetbook/src/workbench/workbench_provider.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 class DeviceHandle<CustomTheme> extends ConsumerWidget {

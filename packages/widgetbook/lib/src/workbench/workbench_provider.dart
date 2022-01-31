@@ -21,7 +21,7 @@ void initializeWorkbenchProvider<CustomTheme>() {
       WorkbenchState<CustomTheme>>(
     (ref) {
       final localization = ref.watch(localizationProvider);
-      final theming = ref.watch(getThemingProvider<CustomTheme>());
+      final theming = ref.watch(getProvider<CustomTheme>());
       final devices = ref.watch(devicesProvider);
       final rendering = ref.watch(getRenderingProvider<CustomTheme>());
       return Workbench<CustomTheme>(
@@ -39,29 +39,6 @@ void initializeWorkbenchProvider<CustomTheme>() {
     },
   );
 }
-
-// TODO remove if this is working
-// final workbenchProvider =
-//     StateNotifierProvider<Workbench<CustomTheme>, WorkbenchState<CustomTheme>>(
-//   (ref) {
-//     final localization = ref.watch(localizationProvider);
-//     final theming = ref.watch(themingProvider);
-//     final devices = ref.watch(devicesProvider);
-//     final rendering = ref.watch(renderingProvider);
-//     return Workbench<CustomTheme>(
-//       state: WorkbenchState<CustomTheme>(
-//         locale: localization.supportedLocales.first,
-//         theme: theming.themes.first,
-//         device: devices.devices.first,
-//         renderMode: RenderMode.widgetbook(),
-//       ),
-//       locales: localization.supportedLocales,
-//       themes: theming.themes,
-//       devices: devices.devices,
-//       renderModes: rendering.renderModes,
-//     );
-//   },
-// );
 
 class Workbench<CustomTheme>
     extends StateNotifier<WorkbenchState<CustomTheme>> {

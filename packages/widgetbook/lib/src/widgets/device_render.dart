@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widgetbook/src/localization/localization.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/widgets/renderer.dart';
-import 'package:widgetbook/src/workbench/workbench.dart';
+import 'package:widgetbook/src/workbench/workbench_provider.dart';
 
 class DeviceRender<CustomTheme> extends ConsumerWidget {
   const DeviceRender({

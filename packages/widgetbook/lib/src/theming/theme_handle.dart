@@ -5,7 +5,7 @@ import 'package:widgetbook/src/theming/theming.dart';
 import 'package:widgetbook/src/theming/widgetbook_theme.dart';
 import 'package:widgetbook/src/workbench/multi_render.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
-import 'package:widgetbook/src/workbench/workbench.dart';
+import 'package:widgetbook/src/workbench/workbench_provider.dart';
 
 class ThemeHandle<CustomTheme> extends ConsumerWidget {
   const ThemeHandle({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class ThemeHandle<CustomTheme> extends ConsumerWidget {
     final workbench = ref.read(getWorkbenchProvider<CustomTheme>().notifier);
     return MultiRenderHandle<WidgetbookTheme<CustomTheme>, CustomTheme>(
       multiRender: MultiRender.themes,
-      items: ref.watch(getThemingProvider<CustomTheme>()).themes,
+      items: ref.watch(getProvider<CustomTheme>()).themes,
       buildItem: (WidgetbookTheme<CustomTheme> e) => SelectionItem(
         name: e.name,
         selectedItem: ref.watch(getWorkbenchProvider<CustomTheme>()).theme,

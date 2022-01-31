@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widgetbook/src/localization/localization.dart';
-import 'package:widgetbook/src/rendering/render_mode.dart';
 import 'package:widgetbook/src/rendering/rendering_provider.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -45,21 +44,23 @@ class Renderer<CustomTheme> extends ConsumerWidget {
               rendering.themeBuilder(
                 context,
                 theme,
-                Builder(builder: (context) {
-                  return rendering.deviceFrameBuilder(
-                    context,
-                    device,
-                    renderMode,
-                    rendering.scaffoldBuilder(
+                Builder(
+                  builder: (context) {
+                    return rendering.deviceFrameBuilder(
                       context,
+                      device,
                       renderMode,
-                      rendering.useCaseBuilder(
+                      rendering.scaffoldBuilder(
                         context,
-                        useCaseBuilder(context),
+                        renderMode,
+                        rendering.useCaseBuilder(
+                          context,
+                          useCaseBuilder(context),
+                        ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  },
+                ),
               ),
             ),
           ),

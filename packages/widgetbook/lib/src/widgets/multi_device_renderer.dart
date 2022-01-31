@@ -6,7 +6,7 @@ import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/theming/theming.dart';
 import 'package:widgetbook/src/widgets/renderer.dart';
 import 'package:widgetbook/src/workbench/multi_render.dart';
-import 'package:widgetbook/src/workbench/workbench.dart';
+import 'package:widgetbook/src/workbench/workbench_provider.dart';
 
 class MultiRenderer<CustomTheme> extends ConsumerWidget {
   const MultiRenderer({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class MultiRenderer<CustomTheme> extends ConsumerWidget {
         // This cannot happen
         break;
       case MultiRender.themes:
-        final themingState = ref.read(getThemingProvider<CustomTheme>());
+        final themingState = ref.read(getProvider<CustomTheme>());
         return _buildRenderer(
           themingState.themes
               .map(

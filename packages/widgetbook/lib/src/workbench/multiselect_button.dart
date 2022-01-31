@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widgetbook/src/utils/extensions.dart';
 import 'package:widgetbook/src/workbench/multi_render.dart';
-import 'package:widgetbook/src/workbench/workbench.dart';
+import 'package:widgetbook/src/workbench/workbench_provider.dart';
 import 'package:widgetbook/src/workbench/workbench_button.dart';
 
 class MultiselectButton<CustomTheme> extends ConsumerWidget {

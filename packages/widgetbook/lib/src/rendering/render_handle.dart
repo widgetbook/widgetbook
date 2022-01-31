@@ -4,7 +4,7 @@ import 'package:widgetbook/src/rendering/render_mode.dart';
 import 'package:widgetbook/src/rendering/rendering_provider.dart';
 import 'package:widgetbook/src/workbench/iteration_button.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
-import 'package:widgetbook/src/workbench/workbench.dart';
+import 'package:widgetbook/src/workbench/workbench_provider.dart';
 
 class RenderHandle<CustomTheme> extends ConsumerWidget {
   const RenderHandle({

@@ -2,16 +2,16 @@ import 'package:riverpod/riverpod.dart';
 import 'package:widgetbook/src/theming/theming_state.dart';
 import 'package:widgetbook/src/theming/widgetbook_theme.dart';
 
-late Object _themingProvider;
+late Object _provider;
 
 StateNotifierProvider<Theming<CustomTheme>, ThemingState<CustomTheme>>
-    getThemingProvider<CustomTheme>() {
-  return _themingProvider
+    getProvider<CustomTheme>() {
+  return _provider
       as StateNotifierProvider<Theming<CustomTheme>, ThemingState<CustomTheme>>;
 }
 
-void initializeThemingProvider<CustomTheme>() {
-  _themingProvider =
+void initializeProvider<CustomTheme>() {
+  _provider =
       StateNotifierProvider<Theming<CustomTheme>, ThemingState<CustomTheme>>(
     (ref) {
       return Theming<CustomTheme>();

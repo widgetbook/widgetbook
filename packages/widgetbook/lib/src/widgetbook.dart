@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+// TODO remove the alias
+import 'package:provider/provider.dart' as asdfasdf;
 import 'package:widgetbook/src/configure_non_web.dart'
     if (dart.library.html) 'package:widgetbook/src/configure_web.dart';
 import 'package:widgetbook/src/devices/devices.dart';
@@ -21,7 +23,8 @@ import 'package:widgetbook/src/services/filter_service.dart';
 import 'package:widgetbook/src/theming/theming.dart';
 import 'package:widgetbook/src/theming/widgetbook_theme.dart';
 import 'package:widgetbook/src/utils/styles.dart';
-import 'package:widgetbook/src/workbench/workbench.dart';
+import 'package:widgetbook/src/workbench/workbench_provider.dart';
+import 'package:widgetbook/src/zoom/zoom_provider.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
 
 class Widgetbook<CustomTheme> extends StatelessWidget {
@@ -146,22 +149,29 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return UncontrolledProviderScope(
-      container: ProviderContainer(),
-      child: WidgetbookWrapper<CustomTheme>(
-        categories: categories,
-        appInfo: appInfo,
-        devices: devices,
-        defaultTheme: defaultTheme,
-        supportedLocales: supportedLocales,
-        localizationsDelegates: localizationsDelegates,
-        themes: themes,
-        renderModes: renderModes,
-        deviceFrameBuilder: deviceFrameBuilder,
-        localizationBuilder: localizationBuilder,
-        themeBuilder: themeBuilder,
-        scaffoldBuilder: scaffoldBuilder,
-        useCaseBuilder: useCaseBuilder,
+    return asdfasdf.MultiProvider(
+      providers: [
+        asdfasdf.Provider(
+          create: (_) => ZoomProvider(),
+        ),
+      ],
+      child: UncontrolledProviderScope(
+        container: ProviderContainer(),
+        child: WidgetbookWrapper<CustomTheme>(
+          categories: categories,
+          appInfo: appInfo,
+          devices: devices,
+          defaultTheme: defaultTheme,
+          supportedLocales: supportedLocales,
+          localizationsDelegates: localizationsDelegates,
+          themes: themes,
+          renderModes: renderModes,
+          deviceFrameBuilder: deviceFrameBuilder,
+          localizationBuilder: localizationBuilder,
+          themeBuilder: themeBuilder,
+          scaffoldBuilder: scaffoldBuilder,
+          useCaseBuilder: useCaseBuilder,
+        ),
       ),
     );
   }
@@ -252,7 +262,7 @@ class _WidgetbookState<CustomTheme>
   }
 
   void _initializeProviders() {
-    initializeThemingProvider<CustomTheme>();
+    initializeProvider<CustomTheme>();
     initializeRenderingProvider<CustomTheme>();
     initializeWorkbenchProvider<CustomTheme>();
   }
@@ -262,7 +272,7 @@ class _WidgetbookState<CustomTheme>
           localizationsDelegates: widget.localizationsDelegates?.toList(),
           supportedLocales: widget.supportedLocales.toList(),
         );
-    ref.read(getThemingProvider<CustomTheme>().notifier).hotReloadUpdate(
+    ref.read(getProvider<CustomTheme>().notifier).hotReloadUpdate(
           themes: widget.themes.toList(),
         );
     ref.read(devicesProvider.notifier).hotReloadUpdate(

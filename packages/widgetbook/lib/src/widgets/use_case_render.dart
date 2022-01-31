@@ -1,37 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
 import 'package:widgetbook/src/widgets/device_render.dart';
 import 'package:widgetbook/src/widgets/multi_device_renderer.dart';
 import 'package:widgetbook/src/workbench/multi_render.dart';
-import 'package:widgetbook/src/workbench/workbench.dart';
+import 'package:widgetbook/src/workbench/workbench_provider.dart';
+import 'package:widgetbook/src/zoom/zoom_provider.dart';
 
-class UseCaseRender<CustomTheme> extends ConsumerStatefulWidget {
+class UseCaseRender<CustomTheme> extends ConsumerWidget {
   const UseCaseRender({Key? key}) : super(key: key);
 
-  @override
-  _StoryState createState() => _StoryState<CustomTheme>();
-}
-
-class _StoryState<CustomTheme> extends ConsumerState<UseCaseRender> {
-  Widget _buildStory() {
-    final state = CanvasProvider.of(context)!.state;
-    if (state.selectedStory != null) {
-      return _buildCanvas(state.selectedStory!);
-    }
-
-    return Center(
-      child: Container(),
-    );
-  }
-
-  Widget _buildCanvas(WidgetbookUseCase story) {
+  Widget _buildCanvas(
+    BuildContext context,
+    WidgetbookUseCase story,
+    WidgetRef ref,
+  ) {
     final workkbenchState = ref.watch(getWorkbenchProvider<CustomTheme>());
 
     return workkbenchState.multiRender == MultiRender.none
-        ? DeviceRender<CustomTheme>(
-            story: story,
+        ? ClipRect(
+            child: OverflowBox(
+              child: Transform.scale(
+                scale: context.watch<ZoomProvider>().state.zoomLevel,
+                child: DeviceRender<CustomTheme>(
+                  story: story,
+                ),
+              ),
+            ),
           )
         : SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -42,7 +39,15 @@ class _StoryState<CustomTheme> extends ConsumerState<UseCaseRender> {
   @override
   Widget build(
     BuildContext context,
+    WidgetRef ref,
   ) {
-    return _buildStory();
+    final state = CanvasProvider.of(context)!.state;
+    if (state.selectedStory != null) {
+      return _buildCanvas(context, state.selectedStory!, ref);
+    }
+
+    return Center(
+      child: Container(),
+    );
   }
 }
