@@ -226,7 +226,6 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
             deviceFrames.hashCode,
       ),
       providers: [
-        // TODO this can be moved down the tree
         ChangeNotifierProvider(
           create: (_) => ZoomProvider(),
         ),

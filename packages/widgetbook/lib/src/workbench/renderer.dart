@@ -42,8 +42,7 @@ class Renderer<CustomTheme> extends StatelessWidget {
           child: renderingState.localizationBuilder(
             context,
             workbenchProvider.locales,
-            // TODO this can be null!
-            localizationsDelegates!.toList(),
+            localizationsDelegates?.toList(),
             locale,
             renderingState.themeBuilder(
               context,
