@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widgetbook/src/constants/constants.dart';
 import 'package:widgetbook/src/devices/device_handle.dart';
 import 'package:widgetbook/src/localization/localization_handle.dart';
@@ -7,11 +6,11 @@ import 'package:widgetbook/src/rendering/render_handle.dart';
 import 'package:widgetbook/src/theming/theme_handle.dart';
 import 'package:widgetbook/src/zoom/zoom_handle.dart';
 
-class ControlsBar<CustomTheme> extends ConsumerWidget {
+class ControlsBar<CustomTheme> extends StatelessWidget {
   const ControlsBar({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return SizedBox(
       height: Constants.controlBarHeight,
       child: Row(

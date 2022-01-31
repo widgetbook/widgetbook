@@ -14,13 +14,11 @@ dependencies:
   collection: ^1.15.0
   flutter:
     sdk: flutter
-  flutter_riverpod: ^1.0.3
   flutter_web_plugins:
     sdk: flutter
   freezed_annotation: ^1.1.0
   meta: ^1.7.0
   provider: ^6.0.2
-  riverpod: ^1.0.3
   vector_math: ^2.1.0
   widgetbook_models: ^0.0.4
 

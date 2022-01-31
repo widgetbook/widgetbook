@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:widgetbook/src/workbench/iteration_button.dart';
-import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/comparison_button.dart';
+import 'package:widgetbook/src/workbench/comparison_setting.dart';
+import 'package:widgetbook/src/workbench/iteration_button.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
 
-class ComparisonHandle<T, CustomTheme> extends ConsumerWidget {
+class ComparisonHandle<T, CustomTheme> extends StatelessWidget {
   const ComparisonHandle({
     Key? key,
     required this.multiRender,
@@ -22,7 +21,7 @@ class ComparisonHandle<T, CustomTheme> extends ConsumerWidget {
   final VoidCallback onNextPressed;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Row(
       children: [
         ComparisonButton<CustomTheme>(

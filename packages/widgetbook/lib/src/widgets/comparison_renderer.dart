@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/localization/localization_provider.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
@@ -7,10 +6,10 @@ import 'package:widgetbook/src/widgets/renderer.dart';
 import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
 
-class ComparisonRenderer<CustomTheme> extends ConsumerWidget {
+class ComparisonRenderer<CustomTheme> extends StatelessWidget {
   const ComparisonRenderer({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final workbenchState =
         context.watch<WorkbenchProvider<CustomTheme>>().state;
     final localizationState = context.watch<LocalizationProvider>().state;

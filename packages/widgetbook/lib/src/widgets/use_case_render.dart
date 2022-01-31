@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/providers/canvas_provider.dart';
@@ -9,13 +8,12 @@ import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
 import 'package:widgetbook/src/zoom/zoom_provider.dart';
 
-class UseCaseRender<CustomTheme> extends ConsumerWidget {
+class UseCaseRender<CustomTheme> extends StatelessWidget {
   const UseCaseRender({Key? key}) : super(key: key);
 
   Widget _buildCanvas(
     BuildContext context,
     WidgetbookUseCase story,
-    WidgetRef ref,
   ) {
     final workkbenchState =
         context.watch<WorkbenchProvider<CustomTheme>>().state;
@@ -40,11 +38,13 @@ class UseCaseRender<CustomTheme> extends ConsumerWidget {
   @override
   Widget build(
     BuildContext context,
-    WidgetRef ref,
   ) {
     final state = CanvasProvider.of(context)!.state;
     if (state.selectedStory != null) {
-      return _buildCanvas(context, state.selectedStory!, ref);
+      return _buildCanvas(
+        context,
+        state.selectedStory!,
+      );
     }
 
     return Center(

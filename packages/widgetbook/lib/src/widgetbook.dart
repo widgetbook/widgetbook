@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 // TODO remove the alias
 import 'package:provider/provider.dart' as asdfasdf;
 import 'package:widgetbook/src/configure_non_web.dart'
@@ -232,29 +231,26 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
           ),
         )
       ],
-      child: UncontrolledProviderScope(
-        container: ProviderContainer(),
-        child: WidgetbookWrapper<CustomTheme>(
-          categories: categories,
-          appInfo: appInfo,
-          devices: devices,
-          defaultTheme: defaultTheme,
-          supportedLocales: supportedLocales,
-          localizationsDelegates: localizationsDelegates,
-          themes: themes,
-          deviceFrames: deviceFrames,
-          deviceFrameBuilder: deviceFrameBuilder,
-          localizationBuilder: localizationBuilder,
-          themeBuilder: themeBuilder,
-          scaffoldBuilder: scaffoldBuilder,
-          useCaseBuilder: useCaseBuilder,
-        ),
+      child: WidgetbookWrapper<CustomTheme>(
+        categories: categories,
+        appInfo: appInfo,
+        devices: devices,
+        defaultTheme: defaultTheme,
+        supportedLocales: supportedLocales,
+        localizationsDelegates: localizationsDelegates,
+        themes: themes,
+        deviceFrames: deviceFrames,
+        deviceFrameBuilder: deviceFrameBuilder,
+        localizationBuilder: localizationBuilder,
+        themeBuilder: themeBuilder,
+        scaffoldBuilder: scaffoldBuilder,
+        useCaseBuilder: useCaseBuilder,
       ),
     );
   }
 }
 
-class WidgetbookWrapper<CustomTheme> extends ConsumerStatefulWidget {
+class WidgetbookWrapper<CustomTheme> extends StatefulWidget {
   const WidgetbookWrapper({
     Key? key,
     required this.categories,
@@ -322,7 +318,7 @@ class WidgetbookWrapper<CustomTheme> extends ConsumerStatefulWidget {
 }
 
 class _WidgetbookState<CustomTheme>
-    extends ConsumerState<WidgetbookWrapper<CustomTheme>> {
+    extends State<WidgetbookWrapper<CustomTheme>> {
   // TODO ugly hack
   late BuildContext contextWithProviders;
 
@@ -346,48 +342,44 @@ class _WidgetbookState<CustomTheme>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(
-      builder: (context, ref, child) {
-        return OrganizerBuilder(
-          initialState: OrganizerState.unfiltered(
-            categories: widget.categories,
-          ),
-          storyRepository: storyRepository,
-          selectedStoryRepository: selectedStoryRepository,
-          filterService: const FilterService(),
-          child: CanvasBuilder(
-            selectedStoryRepository: selectedStoryRepository,
-            storyRepository: storyRepository,
-            child: Builder(
-              builder: (context) {
-                contextWithProviders = context;
-                final canvasState = CanvasProvider.of(context)!.state;
-                final storiesState = OrganizerProvider.of(context)!.state;
+    return OrganizerBuilder(
+      initialState: OrganizerState.unfiltered(
+        categories: widget.categories,
+      ),
+      storyRepository: storyRepository,
+      selectedStoryRepository: selectedStoryRepository,
+      filterService: const FilterService(),
+      child: CanvasBuilder(
+        selectedStoryRepository: selectedStoryRepository,
+        storyRepository: storyRepository,
+        child: Builder(
+          builder: (context) {
+            contextWithProviders = context;
+            final canvasState = CanvasProvider.of(context)!.state;
+            final storiesState = OrganizerProvider.of(context)!.state;
 
-                return MaterialApp.router(
-                  routeInformationParser: StoryRouteInformationParser(
-                    onRoute: (path) {
-                      final stories = StoryHelper.getAllStoriesFromCategories(
-                        storiesState.allCategories,
-                      );
-                      final selectedStory = selectStoryFromPath(path, stories);
-                      CanvasProvider.of(context)!.selectStory(selectedStory);
-                    },
-                  ),
-                  routerDelegate: StoryRouterDelegate<CustomTheme>(
-                    canvasState: canvasState,
-                    appInfo: widget.appInfo,
-                  ),
-                  title: widget.appInfo.name,
-                  debugShowCheckedModeBanner: false,
-                  darkTheme: Styles.darkTheme,
-                  theme: Styles.lightTheme,
-                );
-              },
-            ),
-          ),
-        );
-      },
+            return MaterialApp.router(
+              routeInformationParser: StoryRouteInformationParser(
+                onRoute: (path) {
+                  final stories = StoryHelper.getAllStoriesFromCategories(
+                    storiesState.allCategories,
+                  );
+                  final selectedStory = selectStoryFromPath(path, stories);
+                  CanvasProvider.of(context)!.selectStory(selectedStory);
+                },
+              ),
+              routerDelegate: StoryRouterDelegate<CustomTheme>(
+                canvasState: canvasState,
+                appInfo: widget.appInfo,
+              ),
+              title: widget.appInfo.name,
+              debugShowCheckedModeBanner: false,
+              darkTheme: Styles.darkTheme,
+              theme: Styles.lightTheme,
+            );
+          },
+        ),
+      ),
     );
   }
 

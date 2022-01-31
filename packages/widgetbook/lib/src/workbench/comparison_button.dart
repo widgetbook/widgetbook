@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/utils/extensions.dart';
 import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/workbench_button.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
 
-class ComparisonButton<CustomTheme> extends ConsumerWidget {
+class ComparisonButton<CustomTheme> extends StatelessWidget {
   const ComparisonButton({
     Key? key,
     required this.value,
@@ -15,7 +14,7 @@ class ComparisonButton<CustomTheme> extends ConsumerWidget {
   final ComparisonSetting value;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final provider = context.watch<WorkbenchProvider<CustomTheme>>();
     final state = provider.state;
     final currentSetting = state.comparisonSetting;

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:widgetbook/src/localization/localization_provider.dart';
-import 'package:widgetbook/src/rendering/device_frame.dart';
+import 'package:provider/provider.dart';
 import 'package:widgetbook/src/rendering/rendering_provider.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:provider/provider.dart';
 
-class Renderer<CustomTheme> extends ConsumerWidget {
+class Renderer<CustomTheme> extends StatelessWidget {
   const Renderer({
     Key? key,
     required this.device,
@@ -26,7 +23,9 @@ class Renderer<CustomTheme> extends ConsumerWidget {
   final Widget Function(BuildContext) useCaseBuilder;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(
+    BuildContext context,
+  ) {
     final renderingState =
         context.watch<RenderingProvider<CustomTheme>>().state;
     final workbenchProvider =

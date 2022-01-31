@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/rendering/device_frame.dart';
 import 'package:widgetbook/src/rendering/rendering_provider.dart';
@@ -7,12 +6,12 @@ import 'package:widgetbook/src/workbench/iteration_button.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
 
-class RenderHandle<CustomTheme> extends ConsumerWidget {
+class RenderHandle<CustomTheme> extends StatelessWidget {
   const RenderHandle({
     Key? key,
   }) : super(key: key);
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final workbenchProvider = context.watch<WorkbenchProvider<CustomTheme>>();
     final workbenchState = workbenchProvider.state;
 
