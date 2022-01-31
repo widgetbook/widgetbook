@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widgetbook/src/localization/localization.dart';
+import 'package:widgetbook/src/rendering/device_frame.dart';
 import 'package:widgetbook/src/rendering/rendering_provider.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -11,7 +12,7 @@ class Renderer<CustomTheme> extends ConsumerWidget {
     required this.locale,
     required this.localizationsDelegates,
     required this.theme,
-    required this.renderMode,
+    required this.deviceFrame,
     required this.useCaseBuilder,
   }) : super(key: key);
 
@@ -19,7 +20,7 @@ class Renderer<CustomTheme> extends ConsumerWidget {
   final Locale locale;
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
   final CustomTheme theme;
-  final RenderMode renderMode;
+  final DeviceFrame deviceFrame;
   final Widget Function(BuildContext) useCaseBuilder;
 
   @override
@@ -49,10 +50,10 @@ class Renderer<CustomTheme> extends ConsumerWidget {
                     return rendering.deviceFrameBuilder(
                       context,
                       device,
-                      renderMode,
+                      deviceFrame,
                       rendering.scaffoldBuilder(
                         context,
-                        renderMode,
+                        deviceFrame,
                         rendering.useCaseBuilder(
                           context,
                           useCaseBuilder(context),

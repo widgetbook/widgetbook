@@ -44,7 +44,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
     this.scaffoldBuilder,
     this.useCaseBuilder,
     List<Locale>? supportedLocales,
-    List<RenderMode>? renderModes,
+    List<DeviceFrame>? deviceFrames,
     // TODO check if this works
   })  : assert(
           themes.length > 0,
@@ -55,14 +55,14 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
             const [
               Locale('us'),
             ],
-        renderModes = renderModes ??
-            const <RenderMode>[
+        deviceFrames = deviceFrames ??
+            const <DeviceFrame>[
               // TODO how to use the factory constructors here?
-              RenderMode(
+              DeviceFrame(
                 name: 'Widgetbook',
                 allowsDevices: true,
               ),
-              RenderMode(
+              DeviceFrame(
                 name: 'None',
                 allowsDevices: false,
               )
@@ -95,7 +95,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
 
   final List<WidgetbookTheme<CustomTheme>> themes;
 
-  final List<RenderMode> renderModes;
+  final List<DeviceFrame> deviceFrames;
 
   final DeviceFrameBuilderFunction? deviceFrameBuilder;
 
@@ -112,7 +112,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
     required List<WidgetbookTheme<CupertinoThemeData>> themes,
     required AppInfo appInfo,
     List<Device>? devices,
-    List<RenderMode>? renderModes,
+    List<DeviceFrame>? deviceFrames,
     List<Locale>? supportedLocales,
     Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     DeviceFrameBuilderFunction? deviceFrameBuilder,
@@ -135,7 +135,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
       themeBuilder: themeBuilder,
       scaffoldBuilder: scaffoldBuilder,
       useCaseBuilder: useCaseBuilder,
-      renderModes: renderModes,
+      deviceFrames: deviceFrames,
     );
   }
 
@@ -144,7 +144,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
     required List<WidgetbookTheme<ThemeData>> themes,
     required AppInfo appInfo,
     List<Device>? devices,
-    List<RenderMode>? renderModes,
+    List<DeviceFrame>? deviceFrames,
     List<Locale>? supportedLocales,
     Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     DeviceFrameBuilderFunction? deviceFrameBuilder,
@@ -167,7 +167,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
       themeBuilder: themeBuilder,
       scaffoldBuilder: scaffoldBuilder,
       useCaseBuilder: useCaseBuilder,
-      renderModes: renderModes,
+      deviceFrames: deviceFrames,
     );
   }
 
@@ -192,7 +192,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
             locales: supportedLocales,
             themes: themes,
             devices: devices,
-            renderModes: renderModes,
+            deviceFrames: deviceFrames,
           ),
         )
       ],
@@ -206,7 +206,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
           supportedLocales: supportedLocales,
           localizationsDelegates: localizationsDelegates,
           themes: themes,
-          renderModes: renderModes,
+          deviceFrames: deviceFrames,
           deviceFrameBuilder: deviceFrameBuilder,
           localizationBuilder: localizationBuilder,
           themeBuilder: themeBuilder,
@@ -228,7 +228,7 @@ class WidgetbookWrapper<CustomTheme> extends ConsumerStatefulWidget {
     Iterable<Locale>? supportedLocales,
     this.localizationsDelegates,
     this.defaultTheme = ThemeMode.system,
-    required this.renderModes,
+    required this.deviceFrames,
     this.deviceFrameBuilder,
     this.localizationBuilder,
     this.themeBuilder,
@@ -268,7 +268,7 @@ class WidgetbookWrapper<CustomTheme> extends ConsumerStatefulWidget {
 
   final Iterable<WidgetbookTheme<CustomTheme>> themes;
 
-  final List<RenderMode> renderModes;
+  final List<DeviceFrame> deviceFrames;
 
   final DeviceFrameBuilderFunction? deviceFrameBuilder;
 
@@ -317,7 +317,7 @@ class _WidgetbookState<CustomTheme>
         );
 
     ref.read(getRenderingProvider<CustomTheme>().notifier)
-      ..renderModesChanged(widget.renderModes)
+      ..deviceFramesChanged(widget.deviceFrames)
       ..deviceFrameBuilderChanged(widget.deviceFrameBuilder)
       ..localizationBuilderChanged(widget.localizationBuilder)
       ..themeBuilderChanged(widget.themeBuilder)

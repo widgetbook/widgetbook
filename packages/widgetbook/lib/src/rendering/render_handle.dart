@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:widgetbook/src/rendering/render_mode.dart';
+import 'package:provider/provider.dart';
+import 'package:widgetbook/src/rendering/device_frame.dart';
 import 'package:widgetbook/src/rendering/rendering_provider.dart';
 import 'package:widgetbook/src/workbench/iteration_button.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
-import 'package:provider/provider.dart';
 
 class RenderHandle<CustomTheme> extends ConsumerWidget {
   const RenderHandle({
@@ -20,20 +20,20 @@ class RenderHandle<CustomTheme> extends ConsumerWidget {
 
     return Row(
       children: [
-        IterationButton.left(onPressed: workbenchProvider.previousRenderMode),
-        ...renderingState.renderModes
+        IterationButton.left(onPressed: workbenchProvider.previousDeviceFrame),
+        ...renderingState.deviceFrames
             .map(
-              (e) => SelectionItem<RenderMode>(
+              (e) => SelectionItem<DeviceFrame>(
                 name: e.name,
-                selectedItem: workbenchState.renderMode,
+                selectedItem: workbenchState.deviceFrame,
                 item: e,
                 onPressed: () {
-                  workbenchProvider.changedRenderMode(e);
+                  workbenchProvider.changedDeviceFrame(e);
                 },
               ),
             )
             .toList(),
-        IterationButton.right(onPressed: workbenchProvider.nextRenderMode),
+        IterationButton.right(onPressed: workbenchProvider.nextDeviceFrame),
         const SizedBox(
           width: 8,
         ),

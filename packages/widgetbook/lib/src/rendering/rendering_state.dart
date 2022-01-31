@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:widgetbook/src/rendering/render_mode.dart';
+import 'package:widgetbook/src/rendering/device_frame.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 part 'rendering_state.freezed.dart';
@@ -8,7 +8,7 @@ part 'rendering_state.freezed.dart';
 typedef DeviceFrameBuilderFunction = Widget Function(
   BuildContext context,
   Device device,
-  RenderMode renderMode,
+  DeviceFrame deviceFrame,
   Widget child,
 );
 
@@ -28,7 +28,7 @@ typedef ThemeBuilderFunction<CustomTheme> = Widget Function(
 
 typedef ScaffoldBuilderFunction = Widget Function(
   BuildContext context,
-  RenderMode renderMode,
+  DeviceFrame deviceFrame,
   Widget child,
 );
 
@@ -40,7 +40,7 @@ typedef UseCaseBuilderFunction = Widget Function(
 @freezed
 class RenderingState<CustomTheme> with _$RenderingState<CustomTheme> {
   factory RenderingState({
-    required List<RenderMode> renderModes,
+    required List<DeviceFrame> deviceFrames,
     required DeviceFrameBuilderFunction deviceFrameBuilder,
     required LocalizationBuilderFunction localizationBuilder,
     required ThemeBuilderFunction<CustomTheme> themeBuilder,

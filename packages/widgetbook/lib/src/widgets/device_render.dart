@@ -23,7 +23,7 @@ class DeviceRender<CustomTheme> extends ConsumerWidget {
       locale: state.locale!,
       localizationsDelegates: localizationState.localizationsDelegates,
       theme: state.theme!.data,
-      renderMode: state.renderMode,
+      deviceFrame: state.deviceFrame,
       useCaseBuilder: story.builder,
     );
   }

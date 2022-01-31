@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:widgetbook/src/rendering/device_frame.dart';
 import 'package:widgetbook/src/workbench/multi_render.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -12,6 +13,6 @@ class WorkbenchState<CustomTheme> with _$WorkbenchState<CustomTheme> {
     WidgetbookTheme<CustomTheme>? theme,
     Locale? locale,
     Device? device,
-    required RenderMode renderMode,
+    required DeviceFrame deviceFrame,
   }) = _WorkbenchState;
 }

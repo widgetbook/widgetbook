@@ -1,4 +1,4 @@
-import 'package:device_frame/device_frame.dart';
+import 'package:device_frame/device_frame.dart' as frame;
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:meal_app/models/meal.dart';
@@ -35,22 +35,22 @@ class Storyboard extends StatelessWidget {
         Samsung.s10,
         Samsung.s21ultra,
       ],
-      renderModes: [
-        RenderMode.widgetbook(),
-        RenderMode.devicePreview(),
-        RenderMode.none(),
+      deviceFrames: [
+        DeviceFrame.widgetbook(),
+        DeviceFrame.devicePreview(),
+        DeviceFrame.none(),
       ],
       deviceFrameBuilder: (context, device, renderMode, child) {
-        if (renderMode == RenderMode.widgetbook()) {
+        if (renderMode == DeviceFrame.widgetbook()) {
           return WidgetbookDeviceFrame(
             device: device,
             child: child,
           );
         }
 
-        if (renderMode == RenderMode.devicePreview()) {
-          return DeviceFrame(
-            device: Devices.ios.iPhone12,
+        if (renderMode == DeviceFrame.devicePreview()) {
+          return frame.DeviceFrame(
+            device: frame.Devices.ios.iPhone12,
             screen: child,
           );
         }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/extensions/list_extension.dart';
+import 'package:widgetbook/src/rendering/device_frame.dart';
 import 'package:widgetbook/src/state_change_notifier.dart';
 import 'package:widgetbook/src/workbench/multi_render.dart';
 import 'package:widgetbook/src/workbench/workbench_state.dart';
@@ -12,11 +13,11 @@ class WorkbenchProvider<CustomTheme>
     required this.locales,
     required this.themes,
     required this.devices,
-    required this.renderModes,
+    required this.deviceFrames,
   }) : super(
           state: state ??
               WorkbenchState(
-                renderMode: renderModes.first,
+                deviceFrame: deviceFrames.first,
                 theme: themes.first,
                 device: devices.first,
                 locale: locales.first,
@@ -26,7 +27,7 @@ class WorkbenchProvider<CustomTheme>
   final List<Locale> locales;
   final List<WidgetbookTheme<CustomTheme>> themes;
   final List<Device> devices;
-  final List<RenderMode> renderModes;
+  final List<DeviceFrame> deviceFrames;
 
   void changedMultiRender(MultiRender multiRender) {
     if (state.multiRender == multiRender) {
@@ -96,8 +97,8 @@ class WorkbenchProvider<CustomTheme>
     );
   }
 
-  void changedRenderMode(RenderMode renderMode) {
-    state = state.copyWith(renderMode: renderMode);
+  void changedDeviceFrame(DeviceFrame deviceFrame) {
+    state = state.copyWith(deviceFrame: deviceFrame);
   }
 
   void nextLocale() {
@@ -160,17 +161,17 @@ class WorkbenchProvider<CustomTheme>
     );
   }
 
-  void nextRenderMode() {
-    final nextRenderMode = renderModes.getNext(state.renderMode);
+  void nextDeviceFrame() {
+    final nextDeviceFrame = deviceFrames.getNext(state.deviceFrame);
     state = state.copyWith(
-      renderMode: nextRenderMode,
+      deviceFrame: nextDeviceFrame,
     );
   }
 
-  void previousRenderMode() {
-    final previousDevice = renderModes.getPrevious(state.renderMode);
+  void previousDeviceFrame() {
+    final previousDevice = deviceFrames.getPrevious(state.deviceFrame);
     state = state.copyWith(
-      renderMode: previousDevice,
+      deviceFrame: previousDevice,
     );
   }
 }

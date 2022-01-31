@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod/riverpod.dart';
+import 'package:widgetbook/src/rendering/device_frame.dart';
 import 'package:widgetbook/src/rendering/rendering_state.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -33,17 +34,17 @@ class Rendering<CustomTheme>
   Rendering()
       : super(
           RenderingState<CustomTheme>(
-            renderModes: [
-              RenderMode.widgetbook(),
-              RenderMode.none(),
+            deviceFrames: [
+              DeviceFrame.widgetbook(),
+              DeviceFrame.none(),
             ],
             deviceFrameBuilder: (
               BuildContext context,
               Device device,
-              RenderMode renderMode,
+              DeviceFrame deviceFrame,
               Widget child,
             ) {
-              if (renderMode == RenderMode.widgetbook()) {
+              if (deviceFrame == DeviceFrame.widgetbook()) {
                 return WidgetbookDeviceFrame(
                   device: device,
                   child: child,
@@ -90,11 +91,11 @@ class Rendering<CustomTheme>
             },
             scaffoldBuilder: (
               BuildContext context,
-              RenderMode renderMode,
+              DeviceFrame deviceFrame,
               Widget child,
             ) {
-              if (renderMode == RenderMode.widgetbook() ||
-                  renderMode == RenderMode.devicePreview()) {
+              if (deviceFrame == DeviceFrame.widgetbook() ||
+                  deviceFrame == DeviceFrame.devicePreview()) {
                 return Scaffold(
                   body: child,
                 );
@@ -108,9 +109,9 @@ class Rendering<CustomTheme>
           ),
         );
 
-  void renderModesChanged(List<RenderMode>? renderModes) {
-    if (renderModes != null) {
-      state = state.copyWith(renderModes: renderModes);
+  void deviceFramesChanged(List<DeviceFrame>? deviceFrames) {
+    if (deviceFrames != null) {
+      state = state.copyWith(deviceFrames: deviceFrames);
     }
   }
 

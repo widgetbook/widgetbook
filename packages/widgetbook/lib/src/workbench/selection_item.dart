@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/constants/radii.dart';
-import 'package:widgetbook/src/utils/extensions.dart';
 import 'package:widgetbook/src/workbench/workbench_button.dart';
 
 class SelectionItem<T> extends StatelessWidget {

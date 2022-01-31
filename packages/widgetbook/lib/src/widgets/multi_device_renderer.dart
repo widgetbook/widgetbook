@@ -34,7 +34,7 @@ class MultiRenderer<CustomTheme> extends ConsumerWidget {
                     localizationsDelegates:
                         localizationState.localizationsDelegates,
                     theme: e.data,
-                    renderMode: workbenchState.renderMode,
+                    deviceFrame: workbenchState.deviceFrame,
                     useCaseBuilder: (BuildContext context) =>
                         CanvasProvider.of(context)!
                             .state
@@ -57,7 +57,7 @@ class MultiRenderer<CustomTheme> extends ConsumerWidget {
                       localizationsDelegates:
                           localizationState.localizationsDelegates,
                       theme: workbenchState.theme!.data,
-                      renderMode: workbenchState.renderMode,
+                      deviceFrame: workbenchState.deviceFrame,
                       useCaseBuilder: (BuildContext context) =>
                           CanvasProvider.of(context)!
                               .state
@@ -79,7 +79,7 @@ class MultiRenderer<CustomTheme> extends ConsumerWidget {
                       localizationsDelegates:
                           localizationState.localizationsDelegates,
                       theme: workbenchState.theme!.data,
-                      renderMode: workbenchState.renderMode,
+                      deviceFrame: workbenchState.deviceFrame,
                       useCaseBuilder: (BuildContext context) =>
                           CanvasProvider.of(context)!
                               .state

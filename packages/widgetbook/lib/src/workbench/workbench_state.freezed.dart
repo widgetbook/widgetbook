@@ -22,13 +22,13 @@ class _$WorkbenchStateTearOff {
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
-      required RenderMode renderMode}) {
+      required DeviceFrame deviceFrame}) {
     return _WorkbenchState<CustomTheme>(
       multiRender: multiRender,
       theme: theme,
       locale: locale,
       device: device,
-      renderMode: renderMode,
+      deviceFrame: deviceFrame,
     );
   }
 }
@@ -42,7 +42,7 @@ mixin _$WorkbenchState<CustomTheme> {
   WidgetbookTheme<CustomTheme>? get theme => throw _privateConstructorUsedError;
   Locale? get locale => throw _privateConstructorUsedError;
   Device? get device => throw _privateConstructorUsedError;
-  RenderMode get renderMode => throw _privateConstructorUsedError;
+  DeviceFrame get deviceFrame => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WorkbenchStateCopyWith<CustomTheme, WorkbenchState<CustomTheme>>
@@ -59,10 +59,10 @@ abstract class $WorkbenchStateCopyWith<CustomTheme, $Res> {
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
-      RenderMode renderMode});
+      DeviceFrame deviceFrame});
 
   $WidgetbookThemeCopyWith<CustomTheme, $Res>? get theme;
-  $RenderModeCopyWith<$Res> get renderMode;
+  $DeviceFrameCopyWith<$Res> get deviceFrame;
 }
 
 /// @nodoc
@@ -80,7 +80,7 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
     Object? theme = freezed,
     Object? locale = freezed,
     Object? device = freezed,
-    Object? renderMode = freezed,
+    Object? deviceFrame = freezed,
   }) {
     return _then(_value.copyWith(
       multiRender: multiRender == freezed
@@ -99,10 +99,10 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
           ? _value.device
           : device // ignore: cast_nullable_to_non_nullable
               as Device?,
-      renderMode: renderMode == freezed
-          ? _value.renderMode
-          : renderMode // ignore: cast_nullable_to_non_nullable
-              as RenderMode,
+      deviceFrame: deviceFrame == freezed
+          ? _value.deviceFrame
+          : deviceFrame // ignore: cast_nullable_to_non_nullable
+              as DeviceFrame,
     ));
   }
 
@@ -118,9 +118,9 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
   }
 
   @override
-  $RenderModeCopyWith<$Res> get renderMode {
-    return $RenderModeCopyWith<$Res>(_value.renderMode, (value) {
-      return _then(_value.copyWith(renderMode: value));
+  $DeviceFrameCopyWith<$Res> get deviceFrame {
+    return $DeviceFrameCopyWith<$Res>(_value.deviceFrame, (value) {
+      return _then(_value.copyWith(deviceFrame: value));
     });
   }
 }
@@ -137,12 +137,12 @@ abstract class _$WorkbenchStateCopyWith<CustomTheme, $Res>
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
-      RenderMode renderMode});
+      DeviceFrame deviceFrame});
 
   @override
   $WidgetbookThemeCopyWith<CustomTheme, $Res>? get theme;
   @override
-  $RenderModeCopyWith<$Res> get renderMode;
+  $DeviceFrameCopyWith<$Res> get deviceFrame;
 }
 
 /// @nodoc
@@ -163,7 +163,7 @@ class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
     Object? theme = freezed,
     Object? locale = freezed,
     Object? device = freezed,
-    Object? renderMode = freezed,
+    Object? deviceFrame = freezed,
   }) {
     return _then(_WorkbenchState<CustomTheme>(
       multiRender: multiRender == freezed
@@ -182,10 +182,10 @@ class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
           ? _value.device
           : device // ignore: cast_nullable_to_non_nullable
               as Device?,
-      renderMode: renderMode == freezed
-          ? _value.renderMode
-          : renderMode // ignore: cast_nullable_to_non_nullable
-              as RenderMode,
+      deviceFrame: deviceFrame == freezed
+          ? _value.deviceFrame
+          : deviceFrame // ignore: cast_nullable_to_non_nullable
+              as DeviceFrame,
     ));
   }
 }
@@ -198,7 +198,7 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
       this.theme,
       this.locale,
       this.device,
-      required this.renderMode});
+      required this.deviceFrame});
 
   @JsonKey()
   @override
@@ -210,11 +210,11 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
   @override
   final Device? device;
   @override
-  final RenderMode renderMode;
+  final DeviceFrame deviceFrame;
 
   @override
   String toString() {
-    return 'WorkbenchState<$CustomTheme>(multiRender: $multiRender, theme: $theme, locale: $locale, device: $device, renderMode: $renderMode)';
+    return 'WorkbenchState<$CustomTheme>(multiRender: $multiRender, theme: $theme, locale: $locale, device: $device, deviceFrame: $deviceFrame)';
   }
 
   @override
@@ -228,7 +228,7 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
             const DeepCollectionEquality().equals(other.locale, locale) &&
             const DeepCollectionEquality().equals(other.device, device) &&
             const DeepCollectionEquality()
-                .equals(other.renderMode, renderMode));
+                .equals(other.deviceFrame, deviceFrame));
   }
 
   @override
@@ -238,7 +238,7 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
       const DeepCollectionEquality().hash(theme),
       const DeepCollectionEquality().hash(locale),
       const DeepCollectionEquality().hash(device),
-      const DeepCollectionEquality().hash(renderMode));
+      const DeepCollectionEquality().hash(deviceFrame));
 
   @JsonKey(ignore: true)
   @override
@@ -254,7 +254,7 @@ abstract class _WorkbenchState<CustomTheme>
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
-      required RenderMode renderMode}) = _$_WorkbenchState<CustomTheme>;
+      required DeviceFrame deviceFrame}) = _$_WorkbenchState<CustomTheme>;
 
   @override
   MultiRender get multiRender;
@@ -265,7 +265,7 @@ abstract class _WorkbenchState<CustomTheme>
   @override
   Device? get device;
   @override
-  RenderMode get renderMode;
+  DeviceFrame get deviceFrame;
   @override
   @JsonKey(ignore: true)
   _$WorkbenchStateCopyWith<CustomTheme, _WorkbenchState<CustomTheme>>

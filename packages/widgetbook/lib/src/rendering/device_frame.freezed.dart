@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'render_mode.dart';
+part of 'device_frame.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,11 +14,11 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$RenderModeTearOff {
-  const _$RenderModeTearOff();
+class _$DeviceFrameTearOff {
+  const _$DeviceFrameTearOff();
 
-  _RenderMode call({required String name, required bool allowsDevices}) {
-    return _RenderMode(
+  _DeviceFrame call({required String name, required bool allowsDevices}) {
+    return _DeviceFrame(
       name: name,
       allowsDevices: allowsDevices,
     );
@@ -26,10 +26,10 @@ class _$RenderModeTearOff {
 }
 
 /// @nodoc
-const $RenderMode = _$RenderModeTearOff();
+const $DeviceFrame = _$DeviceFrameTearOff();
 
 /// @nodoc
-mixin _$RenderMode {
+mixin _$DeviceFrame {
   /// The name displayed as a tooltip
   String get name => throw _privateConstructorUsedError;
 
@@ -37,25 +37,25 @@ mixin _$RenderMode {
   bool get allowsDevices => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $RenderModeCopyWith<RenderMode> get copyWith =>
+  $DeviceFrameCopyWith<DeviceFrame> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $RenderModeCopyWith<$Res> {
-  factory $RenderModeCopyWith(
-          RenderMode value, $Res Function(RenderMode) then) =
-      _$RenderModeCopyWithImpl<$Res>;
+abstract class $DeviceFrameCopyWith<$Res> {
+  factory $DeviceFrameCopyWith(
+          DeviceFrame value, $Res Function(DeviceFrame) then) =
+      _$DeviceFrameCopyWithImpl<$Res>;
   $Res call({String name, bool allowsDevices});
 }
 
 /// @nodoc
-class _$RenderModeCopyWithImpl<$Res> implements $RenderModeCopyWith<$Res> {
-  _$RenderModeCopyWithImpl(this._value, this._then);
+class _$DeviceFrameCopyWithImpl<$Res> implements $DeviceFrameCopyWith<$Res> {
+  _$DeviceFrameCopyWithImpl(this._value, this._then);
 
-  final RenderMode _value;
+  final DeviceFrame _value;
   // ignore: unused_field
-  final $Res Function(RenderMode) _then;
+  final $Res Function(DeviceFrame) _then;
 
   @override
   $Res call({
@@ -76,30 +76,31 @@ class _$RenderModeCopyWithImpl<$Res> implements $RenderModeCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$RenderModeCopyWith<$Res> implements $RenderModeCopyWith<$Res> {
-  factory _$RenderModeCopyWith(
-          _RenderMode value, $Res Function(_RenderMode) then) =
-      __$RenderModeCopyWithImpl<$Res>;
+abstract class _$DeviceFrameCopyWith<$Res>
+    implements $DeviceFrameCopyWith<$Res> {
+  factory _$DeviceFrameCopyWith(
+          _DeviceFrame value, $Res Function(_DeviceFrame) then) =
+      __$DeviceFrameCopyWithImpl<$Res>;
   @override
   $Res call({String name, bool allowsDevices});
 }
 
 /// @nodoc
-class __$RenderModeCopyWithImpl<$Res> extends _$RenderModeCopyWithImpl<$Res>
-    implements _$RenderModeCopyWith<$Res> {
-  __$RenderModeCopyWithImpl(
-      _RenderMode _value, $Res Function(_RenderMode) _then)
-      : super(_value, (v) => _then(v as _RenderMode));
+class __$DeviceFrameCopyWithImpl<$Res> extends _$DeviceFrameCopyWithImpl<$Res>
+    implements _$DeviceFrameCopyWith<$Res> {
+  __$DeviceFrameCopyWithImpl(
+      _DeviceFrame _value, $Res Function(_DeviceFrame) _then)
+      : super(_value, (v) => _then(v as _DeviceFrame));
 
   @override
-  _RenderMode get _value => super._value as _RenderMode;
+  _DeviceFrame get _value => super._value as _DeviceFrame;
 
   @override
   $Res call({
     Object? name = freezed,
     Object? allowsDevices = freezed,
   }) {
-    return _then(_RenderMode(
+    return _then(_DeviceFrame(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -114,8 +115,8 @@ class __$RenderModeCopyWithImpl<$Res> extends _$RenderModeCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RenderMode implements _RenderMode {
-  const _$_RenderMode({required this.name, required this.allowsDevices});
+class _$_DeviceFrame implements _DeviceFrame {
+  const _$_DeviceFrame({required this.name, required this.allowsDevices});
 
   @override
 
@@ -128,14 +129,14 @@ class _$_RenderMode implements _RenderMode {
 
   @override
   String toString() {
-    return 'RenderMode(name: $name, allowsDevices: $allowsDevices)';
+    return 'DeviceFrame(name: $name, allowsDevices: $allowsDevices)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _RenderMode &&
+            other is _DeviceFrame &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.allowsDevices, allowsDevices));
@@ -149,13 +150,13 @@ class _$_RenderMode implements _RenderMode {
 
   @JsonKey(ignore: true)
   @override
-  _$RenderModeCopyWith<_RenderMode> get copyWith =>
-      __$RenderModeCopyWithImpl<_RenderMode>(this, _$identity);
+  _$DeviceFrameCopyWith<_DeviceFrame> get copyWith =>
+      __$DeviceFrameCopyWithImpl<_DeviceFrame>(this, _$identity);
 }
 
-abstract class _RenderMode implements RenderMode {
-  const factory _RenderMode(
-      {required String name, required bool allowsDevices}) = _$_RenderMode;
+abstract class _DeviceFrame implements DeviceFrame {
+  const factory _DeviceFrame(
+      {required String name, required bool allowsDevices}) = _$_DeviceFrame;
 
   @override
 
@@ -167,6 +168,6 @@ abstract class _RenderMode implements RenderMode {
   bool get allowsDevices;
   @override
   @JsonKey(ignore: true)
-  _$RenderModeCopyWith<_RenderMode> get copyWith =>
+  _$DeviceFrameCopyWith<_DeviceFrame> get copyWith =>
       throw _privateConstructorUsedError;
 }

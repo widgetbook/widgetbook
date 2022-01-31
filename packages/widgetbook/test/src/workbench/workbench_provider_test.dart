@@ -36,9 +36,9 @@ void main() {
         s21,
       ];
 
-      final renderModes = [
-        RenderMode.widgetbook(),
-        RenderMode.none(),
+      final deviceFrames = [
+        DeviceFrame.widgetbook(),
+        DeviceFrame.none(),
       ];
 
       test(
@@ -48,14 +48,14 @@ void main() {
             locales: locales,
             themes: themes,
             devices: devices,
-            renderModes: renderModes,
+            deviceFrames: deviceFrames,
           );
 
           expect(
             provider.state,
             equals(
               WorkbenchState<ThemeData>(
-                renderMode: RenderMode.widgetbook(),
+                deviceFrame: DeviceFrame.widgetbook(),
                 theme: lightTheme,
                 locale: usLocale,
                 device: iPhone,
@@ -75,14 +75,14 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                renderModes: renderModes,
+                deviceFrames: deviceFrames,
               )..changedMultiRender(MultiRender.none);
 
               expect(
                 provider.state,
                 equals(
                   WorkbenchState<ThemeData>(
-                    renderMode: RenderMode.widgetbook(),
+                    deviceFrame: DeviceFrame.widgetbook(),
                     theme: lightTheme,
                     locale: usLocale,
                     device: iPhone,
@@ -99,7 +99,7 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                renderModes: renderModes,
+                deviceFrames: deviceFrames,
               )..changedMultiRender(MultiRender.themes);
 
               expect(
@@ -107,7 +107,7 @@ void main() {
                 equals(
                   WorkbenchState<ThemeData>(
                     multiRender: MultiRender.themes,
-                    renderMode: RenderMode.widgetbook(),
+                    deviceFrame: DeviceFrame.widgetbook(),
                     locale: usLocale,
                     device: iPhone,
                   ),
@@ -123,7 +123,7 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                renderModes: renderModes,
+                deviceFrames: deviceFrames,
               )..changedMultiRender(MultiRender.devices);
 
               expect(
@@ -131,7 +131,7 @@ void main() {
                 equals(
                   WorkbenchState<ThemeData>(
                     multiRender: MultiRender.devices,
-                    renderMode: RenderMode.widgetbook(),
+                    deviceFrame: DeviceFrame.widgetbook(),
                     theme: lightTheme,
                     locale: usLocale,
                   ),
@@ -147,7 +147,7 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                renderModes: renderModes,
+                deviceFrames: deviceFrames,
               )..changedMultiRender(MultiRender.themes);
 
               expect(
@@ -155,7 +155,7 @@ void main() {
                 equals(
                   WorkbenchState<ThemeData>(
                     multiRender: MultiRender.themes,
-                    renderMode: RenderMode.widgetbook(),
+                    deviceFrame: DeviceFrame.widgetbook(),
                     locale: usLocale,
                     device: iPhone,
                   ),
@@ -176,14 +176,14 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                renderModes: renderModes,
+                deviceFrames: deviceFrames,
               )..changedDevice(s21);
 
               expect(
                 provider.state,
                 equals(
                   WorkbenchState<ThemeData>(
-                    renderMode: RenderMode.widgetbook(),
+                    deviceFrame: DeviceFrame.widgetbook(),
                     theme: lightTheme,
                     locale: usLocale,
                     device: s21,
@@ -200,7 +200,7 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                renderModes: renderModes,
+                deviceFrames: deviceFrames,
               )..changedDevice(s21);
 
               expect(
@@ -208,7 +208,7 @@ void main() {
                 equals(
                   WorkbenchState<ThemeData>(
                     multiRender: MultiRender.none,
-                    renderMode: RenderMode.widgetbook(),
+                    deviceFrame: DeviceFrame.widgetbook(),
                     theme: lightTheme,
                     locale: usLocale,
                     device: s21,
@@ -230,14 +230,14 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                renderModes: renderModes,
+                deviceFrames: deviceFrames,
               )..changedTheme(darkTheme);
 
               expect(
                 provider.state,
                 equals(
                   WorkbenchState<ThemeData>(
-                    renderMode: RenderMode.widgetbook(),
+                    deviceFrame: DeviceFrame.widgetbook(),
                     theme: darkTheme,
                     locale: usLocale,
                     device: iPhone,
@@ -254,7 +254,7 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                renderModes: renderModes,
+                deviceFrames: deviceFrames,
               )..changedTheme(darkTheme);
 
               expect(
@@ -262,7 +262,7 @@ void main() {
                 equals(
                   WorkbenchState<ThemeData>(
                     multiRender: MultiRender.none,
-                    renderMode: RenderMode.widgetbook(),
+                    deviceFrame: DeviceFrame.widgetbook(),
                     theme: darkTheme,
                     locale: usLocale,
                     device: iPhone,
@@ -284,14 +284,14 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                renderModes: renderModes,
+                deviceFrames: deviceFrames,
               )..changedLocale(deLocale);
 
               expect(
                 provider.state,
                 equals(
                   WorkbenchState<ThemeData>(
-                    renderMode: RenderMode.widgetbook(),
+                    deviceFrame: DeviceFrame.widgetbook(),
                     theme: lightTheme,
                     locale: deLocale,
                     device: iPhone,
@@ -308,7 +308,7 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                renderModes: renderModes,
+                deviceFrames: deviceFrames,
               )..changedTheme(darkTheme);
 
               expect(
@@ -316,7 +316,7 @@ void main() {
                 equals(
                   WorkbenchState<ThemeData>(
                     multiRender: MultiRender.none,
-                    renderMode: RenderMode.widgetbook(),
+                    deviceFrame: DeviceFrame.widgetbook(),
                     theme: darkTheme,
                     locale: usLocale,
                     device: iPhone,
@@ -329,21 +329,21 @@ void main() {
       );
 
       test(
-        'changedRenderMode changed to value',
+        'changedDeviceFrame changed to value',
         () {
           final provider = WorkbenchProvider<ThemeData>(
             locales: locales,
             themes: themes,
             devices: devices,
-            renderModes: renderModes,
-          )..changedRenderMode(RenderMode.none());
+            deviceFrames: deviceFrames,
+          )..changedDeviceFrame(DeviceFrame.none());
 
           expect(
             provider.state,
             equals(
               WorkbenchState<ThemeData>(
                 multiRender: MultiRender.none,
-                renderMode: RenderMode.none(),
+                deviceFrame: DeviceFrame.none(),
                 theme: lightTheme,
                 locale: usLocale,
                 device: iPhone,
@@ -360,7 +360,7 @@ void main() {
             locales: locales,
             themes: themes,
             devices: devices,
-            renderModes: renderModes,
+            deviceFrames: deviceFrames,
           )..nextTheme();
 
           expect(
@@ -368,7 +368,7 @@ void main() {
             equals(
               WorkbenchState<ThemeData>(
                 multiRender: MultiRender.none,
-                renderMode: RenderMode.widgetbook(),
+                deviceFrame: DeviceFrame.widgetbook(),
                 theme: darkTheme,
                 locale: usLocale,
                 device: iPhone,
@@ -385,7 +385,7 @@ void main() {
             locales: locales,
             themes: themes,
             devices: devices,
-            renderModes: renderModes,
+            deviceFrames: deviceFrames,
           )..previousTheme();
 
           expect(
@@ -393,7 +393,7 @@ void main() {
             equals(
               WorkbenchState<ThemeData>(
                 multiRender: MultiRender.none,
-                renderMode: RenderMode.widgetbook(),
+                deviceFrame: DeviceFrame.widgetbook(),
                 theme: darkTheme,
                 locale: usLocale,
                 device: iPhone,
@@ -410,7 +410,7 @@ void main() {
             locales: locales,
             themes: themes,
             devices: devices,
-            renderModes: renderModes,
+            deviceFrames: deviceFrames,
           )..nextDevice();
 
           expect(
@@ -418,7 +418,7 @@ void main() {
             equals(
               WorkbenchState<ThemeData>(
                 multiRender: MultiRender.none,
-                renderMode: RenderMode.widgetbook(),
+                deviceFrame: DeviceFrame.widgetbook(),
                 theme: lightTheme,
                 locale: usLocale,
                 device: s21,
@@ -435,7 +435,7 @@ void main() {
             locales: locales,
             themes: themes,
             devices: devices,
-            renderModes: renderModes,
+            deviceFrames: deviceFrames,
           )..previousDevice();
 
           expect(
@@ -443,7 +443,7 @@ void main() {
             equals(
               WorkbenchState<ThemeData>(
                 multiRender: MultiRender.none,
-                renderMode: RenderMode.widgetbook(),
+                deviceFrame: DeviceFrame.widgetbook(),
                 theme: lightTheme,
                 locale: usLocale,
                 device: s21,
@@ -454,21 +454,21 @@ void main() {
       );
 
       test(
-        'nextRenderMode returns next $RenderMode',
+        'nextDeviceFrame returns next $DeviceFrame',
         () {
           final provider = WorkbenchProvider<ThemeData>(
             locales: locales,
             themes: themes,
             devices: devices,
-            renderModes: renderModes,
-          )..nextRenderMode();
+            deviceFrames: deviceFrames,
+          )..nextDeviceFrame();
 
           expect(
             provider.state,
             equals(
               WorkbenchState<ThemeData>(
                 multiRender: MultiRender.none,
-                renderMode: RenderMode.none(),
+                deviceFrame: DeviceFrame.none(),
                 theme: lightTheme,
                 locale: usLocale,
                 device: iPhone,
@@ -479,21 +479,21 @@ void main() {
       );
 
       test(
-        'previousRenderMode returns previous $RenderMode',
+        'previousDeviceFrame returns previous $DeviceFrame',
         () {
           final provider = WorkbenchProvider<ThemeData>(
             locales: locales,
             themes: themes,
             devices: devices,
-            renderModes: renderModes,
-          )..previousRenderMode();
+            deviceFrames: deviceFrames,
+          )..previousDeviceFrame();
 
           expect(
             provider.state,
             equals(
               WorkbenchState<ThemeData>(
                 multiRender: MultiRender.none,
-                renderMode: RenderMode.none(),
+                deviceFrame: DeviceFrame.none(),
                 theme: lightTheme,
                 locale: usLocale,
                 device: iPhone,
