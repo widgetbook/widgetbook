@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// TODO(dkbast): What do you think about this extension method.
 import 'package:widgetbook/src/utils/extensions.dart';
 import 'package:widgetbook/src/workbench/workbench_button.dart';
 

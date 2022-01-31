@@ -48,7 +48,6 @@ void main() {
           final organizerProvider = OrganizerProviderMock();
           await tester.pumpWidgetWithMaterialApp(
             SearchBar(
-              theme: ThemeMode.dark,
               organizerProvider: organizerProvider,
             ),
           );
