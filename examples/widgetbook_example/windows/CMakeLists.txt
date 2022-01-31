@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.14)
 project(meal_app LANGUAGES CXX)
 
 set(BINARY_NAME "meal_app")
