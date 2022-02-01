@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/configure_non_web.dart'
     if (dart.library.html) 'package:widgetbook/src/configure_web.dart';
@@ -18,6 +19,8 @@ import 'package:widgetbook/src/routing/route_information_parser.dart';
 import 'package:widgetbook/src/routing/story_router_delegate.dart';
 import 'package:widgetbook/src/services/filter_service.dart';
 import 'package:widgetbook/src/theming/widgetbook_theme.dart';
+import 'package:widgetbook/src/tool/tool_provider.dart';
+import 'package:widgetbook/src/translate/translate_provider.dart';
 import 'package:widgetbook/src/utils/styles.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
 import 'package:widgetbook/src/zoom/zoom_provider.dart';
@@ -56,7 +59,6 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
     required this.appInfo,
     this.localizationsDelegates,
     required this.themes,
-    this.defaultTheme = ThemeMode.system,
     this.deviceFrameBuilder,
     this.localizationBuilder,
     this.themeBuilder,
@@ -118,9 +120,6 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
 
   /// Information about the app that is catalogued in the Widgetbook.
   final AppInfo appInfo;
-
-  /// The default theme mode Widgetbook starts with
-  final ThemeMode defaultTheme;
 
   final List<Locale> supportedLocales;
 
@@ -210,8 +209,7 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       key: ValueKey(
-        themes.hashCode ^
-            key.hashCode ^
+        key.hashCode ^
             categories.hashCode ^
             themes.hashCode ^
             appInfo.hashCode ^
@@ -252,13 +250,18 @@ class Widgetbook<CustomTheme> extends StatelessWidget {
             scaffoldBuilder: scaffoldBuilder ?? defaultScaffoldBuilder,
             useCaseBuilder: useCaseBuilder ?? defaultUseCaseBuilder,
           ),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ToolProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => TranslateProvider(),
+        ),
       ],
       child: WidgetbookWrapper<CustomTheme>(
         categories: categories,
         appInfo: appInfo,
         devices: devices,
-        defaultTheme: defaultTheme,
         supportedLocales: supportedLocales,
         localizationsDelegates: localizationsDelegates,
         themes: themes,
@@ -289,8 +292,10 @@ class WidgetbookWrapper<CustomTheme> extends StatefulWidget {
     this.themeBuilder,
     this.scaffoldBuilder,
     this.useCaseBuilder,
-  })  : supportedLocales =
-            supportedLocales ?? const <Locale>[Locale('en', 'US')],
+  })  : supportedLocales = supportedLocales ??
+            const <Locale>[
+              Locale('en', 'US'),
+            ],
         devices = devices ??
             const [
               Apple.iPhone11,
@@ -364,42 +369,57 @@ class _WidgetbookState<CustomTheme>
 
   @override
   Widget build(BuildContext context) {
-    return OrganizerBuilder(
-      initialState: OrganizerState.unfiltered(
-        categories: widget.categories,
-      ),
-      storyRepository: storyRepository,
-      selectedStoryRepository: selectedStoryRepository,
-      filterService: const FilterService(),
-      child: CanvasBuilder(
-        selectedStoryRepository: selectedStoryRepository,
-        storyRepository: storyRepository,
-        child: Builder(
-          builder: (context) {
-            contextWithProviders = context;
-            final canvasState = CanvasProvider.of(context)!.state;
-            final storiesState = OrganizerProvider.of(context)!.state;
+    // TODO mit damian besprechen
+    return Focus(
+      onKeyEvent: (n, e) {
+        if (e.logicalKey == LogicalKeyboardKey.keyV) {
+          context.read<ToolProvider>().selecionTool();
+          return KeyEventResult.handled;
+        }
+        if (e.logicalKey == LogicalKeyboardKey.keyM) {
+          context.read<ToolProvider>().moveTool();
+          return KeyEventResult.handled;
+        }
 
-            return MaterialApp.router(
-              routeInformationParser: StoryRouteInformationParser(
-                onRoute: (path) {
-                  final stories = StoryHelper.getAllStoriesFromCategories(
-                    storiesState.allCategories,
-                  );
-                  final selectedStory = selectStoryFromPath(path, stories);
-                  CanvasProvider.of(context)!.selectStory(selectedStory);
-                },
-              ),
-              routerDelegate: StoryRouterDelegate<CustomTheme>(
-                canvasState: canvasState,
-                appInfo: widget.appInfo,
-              ),
-              title: widget.appInfo.name,
-              debugShowCheckedModeBanner: false,
-              darkTheme: Styles.darkTheme,
-              theme: Styles.lightTheme,
-            );
-          },
+        return KeyEventResult.ignored;
+      },
+      child: OrganizerBuilder(
+        initialState: OrganizerState.unfiltered(
+          categories: widget.categories,
+        ),
+        storyRepository: storyRepository,
+        selectedStoryRepository: selectedStoryRepository,
+        filterService: const FilterService(),
+        child: CanvasBuilder(
+          selectedStoryRepository: selectedStoryRepository,
+          storyRepository: storyRepository,
+          child: Builder(
+            builder: (context) {
+              contextWithProviders = context;
+              final canvasState = CanvasProvider.of(context)!.state;
+              final storiesState = OrganizerProvider.of(context)!.state;
+
+              return MaterialApp.router(
+                routeInformationParser: StoryRouteInformationParser(
+                  onRoute: (path) {
+                    final stories = StoryHelper.getAllStoriesFromCategories(
+                      storiesState.allCategories,
+                    );
+                    final selectedStory = selectStoryFromPath(path, stories);
+                    CanvasProvider.of(context)!.selectStory(selectedStory);
+                  },
+                ),
+                routerDelegate: StoryRouterDelegate<CustomTheme>(
+                  canvasState: canvasState,
+                  appInfo: widget.appInfo,
+                ),
+                title: widget.appInfo.name,
+                debugShowCheckedModeBanner: false,
+                darkTheme: Styles.darkTheme,
+                theme: Styles.lightTheme,
+              );
+            },
+          ),
         ),
       ),
     );

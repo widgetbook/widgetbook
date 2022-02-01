@@ -71,6 +71,7 @@ class Storyboard extends StatelessWidget {
         WidgetbookCategory(
           name: 'widgets test',
           folders: [
+            WidgetbookFolder(name: 'Test'),
             WidgetbookFolder(
               name: 'attributes',
               widgets: [

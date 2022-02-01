@@ -16,9 +16,13 @@ class ZoomProvider with ChangeNotifier {
 
   ZoomState get state => _state;
 
-  double get levelChange => 0.25;
-  double get minLevel => 0.25;
-  double get maxLevel => 5;
+  static const double levelChange = 0.25;
+  static const double minLevel = 0.25;
+  static const double maxLevel = 5;
+
+  void zoomRelative(double change) {
+    setScale(state.zoomLevel + change);
+  }
 
   void zoomIn() {
     setScale(state.zoomLevel + levelChange);

@@ -15,12 +15,8 @@ class ZoomHandle extends StatelessWidget {
     final state = provider.state;
     return Row(
       children: [
-        WorkbenchButton.icon(
-          onPressed: provider.zoomOut,
-          child: Icon(
-            Icons.remove,
-            color: context.theme.hintColor,
-          ),
+        const SizedBox(
+          width: 16,
         ),
         Row(
           children: [
@@ -39,13 +35,6 @@ class ZoomHandle extends StatelessWidget {
             const Text('zoom'),
           ],
         ),
-        WorkbenchButton.icon(
-          onPressed: provider.zoomIn,
-          child: Icon(
-            Icons.add,
-            color: context.theme.hintColor,
-          ),
-        ),
         Tooltip(
           message: 'Reset zoom',
           child: WorkbenchButton.icon(
@@ -54,6 +43,20 @@ class ZoomHandle extends StatelessWidget {
               Icons.replay,
               color: context.theme.hintColor,
             ),
+          ),
+        ),
+        WorkbenchButton.icon(
+          onPressed: provider.zoomOut,
+          child: Icon(
+            Icons.remove,
+            color: context.theme.hintColor,
+          ),
+        ),
+        WorkbenchButton.icon(
+          onPressed: provider.zoomIn,
+          child: Icon(
+            Icons.add,
+            color: context.theme.hintColor,
           ),
         ),
       ],

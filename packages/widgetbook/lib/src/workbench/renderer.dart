@@ -33,37 +33,36 @@ class Renderer<CustomTheme> extends StatelessWidget {
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(device.name),
         const SizedBox(
           height: 16,
         ),
-        Center(
-          child: renderingState.localizationBuilder(
+        renderingState.localizationBuilder(
+          context,
+          workbenchProvider.locales,
+          localizationsDelegates?.toList(),
+          locale,
+          renderingState.themeBuilder(
             context,
-            workbenchProvider.locales,
-            localizationsDelegates?.toList(),
-            locale,
-            renderingState.themeBuilder(
-              context,
-              theme,
-              Builder(
-                builder: (context) {
-                  return renderingState.deviceFrameBuilder(
+            theme,
+            Builder(
+              builder: (context) {
+                return renderingState.deviceFrameBuilder(
+                  context,
+                  device,
+                  deviceFrame,
+                  renderingState.scaffoldBuilder(
                     context,
-                    device,
                     deviceFrame,
-                    renderingState.scaffoldBuilder(
+                    renderingState.useCaseBuilder(
                       context,
-                      deviceFrame,
-                      renderingState.useCaseBuilder(
-                        context,
-                        useCaseBuilder(context),
-                      ),
+                      useCaseBuilder(context),
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           ),
         ),

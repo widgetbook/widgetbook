@@ -24,10 +24,6 @@ class WorkbenchControls<CustomTheme> extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const ZoomHandle(),
-                  const SizedBox(
-                    width: 40,
-                  ),
                   ThemeHandle<CustomTheme>(),
                   const SizedBox(
                     width: 40,
