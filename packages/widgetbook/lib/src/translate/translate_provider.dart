@@ -3,7 +3,11 @@ import 'package:widgetbook/src/state_change_notifier.dart';
 import 'package:widgetbook/src/translate/translate_state.dart';
 
 class TranslateProvider extends StateChangeNotifier<TranslateState> {
-  TranslateProvider() : super(state: TranslateState());
+  TranslateProvider({
+    TranslateState? state,
+  }) : super(
+          state: state ?? TranslateState(),
+        );
 
   void updateOffset(Offset offset) {
     state = TranslateState(offset: offset);
