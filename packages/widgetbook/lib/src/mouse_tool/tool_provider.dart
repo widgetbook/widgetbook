@@ -1,10 +1,11 @@
+import 'package:widgetbook/src/mouse_tool/tool_state.dart';
 import 'package:widgetbook/src/state_change_notifier.dart';
-import 'package:widgetbook/src/tool/tool_state.dart';
 
 class ToolProvider extends StateChangeNotifier<ToolState> {
-  ToolProvider()
-      : super(
-          state: ToolState(),
+  ToolProvider({
+    ToolState? state,
+  }) : super(
+          state: state ?? ToolState(),
         );
 
   void moveTool() {

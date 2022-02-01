@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/tool/tool_provider.dart';
-import 'package:widgetbook/src/tool/tool_state.dart';
+import 'package:widgetbook/src/mouse_tool/tool_provider.dart';
+import 'package:widgetbook/src/mouse_tool/tool_state.dart';
 import 'package:widgetbook/src/translate/translate_provider.dart';
 import 'package:widgetbook/src/workbench/comparison_renderer.dart';
 import 'package:widgetbook/src/zoom/zoom_provider.dart';
