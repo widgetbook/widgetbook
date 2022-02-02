@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:widgetbook/src/constants/radii.dart';
-import 'package:widgetbook/src/providers/canvas_provider.dart';
+import 'package:widgetbook/src/navigation.dart/preview_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 import 'package:widgetbook/src/widgets/expanders/expander_row.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -55,7 +56,7 @@ class _TileState extends State<Tile> {
             ),
             if (hovered && widget.organizer is ExpandableOrganizer)
               Padding(
-                  padding: const EdgeInsets.only(right: 4),
+                padding: const EdgeInsets.only(right: 4),
                 child: ExpanderRow.small(
                   organizers: [widget.organizer as ExpandableOrganizer],
                 ),
@@ -68,8 +69,8 @@ class _TileState extends State<Tile> {
 
   @override
   Widget build(BuildContext context) {
-    final state = CanvasProvider.of(context)!.state;
-    final isSelected = state.selectedStory == widget.organizer;
+    final state = context.watch<PreviewProvider>().state;
+    final isSelected = state.selectedUseCase == widget.organizer;
 
     return GestureDetector(
       onTap: () {

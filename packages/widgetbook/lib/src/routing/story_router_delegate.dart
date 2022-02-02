@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/navigation/ui/navigation_panel.dart';
-import 'package:widgetbook/src/providers/canvas_provider.dart';
-import 'package:widgetbook/src/providers/canvas_state.dart';
-import 'package:widgetbook/src/providers/organizer_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:widgetbook/src/navigation.dart/navigation_panel.dart';
+import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
+import 'package:widgetbook/src/navigation.dart/preview_provider.dart';
+import 'package:widgetbook/src/navigation.dart/preview_state.dart';
 import 'package:widgetbook/src/routing/story_route_path.dart';
 import 'package:widgetbook/src/styled_widgets/styled_scaffold.dart';
-import 'package:widgetbook/src/widgets/wrapper.dart';
-
+import 'package:widgetbook/src/workbench/workbench.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 class NoAnimationTransitionDelegate extends TransitionDelegate<void> {
@@ -42,18 +42,18 @@ class NoAnimationTransitionDelegate extends TransitionDelegate<void> {
   }
 }
 
-class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
+class StoryRouterDelegate<CustomTheme> extends RouterDelegate<StoryRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<StoryRoutePath> {
   StoryRouterDelegate({
     required this.appInfo,
-    required this.canvasState,
+    required this.previewState,
   }) : navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   final GlobalKey<NavigatorState> navigatorKey;
 
   final AppInfo appInfo;
-  final CanvasState canvasState;
+  final PreviewState previewState;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
             body: Padding(
               padding: const EdgeInsets.all(16),
               child: Builder(builder: (context) {
-                final state = OrganizerProvider.of(context)!.state;
+                final state = context.watch<OrganizerProvider>().state;
                 return Row(
                   children: [
                     NavigationPanel(
@@ -76,8 +76,8 @@ class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
                     const SizedBox(
                       width: 16,
                     ),
-                    const Expanded(
-                      child: Editor(),
+                    Expanded(
+                      child: Workbench<CustomTheme>(),
                     ),
                   ],
                 );
@@ -91,8 +91,7 @@ class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
           return false;
         }
 
-        CanvasProvider.of(context)!.deselectStory();
-
+        context.read<PreviewProvider>().deselectStory();
         notifyListeners();
 
         return true;
@@ -102,9 +101,9 @@ class StoryRouterDelegate extends RouterDelegate<StoryRoutePath>
 
   @override
   StoryRoutePath get currentConfiguration => StoryRoutePath(
-        path: canvasState.selectedStory == null
+        path: previewState.selectedUseCase == null
             ? '/'
-            : '/stories/${canvasState.selectedStory!.path}',
+            : '/stories/${previewState.selectedUseCase!.path}',
       );
 
   @override

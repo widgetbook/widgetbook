@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:widgetbook/src/constants/radii.dart';
-import 'package:widgetbook/src/providers/organizer_provider.dart';
+import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({
     Key? key,
-    required this.theme,
-    this.organizerProvider,
   }) : super(key: key);
-
-  final ThemeMode theme;
-  final OrganizerProvider? organizerProvider;
 
   @override
   _SearchBarState createState() => _SearchBarState();
@@ -20,16 +16,13 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   TextEditingController controller = TextEditingController();
 
-  OrganizerProvider _getProvider() {
-    return widget.organizerProvider ?? OrganizerProvider.of(context)!;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final fillColor = widget.theme == ThemeMode.light
+    // TODO how to handle dark and light theme of the app?
+    final fillColor = ThemeMode.dark == ThemeMode.light
         ? Styles.lightSurface
         : Styles.darkSurface;
-    final onFillColor = widget.theme == ThemeMode.light
+    final onFillColor = ThemeMode.dark == ThemeMode.light
         ? Styles.onLightSurface
         : Styles.onDarkSurface;
 
@@ -58,7 +51,7 @@ class _SearchBarState extends State<SearchBar> {
       ),
       onChanged: (value) {
         setState(() {});
-        _getProvider().filter(value);
+        context.read<OrganizerProvider>().filter(value);
       },
     );
   }
@@ -75,7 +68,7 @@ class _SearchBarState extends State<SearchBar> {
           },
         );
 
-        _getProvider().resetFilter();
+        context.read<OrganizerProvider>().resetFilter();
       },
     );
   }

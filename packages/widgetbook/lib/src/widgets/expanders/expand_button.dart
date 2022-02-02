@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/providers/organizer_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 class ExpandButton extends StatefulWidget {
@@ -39,8 +40,9 @@ class _ExpandButtonState extends State<ExpandButton> {
           size: widget.size,
         ),
         onTap: () {
-          OrganizerProvider.of(context)
-              ?.setExpandedRecursive(widget.organizers, widget.expandTo);
+          context
+              .read<OrganizerProvider>()
+              .setExpandedRecursive(widget.organizers, widget.expandTo);
         },
       ),
     );

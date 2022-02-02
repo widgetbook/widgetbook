@@ -1,3 +1,4 @@
+import 'package:device_frame/device_frame.dart' as frame;
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:meal_app/models/meal.dart';
@@ -9,19 +10,66 @@ import 'package:meal_app/widgets/ingredients.dart';
 import 'package:meal_app/widgets/meal_detail.dart';
 import 'package:meal_app/widgets/new_tag.dart';
 import 'package:meal_app/widgets/rotated_image.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class Storyboard extends StatelessWidget {
   const Storyboard({Key? key}) : super(key: key);
 
   Widget buildStorybook(BuildContext context) {
-    return Widgetbook(
-      defaultTheme: ThemeMode.dark,
+    return Widgetbook.material(
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en'),
+        Locale('de'),
+        Locale('fr'),
+      ],
       devices: [
         Apple.iPhone11,
         Apple.iPhone12,
         Samsung.s10,
         Samsung.s21ultra,
-        Apple.iMacM1,
+      ],
+      deviceFrames: [
+        DeviceFrame.widgetbook(),
+        DeviceFrame.devicePreview(),
+        DeviceFrame.none(),
+      ],
+      deviceFrameBuilder: (context, device, renderMode, child) {
+        if (renderMode == DeviceFrame.widgetbook()) {
+          return WidgetbookDeviceFrame(
+            device: device,
+            child: child,
+          );
+        }
+
+        if (renderMode == DeviceFrame.devicePreview()) {
+          return frame.DeviceFrame(
+            device: frame.Devices.ios.iPhone12,
+            screen: child,
+          );
+        }
+
+        return child;
+      },
+      themes: [
+        WidgetbookTheme(
+          name: 'Light',
+          data: lightTheme,
+        ),
+        WidgetbookTheme(
+          name: 'Light',
+          data: lightTheme,
+        ),
+        WidgetbookTheme(
+          name: 'Dark',
+          data: darkTheme,
+        )
       ],
       categories: [
         WidgetbookCategory(
@@ -210,8 +258,6 @@ class Storyboard extends StatelessWidget {
         ),
       ],
       appInfo: AppInfo(name: 'Meal App'),
-      lightTheme: getLightTheme(context),
-      darkTheme: getDarkTheme(context),
     );
   }
 

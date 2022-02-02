@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
+import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
+import 'package:widgetbook/src/navigation.dart/organizer_state.dart';
+import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/widgets/search_bar.dart';
 
 import '../../helper/widget_test_helper.dart';
-import '../../mocks/providers/organizer_provider_mock.dart';
 
 Finder _findTextField() {
   final textFieldFinder = find.byKey(
@@ -45,11 +47,16 @@ void main() {
       testWidgets(
         'behaves correctly',
         (WidgetTester tester) async {
-          final organizerProvider = OrganizerProviderMock();
+          final organizerProvider = OrganizerProvider(
+            state: OrganizerState.unfiltered(
+              categories: [],
+            ),
+            storyRepository: StoryRepository(),
+          );
           await tester.pumpWidgetWithMaterialApp(
-            SearchBar(
-              theme: ThemeMode.dark,
-              organizerProvider: organizerProvider,
+            ChangeNotifierProvider.value(
+              value: organizerProvider,
+              child: const SearchBar(),
             ),
           );
 
@@ -64,18 +71,10 @@ void main() {
           );
           await tester.pump();
 
-          verify(
-            () => organizerProvider.filter(searchTerm),
-          ).called(1);
-
           final cancelSearchButton = _findCancelButton();
 
           await tester.tap(cancelSearchButton);
           await tester.pump();
-
-          verify(
-            organizerProvider.resetFilter,
-          ).called(1);
 
           _expectNoCancelButton();
           _expectEmptyTextField(searchTerm);

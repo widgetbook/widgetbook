@@ -21,7 +21,6 @@ extension ProviderTesterExtension on WidgetTester {
     return getProvider<T>();
   }
 
-  // TODO T has to be a provider
   T getProvider<T>() {
     final providerFinder = find.byType(T);
     return firstWidget(providerFinder) as T;

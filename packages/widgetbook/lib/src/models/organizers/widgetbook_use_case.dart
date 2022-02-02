@@ -43,4 +43,7 @@ class WidgetbookUseCase extends Organizer implements Model {
 
   @override
   int get hashCode => builder.hashCode;
+
+  @override
+  String toString() => 'WidgetbookUseCase(name: $name, builder: $builder)';
 }

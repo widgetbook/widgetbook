@@ -12,8 +12,11 @@ dependencies:
   bloc: ^7.0.0
   cupertino_icons: ^1.0.2
   equatable: ^2.0.3
+  intl: ^0.17.0
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter       
   flutter_bloc: ^7.1.0
   font_awesome_flutter: ^9.1.0
   
@@ -29,5 +32,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
   assets:
     - assets/

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
-import 'package:widgetbook/src/providers/canvas_provider.dart';
+import 'package:widgetbook/src/navigation.dart/preview_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 import 'package:widgetbook/src/widgets/tiles/spaced_tile.dart';
 
 class StoryTile extends StatefulWidget {
   const StoryTile({
     Key? key,
-    required this.story,
+    required this.useCase,
     required this.level,
   }) : super(key: key);
 
-  final WidgetbookUseCase story;
+  final WidgetbookUseCase useCase;
   final int level;
 
   @override
@@ -23,11 +24,11 @@ class _StoryTileState extends State<StoryTile> {
   Widget build(BuildContext context) {
     return SpacedTile(
       level: widget.level,
-      organizer: widget.story,
+      organizer: widget.useCase,
       iconData: Icons.auto_stories,
       iconColor: Styles.storyColor,
       onClicked: () {
-        CanvasProvider.of(context)!.selectStory(widget.story);
+        context.read<PreviewProvider>().selectUseCase(widget.useCase);
       },
     );
   }
