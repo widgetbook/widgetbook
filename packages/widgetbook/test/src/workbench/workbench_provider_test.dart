@@ -70,7 +70,7 @@ void main() {
       );
 
       group(
-        'changedMultiRender',
+        'changedComparisonSetting',
         () {
           test(
             '(${ComparisonSetting.none}) sets locale, theme and device',

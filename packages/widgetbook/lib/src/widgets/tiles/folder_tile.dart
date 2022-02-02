@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
-import 'package:widgetbook/src/providers/organizer_provider.dart';
-
+import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 import 'package:widgetbook/src/widgets/tiles/spaced_tile.dart';
 import 'package:widgetbook/src/widgets/tiles/tile_helper_methods.dart';
@@ -37,9 +36,7 @@ class _FolderTileState extends State<FolderTile> {
           iconData: isExpanded ? Icons.folder_open : Icons.folder,
           iconColor: context.colorScheme.primary,
           onClicked: () {
-            setState(() {
-              OrganizerProvider.of(context)!.toggleExpander(widget.folder);
-            });
+            context.read<OrganizerProvider>().toggleExpander(widget.folder);
           },
         ),
         if (isExpanded)

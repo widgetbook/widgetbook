@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/mouse_tool/toolbar.dart';
-import 'package:widgetbook/src/providers/canvas_provider.dart';
+import 'package:widgetbook/src/navigation.dart/preview_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 import 'package:widgetbook/src/workbench/preview.dart';
 import 'package:widgetbook/src/workbench/workbench_controls.dart';
@@ -13,8 +14,8 @@ class Workbench<CustomTheme> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = CanvasProvider.of(context)!.state;
-    final useCase = state.selectedStory;
+    final state = context.watch<PreviewProvider>().state;
+    final useCase = state.selectedUseCase;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

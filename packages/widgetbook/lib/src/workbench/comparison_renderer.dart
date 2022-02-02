@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/localization/localization_provider.dart';
 import 'package:widgetbook/src/localization/localization_state.dart';
-import 'package:widgetbook/src/providers/canvas_provider.dart';
+import 'package:widgetbook/src/navigation.dart/preview_provider.dart';
 import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/renderer.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
@@ -131,7 +131,8 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
         context.watch<WorkbenchProvider<CustomTheme>>().state;
     final localizationState = context.watch<LocalizationProvider>().state;
 
-    final builder = CanvasProvider.of(context)!.state.selectedStory!.builder;
+    final builder =
+        context.watch<PreviewProvider>().state.selectedUseCase!.builder;
 
     return _buildDevices(
       workbenchState: workbenchState,

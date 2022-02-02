@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:widgetbook/src/constants/radii.dart';
-import 'package:widgetbook/src/providers/organizer_provider.dart';
+import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 
+// TODO this should be stateless
 class SearchBar extends StatefulWidget {
   const SearchBar({
     Key? key,
-    this.organizerProvider,
   }) : super(key: key);
-
-  final OrganizerProvider? organizerProvider;
 
   @override
   _SearchBarState createState() => _SearchBarState();
@@ -17,10 +16,6 @@ class SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<SearchBar> {
   TextEditingController controller = TextEditingController();
-
-  OrganizerProvider _getProvider() {
-    return widget.organizerProvider ?? OrganizerProvider.of(context)!;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +52,7 @@ class _SearchBarState extends State<SearchBar> {
       ),
       onChanged: (value) {
         setState(() {});
-        _getProvider().filter(value);
+        context.read<OrganizerProvider>().filter(value);
       },
     );
   }
@@ -74,7 +69,7 @@ class _SearchBarState extends State<SearchBar> {
           },
         );
 
-        _getProvider().resetFilter();
+        context.read<OrganizerProvider>().resetFilter();
       },
     );
   }
