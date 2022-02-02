@@ -22,11 +22,11 @@ class _$WorkbenchStateTearOff {
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
-      required DeviceFrame deviceFrame,
+      required WidgetbookFrame deviceFrame,
       required List<WidgetbookTheme<CustomTheme>> themes,
       required List<Locale> locales,
       required List<Device> devices,
-      required List<DeviceFrame> deviceFrames}) {
+      required List<WidgetbookFrame> deviceFrames}) {
     return _WorkbenchState<CustomTheme>(
       comparisonSetting: comparisonSetting,
       theme: theme,
@@ -50,12 +50,12 @@ mixin _$WorkbenchState<CustomTheme> {
   WidgetbookTheme<CustomTheme>? get theme => throw _privateConstructorUsedError;
   Locale? get locale => throw _privateConstructorUsedError;
   Device? get device => throw _privateConstructorUsedError;
-  DeviceFrame get deviceFrame => throw _privateConstructorUsedError;
+  WidgetbookFrame get deviceFrame => throw _privateConstructorUsedError;
   List<WidgetbookTheme<CustomTheme>> get themes =>
       throw _privateConstructorUsedError;
   List<Locale> get locales => throw _privateConstructorUsedError;
   List<Device> get devices => throw _privateConstructorUsedError;
-  List<DeviceFrame> get deviceFrames => throw _privateConstructorUsedError;
+  List<WidgetbookFrame> get deviceFrames => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WorkbenchStateCopyWith<CustomTheme, WorkbenchState<CustomTheme>>
@@ -72,14 +72,14 @@ abstract class $WorkbenchStateCopyWith<CustomTheme, $Res> {
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
-      DeviceFrame deviceFrame,
+      WidgetbookFrame deviceFrame,
       List<WidgetbookTheme<CustomTheme>> themes,
       List<Locale> locales,
       List<Device> devices,
-      List<DeviceFrame> deviceFrames});
+      List<WidgetbookFrame> deviceFrames});
 
   $WidgetbookThemeCopyWith<CustomTheme, $Res>? get theme;
-  $DeviceFrameCopyWith<$Res> get deviceFrame;
+  $WidgetbookFrameCopyWith<$Res> get deviceFrame;
 }
 
 /// @nodoc
@@ -123,7 +123,7 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
       deviceFrame: deviceFrame == freezed
           ? _value.deviceFrame
           : deviceFrame // ignore: cast_nullable_to_non_nullable
-              as DeviceFrame,
+              as WidgetbookFrame,
       themes: themes == freezed
           ? _value.themes
           : themes // ignore: cast_nullable_to_non_nullable
@@ -139,7 +139,7 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
       deviceFrames: deviceFrames == freezed
           ? _value.deviceFrames
           : deviceFrames // ignore: cast_nullable_to_non_nullable
-              as List<DeviceFrame>,
+              as List<WidgetbookFrame>,
     ));
   }
 
@@ -155,8 +155,8 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
   }
 
   @override
-  $DeviceFrameCopyWith<$Res> get deviceFrame {
-    return $DeviceFrameCopyWith<$Res>(_value.deviceFrame, (value) {
+  $WidgetbookFrameCopyWith<$Res> get deviceFrame {
+    return $WidgetbookFrameCopyWith<$Res>(_value.deviceFrame, (value) {
       return _then(_value.copyWith(deviceFrame: value));
     });
   }
@@ -174,16 +174,16 @@ abstract class _$WorkbenchStateCopyWith<CustomTheme, $Res>
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
-      DeviceFrame deviceFrame,
+      WidgetbookFrame deviceFrame,
       List<WidgetbookTheme<CustomTheme>> themes,
       List<Locale> locales,
       List<Device> devices,
-      List<DeviceFrame> deviceFrames});
+      List<WidgetbookFrame> deviceFrames});
 
   @override
   $WidgetbookThemeCopyWith<CustomTheme, $Res>? get theme;
   @override
-  $DeviceFrameCopyWith<$Res> get deviceFrame;
+  $WidgetbookFrameCopyWith<$Res> get deviceFrame;
 }
 
 /// @nodoc
@@ -230,7 +230,7 @@ class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
       deviceFrame: deviceFrame == freezed
           ? _value.deviceFrame
           : deviceFrame // ignore: cast_nullable_to_non_nullable
-              as DeviceFrame,
+              as WidgetbookFrame,
       themes: themes == freezed
           ? _value.themes
           : themes // ignore: cast_nullable_to_non_nullable
@@ -246,7 +246,7 @@ class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
       deviceFrames: deviceFrames == freezed
           ? _value.deviceFrames
           : deviceFrames // ignore: cast_nullable_to_non_nullable
-              as List<DeviceFrame>,
+              as List<WidgetbookFrame>,
     ));
   }
 }
@@ -275,7 +275,7 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
   @override
   final Device? device;
   @override
-  final DeviceFrame deviceFrame;
+  final WidgetbookFrame deviceFrame;
   @override
   final List<WidgetbookTheme<CustomTheme>> themes;
   @override
@@ -283,7 +283,7 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
   @override
   final List<Device> devices;
   @override
-  final List<DeviceFrame> deviceFrames;
+  final List<WidgetbookFrame> deviceFrames;
 
   @override
   String toString() {
@@ -336,11 +336,11 @@ abstract class _WorkbenchState<CustomTheme>
           WidgetbookTheme<CustomTheme>? theme,
           Locale? locale,
           Device? device,
-          required DeviceFrame deviceFrame,
+          required WidgetbookFrame deviceFrame,
           required List<WidgetbookTheme<CustomTheme>> themes,
           required List<Locale> locales,
           required List<Device> devices,
-          required List<DeviceFrame> deviceFrames}) =
+          required List<WidgetbookFrame> deviceFrames}) =
       _$_WorkbenchState<CustomTheme>;
 
   @override
@@ -352,7 +352,7 @@ abstract class _WorkbenchState<CustomTheme>
   @override
   Device? get device;
   @override
-  DeviceFrame get deviceFrame;
+  WidgetbookFrame get deviceFrame;
   @override
   List<WidgetbookTheme<CustomTheme>> get themes;
   @override
@@ -360,7 +360,7 @@ abstract class _WorkbenchState<CustomTheme>
   @override
   List<Device> get devices;
   @override
-  List<DeviceFrame> get deviceFrames;
+  List<WidgetbookFrame> get deviceFrames;
   @override
   @JsonKey(ignore: true)
   _$WorkbenchStateCopyWith<CustomTheme, _WorkbenchState<CustomTheme>>

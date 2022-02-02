@@ -96,7 +96,7 @@ void main() {
                   deviceFrames: const [],
                 ),
                 expectAssertionErrorWithMessage(
-                  message: 'Please specify at least one $DeviceFrame.',
+                  message: 'Please specify at least one $WidgetbookFrame.',
                 ),
               );
             },

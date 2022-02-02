@@ -72,9 +72,9 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
   /// [BuildContext].
   /// - [themeBuilder] allows you to specify how the currently active `theme` is
   /// injected into [BuildContext].
-  /// - [deviceFrameBuilder] allows you to define how a [DeviceFrame] is build.
+  /// - [deviceFrameBuilder] allows you to define how a [WidgetbookFrame] is build.
   /// This decides how the use case is embedded into a virtual device.
-  /// See [DeviceFrameBuilderFunction] and [DeviceFrame]. For instance, this
+  /// See [DeviceFrameBuilderFunction] and [WidgetbookFrame]. For instance, this
   /// property can be used to wrap your usecase with the device frame of the
   /// [device_frame package](https://pub.dev/packages/device_frame).
   /// - [scaffoldBuilder] allows you to wrap the use case with a scaffold, for
@@ -95,7 +95,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     this.scaffoldBuilder,
     this.useCaseBuilder,
     List<Locale>? supportedLocales,
-    List<DeviceFrame>? deviceFrames,
+    List<WidgetbookFrame>? deviceFrames,
   })  : assert(
           categories.length > 0,
           'Please specify at least one $WidgetbookCategory.',
@@ -110,7 +110,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
         ),
         assert(
           deviceFrames == null || deviceFrames.length > 0,
-          'Please specify at least one $DeviceFrame.',
+          'Please specify at least one $WidgetbookFrame.',
         ),
         assert(
           supportedLocales == null || supportedLocales.length > 0,
@@ -121,12 +121,12 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
               Locale('us'),
             ],
         deviceFrames = deviceFrames ??
-            const <DeviceFrame>[
-              DeviceFrame(
+            const <WidgetbookFrame>[
+              WidgetbookFrame(
                 name: 'Widgetbook',
                 allowsDevices: true,
               ),
-              DeviceFrame(
+              WidgetbookFrame(
                 name: 'None',
                 allowsDevices: false,
               )
@@ -157,7 +157,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
 
   final List<WidgetbookTheme<CustomTheme>> themes;
 
-  final List<DeviceFrame> deviceFrames;
+  final List<WidgetbookFrame> deviceFrames;
 
   final DeviceFrameBuilderFunction? deviceFrameBuilder;
 
@@ -175,7 +175,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     required List<WidgetbookTheme<CupertinoThemeData>> themes,
     required AppInfo appInfo,
     List<Device>? devices,
-    List<DeviceFrame>? deviceFrames,
+    List<WidgetbookFrame>? deviceFrames,
     List<Locale>? supportedLocales,
     List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     DeviceFrameBuilderFunction? deviceFrameBuilder,
@@ -208,7 +208,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     required List<WidgetbookTheme<ThemeData>> themes,
     required AppInfo appInfo,
     List<Device>? devices,
-    List<DeviceFrame>? deviceFrames,
+    List<WidgetbookFrame>? deviceFrames,
     List<Locale>? supportedLocales,
     List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     DeviceFrameBuilderFunction? deviceFrameBuilder,

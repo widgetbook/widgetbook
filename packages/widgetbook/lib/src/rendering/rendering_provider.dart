@@ -4,7 +4,7 @@ import 'package:widgetbook/src/state_change_notifier.dart';
 class RenderingProvider<CustomTheme>
     extends StateChangeNotifier<RenderingState<CustomTheme>> {
   RenderingProvider({
-    required List<DeviceFrame> deviceFrames,
+    required List<WidgetbookFrame> deviceFrames,
     required DeviceFrameBuilderFunction deviceFrameBuilder,
     required LocalizationBuilderFunction localizationBuilder,
     required ThemeBuilderFunction<CustomTheme> themeBuilder,

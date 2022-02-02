@@ -10,8 +10,8 @@ void main() {
         'sets state',
         () {
           final deviceFrames = [
-            DeviceFrame.widgetbook(),
-            DeviceFrame.none(),
+            WidgetbookFrame.defaultFrame(),
+            WidgetbookFrame.noFrame(),
           ];
 
           final deviceFrameBuilder = defaultDeviceFrameBuilder;

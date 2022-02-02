@@ -19,7 +19,7 @@ class Renderer<CustomTheme> extends StatelessWidget {
   final Locale locale;
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
   final CustomTheme theme;
-  final DeviceFrame deviceFrame;
+  final WidgetbookFrame deviceFrame;
   final Widget Function(BuildContext) useCaseBuilder;
 
   Widget _buildText() {

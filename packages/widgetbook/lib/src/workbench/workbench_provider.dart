@@ -11,7 +11,7 @@ class WorkbenchProvider<CustomTheme>
     required List<WidgetbookTheme<CustomTheme>> themes,
     required List<Locale> locales,
     required List<Device> devices,
-    required List<DeviceFrame> deviceFrames,
+    required List<WidgetbookFrame> deviceFrames,
   }) : super(
           state: WorkbenchState(
             deviceFrame: deviceFrames.first,
@@ -29,7 +29,7 @@ class WorkbenchProvider<CustomTheme>
     required List<WidgetbookTheme<CustomTheme>> themes,
     required List<Locale> locales,
     required List<Device> devices,
-    required List<DeviceFrame> deviceFrames,
+    required List<WidgetbookFrame> deviceFrames,
   }) {
     state = state.copyWith(
       deviceFrame: deviceFrames.firstWhere(
@@ -132,7 +132,7 @@ class WorkbenchProvider<CustomTheme>
     );
   }
 
-  void changedDeviceFrame(DeviceFrame deviceFrame) {
+  void changedDeviceFrame(WidgetbookFrame deviceFrame) {
     state = state.copyWith(deviceFrame: deviceFrame);
   }
 

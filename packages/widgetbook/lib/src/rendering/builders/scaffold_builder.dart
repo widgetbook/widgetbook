@@ -3,11 +3,11 @@ import 'package:widgetbook/widgetbook.dart';
 
 ScaffoldBuilderFunction get defaultScaffoldBuilder => (
       BuildContext context,
-      DeviceFrame deviceFrame,
+      WidgetbookFrame deviceFrame,
       Widget child,
     ) {
-      if (deviceFrame == DeviceFrame.widgetbook() ||
-          deviceFrame == DeviceFrame.deviceFrame()) {
+      if (deviceFrame == WidgetbookFrame.defaultFrame() ||
+          deviceFrame == WidgetbookFrame.deviceFrame()) {
         return Scaffold(
           body: child,
         );
@@ -18,6 +18,6 @@ ScaffoldBuilderFunction get defaultScaffoldBuilder => (
 
 typedef ScaffoldBuilderFunction = Widget Function(
   BuildContext context,
-  DeviceFrame deviceFrame,
+  WidgetbookFrame deviceFrame,
   Widget child,
 );
