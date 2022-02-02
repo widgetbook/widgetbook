@@ -342,7 +342,7 @@ void main() {
               ],
             ),
             storyRepository: storyRepository,
-          )..update(
+          )..hotReload(
               [
                 WidgetbookCategory(
                   name: 'Category 1',

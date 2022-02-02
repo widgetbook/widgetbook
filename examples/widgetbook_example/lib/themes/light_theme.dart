@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:meal_app/constants/border.dart';
 import 'package:meal_app/constants/color.dart';
 
-ThemeData getLightTheme(BuildContext context) {
+ThemeData get lightTheme {
   return ThemeData(
     primarySwatch: Colors.blue,
-    textTheme: Theme.of(context).textTheme.apply(
-          bodyColor: ColorConstants.lightFontColor,
-          displayColor: ColorConstants.lightFontColor,
-          decorationColor: ColorConstants.lightFontColor,
-        ),
+    textTheme: TextTheme().apply(
+      bodyColor: ColorConstants.lightFontColor,
+      displayColor: ColorConstants.lightFontColor,
+      decorationColor: ColorConstants.lightFontColor,
+    ),
     scaffoldBackgroundColor: ColorConstants.backgroundColorLight,
     primaryColor: ColorConstants.primaryColor,
     iconTheme: IconThemeData(

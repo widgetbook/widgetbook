@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:meal_app/constants/border.dart';
 import 'package:meal_app/constants/color.dart';
 
-ThemeData getDarkTheme(BuildContext context) {
+ThemeData get darkTheme {
   return ThemeData(
     primarySwatch: Colors.blue,
-    textTheme: Theme.of(context).textTheme.apply(
-          bodyColor: Colors.white,
-          displayColor: Colors.white,
-          decorationColor: Colors.white,
-        ),
+    textTheme: TextTheme().apply(
+      bodyColor: Colors.white,
+      displayColor: Colors.white,
+      decorationColor: Colors.white,
+    ),
     scaffoldBackgroundColor: ColorConstants.backgroundColorDark,
     primaryColor: ColorConstants.primaryColor,
     iconTheme: IconThemeData(

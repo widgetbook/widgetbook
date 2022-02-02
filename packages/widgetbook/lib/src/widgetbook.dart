@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/configure_non_web.dart'
     if (dart.library.html) 'package:widgetbook/src/configure_web.dart';
+import 'package:widgetbook/src/extensions/list_extension.dart';
 import 'package:widgetbook/src/localization/localization_provider.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/story_helper.dart';
@@ -243,43 +244,66 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
 
 class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   final StoryRepository storyRepository = StoryRepository();
+  final SelectedStoryRepository selectedStoryRepository =
+      SelectedStoryRepository();
+
+  late OrganizerProvider organizerProvider;
+  late PreviewProvider previewProvider;
+  late WorkbenchProvider<CustomTheme> workbenchProvider;
+
+  @override
+  void initState() {
+    organizerProvider = OrganizerProvider(
+      state: OrganizerState.unfiltered(categories: widget.categories),
+      storyRepository: storyRepository,
+    );
+    previewProvider = PreviewProvider(
+      storyRepository: storyRepository,
+      selectedStoryRepository: selectedStoryRepository,
+    );
+    workbenchProvider = WorkbenchProvider<CustomTheme>(
+      themes: widget.themes,
+      locales: widget.supportedLocales,
+      devices: widget.devices,
+      deviceFrames: widget.deviceFrames,
+    );
+
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant Widgetbook<CustomTheme> oldWidget) {
+    organizerProvider.hotReload(widget.categories);
+    workbenchProvider.hotReload(
+      themes: widget.themes,
+      locales: widget.supportedLocales,
+      devices: widget.devices,
+      deviceFrames: widget.deviceFrames,
+    );
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      key: ValueKey(
-        widget.categories.hashCode ^
-            widget.themes.hashCode ^
-            widget.appInfo.hashCode ^
-            widget.devices.hashCode ^
-            widget.supportedLocales.hashCode ^
-            widget.localizationsDelegates.hashCode ^
-            widget.deviceFrameBuilder.hashCode ^
-            widget.localizationBuilder.hashCode ^
-            widget.themeBuilder.hashCode ^
-            widget.scaffoldBuilder.hashCode ^
-            widget.useCaseBuilder.hashCode ^
-            widget.deviceFrames.hashCode,
-      ),
       providers: [
         ChangeNotifierProvider(
-          create: (_) => ZoomProvider(),
-        ),
-        ChangeNotifierProvider(
-          key: ValueKey(widget.devices),
-          create: (_) => WorkbenchProvider(
-            themes: widget.themes,
-            locales: widget.supportedLocales,
-            devices: widget.devices,
-            deviceFrames: widget.deviceFrames,
+          key: ValueKey(
+            widget.localizationsDelegates,
           ),
-        ),
-        ChangeNotifierProvider(
           create: (_) => LocalizationProvider(
             localizationsDelegates: widget.localizationsDelegates,
           ),
         ),
         ChangeNotifierProvider(
+          key: ValueKey(
+            widget.deviceFrames.hashCodeOfItems ^
+                widget.deviceFrameBuilder.hashCode ^
+                widget.localizationBuilder.hashCode ^
+                widget.themeBuilder.hashCode ^
+                widget.scaffoldBuilder.hashCode ^
+                widget.useCaseBuilder.hashCode,
+          ),
           create: (_) => RenderingProvider(
             deviceFrames: widget.deviceFrames,
             deviceFrameBuilder:
@@ -292,170 +316,47 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
             useCaseBuilder: widget.useCaseBuilder ?? defaultUseCaseBuilder,
           ),
         ),
-        ChangeNotifierProvider(
-          create: (_) => ToolProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => TranslateProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => OrganizerProvider(
-            state: OrganizerState.unfiltered(categories: widget.categories),
-            storyRepository: storyRepository,
-          ),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => PreviewProvider(
-            storyRepository: storyRepository,
-            // TODO is this repository needed?
-            selectedStoryRepository: SelectedStoryRepository(),
-          ),
-        ),
+        ChangeNotifierProvider(create: (_) => ZoomProvider()),
+        ChangeNotifierProvider(create: (_) => ToolProvider()),
+        ChangeNotifierProvider(create: (_) => TranslateProvider()),
+        ChangeNotifierProvider.value(value: workbenchProvider),
+        ChangeNotifierProvider.value(value: organizerProvider),
+        ChangeNotifierProvider.value(value: previewProvider),
       ],
-      child: WidgetbookWrapper<CustomTheme>(
-        categories: widget.categories,
-        appInfo: widget.appInfo,
-        devices: widget.devices,
-        supportedLocales: widget.supportedLocales,
-        localizationsDelegates: widget.localizationsDelegates,
-        themes: widget.themes,
-        deviceFrames: widget.deviceFrames,
-        deviceFrameBuilder: widget.deviceFrameBuilder,
-        localizationBuilder: widget.localizationBuilder,
-        themeBuilder: widget.themeBuilder,
-        scaffoldBuilder: widget.scaffoldBuilder,
-        useCaseBuilder: widget.useCaseBuilder,
-      ),
-    );
-  }
-}
+      child: Focus(
+        onKeyEvent: (n, e) {
+          if (e.logicalKey == LogicalKeyboardKey.keyV) {
+            context.read<ToolProvider>().selecionTool();
+            return KeyEventResult.handled;
+          }
+          if (e.logicalKey == LogicalKeyboardKey.keyM) {
+            context.read<ToolProvider>().moveTool();
+            return KeyEventResult.handled;
+          }
 
-class WidgetbookWrapper<CustomTheme> extends StatefulWidget {
-  const WidgetbookWrapper({
-    Key? key,
-    required this.categories,
-    List<Device>? devices,
-    required this.appInfo,
-    required this.themes,
-    Iterable<Locale>? supportedLocales,
-    this.localizationsDelegates,
-    this.defaultTheme = ThemeMode.system,
-    required this.deviceFrames,
-    this.deviceFrameBuilder,
-    this.localizationBuilder,
-    this.themeBuilder,
-    this.scaffoldBuilder,
-    this.useCaseBuilder,
-  })  : supportedLocales = supportedLocales ??
-            const <Locale>[
-              Locale('en', 'US'),
-            ],
-        devices = devices ??
-            const [
-              Apple.iPhone11,
-              Apple.iPhone12,
-              Apple.iPhone12Mini,
-              Apple.iPhone12Pro,
-              Samsung.s10,
-              Samsung.s21ultra,
-            ],
-        super(key: key);
-
-  /// Categories which host Folders and WidgetElements.
-  /// This can be used to organize the structure of the Widgetbook on a large
-  /// scale.
-  final List<WidgetbookCategory> categories;
-
-  /// The devices on which Stories are previewed.
-  final List<Device> devices;
-
-  /// Information about the app that is catalogued in the Widgetbook.
-  final AppInfo appInfo;
-
-  /// The default theme mode Widgetbook starts with
-  final ThemeMode defaultTheme;
-
-  final Iterable<Locale> supportedLocales;
-
-  final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
-
-  final Iterable<WidgetbookTheme<CustomTheme>> themes;
-
-  final List<DeviceFrame> deviceFrames;
-
-  final DeviceFrameBuilderFunction? deviceFrameBuilder;
-
-  final LocalizationBuilderFunction? localizationBuilder;
-
-  final ThemeBuilderFunction<CustomTheme>? themeBuilder;
-
-  final ScaffoldBuilderFunction? scaffoldBuilder;
-
-  final UseCaseBuilderFunction? useCaseBuilder;
-
-  @override
-  _WidgetbookWrapperState<CustomTheme> createState() =>
-      _WidgetbookWrapperState<CustomTheme>();
-}
-
-class _WidgetbookWrapperState<CustomTheme>
-    extends State<WidgetbookWrapper<CustomTheme>> {
-  // TODO ugly hack
-  late BuildContext contextWithProviders;
-
-  SelectedStoryRepository selectedStoryRepository = SelectedStoryRepository();
-  StoryRepository storyRepository = StoryRepository();
-
-  @override
-  void initState() {
-    configureApp();
-
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Focus(
-      onKeyEvent: (n, e) {
-        if (e.logicalKey == LogicalKeyboardKey.keyV) {
-          context.read<ToolProvider>().selecionTool();
-          return KeyEventResult.handled;
-        }
-        if (e.logicalKey == LogicalKeyboardKey.keyM) {
-          context.read<ToolProvider>().moveTool();
-          return KeyEventResult.handled;
-        }
-
-        return KeyEventResult.ignored;
-      },
-      child: Builder(
-        builder: (context) {
-          contextWithProviders = context;
-          final previewState = context.watch<PreviewProvider>().state;
-          final organizersState = context.watch<OrganizerProvider>().state;
-
-          return MaterialApp.router(
-            routeInformationParser: StoryRouteInformationParser(
-              onRoute: (path) {
-                final stories = StoryHelper.getAllStoriesFromCategories(
-                  organizersState.allCategories,
-                );
-
-                // TODO implement navigator properly
-                // ignore: unused_local_variable
-                final selectedStory = selectStoryFromPath(path, stories);
-              },
-            ),
-            routerDelegate: StoryRouterDelegate<CustomTheme>(
-              previewState: previewState,
-              appInfo: widget.appInfo,
-            ),
-            title: widget.appInfo.name,
-            debugShowCheckedModeBanner: false,
-            darkTheme: Styles.darkTheme,
-            theme: Styles.lightTheme,
-          );
+          return KeyEventResult.ignored;
         },
+        child: MaterialApp.router(
+          routeInformationParser: StoryRouteInformationParser(
+            onRoute: (path) {
+              final stories = StoryHelper.getAllStoriesFromCategories(
+                organizerProvider.state.allCategories,
+              );
+
+              // TODO implement navigator properly
+              // ignore: unused_local_variable
+              final selectedStory = selectStoryFromPath(path, stories);
+            },
+          ),
+          routerDelegate: StoryRouterDelegate<CustomTheme>(
+            previewState: previewProvider.state,
+            appInfo: widget.appInfo,
+          ),
+          title: widget.appInfo.name,
+          debugShowCheckedModeBanner: false,
+          darkTheme: Styles.darkTheme,
+          theme: Styles.lightTheme,
+        ),
       ),
     );
   }

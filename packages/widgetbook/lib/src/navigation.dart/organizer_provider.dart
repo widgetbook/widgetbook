@@ -64,7 +64,7 @@ class OrganizerProvider extends StateChangeNotifier<OrganizerState> {
     }
   }
 
-  void update(List<WidgetbookCategory> categories) {
+  void hotReload(List<WidgetbookCategory> categories) {
     _updateFolders(categories);
     _updateWidgets(categories);
     state = OrganizerState.unfiltered(categories: categories);

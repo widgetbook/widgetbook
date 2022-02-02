@@ -60,18 +60,21 @@ class Storyboard extends StatelessWidget {
       themes: [
         WidgetbookTheme(
           name: 'Light',
-          data: getLightTheme(context),
+          data: lightTheme,
+        ),
+        WidgetbookTheme(
+          name: 'Light',
+          data: lightTheme,
         ),
         WidgetbookTheme(
           name: 'Dark',
-          data: getDarkTheme(context),
+          data: darkTheme,
         )
       ],
       categories: [
         WidgetbookCategory(
           name: 'widgets test',
           folders: [
-            WidgetbookFolder(name: 'Test'),
             WidgetbookFolder(
               name: 'attributes',
               widgets: [

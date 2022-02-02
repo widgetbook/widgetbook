@@ -25,6 +25,44 @@ class WorkbenchProvider<CustomTheme>
           ),
         );
 
+  void hotReload({
+    required List<WidgetbookTheme<CustomTheme>> themes,
+    required List<Locale> locales,
+    required List<Device> devices,
+    required List<DeviceFrame> deviceFrames,
+  }) {
+    state = state.copyWith(
+      deviceFrame: deviceFrames.firstWhere(
+        (element) => element == state.deviceFrame,
+        orElse: () => deviceFrames.first,
+      ),
+      // Due to unknown reasons the data property of `WidgetbookTheme` is not
+      // comparable in all cases. Therefore, the names will be compared instead.
+      theme: state.theme == null
+          ? null
+          : themes.firstWhere(
+              (element) => element.name == state.theme!.name,
+              orElse: () => themes.first,
+            ),
+      locale: state.locale == null
+          ? null
+          : locales.firstWhere(
+              (element) => element == state.locale,
+              orElse: () => locales.first,
+            ),
+      device: state.device == null
+          ? null
+          : devices.firstWhere(
+              (element) => element == state.device,
+              orElse: () => devices.first,
+            ),
+      themes: themes,
+      locales: locales,
+      devices: devices,
+      deviceFrames: deviceFrames,
+    );
+  }
+
   void changedComparisonSetting(ComparisonSetting comparisonSetting) {
     if (state.comparisonSetting == comparisonSetting) {
       comparisonSetting = ComparisonSetting.none;
