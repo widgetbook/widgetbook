@@ -22,6 +22,19 @@ class Renderer<CustomTheme> extends StatelessWidget {
   final DeviceFrame deviceFrame;
   final Widget Function(BuildContext) useCaseBuilder;
 
+  Widget _buildText() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(device.name),
+        const SizedBox(
+          height: 16,
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(
     BuildContext context,
@@ -35,10 +48,7 @@ class Renderer<CustomTheme> extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(device.name),
-        const SizedBox(
-          height: 16,
-        ),
+        if (deviceFrame.allowsDevices) _buildText(),
         renderingState.localizationBuilder(
           context,
           workbenchProvider.locales,

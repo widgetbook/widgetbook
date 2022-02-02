@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/configure_non_web.dart'
-    if (dart.library.html) 'package:widgetbook/src/configure_web.dart';
+
 import 'package:widgetbook/src/extensions/list_extension.dart';
 import 'package:widgetbook/src/localization/localization_provider.dart';
 import 'package:widgetbook/src/models/app_info.dart';
@@ -323,40 +321,26 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
         ChangeNotifierProvider.value(value: organizerProvider),
         ChangeNotifierProvider.value(value: previewProvider),
       ],
-      child: Focus(
-        onKeyEvent: (n, e) {
-          if (e.logicalKey == LogicalKeyboardKey.keyV) {
-            context.read<ToolProvider>().selecionTool();
-            return KeyEventResult.handled;
-          }
-          if (e.logicalKey == LogicalKeyboardKey.keyM) {
-            context.read<ToolProvider>().moveTool();
-            return KeyEventResult.handled;
-          }
+      child: MaterialApp.router(
+        routeInformationParser: StoryRouteInformationParser(
+          onRoute: (path) {
+            final stories = StoryHelper.getAllStoriesFromCategories(
+              organizerProvider.state.allCategories,
+            );
 
-          return KeyEventResult.ignored;
-        },
-        child: MaterialApp.router(
-          routeInformationParser: StoryRouteInformationParser(
-            onRoute: (path) {
-              final stories = StoryHelper.getAllStoriesFromCategories(
-                organizerProvider.state.allCategories,
-              );
-
-              // TODO implement navigator properly
-              // ignore: unused_local_variable
-              final selectedStory = selectStoryFromPath(path, stories);
-            },
-          ),
-          routerDelegate: StoryRouterDelegate<CustomTheme>(
-            previewState: previewProvider.state,
-            appInfo: widget.appInfo,
-          ),
-          title: widget.appInfo.name,
-          debugShowCheckedModeBanner: false,
-          darkTheme: Styles.darkTheme,
-          theme: Styles.lightTheme,
+            // TODO implement navigator properly
+            // ignore: unused_local_variable
+            final selectedStory = selectStoryFromPath(path, stories);
+          },
         ),
+        routerDelegate: StoryRouterDelegate<CustomTheme>(
+          previewState: previewProvider.state,
+          appInfo: widget.appInfo,
+        ),
+        title: widget.appInfo.name,
+        debugShowCheckedModeBanner: false,
+        darkTheme: Styles.darkTheme,
+        theme: Styles.lightTheme,
       ),
     );
   }
