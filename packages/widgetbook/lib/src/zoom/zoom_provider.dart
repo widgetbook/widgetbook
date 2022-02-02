@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:widgetbook/src/state_change_notifier.dart';
 import 'package:widgetbook/src/zoom/zoom_state.dart';
 

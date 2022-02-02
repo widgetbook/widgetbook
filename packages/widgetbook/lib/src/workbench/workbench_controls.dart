@@ -4,7 +4,6 @@ import 'package:widgetbook/src/devices/device_handle.dart';
 import 'package:widgetbook/src/localization/localization_handle.dart';
 import 'package:widgetbook/src/rendering/render_handle.dart';
 import 'package:widgetbook/src/theming/theme_handle.dart';
-import 'package:widgetbook/src/zoom/zoom_handle.dart';
 
 class WorkbenchControls<CustomTheme> extends StatelessWidget {
   const WorkbenchControls({Key? key}) : super(key: key);

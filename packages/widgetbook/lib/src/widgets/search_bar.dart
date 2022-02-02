@@ -4,7 +4,6 @@ import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 
-// TODO this should be stateless
 class SearchBar extends StatefulWidget {
   const SearchBar({
     Key? key,

@@ -33,11 +33,9 @@ class OrganizerProvider extends StateChangeNotifier<OrganizerState> {
     final newFolders = FolderHelper.getAllFoldersFromCategories(
       categories,
     );
-    final oldFolderMap = Map<String, WidgetbookFolder>.fromIterable(
-      oldFolders,
-      key: (dynamic k) => k.path as String,
-      value: (dynamic v) => v as WidgetbookFolder,
-    );
+    final oldFolderMap = {
+      for (var e in oldFolders) e.path: e,
+    };
 
     for (final folder in newFolders) {
       final path = folder.path;
@@ -54,11 +52,9 @@ class OrganizerProvider extends StateChangeNotifier<OrganizerState> {
     final newWidgets = WidgetHelper.getAllWidgetElementsFromCategories(
       categories,
     );
-    final oldFolderMap = Map<String, WidgetbookWidget>.fromIterable(
-      oldWidgets,
-      key: (dynamic k) => k.path as String,
-      value: (dynamic v) => v as WidgetbookWidget,
-    );
+    final oldFolderMap = {
+      for (var e in oldWidgets) e.path: e,
+    };
 
     for (final widget in newWidgets) {
       final path = widget.path;

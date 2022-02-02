@@ -441,6 +441,8 @@ class _WidgetbookWrapperState<CustomTheme>
                   organizersState.allCategories,
                 );
 
+                // TODO implement navigator properly
+                // ignore: unused_local_variable
                 final selectedStory = selectStoryFromPath(path, stories);
               },
             ),
