@@ -7,7 +7,7 @@ ScaffoldBuilderFunction get defaultScaffoldBuilder => (
       Widget child,
     ) {
       if (deviceFrame == DeviceFrame.widgetbook() ||
-          deviceFrame == DeviceFrame.devicePreview()) {
+          deviceFrame == DeviceFrame.deviceFrame()) {
         return Scaffold(
           body: child,
         );

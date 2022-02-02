@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'device_frame.freezed.dart';
 
+// TODO rename this to WidgetbookFrame
 @freezed
 class DeviceFrame with _$DeviceFrame {
   const factory DeviceFrame({
@@ -12,6 +13,7 @@ class DeviceFrame with _$DeviceFrame {
     required bool allowsDevices,
   }) = _DeviceFrame;
 
+  // TODO rename this to `default`
   factory DeviceFrame.widgetbook() {
     return const DeviceFrame(
       name: 'Widgetbook',
@@ -26,7 +28,7 @@ class DeviceFrame with _$DeviceFrame {
     );
   }
 
-  factory DeviceFrame.devicePreview() {
+  factory DeviceFrame.deviceFrame() {
     return const DeviceFrame(
       name: 'Device Preview',
       allowsDevices: true,

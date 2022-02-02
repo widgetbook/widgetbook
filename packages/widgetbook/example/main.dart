@@ -1,24 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-class CustomWidget extends StatelessWidget {
-  const CustomWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.green,
-      child: const Text('hello world'),
-    );
-  }
+void main() {
+  runApp(const HotreloadWidgetbook());
 }
 
-class HotReload extends StatelessWidget {
-  const HotReload({Key? key}) : super(key: key);
+class HotreloadWidgetbook extends StatelessWidget {
+  const HotreloadWidgetbook({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
+      categories: [
+        WidgetbookCategory(
+          name: 'widgets',
+          widgets: [
+            WidgetbookWidget(
+              name: 'Button',
+              useCases: [
+                WidgetbookUseCase(
+                  name: 'elevated',
+                  builder: (context) => ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Widgetbook'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        )
+      ],
       themes: [
         WidgetbookTheme(
           name: 'Light',
@@ -29,47 +40,7 @@ class HotReload extends StatelessWidget {
           data: ThemeData.dark(),
         ),
       ],
-      categories: [
-        WidgetbookCategory(
-          name: 'widgets',
-          widgets: [
-            WidgetbookWidget(
-              name: '$CustomWidget',
-              useCases: [
-                WidgetbookUseCase(
-                  name: 'Default',
-                  builder: (context) => const CustomWidget(),
-                ),
-              ],
-            ),
-          ],
-          folders: [
-            WidgetbookFolder(
-              name: 'Texts',
-              widgets: [
-                WidgetbookWidget(
-                  name: 'Normal Text',
-                  useCases: [
-                    WidgetbookUseCase(
-                      name: 'Default',
-                      builder: (context) => const Text(
-                        'The brown fox ...',
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-      ],
-      appInfo: AppInfo(
-        name: 'Widgetbook Example',
-      ),
+      appInfo: AppInfo(name: 'Example'),
     );
   }
-}
-
-void main() {
-  runApp(const HotReload());
 }
