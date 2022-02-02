@@ -9,7 +9,7 @@ void main() {
       test(
         'sets state',
         () {
-          final deviceFrames = [
+          final frames = [
             WidgetbookFrame.defaultFrame(),
             WidgetbookFrame.noFrame(),
           ];
@@ -21,7 +21,7 @@ void main() {
           final useCaseBuilder = defaultUseCaseBuilder;
 
           final provider = RenderingProvider(
-            deviceFrames: deviceFrames,
+            frames: frames,
             deviceFrameBuilder: deviceFrameBuilder,
             localizationBuilder: localizationBuilder,
             themeBuilder: themeBuilder,
@@ -33,7 +33,7 @@ void main() {
             provider.state,
             equals(
               RenderingState(
-                deviceFrames: deviceFrames,
+                frames: frames,
                 deviceFrameBuilder: deviceFrameBuilder,
                 localizationBuilder: localizationBuilder,
                 themeBuilder: themeBuilder,

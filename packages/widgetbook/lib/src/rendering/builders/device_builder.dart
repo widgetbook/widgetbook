@@ -4,10 +4,10 @@ import 'package:widgetbook/widgetbook.dart';
 DeviceFrameBuilderFunction get defaultDeviceFrameBuilder => (
       BuildContext context,
       Device device,
-      WidgetbookFrame deviceFrame,
+      WidgetbookFrame frame,
       Widget child,
     ) {
-      if (deviceFrame == WidgetbookFrame.defaultFrame()) {
+      if (frame == WidgetbookFrame.defaultFrame()) {
         return WidgetbookDeviceFrame(
           device: device,
           child: child,
@@ -20,6 +20,6 @@ DeviceFrameBuilderFunction get defaultDeviceFrameBuilder => (
 typedef DeviceFrameBuilderFunction = Widget Function(
   BuildContext context,
   Device device,
-  WidgetbookFrame deviceFrame,
+  WidgetbookFrame frame,
   Widget child,
 );

@@ -22,11 +22,11 @@ class RenderHandle<CustomTheme> extends StatelessWidget {
       children: [
         IterationButton.previous(
             onPressed: workbenchProvider.previousDeviceFrame),
-        ...renderingState.deviceFrames
+        ...renderingState.frames
             .map(
               (e) => SelectionItem<WidgetbookFrame>(
                 name: e.name,
-                selectedItem: workbenchState.deviceFrame,
+                selectedItem: workbenchState.frame,
                 item: e,
                 onPressed: () {
                   workbenchProvider.changedDeviceFrame(e);

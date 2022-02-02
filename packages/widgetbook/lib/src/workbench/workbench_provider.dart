@@ -11,17 +11,17 @@ class WorkbenchProvider<CustomTheme>
     required List<WidgetbookTheme<CustomTheme>> themes,
     required List<Locale> locales,
     required List<Device> devices,
-    required List<WidgetbookFrame> deviceFrames,
+    required List<WidgetbookFrame> frames,
   }) : super(
           state: WorkbenchState(
-            deviceFrame: deviceFrames.first,
+            frame: frames.first,
             locale: locales.first,
             device: devices.first,
             theme: themes.first,
             themes: themes,
             locales: locales,
             devices: devices,
-            deviceFrames: deviceFrames,
+            frames: frames,
           ),
         );
 
@@ -29,12 +29,12 @@ class WorkbenchProvider<CustomTheme>
     required List<WidgetbookTheme<CustomTheme>> themes,
     required List<Locale> locales,
     required List<Device> devices,
-    required List<WidgetbookFrame> deviceFrames,
+    required List<WidgetbookFrame> frames,
   }) {
     state = state.copyWith(
-      deviceFrame: deviceFrames.firstWhere(
-        (element) => element == state.deviceFrame,
-        orElse: () => deviceFrames.first,
+      frame: frames.firstWhere(
+        (element) => element == state.frame,
+        orElse: () => frames.first,
       ),
       // Due to unknown reasons the data property of `WidgetbookTheme` is not
       // comparable in all cases. Therefore, the names will be compared instead.
@@ -59,7 +59,7 @@ class WorkbenchProvider<CustomTheme>
       themes: themes,
       locales: locales,
       devices: devices,
-      deviceFrames: deviceFrames,
+      frames: frames,
     );
   }
 
@@ -132,8 +132,8 @@ class WorkbenchProvider<CustomTheme>
     );
   }
 
-  void changedDeviceFrame(WidgetbookFrame deviceFrame) {
-    state = state.copyWith(deviceFrame: deviceFrame);
+  void changedDeviceFrame(WidgetbookFrame frame) {
+    state = state.copyWith(frame: frame);
   }
 
   void nextLocale() {
@@ -199,16 +199,16 @@ class WorkbenchProvider<CustomTheme>
   }
 
   void nextDeviceFrame() {
-    final nextDeviceFrame = state.deviceFrames.getNext(state.deviceFrame);
+    final nextDeviceFrame = state.frames.getNext(state.frame);
     state = state.copyWith(
-      deviceFrame: nextDeviceFrame,
+      frame: nextDeviceFrame,
     );
   }
 
   void previousDeviceFrame() {
-    final previousDevice = state.deviceFrames.getPrevious(state.deviceFrame);
+    final previousDevice = state.frames.getPrevious(state.frame);
     state = state.copyWith(
-      deviceFrame: previousDevice,
+      frame: previousDevice,
     );
   }
 }

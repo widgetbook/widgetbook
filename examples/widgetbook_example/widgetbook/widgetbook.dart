@@ -40,13 +40,13 @@ class HotreloadWidgetbook extends StatelessWidget {
         Samsung.s10,
         Samsung.s21ultra,
       ],
-      deviceFrames: [
-        WidgetbookFrame.widgetbook(),
+      frames: [
+        WidgetbookFrame.defaultFrame(),
         WidgetbookFrame.deviceFrame(),
-        WidgetbookFrame.none(),
+        WidgetbookFrame.noFrame(),
       ],
       deviceFrameBuilder: (context, device, renderMode, child) {
-        if (renderMode == WidgetbookFrame.widgetbook()) {
+        if (renderMode == WidgetbookFrame.defaultFrame()) {
           return WidgetbookDeviceFrame(
             device: device,
             child: child,

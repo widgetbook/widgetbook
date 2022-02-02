@@ -294,15 +294,15 @@ Device(
 ),
 ```
 
-## `deviceFrame`
+## `frames`
 
-The `deviceFrame` property allows developers to define different ways of how the frame of a device is visualized. The following `DeviceFrame`s are defined:
+The `frames` property allows developers to define different ways of how the frame of a device is visualized. The following `WidgetbookFrame`s are defined:
 
-`DeviceFrame` | Comment | Is default
+`WidgetbookFrame` | Comment | Is default
 ------------ | ------------- | ------------- 
-`DeviceFrame.widgetbook` | The default frame of `Widgetbook` | ✅ | 
-`DeviceFrame.none` | No frame - this just shows the use case without any device restrictions | ✅ |
-`DeviceFrame.deviceFrame` | A frame known from the [device_frame](https://pub.dev/packages/device_frame) package |  |
+`WidgetbookFrame.defaultFrame` | The default frame of `Widgetbook` | ✅ | 
+`WidgetbookFrame.noFrame` | No frame - this just shows the use case without any device restrictions | ✅ |
+`WidgetbookFrame.deviceFrame` | A frame known from the [device_frame](https://pub.dev/packages/device_frame) package |  |
 
 ## Builders
 
@@ -310,7 +310,7 @@ The `deviceFrame` property allows developers to define different ways of how the
 
 ### `deviceFrameBuilder`
 
-The `deviceFrameBuilder` in combination with the `deviceFrame` can be used to add your or an existing implementation of a device frame: 
+The `deviceFrameBuilder` in combination with the `frames` property can be used to add your or an existing implementation of a device frame: 
 
 For the [device_frame](https://pub.dev/packages/device_frame) package this can look like this:
 

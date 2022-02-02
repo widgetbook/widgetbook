@@ -95,7 +95,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     this.scaffoldBuilder,
     this.useCaseBuilder,
     List<Locale>? supportedLocales,
-    List<WidgetbookFrame>? deviceFrames,
+    List<WidgetbookFrame>? frames,
   })  : assert(
           categories.length > 0,
           'Please specify at least one $WidgetbookCategory.',
@@ -109,7 +109,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
           'Please specify at least one $WidgetbookTheme.',
         ),
         assert(
-          deviceFrames == null || deviceFrames.length > 0,
+          frames == null || frames.length > 0,
           'Please specify at least one $WidgetbookFrame.',
         ),
         assert(
@@ -120,7 +120,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
             const [
               Locale('us'),
             ],
-        deviceFrames = deviceFrames ??
+        frames = frames ??
             const <WidgetbookFrame>[
               WidgetbookFrame(
                 name: 'Widgetbook',
@@ -157,7 +157,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
 
   final List<WidgetbookTheme<CustomTheme>> themes;
 
-  final List<WidgetbookFrame> deviceFrames;
+  final List<WidgetbookFrame> frames;
 
   final DeviceFrameBuilderFunction? deviceFrameBuilder;
 
@@ -175,7 +175,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     required List<WidgetbookTheme<CupertinoThemeData>> themes,
     required AppInfo appInfo,
     List<Device>? devices,
-    List<WidgetbookFrame>? deviceFrames,
+    List<WidgetbookFrame>? frames,
     List<Locale>? supportedLocales,
     List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     DeviceFrameBuilderFunction? deviceFrameBuilder,
@@ -198,7 +198,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
       themeBuilder: themeBuilder,
       scaffoldBuilder: scaffoldBuilder,
       useCaseBuilder: useCaseBuilder,
-      deviceFrames: deviceFrames,
+      frames: frames,
     );
   }
 
@@ -208,7 +208,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     required List<WidgetbookTheme<ThemeData>> themes,
     required AppInfo appInfo,
     List<Device>? devices,
-    List<WidgetbookFrame>? deviceFrames,
+    List<WidgetbookFrame>? frames,
     List<Locale>? supportedLocales,
     List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     DeviceFrameBuilderFunction? deviceFrameBuilder,
@@ -231,7 +231,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
       themeBuilder: themeBuilder,
       scaffoldBuilder: scaffoldBuilder,
       useCaseBuilder: useCaseBuilder,
-      deviceFrames: deviceFrames,
+      frames: frames,
     );
   }
 
@@ -263,7 +263,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
       themes: widget.themes,
       locales: widget.supportedLocales,
       devices: widget.devices,
-      deviceFrames: widget.deviceFrames,
+      frames: widget.frames,
     );
 
     super.initState();
@@ -276,7 +276,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
       themes: widget.themes,
       locales: widget.supportedLocales,
       devices: widget.devices,
-      deviceFrames: widget.deviceFrames,
+      frames: widget.frames,
     );
     super.didUpdateWidget(oldWidget);
   }
@@ -295,7 +295,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
         ),
         ChangeNotifierProvider(
           key: ValueKey(
-            widget.deviceFrames.hashCodeOfItems ^
+            widget.frames.hashCodeOfItems ^
                 widget.deviceFrameBuilder.hashCode ^
                 widget.localizationBuilder.hashCode ^
                 widget.themeBuilder.hashCode ^
@@ -303,7 +303,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
                 widget.useCaseBuilder.hashCode,
           ),
           create: (_) => RenderingProvider(
-            deviceFrames: widget.deviceFrames,
+            frames: widget.frames,
             deviceFrameBuilder:
                 widget.deviceFrameBuilder ?? defaultDeviceFrameBuilder,
             localizationBuilder:

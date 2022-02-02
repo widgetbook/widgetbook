@@ -18,14 +18,14 @@ class _$RenderingStateTearOff {
   const _$RenderingStateTearOff();
 
   _RenderingState<CustomTheme> call<CustomTheme>(
-      {required List<WidgetbookFrame> deviceFrames,
+      {required List<WidgetbookFrame> frames,
       required DeviceFrameBuilderFunction deviceFrameBuilder,
       required LocalizationBuilderFunction localizationBuilder,
       required ThemeBuilderFunction<CustomTheme> themeBuilder,
       required ScaffoldBuilderFunction scaffoldBuilder,
       required UseCaseBuilderFunction useCaseBuilder}) {
     return _RenderingState<CustomTheme>(
-      deviceFrames: deviceFrames,
+      frames: frames,
       deviceFrameBuilder: deviceFrameBuilder,
       localizationBuilder: localizationBuilder,
       themeBuilder: themeBuilder,
@@ -40,7 +40,7 @@ const $RenderingState = _$RenderingStateTearOff();
 
 /// @nodoc
 mixin _$RenderingState<CustomTheme> {
-  List<WidgetbookFrame> get deviceFrames => throw _privateConstructorUsedError;
+  List<WidgetbookFrame> get frames => throw _privateConstructorUsedError;
   DeviceFrameBuilderFunction get deviceFrameBuilder =>
       throw _privateConstructorUsedError;
   LocalizationBuilderFunction get localizationBuilder =>
@@ -63,7 +63,7 @@ abstract class $RenderingStateCopyWith<CustomTheme, $Res> {
           $Res Function(RenderingState<CustomTheme>) then) =
       _$RenderingStateCopyWithImpl<CustomTheme, $Res>;
   $Res call(
-      {List<WidgetbookFrame> deviceFrames,
+      {List<WidgetbookFrame> frames,
       DeviceFrameBuilderFunction deviceFrameBuilder,
       LocalizationBuilderFunction localizationBuilder,
       ThemeBuilderFunction<CustomTheme> themeBuilder,
@@ -82,7 +82,7 @@ class _$RenderingStateCopyWithImpl<CustomTheme, $Res>
 
   @override
   $Res call({
-    Object? deviceFrames = freezed,
+    Object? frames = freezed,
     Object? deviceFrameBuilder = freezed,
     Object? localizationBuilder = freezed,
     Object? themeBuilder = freezed,
@@ -90,9 +90,9 @@ class _$RenderingStateCopyWithImpl<CustomTheme, $Res>
     Object? useCaseBuilder = freezed,
   }) {
     return _then(_value.copyWith(
-      deviceFrames: deviceFrames == freezed
-          ? _value.deviceFrames
-          : deviceFrames // ignore: cast_nullable_to_non_nullable
+      frames: frames == freezed
+          ? _value.frames
+          : frames // ignore: cast_nullable_to_non_nullable
               as List<WidgetbookFrame>,
       deviceFrameBuilder: deviceFrameBuilder == freezed
           ? _value.deviceFrameBuilder
@@ -126,7 +126,7 @@ abstract class _$RenderingStateCopyWith<CustomTheme, $Res>
       __$RenderingStateCopyWithImpl<CustomTheme, $Res>;
   @override
   $Res call(
-      {List<WidgetbookFrame> deviceFrames,
+      {List<WidgetbookFrame> frames,
       DeviceFrameBuilderFunction deviceFrameBuilder,
       LocalizationBuilderFunction localizationBuilder,
       ThemeBuilderFunction<CustomTheme> themeBuilder,
@@ -148,7 +148,7 @@ class __$RenderingStateCopyWithImpl<CustomTheme, $Res>
 
   @override
   $Res call({
-    Object? deviceFrames = freezed,
+    Object? frames = freezed,
     Object? deviceFrameBuilder = freezed,
     Object? localizationBuilder = freezed,
     Object? themeBuilder = freezed,
@@ -156,9 +156,9 @@ class __$RenderingStateCopyWithImpl<CustomTheme, $Res>
     Object? useCaseBuilder = freezed,
   }) {
     return _then(_RenderingState<CustomTheme>(
-      deviceFrames: deviceFrames == freezed
-          ? _value.deviceFrames
-          : deviceFrames // ignore: cast_nullable_to_non_nullable
+      frames: frames == freezed
+          ? _value.frames
+          : frames // ignore: cast_nullable_to_non_nullable
               as List<WidgetbookFrame>,
       deviceFrameBuilder: deviceFrameBuilder == freezed
           ? _value.deviceFrameBuilder
@@ -188,7 +188,7 @@ class __$RenderingStateCopyWithImpl<CustomTheme, $Res>
 
 class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
   _$_RenderingState(
-      {required this.deviceFrames,
+      {required this.frames,
       required this.deviceFrameBuilder,
       required this.localizationBuilder,
       required this.themeBuilder,
@@ -196,7 +196,7 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
       required this.useCaseBuilder});
 
   @override
-  final List<WidgetbookFrame> deviceFrames;
+  final List<WidgetbookFrame> frames;
   @override
   final DeviceFrameBuilderFunction deviceFrameBuilder;
   @override
@@ -210,7 +210,7 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
 
   @override
   String toString() {
-    return 'RenderingState<$CustomTheme>(deviceFrames: $deviceFrames, deviceFrameBuilder: $deviceFrameBuilder, localizationBuilder: $localizationBuilder, themeBuilder: $themeBuilder, scaffoldBuilder: $scaffoldBuilder, useCaseBuilder: $useCaseBuilder)';
+    return 'RenderingState<$CustomTheme>(frames: $frames, deviceFrameBuilder: $deviceFrameBuilder, localizationBuilder: $localizationBuilder, themeBuilder: $themeBuilder, scaffoldBuilder: $scaffoldBuilder, useCaseBuilder: $useCaseBuilder)';
   }
 
   @override
@@ -218,8 +218,7 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _RenderingState<CustomTheme> &&
-            const DeepCollectionEquality()
-                .equals(other.deviceFrames, deviceFrames) &&
+            const DeepCollectionEquality().equals(other.frames, frames) &&
             (identical(other.deviceFrameBuilder, deviceFrameBuilder) ||
                 other.deviceFrameBuilder == deviceFrameBuilder) &&
             (identical(other.localizationBuilder, localizationBuilder) ||
@@ -235,7 +234,7 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(deviceFrames),
+      const DeepCollectionEquality().hash(frames),
       deviceFrameBuilder,
       localizationBuilder,
       themeBuilder,
@@ -252,7 +251,7 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
 abstract class _RenderingState<CustomTheme>
     implements RenderingState<CustomTheme> {
   factory _RenderingState(
-          {required List<WidgetbookFrame> deviceFrames,
+          {required List<WidgetbookFrame> frames,
           required DeviceFrameBuilderFunction deviceFrameBuilder,
           required LocalizationBuilderFunction localizationBuilder,
           required ThemeBuilderFunction<CustomTheme> themeBuilder,
@@ -261,7 +260,7 @@ abstract class _RenderingState<CustomTheme>
       _$_RenderingState<CustomTheme>;
 
   @override
-  List<WidgetbookFrame> get deviceFrames;
+  List<WidgetbookFrame> get frames;
   @override
   DeviceFrameBuilderFunction get deviceFrameBuilder;
   @override
