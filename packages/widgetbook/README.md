@@ -217,7 +217,7 @@ class HotReload extends StatelessWidget {
 
 ## `appInfo`
 
-The `appInfo` property allows users to label the `Widgetbook` in case you are maintaining more than one `Widgetbook`'s for multiple projects. Customize `Widgetbook`'s name according to the project by using appInfo:
+The `appInfo` property allows users to label the `Widgetbook` in case you are maintaining more than one `Widgetbook` for multiple projects. Customize `Widgetbook`'s name according to the project by using appInfo:
 
 ```dart
 Widgetbook.material(
@@ -276,7 +276,7 @@ Widgetbook.material(
 )
 ```
 
-Right now there is a predefinied list of devices but let us know which you need in our [Discord](https://discord.gg/zT4AMStAJA).
+Right now, there is a predefined list of devices. If you need more devices, you can either add them on your own or let us know which ones you need in our [Discord](https://discord.gg/zT4AMStAJA).
 
 ### Define your own device
 
