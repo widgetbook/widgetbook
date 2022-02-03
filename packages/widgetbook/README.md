@@ -13,7 +13,7 @@ A flutter package which helps developers cataloguing their widgets, testing them
 
 # See it in action!
 
-Check out the `Widgetbook` with the example app on our [homepage](https://demo.widgetbook.io). Furthermore, you can [check out the code of the app at github](https://github.com/widgetbook/widgetbook/tree/main/example). 
+Check out the `Widgetbook` with the example app on our [homepage](https://demo.widgetbook.io). Furthermore, you can [check out the code of the app at github](https://github.com/widgetbook/widgetbook/tree/main/examples). 
 
 # Other packages
 
@@ -154,7 +154,7 @@ Material | `Widgetbook.material` | `Widgetbook<ThemeData>`
 Cupertino | `Widgetbook.cupertino` | `Widgetbook<CupertinoThemeData>`
 
 
-As you can see from the constructor definitions, `Widgetbook` allows to define your Theme type to accompany any implementation. However, most developers will likely use `Widgetbook.material` as shown [in the example](#Usage) above. 
+As you can see from the constructor definitions, `Widgetbook` allows to define your Theme type to accompany any implementation. However, most developers will likely use `Widgetbook.material` as shown [in the example](#Usage) above.
 
 # Properties
 
