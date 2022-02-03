@@ -1,4 +1,5 @@
 import 'package:device_frame/device_frame.dart' as frame;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:meal_app/models/meal.dart';
@@ -13,8 +14,12 @@ import 'package:meal_app/widgets/rotated_image.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-class Storyboard extends StatelessWidget {
-  const Storyboard({Key? key}) : super(key: key);
+void main() {
+  runApp(HotreloadWidgetbook());
+}
+
+class HotreloadWidgetbook extends StatelessWidget {
+  const HotreloadWidgetbook({Key? key}) : super(key: key);
 
   Widget buildStorybook(BuildContext context) {
     return Widgetbook.material(
@@ -35,20 +40,20 @@ class Storyboard extends StatelessWidget {
         Samsung.s10,
         Samsung.s21ultra,
       ],
-      deviceFrames: [
-        DeviceFrame.widgetbook(),
-        DeviceFrame.devicePreview(),
-        DeviceFrame.none(),
+      frames: [
+        WidgetbookFrame.defaultFrame(),
+        WidgetbookFrame.deviceFrame(),
+        WidgetbookFrame.noFrame(),
       ],
       deviceFrameBuilder: (context, device, renderMode, child) {
-        if (renderMode == DeviceFrame.widgetbook()) {
+        if (renderMode == WidgetbookFrame.defaultFrame()) {
           return WidgetbookDeviceFrame(
             device: device,
             child: child,
           );
         }
 
-        if (renderMode == DeviceFrame.devicePreview()) {
+        if (renderMode == WidgetbookFrame.deviceFrame()) {
           return frame.DeviceFrame(
             device: frame.Devices.ios.iPhone12,
             screen: child,
@@ -113,8 +118,7 @@ class Storyboard extends StatelessWidget {
           ],
           widgets: [
             WidgetbookWidget(
-              name:
-                  'Ingredients ajsifgjasdigasdi guiasd hgiu asduigh asdughu ashguh asudghas udghusahg ',
+              name: 'Ingredients',
               useCases: [
                 WidgetbookUseCase(
                   name: 'Shortl list ',

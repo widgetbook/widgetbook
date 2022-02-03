@@ -4,9 +4,6 @@
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis) 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?label=test&style=flat-square)
-[![youtube: How to](https://img.shields.io/badge/YouTube-What%20is%20Widgetbook%3F-d05454?style=flat-square)](https://www.youtube.com/watch?v=vs3ocjMsl7s)
-[![youtube: How to](https://img.shields.io/badge/YouTube-How%20to%20%20use%20Widgetbook%3F-d05454?style=flat-square)](https://www.youtube.com/watch?v=qcTZxJDLEAE) 
-[![youtube: How to](https://img.shields.io/badge/YouTube-How%20to%20%20use%20Widgetbook%20Generator%3F-d05454?style=flat-square)](https://www.youtube.com/watch?v=dh8hxgtbjtk) 
 
 A flutter package which helps developers cataloguing their widgets, testing them quickly on multiple devices and themes, and sharing them easily with designers and clients. Inspired by Storybook.js and flutterbook.
 
@@ -16,8 +13,7 @@ A flutter package which helps developers cataloguing their widgets, testing them
 
 # See it in action!
 
-Check out the `Widgetbook` with the example app on our [github page](https://widgetbook.github.io). We also have introduction videos for [What is Widgetbook?](https://www.youtube.com/watch?v=vs3ocjMsl7s), [How to use Widgetbook?](https://www.youtube.com/watch?v=qcTZxJDLEAE) and [How to use Widgetbook generator?](https://www.youtube.com/watch?v=dh8hxgtbjtk).
-Furthermore, you can [check out the code of the app at github](https://github.com/widgetbook/widgetbook/tree/main/example). 
+Check out the `Widgetbook` with the example app on our [homepage](https://demo.widgetbook.io). Furthermore, you can [check out the code of the app at github](https://github.com/widgetbook/widgetbook/tree/main/example). 
 
 # Other packages
 
@@ -29,13 +25,64 @@ Furthermore, you can [check out the code of the app at github](https://github.co
 | [package:widgetbook_annotation](https://pub.dev/packages/widgetbook_annotation) | [![Pub Version](https://img.shields.io/pub/v/widgetbook_annotation?style=flat-square)](https://pub.dev/packages/widgetbook_annotation) |
 | [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) | [![Pub Version](https://img.shields.io/pub/v/widgetbook_generator?style=flat-square)](https://pub.dev/packages/widgetbook_generator) |
 
+# Usage
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+
+void main() {
+  runApp(const HotreloadWidgetbook());
+}
+
+class HotreloadWidgetbook extends StatelessWidget {
+  const HotreloadWidgetbook({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook.material(
+      categories: [
+        WidgetbookCategory(
+          name: 'widgets',
+          widgets: [
+            WidgetbookWidget(
+              name: 'Button',
+              useCases: [
+                WidgetbookUseCase(
+                  name: 'elevated',
+                  builder: (context) => ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Widgetbook'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        )
+      ],
+      themes: [
+        WidgetbookTheme(
+          name: 'Light',
+          data: ThemeData.light(),
+        ),
+        WidgetbookTheme(
+          name: 'Dark', 
+          data: ThemeData.dark(),
+        ),
+      ],
+      appInfo: AppInfo(name: 'Example'),
+    );
+  }
+}
+```
+
 # Getting Started
 
 This package provides a flutter widget called `Widgetbook` in which custom widgets from your app can be injected.
 
 ## Setting up
 
-First, add the dependency to your pubspec.yaml file:
+First, add the dependency to your `pubspec.yaml` file:
 
 ```yaml
 # pubspec.yaml
@@ -43,16 +90,18 @@ dev_dependencies:
   widgetbook:
 ```
 
-Since the Widgetbook is launched as a separate app, it is recommended to create another main method. This enables you to switch between your app and the `Widgetbook` at any time. You can even launch your app and `Widgetbook` simultaneously.
+Since the Widgetbook is launched as a separate app, it is recommended to create another `main` method. This enables you to switch between your app and `Widgetbook` at any time. You can even launch your app and `Widgetbook` simultaneously.
 
 The folder structure might look like this:
+
 ```
 example_app
-+ lib
-+--- main.dart
-+ widgetbook
-+--- main.dart
-+--- widgetbook.dart
+├─ lib
+│  ├─ main.dart
+├─ widgetbook
+│  ├─ main.dart
+│  ├─ widgetbook.dart
+├─ pubspec.yaml
 ```
 
 The `widgetbook/widgetbook.dart` file contains the `Widgetbook` wrapped within a stateless widget that enables hot reloading. The code looks like this: 
@@ -94,9 +143,28 @@ Run the `Widgetbook` main method by executing `flutter run -t widgetbook/main.da
 
 > **NOTE:** If you are using [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) see the documentation on how to run Widgetbook.
 
-# Inject your widgets
+# Constructors
 
-Your widgets can be organized into different areas of interest by using `WidgetbookCategory`, `WidgetbookFolder`, `WidgetbookWidget` and `WidgetbookUseCase`.
+`Widgetbook` allows developers to define whatever `Theme` they have defined for their app. To accompany every theme and the ones defined by Flutter, the following constructors exist: 
+
+Theme | Constructor | Defaults to
+------------ | ------------- | ------------- 
+Custom Theme | `Widgetbook<YourTheme>` | ➖
+Material | `Widgetbook.material` | `Widgetbook<ThemeData>`
+Cupertino | `Widgetbook.cupertino` | `Widgetbook<CupertinoThemeData>`
+
+
+As you can see from the constructor definitions, `Widgetbook` allows to define your Theme type to accompany any implementation. However, most developers will likely use `Widgetbook.material` as shown [in the example](#usage) above. 
+
+# Properties
+
+`Widgetbook` defines various properties to customize how your `Widget`s will be rendered.
+
+## `categories`
+
+Your widgets can be catalogued by using different `Organizer`s. The available organizers are: `WidgetbookCategory`, `WidgetbookFolder`, `WidgetbookWidget` and `WidgetbookUseCase`.
+
+Both `WidgetbookCategory` and `WidgetbookFolder` can contain sub folders and `WidgetbookWidget` elements. However, `WidgetbookWidget` can only contain `WidgetbookUseCase`s. 
 
 ```dart
 class HotReload extends StatelessWidget {
@@ -147,48 +215,68 @@ class HotReload extends StatelessWidget {
 }
 ```
 
-## Set Widgetbook name
+## `appInfo`
 
-Customize `Widgetbook`'s name according to the project by using appInfo:
+The `appInfo` property allows users to label the `Widgetbook` in case you are maintaining more than one `Widgetbook` for multiple projects. Customize `Widgetbook`'s name according to the project by using appInfo:
 
 ```dart
-Widgetbook(
+Widgetbook.material(
   appInfo: AppInfo(
     name: 'Your apps name',
   ),
 )
 ```
 
-## Adding Themes
+## Localization
 
-Import your app's theme for a realistic preview by using `Widgetbook`'s `lightTheme` and `darkTheme` properties:
+Widgetbook defines the two properties `supportedLocales` and `localizationsDelegates` to support localization of `Widget`s. These values behave as described in [Flutter Internationalization](https://docs.flutter.dev/development/accessibility-and-localization/internationalization).
+
 ```dart
-Widgetbook(
-  lightTheme: lightTheme,
-  darkTheme: darkTheme,
+Widgetbook.material(
+  localizationsDelegates: [
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ],
+  supportedLocales: [
+    Locale('en'), // English, no country code
+    Locale('es'), // Spanish, no country code
+  ],
 )
 ```
 
-A preview in Widgetbook's light or dark mode is only shown when the appropriate theme is set. 
+## `themes`
 
-If you are in development and haven't defined a theme yet, you can use `ThemeData.light()` or `ThemeData.dark()` to use a default theme.
+Import your app's theme for a realistic preview by using `Widgetbook`'s `theme` property:
+```dart
+Widgetbook.material(
+   themes: [
+    WidgetbookTheme(
+      name: 'Light',
+      data: ThemeData.light(),
+    ),
+    WidgetbookTheme(
+      name: 'Dark',
+      data: ThemeData.dark(),
+    ),
+  ],
+)
+```
 
-## Add devices
+## `devices`
 
 Customize the preview by defining preview devices: 
 
 ```dart
-Widgetbook(
+Widgetbook.material(
   devices: [
     Apple.iPhone11,
-    Apple.iPhone12,
-    Samsung.s10,
     Samsung.s21ultra,
   ]
 )
 ```
 
-Right now there is a predefinied short list of devices but let us know which you need in our [Discord](https://discord.gg/zT4AMStAJA). We will extend the list of predefinied devices in the future!
+Right now, there is a predefined list of devices. If you need more devices, you can either add them on your own or let us know which ones you need in our [Discord](https://discord.gg/zT4AMStAJA).
 
 ### Define your own device
 
@@ -205,6 +293,89 @@ Device(
   type: DeviceType.tablet,
 ),
 ```
+
+## `frames`
+
+The `frames` property allows developers to define different ways of how the frame of a device is visualized. The following `WidgetbookFrame`s are defined:
+
+`WidgetbookFrame` | Comment | Is default
+------------ | ------------- | ------------- 
+`WidgetbookFrame.defaultFrame` | The default frame of `Widgetbook` | ✅ | 
+`WidgetbookFrame.noFrame` | No frame - this just shows the use case without any device restrictions | ✅ |
+`WidgetbookFrame.deviceFrame` | A frame known from the [device_frame](https://pub.dev/packages/device_frame) package |  |
+
+## Builders
+
+`Widgetbook` exposes various builder functions to allow customization of how `WidgetbookUseCase`s are displayed.
+
+### `deviceFrameBuilder`
+
+The `deviceFrameBuilder` in combination with the `frames` property can be used to add your or an existing implementation of a device frame: 
+
+For the [device_frame](https://pub.dev/packages/device_frame) package this can look like this:
+
+```dart
+Widgetbook.material(
+  deviceFrameBuilder: (context, device, renderMode, child) {
+    if (renderMode == DeviceFrame.deviceFrame()) {
+      return frame.DeviceFrame(
+        device: frame.Devices.ios.iPhone12,
+        screen: child,
+      );
+    }
+
+    // default to no device frame
+    return child;
+  },
+)
+```
+
+### `localizationBuilder`
+
+The default of `localizationBuilder` is defined as: 
+
+```dart
+(
+  BuildContext context,
+  List<Locale> supportedLocales,
+  List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
+  Locale activeLocale,
+  Widget child,
+) {
+  if (localizationsDelegates != null) {
+    return Localizations(
+      locale: activeLocale,
+      delegates: localizationsDelegates,
+      child: child,
+    );
+  }
+
+  return child;
+};
+```
+
+### `themeBuilder`
+
+The `themeBuilder` allows you to inject theme data into the `Widget` tree. An implementation for `CupertinoThemeData` could look like this:
+
+```dart
+Widgetbook<CupertinoThemeData>(
+  themeBuilder: (
+    BuildContext context,
+    CupertinoThemeData theme,
+    Widget child,
+  ) {
+    return CupertinoTheme(
+      data: theme,
+      child: child,
+    );
+  },
+)
+```
+
+### `scaffoldBuilder` and `useCaseBuilder`
+
+Both the `scaffoldBuilder` and `useCaseBuilder` can be used to wrap the `Widget` with e.g. a `Scaffold` or some other `Widget` like a `Center`, `Container` or `Padding`.  
 
 # Known Issues
 

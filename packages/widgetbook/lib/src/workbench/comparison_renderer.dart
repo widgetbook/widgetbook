@@ -24,7 +24,7 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
               locale: workbenchState.locale!,
               localizationsDelegates: localizationState.localizationsDelegates,
               theme: e.data,
-              deviceFrame: workbenchState.deviceFrame,
+              frame: workbenchState.frame,
               useCaseBuilder: builder,
             ),
           )
@@ -45,7 +45,7 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
               locale: workbenchState.locale!,
               localizationsDelegates: localizationState.localizationsDelegates,
               theme: workbenchState.theme!.data,
-              deviceFrame: workbenchState.deviceFrame,
+              frame: workbenchState.frame,
               useCaseBuilder: builder,
             ),
           )
@@ -66,7 +66,7 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
               locale: e,
               localizationsDelegates: localizationState.localizationsDelegates,
               theme: workbenchState.theme!.data,
-              deviceFrame: workbenchState.deviceFrame,
+              frame: workbenchState.frame,
               useCaseBuilder: builder,
             ),
           )
@@ -84,7 +84,7 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
       locale: workbenchState.locale!,
       localizationsDelegates: localizationState.localizationsDelegates,
       theme: workbenchState.theme!.data,
-      deviceFrame: workbenchState.deviceFrame,
+      frame: workbenchState.frame,
       useCaseBuilder: builder,
     );
   }

@@ -36,9 +36,9 @@ void main() {
         s21,
       ];
 
-      final deviceFrames = [
-        DeviceFrame.widgetbook(),
-        DeviceFrame.none(),
+      final frames = [
+        WidgetbookFrame.defaultFrame(),
+        WidgetbookFrame.noFrame(),
       ];
 
       test(
@@ -48,18 +48,18 @@ void main() {
             locales: locales,
             themes: themes,
             devices: devices,
-            deviceFrames: deviceFrames,
+            frames: frames,
           );
 
           expect(
             provider.state,
             equals(
               WorkbenchState<ThemeData>(
-                deviceFrame: DeviceFrame.widgetbook(),
+                frame: WidgetbookFrame.defaultFrame(),
                 theme: lightTheme,
                 locale: usLocale,
                 device: iPhone,
-                deviceFrames: deviceFrames,
+                frames: frames,
                 locales: locales,
                 themes: themes,
                 devices: devices,
@@ -79,18 +79,18 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                deviceFrames: deviceFrames,
+                frames: frames,
               )..changedComparisonSetting(ComparisonSetting.none);
 
               expect(
                 provider.state,
                 equals(
                   WorkbenchState<ThemeData>(
-                    deviceFrame: DeviceFrame.widgetbook(),
+                    frame: WidgetbookFrame.defaultFrame(),
                     theme: lightTheme,
                     locale: usLocale,
                     device: iPhone,
-                    deviceFrames: deviceFrames,
+                    frames: frames,
                     locales: locales,
                     themes: themes,
                     devices: devices,
@@ -107,7 +107,7 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                deviceFrames: deviceFrames,
+                frames: frames,
               )..changedComparisonSetting(ComparisonSetting.themes);
 
               expect(
@@ -115,10 +115,10 @@ void main() {
                 equals(
                   WorkbenchState<ThemeData>(
                     comparisonSetting: ComparisonSetting.themes,
-                    deviceFrame: DeviceFrame.widgetbook(),
+                    frame: WidgetbookFrame.defaultFrame(),
                     locale: usLocale,
                     device: iPhone,
-                    deviceFrames: deviceFrames,
+                    frames: frames,
                     locales: locales,
                     themes: themes,
                     devices: devices,
@@ -135,7 +135,7 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                deviceFrames: deviceFrames,
+                frames: frames,
               )..changedComparisonSetting(ComparisonSetting.devices);
 
               expect(
@@ -143,10 +143,10 @@ void main() {
                 equals(
                   WorkbenchState<ThemeData>(
                     comparisonSetting: ComparisonSetting.devices,
-                    deviceFrame: DeviceFrame.widgetbook(),
+                    frame: WidgetbookFrame.defaultFrame(),
                     theme: lightTheme,
                     locale: usLocale,
-                    deviceFrames: deviceFrames,
+                    frames: frames,
                     locales: locales,
                     themes: themes,
                     devices: devices,
@@ -163,7 +163,7 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                deviceFrames: deviceFrames,
+                frames: frames,
               )..changedComparisonSetting(ComparisonSetting.themes);
 
               expect(
@@ -171,10 +171,10 @@ void main() {
                 equals(
                   WorkbenchState<ThemeData>(
                     comparisonSetting: ComparisonSetting.themes,
-                    deviceFrame: DeviceFrame.widgetbook(),
+                    frame: WidgetbookFrame.defaultFrame(),
                     locale: usLocale,
                     device: iPhone,
-                    deviceFrames: deviceFrames,
+                    frames: frames,
                     locales: locales,
                     themes: themes,
                     devices: devices,
@@ -196,18 +196,18 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                deviceFrames: deviceFrames,
+                frames: frames,
               )..changedDevice(s21);
 
               expect(
                 provider.state,
                 equals(
                   WorkbenchState<ThemeData>(
-                    deviceFrame: DeviceFrame.widgetbook(),
+                    frame: WidgetbookFrame.defaultFrame(),
                     theme: lightTheme,
                     locale: usLocale,
                     device: s21,
-                    deviceFrames: deviceFrames,
+                    frames: frames,
                     locales: locales,
                     themes: themes,
                     devices: devices,
@@ -224,7 +224,7 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                deviceFrames: deviceFrames,
+                frames: frames,
               )..changedDevice(s21);
 
               expect(
@@ -232,11 +232,11 @@ void main() {
                 equals(
                   WorkbenchState<ThemeData>(
                     comparisonSetting: ComparisonSetting.none,
-                    deviceFrame: DeviceFrame.widgetbook(),
+                    frame: WidgetbookFrame.defaultFrame(),
                     theme: lightTheme,
                     locale: usLocale,
                     device: s21,
-                    deviceFrames: deviceFrames,
+                    frames: frames,
                     locales: locales,
                     themes: themes,
                     devices: devices,
@@ -258,18 +258,18 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                deviceFrames: deviceFrames,
+                frames: frames,
               )..changedTheme(darkTheme);
 
               expect(
                 provider.state,
                 equals(
                   WorkbenchState<ThemeData>(
-                    deviceFrame: DeviceFrame.widgetbook(),
+                    frame: WidgetbookFrame.defaultFrame(),
                     theme: darkTheme,
                     locale: usLocale,
                     device: iPhone,
-                    deviceFrames: deviceFrames,
+                    frames: frames,
                     locales: locales,
                     themes: themes,
                     devices: devices,
@@ -286,7 +286,7 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                deviceFrames: deviceFrames,
+                frames: frames,
               )..changedTheme(darkTheme);
 
               expect(
@@ -294,11 +294,11 @@ void main() {
                 equals(
                   WorkbenchState<ThemeData>(
                     comparisonSetting: ComparisonSetting.none,
-                    deviceFrame: DeviceFrame.widgetbook(),
+                    frame: WidgetbookFrame.defaultFrame(),
                     theme: darkTheme,
                     locale: usLocale,
                     device: iPhone,
-                    deviceFrames: deviceFrames,
+                    frames: frames,
                     locales: locales,
                     themes: themes,
                     devices: devices,
@@ -320,18 +320,18 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                deviceFrames: deviceFrames,
+                frames: frames,
               )..changedLocale(deLocale);
 
               expect(
                 provider.state,
                 equals(
                   WorkbenchState<ThemeData>(
-                    deviceFrame: DeviceFrame.widgetbook(),
+                    frame: WidgetbookFrame.defaultFrame(),
                     theme: lightTheme,
                     locale: deLocale,
                     device: iPhone,
-                    deviceFrames: deviceFrames,
+                    frames: frames,
                     locales: locales,
                     themes: themes,
                     devices: devices,
@@ -348,7 +348,7 @@ void main() {
                 locales: locales,
                 themes: themes,
                 devices: devices,
-                deviceFrames: deviceFrames,
+                frames: frames,
               )..changedTheme(darkTheme);
 
               expect(
@@ -356,11 +356,11 @@ void main() {
                 equals(
                   WorkbenchState<ThemeData>(
                     comparisonSetting: ComparisonSetting.none,
-                    deviceFrame: DeviceFrame.widgetbook(),
+                    frame: WidgetbookFrame.defaultFrame(),
                     theme: darkTheme,
                     locale: usLocale,
                     device: iPhone,
-                    deviceFrames: deviceFrames,
+                    frames: frames,
                     locales: locales,
                     themes: themes,
                     devices: devices,
@@ -379,19 +379,19 @@ void main() {
             locales: locales,
             themes: themes,
             devices: devices,
-            deviceFrames: deviceFrames,
-          )..changedDeviceFrame(DeviceFrame.none());
+            frames: frames,
+          )..changedDeviceFrame(WidgetbookFrame.noFrame());
 
           expect(
             provider.state,
             equals(
               WorkbenchState<ThemeData>(
                 comparisonSetting: ComparisonSetting.none,
-                deviceFrame: DeviceFrame.none(),
+                frame: WidgetbookFrame.noFrame(),
                 theme: lightTheme,
                 locale: usLocale,
                 device: iPhone,
-                deviceFrames: deviceFrames,
+                frames: frames,
                 locales: locales,
                 themes: themes,
                 devices: devices,
@@ -408,7 +408,7 @@ void main() {
             locales: locales,
             themes: themes,
             devices: devices,
-            deviceFrames: deviceFrames,
+            frames: frames,
           )..nextTheme();
 
           expect(
@@ -416,11 +416,11 @@ void main() {
             equals(
               WorkbenchState<ThemeData>(
                 comparisonSetting: ComparisonSetting.none,
-                deviceFrame: DeviceFrame.widgetbook(),
+                frame: WidgetbookFrame.defaultFrame(),
                 theme: darkTheme,
                 locale: usLocale,
                 device: iPhone,
-                deviceFrames: deviceFrames,
+                frames: frames,
                 locales: locales,
                 themes: themes,
                 devices: devices,
@@ -437,7 +437,7 @@ void main() {
             locales: locales,
             themes: themes,
             devices: devices,
-            deviceFrames: deviceFrames,
+            frames: frames,
           )..previousTheme();
 
           expect(
@@ -445,11 +445,11 @@ void main() {
             equals(
               WorkbenchState<ThemeData>(
                 comparisonSetting: ComparisonSetting.none,
-                deviceFrame: DeviceFrame.widgetbook(),
+                frame: WidgetbookFrame.defaultFrame(),
                 theme: darkTheme,
                 locale: usLocale,
                 device: iPhone,
-                deviceFrames: deviceFrames,
+                frames: frames,
                 locales: locales,
                 themes: themes,
                 devices: devices,
@@ -466,7 +466,7 @@ void main() {
             locales: locales,
             themes: themes,
             devices: devices,
-            deviceFrames: deviceFrames,
+            frames: frames,
           )..nextDevice();
 
           expect(
@@ -474,11 +474,11 @@ void main() {
             equals(
               WorkbenchState<ThemeData>(
                 comparisonSetting: ComparisonSetting.none,
-                deviceFrame: DeviceFrame.widgetbook(),
+                frame: WidgetbookFrame.defaultFrame(),
                 theme: lightTheme,
                 locale: usLocale,
                 device: s21,
-                deviceFrames: deviceFrames,
+                frames: frames,
                 locales: locales,
                 themes: themes,
                 devices: devices,
@@ -495,7 +495,7 @@ void main() {
             locales: locales,
             themes: themes,
             devices: devices,
-            deviceFrames: deviceFrames,
+            frames: frames,
           )..previousDevice();
 
           expect(
@@ -503,11 +503,11 @@ void main() {
             equals(
               WorkbenchState<ThemeData>(
                 comparisonSetting: ComparisonSetting.none,
-                deviceFrame: DeviceFrame.widgetbook(),
+                frame: WidgetbookFrame.defaultFrame(),
                 theme: lightTheme,
                 locale: usLocale,
                 device: s21,
-                deviceFrames: deviceFrames,
+                frames: frames,
                 locales: locales,
                 themes: themes,
                 devices: devices,
@@ -518,13 +518,13 @@ void main() {
       );
 
       test(
-        'nextDeviceFrame returns next $DeviceFrame',
+        'nextDeviceFrame returns next $WidgetbookFrame',
         () {
           final provider = WorkbenchProvider<ThemeData>(
             locales: locales,
             themes: themes,
             devices: devices,
-            deviceFrames: deviceFrames,
+            frames: frames,
           )..nextDeviceFrame();
 
           expect(
@@ -532,11 +532,11 @@ void main() {
             equals(
               WorkbenchState<ThemeData>(
                 comparisonSetting: ComparisonSetting.none,
-                deviceFrame: DeviceFrame.none(),
+                frame: WidgetbookFrame.noFrame(),
                 theme: lightTheme,
                 locale: usLocale,
                 device: iPhone,
-                deviceFrames: deviceFrames,
+                frames: frames,
                 locales: locales,
                 themes: themes,
                 devices: devices,
@@ -547,13 +547,13 @@ void main() {
       );
 
       test(
-        'previousDeviceFrame returns previous $DeviceFrame',
+        'previousDeviceFrame returns previous $WidgetbookFrame',
         () {
           final provider = WorkbenchProvider<ThemeData>(
             locales: locales,
             themes: themes,
             devices: devices,
-            deviceFrames: deviceFrames,
+            frames: frames,
           )..previousDeviceFrame();
 
           expect(
@@ -561,11 +561,11 @@ void main() {
             equals(
               WorkbenchState<ThemeData>(
                 comparisonSetting: ComparisonSetting.none,
-                deviceFrame: DeviceFrame.none(),
+                frame: WidgetbookFrame.noFrame(),
                 theme: lightTheme,
                 locale: usLocale,
                 device: iPhone,
-                deviceFrames: deviceFrames,
+                frames: frames,
                 locales: locales,
                 themes: themes,
                 devices: devices,

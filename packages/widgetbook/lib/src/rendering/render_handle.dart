@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/rendering/device_frame.dart';
 import 'package:widgetbook/src/rendering/rendering_provider.dart';
+import 'package:widgetbook/src/rendering/widgetbook_frame.dart';
 import 'package:widgetbook/src/workbench/iteration_button.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
@@ -22,11 +22,11 @@ class RenderHandle<CustomTheme> extends StatelessWidget {
       children: [
         IterationButton.previous(
             onPressed: workbenchProvider.previousDeviceFrame),
-        ...renderingState.deviceFrames
+        ...renderingState.frames
             .map(
-              (e) => SelectionItem<DeviceFrame>(
+              (e) => SelectionItem<WidgetbookFrame>(
                 name: e.name,
-                selectedItem: workbenchState.deviceFrame,
+                selectedItem: workbenchState.frame,
                 item: e,
                 onPressed: () {
                   workbenchProvider.changedDeviceFrame(e);

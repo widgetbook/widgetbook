@@ -11,7 +11,7 @@ class Renderer<CustomTheme> extends StatelessWidget {
     required this.locale,
     required this.localizationsDelegates,
     required this.theme,
-    required this.deviceFrame,
+    required this.frame,
     required this.useCaseBuilder,
   }) : super(key: key);
 
@@ -19,7 +19,7 @@ class Renderer<CustomTheme> extends StatelessWidget {
   final Locale locale;
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
   final CustomTheme theme;
-  final DeviceFrame deviceFrame;
+  final WidgetbookFrame frame;
   final Widget Function(BuildContext) useCaseBuilder;
 
   Widget _buildText() {
@@ -48,7 +48,7 @@ class Renderer<CustomTheme> extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (deviceFrame.allowsDevices) _buildText(),
+        if (frame.allowsDevices) _buildText(),
         renderingState.localizationBuilder(
           context,
           workbenchProvider.locales,
@@ -62,10 +62,10 @@ class Renderer<CustomTheme> extends StatelessWidget {
                 return renderingState.deviceFrameBuilder(
                   context,
                   device,
-                  deviceFrame,
+                  frame,
                   renderingState.scaffoldBuilder(
                     context,
-                    deviceFrame,
+                    frame,
                     renderingState.useCaseBuilder(
                       context,
                       useCaseBuilder(context),

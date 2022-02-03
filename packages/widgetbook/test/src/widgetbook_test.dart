@@ -86,17 +86,17 @@ void main() {
           );
 
           test(
-            'deviceFrames is empty',
+            'frames is empty',
             () {
               expect(
                 () => Widgetbook(
                   categories: categories,
                   appInfo: appInfo,
                   themes: themes,
-                  deviceFrames: const [],
+                  frames: const [],
                 ),
                 expectAssertionErrorWithMessage(
-                  message: 'Please specify at least one $DeviceFrame.',
+                  message: 'Please specify at least one $WidgetbookFrame.',
                 ),
               );
             },

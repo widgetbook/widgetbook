@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'device_frame.dart';
+part of 'widgetbook_frame.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,11 +14,11 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$DeviceFrameTearOff {
-  const _$DeviceFrameTearOff();
+class _$WidgetbookFrameTearOff {
+  const _$WidgetbookFrameTearOff();
 
-  _DeviceFrame call({required String name, required bool allowsDevices}) {
-    return _DeviceFrame(
+  _WidgetbookFrame call({required String name, required bool allowsDevices}) {
+    return _WidgetbookFrame(
       name: name,
       allowsDevices: allowsDevices,
     );
@@ -26,10 +26,10 @@ class _$DeviceFrameTearOff {
 }
 
 /// @nodoc
-const $DeviceFrame = _$DeviceFrameTearOff();
+const $WidgetbookFrame = _$WidgetbookFrameTearOff();
 
 /// @nodoc
-mixin _$DeviceFrame {
+mixin _$WidgetbookFrame {
   /// The name displayed as a tooltip
   String get name => throw _privateConstructorUsedError;
 
@@ -37,25 +37,26 @@ mixin _$DeviceFrame {
   bool get allowsDevices => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $DeviceFrameCopyWith<DeviceFrame> get copyWith =>
+  $WidgetbookFrameCopyWith<WidgetbookFrame> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DeviceFrameCopyWith<$Res> {
-  factory $DeviceFrameCopyWith(
-          DeviceFrame value, $Res Function(DeviceFrame) then) =
-      _$DeviceFrameCopyWithImpl<$Res>;
+abstract class $WidgetbookFrameCopyWith<$Res> {
+  factory $WidgetbookFrameCopyWith(
+          WidgetbookFrame value, $Res Function(WidgetbookFrame) then) =
+      _$WidgetbookFrameCopyWithImpl<$Res>;
   $Res call({String name, bool allowsDevices});
 }
 
 /// @nodoc
-class _$DeviceFrameCopyWithImpl<$Res> implements $DeviceFrameCopyWith<$Res> {
-  _$DeviceFrameCopyWithImpl(this._value, this._then);
+class _$WidgetbookFrameCopyWithImpl<$Res>
+    implements $WidgetbookFrameCopyWith<$Res> {
+  _$WidgetbookFrameCopyWithImpl(this._value, this._then);
 
-  final DeviceFrame _value;
+  final WidgetbookFrame _value;
   // ignore: unused_field
-  final $Res Function(DeviceFrame) _then;
+  final $Res Function(WidgetbookFrame) _then;
 
   @override
   $Res call({
@@ -76,31 +77,32 @@ class _$DeviceFrameCopyWithImpl<$Res> implements $DeviceFrameCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$DeviceFrameCopyWith<$Res>
-    implements $DeviceFrameCopyWith<$Res> {
-  factory _$DeviceFrameCopyWith(
-          _DeviceFrame value, $Res Function(_DeviceFrame) then) =
-      __$DeviceFrameCopyWithImpl<$Res>;
+abstract class _$WidgetbookFrameCopyWith<$Res>
+    implements $WidgetbookFrameCopyWith<$Res> {
+  factory _$WidgetbookFrameCopyWith(
+          _WidgetbookFrame value, $Res Function(_WidgetbookFrame) then) =
+      __$WidgetbookFrameCopyWithImpl<$Res>;
   @override
   $Res call({String name, bool allowsDevices});
 }
 
 /// @nodoc
-class __$DeviceFrameCopyWithImpl<$Res> extends _$DeviceFrameCopyWithImpl<$Res>
-    implements _$DeviceFrameCopyWith<$Res> {
-  __$DeviceFrameCopyWithImpl(
-      _DeviceFrame _value, $Res Function(_DeviceFrame) _then)
-      : super(_value, (v) => _then(v as _DeviceFrame));
+class __$WidgetbookFrameCopyWithImpl<$Res>
+    extends _$WidgetbookFrameCopyWithImpl<$Res>
+    implements _$WidgetbookFrameCopyWith<$Res> {
+  __$WidgetbookFrameCopyWithImpl(
+      _WidgetbookFrame _value, $Res Function(_WidgetbookFrame) _then)
+      : super(_value, (v) => _then(v as _WidgetbookFrame));
 
   @override
-  _DeviceFrame get _value => super._value as _DeviceFrame;
+  _WidgetbookFrame get _value => super._value as _WidgetbookFrame;
 
   @override
   $Res call({
     Object? name = freezed,
     Object? allowsDevices = freezed,
   }) {
-    return _then(_DeviceFrame(
+    return _then(_WidgetbookFrame(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -115,8 +117,8 @@ class __$DeviceFrameCopyWithImpl<$Res> extends _$DeviceFrameCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_DeviceFrame implements _DeviceFrame {
-  const _$_DeviceFrame({required this.name, required this.allowsDevices});
+class _$_WidgetbookFrame implements _WidgetbookFrame {
+  const _$_WidgetbookFrame({required this.name, required this.allowsDevices});
 
   @override
 
@@ -129,14 +131,14 @@ class _$_DeviceFrame implements _DeviceFrame {
 
   @override
   String toString() {
-    return 'DeviceFrame(name: $name, allowsDevices: $allowsDevices)';
+    return 'WidgetbookFrame(name: $name, allowsDevices: $allowsDevices)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _DeviceFrame &&
+            other is _WidgetbookFrame &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.allowsDevices, allowsDevices));
@@ -150,13 +152,13 @@ class _$_DeviceFrame implements _DeviceFrame {
 
   @JsonKey(ignore: true)
   @override
-  _$DeviceFrameCopyWith<_DeviceFrame> get copyWith =>
-      __$DeviceFrameCopyWithImpl<_DeviceFrame>(this, _$identity);
+  _$WidgetbookFrameCopyWith<_WidgetbookFrame> get copyWith =>
+      __$WidgetbookFrameCopyWithImpl<_WidgetbookFrame>(this, _$identity);
 }
 
-abstract class _DeviceFrame implements DeviceFrame {
-  const factory _DeviceFrame(
-      {required String name, required bool allowsDevices}) = _$_DeviceFrame;
+abstract class _WidgetbookFrame implements WidgetbookFrame {
+  const factory _WidgetbookFrame(
+      {required String name, required bool allowsDevices}) = _$_WidgetbookFrame;
 
   @override
 
@@ -168,6 +170,6 @@ abstract class _DeviceFrame implements DeviceFrame {
   bool get allowsDevices;
   @override
   @JsonKey(ignore: true)
-  _$DeviceFrameCopyWith<_DeviceFrame> get copyWith =>
+  _$WidgetbookFrameCopyWith<_WidgetbookFrame> get copyWith =>
       throw _privateConstructorUsedError;
 }

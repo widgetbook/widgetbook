@@ -1,0 +1,4 @@
+name: widgetbook
+
+packages:
+  - packages/**

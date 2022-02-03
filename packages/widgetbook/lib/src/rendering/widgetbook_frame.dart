@@ -1,33 +1,33 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'device_frame.freezed.dart';
+part 'widgetbook_frame.freezed.dart';
 
 @freezed
-class DeviceFrame with _$DeviceFrame {
-  const factory DeviceFrame({
+class WidgetbookFrame with _$WidgetbookFrame {
+  const factory WidgetbookFrame({
     /// The name displayed as a tooltip
     required String name,
 
     /// Indicators whether this mode supports specific devices e.g. iPhone 11
     required bool allowsDevices,
-  }) = _DeviceFrame;
+  }) = _WidgetbookFrame;
 
-  factory DeviceFrame.widgetbook() {
-    return const DeviceFrame(
+  factory WidgetbookFrame.defaultFrame() {
+    return const WidgetbookFrame(
       name: 'Widgetbook',
       allowsDevices: true,
     );
   }
 
-  factory DeviceFrame.none() {
-    return const DeviceFrame(
+  factory WidgetbookFrame.noFrame() {
+    return const WidgetbookFrame(
       name: 'None',
       allowsDevices: false,
     );
   }
 
-  factory DeviceFrame.devicePreview() {
-    return const DeviceFrame(
+  factory WidgetbookFrame.deviceFrame() {
+    return const WidgetbookFrame(
       name: 'Device Preview',
       allowsDevices: true,
     );
