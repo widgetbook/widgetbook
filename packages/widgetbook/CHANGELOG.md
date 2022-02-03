@@ -1,3 +1,15 @@
+## 2.0.0-beta
+
+- fix: pan cannot be reset in viewport [#99](https://github.com/widgetbook/widgetbook/issues/99)
+- fix: use cases cannot be previewed without a device [#84](https://github.com/widgetbook/widgetbook/issues/84)
+- fix: cannot inject custom themes into widget tree [#75](https://github.com/widgetbook/widgetbook/issues/75)
+- fix: cannot wrap use cases in other widgets [#74](https://github.com/widgetbook/widgetbook/issues/74)
+- fix: cannot set a default theme [#60](https://github.com/widgetbook/widgetbook/issues/60)
+- fix: cannot show multiple devices next to each other [#55](https://github.com/widgetbook/widgetbook/issues/55)
+- fix: no way to use widgets that require localization [#53](https://github.com/widgetbook/widgetbook/issues/53)
+- fix: device can be moved out of sight [#7](https://github.com/widgetbook/widgetbook/issues/7)
+- fix: viewport resets when different story is selected [#6](https://github.com/widgetbook/widgetbook/issues/6)  
+
 ## 1.0.3
 
 - changed documentation to be consistent with the existing videos
