@@ -26,7 +26,7 @@ jobs:
       run: flutter config --enable-macos-desktop
     - run: flutter pub get
     - run: | 
-        flutter build macos -t stories/main.dart
+        flutter build macos -t widgetbook/main.dart
     - name: Create tar archive
       run: |
         cd build/macos/Build/Products/Release
