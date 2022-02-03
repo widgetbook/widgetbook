@@ -8,7 +8,7 @@
 A flutter package which helps developers cataloguing their widgets, testing them quickly on multiple devices and themes, and sharing them easily with designers and clients. Inspired by Storybook.js and flutterbook.
 
 <p align="center">
-<img src="https://media.githubusercontent.com/media/widgetbook/widgetbook/main/docs/assets/Screenshot.png" alt="Widgetbook Screenshot" />
+<img src="https://raw.githubusercontent.com/widgetbook/widgetbook/main/docs/assets/Screenshot.png" alt="Widgetbook Screenshot" />
 </p>
 
 # See it in action!
@@ -154,7 +154,7 @@ Material | `Widgetbook.material` | `Widgetbook<ThemeData>`
 Cupertino | `Widgetbook.cupertino` | `Widgetbook<CupertinoThemeData>`
 
 
-As you can see from the constructor definitions, `Widgetbook` allows to define your Theme type to accompany any implementation. However, most developers will likely use `Widgetbook.material` as shown [in the example](#usage) above. 
+As you can see from the constructor definitions, `Widgetbook` allows to define your Theme type to accompany any implementation. However, most developers will likely use `Widgetbook.material` as shown [in the example](#Usage) above. 
 
 # Properties
 
