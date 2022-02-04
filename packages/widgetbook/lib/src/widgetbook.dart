@@ -338,6 +338,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
           appInfo: widget.appInfo,
         ),
         title: widget.appInfo.name,
+        themeMode: ThemeMode.dark,
         debugShowCheckedModeBanner: false,
         darkTheme: Styles.darkTheme,
         theme: Styles.lightTheme,
