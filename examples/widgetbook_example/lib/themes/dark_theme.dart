@@ -4,11 +4,7 @@ import 'package:meal_app/constants/color.dart';
 
 ThemeData get darkTheme {
   return ThemeData.dark().copyWith(
-    textTheme: TextTheme().apply(
-      bodyColor: Colors.yellow,
-      displayColor: Colors.yellow,
-      decorationColor: Colors.yellow,
-    ),
+    textTheme: TextTheme().apply(),
     scaffoldBackgroundColor: ColorConstants.backgroundColorDark,
     primaryColor: ColorConstants.primaryColor,
     iconTheme: IconThemeData(
