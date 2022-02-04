@@ -22,6 +22,6 @@ class WidgetbookFolder extends ExpandableOrganizer {
   }
   @override
   String toString() {
-  return 'name: $name, expanded: $isExpanded, folders: $folders, widgets: $widgets';
+    return 'name: $name, expanded: $isExpanded, folders: $folders, widgets: $widgets';
   }
 }
