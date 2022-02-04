@@ -33,6 +33,6 @@ class WidgetbookWidget extends ExpandableOrganizer {
 
   @override
   String toString() {
-      return 'name: $name, expanded: $isExpanded';
+    return 'name: $name, expanded: $isExpanded';
   }
 }
