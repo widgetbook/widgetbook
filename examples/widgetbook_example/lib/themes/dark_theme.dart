@@ -3,12 +3,11 @@ import 'package:meal_app/constants/border.dart';
 import 'package:meal_app/constants/color.dart';
 
 ThemeData get darkTheme {
-  return ThemeData(
-    primarySwatch: Colors.blue,
+  return ThemeData.dark().copyWith(
     textTheme: TextTheme().apply(
-      bodyColor: Colors.white,
-      displayColor: Colors.white,
-      decorationColor: Colors.white,
+      bodyColor: Colors.yellow,
+      displayColor: Colors.yellow,
+      decorationColor: Colors.yellow,
     ),
     scaffoldBackgroundColor: ColorConstants.backgroundColorDark,
     primaryColor: ColorConstants.primaryColor,

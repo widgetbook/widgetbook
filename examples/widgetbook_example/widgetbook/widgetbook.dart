@@ -68,10 +68,6 @@ class HotreloadWidgetbook extends StatelessWidget {
           data: lightTheme,
         ),
         WidgetbookTheme(
-          name: 'Light',
-          data: lightTheme,
-        ),
-        WidgetbookTheme(
           name: 'Dark',
           data: darkTheme,
         )
