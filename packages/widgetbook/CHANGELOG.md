@@ -1,3 +1,7 @@
+## 2.0.3-beta
+
+- fix: UI not optimized for light theme [#110](https://github.com/widgetbook/widgetbook/issues/110)
+
 ## 2.0.2-beta
 
 - fix: pan cannot be reset in viewport [#99](https://github.com/widgetbook/widgetbook/issues/99)

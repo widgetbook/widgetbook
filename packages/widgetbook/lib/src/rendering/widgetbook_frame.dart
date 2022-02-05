@@ -28,7 +28,7 @@ class WidgetbookFrame with _$WidgetbookFrame {
 
   factory WidgetbookFrame.deviceFrame() {
     return const WidgetbookFrame(
-      name: 'Device Preview',
+      name: 'Device Frame',
       allowsDevices: true,
     );
   }
