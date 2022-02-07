@@ -43,7 +43,7 @@ jobs:
     defaults:
       run:
         working-directory: examples/widgetbook_example
-    name: build macOS
+    name: build web
     runs-on: ubuntu-latest 
     steps:
     - uses: actions/checkout@v2
