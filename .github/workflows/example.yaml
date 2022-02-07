@@ -31,9 +31,22 @@ jobs:
       run: |
         cd build/macos/Build/Products/Release
         tar -cf app.tar.gz meal_app.app
+
     - uses: actions/upload-artifact@v2
       with:
         name: AppMacOS
         path: examples/widgetbook_example/build/macos/Build/Products/Release/app.tar.gz
         retention-days: 3
         if-no-files-found: error
+
+    - name: Authenticate Service Account
+      uses: google-github-actions/auth@v0.4.0
+      with:
+        credentials_json: ${{ secrets.STORAGE_SERVICE_ACCOUNT }}
+
+    - name: Upload folder
+      uses: google-github-actions/upload-cloud-storage@v0.4.0
+      with:
+        path: examples/widgetbook_example/build/web
+        destination: demo.widgetbook.io
+        parent: false
