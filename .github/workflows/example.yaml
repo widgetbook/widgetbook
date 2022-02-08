@@ -31,6 +31,7 @@ jobs:
       run: |
         cd build/macos/Build/Products/Release
         tar -cf app.tar.gz meal_app.app
+
     - uses: actions/upload-artifact@v2
       with:
         name: AppMacOS
