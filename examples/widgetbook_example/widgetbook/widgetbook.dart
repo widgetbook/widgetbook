@@ -36,8 +36,8 @@ class HotreloadWidgetbook extends StatelessWidget {
       devices: [
         Apple.iPhone12ProMax,
         Apple.iPhone13Mini,
-        Samsung.s10,
-        Samsung.s21ultra,
+        Apple.iPhone11ProMax,
+        Apple.iPhone11,
       ],
       themes: [
         WidgetbookTheme(

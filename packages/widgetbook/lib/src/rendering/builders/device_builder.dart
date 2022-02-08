@@ -2,7 +2,7 @@ import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-DeviceInfo? mapDeviceToDeviceInfo(Device device) {
+DeviceInfo mapDeviceToDeviceInfo(Device device) {
   final map = {
     Apple.iPhone12Mini: Devices.ios.iPhone12Mini,
     Apple.iPhone12: Devices.ios.iPhone12,
@@ -17,7 +17,17 @@ DeviceInfo? mapDeviceToDeviceInfo(Device device) {
     Apple.iPadPro11Inch: Devices.ios.iPadPro11Inches,
   };
 
-  final mappedDevice = map[device];
+  final mappedDevice = map[device] ??
+      DeviceInfo.genericPhone(
+        platform: TargetPlatform.iOS,
+        id: 'custom',
+        name: 'custom',
+        screenSize: Size(
+          device.resolution.logicalSize.width,
+          device.resolution.logicalSize.height,
+        ),
+        pixelRatio: device.resolution.scaleFactor,
+      );
 
   return mappedDevice;
 }
@@ -37,12 +47,6 @@ DeviceFrameBuilderFunction get defaultDeviceFrameBuilder => (
 
       if (frame == WidgetbookFrame.deviceFrame()) {
         final deviceInfo = mapDeviceToDeviceInfo(device);
-        if (deviceInfo == null) {
-          return WidgetbookDeviceFrame(
-            device: device,
-            child: child,
-          );
-        }
         return DeviceFrame(
           device: deviceInfo,
           screen: child,
