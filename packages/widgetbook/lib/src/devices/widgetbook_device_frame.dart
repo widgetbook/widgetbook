@@ -11,6 +11,26 @@ class WidgetbookDeviceFrame extends StatelessWidget {
   final Device device;
   final Widget child;
 
+  MediaQueryData mediaQuery({
+    required BuildContext context,
+  }) {
+    final mediaQuery = MediaQuery.of(context);
+    final viewPadding = mediaQuery.padding;
+
+    final width = device.resolution.logicalSize.width;
+    final height = device.resolution.logicalSize.height;
+
+    final deviceQuery = mediaQuery.copyWith(
+      size: Size(width, height),
+      padding: viewPadding,
+      viewInsets: EdgeInsets.zero,
+      viewPadding: viewPadding,
+      devicePixelRatio: device.resolution.scaleFactor,
+    );
+
+    return deviceQuery;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,7 +43,12 @@ class WidgetbookDeviceFrame extends StatelessWidget {
       ),
       width: device.resolution.logicalSize.width,
       height: device.resolution.logicalSize.height,
-      child: child,
+      child: MediaQuery(
+        data: mediaQuery(
+          context: context,
+        ),
+        child: child,
+      ),
     );
   }
 }
