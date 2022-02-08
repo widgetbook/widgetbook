@@ -63,14 +63,16 @@ class Renderer<CustomTheme> extends StatelessWidget {
                   context,
                   device,
                   frame,
-                  renderingState.scaffoldBuilder(
-                    context,
-                    frame,
-                    renderingState.useCaseBuilder(
+                  Builder(builder: (context) {
+                    return renderingState.scaffoldBuilder(
                       context,
-                      useCaseBuilder(context),
-                    ),
-                  ),
+                      frame,
+                      renderingState.useCaseBuilder(
+                        context,
+                        useCaseBuilder(context),
+                      ),
+                    );
+                  }),
                 );
               },
             ),

@@ -22,6 +22,42 @@ class HotreloadWidgetbook extends StatelessWidget {
   const HotreloadWidgetbook({Key? key}) : super(key: key);
 
   Widget buildStorybook(BuildContext context) {
+    return Widgetbook(
+      themes: [WidgetbookTheme(name: "Light", data: ThemeData.light())],
+      categories: [
+        WidgetbookCategory(
+          name: 'widgets',
+          widgets: [
+            WidgetbookWidget(
+              name: 'some widget',
+              useCases: [
+                WidgetbookUseCase(
+                  name: 'Default',
+                  builder: (context) => Container(
+                    color: Colors.green,
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.25,
+                      ),
+                      child: Container(
+                        color: Colors.blue,
+                        width: 250,
+                        height: 250,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+      appInfo: AppInfo(
+        name: 'Widgetbook Example',
+      ),
+    );
     return Widgetbook.material(
       localizationsDelegates: [
         AppLocalizations.delegate,
