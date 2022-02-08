@@ -304,7 +304,7 @@ The `frames` property allows developers to define different ways of how the fram
 `WidgetbookFrame.noFrame` | No frame - this just shows the use case without any device restrictions | ✅ |
 `WidgetbookFrame.deviceFrame` | A frame known from the [device_frame](https://pub.dev/packages/device_frame) package | ✅ |
 
-If the Device Frame option is active, the Widgetbook devices will be mapped to the devices of [device_frame](https://pub.dev/packages/device_frame). If selected device does not exist the implementation will default to the `defaultFrame`.  
+If the Device Frame option is active, the Widgetbook devices will be mapped to the devices of [device_frame](https://pub.dev/packages/device_frame).
 
 ## Builders
 
