@@ -381,7 +381,13 @@ Widgetbook<CupertinoThemeData>(
 
 ### `scaffoldBuilder` and `useCaseBuilder`
 
-Both the `scaffoldBuilder` and `useCaseBuilder` can be used to wrap the `Widget` with e.g. a `Scaffold` or some other `Widget` like a `Center`, `Container` or `Padding`.  
+Both the `scaffoldBuilder` and `useCaseBuilder` can be used to wrap the `Widget` with e.g. a `Scaffold` or some other `Widget` like a `Center`, `Container` or `Padding`.
+
+# Supported Flutter version
+
+We are currently aiming to support the following flutter version
+
+`flutter: >=2.8.0`
 
 # Known Issues
 
