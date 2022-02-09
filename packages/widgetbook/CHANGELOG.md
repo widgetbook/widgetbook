@@ -1,3 +1,9 @@
+## 2.0.4-beta
+
+- feat: added `textScaleFactors` for font accessibility ([#15](https://github.com/widgetbook/widgetbook/issues/15))
+- fix: added `MediaQuery` to `WidgetbookDeviceFrame` ([#66](https://github.com/widgetbook/widgetbook/issues/66))
+- feat: added [device_frame](https://pub.dev/packages/device_frame) ([#112](https://github.com/widgetbook/widgetbook/pull/114))
+
 ## 2.0.3-beta
 
 - fix: UI not optimized for light theme [#110](https://github.com/widgetbook/widgetbook/issues/110)
