@@ -127,6 +127,10 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
                 allowsDevices: true,
               ),
               WidgetbookFrame(
+                name: 'Device Frame',
+                allowsDevices: true,
+              ),
+              WidgetbookFrame(
                 name: 'None',
                 allowsDevices: false,
               )

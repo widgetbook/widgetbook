@@ -91,6 +91,42 @@ class Apple {
     ),
   );
 
+  /// A iPhone 13 Pro Max
+  static const Device iPhone13ProMax = Device.mobile(
+    name: 'iPhone 13 Pro Max',
+    resolution: Resolution(
+      nativeSize: DeviceSize(width: 1284, height: 2778),
+      scaleFactor: 3,
+    ),
+  );
+
+  /// A iPhone 13 Pro
+  static const Device iPhone13Pro = Device.mobile(
+    name: 'iPhone 13 Pro',
+    resolution: Resolution(
+      nativeSize: DeviceSize(width: 1170, height: 2532),
+      scaleFactor: 3,
+    ),
+  );
+
+  /// A iPhone 13
+  static const Device iPhone13 = Device.mobile(
+    name: 'iPhone 13',
+    resolution: Resolution(
+      nativeSize: DeviceSize(width: 1170, height: 2532),
+      scaleFactor: 3,
+    ),
+  );
+
+  /// A iPhone 13 Mini
+  static const Device iPhone13Mini = Device.mobile(
+    name: 'iPhone 13 Mini',
+    resolution: Resolution(
+      nativeSize: DeviceSize(width: 1125, height: 2436),
+      scaleFactor: 3,
+    ),
+  );
+
   /// A iPhone 12 Pro Max
   static const Device iPhone12ProMax = Device.mobile(
     name: 'iPhone 12 Pro Max',

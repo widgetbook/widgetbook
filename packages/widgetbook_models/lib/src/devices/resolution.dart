@@ -1,15 +1,27 @@
-import 'package:meta/meta.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:widgetbook_models/src/devices/device_size.dart';
+
+part 'resolution.freezed.dart';
 
 /// The resolution of a device defined by the nativeSize of the Device
 /// and its scaling factor.
-@immutable
-class Resolution {
+@freezed
+class Resolution with _$Resolution {
   /// Creates a new instance based on nativeSize and scaleFactor
-  const Resolution({
-    required this.nativeSize,
-    required this.scaleFactor,
-  });
+  const factory Resolution({
+    /// The nativeSize defines the number of pixels of the device screen.
+    /// It is used to calculate the logical size of the device by
+    /// using the following formula:
+    /// logicalSize = nativeSize / scaleFactor
+    required DeviceSize nativeSize,
+
+    /// The scaleFactor is used to calculate the logical size of the device by
+    /// using the following formula:
+    /// logicalSize = nativeSize / scaleFactor
+    required double scaleFactor,
+  }) = _Resolution;
+
+  const Resolution._();
 
   /// Crates a newinstance based on nativeWidth, nativeHeight and scaleFactor
   factory Resolution.dimensions({
@@ -30,27 +42,4 @@ class Resolution {
   /// It is calculated by using the following formula:
   /// logicalSize = nativeSize / scaleFactor
   DeviceSize get logicalSize => nativeSize / scaleFactor;
-
-  /// The nativeSize defines the number of pixels of the device screen.
-  /// It is used to calculate the logical size of the device by
-  /// using the following formula:
-  /// logicalSize = nativeSize / scaleFactor
-  final DeviceSize nativeSize;
-
-  /// The scaleFactor is used to calculate the logical size of the device by
-  /// using the following formula:
-  /// logicalSize = nativeSize / scaleFactor
-  final double scaleFactor;
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Resolution &&
-        other.nativeSize == nativeSize &&
-        other.scaleFactor == scaleFactor;
-  }
-
-  @override
-  int get hashCode => nativeSize.hashCode ^ scaleFactor.hashCode;
 }

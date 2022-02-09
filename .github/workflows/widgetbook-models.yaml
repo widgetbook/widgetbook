@@ -37,6 +37,7 @@ jobs:
       uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
       with:
         path: packages/widgetbook_models/coverage/lcov.info
+        exclude: '**/*.g.dart **/*.freezed.dart'
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1

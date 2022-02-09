@@ -1,4 +1,3 @@
-import 'package:device_frame/device_frame.dart' as frame;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -35,33 +34,11 @@ class HotreloadWidgetbook extends StatelessWidget {
         Locale('fr'),
       ],
       devices: [
+        Apple.iPhone12ProMax,
+        Apple.iPhone13Mini,
+        Apple.iPhone11ProMax,
         Apple.iPhone11,
-        Apple.iPhone12,
-        Samsung.s10,
-        Samsung.s21ultra,
       ],
-      frames: [
-        WidgetbookFrame.defaultFrame(),
-        WidgetbookFrame.deviceFrame(),
-        WidgetbookFrame.noFrame(),
-      ],
-      deviceFrameBuilder: (context, device, renderMode, child) {
-        if (renderMode == WidgetbookFrame.defaultFrame()) {
-          return WidgetbookDeviceFrame(
-            device: device,
-            child: child,
-          );
-        }
-
-        if (renderMode == WidgetbookFrame.deviceFrame()) {
-          return frame.DeviceFrame(
-            device: frame.Devices.ios.iPhone12,
-            screen: child,
-          );
-        }
-
-        return child;
-      },
       themes: [
         WidgetbookTheme(
           name: 'Light',

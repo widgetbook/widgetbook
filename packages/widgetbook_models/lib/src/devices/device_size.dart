@@ -1,22 +1,23 @@
-import 'package:meta/meta.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'device_size.freezed.dart';
 
 /// Defines the size of a device
 ///
 /// This is implemented since build_runner does not work with flutter
 /// dependencies. Therefore, Size from flutter material cannot be used.
-@immutable
-class DeviceSize {
+@freezed
+class DeviceSize with _$DeviceSize {
   /// Creates a new instance of DeviceSize by specifying width and height.
-  const DeviceSize({
-    required this.width,
-    required this.height,
-  });
+  const factory DeviceSize({
+    /// Width of the device
+    required double width,
 
-  /// Width of the device
-  final double width;
+    /// Height of the device
+    required double height,
+  }) = _DeviceSize;
 
-  /// Height of the device
-  final double height;
+  const DeviceSize._();
 
   /// Multiplication operator.
   ///
@@ -37,16 +38,4 @@ class DeviceSize {
         width: width / operand,
         height: height / operand,
       );
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is DeviceSize &&
-        other.width == width &&
-        other.height == height;
-  }
-
-  @override
-  int get hashCode => width.hashCode ^ height.hashCode;
 }
