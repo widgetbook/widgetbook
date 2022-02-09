@@ -12,16 +12,19 @@ class WorkbenchProvider<CustomTheme>
     required List<Locale> locales,
     required List<Device> devices,
     required List<WidgetbookFrame> frames,
+    required List<double> textScaleFactors,
   }) : super(
           state: WorkbenchState(
             frame: frames.first,
             locale: locales.first,
             device: devices.first,
             theme: themes.first,
+            textScaleFactor: textScaleFactors.first,
             themes: themes,
             locales: locales,
             devices: devices,
             frames: frames,
+            textScaleFactors: textScaleFactors,
           ),
         );
 
@@ -30,6 +33,7 @@ class WorkbenchProvider<CustomTheme>
     required List<Locale> locales,
     required List<Device> devices,
     required List<WidgetbookFrame> frames,
+    required List<double> textScaleFactors,
   }) {
     state = state.copyWith(
       frame: frames.firstWhere(
@@ -56,10 +60,27 @@ class WorkbenchProvider<CustomTheme>
               (element) => element == state.device,
               orElse: () => devices.first,
             ),
+      textScaleFactor: textScaleFactors.firstWhere(
+        (element) => element == state.textScaleFactor,
+        orElse: () => textScaleFactors.first,
+      ),
+      textScaleFactors: textScaleFactors,
       themes: themes,
       locales: locales,
       devices: devices,
       frames: frames,
+    );
+  }
+
+  WorkbenchState<CustomTheme> resetComparisonSetting(
+    ComparisonSetting comparisonSetting,
+  ) {
+    return state.copyWith(
+      comparisonSetting: comparisonSetting,
+      locale: state.locale ?? state.locales.first,
+      theme: state.theme ?? state.themes.first,
+      device: state.device ?? state.devices.first,
+      textScaleFactor: state.textScaleFactor ?? state.textScaleFactors.first,
     );
   }
 
@@ -68,38 +89,23 @@ class WorkbenchProvider<CustomTheme>
       comparisonSetting = ComparisonSetting.none;
     }
 
+    final newState = resetComparisonSetting(comparisonSetting);
+
     switch (comparisonSetting) {
       case ComparisonSetting.none:
-        state = state.copyWith(
-          comparisonSetting: comparisonSetting,
-          locale: state.locale ?? state.locales.first,
-          theme: state.theme ?? state.themes.first,
-          device: state.device ?? state.devices.first,
-        );
+        state = newState;
         break;
       case ComparisonSetting.themes:
-        state = state.copyWith(
-          comparisonSetting: comparisonSetting,
-          locale: state.locale ?? state.locales.first,
-          theme: null,
-          device: state.device ?? state.devices.first,
-        );
+        state = newState.copyWith(theme: null);
         break;
       case ComparisonSetting.devices:
-        state = state.copyWith(
-          comparisonSetting: comparisonSetting,
-          locale: state.locale ?? state.locales.first,
-          theme: state.theme ?? state.themes.first,
-          device: null,
-        );
+        state = state = newState.copyWith(device: null);
         break;
       case ComparisonSetting.localization:
-        state = state.copyWith(
-          comparisonSetting: comparisonSetting,
-          locale: null,
-          theme: state.theme ?? state.themes.first,
-          device: state.device ?? state.devices.first,
-        );
+        state = state = newState.copyWith(locale: null);
+        break;
+      case ComparisonSetting.textScale:
+        state = state = newState.copyWith(textScaleFactor: null);
         break;
     }
   }
@@ -134,6 +140,10 @@ class WorkbenchProvider<CustomTheme>
 
   void changedDeviceFrame(WidgetbookFrame frame) {
     state = state.copyWith(frame: frame);
+  }
+
+  void changedTextScaleFactor(double textScaleFactor) {
+    state = state.copyWith(textScaleFactor: textScaleFactor);
   }
 
   void nextLocale() {
@@ -209,6 +219,24 @@ class WorkbenchProvider<CustomTheme>
     final previousDevice = state.frames.getPrevious(state.frame);
     state = state.copyWith(
       frame: previousDevice,
+    );
+  }
+
+  void nextTextScaleFactor() {
+    final nextTextScaleFactor = state.textScaleFactors.getNext(
+      state.textScaleFactor,
+    );
+    state = state.copyWith(
+      textScaleFactor: nextTextScaleFactor,
+    );
+  }
+
+  void previousTextScaleFactor() {
+    final previousTextScaleFactor = state.textScaleFactors.getPrevious(
+      state.textScaleFactor,
+    );
+    state = state.copyWith(
+      textScaleFactor: previousTextScaleFactor,
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:widgetbook/src/constants/constants.dart';
 import 'package:widgetbook/src/devices/device_handle.dart';
 import 'package:widgetbook/src/localization/localization_handle.dart';
 import 'package:widgetbook/src/rendering/render_handle.dart';
+import 'package:widgetbook/src/text_scale/text_scale_handle.dart';
 import 'package:widgetbook/src/theming/theme_handle.dart';
 
 class WorkbenchControls<CustomTheme> extends StatelessWidget {
@@ -36,6 +37,10 @@ class WorkbenchControls<CustomTheme> extends StatelessWidget {
                     width: 40,
                   ),
                   RenderHandle<CustomTheme>(),
+                  const SizedBox(
+                    width: 40,
+                  ),
+                  TextScaleHandle<CustomTheme>(),
                 ],
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:widgetbook/src/rendering/builders/text_scale_builder.dart';
 
 import 'package:widgetbook/src/rendering/rendering.dart';
 
@@ -12,6 +13,7 @@ class RenderingState<CustomTheme> with _$RenderingState<CustomTheme> {
     required LocalizationBuilderFunction localizationBuilder,
     required ThemeBuilderFunction<CustomTheme> themeBuilder,
     required ScaffoldBuilderFunction scaffoldBuilder,
+    required TextScaleBuilder textScaleBuilder,
     required UseCaseBuilderFunction useCaseBuilder,
   }) = _RenderingState;
 }

@@ -70,6 +70,23 @@ void main() {
           );
 
           test(
+            'textScaleFactors is empty',
+            () {
+              expect(
+                () => Widgetbook(
+                  categories: categories,
+                  appInfo: appInfo,
+                  themes: themes,
+                  textScaleFactors: const [],
+                ),
+                expectAssertionErrorWithMessage(
+                  message: 'Please specify at least one textScaleFactor.',
+                ),
+              );
+            },
+          );
+
+          test(
             'themes is empty',
             () {
               expect(

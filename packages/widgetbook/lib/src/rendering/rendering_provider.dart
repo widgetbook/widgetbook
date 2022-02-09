@@ -1,3 +1,4 @@
+import 'package:widgetbook/src/rendering/builders/text_scale_builder.dart';
 import 'package:widgetbook/src/rendering/rendering.dart';
 import 'package:widgetbook/src/state_change_notifier.dart';
 
@@ -9,6 +10,7 @@ class RenderingProvider<CustomTheme>
     required LocalizationBuilderFunction localizationBuilder,
     required ThemeBuilderFunction<CustomTheme> themeBuilder,
     required ScaffoldBuilderFunction scaffoldBuilder,
+    TextScaleBuilder? textScaleBuilder,
     required UseCaseBuilderFunction useCaseBuilder,
   }) : super(
           state: RenderingState<CustomTheme>(
@@ -17,6 +19,7 @@ class RenderingProvider<CustomTheme>
             localizationBuilder: localizationBuilder,
             themeBuilder: themeBuilder,
             scaffoldBuilder: scaffoldBuilder,
+            textScaleBuilder: textScaleBuilder ?? defaultTextScaleBuilder,
             useCaseBuilder: useCaseBuilder,
           ),
         );
