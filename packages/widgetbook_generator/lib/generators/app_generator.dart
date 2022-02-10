@@ -2,8 +2,10 @@ import 'package:widgetbook_generator/code_generators/instances/app_info_instance
 import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/theme_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/theme_mode_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/variable_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_instance.dart';
+import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
@@ -16,6 +18,8 @@ String generateWidgetbook({
   required List<Device> devices,
   required bool foldersExpanded,
   required bool widgetsExpanded,
+  WidgetbookLocalesData? localesData,
+  WidgetbookThemeData? widgetbookThemeData,
   WidgetbookThemeData? lightTheme,
   WidgetbookThemeData? darkTheme,
   bool? defaultThemeIsDark,
@@ -35,6 +39,9 @@ String generateWidgetbook({
     categories: [
       category,
     ],
+    locales: localesData != null
+        ? VariableInstance(variableIdentifier: localesData.name)
+        : null,
   ).toCode();
 
   return '''

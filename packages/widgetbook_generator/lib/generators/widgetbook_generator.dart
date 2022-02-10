@@ -9,6 +9,7 @@ import 'package:widgetbook_generator/extensions/list_extension.dart';
 import 'package:widgetbook_generator/generators/app_generator.dart';
 import 'package:widgetbook_generator/generators/imports_generator.dart';
 import 'package:widgetbook_generator/generators/main_generator.dart';
+import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 import 'package:widgetbook_generator/readers/device_reader.dart';
@@ -37,6 +38,8 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
       (map) => WidgetbookStoryData.fromMap(map),
     );
 
+    final locales = await _getLocales(buildStep);
+
     final name = _getName(annotation);
     final devices = _getDevices(annotation);
     final lightTheme =
@@ -53,6 +56,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
           [
             ...themeData,
             ...stories,
+            if (locales != null) locales,
           ],
         ),
       )
@@ -69,11 +73,28 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
           devices: devices,
           foldersExpanded: foldersExpanded,
           widgetsExpanded: widgetsExpanded,
+          localesData: locales,
         ),
       );
 
     return buffer.toString();
   }
+}
+
+Future<WidgetbookLocalesData?> _getLocales(BuildStep buildStep) async {
+  final locales = await _loadDataFromJson(
+    buildStep,
+    '**.locales.widgetbook.json',
+    (map) => WidgetbookLocalesData.fromJson(map),
+  );
+
+  if (locales.length > 1) {
+    throw InvalidGenerationSourceError(
+      'More than one list of locales defined.',
+    );
+  }
+
+  return locales.isNotEmpty ? locales.first : null;
 }
 
 List<Device> _getDevices(ConstantReader annotation) {
@@ -114,7 +135,8 @@ Future<List<T>> _loadDataFromJson<T>(
   final glob = Glob(extension);
   final widgetbookData = <T>[];
   await for (final id in buildStep.findAssets(glob)) {
-    final decodedJson = jsonDecode(await buildStep.readAsString(id)) as List;
+    dynamic content = jsonDecode(await buildStep.readAsString(id));
+    final decodedJson = content as List;
     final jsons = decodedJson.cast<Map<String, dynamic>>();
     final something = jsons.map<T>((Map<String, dynamic> json) {
       return fromMap(json);

@@ -51,7 +51,7 @@ class WidgetbookThemeData extends WidgetbookData {
   final bool isDarkTheme;
 
   @override
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'name': name,
       'importStatement': importStatement,
