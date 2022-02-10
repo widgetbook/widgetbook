@@ -1,5 +1,6 @@
 library widgetbook_models;
 
+export './src/device_frame/device_frame.dart';
 export './src/devices/apple_devices.dart';
 export './src/devices/desktop_screens.dart';
 export './src/devices/device.dart';

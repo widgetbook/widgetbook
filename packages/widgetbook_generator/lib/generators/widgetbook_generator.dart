@@ -42,6 +42,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
 
     final name = _getName(annotation);
     final devices = _getDevices(annotation);
+    final frames = _getFrames(annotation);
     final lightTheme =
         themeData.firstWhereOrDefault((element) => !element.isDarkTheme);
     final darkTheme =
@@ -71,6 +72,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
           defaultThemeIsDark: defaultThemeIsDark,
           stories: stories,
           devices: devices,
+          frames: frames,
           foldersExpanded: foldersExpanded,
           widgetsExpanded: widgetsExpanded,
           localesData: locales,
@@ -106,6 +108,20 @@ List<Device> _getDevices(ConstantReader annotation) {
   }
 
   return devices;
+}
+
+List<WidgetbookFrame> _getFrames(ConstantReader annotation) {
+  final frames = <WidgetbookFrame>[];
+
+  for (final deviceObject in annotation.read('frames').listValue) {
+    final name = deviceObject.getField('name')!.toStringValue()!;
+    final allowsDevices =
+        deviceObject.getField('allowsDevices')!.toBoolValue()!;
+
+    frames.add(WidgetbookFrame(name: name, allowsDevices: allowsDevices));
+  }
+
+  return frames;
 }
 
 String _getName(ConstantReader annotation) {

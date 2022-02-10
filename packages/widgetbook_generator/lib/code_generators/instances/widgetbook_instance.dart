@@ -1,5 +1,6 @@
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/frame_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/theme_instance.dart';
@@ -7,7 +8,6 @@ import 'package:widgetbook_generator/code_generators/instances/theme_mode_instan
 import 'package:widgetbook_generator/code_generators/instances/variable_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
-import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
 
 /// An instance for Widgetbook
 class WidgetbookInstance extends Instance {
@@ -19,6 +19,7 @@ class WidgetbookInstance extends Instance {
     ThemeInstance? darkThemeInstance,
     ThemeModeInstance? defaultThemeInstance,
     List<DeviceInstance> devices = const <DeviceInstance>[],
+    List<FrameInstance> frames = const <FrameInstance>[],
     VariableInstance? locales,
   }) : super(
           name: 'Widgetbook',
@@ -36,6 +37,11 @@ class WidgetbookInstance extends Instance {
               Property(
                 key: 'devices',
                 instance: ListInstance(instances: devices),
+              ),
+            if (frames.isNotEmpty)
+              Property(
+                key: 'frames',
+                instance: ListInstance(instances: frames),
               ),
             Property(
               key: 'categories',

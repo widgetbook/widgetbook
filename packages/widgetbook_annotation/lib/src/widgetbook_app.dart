@@ -11,6 +11,7 @@ class WidgetbookApp {
   const WidgetbookApp({
     required this.name,
     this.devices = const <Device>[],
+    this.frames = const <WidgetbookFrame>[],
     this.defaultTheme,
     this.foldersExpanded = false,
     this.widgetsExpanded = false,
@@ -18,6 +19,9 @@ class WidgetbookApp {
 
   /// The devices shown in the Widgetbook
   final List<Device> devices;
+
+  /// The device frames shown in the Widgetbook
+  final List<WidgetbookFrame> frames;
 
   /// The name of the widgetbook.
   /// This information will be displayed at the top left corner in the UI.
