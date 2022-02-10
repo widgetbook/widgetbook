@@ -5,6 +5,7 @@ import 'package:widgetbook/src/localization/localization_handle.dart';
 import 'package:widgetbook/src/rendering/render_handle.dart';
 import 'package:widgetbook/src/text_scale/text_scale_handle.dart';
 import 'package:widgetbook/src/theming/theme_handle.dart';
+import 'package:widgetbook/src/workbench/orientation_handle.dart';
 
 class WorkbenchControls<CustomTheme> extends StatelessWidget {
   const WorkbenchControls({Key? key}) : super(key: key);
@@ -41,6 +42,10 @@ class WorkbenchControls<CustomTheme> extends StatelessWidget {
                     width: 40,
                   ),
                   TextScaleHandle<CustomTheme>(),
+                  const SizedBox(
+                    width: 40,
+                  ),
+                  OrientationHandle<CustomTheme>(),
                 ],
               ),
             ),

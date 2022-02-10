@@ -26,6 +26,7 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
               theme: e.data,
               frame: workbenchState.frame,
               textScaleFactor: workbenchState.textScaleFactor!,
+              orientation: workbenchState.orientation,
               useCaseBuilder: builder,
             ),
           )
@@ -48,6 +49,7 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
               theme: workbenchState.theme!.data,
               frame: workbenchState.frame,
               textScaleFactor: workbenchState.textScaleFactor!,
+              orientation: workbenchState.orientation,
               useCaseBuilder: builder,
             ),
           )
@@ -70,6 +72,7 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
               theme: workbenchState.theme!.data,
               frame: workbenchState.frame,
               textScaleFactor: workbenchState.textScaleFactor!,
+              orientation: workbenchState.orientation,
               useCaseBuilder: builder,
             ),
           )
@@ -92,6 +95,7 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
               theme: workbenchState.theme!.data,
               frame: workbenchState.frame,
               textScaleFactor: e,
+              orientation: workbenchState.orientation,
               useCaseBuilder: builder,
             ),
           )
@@ -111,6 +115,7 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
       theme: workbenchState.theme!.data,
       frame: workbenchState.frame,
       textScaleFactor: workbenchState.textScaleFactor!,
+      orientation: workbenchState.orientation,
       useCaseBuilder: builder,
     );
   }

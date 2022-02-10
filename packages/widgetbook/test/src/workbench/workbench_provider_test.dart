@@ -241,6 +241,64 @@ void main() {
       );
 
       group(
+        'toggledOrientation',
+        () {
+          test(
+            'changes ${Orientation.portrait} to ${Orientation.landscape}',
+            () {
+              final provider = WorkbenchProvider<ThemeData>(
+                locales: locales,
+                themes: themes,
+                devices: devices,
+                frames: frames,
+                textScaleFactors: textScaleFactors,
+              )..toggledOrientation();
+
+              expect(
+                provider.state,
+                equals(
+                  WorkbenchState<ThemeData>(
+                    frame: WidgetbookFrame.defaultFrame(),
+                    theme: lightTheme,
+                    locale: usLocale,
+                    device: iPhone,
+                    textScaleFactor: textScaleFactor1,
+                    frames: frames,
+                    locales: locales,
+                    themes: themes,
+                    devices: devices,
+                    textScaleFactors: textScaleFactors,
+                    orientation: Orientation.landscape,
+                  ),
+                ),
+              );
+
+              provider.toggledOrientation();
+
+              expect(
+                provider.state,
+                equals(
+                  WorkbenchState<ThemeData>(
+                    frame: WidgetbookFrame.defaultFrame(),
+                    theme: lightTheme,
+                    locale: usLocale,
+                    device: iPhone,
+                    textScaleFactor: textScaleFactor1,
+                    frames: frames,
+                    locales: locales,
+                    themes: themes,
+                    devices: devices,
+                    textScaleFactors: textScaleFactors,
+                    orientation: Orientation.portrait,
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      );
+
+      group(
         'changedDevice',
         () {
           test(

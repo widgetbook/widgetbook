@@ -13,6 +13,7 @@ class Renderer<CustomTheme> extends StatelessWidget {
     required this.theme,
     required this.frame,
     required this.textScaleFactor,
+    required this.orientation,
     required this.useCaseBuilder,
   }) : super(key: key);
 
@@ -22,6 +23,7 @@ class Renderer<CustomTheme> extends StatelessWidget {
   final CustomTheme theme;
   final WidgetbookFrame frame;
   final double textScaleFactor;
+  final Orientation orientation;
   final Widget Function(BuildContext) useCaseBuilder;
 
   Widget _buildText() {
@@ -65,6 +67,7 @@ class Renderer<CustomTheme> extends StatelessWidget {
                   context,
                   device,
                   frame,
+                  orientation,
                   Builder(builder: (context) {
                     return renderingState.textScaleBuilder(
                       context,

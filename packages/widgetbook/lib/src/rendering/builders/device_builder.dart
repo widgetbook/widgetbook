@@ -36,10 +36,12 @@ DeviceFrameBuilderFunction get defaultDeviceFrameBuilder => (
       BuildContext context,
       Device device,
       WidgetbookFrame frame,
+      Orientation orientation,
       Widget child,
     ) {
       if (frame == WidgetbookFrame.defaultFrame()) {
         return WidgetbookDeviceFrame(
+          orientation: orientation,
           device: device,
           child: child,
         );
@@ -48,6 +50,7 @@ DeviceFrameBuilderFunction get defaultDeviceFrameBuilder => (
       if (frame == WidgetbookFrame.deviceFrame()) {
         final deviceInfo = mapDeviceToDeviceInfo(device);
         return DeviceFrame(
+          orientation: orientation,
           device: deviceInfo,
           screen: child,
         );
@@ -60,5 +63,6 @@ typedef DeviceFrameBuilderFunction = Widget Function(
   BuildContext context,
   Device device,
   WidgetbookFrame frame,
+  Orientation orientation,
   Widget child,
 );

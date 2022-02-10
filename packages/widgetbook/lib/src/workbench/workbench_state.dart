@@ -14,6 +14,7 @@ class WorkbenchState<CustomTheme> with _$WorkbenchState<CustomTheme> {
     Device? device,
     required double? textScaleFactor,
     required WidgetbookFrame frame,
+    @Default(Orientation.portrait) Orientation orientation,
     required List<WidgetbookTheme<CustomTheme>> themes,
     required List<Locale> locales,
     required List<Device> devices,

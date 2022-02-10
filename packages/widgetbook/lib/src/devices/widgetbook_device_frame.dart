@@ -6,10 +6,29 @@ class WidgetbookDeviceFrame extends StatelessWidget {
     Key? key,
     required this.device,
     required this.child,
+    required this.orientation,
   }) : super(key: key);
 
   final Device device;
   final Widget child;
+  final Orientation orientation;
+
+  bool get _isLandscape {
+    return orientation == Orientation.landscape &&
+        device.type != DeviceType.desktop;
+  }
+
+  double get _width {
+    return _isLandscape
+        ? device.resolution.logicalSize.height
+        : device.resolution.logicalSize.width;
+  }
+
+  double get _height {
+    return _isLandscape
+        ? device.resolution.logicalSize.width
+        : device.resolution.logicalSize.height;
+  }
 
   MediaQueryData mediaQuery({
     required BuildContext context,
@@ -17,11 +36,8 @@ class WidgetbookDeviceFrame extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     final viewPadding = mediaQuery.padding;
 
-    final width = device.resolution.logicalSize.width;
-    final height = device.resolution.logicalSize.height;
-
     final deviceQuery = mediaQuery.copyWith(
-      size: Size(width, height),
+      size: Size(_width, _height),
       padding: viewPadding,
       viewInsets: EdgeInsets.zero,
       viewPadding: viewPadding,
@@ -41,8 +57,8 @@ class WidgetbookDeviceFrame extends StatelessWidget {
               : Colors.black,
         ),
       ),
-      width: device.resolution.logicalSize.width,
-      height: device.resolution.logicalSize.height,
+      width: _width,
+      height: _height,
       child: MediaQuery(
         data: mediaQuery(
           context: context,
