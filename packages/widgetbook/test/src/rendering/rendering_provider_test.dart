@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/src/rendering/builders/text_scale_builder.dart';
 import 'package:widgetbook/src/rendering/rendering.dart';
 
 void main() {
@@ -19,6 +20,7 @@ void main() {
           final themeBuilder = defaultThemeBuilder<ThemeData>();
           final scaffoldBuilder = defaultScaffoldBuilder;
           final useCaseBuilder = defaultUseCaseBuilder;
+          final textScaleBuilder = defaultTextScaleBuilder;
 
           final provider = RenderingProvider(
             frames: frames,
@@ -27,6 +29,7 @@ void main() {
             themeBuilder: themeBuilder,
             scaffoldBuilder: scaffoldBuilder,
             useCaseBuilder: useCaseBuilder,
+            textScaleBuilder: textScaleBuilder,
           );
 
           expect(
@@ -38,6 +41,7 @@ void main() {
                 localizationBuilder: localizationBuilder,
                 themeBuilder: themeBuilder,
                 scaffoldBuilder: scaffoldBuilder,
+                textScaleBuilder: textScaleBuilder,
                 useCaseBuilder: useCaseBuilder,
               ),
             ),

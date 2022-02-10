@@ -22,6 +22,7 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         channel: stable
+        flutter-version: '2.8.0'
     - name: Enable MacOS desktop support
       run: flutter config --enable-macos-desktop
     - run: flutter pub get

@@ -49,6 +49,10 @@ class HotreloadWidgetbook extends StatelessWidget {
           data: darkTheme,
         )
       ],
+      textScaleFactors: [
+        1,
+        2,
+      ],
       categories: [
         WidgetbookCategory(
           name: 'widgets test',

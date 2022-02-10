@@ -306,6 +306,10 @@ The `frames` property allows developers to define different ways of how the fram
 
 If the Device Frame option is active, the Widgetbook devices will be mapped to the devices of [device_frame](https://pub.dev/packages/device_frame).
 
+## `textScaleFactors`
+
+The `textScaleFactors` property allows you to define a list of different text scales which are injected (and can then be accessed) via the `MediaQuery`. The list defaults to `textScaleFactors` of `[ 1.0 ]`. 
+
 ## Builders
 
 `Widgetbook` exposes various builder functions to allow customization of how `WidgetbookUseCase`s are displayed.
@@ -377,7 +381,13 @@ Widgetbook<CupertinoThemeData>(
 
 ### `scaffoldBuilder` and `useCaseBuilder`
 
-Both the `scaffoldBuilder` and `useCaseBuilder` can be used to wrap the `Widget` with e.g. a `Scaffold` or some other `Widget` like a `Center`, `Container` or `Padding`.  
+Both the `scaffoldBuilder` and `useCaseBuilder` can be used to wrap the `Widget` with e.g. a `Scaffold` or some other `Widget` like a `Center`, `Container` or `Padding`.
+
+# Supported Flutter version
+
+We are currently aiming to support the following flutter version
+
+`flutter: >=2.8.0`
 
 # Known Issues
 

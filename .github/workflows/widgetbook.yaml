@@ -24,6 +24,7 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         channel: stable
+        flutter-version: '2.8.0'
 
     - name: Get flutter packages 
       run: flutter pub get
@@ -60,5 +61,6 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         channel: stable
+        flutter-version: '2.8.0'
     - run: flutter pub get
     - run: flutter analyze

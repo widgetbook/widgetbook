@@ -22,21 +22,25 @@ class _$WorkbenchStateTearOff {
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
+      required double? textScaleFactor,
       required WidgetbookFrame frame,
       required List<WidgetbookTheme<CustomTheme>> themes,
       required List<Locale> locales,
       required List<Device> devices,
-      required List<WidgetbookFrame> frames}) {
+      required List<WidgetbookFrame> frames,
+      required List<double> textScaleFactors}) {
     return _WorkbenchState<CustomTheme>(
       comparisonSetting: comparisonSetting,
       theme: theme,
       locale: locale,
       device: device,
+      textScaleFactor: textScaleFactor,
       frame: frame,
       themes: themes,
       locales: locales,
       devices: devices,
       frames: frames,
+      textScaleFactors: textScaleFactors,
     );
   }
 }
@@ -50,12 +54,14 @@ mixin _$WorkbenchState<CustomTheme> {
   WidgetbookTheme<CustomTheme>? get theme => throw _privateConstructorUsedError;
   Locale? get locale => throw _privateConstructorUsedError;
   Device? get device => throw _privateConstructorUsedError;
+  double? get textScaleFactor => throw _privateConstructorUsedError;
   WidgetbookFrame get frame => throw _privateConstructorUsedError;
   List<WidgetbookTheme<CustomTheme>> get themes =>
       throw _privateConstructorUsedError;
   List<Locale> get locales => throw _privateConstructorUsedError;
   List<Device> get devices => throw _privateConstructorUsedError;
   List<WidgetbookFrame> get frames => throw _privateConstructorUsedError;
+  List<double> get textScaleFactors => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WorkbenchStateCopyWith<CustomTheme, WorkbenchState<CustomTheme>>
@@ -72,13 +78,16 @@ abstract class $WorkbenchStateCopyWith<CustomTheme, $Res> {
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
+      double? textScaleFactor,
       WidgetbookFrame frame,
       List<WidgetbookTheme<CustomTheme>> themes,
       List<Locale> locales,
       List<Device> devices,
-      List<WidgetbookFrame> frames});
+      List<WidgetbookFrame> frames,
+      List<double> textScaleFactors});
 
   $WidgetbookThemeCopyWith<CustomTheme, $Res>? get theme;
+  $DeviceCopyWith<$Res>? get device;
   $WidgetbookFrameCopyWith<$Res> get frame;
 }
 
@@ -97,11 +106,13 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
     Object? theme = freezed,
     Object? locale = freezed,
     Object? device = freezed,
+    Object? textScaleFactor = freezed,
     Object? frame = freezed,
     Object? themes = freezed,
     Object? locales = freezed,
     Object? devices = freezed,
     Object? frames = freezed,
+    Object? textScaleFactors = freezed,
   }) {
     return _then(_value.copyWith(
       comparisonSetting: comparisonSetting == freezed
@@ -120,6 +131,10 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
           ? _value.device
           : device // ignore: cast_nullable_to_non_nullable
               as Device?,
+      textScaleFactor: textScaleFactor == freezed
+          ? _value.textScaleFactor
+          : textScaleFactor // ignore: cast_nullable_to_non_nullable
+              as double?,
       frame: frame == freezed
           ? _value.frame
           : frame // ignore: cast_nullable_to_non_nullable
@@ -140,6 +155,10 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
           ? _value.frames
           : frames // ignore: cast_nullable_to_non_nullable
               as List<WidgetbookFrame>,
+      textScaleFactors: textScaleFactors == freezed
+          ? _value.textScaleFactors
+          : textScaleFactors // ignore: cast_nullable_to_non_nullable
+              as List<double>,
     ));
   }
 
@@ -151,6 +170,17 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
 
     return $WidgetbookThemeCopyWith<CustomTheme, $Res>(_value.theme!, (value) {
       return _then(_value.copyWith(theme: value));
+    });
+  }
+
+  @override
+  $DeviceCopyWith<$Res>? get device {
+    if (_value.device == null) {
+      return null;
+    }
+
+    return $DeviceCopyWith<$Res>(_value.device!, (value) {
+      return _then(_value.copyWith(device: value));
     });
   }
 
@@ -174,14 +204,18 @@ abstract class _$WorkbenchStateCopyWith<CustomTheme, $Res>
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
+      double? textScaleFactor,
       WidgetbookFrame frame,
       List<WidgetbookTheme<CustomTheme>> themes,
       List<Locale> locales,
       List<Device> devices,
-      List<WidgetbookFrame> frames});
+      List<WidgetbookFrame> frames,
+      List<double> textScaleFactors});
 
   @override
   $WidgetbookThemeCopyWith<CustomTheme, $Res>? get theme;
+  @override
+  $DeviceCopyWith<$Res>? get device;
   @override
   $WidgetbookFrameCopyWith<$Res> get frame;
 }
@@ -204,11 +238,13 @@ class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
     Object? theme = freezed,
     Object? locale = freezed,
     Object? device = freezed,
+    Object? textScaleFactor = freezed,
     Object? frame = freezed,
     Object? themes = freezed,
     Object? locales = freezed,
     Object? devices = freezed,
     Object? frames = freezed,
+    Object? textScaleFactors = freezed,
   }) {
     return _then(_WorkbenchState<CustomTheme>(
       comparisonSetting: comparisonSetting == freezed
@@ -227,6 +263,10 @@ class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
           ? _value.device
           : device // ignore: cast_nullable_to_non_nullable
               as Device?,
+      textScaleFactor: textScaleFactor == freezed
+          ? _value.textScaleFactor
+          : textScaleFactor // ignore: cast_nullable_to_non_nullable
+              as double?,
       frame: frame == freezed
           ? _value.frame
           : frame // ignore: cast_nullable_to_non_nullable
@@ -247,6 +287,10 @@ class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
           ? _value.frames
           : frames // ignore: cast_nullable_to_non_nullable
               as List<WidgetbookFrame>,
+      textScaleFactors: textScaleFactors == freezed
+          ? _value.textScaleFactors
+          : textScaleFactors // ignore: cast_nullable_to_non_nullable
+              as List<double>,
     ));
   }
 }
@@ -259,11 +303,13 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
       this.theme,
       this.locale,
       this.device,
+      required this.textScaleFactor,
       required this.frame,
       required this.themes,
       required this.locales,
       required this.devices,
-      required this.frames});
+      required this.frames,
+      required this.textScaleFactors});
 
   @JsonKey()
   @override
@@ -275,6 +321,8 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
   @override
   final Device? device;
   @override
+  final double? textScaleFactor;
+  @override
   final WidgetbookFrame frame;
   @override
   final List<WidgetbookTheme<CustomTheme>> themes;
@@ -284,10 +332,12 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
   final List<Device> devices;
   @override
   final List<WidgetbookFrame> frames;
+  @override
+  final List<double> textScaleFactors;
 
   @override
   String toString() {
-    return 'WorkbenchState<$CustomTheme>(comparisonSetting: $comparisonSetting, theme: $theme, locale: $locale, device: $device, frame: $frame, themes: $themes, locales: $locales, devices: $devices, frames: $frames)';
+    return 'WorkbenchState<$CustomTheme>(comparisonSetting: $comparisonSetting, theme: $theme, locale: $locale, device: $device, textScaleFactor: $textScaleFactor, frame: $frame, themes: $themes, locales: $locales, devices: $devices, frames: $frames, textScaleFactors: $textScaleFactors)';
   }
 
   @override
@@ -300,11 +350,15 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
             const DeepCollectionEquality().equals(other.theme, theme) &&
             const DeepCollectionEquality().equals(other.locale, locale) &&
             const DeepCollectionEquality().equals(other.device, device) &&
+            const DeepCollectionEquality()
+                .equals(other.textScaleFactor, textScaleFactor) &&
             const DeepCollectionEquality().equals(other.frame, frame) &&
             const DeepCollectionEquality().equals(other.themes, themes) &&
             const DeepCollectionEquality().equals(other.locales, locales) &&
             const DeepCollectionEquality().equals(other.devices, devices) &&
-            const DeepCollectionEquality().equals(other.frames, frames));
+            const DeepCollectionEquality().equals(other.frames, frames) &&
+            const DeepCollectionEquality()
+                .equals(other.textScaleFactors, textScaleFactors));
   }
 
   @override
@@ -314,11 +368,13 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
       const DeepCollectionEquality().hash(theme),
       const DeepCollectionEquality().hash(locale),
       const DeepCollectionEquality().hash(device),
+      const DeepCollectionEquality().hash(textScaleFactor),
       const DeepCollectionEquality().hash(frame),
       const DeepCollectionEquality().hash(themes),
       const DeepCollectionEquality().hash(locales),
       const DeepCollectionEquality().hash(devices),
-      const DeepCollectionEquality().hash(frames));
+      const DeepCollectionEquality().hash(frames),
+      const DeepCollectionEquality().hash(textScaleFactors));
 
   @JsonKey(ignore: true)
   @override
@@ -334,11 +390,13 @@ abstract class _WorkbenchState<CustomTheme>
       WidgetbookTheme<CustomTheme>? theme,
       Locale? locale,
       Device? device,
+      required double? textScaleFactor,
       required WidgetbookFrame frame,
       required List<WidgetbookTheme<CustomTheme>> themes,
       required List<Locale> locales,
       required List<Device> devices,
-      required List<WidgetbookFrame> frames}) = _$_WorkbenchState<CustomTheme>;
+      required List<WidgetbookFrame> frames,
+      required List<double> textScaleFactors}) = _$_WorkbenchState<CustomTheme>;
 
   @override
   ComparisonSetting get comparisonSetting;
@@ -349,6 +407,8 @@ abstract class _WorkbenchState<CustomTheme>
   @override
   Device? get device;
   @override
+  double? get textScaleFactor;
+  @override
   WidgetbookFrame get frame;
   @override
   List<WidgetbookTheme<CustomTheme>> get themes;
@@ -358,6 +418,8 @@ abstract class _WorkbenchState<CustomTheme>
   List<Device> get devices;
   @override
   List<WidgetbookFrame> get frames;
+  @override
+  List<double> get textScaleFactors;
   @override
   @JsonKey(ignore: true)
   _$WorkbenchStateCopyWith<CustomTheme, _WorkbenchState<CustomTheme>>

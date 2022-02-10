@@ -12,6 +12,7 @@ class Renderer<CustomTheme> extends StatelessWidget {
     required this.localizationsDelegates,
     required this.theme,
     required this.frame,
+    required this.textScaleFactor,
     required this.useCaseBuilder,
   }) : super(key: key);
 
@@ -20,6 +21,7 @@ class Renderer<CustomTheme> extends StatelessWidget {
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
   final CustomTheme theme;
   final WidgetbookFrame frame;
+  final double textScaleFactor;
   final Widget Function(BuildContext) useCaseBuilder;
 
   Widget _buildText() {
@@ -64,12 +66,20 @@ class Renderer<CustomTheme> extends StatelessWidget {
                   device,
                   frame,
                   Builder(builder: (context) {
-                    return renderingState.scaffoldBuilder(
+                    return renderingState.textScaleBuilder(
                       context,
-                      frame,
-                      renderingState.useCaseBuilder(
-                        context,
-                        useCaseBuilder(context),
+                      textScaleFactor,
+                      Builder(
+                        builder: (context) {
+                          return renderingState.scaffoldBuilder(
+                            context,
+                            frame,
+                            renderingState.useCaseBuilder(
+                              context,
+                              useCaseBuilder(context),
+                            ),
+                          );
+                        },
                       ),
                     );
                   }),

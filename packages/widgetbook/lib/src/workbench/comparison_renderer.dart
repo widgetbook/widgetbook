@@ -25,6 +25,7 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
               localizationsDelegates: localizationState.localizationsDelegates,
               theme: e.data,
               frame: workbenchState.frame,
+              textScaleFactor: workbenchState.textScaleFactor!,
               useCaseBuilder: builder,
             ),
           )
@@ -46,6 +47,7 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
               localizationsDelegates: localizationState.localizationsDelegates,
               theme: workbenchState.theme!.data,
               frame: workbenchState.frame,
+              textScaleFactor: workbenchState.textScaleFactor!,
               useCaseBuilder: builder,
             ),
           )
@@ -67,6 +69,29 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
               localizationsDelegates: localizationState.localizationsDelegates,
               theme: workbenchState.theme!.data,
               frame: workbenchState.frame,
+              textScaleFactor: workbenchState.textScaleFactor!,
+              useCaseBuilder: builder,
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  Widget _buildtextScaleComparison({
+    required WorkbenchState<CustomTheme> workbenchState,
+    required LocalizationState localizationState,
+    required Widget Function(BuildContext) builder,
+  }) {
+    return _buildRenderer(
+      workbenchState.textScaleFactors
+          .map(
+            (e) => Renderer(
+              device: workbenchState.device!,
+              locale: workbenchState.locale!,
+              localizationsDelegates: localizationState.localizationsDelegates,
+              theme: workbenchState.theme!.data,
+              frame: workbenchState.frame,
+              textScaleFactor: e,
               useCaseBuilder: builder,
             ),
           )
@@ -85,6 +110,7 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
       localizationsDelegates: localizationState.localizationsDelegates,
       theme: workbenchState.theme!.data,
       frame: workbenchState.frame,
+      textScaleFactor: workbenchState.textScaleFactor!,
       useCaseBuilder: builder,
     );
   }
@@ -118,6 +144,13 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
 
       case ComparisonSetting.localization:
         return _buildLocaleComparison(
+          workbenchState: workbenchState,
+          localizationState: localizationState,
+          builder: builder,
+        );
+
+      case ComparisonSetting.textScale:
+        return _buildtextScaleComparison(
           workbenchState: workbenchState,
           localizationState: localizationState,
           builder: builder,

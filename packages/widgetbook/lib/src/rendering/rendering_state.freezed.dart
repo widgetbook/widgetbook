@@ -23,6 +23,7 @@ class _$RenderingStateTearOff {
       required LocalizationBuilderFunction localizationBuilder,
       required ThemeBuilderFunction<CustomTheme> themeBuilder,
       required ScaffoldBuilderFunction scaffoldBuilder,
+      required TextScaleBuilder textScaleBuilder,
       required UseCaseBuilderFunction useCaseBuilder}) {
     return _RenderingState<CustomTheme>(
       frames: frames,
@@ -30,6 +31,7 @@ class _$RenderingStateTearOff {
       localizationBuilder: localizationBuilder,
       themeBuilder: themeBuilder,
       scaffoldBuilder: scaffoldBuilder,
+      textScaleBuilder: textScaleBuilder,
       useCaseBuilder: useCaseBuilder,
     );
   }
@@ -49,6 +51,7 @@ mixin _$RenderingState<CustomTheme> {
       throw _privateConstructorUsedError;
   ScaffoldBuilderFunction get scaffoldBuilder =>
       throw _privateConstructorUsedError;
+  TextScaleBuilder get textScaleBuilder => throw _privateConstructorUsedError;
   UseCaseBuilderFunction get useCaseBuilder =>
       throw _privateConstructorUsedError;
 
@@ -68,6 +71,7 @@ abstract class $RenderingStateCopyWith<CustomTheme, $Res> {
       LocalizationBuilderFunction localizationBuilder,
       ThemeBuilderFunction<CustomTheme> themeBuilder,
       ScaffoldBuilderFunction scaffoldBuilder,
+      TextScaleBuilder textScaleBuilder,
       UseCaseBuilderFunction useCaseBuilder});
 }
 
@@ -87,6 +91,7 @@ class _$RenderingStateCopyWithImpl<CustomTheme, $Res>
     Object? localizationBuilder = freezed,
     Object? themeBuilder = freezed,
     Object? scaffoldBuilder = freezed,
+    Object? textScaleBuilder = freezed,
     Object? useCaseBuilder = freezed,
   }) {
     return _then(_value.copyWith(
@@ -110,6 +115,10 @@ class _$RenderingStateCopyWithImpl<CustomTheme, $Res>
           ? _value.scaffoldBuilder
           : scaffoldBuilder // ignore: cast_nullable_to_non_nullable
               as ScaffoldBuilderFunction,
+      textScaleBuilder: textScaleBuilder == freezed
+          ? _value.textScaleBuilder
+          : textScaleBuilder // ignore: cast_nullable_to_non_nullable
+              as TextScaleBuilder,
       useCaseBuilder: useCaseBuilder == freezed
           ? _value.useCaseBuilder
           : useCaseBuilder // ignore: cast_nullable_to_non_nullable
@@ -131,6 +140,7 @@ abstract class _$RenderingStateCopyWith<CustomTheme, $Res>
       LocalizationBuilderFunction localizationBuilder,
       ThemeBuilderFunction<CustomTheme> themeBuilder,
       ScaffoldBuilderFunction scaffoldBuilder,
+      TextScaleBuilder textScaleBuilder,
       UseCaseBuilderFunction useCaseBuilder});
 }
 
@@ -153,6 +163,7 @@ class __$RenderingStateCopyWithImpl<CustomTheme, $Res>
     Object? localizationBuilder = freezed,
     Object? themeBuilder = freezed,
     Object? scaffoldBuilder = freezed,
+    Object? textScaleBuilder = freezed,
     Object? useCaseBuilder = freezed,
   }) {
     return _then(_RenderingState<CustomTheme>(
@@ -176,6 +187,10 @@ class __$RenderingStateCopyWithImpl<CustomTheme, $Res>
           ? _value.scaffoldBuilder
           : scaffoldBuilder // ignore: cast_nullable_to_non_nullable
               as ScaffoldBuilderFunction,
+      textScaleBuilder: textScaleBuilder == freezed
+          ? _value.textScaleBuilder
+          : textScaleBuilder // ignore: cast_nullable_to_non_nullable
+              as TextScaleBuilder,
       useCaseBuilder: useCaseBuilder == freezed
           ? _value.useCaseBuilder
           : useCaseBuilder // ignore: cast_nullable_to_non_nullable
@@ -193,6 +208,7 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
       required this.localizationBuilder,
       required this.themeBuilder,
       required this.scaffoldBuilder,
+      required this.textScaleBuilder,
       required this.useCaseBuilder});
 
   @override
@@ -206,11 +222,13 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
   @override
   final ScaffoldBuilderFunction scaffoldBuilder;
   @override
+  final TextScaleBuilder textScaleBuilder;
+  @override
   final UseCaseBuilderFunction useCaseBuilder;
 
   @override
   String toString() {
-    return 'RenderingState<$CustomTheme>(frames: $frames, deviceFrameBuilder: $deviceFrameBuilder, localizationBuilder: $localizationBuilder, themeBuilder: $themeBuilder, scaffoldBuilder: $scaffoldBuilder, useCaseBuilder: $useCaseBuilder)';
+    return 'RenderingState<$CustomTheme>(frames: $frames, deviceFrameBuilder: $deviceFrameBuilder, localizationBuilder: $localizationBuilder, themeBuilder: $themeBuilder, scaffoldBuilder: $scaffoldBuilder, textScaleBuilder: $textScaleBuilder, useCaseBuilder: $useCaseBuilder)';
   }
 
   @override
@@ -227,6 +245,8 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
                 other.themeBuilder == themeBuilder) &&
             (identical(other.scaffoldBuilder, scaffoldBuilder) ||
                 other.scaffoldBuilder == scaffoldBuilder) &&
+            (identical(other.textScaleBuilder, textScaleBuilder) ||
+                other.textScaleBuilder == textScaleBuilder) &&
             (identical(other.useCaseBuilder, useCaseBuilder) ||
                 other.useCaseBuilder == useCaseBuilder));
   }
@@ -239,6 +259,7 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
       localizationBuilder,
       themeBuilder,
       scaffoldBuilder,
+      textScaleBuilder,
       useCaseBuilder);
 
   @JsonKey(ignore: true)
@@ -256,6 +277,7 @@ abstract class _RenderingState<CustomTheme>
           required LocalizationBuilderFunction localizationBuilder,
           required ThemeBuilderFunction<CustomTheme> themeBuilder,
           required ScaffoldBuilderFunction scaffoldBuilder,
+          required TextScaleBuilder textScaleBuilder,
           required UseCaseBuilderFunction useCaseBuilder}) =
       _$_RenderingState<CustomTheme>;
 
@@ -269,6 +291,8 @@ abstract class _RenderingState<CustomTheme>
   ThemeBuilderFunction<CustomTheme> get themeBuilder;
   @override
   ScaffoldBuilderFunction get scaffoldBuilder;
+  @override
+  TextScaleBuilder get textScaleBuilder;
   @override
   UseCaseBuilderFunction get useCaseBuilder;
   @override

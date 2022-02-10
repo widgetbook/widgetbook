@@ -1,3 +1,7 @@
+## 0.0.5
+
+- changed package to use [freezed](https://pub.dev/packages/freezed)
+
 ## 0.0.4
 
 - added desktop screens to export

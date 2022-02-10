@@ -96,6 +96,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     this.useCaseBuilder,
     List<Locale>? supportedLocales,
     List<WidgetbookFrame>? frames,
+    List<double>? textScaleFactors,
   })  : assert(
           categories.length > 0,
           'Please specify at least one $WidgetbookCategory.',
@@ -103,6 +104,10 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
         assert(
           devices == null || devices.length > 0,
           'Please specify at least one $Device.',
+        ),
+        assert(
+          textScaleFactors == null || textScaleFactors.length > 0,
+          'Please specify at least one textScaleFactor.',
         ),
         assert(
           themes.length > 0,
@@ -120,6 +125,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
             const [
               Locale('us'),
             ],
+        textScaleFactors = textScaleFactors ?? const [1],
         frames = frames ??
             const <WidgetbookFrame>[
               WidgetbookFrame(
@@ -163,6 +169,9 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
 
   final List<WidgetbookFrame> frames;
 
+  /// A list of text scale factors to test for font size accessibility
+  final List<double> textScaleFactors;
+
   final DeviceFrameBuilderFunction? deviceFrameBuilder;
 
   final LocalizationBuilderFunction? localizationBuilder;
@@ -187,6 +196,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     ThemeBuilderFunction<CupertinoThemeData>? themeBuilder,
     ScaffoldBuilderFunction? scaffoldBuilder,
     UseCaseBuilderFunction? useCaseBuilder,
+    List<double>? textScaleFactors,
     Key? key,
   }) {
     return Widgetbook<CupertinoThemeData>(
@@ -203,6 +213,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
       scaffoldBuilder: scaffoldBuilder,
       useCaseBuilder: useCaseBuilder,
       frames: frames,
+      textScaleFactors: textScaleFactors,
     );
   }
 
@@ -220,6 +231,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     ThemeBuilderFunction<ThemeData>? themeBuilder,
     ScaffoldBuilderFunction? scaffoldBuilder,
     UseCaseBuilderFunction? useCaseBuilder,
+    List<double>? textScaleFactors,
     Key? key,
   }) {
     return Widgetbook<ThemeData>(
@@ -236,6 +248,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
       scaffoldBuilder: scaffoldBuilder,
       useCaseBuilder: useCaseBuilder,
       frames: frames,
+      textScaleFactors: textScaleFactors,
     );
   }
 
@@ -268,6 +281,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
       locales: widget.supportedLocales,
       devices: widget.devices,
       frames: widget.frames,
+      textScaleFactors: widget.textScaleFactors,
     );
 
     super.initState();
@@ -281,6 +295,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
       locales: widget.supportedLocales,
       devices: widget.devices,
       frames: widget.frames,
+      textScaleFactors: widget.textScaleFactors,
     );
     super.didUpdateWidget(oldWidget);
   }

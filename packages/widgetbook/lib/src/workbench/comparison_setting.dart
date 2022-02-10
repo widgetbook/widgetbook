@@ -11,4 +11,7 @@ enum ComparisonSetting {
 
   /// Allows to compare localization
   localization,
+
+  /// Allows to compare text scales
+  textScale
 }
