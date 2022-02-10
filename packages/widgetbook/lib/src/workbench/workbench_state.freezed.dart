@@ -24,6 +24,7 @@ class _$WorkbenchStateTearOff {
       Device? device,
       required double? textScaleFactor,
       required WidgetbookFrame frame,
+      Orientation orientation = Orientation.portrait,
       required List<WidgetbookTheme<CustomTheme>> themes,
       required List<Locale> locales,
       required List<Device> devices,
@@ -36,6 +37,7 @@ class _$WorkbenchStateTearOff {
       device: device,
       textScaleFactor: textScaleFactor,
       frame: frame,
+      orientation: orientation,
       themes: themes,
       locales: locales,
       devices: devices,
@@ -56,6 +58,7 @@ mixin _$WorkbenchState<CustomTheme> {
   Device? get device => throw _privateConstructorUsedError;
   double? get textScaleFactor => throw _privateConstructorUsedError;
   WidgetbookFrame get frame => throw _privateConstructorUsedError;
+  Orientation get orientation => throw _privateConstructorUsedError;
   List<WidgetbookTheme<CustomTheme>> get themes =>
       throw _privateConstructorUsedError;
   List<Locale> get locales => throw _privateConstructorUsedError;
@@ -80,6 +83,7 @@ abstract class $WorkbenchStateCopyWith<CustomTheme, $Res> {
       Device? device,
       double? textScaleFactor,
       WidgetbookFrame frame,
+      Orientation orientation,
       List<WidgetbookTheme<CustomTheme>> themes,
       List<Locale> locales,
       List<Device> devices,
@@ -108,6 +112,7 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
     Object? device = freezed,
     Object? textScaleFactor = freezed,
     Object? frame = freezed,
+    Object? orientation = freezed,
     Object? themes = freezed,
     Object? locales = freezed,
     Object? devices = freezed,
@@ -139,6 +144,10 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
           ? _value.frame
           : frame // ignore: cast_nullable_to_non_nullable
               as WidgetbookFrame,
+      orientation: orientation == freezed
+          ? _value.orientation
+          : orientation // ignore: cast_nullable_to_non_nullable
+              as Orientation,
       themes: themes == freezed
           ? _value.themes
           : themes // ignore: cast_nullable_to_non_nullable
@@ -206,6 +215,7 @@ abstract class _$WorkbenchStateCopyWith<CustomTheme, $Res>
       Device? device,
       double? textScaleFactor,
       WidgetbookFrame frame,
+      Orientation orientation,
       List<WidgetbookTheme<CustomTheme>> themes,
       List<Locale> locales,
       List<Device> devices,
@@ -240,6 +250,7 @@ class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
     Object? device = freezed,
     Object? textScaleFactor = freezed,
     Object? frame = freezed,
+    Object? orientation = freezed,
     Object? themes = freezed,
     Object? locales = freezed,
     Object? devices = freezed,
@@ -271,6 +282,10 @@ class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
           ? _value.frame
           : frame // ignore: cast_nullable_to_non_nullable
               as WidgetbookFrame,
+      orientation: orientation == freezed
+          ? _value.orientation
+          : orientation // ignore: cast_nullable_to_non_nullable
+              as Orientation,
       themes: themes == freezed
           ? _value.themes
           : themes // ignore: cast_nullable_to_non_nullable
@@ -305,6 +320,7 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
       this.device,
       required this.textScaleFactor,
       required this.frame,
+      this.orientation = Orientation.portrait,
       required this.themes,
       required this.locales,
       required this.devices,
@@ -324,6 +340,9 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
   final double? textScaleFactor;
   @override
   final WidgetbookFrame frame;
+  @JsonKey()
+  @override
+  final Orientation orientation;
   @override
   final List<WidgetbookTheme<CustomTheme>> themes;
   @override
@@ -337,7 +356,7 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
 
   @override
   String toString() {
-    return 'WorkbenchState<$CustomTheme>(comparisonSetting: $comparisonSetting, theme: $theme, locale: $locale, device: $device, textScaleFactor: $textScaleFactor, frame: $frame, themes: $themes, locales: $locales, devices: $devices, frames: $frames, textScaleFactors: $textScaleFactors)';
+    return 'WorkbenchState<$CustomTheme>(comparisonSetting: $comparisonSetting, theme: $theme, locale: $locale, device: $device, textScaleFactor: $textScaleFactor, frame: $frame, orientation: $orientation, themes: $themes, locales: $locales, devices: $devices, frames: $frames, textScaleFactors: $textScaleFactors)';
   }
 
   @override
@@ -353,6 +372,8 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
             const DeepCollectionEquality()
                 .equals(other.textScaleFactor, textScaleFactor) &&
             const DeepCollectionEquality().equals(other.frame, frame) &&
+            const DeepCollectionEquality()
+                .equals(other.orientation, orientation) &&
             const DeepCollectionEquality().equals(other.themes, themes) &&
             const DeepCollectionEquality().equals(other.locales, locales) &&
             const DeepCollectionEquality().equals(other.devices, devices) &&
@@ -370,6 +391,7 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
       const DeepCollectionEquality().hash(device),
       const DeepCollectionEquality().hash(textScaleFactor),
       const DeepCollectionEquality().hash(frame),
+      const DeepCollectionEquality().hash(orientation),
       const DeepCollectionEquality().hash(themes),
       const DeepCollectionEquality().hash(locales),
       const DeepCollectionEquality().hash(devices),
@@ -392,6 +414,7 @@ abstract class _WorkbenchState<CustomTheme>
       Device? device,
       required double? textScaleFactor,
       required WidgetbookFrame frame,
+      Orientation orientation,
       required List<WidgetbookTheme<CustomTheme>> themes,
       required List<Locale> locales,
       required List<Device> devices,
@@ -410,6 +433,8 @@ abstract class _WorkbenchState<CustomTheme>
   double? get textScaleFactor;
   @override
   WidgetbookFrame get frame;
+  @override
+  Orientation get orientation;
   @override
   List<WidgetbookTheme<CustomTheme>> get themes;
   @override

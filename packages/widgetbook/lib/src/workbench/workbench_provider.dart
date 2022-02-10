@@ -146,6 +146,13 @@ class WorkbenchProvider<CustomTheme>
     state = state.copyWith(textScaleFactor: textScaleFactor);
   }
 
+  void toggledOrientation() {
+    final orientation = state.orientation == Orientation.portrait
+        ? Orientation.landscape
+        : Orientation.portrait;
+    state = state.copyWith(orientation: orientation);
+  }
+
   void nextLocale() {
     final nextLocale = state.locales.getNext(state.locale);
     state = state.copyWith(
