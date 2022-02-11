@@ -12,6 +12,7 @@ class WidgetbookApp {
     required this.name,
     this.devices = const <Device>[],
     this.frames = const <WidgetbookFrame>[],
+    this.textScaleFactors = const <double>[],
     this.defaultTheme,
     this.foldersExpanded = false,
     this.widgetsExpanded = false,
@@ -22,6 +23,9 @@ class WidgetbookApp {
 
   /// The device frames shown in the Widgetbook
   final List<WidgetbookFrame> frames;
+
+  /// A list of text scale factors
+  final List<double> textScaleFactors;
 
   /// The name of the widgetbook.
   /// This information will be displayed at the top left corner in the UI.

@@ -1,5 +1,6 @@
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/double_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/frame_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
@@ -20,6 +21,7 @@ class WidgetbookInstance extends Instance {
     ThemeModeInstance? defaultThemeInstance,
     List<DeviceInstance> devices = const <DeviceInstance>[],
     List<FrameInstance> frames = const <FrameInstance>[],
+    List<DoubleInstance> textScaleFactors = const <DoubleInstance>[],
     VariableInstance? locales,
   }) : super(
           name: 'Widgetbook',
@@ -42,6 +44,11 @@ class WidgetbookInstance extends Instance {
               Property(
                 key: 'frames',
                 instance: ListInstance(instances: frames),
+              ),
+            if (textScaleFactors.isNotEmpty)
+              Property(
+                key: 'textScaleFactors',
+                instance: ListInstance(instances: textScaleFactors),
               ),
             Property(
               key: 'categories',

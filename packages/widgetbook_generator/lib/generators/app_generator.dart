@@ -1,5 +1,6 @@
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/double_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/frame_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/theme_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/theme_mode_instance.dart';
@@ -18,6 +19,7 @@ String generateWidgetbook({
   required List<WidgetbookStoryData> stories,
   required List<Device> devices,
   required List<WidgetbookFrame> frames,
+  required List<double> textScaleFactors,
   required bool foldersExpanded,
   required bool widgetsExpanded,
   WidgetbookLocalesData? localesData,
@@ -39,6 +41,9 @@ String generateWidgetbook({
         : null,
     devices: devices.map((device) => DeviceInstance(device: device)).toList(),
     frames: frames.map((frame) => FrameInstance(frame: frame)).toList(),
+    textScaleFactors: textScaleFactors
+        .map((textScale) => DoubleInstance.value(textScale))
+        .toList(),
     categories: [
       category,
     ],

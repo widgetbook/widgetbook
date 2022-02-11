@@ -43,6 +43,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
     final name = _getName(annotation);
     final devices = _getDevices(annotation);
     final frames = _getFrames(annotation);
+    final textScaleFactors = _getTextScaleFactors(annotation);
     final lightTheme =
         themeData.firstWhereOrDefault((element) => !element.isDarkTheme);
     final darkTheme =
@@ -73,6 +74,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
           stories: stories,
           devices: devices,
           frames: frames,
+          textScaleFactors: textScaleFactors,
           foldersExpanded: foldersExpanded,
           widgetsExpanded: widgetsExpanded,
           localesData: locales,
@@ -122,6 +124,16 @@ List<WidgetbookFrame> _getFrames(ConstantReader annotation) {
   }
 
   return frames;
+}
+
+List<double> _getTextScaleFactors(ConstantReader annotation) {
+  final factors = <double>[];
+
+  for (final value in annotation.read('textScaleFactors').listValue) {
+    factors.add(value.toDoubleValue()!);
+  }
+
+  return factors;
 }
 
 String _getName(ConstantReader annotation) {
