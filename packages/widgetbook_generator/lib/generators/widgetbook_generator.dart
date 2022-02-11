@@ -25,13 +25,6 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
     ConstantReader annotation,
     BuildStep buildStep,
   ) async {
-    // Verification that only one light and one dark theme exist
-    final themeData = await _loadDataFromJson<WidgetbookThemeData>(
-      buildStep,
-      '**.theme.widgetbook.json',
-      (map) => WidgetbookThemeData.fromMap(map),
-    );
-
     final stories = await _loadDataFromJson<WidgetbookStoryData>(
       buildStep,
       '**.story.widgetbook.json',
@@ -44,11 +37,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
     final devices = _getDevices(annotation);
     final frames = _getFrames(annotation);
     final textScaleFactors = _getTextScaleFactors(annotation);
-    final lightTheme =
-        themeData.firstWhereOrDefault((element) => !element.isDarkTheme);
-    final darkTheme =
-        themeData.firstWhereOrDefault((element) => element.isDarkTheme);
-    final defaultThemeIsDark = _getDefaultTheme(annotation);
+    final themes = await _getThemes(buildStep);
     final foldersExpanded = _getFoldersExpanded(annotation);
     final widgetsExpanded = _getWidgetsExpanded(annotation);
 
@@ -56,7 +45,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
       ..writeln(
         generateImports(
           [
-            ...themeData,
+            ...themes,
             ...stories,
             if (locales != null) locales,
           ],
@@ -68,9 +57,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
       ..writeln(
         generateWidgetbook(
           name: name,
-          lightTheme: lightTheme,
-          darkTheme: darkTheme,
-          defaultThemeIsDark: defaultThemeIsDark,
+          themes: themes,
           stories: stories,
           devices: devices,
           frames: frames,
@@ -83,6 +70,24 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
 
     return buffer.toString();
   }
+}
+
+Future<List<WidgetbookThemeData>> _getThemes(BuildStep buildStep) async {
+  final themes = await _loadDataFromJson<WidgetbookThemeData>(
+    buildStep,
+    '**.theme.widgetbook.json',
+    (map) => WidgetbookThemeData.fromJson(map),
+  );
+
+  final defaultTheme =
+      themes.firstWhereOrDefault((element) => element.isDefault);
+  if (defaultTheme != null) {
+    themes
+      ..remove(defaultTheme)
+      ..insert(0, defaultTheme);
+  }
+
+  return themes;
 }
 
 Future<WidgetbookLocalesData?> _getLocales(BuildStep buildStep) async {
@@ -138,13 +143,6 @@ List<double> _getTextScaleFactors(ConstantReader annotation) {
 
 String _getName(ConstantReader annotation) {
   return annotation.read('name').stringValue;
-}
-
-bool? _getDefaultTheme(ConstantReader annotation) {
-  final defaultTheme = annotation.read('defaultTheme');
-  return defaultTheme.isNull
-      ? null
-      : defaultTheme.objectValue.getField('isDarkTheme')?.toBoolValue();
 }
 
 bool _getFoldersExpanded(ConstantReader annotation) {

@@ -24,21 +24,13 @@ String generateWidgetbook({
   required bool widgetsExpanded,
   WidgetbookLocalesData? localesData,
   WidgetbookThemeData? widgetbookThemeData,
-  WidgetbookThemeData? lightTheme,
-  WidgetbookThemeData? darkTheme,
-  bool? defaultThemeIsDark,
+  required List<WidgetbookThemeData> themes,
 }) {
   final category =
       _generateCategoryInstance(stories, foldersExpanded, widgetsExpanded);
   final widgetbookInstanceCode = WidgetbookInstance(
     appInfoInstance: AppInfoInstance(name: name),
-    lightThemeInstance:
-        lightTheme != null ? ThemeInstance(name: lightTheme.name) : null,
-    darkThemeInstance:
-        darkTheme != null ? ThemeInstance(name: darkTheme.name) : null,
-    defaultThemeInstance: defaultThemeIsDark != null
-        ? ThemeModeInstance(name: defaultThemeIsDark ? 'dark' : 'light')
-        : null,
+    themes: themes.map((theme) => ThemeInstance(theme: theme)).toList(),
     devices: devices.map((device) => DeviceInstance(device: device)).toList(),
     frames: frames.map((frame) => FrameInstance(frame: frame)).toList(),
     textScaleFactors: textScaleFactors

@@ -1,13 +1,14 @@
 /// Annotates a function returning a Theme.
 class WidgetbookTheme {
-  /// Creates an annotation for a dark theme.
-  /// Only one theme must me annotated.
-  const WidgetbookTheme.dark() : isDarkTheme = true;
+  /// Creates a new instance of [WidgetbookTheme].
+  const WidgetbookTheme({required this.name, this.isDefault = false});
 
-  /// Creates an annotation for a light theme.
-  /// Only one theme must me annotated.
-  const WidgetbookTheme.light() : isDarkTheme = false;
+  /// The name of the theme displayed in widgetbook.
+  final String name;
 
-  /// Defines whether the annotated function is a dark theme.
-  final bool isDarkTheme;
+  /// Specifies if this theme is the default
+  ///
+  /// If no default theme is specified the frist theme read by the generator
+  /// will be the default.
+  final bool isDefault;
 }

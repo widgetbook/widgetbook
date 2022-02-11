@@ -13,7 +13,6 @@ class WidgetbookApp {
     this.devices = const <Device>[],
     this.frames = const <WidgetbookFrame>[],
     this.textScaleFactors = const <double>[],
-    this.defaultTheme,
     this.foldersExpanded = false,
     this.widgetsExpanded = false,
   });
@@ -30,9 +29,6 @@ class WidgetbookApp {
   /// The name of the widgetbook.
   /// This information will be displayed at the top left corner in the UI.
   final String name;
-
-  /// Set default theme mode. If not specified, system theme mode is used.
-  final WidgetbookTheme? defaultTheme;
 
   /// Determines folders are expanded by default
   final bool foldersExpanded;

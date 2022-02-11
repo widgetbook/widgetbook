@@ -16,9 +16,7 @@ class WidgetbookInstance extends Instance {
   WidgetbookInstance({
     required AppInfoInstance appInfoInstance,
     required List<WidgetbookCategoryInstance> categories,
-    ThemeInstance? lightThemeInstance,
-    ThemeInstance? darkThemeInstance,
-    ThemeModeInstance? defaultThemeInstance,
+    required List<ThemeInstance> themes,
     List<DeviceInstance> devices = const <DeviceInstance>[],
     List<FrameInstance> frames = const <FrameInstance>[],
     List<DoubleInstance> textScaleFactors = const <DoubleInstance>[],
@@ -29,12 +27,7 @@ class WidgetbookInstance extends Instance {
             Property(key: 'appInfo', instance: appInfoInstance),
             if (locales != null)
               Property(key: 'supportedLocales', instance: locales),
-            if (lightThemeInstance != null)
-              Property(key: 'lightTheme', instance: lightThemeInstance),
-            if (darkThemeInstance != null)
-              Property(key: 'darkTheme', instance: darkThemeInstance),
-            if (defaultThemeInstance != null)
-              Property(key: 'defaultTheme', instance: defaultThemeInstance),
+            Property(key: 'themes', instance: ListInstance(instances: themes)),
             if (devices.isNotEmpty)
               Property(
                 key: 'devices',

@@ -21,6 +21,7 @@ void main() {
       instance: WidgetbookInstance(
         appInfoInstance: AppInfoInstance(name: appInfoName),
         categories: const [],
+        themes: const [],
       ),
     );
 
@@ -45,6 +46,7 @@ void main() {
         final instance = WidgetbookInstance(
           appInfoInstance: AppInfoInstance(name: appInfoName),
           categories: const [],
+          themes: const [],
         );
 
         expect(
@@ -62,8 +64,7 @@ void main() {
       () {
         final instance = WidgetbookInstance(
           appInfoInstance: AppInfoInstance(name: appInfoName),
-          lightThemeInstance: const ThemeInstance(name: 'lightTheme'),
-          darkThemeInstance: const ThemeInstance(name: 'darkTheme'),
+          themes: const [],
           devices: [
             DeviceInstance(device: Apple.iPhone11),
             DeviceInstance(device: Apple.iPhone12),
@@ -76,12 +77,10 @@ void main() {
           equals([
             expectedAppInfoProperty,
             const Property(
-              key: 'lightTheme',
-              instance: ThemeInstance(name: 'lightTheme'),
-            ),
-            const Property(
-              key: 'darkTheme',
-              instance: ThemeInstance(name: 'darkTheme'),
+              key: 'themes',
+              instance: ListInstance(
+                instances: <ThemeInstance>[],
+              ),
             ),
             Property(
               key: 'devices',
@@ -113,9 +112,10 @@ void main() {
       'List<$WidgetbookCategoryInstance> and dark theme',
       () {
         final instance = WidgetbookInstance(
-            appInfoInstance: AppInfoInstance(name: appInfoName),
-            categories: const [],
-            defaultThemeInstance: const ThemeModeInstance(name: 'dark'));
+          appInfoInstance: AppInfoInstance(name: appInfoName),
+          categories: const [],
+          themes: const [],
+        );
 
         expect(
           instance.properties,
@@ -133,9 +133,10 @@ void main() {
       'List<$WidgetbookCategoryInstance> and light theme',
       () {
         final instance = WidgetbookInstance(
-            appInfoInstance: AppInfoInstance(name: appInfoName),
-            categories: const [],
-            defaultThemeInstance: const ThemeModeInstance(name: 'light'));
+          appInfoInstance: AppInfoInstance(name: appInfoName),
+          categories: const [],
+          themes: const [],
+        );
 
         expect(
           instance.properties,
