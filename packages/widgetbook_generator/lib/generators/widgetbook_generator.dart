@@ -234,7 +234,7 @@ Future<List<T>> _loadDataFromJson<T>(
   final glob = Glob(extension);
   final widgetbookData = <T>[];
   await for (final id in buildStep.findAssets(glob)) {
-    dynamic content = jsonDecode(await buildStep.readAsString(id));
+    final dynamic content = jsonDecode(await buildStep.readAsString(id));
     final decodedJson = content as List;
     final jsons = decodedJson.cast<Map<String, dynamic>>();
     final something = jsons.map<T>((Map<String, dynamic> json) {

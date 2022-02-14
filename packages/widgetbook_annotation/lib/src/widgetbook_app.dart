@@ -19,6 +19,8 @@ class WidgetbookApp {
     this.constructor = WidgetbookConstructor.custom,
   });
 
+  /// Annotates a code element to creat a Material-themed widgetbook main file
+  /// in the same folder in which the annotated element is defined.
   const WidgetbookApp.material({
     required this.name,
     this.devices = const <Device>[],
@@ -30,6 +32,8 @@ class WidgetbookApp {
     this.themeType,
   });
 
+  /// Annotates a code element to creat a Cupertino-themed widgetbook main
+  /// file in the same folder in which the annotated element is defined.
   const WidgetbookApp.cupertino({
     required this.name,
     this.devices = const <Device>[],
@@ -41,6 +45,7 @@ class WidgetbookApp {
     this.themeType,
   });
 
+  /// The type of the ThemeData.
   final Type? themeType;
 
   /// Indicates which type of theme is used for the generic Widgetbook
