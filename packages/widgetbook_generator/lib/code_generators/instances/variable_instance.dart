@@ -1,7 +1,7 @@
 import 'package:widgetbook_generator/code_generators/instances/base_instance.dart';
 
 class VariableInstance extends BaseInstance {
-  VariableInstance({
+  const VariableInstance({
     required this.variableIdentifier,
   }) : super();
 

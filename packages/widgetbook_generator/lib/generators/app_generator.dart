@@ -18,7 +18,6 @@ import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_type_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_use_case_builder_data.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
-import 'package:widgetbook_models/widgetbook_models.dart';
 
 /// Generates the code of the Widgetbook
 String generateWidgetbook({

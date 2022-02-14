@@ -10,8 +10,6 @@ import 'package:widgetbook_generator/code_generators/instances/theme_instance.da
 import 'package:widgetbook_generator/code_generators/instances/variable_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
-import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_theme_type_data.dart';
 
 /// An instance for Widgetbook
 class WidgetbookInstance extends Instance {

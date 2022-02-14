@@ -1,6 +1,5 @@
 import 'package:meta/meta.dart';
 import 'package:widgetbook_generator/code_generators/instances/base_instance.dart';
-import 'package:widgetbook_generator/code_generators/parameters/parameter.dart';
 import 'package:widgetbook_generator/code_generators/parameters/parameter_list.dart';
 
 @immutable

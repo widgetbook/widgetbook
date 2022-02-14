@@ -5,7 +5,6 @@ import 'package:widgetbook_generator/code_generators/instances/app_info_instance
 import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/theme_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/theme_mode_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
@@ -106,16 +105,6 @@ void main() {
           ]),
         );
       },
-    );
-
-    const expectedThemeModeInstanceDark = Property(
-      key: 'defaultTheme',
-      instance: ThemeModeInstance(name: 'dark'),
-    );
-
-    const expectedThemeModeInstanceLight = Property(
-      key: 'defaultTheme',
-      instance: ThemeModeInstance(name: 'light'),
     );
 
     test(

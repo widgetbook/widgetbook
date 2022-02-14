@@ -3,8 +3,8 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/extensions/element_extensions.dart';
-import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
 import 'package:widgetbook_generator/json_formatter.dart';
+import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
 
 class LocalesResolver extends GeneratorForAnnotation<WidgetbookLocales> {
   @override

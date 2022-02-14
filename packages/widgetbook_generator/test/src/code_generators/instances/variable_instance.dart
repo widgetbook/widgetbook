@@ -11,7 +11,7 @@ void main() {
         () {
           const variableId = 'test';
           expect(
-            VariableInstance(variableIdentifier: variableId).toCode(),
+            const VariableInstance(variableIdentifier: variableId).toCode(),
             equals(variableId),
           );
         },
