@@ -1,5 +1,6 @@
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
@@ -8,7 +9,6 @@ import 'package:widgetbook_generator/code_generators/instances/theme_mode_instan
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
-import 'package:widgetbook_models/widgetbook_models.dart';
 
 import '../instance_helper.dart';
 
@@ -19,6 +19,7 @@ void main() {
     testName(
       'Widgetbook',
       instance: WidgetbookInstance(
+        constructor: WidgetbookConstructor.material,
         appInfoInstance: AppInfoInstance(name: appInfoName),
         categories: const [],
         themes: const [],
@@ -39,11 +40,19 @@ void main() {
       ),
     );
 
+    const expectedThemesInstance = Property(
+      key: 'themes',
+      instance: ListInstance<ThemeInstance>(
+        instances: [],
+      ),
+    );
+
     test(
       '.properties returns $AppInfoInstance and '
       'List<$WidgetbookCategoryInstance>',
       () {
         final instance = WidgetbookInstance(
+          constructor: WidgetbookConstructor.material,
           appInfoInstance: AppInfoInstance(name: appInfoName),
           categories: const [],
           themes: const [],
@@ -53,6 +62,7 @@ void main() {
           instance.properties,
           equals([
             expectedAppInfoProperty,
+            expectedThemesInstance,
             expectedCategoryInstance,
           ]),
         );
@@ -63,6 +73,7 @@ void main() {
       '.properties returns all properties',
       () {
         final instance = WidgetbookInstance(
+          constructor: WidgetbookConstructor.material,
           appInfoInstance: AppInfoInstance(name: appInfoName),
           themes: const [],
           devices: [
@@ -112,6 +123,7 @@ void main() {
       'List<$WidgetbookCategoryInstance> and dark theme',
       () {
         final instance = WidgetbookInstance(
+          constructor: WidgetbookConstructor.material,
           appInfoInstance: AppInfoInstance(name: appInfoName),
           categories: const [],
           themes: const [],
@@ -121,7 +133,7 @@ void main() {
           instance.properties,
           equals([
             expectedAppInfoProperty,
-            expectedThemeModeInstanceDark,
+            expectedThemesInstance,
             expectedCategoryInstance,
           ]),
         );
@@ -133,6 +145,7 @@ void main() {
       'List<$WidgetbookCategoryInstance> and light theme',
       () {
         final instance = WidgetbookInstance(
+          constructor: WidgetbookConstructor.material,
           appInfoInstance: AppInfoInstance(name: appInfoName),
           categories: const [],
           themes: const [],
@@ -142,7 +155,7 @@ void main() {
           instance.properties,
           equals([
             expectedAppInfoProperty,
-            expectedThemeModeInstanceLight,
+            expectedThemesInstance,
             expectedCategoryInstance,
           ]),
         );
