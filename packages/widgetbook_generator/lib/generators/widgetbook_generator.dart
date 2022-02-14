@@ -13,6 +13,7 @@ import 'package:widgetbook_generator/generators/main_generator.dart';
 import 'package:widgetbook_generator/models/widgetbook_device_frame_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_localization_builder_data.dart';
+import 'package:widgetbook_generator/models/widgetbook_localizations_delegates_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_scaffold_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_builder_data.dart';
@@ -73,6 +74,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
     );
 
     final locales = await _getLocales(buildStep);
+    final localizationDelegates = await _getLocalizationDelegates(buildStep);
 
     final name = _getName(annotation);
     final themeType = _getThemeType(annotation);
@@ -110,6 +112,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
           foldersExpanded: foldersExpanded,
           widgetsExpanded: widgetsExpanded,
           localesData: locales,
+          localizationDelegatesData: localizationDelegates,
           deviceFrameBuilder:
               deviceFrameBuilder.isNotEmpty ? deviceFrameBuilder.first : null,
           localizationBuilder:
@@ -158,6 +161,23 @@ Future<WidgetbookLocalesData?> _getLocales(BuildStep buildStep) async {
   }
 
   return locales.isNotEmpty ? locales.first : null;
+}
+
+Future<WidgetbookLocalizationsDelegatesData?> _getLocalizationDelegates(
+    BuildStep buildStep) async {
+  final localizationDelegates = await _loadDataFromJson(
+    buildStep,
+    '**.delegates.widgetbook.json',
+    (map) => WidgetbookLocalizationsDelegatesData.fromJson(map),
+  );
+
+  if (localizationDelegates.length > 1) {
+    throw InvalidGenerationSourceError(
+      'More than one list of delegates defined.',
+    );
+  }
+
+  return localizationDelegates.isNotEmpty ? localizationDelegates.first : null;
 }
 
 List<Device> _getDevices(ConstantReader annotation) {

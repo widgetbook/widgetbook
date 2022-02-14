@@ -24,6 +24,7 @@ class WidgetbookInstance extends Instance {
     List<FrameInstance> frames = const <FrameInstance>[],
     List<DoubleInstance> textScaleFactors = const <DoubleInstance>[],
     VariableInstance? locales,
+    VariableInstance? localizationDelegates,
     VariableInstance? deviceFrameBuilder,
     VariableInstance? localizationBuilder,
     VariableInstance? scaffoldBuilder,
@@ -37,6 +38,10 @@ class WidgetbookInstance extends Instance {
             Property(key: 'appInfo', instance: appInfoInstance),
             if (locales != null)
               Property(key: 'supportedLocales', instance: locales),
+            if (localizationDelegates != null)
+              Property(
+                  key: 'localizationsDelegates',
+                  instance: localizationDelegates),
             Property(key: 'themes', instance: ListInstance(instances: themes)),
             if (devices.isNotEmpty)
               Property(

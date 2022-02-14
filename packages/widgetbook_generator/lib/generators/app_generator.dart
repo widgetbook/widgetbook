@@ -11,6 +11,7 @@ import 'package:widgetbook_generator/code_generators/instances/widgetbook_instan
 import 'package:widgetbook_generator/models/widgetbook_device_frame_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_localization_builder_data.dart';
+import 'package:widgetbook_generator/models/widgetbook_localizations_delegates_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_scaffold_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_builder_data.dart';
@@ -30,6 +31,7 @@ String generateWidgetbook({
   required bool foldersExpanded,
   required bool widgetsExpanded,
   WidgetbookLocalesData? localesData,
+  WidgetbookLocalizationsDelegatesData? localizationDelegatesData,
   WidgetbookThemeData? widgetbookThemeData,
   WidgetbookThemeTypeData? themeTypeData,
   required List<WidgetbookThemeData> themes,
@@ -56,6 +58,9 @@ String generateWidgetbook({
     type: themeTypeData?.name,
     locales: localesData != null
         ? VariableInstance(variableIdentifier: localesData.name)
+        : null,
+    localizationDelegates: localizationDelegatesData != null
+        ? VariableInstance(variableIdentifier: localizationDelegatesData.name)
         : null,
     deviceFrameBuilder: deviceFrameBuilder != null
         ? VariableInstance(variableIdentifier: deviceFrameBuilder.name)

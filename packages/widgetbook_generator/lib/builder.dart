@@ -5,6 +5,7 @@ import 'package:widgetbook_generator/generators/widgetbook_generator.dart';
 import 'package:widgetbook_generator/resolvers/device_frame_builder_resolver.dart';
 import 'package:widgetbook_generator/resolvers/locales_resolver.dart';
 import 'package:widgetbook_generator/resolvers/localization_builder_resolver.dart';
+import 'package:widgetbook_generator/resolvers/localization_delegates_resolver.dart';
 import 'package:widgetbook_generator/resolvers/scaffold_builder_resolver.dart';
 import 'package:widgetbook_generator/resolvers/story_resolver.dart';
 import 'package:widgetbook_generator/resolvers/theme_builder_resolver.dart';
@@ -41,6 +42,17 @@ Builder localesBuilder(BuilderOptions options) {
     LocalesResolver(),
     formatOutput: _formatOutput,
     generatedExtension: '.locales.widgetbook.json',
+  );
+}
+
+/// Builder for the WidgetbookLocalizationDelegates annotation.
+/// Creates a .delegates.widgetbook.json file for each .dart file containing a
+/// WidgetbookLocales annotation
+Builder localizationDelegatesBuilder(BuilderOptions options) {
+  return JsonLibraryBuilder(
+    LocalizationDelegatesResolver(),
+    formatOutput: _formatOutput,
+    generatedExtension: '.delegates.widgetbook.json',
   );
 }
 
