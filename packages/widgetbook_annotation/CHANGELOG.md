@@ -1,4 +1,4 @@
-## 2.0.0
+## 2.0.0-beta
 
 - feat: added annotations to support [widgetbook](https://pub.dev/packages/widgetbook) in version 2.0.x
 

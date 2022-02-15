@@ -1,4 +1,4 @@
-## 2.0.0
+## 2.0.0-beta
 
 - feat: adapted generator for [widgetbook](https://pub.dev/packages/widgetbook) 2.0.x ([#115](https://github.com/widgetbook/widgetbook/issues/115))
 
