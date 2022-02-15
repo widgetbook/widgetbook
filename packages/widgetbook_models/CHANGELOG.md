@@ -1,3 +1,7 @@
+## 0.0.6
+
+- added `WidgetbookFrame` to package
+
 ## 0.0.5
 
 - changed package to use [freezed](https://pub.dev/packages/freezed)

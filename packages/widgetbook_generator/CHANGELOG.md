@@ -1,3 +1,7 @@
+## 2.0.0
+
+- feat: adapted generator for [widgetbook](https://pub.dev/packages/widgetbook) 2.0.x ([#115](https://github.com/widgetbook/widgetbook/issues/115))
+
 ## 1.0.3
 
 - changed documentation to be consistent with the existing videos

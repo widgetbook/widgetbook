@@ -1,3 +1,7 @@
+## 2.0.0
+
+- feat: added annotations to support [widgetbook](https://pub.dev/packages/widgetbook) in version 2.0.x
+
 ## 1.0.1 
 
 - added documentation for skipping of the `src` folder
