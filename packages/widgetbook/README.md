@@ -381,7 +381,7 @@ Both the `scaffoldBuilder` and `useCaseBuilder` can be used to wrap the `Widget`
 
 A lot of app projects implement dedicated packages for UI components. These packages often do not define a (desktop) app. Therefore, it's hard to use Widgetbook for these packages. This section will explain how you can get Widgetbook running in such a scenario. 
 
-Lets assume you have set up a monorepo with the following folder structure with two packages `ui_components` and `core_api`:
+Let's assume you have set up a monorepo with the following folder structure with two packages `ui_components` and `core_api`:
 
 ```
 monorepo
@@ -391,7 +391,7 @@ monorepo
 │  ├─ core_api
 ```
 
-To create a widgetbook for the `ui_components` package we recommend to create a new folder named `widgetbooks` in the root of the repository and add a flutter (desktop) app named `ui_components_widgetbook`. The folder structure of your repository will look like this:
+To create a widgetbook for the `ui_components` package, we recommend to create a new folder named `widgetbooks` in the root of the repository and add a flutter (desktop) app named `ui_components_widgetbook`. The folder structure of your repository will look like this:
 
 ```
 monorepo
