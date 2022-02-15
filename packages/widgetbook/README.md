@@ -389,6 +389,46 @@ We are currently aiming to support the following flutter version
 
 `flutter: >=2.8.0`
 
+# Using Widgetbook for a package
+
+A lot of app projects implement dedicated packages for UI components. These packages often do not define a (desktop) app. Therefore, it's hard to use Widgetbook for these packages. This section will explain how you can get Widgetbook running in such a scenario. 
+
+Let's assume you have set up a monorepo with the following folder structure with two packages `ui_components` and `core_api`:
+
+```
+monorepo
+├─ docs
+├─ packages
+│  ├─ ui_components
+│  ├─ core_api
+```
+
+To create a widgetbook for the `ui_components` package, we recommend to create a new folder named `widgetbooks` in the root of the repository and add a flutter (desktop) app named `ui_components_widgetbook`. The folder structure of your repository will look like this:
+
+```
+monorepo
+├─ docs
+├─ packages
+│  ├─ ui_components
+│  ├─ core_api
+├─ widgetbooks
+│  ├─ ui_components_widgetbook
+│  │  ├─ lib
+│  │  ├─ macos
+│  │  ├─ pubspec.yaml
+```
+
+Make sure to modify `widgetbooks/ui_components_widgetbook/pubspec.yaml` to depend on `ui_components`: 
+
+`pubspec.yaml:`
+```
+dependencies:
+  ui_components:
+    path: ../../packages/ui_components
+```
+
+You can now use all exported `Widget`s from your library to compose your Widgetbook.
+
 # Known Issues
 
 - Hot reloading on web is currently not working properly. This is due to the fact that hot reloading is actually a restart. The problem is tracked in [widgetbook/issues/4](https://github.com/widgetbook/widgetbook/issues/4). For now we recommended to use MacOS or Windows as a platform for development.
