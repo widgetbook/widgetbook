@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@WidgetbookTheme.dark()
+@WidgetbookTheme(name: 'Dark')
 ThemeData darkTheme() => ThemeData.dark();
 
 @WidgetbookUseCase(name: 'Default', type: CustomPadding)

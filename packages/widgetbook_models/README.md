@@ -5,7 +5,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?label=test&style=flat-square)
 
-This package features the models for the Widgetbook `Device` class. The `device` class is used in the following packages:
+This package features the models for the Widgetbook packages. The following packages use `widgetbook_models`:
 
 - [package:widgetbook](https://pub.dev/packages/widgetbook)
 - [package:widgetbook_annotation](https://pub.dev/packages/widgetbook_annotation)
@@ -17,9 +17,7 @@ Furthermore, the package contains predefined and commonly used devices.
 
 # Classes
 
-Currently the package contains the `Device` class with its required subclasses and collections of various devices.
-
-## Resolution
+## `Resolution`
 
 A device's screen resolution is defined by the number of distinct pixels in each dimension that can be displayed. Furthermore, on Apple and Android devices, this resolution is divided into logical and native resolution by a scaling factor. Therefore, to define a resolution, the native amount of pixels in each dimension and a scaling factor is required. 
 
@@ -34,7 +32,7 @@ Resolution(
 
 `DeviceSize` is similar to `Size` from the Flutter SDK and contains properties for `width` and `height`.
 
-## Device
+## `Device`
 
 The device class specifies a device like the *iPhone 12* based on a `name`, its `resolution` and its `type`. `type` is primarily used for better iconization in [package:widgetbook](https://pub.dev/packages/widgetbook)'s user interface.
 
@@ -63,6 +61,14 @@ The following device types exist and can be accessed with the respective `Device
     - used for screens with unusual apsect ratios.
 
 These constructors allow you to create your own devices in case there is something missing in our collection of devices.
+
+## `WidgetbookFrame`
+
+The `WidgetbookFrame` represents a device frame wrapped around the `Widget`. The following frames are pre-defined:
+
+- `WidgetbookFrame.defaultFrame`
+- `WidgetbookFrame.noFrame`
+- `WidgetbookFrame.deviceFrame`
 
 # Collections
 

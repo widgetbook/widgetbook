@@ -3,7 +3,7 @@ import 'package:meal_app/constants/border.dart';
 import 'package:meal_app/constants/color.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@WidgetbookTheme.dark()
+@WidgetbookTheme(name: 'Dark', isDefault: true)
 ThemeData getDarkThemeData() => ThemeData(
       primarySwatch: Colors.blue,
     );
