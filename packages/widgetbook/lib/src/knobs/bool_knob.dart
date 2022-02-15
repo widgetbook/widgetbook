@@ -3,11 +3,6 @@ import 'package:provider/provider.dart';
 
 import 'package:widgetbook/src/knobs/knobs.dart';
 
-/// A knob that allows the user to toggle a boolean value.
-///
-/// See also:
-/// * [BooleanKnobWidget], which is the widget that displays the knob.
-/// {@endtemplate}
 class BoolKnob extends Knob<bool> {
   /// {@macro bool_knob}
   BoolKnob({
@@ -28,14 +23,6 @@ class BoolKnob extends Knob<bool> {
       );
 }
 
-/// {@template boolean_knob_widget}
-/// A knob widget that allows the user to toggle a boolean value.
-///
-/// The knob is displayed as a checkbox.
-///
-/// See also:
-/// * [BoolKnob], which is the knob that this widget represents.
-/// {@endtemplate}
 class BooleanKnobWidget extends StatelessWidget {
   /// {@macro boolean_knob_widget}
   const BooleanKnobWidget({
@@ -50,7 +37,8 @@ class BooleanKnobWidget extends StatelessWidget {
   final bool value;
 
   @override
-  Widget build(BuildContext context) => CheckboxListTile(
+  Widget build(BuildContext context) => SwitchListTile(
+        key: Key('$label-switchTileKnob'),
         title: Text(label),
         subtitle: description == null ? null : Text(description!),
         value: value,

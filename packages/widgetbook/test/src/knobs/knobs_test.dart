@@ -16,12 +16,17 @@ void main() {
       final useCase = WidgetbookUseCase(
         name: 'use case',
         builder: (context) {
-          return Text(context.knobs.boolean(
-            label: 'label',
-            initial: true,
-          )
-              ? 'Hi'
-              : 'Bye');
+          return Column(
+            children: [
+              Text(context.knobs.boolean(
+                label: 'label',
+                initial: true,
+              )
+                  ? 'Hi'
+                  : 'Bye'),
+              ...knobsNotifier.all().map((e) => e.build())
+            ],
+          );
         },
       );
       selectedStoryRepository.setItem(useCase);
@@ -41,12 +46,19 @@ void main() {
       final useCase = WidgetbookUseCase(
         name: 'use case',
         builder: (context) {
-          return Text(context.knobs.boolean(
-            label: 'label',
-            initial: true,
-          )
-              ? 'Hi'
-              : 'Bye');
+          return Column(
+            children: [
+              Text(context.knobs.boolean(
+                label: 'label',
+                initial: true,
+              )
+                  ? 'Hi'
+                  : 'Bye'),
+              ...knobsNotifier.all().map((e) {
+                return e.build();
+              })
+            ],
+          );
         },
       );
       selectedStoryRepository.setItem(useCase);
@@ -54,8 +66,10 @@ void main() {
         create: (context) => knobsNotifier,
         child: Builder(builder: useCase.builder),
       ));
-      var knobs = knobsNotifier.all();
-
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('label-switchTileKnob')));
+      await tester.pumpAndSettle();
+      expect(find.text('Bye'), findsOneWidget);
     },
   );
 }

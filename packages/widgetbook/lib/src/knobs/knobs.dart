@@ -35,11 +35,15 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   final Map<String, Map<String, Knob>> _knobs = <String, Map<String, Knob>>{};
 
   void update<T>(String label, T value) {
+    // TODO: Add this somewhere
+    /* _selectedStoryRepository.getStream().listen((event) { */
+    /*   notifyListeners(); */
+    /* }); */
+
     if (!_selectedStoryRepository.isSet()) {
       return;
     }
-
-    _knobs[_selectedStoryRepository.item!.id]![label]!.value = value;
+    _knobs[_selectedStoryRepository.item!.name]![label]!.value = value;
     notifyListeners();
   }
 
