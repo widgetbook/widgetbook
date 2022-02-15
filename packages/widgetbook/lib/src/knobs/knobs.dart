@@ -29,17 +29,14 @@ extension Knobs on BuildContext {
 }
 
 class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
-  KnobsNotifier(this._selectedStoryRepository);
+  KnobsNotifier(this._selectedStoryRepository) {
+    _selectedStoryRepository.getStream().listen((event) => notifyListeners());
+  }
 
   final SelectedStoryRepository _selectedStoryRepository;
   final Map<String, Map<String, Knob>> _knobs = <String, Map<String, Knob>>{};
 
   void update<T>(String label, T value) {
-    // TODO: Add this somewhere
-    /* _selectedStoryRepository.getStream().listen((event) { */
-    /*   notifyListeners(); */
-    /* }); */
-
     if (!_selectedStoryRepository.isSet()) {
       return;
     }
