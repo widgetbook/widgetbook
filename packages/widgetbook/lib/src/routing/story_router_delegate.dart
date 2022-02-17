@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:widgetbook/src/knobs/knobs.dart';
+import 'package:widgetbook/src/knobs/knobs_builder.dart';
 import 'package:widgetbook/src/navigation.dart/navigation_panel.dart';
 import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
 import 'package:widgetbook/src/navigation.dart/preview_provider.dart';
@@ -8,6 +10,8 @@ import 'package:widgetbook/src/routing/story_route_path.dart';
 import 'package:widgetbook/src/styled_widgets/styled_scaffold.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 import 'package:widgetbook/widgetbook.dart';
+
+import '../constants/radii.dart';
 
 class NoAnimationTransitionDelegate extends TransitionDelegate<void> {
   @override
@@ -77,7 +81,43 @@ class StoryRouterDelegate<CustomTheme> extends RouterDelegate<StoryRoutePath>
                       width: 16,
                     ),
                     Expanded(
-                      child: Workbench<CustomTheme>(),
+                      child: Column(
+                        children: [
+                          Expanded(child: Workbench<CustomTheme>()),
+                          const SizedBox(
+                            width: 1000,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 16.0),
+                            child: Container(
+                              width: double.infinity,
+                              height: 300,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.surface,
+                                borderRadius: Radii.defaultRadius,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'Knobs',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    ...context
+                                        .watch<KnobsNotifier>()
+                                        .all()
+                                        .map((e) => e.build())
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 );
