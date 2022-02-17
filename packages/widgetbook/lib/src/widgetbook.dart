@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:widgetbook/src/extensions/list_extension.dart';
+import 'package:widgetbook/src/knobs/knobs.dart';
 import 'package:widgetbook/src/localization/localization_provider.dart';
 import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/story_helper.dart';
@@ -333,9 +334,13 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
             useCaseBuilder: widget.useCaseBuilder ?? defaultUseCaseBuilder,
           ),
         ),
+
+        /// Likely just register notifier here
         ChangeNotifierProvider(create: (_) => ZoomProvider()),
         ChangeNotifierProvider(create: (_) => ToolProvider()),
         ChangeNotifierProvider(create: (_) => TranslateProvider()),
+        ChangeNotifierProvider(
+            create: (_) => KnobsNotifier(selectedStoryRepository)),
         ChangeNotifierProvider.value(value: workbenchProvider),
         ChangeNotifierProvider.value(value: organizerProvider),
         ChangeNotifierProvider.value(value: previewProvider),
