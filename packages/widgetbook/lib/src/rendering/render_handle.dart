@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/rendering/rendering_provider.dart';
-import 'package:widgetbook/src/rendering/widgetbook_frame.dart';
 import 'package:widgetbook/src/workbench/iteration_button.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
+import 'package:widgetbook_models/widgetbook_models.dart';
 
 class RenderHandle<CustomTheme> extends StatelessWidget {
   const RenderHandle({

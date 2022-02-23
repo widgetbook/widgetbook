@@ -17,5 +17,5 @@ abstract class WidgetbookData {
   final List<String> dependencies;
 
   /// Maps this object into a serializable format
-  Map<String, dynamic> toMap();
+  Map<String, dynamic> toJson();
 }

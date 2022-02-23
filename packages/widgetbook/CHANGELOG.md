@@ -1,4 +1,4 @@
-## 2.0.4-beta
+## 2.0.5-beta
 
 - feat: added `textScaleFactors` for font accessibility ([#15](https://github.com/widgetbook/widgetbook/issues/15))
 - fix: added `MediaQuery` to `WidgetbookDeviceFrame` ([#66](https://github.com/widgetbook/widgetbook/issues/66))

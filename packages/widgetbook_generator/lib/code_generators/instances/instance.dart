@@ -20,6 +20,8 @@ abstract class Instance extends BaseInstance {
   const Instance({
     required this.name,
     required this.properties,
+    this.genericParameters = const <String>[],
+    this.namedConstructor,
     this.trailingComma = true,
   });
 
@@ -28,6 +30,11 @@ abstract class Instance extends BaseInstance {
   ///
   /// For example: `Container`, `Text` or `SizedBox`
   final String name;
+
+  /// Identifier of named constructor
+  final String? namedConstructor;
+
+  final List<String> genericParameters;
 
   /// The properties which are defined by the instance.
   final List<Property> properties;
@@ -45,8 +52,22 @@ abstract class Instance extends BaseInstance {
 
   @override
   String toCode() {
-    final stringBuffer = StringBuffer()
-      ..write(name)
+    final stringBuffer = StringBuffer()..write(name);
+
+    if (namedConstructor != null) {
+      stringBuffer
+        ..write('.')
+        ..write(namedConstructor);
+    }
+
+    if (genericParameters.isNotEmpty) {
+      stringBuffer
+        ..write('<')
+        ..write(genericParameters.join(', '))
+        ..write('>');
+    }
+
+    stringBuffer
       ..write('(')
       ..write(
         _propertiesToCode(),

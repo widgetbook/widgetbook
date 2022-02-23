@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:widgetbook/src/rendering/builders/text_scale_builder.dart';
 
 import 'package:widgetbook/src/rendering/rendering.dart';
+import 'package:widgetbook_models/widgetbook_models.dart';
 
 part 'rendering_state.freezed.dart';
 

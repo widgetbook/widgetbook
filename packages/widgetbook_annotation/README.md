@@ -39,20 +39,52 @@ dev_dependencies:
 
 This package defines the annotations `@WidgetbookApp`, `@WidgetbookUseCase`, and `@WidgetbookTheme`. The annotations and their usage are explained below.
 
-## @WidgetbookApp
+## `@WidgetbookApp`
 
 The annotation `@WidgetbookApp` has to be set only once and is mandatory for the code generation process. It is not important which element is annotated, but the location of the file in which `@WidgetbookApp` is used, defines the folder in which [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) will create the file `app.widgetbook.main`. The `app.widgetbook.main` file contains all the code to run the Widgetbook. 
 
+### Theme support
+
+Since [package:widgetbook](https://pub.dev/packages/widgetbook) supports Material and Cupertino themes as well as a custom themes the annotation can be used with different constructors.
+
+_`WidgetbookApp.material(...)`_
+
+ `@WidgetbookApp.material` should be used if you use a Material theme (`ThemeData`) within your app.
+
+ _`WidgetbookApp.cupertino(...)`_
+
+ `@WidgetbookApp.cupertino` should be used if you use a Cupertino theme (`CupertinoThemeData`) within your app.
+
+  _`WidgetbookApp`_
+
+ `@WidgetbookApp` should be used if you use custom theme within your app. You can use the `themeType` property of the `WidgetbookApp` constructor if you need the generator to create a generic instance. For example:
+
+ ```dart
+@WidgetbookApp(themeType: MyCustomTheme)
+```
+
+will create the following code:
+
+```dart
+class HotReload extends StatelessWidget {
+  const HotReload({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook<MyCustomTheme>(...);
+  }
+}
+```
+
 ### Parameters
 
-The annotation `@WidgetbookApp` has one required parameter `name` and one optional parameter `devices`.
+The annotation `@WidgetbookApp` (and its named constructors) has one required parameter `name` and multiple optional parameters.
 
 From the `name` parameter, the generator will create the `AppInfo` property of [package:widgetbook](https://pub.dev/packages/widgetbook). Therefore, this value will show in the upper left corner of the Widgetbook. 
 
-From the `devices` parameter, the generator will create the devices in which one can preview the widgets. 
+_optional parameters_
 
-You can set default theme mode by `defaultTheme` parameter. If not specified, system theme mode is used. 
-Valid values are `WidgetbookTheme.dark()` and `WidgetbookTheme.light()`.
+The optional `devices`, `frames` and `textScaleFactors` properties can be used to set the corresponding parameters documented in [package:widgetbook](https://pub.dev/packages/widgetbook).
 
 ### Example
 
@@ -71,7 +103,27 @@ app
 one might add `@WidgetbookApp` to the `App` Widget defined in `app.dart`.
 
 ```dart 
-@WidgetbookApp(name: 'Example App', devices: [ Apple.iPhone12 ])
+@WidgetbookApp.material(
+  name: 'Meal App',
+  frames: const [
+    WidgetbookFrame(
+      name: 'Widgetbook',
+      allowsDevices: true,
+    ),
+    WidgetbookFrame(
+      name: 'None',
+      allowsDevices: false,
+    ),
+  ],
+  devices: [Apple.iPhone12],
+  textScaleFactors: [
+    1,
+    2,
+    3,
+  ],
+  foldersExpanded: true,
+  widgetsExpanded: true,
+)
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -93,7 +145,7 @@ app
 ├─ pubspec.yaml
 ```
 
-## @WidgetbookUseCase
+## `@WidgetbookUseCase`
 
 `@WidgetbookUseCase` allows developers to mark functions as a use case. The `@WidgetbookUseCase` must be applied to a function 
 
@@ -167,13 +219,11 @@ If you require multiple use cases for a Widget, feel free to define multiple `@W
 
 Generator skips top root `src` folder from navigation panel. Many Flutter projects have its source code under a `src` folder, so keep it as a top-level category is unnecessary. If you have the same folder name under `lib` and `src` that folders will be merged. 
 
-## WidgetbookTheme
+## `@WidgetbookTheme`
 
-`@WidgetbookTheme` allows developers to annotate the light and dark theme of their app. Similar to `@WidgetbookUseCase`, `@WidgetbookTheme` is used on methods returning a `ThemeData` object. 
+`@WidgetbookTheme` allows developers to annotated themes of their app. Similar to `@WidgetbookUseCase`, `@WidgetbookTheme` is used on methods returning a `ThemeData` object. 
 
-### Constructors
-
-`@WidgetbookTheme` features two constructors `@WidgetbookTheme.light()` and `@WidgetbookTheme.dark()` for differentiation between the light and dark theme of the app. 
+`@WidgetbookTheme` requires a `name` to identify different themes in the Widgetbook UI. You can also define `isDefault` to true if you want the theme to be the default on startup. 
 
 ### Example
 
@@ -182,6 +232,65 @@ Generator skips top root `src` folder from navigation panel. Many Flutter projec
 ThemeData getDarkTheme() => ThemeData(
       primarySwatch: Colors.blue,
     );
+```
+
+## Localization annotations
+
+Widgetbook allows developers to annotate locales and localization delegates supported by your app. 
+
+### `@WidgetbookLocales`
+
+Use `@WidgetbookLocales` to define the supported locales: 
+
+```dart
+@WidgetbookLocales()
+final locales = [
+  Locale('en'),
+  Locale('de'),
+  Locale('fr'),
+];
+```
+
+### `@WidgetbookLocalizationDelegates`
+
+Use `@WidgetbookLocalizationDelegates` to define the supported localization delegates:
+
+```dart
+@WidgetbookLocalizationDelegates()
+final delegates = [
+  AppLocalizations.delegate,
+  GlobalMaterialLocalizations.delegate,
+  GlobalWidgetsLocalizations.delegate,
+  GlobalCupertinoLocalizations.delegate,
+];
+```
+
+## Builder annotations
+
+Widgetbook supports builder functions to customize how the use cases, themes and localization is build. Therefore, this package features annotations for all the builder functions available. 
+
+The annotations are:
+
+- `@WidgetbookDeviceFrameBuilder`
+- `@WidgetbookLocalizationBuilder`
+- `@WidgetbookScaffoldBuilder`
+- `@WidgetbookThemeBuilder`
+- `@WidgetbookUseCaseBuilder`
+
+### How to define an annotated builder function
+
+Make sure to define a global function with the parameters of the builder function you'd like to define. 
+
+### Example 
+```dart
+@WidgetbookDeviceFrameBuilder()
+DeviceFrameBuilderFunction frameBuilder = (
+  BuildContext context,
+  Device device,
+  WidgetbookFrame frame,
+  Orientation orientation,
+  Widget child,
+) { ... }
 ```
 
 # Let us know how you feel about Widgetbook
