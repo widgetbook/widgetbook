@@ -32,19 +32,6 @@ jobs:
     - name: Run Tests
       run: flutter test --coverage
 
-    - name: Check Code Coverage
-      uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
-      with:
-        path: packages/widgetbook/coverage/lcov.info
-        exclude: '**/*.g.dart **/*.freezed.dart'
-        min_coverage: 30
-      
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        directory: ./packages/widgetbook/coverage/
-
   code-quality:
     defaults:
       run:

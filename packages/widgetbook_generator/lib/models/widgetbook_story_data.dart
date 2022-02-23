@@ -69,7 +69,7 @@ class WidgetbookStoryData extends WidgetbookData {
   final String typeDefinition;
 
   @override
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'name': name,
       'importStatement': importStatement,

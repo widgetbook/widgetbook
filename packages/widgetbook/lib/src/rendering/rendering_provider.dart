@@ -1,6 +1,7 @@
 import 'package:widgetbook/src/rendering/builders/text_scale_builder.dart';
 import 'package:widgetbook/src/rendering/rendering.dart';
 import 'package:widgetbook/src/state_change_notifier.dart';
+import 'package:widgetbook_models/widgetbook_models.dart';
 
 class RenderingProvider<CustomTheme>
     extends StateChangeNotifier<RenderingState<CustomTheme>> {

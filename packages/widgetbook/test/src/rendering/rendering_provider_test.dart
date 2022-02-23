@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/rendering/builders/text_scale_builder.dart';
 import 'package:widgetbook/src/rendering/rendering.dart';
+import 'package:widgetbook_models/widgetbook_models.dart';
 
 void main() {
   group(
