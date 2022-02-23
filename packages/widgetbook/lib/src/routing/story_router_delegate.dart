@@ -85,10 +85,9 @@ class StoryRouterDelegate<CustomTheme> extends RouterDelegate<StoryRoutePath>
                             flex: 3,
                             child: Workbench<CustomTheme>(),
                           ),
-                          SizedBox(width: 16,),
-                          Expanded(
-                            flex: 1,
-                            child: const SettingsPanel(),
+                          const SizedBox(width: 16,),
+                          const Expanded(
+                            child: SettingsPanel(),
                           )
                         ],
                       ),
