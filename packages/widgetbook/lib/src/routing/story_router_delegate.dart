@@ -6,6 +6,7 @@ import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
 import 'package:widgetbook/src/navigation.dart/preview_provider.dart';
 import 'package:widgetbook/src/navigation.dart/preview_state.dart';
 import 'package:widgetbook/src/routing/story_route_path.dart';
+import 'package:widgetbook/src/settings_panel/settings_panel.dart';
 import 'package:widgetbook/src/styled_widgets/styled_scaffold.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -78,10 +79,17 @@ class StoryRouterDelegate<CustomTheme> extends RouterDelegate<StoryRoutePath>
                       width: 16,
                     ),
                     Expanded(
-                      child: Column(
+                      child: Row(
                         children: [
-                          Expanded(child: Workbench<CustomTheme>()),
-                          const KnobsPanel()
+                          Expanded(
+                            flex: 3,
+                            child: Workbench<CustomTheme>(),
+                          ),
+                          SizedBox(width: 16,),
+                          Expanded(
+                            flex: 1,
+                            child: const SettingsPanel(),
+                          )
                         ],
                       ),
                     ),

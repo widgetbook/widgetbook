@@ -14,8 +14,6 @@ class KnobsPanel extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: Container(
-        /* width: double.infinity, */
-        /* height: 300, */
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
           borderRadius: Radii.defaultRadius,
