@@ -13,10 +13,11 @@ class SettingsPanel extends StatelessWidget {
     return DefaultTabController(
       length: 1,
       child: Column(children: [
-        const SizedBox(
+        SizedBox(
           height: Constants.controlBarHeight,
           child: TabBar(
-            tabs: [
+            indicatorColor: Theme.of(context).colorScheme.primary,
+            tabs: const [
               Tab(
                 icon: Icon(
                   Icons.build,
