@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
 
 class BoolKnob extends Knob<bool> {
-  /// {@macro bool_knob}
   BoolKnob({
     required String label,
     String? description,
@@ -24,7 +23,6 @@ class BoolKnob extends Knob<bool> {
 }
 
 class BooleanKnobWidget extends StatelessWidget {
-  /// {@macro boolean_knob_widget}
   const BooleanKnobWidget({
     Key? key,
     required this.label,
