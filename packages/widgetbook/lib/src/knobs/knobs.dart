@@ -67,13 +67,13 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   bool boolean({
     required String label,
     String? description,
-    bool initial = false,
+    bool initialValue = false,
   }) =>
       _addKnob(
         BoolKnob(
           label: label,
           description: description,
-          value: initial,
+          value: initialValue,
         ),
       );
 }

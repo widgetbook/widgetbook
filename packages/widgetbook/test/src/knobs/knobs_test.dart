@@ -20,7 +20,7 @@ void main() {
             children: [
               Text(context.knobs.boolean(
                 label: 'label',
-                initial: true,
+                initialValue: true,
               )
                   ? 'Hi'
                   : 'Bye'),
@@ -50,7 +50,7 @@ void main() {
             children: [
               Text(context.knobs.boolean(
                 label: 'label',
-                initial: true,
+                initialValue: true,
               )
                   ? 'Hi'
                   : 'Bye'),
