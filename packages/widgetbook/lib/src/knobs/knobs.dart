@@ -20,6 +20,16 @@ abstract class Knob<T> {
   /// This is the label that's put above a knob
   final String label;
 
+  @override
+  bool operator ==(Object other) {
+    return other is Knob<T> &&
+        other.value == value &&
+        other.label == other.label &&
+        other.description == other.description;
+  }
+
+  @override
+  int get hashCode => label.hashCode;
 
   Widget build();
 }
