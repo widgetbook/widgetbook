@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/constants/radii.dart';
 
-import 'knobs.dart';
+import 'package:widgetbook/src/knobs/knobs.dart';
 
 class KnobsPanel extends StatelessWidget {
   const KnobsPanel({
@@ -11,16 +10,18 @@ class KnobsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final knobs = context.watch<KnobsNotifier>().all();
+    final noKnobs = knobs.isEmpty;
+    final title = noKnobs ? 'No knobs to dispaly' : 'Knobs';
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Knobs',
-          style: TextStyle(
+        Text(
+          title,
+          style: const TextStyle(
             fontSize: 20,
           ),
         ),
-        ...context.watch<KnobsNotifier>().all().map((e) => e.build())
+        ...knobs.map((e) => e.build())
       ],
     );
   }
