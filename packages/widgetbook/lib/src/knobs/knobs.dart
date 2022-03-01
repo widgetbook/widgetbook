@@ -24,8 +24,8 @@ abstract class Knob<T> {
   bool operator ==(Object other) {
     return other is Knob<T> &&
         other.value == value &&
-        other.label == other.label &&
-        other.description == other.description;
+        other.label == label &&
+        other.description == description;
   }
 
   @override

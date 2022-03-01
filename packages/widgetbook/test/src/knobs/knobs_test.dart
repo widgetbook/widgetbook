@@ -49,6 +49,16 @@ void main() {
   );
 
   testWidgets(
+    'Equality operator works correctly',
+    (WidgetTester tester) async {
+      final first  = BoolKnob(label: 'first', value: true);
+      final second  = BoolKnob(label: 'second', value: true);
+      expect(first, equals(BoolKnob(label: 'first', value: true)));
+      expect(first, isNot(equals(second)));
+    },
+  );
+
+  testWidgets(
     'Bool knob functions',
     (WidgetTester tester) async {
       final selectedStoryRepository = SelectedStoryRepository();
