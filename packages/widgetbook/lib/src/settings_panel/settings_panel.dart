@@ -14,7 +14,7 @@ class SettingsPanel extends StatelessWidget {
       length: 1,
       child: Column(children: [
         const SizedBox(
-        height: Constants.controlBarHeight,
+          height: Constants.controlBarHeight,
           child: TabBar(
             tabs: [
               Tab(
@@ -24,6 +24,9 @@ class SettingsPanel extends StatelessWidget {
               )
             ],
           ),
+        ),
+        const SizedBox(
+          height: 16,
         ),
         Expanded(
           child: Container(
