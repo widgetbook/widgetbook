@@ -335,7 +335,6 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
           ),
         ),
 
-        /// Likely just register notifier here
         ChangeNotifierProvider(create: (_) => ZoomProvider()),
         ChangeNotifierProvider(create: (_) => ToolProvider()),
         ChangeNotifierProvider(create: (_) => TranslateProvider()),
