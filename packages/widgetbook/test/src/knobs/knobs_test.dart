@@ -8,6 +8,34 @@ import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/widget_test_helper.dart';
 
+Widget renderWithKnobs({
+  required List<Widget> Function(BuildContext) build,
+}) {
+  final selectedStoryRepository = SelectedStoryRepository();
+  final knobsNotifier = KnobsNotifier(selectedStoryRepository);
+  final useCase = WidgetbookUseCase(
+    name: 'use case',
+    builder: (context) {
+      return Column(
+        children: [
+          ...build(context),
+          ...knobsNotifier.all().map(
+            (e) {
+              return e.build();
+            },
+          )
+        ],
+      );
+    },
+  );
+  selectedStoryRepository.setItem(useCase);
+  final changeNotifierProvider = ChangeNotifierProvider(
+    create: (context) => knobsNotifier,
+    child: Builder(builder: useCase.builder),
+  );
+  return changeNotifierProvider;
+}
+
 void main() {
   testWidgets(
     'Bool knob added',
@@ -45,51 +73,6 @@ void main() {
               value: true,
             )
           ]));
-    },
-  );
-
-  testWidgets(
-    'Equality operator works correctly',
-    (WidgetTester tester) async {
-      final first  = BoolKnob(label: 'first', value: true);
-      final second  = BoolKnob(label: 'second', value: true);
-      expect(first, equals(BoolKnob(label: 'first', value: true)));
-      expect(first, isNot(equals(second)));
-    },
-  );
-
-  testWidgets(
-    'Bool knob functions',
-    (WidgetTester tester) async {
-      final selectedStoryRepository = SelectedStoryRepository();
-      final knobsNotifier = KnobsNotifier(selectedStoryRepository);
-      final useCase = WidgetbookUseCase(
-        name: 'use case',
-        builder: (context) {
-          return Column(
-            children: [
-              Text(context.knobs.boolean(
-                label: 'label',
-                initialValue: true,
-              )
-                  ? 'Hi'
-                  : 'Bye'),
-              ...knobsNotifier.all().map((e) {
-                return e.build();
-              })
-            ],
-          );
-        },
-      );
-      selectedStoryRepository.setItem(useCase);
-      await tester.pumpWidgetWithMaterialApp(ChangeNotifierProvider(
-        create: (context) => knobsNotifier,
-        child: Builder(builder: useCase.builder),
-      ));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const Key('label-switchTileKnob')));
-      await tester.pumpAndSettle();
-      expect(find.text('Bye'), findsOneWidget);
     },
   );
 }
