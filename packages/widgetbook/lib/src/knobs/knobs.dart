@@ -4,6 +4,8 @@ import 'package:widgetbook/src/knobs/bool_knob.dart';
 import 'package:widgetbook/src/knobs/knobs_builder.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 
+import 'nullable_bool_knob.dart';
+
 abstract class Knob<T> {
   Knob({
     required this.label,
@@ -59,6 +61,20 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   }) =>
       _addKnob(
         BoolKnob(
+          label: label,
+          description: description,
+          value: initialValue,
+        ),
+      );
+
+  @override
+  bool? nullableBoolean({
+    required String label,
+    String? description,
+    bool? initialValue = false,
+  }) =>
+      _addKnob(
+        NullableBoolKnob(
           label: label,
           description: description,
           value: initialValue,

@@ -8,5 +8,10 @@ abstract class KnobsBuilder {
     String? description,
     bool initialValue = false,
   });
-  /// Creates text input field with [label], [description] and [initial] value.
+
+  bool? nullableBoolean({
+    required String label,
+    String? description,
+    bool? initialValue = false,
+  });
 }
