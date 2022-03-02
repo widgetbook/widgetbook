@@ -19,6 +19,7 @@ class SettingsPanel extends StatelessWidget {
             indicatorColor: Theme.of(context).colorScheme.primary,
             tabs: const [
               Tab(
+                key: Key('knobsTab'),
                 icon: Icon(
                   Icons.build,
                 ),
