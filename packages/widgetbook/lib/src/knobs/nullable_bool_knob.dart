@@ -38,34 +38,38 @@ class NullableBooleanKnobWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final _val = value ?? false;
     final _disabled = value == null;
-    return Wrap(
-      children: [
-        SwitchListTile(
-          key: Key('$label-switchTileKnob'),
-          title: Text(label, overflow: TextOverflow.ellipsis),
-          subtitle: description == null ? null : Text(description!),
-          value: _val,
-          onChanged: _disabled
-              ? null
-              : (v) => context.read<KnobsNotifier>().update(label, v),
-        ),
-        Checkbox(
-        key: Key('$label-switchTileKnob-check'),
-          value: _disabled,
-          onChanged: (v) {
-            bool? newValue;
-            switch (v) {
-              case null:
-              case true:
-                newValue = null;
-                break;
-              default:
-                newValue = false;
-            }
-            context.read<KnobsNotifier>().update(label, newValue);
-          },
-        )
-      ],
+    return ListTile(
+      key: Key('$label-switchTileKnob'),
+      title: Text(label, overflow: TextOverflow.ellipsis),
+      dense: true,
+      subtitle: description == null ? null : Text(description!),
+      trailing: Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          Switch(
+            value: _val,
+            onChanged: _disabled
+                ? null
+                : (v) => context.read<KnobsNotifier>().update(label, v),
+          ),
+          Checkbox(
+            key: Key('$label-switchTileKnob-check'),
+            value: _disabled,
+            onChanged: (v) {
+              bool? newValue;
+              switch (v) {
+                case null:
+                case true:
+                  newValue = null;
+                  break;
+                default:
+                  newValue = false;
+              }
+              context.read<KnobsNotifier>().update(label, newValue);
+            },
+          )
+        ],
+      ),
     );
   }
 }
