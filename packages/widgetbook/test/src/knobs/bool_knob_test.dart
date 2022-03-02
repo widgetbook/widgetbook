@@ -37,4 +37,56 @@ void main() {
       expect(find.text('Bye'), findsOneWidget);
     },
   );
+
+  testWidgets(
+    'Equality operator works correctly',
+    (WidgetTester tester) async {
+      final first = NullableBoolKnob(label: 'first', value: null);
+      final second = NullableBoolKnob(label: 'second', value: null);
+      expect(first, equals(BoolKnob(label: 'first', value: null)));
+      expect(first, isNot(equals(second)));
+    },
+  );
+
+  testWidgets(
+    'Nullable Bool knob functions',
+    (WidgetTester tester) async {
+      await tester.pumpWidgetWithMaterialApp(
+        renderWithKnobs(build: (context) {
+          final bool? value = context.knobs.nullableBoolean(
+            label: 'label',
+            initialValue: null,
+          );
+          String text;
+
+          switch (value) {
+            case null:
+              text = 'idk';
+              break;
+            case true:
+              text = 'hi';
+              break;
+            case false:
+              text = 'bye';
+              break;
+            default:
+              text = 'wont happen';
+          }
+
+          return [Text(text)];
+        }),
+      );
+
+      expect(find.text('idk'), findsOneWidget);
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('check-switchTileKnob')));
+      expect(find.text('bye'), findsOneWidget);
+      await tester.tap(find.byKey(const Key('label-switchTileKnob')));
+      expect(find.text('hi'), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('check-switchTileKnob')));
+      expect(find.text('idk'), findsOneWidget);
+      await tester.pumpAndSettle();
+    },
+  );
 }
