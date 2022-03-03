@@ -26,11 +26,11 @@ void main() {
             build: (context) => [
                   Text(context.knobs.text(
                     label: 'label',
-                    initialValue: 'Hi',
+                    initialValue: 'Hi dude',
                   ))
                 ]),
       );
-      expect(find.text('Hi'), findsOneWidget);
+      expect(find.text('Hi dude'), findsWidgets);
     },
   );
 
@@ -48,7 +48,7 @@ void main() {
       await tester.enterText(find.byKey(const Key('label-textKnob')), 'Bye');
       await tester.pumpAndSettle();
 
-      expect(find.text('Bye'), findsOneWidget);
+      expect(find.text('Bye'), findsWidgets);
     },
   );
 }

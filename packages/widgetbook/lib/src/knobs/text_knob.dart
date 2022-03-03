@@ -49,18 +49,32 @@ class _TextKnobWidgetState extends State<TextKnobWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      key: Key('${widget.label}-switchTileKnob'),
-      title: Text(widget.label, overflow: TextOverflow.ellipsis),
-      subtitle: widget.description == null ? null : Text(widget.description!),
-      trailing: Expanded(
-          child: TextField(
-        key: Key('${widget.label}-textKnob'),
-        controller: controller,
-        onChanged: (v) {
-          context.read<KnobsNotifier>().update(widget.label, v);
-        },
-      )),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Center(
+          child: Text(
+            '${widget.label}:',
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        Expanded(
+          child: ListTile(
+            title: TextField(
+              key: Key('${widget.label}-textKnob'),
+              controller: controller,
+              onChanged: (v) {
+                context.read<KnobsNotifier>().update(widget.label, v);
+              },
+            ),
+            subtitle: widget.description == null
+                ? null
+                : Text(
+                    widget.description!,
+                  ),
+          ),
+        ),
+      ],
     );
   }
 }

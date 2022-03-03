@@ -81,6 +81,18 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
           value: initialValue,
         ),
       );
+  @override
+  String text({
+    required String label,
+    String? description,
+    String initialValue = '',
+  }) =>
+      _addKnob(
+        TextKnob(
+          label: label,
+          value: initialValue,
+        )
+      );
 
   void update<T>(String label, T value) {
     if (!_selectedStoryRepository.isSet()) {
@@ -100,14 +112,6 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     }) as Knob<T>)
         .value;
   }
-
-  @override
-  String text({
-    required String label,
-    String? description,
-    String initialValue = '',
-  }) =>
-      TextKnob(label: label, value: initialValue).value;
 }
 
 extension Knobs on BuildContext {
