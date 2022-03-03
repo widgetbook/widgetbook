@@ -46,19 +46,69 @@ void main() {
       );
 
       expect(find.text('idk'), findsOneWidget);
+
       await tester.tap(find.byKey(const Key('label-switchTileKnob-check')));
       await tester.pumpAndSettle();
-
       expect(find.text('bye'), findsOneWidget);
+
       await tester.tap(find.byKey(const Key('label-switchTileKnob')));
       await tester.pumpAndSettle();
-
       expect(find.text('hi'), findsOneWidget);
+
       await tester.tap(find.byKey(const Key('label-switchTileKnob-check')));
       await tester.pumpAndSettle();
+      expect(find.text('idk'), findsOneWidget);
 
       expect(find.text('idk'), findsOneWidget);
       await tester.pumpAndSettle();
+    },
+  );
+
+  testWidgets(
+    'Nullable Bool knob remembers previous value before null',
+    (WidgetTester tester) async {
+      await tester.pumpWidgetWithMaterialApp(
+        renderWithKnobs(build: (context) {
+          final value = context.knobs.nullableBoolean(
+            label: 'label',
+            initialValue: null,
+          );
+          String text;
+
+          switch (value) {
+            case null:
+              text = 'idk';
+              break;
+            case true:
+              text = 'hi';
+              break;
+            case false:
+              text = 'bye';
+              break;
+            default:
+              text = 'wont happen';
+          }
+          return [Text(text)];
+        }),
+      );
+
+      expect(find.text('idk'), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('label-switchTileKnob-check')));
+      await tester.pumpAndSettle();
+      expect(find.text('bye'), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('label-switchTileKnob')));
+      await tester.pumpAndSettle();
+      expect(find.text('hi'), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('label-switchTileKnob-check')));
+      await tester.pumpAndSettle();
+      expect(find.text('idk'), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('label-switchTileKnob-check')));
+      await tester.pumpAndSettle();
+      expect(find.text('hi'), findsOneWidget);
     },
   );
 }

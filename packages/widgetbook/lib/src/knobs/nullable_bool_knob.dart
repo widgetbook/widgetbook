@@ -22,7 +22,7 @@ class NullableBoolKnob extends Knob<bool?> {
       );
 }
 
-class NullableBooleanKnobWidget extends StatelessWidget {
+class NullableBooleanKnobWidget extends StatefulWidget {
   const NullableBooleanKnobWidget({
     Key? key,
     required this.label,
@@ -35,25 +35,45 @@ class NullableBooleanKnobWidget extends StatelessWidget {
   final bool? value;
 
   @override
+  State<NullableBooleanKnobWidget> createState() =>
+      _NullableBooleanKnobWidgetState();
+}
+
+class _NullableBooleanKnobWidgetState extends State<NullableBooleanKnobWidget> {
+  bool value = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.value != null) {
+      value = widget.value!;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final _val = value ?? false;
-    final _disabled = value == null;
+    final _disabled = widget.value == null;
     return ListTile(
-      key: Key('$label-switchTileKnob'),
-      title: Text(label, overflow: TextOverflow.ellipsis),
+      title: Text(widget.label, overflow: TextOverflow.ellipsis),
       dense: true,
-      subtitle: description == null ? null : Text(description!),
+      subtitle: widget.description == null ? null : Text(widget.description!),
       trailing: Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           Switch(
-            value: _val,
+            key: Key('${widget.label}-switchTileKnob'),
+            value: value,
             onChanged: _disabled
                 ? null
-                : (v) => context.read<KnobsNotifier>().update(label, v),
+                : (v) {
+                    setState(() {
+                      value = v;
+                    });
+                    context.read<KnobsNotifier>().update(widget.label, v);
+                  },
           ),
           Checkbox(
-            key: Key('$label-switchTileKnob-check'),
+            key: Key('${widget.label}-switchTileKnob-check'),
             value: _disabled,
             onChanged: (v) {
               bool? newValue;
@@ -62,10 +82,10 @@ class NullableBooleanKnobWidget extends StatelessWidget {
                 case true:
                   newValue = null;
                   break;
-                default:
-                  newValue = false;
+                case false:
+                  newValue = value;
               }
-              context.read<KnobsNotifier>().update(label, newValue);
+              context.read<KnobsNotifier>().update(widget.label, newValue);
             },
           )
         ],
