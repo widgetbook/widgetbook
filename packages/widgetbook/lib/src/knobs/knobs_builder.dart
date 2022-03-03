@@ -14,4 +14,10 @@ abstract class KnobsBuilder {
     String? description,
     bool? initialValue = false,
   });
+
+  String text({
+    required String label,
+    String? description,
+    String initialValue,
+  });
 }

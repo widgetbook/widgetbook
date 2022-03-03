@@ -2,9 +2,10 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/knobs/bool_knob.dart';
 import 'package:widgetbook/src/knobs/knobs_builder.dart';
+import 'package:widgetbook/src/knobs/text_knob.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 
-import 'nullable_bool_knob.dart';
+import 'package:widgetbook/src/knobs/nullable_bool_knob.dart';
 
 abstract class Knob<T> {
   Knob({
@@ -99,6 +100,14 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     }) as Knob<T>)
         .value;
   }
+
+  @override
+  String text({
+    required String label,
+    String? description,
+    String initialValue = '',
+  }) =>
+      TextKnob(label: label, value: initialValue).value;
 }
 
 extension Knobs on BuildContext {
