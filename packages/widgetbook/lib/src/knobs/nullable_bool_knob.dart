@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:widgetbook/src/knobs/knobs.dart';
+import 'package:widgetbook/src/knobs/nullable_checkbox.dart';
 
 class NullableBoolKnob extends Knob<bool?> {
   NullableBoolKnob({
@@ -72,22 +73,11 @@ class _NullableBooleanKnobWidgetState extends State<NullableBooleanKnobWidget> {
                     context.read<KnobsNotifier>().update(widget.label, v);
                   },
           ),
-          Checkbox(
-            key: Key('${widget.label}-switchTileKnob-check'),
-            value: _disabled,
-            onChanged: (v) {
-              bool? newValue;
-              switch (v) {
-                case null:
-                case true:
-                  newValue = null;
-                  break;
-                case false:
-                  newValue = value;
-              }
-              context.read<KnobsNotifier>().update(widget.label, newValue);
-            },
-          )
+          NullableCheckbox(
+            cachedValue: value,
+            value: widget.value,
+            label: widget.label,
+          ),
         ],
       ),
     );
