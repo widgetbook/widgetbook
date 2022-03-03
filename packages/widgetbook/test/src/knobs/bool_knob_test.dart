@@ -31,6 +31,7 @@ void main() {
                       : 'Bye')
                 ]),
       );
+      expect(find.text('Hi'), findsOneWidget);
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const Key('label-switchTileKnob')));
       await tester.pumpAndSettle();
