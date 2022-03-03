@@ -48,6 +48,7 @@ class _NullableTexteanKnobWidgetState extends State<NullableTexteanKnobWidget> {
   void initState() {
     super.initState();
     if (widget.value != null) {
+      controller.text = widget.value!;
       value = widget.value!;
     }
   }
@@ -68,7 +69,7 @@ class _NullableTexteanKnobWidgetState extends State<NullableTexteanKnobWidget> {
         ),
         Expanded(
           child: TextField(
-            key: Key('${widget.label}-textKnob'),
+            key: Key('${widget.label}-nullableTextKnob'),
             controller: controller,
             onChanged: (v) {
               context.read<KnobsNotifier>().update(widget.label, v);

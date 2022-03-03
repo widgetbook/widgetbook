@@ -20,4 +20,10 @@ abstract class KnobsBuilder {
     String? description,
     String initialValue,
   });
+
+  String? nullableText({
+    required String label,
+    String? description,
+    String? initialValue,
+  });
 }

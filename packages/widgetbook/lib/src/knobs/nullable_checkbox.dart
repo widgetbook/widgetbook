@@ -18,7 +18,8 @@ class NullableCheckbox<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Checkbox(
-      value: cachedValue == null,
+    key: Key('$label-nullableCheckbox'),
+      value: value == null,
       onChanged: (v) {
         T? newValue;
         switch (v) {
