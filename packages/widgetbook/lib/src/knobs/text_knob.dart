@@ -58,20 +58,16 @@ class _TextKnobWidgetState extends State<TextKnobWidget> {
             overflow: TextOverflow.ellipsis,
           ),
         ),
+        const SizedBox(
+          width: 10,
+        ),
         Expanded(
-          child: ListTile(
-            title: TextField(
-              key: Key('${widget.label}-textKnob'),
-              controller: controller,
-              onChanged: (v) {
-                context.read<KnobsNotifier>().update(widget.label, v);
-              },
-            ),
-            subtitle: widget.description == null
-                ? null
-                : Text(
-                    widget.description!,
-                  ),
+          child: TextField(
+            key: Key('${widget.label}-textKnob'),
+            controller: controller,
+            onChanged: (v) {
+              context.read<KnobsNotifier>().update(widget.label, v);
+            },
           ),
         ),
       ],
