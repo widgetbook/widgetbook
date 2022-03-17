@@ -5,6 +5,14 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?label=test&style=flat-square)
 
+# Open Source Package & Widgetbook Cloud
+
+Widgetbook is the custom widget library specifically created for Flutter applications. Developers can manage all of their widgets in one place and see how they will appear on different devices as well as in different languages and themes. 
+
+Widgetbook Cloud is the collaboration platform for Flutter frontend teams. Developers can easily share their Widgetbook with designers, project managers, clients, and more to simplify review processes.
+
+[Get access to Widgetbook Cloud!](https://www.widgetbook.io/pilot-customer?utm_source=github&utm_medium=github&utm_campaign=read_me)
+
 # Packages
 
 The widgetbook repository contains of the Widgetbook packages which are located at [/widgetbook/packages/](https://github.com/widgetbook/widgetbook/tree/main/packages).
