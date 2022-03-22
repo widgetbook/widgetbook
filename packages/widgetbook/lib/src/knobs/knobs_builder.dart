@@ -26,4 +26,13 @@ abstract class KnobsBuilder {
     String? description,
     String? initialValue,
   });
+
+  double slider({
+    required String label,
+    String? description,
+    required double initialValue,
+    double max,
+    double min,
+    int? divisions,
+  });
 }

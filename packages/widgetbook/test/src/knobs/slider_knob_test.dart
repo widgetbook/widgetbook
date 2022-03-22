@@ -23,15 +23,17 @@ void main() {
       await tester.pumpWidgetWithMaterialApp(
         renderWithKnobs(
             build: (context) => [
-                  Text(context.knobs
-                      .slider(
-                        label: 'label',
-                        initialValue: 5,
-                        max: 7,
-                        min: 3,
-                        divisions: 1,
-                      )
-                      .toString())
+                  Text(
+                    context.knobs
+                        .slider(
+                          label: 'label',
+                          initialValue: 5,
+                          max: 7,
+                          min: 3,
+                          divisions: 1,
+                        )
+                        .toString(),
+                  )
                 ]),
       );
       expect(find.text('5'), findsOneWidget);
