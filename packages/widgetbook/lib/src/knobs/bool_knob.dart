@@ -35,11 +35,14 @@ class BooleanKnobWidget extends StatelessWidget {
   final bool value;
 
   @override
-  Widget build(BuildContext context) => SwitchListTile(
-        key: Key('$label-switchTileKnob'),
-        title: Text(label, overflow: TextOverflow.ellipsis),
-        subtitle: description == null ? null : Text(description!),
-        value: value,
-        onChanged: (v) => context.read<KnobsNotifier>().update(label, v),
+  Widget build(BuildContext context) => KnobWrapper(
+        description: description,
+        child: SwitchListTile(
+          key: Key('$label-switchTileKnob'),
+          title: Text(label, overflow: TextOverflow.ellipsis),
+          subtitle: description == null ? null : Text(description!),
+          value: value,
+          onChanged: (v) => context.read<KnobsNotifier>().update(label, v),
+        ),
       );
 }

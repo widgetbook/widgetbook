@@ -54,31 +54,34 @@ class _NullableBooleanKnobWidgetState extends State<NullableBooleanKnobWidget> {
   @override
   Widget build(BuildContext context) {
     final _disabled = widget.value == null;
-    return ListTile(
-      title: Text(widget.label, overflow: TextOverflow.ellipsis),
-      dense: true,
-      subtitle: widget.description == null ? null : Text(widget.description!),
-      trailing: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          Switch(
-            key: Key('${widget.label}-switchTileKnob'),
-            value: value,
-            onChanged: _disabled
-                ? null
-                : (v) {
-                    setState(() {
-                      value = v;
-                    });
-                    context.read<KnobsNotifier>().update(widget.label, v);
-                  },
-          ),
-          NullableCheckbox(
-            cachedValue: value,
-            value: widget.value,
-            label: widget.label,
-          ),
-        ],
+    return KnobWrapper(
+    description: widget.description,
+      child: ListTile(
+        title: Text(widget.label, overflow: TextOverflow.ellipsis),
+        dense: true,
+        subtitle: widget.description == null ? null : Text(widget.description!),
+        trailing: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Switch(
+              key: Key('${widget.label}-switchTileKnob'),
+              value: value,
+              onChanged: _disabled
+                  ? null
+                  : (v) {
+                      setState(() {
+                        value = v;
+                      });
+                      context.read<KnobsNotifier>().update(widget.label, v);
+                    },
+            ),
+            NullableCheckbox(
+              cachedValue: value,
+              value: widget.value,
+              label: widget.label,
+            ),
+          ],
+        ),
       ),
     );
   }

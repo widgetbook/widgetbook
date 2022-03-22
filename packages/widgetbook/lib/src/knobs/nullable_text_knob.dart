@@ -55,36 +55,39 @@ class _NullableTexteanKnobWidgetState extends State<NullableTexteanKnobWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Center(
-          child: Text(
-            '${widget.label}:',
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Expanded(
-          child: TextField(
-            key: Key('${widget.label}-nullableTextKnob'),
-            controller: controller,
-            decoration: InputDecoration(
-              isDense: true,
+    return KnobWrapper(
+    description: widget.description,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Center(
+            child: Text(
+              '${widget.label}:',
+              overflow: TextOverflow.ellipsis,
             ),
-            onChanged: (v) {
-              context.read<KnobsNotifier>().update(widget.label, v);
-            },
           ),
-        ),
-        NullableCheckbox(
-          cachedValue: value,
-          value: widget.value,
-          label: widget.label,
-        )
-      ],
+          const SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: TextField(
+              key: Key('${widget.label}-nullableTextKnob'),
+              controller: controller,
+              decoration: InputDecoration(
+                isDense: true,
+              ),
+              onChanged: (v) {
+                context.read<KnobsNotifier>().update(widget.label, v);
+              },
+            ),
+          ),
+          NullableCheckbox(
+            cachedValue: value,
+            value: widget.value,
+            label: widget.label,
+          )
+        ],
+      ),
     );
   }
 }
