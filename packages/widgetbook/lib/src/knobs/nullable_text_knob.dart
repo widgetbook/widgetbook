@@ -71,6 +71,9 @@ class _NullableTexteanKnobWidgetState extends State<NullableTexteanKnobWidget> {
           child: TextField(
             key: Key('${widget.label}-nullableTextKnob'),
             controller: controller,
+            decoration: InputDecoration(
+              isDense: true,
+            ),
             onChanged: (v) {
               context.read<KnobsNotifier>().update(widget.label, v);
             },

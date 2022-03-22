@@ -91,6 +91,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
       _addKnob(TextKnob(
         label: label,
         value: initialValue,
+        description: description,
       ));
 
   @override
@@ -103,6 +104,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
         NullableTextKnob(
           label: label,
           value: initialValue,
+          description: description,
         ),
       );
 
@@ -128,4 +130,30 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
 
 extension Knobs on BuildContext {
   KnobsBuilder get knobs => watch<KnobsNotifier>();
+}
+
+/// Provides the description to the Knob
+class KnobWrapper extends StatelessWidget {
+  const KnobWrapper({
+    required this.child,
+    this.description,
+    Key? key,
+  }) : super(key: key);
+
+  final Widget child;
+  final String? description;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        child,
+        if (description != null) ...[
+          const SizedBox(height: 10),
+          Text(description!)
+        ]
+      ],
+    );
+  }
 }

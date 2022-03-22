@@ -35,6 +35,23 @@ void main() {
   );
 
   testWidgets(
+    'Text knob description displays',
+    (WidgetTester tester) async {
+      await tester.pumpWidgetWithMaterialApp(
+        renderWithKnobs(
+            build: (context) => [
+                  Text(context.knobs.text(
+                    label: 'label',
+                    initialValue: 'Hi dude',
+                    description: 'test description'
+                  ))
+                ]),
+      );
+      expect(find.text('test description'), findsOneWidget);
+    },
+  );
+
+  testWidgets(
     'Text knob functions',
     (WidgetTester tester) async {
       await tester.pumpWidgetWithMaterialApp(

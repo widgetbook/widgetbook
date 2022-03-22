@@ -49,28 +49,34 @@ class _TextKnobWidgetState extends State<TextKnobWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Center(
-          child: Text(
-            '${widget.label}:',
-            overflow: TextOverflow.ellipsis,
+    return KnobWrapper(
+      description: widget.description,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Center(
+            child: Text(
+              '${widget.label}:',
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Expanded(
-          child: TextField(
-            key: Key('${widget.label}-textKnob'),
-            controller: controller,
-            onChanged: (v) {
-              context.read<KnobsNotifier>().update(widget.label, v);
-            },
+          const SizedBox(
+            width: 10,
           ),
-        ),
-      ],
+          Expanded(
+            child: TextField(
+              key: Key('${widget.label}-textKnob'),
+              controller: controller,
+              decoration: const InputDecoration(
+                isDense: true,
+              ),
+              onChanged: (v) {
+                context.read<KnobsNotifier>().update(widget.label, v);
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
