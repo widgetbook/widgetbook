@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/src/app_info/app_info.dart';
 import 'package:widgetbook/src/constants/constants.dart';
-import 'package:widgetbook/src/models/app_info.dart';
 
 class Header extends StatelessWidget {
   const Header({

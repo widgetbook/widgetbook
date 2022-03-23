@@ -1,21 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
+import 'package:widgetbook/src/app_info/app_info.dart';
+import 'package:widgetbook/src/app_info/app_info_provider.dart';
 import 'package:widgetbook/src/extensions/list_extension.dart';
 import 'package:widgetbook/src/localization/localization_provider.dart';
-import 'package:widgetbook/src/models/app_info.dart';
-import 'package:widgetbook/src/models/organizers/organizer_helper/story_helper.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/mouse_tool/tool_provider.dart';
 import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
 import 'package:widgetbook/src/navigation.dart/organizer_state.dart';
 import 'package:widgetbook/src/navigation.dart/preview_provider.dart';
+import 'package:widgetbook/src/navigation.dart/router.dart';
 import 'package:widgetbook/src/rendering/rendering.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
-import 'package:widgetbook/src/routing/route_information_parser.dart';
-import 'package:widgetbook/src/routing/story_router_delegate.dart';
 import 'package:widgetbook/src/theming/widgetbook_theme.dart';
 import 'package:widgetbook/src/translate/translate_provider.dart';
 import 'package:widgetbook/src/utils/styles.dart';
@@ -264,24 +263,31 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
 
   late OrganizerProvider organizerProvider;
   late PreviewProvider previewProvider;
+  late AppInfoProvider appInfoProvider;
   late WorkbenchProvider<CustomTheme> workbenchProvider;
+  late GoRouter goRouter;
 
   @override
   void initState() {
     organizerProvider = OrganizerProvider(
       state: OrganizerState.unfiltered(categories: widget.categories),
       storyRepository: storyRepository,
-    );
+    )..hotReload(widget.categories);
     previewProvider = PreviewProvider(
       storyRepository: storyRepository,
       selectedStoryRepository: selectedStoryRepository,
     );
+    appInfoProvider = AppInfoProvider(state: widget.appInfo);
     workbenchProvider = WorkbenchProvider<CustomTheme>(
       themes: widget.themes,
       locales: widget.supportedLocales,
       devices: widget.devices,
       frames: widget.frames,
       textScaleFactors: widget.textScaleFactors,
+    );
+    goRouter = createRouter(
+      workbenchProvider: workbenchProvider,
+      previewProvider: previewProvider,
     );
 
     super.initState();
@@ -297,6 +303,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
       frames: widget.frames,
       textScaleFactors: widget.textScaleFactors,
     );
+    appInfoProvider.hotReload(widget.appInfo);
     super.didUpdateWidget(oldWidget);
   }
 
@@ -339,23 +346,11 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
         ChangeNotifierProvider.value(value: workbenchProvider),
         ChangeNotifierProvider.value(value: organizerProvider),
         ChangeNotifierProvider.value(value: previewProvider),
+        ChangeNotifierProvider.value(value: appInfoProvider),
       ],
       child: MaterialApp.router(
-        routeInformationParser: StoryRouteInformationParser(
-          onRoute: (path) {
-            final stories = StoryHelper.getAllStoriesFromCategories(
-              organizerProvider.state.allCategories,
-            );
-
-            // TODO implement navigator properly
-            // ignore: unused_local_variable
-            final selectedStory = selectStoryFromPath(path, stories);
-          },
-        ),
-        routerDelegate: StoryRouterDelegate<CustomTheme>(
-          previewState: previewProvider.state,
-          appInfo: widget.appInfo,
-        ),
+        routeInformationParser: goRouter.routeInformationParser,
+        routerDelegate: goRouter.routerDelegate,
         title: widget.appInfo.name,
         themeMode: ThemeMode.dark,
         debugShowCheckedModeBanner: false,

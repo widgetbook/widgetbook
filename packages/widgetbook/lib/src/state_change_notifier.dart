@@ -8,6 +8,10 @@ class StateChangeNotifier<T> with ChangeNotifier {
   T _state;
 
   set state(T value) {
+    if (state == value) {
+      return;
+    }
+
     _state = value;
     notifyListeners();
   }

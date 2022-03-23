@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/src/app_info/app_info.dart';
 import 'package:widgetbook/src/constants/radii.dart';
-import 'package:widgetbook/src/models/app_info.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/widgets/expanders/expander_row.dart';
 import 'package:widgetbook/src/widgets/header.dart';
