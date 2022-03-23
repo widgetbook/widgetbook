@@ -1,3 +1,6 @@
+## 2.0.6-beta
+- closed: Scrolling interferes with zooming ([#85](https://github.com/widgetbook/widgetbook/issues/85))
+
 ## 2.0.5-beta
 
 - feat: added `textScaleFactors` for font accessibility ([#15](https://github.com/widgetbook/widgetbook/issues/15))
