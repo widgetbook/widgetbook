@@ -77,10 +77,12 @@ class Renderer<CustomTheme> extends StatelessWidget {
                           return renderingState.scaffoldBuilder(
                             context,
                             frame,
-                            renderingState.useCaseBuilder(
-                              context,
-                              useCaseBuilder(context),
-                            ),
+                            Builder(builder: (context) {
+                              return renderingState.useCaseBuilder(
+                                context,
+                                useCaseBuilder(context),
+                              );
+                            }),
                           );
                         },
                       ),

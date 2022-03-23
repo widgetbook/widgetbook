@@ -7,8 +7,10 @@ ScaffoldBuilderFunction get defaultScaffoldBuilder => (
       Widget child,
     ) {
       if (frame.allowsDevices) {
-        return Scaffold(
-          body: child,
+        return ScaffoldMessenger(
+          child: Scaffold(
+            body: child,
+          ),
         );
       }
 
