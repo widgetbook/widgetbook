@@ -20,11 +20,20 @@ class ThemeResolver extends GeneratorForAnnotation<WidgetbookTheme> {
       );
     }
 
+    if (element.kind != ElementKind.FUNCTION ||
+        !(element as FunctionElement).isStatic) {
+      throw InvalidGenerationSourceError(
+        'The $WidgetbookTheme annotation cannot be applied to static '
+        'functions.',
+        element: element,
+      );
+    }
+
     final isDefault = annotation.read('isDefault').boolValue;
     final name = annotation.read('name').stringValue;
 
     final themeData = WidgetbookThemeData(
-      name: element.name!,
+      name: element.name,
       importStatement: element.importStatement,
       dependencies: element.dependencies,
       isDefault: isDefault,
