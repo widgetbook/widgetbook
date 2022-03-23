@@ -244,7 +244,7 @@ Use `@WidgetbookLocales` to define the supported locales:
 
 ```dart
 @WidgetbookLocales()
-final locales = [
+final locales = <Locale>[
   Locale('en'),
   Locale('de'),
   Locale('fr'),
