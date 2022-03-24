@@ -5,7 +5,7 @@ class WidgetbookFolder extends ExpandableOrganizer {
   WidgetbookFolder({
     required String name,
     List<WidgetbookFolder>? folders,
-    List<WidgetbookWidget>? widgets,
+    List<WidgetbookComponent>? widgets,
     bool isExpanded = false,
   }) : super(
           name: name,

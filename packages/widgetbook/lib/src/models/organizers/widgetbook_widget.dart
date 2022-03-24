@@ -2,8 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 
 ///
-class WidgetbookWidget extends ExpandableOrganizer {
-  WidgetbookWidget({
+class WidgetbookComponent extends ExpandableOrganizer {
+  WidgetbookComponent({
     required String name,
     required this.useCases,
     bool isExpanded = false,
@@ -25,7 +25,7 @@ class WidgetbookWidget extends ExpandableOrganizer {
     if (identical(this, other)) return true;
     final listEquals = const DeepCollectionEquality().equals;
 
-    return other is WidgetbookWidget && listEquals(other.useCases, useCases);
+    return other is WidgetbookComponent && listEquals(other.useCases, useCases);
   }
 
   @override

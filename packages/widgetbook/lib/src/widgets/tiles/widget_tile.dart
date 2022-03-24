@@ -13,7 +13,7 @@ class WidgetTile extends StatefulWidget {
     required this.level,
   }) : super(key: key);
 
-  final WidgetbookWidget widgetElement;
+  final WidgetbookComponent widgetElement;
   final int level;
 
   @override

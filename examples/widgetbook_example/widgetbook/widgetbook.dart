@@ -60,7 +60,7 @@ class HotreloadWidgetbook extends StatelessWidget {
             WidgetbookFolder(
               name: 'attributes',
               widgets: [
-                WidgetbookWidget(
+                WidgetbookComponent(
                   name: 'PriceAttribute',
                   useCases: [
                     WidgetbookUseCase(
@@ -73,7 +73,7 @@ class HotreloadWidgetbook extends StatelessWidget {
                     ),
                   ],
                 ),
-                WidgetbookWidget(
+                WidgetbookComponent(
                   name: 'WeightAttribute',
                   useCases: [
                     WidgetbookUseCase(
@@ -94,7 +94,7 @@ class HotreloadWidgetbook extends StatelessWidget {
             ),
           ],
           widgets: [
-            WidgetbookWidget(
+            WidgetbookComponent(
               name: 'Ingredients',
               useCases: [
                 WidgetbookUseCase(
@@ -138,7 +138,7 @@ class HotreloadWidgetbook extends StatelessWidget {
                 ),
               ],
             ),
-            WidgetbookWidget(
+            WidgetbookComponent(
               name: 'New tag',
               useCases: [
                 WidgetbookUseCase(
@@ -147,7 +147,7 @@ class HotreloadWidgetbook extends StatelessWidget {
                 ),
               ],
             ),
-            WidgetbookWidget(
+            WidgetbookComponent(
               name: 'Rotated image',
               useCases: [
                 WidgetbookUseCase(
@@ -158,7 +158,7 @@ class HotreloadWidgetbook extends StatelessWidget {
                 ),
               ],
             ),
-            WidgetbookWidget(
+            WidgetbookComponent(
               name: 'MealDetail',
               useCases: [
                 WidgetbookUseCase(
@@ -203,7 +203,7 @@ class HotreloadWidgetbook extends StatelessWidget {
             WidgetbookFolder(
               name: 'attributes',
               widgets: [
-                WidgetbookWidget(
+                WidgetbookComponent(
                   name: 'PriceAttribute',
                   useCases: [
                     WidgetbookUseCase(
@@ -216,7 +216,7 @@ class HotreloadWidgetbook extends StatelessWidget {
                     ),
                   ],
                 ),
-                WidgetbookWidget(
+                WidgetbookComponent(
                   name: 'WeightAttribute',
                   useCases: [
                     WidgetbookUseCase(

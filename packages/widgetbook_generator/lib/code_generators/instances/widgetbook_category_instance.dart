@@ -28,7 +28,7 @@ class WidgetbookCategoryInstance extends Instance {
               key: 'widgets',
               instance: ListInstance(
                 instances: widgets
-                    .map((widget) => WidgetbookWidgetInstance(
+                    .map((widget) => WidgetbookComponentInstance(
                           name: widget.name,
                           stories: widget.stories,
                           isExpanded: widget.isExpanded,

@@ -45,7 +45,7 @@ class HotreloadWidgetbook extends StatelessWidget {
         WidgetbookCategory(
           name: 'widgets',
           widgets: [
-            WidgetbookWidget(
+            WidgetbookComponent(
               name: 'Button',
               useCases: [
                 WidgetbookUseCase(
@@ -162,9 +162,9 @@ As you can see from the constructor definitions, `Widgetbook` allows to define y
 
 ## `categories`
 
-Your widgets can be catalogued by using different `Organizer`s. The available organizers are: `WidgetbookCategory`, `WidgetbookFolder`, `WidgetbookWidget` and `WidgetbookUseCase`.
+Your widgets can be catalogued by using different `Organizer`s. The available organizers are: `WidgetbookCategory`, `WidgetbookFolder`, `WidgetbookComponent` and `WidgetbookUseCase`.
 
-Both `WidgetbookCategory` and `WidgetbookFolder` can contain sub folders and `WidgetbookWidget` elements. However, `WidgetbookWidget` can only contain `WidgetbookUseCase`s. 
+Both `WidgetbookCategory` and `WidgetbookFolder` can contain sub folders and `WidgetbookComponent` elements. However, `WidgetbookComponent` can only contain `WidgetbookUseCase`s. 
 
 ```dart
 class HotReload extends StatelessWidget {
@@ -177,7 +177,7 @@ class HotReload extends StatelessWidget {
         WidgetbookCategory(
           name: 'widgets',
           widgets: [
-            WidgetbookWidget(
+            WidgetbookComponent(
               name: '$CustomWidget',
               useCases: [
                 WidgetbookUseCase(
@@ -191,7 +191,7 @@ class HotReload extends StatelessWidget {
             WidgetbookFolder(
               name: 'Texts',
               widgets: [
-                WidgetbookWidget(
+                WidgetbookComponent(
                   name: 'Normal Text',
                   useCases: [
                     WidgetbookUseCase(
