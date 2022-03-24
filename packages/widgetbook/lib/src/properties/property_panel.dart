@@ -36,38 +36,41 @@ class PropertyPanel<CustomTheme> extends StatelessWidget {
               color: Theme.of(context).colorScheme.surface,
               borderRadius: Radii.defaultRadius,
             ),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: OrientationHandle<CustomTheme>(),
-                ),
-                _buildSpacing(context),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: ThemeHandle<CustomTheme>(),
-                ),
-                _buildSpacing(context),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: RenderHandle<CustomTheme>(),
-                ),
-                _buildSpacing(context),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: DeviceHandle<CustomTheme>(),
-                ),
-                _buildSpacing(context),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: LocalizationHandle<CustomTheme>(),
-                ),
-                _buildSpacing(context),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: TextScaleHandle<CustomTheme>(),
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: OrientationHandle<CustomTheme>(),
+                  ),
+                  _buildSpacing(context),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: ThemeHandle<CustomTheme>(),
+                  ),
+                  _buildSpacing(context),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: RenderHandle<CustomTheme>(),
+                  ),
+                  _buildSpacing(context),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: DeviceHandle<CustomTheme>(),
+                  ),
+                  _buildSpacing(context),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: LocalizationHandle<CustomTheme>(),
+                  ),
+                  _buildSpacing(context),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: TextScaleHandle<CustomTheme>(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

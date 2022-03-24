@@ -137,7 +137,7 @@ class _TrippleSplitViewState extends State<TrippleSplitView> {
     return LayoutBuilder(
       builder: (context, BoxConstraints constraints) {
         final newMaxWidth = constraints.maxWidth - dividerWidth * 2;
-        if (newMaxWidth != totalHeight) {
+        if (isInitialized && newMaxWidth != totalHeight) {
           recalculateRatios(newMaxWidth);
         }
         totalHeight = constraints.maxHeight;
