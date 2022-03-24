@@ -17,6 +17,7 @@ class ThemeHandle<CustomTheme> extends StatelessWidget {
     final workbenchState = workbenchProvider.state;
 
     return ComparisonHandle<WidgetbookTheme<CustomTheme>, CustomTheme>(
+      name: 'Themes',
       multiRender: ComparisonSetting.themes,
       items: workbenchState.themes,
       buildItem: (WidgetbookTheme<CustomTheme> e) => SelectionItem(

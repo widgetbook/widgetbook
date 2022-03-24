@@ -6,6 +6,7 @@ import 'package:widgetbook_models/widgetbook_models.dart';
 class RenderingProvider<CustomTheme>
     extends StateChangeNotifier<RenderingState<CustomTheme>> {
   RenderingProvider({
+    // TODO is this required?
     required List<WidgetbookFrame> frames,
     required DeviceFrameBuilderFunction deviceFrameBuilder,
     required LocalizationBuilderFunction localizationBuilder,

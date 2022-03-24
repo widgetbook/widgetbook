@@ -18,6 +18,7 @@ class LocalizationHandle<CustomTheme> extends StatelessWidget {
     final workbenchState = workbenchProvider.state;
 
     return ComparisonHandle<Locale, CustomTheme>(
+      name: 'Localization',
       multiRender: ComparisonSetting.localization,
       items: workbenchState.locales,
       buildItem: (Locale e) => SelectionItem(
