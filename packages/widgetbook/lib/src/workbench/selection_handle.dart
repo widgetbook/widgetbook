@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/workbench/comparison_button.dart';
-import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/iteration_button.dart';
 import 'package:widgetbook/src/workbench/selection_item.dart';
 
-/// The [ComparisonHandle] allows users to preview one specific setting of a
+/// The [SelectionHandle] allows users to preview one specific setting of a
 /// collection or the whole collection at once.
-class ComparisonHandle<T, CustomTheme> extends StatelessWidget {
-  const ComparisonHandle({
+class SelectionHandle<T, CustomTheme> extends StatelessWidget {
+  const SelectionHandle({
     Key? key,
     required this.name,
-    required this.multiRender,
     required this.items,
     required this.buildItem,
     required this.onPreviousPressed,
@@ -18,7 +15,6 @@ class ComparisonHandle<T, CustomTheme> extends StatelessWidget {
   }) : super(key: key);
 
   final String name;
-  final ComparisonSetting multiRender;
   final List<T> items;
   final SelectionItem<T> Function(T item) buildItem;
   final VoidCallback onPreviousPressed;
@@ -37,9 +33,6 @@ class ComparisonHandle<T, CustomTheme> extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Expanded(child: Container()),
-            ComparisonButton<CustomTheme>(
-              value: multiRender,
-            ),
             IterationButton.previous(onPressed: onPreviousPressed),
             IterationButton.next(onPressed: onNextPressed),
           ],

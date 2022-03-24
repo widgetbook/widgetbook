@@ -15,6 +15,7 @@ class DeviceHandle<CustomTheme> extends StatelessWidget {
   ) {
     final workbenchProvider = context.watch<WorkbenchProvider<CustomTheme>>();
     return ComparisonHandle<Device, CustomTheme>(
+      name: 'Devices',
       multiRender: ComparisonSetting.devices,
       items: workbenchProvider.state.devices,
       buildItem: (Device e) => SelectionItem(

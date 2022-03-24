@@ -95,7 +95,7 @@ ThemeBuilderFunction<CustomTheme> themeBuilder<CustomTheme>() => (
     };
 
 @WidgetbookLocales()
-final locales = [
+final locales = <Locale>[
   Locale('en'),
   Locale('de'),
   Locale('fr'),

@@ -227,8 +227,8 @@ Generator skips top root `src` folder from navigation panel. Many Flutter projec
 
 ### Example
 
-```dart
-@WidgetbookTheme.dark()
+```
+@WidgetbookTheme(name: 'Dark', isDefault: true)
 ThemeData getDarkTheme() => ThemeData(
       primarySwatch: Colors.blue,
     );
@@ -244,7 +244,7 @@ Use `@WidgetbookLocales` to define the supported locales:
 
 ```dart
 @WidgetbookLocales()
-final locales = [
+final locales = <Locale>[
   Locale('en'),
   Locale('de'),
   Locale('fr'),

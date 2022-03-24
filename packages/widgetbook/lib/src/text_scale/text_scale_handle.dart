@@ -13,6 +13,7 @@ class TextScaleHandle<CustomTheme> extends StatelessWidget {
     final workbenchProvider = context.watch<WorkbenchProvider<CustomTheme>>();
     final workbenchState = workbenchProvider.state;
     return ComparisonHandle<double, CustomTheme>(
+      name: 'Text scale factors',
       multiRender: ComparisonSetting.textScale,
       items: workbenchState.textScaleFactors,
       buildItem: (double e) => SelectionItem(

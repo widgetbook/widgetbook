@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:widgetbook/src/app_info/app_info_provider.dart';
 import 'package:widgetbook/src/navigation.dart/navigation_panel.dart';
 import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
+import 'package:widgetbook/src/properties/property_panel.dart';
 import 'package:widgetbook/src/styled_widgets/styled_scaffold.dart';
+import 'package:widgetbook/src/widgets/multi_split_view.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 
 class WidgetbookPage<CustomTheme> extends StatelessWidget {
@@ -17,19 +19,13 @@ class WidgetbookPage<CustomTheme> extends StatelessWidget {
         child: Builder(builder: (context) {
           final appInfo = context.watch<AppInfoProvider>().state;
           final state = context.watch<OrganizerProvider>().state;
-          return Row(
-            children: [
-              NavigationPanel(
-                appInfo: appInfo,
-                categories: state.filteredCategories,
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              Expanded(
-                child: Workbench<CustomTheme>(),
-              ),
-            ],
+          return TrippleSplitView(
+            leftChild: NavigationPanel(
+              appInfo: appInfo,
+              categories: state.filteredCategories,
+            ),
+            centerChild: Workbench<CustomTheme>(),
+            rightChild: PropertyPanel<CustomTheme>(),
           );
         }),
       ),
