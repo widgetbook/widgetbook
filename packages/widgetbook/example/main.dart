@@ -15,7 +15,7 @@ class HotreloadWidgetbook extends StatelessWidget {
         WidgetbookCategory(
           name: 'widgets',
           widgets: [
-            WidgetbookWidget(
+            WidgetbookComponent(
               name: 'Button',
               useCases: [
                 WidgetbookUseCase(

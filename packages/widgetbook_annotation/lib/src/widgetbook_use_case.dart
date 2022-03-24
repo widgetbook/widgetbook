@@ -1,4 +1,4 @@
-/// Annotates a builder function which is used to create the WidgetbookWidget
+/// Annotates a builder function which is used to create the WidgetbookComponent
 /// and [WidgetbookUseCase] for the Widgetbook
 class WidgetbookUseCase {
   /// Creates a new annotation with [name] and [type].
@@ -17,6 +17,6 @@ class WidgetbookUseCase {
   final String name;
 
   /// The type of the Widget shown in the UseCase.
-  /// It is used to generate the WidgetbookWidget of the Widgetbook.
+  /// It is used to generate the WidgetbookComponent of the Widgetbook.
   final Type type;
 }

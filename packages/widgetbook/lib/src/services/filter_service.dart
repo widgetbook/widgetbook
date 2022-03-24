@@ -44,11 +44,11 @@ class FilterService {
       }
     }
 
-    final matchingWidgets = <WidgetbookWidget>[];
+    final matchingWidgets = <WidgetbookComponent>[];
     for (final subOrganizer in organizer.widgets) {
       final result = _filterOrganizer(regExp, subOrganizer);
       if (_isMatch(result)) {
-        matchingWidgets.add(result! as WidgetbookWidget);
+        matchingWidgets.add(result! as WidgetbookComponent);
       }
     }
 
@@ -66,7 +66,7 @@ class FilterService {
   ExpandableOrganizer _createFilteredSubtree(
     ExpandableOrganizer organizer,
     List<WidgetbookFolder> folders,
-    List<WidgetbookWidget> widgets,
+    List<WidgetbookComponent> widgets,
   ) {
     if (organizer is WidgetbookCategory) {
       return WidgetbookCategory(
