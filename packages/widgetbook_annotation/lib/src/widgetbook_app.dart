@@ -29,8 +29,7 @@ class WidgetbookApp {
     this.foldersExpanded = false,
     this.widgetsExpanded = false,
     this.constructor = WidgetbookConstructor.material,
-    this.themeType,
-  });
+  }) : themeType = null;
 
   /// Annotates a code element to creat a Cupertino-themed widgetbook main
   /// file in the same folder in which the annotated element is defined.
@@ -42,8 +41,7 @@ class WidgetbookApp {
     this.foldersExpanded = false,
     this.widgetsExpanded = false,
     this.constructor = WidgetbookConstructor.cupertino,
-    this.themeType,
-  });
+  }) : themeType = null;
 
   /// The type of the ThemeData.
   final Type? themeType;
