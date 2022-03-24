@@ -124,11 +124,22 @@ class _TrippleSplitViewState extends State<TrippleSplitView> {
     isInitialized = true;
   }
 
+  void recalculateRatios(double newSize) {
+    final leftSize = currentTotalWidth * leftRatio;
+    final rightSize = currentTotalWidth * rightRatio;
+
+    leftRatio = leftSize / newSize;
+    rightRatio = rightSize / newSize;
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, BoxConstraints constraints) {
         final newMaxWidth = constraints.maxWidth - dividerWidth * 2;
+        if (newMaxWidth != totalHeight) {
+          recalculateRatios(newMaxWidth);
+        }
         totalHeight = constraints.maxHeight;
         currentTotalWidth = newMaxWidth;
         if (!isInitialized) {
