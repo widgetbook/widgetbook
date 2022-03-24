@@ -39,6 +39,14 @@ class PreviewProvider extends StateChangeNotifier<PreviewState> {
     );
   }
 
+  void selectUseCaseByPath(String? path) {
+    if (path == null) {
+      return;
+    }
+
+    state = PreviewState(selectedUseCase: storyRepository.memory[path]);
+  }
+
   void deselectStory() {
     selectedStoryRepository.deleteItem();
     state = PreviewState.unselected();

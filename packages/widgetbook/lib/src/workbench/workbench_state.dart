@@ -21,4 +21,11 @@ class WorkbenchState<CustomTheme> with _$WorkbenchState<CustomTheme> {
     required List<WidgetbookFrame> frames,
     required List<double> textScaleFactors,
   }) = _WorkbenchState;
+
+  WorkbenchState._();
+
+  bool get hasSelectedTheme => theme != null;
+  bool get hasSelectedLocale => locale != null;
+  bool get hasSelectedDevice => device != null;
+  bool get hasSelectedTextScaleFactor => textScaleFactor != null;
 }

@@ -2,3 +2,4 @@ name: widgetbook
 
 packages:
   - packages/**
+  - examples/**

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/src/extensions/enum_extension.dart';
 import 'package:widgetbook/src/extensions/list_extension.dart';
 import 'package:widgetbook/src/state_change_notifier.dart';
 import 'package:widgetbook/src/workbench/comparison_setting.dart';
@@ -144,6 +145,60 @@ class WorkbenchProvider<CustomTheme>
 
   void changedTextScaleFactor(double textScaleFactor) {
     state = state.copyWith(textScaleFactor: textScaleFactor);
+  }
+
+  void setThemeByName(String? name) {
+    final theme = state.themes.firstWhere(
+      (element) => element.name == name,
+      orElse: () => state.themes.first,
+    );
+    state = state.copyWith(theme: theme);
+  }
+
+  void setLocaleByName(String? name) {
+    final locale = state.locales.firstWhere(
+      (element) => element.languageCode == name,
+      orElse: () => state.locales.first,
+    );
+    state = state.copyWith(locale: locale);
+  }
+
+  void setDeviceByName(String? name) {
+    final device = state.devices.firstWhere(
+      (element) => element.name == name,
+      orElse: () => state.devices.first,
+    );
+    state = state.copyWith(device: device);
+  }
+
+  void setTextScaleFactorByName(String? name) {
+    final textScaleFactor = state.textScaleFactors.firstWhere(
+      (element) => element.toStringAsFixed(1) == name,
+      orElse: () => state.textScaleFactors.first,
+    );
+    state = state.copyWith(textScaleFactor: textScaleFactor);
+  }
+
+  void setOrientationByName(String? name) {
+    var orientation = Orientation.landscape;
+    if (name != null) {
+      if (name == Orientation.landscape.toShortString()) {
+        orientation = Orientation.landscape;
+      }
+      if (name == Orientation.portrait.toShortString()) {
+        orientation = Orientation.portrait;
+      }
+    }
+
+    state = state.copyWith(orientation: orientation);
+  }
+
+  void setFrameByName(String? name) {
+    final frame = state.frames.firstWhere(
+      (element) => element.name == name,
+      orElse: () => state.frames.first,
+    );
+    state = state.copyWith(frame: frame);
   }
 
   void toggledOrientation() {
