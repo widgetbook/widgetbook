@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/src/constants/constants.dart';
 import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/devices/device_handle.dart';
 import 'package:widgetbook/src/localization/localization_handle.dart';
@@ -19,45 +20,58 @@ class PropertyPanel<CustomTheme> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minWidth: 50, maxWidth: 400),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: Radii.defaultRadius,
-      ),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: OrientationHandle<CustomTheme>(),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(
+          height: Constants.controlBarHeight,
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Expanded(
+          child: Container(
+            constraints: const BoxConstraints(minWidth: 50, maxWidth: 400),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              borderRadius: Radii.defaultRadius,
+            ),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: OrientationHandle<CustomTheme>(),
+                ),
+                _buildSpacing(context),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: ThemeHandle<CustomTheme>(),
+                ),
+                _buildSpacing(context),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: RenderHandle<CustomTheme>(),
+                ),
+                _buildSpacing(context),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: DeviceHandle<CustomTheme>(),
+                ),
+                _buildSpacing(context),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: LocalizationHandle<CustomTheme>(),
+                ),
+                _buildSpacing(context),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: TextScaleHandle<CustomTheme>(),
+                ),
+              ],
+            ),
           ),
-          _buildSpacing(context),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: ThemeHandle<CustomTheme>(),
-          ),
-          _buildSpacing(context),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: RenderHandle<CustomTheme>(),
-          ),
-          _buildSpacing(context),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: DeviceHandle<CustomTheme>(),
-          ),
-          _buildSpacing(context),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: LocalizationHandle<CustomTheme>(),
-          ),
-          _buildSpacing(context),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: TextScaleHandle<CustomTheme>(),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
