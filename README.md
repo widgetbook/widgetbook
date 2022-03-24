@@ -56,4 +56,4 @@ We love the open source flutter community!💙 If you'd like to contribute to on
 
 # Questions or Issues? 
 
-If something does not feel right or if you have questions, feel free to contact us. You can do so by [creating an issue](https://github.com/widgetbook/widgetbook/issues), [contacting us on discord](https://discord.gg/zT4AMStAJA) or [booking a call with us via calendly](https://calendly.com/widgetbook/call).
+If something does not feel right or if you have questions, feel free to contact us. You can do so by [creating an issue](https://github.com/widgetbook/widgetbook/issues) or [contacting us on discord](https://discord.gg/zT4AMStAJA).
