@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.15)
-project(meal_app LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.14)
+project(widgetbook_annotation_example LANGUAGES CXX)
 
-set(BINARY_NAME "meal_app")
+set(BINARY_NAME "widgetbook_annotation_example")
 
 cmake_policy(SET CMP0063 NEW)
 
