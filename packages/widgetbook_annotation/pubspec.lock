@@ -85,6 +85,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.2"
+  freezed_annotation:
+    dependency: transitive
+    description:
+      name: freezed_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   frontend_server_client:
     dependency: transitive
     description:
@@ -127,6 +134,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3"
+  json_annotation:
+    dependency: transitive
+    description:
+      name: json_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.4.0"
   logging:
     dependency: transitive
     description:
@@ -333,10 +347,10 @@ packages:
   widgetbook_models:
     dependency: "direct main"
     description:
-      name: widgetbook_models
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.4"
+      path: "../widgetbook_models"
+      relative: true
+    source: path
+    version: "0.0.6"
   yaml:
     dependency: transitive
     description:

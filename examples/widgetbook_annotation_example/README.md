@@ -1,4 +1,4 @@
-# meal_app
+# widgetbook_annotation_example
 
 A new Flutter project.
 

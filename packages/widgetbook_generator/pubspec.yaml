@@ -18,8 +18,10 @@ dependencies:
   json_annotation: ^4.4.0
   meta: ^1.7.0
   source_gen: ^1.1.0
-  widgetbook_annotation: ^2.0.0-beta
-  widgetbook_models: ^0.0.6
+  widgetbook_annotation:
+    path: ../widgetbook_annotation
+  widgetbook_models:
+    path: ../widgetbook_models
 
 
 dev_dependencies:
