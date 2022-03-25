@@ -266,6 +266,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   late OrganizerProvider organizerProvider;
   late PreviewProvider previewProvider;
   late WorkbenchProvider<CustomTheme> workbenchProvider;
+  late KnobsNotifier knobsNotifier;
 
   @override
   void initState() {
@@ -277,6 +278,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
       storyRepository: storyRepository,
       selectedStoryRepository: selectedStoryRepository,
     );
+    knobsNotifier = KnobsNotifier(selectedStoryRepository);
     workbenchProvider = WorkbenchProvider<CustomTheme>(
       themes: widget.themes,
       locales: widget.supportedLocales,
@@ -334,12 +336,10 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
             useCaseBuilder: widget.useCaseBuilder ?? defaultUseCaseBuilder,
           ),
         ),
-
         ChangeNotifierProvider(create: (_) => ZoomProvider()),
         ChangeNotifierProvider(create: (_) => ToolProvider()),
         ChangeNotifierProvider(create: (_) => TranslateProvider()),
-        ChangeNotifierProvider(
-            create: (_) => KnobsNotifier(selectedStoryRepository)),
+        ChangeNotifierProvider.value(value: knobsNotifier),
         ChangeNotifierProvider.value(value: workbenchProvider),
         ChangeNotifierProvider.value(value: organizerProvider),
         ChangeNotifierProvider.value(value: previewProvider),
