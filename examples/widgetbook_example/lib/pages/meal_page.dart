@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meal_app/models/meal.dart';
-import 'package:meal_app/widgets/meal_detail.dart';
+import 'package:widgetbook_example/models/meal.dart';
+import 'package:widgetbook_example/widgets/meal_detail.dart';
 
 class MealPage extends StatelessWidget {
   final Meal meal;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/constants/radii.dart';
-import 'package:widgetbook/src/navigation.dart/preview_provider.dart';
+import 'package:widgetbook/src/navigation/preview_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 import 'package:widgetbook/src/workbench/preview.dart';
 import 'package:widgetbook/src/workbench/workbench_controls.dart';

@@ -497,7 +497,7 @@ packages:
       path: "../widgetbook_annotation"
       relative: true
     source: path
-    version: "2.0.0-beta"
+    version: "2.0.1-beta"
   widgetbook_models:
     dependency: "direct main"
     description:

@@ -35,7 +35,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
   ) async {
     final stories = await _loadDataFromJson<WidgetbookStoryData>(
       buildStep,
-      '**.story.widgetbook.json',
+      '**.usecase.widgetbook.json',
       (map) => WidgetbookStoryData.fromMap(map),
     );
 

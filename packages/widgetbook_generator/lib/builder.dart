@@ -24,12 +24,12 @@ Builder themeBuilder(BuilderOptions options) {
 }
 
 /// Builder for the WidgetbookUseCase annotation.
-/// Creates a .story.widgetbook.json file for each .dart file containing a
+/// Creates a .usecase.widgetbook.json file for each .dart file containing a
 /// WidgetbookStory annotation
 Builder storyBuilder(BuilderOptions options) {
   return JsonLibraryBuilder(
-    StoryResolver(),
-    generatedExtension: '.story.widgetbook.json',
+    UseCaseResolver(),
+    generatedExtension: '.usecase.widgetbook.json',
     formatOutput: _formatOutput,
   );
 }

@@ -1,4 +1,4 @@
-name: meal_app
+name: widgetbook_example
 description: A new Flutter project.
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -21,8 +21,7 @@ dependencies:
   font_awesome_flutter: ^9.1.0
 
 dev_dependencies:
-  widgetbook:
-    path: ../../packages/widgetbook
+  widgetbook: ^2.0.6-beta
   flutter_test:
     sdk: flutter
   device_frame: ^1.0.0

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
-import 'package:widgetbook/src/navigation.dart/organizer_state.dart';
+import 'package:widgetbook/src/navigation/organizer_provider.dart';
+import 'package:widgetbook/src/navigation/organizer_state.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/widgets/search_bar.dart';
 

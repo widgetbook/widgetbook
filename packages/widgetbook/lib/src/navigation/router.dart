@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:widgetbook/src/extensions/enum_extension.dart';
-import 'package:widgetbook/src/navigation.dart/preview_provider.dart';
+import 'package:widgetbook/src/navigation/preview_provider.dart';
 import 'package:widgetbook/src/widgetbook_page.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
 

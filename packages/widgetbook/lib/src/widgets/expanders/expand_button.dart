@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
+import 'package:widgetbook/src/navigation/organizer_provider.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 class ExpandButton extends StatefulWidget {

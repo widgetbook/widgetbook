@@ -1,4 +1,11 @@
 ## 2.0.6-beta
+
+- refactor: renamed `WidgetbookWidget` to `WidgetbookComponent`
+- fix: `ScaffoldMessenger` opens in `Widgetbook` and not in the previewed app ([#148](https://github.com/widgetbook/widgetbook/issues/148))
+- fix: Missing error when `@WidgetbookTheme` is used on properties ([#130](https://github.com/widgetbook/widgetbook/issues/130))
+- fix: `@WidgetbookApp` wrongly exposes `ThemeType` property ([#129](https://github.com/widgetbook/widgetbook/issues/129))
+- closed: Widgetbook cannt be run for flutter version below 2.10 ([#113](https://github.com/widgetbook/widgetbook/issues/113))
+- fix: setState called during build ([#92](https://github.com/widgetbook/widgetbook/issues/92))
 - closed: Scrolling interferes with zooming ([#85](https://github.com/widgetbook/widgetbook/issues/85))
 
 ## 2.0.5-beta

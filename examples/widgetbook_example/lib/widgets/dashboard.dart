@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meal_app/blocs/meal/meal_bloc.dart';
-import 'package:meal_app/models/meal.dart';
-import 'package:meal_app/widgets/meal_info.dart';
+import 'package:widgetbook_example/blocs/meal/meal_bloc.dart';
+import 'package:widgetbook_example/models/meal.dart';
+import 'package:widgetbook_example/widgets/meal_info.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({Key? key}) : super(key: key);
