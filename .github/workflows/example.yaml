@@ -25,7 +25,14 @@ jobs:
         flutter-version: '2.8.0'
     - name: Enable MacOS desktop support
       run: flutter config --enable-macos-desktop
-    - run: flutter pub get
+
+    - name: Enable melos
+      run: flutter pub global activate melos
+
+    - name: Get packages 
+      run: melos bootstrap
+
+    - name: Build
     - run: | 
         flutter build macos -t widgetbook/main.dart
     - name: Create tar archive

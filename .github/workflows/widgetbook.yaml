@@ -26,8 +26,11 @@ jobs:
         channel: stable
         flutter-version: '2.8.0'
 
-    - name: Get flutter packages 
-      run: flutter pub get
+    - name: Enable melos
+      run: dart pub global activate melos
+
+    - name: Get packages 
+      run: melos bootstrap
 
     - name: Run Tests
       run: flutter test --coverage
