@@ -20,14 +20,11 @@ dependencies:
   flutter_bloc: ^7.1.0
   font_awesome_flutter: ^9.1.0
   
-  widgetbook_annotation:
-    path: ../../packages/widgetbook_annotation
+  widgetbook_annotation: ^2.0.1-beta
 
 dev_dependencies:
-  widgetbook:
-    path: ../../packages/widgetbook
-  widgetbook_generator:
-    path: ../../packages/widgetbook_generator
+  widgetbook: ^2.0.6-beta
+  widgetbook_generator: ^2.0.1-beta
   
   flutter_test:
     sdk: flutter

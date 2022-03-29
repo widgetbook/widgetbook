@@ -125,7 +125,7 @@ packages:
       name: go_router
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.5"
+    version: "3.0.6"
   intl:
     dependency: "direct main"
     description:
@@ -263,9 +263,9 @@ packages:
       path: "../../packages/widgetbook"
       relative: true
     source: path
-    version: "2.0.5-beta"
+    version: "2.0.6-beta"
   widgetbook_models:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       path: "../../packages/widgetbook_models"
       relative: true

@@ -1,6 +1,6 @@
 {
-    "name": "meal_app",
-    "short_name": "meal_app",
+    "name": "widgetbook_example",
+    "short_name": "widgetbook_example",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

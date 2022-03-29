@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:meal_app/widgets/attributes/attribute.dart';
+import 'package:widgetbook_example/widgets/attributes/attribute.dart';
 
 class PriceAttribute extends StatelessWidget {
   final num price;

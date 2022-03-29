@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart';
-import 'package:meal_app/constants/border.dart';
+import 'package:widgetbook_example/constants/border.dart';
 
 class RotatedImage extends StatelessWidget {
   final String assetPath;
