@@ -28,7 +28,7 @@ class WidgetbookStoryData extends WidgetbookData {
         );
 
   /// Obtains a [WidgetbookStoryData] object from classes provided by the
-  /// StoryResolver
+  /// UseCaseResolver
   factory WidgetbookStoryData.fromResolver(
     Element element,
     Element typeElement,

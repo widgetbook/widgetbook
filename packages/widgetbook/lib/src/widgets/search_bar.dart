@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/constants/radii.dart';
-import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
+import 'package:widgetbook/src/navigation/organizer_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 
 class SearchBar extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:widgetbook/src/models/models.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
-import 'package:widgetbook/src/navigation.dart/organizer_state.dart';
+import 'package:widgetbook/src/navigation/organizer_state.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/services/filter_service.dart';
 import 'package:widgetbook/src/state_change_notifier.dart';

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/models/models.dart';
-import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
-import 'package:widgetbook/src/navigation.dart/organizer_state.dart';
+import 'package:widgetbook/src/navigation/organizer_provider.dart';
+import 'package:widgetbook/src/navigation/organizer_state.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/services/filter_service.dart';
 
