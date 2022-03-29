@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         lfs: true
-        
+
     - name: Checkout LFS objects
       run: git lfs checkout
 
@@ -34,7 +34,7 @@ jobs:
       run: melos bootstrap
 
     - name: Build
-    - run: | 
+      run: | 
         flutter build macos -t widgetbook/main.dart
 
     - name: Create tar archive
