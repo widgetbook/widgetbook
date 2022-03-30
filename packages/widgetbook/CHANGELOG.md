@@ -1,3 +1,7 @@
+## 2.0.7-beta
+
+- fix: expanding of elements within the navigation is not working ([#156](https://github.com/widgetbook/widgetbook/issues/156))
+
 ## 2.0.6-beta
 
 - refactor: renamed `WidgetbookWidget` to `WidgetbookComponent`
