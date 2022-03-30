@@ -34,6 +34,7 @@ abstract class ExpandableOrganizer extends Organizer {
     final listEquals = const DeepCollectionEquality().equals;
 
     return other is ExpandableOrganizer &&
+        other.name == name &&
         other.isExpanded == isExpanded &&
         listEquals(other.folders, folders) &&
         listEquals(other.widgets, widgets);

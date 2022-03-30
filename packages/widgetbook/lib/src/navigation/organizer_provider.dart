@@ -95,12 +95,11 @@ class OrganizerProvider extends StateChangeNotifier<OrganizerState> {
   }
 
   void toggleExpander(ExpandableOrganizer organizer) {
+    // Since this is modifying the object directly instead of modifying via
+    // copyWith, we need to call notifyListeners and are not emmitting a new
+    // state object. The state will be adjusted by adjusted the object.
     organizer.isExpanded = !organizer.isExpanded;
-    state = OrganizerState(
-      allCategories: state.allCategories,
-      filteredCategories: state.filteredCategories,
-      searchTerm: state.searchTerm,
-    );
+    notifyListeners();
   }
 
   /// Recursively set the expanded field for an organizer and it's nested widgets.
