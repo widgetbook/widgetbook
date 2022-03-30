@@ -1,3 +1,7 @@
+## 2.0.9-beta
+
+- fix: Orientation defaults to landscape ([#161](https://github.com/widgetbook/widgetbook/issues/161))
+
 ## 2.0.8-beta
 
 - fix: navigation tree collapsing and expanding does not work ([#159](https://github.com/widgetbook/widgetbook/issues/159))

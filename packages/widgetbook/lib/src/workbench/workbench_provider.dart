@@ -180,7 +180,7 @@ class WorkbenchProvider<CustomTheme>
   }
 
   void setOrientationByName(String? name) {
-    var orientation = Orientation.landscape;
+    var orientation = Orientation.portrait;
     if (name != null) {
       if (name == Orientation.landscape.toShortString()) {
         orientation = Orientation.landscape;
