@@ -26,10 +26,10 @@ class _ExpandButtonState extends State<ExpandButton> {
     String tooltip;
     if (widget.expandTo) {
       icon = Icons.expand_more;
-      tooltip = 'Expand';
+      tooltip = 'Expand all';
     } else {
       icon = Icons.expand_less;
-      tooltip = 'Collapse';
+      tooltip = 'Collapse all';
     }
     return Tooltip(
       message: tooltip,

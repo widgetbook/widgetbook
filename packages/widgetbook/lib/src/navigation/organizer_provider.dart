@@ -118,13 +118,13 @@ class OrganizerProvider extends StateChangeNotifier<OrganizerState> {
   /// the `expanded`
   void setExpandedRecursive(
       List<ExpandableOrganizer> organizers, bool expanded) {
+    // Since this is modifying the object directly instead of modifying via
+    // copyWith, we need to call notifyListeners and are not emmitting a new
+    // state object. The state will be adjusted by adjusted the object.
     for (final e in organizers) {
       _setExpandedRecursive(e, expanded);
     }
-    state = OrganizerState(
-      allCategories: state.allCategories,
-      filteredCategories: state.filteredCategories,
-      searchTerm: state.searchTerm,
-    );
+
+    notifyListeners();
   }
 }

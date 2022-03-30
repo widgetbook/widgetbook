@@ -1,3 +1,7 @@
+## 2.0.8-beta
+
+- fix: navigation tree collapsing and expanding does not work ([#159](https://github.com/widgetbook/widgetbook/issues/159))
+
 ## 2.0.7-beta
 
 - fix: expanding of elements within the navigation is not working ([#156](https://github.com/widgetbook/widgetbook/issues/156))
