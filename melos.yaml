@@ -1,5 +1,16 @@
 name: widgetbook
+repository: https://github.com/widgetbook/widgetbook
 
 packages:
   - packages/**
   - examples/**
+
+command:
+  version:
+    linkToCommits: true
+    branch: main
+
+scripts:
+  generate:flutter:
+    run: melos exec -c 1 --depends-on="build_runner" --flutter -- "flutter pub run build_runner build --delete-conflicting-outputs"
+    description: Build all generated files for Flutter packages in this project.

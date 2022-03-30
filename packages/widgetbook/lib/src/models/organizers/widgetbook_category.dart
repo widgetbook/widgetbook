@@ -3,6 +3,7 @@ import 'package:widgetbook/src/models/organizers/widgetbook_folder.dart';
 import 'package:widgetbook/src/models/organizers/widgetbook_widget.dart';
 
 /// Categories help to organize WidgetElements and Stories into different areas.
+// TODO would be great if this uses freezed
 class WidgetbookCategory extends ExpandableOrganizer {
   WidgetbookCategory({
     required String name,
