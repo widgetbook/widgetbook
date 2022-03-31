@@ -1,9 +1,9 @@
-## 2.0.1-beta
+## 2.0.1
 
 - refactor: renamed `WidgetbookWidget` to `WidgetbookComponent`
 - fix: Missing error when `@WidgetbookTheme` is used on properties ([#130](https://github.com/widgetbook/widgetbook/issues/130))
 
-## 2.0.0-beta
+## 2.0.0
 
 - feat: adapted generator for [widgetbook](https://pub.dev/packages/widgetbook) 2.0.x ([#115](https://github.com/widgetbook/widgetbook/issues/115))
 

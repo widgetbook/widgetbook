@@ -385,9 +385,7 @@ Both the `scaffoldBuilder` and `useCaseBuilder` can be used to wrap the `Widget`
 
 # Supported Flutter version
 
-We are currently aiming to support the following flutter version
-
-`flutter: >=2.8.0`
+We are currently aiming to support the latest flutter version.
 
 # Using Widgetbook for a package
 
