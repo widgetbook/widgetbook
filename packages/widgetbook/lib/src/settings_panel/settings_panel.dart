@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/src/constants/constants.dart';
 import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/knobs/knobs_panel.dart';
+import 'package:widgetbook/src/properties/property_panel.dart';
 
-class SettingsPanel extends StatelessWidget {
+class SettingsPanel<CustomTheme> extends StatelessWidget {
   const SettingsPanel({
     Key? key,
   }) : super(key: key);
@@ -11,7 +12,7 @@ class SettingsPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 1,
+      length: 2,
       child: Column(children: [
         SizedBox(
           height: Constants.controlBarHeight,
@@ -23,7 +24,13 @@ class SettingsPanel extends StatelessWidget {
                 icon: Icon(
                   Icons.build,
                 ),
-              )
+              ),
+              Tab(
+                key: Key('knobsTab'),
+                icon: Icon(
+                  Icons.layers,
+                ),
+              ),
             ],
           ),
         ),
@@ -36,11 +43,12 @@ class SettingsPanel extends StatelessWidget {
               color: Theme.of(context).colorScheme.surface,
               borderRadius: Radii.defaultRadius,
             ),
-            child: const Padding(
-              padding: EdgeInsets.all(16),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
               child: TabBarView(
                 children: [
-                  KnobsPanel(),
+                  const KnobsPanel(),
+                  PropertyPanel<CustomTheme>()
                 ],
               ),
             ),
