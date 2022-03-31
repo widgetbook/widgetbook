@@ -1,6 +1,6 @@
 import 'package:widgetbook/src/models/models.dart';
 import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_helper.dart';
-import 'package:widgetbook/src/navigation.dart/organizer_state.dart';
+import 'package:widgetbook/src/navigation/organizer_state.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/services/filter_service.dart';
 import 'package:widgetbook/src/state_change_notifier.dart';
@@ -95,12 +95,11 @@ class OrganizerProvider extends StateChangeNotifier<OrganizerState> {
   }
 
   void toggleExpander(ExpandableOrganizer organizer) {
+    // Since this is modifying the object directly instead of modifying via
+    // copyWith, we need to call notifyListeners and are not emmitting a new
+    // state object. The state will be adjusted by adjusted the object.
     organizer.isExpanded = !organizer.isExpanded;
-    state = OrganizerState(
-      allCategories: state.allCategories,
-      filteredCategories: state.filteredCategories,
-      searchTerm: state.searchTerm,
-    );
+    notifyListeners();
   }
 
   /// Recursively set the expanded field for an organizer and it's nested widgets.
@@ -119,13 +118,13 @@ class OrganizerProvider extends StateChangeNotifier<OrganizerState> {
   /// the `expanded`
   void setExpandedRecursive(
       List<ExpandableOrganizer> organizers, bool expanded) {
+    // Since this is modifying the object directly instead of modifying via
+    // copyWith, we need to call notifyListeners and are not emmitting a new
+    // state object. The state will be adjusted by adjusted the object.
     for (final e in organizers) {
       _setExpandedRecursive(e, expanded);
     }
-    state = OrganizerState(
-      allCategories: state.allCategories,
-      filteredCategories: state.filteredCategories,
-      searchTerm: state.searchTerm,
-    );
+
+    notifyListeners();
   }
 }

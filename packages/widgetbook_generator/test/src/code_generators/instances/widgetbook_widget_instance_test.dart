@@ -9,11 +9,11 @@ import '../instance_helper.dart';
 
 void main() {
   group(
-    '$WidgetbookWidgetInstance',
+    '$WidgetbookComponentInstance',
     () {
       const widgetName = 'CustomWidget';
 
-      final instance = WidgetbookWidgetInstance(
+      final instance = WidgetbookComponentInstance(
         name: widgetName,
         stories: [
           WidgetbookStoryData(
@@ -35,7 +35,7 @@ void main() {
         ],
       );
 
-      testName('WidgetbookWidget', instance: instance);
+      testName('WidgetbookComponent', instance: instance);
 
       test(
         '.properties returns a StringProperty and Property containing a list',

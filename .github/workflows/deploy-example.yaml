@@ -19,10 +19,14 @@ jobs:
 
     - uses: subosito/flutter-action@v1
       with:
-        flutter-version: '2.8.0'
         channel: stable
 
-    - run: flutter pub get
+    - name: Enable melos
+      run: dart pub global activate melos
+
+    - name: Get packages 
+      run: melos bootstrap
+
     - run: | 
         flutter build web -t widgetbook/main.dart
 

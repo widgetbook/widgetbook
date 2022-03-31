@@ -18,9 +18,9 @@ void main() {
     '$FilterService',
     () {
       test(
-        'filters $WidgetbookWidget',
+        'filters $WidgetbookComponent',
         () async {
-          final widget1 = WidgetbookWidget(
+          final widget1 = WidgetbookComponent(
             name: 'Widget 1',
             isExpanded: true,
             useCases: [
@@ -29,7 +29,7 @@ void main() {
             ],
           );
 
-          final widget2 = WidgetbookWidget(
+          final widget2 = WidgetbookComponent(
             name: 'Widget 2',
             isExpanded: true,
             useCases: [
@@ -92,7 +92,7 @@ void main() {
           );
           final folder2 = WidgetbookFolder(name: 'Folder 2');
 
-          final widget1 = WidgetbookWidget(
+          final widget1 = WidgetbookComponent(
             name: 'Widget 1',
             isExpanded: true,
             useCases: [

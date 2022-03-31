@@ -60,12 +60,12 @@ void main() {
                       // Somehow the order of instances injected are in a
                       // reversed order. Since the order doesn't really matter
                       // the test has been left like this
-                      WidgetbookWidgetInstance(
+                      WidgetbookComponentInstance(
                         name: widget2.name,
                         stories: widget2.stories,
                         isExpanded: true,
                       ),
-                      WidgetbookWidgetInstance(
+                      WidgetbookComponentInstance(
                         name: widget1.name,
                         stories: widget1.stories,
                       ),

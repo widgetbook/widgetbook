@@ -18,12 +18,12 @@ List<Widget> buildFolders({
 }
 
 List<Widget> buildWidgets({
-  required List<WidgetbookWidget> widgets,
+  required List<WidgetbookComponent> widgets,
   required int currentLevel,
 }) {
   return widgets
       .map(
-        (WidgetbookWidget widgetElement) => WidgetTile(
+        (WidgetbookComponent widgetElement) => WidgetTile(
           widgetElement: widgetElement,
           level: currentLevel,
         ),

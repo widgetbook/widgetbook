@@ -312,7 +312,7 @@ class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
 
 /// @nodoc
 
-class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
+class _$_WorkbenchState<CustomTheme> extends _WorkbenchState<CustomTheme> {
   _$_WorkbenchState(
       {this.comparisonSetting = ComparisonSetting.none,
       this.theme,
@@ -325,7 +325,8 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
       required this.locales,
       required this.devices,
       required this.frames,
-      required this.textScaleFactors});
+      required this.textScaleFactors})
+      : super._();
 
   @JsonKey()
   @override
@@ -406,7 +407,7 @@ class _$_WorkbenchState<CustomTheme> implements _WorkbenchState<CustomTheme> {
 }
 
 abstract class _WorkbenchState<CustomTheme>
-    implements WorkbenchState<CustomTheme> {
+    extends WorkbenchState<CustomTheme> {
   factory _WorkbenchState(
       {ComparisonSetting comparisonSetting,
       WidgetbookTheme<CustomTheme>? theme,
@@ -420,6 +421,7 @@ abstract class _WorkbenchState<CustomTheme>
       required List<Device> devices,
       required List<WidgetbookFrame> frames,
       required List<double> textScaleFactors}) = _$_WorkbenchState<CustomTheme>;
+  _WorkbenchState._() : super._();
 
   @override
   ComparisonSetting get comparisonSetting;

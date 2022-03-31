@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:widgetbook/widgetbook.dart';
-import 'package:meal_app/models/meal.dart';
-import 'package:meal_app/themes/dark_theme.dart';
-import 'package:meal_app/themes/light_theme.dart';
-import 'package:meal_app/widgets/attributes/price_attribute.dart';
-import 'package:meal_app/widgets/attributes/weight_attribute.dart';
-import 'package:meal_app/widgets/ingredients.dart';
-import 'package:meal_app/widgets/meal_detail.dart';
-import 'package:meal_app/widgets/new_tag.dart';
-import 'package:meal_app/widgets/rotated_image.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_example/models/meal.dart';
+import 'package:widgetbook_example/themes/dark_theme.dart';
+import 'package:widgetbook_example/themes/light_theme.dart';
+import 'package:widgetbook_example/widgets/attributes/price_attribute.dart';
+import 'package:widgetbook_example/widgets/attributes/weight_attribute.dart';
+import 'package:widgetbook_example/widgets/ingredients.dart';
+import 'package:widgetbook_example/widgets/meal_detail.dart';
+import 'package:widgetbook_example/widgets/new_tag.dart';
+import 'package:widgetbook_example/widgets/rotated_image.dart';
 
 void main() {
   runApp(HotreloadWidgetbook());
@@ -60,7 +60,7 @@ class HotreloadWidgetbook extends StatelessWidget {
             WidgetbookFolder(
               name: 'attributes',
               widgets: [
-                WidgetbookWidget(
+                WidgetbookComponent(
                   name: 'PriceAttribute',
                   useCases: [
                     WidgetbookUseCase(
@@ -73,7 +73,7 @@ class HotreloadWidgetbook extends StatelessWidget {
                     ),
                   ],
                 ),
-                WidgetbookWidget(
+                WidgetbookComponent(
                   name: 'WeightAttribute',
                   useCases: [
                     WidgetbookUseCase(
@@ -94,7 +94,7 @@ class HotreloadWidgetbook extends StatelessWidget {
             ),
           ],
           widgets: [
-            WidgetbookWidget(
+            WidgetbookComponent(
               name: 'Ingredients',
               useCases: [
                 WidgetbookUseCase(
@@ -138,7 +138,7 @@ class HotreloadWidgetbook extends StatelessWidget {
                 ),
               ],
             ),
-            WidgetbookWidget(
+            WidgetbookComponent(
               name: 'New tag',
               useCases: [
                 WidgetbookUseCase(
@@ -147,7 +147,7 @@ class HotreloadWidgetbook extends StatelessWidget {
                 ),
               ],
             ),
-            WidgetbookWidget(
+            WidgetbookComponent(
               name: 'Rotated image',
               useCases: [
                 WidgetbookUseCase(
@@ -158,7 +158,7 @@ class HotreloadWidgetbook extends StatelessWidget {
                 ),
               ],
             ),
-            WidgetbookWidget(
+            WidgetbookComponent(
               name: 'MealDetail',
               useCases: [
                 WidgetbookUseCase(
@@ -203,7 +203,7 @@ class HotreloadWidgetbook extends StatelessWidget {
             WidgetbookFolder(
               name: 'attributes',
               widgets: [
-                WidgetbookWidget(
+                WidgetbookComponent(
                   name: 'PriceAttribute',
                   useCases: [
                     WidgetbookUseCase(
@@ -216,7 +216,7 @@ class HotreloadWidgetbook extends StatelessWidget {
                     ),
                   ],
                 ),
-                WidgetbookWidget(
+                WidgetbookComponent(
                   name: 'WeightAttribute',
                   useCases: [
                     WidgetbookUseCase(

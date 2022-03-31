@@ -14,10 +14,10 @@ class WidgetbookFolderInstance extends Instance {
             Property.string(key: 'name', value: folder.name),
             Property(
               key: 'widgets',
-              instance: ListInstance<WidgetbookWidgetInstance>(
+              instance: ListInstance<WidgetbookComponentInstance>(
                 instances: folder.widgets.values
                     .map(
-                      (widget) => WidgetbookWidgetInstance(
+                      (widget) => WidgetbookComponentInstance(
                         name: widget.name,
                         stories: widget.stories,
                         isExpanded: widget.isExpanded,

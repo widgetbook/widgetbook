@@ -1,14 +1,36 @@
-## 2.0.5-beta
+## 2.0.9
+
+- fix: Orientation defaults to landscape ([#161](https://github.com/widgetbook/widgetbook/issues/161))
+
+## 2.0.8
+
+- fix: navigation tree collapsing and expanding does not work ([#159](https://github.com/widgetbook/widgetbook/issues/159))
+
+## 2.0.7
+
+- fix: expanding of elements within the navigation is not working ([#156](https://github.com/widgetbook/widgetbook/issues/156))
+
+## 2.0.6
+
+- refactor: renamed `WidgetbookWidget` to `WidgetbookComponent`
+- fix: `ScaffoldMessenger` opens in `Widgetbook` and not in the previewed app ([#148](https://github.com/widgetbook/widgetbook/issues/148))
+- fix: Missing error when `@WidgetbookTheme` is used on properties ([#130](https://github.com/widgetbook/widgetbook/issues/130))
+- fix: `@WidgetbookApp` wrongly exposes `ThemeType` property ([#129](https://github.com/widgetbook/widgetbook/issues/129))
+- closed: Widgetbook cannt be run for flutter version below 2.10 ([#113](https://github.com/widgetbook/widgetbook/issues/113))
+- fix: setState called during build ([#92](https://github.com/widgetbook/widgetbook/issues/92))
+- closed: Scrolling interferes with zooming ([#85](https://github.com/widgetbook/widgetbook/issues/85))
+
+## 2.0.5
 
 - feat: added `textScaleFactors` for font accessibility ([#15](https://github.com/widgetbook/widgetbook/issues/15))
 - fix: added `MediaQuery` to `WidgetbookDeviceFrame` ([#66](https://github.com/widgetbook/widgetbook/issues/66))
 - feat: added [device_frame](https://pub.dev/packages/device_frame) ([#112](https://github.com/widgetbook/widgetbook/pull/114))
 
-## 2.0.3-beta
+## 2.0.3
 
 - fix: UI not optimized for light theme [#110](https://github.com/widgetbook/widgetbook/issues/110)
 
-## 2.0.2-beta
+## 2.0.2
 
 - fix: pan cannot be reset in viewport [#99](https://github.com/widgetbook/widgetbook/issues/99)
 - fix: use cases cannot be previewed without a device [#84](https://github.com/widgetbook/widgetbook/issues/84)

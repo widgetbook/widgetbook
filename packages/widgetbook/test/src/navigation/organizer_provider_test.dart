@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/models/models.dart';
-import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
-import 'package:widgetbook/src/navigation.dart/organizer_state.dart';
+import 'package:widgetbook/src/navigation/organizer_provider.dart';
+import 'package:widgetbook/src/navigation/organizer_state.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/services/filter_service.dart';
 
@@ -37,9 +37,9 @@ void main() {
     '$OrganizerProvider',
     () {
       test(
-        'togglesExpander of $WidgetbookWidget',
+        'togglesExpander of $WidgetbookComponent',
         () {
-          final widgetElement = WidgetbookWidget(
+          final widgetElement = WidgetbookComponent(
             name: 'Widget 1',
             useCases: [],
           );
@@ -64,7 +64,7 @@ void main() {
                   WidgetbookCategory(
                     name: 'Category 1',
                     widgets: [
-                      WidgetbookWidget(
+                      WidgetbookComponent(
                         name: 'Widget 1',
                         isExpanded: true,
                         useCases: [],
@@ -79,12 +79,12 @@ void main() {
       );
 
       test(
-        'togglesExpander of $WidgetbookWidget',
+        'togglesExpander of $WidgetbookComponent',
         () {
           final widgetbookCategory = WidgetbookCategory(
             name: 'Category 1',
             widgets: [
-              WidgetbookWidget(
+              WidgetbookComponent(
                 name: 'Widget 1',
                 useCases: [],
               )
@@ -111,7 +111,7 @@ void main() {
                   WidgetbookCategory(
                     name: 'Category 1',
                     widgets: [
-                      WidgetbookWidget(
+                      WidgetbookComponent(
                         name: 'Widget 1',
                         isExpanded: true,
                         useCases: [],
@@ -126,7 +126,7 @@ void main() {
       );
 
       test(
-        'recursive expander of $WidgetbookWidget',
+        'recursive expander of $WidgetbookComponent',
         () {
           final widgetCategory = WidgetbookCategory(
             name: 'Category 1',
@@ -137,7 +137,7 @@ void main() {
                   WidgetbookFolder(
                     name: 'Folder 1-2',
                     widgets: [
-                      WidgetbookWidget(
+                      WidgetbookComponent(
                         name: 'Widget 1-2',
                         useCases: [],
                       ),
@@ -151,7 +151,7 @@ void main() {
                   WidgetbookFolder(
                     name: 'Folder 2-2',
                     widgets: [
-                      WidgetbookWidget(
+                      WidgetbookComponent(
                         name: 'Widget 2-2',
                         useCases: [],
                       ),
@@ -188,7 +188,7 @@ void main() {
                             isExpanded: true,
                             name: 'Folder 1-2',
                             widgets: [
-                              WidgetbookWidget(
+                              WidgetbookComponent(
                                 name: 'Widget 1-2',
                                 useCases: [],
                                 isExpanded: true,
@@ -205,7 +205,7 @@ void main() {
                             isExpanded: true,
                             name: 'Folder 2-2',
                             widgets: [
-                              WidgetbookWidget(
+                              WidgetbookComponent(
                                 name: 'Widget 2-2',
                                 useCases: [],
                                 isExpanded: true,
@@ -224,7 +224,7 @@ void main() {
       );
 
       test(
-        'recursive expander of $WidgetbookWidget to false',
+        'recursive expander of $WidgetbookComponent to false',
         () {
           final widgetCategory = WidgetbookCategory(
             name: 'Category 1',
@@ -236,7 +236,7 @@ void main() {
                   WidgetbookFolder(
                     name: 'Folder 1-2',
                     widgets: [
-                      WidgetbookWidget(
+                      WidgetbookComponent(
                         name: 'Widget 1-2',
                         useCases: [],
                       ),
@@ -251,7 +251,7 @@ void main() {
                   WidgetbookFolder(
                     name: 'Folder 2-2',
                     widgets: [
-                      WidgetbookWidget(
+                      WidgetbookComponent(
                         name: 'Widget 2-2',
                         useCases: [],
                       ),
@@ -287,7 +287,7 @@ void main() {
                           WidgetbookFolder(
                             name: 'Folder 1-2',
                             widgets: [
-                              WidgetbookWidget(
+                              WidgetbookComponent(
                                 name: 'Widget 1-2',
                                 useCases: [],
                               ),
@@ -301,7 +301,7 @@ void main() {
                           WidgetbookFolder(
                             name: 'Folder 2-2',
                             widgets: [
-                              WidgetbookWidget(
+                              WidgetbookComponent(
                                 name: 'Widget 2-2',
                                 useCases: [],
                               ),
@@ -319,7 +319,7 @@ void main() {
       );
 
       test(
-        'expands $WidgetbookWidget when the selected story changes',
+        'expands $WidgetbookComponent when the selected story changes',
         () {
           final provider = OrganizerProvider(
             state: OrganizerState.unfiltered(
@@ -332,7 +332,7 @@ void main() {
                     ),
                   ],
                   widgets: [
-                    WidgetbookWidget(
+                    WidgetbookComponent(
                       name: 'Widget 1',
                       isExpanded: true,
                       useCases: [story1, story2],
@@ -354,7 +354,7 @@ void main() {
                   widgets: [
                     // Note that this WidgetElement does not have the isExpanded
                     // property set to true
-                    WidgetbookWidget(
+                    WidgetbookComponent(
                       name: 'Widget 1',
                       useCases: [
                         story1,
@@ -382,7 +382,7 @@ void main() {
                     widgets: [
                       // Note that this WidgetElement does have the isExpanded
                       // property set to true
-                      WidgetbookWidget(
+                      WidgetbookComponent(
                         name: 'Widget 1',
                         isExpanded: true,
                         useCases: [
@@ -410,7 +410,7 @@ void main() {
               folder,
             ],
             widgets: [
-              WidgetbookWidget(
+              WidgetbookComponent(
                 name: 'Widget 1',
                 isExpanded: true,
                 useCases: [
@@ -466,7 +466,7 @@ void main() {
               folder,
             ],
             widgets: [
-              WidgetbookWidget(
+              WidgetbookComponent(
                 name: 'Widget 1',
                 isExpanded: true,
                 useCases: [

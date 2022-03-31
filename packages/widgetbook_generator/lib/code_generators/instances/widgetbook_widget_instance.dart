@@ -5,14 +5,14 @@ import 'package:widgetbook_generator/code_generators/properties/property.dart';
 import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 
 /// An instance for WidgetElementInstance
-class WidgetbookWidgetInstance extends Instance {
-  /// Creates a new instance of [WidgetbookWidgetInstance]
-  WidgetbookWidgetInstance({
+class WidgetbookComponentInstance extends Instance {
+  /// Creates a new instance of [WidgetbookComponentInstance]
+  WidgetbookComponentInstance({
     required String name,
     required List<WidgetbookStoryData> stories,
     bool isExpanded = false,
   }) : super(
-          name: 'WidgetbookWidget',
+          name: 'WidgetbookComponent',
           properties: [
             Property.string(key: 'name', value: name),
             Property(

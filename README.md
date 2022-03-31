@@ -5,6 +5,14 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?label=test&style=flat-square)
 
+# Open Source Package & Widgetbook Cloud
+
+Widgetbook is the custom widget library specifically created for Flutter applications. Developers can manage all of their widgets in one place and see how they will appear on different devices as well as in different languages and themes. 
+
+Widgetbook Cloud is the collaboration platform for Flutter frontend teams. Developers can easily share their Widgetbook with designers, project managers, clients, and more to simplify review processes.
+
+[Get access to Widgetbook Cloud!](https://www.widgetbook.io/pilot-customer?utm_source=github&utm_medium=github&utm_campaign=read_me)
+
 # Packages
 
 The widgetbook repository contains of the Widgetbook packages which are located at [/widgetbook/packages/](https://github.com/widgetbook/widgetbook/tree/main/packages).
@@ -48,4 +56,4 @@ We love the open source flutter community!💙 If you'd like to contribute to on
 
 # Questions or Issues? 
 
-If something does not feel right or if you have questions, feel free to contact us. You can do so by [creating an issue](https://github.com/widgetbook/widgetbook/issues), [contacting us on discord](https://discord.gg/zT4AMStAJA) or [booking a call with us via calendly](https://calendly.com/widgetbook/call).
+If something does not feel right or if you have questions, feel free to contact us. You can do so by [creating an issue](https://github.com/widgetbook/widgetbook/issues) or [contacting us on discord](https://discord.gg/zT4AMStAJA).

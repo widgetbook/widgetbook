@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
-import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
+import 'package:widgetbook/src/navigation/organizer_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 import 'package:widgetbook/src/widgets/tiles/spaced_tile.dart';
 import 'package:widgetbook/src/widgets/tiles/story_tile.dart';
@@ -13,7 +13,7 @@ class WidgetTile extends StatefulWidget {
     required this.level,
   }) : super(key: key);
 
-  final WidgetbookWidget widgetElement;
+  final WidgetbookComponent widgetElement;
   final int level;
 
   @override

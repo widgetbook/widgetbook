@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/localization/localization_provider.dart';
 import 'package:widgetbook/src/localization/localization_state.dart';
-import 'package:widgetbook/src/navigation.dart/preview_provider.dart';
+import 'package:widgetbook/src/navigation/preview_provider.dart';
 import 'package:widgetbook/src/workbench/comparison_setting.dart';
 import 'package:widgetbook/src/workbench/renderer.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';

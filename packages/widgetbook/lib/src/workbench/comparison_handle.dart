@@ -9,6 +9,7 @@ import 'package:widgetbook/src/workbench/selection_item.dart';
 class ComparisonHandle<T, CustomTheme> extends StatelessWidget {
   const ComparisonHandle({
     Key? key,
+    required this.name,
     required this.multiRender,
     required this.items,
     required this.buildItem,
@@ -16,6 +17,7 @@ class ComparisonHandle<T, CustomTheme> extends StatelessWidget {
     required this.onNextPressed,
   }) : super(key: key);
 
+  final String name;
   final ComparisonSetting multiRender;
   final List<T> items;
   final SelectionItem<T> Function(T item) buildItem;
@@ -24,17 +26,28 @@ class ComparisonHandle<T, CustomTheme> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        ComparisonButton<CustomTheme>(
-          value: multiRender,
+        Row(
+          children: [
+            Text(
+              name,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            Expanded(child: Container()),
+            ComparisonButton<CustomTheme>(
+              value: multiRender,
+            ),
+            IterationButton.previous(onPressed: onPreviousPressed),
+            IterationButton.next(onPressed: onNextPressed),
+          ],
         ),
-        IterationButton.previous(onPressed: onPreviousPressed),
-        ...items.map(buildItem).toList(),
-        IterationButton.next(onPressed: onNextPressed),
-        const SizedBox(
-          width: 8,
-        ),
+        Wrap(
+          runSpacing: 6,
+          children: items.map(buildItem).toList(),
+        )
       ],
     );
   }

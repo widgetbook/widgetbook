@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/navigation.dart/organizer_provider.dart';
+import 'package:widgetbook/src/navigation/organizer_provider.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 class ExpandButton extends StatefulWidget {
@@ -26,10 +26,10 @@ class _ExpandButtonState extends State<ExpandButton> {
     String tooltip;
     if (widget.expandTo) {
       icon = Icons.expand_more;
-      tooltip = 'Expand';
+      tooltip = 'Expand all';
     } else {
       icon = Icons.expand_less;
-      tooltip = 'Collapse';
+      tooltip = 'Collapse all';
     }
     return Tooltip(
       message: tooltip,

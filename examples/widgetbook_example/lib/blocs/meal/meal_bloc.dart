@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:meal_app/models/meal.dart';
-import 'package:meal_app/repositories/meal_repository.dart';
 import 'package:meta/meta.dart';
+import 'package:widgetbook_example/models/meal.dart';
+import 'package:widgetbook_example/repositories/meal_repository.dart';
 
 part 'meal_event.dart';
 part 'meal_state.dart';

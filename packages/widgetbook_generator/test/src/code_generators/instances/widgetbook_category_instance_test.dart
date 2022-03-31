@@ -76,13 +76,13 @@ void main() {
                   ),
                   Property(
                     key: 'widgets',
-                    instance: ListInstance<WidgetbookWidgetInstance>(
+                    instance: ListInstance<WidgetbookComponentInstance>(
                       instances: [
-                        WidgetbookWidgetInstance(
+                        WidgetbookComponentInstance(
                           name: widget1.name,
                           stories: widget1.stories,
                         ),
-                        WidgetbookWidgetInstance(
+                        WidgetbookComponentInstance(
                           name: widget2.name,
                           stories: widget2.stories,
                         ),

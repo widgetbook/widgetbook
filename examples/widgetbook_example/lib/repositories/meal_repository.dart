@@ -1,4 +1,4 @@
-import 'package:meal_app/models/meal.dart';
+import 'package:widgetbook_example/models/meal.dart';
 
 class MealRepository {
   List<Meal> loadMeals() {

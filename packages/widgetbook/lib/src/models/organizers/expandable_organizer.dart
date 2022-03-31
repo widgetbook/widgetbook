@@ -8,9 +8,9 @@ abstract class ExpandableOrganizer extends Organizer {
     required String name,
     required this.isExpanded,
     List<WidgetbookFolder>? folders,
-    List<WidgetbookWidget>? widgets,
+    List<WidgetbookComponent>? widgets,
   })  : folders = folders ?? List<WidgetbookFolder>.empty(),
-        widgets = widgets ?? List<WidgetbookWidget>.empty(),
+        widgets = widgets ?? List<WidgetbookComponent>.empty(),
         super(
           name,
         );
@@ -24,7 +24,7 @@ abstract class ExpandableOrganizer extends Organizer {
 
   /// The widgets of one level in the folder tree.
   /// Widgets will be shown below folders;
-  final List<WidgetbookWidget> widgets;
+  final List<WidgetbookComponent> widgets;
 
   /// Abstract class for organizer panel in the left.
 
@@ -34,6 +34,7 @@ abstract class ExpandableOrganizer extends Organizer {
     final listEquals = const DeepCollectionEquality().equals;
 
     return other is ExpandableOrganizer &&
+        other.name == name &&
         other.isExpanded == isExpanded &&
         listEquals(other.folders, folders) &&
         listEquals(other.widgets, widgets);

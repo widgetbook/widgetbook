@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meal_app/constants/border.dart';
-import 'package:meal_app/constants/color.dart';
+import 'package:widgetbook_example/constants/border.dart';
+import 'package:widgetbook_example/constants/color.dart';
 
 ThemeData get darkTheme {
   return ThemeData.dark().copyWith(
