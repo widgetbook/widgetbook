@@ -65,7 +65,7 @@ class _NumberKnobWidgetState extends State<NumberKnobWidget> {
           ),
           Expanded(
             child: TextField(
-              key: Key('${widget.label}-textKnob'),
+              key: Key('${widget.label}-numberKnob'),
               controller: controller,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(

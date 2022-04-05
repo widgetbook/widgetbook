@@ -36,14 +36,14 @@ void main() {
                   )
                 ]),
       );
-      expect(find.text('5'), findsOneWidget);
+      expect(find.text('5.0'), findsOneWidget);
       await tester.pumpAndSettle();
       await tester.drag(
         find.byKey(const Key('label-sliderKnob')),
-        const Offset(200, 0),
+        const Offset(500, 0),
       );
       await tester.pumpAndSettle();
-      expect(find.text('7'), findsOneWidget);
+      expect(find.text('7.0'), findsOneWidget);
     },
   );
 }

@@ -69,6 +69,7 @@ class SliderKnobWidget extends StatelessWidget {
           ),
           Expanded(
             child: Slider(
+            key: Key('$label-sliderKnob'),
               value: value,
               min: min,
               max: max,

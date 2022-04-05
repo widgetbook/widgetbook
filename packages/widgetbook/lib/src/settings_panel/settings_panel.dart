@@ -26,7 +26,7 @@ class SettingsPanel<CustomTheme> extends StatelessWidget {
                 ),
               ),
               Tab(
-                key: Key('knobsTab'),
+                key: Key('propertiesTab'),
                 icon: Icon(
                   Icons.layers,
                 ),

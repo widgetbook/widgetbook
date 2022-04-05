@@ -43,12 +43,12 @@ void main() {
                   Text(context.knobs
                       .number(
                           label: 'label',
-                          initialValue: 2,
+                          initialValue: 200,
                           description: 'test description')
                       .toString())
                 ]),
       );
-      expect(find.text('2'), findsOneWidget);
+      expect(find.text('200'), findsWidgets);
     },
   );
 
@@ -65,7 +65,7 @@ void main() {
                       .toString())
                 ]),
       );
-      await tester.enterText(find.byKey(const Key('label-textKnob')), '5.5');
+      await tester.enterText(find.byKey(const Key('label-numberKnob')), '5.5');
       await tester.pumpAndSettle();
 
       expect(find.text('5.5'), findsWidgets);
