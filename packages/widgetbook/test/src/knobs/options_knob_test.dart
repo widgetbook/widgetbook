@@ -10,9 +10,40 @@ void main() {
   testWidgets(
     'Equality operator works correctly',
     (WidgetTester tester) async {
-      final first = OptionsKnob(label: 'first', value: 3);
-      final second = OptionsKnob(label: 'second', value: 3);
-      expect(first, equals(OptionsKnob(label: 'first', value: 3)));
+      final first = OptionsKnob(
+        label: 'first',
+        value: 10,
+        options: [
+          const Option(
+            label: 'opt',
+            value: 10,
+          ),
+        ],
+      );
+      final second = OptionsKnob(
+        label: 'second',
+        value: 3,
+        options: [
+          const Option(
+            label: 'opt',
+            value: 3,
+          ),
+        ],
+      );
+      expect(
+          first,
+          equals(
+            OptionsKnob(
+              value: 10,
+              label: 'first',
+              options: [
+                const Option(
+                  label: 'opt',
+                  value: 3,
+                )
+              ],
+            ),
+          ));
       expect(first, isNot(equals(second)));
     },
   );
@@ -24,23 +55,30 @@ void main() {
         renderWithKnobs(
             build: (context) => [
                   Text(
-                    context.knobs
-                        .options(
-                          label: 'label',
-                          initialValue: 5,
+                    context.knobs.options(
+                      label: 'label',
+                      options: [
+                        const Option(
+                          label: 'first-option',
+                          value: 'first-value',
+                        ),
+                        const Option(
+                          label: 'second-option',
+                          value: 'second-value',
                         )
-                        .toString(),
+                      ],
+                    ),
                   )
                 ]),
       );
-      expect(find.text('5.0'), findsOneWidget);
+      expect(find.text('first-value'), findsOneWidget);
       await tester.pumpAndSettle();
-      await tester.drag(
-        find.byKey(const Key('label-optionsKnob')),
-        const Offset(500, 0),
-      );
+      await tester.tap(find.byKey(const Key('label-optionsKnob')));
       await tester.pumpAndSettle();
-      expect(find.text('7.0'), findsOneWidget);
+      // I have no clue why I have to do this
+      await tester.tap(find.text('second-option').at(1));
+      await tester.pumpAndSettle();
+      expect(find.text('second-value'), findsOneWidget);
     },
   );
 }

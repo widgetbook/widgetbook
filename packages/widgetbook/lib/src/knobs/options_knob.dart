@@ -58,10 +58,12 @@ class OptionsKnobWidget<T> extends StatelessWidget {
           ),
           Expanded(
             child: DropdownButtonFormField<Option<T>>(
+              key: Key('$label-optionsKnob'),
               items: [
                 for (final option in options)
                   DropdownMenuItem<Option<T>>(
                     value: option,
+                    key: Key('option-${option.label}'),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
