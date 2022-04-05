@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/knobs/knobs.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 void main() {
