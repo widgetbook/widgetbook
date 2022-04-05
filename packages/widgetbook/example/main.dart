@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/src/knobs/knobs.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 void main() {
@@ -22,7 +23,11 @@ class HotreloadWidgetbook extends StatelessWidget {
                   name: 'elevated',
                   builder: (context) => ElevatedButton(
                     onPressed: () {},
-                    child: const Text('Widgetbook'),
+                    child: Text(
+                      context.knobs.number(
+                        label: 'hello',
+                      ).toString(),
+                    ),
                   ),
                 ),
               ],

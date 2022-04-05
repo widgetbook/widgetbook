@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:widgetbook/src/knobs/knobs.dart';
@@ -68,13 +69,22 @@ class _NumberKnobWidgetState extends State<NumberKnobWidget> {
               key: Key('${widget.label}-numberKnob'),
               controller: controller,
               keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
+              ],
               decoration: const InputDecoration(
                 isDense: true,
               ),
               onChanged: (v) {
-                context
-                    .read<KnobsNotifier>()
-                    .update(widget.label, num.parse(v));
+                try {
+                  context
+                      .read<KnobsNotifier>()
+                      .update(widget.label, num.parse(v));
+                } catch (e) {
+                  context
+                      .read<KnobsNotifier>()
+                      .update(widget.label, 0);
+                }
               },
             ),
           ),
