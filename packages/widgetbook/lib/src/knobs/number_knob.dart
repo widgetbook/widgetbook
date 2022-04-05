@@ -70,7 +70,7 @@ class _NumberKnobWidgetState extends State<NumberKnobWidget> {
               controller: controller,
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
+                FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
               ],
               decoration: const InputDecoration(
                 isDense: true,
