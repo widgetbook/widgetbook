@@ -5,6 +5,7 @@ import 'package:widgetbook/src/knobs/knobs_builder.dart';
 import 'package:widgetbook/src/knobs/nullable_bool_knob.dart';
 import 'package:widgetbook/src/knobs/nullable_text_knob.dart';
 import 'package:widgetbook/src/knobs/number_knob.dart';
+import 'package:widgetbook/src/knobs/options_knob.dart';
 import 'package:widgetbook/src/knobs/slider_knob.dart';
 import 'package:widgetbook/src/knobs/text_knob.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
@@ -163,6 +164,23 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
           description: description,
         ),
       );
+
+  @override
+  T options<T>({
+    required String label,
+    String? description,
+    required List<Option<T>> options,
+  }) {
+    assert(options.isNotEmpty, 'Must specify at least one option');
+    return _addKnob(
+      OptionsKnob(
+        label: label,
+        value: options[0].value,
+        description: description,
+        options: options,
+      ),
+    );
+  }
 }
 
 extension Knobs on BuildContext {
@@ -193,4 +211,15 @@ class KnobWrapper extends StatelessWidget {
       ],
     );
   }
+}
+
+class Option<T> {
+  const Option({
+    required this.label,
+    required this.value,
+  });
+
+  /// The label that will be displayed in the dropdown menu.
+  final String label;
+  final T value;
 }

@@ -1,3 +1,5 @@
+import 'knobs.dart';
+
 abstract class KnobsBuilder {
   /// {@macro knobs_builder}
   const KnobsBuilder();
@@ -41,4 +43,12 @@ abstract class KnobsBuilder {
     String? description,
     num initialValue,
   });
+
+  /// The initial value is the first item in the list of options
+  T options<T>({
+    required String label,
+    String? description,
+    required List<Option<T>> options,
+  });
 }
+
