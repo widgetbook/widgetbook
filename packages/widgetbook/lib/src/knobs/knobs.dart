@@ -4,6 +4,7 @@ import 'package:widgetbook/src/knobs/bool_knob.dart';
 import 'package:widgetbook/src/knobs/knobs_builder.dart';
 import 'package:widgetbook/src/knobs/nullable_bool_knob.dart';
 import 'package:widgetbook/src/knobs/nullable_text_knob.dart';
+import 'package:widgetbook/src/knobs/number_knob.dart';
 import 'package:widgetbook/src/knobs/slider_knob.dart';
 import 'package:widgetbook/src/knobs/text_knob.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
@@ -131,6 +132,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   @override
   double slider({
     required String label,
+    //TODO make optional
     required double initialValue,
     String? description,
     double max = 1,
@@ -145,6 +147,20 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
           min: min,
           max: max,
           divisions: divisions,
+        ),
+      );
+
+  @override
+  num number({
+    required String label,
+    String? description,
+    num initialValue = 0,
+  }) =>
+      _addKnob(
+        NumberKnob(
+          label: label,
+          value: initialValue,
+          description: description,
         ),
       );
 }

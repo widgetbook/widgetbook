@@ -35,4 +35,10 @@ abstract class KnobsBuilder {
     double min,
     int? divisions,
   });
+
+  num number({
+    required String label,
+    String? description,
+    num initialValue,
+  });
 }
