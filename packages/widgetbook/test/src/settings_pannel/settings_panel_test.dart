@@ -14,7 +14,7 @@ Widget createPanel() {
   final ret = ChangeNotifierProvider(
     create: (context) => knobsNotifier,
     child: Builder(builder: (context) {
-      return const SettingsPanel();
+      return const SettingsPanel<Theme>();
     }),
   );
   return ret;
