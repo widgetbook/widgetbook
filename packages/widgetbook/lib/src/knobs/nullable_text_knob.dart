@@ -56,7 +56,7 @@ class _NullableTexteanKnobWidgetState extends State<NullableTexteanKnobWidget> {
   @override
   Widget build(BuildContext context) {
     return KnobWrapper(
-    description: widget.description,
+      description: widget.description,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -73,10 +73,13 @@ class _NullableTexteanKnobWidgetState extends State<NullableTexteanKnobWidget> {
             child: TextField(
               key: Key('${widget.label}-nullableTextKnob'),
               controller: controller,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 isDense: true,
               ),
               onChanged: (v) {
+                setState(() {
+                  value = v;
+                });
                 context.read<KnobsNotifier>().update(widget.label, v);
               },
             ),
