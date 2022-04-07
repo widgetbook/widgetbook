@@ -74,7 +74,6 @@ class SliderKnobWidget extends StatelessWidget {
               min: min,
               max: max,
               divisions: divisions,
-              // Could use on change end? Maybe that will help?
               onChanged: (v) {
                 context.read<KnobsNotifier>().update(label, v);
               },
