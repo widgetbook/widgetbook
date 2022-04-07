@@ -17,21 +17,24 @@ class NullableCheckbox<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Checkbox(
-    key: Key('$label-nullableCheckbox'),
-      value: value == null,
-      onChanged: (v) {
-        T? newValue;
-        switch (v) {
-          case null:
-          case true:
-            newValue = null;
-            break;
-          case false:
-            newValue = cachedValue;
-        }
-        context.read<KnobsNotifier>().update(label, newValue);
-      },
+    return Tooltip(
+    message: 'No Value',
+      child: Checkbox(
+      key: Key('$label-nullableCheckbox'),
+        value: value == null,
+        onChanged: (v) {
+          T? newValue;
+          switch (v) {
+            case null:
+            case true:
+              newValue = null;
+              break;
+            case false:
+              newValue = cachedValue;
+          }
+          context.read<KnobsNotifier>().update(label, newValue);
+        },
+      ),
     );
   }
 }
