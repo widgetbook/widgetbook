@@ -33,8 +33,8 @@ abstract class KnobsBuilder {
     required String label,
     String? description,
     required double initialValue,
-    double max,
-    double min,
+    double? max,
+    double? min,
     int? divisions,
   });
 

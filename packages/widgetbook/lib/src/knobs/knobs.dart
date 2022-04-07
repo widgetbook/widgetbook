@@ -136,8 +136,8 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     //TODO make optional
     required double initialValue,
     String? description,
-    double max = 1,
-    double min = 0,
+    double? max,
+    double? min,
     int? divisions,
   }) =>
       _addKnob(
@@ -145,8 +145,8 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
           label: label,
           value: initialValue,
           description: description,
-          min: min,
-          max: max,
+          min: min ?? initialValue - 10,
+          max: max ?? initialValue + 10,
           divisions: divisions,
         ),
       );
