@@ -133,23 +133,24 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   @override
   double slider({
     required String label,
-    //TODO make optional
-    required double initialValue,
+    double? initialValue,
     String? description,
     double? max,
     double? min,
     int? divisions,
-  }) =>
-      _addKnob(
-        SliderKnob(
-          label: label,
-          value: initialValue,
-          description: description,
-          min: min ?? initialValue - 10,
-          max: max ?? initialValue + 10,
-          divisions: divisions,
-        ),
-      );
+  }) {
+    initialValue ??= max ?? min ?? 10;
+    return _addKnob(
+      SliderKnob(
+        label: label,
+        value: initialValue,
+        description: description,
+        min: min ?? initialValue - 10,
+        max: max ?? initialValue + 10,
+        divisions: divisions,
+      ),
+    );
+  }
 
   @override
   num number({

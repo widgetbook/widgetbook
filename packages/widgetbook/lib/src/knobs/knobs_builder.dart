@@ -1,7 +1,6 @@
-import 'knobs.dart';
+import 'package:widgetbook/src/knobs/knobs.dart';
 
 abstract class KnobsBuilder {
-  /// {@macro knobs_builder}
   const KnobsBuilder();
 
   /// Creates checkbox with [label], [description] and [initialValue] value.
@@ -32,7 +31,7 @@ abstract class KnobsBuilder {
   double slider({
     required String label,
     String? description,
-    required double initialValue,
+    double initialValue,
     double? max,
     double? min,
     int? divisions,
