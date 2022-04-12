@@ -115,6 +115,12 @@ class _SliderKnobWidgetState extends State<SliderKnobWidget> {
           const SizedBox(
             width: 10,
           ),
+          SizedBox(
+          width: 45,
+            child: Text(
+              _value.toStringAsFixed(2),
+            ),
+          ),
           Expanded(
             child: Slider(
               key: Key('${widget.label}-sliderKnob'),
