@@ -108,7 +108,7 @@ class _NumberKnobWidgetState extends State<NumberKnobWidget> {
                   ? null
                   : (v) {
                       try {
-                        var value = num.parse(v);
+                        final value = num.parse(v);
                         setState(() {
                           _value = value;
                         });
