@@ -52,6 +52,12 @@ abstract class KnobsBuilder {
     num initialValue,
   });
 
+  num? nullableNumber({
+    required String label,
+    String? description,
+    num? initialValue,
+  });
+
   /// The initial value is the first item in the list of options
   T options<T>({
     required String label,

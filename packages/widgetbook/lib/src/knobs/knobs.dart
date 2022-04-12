@@ -68,7 +68,6 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   T _addKnob<T>(Knob<T> value) {
     final story = _selectedStoryRepository.item!;
     final knobs = _knobs.putIfAbsent(story, () => <String, Knob>{});
-
     return (knobs.putIfAbsent(value.label, () {
       Future.microtask(notifyListeners);
       return value;
@@ -182,6 +181,20 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   }) =>
       _addKnob(
         NumberKnob(
+          label: label,
+          value: initialValue,
+          description: description,
+        ),
+      );
+
+  @override
+  num? nullableNumber({
+    required String label,
+    String? description,
+    num? initialValue = 0,
+  }) =>
+      _addKnob(
+        NullableNumberKnob(
           label: label,
           value: initialValue,
           description: description,
