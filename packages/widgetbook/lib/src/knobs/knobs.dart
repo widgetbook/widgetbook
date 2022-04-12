@@ -9,6 +9,7 @@ import 'package:widgetbook/src/knobs/text_knob.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/widgetbook.dart';
 
+/// This allows stories to have dynamically adjustable parameters.
 abstract class Knob<T> {
   Knob({
     required this.label,
@@ -39,6 +40,7 @@ abstract class Knob<T> {
   Widget build();
 }
 
+/// Updates listeners on changes with the knobs
 class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   KnobsNotifier(this._selectedStoryRepository) {
     _selectedStoryRepository.getStream().listen((event) => notifyListeners());
@@ -220,6 +222,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
 }
 
 extension Knobs on BuildContext {
+  /// Creates adjustable parameters for the WidgetbookUseCase
   KnobsBuilder get knobs => watch<KnobsNotifier>();
 }
 
@@ -249,6 +252,7 @@ class KnobWrapper extends StatelessWidget {
   }
 }
 
+/// Data object that is used within the options knob
 class Option<T> {
   const Option({
     required this.label,
@@ -257,5 +261,7 @@ class Option<T> {
 
   /// The label that will be displayed in the dropdown menu.
   final String label;
+
+  /// The value this label represents
   final T value;
 }

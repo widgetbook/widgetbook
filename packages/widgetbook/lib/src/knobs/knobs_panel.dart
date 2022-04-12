@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:widgetbook/src/knobs/knobs.dart';
 
+/// The panel containing the knobs for a usecase
 class KnobsPanel extends StatelessWidget {
   const KnobsPanel({
     Key? key,
