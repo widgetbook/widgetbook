@@ -92,7 +92,7 @@ class _TextKnobWidgetState extends State<TextKnobWidget> {
           ),
           Expanded(
             child: TextField(
-              key: Key('${widget.label}-nullableTextKnob'),
+              key: Key('${widget.label}-textKnob'),
               controller: controller,
               decoration: const InputDecoration(
                 isDense: true,
