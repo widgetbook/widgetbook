@@ -2,8 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/knobs/bool_knob.dart';
 import 'package:widgetbook/src/knobs/knobs_builder.dart';
-import 'package:widgetbook/src/knobs/nullable_bool_knob.dart';
-import 'package:widgetbook/src/knobs/nullable_text_knob.dart';
 import 'package:widgetbook/src/knobs/number_knob.dart';
 import 'package:widgetbook/src/knobs/options_knob.dart';
 import 'package:widgetbook/src/knobs/slider_knob.dart';

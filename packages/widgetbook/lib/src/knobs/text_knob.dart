@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:widgetbook/src/knobs/knobs.dart';
+import 'package:widgetbook/src/knobs/nullable_checkbox.dart';
 
 class TextKnob extends Knob<String> {
   TextKnob({
@@ -22,29 +23,55 @@ class TextKnob extends Knob<String> {
       );
 }
 
+class NullableTextKnob extends Knob<String?> {
+  NullableTextKnob({
+    required String label,
+    String? description,
+    required String? value,
+  }) : super(
+          label: label,
+          description: description,
+          value: value,
+        );
+
+  @override
+  Widget build() => TextKnobWidget(
+        label: label,
+        description: description,
+        value: value,
+        nullable: true,
+      );
+}
+
 class TextKnobWidget extends StatefulWidget {
   const TextKnobWidget({
     Key? key,
     required this.label,
     required this.description,
     required this.value,
+    this.nullable = false,
   }) : super(key: key);
 
   final String label;
   final String? description;
-  final String value;
+  final String? value;
+  final bool nullable;
 
   @override
   State<TextKnobWidget> createState() => _TextKnobWidgetState();
 }
 
 class _TextKnobWidgetState extends State<TextKnobWidget> {
+  String value = '';
   final controller = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    controller.text = widget.value;
+    if (widget.value != null) {
+      controller.text = widget.value!;
+      value = widget.value!;
+    }
   }
 
   @override
@@ -65,16 +92,25 @@ class _TextKnobWidgetState extends State<TextKnobWidget> {
           ),
           Expanded(
             child: TextField(
-              key: Key('${widget.label}-textKnob'),
+              key: Key('${widget.label}-nullableTextKnob'),
               controller: controller,
               decoration: const InputDecoration(
                 isDense: true,
               ),
               onChanged: (v) {
+                setState(() {
+                  value = v;
+                });
                 context.read<KnobsNotifier>().update(widget.label, v);
               },
             ),
           ),
+          if (widget.nullable)
+            NullableCheckbox(
+              cachedValue: value,
+              value: widget.value,
+              label: widget.label,
+            )
         ],
       ),
     );
