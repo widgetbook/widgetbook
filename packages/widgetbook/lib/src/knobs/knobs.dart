@@ -153,6 +153,28 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   }
 
   @override
+  double? nullableSlider({
+    required String label,
+    double? initialValue,
+    String? description,
+    double? max,
+    double? min,
+    int? divisions,
+  }) {
+    initialValue ??= max ?? min ?? 10;
+    return _addKnob(
+      NullableSliderKnob(
+        label: label,
+        value: initialValue,
+        description: description,
+        min: min ?? initialValue - 10,
+        max: max ?? initialValue + 10,
+        divisions: divisions,
+      ),
+    );
+  }
+
+  @override
   num number({
     required String label,
     String? description,

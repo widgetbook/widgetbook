@@ -37,6 +37,15 @@ abstract class KnobsBuilder {
     int? divisions,
   });
 
+  double? nullableSlider({
+    required String label,
+    String? description,
+    double initialValue,
+    double? max,
+    double? min,
+    int? divisions,
+  });
+
   num number({
     required String label,
     String? description,
