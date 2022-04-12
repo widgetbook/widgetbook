@@ -7,6 +7,7 @@ import 'package:widgetbook/src/knobs/options_knob.dart';
 import 'package:widgetbook/src/knobs/slider_knob.dart';
 import 'package:widgetbook/src/knobs/text_knob.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 abstract class Knob<T> {
   Knob({
@@ -45,27 +46,28 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
 
   final SelectedStoryRepository _selectedStoryRepository;
 
-  final Map<String, Map<String, Knob>> _knobs = <String, Map<String, Knob>>{};
+  final Map<WidgetbookUseCase, Map<String, Knob>> _knobs =
+      <WidgetbookUseCase, Map<String, Knob>>{};
 
   List<Knob> all() {
     if (!_selectedStoryRepository.isSet()) {
       return [];
     }
     final story = _selectedStoryRepository.item;
-    return _knobs[story!.name]?.values.toList() ?? [];
+    return _knobs[story]?.values.toList() ?? [];
   }
 
   void update<T>(String label, T value) {
     if (!_selectedStoryRepository.isSet()) {
       return;
     }
-    _knobs[_selectedStoryRepository.item!.name]![label]!.value = value;
+    _knobs[_selectedStoryRepository.item]![label]!.value = value;
     notifyListeners();
   }
 
   T _addKnob<T>(Knob<T> value) {
     final story = _selectedStoryRepository.item!;
-    final knobs = _knobs.putIfAbsent(story.name, () => <String, Knob>{});
+    final knobs = _knobs.putIfAbsent(story, () => <String, Knob>{});
 
     return (knobs.putIfAbsent(value.label, () {
       Future.microtask(notifyListeners);
