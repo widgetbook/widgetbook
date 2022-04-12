@@ -13,16 +13,18 @@ class KnobsPanel extends StatelessWidget {
     final knobs = context.watch<KnobsNotifier>().all();
     final noKnobs = knobs.isEmpty;
     final title = noKnobs ? 'No knobs to dispaly' : 'Knobs';
-    return Column(
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 20,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 20,
+            ),
           ),
-        ),
-        ...knobs.map((e) => e.build())
-      ],
+          ...knobs.map((e) => e.build())
+        ],
+      ),
     );
   }
 }
