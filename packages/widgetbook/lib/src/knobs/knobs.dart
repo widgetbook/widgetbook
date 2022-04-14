@@ -1,12 +1,15 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:vector_math/vector_math_64.dart';
 import 'package:widgetbook/src/knobs/bool_knob.dart';
 import 'package:widgetbook/src/knobs/knobs_builder.dart';
+import 'package:widgetbook/src/knobs/nullable_checkbox.dart';
 import 'package:widgetbook/src/knobs/number_knob.dart';
 import 'package:widgetbook/src/knobs/options_knob.dart';
 import 'package:widgetbook/src/knobs/slider_knob.dart';
 import 'package:widgetbook/src/knobs/text_knob.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
+import 'package:widgetbook/src/utils/styles.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 /// This allows stories to have dynamically adjustable parameters.
@@ -230,23 +233,46 @@ extension Knobs on BuildContext {
 class KnobWrapper extends StatelessWidget {
   const KnobWrapper({
     required this.child,
-    this.description,
+    required this.description,
+    required this.title,
+    this.nullableCheckbox,
     Key? key,
   }) : super(key: key);
 
   final Widget child;
   final String? description;
+  final String title;
+  final NullableCheckbox? nullableCheckbox;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        child,
+        Row(
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Styles.notCompletelyWhite),
+            ),
+            const Spacer(),
+            if (nullableCheckbox != null) ...[
+              const Text('No Value', style: TextStyle(fontSize: 14)),
+              const SizedBox(width: 10),
+              nullableCheckbox!,
+            ]
+          ],
+        ),
         if (description != null) ...[
-          const SizedBox(height: 10),
-          Text(description!)
-        ]
+          Text(
+            description!,
+            style: const TextStyle(fontSize: 14),
+          ),
+        ],
+          const SizedBox(height: 8),
+        child,
       ],
     );
   }
