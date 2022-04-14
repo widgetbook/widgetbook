@@ -66,5 +66,8 @@ class Styles {
     visualDensity: VisualDensity.adaptivePlatformDensity,
     checkboxTheme:
         CheckboxThemeData(fillColor: MaterialStateProperty.all(primary)),
+    inputDecorationTheme: const InputDecorationTheme(
+      border: InputBorder.none,
+    ),
   );
 }
