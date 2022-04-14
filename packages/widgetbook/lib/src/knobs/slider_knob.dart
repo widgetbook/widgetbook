@@ -102,7 +102,7 @@ class _SliderKnobWidgetState extends State<SliderKnobWidget> {
   Widget build(BuildContext context) {
     final disabled = widget.value == null;
     return KnobWrapper(
-      title: widget.label,
+      title: '${widget.label}  (${_value.toStringAsFixed(2)})',
       description: widget.description,
       nullableCheckbox: widget.nullable
           ? NullableCheckbox<double?>(
@@ -111,43 +111,21 @@ class _SliderKnobWidgetState extends State<SliderKnobWidget> {
               label: widget.label,
             )
           : null,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Center(
-            child: Text(
-              '${widget.label}:',
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          SizedBox(
-            width: 45,
-            child: Text(
-              _value.toStringAsFixed(2),
-            ),
-          ),
-          Expanded(
-            child: Slider(
-              key: Key('${widget.label}-sliderKnob'),
-              value: _value,
-              min: widget.min,
-              max: widget.max,
-              divisions: widget.divisions,
-              onChanged: disabled
-                  ? null
-                  : (v) {
-                      setState(() {
-                        _value = v;
-                      });
-                      context.read<KnobsNotifier>().update(widget.label, v);
-                    },
-              label: _value.toStringAsFixed(2),
-            ),
-          ),
-        ],
+      child: Slider(
+        key: Key('${widget.label}-sliderKnob'),
+        value: _value,
+        min: widget.min,
+        max: widget.max,
+        divisions: widget.divisions,
+        onChanged: disabled
+            ? null
+            : (v) {
+                setState(() {
+                  _value = v;
+                });
+                context.read<KnobsNotifier>().update(widget.label, v);
+              },
+        label: _value.toStringAsFixed(2),
       ),
     );
   }
