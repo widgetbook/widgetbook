@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:vector_math/vector_math_64.dart';
 import 'package:widgetbook/src/knobs/bool_knob.dart';
 import 'package:widgetbook/src/knobs/knobs_builder.dart';
 import 'package:widgetbook/src/knobs/nullable_checkbox.dart';
