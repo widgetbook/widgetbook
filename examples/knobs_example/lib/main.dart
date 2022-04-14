@@ -27,12 +27,14 @@ class MyHomePage extends StatefulWidget {
     this.incrementBy = 1,
     this.countLabel,
     this.iconData,
+    this.showToolTip = true,
   }) : super(key: key);
 
   final String title;
   final int incrementBy;
   final String? countLabel;
   final IconData? iconData;
+  final bool showToolTip;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -70,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        tooltip: widget.showToolTip ? 'Increment' : null,
         child: Icon(widget.iconData ?? Icons.add),
       ),
     );

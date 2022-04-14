@@ -44,7 +44,11 @@ class KnobsExample extends StatelessWidget {
                             ?.toInt() ??
                         0,
                     countLabel: context.knobs.nullableText(
-                        label: 'Count Label', initialValue: 'Current Count'),
+                      label: 'Count Label',
+                      initialValue: 'Current Count',
+                      description:
+                          'This is the text that appears above the current count of increments',
+                    ),
                     iconData: context.knobs.options(label: 'Icon', options: [
                       const Option(
                         label: 'Cross',
@@ -59,6 +63,12 @@ class KnobsExample extends StatelessWidget {
                         value: Icons.circle,
                       ),
                     ]),
+                    showToolTip: context.knobs.boolean(
+                      label: 'Show Increment Tool Tip',
+                      description:
+                          'This is the tooltip that is displayed when hovering over the increment button',
+                      initialValue: true,
+                    ),
                   ),
                 ),
               ],
