@@ -21,15 +21,11 @@ class SettingsPanel<CustomTheme> extends StatelessWidget {
             tabs: const [
               Tab(
                 key: Key('knobsTab'),
-                icon: Icon(
-                  Icons.build,
-                ),
+                icon: Text('Knobs'),
               ),
               Tab(
                 key: Key('propertiesTab'),
-                icon: Icon(
-                  Icons.layers,
-                ),
+                icon: Text('Properties'),
               ),
             ],
           ),
