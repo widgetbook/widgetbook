@@ -76,36 +76,35 @@ class _BooleanKnobWidgetState extends State<BooleanKnobWidget> {
   Widget build(BuildContext context) {
     final disabled = widget.value == null;
     return KnobWrapper(
+      title: widget.label,
       description: widget.description,
-      child: KnobWrapper(
-        description: widget.description,
-        child: ListTile(
-          title: Text(widget.label, overflow: TextOverflow.ellipsis),
-          dense: true,
-          subtitle:
-              widget.description == null ? null : Text(widget.description!),
-          trailing: Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Switch(
-                key: Key('${widget.label}-switchTileKnob'),
-                value: value,
-                onChanged: disabled
-                    ? null
-                    : (v) {
-                        setState(() {
-                          value = v;
-                        });
-                        context.read<KnobsNotifier>().update(widget.label, v);
-                      },
-              ),
-              NullableCheckbox(
-                cachedValue: value,
-                value: widget.value,
-                label: widget.label,
-              ),
-            ],
-          ),
+      nullableCheckbox: widget.nullable
+          ? NullableCheckbox<bool?>(
+              cachedValue: value,
+              value: widget.value,
+              label: widget.label,
+            )
+          : null,
+      child: ListTile(
+        title: Text(widget.label, overflow: TextOverflow.ellipsis),
+        dense: true,
+        subtitle: widget.description == null ? null : Text(widget.description!),
+        trailing: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Switch(
+              key: Key('${widget.label}-switchTileKnob'),
+              value: value,
+              onChanged: disabled
+                  ? null
+                  : (v) {
+                      setState(() {
+                        value = v;
+                      });
+                      context.read<KnobsNotifier>().update(widget.label, v);
+                    },
+            ),
+          ],
         ),
       ),
     );

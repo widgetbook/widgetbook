@@ -43,6 +43,7 @@ class OptionsKnobWidget<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KnobWrapper(
+      title: label,
       description: description,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

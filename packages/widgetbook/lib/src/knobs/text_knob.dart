@@ -78,18 +78,16 @@ class _TextKnobWidgetState extends State<TextKnobWidget> {
   Widget build(BuildContext context) {
     return KnobWrapper(
       description: widget.description,
+      title: widget.label,
+      nullableCheckbox: widget.nullable
+          ? NullableCheckbox<String?>(
+              cachedValue: value,
+              value: widget.value,
+              label: widget.label,
+            )
+          : null,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Center(
-            child: Text(
-              '${widget.label}:',
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
           Expanded(
             child: TextField(
               key: Key('${widget.label}-textKnob'),
@@ -105,12 +103,6 @@ class _TextKnobWidgetState extends State<TextKnobWidget> {
               },
             ),
           ),
-          if (widget.nullable)
-            NullableCheckbox(
-              cachedValue: value,
-              value: widget.value,
-              label: widget.label,
-            )
         ],
       ),
     );

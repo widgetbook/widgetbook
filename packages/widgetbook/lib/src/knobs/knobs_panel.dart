@@ -34,12 +34,10 @@ class KnobsPanel extends StatelessWidget {
             },
             physics: const NeverScrollableScrollPhysics(),
             itemCount: knobs.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                contentPadding: EdgeInsets.all(10),
-                title: knobs[index].build(),
-              );
-            },
+            itemBuilder: (context, index) => Padding(
+              padding: const EdgeInsets.all(12),
+              child: knobs[index].build(),
+            ),
           )
           /* ...knobs.map((e) => ListTile( */
           /*       title: e.build(), */

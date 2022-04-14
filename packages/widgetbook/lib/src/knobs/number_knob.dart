@@ -80,6 +80,14 @@ class _NumberKnobWidgetState extends State<NumberKnobWidget> {
   Widget build(BuildContext context) {
     final disabled = widget.value == null;
     return KnobWrapper(
+      title: widget.label,
+      nullableCheckbox: widget.nullable
+          ? NullableCheckbox<num?>(
+              cachedValue: _value,
+              value: widget.value,
+              label: widget.label,
+            )
+          : null,
       description: widget.description,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -121,12 +129,6 @@ class _NumberKnobWidgetState extends State<NumberKnobWidget> {
                     },
             ),
           ),
-          if (widget.nullable)
-            NullableCheckbox(
-              cachedValue: _value,
-              value: widget.value,
-              label: widget.label,
-            )
         ],
       ),
     );

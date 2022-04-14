@@ -102,7 +102,15 @@ class _SliderKnobWidgetState extends State<SliderKnobWidget> {
   Widget build(BuildContext context) {
     final disabled = widget.value == null;
     return KnobWrapper(
+      title: widget.label,
       description: widget.description,
+      nullableCheckbox: widget.nullable
+          ? NullableCheckbox<double?>(
+              cachedValue: _value,
+              value: widget.value,
+              label: widget.label,
+            )
+          : null,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -116,7 +124,7 @@ class _SliderKnobWidgetState extends State<SliderKnobWidget> {
             width: 10,
           ),
           SizedBox(
-          width: 45,
+            width: 45,
             child: Text(
               _value.toStringAsFixed(2),
             ),
@@ -139,12 +147,6 @@ class _SliderKnobWidgetState extends State<SliderKnobWidget> {
               label: _value.toStringAsFixed(2),
             ),
           ),
-          if (widget.nullable)
-            NullableCheckbox(
-              cachedValue: _value,
-              value: widget.value,
-              label: widget.label,
-            )
         ],
       ),
     );
