@@ -64,5 +64,7 @@ class Styles {
     canvasColor: const Color(0x7f30393E),
     scaffoldBackgroundColor: Colors.black,
     visualDensity: VisualDensity.adaptivePlatformDensity,
+    checkboxTheme:
+        CheckboxThemeData(fillColor: MaterialStateProperty.all(primary)),
   );
 }
