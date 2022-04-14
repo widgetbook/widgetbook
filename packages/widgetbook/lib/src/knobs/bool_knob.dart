@@ -76,27 +76,29 @@ class _BooleanKnobWidgetState extends State<BooleanKnobWidget> {
   Widget build(BuildContext context) {
     final disabled = widget.value == null;
     return KnobWrapper(
-      title: widget.label,
-      description: widget.description,
-      nullableCheckbox: widget.nullable
-          ? NullableCheckbox<bool?>(
-              cachedValue: value,
-              value: widget.value,
-              label: widget.label,
-            )
-          : null,
-      child: Switch(
-        key: Key('${widget.label}-switchTileKnob'),
-        value: value,
-        onChanged: disabled
-            ? null
-            : (v) {
-                setState(() {
-                  value = v;
-                });
-                context.read<KnobsNotifier>().update(widget.label, v);
-              },
-      ),
-    );
+        title: widget.label,
+        description: widget.description,
+        nullableCheckbox: widget.nullable
+            ? NullableCheckbox<bool?>(
+                cachedValue: value,
+                value: widget.value,
+                label: widget.label,
+              )
+            : null,
+        child: SizedBox(
+          width: 35,
+          child: Switch(
+            key: Key('${widget.label}-switchTileKnob'),
+            value: value,
+            onChanged: disabled
+                ? null
+                : (v) {
+                    setState(() {
+                      value = v;
+                    });
+                    context.read<KnobsNotifier>().update(widget.label, v);
+                  },
+          ),
+        ));
   }
 }
