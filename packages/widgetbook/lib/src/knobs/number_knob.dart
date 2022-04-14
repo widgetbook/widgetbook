@@ -89,47 +89,29 @@ class _NumberKnobWidgetState extends State<NumberKnobWidget> {
             )
           : null,
       description: widget.description,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Center(
-            child: Text(
-              '${widget.label}:',
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: TextField(
-              key: Key('${widget.label}-numberKnob'),
-              controller: controller,
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
-              ],
-              decoration: const InputDecoration(
-                isDense: true,
-              ),
-              onChanged: disabled
-                  ? null
-                  : (v) {
-                      try {
-                        final value = num.parse(v);
-                        setState(() {
-                          _value = value;
-                        });
-                        context
-                            .read<KnobsNotifier>()
-                            .update(widget.label, value);
-                      } catch (e) {
-                        context.read<KnobsNotifier>().update(widget.label, 0);
-                      }
-                    },
-            ),
-          ),
+      child: TextField(
+        key: Key('${widget.label}-numberKnob'),
+        controller: controller,
+        keyboardType: TextInputType.number,
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
         ],
+        decoration: const InputDecoration(
+          isDense: true,
+        ),
+        onChanged: disabled
+            ? null
+            : (v) {
+                try {
+                  final value = num.parse(v);
+                  setState(() {
+                    _value = value;
+                  });
+                  context.read<KnobsNotifier>().update(widget.label, value);
+                } catch (e) {
+                  context.read<KnobsNotifier>().update(widget.label, 0);
+                }
+              },
       ),
     );
   }

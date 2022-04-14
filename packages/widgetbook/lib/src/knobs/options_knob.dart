@@ -45,44 +45,28 @@ class OptionsKnobWidget<T> extends StatelessWidget {
     return KnobWrapper(
       title: label,
       description: description,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Center(
-            child: Text(
-              '$label:',
-              overflow: TextOverflow.ellipsis,
+      child: DropdownButtonFormField<Option<T>>(
+        key: Key('$label-optionsKnob'),
+        items: [
+          for (final option in options)
+            DropdownMenuItem<Option<T>>(
+              value: option,
+              key: Key('option-${option.label}'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(option.label),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: DropdownButtonFormField<Option<T>>(
-              key: Key('$label-optionsKnob'),
-              items: [
-                for (final option in options)
-                  DropdownMenuItem<Option<T>>(
-                    value: option,
-                    key: Key('option-${option.label}'),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(option.label),
-                      ],
-                    ),
-                  ),
-              ],
-              value: options.firstWhere((e) => identical(e.value, value)),
-              onChanged: (v) {
-                if (v != null) {
-                  context.read<KnobsNotifier>().update<T>(label, v.value);
-                }
-              },
-            ),
-          ),
         ],
+        value: options.firstWhere((e) => identical(e.value, value)),
+        onChanged: (v) {
+          if (v != null) {
+            context.read<KnobsNotifier>().update<T>(label, v.value);
+          }
+        },
       ),
     );
   }

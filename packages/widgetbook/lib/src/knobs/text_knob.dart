@@ -86,24 +86,18 @@ class _TextKnobWidgetState extends State<TextKnobWidget> {
               label: widget.label,
             )
           : null,
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              key: Key('${widget.label}-textKnob'),
-              controller: controller,
-              decoration: const InputDecoration(
-                isDense: true,
-              ),
-              onChanged: (v) {
-                setState(() {
-                  value = v;
-                });
-                context.read<KnobsNotifier>().update(widget.label, v);
-              },
-            ),
-          ),
-        ],
+      child: TextField(
+        key: Key('${widget.label}-textKnob'),
+        controller: controller,
+        decoration: const InputDecoration(
+          isDense: true,
+        ),
+        onChanged: (v) {
+          setState(() {
+            value = v;
+          });
+          context.read<KnobsNotifier>().update(widget.label, v);
+        },
       ),
     );
   }
