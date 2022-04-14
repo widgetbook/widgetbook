@@ -28,7 +28,7 @@ void main() {
         'Tabs display',
         (WidgetTester tester) async {
           await tester.pumpWidgetWithMaterialApp(createPanel());
-          expect(find.byKey(const Key('knobsTab')), findsOneWidget);
+          expect(find.text('Knobs'), findsOneWidget);
         },
       );
 
@@ -36,9 +36,9 @@ void main() {
         'Knobs panel can be selected',
         (WidgetTester tester) async {
           await tester.pumpWidgetWithMaterialApp(createPanel());
-          await tester.tap(find.byKey(const Key('knobsTab')));
+          await tester.tap(find.text('Knobs'));
           await tester.pumpAndSettle();
-          expect(find.text('No knobs to dispaly'), findsOneWidget);
+          expect(find.text('No knobs to display'), findsOneWidget);
         },
       );
     },

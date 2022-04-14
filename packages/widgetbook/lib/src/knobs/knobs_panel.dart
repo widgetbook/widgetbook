@@ -15,7 +15,7 @@ class KnobsPanel extends StatelessWidget {
     if (knobs.isEmpty) {
       return const Center(
         child: Text(
-          'No Knobs',
+          'No knobs to display',
           style: TextStyle(
             fontSize: 30,
           ),
