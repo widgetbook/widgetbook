@@ -12,38 +12,32 @@ class KnobsPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final knobs = context.watch<KnobsNotifier>().all();
-    final noKnobs = knobs.isEmpty;
-    final title = noKnobs ? 'No knobs to dispaly' : 'Knobs';
+    if (knobs.isEmpty) {
+      return const Center(
+        child: Text(
+          'No Knobs',
+          style: TextStyle(
+            fontSize: 30,
+          ),
+        ),
+      );
+    }
     return SingleChildScrollView(
       physics: const ScrollPhysics(),
-      child: Column(
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 20,
-            ),
-          ),
-          ListView.separated(
-            shrinkWrap: true,
-            separatorBuilder: (context, index) {
-              return Divider(
-                thickness: 4,
-                color: Theme.of(context).scaffoldBackgroundColor,
-              );
-            },
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: knobs.length,
-            itemBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.all(12),
-              child: knobs[index].build(),
-            ),
-          )
-          /* ...knobs.map((e) => ListTile( */
-          /*       title: e.build(), */
-          /*       contentPadding: EdgeInsets.zero, */
-          /*     )) */
-        ],
+      child: ListView.separated(
+        shrinkWrap: true,
+        separatorBuilder: (context, index) {
+          return Divider(
+            thickness: 4,
+            color: Theme.of(context).scaffoldBackgroundColor,
+          );
+        },
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: knobs.length,
+        itemBuilder: (context, index) => Padding(
+          padding: const EdgeInsets.all(12),
+          child: knobs[index].build(),
+        ),
       ),
     );
   }
