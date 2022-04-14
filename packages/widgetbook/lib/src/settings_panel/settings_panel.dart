@@ -43,14 +43,11 @@ class SettingsPanel<CustomTheme> extends StatelessWidget {
               color: Theme.of(context).colorScheme.surface,
               borderRadius: Radii.defaultRadius,
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: TabBarView(
-                children: [
-                  const KnobsPanel(),
-                  PropertyPanel<CustomTheme>()
-                ],
-              ),
+            child: TabBarView(
+              children: [
+                const KnobsPanel(),
+                PropertyPanel<CustomTheme>()
+              ],
             ),
           ),
         ),
