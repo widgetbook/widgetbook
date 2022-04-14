@@ -15,6 +15,7 @@ class KnobsPanel extends StatelessWidget {
     final noKnobs = knobs.isEmpty;
     final title = noKnobs ? 'No knobs to dispaly' : 'Knobs';
     return SingleChildScrollView(
+      physics: const ScrollPhysics(),
       child: Column(
         children: [
           Text(
@@ -23,7 +24,27 @@ class KnobsPanel extends StatelessWidget {
               fontSize: 20,
             ),
           ),
-          ...knobs.map((e) => e.build())
+          ListView.separated(
+            shrinkWrap: true,
+            separatorBuilder: (context, index) {
+              return Divider(
+                thickness: 4,
+                color: Theme.of(context).scaffoldBackgroundColor,
+              );
+            },
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: knobs.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                contentPadding: EdgeInsets.all(10),
+                title: knobs[index].build(),
+              );
+            },
+          )
+          /* ...knobs.map((e) => ListTile( */
+          /*       title: e.build(), */
+          /*       contentPadding: EdgeInsets.zero, */
+          /*     )) */
         ],
       ),
     );
