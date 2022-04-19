@@ -171,6 +171,21 @@ WidgetbookUseCase(
             )
 ```
 
+## Available Knobs
+
+
+| Name            | Type    |
+|-----------------|---------|
+| boolean         | bool    |
+| nullableBoolean | bool?   |
+| text            | String  |
+| nullableText    | String? |
+| slider          | double  |
+| nullableSlider  | double? |
+| number          | num     |
+| nullableNumber  | num?    |
+| options         | T       |
+
 You can see an example of this and different knobs available
 [here](examples/knobs_example/lib/widgetbook.dart).
 
