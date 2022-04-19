@@ -72,6 +72,11 @@ class Styles {
             states.contains(MaterialState.selected) ? primary : null)),
     inputDecorationTheme: const InputDecorationTheme(
       border: InputBorder.none,
+      filled: true,
+      fillColor: Colors.black,
+    ),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: Colors.white,
     ),
   );
 }
