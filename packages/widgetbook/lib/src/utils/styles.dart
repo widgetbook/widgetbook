@@ -64,5 +64,19 @@ class Styles {
     canvasColor: const Color(0x7f30393E),
     scaffoldBackgroundColor: Colors.black,
     visualDensity: VisualDensity.adaptivePlatformDensity,
+    checkboxTheme:
+        CheckboxThemeData(fillColor: MaterialStateProperty.all(primary)),
+    switchTheme: SwitchThemeData(
+        thumbColor: MaterialStateProperty.all(primary),
+        trackColor: MaterialStateProperty.resolveWith((states) =>
+            states.contains(MaterialState.selected) ? primary : null)),
+    inputDecorationTheme: const InputDecorationTheme(
+      border: InputBorder.none,
+      filled: true,
+      fillColor: Colors.black,
+    ),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: Colors.white,
+    ),
   );
 }

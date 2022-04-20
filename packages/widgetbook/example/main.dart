@@ -22,7 +22,11 @@ class HotreloadWidgetbook extends StatelessWidget {
                   name: 'elevated',
                   builder: (context) => ElevatedButton(
                     onPressed: () {},
-                    child: const Text('Widgetbook'),
+                    child: Text(
+                      context.knobs.number(
+                        label: 'hello',
+                      ).toString(),
+                    ),
                   ),
                 ),
               ],

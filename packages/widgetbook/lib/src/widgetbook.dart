@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:widgetbook/src/app_info/app_info.dart';
 import 'package:widgetbook/src/app_info/app_info_provider.dart';
 import 'package:widgetbook/src/extensions/list_extension.dart';
+import 'package:widgetbook/src/knobs/knobs.dart';
 import 'package:widgetbook/src/localization/localization_provider.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/mouse_tool/tool_provider.dart';
@@ -265,6 +266,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   late PreviewProvider previewProvider;
   late AppInfoProvider appInfoProvider;
   late WorkbenchProvider<CustomTheme> workbenchProvider;
+  late KnobsNotifier knobsNotifier;
   late GoRouter goRouter;
 
   @override
@@ -277,6 +279,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
       storyRepository: storyRepository,
       selectedStoryRepository: selectedStoryRepository,
     );
+    knobsNotifier = KnobsNotifier(selectedStoryRepository);
     appInfoProvider = AppInfoProvider(state: widget.appInfo);
     workbenchProvider = WorkbenchProvider<CustomTheme>(
       themes: widget.themes,
@@ -343,6 +346,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
         ChangeNotifierProvider(create: (_) => ZoomProvider()),
         ChangeNotifierProvider(create: (_) => ToolProvider()),
         ChangeNotifierProvider(create: (_) => TranslateProvider()),
+        ChangeNotifierProvider.value(value: knobsNotifier),
         ChangeNotifierProvider.value(value: workbenchProvider),
         ChangeNotifierProvider.value(value: organizerProvider),
         ChangeNotifierProvider.value(value: previewProvider),

@@ -156,6 +156,39 @@ Cupertino | `Widgetbook.cupertino` | `Widgetbook<CupertinoThemeData>`
 
 As you can see from the constructor definitions, `Widgetbook` allows to define your Theme type to accompany any implementation. However, most developers will likely use `Widgetbook.material` as shown [in the example](#Usage) above.
 
+# Knobs
+
+Knobs can be used to dynamically change the parameters passed to a usecase.
+
+```dart
+WidgetbookUseCase(
+        name: 'elevated',
+        builder: (context) => MyHomePage(
+            title: context.knobs.text(
+                   label: 'Title Label',
+                   initialValue: 'HomePage',
+                ),
+            )
+```
+
+## Available Knobs
+
+
+| Name            | Type    |
+|-----------------|---------|
+| boolean         | bool    |
+| nullableBoolean | bool?   |
+| text            | String  |
+| nullableText    | String? |
+| slider          | double  |
+| nullableSlider  | double? |
+| number          | num     |
+| nullableNumber  | num?    |
+| options         | T       |
+
+You can see an example of this and different knobs available
+[here](examples/knobs_example/lib/widgetbook.dart).
+
 # Properties
 
 `Widgetbook` defines various properties to customize how your `Widget`s will be rendered.

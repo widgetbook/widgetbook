@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/constants/constants.dart';
 import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/devices/device_handle.dart';
 import 'package:widgetbook/src/localization/localization_handle.dart';
@@ -23,12 +22,6 @@ class PropertyPanel<CustomTheme> extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(
-          height: Constants.controlBarHeight,
-        ),
-        const SizedBox(
-          height: 16,
-        ),
         Expanded(
           child: Container(
             constraints: const BoxConstraints(minWidth: 50, maxWidth: 400),
