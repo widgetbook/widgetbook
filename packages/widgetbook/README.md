@@ -8,7 +8,7 @@
 A flutter package which helps developers cataloguing their widgets, testing them quickly on multiple devices and themes, and sharing them easily with designers and clients. Inspired by Storybook.js and flutterbook.
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/widgetbook/widgetbook/main/docs/assets/Screenshot.png" alt="Widgetbook Screenshot" />
+<img src="https://raw.githubusercontent.com/widgetbook/widgetbook/main/docs/assets/Screenshot.jpg" alt="Widgetbook Screenshot" />
 </p>
 
 # See it in action!
@@ -158,20 +158,26 @@ As you can see from the constructor definitions, `Widgetbook` allows to define y
 
 # Knobs
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/widgetbook/widgetbook/main/docs/assets/KnobsAnimated.gif" alt="Knobs" />
+</p>
+
 Knobs can be used to dynamically change the parameters passed to a usecase.
 
 ```dart
 WidgetbookUseCase(
-        name: 'elevated',
-        builder: (context) => MyHomePage(
-            title: context.knobs.text(
-                   label: 'Title Label',
-                   initialValue: 'HomePage',
-                ),
-            )
+  name: 'elevated',
+  builder: (context) => MyHomePage(
+    title: context.knobs.text(
+      label: 'Title Label',
+      initialValue: 'HomePage',
+    ),
+  )
+)
 ```
 
 ## Available Knobs
+
 
 
 | Name            | Type    |

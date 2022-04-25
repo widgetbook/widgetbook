@@ -9,6 +9,13 @@
             "type": "dart"
         },
         {
+            "name": "Debug knobs_example",
+            "cwd": "examples/knobs_example",
+            "request": "launch",
+            "program": "lib/widgetbook.dart",
+            "type": "dart"
+        },
+        {
             "name": "Profile widgetbook_example",
             "cwd": "examples/widgetbook_example",
             "request": "launch",

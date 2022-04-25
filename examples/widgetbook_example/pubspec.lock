@@ -263,7 +263,7 @@ packages:
       path: "../../packages/widgetbook"
       relative: true
     source: path
-    version: "2.0.6-beta"
+    version: "2.0.9"
   widgetbook_models:
     dependency: "direct overridden"
     description:

@@ -1,6 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:widgetbook/src/knobs/knobs.dart';
 import 'package:widgetbook/src/knobs/nullable_checkbox.dart';
 
@@ -86,10 +86,10 @@ class _BooleanKnobWidgetState extends State<BooleanKnobWidget> {
               )
             : null,
         child: SizedBox(
-          width: 35,
-          child: Switch(
+          child: CupertinoSwitch(
             key: Key('${widget.label}-switchTileKnob'),
             value: value,
+            activeColor: Theme.of(context).colorScheme.primary,
             onChanged: disabled
                 ? null
                 : (v) {

@@ -522,21 +522,21 @@ packages:
       path: "../../packages/widgetbook"
       relative: true
     source: path
-    version: "2.0.6-beta"
+    version: "2.0.9"
   widgetbook_annotation:
     dependency: "direct main"
     description:
       path: "../../packages/widgetbook_annotation"
       relative: true
     source: path
-    version: "2.0.1-beta"
+    version: "2.0.1"
   widgetbook_generator:
     dependency: "direct dev"
     description:
       path: "../../packages/widgetbook_generator"
       relative: true
     source: path
-    version: "2.0.1-beta"
+    version: "2.0.1"
   widgetbook_models:
     dependency: "direct overridden"
     description:
