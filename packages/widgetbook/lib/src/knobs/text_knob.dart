@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:widgetbook/src/knobs/knobs.dart';
 import 'package:widgetbook/src/knobs/nullable_checkbox.dart';
 
@@ -89,9 +88,6 @@ class _TextKnobWidgetState extends State<TextKnobWidget> {
       child: TextField(
         key: Key('${widget.label}-textKnob'),
         controller: controller,
-        decoration: const InputDecoration(
-          isDense: true,
-        ),
         onChanged: (v) {
           setState(() {
             value = v;

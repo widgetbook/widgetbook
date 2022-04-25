@@ -21,7 +21,8 @@ dependencies:
   font_awesome_flutter: ^9.1.0
 
 dev_dependencies:
-  widgetbook: ^2.0.6-beta
+  widgetbook: 
+    path: ../../packages/widgetbook
   flutter_test:
     sdk: flutter
   device_frame: ^1.0.0

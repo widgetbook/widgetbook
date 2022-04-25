@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/src/constants/radii.dart';
 
 class Styles {
   static const Color storyColor = Color(0xFF6C6A71);
@@ -71,7 +72,24 @@ class Styles {
         trackColor: MaterialStateProperty.resolveWith((states) =>
             states.contains(MaterialState.selected) ? primary : null)),
     inputDecorationTheme: const InputDecorationTheme(
-      border: InputBorder.none,
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.transparent,
+        ),
+        borderRadius: Radii.defaultRadius,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.transparent,
+        ),
+        borderRadius: Radii.defaultRadius,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.transparent,
+        ),
+        borderRadius: Radii.defaultRadius,
+      ),
       filled: true,
       fillColor: Colors.black,
     ),

@@ -28,7 +28,7 @@ The following packages exist:
 
 # Examples
 
-All example apps are located at [/widgetbook/examples/](https://github.com/widgetbook/widgetbook/tree/main/example/meal_app).
+All example apps are located at [/widgetbook/examples/](https://github.com/widgetbook/widgetbook/tree/main/examples/).
 
 ## Example for [package:widgetbook](https://pub.dev/packages/widgetbook)
 

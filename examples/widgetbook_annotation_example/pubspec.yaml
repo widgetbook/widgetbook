@@ -23,7 +23,8 @@ dependencies:
   widgetbook_annotation: ^2.0.1
 
 dev_dependencies:
-  widgetbook: ^2.0.9
+  widgetbook: 
+    path: ../../packages/widgetbook
   widgetbook_generator: ^2.0.1
   
   flutter_test:

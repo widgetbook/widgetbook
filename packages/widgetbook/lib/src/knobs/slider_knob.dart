@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:widgetbook/src/knobs/knobs.dart';
 import 'package:widgetbook/src/knobs/nullable_checkbox.dart';
 
@@ -102,7 +101,7 @@ class _SliderKnobWidgetState extends State<SliderKnobWidget> {
   Widget build(BuildContext context) {
     final disabled = widget.value == null;
     return KnobWrapper(
-      title: '${widget.label}  (${_value.toStringAsFixed(2)})',
+      title: '${widget.label} (${_value.toStringAsFixed(2)})',
       description: widget.description,
       nullableCheckbox: widget.nullable
           ? NullableCheckbox<double?>(

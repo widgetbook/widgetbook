@@ -5,10 +5,10 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?label=test&style=flat-square)
 
-A flutter package which helps developers cataloguing their widgets, testing them quickly on multiple devices and themes, and sharing them easily with designers and clients. Inspired by Storybook.js and flutterbook.
+A flutter package which helps developers cataloguing their widgets, testing them quickly on multiple devices and themes, and sharing them easily with designers and clients. Inspired by Storybook.js.
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/widgetbook/widgetbook/main/docs/assets/Screenshot.png" alt="Widgetbook Screenshot" />
+<img src="https://raw.githubusercontent.com/widgetbook/widgetbook/main/docs/assets/Screenshot.jpg" alt="Widgetbook Screenshot" />
 </p>
 
 # See it in action!
@@ -158,20 +158,26 @@ As you can see from the constructor definitions, `Widgetbook` allows to define y
 
 # Knobs
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/widgetbook/widgetbook/main/docs/assets/KnobsAnimated.gif" alt="Knobs" />
+</p>
+
 Knobs can be used to dynamically change the parameters passed to a usecase.
 
 ```dart
 WidgetbookUseCase(
-        name: 'elevated',
-        builder: (context) => MyHomePage(
-            title: context.knobs.text(
-                   label: 'Title Label',
-                   initialValue: 'HomePage',
-                ),
-            )
+  name: 'elevated',
+  builder: (context) => MyHomePage(
+    title: context.knobs.text(
+      label: 'Title Label',
+      initialValue: 'HomePage',
+    ),
+  )
+)
 ```
 
 ## Available Knobs
+
 
 
 | Name            | Type    |
@@ -466,4 +472,4 @@ You can now use all exported `Widget`s from your library to compose your Widgetb
 
 # Let us know how you feel about Widgetbook
 
-We are funded and aim to shape `Widgetbook` to your (and your team's) needs. If you have questions, feature requests or issues let us know on [Discord](https://discord.gg/zT4AMStAJA) or [GitHub](https://github.com/widgetbook/widgetbook) or book a call with the founders via [Calendly](https://calendly.com/widgetbook/call). We're looking forward to build a community and discuss your feedback on our channel! 💙
+We are funded and aim to shape `Widgetbook` to your (and your team's) needs. If you have questions, feature requests or issues let us know on [Discord](https://discord.gg/zT4AMStAJA) or [GitHub](https://github.com/widgetbook/widgetbook). We're looking forward to build a community and discuss your feedback on our channel! 💙

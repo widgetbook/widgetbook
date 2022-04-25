@@ -1,3 +1,7 @@
+## 2.1.0
+
+- feature: added knobs to dynamically change parameters of a usecase ([#21](https://github.com/widgetbook/widgetbook/issues/21))
+
 ## 2.0.9
 
 - fix: Orientation defaults to landscape ([#161](https://github.com/widgetbook/widgetbook/issues/161))
