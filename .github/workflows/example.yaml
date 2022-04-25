@@ -40,7 +40,7 @@ jobs:
     - name: Create tar archive
       run: |
         cd build/macos/Build/Products/Release
-        tar -cf app.tar.gz meal_app.app
+        tar -cf app.tar.gz widgetbook_example.app
 
     - uses: actions/upload-artifact@v2
       with:
