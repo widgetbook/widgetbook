@@ -260,16 +260,16 @@ packages:
   widgetbook:
     dependency: "direct dev"
     description:
-      path: "../../packages/widgetbook"
-      relative: true
-    source: path
+      name: widgetbook
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "2.0.9"
   widgetbook_models:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "../../packages/widgetbook_models"
-      relative: true
-    source: path
+      name: widgetbook_models
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.6"
 sdks:
   dart: ">=2.14.0 <3.0.0"
