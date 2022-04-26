@@ -4,6 +4,14 @@
     "sidebar": [
         [
             "Overview", "/"
+        ],
+        [
+            "Packages",
+            [
+                "widgetbook", "/packages/widgetbook",
+                "widgetbook_generator", "/packages/widgetbook-generator",
+                "widgetbook_annotation", "/packages/widgetbook-annotation"
+            ]
         ]
     ]
 }
