@@ -6,6 +6,9 @@
             "Overview", "/"
         ],
         [
+            "Getting started", "/getting-started"
+        ],
+        [
             "Packages",
             [
                 "widgetbook", "/packages/widgetbook",
