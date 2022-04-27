@@ -35,7 +35,7 @@
                     "CI/CD", "/widgetbook-cloud/ci-cd"
                 ],
                 [
-                    "Google Storage", "/widgetbook-cloud/google-storage"
+                    "Accessing Resources", "/widgetbook-cloud/accessing-resources"
                 ]
             ]
         ]
