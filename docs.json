@@ -35,11 +35,7 @@
                     "CI/CD", "/widgetbook-cloud/ci-cd"
                 ],
                 [
-                    "Google Storage", [
-                        [
-                            "CORS", "/widgetbook-cloud/google-storage/google-storage"
-                        ]
-                    ]
+                    "Google Storage", "/widgetbook-cloud/google-storage"
                 ]
             ]
         ]
