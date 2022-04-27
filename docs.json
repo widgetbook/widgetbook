@@ -29,13 +29,17 @@
                     "Overview", "/widgetbook-cloud/overview"
                 ],
                 [
-                    "CI/CD", "/widgetbook-cloud/getting-started"
+                    "Getting started", "/widgetbook-cloud/getting-started"
                 ],
                 [
                     "CI/CD", "/widgetbook-cloud/ci-cd"
                 ],
                 [
-                    "Google Storage", "/widgetbook-cloud/google-storage/google-storage"
+                    "Google Storage", [
+                        [
+                            "CORS", "/widgetbook-cloud/google-storage/google-storage"
+                        ]
+                    ]
                 ]
             ]
         ]
