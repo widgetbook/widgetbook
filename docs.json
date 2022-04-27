@@ -21,6 +21,23 @@
                     "widgetbook_annotation", "/packages/widgetbook-annotation"
                 ]
             ]
+        ],
+        [
+            "Widgetbook Cloud",
+            [
+                [
+                    "Overview", "/widgetbook-cloud/overview"
+                ],
+                [
+                    "CI/CD", "/widgetbook-cloud/getting-started"
+                ],
+                [
+                    "CI/CD", "/widgetbook-cloud/ci-cd"
+                ],
+                [
+                    "Google Storage", "/widgetbook-cloud/google-storage/google-storage"
+                ]
+            ]
         ]
     ]
 }
