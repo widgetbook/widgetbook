@@ -9,39 +9,28 @@
             "Getting started", "/getting-started"
         ],
         [
-            "Header",
-            [
-                [
-                    "SubHeader",
-                    [
-                        "Page 1", "https://widgetbook.io"
-                    ]
-                ]
-            ]
-        ],
-        [
             "Package: widgetbook",
             [
                 [
-                    "Overview", "/packages/widgetbook"
+                    "Overview", "/widgetbook/overview"
                 ],
                 [
-                    "Configuration", "/packages/widgetbook"
+                    "Setup", "/widgetbook/setup"
                 ],
                 [
-                    "Run", "/packages/widgetbook"
+                    "Run", "/widgetbook/run"
                 ],
                 [
-                    "Constructors", "/packages/widgetbook"
+                    "Constructors", "/widgetbook/constructors"
                 ],
                 [
-                    "Properties", "/packages/widgetbook"
+                    "Properties", "/widgetbook/properties"
                 ],
                 [
-                    "Knobs", "/packages/widgetbook"
+                    "Knobs", "/widgetbook/knobs"
                 ],
                 [
-                    "Advanced", "/packages/widgetbook"
+                    "Advanced", "/widgetbook/advanced"
                 ]
             ]
         ],

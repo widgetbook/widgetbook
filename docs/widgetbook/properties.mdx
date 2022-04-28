@@ -1,0 +1,226 @@
+# Widgetbook Properties
+
+`Widgetbook` defines various properties to customize how your `Widget`s will be rendered.
+
+## `categories`
+
+Your widgets can be catalogued by using different `Organizer`s. The available organizers are: `WidgetbookCategory`, `WidgetbookFolder`, `WidgetbookComponent` and `WidgetbookUseCase`.
+
+Both `WidgetbookCategory` and `WidgetbookFolder` can contain sub folders and `WidgetbookComponent` elements. However, `WidgetbookComponent` can only contain `WidgetbookUseCase`s. 
+
+```dart
+class HotReload extends StatelessWidget {
+  const HotReload({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      categories: [
+        WidgetbookCategory(
+          name: 'widgets',
+          widgets: [
+            WidgetbookComponent(
+              name: '$CustomWidget',
+              useCases: [
+                WidgetbookUseCase(
+                  name: 'Default',
+                  builder: (context) => CustomWidget(),
+                ),
+              ],
+            ),
+          ],
+          folders: [
+            WidgetbookFolder(
+              name: 'Texts',
+              widgets: [
+                WidgetbookComponent(
+                  name: 'Normal Text',
+                  useCases: [
+                    WidgetbookUseCase(
+                      name: 'Default',
+                      builder: (context) => Text(
+                        'The brown fox ...',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+      appInfo: AppInfo(
+        name: 'Widgetbook Example',
+      ),
+    );
+  }
+}
+```
+
+## `appInfo`
+
+The `appInfo` property allows users to label the `Widgetbook` in case you are maintaining more than one `Widgetbook` for multiple projects. Customize `Widgetbook`'s name according to the project by using appInfo:
+
+```dart
+Widgetbook.material(
+  appInfo: AppInfo(
+    name: 'Your apps name',
+  ),
+)
+```
+
+## Localization
+
+Widgetbook defines the two properties `supportedLocales` and `localizationsDelegates` to support localization of `Widget`s. These values behave as described in [Flutter Internationalization](https://docs.flutter.dev/development/accessibility-and-localization/internationalization).
+
+```dart
+Widgetbook.material(
+  localizationsDelegates: [
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ],
+  supportedLocales: [
+    Locale('en'), // English, no country code
+    Locale('es'), // Spanish, no country code
+  ],
+)
+```
+
+## `themes`
+
+Import your app's theme for a realistic preview by using `Widgetbook`'s `theme` property:
+```dart
+Widgetbook.material(
+   themes: [
+    WidgetbookTheme(
+      name: 'Light',
+      data: ThemeData.light(),
+    ),
+    WidgetbookTheme(
+      name: 'Dark',
+      data: ThemeData.dark(),
+    ),
+  ],
+)
+```
+
+## `devices`
+
+Customize the preview by defining preview devices: 
+
+```dart
+Widgetbook.material(
+  devices: [
+    Apple.iPhone11,
+    Samsung.s21ultra,
+  ]
+)
+```
+
+Right now, there is a predefined list of devices. If you need more devices, you can either add them on your own or let us know which ones you need in our [Discord](https://discord.gg/zT4AMStAJA).
+
+### Define your own device
+
+You can also define your own device by using the `Device` class:
+
+```dart
+Device(
+  name: 'Custom Device',
+  resolution: Resolution.dimensions(
+    width: 500,
+    height: 500,
+    scaleFactor: 2,
+  ),
+  type: DeviceType.tablet,
+),
+```
+
+## `frames`
+
+The `frames` property allows developers to define different ways of how the frame of a device is visualized. The following `WidgetbookFrame`s are defined:
+
+`WidgetbookFrame` | Comment | Is default
+------------ | ------------- | ------------- 
+`WidgetbookFrame.defaultFrame` | The default frame of `Widgetbook` | ✅ | 
+`WidgetbookFrame.noFrame` | No frame - this just shows the use case without any device restrictions | ✅ |
+`WidgetbookFrame.deviceFrame` | A frame known from the [device_frame](https://pub.dev/packages/device_frame) package | ✅ |
+
+If the Device Frame option is active, the Widgetbook devices will be mapped to the devices of [device_frame](https://pub.dev/packages/device_frame).
+
+## `textScaleFactors`
+
+The `textScaleFactors` property allows you to define a list of different text scales which are injected (and can then be accessed) via the `MediaQuery`. The list defaults to `textScaleFactors` of `[ 1.0 ]`. 
+
+## Builders
+
+`Widgetbook` exposes various builder functions to allow customization of how `WidgetbookUseCase`s are displayed.
+
+### `deviceFrameBuilder`
+
+The `deviceFrameBuilder` in combination with the `frames` property can be used to add your or an existing implementation of a device frame: 
+
+For the [device_frame](https://pub.dev/packages/device_frame) package this can look like this:
+
+```dart
+Widgetbook.material(
+  deviceFrameBuilder: (context, device, renderMode, child) {
+    if (renderMode == DeviceFrame.deviceFrame()) {
+      return frame.DeviceFrame(
+        device: frame.Devices.ios.iPhone12,
+        screen: child,
+      );
+    }
+
+    // default to no device frame
+    return child;
+  },
+)
+```
+
+### `localizationBuilder`
+
+The default of `localizationBuilder` is defined as: 
+
+```dart
+(
+  BuildContext context,
+  List<Locale> supportedLocales,
+  List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
+  Locale activeLocale,
+  Widget child,
+) {
+  if (localizationsDelegates != null) {
+    return Localizations(
+      locale: activeLocale,
+      delegates: localizationsDelegates,
+      child: child,
+    );
+  }
+
+  return child;
+};
+```
+
+### `themeBuilder`
+
+The `themeBuilder` allows you to inject theme data into the `Widget` tree. An implementation for `CupertinoThemeData` could look like this:
+
+```dart
+Widgetbook<CupertinoThemeData>(
+  themeBuilder: (
+    BuildContext context,
+    CupertinoThemeData theme,
+    Widget child,
+  ) {
+    return CupertinoTheme(
+      data: theme,
+      child: child,
+    );
+  },
+)
+```
+
+### `scaffoldBuilder` and `useCaseBuilder`
+
+Both the `scaffoldBuilder` and `useCaseBuilder` can be used to wrap the `Widget` with e.g. a `Scaffold` or some other `Widget` like a `Center`, `Container` or `Padding`.

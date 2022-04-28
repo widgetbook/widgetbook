@@ -1,0 +1,36 @@
+# Knobs
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/widgetbook/widgetbook/main/docs/assets/KnobsAnimated.gif" alt="Knobs" />
+</p>
+
+Knobs can be used to dynamically change the parameters passed to a usecase.
+
+```dart
+WidgetbookUseCase(
+  name: 'elevated',
+  builder: (context) => MyHomePage(
+    title: context.knobs.text(
+      label: 'Title Label',
+      initialValue: 'HomePage',
+    ),
+  )
+)
+```
+
+## Available Knobs
+
+| Name            | Type    |
+|-----------------|---------|
+| boolean         | bool    |
+| nullableBoolean | bool?   |
+| text            | String  |
+| nullableText    | String? |
+| slider          | double  |
+| nullableSlider  | double? |
+| number          | num     |
+| nullableNumber  | num?    |
+| options         | T       |
+
+You can see an example of this and different knobs available
+[here](examples/knobs_example/lib/widgetbook.dart).

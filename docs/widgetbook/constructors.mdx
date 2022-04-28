@@ -1,0 +1,12 @@
+# Constructors
+
+`Widgetbook` allows developers to define whatever `Theme` they have defined for their app. To accompany every theme and the ones defined by Flutter, the following constructors exist: 
+
+Theme | Constructor | Defaults to
+------------ | ------------- | ------------- 
+Custom Theme | `Widgetbook<YourTheme>` | ➖
+Material | `Widgetbook.material` | `Widgetbook<ThemeData>`
+Cupertino | `Widgetbook.cupertino` | `Widgetbook<CupertinoThemeData>`
+
+
+As you can see from the constructor definitions, `Widgetbook` allows to define your Theme type to accompany any implementation. However, most developers will likely use `Widgetbook.material` as shown [in the example](#Usage) above.

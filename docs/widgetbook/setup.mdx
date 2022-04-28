@@ -1,0 +1,48 @@
+# Setup
+
+The `widgetbook` package provides a flutter widget called `Widgetbook` in which custom widgets from your app can be injected.
+
+## Setting up
+
+First, add the dependency to your `pubspec.yaml` file:
+
+```yaml
+# pubspec.yaml
+dev_dependencies:
+  widgetbook:
+```
+
+Since the Widgetbook is launched as a separate app, it is recommended to create another `main` method. This enables you to switch between your app and `Widgetbook` at any time. You can even launch your app and `Widgetbook` simultaneously.
+
+The folder structure might look like this:
+
+```
+example_app
+├─ lib
+│  ├─ main.dart
+├─ widgetbook
+│  ├─ main.dart
+│  ├─ widgetbook.dart
+├─ pubspec.yaml
+```
+
+The `widgetbook/widgetbook.dart` file contains the `Widgetbook` wrapped within a stateless widget that enables hot reloading. The code looks like this: 
+
+```dart
+class HotReload extends StatelessWidget {
+  const HotReload({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(...);
+  }
+}
+```
+
+In the `widgetbook/main.dart` run the `HotReload` widget:
+
+```dart
+void main() {
+  runApp(HotReload());
+}
+```
