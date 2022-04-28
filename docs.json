@@ -9,16 +9,44 @@
             "Getting started", "/getting-started"
         ],
         [
-            "Packages",
+            "Package: widgetbook",
             [
                 [
-                    "widgetbook", "/packages/widgetbook"
+                    "Overview", "/packages/widgetbook"
                 ],
                 [
-                    "widgetbook_generator", "/packages/widgetbook-generator"
+                    "Configuration", "/packages/widgetbook"
                 ],
                 [
-                    "widgetbook_annotation", "/packages/widgetbook-annotation"
+                    "Run", "/packages/widgetbook"
+                ],
+                [
+                    "Constructors", "/packages/widgetbook"
+                ],
+                [
+                    "Properties", "/packages/widgetbook"
+                ],
+                [
+                    "Knobs", "/packages/widgetbook"
+                ],
+                [
+                    "Advanced", "/packages/widgetbook"
+                ]
+            ]
+        ],
+        [
+            "Package: widgetbook_annotation",
+            [
+                [
+                    "Overview", "/packages/widgetbook"
+                ]
+            ]
+        ],
+        [
+            "Package: widgetbook_generator",
+            [
+                [
+                    "Overview", "/packages/widgetbook"
                 ]
             ]
         ],
@@ -32,7 +60,7 @@
                     "Getting started", "/widgetbook-cloud/getting-started"
                 ],
                 [
-                    "CI/CD", "/widgetbook-cloud/ci-cd"
+                    "Hosting", "/widgetbook-cloud/hosting"
                 ],
                 [
                     "Accessing Resources", "/widgetbook-cloud/accessing-resources"
