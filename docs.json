@@ -9,6 +9,17 @@
             "Getting started", "/getting-started"
         ],
         [
+            "Header",
+            [
+                [
+                    "SubHeader",
+                    [
+                        "Page 1", "https://widgetbook.io"
+                    ]
+                ]
+            ]
+        ],
+        [
             "Package: widgetbook",
             [
                 [
