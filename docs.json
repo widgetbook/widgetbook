@@ -38,7 +38,7 @@
             "Package: widgetbook_annotation",
             [
                 [
-                    "Overview", "/packages/widgetbook"
+                    "Overview", "/widgetbook-annotation/overview"
                 ]
             ]
         ],
@@ -46,7 +46,7 @@
             "Package: widgetbook_generator",
             [
                 [
-                    "Overview", "/packages/widgetbook"
+                    "Overview", "/widgetbook-generator/overview"
                 ]
             ]
         ],
