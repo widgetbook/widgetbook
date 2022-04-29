@@ -4,11 +4,11 @@ The `widgetbook_annotation` package defines the annotations `@WidgetbookApp`, `@
 
 ## `@WidgetbookApp`
 
-The annotation `@WidgetbookApp` has to be set only once and is mandatory for the code generation process. It is not important which element is annotated, but the location of the file in which `@WidgetbookApp` is used, defines the folder in which [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) will create the file `app.widgetbook.main`. The `app.widgetbook.main` file contains all the code to run the Widgetbook. 
+The annotation `@WidgetbookApp` has to be set only once and is mandatory for the code generation process. It is not important which element is annotated, but the location of the file in which `@WidgetbookApp` is used, defines the folder in which [package:widgetbook_generator](/widgetbook-generator/overview) will create the file `app.widgetbook.main`. The `app.widgetbook.main` file contains all the code to run the Widgetbook. 
 
 ### Theme support
 
-Since [package:widgetbook](https://pub.dev/packages/widgetbook) supports Material and Cupertino themes as well as a custom themes the annotation can be used with different constructors.
+Since [package:widgetbook](/widgetbook/overview) supports Material and Cupertino themes as well as a custom themes the annotation can be used with different constructors.
 
 _`WidgetbookApp.material(...)`_
 
@@ -43,11 +43,11 @@ class HotReload extends StatelessWidget {
 
 The annotation `@WidgetbookApp` (and its named constructors) has one required parameter `name` and multiple optional parameters.
 
-From the `name` parameter, the generator will create the `AppInfo` property of [package:widgetbook](https://pub.dev/packages/widgetbook). Therefore, this value will show in the upper left corner of the Widgetbook. 
+From the `name` parameter, the generator will create the `AppInfo` property of [package:widgetbook](/widgetbook/overview). Therefore, this value will show in the upper left corner of the Widgetbook. 
 
 _optional parameters_
 
-The optional `devices`, `frames` and `textScaleFactors` properties can be used to set the corresponding parameters documented in [package:widgetbook](https://pub.dev/packages/widgetbook).
+The optional `devices`, `frames` and `textScaleFactors` properties can be used to set the corresponding parameters documented in [package:widgetbook](/widgetbook/overview).
 
 ### Example
 
@@ -95,7 +95,7 @@ class App extends StatelessWidget {
 }
 ```
 
-[package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) will then create a new file `app.widgetbook.dart` next to the `app.dart` file. The resulting app structure will look like this:
+[package:widgetbook_generator](/widgetbook-generator/overview) will then create a new file `app.widgetbook.dart` next to the `app.dart` file. The resulting app structure will look like this:
 
 ```
 app
@@ -130,7 +130,7 @@ Widget name(BuildContext context) => YourWidget();
 
 The `name` parameter specifies how the use case will be displayed in the navigation panel in the Widgetbook.
 
-The `type` parameter specifies to which type of Widget the use case belongs. From this information and the location of the file in which the annotation is used, [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) will create the navigation panel shown on the left side of the Widgetbook.
+The `type` parameter specifies to which type of Widget the use case belongs. From this information and the location of the file in which the annotation is used, [package:widgetbook_generator](/widgetbook-generator/overview) will create the navigation panel shown on the left side of the Widgetbook.
 
 ### Example 
 
