@@ -1,6 +1,7 @@
 {
     "name": "Widgetbook",
     "twitter": "widgetbook_io",
+    "googleAnalytics": "G-5NH3BEBYSR",
     "sidebar": [
         [
             "Overview", "/"
@@ -72,7 +73,12 @@
                     "Getting started", "/widgetbook-cloud/getting-started"
                 ],
                 [
-                    "Hosting", "/widgetbook-cloud/hosting"
+                    "Hosting",
+                    [
+                        [
+                            "Overview:", "/widgetbook-cloud/hosting",
+                        ]
+                    ]
                 ],
                 [
                     "Accessing Resources", "/widgetbook-cloud/accessing-resources"
