@@ -39,6 +39,12 @@
             [
                 [
                     "Overview", "/widgetbook-annotation/overview"
+                ],
+                [
+                    "Setup", "/widgetbook-annotation/setup"
+                ],
+                [
+                    "Annotations", "/widgetbook-annotation/annotations"
                 ]
             ]
         ],
