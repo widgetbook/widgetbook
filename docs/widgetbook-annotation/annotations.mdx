@@ -8,36 +8,13 @@ The annotation `@WidgetbookApp` has to be set only once and is mandatory for the
 
 ### Theme support
 
-Since [package:widgetbook](/widgetbook/overview) supports Material and Cupertino themes as well as a custom themes the annotation can be used with different constructors.
+Since [package:widgetbook](/widgetbook/overview) supports Material and Cupertino themes as well as custom themes the annotation can be used with different constructors:
 
-_`WidgetbookApp.material(...)`_
-
- `@WidgetbookApp.material` should be used if you use a Material theme (`ThemeData`) within your app.
-
- _`WidgetbookApp.cupertino(...)`_
-
- `@WidgetbookApp.cupertino` should be used if you use a Cupertino theme (`CupertinoThemeData`) within your app.
-
-  _`WidgetbookApp`_
-
- `@WidgetbookApp` should be used if you use custom theme within your app. You can use the `themeType` property of the `WidgetbookApp` constructor if you need the generator to create a generic instance. For example:
-
- ```dart
-@WidgetbookApp(themeType: MyCustomTheme)
-```
-
-will create the following code:
-
-```dart
-class HotReload extends StatelessWidget {
-  const HotReload({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook<MyCustomTheme>(...);
-  }
-}
-```
+| Constructor | Theme | Description |
+| --- | --- | --- |
+| `@WidgetbookApp.material(...)` | `ThemeData` | Use this if your app uses a Material theme (`ThemeData`) |
+| `@WidgetbookApp.cupertino(...)` | `CupertinoThemeData` | Use this if your app uses a Cupertino theme (`CupertinoThemeData`) |
+| `@WidgetbookApp(themeType: MyCustomTheme, ...)` | `MyCustomTheme` | Use this if your app uses a custom theme (in this case `MyCustomTheme`). To declare the type of the theme to the genrator use the `themeType` property of the `WidgetbookApp` constructor. |
 
 ### Parameters
 
