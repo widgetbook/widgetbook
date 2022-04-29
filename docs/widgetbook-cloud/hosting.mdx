@@ -16,3 +16,41 @@ On the detail page of a project, a card which allows to fetch the API key is dis
 
 Click the button on the card to fetch the API key. 
 The key will be copied to your clipboard.
+
+## GitHub
+
+```yaml
+name: Build 
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: stable
+
+      - name: Build Website
+        run: flutter build web -t path/to/main.widgetbook.dart
+
+      - name: Upload Widgetbook
+        uses: widgetbook/widgetbook-hosting@0.0.24
+        with:
+          path: 'build/web'
+          api_key: '<your API key>'
+```
+
+By running this script, a folder structure `./buid/web/` with the widgetbook web app will be created. The output folder of the build is required by the Widgetbook Hosting action and will be uploaded to the collaboration platform.
+
+### Inputs
+
+The action defines the following inputs: 
+
+| Input | Default | Is optional |
+| ----- | ------- | ----------- |
+| `path` | `build/web` | ✅ |
+| `api_key` | ➖ | ❌ |
