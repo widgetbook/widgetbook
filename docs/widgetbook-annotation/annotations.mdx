@@ -14,13 +14,13 @@ Since [package:widgetbook](/widgetbook/overview) supports Material and Cupertino
 | --- | --- | --- |
 | `@WidgetbookApp.material(...)` | `ThemeData` | Use this if your app uses a Material theme (`ThemeData`) |
 | `@WidgetbookApp.cupertino(...)` | `CupertinoThemeData` | Use this if your app uses a Cupertino theme (`CupertinoThemeData`) |
-| `@WidgetbookApp(themeType: MyCustomTheme, ...)` | `MyCustomTheme` | Use this if your app uses a custom theme (in this case `MyCustomTheme`). To declare the type of the theme to the genrator use the `themeType` property of the `WidgetbookApp` constructor. |
+| `@WidgetbookApp(themeType: MyCustomTheme, ...)` | `MyCustomTheme` | Use this if your app uses a custom theme (in this case `MyCustomTheme`). To declare the type of the theme to the generator, use the `themeType` property of the `WidgetbookApp` constructor. |
 
 ### Parameters
 
 The annotation `@WidgetbookApp` (and its named constructors) has one required parameter `name` and multiple optional parameters.
 
-From the `name` parameter, the generator will create the `AppInfo` property of [package:widgetbook](/widgetbook/overview). Therefore, this value will show in the upper left corner of the Widgetbook. 
+From the `name` parameter, the generator will create the [`AppInfo`](/widgetbook/properties#appinfo) property of [package:widgetbook](/widgetbook/overview). Therefore, this value will show in the upper left corner of the Widgetbook. 
 
 _optional parameters_
 
