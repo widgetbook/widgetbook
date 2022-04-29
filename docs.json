@@ -73,12 +73,7 @@
                     "Getting started", "/widgetbook-cloud/getting-started"
                 ],
                 [
-                    "Hosting",
-                    [
-                        [
-                            "Overview", "/widgetbook-cloud/hosting"
-                        ]
-                    ]
+                    "Hosting", "/widgetbook-cloud/hosting"
                 ],
                 [
                     "Accessing Resources", "/widgetbook-cloud/accessing-resources"
