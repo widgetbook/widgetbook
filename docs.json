@@ -3,6 +3,14 @@
     "twitter": "widgetbook_io",
     "googleAnalytics": "G-5NH3BEBYSR",
     "sidebar": [
+        ["Example", "/example"],
+        [
+            "Expandable",
+            [
+                ["Nested Example", "/example-nested"],
+                ["Nested Expandable", [["Nested x2 Example", "/example-nested-x2"]]]
+            ]
+        ],
         [
             "Overview", "/"
         ],
@@ -76,7 +84,7 @@
                     "Hosting",
                     [
                         [
-                            "Overview:", "/widgetbook-cloud/hosting"
+                            "Overview", "/widgetbook-cloud/hosting"
                         ]
                     ]
                 ],
