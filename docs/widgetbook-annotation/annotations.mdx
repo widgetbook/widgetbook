@@ -110,7 +110,7 @@ Widget name(BuildContext context) => YourWidget();
 | Parameter          | Type     | Required | Description |
 | ------------------ | -------- | -------- | ----------- |
 | `name`             | `String` | ✅       | Sets the `name` of the [`WidgetbookUseCase`](/widgetbook/properties#categories)|
-| `type`             | `Type`   | ✅       | Sets the `name` of the [`WidgetbookComponent`](/widgetbook/properties#categories) based on the `name` of the provided `Type`. If multiple `@WidgetbookUseCase`s reference the same type, `Widgetbook` will group all usecases under the same `WidgetbookComponent`.|
+| `type`             | `Type`   | ✅       | Generates a [`WidgetbookComponent`](/widgetbook/properties#categories) based on the `name` of the provided `Type`. If multiple `@WidgetbookUseCase`s reference the same type, `Widgetbook` will group all usecases under the same `WidgetbookComponent`.|
 
 ### Example 
 
@@ -152,21 +152,33 @@ It often happens that your widget is more complex. In such case, feel free to wr
 After generating the code for the Widgetbook, you will find a navigation panel with the following content
 
 ```
-use cases (Category)
-├─ tiles (Folder)
-│  ├─ AwesomeTile (WidgetElement)
-│  │  ├─ Default (Use Case)
+use cases (WidgetbookCategory)
+├─ tiles (WidgetbookFolder)
+│  ├─ AwesomeTile (WidgetbookComponent)
+│  │  ├─ Default (WidgetbookUseCase)
 ```
 
-If you require multiple use cases for a Widget, feel free to define multiple `@WidgetbookUseCase`s per Widget. The additional use cases will be located in the navigation panel similar to the showcased use case. 
+If you require multiple use cases for a Widget, feel free to define multiple `@WidgetbookUseCase`s per Widget. 
+The additional use cases will be located in the navigation panel similar to the showcased use case. 
+For instance:
+```
+use cases (WidgetbookCategory)
+├─ tiles (WidgetbookFolder)
+│  ├─ AwesomeTile (WidgetbookComponent)
+│  │  ├─ Default (WidgetbookUseCase)
+│  │  ├─ Loaded (WidgetbookUseCase)
+```
 
-Generator skips top root `src` folder from navigation panel. Many Flutter projects have its source code under a `src` folder, so keep it as a top-level category is unnecessary. If you have the same folder name under `lib` and `src` that folders will be merged. 
+The generator skips the top root `src` folder from navigation panel.
 
 ## `@WidgetbookTheme`
 
-`@WidgetbookTheme` allows developers to annotated themes of their app. Similar to `@WidgetbookUseCase`, `@WidgetbookTheme` is used on methods returning a `ThemeData` object. 
+`@WidgetbookTheme` allows developers to annotated themes of their app. 
+Similar to `@WidgetbookUseCase`, `@WidgetbookTheme` is used on methods returning a `ThemeData` object. 
 
-`@WidgetbookTheme` requires a `name` to identify different themes in the Widgetbook UI. You can also define `isDefault` to true if you want the theme to be the default on startup. 
+`@WidgetbookTheme` requires a `name` to identify different themes in the Widgetbook UI. 
+You can also define `isDefault` to true if you want the theme to be the default on startup.
+If you set `isDefault` to true, it will also be the first theme shown in `Widgetbook`.
 
 ### Example
 
