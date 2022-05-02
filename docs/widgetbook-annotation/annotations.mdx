@@ -8,7 +8,7 @@ The annotation `@WidgetbookApp` has to be set only once and is mandatory for the
 
 ### Theme support
 
-Since [package:widgetbook](/widgetbook/overview) supports Material and Cupertino themes as well as custom themes the annotation can be used with different constructors:
+Since [package:widgetbook](/widgetbook/overview) supports [Material and Cupertino themes](/widgetbook/constructors) as well as [custom themes](/widgetbook/constructors) the annotation can be used with different constructors:
 
 | Constructor | Theme | Description |
 | --- | --- | --- |
@@ -20,11 +20,13 @@ Since [package:widgetbook](/widgetbook/overview) supports Material and Cupertino
 
 The annotation `@WidgetbookApp` (and its named constructors) has one required parameter `name` and multiple optional parameters.
 
-From the `name` parameter, the generator will create the [`AppInfo`](/widgetbook/properties#appinfo) property of [package:widgetbook](/widgetbook/overview). Therefore, this value will show in the upper left corner of the Widgetbook. 
-
-_optional parameters_
-
-The optional `devices`, `frames` and `textScaleFactors` properties can be used to set the corresponding parameters documented in [package:widgetbook](/widgetbook/overview).
+| Parameter          | Type     | Required | Description |
+| ------------------ | -------- | -------- | ----------- |
+| `name`             | `String` | ✅       | Creates the [`appInfo`](/widgetbook/properties#appinfo) property.|
+| `devices`          | `List<Device>` |    | Creates the [`devices](/widgetbook/properties#devices) property. |
+| `frames`           | `List<Frame>`  |    | Creates the [`frames](/widgetbook/properties#frames) property. |
+| `textScaleFactors` | `List<double>` |    | Creates the [`textScaleFactors`](/widgetbook/properties#textscalefactors) property. |
+| `themeType`        | `Type`         |    | *Use only* when you need [custom theme support](https://docs.widgetbook.io/~169/widgetbook/constructors) and can only be used with `@WidgetbookApp` and not with `@WidgetbookApp.material` or `@WidgetbookApp.cupertino`.|
 
 ### Example
 

@@ -14,7 +14,7 @@ class HotReload extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Widgetbook(
+    return Widgetbook.material(
       categories: [
         WidgetbookCategory(
           name: 'widgets',
@@ -59,7 +59,8 @@ class HotReload extends StatelessWidget {
 
 ## `appInfo`
 
-The `appInfo` property allows users to label the `Widgetbook` in case you are maintaining more than one `Widgetbook` for multiple projects. Customize `Widgetbook`'s name according to the project by using appInfo:
+The `appInfo` property allows users to label the `Widgetbook` in case you are maintaining more than one `Widgetbook` for multiple projects. 
+Customize `Widgetbook`'s name according to the project by using `appInfo`:
 
 ```dart
 Widgetbook.material(
@@ -143,10 +144,10 @@ The `frames` property allows developers to define different ways of how the fram
 `WidgetbookFrame` | Comment | Is default
 ------------ | ------------- | ------------- 
 `WidgetbookFrame.defaultFrame` | The default frame of `Widgetbook` | ✅ | 
-`WidgetbookFrame.noFrame` | No frame - this just shows the use case without any device restrictions | ✅ |
+`WidgetbookFrame.noFrame` | This just shows the use case without any device restrictions | ✅ |
 `WidgetbookFrame.deviceFrame` | A frame known from the [device_frame](https://pub.dev/packages/device_frame) package | ✅ |
 
-If the Device Frame option is active, the Widgetbook devices will be mapped to the devices of [device_frame](https://pub.dev/packages/device_frame).
+If the `WidgetbookFrame.deviceFrame` option is active, the Widgetbook devices will be mapped to the devices of [device_frame](https://pub.dev/packages/device_frame).
 
 ## `textScaleFactors`
 
@@ -158,16 +159,16 @@ The `textScaleFactors` property allows you to define a list of different text sc
 
 ### `deviceFrameBuilder`
 
-The `deviceFrameBuilder` in combination with the `frames` property can be used to add your or an existing implementation of a device frame: 
+The `deviceFrameBuilder` in combination with the `frames` property can be used to add your custom frame or an existing implementation of a device frame.
 
-For the [device_frame](https://pub.dev/packages/device_frame) package this can look like this:
+For the [device_frame](https://pub.dev/packages/device_frame) package the builder looks like this:
 
 ```dart
 Widgetbook.material(
   deviceFrameBuilder: (context, device, renderMode, child) {
     if (renderMode == DeviceFrame.deviceFrame()) {
       return frame.DeviceFrame(
-        device: frame.Devices.ios.iPhone12,
+        device: device,
         screen: child,
       );
     }
