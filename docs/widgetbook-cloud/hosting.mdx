@@ -10,10 +10,10 @@ API keys are bound to projects.
 Therefore, you require a project to retrieve an API key. 
 Furthermore, only users with the `Owner` role can fetch the API key of a project. 
 
-As a user you can create a new project by clicking the add button. 
+If you are just starting out, make sure to create a new project. 
+To create a project, make sure to also [create a billing account].
 
 On the detail page of a project, a card which allows to fetch the API key is displayed. 
-
 Click the button on the card to fetch the API key. 
 The key will be copied to your clipboard.
 
@@ -48,9 +48,90 @@ By running this script, a folder structure `./buid/web/` with the widgetbook web
 
 ### Inputs
 
-The action defines the following inputs: 
+The GitHub action defines the following inputs: 
 
 | Input | Default | Is optional |
 | ----- | ------- | ----------- |
 | `path` | `build/web` | ✅ |
 | `api_key` | ➖ | ❌ |
+
+## GitLab
+
+The docker image is provided at Docker Hub and is named widgetbook-hosting-gitlab. You can access the executable by calling /widgetbook-hosting.
+
+By running this script, a folder structure ./build/web/ with the widgetbook web app will be created. 
+The output folder of the build is required by the Widgetbook Hosting action and will be uploaded to the collaboration platform. 
+Since the hosting stage requires the build output, it'll be exposed by the stage via an artifact.
+
+```yaml
+stages:
+  - compile
+  - host
+
+compile:
+  stage: compile
+  image: "cirrusci/flutter:2.8.1"
+
+  before_script:
+    - export PATH="$PATH":"$HOME/.pub-cache/bin"
+  script:
+    - flutter build web -t lib/main.widgetbook.dart
+  artifacts:
+    paths:
+    - build/web/
+
+host: 
+  stage: host
+  variables:
+    WIDGETBOOK_API_KEY: "<api key>"
+    WIDGETBOOK_BUILD_PATH: "build/web"
+  image: 
+    name: widgetbook/widgetbook-hosting-gitlab:dev
+  script:
+    - /widgetbook-hosting
+```
+
+### Environment variables
+
+The docker image reads git specific information like branch name, repository name, etc from the environment variables but also requires two mandatory environment variables provided by the user:
+
+| Environment variable | Description | Is required |
+| ----- | ------- | ----------- |
+| `WIDGETBOOK_BUILD_PATH` | The path to the web build of the widgetbook. For small repositories this is likely `build/web/` | ✅ |
+| `WIDGETBOOK_API_KEY` | The API key for your company. See [How to create an API key](#How-to-create-an-api-key)| ✅ |
+
+## BitBucket
+The Widgetbook Hosting docker image allows Widgetbook Cloud user to upload the widgetbook version which has been uploaded to BitBucket.
+
+The docker image is provided at Docker Hub and is named widgetbook-hosting-bitbucket. 
+You can access the executable by calling /widgetbook-hosting.
+
+``` yaml
+pipelines:
+  branches:
+    dev:
+      - step:
+          name: Build web
+          image: 
+            name: cirrusci/flutter
+          script:
+            - flutter build web -t lib/main.widgetbook.dart
+          artifacts:
+            - build/**
+      - step:
+          name: Host on widgetbook
+          image: 
+            name: widgetbook/widgetbook-hosting-bitbucket:dev
+          script:
+            - /widgetbook-hosting
+```
+
+### Environment variables
+
+The docker image reads git specific information like branch name, repository name, etc from the environment variables but also requires two mandatory environment variables provided by the user:
+In BitBucket you can add _repository variables_ by going to the repository settings and then selecting _repository variables_.
+
+| Environment variable | Description | Is required |
+| ----- | ------- | ----------- |
+| `WIDGETBOOK_BUILD_PATH` | The path to the web build of the widgetbook. For small repositories this is likely `build/web/` | ✅ |
+| `WIDGETBOOK_API_KEY` | The API key for your company. See [How to create an API key](#How-to-create-an-api-key)| ✅ |
