@@ -105,11 +105,12 @@ Widget name(BuildContext context) => YourWidget();
 
 ### Parameters
 
-`@WidgetbookUseCase` requires the two parameters `name` and `type`. 
+`@WidgetbookUseCase` requires the following parameters: 
 
-The `name` parameter specifies how the use case will be displayed in the navigation panel in the Widgetbook.
-
-The `type` parameter specifies to which type of Widget the use case belongs. From this information and the location of the file in which the annotation is used, [package:widgetbook_generator](/widgetbook-generator/overview) will create the navigation panel shown on the left side of the Widgetbook.
+| Parameter          | Type     | Required | Description |
+| ------------------ | -------- | -------- | ----------- |
+| `name`             | `String` | ✅       | Sets the `name` of the [`WidgetbookUseCase`](/widgetbook/properties#categories)|
+| `type`             | `Type`   | ✅       | Sets the `name` of the [`WidgetbookComponent`](/widgetbook/properties#categories) based on the `name` of the provided `Type`. If multiple `@WidgetbookUseCase`s reference the same type, `Widgetbook` will group all usecases under the same `WidgetbookComponent`.|
 
 ### Example 
 
