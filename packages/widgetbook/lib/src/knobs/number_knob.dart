@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
 import 'package:widgetbook/src/knobs/knobs.dart';
-
 import 'package:widgetbook/src/knobs/nullable_checkbox.dart';
 
 class NumberKnob extends Knob<num> {
@@ -19,6 +17,7 @@ class NumberKnob extends Knob<num> {
 
   @override
   Widget build() => NumberKnobWidget(
+        key: ValueKey(this),
         label: label,
         description: description,
         value: value,
@@ -38,6 +37,7 @@ class NullableNumberKnob extends Knob<num?> {
 
   @override
   Widget build() => NumberKnobWidget(
+        key: ValueKey(this),
         label: label,
         description: description,
         value: value,
