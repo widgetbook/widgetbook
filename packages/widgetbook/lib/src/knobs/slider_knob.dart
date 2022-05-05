@@ -23,6 +23,7 @@ class SliderKnob extends Knob<double> {
 
   @override
   Widget build() => SliderKnobWidget(
+        key: ValueKey(this),
         label: label,
         description: description,
         value: value,
@@ -52,6 +53,7 @@ class NullableSliderKnob extends Knob<double?> {
 
   @override
   Widget build() => SliderKnobWidget(
+        key: ValueKey(this),
         label: label,
         description: description,
         value: value,

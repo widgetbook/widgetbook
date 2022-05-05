@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:widgetbook/src/knobs/knobs.dart';
 
 class OptionsKnob<T> extends Knob<T> {
@@ -19,6 +18,7 @@ class OptionsKnob<T> extends Knob<T> {
 
   @override
   Widget build() => OptionsKnobWidget<T>(
+        key: ValueKey(this),
         label: label,
         description: description,
         value: value,
