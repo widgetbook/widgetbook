@@ -42,7 +42,7 @@ class SettingsPanel<CustomTheme> extends StatelessWidget {
             child: TabBarView(
               children: [
                 const KnobsPanel(),
-                PropertyPanel<CustomTheme>()
+                PropertyPanel<CustomTheme>(),
               ],
             ),
           ),

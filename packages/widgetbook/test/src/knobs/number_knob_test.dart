@@ -23,12 +23,17 @@ void main() {
     (WidgetTester tester) async {
       await tester.pumpWidgetWithMaterialApp(
         renderWithKnobs(
-            build: (context) => [
-                  Text(context.knobs.number(
+          build: (context) => [
+            Text(
+              context.knobs
+                  .number(
                     label: 'label',
                     initialValue: 5,
-                  ).toString())
-                ]),
+                  )
+                  .toString(),
+            )
+          ],
+        ),
       );
       expect(find.text('5'), findsWidgets);
     },

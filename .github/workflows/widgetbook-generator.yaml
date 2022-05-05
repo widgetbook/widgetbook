@@ -60,3 +60,21 @@ jobs:
       
     - name: Run analyze
       run: dart analyze
+
+  pana:
+    defaults:
+      run:
+        working-directory: packages/widgetbook_generator
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: subosito/flutter-action@v1.5.3
+
+      - name: Install Dependencies
+        run: |
+          flutter packages get
+          flutter pub global activate pana
+      - name: Verify Pub Score
+        run: ../../tool/verify_pub_score.sh
