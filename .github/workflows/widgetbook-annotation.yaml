@@ -60,7 +60,7 @@ jobs:
   pana:
     defaults:
       run:
-        working-directory: packages/bloc
+        working-directory: packages/widgetbook_annotation
 
     runs-on: ubuntu-latest
 

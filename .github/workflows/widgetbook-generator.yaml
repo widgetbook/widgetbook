@@ -64,7 +64,7 @@ jobs:
   pana:
     defaults:
       run:
-        working-directory: packages/bloc
+        working-directory: packages/widgetbook_generator
 
     runs-on: ubuntu-latest
 
