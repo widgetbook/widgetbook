@@ -16,18 +16,20 @@ class WidgetbookPage<CustomTheme> extends StatelessWidget {
     return StyledScaffold(
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Builder(builder: (context) {
-          final appInfo = context.watch<AppInfoProvider>().state;
-          final state = context.watch<OrganizerProvider>().state;
-          return TrippleSplitView(
-            leftChild: NavigationPanel(
-              appInfo: appInfo,
-              categories: state.filteredCategories,
-            ),
-            centerChild: Workbench<CustomTheme>(),
-            rightChild: SettingsPanel<CustomTheme>()
-          );
-        }),
+        child: Builder(
+          builder: (context) {
+            final appInfo = context.watch<AppInfoProvider>().state;
+            final state = context.watch<OrganizerProvider>().state;
+            return TrippleSplitView(
+              leftChild: NavigationPanel(
+                appInfo: appInfo,
+                categories: state.filteredCategories,
+              ),
+              centerChild: Workbench<CustomTheme>(),
+              rightChild: SettingsPanel<CustomTheme>(),
+            );
+          },
+        ),
       ),
     );
   }
