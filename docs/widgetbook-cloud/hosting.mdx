@@ -17,6 +17,36 @@ On the detail page of a project, a card which allows to fetch the API key is dis
 Click the button on the card to fetch the API key. 
 The key will be copied to your clipboard.
 
+## CLI
+
+Since there are plenty of Git provider available, it can be hard to maintain them all.
+Since the Widgetbook Uploader is implemented in Dart, we wrapped the implementation with a Dart CLI to make it easily accessible.
+A compiled AOT version of the CLI is downloadable [here](https://firebasestorage.googleapis.com/v0/b/widgetbook-cloud.appspot.com/o/tools%2Fcli-v1.aot?alt=media), but it's understandable if you'd like to check the source code first and compile it yourself. 
+See the [widgetbook-hosting](https://github.com/widgetbook/widgetbook-hosting) repository for more information.
+
+### Arguments
+
+The CLI accepts the following arguments
+
+| Argument         | Mandatory | Description |
+| ---------------- | --------- | ----------- |
+| `--path`         | ➖        | The path to the build folder of your application. Defaults to `./build/web`.|
+| `--api-key`      | ✅        | The project specific API key for Widgetbook Cloud. See [How to create an API key](/widgetbook-cloud/hosting#how-to-create-an-api-key).|
+| `--branch`       | ✅        | The name of the branch for which the Widgetbook is uploaded.|
+| `--repository`   | ✅        | The name of the repository for which the Widgetbook is uploaded.|
+| `--commit`       | ✅        | The SHA hash of the commit for which the Widgetbook is uploaded.|
+| `--actor`        | ✅        | The username of the actor which triggered the build.|
+| `--git-provider` | ✅        | The name of the Git provider. Allowed values: `GitHub`, `GitLab`, `BitBucket`, `Azure`, `CLI`.
+
+### Run the AOT-compiled CLI
+
+Since the CLI is AOT-compiled, the `cli.aot` file requires the [`dartaotruntime`](https://dart.dev/tools/dartaotruntime) to run the file.
+The `dartaotruntime` is located at `<PathToRootFolderOfSdk>/flutter/bin/cache/dart-sdk/bin` and can be executed like this:
+
+```bash
+dartaotruntime cli.dart
+```
+
 ## GitHub
 
 ```yaml
