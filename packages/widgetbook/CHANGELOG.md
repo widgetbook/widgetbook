@@ -1,3 +1,7 @@
+## 2.1.2
+
+- fix: `useCaseBuilder` is called with old context ([#180](https://github.com/widgetbook/widgetbook/issues/180))
+
 ## 2.1.1
 
 - fix: knob values do not update when usecase changes ([#170](https://github.com/widgetbook/widgetbook/issues/170))
