@@ -22,16 +22,12 @@ dependencies:
   widgetbook_device_frame: ^1.0.1
   widgetbook_models: ^0.0.6
 
-# waiting for https://github.com/felangel/mocktail/issues/128 to complete
-dependency_overrides:
-  test_api: 0.4.9
-
 dev_dependencies:
   build_runner: ^2.1.7
   flutter_test:
     sdk: flutter
   freezed: ^2.0.3
-  mocktail: ^0.3.0
+  # mocktail: ^0.3.0
   very_good_analysis: ^2.3.0
 
 flutter:

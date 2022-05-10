@@ -230,7 +230,7 @@ packages:
       path: "../../packages/widgetbook"
       relative: true
     source: path
-    version: "2.1.2"
+    version: "2.2.0"
   widgetbook_device_frame:
     dependency: "direct overridden"
     description:

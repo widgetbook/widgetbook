@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_device_frame/device_frame.dart';
+import 'package:widgetbook_device_frame/widgetbook_device_frame.dart';
 
 import 'button.dart';
 
