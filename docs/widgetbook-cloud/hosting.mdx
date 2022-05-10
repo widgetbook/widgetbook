@@ -21,7 +21,9 @@ The key will be copied to your clipboard.
 
 Since there are plenty of Git provider available, it can be hard to maintain them all.
 Since the Widgetbook Uploader is implemented in Dart, we wrapped the implementation with a Dart CLI to make it easily accessible.
-A compiled AOT version of the CLI is downloadable [here](https://firebasestorage.googleapis.com/v0/b/widgetbook-cloud.appspot.com/o/tools%2Fcli-v1.aot?alt=media), but it's understandable if you'd like to check the source code first and compile it yourself. 
+A compiled AOT version of the CLI is downloadable [here](https://firebasestorage.googleapis.com/v0/b/widgetbook-cloud.appspot.com/o/tools%2Fcli-v1.aot?alt=media). 
+We provide a AOT compiled version because it's platform independent. 
+But it's understandable if you'd like to check the source code first and/or compile it yourself. 
 See the [widgetbook-hosting](https://github.com/widgetbook/widgetbook-hosting) repository for more information.
 
 ### Arguments
@@ -40,11 +42,12 @@ The CLI accepts the following arguments
 
 ### Run the AOT-compiled CLI
 
-Since the CLI is AOT-compiled, the `cli.aot` file requires the [`dartaotruntime`](https://dart.dev/tools/dartaotruntime) to run the file.
+Since the CLI is AOT-compiled, the `cli-v1.aot` file requires the [`dartaotruntime`](https://dart.dev/tools/dartaotruntime) to run the file.
+`dartaotruntime` comes pre-installed with the Flutter SDK.
 The `dartaotruntime` is located at `<PathToRootFolderOfSdk>/flutter/bin/cache/dart-sdk/bin` and can be executed like this:
 
 ```bash
-dartaotruntime cli.dart
+dartaotruntime cli-1.dart 
 ```
 
 ## GitHub
@@ -165,3 +168,57 @@ In BitBucket you can add _repository variables_ by going to the repository setti
 | ----- | ------- | ----------- |
 | `WIDGETBOOK_BUILD_PATH` | The path to the web build of the widgetbook. For small repositories this is likely `build/web/` | ✅ |
 | `WIDGETBOOK_API_KEY` | The API key for your company. See [How to create an API key](/widgetbook-cloud/hosting#how-to-create-an-api-key)| ✅ |
+
+## Azure DevOps Pipelines
+
+To upload your Widgetbook to Widgetbook Cloud, we recommend to use the [CLI](/widgetbook-cloud/hosting#cli).
+
+### Example
+
+```yaml
+trigger:
+  branches:
+    include:
+    - '*'
+
+pool: 'Default'
+
+stages:
+- stage: WidgetbookHostingStage
+  dependsOn: []
+  displayName: Hosting
+  jobs:
+
+  - job: HostingJob
+    displayName: Hosting
+    steps: 
+
+    - task: FlutterInstall@0
+      displayName: "Install Flutter SDK"
+      inputs:
+        mode: 'auto'
+        channel: 'stable'
+        version: 'latest'
+
+    - task: FlutterBuild@0
+      displayName: "Build application"
+      inputs:
+        target: web
+        projectDirectory: '$(Build.SourcesDirectory)'
+        entryPoint: 'lib/main.widgetbook.dart'
+    
+    - task: Bash@3
+      displayName: "Upload Widgetbook"
+      inputs:
+        targetType: 'inline'
+        script: |
+          curl -o ./cli.aot 'https://firebasestorage.googleapis.com/v0/b/widgetbook-cloud.appspot.com/o/tools%2Fcli-v1.aot?alt=media'
+          $(DartToolPath)/dartaotruntime cli.aot \
+              --api-key <API-KEY> \
+              --path ./build/web \
+              --branch '$(Build.SourceBranchName)' \
+              --repository '$(Build.DefinitionName)' \
+              --commit '$(Build.SourceVersion)' \
+              --actor '$(Build.SourceVersionAuthor)' \
+              --git-provider Azure
+```
