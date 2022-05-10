@@ -1,3 +1,7 @@
+## 1.0.1
+
+- chore: bumped `freezed` dependency to `2.0.3`.
+
 ## 1.0.0-alpha.2
 
 * Added extra padding for virtual keyboard.

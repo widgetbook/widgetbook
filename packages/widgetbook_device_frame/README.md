@@ -1,4 +1,6 @@
-# device_frame
+# A fork of device_frame
+
+Has support for `freezed v2.0.x`.
 
 <p>
   <a href="https://pub.dartlang.org/packages/device_frame"><img src="https://img.shields.io/pub/v/device_frame.svg"></a>
