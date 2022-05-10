@@ -1,5 +1,5 @@
-import 'package:device_frame/src/info/info.dart';
 import 'package:flutter/widgets.dart';
+import 'package:widgetbook_device_frame/src/info/info.dart';
 
 /// A set of Linux devices.
 class LinuxDevices {

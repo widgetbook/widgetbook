@@ -1,11 +1,11 @@
-import 'package:device_frame/src/devices/generic/desktop_monitor/device.dart';
-import 'package:device_frame/src/devices/generic/laptop/device.dart';
-import 'package:device_frame/src/devices/generic/phone/device.dart';
-import 'package:device_frame/src/devices/generic/tablet/device.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:widgetbook_device_frame/src/devices/generic/desktop_monitor/device.dart';
+import 'package:widgetbook_device_frame/src/devices/generic/laptop/device.dart';
+import 'package:widgetbook_device_frame/src/devices/generic/phone/device.dart';
+import 'package:widgetbook_device_frame/src/devices/generic/tablet/device.dart';
 
 import 'identifier.dart';
 

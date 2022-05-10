@@ -1,10 +1,6 @@
-import 'dart:ui';
-
-import 'package:device_frame/device_frame.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook_device_frame/device_frame.dart';
 
 class FakeScreen extends StatelessWidget {
   const FakeScreen({

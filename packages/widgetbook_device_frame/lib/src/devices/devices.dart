@@ -1,10 +1,10 @@
-import 'package:device_frame/src/info/info.dart';
+import 'package:widgetbook_device_frame/src/info/info.dart';
 
 import 'android/devices.dart';
 import 'ios/devices.dart';
 import 'linux/devices.dart';
-import 'windows/devices.dart';
 import 'macos/devices.dart';
+import 'windows/devices.dart';
 
 /// A list of common device specifications sorted by target platform.
 abstract class Devices {

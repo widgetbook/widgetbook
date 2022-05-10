@@ -1,10 +1,10 @@
 import 'dart:ui' as ui;
 
-import 'package:device_frame/src/info/device_type.dart';
-import 'package:device_frame/src/info/identifier.dart';
-import 'package:device_frame/src/info/info.dart';
-import 'package:device_frame/src/devices/generic/base/draw_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:widgetbook_device_frame/src/devices/generic/base/draw_extensions.dart';
+import 'package:widgetbook_device_frame/src/info/device_type.dart';
+import 'package:widgetbook_device_frame/src/info/identifier.dart';
+import 'package:widgetbook_device_frame/src/info/info.dart';
 
 part 'frame.dart';
 
