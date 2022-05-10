@@ -1,3 +1,7 @@
+## 2.2.0
+
+- chore: bumped `freezed` and `freezed_annotation` to `v2.0.3` ([#174](https://github.com/widgetbook/widgetbook/issues/174))
+
 ## 2.1.2
 
 - fix: `useCaseBuilder` is called with old context ([#180](https://github.com/widgetbook/widgetbook/issues/180))
