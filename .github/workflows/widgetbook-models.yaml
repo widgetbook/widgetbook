@@ -21,12 +21,10 @@ jobs:
     - name: Checkout LFS objects
       run: git lfs checkout
 
-    - uses: subosito/flutter-action@v2
-      with:
-        channel: stable
+    - uses: dart-lang/setup-dart@v1
 
-    - name: Flutter version
-      run: flutter --version
+    - name: Dart version
+      run: dart --version
 
     - name: Enable melos
       run: dart pub global activate melos
@@ -35,7 +33,7 @@ jobs:
       run: melos bootstrap
 
     - name: Run Tests
-      run: flutter test
+      run: dart test
 
   code-quality:
     defaults:
@@ -67,16 +65,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
 
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
+      - uses: dart-lang/setup-dart@v1
 
-      - name: Flutter version
-        run: flutter --version
+      - name: Dart version
+        run: dart --version
 
       - name: Install Dependencies
         run: |
-          flutter packages get
-          flutter pub global activate pana
+          dart packages get
+          dart pub global activate pana
       - name: Verify Pub Score
         run: ../../tool/verify_pub_score.sh
