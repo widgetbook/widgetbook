@@ -20,6 +20,8 @@ jobs:
     - uses: subosito/flutter-action@v2
       with:
         channel: stable
+
+    - name: Flutter version
       run: flutter --version
 
     - name: Enable melos
