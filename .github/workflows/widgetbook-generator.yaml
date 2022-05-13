@@ -21,9 +21,10 @@ jobs:
     - name: Checkout LFS objects
       run: git lfs checkout
 
-    - uses: subosito/flutter-action@v1
+    - uses: subosito/flutter-action@v2
       with:
         channel: stable
+      run: flutter --version
 
     - name: Enable melos
       run: dart pub global activate melos
@@ -33,7 +34,7 @@ jobs:
 
     - name: Run Tests
       run: |
-        pub global activate test_coverage
+        flutter pub global activate test_coverage
         export PATH=$PATH:$HOME/.pub-cache/bin
         test_coverage
 
@@ -48,9 +49,10 @@ jobs:
       with:
         lfs: true
 
-    - uses: subosito/flutter-action@v1
+    - uses: subosito/flutter-action@v2
       with:
         channel: stable
+      run: flutter --version
 
     - name: Enable melos
       run: dart pub global activate melos
@@ -70,7 +72,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: subosito/flutter-action@v1.5.3
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+        run: flutter --version
 
       - name: Install Dependencies
         run: |
