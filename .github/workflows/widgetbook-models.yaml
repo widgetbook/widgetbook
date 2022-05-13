@@ -72,7 +72,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          dart packages get
+          dart pub get
           dart pub global activate pana
       - name: Verify Pub Score
         run: ../../tool/verify_pub_score.sh
