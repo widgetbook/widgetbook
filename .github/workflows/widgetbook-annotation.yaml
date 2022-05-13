@@ -35,10 +35,7 @@ jobs:
       run: melos bootstrap
 
     - name: Run Tests
-      run: |
-        flutter pub global activate test_coverage
-        export PATH=$PATH:$HOME/.pub-cache/bin
-        test_coverage
+      run: flutter test
 
   code-quality:
     defaults:
