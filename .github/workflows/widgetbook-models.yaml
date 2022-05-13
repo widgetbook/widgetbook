@@ -29,9 +29,6 @@ jobs:
     - name: Enable melos
       run: dart pub global activate melos
 
-    - name: Get packages 
-      run: melos bootstrap
-
     - name: Run Tests
       run: dart test
 

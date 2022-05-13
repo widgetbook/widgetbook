@@ -21,9 +21,12 @@ jobs:
     - name: Checkout LFS objects
       run: git lfs checkout
 
-    - uses: dart-lang/setup-dart@v1
+    - uses: subosito/flutter-action@v2
       with:
         channel: stable
+
+    - name: Flutter version
+      run: flutter --version
 
     - name: Dart version
       run: dart --version
