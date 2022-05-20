@@ -1,3 +1,7 @@
+## 2.2.2
+
+- chore: updated docs to link to [docs.widgetbook.io](https://docs.widgetbook.io)
+
 ## 2.2.1
 
 - fix: use `widgetbook_models` in version `v0.0.7`
