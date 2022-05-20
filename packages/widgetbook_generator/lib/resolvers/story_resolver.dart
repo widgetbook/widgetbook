@@ -21,15 +21,20 @@ class UseCaseResolver extends GeneratorForAnnotation<WidgetbookUseCase> {
 
     final storyName = annotation.read('name').stringValue;
     final typeElement = annotation.read('type').typeValue.element!;
-    final widgetName = annotation.read('type').typeValue.getDisplayString(
-          withNullability: false,
-        );
+
+    final typeValue = annotation.read('type').typeValue;
+    final widgetName = typeValue.getDisplayString(
+      withNullability: false,
+    );
+
+    final widgetFilePath = typeValue.element!.librarySource!.fullName;
 
     final data = WidgetbookStoryData.fromResolver(
       element,
       typeElement,
       storyName,
       widgetName,
+      widgetFilePath,
     );
 
     return [data].toJson();

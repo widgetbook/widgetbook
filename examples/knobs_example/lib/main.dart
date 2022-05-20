@@ -4,6 +4,12 @@ void main() {
   runApp(const MyApp());
 }
 
+enum AwesomeEnum {
+  awesomeOne,
+  awesomeTwo,
+  awesomeThree,
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -15,7 +21,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(
+        title: 'Flutter Demo Home Page',
+        awesomeEnum: AwesomeEnum.awesomeOne,
+      ),
     );
   }
 }
@@ -28,6 +37,7 @@ class MyHomePage extends StatefulWidget {
     this.countLabel,
     this.iconData,
     this.showToolTip = true,
+    required this.awesomeEnum,
   }) : super(key: key);
 
   final String title;
@@ -35,6 +45,7 @@ class MyHomePage extends StatefulWidget {
   final String? countLabel;
   final IconData? iconData;
   final bool showToolTip;
+  final AwesomeEnum awesomeEnum;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -67,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            Text('Enum: ${widget.awesomeEnum}'),
           ],
         ),
       ),

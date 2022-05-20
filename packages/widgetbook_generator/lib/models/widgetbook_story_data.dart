@@ -21,6 +21,7 @@ class WidgetbookStoryData extends WidgetbookData {
     required List<String> dependencies,
     required this.storyName,
     required this.widgetName,
+    required this.widgetFilePath,
   }) : super(
           name: name,
           importStatement: importStatement,
@@ -34,6 +35,7 @@ class WidgetbookStoryData extends WidgetbookData {
     Element typeElement,
     String storyName,
     String widgetName,
+    String widgetFilePath,
   ) {
     return WidgetbookStoryData(
       name: element.name!,
@@ -42,6 +44,7 @@ class WidgetbookStoryData extends WidgetbookData {
       dependencies: typeElement.dependencies,
       storyName: storyName,
       widgetName: widgetName,
+      widgetFilePath: widgetFilePath,
     );
   }
 
@@ -54,6 +57,7 @@ class WidgetbookStoryData extends WidgetbookData {
       dependencies: List<String>.from(map['dependencies'] as Iterable),
       storyName: map['storyName'] as String,
       widgetName: map['widgetName'] as String,
+      widgetFilePath: map['widgetFilePath'] as String,
     );
   }
 
@@ -66,6 +70,8 @@ class WidgetbookStoryData extends WidgetbookData {
   /// [widgetName] will be displayed as a WidgetElement in the Widgetbook.
   final String widgetName;
 
+  final String widgetFilePath;
+
   final String typeDefinition;
 
   @override
@@ -77,6 +83,7 @@ class WidgetbookStoryData extends WidgetbookData {
       'dependencies': dependencies,
       'storyName': storyName,
       'widgetName': widgetName,
+      'widgetFilePath': widgetFilePath,
     };
   }
 }

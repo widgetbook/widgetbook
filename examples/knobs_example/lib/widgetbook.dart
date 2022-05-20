@@ -63,6 +63,17 @@ class KnobsExample extends StatelessWidget {
                         value: Icons.circle,
                       ),
                     ]),
+                    awesomeEnum: context.knobs.options(
+                      label: 'enum',
+                      options: AwesomeEnum.values
+                          .map(
+                            (e) => Option(
+                              label: e.name,
+                              value: e,
+                            ),
+                          )
+                          .toList(),
+                    ),
                     showToolTip: context.knobs.boolean(
                       label: 'Show Increment Tool Tip',
                       description:

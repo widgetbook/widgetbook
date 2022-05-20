@@ -23,6 +23,7 @@ void main() {
             dependencies: [],
             storyName: 'Story1',
             widgetName: widgetName,
+            widgetFilePath: 'a',
           ),
           WidgetbookStoryData(
             name: 'story2',
@@ -31,6 +32,7 @@ void main() {
             dependencies: [],
             storyName: 'Story2',
             widgetName: widgetName,
+            widgetFilePath: 'a',
           ),
         ],
       );
