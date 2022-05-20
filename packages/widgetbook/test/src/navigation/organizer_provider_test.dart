@@ -1,3 +1,11 @@
+import 'package:flutter_test/flutter_test.dart';
+
+void main() {
+  test('true is true', () {
+    expect(true, isTrue);
+  });
+}
+
 // TODO put this back in once mocktail version is >0.3.1 
 // import 'package:flutter/material.dart';
 // import 'package:flutter_test/flutter_test.dart';

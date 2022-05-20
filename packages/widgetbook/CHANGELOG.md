@@ -1,3 +1,7 @@
+## 2.2.1
+
+- fix: use `widgetbook_models` in version `v0.0.7`
+
 ## 2.2.0
 
 - chore: bumped `freezed` and `freezed_annotation` to `v2.0.3` ([#174](https://github.com/widgetbook/widgetbook/issues/174))

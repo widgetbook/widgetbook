@@ -490,14 +490,14 @@ packages:
       path: "../widgetbook_annotation"
       relative: true
     source: path
-    version: "2.0.1"
+    version: "2.0.2"
   widgetbook_models:
     dependency: "direct main"
     description:
       path: "../widgetbook_models"
       relative: true
     source: path
-    version: "0.0.6"
+    version: "0.0.7"
   yaml:
     dependency: transitive
     description:

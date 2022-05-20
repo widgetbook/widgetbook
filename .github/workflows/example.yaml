@@ -20,9 +20,12 @@ jobs:
     - name: Checkout LFS objects
       run: git lfs checkout
 
-    - uses: subosito/flutter-action@v1
+    - uses: subosito/flutter-action@v2
       with:
         channel: stable
+
+    - name: Flutter version
+      run: flutter --version
 
     - name: Enable MacOS desktop support
       run: flutter config --enable-macos-desktop
