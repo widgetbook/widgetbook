@@ -19,6 +19,7 @@ class TextKnob extends Knob<String> {
         label: label,
         description: description,
         value: value,
+        key: ValueKey(this),
       );
 }
 
@@ -39,6 +40,7 @@ class NullableTextKnob extends Knob<String?> {
         description: description,
         value: value,
         nullable: true,
+        key: ValueKey(this),
       );
 }
 

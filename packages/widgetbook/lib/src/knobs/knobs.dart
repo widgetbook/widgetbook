@@ -271,7 +271,7 @@ class KnobWrapper extends StatelessWidget {
             style: const TextStyle(fontSize: 14),
           ),
         ],
-          const SizedBox(height: 8),
+        const SizedBox(height: 8),
         child,
       ],
     );

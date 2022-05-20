@@ -17,6 +17,7 @@ class BoolKnob extends Knob<bool> {
 
   @override
   Widget build() => BooleanKnobWidget(
+        key: ValueKey(this),
         label: label,
         description: description,
         value: value,
@@ -36,6 +37,7 @@ class NullableBoolKnob extends Knob<bool?> {
 
   @override
   Widget build() => BooleanKnobWidget(
+        key: ValueKey(this),
         label: label,
         description: description,
         value: value,

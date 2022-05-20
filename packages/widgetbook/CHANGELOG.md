@@ -1,10 +1,26 @@
+## 2.2.1
+
+- fix: use `widgetbook_models` in version `v0.0.7`
+
+## 2.2.0
+
+- chore: bumped `freezed` and `freezed_annotation` to `v2.0.3` ([#174](https://github.com/widgetbook/widgetbook/issues/174))
+
+## 2.1.2
+
+- fix: `useCaseBuilder` is called with old context ([#180](https://github.com/widgetbook/widgetbook/issues/180))
+
+## 2.1.1
+
+- fix: knob values do not update when usecase changes ([#170](https://github.com/widgetbook/widgetbook/issues/170))
+
 ## 2.1.0
 
 - feature: added knobs to dynamically change parameters of a usecase ([#21](https://github.com/widgetbook/widgetbook/issues/21))
 
 ## 2.0.9
 
-- fix: Orientation defaults to landscape ([#161](https://github.com/widgetbook/widgetbook/issues/161))
+- fix: orientation defaults to landscape ([#161](https://github.com/widgetbook/widgetbook/issues/161))
 
 ## 2.0.8
 

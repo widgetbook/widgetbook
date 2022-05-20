@@ -1,3 +1,7 @@
+## 2.0.2
+
+- fix: use `widgetbook_models` in version `v0.0.7`
+
 ## 2.0.1
 
 - refactor: renamed `WidgetbookWidget` to `WidgetbookComponent`

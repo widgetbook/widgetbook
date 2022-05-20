@@ -1,3 +1,7 @@
+## 0.0.7
+
+- chore: bumped `freezed` and `freezed_annotation` to `v2.0.3` ([#174](https://github.com/widgetbook/widgetbook/issues/174))
+
 ## 0.0.6
 
 - added `WidgetbookFrame` to package

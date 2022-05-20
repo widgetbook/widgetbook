@@ -80,7 +80,9 @@ class Renderer<CustomTheme> extends StatelessWidget {
                             Builder(builder: (context) {
                               return renderingState.useCaseBuilder(
                                 context,
-                                useCaseBuilder(context),
+                                Builder(
+                                  builder: useCaseBuilder,
+                                ),
                               );
                             }),
                           );
