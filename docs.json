@@ -1,0 +1,87 @@
+{
+    "name": "Widgetbook",
+    "twitter": "widgetbook_io",
+    "googleAnalytics": "G-74GW877FF8",
+    "sidebar": [
+        [
+            "Overview", "/"
+        ],
+        [
+            "Package: widgetbook",
+            [
+                [
+                    "Overview", "/widgetbook/overview"
+                ],
+                [
+                    "Setup", "/widgetbook/setup"
+                ],
+                [
+                    "Run", "/widgetbook/run"
+                ],
+                [
+                    "Constructors", "/widgetbook/constructors"
+                ],
+                [
+                    "Properties", "/widgetbook/properties"
+                ],
+                [
+                    "Knobs", "/widgetbook/knobs"
+                ],
+                [
+                    "Advanced", "/widgetbook/advanced"
+                ]
+            ]
+        ],
+        [
+            "Package: widgetbook_annotation",
+            [
+                [
+                    "Overview", "/widgetbook-annotation/overview"
+                ],
+                [
+                    "Setup", "/widgetbook-annotation/setup"
+                ],
+                [
+                    "Annotations", "/widgetbook-annotation/annotations"
+                ]
+            ]
+        ],
+        [
+            "Package: widgetbook_generator",
+            [
+                [
+                    "Overview", "/widgetbook-generator/overview"
+                ],
+                [
+                    "Setup", "/widgetbook-generator/setup"
+                ],
+                [
+                    "Annotations", "/widgetbook-annotation/annotations"
+                ],
+                [
+                    "Run", "/widgetbook-generator/run" 
+                ]
+            ]
+        ],
+        [
+            "Widgetbook Cloud",
+            [
+                [
+                    "Overview", "/widgetbook-cloud/overview"
+                ],
+                [
+                    "Getting started", "/widgetbook-cloud/getting-started"
+                ],
+                [
+                    "Hosting", "/widgetbook-cloud/hosting"
+                ],
+                [
+                    "Accessing Resources", "/widgetbook-cloud/accessing-resources"
+                ],
+                [
+                    "Billing", "/widgetbook-cloud/billing"
+                ]
+            ]
+        ]
+    ]
+}
