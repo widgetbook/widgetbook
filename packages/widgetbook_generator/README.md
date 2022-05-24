@@ -8,6 +8,17 @@
 [![youtube: How to](https://img.shields.io/badge/YouTube-How%20to%20%20use%20Widgetbook%3F-d05454?style=flat-square)](https://www.youtube.com/watch?v=qcTZxJDLEAE) 
 [![youtube: How to](https://img.shields.io/badge/YouTube-How%20to%20%20use%20Widgetbook%20Generator%3F-d05454?style=flat-square)](https://www.youtube.com/watch?v=dh8hxgtbjtk) 
 
+Widgetbook is a flutter package which helps developers cataloguing their widgets, testing them quickly on multiple devices and themes, and sharing them easily with designers and clients. Inspired by Storybook.js.
+
+
+
+
+
+
+
+
+
+
 [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) allows to generate and setup code for [package:widgetbook](https://pub.dev/packages/widgetbook) which simplifies using and maintaining Widgetbook.
 
 # See [docs.widgetbook.io](https://docs.widgetbook.io/widgetbook-generator/overview) for docs & samples
