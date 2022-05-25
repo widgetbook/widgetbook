@@ -19,10 +19,12 @@ class WidgetbookComponentInstance extends Instance {
               key: 'useCases',
               instance: ListInstance<WidgetbookUseCaseInstance>(
                 instances: stories
-                    .map((story) => WidgetbookUseCaseInstance(
-                          useCaseName: story.storyName,
-                          functionName: story.name,
-                        ))
+                    .map(
+                      (story) => WidgetbookUseCaseInstance(
+                        useCaseName: story.storyName,
+                        functionName: story.name,
+                      ),
+                    )
                     .toList(),
               ),
             ),

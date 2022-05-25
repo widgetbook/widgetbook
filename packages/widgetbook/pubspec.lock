@@ -517,7 +517,7 @@ packages:
       name: very_good_analysis
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.0"
+    version: "3.0.0"
   vm_service:
     dependency: transitive
     description:
@@ -568,5 +568,5 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.17.0-0 <3.0.0"
+  dart: ">=2.17.0 <3.0.0"
   flutter: ">=2.0.0"

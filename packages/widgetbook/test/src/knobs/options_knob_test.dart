@@ -31,19 +31,20 @@ void main() {
         ],
       );
       expect(
-          first,
-          equals(
-            OptionsKnob(
-              value: 10,
-              label: 'first',
-              options: [
-                const Option(
-                  label: 'opt',
-                  value: 3,
-                )
-              ],
-            ),
-          ));
+        first,
+        equals(
+          OptionsKnob(
+            value: 10,
+            label: 'first',
+            options: [
+              const Option(
+                label: 'opt',
+                value: 3,
+              )
+            ],
+          ),
+        ),
+      );
       expect(first, isNot(equals(second)));
     },
   );
@@ -53,23 +54,24 @@ void main() {
     (WidgetTester tester) async {
       await tester.pumpWidgetWithMaterialApp(
         renderWithKnobs(
-            build: (context) => [
-                  Text(
-                    context.knobs.options(
-                      label: 'label',
-                      options: [
-                        const Option(
-                          label: 'first-option',
-                          value: 'first-value',
-                        ),
-                        const Option(
-                          label: 'second-option',
-                          value: 'second-value',
-                        )
-                      ],
-                    ),
+          build: (context) => [
+            Text(
+              context.knobs.options(
+                label: 'label',
+                options: [
+                  const Option(
+                    label: 'first-option',
+                    value: 'first-value',
+                  ),
+                  const Option(
+                    label: 'second-option',
+                    value: 'second-value',
                   )
-                ]),
+                ],
+              ),
+            )
+          ],
+        ),
       );
       expect(find.text('first-value'), findsOneWidget);
       await tester.pumpAndSettle();

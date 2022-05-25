@@ -50,12 +50,18 @@ void main() {
                 ),
                 Property(
                   key: 'useCases',
-                  instance: ListInstance(instances: [
-                    WidgetbookUseCaseInstance(
-                        useCaseName: 'Story1', functionName: 'story1'),
-                    WidgetbookUseCaseInstance(
-                        useCaseName: 'Story2', functionName: 'story2'),
-                  ]),
+                  instance: ListInstance(
+                    instances: [
+                      WidgetbookUseCaseInstance(
+                        useCaseName: 'Story1',
+                        functionName: 'story1',
+                      ),
+                      WidgetbookUseCaseInstance(
+                        useCaseName: 'Story2',
+                        functionName: 'story2',
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

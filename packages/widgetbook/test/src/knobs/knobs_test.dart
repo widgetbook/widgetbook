@@ -46,32 +46,37 @@ void main() {
         builder: (context) {
           return Column(
             children: [
-              Text(context.knobs.boolean(
-                label: 'label',
-                initialValue: true,
-              )
-                  ? 'Hi'
-                  : 'Bye'),
+              Text(
+                context.knobs.boolean(
+                  label: 'label',
+                  initialValue: true,
+                )
+                    ? 'Hi'
+                    : 'Bye',
+              ),
               ...knobsNotifier.all().map((e) => e.build())
             ],
           );
         },
       );
       selectedStoryRepository.setItem(useCase);
-      await tester.pumpWidgetWithMaterialApp(ChangeNotifierProvider(
-        create: (context) => knobsNotifier,
-        child: Builder(builder: useCase.builder),
-      ));
+      await tester.pumpWidgetWithMaterialApp(
+        ChangeNotifierProvider(
+          create: (context) => knobsNotifier,
+          child: Builder(builder: useCase.builder),
+        ),
+      );
       expect(knobsNotifier.all().length, equals(1));
 
       expect(
-          knobsNotifier.all(),
-          equals(<Knob>[
-            BoolKnob(
-              label: 'label',
-              value: true,
-            )
-          ]));
+        knobsNotifier.all(),
+        equals(<Knob>[
+          BoolKnob(
+            label: 'label',
+            value: true,
+          )
+        ]),
+      );
     },
   );
 }

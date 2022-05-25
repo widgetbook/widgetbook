@@ -61,36 +61,37 @@ void main() {
             widgets: widgets,
           );
           expect(
-              instance.properties,
-              equals(
-                [
-                  Property.string(key: 'name', value: categoryName),
-                  Property(
-                    key: 'folders',
-                    instance: ListInstance<WidgetbookFolderInstance>(
-                      instances: [
-                        WidgetbookFolderInstance(folder: folder1),
-                        WidgetbookFolderInstance(folder: folder2),
-                      ],
-                    ),
+            instance.properties,
+            equals(
+              [
+                Property.string(key: 'name', value: categoryName),
+                Property(
+                  key: 'folders',
+                  instance: ListInstance<WidgetbookFolderInstance>(
+                    instances: [
+                      WidgetbookFolderInstance(folder: folder1),
+                      WidgetbookFolderInstance(folder: folder2),
+                    ],
                   ),
-                  Property(
-                    key: 'widgets',
-                    instance: ListInstance<WidgetbookComponentInstance>(
-                      instances: [
-                        WidgetbookComponentInstance(
-                          name: widget1.name,
-                          stories: widget1.stories,
-                        ),
-                        WidgetbookComponentInstance(
-                          name: widget2.name,
-                          stories: widget2.stories,
-                        ),
-                      ],
-                    ),
+                ),
+                Property(
+                  key: 'widgets',
+                  instance: ListInstance<WidgetbookComponentInstance>(
+                    instances: [
+                      WidgetbookComponentInstance(
+                        name: widget1.name,
+                        stories: widget1.stories,
+                      ),
+                      WidgetbookComponentInstance(
+                        name: widget2.name,
+                        stories: widget2.stories,
+                      ),
+                    ],
                   ),
-                ],
-              ));
+                ),
+              ],
+            ),
+          );
         },
       );
     },
