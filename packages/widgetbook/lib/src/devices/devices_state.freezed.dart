@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'devices_state.dart';
@@ -11,21 +12,7 @@ part of 'devices_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$DevicesStateTearOff {
-  const _$DevicesStateTearOff();
-
-  _DevicesState call({required List<Device> devices}) {
-    return _DevicesState(
-      devices: devices,
-    );
-  }
-}
-
-/// @nodoc
-const $DevicesState = _$DevicesStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$DevicesState {
@@ -66,32 +53,33 @@ class _$DevicesStateCopyWithImpl<$Res> implements $DevicesStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$DevicesStateCopyWith<$Res>
+abstract class _$$_DevicesStateCopyWith<$Res>
     implements $DevicesStateCopyWith<$Res> {
-  factory _$DevicesStateCopyWith(
-          _DevicesState value, $Res Function(_DevicesState) then) =
-      __$DevicesStateCopyWithImpl<$Res>;
+  factory _$$_DevicesStateCopyWith(
+          _$_DevicesState value, $Res Function(_$_DevicesState) then) =
+      __$$_DevicesStateCopyWithImpl<$Res>;
   @override
   $Res call({List<Device> devices});
 }
 
 /// @nodoc
-class __$DevicesStateCopyWithImpl<$Res> extends _$DevicesStateCopyWithImpl<$Res>
-    implements _$DevicesStateCopyWith<$Res> {
-  __$DevicesStateCopyWithImpl(
-      _DevicesState _value, $Res Function(_DevicesState) _then)
-      : super(_value, (v) => _then(v as _DevicesState));
+class __$$_DevicesStateCopyWithImpl<$Res>
+    extends _$DevicesStateCopyWithImpl<$Res>
+    implements _$$_DevicesStateCopyWith<$Res> {
+  __$$_DevicesStateCopyWithImpl(
+      _$_DevicesState _value, $Res Function(_$_DevicesState) _then)
+      : super(_value, (v) => _then(v as _$_DevicesState));
 
   @override
-  _DevicesState get _value => super._value as _DevicesState;
+  _$_DevicesState get _value => super._value as _$_DevicesState;
 
   @override
   $Res call({
     Object? devices = freezed,
   }) {
-    return _then(_DevicesState(
+    return _then(_$_DevicesState(
       devices: devices == freezed
-          ? _value.devices
+          ? _value._devices
           : devices // ignore: cast_nullable_to_non_nullable
               as List<Device>,
     ));
@@ -101,10 +89,14 @@ class __$DevicesStateCopyWithImpl<$Res> extends _$DevicesStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_DevicesState implements _DevicesState {
-  _$_DevicesState({required this.devices});
+  _$_DevicesState({required final List<Device> devices}) : _devices = devices;
 
+  final List<Device> _devices;
   @override
-  final List<Device> devices;
+  List<Device> get devices {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_devices);
+  }
 
   @override
   String toString() {
@@ -115,27 +107,28 @@ class _$_DevicesState implements _DevicesState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _DevicesState &&
-            const DeepCollectionEquality().equals(other.devices, devices));
+            other is _$_DevicesState &&
+            const DeepCollectionEquality().equals(other._devices, _devices));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(devices));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_devices));
 
   @JsonKey(ignore: true)
   @override
-  _$DevicesStateCopyWith<_DevicesState> get copyWith =>
-      __$DevicesStateCopyWithImpl<_DevicesState>(this, _$identity);
+  _$$_DevicesStateCopyWith<_$_DevicesState> get copyWith =>
+      __$$_DevicesStateCopyWithImpl<_$_DevicesState>(this, _$identity);
 }
 
 abstract class _DevicesState implements DevicesState {
-  factory _DevicesState({required List<Device> devices}) = _$_DevicesState;
+  factory _DevicesState({required final List<Device> devices}) =
+      _$_DevicesState;
 
   @override
-  List<Device> get devices;
+  List<Device> get devices => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$DevicesStateCopyWith<_DevicesState> get copyWith =>
+  _$$_DevicesStateCopyWith<_$_DevicesState> get copyWith =>
       throw _privateConstructorUsedError;
 }

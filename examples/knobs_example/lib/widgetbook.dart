@@ -11,7 +11,7 @@ class KnobsExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Widgetbook(
+    return Widgetbook.material(
       devices: const [
         Apple.iPhone11,
       ],

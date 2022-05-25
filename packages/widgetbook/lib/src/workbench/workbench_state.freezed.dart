@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'workbench_state.dart';
@@ -11,44 +12,7 @@ part of 'workbench_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$WorkbenchStateTearOff {
-  const _$WorkbenchStateTearOff();
-
-  _WorkbenchState<CustomTheme> call<CustomTheme>(
-      {ComparisonSetting comparisonSetting = ComparisonSetting.none,
-      WidgetbookTheme<CustomTheme>? theme,
-      Locale? locale,
-      Device? device,
-      required double? textScaleFactor,
-      required WidgetbookFrame frame,
-      Orientation orientation = Orientation.portrait,
-      required List<WidgetbookTheme<CustomTheme>> themes,
-      required List<Locale> locales,
-      required List<Device> devices,
-      required List<WidgetbookFrame> frames,
-      required List<double> textScaleFactors}) {
-    return _WorkbenchState<CustomTheme>(
-      comparisonSetting: comparisonSetting,
-      theme: theme,
-      locale: locale,
-      device: device,
-      textScaleFactor: textScaleFactor,
-      frame: frame,
-      orientation: orientation,
-      themes: themes,
-      locales: locales,
-      devices: devices,
-      frames: frames,
-      textScaleFactors: textScaleFactors,
-    );
-  }
-}
-
-/// @nodoc
-const $WorkbenchState = _$WorkbenchStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$WorkbenchState<CustomTheme> {
@@ -202,11 +166,11 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
 }
 
 /// @nodoc
-abstract class _$WorkbenchStateCopyWith<CustomTheme, $Res>
+abstract class _$$_WorkbenchStateCopyWith<CustomTheme, $Res>
     implements $WorkbenchStateCopyWith<CustomTheme, $Res> {
-  factory _$WorkbenchStateCopyWith(_WorkbenchState<CustomTheme> value,
-          $Res Function(_WorkbenchState<CustomTheme>) then) =
-      __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>;
+  factory _$$_WorkbenchStateCopyWith(_$_WorkbenchState<CustomTheme> value,
+          $Res Function(_$_WorkbenchState<CustomTheme>) then) =
+      __$$_WorkbenchStateCopyWithImpl<CustomTheme, $Res>;
   @override
   $Res call(
       {ComparisonSetting comparisonSetting,
@@ -231,16 +195,16 @@ abstract class _$WorkbenchStateCopyWith<CustomTheme, $Res>
 }
 
 /// @nodoc
-class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
+class __$$_WorkbenchStateCopyWithImpl<CustomTheme, $Res>
     extends _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
-    implements _$WorkbenchStateCopyWith<CustomTheme, $Res> {
-  __$WorkbenchStateCopyWithImpl(_WorkbenchState<CustomTheme> _value,
-      $Res Function(_WorkbenchState<CustomTheme>) _then)
-      : super(_value, (v) => _then(v as _WorkbenchState<CustomTheme>));
+    implements _$$_WorkbenchStateCopyWith<CustomTheme, $Res> {
+  __$$_WorkbenchStateCopyWithImpl(_$_WorkbenchState<CustomTheme> _value,
+      $Res Function(_$_WorkbenchState<CustomTheme>) _then)
+      : super(_value, (v) => _then(v as _$_WorkbenchState<CustomTheme>));
 
   @override
-  _WorkbenchState<CustomTheme> get _value =>
-      super._value as _WorkbenchState<CustomTheme>;
+  _$_WorkbenchState<CustomTheme> get _value =>
+      super._value as _$_WorkbenchState<CustomTheme>;
 
   @override
   $Res call({
@@ -257,7 +221,7 @@ class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
     Object? frames = freezed,
     Object? textScaleFactors = freezed,
   }) {
-    return _then(_WorkbenchState<CustomTheme>(
+    return _then(_$_WorkbenchState<CustomTheme>(
       comparisonSetting: comparisonSetting == freezed
           ? _value.comparisonSetting
           : comparisonSetting // ignore: cast_nullable_to_non_nullable
@@ -287,23 +251,23 @@ class __$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
           : orientation // ignore: cast_nullable_to_non_nullable
               as Orientation,
       themes: themes == freezed
-          ? _value.themes
+          ? _value._themes
           : themes // ignore: cast_nullable_to_non_nullable
               as List<WidgetbookTheme<CustomTheme>>,
       locales: locales == freezed
-          ? _value.locales
+          ? _value._locales
           : locales // ignore: cast_nullable_to_non_nullable
               as List<Locale>,
       devices: devices == freezed
-          ? _value.devices
+          ? _value._devices
           : devices // ignore: cast_nullable_to_non_nullable
               as List<Device>,
       frames: frames == freezed
-          ? _value.frames
+          ? _value._frames
           : frames // ignore: cast_nullable_to_non_nullable
               as List<WidgetbookFrame>,
       textScaleFactors: textScaleFactors == freezed
-          ? _value.textScaleFactors
+          ? _value._textScaleFactors
           : textScaleFactors // ignore: cast_nullable_to_non_nullable
               as List<double>,
     ));
@@ -321,15 +285,20 @@ class _$_WorkbenchState<CustomTheme> extends _WorkbenchState<CustomTheme> {
       required this.textScaleFactor,
       required this.frame,
       this.orientation = Orientation.portrait,
-      required this.themes,
-      required this.locales,
-      required this.devices,
-      required this.frames,
-      required this.textScaleFactors})
-      : super._();
+      required final List<WidgetbookTheme<CustomTheme>> themes,
+      required final List<Locale> locales,
+      required final List<Device> devices,
+      required final List<WidgetbookFrame> frames,
+      required final List<double> textScaleFactors})
+      : _themes = themes,
+        _locales = locales,
+        _devices = devices,
+        _frames = frames,
+        _textScaleFactors = textScaleFactors,
+        super._();
 
-  @JsonKey()
   @override
+  @JsonKey()
   final ComparisonSetting comparisonSetting;
   @override
   final WidgetbookTheme<CustomTheme>? theme;
@@ -341,19 +310,43 @@ class _$_WorkbenchState<CustomTheme> extends _WorkbenchState<CustomTheme> {
   final double? textScaleFactor;
   @override
   final WidgetbookFrame frame;
+  @override
   @JsonKey()
-  @override
   final Orientation orientation;
+  final List<WidgetbookTheme<CustomTheme>> _themes;
   @override
-  final List<WidgetbookTheme<CustomTheme>> themes;
+  List<WidgetbookTheme<CustomTheme>> get themes {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_themes);
+  }
+
+  final List<Locale> _locales;
   @override
-  final List<Locale> locales;
+  List<Locale> get locales {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_locales);
+  }
+
+  final List<Device> _devices;
   @override
-  final List<Device> devices;
+  List<Device> get devices {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_devices);
+  }
+
+  final List<WidgetbookFrame> _frames;
   @override
-  final List<WidgetbookFrame> frames;
+  List<WidgetbookFrame> get frames {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_frames);
+  }
+
+  final List<double> _textScaleFactors;
   @override
-  final List<double> textScaleFactors;
+  List<double> get textScaleFactors {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_textScaleFactors);
+  }
 
   @override
   String toString() {
@@ -364,7 +357,7 @@ class _$_WorkbenchState<CustomTheme> extends _WorkbenchState<CustomTheme> {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _WorkbenchState<CustomTheme> &&
+            other is _$_WorkbenchState<CustomTheme> &&
             const DeepCollectionEquality()
                 .equals(other.comparisonSetting, comparisonSetting) &&
             const DeepCollectionEquality().equals(other.theme, theme) &&
@@ -375,12 +368,12 @@ class _$_WorkbenchState<CustomTheme> extends _WorkbenchState<CustomTheme> {
             const DeepCollectionEquality().equals(other.frame, frame) &&
             const DeepCollectionEquality()
                 .equals(other.orientation, orientation) &&
-            const DeepCollectionEquality().equals(other.themes, themes) &&
-            const DeepCollectionEquality().equals(other.locales, locales) &&
-            const DeepCollectionEquality().equals(other.devices, devices) &&
-            const DeepCollectionEquality().equals(other.frames, frames) &&
+            const DeepCollectionEquality().equals(other._themes, _themes) &&
+            const DeepCollectionEquality().equals(other._locales, _locales) &&
+            const DeepCollectionEquality().equals(other._devices, _devices) &&
+            const DeepCollectionEquality().equals(other._frames, _frames) &&
             const DeepCollectionEquality()
-                .equals(other.textScaleFactors, textScaleFactors));
+                .equals(other._textScaleFactors, _textScaleFactors));
   }
 
   @override
@@ -393,62 +386,64 @@ class _$_WorkbenchState<CustomTheme> extends _WorkbenchState<CustomTheme> {
       const DeepCollectionEquality().hash(textScaleFactor),
       const DeepCollectionEquality().hash(frame),
       const DeepCollectionEquality().hash(orientation),
-      const DeepCollectionEquality().hash(themes),
-      const DeepCollectionEquality().hash(locales),
-      const DeepCollectionEquality().hash(devices),
-      const DeepCollectionEquality().hash(frames),
-      const DeepCollectionEquality().hash(textScaleFactors));
+      const DeepCollectionEquality().hash(_themes),
+      const DeepCollectionEquality().hash(_locales),
+      const DeepCollectionEquality().hash(_devices),
+      const DeepCollectionEquality().hash(_frames),
+      const DeepCollectionEquality().hash(_textScaleFactors));
 
   @JsonKey(ignore: true)
   @override
-  _$WorkbenchStateCopyWith<CustomTheme, _WorkbenchState<CustomTheme>>
-      get copyWith => __$WorkbenchStateCopyWithImpl<CustomTheme,
-          _WorkbenchState<CustomTheme>>(this, _$identity);
+  _$$_WorkbenchStateCopyWith<CustomTheme, _$_WorkbenchState<CustomTheme>>
+      get copyWith => __$$_WorkbenchStateCopyWithImpl<CustomTheme,
+          _$_WorkbenchState<CustomTheme>>(this, _$identity);
 }
 
 abstract class _WorkbenchState<CustomTheme>
     extends WorkbenchState<CustomTheme> {
   factory _WorkbenchState(
-      {ComparisonSetting comparisonSetting,
-      WidgetbookTheme<CustomTheme>? theme,
-      Locale? locale,
-      Device? device,
-      required double? textScaleFactor,
-      required WidgetbookFrame frame,
-      Orientation orientation,
-      required List<WidgetbookTheme<CustomTheme>> themes,
-      required List<Locale> locales,
-      required List<Device> devices,
-      required List<WidgetbookFrame> frames,
-      required List<double> textScaleFactors}) = _$_WorkbenchState<CustomTheme>;
+          {final ComparisonSetting comparisonSetting,
+          final WidgetbookTheme<CustomTheme>? theme,
+          final Locale? locale,
+          final Device? device,
+          required final double? textScaleFactor,
+          required final WidgetbookFrame frame,
+          final Orientation orientation,
+          required final List<WidgetbookTheme<CustomTheme>> themes,
+          required final List<Locale> locales,
+          required final List<Device> devices,
+          required final List<WidgetbookFrame> frames,
+          required final List<double> textScaleFactors}) =
+      _$_WorkbenchState<CustomTheme>;
   _WorkbenchState._() : super._();
 
   @override
-  ComparisonSetting get comparisonSetting;
+  ComparisonSetting get comparisonSetting => throw _privateConstructorUsedError;
   @override
-  WidgetbookTheme<CustomTheme>? get theme;
+  WidgetbookTheme<CustomTheme>? get theme => throw _privateConstructorUsedError;
   @override
-  Locale? get locale;
+  Locale? get locale => throw _privateConstructorUsedError;
   @override
-  Device? get device;
+  Device? get device => throw _privateConstructorUsedError;
   @override
-  double? get textScaleFactor;
+  double? get textScaleFactor => throw _privateConstructorUsedError;
   @override
-  WidgetbookFrame get frame;
+  WidgetbookFrame get frame => throw _privateConstructorUsedError;
   @override
-  Orientation get orientation;
+  Orientation get orientation => throw _privateConstructorUsedError;
   @override
-  List<WidgetbookTheme<CustomTheme>> get themes;
+  List<WidgetbookTheme<CustomTheme>> get themes =>
+      throw _privateConstructorUsedError;
   @override
-  List<Locale> get locales;
+  List<Locale> get locales => throw _privateConstructorUsedError;
   @override
-  List<Device> get devices;
+  List<Device> get devices => throw _privateConstructorUsedError;
   @override
-  List<WidgetbookFrame> get frames;
+  List<WidgetbookFrame> get frames => throw _privateConstructorUsedError;
   @override
-  List<double> get textScaleFactors;
+  List<double> get textScaleFactors => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$WorkbenchStateCopyWith<CustomTheme, _WorkbenchState<CustomTheme>>
+  _$$_WorkbenchStateCopyWith<CustomTheme, _$_WorkbenchState<CustomTheme>>
       get copyWith => throw _privateConstructorUsedError;
 }

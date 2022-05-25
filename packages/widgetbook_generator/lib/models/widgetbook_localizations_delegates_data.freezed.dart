@@ -12,36 +12,12 @@ part of 'widgetbook_localizations_delegates_data.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 WidgetbookLocalizationsDelegatesData
     _$WidgetbookLocalizationsDelegatesDataFromJson(Map<String, dynamic> json) {
   return _WidgetbookLocalizationsDelegatesData.fromJson(json);
 }
-
-/// @nodoc
-class _$WidgetbookLocalizationsDelegatesDataTearOff {
-  const _$WidgetbookLocalizationsDelegatesDataTearOff();
-
-  _WidgetbookLocalizationsDelegatesData call(
-      {required String name,
-      required String importStatement,
-      required List<String> dependencies}) {
-    return _WidgetbookLocalizationsDelegatesData(
-      name: name,
-      importStatement: importStatement,
-      dependencies: dependencies,
-    );
-  }
-
-  WidgetbookLocalizationsDelegatesData fromJson(Map<String, Object?> json) {
-    return WidgetbookLocalizationsDelegatesData.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $WidgetbookLocalizationsDelegatesData =
-    _$WidgetbookLocalizationsDelegatesDataTearOff();
 
 /// @nodoc
 mixin _$WidgetbookLocalizationsDelegatesData {
@@ -98,28 +74,29 @@ class _$WidgetbookLocalizationsDelegatesDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$WidgetbookLocalizationsDelegatesDataCopyWith<$Res>
+abstract class _$$_WidgetbookLocalizationsDelegatesDataCopyWith<$Res>
     implements $WidgetbookLocalizationsDelegatesDataCopyWith<$Res> {
-  factory _$WidgetbookLocalizationsDelegatesDataCopyWith(
-          _WidgetbookLocalizationsDelegatesData value,
-          $Res Function(_WidgetbookLocalizationsDelegatesData) then) =
-      __$WidgetbookLocalizationsDelegatesDataCopyWithImpl<$Res>;
+  factory _$$_WidgetbookLocalizationsDelegatesDataCopyWith(
+          _$_WidgetbookLocalizationsDelegatesData value,
+          $Res Function(_$_WidgetbookLocalizationsDelegatesData) then) =
+      __$$_WidgetbookLocalizationsDelegatesDataCopyWithImpl<$Res>;
   @override
   $Res call({String name, String importStatement, List<String> dependencies});
 }
 
 /// @nodoc
-class __$WidgetbookLocalizationsDelegatesDataCopyWithImpl<$Res>
+class __$$_WidgetbookLocalizationsDelegatesDataCopyWithImpl<$Res>
     extends _$WidgetbookLocalizationsDelegatesDataCopyWithImpl<$Res>
-    implements _$WidgetbookLocalizationsDelegatesDataCopyWith<$Res> {
-  __$WidgetbookLocalizationsDelegatesDataCopyWithImpl(
-      _WidgetbookLocalizationsDelegatesData _value,
-      $Res Function(_WidgetbookLocalizationsDelegatesData) _then)
-      : super(_value, (v) => _then(v as _WidgetbookLocalizationsDelegatesData));
+    implements _$$_WidgetbookLocalizationsDelegatesDataCopyWith<$Res> {
+  __$$_WidgetbookLocalizationsDelegatesDataCopyWithImpl(
+      _$_WidgetbookLocalizationsDelegatesData _value,
+      $Res Function(_$_WidgetbookLocalizationsDelegatesData) _then)
+      : super(
+            _value, (v) => _then(v as _$_WidgetbookLocalizationsDelegatesData));
 
   @override
-  _WidgetbookLocalizationsDelegatesData get _value =>
-      super._value as _WidgetbookLocalizationsDelegatesData;
+  _$_WidgetbookLocalizationsDelegatesData get _value =>
+      super._value as _$_WidgetbookLocalizationsDelegatesData;
 
   @override
   $Res call({
@@ -127,7 +104,7 @@ class __$WidgetbookLocalizationsDelegatesDataCopyWithImpl<$Res>
     Object? importStatement = freezed,
     Object? dependencies = freezed,
   }) {
-    return _then(_WidgetbookLocalizationsDelegatesData(
+    return _then(_$_WidgetbookLocalizationsDelegatesData(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -137,7 +114,7 @@ class __$WidgetbookLocalizationsDelegatesDataCopyWithImpl<$Res>
           : importStatement // ignore: cast_nullable_to_non_nullable
               as String,
       dependencies: dependencies == freezed
-          ? _value.dependencies
+          ? _value._dependencies
           : dependencies // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
@@ -151,7 +128,8 @@ class _$_WidgetbookLocalizationsDelegatesData
   _$_WidgetbookLocalizationsDelegatesData(
       {required this.name,
       required this.importStatement,
-      required this.dependencies});
+      required final List<String> dependencies})
+      : _dependencies = dependencies;
 
   factory _$_WidgetbookLocalizationsDelegatesData.fromJson(
           Map<String, dynamic> json) =>
@@ -161,8 +139,12 @@ class _$_WidgetbookLocalizationsDelegatesData
   final String name;
   @override
   final String importStatement;
+  final List<String> _dependencies;
   @override
-  final List<String> dependencies;
+  List<String> get dependencies {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_dependencies);
+  }
 
   @override
   String toString() {
@@ -173,27 +155,28 @@ class _$_WidgetbookLocalizationsDelegatesData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _WidgetbookLocalizationsDelegatesData &&
+            other is _$_WidgetbookLocalizationsDelegatesData &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.importStatement, importStatement) &&
             const DeepCollectionEquality()
-                .equals(other.dependencies, dependencies));
+                .equals(other._dependencies, _dependencies));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(importStatement),
-      const DeepCollectionEquality().hash(dependencies));
+      const DeepCollectionEquality().hash(_dependencies));
 
   @JsonKey(ignore: true)
   @override
-  _$WidgetbookLocalizationsDelegatesDataCopyWith<
-          _WidgetbookLocalizationsDelegatesData>
-      get copyWith => __$WidgetbookLocalizationsDelegatesDataCopyWithImpl<
-          _WidgetbookLocalizationsDelegatesData>(this, _$identity);
+  _$$_WidgetbookLocalizationsDelegatesDataCopyWith<
+          _$_WidgetbookLocalizationsDelegatesData>
+      get copyWith => __$$_WidgetbookLocalizationsDelegatesDataCopyWithImpl<
+          _$_WidgetbookLocalizationsDelegatesData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -204,9 +187,9 @@ class _$_WidgetbookLocalizationsDelegatesData
 abstract class _WidgetbookLocalizationsDelegatesData
     implements WidgetbookLocalizationsDelegatesData {
   factory _WidgetbookLocalizationsDelegatesData(
-          {required String name,
-          required String importStatement,
-          required List<String> dependencies}) =
+          {required final String name,
+          required final String importStatement,
+          required final List<String> dependencies}) =
       _$_WidgetbookLocalizationsDelegatesData;
 
   factory _WidgetbookLocalizationsDelegatesData.fromJson(
@@ -214,14 +197,14 @@ abstract class _WidgetbookLocalizationsDelegatesData
       _$_WidgetbookLocalizationsDelegatesData.fromJson;
 
   @override
-  String get name;
+  String get name => throw _privateConstructorUsedError;
   @override
-  String get importStatement;
+  String get importStatement => throw _privateConstructorUsedError;
   @override
-  List<String> get dependencies;
+  List<String> get dependencies => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$WidgetbookLocalizationsDelegatesDataCopyWith<
-          _WidgetbookLocalizationsDelegatesData>
+  _$$_WidgetbookLocalizationsDelegatesDataCopyWith<
+          _$_WidgetbookLocalizationsDelegatesData>
       get copyWith => throw _privateConstructorUsedError;
 }

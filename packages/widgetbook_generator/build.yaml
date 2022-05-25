@@ -13,7 +13,7 @@ builders:
     auto_apply: dependents
     runs_before: [":widgetbook_builder"]
     build_to: cache
-  localizatio_delegates_builder:
+  localization_delegates_builder:
     import: "package:widgetbook_generator/builder.dart"
     builder_factories: ["localizationDelegatesBuilder"]
     build_extensions: { ".dart": [".delegates.widgetbook.json"] }
@@ -38,6 +38,13 @@ builders:
     import: "package:widgetbook_generator/builder.dart"
     builder_factories: ["localizationBuilder"]
     build_extensions: { ".dart": [".localizationbuilder.widgetbook.json"] }
+    auto_apply: dependents
+    runs_before: [":widgetbook_builder"]
+    build_to: cache
+  app_resolver_builder:
+    import: "package:widgetbook_generator/builder.dart"
+    builder_factories: ["appResolverBuilder"]
+    build_extensions: { ".dart": [".appbuilder.widgetbook.json"] }
     auto_apply: dependents
     runs_before: [":widgetbook_builder"]
     build_to: cache

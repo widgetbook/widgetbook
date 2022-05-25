@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'translate_state.dart';
@@ -11,21 +12,7 @@ part of 'translate_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$TranslateStateTearOff {
-  const _$TranslateStateTearOff();
-
-  _TranslateState call({Offset offset = Offset.zero}) {
-    return _TranslateState(
-      offset: offset,
-    );
-  }
-}
-
-/// @nodoc
-const $TranslateState = _$TranslateStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$TranslateState {
@@ -67,31 +54,31 @@ class _$TranslateStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$TranslateStateCopyWith<$Res>
+abstract class _$$_TranslateStateCopyWith<$Res>
     implements $TranslateStateCopyWith<$Res> {
-  factory _$TranslateStateCopyWith(
-          _TranslateState value, $Res Function(_TranslateState) then) =
-      __$TranslateStateCopyWithImpl<$Res>;
+  factory _$$_TranslateStateCopyWith(
+          _$_TranslateState value, $Res Function(_$_TranslateState) then) =
+      __$$_TranslateStateCopyWithImpl<$Res>;
   @override
   $Res call({Offset offset});
 }
 
 /// @nodoc
-class __$TranslateStateCopyWithImpl<$Res>
+class __$$_TranslateStateCopyWithImpl<$Res>
     extends _$TranslateStateCopyWithImpl<$Res>
-    implements _$TranslateStateCopyWith<$Res> {
-  __$TranslateStateCopyWithImpl(
-      _TranslateState _value, $Res Function(_TranslateState) _then)
-      : super(_value, (v) => _then(v as _TranslateState));
+    implements _$$_TranslateStateCopyWith<$Res> {
+  __$$_TranslateStateCopyWithImpl(
+      _$_TranslateState _value, $Res Function(_$_TranslateState) _then)
+      : super(_value, (v) => _then(v as _$_TranslateState));
 
   @override
-  _TranslateState get _value => super._value as _TranslateState;
+  _$_TranslateState get _value => super._value as _$_TranslateState;
 
   @override
   $Res call({
     Object? offset = freezed,
   }) {
-    return _then(_TranslateState(
+    return _then(_$_TranslateState(
       offset: offset == freezed
           ? _value.offset
           : offset // ignore: cast_nullable_to_non_nullable
@@ -105,8 +92,8 @@ class __$TranslateStateCopyWithImpl<$Res>
 class _$_TranslateState implements _TranslateState {
   _$_TranslateState({this.offset = Offset.zero});
 
-  @JsonKey()
   @override
+  @JsonKey()
   final Offset offset;
 
   @override
@@ -118,7 +105,7 @@ class _$_TranslateState implements _TranslateState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _TranslateState &&
+            other is _$_TranslateState &&
             const DeepCollectionEquality().equals(other.offset, offset));
   }
 
@@ -128,17 +115,17 @@ class _$_TranslateState implements _TranslateState {
 
   @JsonKey(ignore: true)
   @override
-  _$TranslateStateCopyWith<_TranslateState> get copyWith =>
-      __$TranslateStateCopyWithImpl<_TranslateState>(this, _$identity);
+  _$$_TranslateStateCopyWith<_$_TranslateState> get copyWith =>
+      __$$_TranslateStateCopyWithImpl<_$_TranslateState>(this, _$identity);
 }
 
 abstract class _TranslateState implements TranslateState {
-  factory _TranslateState({Offset offset}) = _$_TranslateState;
+  factory _TranslateState({final Offset offset}) = _$_TranslateState;
 
   @override
-  Offset get offset;
+  Offset get offset => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$TranslateStateCopyWith<_TranslateState> get copyWith =>
+  _$$_TranslateStateCopyWith<_$_TranslateState> get copyWith =>
       throw _privateConstructorUsedError;
 }

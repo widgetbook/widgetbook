@@ -1,6 +1,6 @@
 name: widgetbook_generator
 description: A package to automate setup and maintanance of the widgetbook package by using code generation.
-version: 2.1.2
+version: 2.2.0
 homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=widgetbook_generator
 repository: https://github.com/widgetbook/widgetbook
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
@@ -18,7 +18,7 @@ dependencies:
   json_annotation: ^4.4.0
   meta: ^1.7.0
   source_gen: ^1.1.0
-  widgetbook_annotation: ^2.0.1
+  widgetbook_annotation: ^2.1.0
   widgetbook_models: ^0.0.7
 
 dev_dependencies:
@@ -26,4 +26,4 @@ dev_dependencies:
   freezed: ^2.0.3
   json_serializable: ^6.1.4
   test: ^1.18.2
-  very_good_analysis: ^2.3.0
+  very_good_analysis: ^3.0.0

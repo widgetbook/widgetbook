@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'widgetbook_theme_type_data.dart';
+part of 'widgetbook_app_builder_data.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,39 +14,39 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-WidgetbookThemeTypeData _$WidgetbookThemeTypeDataFromJson(
+WidgetbookAppBuilderData _$WidgetbookAppBuilderDataFromJson(
     Map<String, dynamic> json) {
-  return _WidgetbookThemeTypeData.fromJson(json);
+  return _WidgetbookAppBuilderData.fromJson(json);
 }
 
 /// @nodoc
-mixin _$WidgetbookThemeTypeData {
+mixin _$WidgetbookAppBuilderData {
   String get name => throw _privateConstructorUsedError;
   String get importStatement => throw _privateConstructorUsedError;
   List<String> get dependencies => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $WidgetbookThemeTypeDataCopyWith<WidgetbookThemeTypeData> get copyWith =>
+  $WidgetbookAppBuilderDataCopyWith<WidgetbookAppBuilderData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $WidgetbookThemeTypeDataCopyWith<$Res> {
-  factory $WidgetbookThemeTypeDataCopyWith(WidgetbookThemeTypeData value,
-          $Res Function(WidgetbookThemeTypeData) then) =
-      _$WidgetbookThemeTypeDataCopyWithImpl<$Res>;
+abstract class $WidgetbookAppBuilderDataCopyWith<$Res> {
+  factory $WidgetbookAppBuilderDataCopyWith(WidgetbookAppBuilderData value,
+          $Res Function(WidgetbookAppBuilderData) then) =
+      _$WidgetbookAppBuilderDataCopyWithImpl<$Res>;
   $Res call({String name, String importStatement, List<String> dependencies});
 }
 
 /// @nodoc
-class _$WidgetbookThemeTypeDataCopyWithImpl<$Res>
-    implements $WidgetbookThemeTypeDataCopyWith<$Res> {
-  _$WidgetbookThemeTypeDataCopyWithImpl(this._value, this._then);
+class _$WidgetbookAppBuilderDataCopyWithImpl<$Res>
+    implements $WidgetbookAppBuilderDataCopyWith<$Res> {
+  _$WidgetbookAppBuilderDataCopyWithImpl(this._value, this._then);
 
-  final WidgetbookThemeTypeData _value;
+  final WidgetbookAppBuilderData _value;
   // ignore: unused_field
-  final $Res Function(WidgetbookThemeTypeData) _then;
+  final $Res Function(WidgetbookAppBuilderData) _then;
 
   @override
   $Res call({
@@ -72,26 +72,27 @@ class _$WidgetbookThemeTypeDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_WidgetbookThemeTypeDataCopyWith<$Res>
-    implements $WidgetbookThemeTypeDataCopyWith<$Res> {
-  factory _$$_WidgetbookThemeTypeDataCopyWith(_$_WidgetbookThemeTypeData value,
-          $Res Function(_$_WidgetbookThemeTypeData) then) =
-      __$$_WidgetbookThemeTypeDataCopyWithImpl<$Res>;
+abstract class _$$_WidgetbookAppBuilderDataCopyWith<$Res>
+    implements $WidgetbookAppBuilderDataCopyWith<$Res> {
+  factory _$$_WidgetbookAppBuilderDataCopyWith(
+          _$_WidgetbookAppBuilderData value,
+          $Res Function(_$_WidgetbookAppBuilderData) then) =
+      __$$_WidgetbookAppBuilderDataCopyWithImpl<$Res>;
   @override
   $Res call({String name, String importStatement, List<String> dependencies});
 }
 
 /// @nodoc
-class __$$_WidgetbookThemeTypeDataCopyWithImpl<$Res>
-    extends _$WidgetbookThemeTypeDataCopyWithImpl<$Res>
-    implements _$$_WidgetbookThemeTypeDataCopyWith<$Res> {
-  __$$_WidgetbookThemeTypeDataCopyWithImpl(_$_WidgetbookThemeTypeData _value,
-      $Res Function(_$_WidgetbookThemeTypeData) _then)
-      : super(_value, (v) => _then(v as _$_WidgetbookThemeTypeData));
+class __$$_WidgetbookAppBuilderDataCopyWithImpl<$Res>
+    extends _$WidgetbookAppBuilderDataCopyWithImpl<$Res>
+    implements _$$_WidgetbookAppBuilderDataCopyWith<$Res> {
+  __$$_WidgetbookAppBuilderDataCopyWithImpl(_$_WidgetbookAppBuilderData _value,
+      $Res Function(_$_WidgetbookAppBuilderData) _then)
+      : super(_value, (v) => _then(v as _$_WidgetbookAppBuilderData));
 
   @override
-  _$_WidgetbookThemeTypeData get _value =>
-      super._value as _$_WidgetbookThemeTypeData;
+  _$_WidgetbookAppBuilderData get _value =>
+      super._value as _$_WidgetbookAppBuilderData;
 
   @override
   $Res call({
@@ -99,7 +100,7 @@ class __$$_WidgetbookThemeTypeDataCopyWithImpl<$Res>
     Object? importStatement = freezed,
     Object? dependencies = freezed,
   }) {
-    return _then(_$_WidgetbookThemeTypeData(
+    return _then(_$_WidgetbookAppBuilderData(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -118,15 +119,15 @@ class __$$_WidgetbookThemeTypeDataCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_WidgetbookThemeTypeData implements _WidgetbookThemeTypeData {
-  _$_WidgetbookThemeTypeData(
+class _$_WidgetbookAppBuilderData implements _WidgetbookAppBuilderData {
+  _$_WidgetbookAppBuilderData(
       {required this.name,
       required this.importStatement,
       required final List<String> dependencies})
       : _dependencies = dependencies;
 
-  factory _$_WidgetbookThemeTypeData.fromJson(Map<String, dynamic> json) =>
-      _$$_WidgetbookThemeTypeDataFromJson(json);
+  factory _$_WidgetbookAppBuilderData.fromJson(Map<String, dynamic> json) =>
+      _$$_WidgetbookAppBuilderDataFromJson(json);
 
   @override
   final String name;
@@ -141,14 +142,14 @@ class _$_WidgetbookThemeTypeData implements _WidgetbookThemeTypeData {
 
   @override
   String toString() {
-    return 'WidgetbookThemeTypeData(name: $name, importStatement: $importStatement, dependencies: $dependencies)';
+    return 'WidgetbookAppBuilderData(name: $name, importStatement: $importStatement, dependencies: $dependencies)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_WidgetbookThemeTypeData &&
+            other is _$_WidgetbookAppBuilderData &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.importStatement, importStatement) &&
@@ -166,25 +167,24 @@ class _$_WidgetbookThemeTypeData implements _WidgetbookThemeTypeData {
 
   @JsonKey(ignore: true)
   @override
-  _$$_WidgetbookThemeTypeDataCopyWith<_$_WidgetbookThemeTypeData>
-      get copyWith =>
-          __$$_WidgetbookThemeTypeDataCopyWithImpl<_$_WidgetbookThemeTypeData>(
-              this, _$identity);
+  _$$_WidgetbookAppBuilderDataCopyWith<_$_WidgetbookAppBuilderData>
+      get copyWith => __$$_WidgetbookAppBuilderDataCopyWithImpl<
+          _$_WidgetbookAppBuilderData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_WidgetbookThemeTypeDataToJson(this);
+    return _$$_WidgetbookAppBuilderDataToJson(this);
   }
 }
 
-abstract class _WidgetbookThemeTypeData implements WidgetbookThemeTypeData {
-  factory _WidgetbookThemeTypeData(
+abstract class _WidgetbookAppBuilderData implements WidgetbookAppBuilderData {
+  factory _WidgetbookAppBuilderData(
       {required final String name,
       required final String importStatement,
-      required final List<String> dependencies}) = _$_WidgetbookThemeTypeData;
+      required final List<String> dependencies}) = _$_WidgetbookAppBuilderData;
 
-  factory _WidgetbookThemeTypeData.fromJson(Map<String, dynamic> json) =
-      _$_WidgetbookThemeTypeData.fromJson;
+  factory _WidgetbookAppBuilderData.fromJson(Map<String, dynamic> json) =
+      _$_WidgetbookAppBuilderData.fromJson;
 
   @override
   String get name => throw _privateConstructorUsedError;
@@ -194,6 +194,6 @@ abstract class _WidgetbookThemeTypeData implements WidgetbookThemeTypeData {
   List<String> get dependencies => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$$_WidgetbookThemeTypeDataCopyWith<_$_WidgetbookThemeTypeData>
+  _$$_WidgetbookAppBuilderDataCopyWith<_$_WidgetbookAppBuilderData>
       get copyWith => throw _privateConstructorUsedError;
 }

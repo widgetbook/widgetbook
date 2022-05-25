@@ -222,6 +222,11 @@ Widgetbook<CupertinoThemeData>(
 )
 ```
 
+### `appBuilder`
+
+The `appBuilder` allows developer to inject an app-construct like `MaterialApp`, `CupertinoApp` or `WidgetsApp` into the `Widget` tree. 
+The default implementations for the `appBuilder` are defined [here](https://github.com/widgetbook/widgetbook/blob/main/packages/widgetbook/lib/src/rendering/builders/app_builder.dart).
+
 ### `scaffoldBuilder` and `useCaseBuilder`
 
 Both the `scaffoldBuilder` and `useCaseBuilder` can be used to wrap the `Widget` with e.g. a `Scaffold` or some other `Widget` like a `Center`, `Container` or `Padding`.
