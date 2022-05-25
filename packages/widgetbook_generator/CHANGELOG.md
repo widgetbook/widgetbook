@@ -1,3 +1,8 @@
+## 2.2.0
+
+- fix: Custom painter Widgets are incorrectly rendered ([#191](https://github.com/widgetbook/widgetbook/issues/191))
+    - added support for `WidgetbookAppBuilder` and the `appBuilder` property.
+
 ## 2.1.2
 
 - chore: updated docs to link to [docs.widgetbook.io](https://docs.widgetbook.io)

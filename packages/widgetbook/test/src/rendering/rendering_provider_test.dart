@@ -22,6 +22,7 @@ void main() {
           final scaffoldBuilder = defaultScaffoldBuilder;
           final useCaseBuilder = defaultUseCaseBuilder;
           final textScaleBuilder = defaultTextScaleBuilder;
+          const appBuilder = defaultAppBuilder;
 
           final provider = RenderingProvider(
             frames: frames,
@@ -31,6 +32,7 @@ void main() {
             scaffoldBuilder: scaffoldBuilder,
             useCaseBuilder: useCaseBuilder,
             textScaleBuilder: textScaleBuilder,
+            appBuilder: appBuilder,
           );
 
           expect(
@@ -44,6 +46,7 @@ void main() {
                 scaffoldBuilder: scaffoldBuilder,
                 textScaleBuilder: textScaleBuilder,
                 useCaseBuilder: useCaseBuilder,
+                appBuilder: appBuilder,
               ),
             ),
           );

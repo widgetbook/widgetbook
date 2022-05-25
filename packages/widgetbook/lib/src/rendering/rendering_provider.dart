@@ -12,6 +12,7 @@ class RenderingProvider<CustomTheme>
     required LocalizationBuilderFunction localizationBuilder,
     required ThemeBuilderFunction<CustomTheme> themeBuilder,
     required ScaffoldBuilderFunction scaffoldBuilder,
+    required AppBuilderFunction appBuilder,
     TextScaleBuilder? textScaleBuilder,
     required UseCaseBuilderFunction useCaseBuilder,
   }) : super(
@@ -21,6 +22,7 @@ class RenderingProvider<CustomTheme>
             localizationBuilder: localizationBuilder,
             themeBuilder: themeBuilder,
             scaffoldBuilder: scaffoldBuilder,
+            appBuilder: appBuilder,
             textScaleBuilder: textScaleBuilder ?? defaultTextScaleBuilder,
             useCaseBuilder: useCaseBuilder,
           ),

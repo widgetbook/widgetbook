@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'organizer_state.dart';
@@ -11,26 +12,7 @@ part of 'organizer_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$OrganizerStateTearOff {
-  const _$OrganizerStateTearOff();
-
-  _OrganizerState call(
-      {required List<WidgetbookCategory> allCategories,
-      required List<WidgetbookCategory> filteredCategories,
-      required String searchTerm}) {
-    return _OrganizerState(
-      allCategories: allCategories,
-      filteredCategories: filteredCategories,
-      searchTerm: searchTerm,
-    );
-  }
-}
-
-/// @nodoc
-const $OrganizerState = _$OrganizerStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$OrganizerState {
@@ -89,11 +71,11 @@ class _$OrganizerStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$OrganizerStateCopyWith<$Res>
+abstract class _$$_OrganizerStateCopyWith<$Res>
     implements $OrganizerStateCopyWith<$Res> {
-  factory _$OrganizerStateCopyWith(
-          _OrganizerState value, $Res Function(_OrganizerState) then) =
-      __$OrganizerStateCopyWithImpl<$Res>;
+  factory _$$_OrganizerStateCopyWith(
+          _$_OrganizerState value, $Res Function(_$_OrganizerState) then) =
+      __$$_OrganizerStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {List<WidgetbookCategory> allCategories,
@@ -102,15 +84,15 @@ abstract class _$OrganizerStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$OrganizerStateCopyWithImpl<$Res>
+class __$$_OrganizerStateCopyWithImpl<$Res>
     extends _$OrganizerStateCopyWithImpl<$Res>
-    implements _$OrganizerStateCopyWith<$Res> {
-  __$OrganizerStateCopyWithImpl(
-      _OrganizerState _value, $Res Function(_OrganizerState) _then)
-      : super(_value, (v) => _then(v as _OrganizerState));
+    implements _$$_OrganizerStateCopyWith<$Res> {
+  __$$_OrganizerStateCopyWithImpl(
+      _$_OrganizerState _value, $Res Function(_$_OrganizerState) _then)
+      : super(_value, (v) => _then(v as _$_OrganizerState));
 
   @override
-  _OrganizerState get _value => super._value as _OrganizerState;
+  _$_OrganizerState get _value => super._value as _$_OrganizerState;
 
   @override
   $Res call({
@@ -118,13 +100,13 @@ class __$OrganizerStateCopyWithImpl<$Res>
     Object? filteredCategories = freezed,
     Object? searchTerm = freezed,
   }) {
-    return _then(_OrganizerState(
+    return _then(_$_OrganizerState(
       allCategories: allCategories == freezed
-          ? _value.allCategories
+          ? _value._allCategories
           : allCategories // ignore: cast_nullable_to_non_nullable
               as List<WidgetbookCategory>,
       filteredCategories: filteredCategories == freezed
-          ? _value.filteredCategories
+          ? _value._filteredCategories
           : filteredCategories // ignore: cast_nullable_to_non_nullable
               as List<WidgetbookCategory>,
       searchTerm: searchTerm == freezed
@@ -139,14 +121,26 @@ class __$OrganizerStateCopyWithImpl<$Res>
 
 class _$_OrganizerState implements _OrganizerState {
   _$_OrganizerState(
-      {required this.allCategories,
-      required this.filteredCategories,
-      required this.searchTerm});
+      {required final List<WidgetbookCategory> allCategories,
+      required final List<WidgetbookCategory> filteredCategories,
+      required this.searchTerm})
+      : _allCategories = allCategories,
+        _filteredCategories = filteredCategories;
 
+  final List<WidgetbookCategory> _allCategories;
   @override
-  final List<WidgetbookCategory> allCategories;
+  List<WidgetbookCategory> get allCategories {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_allCategories);
+  }
+
+  final List<WidgetbookCategory> _filteredCategories;
   @override
-  final List<WidgetbookCategory> filteredCategories;
+  List<WidgetbookCategory> get filteredCategories {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_filteredCategories);
+  }
+
   @override
   final String searchTerm;
 
@@ -159,11 +153,11 @@ class _$_OrganizerState implements _OrganizerState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _OrganizerState &&
+            other is _$_OrganizerState &&
             const DeepCollectionEquality()
-                .equals(other.allCategories, allCategories) &&
+                .equals(other._allCategories, _allCategories) &&
             const DeepCollectionEquality()
-                .equals(other.filteredCategories, filteredCategories) &&
+                .equals(other._filteredCategories, _filteredCategories) &&
             const DeepCollectionEquality()
                 .equals(other.searchTerm, searchTerm));
   }
@@ -171,30 +165,32 @@ class _$_OrganizerState implements _OrganizerState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(allCategories),
-      const DeepCollectionEquality().hash(filteredCategories),
+      const DeepCollectionEquality().hash(_allCategories),
+      const DeepCollectionEquality().hash(_filteredCategories),
       const DeepCollectionEquality().hash(searchTerm));
 
   @JsonKey(ignore: true)
   @override
-  _$OrganizerStateCopyWith<_OrganizerState> get copyWith =>
-      __$OrganizerStateCopyWithImpl<_OrganizerState>(this, _$identity);
+  _$$_OrganizerStateCopyWith<_$_OrganizerState> get copyWith =>
+      __$$_OrganizerStateCopyWithImpl<_$_OrganizerState>(this, _$identity);
 }
 
 abstract class _OrganizerState implements OrganizerState {
   factory _OrganizerState(
-      {required List<WidgetbookCategory> allCategories,
-      required List<WidgetbookCategory> filteredCategories,
-      required String searchTerm}) = _$_OrganizerState;
+      {required final List<WidgetbookCategory> allCategories,
+      required final List<WidgetbookCategory> filteredCategories,
+      required final String searchTerm}) = _$_OrganizerState;
 
   @override
-  List<WidgetbookCategory> get allCategories;
+  List<WidgetbookCategory> get allCategories =>
+      throw _privateConstructorUsedError;
   @override
-  List<WidgetbookCategory> get filteredCategories;
+  List<WidgetbookCategory> get filteredCategories =>
+      throw _privateConstructorUsedError;
   @override
-  String get searchTerm;
+  String get searchTerm => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$OrganizerStateCopyWith<_OrganizerState> get copyWith =>
+  _$$_OrganizerStateCopyWith<_$_OrganizerState> get copyWith =>
       throw _privateConstructorUsedError;
 }

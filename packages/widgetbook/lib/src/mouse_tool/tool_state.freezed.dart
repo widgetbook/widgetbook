@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'tool_state.dart';
@@ -11,21 +12,7 @@ part of 'tool_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ToolStateTearOff {
-  const _$ToolStateTearOff();
-
-  _ToolState call({SelectionMode mode = SelectionMode.normal}) {
-    return _ToolState(
-      mode: mode,
-    );
-  }
-}
-
-/// @nodoc
-const $ToolState = _$ToolStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ToolState {
@@ -65,28 +52,29 @@ class _$ToolStateCopyWithImpl<$Res> implements $ToolStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ToolStateCopyWith<$Res> implements $ToolStateCopyWith<$Res> {
-  factory _$ToolStateCopyWith(
-          _ToolState value, $Res Function(_ToolState) then) =
-      __$ToolStateCopyWithImpl<$Res>;
+abstract class _$$_ToolStateCopyWith<$Res> implements $ToolStateCopyWith<$Res> {
+  factory _$$_ToolStateCopyWith(
+          _$_ToolState value, $Res Function(_$_ToolState) then) =
+      __$$_ToolStateCopyWithImpl<$Res>;
   @override
   $Res call({SelectionMode mode});
 }
 
 /// @nodoc
-class __$ToolStateCopyWithImpl<$Res> extends _$ToolStateCopyWithImpl<$Res>
-    implements _$ToolStateCopyWith<$Res> {
-  __$ToolStateCopyWithImpl(_ToolState _value, $Res Function(_ToolState) _then)
-      : super(_value, (v) => _then(v as _ToolState));
+class __$$_ToolStateCopyWithImpl<$Res> extends _$ToolStateCopyWithImpl<$Res>
+    implements _$$_ToolStateCopyWith<$Res> {
+  __$$_ToolStateCopyWithImpl(
+      _$_ToolState _value, $Res Function(_$_ToolState) _then)
+      : super(_value, (v) => _then(v as _$_ToolState));
 
   @override
-  _ToolState get _value => super._value as _ToolState;
+  _$_ToolState get _value => super._value as _$_ToolState;
 
   @override
   $Res call({
     Object? mode = freezed,
   }) {
-    return _then(_ToolState(
+    return _then(_$_ToolState(
       mode: mode == freezed
           ? _value.mode
           : mode // ignore: cast_nullable_to_non_nullable
@@ -100,8 +88,8 @@ class __$ToolStateCopyWithImpl<$Res> extends _$ToolStateCopyWithImpl<$Res>
 class _$_ToolState implements _ToolState {
   _$_ToolState({this.mode = SelectionMode.normal});
 
-  @JsonKey()
   @override
+  @JsonKey()
   final SelectionMode mode;
 
   @override
@@ -113,7 +101,7 @@ class _$_ToolState implements _ToolState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ToolState &&
+            other is _$_ToolState &&
             const DeepCollectionEquality().equals(other.mode, mode));
   }
 
@@ -123,17 +111,17 @@ class _$_ToolState implements _ToolState {
 
   @JsonKey(ignore: true)
   @override
-  _$ToolStateCopyWith<_ToolState> get copyWith =>
-      __$ToolStateCopyWithImpl<_ToolState>(this, _$identity);
+  _$$_ToolStateCopyWith<_$_ToolState> get copyWith =>
+      __$$_ToolStateCopyWithImpl<_$_ToolState>(this, _$identity);
 }
 
 abstract class _ToolState implements ToolState {
-  factory _ToolState({SelectionMode mode}) = _$_ToolState;
+  factory _ToolState({final SelectionMode mode}) = _$_ToolState;
 
   @override
-  SelectionMode get mode;
+  SelectionMode get mode => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ToolStateCopyWith<_ToolState> get copyWith =>
+  _$$_ToolStateCopyWith<_$_ToolState> get copyWith =>
       throw _privateConstructorUsedError;
 }

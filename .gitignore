@@ -28,6 +28,7 @@
 .packages
 .pub-cache/
 .pub/
+pubspec_overrides.yaml
 build/
 
 # Android related
