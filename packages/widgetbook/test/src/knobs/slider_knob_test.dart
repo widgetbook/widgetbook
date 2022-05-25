@@ -34,7 +34,7 @@ void main() {
                         )
                         .toString(),
                   )
-                ]),
+                ],),
       );
       expect(find.text('5.0'), findsOneWidget);
       await tester.pumpAndSettle();

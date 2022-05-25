@@ -40,9 +40,10 @@ class _ExpandButtonState extends State<ExpandButton> {
           size: widget.size,
         ),
         onTap: () {
-          context
-              .read<OrganizerProvider>()
-              .setExpandedRecursive(widget.organizers, widget.expandTo);
+          context.read<OrganizerProvider>().setExpandedRecursive(
+                widget.organizers,
+                expanded: widget.expandTo,
+              );
         },
       ),
     );

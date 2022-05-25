@@ -89,20 +89,20 @@ class Renderer<CustomTheme> extends StatelessWidget {
                                           builder: useCaseBuilder,
                                         ),
                                       );
-                                    }),
+                                    },),
                                   );
                                 },
                               ),
                             );
-                          });
-                        }),
+                          },);
+                        },),
                       );
                     },
                   ),
                 );
-              }),
+              },),
             );
-          }),
+          },),
         ),
       ],
     );

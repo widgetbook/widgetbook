@@ -100,7 +100,7 @@ void main() {
             storyRepository: storyRepository,
           )..setExpandedRecursive(
               [widgetbookCategory],
-              true,
+              expanded: true,
             );
 
           expect(
@@ -169,7 +169,7 @@ void main() {
             storyRepository: storyRepository,
           )..setExpandedRecursive(
               [widgetCategory],
-              true,
+              expanded: true,
             );
 
           expect(
@@ -269,7 +269,7 @@ void main() {
             storyRepository: storyRepository,
           )..setExpandedRecursive(
               [widgetCategory],
-              false,
+              expanded: false,
             );
 
           expect(

@@ -51,7 +51,7 @@ void main() {
                 initialValue: true,
               )
                   ? 'Hi'
-                  : 'Bye'),
+                  : 'Bye',),
               ...knobsNotifier.all().map((e) => e.build())
             ],
           );
@@ -61,7 +61,7 @@ void main() {
       await tester.pumpWidgetWithMaterialApp(ChangeNotifierProvider(
         create: (context) => knobsNotifier,
         child: Builder(builder: useCase.builder),
-      ));
+      ),);
       expect(knobsNotifier.all().length, equals(1));
 
       expect(
@@ -71,7 +71,7 @@ void main() {
               label: 'label',
               value: true,
             )
-          ]));
+          ]),);
     },
   );
 }

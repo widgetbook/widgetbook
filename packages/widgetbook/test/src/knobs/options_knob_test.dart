@@ -43,7 +43,7 @@ void main() {
                 )
               ],
             ),
-          ));
+          ),);
       expect(first, isNot(equals(second)));
     },
   );
@@ -69,7 +69,7 @@ void main() {
                       ],
                     ),
                   )
-                ]),
+                ],),
       );
       expect(find.text('first-value'), findsOneWidget);
       await tester.pumpAndSettle();

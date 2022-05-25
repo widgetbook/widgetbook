@@ -15,7 +15,7 @@ Widget createPanel() {
     create: (context) => knobsNotifier,
     child: Builder(builder: (context) {
       return const SettingsPanel<Theme>();
-    }),
+    },),
   );
   return ret;
 }

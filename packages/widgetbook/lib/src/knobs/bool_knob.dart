@@ -101,6 +101,6 @@ class _BooleanKnobWidgetState extends State<BooleanKnobWidget> {
                     context.read<KnobsNotifier>().update(widget.label, v);
                   },
           ),
-        ));
+        ),);
   }
 }

@@ -42,7 +42,7 @@ void main() {
               text = 'wont happen';
           }
           return [Text(text)];
-        }),
+        },),
       );
 
       expect(find.text('idk'), findsOneWidget);
@@ -89,7 +89,7 @@ void main() {
               text = 'wont happen';
           }
           return [Text(text)];
-        }),
+        },),
       );
 
       expect(find.text('idk'), findsOneWidget);

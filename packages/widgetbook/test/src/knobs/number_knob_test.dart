@@ -49,9 +49,9 @@ void main() {
                       .number(
                           label: 'label',
                           initialValue: 200,
-                          description: 'test description')
-                      .toString())
-                ]),
+                          description: 'test description',)
+                      .toString(),)
+                ],),
       );
       expect(find.text('200'), findsWidgets);
     },
@@ -67,8 +67,8 @@ void main() {
                       .number(
                         label: 'label',
                       )
-                      .toString())
-                ]),
+                      .toString(),)
+                ],),
       );
       await tester.enterText(find.byKey(const Key('label-numberKnob')), '5.5');
       await tester.pumpAndSettle();

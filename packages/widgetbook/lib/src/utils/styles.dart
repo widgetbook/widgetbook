@@ -70,7 +70,7 @@ class Styles {
     switchTheme: SwitchThemeData(
         thumbColor: MaterialStateProperty.all(primary),
         trackColor: MaterialStateProperty.resolveWith((states) =>
-            states.contains(MaterialState.selected) ? primary : null)),
+            states.contains(MaterialState.selected) ? primary : null,),),
     inputDecorationTheme: const InputDecorationTheme(
       border: OutlineInputBorder(
         borderSide: BorderSide(

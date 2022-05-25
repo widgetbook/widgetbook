@@ -28,8 +28,8 @@ void main() {
                     initialValue: true,
                   )
                       ? 'Hi'
-                      : 'Bye')
-                ]),
+                      : 'Bye',)
+                ],),
       );
       expect(find.text('Hi'), findsOneWidget);
       await tester.pumpAndSettle();

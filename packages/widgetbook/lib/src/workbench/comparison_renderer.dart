@@ -132,7 +132,7 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
           child: _buildSingleDevice(
               workbenchState: workbenchState,
               localizationState: localizationState,
-              builder: builder),
+              builder: builder,),
         );
       case ComparisonSetting.themes:
         return _buildThemeComparison(

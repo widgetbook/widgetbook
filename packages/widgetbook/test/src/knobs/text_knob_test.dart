@@ -27,8 +27,8 @@ void main() {
                   Text(context.knobs.text(
                     label: 'label',
                     initialValue: 'Hi dude',
-                  ))
-                ]),
+                  ),)
+                ],),
       );
       expect(find.text('Hi dude'), findsWidgets);
     },
@@ -44,7 +44,7 @@ void main() {
               context.knobs.text(
                   label: 'label',
                   initialValue: 'Hi dude',
-                  description: 'test description'),
+                  description: 'test description',),
             )
           ],
         ),
@@ -61,8 +61,8 @@ void main() {
             build: (context) => [
                   Text(context.knobs.text(
                     label: 'label',
-                  ))
-                ]),
+                  ),)
+                ],),
       );
       await tester.enterText(find.byKey(const Key('label-textKnob')), 'Bye');
       await tester.pumpAndSettle();

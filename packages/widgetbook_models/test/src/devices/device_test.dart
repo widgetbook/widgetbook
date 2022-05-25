@@ -82,9 +82,10 @@ void main() {
               () {
                 testEquals(
                   createInstance: (resolution) => Device(
-                      name: 'Device',
-                      resolution: resolution,
-                      type: DeviceType.desktop),
+                    name: 'Device',
+                    resolution: resolution,
+                    type: DeviceType.desktop,
+                  ),
                 );
               },
             );

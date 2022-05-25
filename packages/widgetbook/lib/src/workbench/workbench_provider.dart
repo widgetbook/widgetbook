@@ -86,11 +86,12 @@ class WorkbenchProvider<CustomTheme>
   }
 
   void changedComparisonSetting(ComparisonSetting comparisonSetting) {
+    var setting = comparisonSetting;
     if (state.comparisonSetting == comparisonSetting) {
-      comparisonSetting = ComparisonSetting.none;
+      setting = ComparisonSetting.none;
     }
 
-    final newState = resetComparisonSetting(comparisonSetting);
+    final newState = resetComparisonSetting(setting);
 
     switch (comparisonSetting) {
       case ComparisonSetting.none:

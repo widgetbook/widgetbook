@@ -117,7 +117,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
         label: label,
         value: initialValue,
         description: description,
-      ));
+      ),);
 
   @override
   String? nullableText({
@@ -255,7 +255,7 @@ class KnobWrapper extends StatelessWidget {
               style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
-                  color: Styles.notCompletelyWhite),
+                  color: Styles.notCompletelyWhite,),
             ),
             const Spacer(),
             if (nullableCheckbox != null) ...[

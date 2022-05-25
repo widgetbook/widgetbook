@@ -29,7 +29,7 @@ void main() {
           final text = value ?? 'default';
 
           return [Text(text)];
-        }),
+        },),
       );
 
       expect(find.text('default'), findsOneWidget);
@@ -37,7 +37,7 @@ void main() {
       await tester.tap(find.byKey(const Key('label-nullableCheckbox')));
       await tester.pumpAndSettle();
       await tester.enterText(
-          find.byKey(const Key('label-textKnob')), 'awesome');
+          find.byKey(const Key('label-textKnob')), 'awesome',);
       await tester.pumpAndSettle();
       expect(find.text('awesome'), findsWidgets);
       expect(find.text('default'), findsNothing);
@@ -56,7 +56,7 @@ void main() {
           final text = value ?? 'default';
 
           return [Text(text)];
-        }),
+        },),
       );
 
       expect(find.text('default'), findsOneWidget);
@@ -64,7 +64,7 @@ void main() {
       await tester.tap(find.byKey(const Key('label-nullableCheckbox')));
       await tester.pumpAndSettle();
       await tester.enterText(
-          find.byKey(const Key('label-textKnob')), 'awesome');
+          find.byKey(const Key('label-textKnob')), 'awesome',);
       await tester.pumpAndSettle();
       expect(find.text('awesome'), findsWidgets);
       expect(find.text('default'), findsNothing);
