@@ -113,11 +113,13 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String? description,
     String initialValue = '',
   }) =>
-      _addKnob(TextKnob(
-        label: label,
-        value: initialValue,
-        description: description,
-      ),);
+      _addKnob(
+        TextKnob(
+          label: label,
+          value: initialValue,
+          description: description,
+        ),
+      );
 
   @override
   String? nullableText({
@@ -253,9 +255,10 @@ class KnobWrapper extends StatelessWidget {
             Text(
               title,
               style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: Styles.notCompletelyWhite,),
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                color: Styles.notCompletelyWhite,
+              ),
             ),
             const Spacer(),
             if (nullableCheckbox != null) ...[

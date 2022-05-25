@@ -68,9 +68,11 @@ class Styles {
     checkboxTheme:
         CheckboxThemeData(fillColor: MaterialStateProperty.all(primary)),
     switchTheme: SwitchThemeData(
-        thumbColor: MaterialStateProperty.all(primary),
-        trackColor: MaterialStateProperty.resolveWith((states) =>
-            states.contains(MaterialState.selected) ? primary : null,),),
+      thumbColor: MaterialStateProperty.all(primary),
+      trackColor: MaterialStateProperty.resolveWith(
+        (states) => states.contains(MaterialState.selected) ? primary : null,
+      ),
+    ),
     inputDecorationTheme: const InputDecorationTheme(
       border: OutlineInputBorder(
         borderSide: BorderSide(

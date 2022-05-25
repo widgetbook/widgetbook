@@ -31,7 +31,9 @@ class FilterService {
   }
 
   ExpandableOrganizer? _filterOrganizer(
-      RegExp regExp, ExpandableOrganizer organizer,) {
+    RegExp regExp,
+    ExpandableOrganizer organizer,
+  ) {
     if (organizer.name.contains(regExp)) {
       return organizer;
     }
