@@ -25,8 +25,7 @@ dev_dependencies:
     path: ../../packages/widgetbook
   flutter_test:
     sdk: flutter
-  widgetbook_device_frame:
-    path: ../../packages/widgetbook_device_frame 
+  device_frame: ^1.1.0
 
 flutter:
   uses-material-design: true
