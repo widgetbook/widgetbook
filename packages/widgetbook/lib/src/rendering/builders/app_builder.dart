@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 
 const AppBuilderFunction defaultAppBuilder = _defaultAppBuilderMethod;
 
-Widget _defaultAppBuilderMethod(BuildContext context, Widget child) {
-  final _router = GoRouter(
+GoRouter getRouter(Widget child) {
+  return GoRouter(
     routes: [
       GoRoute(
         path: '/',
@@ -13,6 +13,10 @@ Widget _defaultAppBuilderMethod(BuildContext context, Widget child) {
       ),
     ],
   );
+}
+
+Widget _defaultAppBuilderMethod(BuildContext context, Widget child) {
+  final _router = getRouter(child);
   return WidgetsApp.router(
     color: Colors.transparent,
     builder: (context, childWidget) {
@@ -25,15 +29,19 @@ Widget _defaultAppBuilderMethod(BuildContext context, Widget child) {
 
 AppBuilderFunction get materialAppBuilder =>
     (BuildContext context, Widget child) {
-      return MaterialApp(
-        home: child,
+      final _router = getRouter(child);
+      return MaterialApp.router(
+        routerDelegate: _router.routerDelegate,
+        routeInformationParser: _router.routeInformationParser,
       );
     };
 
 AppBuilderFunction get cupertinoAppBuilder =>
     (BuildContext context, Widget child) {
-      return CupertinoApp(
-        home: child,
+      final _router = getRouter(child);
+      return CupertinoApp.router(
+        routerDelegate: _router.routerDelegate,
+        routeInformationParser: _router.routeInformationParser,
       );
     };
 
