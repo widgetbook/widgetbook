@@ -2,6 +2,8 @@
 
 - fix: Custom painter Widgets are incorrectly rendered ([#191](https://github.com/widgetbook/widgetbook/issues/191))
     - added property `appBuilder`.
+- fix: Dialog shows up in Widgetbook instead of the simulated app ([#172](https://github.com/widgetbook/widgetbook/issues/172))
+- fix: BottomSheet is showing up in Widgetbook instead of simulated app ([#190](https://github.com/widgetbook/widgetbook/issues/190))
 
 ## 2.2.2
 
