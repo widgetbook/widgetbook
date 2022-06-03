@@ -23,12 +23,15 @@ void main() {
     (WidgetTester tester) async {
       await tester.pumpWidgetWithMaterialApp(
         renderWithKnobs(
-            build: (context) => [
-                  Text(context.knobs.text(
-                    label: 'label',
-                    initialValue: 'Hi dude',
-                  ))
-                ]),
+          build: (context) => [
+            Text(
+              context.knobs.text(
+                label: 'label',
+                initialValue: 'Hi dude',
+              ),
+            )
+          ],
+        ),
       );
       expect(find.text('Hi dude'), findsWidgets);
     },
@@ -42,9 +45,10 @@ void main() {
           build: (context) => [
             Text(
               context.knobs.text(
-                  label: 'label',
-                  initialValue: 'Hi dude',
-                  description: 'test description'),
+                label: 'label',
+                initialValue: 'Hi dude',
+                description: 'test description',
+              ),
             )
           ],
         ),
@@ -58,11 +62,14 @@ void main() {
     (WidgetTester tester) async {
       await tester.pumpWidgetWithMaterialApp(
         renderWithKnobs(
-            build: (context) => [
-                  Text(context.knobs.text(
-                    label: 'label',
-                  ))
-                ]),
+          build: (context) => [
+            Text(
+              context.knobs.text(
+                label: 'label',
+              ),
+            )
+          ],
+        ),
       );
       await tester.enterText(find.byKey(const Key('label-textKnob')), 'Bye');
       await tester.pumpAndSettle();

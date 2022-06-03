@@ -1,0 +1,34 @@
+# Accessing resources
+
+It is natural that your application makes requests to your APIs or fetch images, which are displayed in your app.
+Unfortunately, your browser is likely to block these requests based on the [Cross-Origin Resource Sharing (CORS) policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
+
+This guide helps you to get these problems resolved.
+We host all the Widgetbooks under the domain `hosting.widgetbook.io`.
+To make requests from your hosted app, your service has to allow our domain.
+
+## Google Storage
+
+The Google Storage docs [Configure cross-origin resource sharing (CORS)](https://cloud.google.com/storage/docs/configuring-cors) describe in detail how to set this up. But you can also use the steps below.
+
+Make sure that you are not overriding any previous settings by looking up what's already configured for your bucket: `gsutil cors get gs://BUCKET_NAME`. 
+If you just created the bucket, the command will return an empty result.
+
+A new configuration can be set with `gsutil cors set CORS_CONFIG_FILE gs://BUCKET_NAME`.
+
+The config `cors-config.json` file might look like this:
+
+```
+[
+    {
+      "origin": ["https://hosting.widgetbook.io"],
+      "method": ["GET", "HEAD"],
+      "responseHeader": ["Content-Type"],
+      "maxAgeSeconds": 3600
+    }
+]
+```
+
+Use `gsutil cors set cors-config.json gs://BUCKET_NAME` to apply the new configuration.
+It might take some time until the new configuration is active.
+If you want to try the new configuration, make sure to empty the browser cache. 

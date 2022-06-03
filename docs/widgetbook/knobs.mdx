@@ -1,0 +1,48 @@
+# Knobs
+Knobs can be used to dynamically change the parameters passed to a usecase.
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/widgetbook/widgetbook/main/docs/assets/KnobsAnimated.gif" alt="Knobs" />
+</p>
+
+## Usage
+
+Use `context.knobs` to access the knobs builder and add knobs to your `Widget`:
+
+```dart
+WidgetbookUseCase(
+  name: 'elevated',
+  builder: (context) => MyHomePage(
+    title: context.knobs.text(
+      label: 'Title Label',
+      initialValue: 'HomePage',
+    ),
+  )
+)
+```
+
+## Properties
+
+All `Knob`s have the following inherited properties to customize how the knobs are displayed in the UI of `Widgetbook`:
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `label` | `String` | Labels the knob by giving it a title. The `label` must be unique for the `WidgetbookUseCase`. |
+| `description` | `String` | A text which describes what the knob does. Use this to clearify to you team how to operate the knob. |
+
+## Available Knobs
+
+| Name            | Type      |
+|-----------------|-----------|
+| boolean         | `bool`    |
+| nullableBoolean | `bool?`   |
+| text            | `String`  |
+| nullableText    | `String?` |
+| slider          | `double`  |
+| nullableSlider  | `double?` |
+| number          | `num`     |
+| nullableNumber  | `num?`    |
+| options         | `T`       |
+
+You can see an example of this and different knobs available
+[here](examples/knobs_example/lib/widgetbook.dart).

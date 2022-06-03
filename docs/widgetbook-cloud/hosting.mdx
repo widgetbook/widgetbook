@@ -1,0 +1,228 @@
+# Widgetbook Hosting
+
+The Widgetbook Hosting allows users to upload the Flutter web version of a Widgetbook to Widgetbook Cloud.
+To upload any widgetbook, you require an API key.
+
+## How to create an API key
+
+To create an API key, you need to login with your account at [app.widgetbook.io](https://app.widgetbook.io). 
+API keys are bound to projects. 
+Therefore, you require a project to retrieve an API key. 
+Furthermore, only users with the `Owner` role can fetch the API key of a project.
+This helps to keep sensitive information safe. 
+
+If you are not the owner of your project but would still like to fetch the API key, please ask your project owner to promote you from member to owner. 
+For information on member management, please see (member management)[/widgetbook-cloud/projects/#member-management].
+
+If you are just starting out, make sure to create a new project. 
+To create a project, make sure to also [create a billing account](/widgetbook-cloud/billing).
+
+On the detail page of a project, a card which allows to fetch the API key is displayed. 
+Click the button on the card to fetch the API key. 
+The key will be copied to your clipboard.
+
+## CLI
+
+Since there are plenty of Git provider available, it can be hard to maintain them all.
+Since the Widgetbook Uploader is implemented in Dart, we wrapped the implementation with a Dart CLI to make it easily accessible.
+A compiled AOT version of the CLI is downloadable [here](https://firebasestorage.googleapis.com/v0/b/widgetbook-cloud.appspot.com/o/tools%2Fcli-v1.aot?alt=media). 
+We provide a AOT compiled version because it's platform independent. 
+But it's understandable if you'd like to check the source code first and/or compile it yourself. 
+See the [widgetbook-hosting](https://github.com/widgetbook/widgetbook-hosting) repository for more information.
+
+### Arguments
+
+The CLI accepts the following arguments
+
+| Argument         | Mandatory | Description |
+| ---------------- | --------- | ----------- |
+| `--path`         | ➖        | The path to the build folder of your application. Defaults to `./build/web`.|
+| `--api-key`      | ✅        | The project specific API key for Widgetbook Cloud. See [How to create an API key](/widgetbook-cloud/hosting#how-to-create-an-api-key).|
+| `--branch`       | ✅        | The name of the branch for which the Widgetbook is uploaded.|
+| `--repository`   | ✅        | The name of the repository for which the Widgetbook is uploaded.|
+| `--commit`       | ✅        | The SHA hash of the commit for which the Widgetbook is uploaded.|
+| `--actor`        | ✅        | The username of the actor which triggered the build.|
+| `--git-provider` | ✅        | The name of the Git provider. Allowed values: `GitHub`, `GitLab`, `BitBucket`, `Azure`, `CLI`.
+
+### Run the AOT-compiled CLI
+
+Since the CLI is AOT-compiled, the `cli-v1.aot` file requires the [`dartaotruntime`](https://dart.dev/tools/dartaotruntime) to run the file.
+`dartaotruntime` comes pre-installed with the Flutter SDK.
+The `dartaotruntime` is located at `<PathToRootFolderOfSdk>/flutter/bin/cache/dart-sdk/bin` and can be executed like this:
+
+```bash
+dartaotruntime cli-v1.aot 
+```
+
+## GitHub
+
+```yaml
+name: Build 
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: stable
+
+      - name: Build Website
+        run: flutter build web -t path/to/main.widgetbook.dart
+
+      - name: Upload Widgetbook
+        uses: widgetbook/widgetbook-hosting@0.0.24
+        with:
+          path: 'build/web'
+          api_key: '<your API key>'
+```
+
+By running this script, a folder structure `./build/web/` with the widgetbook web app will be created. The output folder of the build is required by the Widgetbook Hosting action and will be uploaded to the collaboration platform.
+
+### Inputs
+
+The GitHub action defines the following inputs: 
+
+| Input | Default | Is required |
+| ----- | ------- | ----------- |
+| `path` | `build/web` |  |
+| `api_key` | ➖ | ✅ |
+
+## GitLab
+
+The docker image is provided at Docker Hub and is named widgetbook-hosting-gitlab. You can access the executable by calling /widgetbook-hosting.
+
+By running this script, a folder structure ./build/web/ with the widgetbook web app will be created. 
+The output folder of the build is required by the Widgetbook Hosting action and will be uploaded to the collaboration platform. 
+Since the hosting stage requires the build output, it'll be exposed by the stage via an artifact.
+
+```yaml
+stages:
+  - compile
+  - host
+
+compile:
+  stage: compile
+  image: "cirrusci/flutter:2.8.1"
+
+  before_script:
+    - export PATH="$PATH":"$HOME/.pub-cache/bin"
+  script:
+    - flutter build web -t lib/main.widgetbook.dart
+  artifacts:
+    paths:
+    - build/web/
+
+host: 
+  stage: host
+  variables:
+    WIDGETBOOK_API_KEY: "<api key>"
+    WIDGETBOOK_BUILD_PATH: "build/web"
+  image: 
+    name: widgetbook/widgetbook-hosting-gitlab:dev
+  script:
+    - /widgetbook-hosting
+```
+
+### Environment variables
+
+The docker image reads git specific information like branch name, repository name, etc from the environment variables but also requires two mandatory environment variables provided by the user:
+
+| Environment variable | Description | Is required |
+| ----- | ------- | ----------- |
+| `WIDGETBOOK_BUILD_PATH` | The path to the web build of the widgetbook. For small repositories this is likely `build/web/` | ✅ |
+| `WIDGETBOOK_API_KEY` | The API key for your company. See [How to create an API key](/widgetbook-cloud/hosting#how-to-create-an-api-key)| ✅ |
+
+## BitBucket
+The Widgetbook Hosting docker image allows Widgetbook Cloud users to upload the widgetbook version which has been uploaded to BitBucket.
+
+The docker image is provided at Docker Hub and is named widgetbook-hosting-bitbucket. 
+You can access the executable by calling /widgetbook-hosting.
+
+``` yaml
+pipelines:
+  branches:
+    dev:
+      - step:
+          name: Build web
+          image: 
+            name: cirrusci/flutter
+          script:
+            - flutter build web -t lib/main.widgetbook.dart
+          artifacts:
+            - build/**
+      - step:
+          name: Host on widgetbook
+          image: 
+            name: widgetbook/widgetbook-hosting-bitbucket:dev
+          script:
+            - /widgetbook-hosting
+```
+
+### Environment variables
+
+The docker image reads git specific information like branch name, repository name, etc from the environment variables but also requires two mandatory environment variables provided by the user:
+In BitBucket you can add _repository variables_ by going to the repository settings and then selecting _repository variables_.
+
+| Environment variable | Description | Is required |
+| ----- | ------- | ----------- |
+| `WIDGETBOOK_BUILD_PATH` | The path to the web build of the widgetbook. For small repositories this is likely `build/web/` | ✅ |
+| `WIDGETBOOK_API_KEY` | The API key for your company. See [How to create an API key](/widgetbook-cloud/hosting#how-to-create-an-api-key)| ✅ |
+
+## Azure DevOps Pipelines
+
+To upload your Widgetbook to Widgetbook Cloud, we recommend to use the [CLI](/widgetbook-cloud/hosting#cli).
+
+### Example
+
+```yaml
+trigger:
+  branches:
+    include:
+    - '*'
+
+pool: 'Default'
+
+stages:
+- stage: WidgetbookHostingStage
+  dependsOn: []
+  displayName: Hosting
+  jobs:
+
+  - job: HostingJob
+    displayName: Hosting
+    steps: 
+
+    - task: FlutterInstall@0
+      displayName: "Install Flutter SDK"
+      inputs:
+        mode: 'auto'
+        channel: 'stable'
+        version: 'latest'
+
+    - task: FlutterBuild@0
+      displayName: "Build application"
+      inputs:
+        target: web
+        projectDirectory: '$(Build.SourcesDirectory)'
+        entryPoint: 'lib/main.widgetbook.dart'
+    
+    - task: Bash@3
+      displayName: "Upload Widgetbook"
+      inputs:
+        targetType: 'inline'
+        script: |
+          curl -o ./cli.aot 'https://firebasestorage.googleapis.com/v0/b/widgetbook-cloud.appspot.com/o/tools%2Fcli-v1.aot?alt=media'
+          $(DartToolPath)/dartaotruntime cli.aot \
+              --api-key <API-KEY> \
+              --path ./build/web \
+              --branch '$(Build.SourceBranchName)' \
+              --repository '$(Build.DefinitionName)' \
+              --commit '$(Build.SourceVersion)' \
+              --actor '$(Build.SourceVersionAuthor)' \
+              --git-provider Azure
+```

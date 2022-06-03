@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'widgetbook_theme.dart';
@@ -11,23 +12,7 @@ part of 'widgetbook_theme.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$WidgetbookThemeTearOff {
-  const _$WidgetbookThemeTearOff();
-
-  _WidgetbookTheme<CustomTheme> call<CustomTheme>(
-      {required String name, required CustomTheme data}) {
-    return _WidgetbookTheme<CustomTheme>(
-      name: name,
-      data: data,
-    );
-  }
-}
-
-/// @nodoc
-const $WidgetbookTheme = _$WidgetbookThemeTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$WidgetbookTheme<CustomTheme> {
@@ -75,33 +60,33 @@ class _$WidgetbookThemeCopyWithImpl<CustomTheme, $Res>
 }
 
 /// @nodoc
-abstract class _$WidgetbookThemeCopyWith<CustomTheme, $Res>
+abstract class _$$_WidgetbookThemeCopyWith<CustomTheme, $Res>
     implements $WidgetbookThemeCopyWith<CustomTheme, $Res> {
-  factory _$WidgetbookThemeCopyWith(_WidgetbookTheme<CustomTheme> value,
-          $Res Function(_WidgetbookTheme<CustomTheme>) then) =
-      __$WidgetbookThemeCopyWithImpl<CustomTheme, $Res>;
+  factory _$$_WidgetbookThemeCopyWith(_$_WidgetbookTheme<CustomTheme> value,
+          $Res Function(_$_WidgetbookTheme<CustomTheme>) then) =
+      __$$_WidgetbookThemeCopyWithImpl<CustomTheme, $Res>;
   @override
   $Res call({String name, CustomTheme data});
 }
 
 /// @nodoc
-class __$WidgetbookThemeCopyWithImpl<CustomTheme, $Res>
+class __$$_WidgetbookThemeCopyWithImpl<CustomTheme, $Res>
     extends _$WidgetbookThemeCopyWithImpl<CustomTheme, $Res>
-    implements _$WidgetbookThemeCopyWith<CustomTheme, $Res> {
-  __$WidgetbookThemeCopyWithImpl(_WidgetbookTheme<CustomTheme> _value,
-      $Res Function(_WidgetbookTheme<CustomTheme>) _then)
-      : super(_value, (v) => _then(v as _WidgetbookTheme<CustomTheme>));
+    implements _$$_WidgetbookThemeCopyWith<CustomTheme, $Res> {
+  __$$_WidgetbookThemeCopyWithImpl(_$_WidgetbookTheme<CustomTheme> _value,
+      $Res Function(_$_WidgetbookTheme<CustomTheme>) _then)
+      : super(_value, (v) => _then(v as _$_WidgetbookTheme<CustomTheme>));
 
   @override
-  _WidgetbookTheme<CustomTheme> get _value =>
-      super._value as _WidgetbookTheme<CustomTheme>;
+  _$_WidgetbookTheme<CustomTheme> get _value =>
+      super._value as _$_WidgetbookTheme<CustomTheme>;
 
   @override
   $Res call({
     Object? name = freezed,
     Object? data = freezed,
   }) {
-    return _then(_WidgetbookTheme<CustomTheme>(
+    return _then(_$_WidgetbookTheme<CustomTheme>(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -133,7 +118,7 @@ class _$_WidgetbookTheme<CustomTheme> implements _WidgetbookTheme<CustomTheme> {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _WidgetbookTheme<CustomTheme> &&
+            other is _$_WidgetbookTheme<CustomTheme> &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.data, data));
   }
@@ -146,22 +131,23 @@ class _$_WidgetbookTheme<CustomTheme> implements _WidgetbookTheme<CustomTheme> {
 
   @JsonKey(ignore: true)
   @override
-  _$WidgetbookThemeCopyWith<CustomTheme, _WidgetbookTheme<CustomTheme>>
-      get copyWith => __$WidgetbookThemeCopyWithImpl<CustomTheme,
-          _WidgetbookTheme<CustomTheme>>(this, _$identity);
+  _$$_WidgetbookThemeCopyWith<CustomTheme, _$_WidgetbookTheme<CustomTheme>>
+      get copyWith => __$$_WidgetbookThemeCopyWithImpl<CustomTheme,
+          _$_WidgetbookTheme<CustomTheme>>(this, _$identity);
 }
 
 abstract class _WidgetbookTheme<CustomTheme>
     implements WidgetbookTheme<CustomTheme> {
-  factory _WidgetbookTheme({required String name, required CustomTheme data}) =
-      _$_WidgetbookTheme<CustomTheme>;
+  factory _WidgetbookTheme(
+      {required final String name,
+      required final CustomTheme data}) = _$_WidgetbookTheme<CustomTheme>;
 
   @override
-  String get name;
+  String get name => throw _privateConstructorUsedError;
   @override
-  CustomTheme get data;
+  CustomTheme get data => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$WidgetbookThemeCopyWith<CustomTheme, _WidgetbookTheme<CustomTheme>>
+  _$$_WidgetbookThemeCopyWith<CustomTheme, _$_WidgetbookTheme<CustomTheme>>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'preview_state.dart';
@@ -11,21 +12,7 @@ part of 'preview_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$PreviewStateTearOff {
-  const _$PreviewStateTearOff();
-
-  _PreviewState call({required WidgetbookUseCase? selectedUseCase}) {
-    return _PreviewState(
-      selectedUseCase: selectedUseCase,
-    );
-  }
-}
-
-/// @nodoc
-const $PreviewState = _$PreviewStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$PreviewState {
@@ -66,30 +53,31 @@ class _$PreviewStateCopyWithImpl<$Res> implements $PreviewStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$PreviewStateCopyWith<$Res>
+abstract class _$$_PreviewStateCopyWith<$Res>
     implements $PreviewStateCopyWith<$Res> {
-  factory _$PreviewStateCopyWith(
-          _PreviewState value, $Res Function(_PreviewState) then) =
-      __$PreviewStateCopyWithImpl<$Res>;
+  factory _$$_PreviewStateCopyWith(
+          _$_PreviewState value, $Res Function(_$_PreviewState) then) =
+      __$$_PreviewStateCopyWithImpl<$Res>;
   @override
   $Res call({WidgetbookUseCase? selectedUseCase});
 }
 
 /// @nodoc
-class __$PreviewStateCopyWithImpl<$Res> extends _$PreviewStateCopyWithImpl<$Res>
-    implements _$PreviewStateCopyWith<$Res> {
-  __$PreviewStateCopyWithImpl(
-      _PreviewState _value, $Res Function(_PreviewState) _then)
-      : super(_value, (v) => _then(v as _PreviewState));
+class __$$_PreviewStateCopyWithImpl<$Res>
+    extends _$PreviewStateCopyWithImpl<$Res>
+    implements _$$_PreviewStateCopyWith<$Res> {
+  __$$_PreviewStateCopyWithImpl(
+      _$_PreviewState _value, $Res Function(_$_PreviewState) _then)
+      : super(_value, (v) => _then(v as _$_PreviewState));
 
   @override
-  _PreviewState get _value => super._value as _PreviewState;
+  _$_PreviewState get _value => super._value as _$_PreviewState;
 
   @override
   $Res call({
     Object? selectedUseCase = freezed,
   }) {
-    return _then(_PreviewState(
+    return _then(_$_PreviewState(
       selectedUseCase: selectedUseCase == freezed
           ? _value.selectedUseCase
           : selectedUseCase // ignore: cast_nullable_to_non_nullable
@@ -115,7 +103,7 @@ class _$_PreviewState extends _PreviewState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _PreviewState &&
+            other is _$_PreviewState &&
             const DeepCollectionEquality()
                 .equals(other.selectedUseCase, selectedUseCase));
   }
@@ -126,19 +114,19 @@ class _$_PreviewState extends _PreviewState {
 
   @JsonKey(ignore: true)
   @override
-  _$PreviewStateCopyWith<_PreviewState> get copyWith =>
-      __$PreviewStateCopyWithImpl<_PreviewState>(this, _$identity);
+  _$$_PreviewStateCopyWith<_$_PreviewState> get copyWith =>
+      __$$_PreviewStateCopyWithImpl<_$_PreviewState>(this, _$identity);
 }
 
 abstract class _PreviewState extends PreviewState {
-  factory _PreviewState({required WidgetbookUseCase? selectedUseCase}) =
+  factory _PreviewState({required final WidgetbookUseCase? selectedUseCase}) =
       _$_PreviewState;
   _PreviewState._() : super._();
 
   @override
-  WidgetbookUseCase? get selectedUseCase;
+  WidgetbookUseCase? get selectedUseCase => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$PreviewStateCopyWith<_PreviewState> get copyWith =>
+  _$$_PreviewStateCopyWith<_$_PreviewState> get copyWith =>
       throw _privateConstructorUsedError;
 }

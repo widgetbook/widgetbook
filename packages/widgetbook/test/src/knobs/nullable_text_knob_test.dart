@@ -21,15 +21,17 @@ void main() {
     'Nullable String knob functions',
     (WidgetTester tester) async {
       await tester.pumpWidgetWithMaterialApp(
-        renderWithKnobs(build: (context) {
-          final value = context.knobs.nullableText(
-            label: 'label',
-          );
+        renderWithKnobs(
+          build: (context) {
+            final value = context.knobs.nullableText(
+              label: 'label',
+            );
 
-          final text = value ?? 'default';
+            final text = value ?? 'default';
 
-          return [Text(text)];
-        }),
+            return [Text(text)];
+          },
+        ),
       );
 
       expect(find.text('default'), findsOneWidget);
@@ -37,7 +39,9 @@ void main() {
       await tester.tap(find.byKey(const Key('label-nullableCheckbox')));
       await tester.pumpAndSettle();
       await tester.enterText(
-          find.byKey(const Key('label-textKnob')), 'awesome');
+        find.byKey(const Key('label-textKnob')),
+        'awesome',
+      );
       await tester.pumpAndSettle();
       expect(find.text('awesome'), findsWidgets);
       expect(find.text('default'), findsNothing);
@@ -48,15 +52,17 @@ void main() {
     'Nullable String remembers previosu value',
     (WidgetTester tester) async {
       await tester.pumpWidgetWithMaterialApp(
-        renderWithKnobs(build: (context) {
-          final value = context.knobs.nullableText(
-            label: 'label',
-          );
+        renderWithKnobs(
+          build: (context) {
+            final value = context.knobs.nullableText(
+              label: 'label',
+            );
 
-          final text = value ?? 'default';
+            final text = value ?? 'default';
 
-          return [Text(text)];
-        }),
+            return [Text(text)];
+          },
+        ),
       );
 
       expect(find.text('default'), findsOneWidget);
@@ -64,7 +70,9 @@ void main() {
       await tester.tap(find.byKey(const Key('label-nullableCheckbox')));
       await tester.pumpAndSettle();
       await tester.enterText(
-          find.byKey(const Key('label-textKnob')), 'awesome');
+        find.byKey(const Key('label-textKnob')),
+        'awesome',
+      );
       await tester.pumpAndSettle();
       expect(find.text('awesome'), findsWidgets);
       expect(find.text('default'), findsNothing);

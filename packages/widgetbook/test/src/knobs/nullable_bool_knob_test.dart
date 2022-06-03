@@ -21,28 +21,30 @@ void main() {
     'Nullable Bool knob functions',
     (WidgetTester tester) async {
       await tester.pumpWidgetWithMaterialApp(
-        renderWithKnobs(build: (context) {
-          final value = context.knobs.nullableBoolean(
-            label: 'label',
-            initialValue: null,
-          );
-          String text;
+        renderWithKnobs(
+          build: (context) {
+            final value = context.knobs.nullableBoolean(
+              label: 'label',
+              initialValue: null,
+            );
+            String text;
 
-          switch (value) {
-            case null:
-              text = 'idk';
-              break;
-            case true:
-              text = 'hi';
-              break;
-            case false:
-              text = 'bye';
-              break;
-            default:
-              text = 'wont happen';
-          }
-          return [Text(text)];
-        }),
+            switch (value) {
+              case null:
+                text = 'idk';
+                break;
+              case true:
+                text = 'hi';
+                break;
+              case false:
+                text = 'bye';
+                break;
+              default:
+                text = 'wont happen';
+            }
+            return [Text(text)];
+          },
+        ),
       );
 
       expect(find.text('idk'), findsOneWidget);
@@ -68,28 +70,30 @@ void main() {
     'Nullable Bool knob remembers previous value before null',
     (WidgetTester tester) async {
       await tester.pumpWidgetWithMaterialApp(
-        renderWithKnobs(build: (context) {
-          final value = context.knobs.nullableBoolean(
-            label: 'label',
-            initialValue: null,
-          );
-          String text;
+        renderWithKnobs(
+          build: (context) {
+            final value = context.knobs.nullableBoolean(
+              label: 'label',
+              initialValue: null,
+            );
+            String text;
 
-          switch (value) {
-            case null:
-              text = 'idk';
-              break;
-            case true:
-              text = 'hi';
-              break;
-            case false:
-              text = 'bye';
-              break;
-            default:
-              text = 'wont happen';
-          }
-          return [Text(text)];
-        }),
+            switch (value) {
+              case null:
+                text = 'idk';
+                break;
+              case true:
+                text = 'hi';
+                break;
+              case false:
+                text = 'bye';
+                break;
+              default:
+                text = 'wont happen';
+            }
+            return [Text(text)];
+          },
+        ),
       );
 
       expect(find.text('idk'), findsOneWidget);

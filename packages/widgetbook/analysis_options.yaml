@@ -8,4 +8,6 @@ linter:
     public_member_api_docs: false
     avoid_equals_and_hash_code_on_mutable_classes: false
     avoid_dynamic_calls: false
+    library_private_types_in_public_api: false
     lines_longer_than_80_chars: false
+    flutter_style_todos: false

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'localization_state.dart';
@@ -11,22 +12,7 @@ part of 'localization_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$LocalizationStateTearOff {
-  const _$LocalizationStateTearOff();
-
-  _LocalizationState call(
-      {List<LocalizationsDelegate<dynamic>>? localizationsDelegates}) {
-    return _LocalizationState(
-      localizationsDelegates: localizationsDelegates,
-    );
-  }
-}
-
-/// @nodoc
-const $LocalizationState = _$LocalizationStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$LocalizationState {
@@ -69,33 +55,33 @@ class _$LocalizationStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$LocalizationStateCopyWith<$Res>
+abstract class _$$_LocalizationStateCopyWith<$Res>
     implements $LocalizationStateCopyWith<$Res> {
-  factory _$LocalizationStateCopyWith(
-          _LocalizationState value, $Res Function(_LocalizationState) then) =
-      __$LocalizationStateCopyWithImpl<$Res>;
+  factory _$$_LocalizationStateCopyWith(_$_LocalizationState value,
+          $Res Function(_$_LocalizationState) then) =
+      __$$_LocalizationStateCopyWithImpl<$Res>;
   @override
   $Res call({List<LocalizationsDelegate<dynamic>>? localizationsDelegates});
 }
 
 /// @nodoc
-class __$LocalizationStateCopyWithImpl<$Res>
+class __$$_LocalizationStateCopyWithImpl<$Res>
     extends _$LocalizationStateCopyWithImpl<$Res>
-    implements _$LocalizationStateCopyWith<$Res> {
-  __$LocalizationStateCopyWithImpl(
-      _LocalizationState _value, $Res Function(_LocalizationState) _then)
-      : super(_value, (v) => _then(v as _LocalizationState));
+    implements _$$_LocalizationStateCopyWith<$Res> {
+  __$$_LocalizationStateCopyWithImpl(
+      _$_LocalizationState _value, $Res Function(_$_LocalizationState) _then)
+      : super(_value, (v) => _then(v as _$_LocalizationState));
 
   @override
-  _LocalizationState get _value => super._value as _LocalizationState;
+  _$_LocalizationState get _value => super._value as _$_LocalizationState;
 
   @override
   $Res call({
     Object? localizationsDelegates = freezed,
   }) {
-    return _then(_LocalizationState(
+    return _then(_$_LocalizationState(
       localizationsDelegates: localizationsDelegates == freezed
-          ? _value.localizationsDelegates
+          ? _value._localizationsDelegates
           : localizationsDelegates // ignore: cast_nullable_to_non_nullable
               as List<LocalizationsDelegate<dynamic>>?,
     ));
@@ -105,10 +91,18 @@ class __$LocalizationStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LocalizationState implements _LocalizationState {
-  _$_LocalizationState({this.localizationsDelegates});
+  _$_LocalizationState(
+      {final List<LocalizationsDelegate<dynamic>>? localizationsDelegates})
+      : _localizationsDelegates = localizationsDelegates;
 
+  final List<LocalizationsDelegate<dynamic>>? _localizationsDelegates;
   @override
-  final List<LocalizationsDelegate<dynamic>>? localizationsDelegates;
+  List<LocalizationsDelegate<dynamic>>? get localizationsDelegates {
+    final value = _localizationsDelegates;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -119,30 +113,32 @@ class _$_LocalizationState implements _LocalizationState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _LocalizationState &&
-            const DeepCollectionEquality()
-                .equals(other.localizationsDelegates, localizationsDelegates));
+            other is _$_LocalizationState &&
+            const DeepCollectionEquality().equals(
+                other._localizationsDelegates, _localizationsDelegates));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(localizationsDelegates));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_localizationsDelegates));
 
   @JsonKey(ignore: true)
   @override
-  _$LocalizationStateCopyWith<_LocalizationState> get copyWith =>
-      __$LocalizationStateCopyWithImpl<_LocalizationState>(this, _$identity);
+  _$$_LocalizationStateCopyWith<_$_LocalizationState> get copyWith =>
+      __$$_LocalizationStateCopyWithImpl<_$_LocalizationState>(
+          this, _$identity);
 }
 
 abstract class _LocalizationState implements LocalizationState {
   factory _LocalizationState(
-          {List<LocalizationsDelegate<dynamic>>? localizationsDelegates}) =
-      _$_LocalizationState;
+      {final List<LocalizationsDelegate<dynamic>>?
+          localizationsDelegates}) = _$_LocalizationState;
 
   @override
-  List<LocalizationsDelegate<dynamic>>? get localizationsDelegates;
+  List<LocalizationsDelegate<dynamic>>? get localizationsDelegates =>
+      throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$LocalizationStateCopyWith<_LocalizationState> get copyWith =>
+  _$$_LocalizationStateCopyWith<_$_LocalizationState> get copyWith =>
       throw _privateConstructorUsedError;
 }

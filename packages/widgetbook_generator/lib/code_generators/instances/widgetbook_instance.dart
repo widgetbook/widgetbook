@@ -27,6 +27,7 @@ class WidgetbookInstance extends Instance {
     VariableInstance? localizationDelegates,
     VariableInstance? deviceFrameBuilder,
     VariableInstance? localizationBuilder,
+    VariableInstance? appBuilder,
     VariableInstance? scaffoldBuilder,
     VariableInstance? useCaseBuilder,
     FunctionCallInstance? themeBuilder,
@@ -40,8 +41,9 @@ class WidgetbookInstance extends Instance {
               Property(key: 'supportedLocales', instance: locales),
             if (localizationDelegates != null)
               Property(
-                  key: 'localizationsDelegates',
-                  instance: localizationDelegates),
+                key: 'localizationsDelegates',
+                instance: localizationDelegates,
+              ),
             Property(key: 'themes', instance: ListInstance(instances: themes)),
             if (devices.isNotEmpty)
               Property(
@@ -71,6 +73,11 @@ class WidgetbookInstance extends Instance {
               Property(
                 key: 'localizationBuilder',
                 instance: localizationBuilder,
+              ),
+            if (appBuilder != null)
+              Property(
+                key: 'appBuilder',
+                instance: appBuilder,
               ),
             if (scaffoldBuilder != null)
               Property(

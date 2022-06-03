@@ -3,7 +3,8 @@ import 'package:widgetbook/widgetbook.dart';
 /// Helper to navigate the folder tree.
 class FolderHelper {
   static List<WidgetbookFolder> getAllFoldersFromCategories(
-      List<WidgetbookCategory> categories) {
+    List<WidgetbookCategory> categories,
+  ) {
     final folders = <WidgetbookFolder>[];
     for (final category in categories) {
       folders.addAll(
@@ -14,12 +15,14 @@ class FolderHelper {
   }
 
   static List<WidgetbookFolder> getAllFoldersFromCategory(
-      WidgetbookCategory category) {
+    WidgetbookCategory category,
+  ) {
     return getAllFoldersFromFolders(category.folders);
   }
 
   static List<WidgetbookFolder> getAllFoldersFromFolders(
-      List<WidgetbookFolder> folders) {
+    List<WidgetbookFolder> folders,
+  ) {
     final folderList = <WidgetbookFolder>[];
     for (final folder in folders) {
       folderList.addAll(
@@ -30,7 +33,8 @@ class FolderHelper {
   }
 
   static List<WidgetbookFolder> getAllFoldersFromFolder(
-      WidgetbookFolder folder) {
+    WidgetbookFolder folder,
+  ) {
     final folderList = List<WidgetbookFolder>.from(
       <WidgetbookFolder>[folder],
     )..addAll(

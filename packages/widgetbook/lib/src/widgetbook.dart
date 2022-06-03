@@ -93,6 +93,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     this.localizationBuilder,
     this.themeBuilder,
     this.scaffoldBuilder,
+    this.appBuilder = defaultAppBuilder,
     this.useCaseBuilder,
     List<Locale>? supportedLocales,
     List<WidgetbookFrame>? frames,
@@ -180,6 +181,8 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
 
   final ScaffoldBuilderFunction? scaffoldBuilder;
 
+  final AppBuilderFunction appBuilder;
+
   final UseCaseBuilderFunction? useCaseBuilder;
 
   /// A [Widgetbook] which uses cupertino theming via [CupertinoThemeData].
@@ -194,6 +197,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     DeviceFrameBuilderFunction? deviceFrameBuilder,
     LocalizationBuilderFunction? localizationBuilder,
     ThemeBuilderFunction<CupertinoThemeData>? themeBuilder,
+    AppBuilderFunction? appBuilder,
     ScaffoldBuilderFunction? scaffoldBuilder,
     UseCaseBuilderFunction? useCaseBuilder,
     List<double>? textScaleFactors,
@@ -211,6 +215,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
       localizationBuilder: localizationBuilder,
       themeBuilder: themeBuilder,
       scaffoldBuilder: scaffoldBuilder,
+      appBuilder: appBuilder ?? cupertinoAppBuilder,
       useCaseBuilder: useCaseBuilder,
       frames: frames,
       textScaleFactors: textScaleFactors,
@@ -229,6 +234,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     DeviceFrameBuilderFunction? deviceFrameBuilder,
     LocalizationBuilderFunction? localizationBuilder,
     ThemeBuilderFunction<ThemeData>? themeBuilder,
+    AppBuilderFunction? appBuilder,
     ScaffoldBuilderFunction? scaffoldBuilder,
     UseCaseBuilderFunction? useCaseBuilder,
     List<double>? textScaleFactors,
@@ -246,6 +252,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
       localizationBuilder: localizationBuilder,
       themeBuilder: themeBuilder,
       scaffoldBuilder: scaffoldBuilder,
+      appBuilder: appBuilder ?? materialAppBuilder,
       useCaseBuilder: useCaseBuilder,
       frames: frames,
       textScaleFactors: textScaleFactors,
@@ -340,6 +347,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
             themeBuilder:
                 widget.themeBuilder ?? defaultThemeBuilder<CustomTheme>(),
             scaffoldBuilder: widget.scaffoldBuilder ?? defaultScaffoldBuilder,
+            appBuilder: widget.appBuilder,
             useCaseBuilder: widget.useCaseBuilder ?? defaultUseCaseBuilder,
           ),
         ),

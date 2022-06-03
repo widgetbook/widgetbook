@@ -23,7 +23,7 @@ class Workbench<CustomTheme> extends StatelessWidget {
           height: 16,
         ),
         Expanded(
-          child: Container(
+          child: DecoratedBox(
             decoration: BoxDecoration(
               borderRadius: Radii.defaultRadius,
               color: context.colorScheme.surface,

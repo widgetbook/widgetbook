@@ -130,9 +130,10 @@ class ComparisonRenderer<CustomTheme> extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(50),
           child: _buildSingleDevice(
-              workbenchState: workbenchState,
-              localizationState: localizationState,
-              builder: builder),
+            workbenchState: workbenchState,
+            localizationState: localizationState,
+            builder: builder,
+          ),
         );
       case ComparisonSetting.themes:
         return _buildThemeComparison(

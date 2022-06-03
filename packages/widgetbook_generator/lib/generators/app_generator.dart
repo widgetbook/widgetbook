@@ -8,6 +8,7 @@ import 'package:widgetbook_generator/code_generators/instances/theme_instance.da
 import 'package:widgetbook_generator/code_generators/instances/variable_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_instance.dart';
+import 'package:widgetbook_generator/models/widgetbook_app_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_device_frame_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_localization_builder_data.dart';
@@ -37,6 +38,7 @@ String generateWidgetbook({
   required List<WidgetbookThemeData> themes,
   WidgetbookDeviceFrameData? deviceFrameBuilder,
   WidgetbookLocalizationBuilderData? localizationBuilder,
+  WidgetbookAppBuilderData? appBuilder,
   WidgetbookScaffoldBuilderData? scaffoldBuilder,
   WidgetbookThemeBuilderData? themeBuilder,
   WidgetbookUseCaseBuilderData? useCaseBuilder,
@@ -65,6 +67,9 @@ String generateWidgetbook({
         : null,
     localizationBuilder: localizationBuilder != null
         ? VariableInstance(variableIdentifier: localizationBuilder.name)
+        : null,
+    appBuilder: appBuilder != null
+        ? VariableInstance(variableIdentifier: appBuilder.name)
         : null,
     scaffoldBuilder: scaffoldBuilder != null
         ? VariableInstance(variableIdentifier: scaffoldBuilder.name)

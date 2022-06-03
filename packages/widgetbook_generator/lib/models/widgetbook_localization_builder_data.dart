@@ -14,6 +14,7 @@ class WidgetbookLocalizationBuilderData extends WidgetbookData
   }) = _WidgetbookLocalizationBuilderData;
 
   factory WidgetbookLocalizationBuilderData.fromJson(
-          Map<String, dynamic> json) =>
+    Map<String, dynamic> json,
+  ) =>
       _$WidgetbookLocalizationBuilderDataFromJson(json);
 }

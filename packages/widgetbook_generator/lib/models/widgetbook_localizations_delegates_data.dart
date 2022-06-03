@@ -13,6 +13,7 @@ class WidgetbookLocalizationsDelegatesData
   }) = _WidgetbookLocalizationsDelegatesData;
 
   factory WidgetbookLocalizationsDelegatesData.fromJson(
-          Map<String, dynamic> json) =>
+    Map<String, dynamic> json,
+  ) =>
       _$WidgetbookLocalizationsDelegatesDataFromJson(json);
 }

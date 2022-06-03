@@ -10,6 +10,7 @@ import 'package:widgetbook_generator/extensions/list_extension.dart';
 import 'package:widgetbook_generator/generators/app_generator.dart';
 import 'package:widgetbook_generator/generators/imports_generator.dart';
 import 'package:widgetbook_generator/generators/main_generator.dart';
+import 'package:widgetbook_generator/models/widgetbook_app_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_device_frame_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_localization_builder_data.dart';
@@ -51,6 +52,12 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
       buildStep,
       '**.localizationbuilder.widgetbook.json',
       WidgetbookLocalizationBuilderData.fromJson,
+    );
+
+    final appBuilder = await _loadDataFromJson<WidgetbookAppBuilderData>(
+      buildStep,
+      '**.appbuilder.widgetbook.json',
+      (json) => WidgetbookAppBuilderData.fromJson(json),
     );
 
     final scaffoldBuilder =
@@ -117,6 +124,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
               deviceFrameBuilder.isNotEmpty ? deviceFrameBuilder.first : null,
           localizationBuilder:
               localizationBuilder.isNotEmpty ? localizationBuilder.first : null,
+          appBuilder: appBuilder.isNotEmpty ? appBuilder.first : null,
           scaffoldBuilder:
               scaffoldBuilder.isNotEmpty ? scaffoldBuilder.first : null,
           themeBuilder: themeBuilder.isNotEmpty ? themeBuilder.first : null,
@@ -164,7 +172,8 @@ Future<WidgetbookLocalesData?> _getLocales(BuildStep buildStep) async {
 }
 
 Future<WidgetbookLocalizationsDelegatesData?> _getLocalizationDelegates(
-    BuildStep buildStep) async {
+  BuildStep buildStep,
+) async {
   final localizationDelegates = await _loadDataFromJson(
     buildStep,
     '**.delegates.widgetbook.json',

@@ -25,7 +25,6 @@ void main() {
             componentName: widgetName,
             useCaseDefinitionPath: 'a',
             componentDefinitionPath: 'a',
-            libraryName: 'widgetbook_generator',
           ),
           WidgetbookUseCaseData(
             name: 'story2',
@@ -36,7 +35,6 @@ void main() {
             componentName: widgetName,
             useCaseDefinitionPath: 'a',
             componentDefinitionPath: 'a',
-            libraryName: 'widgetbook_generator',
           ),
         ],
       );

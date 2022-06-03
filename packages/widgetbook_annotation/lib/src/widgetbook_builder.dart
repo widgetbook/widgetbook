@@ -16,6 +16,12 @@ class WidgetbookLocalizationBuilder {
   const WidgetbookLocalizationBuilder();
 }
 
+/// Annotates a app builder function
+class WidgetbookAppBuilder {
+  /// Creates a new [WidgetbookAppBuilder].
+  const WidgetbookAppBuilder();
+}
+
 /// Annotates a scaffold builder function.
 class WidgetbookScaffoldBuilder {
   /// Creates a new [WidgetbookScaffoldBuilder].

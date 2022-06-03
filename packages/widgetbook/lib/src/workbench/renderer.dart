@@ -53,46 +53,66 @@ class Renderer<CustomTheme> extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (frame.allowsDevices) _buildText(),
-        renderingState.localizationBuilder(
+        renderingState.deviceFrameBuilder(
           context,
-          workbenchProvider.locales,
-          localizationsDelegates?.toList(),
-          locale,
-          renderingState.themeBuilder(
-            context,
-            theme,
-            Builder(
-              builder: (context) {
-                return renderingState.deviceFrameBuilder(
-                  context,
-                  device,
-                  frame,
-                  orientation,
-                  Builder(builder: (context) {
-                    return renderingState.textScaleBuilder(
+          device,
+          frame,
+          orientation,
+          Builder(
+            builder: (context) {
+              return renderingState.appBuilder(
+                context,
+                Builder(
+                  builder: (context) {
+                    return renderingState.localizationBuilder(
                       context,
-                      textScaleFactor,
+                      workbenchProvider.locales,
+                      localizationsDelegates?.toList(),
+                      locale,
                       Builder(
                         builder: (context) {
-                          return renderingState.scaffoldBuilder(
+                          return renderingState.themeBuilder(
                             context,
-                            frame,
-                            Builder(builder: (context) {
-                              return renderingState.useCaseBuilder(
-                                context,
-                                Builder(
-                                  builder: useCaseBuilder,
-                                ),
-                              );
-                            }),
+                            theme,
+                            Builder(
+                              builder: (context) {
+                                return Builder(
+                                  builder: (context) {
+                                    return renderingState.textScaleBuilder(
+                                      context,
+                                      textScaleFactor,
+                                      Builder(
+                                        builder: (context) {
+                                          return renderingState.scaffoldBuilder(
+                                            context,
+                                            frame,
+                                            Builder(
+                                              builder: (context) {
+                                                return renderingState
+                                                    .useCaseBuilder(
+                                                  context,
+                                                  Builder(
+                                                    builder: useCaseBuilder,
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
                           );
                         },
                       ),
                     );
-                  }),
-                );
-              },
-            ),
+                  },
+                ),
+              );
+            },
           ),
         ),
       ],

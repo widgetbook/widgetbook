@@ -2,6 +2,7 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_generator/builders/json_builder.dart';
 import 'package:widgetbook_generator/generators/widgetbook_generator.dart';
+import 'package:widgetbook_generator/resolvers/app_builder_resolver.dart';
 import 'package:widgetbook_generator/resolvers/device_frame_builder_resolver.dart';
 import 'package:widgetbook_generator/resolvers/locales_resolver.dart';
 import 'package:widgetbook_generator/resolvers/localization_builder_resolver.dart';
@@ -71,6 +72,17 @@ Builder localizationBuilder(BuilderOptions options) {
     LocalizationBuilderResolver(),
     formatOutput: _formatOutput,
     generatedExtension: '.localizationbuilder.widgetbook.json',
+  );
+}
+
+/// Builder for the AppBuilder annotation.
+/// Creates a .appbuilder.widgetbook.json file for each .dart file containing a
+/// AppBuilder annotation
+Builder appResolverBuilder(BuilderOptions options) {
+  return JsonLibraryBuilder(
+    AppBuilderResolver(),
+    generatedExtension: '.appbuilder.widgetbook.json',
+    formatOutput: _formatOutput,
   );
 }
 

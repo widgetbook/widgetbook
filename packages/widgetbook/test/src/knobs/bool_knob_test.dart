@@ -22,14 +22,17 @@ void main() {
     (WidgetTester tester) async {
       await tester.pumpWidgetWithMaterialApp(
         renderWithKnobs(
-            build: (context) => [
-                  Text(context.knobs.boolean(
-                    label: 'label',
-                    initialValue: true,
-                  )
-                      ? 'Hi'
-                      : 'Bye')
-                ]),
+          build: (context) => [
+            Text(
+              context.knobs.boolean(
+                label: 'label',
+                initialValue: true,
+              )
+                  ? 'Hi'
+                  : 'Bye',
+            )
+          ],
+        ),
       );
       expect(find.text('Hi'), findsOneWidget);
       await tester.pumpAndSettle();

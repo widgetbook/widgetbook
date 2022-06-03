@@ -1,3 +1,16 @@
+## 2.2.0
+
+- fix: Custom painter Widgets are incorrectly rendered ([#191](https://github.com/widgetbook/widgetbook/issues/191))
+    - added support for `WidgetbookAppBuilder` and the `appBuilder` property.
+
+## 2.1.2
+
+- chore: updated docs to link to [docs.widgetbook.io](https://docs.widgetbook.io)
+
+## 2.1.1
+
+- fix: use `widgetbook_models` in version `v0.0.7`
+
 ## 2.1.0
 
 - chore: bumped `freezed` and `freezed_annotation` to `v2.0.3` ([#174](https://github.com/widgetbook/widgetbook/issues/174))
