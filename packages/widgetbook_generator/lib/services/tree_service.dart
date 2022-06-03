@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:meta/meta.dart';
-import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
+import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
 
 class Widget {
   Widget(
@@ -11,7 +11,7 @@ class Widget {
 
   final String name;
   final bool isExpanded;
-  List<WidgetbookStoryData> stories = <WidgetbookStoryData>[];
+  List<WidgetbookUseCaseData> stories = <WidgetbookUseCaseData>[];
 }
 
 @immutable
@@ -67,9 +67,9 @@ class TreeService {
 
   void addStoryToFolder(
     Folder? folder,
-    WidgetbookStoryData story,
+    WidgetbookUseCaseData useCase,
   ) {
-    final widgetName = story.widgetName;
+    final widgetName = useCase.componentName;
 
     folder ??= rootFolder;
 
@@ -83,7 +83,7 @@ class TreeService {
 
     // TODO do we need to check if a story with that name already exist?
     // it might happen by copy and pasting that stories are duplicated.
-    widgets[widgetName]!.stories.add(story);
+    widgets[widgetName]!.stories.add(useCase);
   }
 
   Folder? addFolder(Folder? folder, List<String> paths) {

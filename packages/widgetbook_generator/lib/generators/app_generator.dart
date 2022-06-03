@@ -13,18 +13,18 @@ import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_localization_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_localizations_delegates_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_scaffold_builder_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_type_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_use_case_builder_data.dart';
+import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
 
 /// Generates the code of the Widgetbook
 String generateWidgetbook({
   required String name,
   required WidgetbookConstructor constructor,
-  required List<WidgetbookStoryData> stories,
+  required List<WidgetbookUseCaseData> useCases,
   required List<Device> devices,
   required List<WidgetbookFrame> frames,
   required List<double> textScaleFactors,
@@ -42,16 +42,14 @@ String generateWidgetbook({
   WidgetbookUseCaseBuilderData? useCaseBuilder,
 }) {
   final category =
-      _generateCategoryInstance(stories, foldersExpanded, widgetsExpanded);
+      _generateCategoryInstance(useCases, foldersExpanded, widgetsExpanded);
   final widgetbookInstanceCode = WidgetbookInstance(
     constructor: constructor,
     appInfoInstance: AppInfoInstance(name: name),
     themes: themes.map((theme) => ThemeInstance(theme: theme)).toList(),
     devices: devices.map((device) => DeviceInstance(device: device)).toList(),
     frames: frames.map((frame) => FrameInstance(frame: frame)).toList(),
-    textScaleFactors: textScaleFactors
-        .map((textScale) => DoubleInstance.value(textScale))
-        .toList(),
+    textScaleFactors: textScaleFactors.map(DoubleInstance.value).toList(),
     categories: [
       category,
     ],
@@ -92,15 +90,15 @@ class HotReload extends StatelessWidget {
 }
 
 WidgetbookCategoryInstance _generateCategoryInstance(
-  List<WidgetbookStoryData> stories,
+  List<WidgetbookUseCaseData> useCases,
   bool foldersExpanded,
   bool widgetsExpanded,
 ) {
   final service = TreeService(foldersExpanded, widgetsExpanded);
 
-  for (final story in stories) {
-    final folder = service.addFolderByImport(story.typeDefinition);
-    service.addStoryToFolder(folder, story);
+  for (final useCase in useCases) {
+    final folder = service.addFolderByImport(useCase.componentImportStatement);
+    service.addStoryToFolder(folder, useCase);
   }
 
   return WidgetbookCategoryInstance(

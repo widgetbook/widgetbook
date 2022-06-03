@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'widgetbook_localization_builder_data.dart';
@@ -11,36 +12,12 @@ part of 'widgetbook_localization_builder_data.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 WidgetbookLocalizationBuilderData _$WidgetbookLocalizationBuilderDataFromJson(
     Map<String, dynamic> json) {
   return _WidgetbookLocalizationBuilderData.fromJson(json);
 }
-
-/// @nodoc
-class _$WidgetbookLocalizationBuilderDataTearOff {
-  const _$WidgetbookLocalizationBuilderDataTearOff();
-
-  _WidgetbookLocalizationBuilderData call(
-      {required String name,
-      required String importStatement,
-      required List<String> dependencies}) {
-    return _WidgetbookLocalizationBuilderData(
-      name: name,
-      importStatement: importStatement,
-      dependencies: dependencies,
-    );
-  }
-
-  WidgetbookLocalizationBuilderData fromJson(Map<String, Object?> json) {
-    return WidgetbookLocalizationBuilderData.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $WidgetbookLocalizationBuilderData =
-    _$WidgetbookLocalizationBuilderDataTearOff();
 
 /// @nodoc
 mixin _$WidgetbookLocalizationBuilderData {
@@ -96,28 +73,28 @@ class _$WidgetbookLocalizationBuilderDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$WidgetbookLocalizationBuilderDataCopyWith<$Res>
+abstract class _$$_WidgetbookLocalizationBuilderDataCopyWith<$Res>
     implements $WidgetbookLocalizationBuilderDataCopyWith<$Res> {
-  factory _$WidgetbookLocalizationBuilderDataCopyWith(
-          _WidgetbookLocalizationBuilderData value,
-          $Res Function(_WidgetbookLocalizationBuilderData) then) =
-      __$WidgetbookLocalizationBuilderDataCopyWithImpl<$Res>;
+  factory _$$_WidgetbookLocalizationBuilderDataCopyWith(
+          _$_WidgetbookLocalizationBuilderData value,
+          $Res Function(_$_WidgetbookLocalizationBuilderData) then) =
+      __$$_WidgetbookLocalizationBuilderDataCopyWithImpl<$Res>;
   @override
   $Res call({String name, String importStatement, List<String> dependencies});
 }
 
 /// @nodoc
-class __$WidgetbookLocalizationBuilderDataCopyWithImpl<$Res>
+class __$$_WidgetbookLocalizationBuilderDataCopyWithImpl<$Res>
     extends _$WidgetbookLocalizationBuilderDataCopyWithImpl<$Res>
-    implements _$WidgetbookLocalizationBuilderDataCopyWith<$Res> {
-  __$WidgetbookLocalizationBuilderDataCopyWithImpl(
-      _WidgetbookLocalizationBuilderData _value,
-      $Res Function(_WidgetbookLocalizationBuilderData) _then)
-      : super(_value, (v) => _then(v as _WidgetbookLocalizationBuilderData));
+    implements _$$_WidgetbookLocalizationBuilderDataCopyWith<$Res> {
+  __$$_WidgetbookLocalizationBuilderDataCopyWithImpl(
+      _$_WidgetbookLocalizationBuilderData _value,
+      $Res Function(_$_WidgetbookLocalizationBuilderData) _then)
+      : super(_value, (v) => _then(v as _$_WidgetbookLocalizationBuilderData));
 
   @override
-  _WidgetbookLocalizationBuilderData get _value =>
-      super._value as _WidgetbookLocalizationBuilderData;
+  _$_WidgetbookLocalizationBuilderData get _value =>
+      super._value as _$_WidgetbookLocalizationBuilderData;
 
   @override
   $Res call({
@@ -125,7 +102,7 @@ class __$WidgetbookLocalizationBuilderDataCopyWithImpl<$Res>
     Object? importStatement = freezed,
     Object? dependencies = freezed,
   }) {
-    return _then(_WidgetbookLocalizationBuilderData(
+    return _then(_$_WidgetbookLocalizationBuilderData(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -135,7 +112,7 @@ class __$WidgetbookLocalizationBuilderDataCopyWithImpl<$Res>
           : importStatement // ignore: cast_nullable_to_non_nullable
               as String,
       dependencies: dependencies == freezed
-          ? _value.dependencies
+          ? _value._dependencies
           : dependencies // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
@@ -149,7 +126,8 @@ class _$_WidgetbookLocalizationBuilderData
   _$_WidgetbookLocalizationBuilderData(
       {required this.name,
       required this.importStatement,
-      required this.dependencies});
+      required final List<String> dependencies})
+      : _dependencies = dependencies;
 
   factory _$_WidgetbookLocalizationBuilderData.fromJson(
           Map<String, dynamic> json) =>
@@ -159,8 +137,12 @@ class _$_WidgetbookLocalizationBuilderData
   final String name;
   @override
   final String importStatement;
+  final List<String> _dependencies;
   @override
-  final List<String> dependencies;
+  List<String> get dependencies {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_dependencies);
+  }
 
   @override
   String toString() {
@@ -171,27 +153,28 @@ class _$_WidgetbookLocalizationBuilderData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _WidgetbookLocalizationBuilderData &&
+            other is _$_WidgetbookLocalizationBuilderData &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.importStatement, importStatement) &&
             const DeepCollectionEquality()
-                .equals(other.dependencies, dependencies));
+                .equals(other._dependencies, _dependencies));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(importStatement),
-      const DeepCollectionEquality().hash(dependencies));
+      const DeepCollectionEquality().hash(_dependencies));
 
   @JsonKey(ignore: true)
   @override
-  _$WidgetbookLocalizationBuilderDataCopyWith<
-          _WidgetbookLocalizationBuilderData>
-      get copyWith => __$WidgetbookLocalizationBuilderDataCopyWithImpl<
-          _WidgetbookLocalizationBuilderData>(this, _$identity);
+  _$$_WidgetbookLocalizationBuilderDataCopyWith<
+          _$_WidgetbookLocalizationBuilderData>
+      get copyWith => __$$_WidgetbookLocalizationBuilderDataCopyWithImpl<
+          _$_WidgetbookLocalizationBuilderData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -202,9 +185,9 @@ class _$_WidgetbookLocalizationBuilderData
 abstract class _WidgetbookLocalizationBuilderData
     implements WidgetbookLocalizationBuilderData {
   factory _WidgetbookLocalizationBuilderData(
-          {required String name,
-          required String importStatement,
-          required List<String> dependencies}) =
+          {required final String name,
+          required final String importStatement,
+          required final List<String> dependencies}) =
       _$_WidgetbookLocalizationBuilderData;
 
   factory _WidgetbookLocalizationBuilderData.fromJson(
@@ -212,14 +195,14 @@ abstract class _WidgetbookLocalizationBuilderData
       _$_WidgetbookLocalizationBuilderData.fromJson;
 
   @override
-  String get name;
+  String get name => throw _privateConstructorUsedError;
   @override
-  String get importStatement;
+  String get importStatement => throw _privateConstructorUsedError;
   @override
-  List<String> get dependencies;
+  List<String> get dependencies => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$WidgetbookLocalizationBuilderDataCopyWith<
-          _WidgetbookLocalizationBuilderData>
+  _$$_WidgetbookLocalizationBuilderDataCopyWith<
+          _$_WidgetbookLocalizationBuilderData>
       get copyWith => throw _privateConstructorUsedError;
 }

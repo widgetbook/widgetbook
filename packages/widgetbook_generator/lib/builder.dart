@@ -7,10 +7,10 @@ import 'package:widgetbook_generator/resolvers/locales_resolver.dart';
 import 'package:widgetbook_generator/resolvers/localization_builder_resolver.dart';
 import 'package:widgetbook_generator/resolvers/localization_delegates_resolver.dart';
 import 'package:widgetbook_generator/resolvers/scaffold_builder_resolver.dart';
-import 'package:widgetbook_generator/resolvers/story_resolver.dart';
 import 'package:widgetbook_generator/resolvers/theme_builder_resolver.dart';
 import 'package:widgetbook_generator/resolvers/theme_resolver.dart';
 import 'package:widgetbook_generator/resolvers/use_case_builder_resolver.dart';
+import 'package:widgetbook_generator/resolvers/use_case_resolver.dart';
 
 /// Builder for the WidgetbookTheme annotation.
 /// Creates a .theme.widgetbook.json file for each .dart file containing a

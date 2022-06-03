@@ -25,7 +25,8 @@ dependencies:
 dev_dependencies:
   widgetbook: 
     path: ../../packages/widgetbook
-  widgetbook_generator: ^2.0.1
+  widgetbook_generator:
+    path: ../../packages/widgetbook_generator
   
   flutter_test:
     sdk: flutter

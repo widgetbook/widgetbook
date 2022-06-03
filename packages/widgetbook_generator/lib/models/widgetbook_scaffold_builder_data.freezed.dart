@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'widgetbook_scaffold_builder_data.dart';
@@ -11,35 +12,12 @@ part of 'widgetbook_scaffold_builder_data.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 WidgetbookScaffoldBuilderData _$WidgetbookScaffoldBuilderDataFromJson(
     Map<String, dynamic> json) {
   return _WidgetbookScaffoldBuilderData.fromJson(json);
 }
-
-/// @nodoc
-class _$WidgetbookScaffoldBuilderDataTearOff {
-  const _$WidgetbookScaffoldBuilderDataTearOff();
-
-  _WidgetbookScaffoldBuilderData call(
-      {required String name,
-      required String importStatement,
-      required List<String> dependencies}) {
-    return _WidgetbookScaffoldBuilderData(
-      name: name,
-      importStatement: importStatement,
-      dependencies: dependencies,
-    );
-  }
-
-  WidgetbookScaffoldBuilderData fromJson(Map<String, Object?> json) {
-    return WidgetbookScaffoldBuilderData.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $WidgetbookScaffoldBuilderData = _$WidgetbookScaffoldBuilderDataTearOff();
 
 /// @nodoc
 mixin _$WidgetbookScaffoldBuilderData {
@@ -95,28 +73,28 @@ class _$WidgetbookScaffoldBuilderDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$WidgetbookScaffoldBuilderDataCopyWith<$Res>
+abstract class _$$_WidgetbookScaffoldBuilderDataCopyWith<$Res>
     implements $WidgetbookScaffoldBuilderDataCopyWith<$Res> {
-  factory _$WidgetbookScaffoldBuilderDataCopyWith(
-          _WidgetbookScaffoldBuilderData value,
-          $Res Function(_WidgetbookScaffoldBuilderData) then) =
-      __$WidgetbookScaffoldBuilderDataCopyWithImpl<$Res>;
+  factory _$$_WidgetbookScaffoldBuilderDataCopyWith(
+          _$_WidgetbookScaffoldBuilderData value,
+          $Res Function(_$_WidgetbookScaffoldBuilderData) then) =
+      __$$_WidgetbookScaffoldBuilderDataCopyWithImpl<$Res>;
   @override
   $Res call({String name, String importStatement, List<String> dependencies});
 }
 
 /// @nodoc
-class __$WidgetbookScaffoldBuilderDataCopyWithImpl<$Res>
+class __$$_WidgetbookScaffoldBuilderDataCopyWithImpl<$Res>
     extends _$WidgetbookScaffoldBuilderDataCopyWithImpl<$Res>
-    implements _$WidgetbookScaffoldBuilderDataCopyWith<$Res> {
-  __$WidgetbookScaffoldBuilderDataCopyWithImpl(
-      _WidgetbookScaffoldBuilderData _value,
-      $Res Function(_WidgetbookScaffoldBuilderData) _then)
-      : super(_value, (v) => _then(v as _WidgetbookScaffoldBuilderData));
+    implements _$$_WidgetbookScaffoldBuilderDataCopyWith<$Res> {
+  __$$_WidgetbookScaffoldBuilderDataCopyWithImpl(
+      _$_WidgetbookScaffoldBuilderData _value,
+      $Res Function(_$_WidgetbookScaffoldBuilderData) _then)
+      : super(_value, (v) => _then(v as _$_WidgetbookScaffoldBuilderData));
 
   @override
-  _WidgetbookScaffoldBuilderData get _value =>
-      super._value as _WidgetbookScaffoldBuilderData;
+  _$_WidgetbookScaffoldBuilderData get _value =>
+      super._value as _$_WidgetbookScaffoldBuilderData;
 
   @override
   $Res call({
@@ -124,7 +102,7 @@ class __$WidgetbookScaffoldBuilderDataCopyWithImpl<$Res>
     Object? importStatement = freezed,
     Object? dependencies = freezed,
   }) {
-    return _then(_WidgetbookScaffoldBuilderData(
+    return _then(_$_WidgetbookScaffoldBuilderData(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -134,7 +112,7 @@ class __$WidgetbookScaffoldBuilderDataCopyWithImpl<$Res>
           : importStatement // ignore: cast_nullable_to_non_nullable
               as String,
       dependencies: dependencies == freezed
-          ? _value.dependencies
+          ? _value._dependencies
           : dependencies // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
@@ -148,7 +126,8 @@ class _$_WidgetbookScaffoldBuilderData
   _$_WidgetbookScaffoldBuilderData(
       {required this.name,
       required this.importStatement,
-      required this.dependencies});
+      required final List<String> dependencies})
+      : _dependencies = dependencies;
 
   factory _$_WidgetbookScaffoldBuilderData.fromJson(
           Map<String, dynamic> json) =>
@@ -158,8 +137,12 @@ class _$_WidgetbookScaffoldBuilderData
   final String name;
   @override
   final String importStatement;
+  final List<String> _dependencies;
   @override
-  final List<String> dependencies;
+  List<String> get dependencies {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_dependencies);
+  }
 
   @override
   String toString() {
@@ -170,26 +153,27 @@ class _$_WidgetbookScaffoldBuilderData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _WidgetbookScaffoldBuilderData &&
+            other is _$_WidgetbookScaffoldBuilderData &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.importStatement, importStatement) &&
             const DeepCollectionEquality()
-                .equals(other.dependencies, dependencies));
+                .equals(other._dependencies, _dependencies));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(importStatement),
-      const DeepCollectionEquality().hash(dependencies));
+      const DeepCollectionEquality().hash(_dependencies));
 
   @JsonKey(ignore: true)
   @override
-  _$WidgetbookScaffoldBuilderDataCopyWith<_WidgetbookScaffoldBuilderData>
-      get copyWith => __$WidgetbookScaffoldBuilderDataCopyWithImpl<
-          _WidgetbookScaffoldBuilderData>(this, _$identity);
+  _$$_WidgetbookScaffoldBuilderDataCopyWith<_$_WidgetbookScaffoldBuilderData>
+      get copyWith => __$$_WidgetbookScaffoldBuilderDataCopyWithImpl<
+          _$_WidgetbookScaffoldBuilderData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -200,21 +184,22 @@ class _$_WidgetbookScaffoldBuilderData
 abstract class _WidgetbookScaffoldBuilderData
     implements WidgetbookScaffoldBuilderData {
   factory _WidgetbookScaffoldBuilderData(
-      {required String name,
-      required String importStatement,
-      required List<String> dependencies}) = _$_WidgetbookScaffoldBuilderData;
+          {required final String name,
+          required final String importStatement,
+          required final List<String> dependencies}) =
+      _$_WidgetbookScaffoldBuilderData;
 
   factory _WidgetbookScaffoldBuilderData.fromJson(Map<String, dynamic> json) =
       _$_WidgetbookScaffoldBuilderData.fromJson;
 
   @override
-  String get name;
+  String get name => throw _privateConstructorUsedError;
   @override
-  String get importStatement;
+  String get importStatement => throw _privateConstructorUsedError;
   @override
-  List<String> get dependencies;
+  List<String> get dependencies => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$WidgetbookScaffoldBuilderDataCopyWith<_WidgetbookScaffoldBuilderData>
+  _$$_WidgetbookScaffoldBuilderDataCopyWith<_$_WidgetbookScaffoldBuilderData>
       get copyWith => throw _privateConstructorUsedError;
 }
