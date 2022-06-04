@@ -17,6 +17,8 @@ class TrippleSplitView extends StatefulWidget {
     required this.leftChild,
     required this.centerChild,
     required this.rightChild,
+    required this.isLeftDisabled,
+    required this.isRightDisabled,
   }) : super(key: key);
 
   final double leftMinWidth;
@@ -24,6 +26,9 @@ class TrippleSplitView extends StatefulWidget {
   final Widget leftChild;
   final Widget centerChild;
   final Widget rightChild;
+
+  final bool isLeftDisabled;
+  final bool isRightDisabled;
 
   @override
   State<TrippleSplitView> createState() => _TrippleSplitViewState();
@@ -148,17 +153,20 @@ class _TrippleSplitViewState extends State<TrippleSplitView> {
 
         return Row(
           children: [
-            SizedBox(
-              width: leftRatio * currentTotalWidth,
-              child: showLeft ? widget.leftChild : Container(),
-            ),
-            buildGestureDetector(DetectorSide.left),
+            if (!widget.isLeftDisabled)
+              SizedBox(
+                width: leftRatio * currentTotalWidth,
+                child: showLeft ? widget.leftChild : Container(),
+              ),
+            if (!widget.isLeftDisabled) buildGestureDetector(DetectorSide.left),
             Expanded(child: widget.centerChild),
-            buildGestureDetector(DetectorSide.right),
-            SizedBox(
-              width: rightRatio * currentTotalWidth,
-              child: showRight ? widget.rightChild : Container(),
-            ),
+            if (!widget.isRightDisabled)
+              buildGestureDetector(DetectorSide.right),
+            if (!widget.isRightDisabled)
+              SizedBox(
+                width: rightRatio * currentTotalWidth,
+                child: showRight ? widget.rightChild : Container(),
+              ),
           ],
         );
       },
