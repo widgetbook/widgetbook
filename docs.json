@@ -56,9 +56,6 @@
                     "Setup", "/widgetbook-generator/setup"
                 ],
                 [
-                    "Annotations", "/widgetbook-annotation/annotations"
-                ],
-                [
                     "Run", "/widgetbook-generator/run" 
                 ]
             ]
