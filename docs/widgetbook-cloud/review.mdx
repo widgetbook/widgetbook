@@ -9,8 +9,6 @@ To use Widgetbook Cloud _Review_ your setup has to meet the following requiremen
 - Use `widgetbook` package in version `v2.4.0-beta.1`
 - Use Widgetbook CLI `v2-beta`
 
-
-
 ## CLI v2
 
 Since there are plenty of Git provider available, it can be hard to maintain them all.
@@ -96,7 +94,7 @@ jobs:
                 --base-branch \
                 $GITHUB_BASE_REF \
                 --base-commit \
-                ${{ github.event.pull_request.base.sha }} \
+                $\{\{ github.event.pull_request.base.sha \}\} \
                 --git-provider \
                 "GitHub"
 ```
