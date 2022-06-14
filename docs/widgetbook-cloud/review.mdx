@@ -1,0 +1,102 @@
+# Review (beta)
+
+> **NOTE:** Since the Review feature is currently in beta, we're not aiming to migrate any data created previous to the official (non-beta) release to make changes to the feature easier for our development team.
+
+The Widgetbook Cloud _Review_ feature (currently in beta) allows teams to review added, changed or removed components.
+
+To use Widgetbook Cloud _Review_ your setup has to meet the following requirements:
+- Use `widgetbook_generator` package in version `v2.4.0-beta.1`
+- Use `widgetbook` package in version `v2.4.0-beta.1`
+- Use Widgetbook CLI `v2-beta`
+
+
+
+## CLI v2
+
+Since there are plenty of Git provider available, it can be hard to maintain them all.
+Since the Widgetbook Uploader is implemented in Dart, we wrapped the implementation with a Dart CLI to make it easily accessible.
+
+A pre-compiled version of the CLI is available for the most common systems:
+
+| OS      | Architecture | Link |
+| ------- | ------------ | ---- |
+| Mac OS  | x86          | [🔗](https://firebasestorage.googleapis.com/v0/b/widgetbook-cloud.appspot.com/o/tools%2Fcli-v2-beta-production-macos-x86.exe?alt=media) |
+| Mac OS  | ARM          | coming soon, use x86 version with Rosetta for now |
+| Windows | x86          | [🔗](https://firebasestorage.googleapis.com/v0/b/widgetbook-cloud.appspot.com/o/tools%2Fcli-v2-beta-production-windows-x86.exe?alt=media) |
+| Ubuntu  | x86          | [🔗](https://firebasestorage.googleapis.com/v0/b/widgetbook-cloud.appspot.com/o/tools%2Fcli-v2-beta-production-ubuntu-x86.exe?alt=media) |
+
+But it's understandable if you'd like to check the source code first and/or compile it yourself. 
+See the [widgetbook-hosting](https://github.com/widgetbook/widgetbook-hosting) repository for more information.
+
+### Arguments
+
+The CLI accepts the following arguments
+
+| Argument         | Mandatory | Description |
+| ---------------- | --------- | ----------- |
+| `--path`         | ✅        | The path to the build folder of your application. Defaults to `./build/web`.|
+| `--api-key`      | ✅        | The project specific API key for Widgetbook Cloud. See [How to create an API key](/widgetbook-cloud/hosting#how-to-create-an-api-key).|
+| `--branch`       | ✅        | The name of the branch for which the Widgetbook is uploaded.|
+| `--repository`   | ✅        | The name of the repository for which the Widgetbook is uploaded.|
+| `--commit`       | ✅        | The SHA hash of the commit for which the Widgetbook is uploaded.|
+| `--actor`        | ✅        | The username of the actor which triggered the build.|
+| `--git-provider` | ✅        | The name of the Git provider. Allowed values: `GitHub`, `GitLab`, `BitBucket`, `Azure`, `CLI`.
+| `--base-branch`  | ➖        | The name of the pull-request's base branch. |
+| `--base-commit`  | ➖        | The SHA hash of pull-request's base branch. |
+
+## GitHub Example
+
+The CLI extracts information from `widgetbook_generator` and also obtains branch information from git.
+For this to work properly make sure to checkout your code with `fetch-depth: '0'`. 
+Also make sure to run the `build_runner` before calling the `CLI`.
+
+```yaml
+name: Build 
+on: [pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
+
+      - name: Show branches
+        run: git branch -a
+
+      - name: Setup flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: stable
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Run build runner
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Build Website
+        run: flutter build web -t lib/main.widgetbook.dart
+
+      - name: Upload Widgetbook
+        run: |
+          curl -o ./cli.exe 'https://firebasestorage.googleapis.com/v0/b/widgetbook-cloud.appspot.com/o/tools%2Fcli-v2-beta-production-ubuntu-x86.exe?alt=media'
+          chmod +x cli.exe 
+          ./cli.exe \
+                --path "./" --api-key <API-KEY> \
+                --branch \
+                $GITHUB_HEAD_REF \
+                --repository \
+                $GITHUB_REPOSITORY \
+                --commit \
+                $GITHUB_SHA \
+                --actor \
+                $GITHUB_ACTOR \
+                --base-branch \
+                $GITHUB_BASE_REF \
+                --base-commit \
+                ${{ github.event.pull_request.base.sha }} \
+                --git-provider \
+                "GitHub"
+```
