@@ -94,7 +94,7 @@ jobs:
                 --base-branch \
                 $GITHUB_BASE_REF \
                 --base-commit \
-                \${{ github.event.pull_request.base.sha }} \
+                \$\{{ github.event.pull_request.base.sha }} \
                 --git-provider \
                 "GitHub"
 ```
