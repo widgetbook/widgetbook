@@ -2,14 +2,14 @@ import 'package:widgetbook_generator/code_generators/instances/instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_use_case_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
-import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
+import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
 
 /// An instance for WidgetElementInstance
 class WidgetbookComponentInstance extends Instance {
   /// Creates a new instance of [WidgetbookComponentInstance]
   WidgetbookComponentInstance({
     required String name,
-    required List<WidgetbookStoryData> stories,
+    required List<WidgetbookUseCaseData> stories,
     bool isExpanded = false,
   }) : super(
           name: 'WidgetbookComponent',
@@ -19,12 +19,10 @@ class WidgetbookComponentInstance extends Instance {
               key: 'useCases',
               instance: ListInstance<WidgetbookUseCaseInstance>(
                 instances: stories
-                    .map(
-                      (story) => WidgetbookUseCaseInstance(
-                        useCaseName: story.storyName,
-                        functionName: story.name,
-                      ),
-                    )
+                    .map((useCase) => WidgetbookUseCaseInstance(
+                          useCaseName: useCase.useCaseName,
+                          functionName: useCase.name,
+                        ))
                     .toList(),
               ),
             ),

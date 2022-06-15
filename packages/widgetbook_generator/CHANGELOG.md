@@ -1,3 +1,7 @@
+## 2.4.0-beta.1
+
+- feat: added builders to generate `.json` files for annotated code elements.
+
 ## 2.2.0
 
 - fix: Custom painter Widgets are incorrectly rendered ([#191](https://github.com/widgetbook/widgetbook/issues/191))

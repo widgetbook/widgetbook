@@ -9,7 +9,14 @@ import 'package:widgetbook/src/widgets/multi_split_view.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 
 class WidgetbookPage<CustomTheme> extends StatelessWidget {
-  const WidgetbookPage({Key? key}) : super(key: key);
+  const WidgetbookPage({
+    Key? key,
+    required this.disableNavigation,
+    required this.disableProperties,
+  }) : super(key: key);
+
+  final bool disableNavigation;
+  final bool disableProperties;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +28,8 @@ class WidgetbookPage<CustomTheme> extends StatelessWidget {
             final appInfo = context.watch<AppInfoProvider>().state;
             final state = context.watch<OrganizerProvider>().state;
             return TrippleSplitView(
+              isLeftDisabled: disableNavigation,
+              isRightDisabled: disableProperties,
               leftChild: NavigationPanel(
                 appInfo: appInfo,
                 categories: state.filteredCategories,

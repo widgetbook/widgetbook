@@ -16,11 +16,11 @@ import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_localization_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_localizations_delegates_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_scaffold_builder_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_type_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_use_case_builder_data.dart';
+import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
 import 'package:widgetbook_generator/readers/device_reader.dart';
 
 /// Generates the code for Widgetbook
@@ -34,24 +34,24 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
     ConstantReader annotation,
     BuildStep buildStep,
   ) async {
-    final stories = await _loadDataFromJson<WidgetbookStoryData>(
+    final useCases = await _loadDataFromJson<WidgetbookUseCaseData>(
       buildStep,
       '**.usecase.widgetbook.json',
-      (map) => WidgetbookStoryData.fromMap(map),
+      WidgetbookUseCaseData.fromJson,
     );
 
     final deviceFrameBuilder =
         await _loadDataFromJson<WidgetbookDeviceFrameData>(
       buildStep,
       '**.deviceframebuilder.widgetbook.json',
-      (json) => WidgetbookDeviceFrameData.fromJson(json),
+      WidgetbookDeviceFrameData.fromJson,
     );
 
     final localizationBuilder =
         await _loadDataFromJson<WidgetbookLocalizationBuilderData>(
       buildStep,
       '**.localizationbuilder.widgetbook.json',
-      (json) => WidgetbookLocalizationBuilderData.fromJson(json),
+      WidgetbookLocalizationBuilderData.fromJson,
     );
 
     final appBuilder = await _loadDataFromJson<WidgetbookAppBuilderData>(
@@ -64,20 +64,20 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
         await _loadDataFromJson<WidgetbookScaffoldBuilderData>(
       buildStep,
       '**.scaffoldbuilder.widgetbook.json',
-      (json) => WidgetbookScaffoldBuilderData.fromJson(json),
+      WidgetbookScaffoldBuilderData.fromJson,
     );
 
     final themeBuilder = await _loadDataFromJson<WidgetbookThemeBuilderData>(
       buildStep,
       '**.themebuilder.widgetbook.json',
-      (json) => WidgetbookThemeBuilderData.fromJson(json),
+      WidgetbookThemeBuilderData.fromJson,
     );
 
     final useCaseBuilder =
         await _loadDataFromJson<WidgetbookUseCaseBuilderData>(
       buildStep,
       '**.usecasebuilder.widgetbook.json',
-      (json) => WidgetbookUseCaseBuilderData.fromJson(json),
+      WidgetbookUseCaseBuilderData.fromJson,
     );
 
     final locales = await _getLocales(buildStep);
@@ -98,7 +98,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
         generateImports(
           [
             ...themes,
-            ...stories,
+            ...useCases,
             if (locales != null) locales,
           ],
         ),
@@ -112,7 +112,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
           constructor: constructor,
           themeTypeData: themeType,
           themes: themes,
-          stories: stories,
+          useCases: useCases,
           devices: devices,
           frames: frames,
           textScaleFactors: textScaleFactors,
@@ -141,7 +141,7 @@ Future<List<WidgetbookThemeData>> _getThemes(BuildStep buildStep) async {
   final themes = await _loadDataFromJson<WidgetbookThemeData>(
     buildStep,
     '**.theme.widgetbook.json',
-    (map) => WidgetbookThemeData.fromJson(map),
+    WidgetbookThemeData.fromJson,
   );
 
   final defaultTheme =
@@ -159,7 +159,7 @@ Future<WidgetbookLocalesData?> _getLocales(BuildStep buildStep) async {
   final locales = await _loadDataFromJson(
     buildStep,
     '**.locales.widgetbook.json',
-    (map) => WidgetbookLocalesData.fromJson(map),
+    WidgetbookLocalesData.fromJson,
   );
 
   if (locales.length > 1) {
@@ -177,7 +177,7 @@ Future<WidgetbookLocalizationsDelegatesData?> _getLocalizationDelegates(
   final localizationDelegates = await _loadDataFromJson(
     buildStep,
     '**.delegates.widgetbook.json',
-    (map) => WidgetbookLocalizationsDelegatesData.fromJson(map),
+    WidgetbookLocalizationsDelegatesData.fromJson,
   );
 
   if (localizationDelegates.length > 1) {

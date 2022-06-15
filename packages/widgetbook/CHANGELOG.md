@@ -1,3 +1,7 @@
+## 2.4.0-beta.2
+
+- Added parameter `disable-navigation` and `disable-properties` to router.
+
 ## 2.3.0 
 
 - fix: Custom painter Widgets are incorrectly rendered ([#191](https://github.com/widgetbook/widgetbook/issues/191))

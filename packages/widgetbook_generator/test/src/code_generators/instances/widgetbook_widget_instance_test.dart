@@ -3,7 +3,7 @@ import 'package:widgetbook_generator/code_generators/instances/list_instance.dar
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_use_case_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_widget_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
-import 'package:widgetbook_generator/models/widgetbook_story_data.dart';
+import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
 
 import '../instance_helper.dart';
 
@@ -16,21 +16,25 @@ void main() {
       final instance = WidgetbookComponentInstance(
         name: widgetName,
         stories: [
-          WidgetbookStoryData(
+          WidgetbookUseCaseData(
             name: 'story1',
             importStatement: '',
-            typeDefinition: '',
+            componentImportStatement: '',
             dependencies: [],
-            storyName: 'Story1',
-            widgetName: widgetName,
+            useCaseName: 'Story1',
+            componentName: widgetName,
+            useCaseDefinitionPath: 'a',
+            componentDefinitionPath: 'a',
           ),
-          WidgetbookStoryData(
+          WidgetbookUseCaseData(
             name: 'story2',
             importStatement: '',
-            typeDefinition: '',
+            componentImportStatement: '',
             dependencies: [],
-            storyName: 'Story2',
-            widgetName: widgetName,
+            useCaseName: 'Story2',
+            componentName: widgetName,
+            useCaseDefinitionPath: 'a',
+            componentDefinitionPath: 'a',
           ),
         ],
       );
@@ -53,13 +57,9 @@ void main() {
                   instance: ListInstance(
                     instances: [
                       WidgetbookUseCaseInstance(
-                        useCaseName: 'Story1',
-                        functionName: 'story1',
-                      ),
+                          useCaseName: 'Story1', functionName: 'story1'),
                       WidgetbookUseCaseInstance(
-                        useCaseName: 'Story2',
-                        functionName: 'story2',
-                      ),
+                          useCaseName: 'Story2', functionName: 'story2'),
                     ],
                   ),
                 ),

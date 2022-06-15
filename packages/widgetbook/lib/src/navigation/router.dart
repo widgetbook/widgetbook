@@ -62,6 +62,17 @@ void refreshRoute<CustomTheme>(
   router.goNamed('/', queryParams: queryParameters);
 }
 
+bool _parseBoolQueryParameter({
+  required String? value,
+  bool defaultValue = false,
+}) {
+  if (value == null) {
+    return defaultValue;
+  }
+
+  return value == 'true';
+}
+
 GoRouter createRouter<CustomTheme>({
   required WorkbenchProvider<CustomTheme> workbenchProvider,
   required PreviewProvider previewProvider,
@@ -75,6 +86,7 @@ GoRouter createRouter<CustomTheme>({
       final orientation = routerState.queryParams['orientation'];
       final frame = routerState.queryParams['frame'];
       final path = routerState.queryParams['path'];
+
       workbenchProvider
         ..setThemeByName(theme)
         ..setLocaleByName(locale)
@@ -90,7 +102,19 @@ GoRouter createRouter<CustomTheme>({
         name: '/',
         path: '/',
         pageBuilder: (context, state) {
-          return NoTransitionPage<void>(child: WidgetbookPage<CustomTheme>());
+          final disableNavigation = _parseBoolQueryParameter(
+            value: state.queryParams['disable-navigation'],
+          );
+          final disableProperties = _parseBoolQueryParameter(
+            value: state.queryParams['disable-properties'],
+          );
+
+          return NoTransitionPage<void>(
+            child: WidgetbookPage<CustomTheme>(
+              disableNavigation: disableNavigation,
+              disableProperties: disableProperties,
+            ),
+          );
         },
       ),
     ],
