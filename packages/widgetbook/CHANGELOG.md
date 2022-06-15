@@ -1,4 +1,4 @@
-## 2.4.0-beta.1
+## 2.4.0-beta.2
 
 - Added parameter `disable-navigation` and `disable-properties` to router.
 
