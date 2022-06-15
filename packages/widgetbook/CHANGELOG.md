@@ -1,6 +1,6 @@
 ## 2.4.0-beta.1
 
-- TBD
+- Added parameter `disable-navigation` and `disable-properties` to router.
 
 ## 2.3.0 
 
