@@ -27,6 +27,20 @@ builders:
     auto_apply: dependents
     runs_before: [":widgetbook_builder"]
     build_to: cache
+  devices_builder:
+    import: "package:widgetbook_generator/builder.dart"
+    builder_factories: ["devicesBuilder"]
+    build_extensions: { ".dart": [".devices.widgetbook.json"] }
+    auto_apply: dependents
+    runs_before: [":widgetbook_builder"]
+    build_to: cache
+  text_scale_factor_builder:
+    import: "package:widgetbook_generator/builder.dart"
+    builder_factories: ["textScaleFactorsBuilder"]
+    build_extensions: { ".dart": [".textscalefactors.widgetbook.json"] }
+    auto_apply: dependents
+    runs_before: [":widgetbook_builder"]
+    build_to: cache
   device_frame_builder:
     import: "package:widgetbook_generator/builder.dart"
     builder_factories: ["deviceFrameBuilder"]

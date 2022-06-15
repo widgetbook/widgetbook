@@ -14,6 +14,8 @@ _$_WidgetbookLocalesData _$$_WidgetbookLocalesDataFromJson(
       dependencies: (json['dependencies'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      locales:
+          (json['locales'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$$_WidgetbookLocalesDataToJson(
@@ -22,4 +24,5 @@ Map<String, dynamic> _$$_WidgetbookLocalesDataToJson(
       'name': instance.name,
       'importStatement': instance.importStatement,
       'dependencies': instance.dependencies,
+      'locales': instance.locales,
     };

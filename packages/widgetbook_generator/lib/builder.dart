@@ -4,10 +4,12 @@ import 'package:widgetbook_generator/builders/json_builder.dart';
 import 'package:widgetbook_generator/generators/widgetbook_generator.dart';
 import 'package:widgetbook_generator/resolvers/app_builder_resolver.dart';
 import 'package:widgetbook_generator/resolvers/device_frame_builder_resolver.dart';
+import 'package:widgetbook_generator/resolvers/device_resolver.dart';
 import 'package:widgetbook_generator/resolvers/locales_resolver.dart';
 import 'package:widgetbook_generator/resolvers/localization_builder_resolver.dart';
 import 'package:widgetbook_generator/resolvers/localization_delegates_resolver.dart';
 import 'package:widgetbook_generator/resolvers/scaffold_builder_resolver.dart';
+import 'package:widgetbook_generator/resolvers/text_scale_factor_resolver.dart';
 import 'package:widgetbook_generator/resolvers/theme_builder_resolver.dart';
 import 'package:widgetbook_generator/resolvers/theme_resolver.dart';
 import 'package:widgetbook_generator/resolvers/use_case_builder_resolver.dart';
@@ -31,6 +33,27 @@ Builder storyBuilder(BuilderOptions options) {
   return JsonLibraryBuilder(
     UseCaseResolver(),
     generatedExtension: '.usecase.widgetbook.json',
+    formatOutput: _formatOutput,
+  );
+}
+
+/// Builder for creating a json which contains all used devices.
+/// Creates a .devices.widgetbook.json file for each device used in Widgetbook.
+Builder devicesBuilder(BuilderOptions options) {
+  return JsonLibraryBuilder(
+    DeviceResolver(),
+    generatedExtension: '.devices.widgetbook.json',
+    formatOutput: _formatOutput,
+  );
+}
+
+/// Builder for creating a json which contains all used text scale factors.
+/// Creates a .textscalefactors.widgetbook.json file for each text scale factor
+/// used in Widgetbook.
+Builder textScaleFactorsBuilder(BuilderOptions options) {
+  return JsonLibraryBuilder(
+    TextScaleFactorResolver(),
+    generatedExtension: '.textscalefactors.widgetbook.json',
     formatOutput: _formatOutput,
   );
 }

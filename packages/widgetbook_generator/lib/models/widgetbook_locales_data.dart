@@ -11,6 +11,7 @@ class WidgetbookLocalesData extends WidgetbookData
     required String name,
     required String importStatement,
     required List<String> dependencies,
+    required List<String> locales,
   }) = _WidgetbookLocalesData;
 
   factory WidgetbookLocalesData.fromJson(Map<String, dynamic> json) =>
