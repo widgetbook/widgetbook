@@ -3,13 +3,22 @@
 > **NOTE:** Since the Review feature is currently in beta, we're not aiming to migrate any data created previous to the official (non-beta) release to make changes to the feature easier for our development team.
 
 The Widgetbook Cloud _Review_ feature (currently in beta) allows teams to review added, changed or removed components.
+The Review feature closely relates to reviews known from Pull-Requests. 
+For each Pull-Request, our new CLI v2 analyzes the changes to your Widgetbook and creates a review.
+Members of a frontend-team now can review each _changed_ use-case in isolation and add comments for other team members.
+
+Once all changes from the review are accepted, a developer closes the Pull-Request and the review's status gets updated to `merged`.
+For this to work, a webhook to our services is required.
+
+## Requirements
 
 To use Widgetbook Cloud _Review_ your setup has to meet the following requirements:
-- Use `widgetbook_generator` package in version `v2.4.0-beta.1`
-- Use `widgetbook` package in version `v2.4.0-beta.1`
+- Use `widgetbook_generator` package in version `v2.4.0-beta.1` (no special configuration required).
+- Use `widgetbook` package in version `v2.4.0-beta.1` (no special configuration required).
 - Use Widgetbook CLI `v2-beta`
+- Setup a GitHub webhook
 
-## CLI v2
+## CLI v2-beta
 
 Since there are plenty of Git provider available, it can be hard to maintain them all.
 Since the Widgetbook Uploader is implemented in Dart, we wrapped the implementation with a Dart CLI to make it easily accessible.
@@ -28,11 +37,12 @@ See the [widgetbook-hosting](https://github.com/widgetbook/widgetbook-hosting) r
 
 ### Arguments
 
-The CLI accepts the following arguments
+The CLI accepts the following arguments.
+> Note that the useage of the `path` argument received breaking changes!
 
 | Argument         | Mandatory | Description |
 | ---------------- | --------- | ----------- |
-| `--path`         | ✅        | The path to the build folder of your application. Defaults to `./build/web`.|
+| `--path`         | ✅        | The path to your project. |
 | `--api-key`      | ✅        | The project specific API key for Widgetbook Cloud. See [How to create an API key](/widgetbook-cloud/hosting#how-to-create-an-api-key).|
 | `--branch`       | ✅        | The name of the branch for which the Widgetbook is uploaded.|
 | `--repository`   | ✅        | The name of the repository for which the Widgetbook is uploaded.|
@@ -42,15 +52,13 @@ The CLI accepts the following arguments
 | `--base-branch`  | ➖        | The name of the pull-request's base branch. |
 | `--base-commit`  | ➖        | The SHA hash of pull-request's base branch. |
 
-## GitHub Example
+### CLI Example (GitHub)
 
 The CLI extracts information from `widgetbook_generator` and also obtains branch information from git.
 For this to work properly make sure to checkout your code with `fetch-depth: '0'`. 
 Also make sure to run the `build_runner` before calling the `CLI`.
 
-```yaml
-${{ test }}
-```
+> Note: In the example below you'll find the `--base-commit` parameter which is just set to `$`. This is incorrect and should be the following value: ${{ github.event.pull_request.base.sha }}. This is a problem with our documentation and we're already working on a fix.
 
 ```yaml
 name: Build 
@@ -98,7 +106,35 @@ jobs:
                 --base-branch \
                 $GITHUB_BASE_REF \
                 --base-commit \
-                ${{ github.event.pull_request.base.sha }} \ \
+                ${{ github.event.pull_request.base.sha }} \
                 --git-provider \
                 "GitHub"
 ```
+
+## Setup Webhook (GitHub)
+
+A GitHub Webhook allows Widgetbook Cloud to receive information about changes within your repository.
+Widgetbook Cloud can automatically set the state of a Review to `closed` or `merged` when a corresponding Pull-Request is `closed` or `merged`.
+For this to work, you need to configure a webhook. 
+See [Setting up a webhook](https://docs.github.com/en/developers/webhooks-and-events/webhooks/creating-webhooks#setting-up-a-webhook) for instructions on how to do this.
+
+### Requirements
+
+You need to meet the following requirements to setup a webhook to Widgetbook Cloud:
+- Webhook Secret
+- Payload URL
+
+### Obtaining the Webhook Secret
+
+The webhook secret can be obtained by going to the project overview and click the `Get secret` button within the webhook card.
+
+### Setting up the webhook
+
+1. Go to [https://github.com/username/repo-name/settings/hooks](https://github.com/username/repo-name/settings/hooks). Make sure to replace `username` and `repo-name` with your appropriate values.
+1. Click `Add webhook`
+1. Paste `https://api.widgetbook.io/v1/webhooks/github` into the `Payload URL` field.
+1. Set `Content type` to `application/json`
+1. Paste your Widgetbook Cloud webhook secret into the `Secret` field.
+1. Select when to trigger the webhook.
+    1. Select `Send me everything` or
+    2. Select `Let me select individual events` and enable `Pull requests`. You can disable all other options. 
