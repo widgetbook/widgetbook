@@ -20,7 +20,10 @@ String generateImports(
     ..add('package:widgetbook/widgetbook.dart')
     ..remove('package:widgetbook_annotation/widgetbook_annotation.dart');
 
-  return set.map(_generateImportStatement).join('\n');
+  final imports = set.map(_generateImportStatement).toList()
+    ..sort((a, b) => a.compareTo(b));
+
+  return imports.join('\n');
 }
 
 String _generateImportStatement(String import) {
