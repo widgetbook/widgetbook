@@ -31,6 +31,7 @@ AppBuilderFunction get materialAppBuilder =>
     (BuildContext context, Widget child) {
       final _router = getRouter(child);
       return MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         routerDelegate: _router.routerDelegate,
         routeInformationParser: _router.routeInformationParser,
       );
