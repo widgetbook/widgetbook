@@ -232,7 +232,7 @@ packages:
     source: path
     version: "2.3.0"
   widgetbook_models:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       path: "../../packages/widgetbook_models"
       relative: true

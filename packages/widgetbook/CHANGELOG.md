@@ -1,4 +1,9 @@
-## 2.4.0-beta.2
+## 2.4.1
+
+- fix: failed to load font Nunito ([#206](https://github.com/widgetbook/widgetbook/issues/206)) 
+- fix: preview app shows debug banner ([#202](https://github.com/widgetbook/widgetbook/issues/202))
+
+## 2.4.0
 
 - Added parameter `disable-navigation` and `disable-properties` to router.
 
