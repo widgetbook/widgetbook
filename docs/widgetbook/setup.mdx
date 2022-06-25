@@ -12,6 +12,19 @@ dev_dependencies:
   widgetbook:
 ```
 
+## Create a Widgetbook with mason 🧱
+
+Checkout the [widgetbook_starter](https://brickhub.dev/bricks/widgetbook_starter/0.1.0+1) brick on Brickhub.
+
+```bash
+dart pub global activate mason_cli
+mason init
+mason add widgetbook_starter
+mason make --name "Name of your widgetbook"
+```
+
+## Create a Widgetbook manually
+
 Since the Widgetbook is launched as a separate app, it is recommended to create another `main` method. 
 This enables you to switch between your app and `Widgetbook` at any time. 
 You can even launch your app and `Widgetbook` simultaneously.
