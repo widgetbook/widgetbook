@@ -1,4 +1,8 @@
-## 2.4.0-beta.1
+## 2.4.1
+
+- fix: imports of generated file not deterministic ([#167](https://github.com/widgetbook/widgetbook/issues/167))
+
+## 2.4.0
 
 - feat: added builders to generate `.json` files for annotated code elements.
 
