@@ -85,6 +85,13 @@
                     "Billing", "/widgetbook-cloud/billing"
                 ]
             ]
+        ],[
+            "CLI",
+            [
+                [
+                    "Overview", "/widgetbook-cli/overview"
+                ]
+            ]
         ]
     ]
 }
