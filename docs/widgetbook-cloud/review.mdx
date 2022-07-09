@@ -4,7 +4,7 @@
 
 The Widgetbook Cloud _Review_ feature (currently in beta) allows teams to review added, changed or removed components.
 The Review feature closely relates to reviews known from Pull-Requests. 
-For each Pull-Request, our new CLI v2 analyzes the changes to your Widgetbook and creates a review.
+For each Pull-Request, our new `widgetbook-cli` analyzes the changes to your Widgetbook and creates a review.
 Members of a frontend-team now can review each _changed_ use-case in isolation and add comments for other team members.
 
 Once all changes from the review are accepted, a developer closes the Pull-Request and the review's status gets updated to `merged`.
@@ -13,44 +13,18 @@ For this to work, a webhook to our services is required.
 ## Requirements
 
 To use Widgetbook Cloud _Review_ your setup has to meet the following requirements:
-- Use `widgetbook_generator` package in version `v2.4.0-beta.1` (no special configuration required).
-- Use `widgetbook` package in version `v2.4.0-beta.1` (no special configuration required).
-- Use Widgetbook CLI `v2-beta`
+- Use `widgetbook_generator` package in version `v2.4.1` (no special configuration required).
+- Use `widgetbook` package in version `v2.4.1` (no special configuration required).
+- Use the `widgetbook-cli` from the [widgetbook_cli](https://pub.dev/packages/widgetbook_cli) pub.dev package.
 - Setup a GitHub webhook
 
-## CLI v2-beta
+## Setup the CLI
 
-Since there are plenty of Git provider available, it can be hard to maintain them all.
-Since the Widgetbook Uploader is implemented in Dart, we wrapped the implementation with a Dart CLI to make it easily accessible.
+For instructions on how to setup the CLI see [our docs](/widgetbook-cli/overview) or just run:
 
-A pre-compiled version of the CLI is available for the most common systems:
-
-| OS      | Architecture | Link |
-| ------- | ------------ | ---- |
-| Mac OS  | x86          | [🔗](https://firebasestorage.googleapis.com/v0/b/widgetbook-cloud.appspot.com/o/tools%2Fcli-v2-beta-production-macos-x86.exe?alt=media) |
-| Mac OS  | ARM          | coming soon, use x86 version with Rosetta for now |
-| Windows | x86          | [🔗](https://firebasestorage.googleapis.com/v0/b/widgetbook-cloud.appspot.com/o/tools%2Fcli-v2-beta-production-windows-x86.exe?alt=media) |
-| Ubuntu  | x86          | [🔗](https://firebasestorage.googleapis.com/v0/b/widgetbook-cloud.appspot.com/o/tools%2Fcli-v2-beta-production-ubuntu-x86.exe?alt=media) |
-
-But it's understandable if you'd like to check the source code first and/or compile it yourself. 
-See the [widgetbook-hosting](https://github.com/widgetbook/widgetbook-hosting) repository for more information.
-
-### Arguments
-
-The CLI accepts the following arguments.
-> Note that the useage of the `path` argument received breaking changes!
-
-| Argument         | Mandatory | Description |
-| ---------------- | --------- | ----------- |
-| `--path`         | ✅        | The path to your project. |
-| `--api-key`      | ✅        | The project specific API key for Widgetbook Cloud. See [How to create an API key](/widgetbook-cloud/hosting#how-to-create-an-api-key).|
-| `--branch`       | ✅        | The name of the branch for which the Widgetbook is uploaded.|
-| `--repository`   | ✅        | The name of the repository for which the Widgetbook is uploaded.|
-| `--commit`       | ✅        | The SHA hash of the commit for which the Widgetbook is uploaded.|
-| `--actor`        | ✅        | The username of the actor which triggered the build.|
-| `--git-provider` | ✅        | The name of the Git provider. Allowed values: `GitHub`, `GitLab`, `BitBucket`, `Azure`, `CLI`.
-| `--base-branch`  | ➖        | The name of the pull-request's base branch. |
-| `--base-commit`  | ➖        | The SHA hash of pull-request's base branch. |
+```bash
+dart pub global activate widgetbook_cli
+```
 
 ### CLI Example (GitHub)
 
@@ -70,9 +44,6 @@ jobs:
         with:
           fetch-depth: '0'
 
-      - name: Show branches
-        run: git branch -a
-
       - name: Setup flutter
         uses: subosito/flutter-action@v1
         with:
@@ -87,11 +58,12 @@ jobs:
       - name: Build Website
         run: flutter build web -t lib/main.widgetbook.dart
 
+      - name: Install Widgetbook CLI
+        run: dart pub global activate widgetbook_cli
+
       - name: Upload Widgetbook
         run: |
-          curl -o ./cli.exe 'https://firebasestorage.googleapis.com/v0/b/widgetbook-cloud.appspot.com/o/tools%2Fcli-v2-beta-production-ubuntu-x86.exe?alt=media'
-          chmod +x cli.exe 
-          ./cli.exe \
+          widgetbook-cli \
                 --path "./" --api-key <API-KEY> \
                 --branch \
                 $GITHUB_HEAD_REF \
