@@ -1,6 +1,7 @@
 {
     "mdx-preview.preview.useVscodeMarkdownStyles": false,
     "conventionalCommits.scopes": [
-        "widgetbook"
+        "widgetbook",
+        "cli"
     ]
 }
