@@ -1,6 +1,6 @@
 # Overview
 
-`widgetbook-cli` allows developers to upload their Widgetbook to Widgetbook Cloud.
+`widgetbook_cli` allows developers to upload their Widgetbook to Widgetbook Cloud.
 
 Currently the CLI supports two features:
 - uploading a [Widgetbook Build](/widgetbook-cloud/hosting)
@@ -22,7 +22,7 @@ dart pub global activate widgetbook_cli
 
 Run the CLI by using
 ```bash
-widgetbook-cli [<options>]
+widgetbook [<options>]
 ```
 
 ### Arguments
