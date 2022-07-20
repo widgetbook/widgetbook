@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:args/args.dart';
 import 'package:path/path.dart' as p;
+import 'package:widgetbook_git/widgetbook_git.dart';
 
 import 'models/deployment_data.dart';
 import 'review/devices/device_parser.dart';
@@ -29,7 +30,7 @@ void main(List<String> arguments) async {
     ..addOption(
       'path',
       help: 'The path to the build folder of your application.',
-      mandatory: true,
+      defaultsTo: './',
     )
     ..addOption(
       'api-key',
@@ -39,7 +40,6 @@ void main(List<String> arguments) async {
     ..addOption(
       'branch',
       help: 'The name of the branch for which the Widgetbook is uploaded.',
-      mandatory: true,
     )
     ..addOption(
       'repository',
@@ -49,7 +49,6 @@ void main(List<String> arguments) async {
     ..addOption(
       'commit',
       help: 'The SHA hash of the commit for which the Widgetbook is uploaded.',
-      mandatory: true,
     )
     ..addOption(
       'actor',
@@ -59,14 +58,14 @@ void main(List<String> arguments) async {
     ..addOption(
       'git-provider',
       help: 'The name of the Git provider.',
-      mandatory: true,
+      defaultsTo: 'Local',
       allowed: [
         'GitHub',
         'GitLab',
         'BitBucket',
         'Azure',
         // CLI is for users running the command locally.
-        'CLI',
+        'Local',
       ],
     )
     ..addOption(
@@ -81,15 +80,40 @@ void main(List<String> arguments) async {
   final args = parser.parse(arguments);
 
   final path = args['path'] as String;
+
+  if (!await GitDir.isGitDir(path)) {
+    print('Directory from "path" is not a Git folder');
+    return;
+  }
+
+  final gitDir = await GitDir.fromExisting(
+    path,
+    allowSubdirectory: true,
+  );
+
   final apiKey = args['api-key'] as String;
-  final branch = args['branch'] as String;
+  final currentBranch = await gitDir.currentBranch();
+  final branch = args['branch'] as String? ?? currentBranch.branchName;
   final repository = args['repository'] as String;
-  final commit = args['commit'] as String;
+  final commit = args['commit'] as String? ?? currentBranch.sha;
   final actor = args['actor'] as String;
   final gitProvider = args['git-provider'] as String;
 
   final baseBranch = args['base-branch'] as String?;
-  final baseCommit = args['base-commit'] as String?;
+  final branches = (await gitDir.branches()).toList();
+  final branchExists = baseBranch != null &&
+      branches.any(
+        (element) => element.branchName == baseBranch,
+      );
+  var baseCommit = args['base-commit'] as String?;
+
+  if (branchExists) {
+    baseCommit = branches
+        .firstWhere(
+          (element) => element.branchName == baseBranch,
+        )
+        .sha;
+  }
 
   final buildPath = p.join(
     path,
