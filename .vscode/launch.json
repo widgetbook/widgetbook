@@ -2,6 +2,20 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug CLI",
+            "cwd": "packages/widgetbook_cli",
+            "request": "launch",
+            "program": "bin/cli_debug.dart",
+            "type": "dart",
+            "args": [
+                "--api-key", "abc",
+                "--repository", "test-repo",
+                "--actor", "jenshor",
+                "--git-provider", "CLI",
+                "--base-branch", "main"
+            ]
+        },
+        {
             "name": "Debug widgetbook_example",
             "cwd": "examples/widgetbook_example",
             "request": "launch",
