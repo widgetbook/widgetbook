@@ -3,8 +3,8 @@
 `widgetbook_cli` allows developers to upload their Widgetbook to Widgetbook Cloud.
 
 Currently the CLI supports two features:
-- uploading a [Widgetbook Build](/widgetbook-cloud/hosting)
-- uploading a [Widgetbook Review](/widgetbook-cloud/review)
+- uploading a [Widgetbook Build](https://docs.widgetbook.io/widgetbook-cloud/hosting)
+- uploading a [Widgetbook Review](https://docs.widgetbook.io/widgetbook-cloud/review)
 
 ## Repository
 
@@ -32,7 +32,7 @@ The CLI accepts the following arguments.
 | Argument         | Mandatory | Description |
 | ---------------- | --------- | ----------- |
 | `--path`         | ➖        | The path to your project. Defaults to `./`. |
-| `--api-key`      | ✅        | The project specific API key for Widgetbook Cloud. See [How to create an API key](/widgetbook-cloud/hosting#how-to-create-an-api-key).|
+| `--api-key`      | ✅        | The project specific API key for Widgetbook Cloud. See [How to create an API key](https://docs.widgetbook.io/widgetbook-cloud/hosting#how-to-create-an-api-key).|
 | `--branch`       | ➖        | The name of the branch for which the Widgetbook is uploaded. Defaults to the current git branch. |
 | `--commit`       | ➖        | The SHA hash of the commit for which the Widgetbook is uploaded. Defaults to the last commit of the current git branch. |
 | `--repository`   | ✅        | The name of the repository for which the Widgetbook is uploaded.|
