@@ -142,12 +142,20 @@ void main(List<String> arguments) async {
       ),
     );
 
-    if (uploadInfo != null &&
-        baseBranch != null &&
-        baseCommit != null &&
-        // If a review shall be created, the projects needs to use generator
-        // Generator requires to define at least one theme.
-        themes.isNotEmpty) {
+    // If generator is not run or not properly configured
+    if (themes.isEmpty) {
+      print(
+        'HINT: Could not find generator files. '
+        'Therefore, no review has been created. '
+        'Make sure to use widgetbook_generator and '
+        'run build_runner before this CLI. '
+        'See https://docs.widgetbook.io/widgetbook-cloud/review for more '
+        'information.',
+      );
+      exit(0);
+    }
+
+    if (uploadInfo != null && baseBranch != null && baseCommit != null) {
       await WidgetbookHttpClient().uploadReview(
         apiKey: apiKey,
         useCases: useCases,

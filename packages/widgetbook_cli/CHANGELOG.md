@@ -1,3 +1,7 @@
+## 2.0.0-beta.10
+
+- fix: ambiguous warning when no generator files are found
+
 ## 2.0.0-beta.9
 
 - docs: change relative links to global links.
