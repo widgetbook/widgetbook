@@ -4,6 +4,7 @@ import 'package:args/args.dart';
 import 'package:path/path.dart' as p;
 import 'package:widgetbook_git/widgetbook_git.dart';
 
+import 'git-provider/github/github.dart';
 import 'models/deployment_data.dart';
 import 'review/devices/device_parser.dart';
 import 'review/locales/locales_parser.dart';
@@ -75,6 +76,14 @@ void main(List<String> arguments) async {
     ..addOption(
       'base-commit',
       help: 'The SHA hash of the commit of the base branch.',
+    )
+    ..addOption(
+      'github-token',
+      help: 'GitHub API token.',
+    )
+    ..addOption(
+      'pr',
+      help: 'The number of the PR.',
     );
 
   final args = parser.parse(arguments);
@@ -98,6 +107,8 @@ void main(List<String> arguments) async {
   final commit = args['commit'] as String? ?? currentBranch.sha;
   final actor = args['actor'] as String;
   final gitProvider = args['git-provider'] as String;
+  final gitHubToken = args['github-token'] as String?;
+  final prNumber = args['pr'] as String?;
 
   final baseBranch = args['base-branch'] as String?;
   final branches = (await gitDir.branches()).toList();
@@ -141,6 +152,17 @@ void main(List<String> arguments) async {
         provider: gitProvider,
       ),
     );
+
+    if (uploadInfo != null && prNumber != null) {
+      if (gitHubToken != null) {
+        await GithubProvider(
+          apiKey: gitHubToken,
+        ).addBuildComment(
+          buildInfo: uploadInfo,
+          number: prNumber,
+        );
+      }
+    }
 
     // If generator is not run or not properly configured
     if (themes.isEmpty) {

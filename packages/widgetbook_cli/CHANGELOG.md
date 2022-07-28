@@ -1,3 +1,7 @@
+## 2.0.0-beta.11
+
+- feat: comment link to Build in PR
+
 ## 2.0.0-beta.10
 
 - fix: ambiguous warning when no generator files are found
