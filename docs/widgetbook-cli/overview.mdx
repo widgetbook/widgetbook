@@ -40,6 +40,8 @@ The CLI accepts the following arguments.
 | `--git-provider` | ➖        | The name of the Git provider. Allowed values: `GitHub`, `GitLab`, `BitBucket`, `Azure`, `Local`. Defaults to `Local` |
 | `--base-branch`  | ➖        | The name of the pull-request's base branch. |
 | `--base-commit`  | ➖        | The SHA hash of pull-request's base branch. Defaults to the last commit of `base-branch`, if `base-branch` is set. |
+| `--pr`           | ➖        | The number of the PR on which the CLI is running. |
+| `--github-token` | ➖        | The authentication token to post comments to the PR on which the CLI is running. |
 
 If `base-branch` or `base-commit` are omitted, a Widgetbook Build is created. 
 If `base-branch` and `base-commit` are provided, a widgetbook Build and a Widgetbook Review is created.
