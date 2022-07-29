@@ -29,7 +29,10 @@ class GithubProvider extends GitProvider {
         'comments',
       ),
       data: Comment(
-        body: 'https://app.widgetbook.io/#/projects/$projectId/builds/$buildId',
+        body: commentBody(
+          projectId: projectId,
+          buildId: buildId,
+        ),
       ).toJson(),
     );
   }
