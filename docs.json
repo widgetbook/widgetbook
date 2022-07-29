@@ -56,9 +56,6 @@
                     "Setup", "/widgetbook-generator/setup"
                 ],
                 [
-                    "Annotations", "/widgetbook-annotation/annotations"
-                ],
-                [
                     "Run", "/widgetbook-generator/run" 
                 ]
             ]
@@ -71,6 +68,9 @@
                 ],
                 [
                     "Getting started", "/widgetbook-cloud/getting-started"
+                ],
+                [
+                    "Projects", "/widgetbook-cloud/projects"
                 ],
                 [
                     "Hosting", "/widgetbook-cloud/hosting"

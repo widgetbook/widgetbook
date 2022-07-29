@@ -34,7 +34,7 @@ class Styles {
       onBackground: Color(0xff222222),
     ),
     shadowColor: const Color(0xff222222).withOpacity(0.05),
-    fontFamily: 'Nunito',
+    fontFamily: 'packages/widgetbook/Nunito',
     dividerColor: const Color(0xff6C6F8D),
     canvasColor: const Color(0x7fc3e8f3),
     scaffoldBackgroundColor: Colors.white,
