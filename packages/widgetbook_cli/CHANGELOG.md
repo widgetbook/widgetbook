@@ -1,3 +1,7 @@
+## 2.0.0-beta.14
+
+- docs: add `pr` and `github-token` arguments
+
 ## 2.0.0-beta.13
 
 - feat: improve comment link markdown
