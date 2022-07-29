@@ -1,3 +1,7 @@
+## 2.0.0-beta.13
+
+- feat: improve comment link markdown
+
 ## 2.0.0-beta.11
 
 - feat: comment link to Build in PR
@@ -17,7 +21,7 @@
 ## 2.0.0-beta.7
 
 - fix: change name of executable from `widgetbook-cli` to `widgetbook`.
-
+ 
 ## 2.0.0-beta.6
 
 - Initial version.
