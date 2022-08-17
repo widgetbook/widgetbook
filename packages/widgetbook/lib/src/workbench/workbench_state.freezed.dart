@@ -18,14 +18,12 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$WorkbenchState<CustomTheme> {
   ComparisonSetting get comparisonSetting => throw _privateConstructorUsedError;
   WidgetbookTheme<CustomTheme>? get theme => throw _privateConstructorUsedError;
-  Locale? get locale => throw _privateConstructorUsedError;
   Device? get device => throw _privateConstructorUsedError;
   double? get textScaleFactor => throw _privateConstructorUsedError;
   WidgetbookFrame get frame => throw _privateConstructorUsedError;
   Orientation get orientation => throw _privateConstructorUsedError;
   List<WidgetbookTheme<CustomTheme>> get themes =>
       throw _privateConstructorUsedError;
-  List<Locale> get locales => throw _privateConstructorUsedError;
   List<Device> get devices => throw _privateConstructorUsedError;
   List<WidgetbookFrame> get frames => throw _privateConstructorUsedError;
   List<double> get textScaleFactors => throw _privateConstructorUsedError;
@@ -43,13 +41,11 @@ abstract class $WorkbenchStateCopyWith<CustomTheme, $Res> {
   $Res call(
       {ComparisonSetting comparisonSetting,
       WidgetbookTheme<CustomTheme>? theme,
-      Locale? locale,
       Device? device,
       double? textScaleFactor,
       WidgetbookFrame frame,
       Orientation orientation,
       List<WidgetbookTheme<CustomTheme>> themes,
-      List<Locale> locales,
       List<Device> devices,
       List<WidgetbookFrame> frames,
       List<double> textScaleFactors});
@@ -72,13 +68,11 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
   $Res call({
     Object? comparisonSetting = freezed,
     Object? theme = freezed,
-    Object? locale = freezed,
     Object? device = freezed,
     Object? textScaleFactor = freezed,
     Object? frame = freezed,
     Object? orientation = freezed,
     Object? themes = freezed,
-    Object? locales = freezed,
     Object? devices = freezed,
     Object? frames = freezed,
     Object? textScaleFactors = freezed,
@@ -92,10 +86,6 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as WidgetbookTheme<CustomTheme>?,
-      locale: locale == freezed
-          ? _value.locale
-          : locale // ignore: cast_nullable_to_non_nullable
-              as Locale?,
       device: device == freezed
           ? _value.device
           : device // ignore: cast_nullable_to_non_nullable
@@ -116,10 +106,6 @@ class _$WorkbenchStateCopyWithImpl<CustomTheme, $Res>
           ? _value.themes
           : themes // ignore: cast_nullable_to_non_nullable
               as List<WidgetbookTheme<CustomTheme>>,
-      locales: locales == freezed
-          ? _value.locales
-          : locales // ignore: cast_nullable_to_non_nullable
-              as List<Locale>,
       devices: devices == freezed
           ? _value.devices
           : devices // ignore: cast_nullable_to_non_nullable
@@ -175,13 +161,11 @@ abstract class _$$_WorkbenchStateCopyWith<CustomTheme, $Res>
   $Res call(
       {ComparisonSetting comparisonSetting,
       WidgetbookTheme<CustomTheme>? theme,
-      Locale? locale,
       Device? device,
       double? textScaleFactor,
       WidgetbookFrame frame,
       Orientation orientation,
       List<WidgetbookTheme<CustomTheme>> themes,
-      List<Locale> locales,
       List<Device> devices,
       List<WidgetbookFrame> frames,
       List<double> textScaleFactors});
@@ -210,13 +194,11 @@ class __$$_WorkbenchStateCopyWithImpl<CustomTheme, $Res>
   $Res call({
     Object? comparisonSetting = freezed,
     Object? theme = freezed,
-    Object? locale = freezed,
     Object? device = freezed,
     Object? textScaleFactor = freezed,
     Object? frame = freezed,
     Object? orientation = freezed,
     Object? themes = freezed,
-    Object? locales = freezed,
     Object? devices = freezed,
     Object? frames = freezed,
     Object? textScaleFactors = freezed,
@@ -230,10 +212,6 @@ class __$$_WorkbenchStateCopyWithImpl<CustomTheme, $Res>
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as WidgetbookTheme<CustomTheme>?,
-      locale: locale == freezed
-          ? _value.locale
-          : locale // ignore: cast_nullable_to_non_nullable
-              as Locale?,
       device: device == freezed
           ? _value.device
           : device // ignore: cast_nullable_to_non_nullable
@@ -254,10 +232,6 @@ class __$$_WorkbenchStateCopyWithImpl<CustomTheme, $Res>
           ? _value._themes
           : themes // ignore: cast_nullable_to_non_nullable
               as List<WidgetbookTheme<CustomTheme>>,
-      locales: locales == freezed
-          ? _value._locales
-          : locales // ignore: cast_nullable_to_non_nullable
-              as List<Locale>,
       devices: devices == freezed
           ? _value._devices
           : devices // ignore: cast_nullable_to_non_nullable
@@ -280,18 +254,15 @@ class _$_WorkbenchState<CustomTheme> extends _WorkbenchState<CustomTheme> {
   _$_WorkbenchState(
       {this.comparisonSetting = ComparisonSetting.none,
       this.theme,
-      this.locale,
       this.device,
       required this.textScaleFactor,
       required this.frame,
       this.orientation = Orientation.portrait,
       required final List<WidgetbookTheme<CustomTheme>> themes,
-      required final List<Locale> locales,
       required final List<Device> devices,
       required final List<WidgetbookFrame> frames,
       required final List<double> textScaleFactors})
       : _themes = themes,
-        _locales = locales,
         _devices = devices,
         _frames = frames,
         _textScaleFactors = textScaleFactors,
@@ -302,8 +273,6 @@ class _$_WorkbenchState<CustomTheme> extends _WorkbenchState<CustomTheme> {
   final ComparisonSetting comparisonSetting;
   @override
   final WidgetbookTheme<CustomTheme>? theme;
-  @override
-  final Locale? locale;
   @override
   final Device? device;
   @override
@@ -318,13 +287,6 @@ class _$_WorkbenchState<CustomTheme> extends _WorkbenchState<CustomTheme> {
   List<WidgetbookTheme<CustomTheme>> get themes {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_themes);
-  }
-
-  final List<Locale> _locales;
-  @override
-  List<Locale> get locales {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_locales);
   }
 
   final List<Device> _devices;
@@ -350,7 +312,7 @@ class _$_WorkbenchState<CustomTheme> extends _WorkbenchState<CustomTheme> {
 
   @override
   String toString() {
-    return 'WorkbenchState<$CustomTheme>(comparisonSetting: $comparisonSetting, theme: $theme, locale: $locale, device: $device, textScaleFactor: $textScaleFactor, frame: $frame, orientation: $orientation, themes: $themes, locales: $locales, devices: $devices, frames: $frames, textScaleFactors: $textScaleFactors)';
+    return 'WorkbenchState<$CustomTheme>(comparisonSetting: $comparisonSetting, theme: $theme, device: $device, textScaleFactor: $textScaleFactor, frame: $frame, orientation: $orientation, themes: $themes, devices: $devices, frames: $frames, textScaleFactors: $textScaleFactors)';
   }
 
   @override
@@ -361,7 +323,6 @@ class _$_WorkbenchState<CustomTheme> extends _WorkbenchState<CustomTheme> {
             const DeepCollectionEquality()
                 .equals(other.comparisonSetting, comparisonSetting) &&
             const DeepCollectionEquality().equals(other.theme, theme) &&
-            const DeepCollectionEquality().equals(other.locale, locale) &&
             const DeepCollectionEquality().equals(other.device, device) &&
             const DeepCollectionEquality()
                 .equals(other.textScaleFactor, textScaleFactor) &&
@@ -369,7 +330,6 @@ class _$_WorkbenchState<CustomTheme> extends _WorkbenchState<CustomTheme> {
             const DeepCollectionEquality()
                 .equals(other.orientation, orientation) &&
             const DeepCollectionEquality().equals(other._themes, _themes) &&
-            const DeepCollectionEquality().equals(other._locales, _locales) &&
             const DeepCollectionEquality().equals(other._devices, _devices) &&
             const DeepCollectionEquality().equals(other._frames, _frames) &&
             const DeepCollectionEquality()
@@ -381,13 +341,11 @@ class _$_WorkbenchState<CustomTheme> extends _WorkbenchState<CustomTheme> {
       runtimeType,
       const DeepCollectionEquality().hash(comparisonSetting),
       const DeepCollectionEquality().hash(theme),
-      const DeepCollectionEquality().hash(locale),
       const DeepCollectionEquality().hash(device),
       const DeepCollectionEquality().hash(textScaleFactor),
       const DeepCollectionEquality().hash(frame),
       const DeepCollectionEquality().hash(orientation),
       const DeepCollectionEquality().hash(_themes),
-      const DeepCollectionEquality().hash(_locales),
       const DeepCollectionEquality().hash(_devices),
       const DeepCollectionEquality().hash(_frames),
       const DeepCollectionEquality().hash(_textScaleFactors));
@@ -404,13 +362,11 @@ abstract class _WorkbenchState<CustomTheme>
   factory _WorkbenchState(
           {final ComparisonSetting comparisonSetting,
           final WidgetbookTheme<CustomTheme>? theme,
-          final Locale? locale,
           final Device? device,
           required final double? textScaleFactor,
           required final WidgetbookFrame frame,
           final Orientation orientation,
           required final List<WidgetbookTheme<CustomTheme>> themes,
-          required final List<Locale> locales,
           required final List<Device> devices,
           required final List<WidgetbookFrame> frames,
           required final List<double> textScaleFactors}) =
@@ -422,8 +378,6 @@ abstract class _WorkbenchState<CustomTheme>
   @override
   WidgetbookTheme<CustomTheme>? get theme => throw _privateConstructorUsedError;
   @override
-  Locale? get locale => throw _privateConstructorUsedError;
-  @override
   Device? get device => throw _privateConstructorUsedError;
   @override
   double? get textScaleFactor => throw _privateConstructorUsedError;
@@ -434,8 +388,6 @@ abstract class _WorkbenchState<CustomTheme>
   @override
   List<WidgetbookTheme<CustomTheme>> get themes =>
       throw _privateConstructorUsedError;
-  @override
-  List<Locale> get locales => throw _privateConstructorUsedError;
   @override
   List<Device> get devices => throw _privateConstructorUsedError;
   @override

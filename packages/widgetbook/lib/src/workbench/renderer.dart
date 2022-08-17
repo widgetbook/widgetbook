@@ -8,8 +8,6 @@ class Renderer<CustomTheme> extends StatelessWidget {
   const Renderer({
     Key? key,
     required this.device,
-    required this.locale,
-    required this.localizationsDelegates,
     required this.theme,
     required this.frame,
     required this.textScaleFactor,
@@ -18,8 +16,6 @@ class Renderer<CustomTheme> extends StatelessWidget {
   }) : super(key: key);
 
   final Device device;
-  final Locale locale;
-  final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
   final CustomTheme theme;
   final WidgetbookFrame frame;
   final double textScaleFactor;
@@ -64,47 +60,36 @@ class Renderer<CustomTheme> extends StatelessWidget {
                 context,
                 Builder(
                   builder: (context) {
-                    return renderingState.localizationBuilder(
+                    return renderingState.themeBuilder(
                       context,
-                      workbenchProvider.locales,
-                      localizationsDelegates?.toList(),
-                      locale,
+                      theme,
                       Builder(
                         builder: (context) {
-                          return renderingState.themeBuilder(
-                            context,
-                            theme,
-                            Builder(
-                              builder: (context) {
-                                return Builder(
+                          return Builder(
+                            builder: (context) {
+                              return renderingState.textScaleBuilder(
+                                context,
+                                textScaleFactor,
+                                Builder(
                                   builder: (context) {
-                                    return renderingState.textScaleBuilder(
+                                    return renderingState.scaffoldBuilder(
                                       context,
-                                      textScaleFactor,
+                                      frame,
                                       Builder(
                                         builder: (context) {
-                                          return renderingState.scaffoldBuilder(
+                                          return renderingState.useCaseBuilder(
                                             context,
-                                            frame,
                                             Builder(
-                                              builder: (context) {
-                                                return renderingState
-                                                    .useCaseBuilder(
-                                                  context,
-                                                  Builder(
-                                                    builder: useCaseBuilder,
-                                                  ),
-                                                );
-                                              },
+                                              builder: useCaseBuilder,
                                             ),
                                           );
                                         },
                                       ),
                                     );
                                   },
-                                );
-                              },
-                            ),
+                                ),
+                              );
+                            },
                           );
                         },
                       ),

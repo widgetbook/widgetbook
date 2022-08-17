@@ -28,6 +28,31 @@ class HotreloadWidgetbook extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      appBuilder: (context, child) {
+        return Localizations(
+          locale: context.localization.activeLocale,
+          delegates: context.localization.localizationsDelegates,
+          child: child,
+        );
+      },
+      addons: [
+        LocalizationAddon(
+          data: LocalizationData(
+            activeLocale: Locale('en'),
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            locales: [
+              Locale('en'),
+              Locale('de'),
+              Locale('fr'),
+            ],
+          ),
+        ),
+      ],
       supportedLocales: [
         Locale('en'),
         Locale('de'),

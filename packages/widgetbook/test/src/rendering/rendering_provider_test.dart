@@ -17,7 +17,6 @@ void main() {
           ];
 
           final deviceFrameBuilder = defaultDeviceFrameBuilder;
-          final localizationBuilder = defaultLocalizationBuilder;
           final themeBuilder = defaultThemeBuilder<ThemeData>();
           final scaffoldBuilder = defaultScaffoldBuilder;
           final useCaseBuilder = defaultUseCaseBuilder;
@@ -27,7 +26,6 @@ void main() {
           final provider = RenderingProvider(
             frames: frames,
             deviceFrameBuilder: deviceFrameBuilder,
-            localizationBuilder: localizationBuilder,
             themeBuilder: themeBuilder,
             scaffoldBuilder: scaffoldBuilder,
             useCaseBuilder: useCaseBuilder,
@@ -41,7 +39,6 @@ void main() {
               RenderingState(
                 frames: frames,
                 deviceFrameBuilder: deviceFrameBuilder,
-                localizationBuilder: localizationBuilder,
                 themeBuilder: themeBuilder,
                 scaffoldBuilder: scaffoldBuilder,
                 textScaleBuilder: textScaleBuilder,

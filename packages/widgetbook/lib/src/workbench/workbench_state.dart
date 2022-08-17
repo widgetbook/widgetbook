@@ -10,13 +10,11 @@ class WorkbenchState<CustomTheme> with _$WorkbenchState<CustomTheme> {
   factory WorkbenchState({
     @Default(ComparisonSetting.none) ComparisonSetting comparisonSetting,
     WidgetbookTheme<CustomTheme>? theme,
-    Locale? locale,
     Device? device,
     required double? textScaleFactor,
     required WidgetbookFrame frame,
     @Default(Orientation.portrait) Orientation orientation,
     required List<WidgetbookTheme<CustomTheme>> themes,
-    required List<Locale> locales,
     required List<Device> devices,
     required List<WidgetbookFrame> frames,
     required List<double> textScaleFactors,
@@ -25,7 +23,6 @@ class WorkbenchState<CustomTheme> with _$WorkbenchState<CustomTheme> {
   WorkbenchState._();
 
   bool get hasSelectedTheme => theme != null;
-  bool get hasSelectedLocale => locale != null;
   bool get hasSelectedDevice => device != null;
   bool get hasSelectedTextScaleFactor => textScaleFactor != null;
 }

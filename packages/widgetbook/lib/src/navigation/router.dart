@@ -21,13 +21,6 @@ void refreshRoute<CustomTheme>(
     );
   }
 
-  if (workbenchState.hasSelectedLocale) {
-    queryParameters.putIfAbsent(
-      'locale',
-      () => workbenchState.locale!.languageCode,
-    );
-  }
-
   if (workbenchState.hasSelectedDevice) {
     queryParameters.putIfAbsent(
       'device',
@@ -80,7 +73,6 @@ GoRouter createRouter<CustomTheme>({
   final router = GoRouter(
     redirect: (routerState) {
       final theme = routerState.queryParams['theme'];
-      final locale = routerState.queryParams['locale'];
       final device = routerState.queryParams['device'];
       final textScaleFactor = routerState.queryParams['text-scale-factor'];
       final orientation = routerState.queryParams['orientation'];
@@ -89,7 +81,6 @@ GoRouter createRouter<CustomTheme>({
 
       workbenchProvider
         ..setThemeByName(theme)
-        ..setLocaleByName(locale)
         ..setDeviceByName(device)
         ..setTextScaleFactorByName(textScaleFactor)
         ..setOrientationByName(orientation)

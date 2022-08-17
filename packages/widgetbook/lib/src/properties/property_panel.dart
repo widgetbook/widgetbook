@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/devices/device_handle.dart';
-import 'package:widgetbook/src/localization/localization_handle.dart';
 import 'package:widgetbook/src/rendering/render_handle.dart';
 import 'package:widgetbook/src/text_scale/text_scale_handle.dart';
 import 'package:widgetbook/src/theming/theme_handle.dart';
@@ -51,11 +50,6 @@ class PropertyPanel<CustomTheme> extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: DeviceHandle<CustomTheme>(),
-                  ),
-                  _buildSpacing(context),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: LocalizationHandle<CustomTheme>(),
                   ),
                   _buildSpacing(context),
                   Padding(

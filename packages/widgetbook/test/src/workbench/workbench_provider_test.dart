@@ -9,13 +9,6 @@ void main() {
   group(
     '$WorkbenchProvider',
     () {
-      const usLocale = Locale('us');
-      const deLocale = Locale('de');
-      const locales = [
-        usLocale,
-        deLocale,
-      ];
-
       final lightTheme = WidgetbookTheme(
         name: 'light',
         data: ThemeData.light(),
@@ -52,7 +45,6 @@ void main() {
         'WorkbenchState<$ThemeData> defaults to the first item',
         () {
           final provider = WorkbenchProvider<ThemeData>(
-            locales: locales,
             themes: themes,
             devices: devices,
             frames: frames,
@@ -65,11 +57,9 @@ void main() {
               WorkbenchState<ThemeData>(
                 frame: WidgetbookFrame.defaultFrame(),
                 theme: lightTheme,
-                locale: usLocale,
                 device: iPhone,
                 frames: frames,
                 textScaleFactor: textScaleFactor1,
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 textScaleFactors: textScaleFactors,
@@ -86,7 +76,6 @@ void main() {
             '(${ComparisonSetting.none}) sets locale, theme, device and textScaleFactor to a value not null',
             () {
               final provider = WorkbenchProvider<ThemeData>(
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 frames: frames,
@@ -99,11 +88,9 @@ void main() {
                   WorkbenchState<ThemeData>(
                     frame: WidgetbookFrame.defaultFrame(),
                     theme: lightTheme,
-                    locale: usLocale,
                     device: iPhone,
                     frames: frames,
                     textScaleFactor: textScaleFactor1,
-                    locales: locales,
                     themes: themes,
                     devices: devices,
                     textScaleFactors: textScaleFactors,
@@ -117,7 +104,6 @@ void main() {
             '(${ComparisonSetting.themes}) sets $ComparisonSetting to value and themes to null',
             () {
               final provider = WorkbenchProvider<ThemeData>(
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 frames: frames,
@@ -130,11 +116,9 @@ void main() {
                   WorkbenchState<ThemeData>(
                     comparisonSetting: ComparisonSetting.themes,
                     frame: WidgetbookFrame.defaultFrame(),
-                    locale: usLocale,
                     device: iPhone,
                     frames: frames,
                     textScaleFactor: textScaleFactor1,
-                    locales: locales,
                     themes: themes,
                     devices: devices,
                     textScaleFactors: textScaleFactors,
@@ -148,7 +132,6 @@ void main() {
             '(${ComparisonSetting.devices}) sets $ComparisonSetting to value and devices to null',
             () {
               final provider = WorkbenchProvider<ThemeData>(
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 frames: frames,
@@ -162,41 +145,8 @@ void main() {
                     comparisonSetting: ComparisonSetting.devices,
                     frame: WidgetbookFrame.defaultFrame(),
                     theme: lightTheme,
-                    locale: usLocale,
                     frames: frames,
                     textScaleFactor: textScaleFactor1,
-                    locales: locales,
-                    themes: themes,
-                    devices: devices,
-                    textScaleFactors: textScaleFactors,
-                  ),
-                ),
-              );
-            },
-          );
-
-          test(
-            '(${ComparisonSetting.localization}) sets $ComparisonSetting to value and locale to null',
-            () {
-              final provider = WorkbenchProvider<ThemeData>(
-                locales: locales,
-                themes: themes,
-                devices: devices,
-                frames: frames,
-                textScaleFactors: textScaleFactors,
-              )..changedComparisonSetting(ComparisonSetting.themes);
-
-              expect(
-                provider.state,
-                equals(
-                  WorkbenchState<ThemeData>(
-                    comparisonSetting: ComparisonSetting.themes,
-                    frame: WidgetbookFrame.defaultFrame(),
-                    locale: usLocale,
-                    device: iPhone,
-                    textScaleFactor: textScaleFactor1,
-                    frames: frames,
-                    locales: locales,
                     themes: themes,
                     devices: devices,
                     textScaleFactors: textScaleFactors,
@@ -210,7 +160,6 @@ void main() {
             '(${ComparisonSetting.textScale}) sets $ComparisonSetting to value and textScale to null',
             () {
               final provider = WorkbenchProvider<ThemeData>(
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 frames: frames,
@@ -223,12 +172,10 @@ void main() {
                   WorkbenchState<ThemeData>(
                     comparisonSetting: ComparisonSetting.textScale,
                     frame: WidgetbookFrame.defaultFrame(),
-                    locale: usLocale,
                     device: iPhone,
                     theme: lightTheme,
                     textScaleFactor: null,
                     frames: frames,
-                    locales: locales,
                     themes: themes,
                     devices: devices,
                     textScaleFactors: textScaleFactors,
@@ -247,7 +194,6 @@ void main() {
             'changes ${Orientation.portrait} to ${Orientation.landscape}',
             () {
               final provider = WorkbenchProvider<ThemeData>(
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 frames: frames,
@@ -260,11 +206,9 @@ void main() {
                   WorkbenchState<ThemeData>(
                     frame: WidgetbookFrame.defaultFrame(),
                     theme: lightTheme,
-                    locale: usLocale,
                     device: iPhone,
                     textScaleFactor: textScaleFactor1,
                     frames: frames,
-                    locales: locales,
                     themes: themes,
                     devices: devices,
                     textScaleFactors: textScaleFactors,
@@ -281,11 +225,9 @@ void main() {
                   WorkbenchState<ThemeData>(
                     frame: WidgetbookFrame.defaultFrame(),
                     theme: lightTheme,
-                    locale: usLocale,
                     device: iPhone,
                     textScaleFactor: textScaleFactor1,
                     frames: frames,
-                    locales: locales,
                     themes: themes,
                     devices: devices,
                     textScaleFactors: textScaleFactors,
@@ -305,7 +247,6 @@ void main() {
             'sets active device to value',
             () {
               final provider = WorkbenchProvider<ThemeData>(
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 frames: frames,
@@ -318,11 +259,9 @@ void main() {
                   WorkbenchState<ThemeData>(
                     frame: WidgetbookFrame.defaultFrame(),
                     theme: lightTheme,
-                    locale: usLocale,
                     device: s21,
                     textScaleFactor: textScaleFactor1,
                     frames: frames,
-                    locales: locales,
                     themes: themes,
                     devices: devices,
                     textScaleFactors: textScaleFactors,
@@ -336,7 +275,6 @@ void main() {
             'sets active device to value if ${ComparisonSetting.devices} is active',
             () {
               final provider = WorkbenchProvider<ThemeData>(
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 frames: frames,
@@ -350,11 +288,9 @@ void main() {
                     comparisonSetting: ComparisonSetting.none,
                     frame: WidgetbookFrame.defaultFrame(),
                     theme: lightTheme,
-                    locale: usLocale,
                     device: s21,
                     textScaleFactor: textScaleFactor1,
                     frames: frames,
-                    locales: locales,
                     themes: themes,
                     devices: devices,
                     textScaleFactors: textScaleFactors,
@@ -373,7 +309,6 @@ void main() {
             'sets active theme to value',
             () {
               final provider = WorkbenchProvider<ThemeData>(
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 frames: frames,
@@ -386,11 +321,9 @@ void main() {
                   WorkbenchState<ThemeData>(
                     frame: WidgetbookFrame.defaultFrame(),
                     theme: darkTheme,
-                    locale: usLocale,
                     device: iPhone,
                     textScaleFactor: textScaleFactor1,
                     frames: frames,
-                    locales: locales,
                     themes: themes,
                     devices: devices,
                     textScaleFactors: textScaleFactors,
@@ -404,7 +337,6 @@ void main() {
             'sets active theme to value if ${ComparisonSetting.themes} is active',
             () {
               final provider = WorkbenchProvider<ThemeData>(
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 frames: frames,
@@ -418,79 +350,9 @@ void main() {
                     comparisonSetting: ComparisonSetting.none,
                     frame: WidgetbookFrame.defaultFrame(),
                     theme: darkTheme,
-                    locale: usLocale,
                     device: iPhone,
                     textScaleFactor: textScaleFactor1,
                     frames: frames,
-                    locales: locales,
-                    themes: themes,
-                    devices: devices,
-                    textScaleFactors: textScaleFactors,
-                  ),
-                ),
-              );
-            },
-          );
-        },
-      );
-
-      group(
-        'changedLocale',
-        () {
-          test(
-            'sets active locale to value',
-            () {
-              final provider = WorkbenchProvider<ThemeData>(
-                locales: locales,
-                themes: themes,
-                devices: devices,
-                frames: frames,
-                textScaleFactors: textScaleFactors,
-              )..changedLocale(deLocale);
-
-              expect(
-                provider.state,
-                equals(
-                  WorkbenchState<ThemeData>(
-                    frame: WidgetbookFrame.defaultFrame(),
-                    theme: lightTheme,
-                    locale: deLocale,
-                    device: iPhone,
-                    textScaleFactor: textScaleFactor1,
-                    frames: frames,
-                    locales: locales,
-                    themes: themes,
-                    devices: devices,
-                    textScaleFactors: textScaleFactors,
-                  ),
-                ),
-              );
-            },
-          );
-
-          test(
-            'sets active locale to value if ${ComparisonSetting.localization} is active',
-            () {
-              final provider = WorkbenchProvider<ThemeData>(
-                locales: locales,
-                themes: themes,
-                devices: devices,
-                frames: frames,
-                textScaleFactors: textScaleFactors,
-              )..changedTheme(darkTheme);
-
-              expect(
-                provider.state,
-                equals(
-                  WorkbenchState<ThemeData>(
-                    comparisonSetting: ComparisonSetting.none,
-                    frame: WidgetbookFrame.defaultFrame(),
-                    theme: darkTheme,
-                    locale: usLocale,
-                    device: iPhone,
-                    textScaleFactor: textScaleFactor1,
-                    frames: frames,
-                    locales: locales,
                     themes: themes,
                     devices: devices,
                     textScaleFactors: textScaleFactors,
@@ -506,7 +368,6 @@ void main() {
         'changedDeviceFrame changed to value',
         () {
           final provider = WorkbenchProvider<ThemeData>(
-            locales: locales,
             themes: themes,
             devices: devices,
             frames: frames,
@@ -520,11 +381,9 @@ void main() {
                 comparisonSetting: ComparisonSetting.none,
                 frame: WidgetbookFrame.noFrame(),
                 theme: lightTheme,
-                locale: usLocale,
                 device: iPhone,
                 textScaleFactor: textScaleFactor1,
                 frames: frames,
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 textScaleFactors: textScaleFactors,
@@ -538,7 +397,6 @@ void main() {
         'nextTheme returns next theme',
         () {
           final provider = WorkbenchProvider<ThemeData>(
-            locales: locales,
             themes: themes,
             devices: devices,
             frames: frames,
@@ -552,11 +410,9 @@ void main() {
                 comparisonSetting: ComparisonSetting.none,
                 frame: WidgetbookFrame.defaultFrame(),
                 theme: darkTheme,
-                locale: usLocale,
                 device: iPhone,
                 textScaleFactor: textScaleFactor1,
                 frames: frames,
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 textScaleFactors: textScaleFactors,
@@ -573,7 +429,6 @@ void main() {
             'sets active text scale to value',
             () {
               final provider = WorkbenchProvider<ThemeData>(
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 frames: frames,
@@ -586,11 +441,9 @@ void main() {
                   WorkbenchState<ThemeData>(
                     frame: WidgetbookFrame.defaultFrame(),
                     theme: lightTheme,
-                    locale: usLocale,
                     device: iPhone,
                     textScaleFactor: textScaleFactor2,
                     frames: frames,
-                    locales: locales,
                     themes: themes,
                     devices: devices,
                     textScaleFactors: textScaleFactors,
@@ -604,7 +457,6 @@ void main() {
             'sets active theme to value if ${ComparisonSetting.textScale} is active',
             () {
               final provider = WorkbenchProvider<ThemeData>(
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 frames: frames,
@@ -618,11 +470,9 @@ void main() {
                     comparisonSetting: ComparisonSetting.none,
                     frame: WidgetbookFrame.defaultFrame(),
                     theme: lightTheme,
-                    locale: usLocale,
                     device: iPhone,
                     textScaleFactor: textScaleFactor1,
                     frames: frames,
-                    locales: locales,
                     themes: themes,
                     devices: devices,
                     textScaleFactors: textScaleFactors,
@@ -638,7 +488,6 @@ void main() {
         'previousTheme returns previous theme',
         () {
           final provider = WorkbenchProvider<ThemeData>(
-            locales: locales,
             themes: themes,
             devices: devices,
             frames: frames,
@@ -652,11 +501,9 @@ void main() {
                 comparisonSetting: ComparisonSetting.none,
                 frame: WidgetbookFrame.defaultFrame(),
                 theme: darkTheme,
-                locale: usLocale,
                 device: iPhone,
                 textScaleFactor: textScaleFactor1,
                 frames: frames,
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 textScaleFactors: textScaleFactors,
@@ -670,7 +517,6 @@ void main() {
         'nextDevice returns next device',
         () {
           final provider = WorkbenchProvider<ThemeData>(
-            locales: locales,
             themes: themes,
             devices: devices,
             frames: frames,
@@ -684,11 +530,9 @@ void main() {
                 comparisonSetting: ComparisonSetting.none,
                 frame: WidgetbookFrame.defaultFrame(),
                 theme: lightTheme,
-                locale: usLocale,
                 device: s21,
                 textScaleFactor: textScaleFactor1,
                 frames: frames,
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 textScaleFactors: textScaleFactors,
@@ -702,7 +546,6 @@ void main() {
         'previousDevice returns previous device',
         () {
           final provider = WorkbenchProvider<ThemeData>(
-            locales: locales,
             themes: themes,
             devices: devices,
             frames: frames,
@@ -716,11 +559,9 @@ void main() {
                 comparisonSetting: ComparisonSetting.none,
                 frame: WidgetbookFrame.defaultFrame(),
                 theme: lightTheme,
-                locale: usLocale,
                 device: s21,
                 textScaleFactor: textScaleFactor1,
                 frames: frames,
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 textScaleFactors: textScaleFactors,
@@ -734,7 +575,6 @@ void main() {
         'nextDeviceFrame returns next $WidgetbookFrame',
         () {
           final provider = WorkbenchProvider<ThemeData>(
-            locales: locales,
             themes: themes,
             devices: devices,
             frames: frames,
@@ -748,11 +588,9 @@ void main() {
                 comparisonSetting: ComparisonSetting.none,
                 frame: WidgetbookFrame.noFrame(),
                 theme: lightTheme,
-                locale: usLocale,
                 device: iPhone,
                 textScaleFactor: textScaleFactor1,
                 frames: frames,
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 textScaleFactors: textScaleFactors,
@@ -766,7 +604,6 @@ void main() {
         'previousDeviceFrame returns previous $WidgetbookFrame',
         () {
           final provider = WorkbenchProvider<ThemeData>(
-            locales: locales,
             themes: themes,
             devices: devices,
             frames: frames,
@@ -780,11 +617,9 @@ void main() {
                 comparisonSetting: ComparisonSetting.none,
                 frame: WidgetbookFrame.noFrame(),
                 theme: lightTheme,
-                locale: usLocale,
                 device: iPhone,
                 textScaleFactor: textScaleFactor1,
                 frames: frames,
-                locales: locales,
                 themes: themes,
                 devices: devices,
                 textScaleFactors: textScaleFactors,

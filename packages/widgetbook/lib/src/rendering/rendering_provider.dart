@@ -9,7 +9,6 @@ class RenderingProvider<CustomTheme>
     // TODO is this required?
     required List<WidgetbookFrame> frames,
     required DeviceFrameBuilderFunction deviceFrameBuilder,
-    required LocalizationBuilderFunction localizationBuilder,
     required ThemeBuilderFunction<CustomTheme> themeBuilder,
     required ScaffoldBuilderFunction scaffoldBuilder,
     required AppBuilderFunction appBuilder,
@@ -19,7 +18,6 @@ class RenderingProvider<CustomTheme>
           state: RenderingState<CustomTheme>(
             frames: frames,
             deviceFrameBuilder: deviceFrameBuilder,
-            localizationBuilder: localizationBuilder,
             themeBuilder: themeBuilder,
             scaffoldBuilder: scaffoldBuilder,
             appBuilder: appBuilder,
