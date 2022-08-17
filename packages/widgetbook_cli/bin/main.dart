@@ -150,19 +150,12 @@ void main(List<String> arguments) async {
         actor: actor,
         apiKey: apiKey,
         provider: gitProvider,
+        themes: themes,
+        locales: locales,
+        devices: devices,
+        textScaleFactors: textScaleFactors,
       ),
     );
-
-    if (uploadInfo != null && prNumber != null) {
-      if (gitHubToken != null) {
-        await GithubProvider(
-          apiKey: gitHubToken,
-        ).addBuildComment(
-          buildInfo: uploadInfo,
-          number: prNumber,
-        );
-      }
-    }
 
     // If generator is not run or not properly configured
     if (themes.isEmpty) {
@@ -178,7 +171,7 @@ void main(List<String> arguments) async {
     }
 
     if (uploadInfo != null && baseBranch != null && baseCommit != null) {
-      await WidgetbookHttpClient().uploadReview(
+      final review = await WidgetbookHttpClient().uploadReview(
         apiKey: apiKey,
         useCases: useCases,
         buildId: uploadInfo['build'] as String,
@@ -192,7 +185,29 @@ void main(List<String> arguments) async {
         devices: devices,
         textScaleFactors: textScaleFactors,
       );
+      if (prNumber != null) {
+        if (gitHubToken != null) {
+          await GithubProvider(
+            apiKey: gitHubToken,
+          ).addBuildComment(
+            buildInfo: uploadInfo,
+            number: prNumber,
+            review: review,
+          );
+        }
+      }
     } else {
+      // Refactor this
+      if (uploadInfo != null && prNumber != null) {
+        if (gitHubToken != null) {
+          await GithubProvider(
+            apiKey: gitHubToken,
+          ).addBuildComment(
+            buildInfo: uploadInfo,
+            number: prNumber,
+          );
+        }
+      }
       print(
         'HINT: No pull-request information available. Therefore, no review will'
         ' be created. See docs for more information.',

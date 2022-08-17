@@ -7,8 +7,10 @@ import 'package:path/path.dart';
 
 import 'flavor/flavor.dart';
 import 'models/deployment_data.dart';
+import 'review/api/create_review_response.dart';
 import 'review/devices/models/device_data.dart';
 import 'review/locales/models/locale_data.dart';
+import 'review/models/review.dart';
 import 'review/text_scale_factors/models/text_scale_factor_data.dart';
 import 'review/themes/models/theme_data.dart';
 import 'review/use_cases/models/changed_use_case.dart';
@@ -37,7 +39,7 @@ class WidgetbookHttpClient {
   /// underlying [Dio] client
   final Dio client;
 
-  Future<void> uploadReview({
+  Future<Review?> uploadReview({
     required String apiKey,
     required List<ChangedUseCase> useCases,
     required String buildId,
@@ -52,9 +54,8 @@ class WidgetbookHttpClient {
     required List<TextScaleFactorData> textScaleFactors,
   }) async {
     if (useCases.isNotEmpty) {
-      // TODO rename this endpoint to '/reviews/
-      await client.post<dynamic>(
-        '/builds/use-cases',
+      final response = await client.post<dynamic>(
+        '/reviews',
         data: CreateUseCasesRequest(
           apiKey: apiKey,
           useCases: useCases,
@@ -70,7 +71,11 @@ class WidgetbookHttpClient {
           textScaleFactors: textScaleFactors,
         ).toJson(),
       );
+      final dynamic goodResponse = jsonDecode(jsonEncode(response.data));
+      return CreateReviewResponse.fromJson(goodResponse as Map<String, dynamic>)
+          .review;
     }
+    return null;
   }
 
   /// Uploads the deployment .zip file to the Widgetbook Cloud backend
@@ -94,6 +99,10 @@ class WidgetbookHttpClient {
             'commit': data.commitSha,
             'version-control-provider': data.provider,
             'api-key': data.apiKey,
+            'devices': jsonEncode(data.devices),
+            'themes': jsonEncode(data.themes),
+            'textScaleFactors': jsonEncode(data.textScaleFactors),
+            'locales': jsonEncode(data.locales),
           },
         ),
       );
