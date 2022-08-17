@@ -19,7 +19,7 @@ mason make widgetbook_starter --name "Name of your app"
 
 ## Outputs 📦
 
-```back
+```bash
 mason make widgetbook_starter --name "Name of your app"
 └── widgetbook
     ├── main.dart

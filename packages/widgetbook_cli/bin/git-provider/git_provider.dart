@@ -19,17 +19,25 @@ abstract class GitProvider {
   String commentBody({
     required String projectId,
     required String buildId,
+    String? reviewId,
   }) {
     final buffer = StringBuffer()
       ..writeln('### 📦 Build')
       ..writeln()
       ..writeln(
         '- 🔗 [Widgetbook Cloud - Build](https://app.widgetbook.io/#/projects/$projectId/builds/$buildId)',
-      )
-      ..writeln()
-      ..writeln('### 📑 Review')
-      ..writeln()
-      ..writeln('Coming soon!');
+      );
+
+    if (reviewId != null) {
+      buffer
+        ..writeln()
+        ..writeln('### 📑 Review')
+        ..writeln()
+        ..writeln(
+          '- 🔗 [Widgetbook Cloud - Review](https://app.widgetbook.io/#/projects/$projectId/reviews/$reviewId/overview)',
+        );
+    }
+
     return buffer.toString();
   }
 
