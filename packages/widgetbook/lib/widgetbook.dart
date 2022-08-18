@@ -1,4 +1,5 @@
 export 'package:device_frame/device_frame.dart' hide DeviceType;
+export 'package:widgetbook/src/addons/addons.dart';
 export 'package:widgetbook/src/devices/widgetbook_device_frame.dart';
 export 'package:widgetbook/src/knobs/knobs.dart';
 export 'package:widgetbook/src/models/models.dart';

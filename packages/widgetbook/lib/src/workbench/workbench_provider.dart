@@ -10,19 +10,16 @@ class WorkbenchProvider<CustomTheme>
     extends StateChangeNotifier<WorkbenchState<CustomTheme>> {
   WorkbenchProvider({
     required List<WidgetbookTheme<CustomTheme>> themes,
-    required List<Locale> locales,
     required List<Device> devices,
     required List<WidgetbookFrame> frames,
     required List<double> textScaleFactors,
   }) : super(
           state: WorkbenchState(
             frame: frames.first,
-            locale: locales.first,
             device: devices.first,
             theme: themes.first,
             textScaleFactor: textScaleFactors.first,
             themes: themes,
-            locales: locales,
             devices: devices,
             frames: frames,
             textScaleFactors: textScaleFactors,
@@ -31,7 +28,6 @@ class WorkbenchProvider<CustomTheme>
 
   void hotReload({
     required List<WidgetbookTheme<CustomTheme>> themes,
-    required List<Locale> locales,
     required List<Device> devices,
     required List<WidgetbookFrame> frames,
     required List<double> textScaleFactors,
@@ -49,12 +45,6 @@ class WorkbenchProvider<CustomTheme>
               (element) => element.name == state.theme!.name,
               orElse: () => themes.first,
             ),
-      locale: state.locale == null
-          ? null
-          : locales.firstWhere(
-              (element) => element == state.locale,
-              orElse: () => locales.first,
-            ),
       device: state.device == null
           ? null
           : devices.firstWhere(
@@ -67,7 +57,6 @@ class WorkbenchProvider<CustomTheme>
       ),
       textScaleFactors: textScaleFactors,
       themes: themes,
-      locales: locales,
       devices: devices,
       frames: frames,
     );
@@ -78,7 +67,6 @@ class WorkbenchProvider<CustomTheme>
   ) {
     return state.copyWith(
       comparisonSetting: comparisonSetting,
-      locale: state.locale ?? state.locales.first,
       theme: state.theme ?? state.themes.first,
       device: state.device ?? state.devices.first,
       textScaleFactor: state.textScaleFactor ?? state.textScaleFactors.first,
@@ -103,9 +91,7 @@ class WorkbenchProvider<CustomTheme>
       case ComparisonSetting.devices:
         state = state = newState.copyWith(device: null);
         break;
-      case ComparisonSetting.localization:
-        state = state = newState.copyWith(locale: null);
-        break;
+
       case ComparisonSetting.textScale:
         state = state = newState.copyWith(textScaleFactor: null);
         break;
@@ -130,16 +116,6 @@ class WorkbenchProvider<CustomTheme>
     );
   }
 
-  void changedLocale(Locale? locale) {
-    state = state.copyWith(
-      locale: locale,
-      comparisonSetting:
-          state.comparisonSetting == ComparisonSetting.localization
-              ? ComparisonSetting.none
-              : state.comparisonSetting,
-    );
-  }
-
   void changedDeviceFrame(WidgetbookFrame frame) {
     state = state.copyWith(frame: frame);
   }
@@ -154,14 +130,6 @@ class WorkbenchProvider<CustomTheme>
       orElse: () => state.themes.first,
     );
     state = state.copyWith(theme: theme);
-  }
-
-  void setLocaleByName(String? name) {
-    final locale = state.locales.firstWhere(
-      (element) => element.languageCode == name,
-      orElse: () => state.locales.first,
-    );
-    state = state.copyWith(locale: locale);
   }
 
   void setDeviceByName(String? name) {
@@ -207,28 +175,6 @@ class WorkbenchProvider<CustomTheme>
         ? Orientation.landscape
         : Orientation.portrait;
     state = state.copyWith(orientation: orientation);
-  }
-
-  void nextLocale() {
-    final nextLocale = state.locales.getNext(state.locale);
-    state = state.copyWith(
-      locale: nextLocale,
-      comparisonSetting:
-          state.comparisonSetting == ComparisonSetting.localization
-              ? ComparisonSetting.none
-              : state.comparisonSetting,
-    );
-  }
-
-  void previousLocale() {
-    final previousLocale = state.locales.getPrevious(state.locale);
-    state = state.copyWith(
-      locale: previousLocale,
-      comparisonSetting:
-          state.comparisonSetting == ComparisonSetting.localization
-              ? ComparisonSetting.none
-              : state.comparisonSetting,
-    );
   }
 
   void nextTheme() {

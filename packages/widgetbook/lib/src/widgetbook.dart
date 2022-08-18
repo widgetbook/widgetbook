@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:widgetbook/src/addons/addon.dart';
+import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/app_info/app_info.dart';
 import 'package:widgetbook/src/app_info/app_info_provider.dart';
 import 'package:widgetbook/src/extensions/list_extension.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
-import 'package:widgetbook/src/localization/localization_provider.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/mouse_tool/tool_provider.dart';
 import 'package:widgetbook/src/navigation/organizer_provider.dart';
@@ -87,14 +88,13 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     required this.categories,
     List<Device>? devices,
     required this.appInfo,
-    this.localizationsDelegates,
     required this.themes,
     this.deviceFrameBuilder,
-    this.localizationBuilder,
     this.themeBuilder,
     this.scaffoldBuilder,
     this.appBuilder = defaultAppBuilder,
     this.useCaseBuilder,
+    required this.addons,
     List<Locale>? supportedLocales,
     List<WidgetbookFrame>? frames,
     List<double>? textScaleFactors,
@@ -122,10 +122,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
           supportedLocales == null || supportedLocales.length > 0,
           'Please specify at least one supported $Locale.',
         ),
-        supportedLocales = supportedLocales ??
-            const [
-              Locale('us'),
-            ],
         textScaleFactors = textScaleFactors ?? const [1],
         frames = frames ??
             const <WidgetbookFrame>[
@@ -150,6 +146,8 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
             ],
         super(key: key);
 
+  final List<WidgetbookAddOn> addons;
+
   /// Categories which host Folders and WidgetElements.
   /// This can be used to organize the structure of the Widgetbook on a large
   /// scale.
@@ -161,11 +159,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
   /// Information about the app that is catalogued in the Widgetbook.
   final AppInfo appInfo;
 
-  /// A list of supported [Locale]s.
-  final List<Locale> supportedLocales;
-
-  final List<LocalizationsDelegate<dynamic>>? localizationsDelegates;
-
   final List<WidgetbookTheme<CustomTheme>> themes;
 
   final List<WidgetbookFrame> frames;
@@ -174,8 +167,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
   final List<double> textScaleFactors;
 
   final DeviceFrameBuilderFunction? deviceFrameBuilder;
-
-  final LocalizationBuilderFunction? localizationBuilder;
 
   final ThemeBuilderFunction<CustomTheme>? themeBuilder;
 
@@ -190,12 +181,12 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     required List<WidgetbookCategory> categories,
     required List<WidgetbookTheme<CupertinoThemeData>> themes,
     required AppInfo appInfo,
+    required List<WidgetbookAddOn> addons,
     List<Device>? devices,
     List<WidgetbookFrame>? frames,
     List<Locale>? supportedLocales,
     List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     DeviceFrameBuilderFunction? deviceFrameBuilder,
-    LocalizationBuilderFunction? localizationBuilder,
     ThemeBuilderFunction<CupertinoThemeData>? themeBuilder,
     AppBuilderFunction? appBuilder,
     ScaffoldBuilderFunction? scaffoldBuilder,
@@ -209,10 +200,9 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
       themes: themes,
       appInfo: appInfo,
       devices: devices,
+      addons: addons,
       supportedLocales: supportedLocales,
-      localizationsDelegates: localizationsDelegates,
       deviceFrameBuilder: deviceFrameBuilder,
-      localizationBuilder: localizationBuilder,
       themeBuilder: themeBuilder,
       scaffoldBuilder: scaffoldBuilder,
       appBuilder: appBuilder ?? cupertinoAppBuilder,
@@ -227,12 +217,12 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     required List<WidgetbookCategory> categories,
     required List<WidgetbookTheme<ThemeData>> themes,
     required AppInfo appInfo,
+    required List<WidgetbookAddOn> addons,
     List<Device>? devices,
     List<WidgetbookFrame>? frames,
     List<Locale>? supportedLocales,
     List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     DeviceFrameBuilderFunction? deviceFrameBuilder,
-    LocalizationBuilderFunction? localizationBuilder,
     ThemeBuilderFunction<ThemeData>? themeBuilder,
     AppBuilderFunction? appBuilder,
     ScaffoldBuilderFunction? scaffoldBuilder,
@@ -246,10 +236,9 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
       themes: themes,
       appInfo: appInfo,
       devices: devices,
+      addons: addons,
       supportedLocales: supportedLocales,
-      localizationsDelegates: localizationsDelegates,
       deviceFrameBuilder: deviceFrameBuilder,
-      localizationBuilder: localizationBuilder,
       themeBuilder: themeBuilder,
       scaffoldBuilder: scaffoldBuilder,
       appBuilder: appBuilder ?? materialAppBuilder,
@@ -290,7 +279,6 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
     appInfoProvider = AppInfoProvider(state: widget.appInfo);
     workbenchProvider = WorkbenchProvider<CustomTheme>(
       themes: widget.themes,
-      locales: widget.supportedLocales,
       devices: widget.devices,
       frames: widget.frames,
       textScaleFactors: widget.textScaleFactors,
@@ -308,7 +296,6 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
     organizerProvider.hotReload(widget.categories);
     workbenchProvider.hotReload(
       themes: widget.themes,
-      locales: widget.supportedLocales,
       devices: widget.devices,
       frames: widget.frames,
       textScaleFactors: widget.textScaleFactors,
@@ -323,17 +310,8 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
       providers: [
         ChangeNotifierProvider(
           key: ValueKey(
-            widget.localizationsDelegates,
-          ),
-          create: (_) => LocalizationProvider(
-            localizationsDelegates: widget.localizationsDelegates,
-          ),
-        ),
-        ChangeNotifierProvider(
-          key: ValueKey(
             widget.frames.hashCodeOfItems ^
                 widget.deviceFrameBuilder.hashCode ^
-                widget.localizationBuilder.hashCode ^
                 widget.themeBuilder.hashCode ^
                 widget.scaffoldBuilder.hashCode ^
                 widget.useCaseBuilder.hashCode,
@@ -342,8 +320,6 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
             frames: widget.frames,
             deviceFrameBuilder:
                 widget.deviceFrameBuilder ?? defaultDeviceFrameBuilder,
-            localizationBuilder:
-                widget.localizationBuilder ?? defaultLocalizationBuilder,
             themeBuilder:
                 widget.themeBuilder ?? defaultThemeBuilder<CustomTheme>(),
             scaffoldBuilder: widget.scaffoldBuilder ?? defaultScaffoldBuilder,
@@ -359,6 +335,9 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
         ChangeNotifierProvider.value(value: organizerProvider),
         ChangeNotifierProvider.value(value: previewProvider),
         ChangeNotifierProvider.value(value: appInfoProvider),
+        ChangeNotifierProvider(
+          create: (_) => AddOnProvider(widget.addons),
+        ),
       ],
       child: MaterialApp.router(
         routeInformationParser: goRouter.routeInformationParser,

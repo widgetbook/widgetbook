@@ -41,6 +41,7 @@ void main() {
             () {
               expect(
                 () => Widgetbook(
+                  addons: const [],
                   categories: const [],
                   appInfo: appInfo,
                   themes: themes,
@@ -57,6 +58,7 @@ void main() {
             () {
               expect(
                 () => Widgetbook(
+                  addons: const [],
                   categories: categories,
                   appInfo: appInfo,
                   themes: themes,
@@ -74,6 +76,7 @@ void main() {
             () {
               expect(
                 () => Widgetbook(
+                  addons: const [],
                   categories: categories,
                   appInfo: appInfo,
                   themes: themes,
@@ -91,6 +94,7 @@ void main() {
             () {
               expect(
                 () => Widgetbook(
+                  addons: const [],
                   categories: categories,
                   appInfo: appInfo,
                   themes: const [],
@@ -107,6 +111,7 @@ void main() {
             () {
               expect(
                 () => Widgetbook(
+                  addons: const [],
                   categories: categories,
                   appInfo: appInfo,
                   themes: themes,
@@ -124,6 +129,7 @@ void main() {
             () {
               expect(
                 () => Widgetbook(
+                  addons: const [],
                   categories: categories,
                   appInfo: appInfo,
                   themes: themes,
