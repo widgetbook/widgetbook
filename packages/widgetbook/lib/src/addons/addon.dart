@@ -7,6 +7,7 @@ class WidgetbookAddOn {
     // TODO This can be optional/nullable
     required this.wrapperBuilder,
     required this.builder,
+    required this.previewBuilder,
   });
 
   // TODO if we make this a builder, we can access buildcontext
@@ -14,4 +15,5 @@ class WidgetbookAddOn {
   final String name;
   final Widget Function(BuildContext context, Widget child) wrapperBuilder;
   final Widget Function(BuildContext context) builder;
+  final Widget Function(BuildContext context, Widget child) previewBuilder;
 }
