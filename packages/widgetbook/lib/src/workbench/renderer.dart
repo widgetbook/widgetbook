@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/rendering/rendering_provider.dart';
-import 'package:widgetbook/src/workbench/workbench_provider.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 class Renderer<CustomTheme> extends StatelessWidget {
@@ -41,66 +41,66 @@ class Renderer<CustomTheme> extends StatelessWidget {
   ) {
     final renderingState =
         context.watch<RenderingProvider<CustomTheme>>().state;
-    final workbenchProvider =
-        context.watch<WorkbenchProvider<CustomTheme>>().state;
+    final addons = context.watch<AddOnProvider>().value;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (frame.allowsDevices) _buildText(),
-        renderingState.deviceFrameBuilder(
-          context,
-          device,
-          frame,
-          orientation,
-          Builder(
-            builder: (context) {
-              return renderingState.appBuilder(
-                context,
-                Builder(
-                  builder: (context) {
-                    return renderingState.themeBuilder(
-                      context,
-                      theme,
-                      Builder(
-                        builder: (context) {
-                          return Builder(
-                            builder: (context) {
-                              return renderingState.textScaleBuilder(
-                                context,
-                                textScaleFactor,
-                                Builder(
-                                  builder: (context) {
-                                    return renderingState.scaffoldBuilder(
-                                      context,
-                                      frame,
-                                      Builder(
-                                        builder: (context) {
-                                          return renderingState.useCaseBuilder(
-                                            context,
-                                            Builder(
-                                              builder: useCaseBuilder,
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    );
-                                  },
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
-              );
-            },
-          ),
-        ),
-      ],
+    return addons.first.previewBuilder(
+      context,
+      Builder(
+        builder: (context) {
+          return renderingState.deviceFrameBuilder(
+            context,
+            device,
+            frame,
+            orientation,
+            Builder(
+              builder: (context) {
+                return renderingState.appBuilder(
+                  context,
+                  Builder(
+                    builder: (context) {
+                      return renderingState.themeBuilder(
+                        context,
+                        theme,
+                        Builder(
+                          builder: (context) {
+                            return Builder(
+                              builder: (context) {
+                                return renderingState.textScaleBuilder(
+                                  context,
+                                  textScaleFactor,
+                                  Builder(
+                                    builder: (context) {
+                                      return renderingState.scaffoldBuilder(
+                                        context,
+                                        frame,
+                                        Builder(
+                                          builder: (context) {
+                                            return renderingState
+                                                .useCaseBuilder(
+                                              context,
+                                              Builder(
+                                                builder: useCaseBuilder,
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

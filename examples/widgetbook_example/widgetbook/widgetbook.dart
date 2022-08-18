@@ -37,8 +37,10 @@ class HotreloadWidgetbook extends StatelessWidget {
       },
       addons: [
         LocalizationAddon(
-          data: LocalizationData(
-            activeLocale: Locale('en'),
+          data: LocalizationSelection(
+            activeLocales: {
+              Locale('en'),
+            },
             localizationsDelegates: [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,

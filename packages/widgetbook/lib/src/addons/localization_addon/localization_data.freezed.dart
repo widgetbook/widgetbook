@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$LocalizationData {
   Locale get activeLocale => throw _privateConstructorUsedError;
-  List<Locale> get locales => throw _privateConstructorUsedError;
   List<LocalizationsDelegate<dynamic>> get localizationsDelegates =>
       throw _privateConstructorUsedError;
 
@@ -33,7 +32,6 @@ abstract class $LocalizationDataCopyWith<$Res> {
       _$LocalizationDataCopyWithImpl<$Res>;
   $Res call(
       {Locale activeLocale,
-      List<Locale> locales,
       List<LocalizationsDelegate<dynamic>> localizationsDelegates});
 }
 
@@ -49,7 +47,6 @@ class _$LocalizationDataCopyWithImpl<$Res>
   @override
   $Res call({
     Object? activeLocale = freezed,
-    Object? locales = freezed,
     Object? localizationsDelegates = freezed,
   }) {
     return _then(_value.copyWith(
@@ -57,10 +54,6 @@ class _$LocalizationDataCopyWithImpl<$Res>
           ? _value.activeLocale
           : activeLocale // ignore: cast_nullable_to_non_nullable
               as Locale,
-      locales: locales == freezed
-          ? _value.locales
-          : locales // ignore: cast_nullable_to_non_nullable
-              as List<Locale>,
       localizationsDelegates: localizationsDelegates == freezed
           ? _value.localizationsDelegates
           : localizationsDelegates // ignore: cast_nullable_to_non_nullable
@@ -78,7 +71,6 @@ abstract class _$$_LocalizationDataCopyWith<$Res>
   @override
   $Res call(
       {Locale activeLocale,
-      List<Locale> locales,
       List<LocalizationsDelegate<dynamic>> localizationsDelegates});
 }
 
@@ -96,7 +88,6 @@ class __$$_LocalizationDataCopyWithImpl<$Res>
   @override
   $Res call({
     Object? activeLocale = freezed,
-    Object? locales = freezed,
     Object? localizationsDelegates = freezed,
   }) {
     return _then(_$_LocalizationData(
@@ -104,10 +95,6 @@ class __$$_LocalizationDataCopyWithImpl<$Res>
           ? _value.activeLocale
           : activeLocale // ignore: cast_nullable_to_non_nullable
               as Locale,
-      locales: locales == freezed
-          ? _value._locales
-          : locales // ignore: cast_nullable_to_non_nullable
-              as List<Locale>,
       localizationsDelegates: localizationsDelegates == freezed
           ? _value._localizationsDelegates
           : localizationsDelegates // ignore: cast_nullable_to_non_nullable
@@ -121,21 +108,12 @@ class __$$_LocalizationDataCopyWithImpl<$Res>
 class _$_LocalizationData implements _LocalizationData {
   _$_LocalizationData(
       {required this.activeLocale,
-      required final List<Locale> locales,
       required final List<LocalizationsDelegate<dynamic>>
           localizationsDelegates})
-      : _locales = locales,
-        _localizationsDelegates = localizationsDelegates;
+      : _localizationsDelegates = localizationsDelegates;
 
   @override
   final Locale activeLocale;
-  final List<Locale> _locales;
-  @override
-  List<Locale> get locales {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_locales);
-  }
-
   final List<LocalizationsDelegate<dynamic>> _localizationsDelegates;
   @override
   List<LocalizationsDelegate<dynamic>> get localizationsDelegates {
@@ -145,7 +123,7 @@ class _$_LocalizationData implements _LocalizationData {
 
   @override
   String toString() {
-    return 'LocalizationData(activeLocale: $activeLocale, locales: $locales, localizationsDelegates: $localizationsDelegates)';
+    return 'LocalizationData(activeLocale: $activeLocale, localizationsDelegates: $localizationsDelegates)';
   }
 
   @override
@@ -155,7 +133,6 @@ class _$_LocalizationData implements _LocalizationData {
             other is _$_LocalizationData &&
             const DeepCollectionEquality()
                 .equals(other.activeLocale, activeLocale) &&
-            const DeepCollectionEquality().equals(other._locales, _locales) &&
             const DeepCollectionEquality().equals(
                 other._localizationsDelegates, _localizationsDelegates));
   }
@@ -164,7 +141,6 @@ class _$_LocalizationData implements _LocalizationData {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(activeLocale),
-      const DeepCollectionEquality().hash(_locales),
       const DeepCollectionEquality().hash(_localizationsDelegates));
 
   @JsonKey(ignore: true)
@@ -176,14 +152,11 @@ class _$_LocalizationData implements _LocalizationData {
 abstract class _LocalizationData implements LocalizationData {
   factory _LocalizationData(
       {required final Locale activeLocale,
-      required final List<Locale> locales,
       required final List<LocalizationsDelegate<dynamic>>
           localizationsDelegates}) = _$_LocalizationData;
 
   @override
   Locale get activeLocale => throw _privateConstructorUsedError;
-  @override
-  List<Locale> get locales => throw _privateConstructorUsedError;
   @override
   List<LocalizationsDelegate<dynamic>> get localizationsDelegates =>
       throw _privateConstructorUsedError;

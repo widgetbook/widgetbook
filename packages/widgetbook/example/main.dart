@@ -11,6 +11,7 @@ class HotreloadWidgetbook extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
+      addons: [],
       categories: [
         WidgetbookCategory(
           name: 'widgets',
