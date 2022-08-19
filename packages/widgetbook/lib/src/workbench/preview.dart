@@ -36,16 +36,9 @@ class Preview<CustomTheme> extends StatelessWidget {
           }
         },
         child: ClipRect(
-          child: OverflowBox(
-            maxHeight: double.maxFinite,
-            maxWidth: double.maxFinite,
-            child: Transform.scale(
-              scale: context.watch<ZoomProvider>().state.zoomLevel,
-              child: Transform.translate(
-                offset: context.watch<TranslateProvider>().state.offset,
-                child: ComparisonRenderer<CustomTheme>(),
-              ),
-            ),
+          child: Transform.scale(
+            scale: context.watch<ZoomProvider>().state.zoomLevel,
+            child: ComparisonRenderer<CustomTheme>(),
           ),
         ),
       ),

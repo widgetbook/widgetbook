@@ -8,9 +8,8 @@ class WidgetbookAddOn {
     // TODO This can be optional/nullable
     required this.wrapperBuilder,
     required this.builder,
-    required this.previewBuilder,
     required this.providerBuilder,
-    required this.hashBuilder,
+    required this.selectionCount,
   });
 
   // TODO if we make this a builder, we can access buildcontext
@@ -23,14 +22,10 @@ class WidgetbookAddOn {
   final Widget Function(
     BuildContext context,
   ) builder;
-  final Widget Function(
-    BuildContext context,
-    Widget child,
-  ) previewBuilder;
+
   final SingleChildWidget Function(
     BuildContext context,
-    // TODO we likely need some sort of index
-    // int index,
+    int index,
   ) providerBuilder;
-  final int Function(BuildContext context) hashBuilder;
+  final int Function(BuildContext context) selectionCount;
 }
