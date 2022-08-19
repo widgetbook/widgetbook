@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/addons/addon.dart';
+import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/addons/theme_addon/theme_provider.dart';
 import 'package:widgetbook/src/addons/theme_addon/theme_selection.dart';
 import 'package:widgetbook/src/addons/theme_addon/theme_selection_provider.dart';
@@ -15,14 +16,13 @@ class ThemeAddon extends WidgetbookAddOn {
           wrapperBuilder: (context, child) =>
               _wrapperBuilder(context, child, themes),
           builder: _builder,
-          previewBuilder: _previewBuilder,
           providerBuilder: _providerBuilder,
-          hashBuilder: _hashBuilder,
+          selectionCount: _selectionCount,
         );
 }
 
-int _hashBuilder(BuildContext context) {
-  return context.read<ThemeSelectionProvider>().value.hashCode;
+int _selectionCount(BuildContext context) {
+  return context.read<ThemeSelectionProvider>().value.activeThemes.length;
 }
 
 Widget _builder(BuildContext context) {
@@ -36,6 +36,7 @@ Widget _builder(BuildContext context) {
         title: Text(item.toString()),
         onTap: () {
           context.read<ThemeSelectionProvider>().tapped(item);
+          context.read<AddOnProvider>().update();
         },
       );
     },
@@ -67,28 +68,14 @@ Widget _wrapperBuilder(
   );
 }
 
-Widget _previewBuilder(BuildContext context, Widget child) {
-  final data = context.watch<ThemeSelectionProvider>().value;
-  return Row(
-    mainAxisSize: MainAxisSize.min,
-    children: data.activeThemes
-        .map(
-          (theme) => ChangeNotifierProvider(
-            create: (context) => ThemeProvider(
-              theme,
-            ),
-            child: child,
-          ),
-        )
-        .toList(),
-  );
-}
-
-SingleChildWidget _providerBuilder(BuildContext context) {
+SingleChildWidget _providerBuilder(
+  BuildContext context,
+  int index,
+) {
   final selection = context.watch<ThemeSelectionProvider>().value;
   final theme = selection.activeThemes.isEmpty
       ? selection.themes.first
-      : selection.activeThemes.first;
+      : selection.activeThemes.elementAt(index);
   return ChangeNotifierProvider(
     create: (_) => ThemeProvider(theme),
   );

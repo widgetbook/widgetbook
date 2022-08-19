@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/addons/addon.dart';
+import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/addons/localization_addon/localization_data.dart';
 import 'package:widgetbook/src/addons/localization_addon/localization_provider.dart';
 import 'package:widgetbook/src/addons/localization_addon/localization_selection.dart';
@@ -19,14 +20,17 @@ class LocalizationAddon extends WidgetbookAddOn {
           wrapperBuilder: (context, child) =>
               _wrapperBuilder(context, child, data),
           builder: _builder,
-          previewBuilder: _previewBuilder,
           providerBuilder: _providerBuilder,
-          hashBuilder: _hashBuilder,
+          selectionCount: _selectionCount,
         );
 }
 
-int _hashBuilder(BuildContext context) {
-  return context.read<LocalizationSelectionProvider>().value.hashCode;
+int _selectionCount(BuildContext context) {
+  return context
+      .read<LocalizationSelectionProvider>()
+      .value
+      .activeLocales
+      .length;
 }
 
 Widget _builder(BuildContext context) {
@@ -40,6 +44,7 @@ Widget _builder(BuildContext context) {
         title: Text(item.toString()),
         onTap: () {
           context.read<LocalizationSelectionProvider>().tapped(item);
+          context.read<AddOnProvider>().update();
         },
       );
     },
@@ -64,36 +69,14 @@ Widget _wrapperBuilder(
   );
 }
 
-Widget _previewBuilder(BuildContext context, Widget child) {
-  final data = context.watch<LocalizationSelectionProvider>().value;
-  return Row(
-    mainAxisSize: MainAxisSize.min,
-    children: data.activeLocales
-        .map(
-          // TODO remove SizedBox
-          (locale) => SizedBox(
-            width: 400,
-            child: ChangeNotifierProvider(
-              create: (context) => LocalizationProvider(
-                LocalizationData(
-                  activeLocale: locale,
-                  supportedLocales: data.locales,
-                  localizationsDelegates: data.localizationsDelegates,
-                ),
-              ),
-              child: child,
-            ),
-          ),
-        )
-        .toList(),
-  );
-}
-
-SingleChildWidget _providerBuilder(BuildContext context) {
+SingleChildWidget _providerBuilder(
+  BuildContext context,
+  int index,
+) {
   final selection = context.watch<LocalizationSelectionProvider>().value;
   final locale = selection.activeLocales.isEmpty
       ? selection.locales.first
-      : selection.activeLocales.first;
+      : selection.activeLocales.elementAt(index);
   return ChangeNotifierProvider(
     create: (context) => LocalizationProvider(
       LocalizationData(
