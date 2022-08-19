@@ -19,8 +19,6 @@ mixin _$RenderingState<CustomTheme> {
   List<WidgetbookFrame> get frames => throw _privateConstructorUsedError;
   DeviceFrameBuilderFunction get deviceFrameBuilder =>
       throw _privateConstructorUsedError;
-  ThemeBuilderFunction<CustomTheme> get themeBuilder =>
-      throw _privateConstructorUsedError;
   ScaffoldBuilderFunction get scaffoldBuilder =>
       throw _privateConstructorUsedError;
   AppBuilderFunction get appBuilder => throw _privateConstructorUsedError;
@@ -41,7 +39,6 @@ abstract class $RenderingStateCopyWith<CustomTheme, $Res> {
   $Res call(
       {List<WidgetbookFrame> frames,
       DeviceFrameBuilderFunction deviceFrameBuilder,
-      ThemeBuilderFunction<CustomTheme> themeBuilder,
       ScaffoldBuilderFunction scaffoldBuilder,
       AppBuilderFunction appBuilder,
       TextScaleBuilder textScaleBuilder,
@@ -61,7 +58,6 @@ class _$RenderingStateCopyWithImpl<CustomTheme, $Res>
   $Res call({
     Object? frames = freezed,
     Object? deviceFrameBuilder = freezed,
-    Object? themeBuilder = freezed,
     Object? scaffoldBuilder = freezed,
     Object? appBuilder = freezed,
     Object? textScaleBuilder = freezed,
@@ -76,10 +72,6 @@ class _$RenderingStateCopyWithImpl<CustomTheme, $Res>
           ? _value.deviceFrameBuilder
           : deviceFrameBuilder // ignore: cast_nullable_to_non_nullable
               as DeviceFrameBuilderFunction,
-      themeBuilder: themeBuilder == freezed
-          ? _value.themeBuilder
-          : themeBuilder // ignore: cast_nullable_to_non_nullable
-              as ThemeBuilderFunction<CustomTheme>,
       scaffoldBuilder: scaffoldBuilder == freezed
           ? _value.scaffoldBuilder
           : scaffoldBuilder // ignore: cast_nullable_to_non_nullable
@@ -110,7 +102,6 @@ abstract class _$$_RenderingStateCopyWith<CustomTheme, $Res>
   $Res call(
       {List<WidgetbookFrame> frames,
       DeviceFrameBuilderFunction deviceFrameBuilder,
-      ThemeBuilderFunction<CustomTheme> themeBuilder,
       ScaffoldBuilderFunction scaffoldBuilder,
       AppBuilderFunction appBuilder,
       TextScaleBuilder textScaleBuilder,
@@ -133,7 +124,6 @@ class __$$_RenderingStateCopyWithImpl<CustomTheme, $Res>
   $Res call({
     Object? frames = freezed,
     Object? deviceFrameBuilder = freezed,
-    Object? themeBuilder = freezed,
     Object? scaffoldBuilder = freezed,
     Object? appBuilder = freezed,
     Object? textScaleBuilder = freezed,
@@ -148,10 +138,6 @@ class __$$_RenderingStateCopyWithImpl<CustomTheme, $Res>
           ? _value.deviceFrameBuilder
           : deviceFrameBuilder // ignore: cast_nullable_to_non_nullable
               as DeviceFrameBuilderFunction,
-      themeBuilder: themeBuilder == freezed
-          ? _value.themeBuilder
-          : themeBuilder // ignore: cast_nullable_to_non_nullable
-              as ThemeBuilderFunction<CustomTheme>,
       scaffoldBuilder: scaffoldBuilder == freezed
           ? _value.scaffoldBuilder
           : scaffoldBuilder // ignore: cast_nullable_to_non_nullable
@@ -178,7 +164,6 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
   _$_RenderingState(
       {required final List<WidgetbookFrame> frames,
       required this.deviceFrameBuilder,
-      required this.themeBuilder,
       required this.scaffoldBuilder,
       required this.appBuilder,
       required this.textScaleBuilder,
@@ -195,8 +180,6 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
   @override
   final DeviceFrameBuilderFunction deviceFrameBuilder;
   @override
-  final ThemeBuilderFunction<CustomTheme> themeBuilder;
-  @override
   final ScaffoldBuilderFunction scaffoldBuilder;
   @override
   final AppBuilderFunction appBuilder;
@@ -207,7 +190,7 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
 
   @override
   String toString() {
-    return 'RenderingState<$CustomTheme>(frames: $frames, deviceFrameBuilder: $deviceFrameBuilder, themeBuilder: $themeBuilder, scaffoldBuilder: $scaffoldBuilder, appBuilder: $appBuilder, textScaleBuilder: $textScaleBuilder, useCaseBuilder: $useCaseBuilder)';
+    return 'RenderingState<$CustomTheme>(frames: $frames, deviceFrameBuilder: $deviceFrameBuilder, scaffoldBuilder: $scaffoldBuilder, appBuilder: $appBuilder, textScaleBuilder: $textScaleBuilder, useCaseBuilder: $useCaseBuilder)';
   }
 
   @override
@@ -218,8 +201,6 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
             const DeepCollectionEquality().equals(other._frames, _frames) &&
             (identical(other.deviceFrameBuilder, deviceFrameBuilder) ||
                 other.deviceFrameBuilder == deviceFrameBuilder) &&
-            (identical(other.themeBuilder, themeBuilder) ||
-                other.themeBuilder == themeBuilder) &&
             (identical(other.scaffoldBuilder, scaffoldBuilder) ||
                 other.scaffoldBuilder == scaffoldBuilder) &&
             (identical(other.appBuilder, appBuilder) ||
@@ -235,7 +216,6 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
       runtimeType,
       const DeepCollectionEquality().hash(_frames),
       deviceFrameBuilder,
-      themeBuilder,
       scaffoldBuilder,
       appBuilder,
       textScaleBuilder,
@@ -253,7 +233,6 @@ abstract class _RenderingState<CustomTheme>
   factory _RenderingState(
           {required final List<WidgetbookFrame> frames,
           required final DeviceFrameBuilderFunction deviceFrameBuilder,
-          required final ThemeBuilderFunction<CustomTheme> themeBuilder,
           required final ScaffoldBuilderFunction scaffoldBuilder,
           required final AppBuilderFunction appBuilder,
           required final TextScaleBuilder textScaleBuilder,
@@ -264,9 +243,6 @@ abstract class _RenderingState<CustomTheme>
   List<WidgetbookFrame> get frames => throw _privateConstructorUsedError;
   @override
   DeviceFrameBuilderFunction get deviceFrameBuilder =>
-      throw _privateConstructorUsedError;
-  @override
-  ThemeBuilderFunction<CustomTheme> get themeBuilder =>
       throw _privateConstructorUsedError;
   @override
   ScaffoldBuilderFunction get scaffoldBuilder =>

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 const AppBuilderFunction defaultAppBuilder = _defaultAppBuilderMethod;
 
@@ -32,6 +33,10 @@ AppBuilderFunction get materialAppBuilder =>
     (BuildContext context, Widget child) {
       final _router = getRouter(child);
       return MaterialApp.router(
+        theme: context.theme,
+        locale: context.localization.activeLocale,
+        supportedLocales: context.localization.supportedLocales,
+        localizationsDelegates: context.localization.localizationsDelegates,
         debugShowCheckedModeBanner: false,
         routerDelegate: _router.routerDelegate,
         routeInformationParser: _router.routeInformationParser,

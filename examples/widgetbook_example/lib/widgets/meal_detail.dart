@@ -23,8 +23,10 @@ class MealDetail extends StatelessWidget {
           SizedBox(
             height: 16,
           ),
-          RotatedImage(
-            assetPath: meal.imagePath,
+          Expanded(
+            child: RotatedImage(
+              assetPath: meal.imagePath,
+            ),
           ),
           SizedBox(
             height: 32,

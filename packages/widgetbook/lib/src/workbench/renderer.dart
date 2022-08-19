@@ -43,10 +43,17 @@ class Renderer<CustomTheme> extends StatelessWidget {
         context.watch<RenderingProvider<CustomTheme>>().state;
     final addons = context.watch<AddOnProvider>().value;
 
-    return addons.first.previewBuilder(
-      context,
-      Builder(
+    return MultiProvider(
+      // TODO Performance wise this this is not too hot
+      key: ValueKey(
+        addons
+            .map((e) => e.hashBuilder(context))
+            .reduce((value1, value2) => value1 ^ value2),
+      ),
+      providers: addons.map((e) => e.providerBuilder(context)).toList(),
+      child: Builder(
         builder: (context) {
+          print('Locale: ${context.localization.activeLocale}');
           return renderingState.deviceFrameBuilder(
             context,
             device,
@@ -58,40 +65,31 @@ class Renderer<CustomTheme> extends StatelessWidget {
                   context,
                   Builder(
                     builder: (context) {
-                      return renderingState.themeBuilder(
-                        context,
-                        theme,
-                        Builder(
-                          builder: (context) {
-                            return Builder(
+                      return Builder(
+                        builder: (context) {
+                          return renderingState.textScaleBuilder(
+                            context,
+                            textScaleFactor,
+                            Builder(
                               builder: (context) {
-                                return renderingState.textScaleBuilder(
+                                return renderingState.scaffoldBuilder(
                                   context,
-                                  textScaleFactor,
+                                  frame,
                                   Builder(
                                     builder: (context) {
-                                      return renderingState.scaffoldBuilder(
+                                      return renderingState.useCaseBuilder(
                                         context,
-                                        frame,
                                         Builder(
-                                          builder: (context) {
-                                            return renderingState
-                                                .useCaseBuilder(
-                                              context,
-                                              Builder(
-                                                builder: useCaseBuilder,
-                                              ),
-                                            );
-                                          },
+                                          builder: useCaseBuilder,
                                         ),
                                       );
                                     },
                                   ),
                                 );
                               },
-                            );
-                          },
-                        ),
+                            ),
+                          );
+                        },
                       );
                     },
                   ),

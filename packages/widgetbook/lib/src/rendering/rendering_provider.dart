@@ -9,7 +9,6 @@ class RenderingProvider<CustomTheme>
     // TODO is this required?
     required List<WidgetbookFrame> frames,
     required DeviceFrameBuilderFunction deviceFrameBuilder,
-    required ThemeBuilderFunction<CustomTheme> themeBuilder,
     required ScaffoldBuilderFunction scaffoldBuilder,
     required AppBuilderFunction appBuilder,
     TextScaleBuilder? textScaleBuilder,
@@ -18,7 +17,6 @@ class RenderingProvider<CustomTheme>
           state: RenderingState<CustomTheme>(
             frames: frames,
             deviceFrameBuilder: deviceFrameBuilder,
-            themeBuilder: themeBuilder,
             scaffoldBuilder: scaffoldBuilder,
             appBuilder: appBuilder,
             textScaleBuilder: textScaleBuilder ?? defaultTextScaleBuilder,

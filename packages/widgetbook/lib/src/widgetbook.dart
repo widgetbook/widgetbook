@@ -90,7 +90,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     required this.appInfo,
     required this.themes,
     this.deviceFrameBuilder,
-    this.themeBuilder,
     this.scaffoldBuilder,
     this.appBuilder = defaultAppBuilder,
     this.useCaseBuilder,
@@ -168,8 +167,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
 
   final DeviceFrameBuilderFunction? deviceFrameBuilder;
 
-  final ThemeBuilderFunction<CustomTheme>? themeBuilder;
-
   final ScaffoldBuilderFunction? scaffoldBuilder;
 
   final AppBuilderFunction appBuilder;
@@ -187,7 +184,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     List<Locale>? supportedLocales,
     List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     DeviceFrameBuilderFunction? deviceFrameBuilder,
-    ThemeBuilderFunction<CupertinoThemeData>? themeBuilder,
     AppBuilderFunction? appBuilder,
     ScaffoldBuilderFunction? scaffoldBuilder,
     UseCaseBuilderFunction? useCaseBuilder,
@@ -203,7 +199,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
       addons: addons,
       supportedLocales: supportedLocales,
       deviceFrameBuilder: deviceFrameBuilder,
-      themeBuilder: themeBuilder,
       scaffoldBuilder: scaffoldBuilder,
       appBuilder: appBuilder ?? cupertinoAppBuilder,
       useCaseBuilder: useCaseBuilder,
@@ -223,7 +218,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     List<Locale>? supportedLocales,
     List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     DeviceFrameBuilderFunction? deviceFrameBuilder,
-    ThemeBuilderFunction<ThemeData>? themeBuilder,
     AppBuilderFunction? appBuilder,
     ScaffoldBuilderFunction? scaffoldBuilder,
     UseCaseBuilderFunction? useCaseBuilder,
@@ -239,7 +233,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
       addons: addons,
       supportedLocales: supportedLocales,
       deviceFrameBuilder: deviceFrameBuilder,
-      themeBuilder: themeBuilder,
       scaffoldBuilder: scaffoldBuilder,
       appBuilder: appBuilder ?? materialAppBuilder,
       useCaseBuilder: useCaseBuilder,
@@ -312,16 +305,13 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
           key: ValueKey(
             widget.frames.hashCodeOfItems ^
                 widget.deviceFrameBuilder.hashCode ^
-                widget.themeBuilder.hashCode ^
                 widget.scaffoldBuilder.hashCode ^
                 widget.useCaseBuilder.hashCode,
           ),
-          create: (_) => RenderingProvider(
+          create: (_) => RenderingProvider<CustomTheme>(
             frames: widget.frames,
             deviceFrameBuilder:
                 widget.deviceFrameBuilder ?? defaultDeviceFrameBuilder,
-            themeBuilder:
-                widget.themeBuilder ?? defaultThemeBuilder<CustomTheme>(),
             scaffoldBuilder: widget.scaffoldBuilder ?? defaultScaffoldBuilder,
             appBuilder: widget.appBuilder,
             useCaseBuilder: widget.useCaseBuilder ?? defaultUseCaseBuilder,
