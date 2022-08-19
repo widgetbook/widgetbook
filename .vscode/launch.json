@@ -30,6 +30,13 @@
             "type": "dart"
         },
         {
+            "name": "Debug widgetbook_example",
+            "cwd": "examples/widgetbook_example",
+            "request": "launch",
+            "program": "widgetbook/main.dart",
+            "type": "dart",
+        },
+        {
             "name": "Profile widgetbook_example",
             "cwd": "examples/widgetbook_example",
             "request": "launch",

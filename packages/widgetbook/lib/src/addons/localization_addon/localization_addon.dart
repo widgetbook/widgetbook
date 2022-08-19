@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/addons/addon.dart';
 import 'package:widgetbook/src/addons/localization_addon/localization_data.dart';
@@ -19,7 +20,13 @@ class LocalizationAddon extends WidgetbookAddOn {
               _wrapperBuilder(context, child, data),
           builder: _builder,
           previewBuilder: _previewBuilder,
+          providerBuilder: _providerBuilder,
+          hashBuilder: _hashBuilder,
         );
+}
+
+int _hashBuilder(BuildContext context) {
+  return context.read<LocalizationSelectionProvider>().value.hashCode;
 }
 
 Widget _builder(BuildContext context) {
@@ -70,6 +77,7 @@ Widget _previewBuilder(BuildContext context, Widget child) {
               create: (context) => LocalizationProvider(
                 LocalizationData(
                   activeLocale: locale,
+                  supportedLocales: data.locales,
                   localizationsDelegates: data.localizationsDelegates,
                 ),
               ),
@@ -81,7 +89,23 @@ Widget _previewBuilder(BuildContext context, Widget child) {
   );
 }
 
-extension Localization on BuildContext {
+SingleChildWidget _providerBuilder(BuildContext context) {
+  final selection = context.watch<LocalizationSelectionProvider>().value;
+  final locale = selection.activeLocales.isEmpty
+      ? selection.locales.first
+      : selection.activeLocales.first;
+  return ChangeNotifierProvider(
+    create: (context) => LocalizationProvider(
+      LocalizationData(
+        activeLocale: locale,
+        supportedLocales: selection.locales,
+        localizationsDelegates: selection.localizationsDelegates,
+      ),
+    ),
+  );
+}
+
+extension LocalizationExtension on BuildContext {
   /// Creates adjustable parameters for the WidgetbookUseCase
   LocalizationData get localization => watch<LocalizationProvider>().value;
 }

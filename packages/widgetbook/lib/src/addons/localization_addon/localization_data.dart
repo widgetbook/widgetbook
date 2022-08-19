@@ -7,6 +7,7 @@ part 'localization_data.freezed.dart';
 class LocalizationData with _$LocalizationData {
   factory LocalizationData({
     required Locale activeLocale,
+    required List<Locale> supportedLocales,
     required List<LocalizationsDelegate<dynamic>> localizationsDelegates,
   }) = _LocalizationData;
 }

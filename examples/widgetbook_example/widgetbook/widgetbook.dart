@@ -28,14 +28,13 @@ class HotreloadWidgetbook extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      appBuilder: (context, child) {
-        return Localizations(
-          locale: context.localization.activeLocale,
-          delegates: context.localization.localizationsDelegates,
-          child: child,
-        );
-      },
       addons: [
+        ThemeAddon(
+          themes: [
+            lightTheme,
+            darkTheme,
+          ],
+        ),
         LocalizationAddon(
           data: LocalizationSelection(
             activeLocales: {

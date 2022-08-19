@@ -10,7 +10,6 @@ class RenderingState<CustomTheme> with _$RenderingState<CustomTheme> {
   factory RenderingState({
     required List<WidgetbookFrame> frames,
     required DeviceFrameBuilderFunction deviceFrameBuilder,
-    required ThemeBuilderFunction<CustomTheme> themeBuilder,
     required ScaffoldBuilderFunction scaffoldBuilder,
     required AppBuilderFunction appBuilder,
     required TextScaleBuilder textScaleBuilder,
