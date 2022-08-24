@@ -67,23 +67,15 @@ class Renderer<CustomTheme> extends StatelessWidget {
                     builder: (context) {
                       return Builder(
                         builder: (context) {
-                          return renderingState.textScaleBuilder(
+                          return renderingState.scaffoldBuilder(
                             context,
-                            textScaleFactor,
+                            frame,
                             Builder(
                               builder: (context) {
-                                return renderingState.scaffoldBuilder(
+                                return renderingState.useCaseBuilder(
                                   context,
-                                  frame,
                                   Builder(
-                                    builder: (context) {
-                                      return renderingState.useCaseBuilder(
-                                        context,
-                                        Builder(
-                                          builder: useCaseBuilder,
-                                        ),
-                                      );
-                                    },
+                                    builder: useCaseBuilder,
                                   ),
                                 );
                               },
