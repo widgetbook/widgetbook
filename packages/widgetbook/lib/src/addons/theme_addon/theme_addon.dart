@@ -6,6 +6,7 @@ import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/addons/theme_addon/theme_provider.dart';
 import 'package:widgetbook/src/addons/theme_addon/theme_selection.dart';
 import 'package:widgetbook/src/addons/theme_addon/theme_selection_provider.dart';
+import 'package:widgetbook/src/navigation/router.dart';
 
 class ThemeAddon extends WidgetbookAddOn {
   ThemeAddon({
@@ -13,12 +14,20 @@ class ThemeAddon extends WidgetbookAddOn {
   }) : super(
           icon: const Icon(Icons.theater_comedy),
           name: 'themes',
-          wrapperBuilder: (context, child) =>
+          wrapperBuilder: (context, routerData, child) =>
               _wrapperBuilder(context, child, themes),
           builder: _builder,
           providerBuilder: _providerBuilder,
           selectionCount: _selectionCount,
+          getQueryParameter: _getQueryParameter,
         );
+}
+
+String _getQueryParameter(BuildContext context) {
+  final selectedItems =
+      context.read<ThemeSelectionProvider>().value.activeThemes;
+
+  return selectedItems.map((e) => e).join(',');
 }
 
 int _selectionCount(BuildContext context) {
@@ -37,6 +46,7 @@ Widget _builder(BuildContext context) {
         onTap: () {
           context.read<ThemeSelectionProvider>().tapped(item);
           context.read<AddOnProvider>().update();
+          navigate(context);
         },
       );
     },

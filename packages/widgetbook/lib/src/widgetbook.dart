@@ -330,6 +330,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
         ),
       ],
       child: MaterialApp.router(
+        routeInformationProvider: goRouter.routeInformationProvider,
         routeInformationParser: goRouter.routeInformationParser,
         routerDelegate: goRouter.routerDelegate,
         title: widget.appInfo.name,
@@ -339,19 +340,5 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
         theme: Styles.lightTheme,
       ),
     );
-  }
-
-  WidgetbookUseCase? selectStoryFromPath(
-    String? path,
-    List<WidgetbookUseCase> stories,
-  ) {
-    final storyPath = path?.replaceFirst('/stories/', '') ?? '';
-    WidgetbookUseCase? story;
-    for (final element in stories) {
-      if (element.path == storyPath) {
-        story = element;
-      }
-    }
-    return story;
   }
 }

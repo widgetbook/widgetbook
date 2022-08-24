@@ -32,14 +32,13 @@ Widget _defaultAppBuilderMethod(BuildContext context, Widget child) {
 AppBuilderFunction get materialAppBuilder =>
     (BuildContext context, Widget child) {
       final _router = getRouter(child);
-      return MaterialApp.router(
+      return MaterialApp(
         theme: context.theme,
         locale: context.localization.activeLocale,
         supportedLocales: context.localization.supportedLocales,
         localizationsDelegates: context.localization.localizationsDelegates,
         debugShowCheckedModeBanner: false,
-        routerDelegate: _router.routerDelegate,
-        routeInformationParser: _router.routeInformationParser,
+        home: child,
       );
     };
 

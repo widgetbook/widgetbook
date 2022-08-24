@@ -10,15 +10,20 @@ class WidgetbookAddOn {
     required this.builder,
     required this.providerBuilder,
     required this.selectionCount,
+    required this.getQueryParameter,
   });
 
   // TODO if we make this a builder, we can access buildcontext
   final Widget icon;
+
   final String name;
+
   final Widget Function(
     BuildContext context,
+    Map<String, dynamic> routerData,
     Widget child,
   ) wrapperBuilder;
+
   final Widget Function(
     BuildContext context,
   ) builder;
@@ -27,5 +32,8 @@ class WidgetbookAddOn {
     BuildContext context,
     int index,
   ) providerBuilder;
+
   final int Function(BuildContext context) selectionCount;
+
+  final String Function(BuildContext context) getQueryParameter;
 }

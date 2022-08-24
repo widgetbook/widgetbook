@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/navigation/preview_provider.dart';
+import 'package:widgetbook/src/navigation/router.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 import 'package:widgetbook/src/widgets/tiles/spaced_tile.dart';
 
@@ -29,6 +30,7 @@ class _StoryTileState extends State<StoryTile> {
       iconColor: Styles.storyColor,
       onClicked: () {
         context.read<PreviewProvider>().selectUseCase(widget.useCase);
+        navigate(context);
       },
     );
   }
