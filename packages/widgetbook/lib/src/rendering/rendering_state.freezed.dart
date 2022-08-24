@@ -22,7 +22,6 @@ mixin _$RenderingState<CustomTheme> {
   ScaffoldBuilderFunction get scaffoldBuilder =>
       throw _privateConstructorUsedError;
   AppBuilderFunction get appBuilder => throw _privateConstructorUsedError;
-  TextScaleBuilder get textScaleBuilder => throw _privateConstructorUsedError;
   UseCaseBuilderFunction get useCaseBuilder =>
       throw _privateConstructorUsedError;
 
@@ -41,7 +40,6 @@ abstract class $RenderingStateCopyWith<CustomTheme, $Res> {
       DeviceFrameBuilderFunction deviceFrameBuilder,
       ScaffoldBuilderFunction scaffoldBuilder,
       AppBuilderFunction appBuilder,
-      TextScaleBuilder textScaleBuilder,
       UseCaseBuilderFunction useCaseBuilder});
 }
 
@@ -60,7 +58,6 @@ class _$RenderingStateCopyWithImpl<CustomTheme, $Res>
     Object? deviceFrameBuilder = freezed,
     Object? scaffoldBuilder = freezed,
     Object? appBuilder = freezed,
-    Object? textScaleBuilder = freezed,
     Object? useCaseBuilder = freezed,
   }) {
     return _then(_value.copyWith(
@@ -80,10 +77,6 @@ class _$RenderingStateCopyWithImpl<CustomTheme, $Res>
           ? _value.appBuilder
           : appBuilder // ignore: cast_nullable_to_non_nullable
               as AppBuilderFunction,
-      textScaleBuilder: textScaleBuilder == freezed
-          ? _value.textScaleBuilder
-          : textScaleBuilder // ignore: cast_nullable_to_non_nullable
-              as TextScaleBuilder,
       useCaseBuilder: useCaseBuilder == freezed
           ? _value.useCaseBuilder
           : useCaseBuilder // ignore: cast_nullable_to_non_nullable
@@ -104,7 +97,6 @@ abstract class _$$_RenderingStateCopyWith<CustomTheme, $Res>
       DeviceFrameBuilderFunction deviceFrameBuilder,
       ScaffoldBuilderFunction scaffoldBuilder,
       AppBuilderFunction appBuilder,
-      TextScaleBuilder textScaleBuilder,
       UseCaseBuilderFunction useCaseBuilder});
 }
 
@@ -126,7 +118,6 @@ class __$$_RenderingStateCopyWithImpl<CustomTheme, $Res>
     Object? deviceFrameBuilder = freezed,
     Object? scaffoldBuilder = freezed,
     Object? appBuilder = freezed,
-    Object? textScaleBuilder = freezed,
     Object? useCaseBuilder = freezed,
   }) {
     return _then(_$_RenderingState<CustomTheme>(
@@ -146,10 +137,6 @@ class __$$_RenderingStateCopyWithImpl<CustomTheme, $Res>
           ? _value.appBuilder
           : appBuilder // ignore: cast_nullable_to_non_nullable
               as AppBuilderFunction,
-      textScaleBuilder: textScaleBuilder == freezed
-          ? _value.textScaleBuilder
-          : textScaleBuilder // ignore: cast_nullable_to_non_nullable
-              as TextScaleBuilder,
       useCaseBuilder: useCaseBuilder == freezed
           ? _value.useCaseBuilder
           : useCaseBuilder // ignore: cast_nullable_to_non_nullable
@@ -166,7 +153,6 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
       required this.deviceFrameBuilder,
       required this.scaffoldBuilder,
       required this.appBuilder,
-      required this.textScaleBuilder,
       required this.useCaseBuilder})
       : _frames = frames;
 
@@ -184,13 +170,11 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
   @override
   final AppBuilderFunction appBuilder;
   @override
-  final TextScaleBuilder textScaleBuilder;
-  @override
   final UseCaseBuilderFunction useCaseBuilder;
 
   @override
   String toString() {
-    return 'RenderingState<$CustomTheme>(frames: $frames, deviceFrameBuilder: $deviceFrameBuilder, scaffoldBuilder: $scaffoldBuilder, appBuilder: $appBuilder, textScaleBuilder: $textScaleBuilder, useCaseBuilder: $useCaseBuilder)';
+    return 'RenderingState<$CustomTheme>(frames: $frames, deviceFrameBuilder: $deviceFrameBuilder, scaffoldBuilder: $scaffoldBuilder, appBuilder: $appBuilder, useCaseBuilder: $useCaseBuilder)';
   }
 
   @override
@@ -205,8 +189,6 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
                 other.scaffoldBuilder == scaffoldBuilder) &&
             (identical(other.appBuilder, appBuilder) ||
                 other.appBuilder == appBuilder) &&
-            (identical(other.textScaleBuilder, textScaleBuilder) ||
-                other.textScaleBuilder == textScaleBuilder) &&
             (identical(other.useCaseBuilder, useCaseBuilder) ||
                 other.useCaseBuilder == useCaseBuilder));
   }
@@ -218,7 +200,6 @@ class _$_RenderingState<CustomTheme> implements _RenderingState<CustomTheme> {
       deviceFrameBuilder,
       scaffoldBuilder,
       appBuilder,
-      textScaleBuilder,
       useCaseBuilder);
 
   @JsonKey(ignore: true)
@@ -235,7 +216,6 @@ abstract class _RenderingState<CustomTheme>
           required final DeviceFrameBuilderFunction deviceFrameBuilder,
           required final ScaffoldBuilderFunction scaffoldBuilder,
           required final AppBuilderFunction appBuilder,
-          required final TextScaleBuilder textScaleBuilder,
           required final UseCaseBuilderFunction useCaseBuilder}) =
       _$_RenderingState<CustomTheme>;
 
@@ -249,8 +229,6 @@ abstract class _RenderingState<CustomTheme>
       throw _privateConstructorUsedError;
   @override
   AppBuilderFunction get appBuilder => throw _privateConstructorUsedError;
-  @override
-  TextScaleBuilder get textScaleBuilder => throw _privateConstructorUsedError;
   @override
   UseCaseBuilderFunction get useCaseBuilder =>
       throw _privateConstructorUsedError;

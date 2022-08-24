@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:meal_app/themes/dark_theme.dart';
-import 'package:meal_app/widgets/dashboard.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:meal_app/themes/dark_theme.dart';
+import 'package:meal_app/widgets/dashboard.dart';
 import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 @WidgetbookDeviceFrameBuilder()
 DeviceFrameBuilderFunction frameBuilder = (
@@ -35,25 +34,6 @@ DeviceFrameBuilderFunction frameBuilder = (
   return child;
 };
 
-@WidgetbookLocalizationBuilder()
-LocalizationBuilderFunction localizationBuilder = (
-  BuildContext context,
-  List<Locale> supportedLocales,
-  List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
-  Locale activeLocale,
-  Widget child,
-) {
-  if (localizationsDelegates != null) {
-    return Localizations(
-      locale: activeLocale,
-      delegates: localizationsDelegates,
-      child: child,
-    );
-  }
-
-  return child;
-};
-
 @WidgetbookScaffoldBuilder()
 ScaffoldBuilderFunction scaffoldBuilder = (
   BuildContext context,
@@ -68,31 +48,6 @@ ScaffoldBuilderFunction scaffoldBuilder = (
 
   return child;
 };
-
-@WidgetbookThemeBuilder()
-ThemeBuilderFunction<CustomTheme> themeBuilder<CustomTheme>() => (
-      BuildContext context,
-      CustomTheme theme,
-      Widget child,
-    ) {
-      if (theme is ThemeData) {
-        return Theme(
-          data: theme,
-          child: child,
-        );
-      }
-      if (theme is CupertinoThemeData) {
-        return CupertinoTheme(
-          data: theme,
-          child: child,
-        );
-      }
-
-      throw Exception(
-        'You are using Widgetbook with custom theme data. '
-        'Please provide an implementation for themeBuilder.',
-      );
-    };
 
 @WidgetbookLocales()
 final locales = <Locale>[

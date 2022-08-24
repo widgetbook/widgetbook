@@ -30,14 +30,20 @@ Widget _defaultAppBuilderMethod(BuildContext context, Widget child) {
 
 AppBuilderFunction get materialAppBuilder =>
     (BuildContext context, Widget child) {
-      final _router = getRouter(child);
       return MaterialApp(
         theme: context.theme,
         locale: context.localization.activeLocale,
         supportedLocales: context.localization.supportedLocales,
         localizationsDelegates: context.localization.localizationsDelegates,
         debugShowCheckedModeBanner: false,
-        home: child,
+        home: Scaffold(
+          body: MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaleFactor: context.textScale,
+            ),
+            child: child,
+          ),
+        ),
       );
     };
 

@@ -35,6 +35,15 @@ class HotreloadWidgetbook extends StatelessWidget {
             darkTheme,
           ],
         ),
+        TextScaleAddon(
+          data: TextScaleSelection(
+            activeTextScales: {
+              1,
+              2,
+            },
+            textScales: [1, 2, 3],
+          ),
+        ),
         LocalizationAddon(
           data: LocalizationSelection(
             activeLocales: {
