@@ -7,6 +7,7 @@ import 'package:widgetbook/src/addons/localization_addon/localization_data.dart'
 import 'package:widgetbook/src/addons/localization_addon/localization_provider.dart';
 import 'package:widgetbook/src/addons/localization_addon/localization_selection.dart';
 import 'package:widgetbook/src/addons/localization_addon/localization_selection_provider.dart';
+import 'package:widgetbook/src/navigation/router.dart';
 
 export './localization_data.dart';
 export './localization_selection.dart';
@@ -16,13 +17,21 @@ class LocalizationAddon extends WidgetbookAddOn {
     required LocalizationSelection data,
   }) : super(
           icon: const Icon(Icons.translate),
-          name: 'Localization',
-          wrapperBuilder: (context, child) =>
-              _wrapperBuilder(context, child, data),
+          name: 'localization',
+          wrapperBuilder: (context, routerData, child) =>
+              _wrapperBuilder(context, child, routerData, data),
           builder: _builder,
           providerBuilder: _providerBuilder,
           selectionCount: _selectionCount,
+          getQueryParameter: _getQueryParameter,
         );
+}
+
+String _getQueryParameter(BuildContext context) {
+  final selectedItems =
+      context.read<LocalizationSelectionProvider>().value.activeLocales;
+
+  return selectedItems.map((e) => e.languageCode).join(',');
 }
 
 int _selectionCount(BuildContext context) {
@@ -45,6 +54,7 @@ Widget _builder(BuildContext context) {
         onTap: () {
           context.read<LocalizationSelectionProvider>().tapped(item);
           context.read<AddOnProvider>().update();
+          navigate(context);
         },
       );
     },
@@ -61,10 +71,28 @@ Widget _builder(BuildContext context) {
 Widget _wrapperBuilder(
   BuildContext context,
   Widget child,
+  Map<String, dynamic> routerData,
   LocalizationSelection data,
 ) {
+  final activeLocalesString = routerData['locales'] as String?;
+  final selectedLocales = <Locale>[];
+  if (activeLocalesString != null) {
+    final activeLocales = activeLocalesString.split(',');
+    final mapLocales = {for (var e in data.locales) e.languageCode: e};
+
+    for (final activeLocale in activeLocales) {
+      if (mapLocales.containsKey(activeLocale)) {
+        selectedLocales.add(mapLocales[activeLocale]!);
+      }
+    }
+  }
+
+  final initialData = selectedLocales.isNotEmpty
+      ? data.copyWith(activeLocales: selectedLocales.toSet())
+      : data;
+
   return ChangeNotifierProvider(
-    create: (_) => LocalizationSelectionProvider(data),
+    create: (_) => LocalizationSelectionProvider(initialData),
     child: child,
   );
 }

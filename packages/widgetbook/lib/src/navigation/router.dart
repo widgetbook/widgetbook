@@ -1,58 +1,26 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:widgetbook/src/extensions/enum_extension.dart';
+import 'package:provider/provider.dart';
+import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/navigation/preview_provider.dart';
 import 'package:widgetbook/src/widgetbook_page.dart';
 import 'package:widgetbook/src/workbench/workbench_provider.dart';
 
-void refreshRoute<CustomTheme>(
-  GoRouter router, {
-  required WorkbenchProvider<CustomTheme> workbenchProvider,
-  required PreviewProvider previewProvider,
-}) {
-  final previewState = previewProvider.state;
-  final workbenchState = workbenchProvider.state;
+void navigate(BuildContext context) {
+  final addons = context.read<AddOnProvider>().value;
+  final queryParameters = {
+    for (final addon in addons) addon.name: addon.getQueryParameter(context)
+  };
 
-  final queryParameters = <String, String>{};
-
-  if (workbenchState.hasSelectedTheme) {
-    queryParameters.putIfAbsent(
-      'theme',
-      () => workbenchState.theme!.name,
-    );
+  final usecase = context.read<PreviewProvider>().state.selectedUseCase;
+  if (usecase != null) {
+    queryParameters.putIfAbsent('path', () => usecase.path);
   }
 
-  if (workbenchState.hasSelectedDevice) {
-    queryParameters.putIfAbsent(
-      'device',
-      () => workbenchState.device!.name,
-    );
-  }
-
-  if (workbenchState.hasSelectedTextScaleFactor) {
-    queryParameters.putIfAbsent(
-      'text-scale-factor',
-      () => workbenchState.textScaleFactor!.toStringAsFixed(1),
-    );
-  }
-
-  queryParameters
-    ..putIfAbsent(
-      'orientation',
-      () => workbenchState.orientation.toShortString(),
-    )
-    ..putIfAbsent(
-      'frame',
-      () => workbenchState.frame.name,
-    );
-
-  if (previewState.isUseCaseSelected) {
-    queryParameters.putIfAbsent(
-      'path',
-      () => previewState.selectedUseCase!.path,
-    );
-  }
-
-  router.goNamed('/', queryParams: queryParameters);
+  context.goNamed(
+    '/',
+    queryParams: queryParameters,
+  );
 }
 
 bool _parseBoolQueryParameter({
@@ -72,19 +40,8 @@ GoRouter createRouter<CustomTheme>({
 }) {
   final router = GoRouter(
     redirect: (routerState) {
-      final theme = routerState.queryParams['theme'];
-      final device = routerState.queryParams['device'];
-      final textScaleFactor = routerState.queryParams['text-scale-factor'];
-      final orientation = routerState.queryParams['orientation'];
-      final frame = routerState.queryParams['frame'];
       final path = routerState.queryParams['path'];
 
-      workbenchProvider
-        ..setThemeByName(theme)
-        ..setDeviceByName(device)
-        ..setTextScaleFactorByName(textScaleFactor)
-        ..setOrientationByName(orientation)
-        ..setFrameByName(frame);
       previewProvider.selectUseCaseByPath(path);
       return null;
     },
@@ -104,28 +61,13 @@ GoRouter createRouter<CustomTheme>({
             child: WidgetbookPage<CustomTheme>(
               disableNavigation: disableNavigation,
               disableProperties: disableProperties,
+              routerData: state.queryParams,
             ),
           );
         },
       ),
     ],
   );
-
-  previewProvider.addListener(() {
-    refreshRoute(
-      router,
-      workbenchProvider: workbenchProvider,
-      previewProvider: previewProvider,
-    );
-  });
-
-  workbenchProvider.addListener(() {
-    refreshRoute(
-      router,
-      workbenchProvider: workbenchProvider,
-      previewProvider: previewProvider,
-    );
-  });
 
   return router;
 }
