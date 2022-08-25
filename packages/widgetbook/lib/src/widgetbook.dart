@@ -89,7 +89,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     List<Device>? devices,
     required this.appInfo,
     required this.themes,
-    this.deviceFrameBuilder,
     this.scaffoldBuilder,
     this.appBuilder = defaultAppBuilder,
     this.useCaseBuilder,
@@ -165,8 +164,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
   /// A list of text scale factors to test for font size accessibility
   final List<double> textScaleFactors;
 
-  final DeviceFrameBuilderFunction? deviceFrameBuilder;
-
   final ScaffoldBuilderFunction? scaffoldBuilder;
 
   final AppBuilderFunction appBuilder;
@@ -183,7 +180,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     List<WidgetbookFrame>? frames,
     List<Locale>? supportedLocales,
     List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
-    DeviceFrameBuilderFunction? deviceFrameBuilder,
     AppBuilderFunction? appBuilder,
     ScaffoldBuilderFunction? scaffoldBuilder,
     UseCaseBuilderFunction? useCaseBuilder,
@@ -198,7 +194,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
       devices: devices,
       addons: addons,
       supportedLocales: supportedLocales,
-      deviceFrameBuilder: deviceFrameBuilder,
       scaffoldBuilder: scaffoldBuilder,
       appBuilder: appBuilder ?? cupertinoAppBuilder,
       useCaseBuilder: useCaseBuilder,
@@ -217,7 +212,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     List<WidgetbookFrame>? frames,
     List<Locale>? supportedLocales,
     List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
-    DeviceFrameBuilderFunction? deviceFrameBuilder,
     AppBuilderFunction? appBuilder,
     ScaffoldBuilderFunction? scaffoldBuilder,
     UseCaseBuilderFunction? useCaseBuilder,
@@ -232,7 +226,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
       devices: devices,
       addons: addons,
       supportedLocales: supportedLocales,
-      deviceFrameBuilder: deviceFrameBuilder,
       scaffoldBuilder: scaffoldBuilder,
       appBuilder: appBuilder ?? materialAppBuilder,
       useCaseBuilder: useCaseBuilder,
@@ -304,14 +297,11 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
         ChangeNotifierProvider(
           key: ValueKey(
             widget.frames.hashCodeOfItems ^
-                widget.deviceFrameBuilder.hashCode ^
                 widget.scaffoldBuilder.hashCode ^
                 widget.useCaseBuilder.hashCode,
           ),
           create: (_) => RenderingProvider<CustomTheme>(
             frames: widget.frames,
-            deviceFrameBuilder:
-                widget.deviceFrameBuilder ?? defaultDeviceFrameBuilder,
             scaffoldBuilder: widget.scaffoldBuilder ?? defaultScaffoldBuilder,
             appBuilder: widget.appBuilder,
             useCaseBuilder: widget.useCaseBuilder ?? defaultUseCaseBuilder,

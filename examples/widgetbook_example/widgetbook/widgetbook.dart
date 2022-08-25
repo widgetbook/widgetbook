@@ -21,6 +21,13 @@ class HotreloadWidgetbook extends StatelessWidget {
   const HotreloadWidgetbook({Key? key}) : super(key: key);
 
   Widget buildStorybook(BuildContext context) {
+    final activeFrameBuilder = WidgetbookFrameBuilder(
+      devices: [
+        Apple.iPhone11,
+        Apple.iPhone12,
+      ],
+    );
+
     return Widgetbook.material(
       localizationsDelegates: [
         AppLocalizations.delegate,
@@ -42,6 +49,14 @@ class HotreloadWidgetbook extends StatelessWidget {
               2,
             },
             textScales: [1, 2, 3],
+          ),
+        ),
+        DeviceAddon(
+          data: DeviceSelection(
+            activeFrameBuilder: activeFrameBuilder,
+            frameBuilders: [
+              activeFrameBuilder,
+            ],
           ),
         ),
         LocalizationAddon(

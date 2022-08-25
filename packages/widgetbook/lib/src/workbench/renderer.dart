@@ -54,37 +54,29 @@ class Renderer<CustomTheme> extends StatelessWidget {
       ],
       child: Builder(
         builder: (context) {
-          return renderingState.deviceFrameBuilder(
+          final frameBuilder = context.frameBuilder;
+          print('Renderer: ${frameBuilder.name}');
+          return renderingState.appBuilder(
             context,
-            device,
-            frame,
-            orientation,
             Builder(
               builder: (context) {
-                return renderingState.appBuilder(
-                  context,
-                  Builder(
-                    builder: (context) {
-                      return Builder(
+                return Builder(
+                  builder: (context) {
+                    return renderingState.scaffoldBuilder(
+                      context,
+                      frame,
+                      Builder(
                         builder: (context) {
-                          return renderingState.scaffoldBuilder(
+                          return renderingState.useCaseBuilder(
                             context,
-                            frame,
                             Builder(
-                              builder: (context) {
-                                return renderingState.useCaseBuilder(
-                                  context,
-                                  Builder(
-                                    builder: useCaseBuilder,
-                                  ),
-                                );
-                              },
+                              builder: useCaseBuilder,
                             ),
                           );
                         },
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 );
               },
             ),

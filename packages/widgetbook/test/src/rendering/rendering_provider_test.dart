@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/rendering/builders/text_scale_builder.dart';
 import 'package:widgetbook/src/rendering/rendering.dart';
@@ -17,7 +16,6 @@ void main() {
           ];
 
           final deviceFrameBuilder = defaultDeviceFrameBuilder;
-          final themeBuilder = defaultThemeBuilder<ThemeData>();
           final scaffoldBuilder = defaultScaffoldBuilder;
           final useCaseBuilder = defaultUseCaseBuilder;
           final textScaleBuilder = defaultTextScaleBuilder;
