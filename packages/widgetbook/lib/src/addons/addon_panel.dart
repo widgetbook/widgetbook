@@ -23,7 +23,7 @@ class _AddonPanelState extends State<AddonPanel> {
   OverlayEntry _createEntry(WidgetBuilder childBuilder) => OverlayEntry(
         builder: (context) => Positioned(
           height: 350,
-          width: 200,
+          width: 600,
           child: CompositedTransformFollower(
             targetAnchor: Alignment.bottomCenter,
             followerAnchor: Alignment.topCenter,

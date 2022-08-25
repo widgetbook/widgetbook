@@ -30,18 +30,22 @@ Widget _defaultAppBuilderMethod(BuildContext context, Widget child) {
 
 AppBuilderFunction get materialAppBuilder =>
     (BuildContext context, Widget child) {
-      return MaterialApp(
-        theme: context.theme,
-        locale: context.localization.activeLocale,
-        supportedLocales: context.localization.supportedLocales,
-        localizationsDelegates: context.localization.localizationsDelegates,
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-              textScaleFactor: context.textScale,
+      final frameBuilder = context.frameBuilder;
+      return frameBuilder.builder(
+        context,
+        MaterialApp(
+          theme: context.theme,
+          locale: context.localization.activeLocale,
+          supportedLocales: context.localization.supportedLocales,
+          localizationsDelegates: context.localization.localizationsDelegates,
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            body: MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                textScaleFactor: context.textScale,
+              ),
+              child: child,
             ),
-            child: child,
           ),
         ),
       );

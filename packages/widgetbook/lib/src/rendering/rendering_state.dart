@@ -8,7 +8,6 @@ part 'rendering_state.freezed.dart';
 class RenderingState<CustomTheme> with _$RenderingState<CustomTheme> {
   factory RenderingState({
     required List<WidgetbookFrame> frames,
-    required DeviceFrameBuilderFunction deviceFrameBuilder,
     required ScaffoldBuilderFunction scaffoldBuilder,
     required AppBuilderFunction appBuilder,
     required UseCaseBuilderFunction useCaseBuilder,

@@ -7,14 +7,12 @@ class RenderingProvider<CustomTheme>
   RenderingProvider({
     // TODO is this required?
     required List<WidgetbookFrame> frames,
-    required DeviceFrameBuilderFunction deviceFrameBuilder,
     required ScaffoldBuilderFunction scaffoldBuilder,
     required AppBuilderFunction appBuilder,
     required UseCaseBuilderFunction useCaseBuilder,
   }) : super(
           state: RenderingState<CustomTheme>(
             frames: frames,
-            deviceFrameBuilder: deviceFrameBuilder,
             scaffoldBuilder: scaffoldBuilder,
             appBuilder: appBuilder,
             useCaseBuilder: useCaseBuilder,
