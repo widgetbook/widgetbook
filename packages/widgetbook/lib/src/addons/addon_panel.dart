@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/addons/addon.dart';
+import 'package:widgetbook/src/addons/models/panel_size.dart';
 
 class AddonPanel extends StatefulWidget {
   const AddonPanel({
@@ -20,10 +21,10 @@ class AddonPanel extends StatefulWidget {
 class _AddonPanelState extends State<AddonPanel> {
   PluginOverlay? _overlay;
 
-  OverlayEntry _createEntry(WidgetBuilder childBuilder) => OverlayEntry(
+  OverlayEntry _createEntry(WidgetbookAddOn addon) => OverlayEntry(
         builder: (context) => Positioned(
           height: 350,
-          width: 600,
+          width: addon.panelSize == PanelSize.small ? 300 : 600,
           child: CompositedTransformFollower(
             targetAnchor: Alignment.bottomCenter,
             followerAnchor: Alignment.topCenter,
@@ -37,17 +38,17 @@ class _AddonPanelState extends State<AddonPanel> {
               locale: const Locale('en', 'US'),
               child: Dialog(
                 clipBehavior: Clip.antiAlias,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    topRight: Radius.circular(8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    8,
                   ),
                 ),
+                backgroundColor: const Color(0xFF3d3d3d),
                 insetPadding: EdgeInsets.zero,
                 child: Navigator(
                   onGenerateRoute: (_) => MaterialPageRoute<void>(
                     builder: (context) => Material(
-                      child: childBuilder(context),
+                      child: addon.builder(context),
                     ),
                   ),
                 ),
@@ -58,11 +59,8 @@ class _AddonPanelState extends State<AddonPanel> {
       );
 
   void _onPluginButtonPressed(WidgetbookAddOn p) {
-    final panelBuilder = p.builder;
-
     void insertOverlay() {
-      final overlay =
-          PluginOverlay(plugin: p, entry: _createEntry(panelBuilder));
+      final overlay = PluginOverlay(plugin: p, entry: _createEntry(p));
       _overlay = overlay;
       widget.overlayKey.currentState?.insert(overlay.entry);
     }

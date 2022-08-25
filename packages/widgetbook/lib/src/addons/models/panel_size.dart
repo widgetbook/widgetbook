@@ -1,0 +1,4 @@
+enum PanelSize {
+  small,
+  large,
+}

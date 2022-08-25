@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:nested/nested.dart';
+import 'package:widgetbook/src/addons/models/panel_size.dart';
 
 class WidgetbookAddOn {
   const WidgetbookAddOn({
@@ -11,12 +12,15 @@ class WidgetbookAddOn {
     required this.providerBuilder,
     required this.selectionCount,
     required this.getQueryParameter,
+    this.panelSize = PanelSize.small,
   });
 
   // TODO if we make this a builder, we can access buildcontext
   final Widget icon;
 
   final String name;
+
+  final PanelSize panelSize;
 
   final Widget Function(
     BuildContext context,
