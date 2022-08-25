@@ -7,6 +7,7 @@ import 'package:widgetbook/src/addons/localization_addon/localization_data.dart'
 import 'package:widgetbook/src/addons/localization_addon/localization_provider.dart';
 import 'package:widgetbook/src/addons/localization_addon/localization_selection.dart';
 import 'package:widgetbook/src/addons/localization_addon/localization_selection_provider.dart';
+import 'package:widgetbook/src/addons/widgets/addon_option_list.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 
 export './localization_data.dart';
@@ -45,26 +46,18 @@ int _selectionCount(BuildContext context) {
 Widget _builder(BuildContext context) {
   final data = context.watch<LocalizationSelectionProvider>().value;
   final locales = data.locales;
+  final activeLocales = data.activeLocales;
 
-  return ListView.separated(
-    itemBuilder: (context, index) {
-      final item = locales[index];
-      return ListTile(
-        title: Text(item.toString()),
-        onTap: () {
-          context.read<LocalizationSelectionProvider>().tapped(item);
-          context.read<AddOnProvider>().update();
-          navigate(context);
-        },
-      );
+  return AddonOptionList<Locale>(
+    name: 'Locales',
+    options: locales,
+    selectedOptions: activeLocales,
+    builder: (item) => Text(item.toString()),
+    onTap: (item) {
+      context.read<LocalizationSelectionProvider>().tapped(item);
+      context.read<AddOnProvider>().update();
+      navigate(context);
     },
-    separatorBuilder: (_, __) {
-      // TODO improve this
-      return const SizedBox(
-        height: 8,
-      );
-    },
-    itemCount: locales.length,
   );
 }
 

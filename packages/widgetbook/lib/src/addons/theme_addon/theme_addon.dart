@@ -6,6 +6,7 @@ import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/addons/theme_addon/theme_provider.dart';
 import 'package:widgetbook/src/addons/theme_addon/theme_selection.dart';
 import 'package:widgetbook/src/addons/theme_addon/theme_selection_provider.dart';
+import 'package:widgetbook/src/addons/widgets/addon_option_list.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 
 class ThemeAddon extends WidgetbookAddOn {
@@ -37,26 +38,19 @@ int _selectionCount(BuildContext context) {
 Widget _builder(BuildContext context) {
   final data = context.watch<ThemeSelectionProvider>().value;
   final themes = data.themes;
+  final activeThemes = data.activeThemes;
 
-  return ListView.separated(
-    itemBuilder: (context, index) {
-      final item = themes[index];
-      return ListTile(
-        title: Text(item.toString()),
-        onTap: () {
-          context.read<ThemeSelectionProvider>().tapped(item);
-          context.read<AddOnProvider>().update();
-          navigate(context);
-        },
-      );
+  return AddonOptionList<ThemeData>(
+    name: 'Themes',
+    options: themes,
+    selectedOptions: activeThemes,
+    // TODO adjust this
+    builder: (item) => Text(item.toString()),
+    onTap: (item) {
+      context.read<ThemeSelectionProvider>().tapped(item);
+      context.read<AddOnProvider>().update();
+      navigate(context);
     },
-    separatorBuilder: (_, __) {
-      // TODO improve this
-      return const SizedBox(
-        height: 8,
-      );
-    },
-    itemCount: themes.length,
   );
 }
 

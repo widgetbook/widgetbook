@@ -6,6 +6,7 @@ import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/addons/text_scale_addon/text_scale_provider.dart';
 import 'package:widgetbook/src/addons/text_scale_addon/text_scale_selection.dart';
 import 'package:widgetbook/src/addons/text_scale_addon/text_scale_selection_provider.dart';
+import 'package:widgetbook/src/addons/widgets/addon_option_list.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 
 export './text_scale_selection.dart';
@@ -47,26 +48,18 @@ int _selectionCount(BuildContext context) {
 Widget _builder(BuildContext context) {
   final data = context.watch<TextScaleSelectionProvider>().value;
   final textScales = data.textScales;
+  final activeTextScales = data.activeTextScales;
 
-  return ListView.separated(
-    itemBuilder: (context, index) {
-      final item = textScales[index];
-      return ListTile(
-        title: Text(item.toString()),
-        onTap: () {
-          context.read<TextScaleSelectionProvider>().tapped(item);
-          context.read<AddOnProvider>().update();
-          navigate(context);
-        },
-      );
+  return AddonOptionList<double>(
+    name: 'Text scales',
+    options: textScales,
+    selectedOptions: activeTextScales,
+    builder: (item) => Text(item.toStringAsFixed(2)),
+    onTap: (item) {
+      context.read<TextScaleSelectionProvider>().tapped(item);
+      context.read<AddOnProvider>().update();
+      navigate(context);
     },
-    separatorBuilder: (_, __) {
-      // TODO improve this
-      return const SizedBox(
-        height: 8,
-      );
-    },
-    itemCount: textScales.length,
   );
 }
 
