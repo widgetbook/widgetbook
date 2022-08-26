@@ -24,6 +24,7 @@ Widget _defaultAppBuilderMethod(BuildContext context, Widget child) {
     builder: (context, childWidget) {
       return childWidget ?? child;
     },
+    debugShowCheckedModeBanner: false,
     routeInformationParser: _router.routeInformationParser,
     routerDelegate: _router.routerDelegate,
   );
@@ -56,6 +57,7 @@ AppBuilderFunction get cupertinoAppBuilder =>
     (BuildContext context, Widget child) {
       final _router = getRouter(child);
       return CupertinoApp.router(
+        debugShowCheckedModeBanner: false,
         routerDelegate: _router.routerDelegate,
         routeInformationParser: _router.routeInformationParser,
       );
