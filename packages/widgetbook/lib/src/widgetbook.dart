@@ -6,22 +6,17 @@ import 'package:widgetbook/src/addons/addon.dart';
 import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/app_info/app_info.dart';
 import 'package:widgetbook/src/app_info/app_info_provider.dart';
-import 'package:widgetbook/src/extensions/list_extension.dart';
+import 'package:widgetbook/src/builder/builder.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
 import 'package:widgetbook/src/models/organizers/organizers.dart';
-import 'package:widgetbook/src/mouse_tool/tool_provider.dart';
 import 'package:widgetbook/src/navigation/organizer_provider.dart';
 import 'package:widgetbook/src/navigation/organizer_state.dart';
 import 'package:widgetbook/src/navigation/preview_provider.dart';
 import 'package:widgetbook/src/navigation/router.dart';
-import 'package:widgetbook/src/rendering/rendering.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/theming/widgetbook_theme.dart';
-import 'package:widgetbook/src/translate/translate_provider.dart';
 import 'package:widgetbook/src/utils/styles.dart';
-import 'package:widgetbook/src/workbench/workbench_provider.dart';
-import 'package:widgetbook/src/zoom/zoom_provider.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
 
 /// Describes the configuration for your [Widget] library.
@@ -63,35 +58,13 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
   /// your app.
   /// The default [Locale] is the first [Locale] in [supportedLocales].
   /// [supportedLocales] defaults to a list with `Locale('us')` as a default.
-  ///
-  /// ### Builder Functions
-  ///
-  /// Widgetbook defines builder functions for previewing use cases. The
-  /// following functions are defined and called in this order:
-  /// - [localizationBuilder] allows you to specify how the currently active
-  /// `locale` and the [localizationsDelegates] are injected into the
-  /// [BuildContext].
-  /// - [themeBuilder] allows you to specify how the currently active `theme` is
-  /// injected into [BuildContext].
-  /// - [deviceFrameBuilder] allows you to define how a [WidgetbookFrame] is build.
-  /// This decides how the use case is embedded into a virtual device.
-  /// See [DeviceFrameBuilderFunction] and [WidgetbookFrame]. For instance, this
-  /// property can be used to wrap your usecase with the device frame of the
-  /// [device_frame package](https://pub.dev/packages/device_frame).
-  /// - [scaffoldBuilder] allows you to wrap the use case with a scaffold, for
-  /// instance [Scaffold].
-  /// - [useCaseBuilder] allows you to customize how a single use case is
-  /// rendered. This can be used to wrap each use case with a specifiy widget,
-  /// e.g. [Center].
   const Widgetbook({
     Key? key,
     required this.categories,
     List<Device>? devices,
     required this.appInfo,
     required this.themes,
-    this.scaffoldBuilder,
     this.appBuilder = defaultAppBuilder,
-    this.useCaseBuilder,
     required this.addons,
     List<Locale>? supportedLocales,
     List<WidgetbookFrame>? frames,
@@ -164,11 +137,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
   /// A list of text scale factors to test for font size accessibility
   final List<double> textScaleFactors;
 
-  final ScaffoldBuilderFunction? scaffoldBuilder;
-
   final AppBuilderFunction appBuilder;
-
-  final UseCaseBuilderFunction? useCaseBuilder;
 
   /// A [Widgetbook] which uses cupertino theming via [CupertinoThemeData].
   static Widgetbook<CupertinoThemeData> cupertino({
@@ -181,8 +150,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     List<Locale>? supportedLocales,
     List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     AppBuilderFunction? appBuilder,
-    ScaffoldBuilderFunction? scaffoldBuilder,
-    UseCaseBuilderFunction? useCaseBuilder,
     List<double>? textScaleFactors,
     Key? key,
   }) {
@@ -194,9 +161,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
       devices: devices,
       addons: addons,
       supportedLocales: supportedLocales,
-      scaffoldBuilder: scaffoldBuilder,
       appBuilder: appBuilder ?? cupertinoAppBuilder,
-      useCaseBuilder: useCaseBuilder,
       frames: frames,
       textScaleFactors: textScaleFactors,
     );
@@ -213,8 +178,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     List<Locale>? supportedLocales,
     List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     AppBuilderFunction? appBuilder,
-    ScaffoldBuilderFunction? scaffoldBuilder,
-    UseCaseBuilderFunction? useCaseBuilder,
     List<double>? textScaleFactors,
     Key? key,
   }) {
@@ -226,9 +189,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
       devices: devices,
       addons: addons,
       supportedLocales: supportedLocales,
-      scaffoldBuilder: scaffoldBuilder,
       appBuilder: appBuilder ?? materialAppBuilder,
-      useCaseBuilder: useCaseBuilder,
       frames: frames,
       textScaleFactors: textScaleFactors,
     );
@@ -244,15 +205,16 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   final SelectedStoryRepository selectedStoryRepository =
       SelectedStoryRepository();
 
+  late BuilderProvider builderProvider;
   late OrganizerProvider organizerProvider;
   late PreviewProvider previewProvider;
   late AppInfoProvider appInfoProvider;
-  late WorkbenchProvider<CustomTheme> workbenchProvider;
   late KnobsNotifier knobsNotifier;
   late GoRouter goRouter;
 
   @override
   void initState() {
+    builderProvider = BuilderProvider(appBuilder: widget.appBuilder);
     organizerProvider = OrganizerProvider(
       state: OrganizerState.unfiltered(categories: widget.categories),
       storyRepository: storyRepository,
@@ -263,14 +225,8 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
     );
     knobsNotifier = KnobsNotifier(selectedStoryRepository);
     appInfoProvider = AppInfoProvider(state: widget.appInfo);
-    workbenchProvider = WorkbenchProvider<CustomTheme>(
-      themes: widget.themes,
-      devices: widget.devices,
-      frames: widget.frames,
-      textScaleFactors: widget.textScaleFactors,
-    );
+
     goRouter = createRouter(
-      workbenchProvider: workbenchProvider,
       previewProvider: previewProvider,
     );
 
@@ -280,13 +236,8 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   @override
   void didUpdateWidget(covariant Widgetbook<CustomTheme> oldWidget) {
     organizerProvider.hotReload(widget.categories);
-    workbenchProvider.hotReload(
-      themes: widget.themes,
-      devices: widget.devices,
-      frames: widget.frames,
-      textScaleFactors: widget.textScaleFactors,
-    );
     appInfoProvider.hotReload(widget.appInfo);
+    builderProvider.hotReload(appBuilder: widget.appBuilder);
     super.didUpdateWidget(oldWidget);
   }
 
@@ -294,27 +245,11 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          key: ValueKey(
-            widget.frames.hashCodeOfItems ^
-                widget.scaffoldBuilder.hashCode ^
-                widget.useCaseBuilder.hashCode,
-          ),
-          create: (_) => RenderingProvider<CustomTheme>(
-            frames: widget.frames,
-            scaffoldBuilder: widget.scaffoldBuilder ?? defaultScaffoldBuilder,
-            appBuilder: widget.appBuilder,
-            useCaseBuilder: widget.useCaseBuilder ?? defaultUseCaseBuilder,
-          ),
-        ),
-        ChangeNotifierProvider(create: (_) => ZoomProvider()),
-        ChangeNotifierProvider(create: (_) => ToolProvider()),
-        ChangeNotifierProvider(create: (_) => TranslateProvider()),
         ChangeNotifierProvider.value(value: knobsNotifier),
-        ChangeNotifierProvider.value(value: workbenchProvider),
         ChangeNotifierProvider.value(value: organizerProvider),
         ChangeNotifierProvider.value(value: previewProvider),
         ChangeNotifierProvider.value(value: appInfoProvider),
+        ChangeNotifierProvider.value(value: builderProvider),
         ChangeNotifierProvider(
           create: (_) => AddOnProvider(widget.addons),
         ),

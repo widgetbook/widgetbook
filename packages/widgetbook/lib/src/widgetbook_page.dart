@@ -10,7 +10,7 @@ import 'package:widgetbook/src/styled_widgets/styled_scaffold.dart';
 import 'package:widgetbook/src/widgets/multi_split_view.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 
-class WidgetbookPage<CustomTheme> extends StatelessWidget {
+class WidgetbookPage extends StatelessWidget {
   const WidgetbookPage({
     Key? key,
     required this.disableNavigation,
@@ -51,10 +51,10 @@ class WidgetbookPage<CustomTheme> extends StatelessWidget {
                   appInfo: appInfo,
                   categories: state.filteredCategories,
                 ),
-                centerChild: Workbench<CustomTheme>(
+                centerChild: Workbench(
                   routerData: routerData,
                 ),
-                rightChild: SettingsPanel<CustomTheme>(),
+                rightChild: const SettingsPanel(),
               ),
             );
           },
