@@ -15,31 +15,33 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$ThemeSelection {
-  List<ThemeData> get themes => throw _privateConstructorUsedError;
-  Set<ThemeData> get activeThemes => throw _privateConstructorUsedError;
+mixin _$ThemeSelection<T> {
+  List<WidgetbookTheme<T>> get themes => throw _privateConstructorUsedError;
+  Set<WidgetbookTheme<T>> get activeThemes =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $ThemeSelectionCopyWith<ThemeSelection> get copyWith =>
+  $ThemeSelectionCopyWith<T, ThemeSelection<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ThemeSelectionCopyWith<$Res> {
+abstract class $ThemeSelectionCopyWith<T, $Res> {
   factory $ThemeSelectionCopyWith(
-          ThemeSelection value, $Res Function(ThemeSelection) then) =
-      _$ThemeSelectionCopyWithImpl<$Res>;
-  $Res call({List<ThemeData> themes, Set<ThemeData> activeThemes});
+          ThemeSelection<T> value, $Res Function(ThemeSelection<T>) then) =
+      _$ThemeSelectionCopyWithImpl<T, $Res>;
+  $Res call(
+      {List<WidgetbookTheme<T>> themes, Set<WidgetbookTheme<T>> activeThemes});
 }
 
 /// @nodoc
-class _$ThemeSelectionCopyWithImpl<$Res>
-    implements $ThemeSelectionCopyWith<$Res> {
+class _$ThemeSelectionCopyWithImpl<T, $Res>
+    implements $ThemeSelectionCopyWith<T, $Res> {
   _$ThemeSelectionCopyWithImpl(this._value, this._then);
 
-  final ThemeSelection _value;
+  final ThemeSelection<T> _value;
   // ignore: unused_field
-  final $Res Function(ThemeSelection) _then;
+  final $Res Function(ThemeSelection<T>) _then;
 
   @override
   $Res call({
@@ -50,87 +52,88 @@ class _$ThemeSelectionCopyWithImpl<$Res>
       themes: themes == freezed
           ? _value.themes
           : themes // ignore: cast_nullable_to_non_nullable
-              as List<ThemeData>,
+              as List<WidgetbookTheme<T>>,
       activeThemes: activeThemes == freezed
           ? _value.activeThemes
           : activeThemes // ignore: cast_nullable_to_non_nullable
-              as Set<ThemeData>,
+              as Set<WidgetbookTheme<T>>,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$$_ThemeSelectionCopyWith<$Res>
-    implements $ThemeSelectionCopyWith<$Res> {
-  factory _$$_ThemeSelectionCopyWith(
-          _$_ThemeSelection value, $Res Function(_$_ThemeSelection) then) =
-      __$$_ThemeSelectionCopyWithImpl<$Res>;
+abstract class _$$_ThemeSelectionCopyWith<T, $Res>
+    implements $ThemeSelectionCopyWith<T, $Res> {
+  factory _$$_ThemeSelectionCopyWith(_$_ThemeSelection<T> value,
+          $Res Function(_$_ThemeSelection<T>) then) =
+      __$$_ThemeSelectionCopyWithImpl<T, $Res>;
   @override
-  $Res call({List<ThemeData> themes, Set<ThemeData> activeThemes});
+  $Res call(
+      {List<WidgetbookTheme<T>> themes, Set<WidgetbookTheme<T>> activeThemes});
 }
 
 /// @nodoc
-class __$$_ThemeSelectionCopyWithImpl<$Res>
-    extends _$ThemeSelectionCopyWithImpl<$Res>
-    implements _$$_ThemeSelectionCopyWith<$Res> {
+class __$$_ThemeSelectionCopyWithImpl<T, $Res>
+    extends _$ThemeSelectionCopyWithImpl<T, $Res>
+    implements _$$_ThemeSelectionCopyWith<T, $Res> {
   __$$_ThemeSelectionCopyWithImpl(
-      _$_ThemeSelection _value, $Res Function(_$_ThemeSelection) _then)
-      : super(_value, (v) => _then(v as _$_ThemeSelection));
+      _$_ThemeSelection<T> _value, $Res Function(_$_ThemeSelection<T>) _then)
+      : super(_value, (v) => _then(v as _$_ThemeSelection<T>));
 
   @override
-  _$_ThemeSelection get _value => super._value as _$_ThemeSelection;
+  _$_ThemeSelection<T> get _value => super._value as _$_ThemeSelection<T>;
 
   @override
   $Res call({
     Object? themes = freezed,
     Object? activeThemes = freezed,
   }) {
-    return _then(_$_ThemeSelection(
+    return _then(_$_ThemeSelection<T>(
       themes: themes == freezed
           ? _value._themes
           : themes // ignore: cast_nullable_to_non_nullable
-              as List<ThemeData>,
+              as List<WidgetbookTheme<T>>,
       activeThemes: activeThemes == freezed
           ? _value._activeThemes
           : activeThemes // ignore: cast_nullable_to_non_nullable
-              as Set<ThemeData>,
+              as Set<WidgetbookTheme<T>>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_ThemeSelection implements _ThemeSelection {
+class _$_ThemeSelection<T> implements _ThemeSelection<T> {
   _$_ThemeSelection(
-      {required final List<ThemeData> themes,
-      required final Set<ThemeData> activeThemes})
+      {required final List<WidgetbookTheme<T>> themes,
+      required final Set<WidgetbookTheme<T>> activeThemes})
       : _themes = themes,
         _activeThemes = activeThemes;
 
-  final List<ThemeData> _themes;
+  final List<WidgetbookTheme<T>> _themes;
   @override
-  List<ThemeData> get themes {
+  List<WidgetbookTheme<T>> get themes {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_themes);
   }
 
-  final Set<ThemeData> _activeThemes;
+  final Set<WidgetbookTheme<T>> _activeThemes;
   @override
-  Set<ThemeData> get activeThemes {
+  Set<WidgetbookTheme<T>> get activeThemes {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableSetView(_activeThemes);
   }
 
   @override
   String toString() {
-    return 'ThemeSelection(themes: $themes, activeThemes: $activeThemes)';
+    return 'ThemeSelection<$T>(themes: $themes, activeThemes: $activeThemes)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ThemeSelection &&
+            other is _$_ThemeSelection<T> &&
             const DeepCollectionEquality().equals(other._themes, _themes) &&
             const DeepCollectionEquality()
                 .equals(other._activeThemes, _activeThemes));
@@ -144,21 +147,24 @@ class _$_ThemeSelection implements _ThemeSelection {
 
   @JsonKey(ignore: true)
   @override
-  _$$_ThemeSelectionCopyWith<_$_ThemeSelection> get copyWith =>
-      __$$_ThemeSelectionCopyWithImpl<_$_ThemeSelection>(this, _$identity);
+  _$$_ThemeSelectionCopyWith<T, _$_ThemeSelection<T>> get copyWith =>
+      __$$_ThemeSelectionCopyWithImpl<T, _$_ThemeSelection<T>>(
+          this, _$identity);
 }
 
-abstract class _ThemeSelection implements ThemeSelection {
+abstract class _ThemeSelection<T> implements ThemeSelection<T> {
   factory _ThemeSelection(
-      {required final List<ThemeData> themes,
-      required final Set<ThemeData> activeThemes}) = _$_ThemeSelection;
+          {required final List<WidgetbookTheme<T>> themes,
+          required final Set<WidgetbookTheme<T>> activeThemes}) =
+      _$_ThemeSelection<T>;
 
   @override
-  List<ThemeData> get themes => throw _privateConstructorUsedError;
+  List<WidgetbookTheme<T>> get themes => throw _privateConstructorUsedError;
   @override
-  Set<ThemeData> get activeThemes => throw _privateConstructorUsedError;
+  Set<WidgetbookTheme<T>> get activeThemes =>
+      throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$$_ThemeSelectionCopyWith<_$_ThemeSelection> get copyWith =>
+  _$$_ThemeSelectionCopyWith<T, _$_ThemeSelection<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
