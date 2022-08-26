@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:widgetbook/src/builder/builder.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 const AppBuilderFunction defaultAppBuilder = _defaultAppBuilderMethod;
@@ -61,8 +62,3 @@ AppBuilderFunction get cupertinoAppBuilder =>
         routeInformationParser: _router.routeInformationParser,
       );
     };
-
-typedef AppBuilderFunction = Widget Function(
-  BuildContext context,
-  Widget child,
-);

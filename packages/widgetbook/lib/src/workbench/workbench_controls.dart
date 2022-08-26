@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/addons/addon_panel.dart';
 import 'package:widgetbook/src/addons/addon_provider.dart';
-import 'package:widgetbook/src/mouse_tool/mouse_handle.dart';
-import 'package:widgetbook/src/translate/translate_handle.dart';
-import 'package:widgetbook/src/zoom/zoom_handle.dart';
 
-class WorkbenchControls<CustomTheme> extends StatelessWidget {
+class WorkbenchControls extends StatelessWidget {
   const WorkbenchControls({
     Key? key,
     required this.overlayKey,
@@ -21,15 +18,6 @@ class WorkbenchControls<CustomTheme> extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const MouseHandle(),
-        const SizedBox(
-          width: 32,
-        ),
-        const ZoomHandle(),
-        const SizedBox(
-          width: 32,
-        ),
-        const TranslateHandle(),
         CompositedTransformTarget(
           link: layerLink,
           child: AddonPanel(

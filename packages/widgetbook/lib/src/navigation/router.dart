@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/navigation/preview_provider.dart';
 import 'package:widgetbook/src/widgetbook_page.dart';
-import 'package:widgetbook/src/workbench/workbench_provider.dart';
 
 void navigate(BuildContext context) {
   final addons = context.read<AddOnProvider>().value;
@@ -34,8 +33,7 @@ bool _parseBoolQueryParameter({
   return value == 'true';
 }
 
-GoRouter createRouter<CustomTheme>({
-  required WorkbenchProvider<CustomTheme> workbenchProvider,
+GoRouter createRouter({
   required PreviewProvider previewProvider,
 }) {
   final router = GoRouter(
@@ -58,7 +56,7 @@ GoRouter createRouter<CustomTheme>({
           );
 
           return NoTransitionPage<void>(
-            child: WidgetbookPage<CustomTheme>(
+            child: WidgetbookPage(
               disableNavigation: disableNavigation,
               disableProperties: disableProperties,
               routerData: state.queryParams,

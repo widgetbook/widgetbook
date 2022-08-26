@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:widgetbook/src/builder/provider/builder_provider.dart';
 import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/navigation/preview_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 import 'package:widgetbook/src/workbench/preview.dart';
 import 'package:widgetbook/src/workbench/workbench_controls.dart';
 
-class Workbench<CustomTheme> extends StatefulWidget {
+class Workbench extends StatefulWidget {
   const Workbench({
     Key? key,
     required this.routerData,
@@ -15,14 +16,15 @@ class Workbench<CustomTheme> extends StatefulWidget {
   final Map<String, dynamic> routerData;
 
   @override
-  State<Workbench<CustomTheme>> createState() => _WorkbenchState<CustomTheme>();
+  State<Workbench> createState() => _WorkbenchState();
 }
 
-class _WorkbenchState<CustomTheme> extends State<Workbench<CustomTheme>> {
+class _WorkbenchState extends State<Workbench> {
   final _overlayKey = GlobalKey<OverlayState>();
   final _layerLink = LayerLink();
   @override
   Widget build(BuildContext context) {
+    final appBuilder = context.watch<BuilderProvider>().value.appBuilder;
     final state = context.watch<PreviewProvider>().state;
     final useCase = state.selectedUseCase;
     return Stack(
@@ -30,7 +32,7 @@ class _WorkbenchState<CustomTheme> extends State<Workbench<CustomTheme>> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            WorkbenchControls<CustomTheme>(
+            WorkbenchControls(
               layerLink: _layerLink,
               overlayKey: _overlayKey,
             ),
@@ -45,8 +47,9 @@ class _WorkbenchState<CustomTheme> extends State<Workbench<CustomTheme>> {
                 ),
                 child: useCase == null
                     ? Container()
-                    : Preview<CustomTheme>(
+                    : Preview(
                         useCase: useCase,
+                        appBuilder: appBuilder,
                       ),
               ),
             ),
