@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/addons/theme_addon/theme_selection.dart';
+import 'package:widgetbook/widgetbook.dart';
 
-class ThemeSelectionProvider extends ValueNotifier<ThemeSelection> {
-  ThemeSelectionProvider(ThemeSelection data) : super(data);
+class ThemeSelectionProvider<T> extends ValueNotifier<ThemeSelection<T>> {
+  ThemeSelectionProvider(ThemeSelection<T> data) : super(data);
 
-  void tapped(ThemeData locale) {
-    final currentSelection = Set<ThemeData>.from(value.activeThemes);
+  void tapped(WidgetbookTheme<T> locale) {
+    final currentSelection = Set<WidgetbookTheme<T>>.from(value.activeThemes);
     if (currentSelection.contains(locale)) {
       currentSelection.remove(locale);
     } else {

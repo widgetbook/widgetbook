@@ -36,10 +36,10 @@ class HotreloadWidgetbook extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       addons: [
-        ThemeAddon(
+        MaterialThemeAddon(
           themes: [
-            lightTheme,
-            darkTheme,
+            WidgetbookTheme(name: 'Light', data: lightTheme),
+            WidgetbookTheme(name: 'Dark', data: darkTheme),
           ],
         ),
         TextScaleAddon(

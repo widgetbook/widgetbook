@@ -35,7 +35,7 @@ AppBuilderFunction get materialAppBuilder =>
       return frameBuilder.builder(
         context,
         MaterialApp(
-          theme: context.theme,
+          theme: context.materialTheme,
           locale: context.localization.activeLocale,
           supportedLocales: context.localization.supportedLocales,
           localizationsDelegates: context.localization.localizationsDelegates,
