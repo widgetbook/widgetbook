@@ -30,15 +30,11 @@ class HotreloadWidgetbook extends StatelessWidget {
     return Widgetbook.material(
       addons: [
         ...configureMaterialAddons(
-          themeSetting: MaterialThemeSetting(
+          themeSetting: MaterialThemeSetting.firstAsSelected(
             themes: [
               WidgetbookTheme(name: 'Light', data: lightTheme),
               WidgetbookTheme(name: 'Dark', data: darkTheme),
             ],
-            activeThemes: {
-              WidgetbookTheme(name: 'Light', data: lightTheme),
-              WidgetbookTheme(name: 'Dark', data: darkTheme),
-            },
           ),
           textScaleSetting: TextScaleSetting.firstAsSelected(
             textScales: [

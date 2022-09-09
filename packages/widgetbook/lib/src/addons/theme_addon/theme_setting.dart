@@ -7,6 +7,28 @@ class ThemeSetting<T> {
     required this.activeThemes,
   });
 
+  /// Sets the first theme within `themes` as the active theme on
+  /// startup
+  factory ThemeSetting.firstAsSelected({
+    required List<WidgetbookTheme<T>> themes,
+  }) {
+    return ThemeSetting(
+      activeThemes: themes.take(1).toSet(),
+      themes: themes,
+    );
+  }
+
+  /// Sets all `themes` as the active themes on
+  /// startup
+  factory ThemeSetting.allAsSelected({
+    required List<WidgetbookTheme<T>> themes,
+  }) {
+    return ThemeSetting(
+      activeThemes: themes.toSet(),
+      themes: themes,
+    );
+  }
+
   final List<WidgetbookTheme<T>> themes;
   final Set<WidgetbookTheme<T>> activeThemes;
 

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 class ThemeSettingProvider<T> extends ValueNotifier<ThemeSetting<T>> {
-  ThemeSettingProvider(ThemeSetting<T> data) : super(data);
+  ThemeSettingProvider(super.data);
 
-  void tapped(WidgetbookTheme<T> locale) {
+  void tapped(WidgetbookTheme<T> theme) {
     final currentSelection = Set<WidgetbookTheme<T>>.from(value.activeThemes);
-    if (currentSelection.contains(locale)) {
-      currentSelection.remove(locale);
+    if (currentSelection.contains(theme)) {
+      currentSelection.remove(theme);
     } else {
-      currentSelection.add(locale);
+      currentSelection.add(theme);
     }
 
     value = value.copyWith(activeThemes: currentSelection);
