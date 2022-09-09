@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/addons/text_scale_addon/text_scale_selection.dart';
+import 'package:widgetbook/src/addons/text_scale_addon/text_scale_setting.dart';
 
-class TextScaleSelectionProvider extends ValueNotifier<TextScaleSelection> {
-  TextScaleSelectionProvider(TextScaleSelection data) : super(data);
+class TextScaleSettingProvider extends ValueNotifier<TextScaleSetting> {
+  TextScaleSettingProvider(TextScaleSetting data) : super(data);
 
   void tapped(double textScales) {
     final currentSelection = Set<double>.from(value.activeTextScales);

@@ -6,7 +6,7 @@ void main() {
 }
 
 class HotreloadWidgetbook extends StatelessWidget {
-  const HotreloadWidgetbook({Key? key}) : super(key: key);
+  const HotreloadWidgetbook({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,16 +36,6 @@ class HotreloadWidgetbook extends StatelessWidget {
             ),
           ],
         )
-      ],
-      themes: [
-        WidgetbookTheme(
-          name: 'Light',
-          data: ThemeData.light(),
-        ),
-        WidgetbookTheme(
-          name: 'Dark',
-          data: ThemeData.dark(),
-        ),
       ],
       appInfo: AppInfo(name: 'Example'),
     );

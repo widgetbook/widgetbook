@@ -5,8 +5,8 @@ import 'package:widgetbook/widgetbook.dart';
 
 class MaterialThemeAddon extends ThemeAddon<ThemeData> {
   MaterialThemeAddon({
-    required List<WidgetbookTheme<ThemeData>> themes,
-  }) : super(themes: themes);
+    required MaterialThemeSetting themeSetting,
+  }) : super(setting: themeSetting);
 }
 
 extension MaterialThemeExtension on BuildContext {

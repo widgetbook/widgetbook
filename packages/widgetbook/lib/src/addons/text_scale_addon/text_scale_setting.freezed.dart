@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'text_scale_selection.dart';
+part of 'text_scale_setting.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,31 +15,31 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$TextScaleSelection {
+mixin _$TextScaleSetting {
   Set<double> get activeTextScales => throw _privateConstructorUsedError;
   List<double> get textScales => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $TextScaleSelectionCopyWith<TextScaleSelection> get copyWith =>
+  $TextScaleSettingCopyWith<TextScaleSetting> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TextScaleSelectionCopyWith<$Res> {
-  factory $TextScaleSelectionCopyWith(
-          TextScaleSelection value, $Res Function(TextScaleSelection) then) =
-      _$TextScaleSelectionCopyWithImpl<$Res>;
+abstract class $TextScaleSettingCopyWith<$Res> {
+  factory $TextScaleSettingCopyWith(
+          TextScaleSetting value, $Res Function(TextScaleSetting) then) =
+      _$TextScaleSettingCopyWithImpl<$Res>;
   $Res call({Set<double> activeTextScales, List<double> textScales});
 }
 
 /// @nodoc
-class _$TextScaleSelectionCopyWithImpl<$Res>
-    implements $TextScaleSelectionCopyWith<$Res> {
-  _$TextScaleSelectionCopyWithImpl(this._value, this._then);
+class _$TextScaleSettingCopyWithImpl<$Res>
+    implements $TextScaleSettingCopyWith<$Res> {
+  _$TextScaleSettingCopyWithImpl(this._value, this._then);
 
-  final TextScaleSelection _value;
+  final TextScaleSetting _value;
   // ignore: unused_field
-  final $Res Function(TextScaleSelection) _then;
+  final $Res Function(TextScaleSetting) _then;
 
   @override
   $Res call({
@@ -60,32 +60,32 @@ class _$TextScaleSelectionCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_TextScaleSelectionCopyWith<$Res>
-    implements $TextScaleSelectionCopyWith<$Res> {
-  factory _$$_TextScaleSelectionCopyWith(_$_TextScaleSelection value,
-          $Res Function(_$_TextScaleSelection) then) =
-      __$$_TextScaleSelectionCopyWithImpl<$Res>;
+abstract class _$$_TextScaleSettingCopyWith<$Res>
+    implements $TextScaleSettingCopyWith<$Res> {
+  factory _$$_TextScaleSettingCopyWith(
+          _$_TextScaleSetting value, $Res Function(_$_TextScaleSetting) then) =
+      __$$_TextScaleSettingCopyWithImpl<$Res>;
   @override
   $Res call({Set<double> activeTextScales, List<double> textScales});
 }
 
 /// @nodoc
-class __$$_TextScaleSelectionCopyWithImpl<$Res>
-    extends _$TextScaleSelectionCopyWithImpl<$Res>
-    implements _$$_TextScaleSelectionCopyWith<$Res> {
-  __$$_TextScaleSelectionCopyWithImpl(
-      _$_TextScaleSelection _value, $Res Function(_$_TextScaleSelection) _then)
-      : super(_value, (v) => _then(v as _$_TextScaleSelection));
+class __$$_TextScaleSettingCopyWithImpl<$Res>
+    extends _$TextScaleSettingCopyWithImpl<$Res>
+    implements _$$_TextScaleSettingCopyWith<$Res> {
+  __$$_TextScaleSettingCopyWithImpl(
+      _$_TextScaleSetting _value, $Res Function(_$_TextScaleSetting) _then)
+      : super(_value, (v) => _then(v as _$_TextScaleSetting));
 
   @override
-  _$_TextScaleSelection get _value => super._value as _$_TextScaleSelection;
+  _$_TextScaleSetting get _value => super._value as _$_TextScaleSetting;
 
   @override
   $Res call({
     Object? activeTextScales = freezed,
     Object? textScales = freezed,
   }) {
-    return _then(_$_TextScaleSelection(
+    return _then(_$_TextScaleSetting(
       activeTextScales: activeTextScales == freezed
           ? _value._activeTextScales
           : activeTextScales // ignore: cast_nullable_to_non_nullable
@@ -100,12 +100,13 @@ class __$$_TextScaleSelectionCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TextScaleSelection implements _TextScaleSelection {
-  _$_TextScaleSelection(
+class _$_TextScaleSetting extends _TextScaleSetting {
+  _$_TextScaleSetting(
       {required final Set<double> activeTextScales,
       required final List<double> textScales})
       : _activeTextScales = activeTextScales,
-        _textScales = textScales;
+        _textScales = textScales,
+        super._();
 
   final Set<double> _activeTextScales;
   @override
@@ -123,14 +124,14 @@ class _$_TextScaleSelection implements _TextScaleSelection {
 
   @override
   String toString() {
-    return 'TextScaleSelection(activeTextScales: $activeTextScales, textScales: $textScales)';
+    return 'TextScaleSetting(activeTextScales: $activeTextScales, textScales: $textScales)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TextScaleSelection &&
+            other is _$_TextScaleSetting &&
             const DeepCollectionEquality()
                 .equals(other._activeTextScales, _activeTextScales) &&
             const DeepCollectionEquality()
@@ -145,22 +146,22 @@ class _$_TextScaleSelection implements _TextScaleSelection {
 
   @JsonKey(ignore: true)
   @override
-  _$$_TextScaleSelectionCopyWith<_$_TextScaleSelection> get copyWith =>
-      __$$_TextScaleSelectionCopyWithImpl<_$_TextScaleSelection>(
-          this, _$identity);
+  _$$_TextScaleSettingCopyWith<_$_TextScaleSetting> get copyWith =>
+      __$$_TextScaleSettingCopyWithImpl<_$_TextScaleSetting>(this, _$identity);
 }
 
-abstract class _TextScaleSelection implements TextScaleSelection {
-  factory _TextScaleSelection(
+abstract class _TextScaleSetting extends TextScaleSetting {
+  factory _TextScaleSetting(
       {required final Set<double> activeTextScales,
-      required final List<double> textScales}) = _$_TextScaleSelection;
+      required final List<double> textScales}) = _$_TextScaleSetting;
+  _TextScaleSetting._() : super._();
 
   @override
-  Set<double> get activeTextScales => throw _privateConstructorUsedError;
+  Set<double> get activeTextScales;
   @override
-  List<double> get textScales => throw _privateConstructorUsedError;
+  List<double> get textScales;
   @override
   @JsonKey(ignore: true)
-  _$$_TextScaleSelectionCopyWith<_$_TextScaleSelection> get copyWith =>
+  _$$_TextScaleSettingCopyWith<_$_TextScaleSetting> get copyWith =>
       throw _privateConstructorUsedError;
 }

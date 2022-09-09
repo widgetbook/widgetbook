@@ -182,13 +182,11 @@ abstract class _OrganizerState implements OrganizerState {
       required final String searchTerm}) = _$_OrganizerState;
 
   @override
-  List<WidgetbookCategory> get allCategories =>
-      throw _privateConstructorUsedError;
+  List<WidgetbookCategory> get allCategories;
   @override
-  List<WidgetbookCategory> get filteredCategories =>
-      throw _privateConstructorUsedError;
+  List<WidgetbookCategory> get filteredCategories;
   @override
-  String get searchTerm => throw _privateConstructorUsedError;
+  String get searchTerm;
   @override
   @JsonKey(ignore: true)
   _$$_OrganizerStateCopyWith<_$_OrganizerState> get copyWith =>

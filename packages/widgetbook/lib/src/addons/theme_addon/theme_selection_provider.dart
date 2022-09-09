@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/addons/theme_addon/theme_selection.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-class ThemeSelectionProvider<T> extends ValueNotifier<ThemeSelection<T>> {
-  ThemeSelectionProvider(ThemeSelection<T> data) : super(data);
+class ThemeSettingProvider<T> extends ValueNotifier<ThemeSetting<T>> {
+  ThemeSettingProvider(ThemeSetting<T> data) : super(data);
 
   void tapped(WidgetbookTheme<T> locale) {
     final currentSelection = Set<WidgetbookTheme<T>>.from(value.activeThemes);

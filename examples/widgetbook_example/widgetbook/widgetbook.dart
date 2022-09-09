@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -29,38 +28,26 @@ class HotreloadWidgetbook extends StatelessWidget {
     );
 
     return Widgetbook.material(
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
       addons: [
-        MaterialThemeAddon(
-          themes: [
-            WidgetbookTheme(name: 'Light', data: lightTheme),
-            WidgetbookTheme(name: 'Dark', data: darkTheme),
-          ],
-        ),
-        TextScaleAddon(
-          data: TextScaleSelection(
-            activeTextScales: {
+        ...configureMaterialAddons(
+          themeSetting: MaterialThemeSetting(
+            themes: [
+              WidgetbookTheme(name: 'Light', data: lightTheme),
+              WidgetbookTheme(name: 'Dark', data: darkTheme),
+            ],
+            activeThemes: {
+              WidgetbookTheme(name: 'Light', data: lightTheme),
+              WidgetbookTheme(name: 'Dark', data: darkTheme),
+            },
+          ),
+          textScaleSetting: TextScaleSetting.firstAsSelected(
+            textScales: [
               1,
               2,
-            },
-            textScales: [1, 2, 3],
-          ),
-        ),
-        DeviceAddon(
-          data: DeviceSelection(
-            activeFrameBuilder: activeFrameBuilder,
-            frameBuilders: [
-              activeFrameBuilder,
+              3,
             ],
           ),
-        ),
-        LocalizationAddon(
-          data: LocalizationSelection(
+          localizationSetting: LocalizationSetting(
             activeLocales: {
               Locale('en'),
             },
@@ -76,32 +63,13 @@ class HotreloadWidgetbook extends StatelessWidget {
               Locale('fr'),
             ],
           ),
+          deviceSetting: DeviceSelection(
+            activeFrameBuilder: activeFrameBuilder,
+            frameBuilders: [
+              activeFrameBuilder,
+            ],
+          ),
         ),
-      ],
-      supportedLocales: [
-        Locale('en'),
-        Locale('de'),
-        Locale('fr'),
-      ],
-      devices: [
-        Apple.iPhone12ProMax,
-        Apple.iPhone13Mini,
-        Apple.iPhone11ProMax,
-        Apple.iPhone11,
-      ],
-      themes: [
-        WidgetbookTheme(
-          name: 'Light',
-          data: lightTheme,
-        ),
-        WidgetbookTheme(
-          name: 'Dark',
-          data: darkTheme,
-        )
-      ],
-      textScaleFactors: [
-        1,
-        2,
       ],
       categories: [
         WidgetbookCategory(
