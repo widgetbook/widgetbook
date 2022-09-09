@@ -143,9 +143,9 @@ abstract class _WidgetbookTheme<CustomTheme>
       required final CustomTheme data}) = _$_WidgetbookTheme<CustomTheme>;
 
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  CustomTheme get data => throw _privateConstructorUsedError;
+  CustomTheme get data;
   @override
   @JsonKey(ignore: true)
   _$$_WidgetbookThemeCopyWith<CustomTheme, _$_WidgetbookTheme<CustomTheme>>

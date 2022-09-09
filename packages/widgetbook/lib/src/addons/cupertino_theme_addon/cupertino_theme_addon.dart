@@ -5,8 +5,8 @@ import 'package:widgetbook/widgetbook.dart';
 
 class CupertinoThemeAddon extends ThemeAddon<CupertinoThemeData> {
   CupertinoThemeAddon({
-    required List<WidgetbookTheme<CupertinoThemeData>> themes,
-  }) : super(themes: themes);
+    required CupertinoThemeSetting themeSetting,
+  }) : super(setting: themeSetting);
 }
 
 extension CupertinoThemeExtension on BuildContext {

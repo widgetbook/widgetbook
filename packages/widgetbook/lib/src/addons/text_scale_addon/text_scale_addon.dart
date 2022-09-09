@@ -4,21 +4,19 @@ import 'package:provider/provider.dart';
 import 'package:widgetbook/src/addons/addon.dart';
 import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/addons/text_scale_addon/text_scale_provider.dart';
-import 'package:widgetbook/src/addons/text_scale_addon/text_scale_selection.dart';
 import 'package:widgetbook/src/addons/text_scale_addon/text_scale_selection_provider.dart';
+import 'package:widgetbook/src/addons/text_scale_addon/text_scale_setting.dart';
 import 'package:widgetbook/src/addons/widgets/addon_option_list.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 
-export './text_scale_selection.dart';
-
 class TextScaleAddon extends WidgetbookAddOn {
   TextScaleAddon({
-    required TextScaleSelection data,
+    required TextScaleSetting setting,
   }) : super(
           icon: const Icon(Icons.text_fields_outlined),
           name: 'text-scales',
           wrapperBuilder: (context, routerData, child) =>
-              _wrapperBuilder(context, child, routerData, data),
+              _wrapperBuilder(context, child, routerData, setting),
           builder: _builder,
           providerBuilder: _providerBuilder,
           selectionCount: _selectionCount,
@@ -28,7 +26,7 @@ class TextScaleAddon extends WidgetbookAddOn {
 
 String _getQueryParameter(BuildContext context) {
   final selectedItems =
-      context.read<TextScaleSelectionProvider>().value.activeTextScales;
+      context.read<TextScaleSettingProvider>().value.activeTextScales;
 
   return selectedItems
       .map(
@@ -38,15 +36,11 @@ String _getQueryParameter(BuildContext context) {
 }
 
 int _selectionCount(BuildContext context) {
-  return context
-      .read<TextScaleSelectionProvider>()
-      .value
-      .activeTextScales
-      .length;
+  return context.read<TextScaleSettingProvider>().value.activeTextScales.length;
 }
 
 Widget _builder(BuildContext context) {
-  final data = context.watch<TextScaleSelectionProvider>().value;
+  final data = context.watch<TextScaleSettingProvider>().value;
   final textScales = data.textScales;
   final activeTextScales = data.activeTextScales;
 
@@ -56,7 +50,7 @@ Widget _builder(BuildContext context) {
     selectedOptions: activeTextScales,
     builder: (item) => Text(item.toStringAsFixed(2)),
     onTap: (item) {
-      context.read<TextScaleSelectionProvider>().tapped(item);
+      context.read<TextScaleSettingProvider>().tapped(item);
       context.read<AddOnProvider>().update();
       navigate(context);
     },
@@ -67,7 +61,7 @@ Widget _wrapperBuilder(
   BuildContext context,
   Widget child,
   Map<String, dynamic> routerData,
-  TextScaleSelection data,
+  TextScaleSetting data,
 ) {
   final activeTextScalesString = routerData['text-scales'] as String?;
   final selectedTextScales = <double>[];
@@ -89,7 +83,7 @@ Widget _wrapperBuilder(
       : data;
 
   return ChangeNotifierProvider(
-    create: (_) => TextScaleSelectionProvider(initialData),
+    create: (_) => TextScaleSettingProvider(initialData),
     child: child,
   );
 }
@@ -98,7 +92,7 @@ SingleChildWidget _providerBuilder(
   BuildContext context,
   int index,
 ) {
-  final selection = context.watch<TextScaleSelectionProvider>().value;
+  final selection = context.watch<TextScaleSettingProvider>().value;
   final textScale = selection.activeTextScales.isEmpty
       ? selection.textScales.first
       : selection.activeTextScales.elementAt(index);

@@ -124,7 +124,7 @@ abstract class _PreviewState extends PreviewState {
   _PreviewState._() : super._();
 
   @override
-  WidgetbookUseCase? get selectedUseCase => throw _privateConstructorUsedError;
+  WidgetbookUseCase? get selectedUseCase;
   @override
   @JsonKey(ignore: true)
   _$$_PreviewStateCopyWith<_$_PreviewState> get copyWith =>

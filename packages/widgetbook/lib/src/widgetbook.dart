@@ -38,84 +38,16 @@ import 'package:widgetbook_models/widgetbook_models.dart';
 /// set to [dynamic] or [Object] and see [ThemeBuilderFunction] for how to
 /// render custom themes.
 class Widgetbook<CustomTheme> extends StatefulWidget {
-  /// Creates a new instance of [Widgetbook].
-  ///
-  /// The [themes] specifies a list of themes available for the app. The default
-  /// theme is the first theme within the list.
-  ///
-  /// ### Localization
-  ///
-  /// The given `localizationDelegates` is required if you want to use the
-  /// Localization options of [Widgetbook]. Make sure to provide the following
-  /// delegates:
-  /// - `AppLocalizations.delegate`
-  /// - `GlobalMaterialLocalizations.delegate`
-  /// - `GlobalWidgetsLocalizations.delegate`
-  /// - `GlobalCupertinoLocalizations.delegate`
-  ///
-  /// Futhermore, make sure to provide all the [Locale]s within
-  /// [supportedLocales] so Widgetbook can show all the [Locale]s supported by
-  /// your app.
-  /// The default [Locale] is the first [Locale] in [supportedLocales].
-  /// [supportedLocales] defaults to a list with `Locale('us')` as a default.
   const Widgetbook({
-    Key? key,
+    super.key,
     required this.categories,
-    List<Device>? devices,
     required this.appInfo,
-    required this.themes,
     this.appBuilder = defaultAppBuilder,
     required this.addons,
-    List<Locale>? supportedLocales,
-    List<WidgetbookFrame>? frames,
-    List<double>? textScaleFactors,
-  })  : assert(
+  }) : assert(
           categories.length > 0,
           'Please specify at least one $WidgetbookCategory.',
-        ),
-        assert(
-          devices == null || devices.length > 0,
-          'Please specify at least one $Device.',
-        ),
-        assert(
-          textScaleFactors == null || textScaleFactors.length > 0,
-          'Please specify at least one textScaleFactor.',
-        ),
-        assert(
-          themes.length > 0,
-          'Please specify at least one $WidgetbookTheme.',
-        ),
-        assert(
-          frames == null || frames.length > 0,
-          'Please specify at least one $WidgetbookFrame.',
-        ),
-        assert(
-          supportedLocales == null || supportedLocales.length > 0,
-          'Please specify at least one supported $Locale.',
-        ),
-        textScaleFactors = textScaleFactors ?? const [1],
-        frames = frames ??
-            const <WidgetbookFrame>[
-              WidgetbookFrame(
-                name: 'Widgetbook',
-                allowsDevices: true,
-              ),
-              WidgetbookFrame(
-                name: 'Device Frame',
-                allowsDevices: true,
-              ),
-              WidgetbookFrame(
-                name: 'None',
-                allowsDevices: false,
-              )
-            ],
-        devices = devices ??
-            const [
-              Apple.iPhone11,
-              Apple.iPhone12,
-              Samsung.s21ultra,
-            ],
-        super(key: key);
+        );
 
   final List<WidgetbookAddOn> addons;
 
@@ -124,18 +56,8 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
   /// scale.
   final List<WidgetbookCategory> categories;
 
-  /// The devices on which Stories are previewed.
-  final List<Device> devices;
-
   /// Information about the app that is catalogued in the Widgetbook.
   final AppInfo appInfo;
-
-  final List<WidgetbookTheme<CustomTheme>> themes;
-
-  final List<WidgetbookFrame> frames;
-
-  /// A list of text scale factors to test for font size accessibility
-  final List<double> textScaleFactors;
 
   final AppBuilderFunction appBuilder;
 
@@ -156,42 +78,26 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     return Widgetbook<CupertinoThemeData>(
       key: key,
       categories: categories,
-      themes: themes,
       appInfo: appInfo,
-      devices: devices,
       addons: addons,
-      supportedLocales: supportedLocales,
       appBuilder: appBuilder ?? cupertinoAppBuilder,
-      frames: frames,
-      textScaleFactors: textScaleFactors,
     );
   }
 
   /// A [Widgetbook] which uses material theming via [ThemeData].
   static Widgetbook<ThemeData> material({
     required List<WidgetbookCategory> categories,
-    required List<WidgetbookTheme<ThemeData>> themes,
     required AppInfo appInfo,
     required List<WidgetbookAddOn> addons,
-    List<Device>? devices,
-    List<WidgetbookFrame>? frames,
-    List<Locale>? supportedLocales,
-    List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     AppBuilderFunction? appBuilder,
-    List<double>? textScaleFactors,
     Key? key,
   }) {
     return Widgetbook<ThemeData>(
       key: key,
       categories: categories,
-      themes: themes,
       appInfo: appInfo,
-      devices: devices,
       addons: addons,
-      supportedLocales: supportedLocales,
       appBuilder: appBuilder ?? materialAppBuilder,
-      frames: frames,
-      textScaleFactors: textScaleFactors,
     );
   }
 

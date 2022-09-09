@@ -182,12 +182,11 @@ abstract class _LocalizationData implements LocalizationData {
           localizationsDelegates}) = _$_LocalizationData;
 
   @override
-  Locale get activeLocale => throw _privateConstructorUsedError;
+  Locale get activeLocale;
   @override
-  List<Locale> get supportedLocales => throw _privateConstructorUsedError;
+  List<Locale> get supportedLocales;
   @override
-  List<LocalizationsDelegate<dynamic>> get localizationsDelegates =>
-      throw _privateConstructorUsedError;
+  List<LocalizationsDelegate<dynamic>> get localizationsDelegates;
   @override
   @JsonKey(ignore: true)
   _$$_LocalizationDataCopyWith<_$_LocalizationData> get copyWith =>

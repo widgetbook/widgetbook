@@ -180,11 +180,11 @@ abstract class _DeviceSelection implements DeviceSelection {
       required final List<FrameBuilder> frameBuilders}) = _$_DeviceSelection;
 
   @override
-  FrameBuilder get activeFrameBuilder => throw _privateConstructorUsedError;
+  FrameBuilder get activeFrameBuilder;
   @override
-  Set<Device> get activeDevices => throw _privateConstructorUsedError;
+  Set<Device> get activeDevices;
   @override
-  List<FrameBuilder> get frameBuilders => throw _privateConstructorUsedError;
+  List<FrameBuilder> get frameBuilders;
   @override
   @JsonKey(ignore: true)
   _$$_DeviceSelectionCopyWith<_$_DeviceSelection> get copyWith =>

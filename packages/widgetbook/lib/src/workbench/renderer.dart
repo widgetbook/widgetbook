@@ -5,10 +5,10 @@ import 'package:widgetbook/src/addons/addon_provider.dart';
 
 class Renderer extends StatelessWidget {
   const Renderer({
-    Key? key,
+    super.key,
     required this.useCaseBuilder,
     required this.appBuilder,
-  }) : super(key: key);
+  });
 
   final Widget Function(BuildContext) useCaseBuilder;
   final Widget Function(BuildContext, Widget child) appBuilder;
@@ -58,16 +58,29 @@ class Renderer extends StatelessWidget {
         index: 0,
       );
     } else {
-      return Row(
-        children: Iterable.generate(
-          multiPropertyAddon.selectionCount(context),
-          (value) => _buildPreview(
+      final renders = Iterable.generate(
+        multiPropertyAddon.selectionCount(context),
+        (value) => Padding(
+          padding: const EdgeInsets.all(8),
+          child: _buildPreview(
             context,
             addons: addons,
             multiPropertyAddon: multiPropertyAddon,
             index: value,
           ),
-        ).toList(),
+        ),
+      ).toList();
+      return ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: renders.length,
+        itemBuilder: (context, index) {
+          final item = renders.elementAt(index);
+          return item;
+        },
+        separatorBuilder: (context, index) => const SizedBox(
+          width: 8,
+          height: 8,
+        ),
       );
     }
   }

@@ -123,8 +123,7 @@ abstract class _BuilderData implements BuilderData {
       _$_BuilderData;
 
   @override
-  Widget Function(BuildContext, Widget) get appBuilder =>
-      throw _privateConstructorUsedError;
+  Widget Function(BuildContext, Widget) get appBuilder;
   @override
   @JsonKey(ignore: true)
   _$$_BuilderDataCopyWith<_$_BuilderData> get copyWith =>
