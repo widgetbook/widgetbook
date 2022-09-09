@@ -101,8 +101,9 @@ SingleChildWidget _providerBuilder(
   final selection = context.watch<TextScaleSelectionProvider>().value;
   final textScale = selection.activeTextScales.isEmpty
       ? selection.textScales.first
-      : selection.textScales.elementAt(index);
+      : selection.activeTextScales.elementAt(index);
   return ChangeNotifierProvider(
+    key: ValueKey(textScale),
     create: (context) => TextScaleProvider(textScale),
   );
 }
