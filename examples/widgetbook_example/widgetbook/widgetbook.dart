@@ -20,11 +20,22 @@ class HotreloadWidgetbook extends StatelessWidget {
   const HotreloadWidgetbook({Key? key}) : super(key: key);
 
   Widget buildStorybook(BuildContext context) {
+    final devices = [
+      Apple.iPhone11,
+      Apple.iPhone12,
+      Device.special(
+        name: 'Test',
+        resolution: Resolution(
+          nativeSize: DeviceSize(width: 400, height: 400),
+          scaleFactor: 1,
+        ),
+      ),
+    ];
+    final deviceFrameBuilder = DeviceFrameBuilder(
+      devices: devices,
+    );
     final activeFrameBuilder = WidgetbookFrameBuilder(
-      devices: [
-        Apple.iPhone11,
-        Apple.iPhone12,
-      ],
+      devices: devices,
     );
 
     return Widgetbook.material(
@@ -63,6 +74,7 @@ class HotreloadWidgetbook extends StatelessWidget {
             activeFrameBuilder: activeFrameBuilder,
             frameBuilders: [
               activeFrameBuilder,
+              deviceFrameBuilder,
             ],
           ),
         ),

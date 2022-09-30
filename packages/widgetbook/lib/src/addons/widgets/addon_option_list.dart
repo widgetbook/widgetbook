@@ -4,13 +4,13 @@ import 'package:widgetbook/src/addons/widgets/addon_option_spacing.dart';
 
 class AddonOptionList<T> extends StatelessWidget {
   const AddonOptionList({
-    Key? key,
+    super.key,
     required this.name,
     required this.options,
     required this.selectedOptions,
     required this.onTap,
     required this.builder,
-  }) : super(key: key);
+  });
 
   final String name;
   final List<T> options;

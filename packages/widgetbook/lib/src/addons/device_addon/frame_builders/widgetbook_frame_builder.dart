@@ -4,19 +4,131 @@ import 'package:widgetbook/widgetbook.dart';
 
 class WidgetbookFrameBuilder extends FrameBuilder {
   WidgetbookFrameBuilder({
-    required List<Device> devices,
+    required super.devices,
   }) : super(
           name: 'Widgetbook',
-          devices: devices,
         );
+
+  static MediaQueryData mediaQuery({
+    required BuildContext context,
+    required Device? info,
+    required Orientation orientation,
+  }) {
+    final mediaQuery = MediaQuery.of(context);
+    const isRotated = false; // info?.isLandscape(orientation) ?? false;
+    final viewPadding = mediaQuery.padding;
+
+    final screenSize = info != null
+        ? Size(
+            info.resolution.logicalSize.width,
+            info.resolution.logicalSize.height,
+          )
+        : mediaQuery.size;
+    final width = isRotated ? screenSize.height : screenSize.width;
+    final height = isRotated ? screenSize.width : screenSize.height;
+
+    return mediaQuery.copyWith(
+      size: Size(width, height),
+      padding: viewPadding,
+      viewInsets: EdgeInsets.zero,
+      viewPadding: viewPadding,
+      devicePixelRatio:
+          info?.resolution.scaleFactor ?? mediaQuery.devicePixelRatio,
+    );
+  }
+
+  Widget _screen(BuildContext context, Widget screen, Device? info) {
+    final mediaQuery = MediaQuery.of(context);
+    const isRotated = false;
+    final screenSize = info != null
+        ? Size(
+            info.resolution.logicalSize.width,
+            info.resolution.logicalSize.height,
+          )
+        : mediaQuery.size;
+    final width = isRotated ? screenSize.height : screenSize.width;
+    final height = isRotated ? screenSize.width : screenSize.height;
+
+    return RotatedBox(
+      quarterTurns: isRotated ? 1 : 0,
+      child: SizedBox(
+        width: width,
+        height: height,
+        child: MediaQuery(
+          data: WidgetbookFrameBuilder.mediaQuery(
+            info: info,
+            orientation: Orientation.portrait,
+            context: context,
+          ),
+          child: screen,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget builder(BuildContext context, Widget child) {
     final device = context.device;
-    return SizedBox(
-      width: device.resolution.logicalSize.width,
-      height: device.resolution.logicalSize.height,
-      child: child,
+    final frameSize = device.resolution.logicalSize;
+    final stack = SizedBox(
+      width: frameSize.width,
+      height: frameSize.height,
+      child: Stack(
+        children: [
+          Positioned(
+            key: const Key('Screen'),
+            left: 0,
+            top: 0,
+            width: frameSize.width,
+            height: frameSize.height,
+            child: ClipPath(
+              clipper: _ScreenClipper(
+                Path()
+                  ..addRect(
+                    Rect.fromLTWH(
+                      0,
+                      0,
+                      device.resolution.logicalSize.width,
+                      device.resolution.logicalSize.height,
+                    ),
+                  ),
+              ),
+              child: FittedBox(
+                child: _screen(context, child, device),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
+
+    const isRotated = false; // device.isLandscape(orientation);
+
+    return FittedBox(
+      child: RotatedBox(
+        quarterTurns: isRotated ? -1 : 0,
+        child: stack,
+      ),
+    );
+  }
+}
+
+class _ScreenClipper extends CustomClipper<Path> {
+  const _ScreenClipper(this.path);
+
+  final Path? path;
+
+  @override
+  Path getClip(Size size) {
+    final path = this.path ?? (Path()..addRect(Offset.zero & size));
+    final bounds = path.getBounds();
+    final transform = Matrix4.translationValues(-bounds.left, -bounds.top, 0);
+
+    return path.transform(transform.storage);
+  }
+
+  @override
+  bool shouldReclip(_ScreenClipper oldClipper) {
+    return oldClipper.path != path;
   }
 }
