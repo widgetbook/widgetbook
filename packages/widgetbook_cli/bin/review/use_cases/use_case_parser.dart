@@ -11,9 +11,12 @@ import 'models/use_case_data.dart';
 
 class UseCaseParser extends GeneratorParser<ChangedUseCase> {
   UseCaseParser({
+    required this.baseBranch,
     required super.projectPath,
     super.fileSystem = const LocalFileSystem(),
   });
+
+  final String baseBranch;
 
   UseCaseData _getUseCase(dynamic data) {
     final stringData = json.encode(data);
@@ -91,9 +94,8 @@ class UseCaseParser extends GeneratorParser<ChangedUseCase> {
         allowSubdirectory: true,
       );
 
-      // TODO fix this
       final fileDiffs = await gitDir.diff(
-        base: 'remotes/origin/main',
+        base: baseBranch,
       );
 
       final changedUseCases = <ChangedUseCase>[];
