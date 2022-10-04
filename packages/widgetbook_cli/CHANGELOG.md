@@ -1,3 +1,11 @@
+## 2.0.2
+
+- fix(cli): UseCaseParser contains hard-coded branch name
+
+## 2.0.1
+
+- feat: improve comment link markdown. 
+
 ## 2.0.0
 
 - docs: add `pr` and `github-token` arguments

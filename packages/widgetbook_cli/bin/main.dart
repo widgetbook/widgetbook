@@ -10,7 +10,7 @@ import 'review/devices/device_parser.dart';
 import 'review/locales/locales_parser.dart';
 import 'review/text_scale_factors/text_scale_factor_parser.dart';
 import 'review/themes/theme_parser.dart';
-import 'review/use_cases/user_case_parser.dart';
+import 'review/use_cases/use_case_parser.dart';
 import 'widgetbook_http_client.dart';
 import 'widgetbook_zip_encoder.dart';
 
@@ -65,7 +65,6 @@ void main(List<String> arguments) async {
         'GitLab',
         'BitBucket',
         'Azure',
-        // CLI is for users running the command locally.
         'Local',
       ],
     )
@@ -133,7 +132,10 @@ void main(List<String> arguments) async {
   );
 
   final directory = Directory(buildPath);
-  final useCases = await UseCaseParser(projectPath: path).parse();
+  final useCases = await UseCaseParser(
+    projectPath: path,
+    baseBranch: branch,
+  ).parse();
   final themes = await ThemeParser(projectPath: path).parse();
   final locales = await LocaleParser(projectPath: path).parse();
   final devices = await DeviceParser(projectPath: path).parse();
