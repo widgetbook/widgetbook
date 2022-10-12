@@ -1,0 +1,58 @@
+on: 
+  pull_request:
+    paths:
+      - "packages/widgetbook_exception/**"
+      - ".github/workflows/widgetbook_exception.yaml"
+  push:
+    branches:
+      - main
+name: widgetbook_exception
+jobs:
+  test:
+    name: test
+    defaults:
+      run:
+        working-directory: packages/widgetbook_exception
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        lfs: true
+    - name: Checkout LFS objects
+      run: git lfs checkout
+
+    - uses: subosito/flutter-action@v2
+      with:
+        channel: stable
+
+    - name: Dart version
+      run: dart --version
+
+    - name: Enable melos
+      run: dart pub global activate melos
+
+    - name: Get packages 
+      run: melos bootstrap
+
+    - name: Run Tests
+      run: dart test
+
+  code-quality:
+    defaults:
+      run:
+        working-directory: packages/widgetbook_exception
+    name: code quality
+    runs-on: ubuntu-latest 
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        lfs: true
+    - name: Checkout LFS objects
+      run: git lfs checkout
+
+    - uses: dart-lang/setup-dart@v1
+
+    - name: Get packages 
+      run: dart pub get
+    - name: Run analyze
+      run: dart analyze
