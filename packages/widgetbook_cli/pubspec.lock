@@ -501,9 +501,9 @@ packages:
   widgetbook_git:
     dependency: "direct main"
     description:
-      name: widgetbook_git
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../widgetbook_git"
+      relative: true
+    source: path
     version: "2.1.0"
   yaml:
     dependency: transitive

@@ -1,6 +1,11 @@
+## 2.0.3-beta.1
+
+- fix(cli): `UseCaseParser` uses `ref` instead of `base` branch
+- fix(cli): `HttpClient` connects to incorrect endpoint
+
 ## 2.0.2
 
-- fix(cli): UseCaseParser contains hard-coded branch name
+- fix(cli): `UseCaseParser` contains hard-coded branch name
 
 ## 2.0.1
 

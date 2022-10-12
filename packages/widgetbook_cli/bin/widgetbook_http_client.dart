@@ -54,7 +54,7 @@ class WidgetbookHttpClient {
     if (useCases.isNotEmpty) {
       // TODO rename this endpoint to '/reviews/
       await client.post<dynamic>(
-        '/builds/use-cases',
+        '/reviews',
         data: CreateUseCasesRequest(
           apiKey: apiKey,
           useCases: useCases,
