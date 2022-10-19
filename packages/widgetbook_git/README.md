@@ -7,8 +7,8 @@ Exposes a Git directory abstraction that makes it easy to inspect and manipulate
 a local Git repository.
 
 ```dart
-import 'package:widgetbook_git/widgetbook_git.dart';
 import 'package:path/path.dart' as p;
+import 'package:widgetbook_git/widgetbook_git.dart';
 
 Future<void> main() async {
   print('Current directory: ${p.current}');
