@@ -1,0 +1,4 @@
+[submodule "demo"]
+	path = demo
+	url = https://github.com/widgetbook/widgetbook-demo.git
+	branch = main
