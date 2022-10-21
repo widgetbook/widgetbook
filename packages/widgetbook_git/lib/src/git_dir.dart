@@ -123,6 +123,12 @@ class GitDir {
         .toBranchReference();
   }
 
+  Future<String> unCommitedChanges() async {
+    final changes = await runCommand(const ['status']);
+
+    return changes.stdout.toString();
+  }
+
   Future<List<TreeEntry>> lsTree(String treeish,
       {bool subTreesOnly = false, String? path}) async {
     final args = ['ls-tree'];
