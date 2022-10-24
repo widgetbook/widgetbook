@@ -1,3 +1,1 @@
-import 'package:version/version.dart';
-
-Version currentVersion = Version(0, 1, 0);
+const String currentVersion = '2.0.3-beta.2';

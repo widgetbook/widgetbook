@@ -6,7 +6,8 @@ import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
 
 import 'flavor/flavor.dart';
-import 'models/deployment_data.dart';
+import 'models/models.dart';
+import 'parsers/exceptions.dart';
 import 'review/devices/models/device_data.dart';
 import 'review/locales/models/locale_data.dart';
 import 'review/text_scale_factors/models/text_scale_factor_data.dart';
@@ -52,24 +53,36 @@ class WidgetbookHttpClient {
     required List<TextScaleFactorData> textScaleFactors,
   }) async {
     if (useCases.isNotEmpty) {
-      // TODO rename this endpoint to '/reviews/
-      await client.post<dynamic>(
-        '/reviews',
-        data: CreateUseCasesRequest(
-          apiKey: apiKey,
-          useCases: useCases,
-          buildId: buildId,
-          projectId: projectId,
-          baseBranch: baseBranch,
-          headBranch: headBranch,
-          baseSha: baseSha,
-          headSha: headSha,
-          themes: themes,
-          locales: locales,
-          devices: devices,
-          textScaleFactors: textScaleFactors,
-        ).toJson(),
-      );
+      try {
+        await client.post<dynamic>(
+          '/reviews',
+          data: CreateUseCasesRequest(
+            apiKey: apiKey,
+            useCases: useCases,
+            buildId: buildId,
+            projectId: projectId,
+            baseBranch: baseBranch,
+            headBranch: headBranch,
+            baseSha: baseSha,
+            headSha: headSha,
+            themes: themes,
+            locales: locales,
+            devices: devices,
+            textScaleFactors: textScaleFactors,
+          ).toJson(),
+        );
+      } on DioError catch (e) {
+        final response = e.response;
+        if (response != null) {
+          final errorResponse = _decodeResponse(response.data);
+
+          throw WidgetbookPublishReviewFailure(
+            message: errorResponse.toString(),
+          );
+        }
+      } catch (e) {
+        throw WidgetbookPublishReviewFailure();
+      }
     }
   }
 
@@ -102,9 +115,11 @@ class WidgetbookHttpClient {
       final response = e.response;
       if (response != null) {
         final errorResponse = _decodeResponse(response.data);
-        print(errorResponse.toString());
-        exit(1);
+
+        throw WidgetbookDeployFailure(message: errorResponse.toString());
       }
+    } catch (e) {
+      throw WidgetbookDeployFailure();
     }
 
     return null;
