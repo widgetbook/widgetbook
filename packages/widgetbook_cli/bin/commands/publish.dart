@@ -30,8 +30,8 @@ import 'package:widgetbook_git/widgetbook_git.dart';
 
 import './command.dart';
 import '../api/widgetbook_http_client.dart';
+import '../ci_parser/ci_parser_runner.dart';
 import '../git-provider/github/github.dart';
-import '../helpers/ci_parser.dart';
 import '../helpers/exceptions.dart';
 import '../helpers/widgetbook_zip_encoder.dart';
 import '../models/models.dart';
@@ -42,7 +42,7 @@ import '../review/themes/theme_parser.dart';
 import '../review/use_cases/models/changed_use_case.dart';
 import '../review/use_cases/use_case_parser.dart';
 
-class PublishCommand extends WidgetbookCommand with CIParser {
+class PublishCommand extends WidgetbookCommand {
   PublishCommand({
     super.logger,
   }) {
@@ -112,8 +112,6 @@ class PublishCommand extends WidgetbookCommand with CIParser {
   @override
   final String name = 'publish';
 
-  PipelineData? pipelineVendor;
-
   @override
   Future<int> run() async {
     final publishProgress = logger.progress(
@@ -132,7 +130,7 @@ class PublishCommand extends WidgetbookCommand with CIParser {
       allowSubdirectory: true,
     );
 
-    publishProgress.update('Detecting git dir');
+    publishProgress.update('Obtaining data from Git');
 
     final isWorkingTreeClean = await gitDir.isWorkingTreeClean();
 
@@ -159,11 +157,19 @@ class PublishCommand extends WidgetbookCommand with CIParser {
       path: path,
     );
 
-    if (ci.isCI) {
-      pipelineVendor = getPipelineVendor;
+    final ciArgs = await CiParserRunner(
+      argResults: results,
+      gitDir: gitDir,
+    ).getParser()?.getCiArgs();
+
+    if (ciArgs == null) {
+      publishProgress.fail();
+      usageException(
+        'Your CI/CD pipeline provider is currently not supported.',
+      );
     }
 
-    publishProgress.update('Checking commit\n');
+    publishProgress.update('Checking commit');
     if (!isWorkingTreeClean) {
       logger.warn('You have un-commited changes');
 
@@ -177,9 +183,10 @@ class PublishCommand extends WidgetbookCommand with CIParser {
         case 'yes':
           logger.warn('This might affect the expected results');
           await _publishBuilds(
-            ciArgsData,
-            gitDir,
-            publishProgress,
+            cliArgs: ciArgsData,
+            ciArgs: ciArgs,
+            gitDir: gitDir,
+            publishProgress: publishProgress,
           );
           break;
 
@@ -189,27 +196,14 @@ class PublishCommand extends WidgetbookCommand with CIParser {
       }
     } else {
       await _publishBuilds(
-        ciArgsData,
-        gitDir,
-        publishProgress,
+        cliArgs: ciArgsData,
+        ciArgs: ciArgs,
+        gitDir: gitDir,
+        publishProgress: publishProgress,
       );
     }
 
     return ExitCode.success.code;
-  }
-
-  Future<String?> _getActorName(GitDir gitDir) async {
-    if ((results['actor'] as String?) != null) {
-      return results['actor'] as String;
-    }
-    if (ci.isCI && pipelineVendor?.actorName != null) {
-      return pipelineVendor!.actorName;
-    }
-    if (!ci.isCI) {
-      final actorFromGit = await gitDir.getActorName();
-      return actorFromGit;
-    }
-    return null;
   }
 
   void _deleteZip(File zip) {
@@ -218,56 +212,17 @@ class PublishCommand extends WidgetbookCommand with CIParser {
     }
   }
 
-  Future<String?> _getRepositoryName(GitDir gitDir) async {
-    if ((results['repository'] as String?) != null) {
-      return results['repository'] as String;
-    }
-    if (ci.isCI && pipelineVendor?.repository != null) {
-      return pipelineVendor!.repository;
-    }
-    if (!ci.isCI) {
-      final repositoryFromGit = await gitDir.getRepositoryName();
-      return repositoryFromGit;
-    }
-    return null;
-  }
-
-  String _pipelineVendorToString(PipelineVendor pipelineVendor) {
-    switch (pipelineVendor) {
-      case PipelineVendor.isGITHUB:
-        return 'GitHub';
-      case PipelineVendor.isGITLAB:
-        return 'GitLab';
-      case PipelineVendor.isAZUREPIPELINES:
-        return 'Azure';
-      case PipelineVendor.isBITBUCKET:
-        return 'BitBucket';
-    }
-  }
-
-  String _overrideGitProvider(String gitProvider) {
-    if (gitProvider != 'Local') {
-      return gitProvider;
-    }
-    if (pipelineVendor != null) {
-      return _pipelineVendorToString(pipelineVendor!.pipeline);
-    }
-    return 'Local';
-  }
-
-  Future<void> _publishBuilds(
-    CliArgs cliArgs,
-    GitDir gitDir,
-    Progress publishProgress,
-  ) async {
-    publishProgress.update('Getting actor');
-    final actor = await _getActorName(gitDir);
-    if (actor == null) {
+  Future<void> _publishBuilds({
+    required CliArgs cliArgs,
+    required CiArgs ciArgs,
+    required GitDir gitDir,
+    required Progress publishProgress,
+  }) async {
+    if (ciArgs.actor == null) {
       throw ActorNotFoundException();
     }
-    publishProgress.update('Getting repository');
-    final repository = await _getRepositoryName(gitDir);
-    if (repository == null) {
+
+    if (ciArgs.repository == null) {
       throw RepositoryNotFoundException();
     }
 
@@ -316,11 +271,11 @@ class PublishCommand extends WidgetbookCommand with CIParser {
           deploymentFile: file,
           data: DeploymentData(
             branchName: cliArgs.branch,
-            repositoryName: repository,
+            repositoryName: ciArgs.repository!,
             commitSha: cliArgs.commit,
-            actor: actor,
+            actor: ciArgs.actor!,
             apiKey: cliArgs.apiKey,
-            provider: _overrideGitProvider(cliArgs.gitProvider),
+            provider: ciArgs.vendor,
           ),
         );
 
