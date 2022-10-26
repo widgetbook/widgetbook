@@ -16,6 +16,16 @@
             ]
         },
         {
+            "name": "Debug CLI analyze",
+            "cwd": "packages/widgetbook_cli",
+            "request": "launch",
+            "program": "bin/cli_debug.dart",
+            "type": "dart",
+            "args": [
+                "analyze",
+            ]
+        },
+        {
             "name": "Debug widgetbook_example",
             "cwd": "examples/widgetbook_example",
             "request": "launch",

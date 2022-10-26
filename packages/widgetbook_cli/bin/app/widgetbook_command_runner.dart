@@ -49,6 +49,11 @@ class WidgetbookCommandRunner extends CommandRunner<int> {
     );
     addCommand(UpgradeCommand(logger: _logger, pubUpdater: _pubUpdater));
     addCommand(PublishCommand(logger: _logger));
+    addCommand(
+      AnalyzeCommand(
+        logger: logger,
+      ),
+    );
   }
 
   final Logger _logger;

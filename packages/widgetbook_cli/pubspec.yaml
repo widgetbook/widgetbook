@@ -19,6 +19,7 @@ dev_dependencies:
   widgetbook_exception:
     path: '../widgetbook_exception'
 dependencies: 
+  analyzer: ^5.2.0
   archive: ^3.3.0
   args: ^2.3.0
   ci: ^0.1.0
