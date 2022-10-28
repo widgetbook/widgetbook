@@ -35,6 +35,16 @@ class GitDir {
     return int.parse(pr.stdout as String);
   }
 
+  Future<String> getActorName() async {
+    final results = await runCommand(['config', 'user.name']);
+    return results.stdout as String;
+  }
+
+  Future<String> getRepositoryName() async {
+    final results = await runCommand(['rev-parse', '--show-toplevel']);
+    return results.stdout.toString().split('/').last;
+  }
+
   /// [revision] should probably be a sha1 to a commit.
   /// But GIT lets you do other things.
   /// See http://git-scm.com/docs/gitrevisions.html
