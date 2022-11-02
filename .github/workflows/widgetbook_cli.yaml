@@ -1,18 +1,18 @@
-on: 
+ on: 
   pull_request:
     paths:
-      - "packages/widgetbook_git/**"
-      - ".github/workflows/widgetbook-git.yaml"
+      - "packages/widgetbook_cli/**"
+      - ".github/workflows/widgetbook_cli.yaml"
   push:
     branches:
       - main
-name: widgetbook_git
+name: widgetbook_cli
 jobs:
   test:
     name: test
     defaults:
       run:
-        working-directory: packages/widgetbook_git
+        working-directory: packages/widgetbook_cli
     runs-on: ubuntu-latest
     steps:
 
@@ -22,11 +22,6 @@ jobs:
     - name: Dart version
       run: dart --version
 
-    - name: Set a git dummy user
-      run: |
-        git config --global user.email "you@example.com"
-        git config --global user.name "Your Name"      
-
     - name: Run Tests
       run: |
         dart pub global activate coverage 1.2.0
@@ -35,15 +30,15 @@ jobs:
     - name: Check Code Coverage
       uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
       with:
-        path: packages/widgetbook_git/coverage/lcov.info    
-        min_coverage: 70
+        path: packages/widgetbook_exception/coverage/lcov.info    
 
   code-quality:
     defaults:
       run:
-        working-directory: packages/widgetbook_git
+        working-directory: packages/widgetbook_exception
     name: code quality
     runs-on: ubuntu-latest 
+
     steps:
 
     - uses: actions/checkout@v2
@@ -55,15 +50,16 @@ jobs:
     - name: Run analyze
       run: dart analyze
 
-  pana:
+    pana:
     defaults:
       run:
-        working-directory: packages/widgetbook_git
+        working-directory: packages/widgetbook_cli
 
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2.3.4
+
       - uses: dart-lang/setup-dart@v1
 
       - name: Dart version
@@ -74,4 +70,4 @@ jobs:
           dart pub get
           dart pub global activate pana
       - name: Verify Pub Score
-        run: ../../tool/verify_pub_score.sh 100
+        run: ../../tool/verify_pub_score.sh    
