@@ -5,14 +5,15 @@ import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
 
-import 'flavor/flavor.dart';
-import 'models/deployment_data.dart';
-import 'review/devices/models/device_data.dart';
-import 'review/locales/models/locale_data.dart';
-import 'review/text_scale_factors/models/text_scale_factor_data.dart';
-import 'review/themes/models/theme_data.dart';
-import 'review/use_cases/models/changed_use_case.dart';
-import 'review/use_cases/requests/create_use_cases_request.dart';
+import '../flavor/flavor.dart';
+import '../helpers/helpers.dart';
+import '../models/models.dart';
+import '../review/devices/models/device_data.dart';
+import '../review/locales/models/locale_data.dart';
+import '../review/text_scale_factors/models/text_scale_factor_data.dart';
+import '../review/themes/models/theme_data.dart';
+import '../review/use_cases/models/changed_use_case.dart';
+import '../review/use_cases/requests/create_use_cases_request.dart';
 
 /// A client to connect to the Widgetbook Cloud backend
 class WidgetbookHttpClient {
@@ -52,24 +53,36 @@ class WidgetbookHttpClient {
     required List<TextScaleFactorData> textScaleFactors,
   }) async {
     if (useCases.isNotEmpty) {
-      // TODO rename this endpoint to '/reviews/
-      await client.post<dynamic>(
-        '/builds/use-cases',
-        data: CreateUseCasesRequest(
-          apiKey: apiKey,
-          useCases: useCases,
-          buildId: buildId,
-          projectId: projectId,
-          baseBranch: baseBranch,
-          headBranch: headBranch,
-          baseSha: baseSha,
-          headSha: headSha,
-          themes: themes,
-          locales: locales,
-          devices: devices,
-          textScaleFactors: textScaleFactors,
-        ).toJson(),
-      );
+      try {
+        await client.post<dynamic>(
+          '/reviews',
+          data: CreateUseCasesRequest(
+            apiKey: apiKey,
+            useCases: useCases,
+            buildId: buildId,
+            projectId: projectId,
+            baseBranch: baseBranch,
+            headBranch: headBranch,
+            baseSha: baseSha,
+            headSha: headSha,
+            themes: themes,
+            locales: locales,
+            devices: devices,
+            textScaleFactors: textScaleFactors,
+          ).toJson(),
+        );
+      } on DioError catch (e) {
+        final response = e.response;
+        if (response != null) {
+          final errorResponse = _decodeResponse(response.data);
+
+          throw WidgetbookPublishReviewException(
+            message: errorResponse.toString(),
+          );
+        }
+      } catch (e) {
+        throw WidgetbookPublishReviewException();
+      }
     }
   }
 
@@ -102,9 +115,11 @@ class WidgetbookHttpClient {
       final response = e.response;
       if (response != null) {
         final errorResponse = _decodeResponse(response.data);
-        print(errorResponse.toString());
-        exit(1);
+
+        throw WidgetbookDeployException(message: errorResponse.toString());
       }
+    } catch (e) {
+      throw WidgetbookDeployException();
     }
 
     return null;
