@@ -14,10 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-CliArgs _$CliArgsFromJson(Map<String, dynamic> json) {
-  return _CliArgs.fromJson(json);
-}
-
 /// @nodoc
 mixin _$CliArgs {
   String get apiKey => throw _privateConstructorUsedError;
@@ -29,7 +25,6 @@ mixin _$CliArgs {
   String? get baseBranch => throw _privateConstructorUsedError;
   String get path => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $CliArgsCopyWith<CliArgs> get copyWith => throw _privateConstructorUsedError;
 }
@@ -180,7 +175,6 @@ class __$$_CliArgsCopyWithImpl<$Res> extends _$CliArgsCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
 class _$_CliArgs implements _CliArgs {
   _$_CliArgs(
       {required this.apiKey,
@@ -191,9 +185,6 @@ class _$_CliArgs implements _CliArgs {
       this.prNumber,
       this.baseBranch,
       required this.path});
-
-  factory _$_CliArgs.fromJson(Map<String, dynamic> json) =>
-      _$$_CliArgsFromJson(json);
 
   @override
   final String apiKey;
@@ -235,7 +226,6 @@ class _$_CliArgs implements _CliArgs {
             const DeepCollectionEquality().equals(other.path, path));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -252,11 +242,6 @@ class _$_CliArgs implements _CliArgs {
   @override
   _$$_CliArgsCopyWith<_$_CliArgs> get copyWith =>
       __$$_CliArgsCopyWithImpl<_$_CliArgs>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_CliArgsToJson(this);
-  }
 }
 
 abstract class _CliArgs implements CliArgs {
@@ -269,8 +254,6 @@ abstract class _CliArgs implements CliArgs {
       final String? prNumber,
       final String? baseBranch,
       required final String path}) = _$_CliArgs;
-
-  factory _CliArgs.fromJson(Map<String, dynamic> json) = _$_CliArgs.fromJson;
 
   @override
   String get apiKey => throw _privateConstructorUsedError;

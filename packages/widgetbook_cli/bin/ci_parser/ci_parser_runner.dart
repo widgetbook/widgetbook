@@ -1,37 +1,56 @@
 import 'package:args/args.dart';
-import 'package:ci/ci.dart' as ci;
 import 'package:widgetbook_git/widgetbook_git.dart';
 
 import './ci_parser.dart';
-import './local_parser.dart';
 
 class CiParserRunner {
   CiParserRunner({
     required this.argResults,
     required this.gitDir,
-  });
+    CiWrapper? ciWrapper,
+    PlatformWrapper? platformWrapper,
+  })  : _ciWrapper = ciWrapper ?? CiWrapper(),
+        _platformWrapper = platformWrapper ?? PlatformWrapper();
 
   final ArgResults argResults;
   final GitDir gitDir;
 
+  final CiWrapper _ciWrapper;
+  final PlatformWrapper _platformWrapper;
+
+  PlatformWrapper get platformWrapper => _platformWrapper;
+
   CiParser? getParser() {
-    if (!ci.isCI) {
+    if (!_ciWrapper.isCI()) {
       return LocalParser(
         argResults: argResults,
         gitDir: gitDir,
       );
     }
-    if (ci.Vendor.IS_GITLAB) {
-      return GitLabParser(argResults: argResults);
+
+    if (_ciWrapper.isGitLab()) {
+      return GitLabParser(
+        argResults: argResults,
+        platformWrapper: _platformWrapper,
+      );
     }
-    if (ci.Vendor.IS_GITHUB_ACTIONS) {
-      return GitHubParser(argResults: argResults);
+    if (_ciWrapper.isGithub()) {
+      return GitHubParser(
+        argResults: argResults,
+        platformWrapper: _platformWrapper,
+      );
     }
-    if (ci.Vendor.IS_AZURE_PIPELINES) {
-      return AzureParser(argResults: argResults);
+    if (_ciWrapper.isAzure()) {
+      return AzureParser(
+        argResults: argResults,
+        platformWrapper: _platformWrapper,
+      );
     }
-    if (ci.Vendor.IS_BITBUCKET) {
-      return BitbucketParser(argResults: argResults);
+    if (_ciWrapper.isBitBucket()) {
+      return BitbucketParser(
+        argResults: argResults,
+        platformWrapper: _platformWrapper,
+      );
     }
 
     return null;

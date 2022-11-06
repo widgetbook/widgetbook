@@ -48,7 +48,12 @@ class WidgetbookCommandRunner extends CommandRunner<int> {
       help: 'Print the current version.',
     );
     addCommand(UpgradeCommand(logger: _logger, pubUpdater: _pubUpdater));
-    addCommand(PublishCommand(logger: _logger));
+
+    addCommand(
+      PublishCommand(
+        logger: _logger,
+      ),
+    );
   }
 
   final Logger _logger;
@@ -89,6 +94,9 @@ class WidgetbookCommandRunner extends CommandRunner<int> {
     } on WidgetbookApiException catch (error) {
       _logger.err(error.message);
       return ExitCode.software.code;
+    } on UnableToCreateZipFileException catch (error) {
+      _logger.err(error.message);
+      return ExitCode.ioError.code;
     } catch (error) {
       _logger.err(error.toString());
       return ExitCode.software.code;

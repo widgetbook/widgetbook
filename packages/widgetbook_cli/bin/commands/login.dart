@@ -8,7 +8,7 @@ class LoginCommand extends WidgetbookCommand {
   });
 
   @override
-  final String description = 'Login to widgetbook cloud';
+  final String description = 'Login to Widgetbook Cloud';
 
   @override
   final String name = 'login';

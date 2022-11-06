@@ -8,7 +8,7 @@ class LogoutCommand extends WidgetbookCommand {
   });
 
   @override
-  final String description = 'Logout from widgetbook cloud';
+  final String description = 'Logout from Widgetbook Cloud';
 
   @override
   final String name = 'logout';

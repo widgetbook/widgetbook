@@ -3,8 +3,8 @@ import 'package:mocktail/mocktail.dart';
 import 'package:pub_updater/pub_updater.dart';
 import 'package:test/test.dart';
 
-import '../../bin/helpers/version.dart';
 import '../../bin/app/widgetbook_command_runner.dart';
+import '../../bin/helpers/version.dart';
 import '../mocks/mocks.dart';
 
 void main() {
@@ -82,7 +82,7 @@ void main() {
       final result = await widgetbookCommandRunner.run(['upgrade']);
       expect(result, equals(ExitCode.success.code));
       verify(
-        () => logger.info('widgetbook cli is already at the latest version.'),
+        () => logger.info('Widgetbook CLI is already at the latest version.'),
       ).called(1);
       verifyNever(() => logger.progress('Upgrading to $latestVersion'));
       verifyNever(() => pubUpdater.update(packageName: packageName));

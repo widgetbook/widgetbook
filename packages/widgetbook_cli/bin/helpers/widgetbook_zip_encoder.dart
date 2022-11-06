@@ -1,11 +1,15 @@
-import 'dart:io';
-
 import 'package:archive/archive_io.dart';
+import 'package:file/file.dart';
+import 'package:file/local.dart';
 
 import './exceptions.dart';
 
 /// Encoder to create the zip file required by Widgetbook Core backend
 class WidgetbookZipEncoder {
+  WidgetbookZipEncoder({FileSystem? fileSystem})
+      : _fileSystem = fileSystem ?? const LocalFileSystem();
+  final FileSystem _fileSystem;
+
   /// Encodes the directory to a .zip file
   File? encode(Directory directory) {
     if (directory.existsSync()) {
@@ -17,7 +21,7 @@ class WidgetbookZipEncoder {
           includeDirName: false,
         )
         ..close();
-      final createdZip = File(fileName);
+      final createdZip = _fileSystem.file(fileName);
       if (!createdZip.existsSync()) {
         throw FileNotFoundException(
           message: 'File ${createdZip.path} does not exist.',

@@ -74,3 +74,13 @@ class WidgetbookApiException implements WidgetbookException {
   @override
   String get message => _message!;
 }
+
+class UnableToCreateZipFileException implements WidgetbookException {
+  UnableToCreateZipFileException({String? message})
+      : _message = message ??= 'Could not create .zip file for upload.';
+
+  final String? _message;
+
+  @override
+  String get message => _message!;
+}

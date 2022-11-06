@@ -1,22 +1,25 @@
-import 'dart:io';
-
-import './parser.dart';
+import './ci_parser.dart';
 
 class GitHubParser extends CiParser {
   GitHubParser({
     required super.argResults,
-  });
+    PlatformWrapper? platformWrapper,
+  }) : _platformWrapper = platformWrapper ?? PlatformWrapper();
+
+  final PlatformWrapper _platformWrapper;
+
+  PlatformWrapper get platformWrapper => _platformWrapper;
 
   @override
   String get vendor => 'GitHub';
 
   @override
   Future<String?> getActor() async {
-    return Platform.environment['GITHUB_ACTOR'];
+    return _platformWrapper.environmentVariable(variable: 'GITHUB_ACTOR');
   }
 
   @override
   Future<String?> getRepository() async {
-    return Platform.environment['GITHUB_REPOSITORY'];
+    return _platformWrapper.environmentVariable(variable: 'GITHUB_REPOSITORY');
   }
 }

@@ -21,16 +21,16 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import 'dart:io';
-
-import 'package:ci/ci.dart' as ci;
+import 'package:file/file.dart';
+import 'package:file/local.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
 import 'package:widgetbook_git/widgetbook_git.dart';
 
 import './command.dart';
 import '../api/widgetbook_http_client.dart';
-import '../ci_parser/ci_parser_runner.dart';
+import '../ci_parser/ci_parser.dart';
 import '../git-provider/github/github.dart';
 import '../helpers/exceptions.dart';
 import '../helpers/widgetbook_zip_encoder.dart';
@@ -43,7 +43,21 @@ import '../review/use_cases/models/changed_use_case.dart';
 import '../review/use_cases/use_case_parser.dart';
 
 class PublishCommand extends WidgetbookCommand {
-  PublishCommand({super.logger, this.ciParserRunner}) {
+  PublishCommand({
+    super.logger,
+    this.ciParserRunner,
+    WidgetbookHttpClient? widgetbookHttpClient,
+    WidgetbookZipEncoder? widgetbookZipEncoder,
+    FileSystem? fileSystem,
+    this.localeParser,
+    this.deviceParser,
+    this.textScaleFactorsParser,
+    this.themeParser,
+    CiWrapper? ciWrapper,
+  })  : _widgetbookHttpClient = widgetbookHttpClient ?? WidgetbookHttpClient(),
+        _widgetbookZipEncoder = widgetbookZipEncoder ?? WidgetbookZipEncoder(),
+        _ciWrapper = ciWrapper ?? CiWrapper(),
+        _fileSystem = fileSystem ?? const LocalFileSystem() {
     argParser
       ..addOption(
         'path',
@@ -110,7 +124,15 @@ class PublishCommand extends WidgetbookCommand {
   @override
   final String name = 'publish';
 
-  late CiParserRunner? ciParserRunner;
+  final CiParserRunner? ciParserRunner;
+  final WidgetbookHttpClient _widgetbookHttpClient;
+  final WidgetbookZipEncoder _widgetbookZipEncoder;
+  final FileSystem _fileSystem;
+  final ThemeParser? themeParser;
+  final LocaleParser? localeParser;
+  final DeviceParser? deviceParser;
+  final TextScaleFactorParser? textScaleFactorsParser;
+  final CiWrapper _ciWrapper;
 
   @override
   Future<int> run() async {
@@ -122,7 +144,12 @@ class PublishCommand extends WidgetbookCommand {
 
     if (!await GitDir.isGitDir(path)) {
       publishProgress.fail();
-      usageException('Directory from "path" is not a Git folder');
+
+      logger.err(
+        'Directory from "path" is not a Git folder',
+      );
+
+      return ExitCode.software.code;
     }
 
     final gitDir = await GitDir.fromExisting(
@@ -157,70 +184,131 @@ class PublishCommand extends WidgetbookCommand {
       path: path,
     );
 
-    ciParserRunner = CiParserRunner(
-      argResults: results,
-      gitDir: gitDir,
-    );
-
-    final ciArgs = await ciParserRunner?.getParser()?.getCiArgs();
+    final ciArgs = ciParserRunner == null
+        ? await CiParserRunner(
+            argResults: results,
+            gitDir: gitDir,
+          ).getParser()?.getCiArgs()
+        : await ciParserRunner!.getParser()?.getCiArgs();
 
     if (ciArgs == null) {
       publishProgress.fail();
-      usageException(
+
+      logger.err(
         'Your CI/CD pipeline provider is currently not supported.',
       );
+
+      return ExitCode.software.code;
     }
 
-    publishProgress.update('Checking commit');
-    if (!isWorkingTreeClean) {
-      logger
-        ..warn('You have un-commited changes')
-        ..warn(
-            'Uploading a new build to Widgetbook Cloud requires a commit SHA. '
-            'Due to un-committed changes, we are using the commit SHA '
-            'of your previous commit which can lead to the build being '
-            'rejected due to an already existing build.');
+    if (!_ciWrapper.isCI()) {
+      publishProgress.update('Checking commit');
+      if (!isWorkingTreeClean) {
+        logger
+          ..warn('You have un-commited changes')
+          ..warn('Uploading a new build to Widgetbook Cloud requires a commit '
+              'SHA. Due to un-committed changes, we are using the commit SHA '
+              'of your previous commit which can lead to the build being '
+              'rejected due to an already existing build.');
 
-      final proceedWithUnCommitedChanges = logger.chooseOne(
-        'Would you like to proceed anyways?',
-        choices: ['no', 'yes'],
-        defaultValue: 'no',
-      );
+        final proceedWithUnCommitedChanges = logger.chooseOne(
+          'Would you like to proceed anyways?',
+          choices: ['no', 'yes'],
+          defaultValue: 'no',
+        );
 
-      if (proceedWithUnCommitedChanges == 'no') {
-        publishProgress.cancel();
-        return ExitCode.success.code;
+        if (proceedWithUnCommitedChanges == 'no') {
+          publishProgress.cancel();
+          return ExitCode.success.code;
+        } else {
+          await publishBuilds(
+            cliArgs: ciArgsData,
+            ciArgs: ciArgs,
+            gitDir: gitDir,
+            publishProgress: publishProgress,
+            getZipFile: getZipFile,
+          );
+        }
       } else {
-        await _publishBuilds(
+        await publishBuilds(
           cliArgs: ciArgsData,
           ciArgs: ciArgs,
           gitDir: gitDir,
           publishProgress: publishProgress,
+          getZipFile: getZipFile,
         );
       }
     } else {
-      await _publishBuilds(
+      await publishBuilds(
         cliArgs: ciArgsData,
         ciArgs: ciArgs,
         gitDir: gitDir,
         publishProgress: publishProgress,
+        getZipFile: getZipFile,
       );
     }
 
     return ExitCode.success.code;
   }
 
-  void _deleteZip(File zip) {
-    if (!ci.isCI) {
-      zip.delete();
-    }
+  @visibleForTesting
+  void deleteZip(File zip) {
+    zip.delete();
   }
 
-  Future<void> _publishBuilds({
+  @visibleForTesting
+  File? getZipFile(Directory directory) =>
+      _widgetbookZipEncoder.encode(directory);
+
+  @visibleForTesting
+  Future<Map<String, dynamic>?> uploadDeploymentInfo({
+    required File file,
+    required CliArgs cliArgs,
+    required CiArgs ciArgs,
+  }) {
+    return _widgetbookHttpClient.uploadDeployment(
+      deploymentFile: file,
+      data: DeploymentData(
+        branchName: cliArgs.branch,
+        repositoryName: ciArgs.repository!,
+        commitSha: cliArgs.commit,
+        actor: ciArgs.actor!,
+        apiKey: cliArgs.apiKey,
+        provider: ciArgs.vendor,
+      ),
+    );
+  }
+
+  @visibleForTesting
+  Future<void> uploadReview({
+    required File file,
+    required CliArgs cliArgs,
+    required CiArgs ciArgs,
+    required ReviewData reviewData,
+  }) {
+    return _widgetbookHttpClient.uploadReview(
+      apiKey: cliArgs.apiKey,
+      useCases: reviewData.useCases,
+      buildId: reviewData.buildId,
+      projectId: reviewData.projectId,
+      baseBranch: cliArgs.baseBranch!,
+      baseSha: reviewData.baseSha,
+      headBranch: cliArgs.branch,
+      headSha: cliArgs.commit,
+      themes: reviewData.themes,
+      locales: reviewData.locales,
+      devices: reviewData.devices,
+      textScaleFactors: reviewData.textScaleFactors,
+    );
+  }
+
+  @visibleForTesting
+  Future<void> publishBuilds({
     required CliArgs cliArgs,
     required CiArgs ciArgs,
     required GitDir gitDir,
     required Progress publishProgress,
+    required File? Function(Directory) getZipFile,
   }) async {
     if (ciArgs.actor == null) {
       throw ActorNotFoundException();
@@ -252,35 +340,34 @@ class PublishCommand extends WidgetbookCommand {
       'web',
     );
 
-    final directory = Directory(buildPath);
+    final directory = _fileSystem.directory(buildPath);
     final useCases = cliArgs.baseBranch == null
         ? <ChangedUseCase>[]
         : await UseCaseParser(
             projectPath: cliArgs.path,
             baseBranch: cliArgs.baseBranch!,
           ).parse();
-    final themes = await ThemeParser(projectPath: cliArgs.path).parse();
-    final locales = await LocaleParser(projectPath: cliArgs.path).parse();
-    final devices = await DeviceParser(projectPath: cliArgs.path).parse();
-    final textScaleFactors =
+
+    final themes = await themeParser?.parse() ??
+        await ThemeParser(projectPath: cliArgs.path).parse();
+
+    final locales = await localeParser?.parse() ??
+        await LocaleParser(projectPath: cliArgs.path).parse();
+    final devices = await deviceParser?.parse() ??
+        await DeviceParser(projectPath: cliArgs.path).parse();
+    final textScaleFactors = await textScaleFactorsParser?.parse() ??
         await TextScaleFactorParser(projectPath: cliArgs.path).parse();
 
     try {
       publishProgress.update('Generating zip');
-      final file = WidgetbookZipEncoder().encode(directory);
+      final file = getZipFile(directory);
 
       if (file != null) {
         publishProgress.update('Uploading build');
-        final uploadInfo = await WidgetbookHttpClient().uploadDeployment(
-          deploymentFile: file,
-          data: DeploymentData(
-            branchName: cliArgs.branch,
-            repositoryName: ciArgs.repository!,
-            commitSha: cliArgs.commit,
-            actor: ciArgs.actor!,
-            apiKey: cliArgs.apiKey,
-            provider: ciArgs.vendor,
-          ),
+        final uploadInfo = await uploadDeploymentInfo(
+          file: file,
+          cliArgs: cliArgs,
+          ciArgs: ciArgs,
         );
 
         if (uploadInfo == null) {
@@ -318,19 +405,20 @@ class PublishCommand extends WidgetbookCommand {
         if (cliArgs.baseBranch != null && baseCommit != null) {
           publishProgress.update('Uploading review');
           try {
-            await WidgetbookHttpClient().uploadReview(
-              apiKey: cliArgs.apiKey,
-              useCases: useCases,
-              buildId: uploadInfo['build'] as String,
-              projectId: uploadInfo['project'] as String,
-              baseBranch: cliArgs.baseBranch!,
-              baseSha: baseCommit,
-              headBranch: cliArgs.branch,
-              headSha: cliArgs.commit,
-              themes: themes,
-              locales: locales,
-              devices: devices,
-              textScaleFactors: textScaleFactors,
+            await uploadReview(
+              file: file,
+              cliArgs: cliArgs,
+              ciArgs: ciArgs,
+              reviewData: ReviewData(
+                useCases: useCases,
+                buildId: uploadInfo['build'] as String,
+                projectId: uploadInfo['project'] as String,
+                baseSha: baseCommit,
+                themes: themes,
+                locales: locales,
+                devices: devices,
+                textScaleFactors: textScaleFactors,
+              ),
             );
             publishProgress.complete('Uploaded review');
           } catch (_) {
@@ -343,9 +431,10 @@ class PublishCommand extends WidgetbookCommand {
           );
         }
 
-        _deleteZip(file);
+        deleteZip(file);
       } else {
         logger.err('Could not create .zip file for upload.');
+        throw UnableToCreateZipFileException();
       }
     } catch (e) {
       publishProgress.fail();
