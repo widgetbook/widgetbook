@@ -17,6 +17,7 @@ import '../../bin/review/devices/device_parser.dart';
 import '../../bin/review/locales/locales_parser.dart';
 import '../../bin/review/text_scale_factors/text_scale_factor_parser.dart';
 import '../../bin/review/themes/theme_parser.dart';
+import '../helpers/test_data.dart';
 import '../mocks/mocks.dart';
 
 class FakeFile extends Fake implements File {}
