@@ -14,6 +14,7 @@ import '../../bin/review/devices/device_parser.dart';
 import '../../bin/review/locales/locales_parser.dart';
 import '../../bin/review/text_scale_factors/text_scale_factor_parser.dart';
 import '../../bin/review/themes/theme_parser.dart';
+import '../../bin/std/stdin_wrapper.dart';
 
 class MockLogger extends Mock implements Logger {}
 
@@ -38,6 +39,8 @@ class MockLocalFileSystem extends Mock implements LocalFileSystem {}
 class MockThemeParser extends Mock implements ThemeParser {}
 
 class MockCiWrapper extends Mock implements CiWrapper {}
+
+class MockStdInWrapper extends Mock implements StdInWrapper {}
 
 class MockLocaleParser extends Mock implements LocaleParser {}
 
