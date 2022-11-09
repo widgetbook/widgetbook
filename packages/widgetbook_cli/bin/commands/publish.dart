@@ -41,6 +41,7 @@ import '../review/text_scale_factors/text_scale_factor_parser.dart';
 import '../review/themes/theme_parser.dart';
 import '../review/use_cases/models/changed_use_case.dart';
 import '../review/use_cases/use_case_parser.dart';
+import '../std/stdin_wrapper.dart';
 
 class PublishCommand extends WidgetbookCommand {
   PublishCommand({
@@ -54,9 +55,11 @@ class PublishCommand extends WidgetbookCommand {
     this.textScaleFactorsParser,
     this.themeParser,
     CiWrapper? ciWrapper,
+    StdInWrapper? stdInWrapper,
   })  : _widgetbookHttpClient = widgetbookHttpClient ?? WidgetbookHttpClient(),
         _widgetbookZipEncoder = widgetbookZipEncoder ?? WidgetbookZipEncoder(),
         _ciWrapper = ciWrapper ?? CiWrapper(),
+        _stdInWrapper = stdInWrapper ?? StdInWrapper(),
         _fileSystem = fileSystem ?? const LocalFileSystem() {
     argParser
       ..addOption(
@@ -133,6 +136,7 @@ class PublishCommand extends WidgetbookCommand {
   final DeviceParser? deviceParser;
   final TextScaleFactorParser? textScaleFactorsParser;
   final CiWrapper _ciWrapper;
+  final StdInWrapper _stdInWrapper;
 
   @override
   Future<int> run() async {
@@ -201,52 +205,36 @@ class PublishCommand extends WidgetbookCommand {
       return ExitCode.software.code;
     }
 
-    if (!_ciWrapper.isCI()) {
-      publishProgress.update('Checking commit');
-      if (!isWorkingTreeClean) {
-        logger
-          ..warn('You have un-commited changes')
-          ..warn('Uploading a new build to Widgetbook Cloud requires a commit '
-              'SHA. Due to un-committed changes, we are using the commit SHA '
-              'of your previous commit which can lead to the build being '
-              'rejected due to an already existing build.');
-
-        final proceedWithUnCommitedChanges = logger.chooseOne(
+    publishProgress.update('Checking for un-commited changes');
+    if (!isWorkingTreeClean) {
+      logger
+        ..warn('You have un-commited changes')
+        ..warn('Uploading a new build to Widgetbook Cloud requires a commit '
+            'SHA. Due to un-committed changes, we are using the commit SHA '
+            'of your previous commit which can lead to the build being '
+            'rejected due to an already existing build.');
+      var proceedWithUnCommitedChanges = 'yes';
+      if (_stdInWrapper.hasTerminal) {
+        proceedWithUnCommitedChanges = logger.chooseOne(
           'Would you like to proceed anyways?',
           choices: ['no', 'yes'],
           defaultValue: 'no',
         );
-
-        if (proceedWithUnCommitedChanges == 'no') {
-          publishProgress.cancel();
-          return ExitCode.success.code;
-        } else {
-          await publishBuilds(
-            cliArgs: ciArgsData,
-            ciArgs: ciArgs,
-            gitDir: gitDir,
-            publishProgress: publishProgress,
-            getZipFile: getZipFile,
-          );
-        }
-      } else {
-        await publishBuilds(
-          cliArgs: ciArgsData,
-          ciArgs: ciArgs,
-          gitDir: gitDir,
-          publishProgress: publishProgress,
-          getZipFile: getZipFile,
-        );
       }
-    } else {
-      await publishBuilds(
-        cliArgs: ciArgsData,
-        ciArgs: ciArgs,
-        gitDir: gitDir,
-        publishProgress: publishProgress,
-        getZipFile: getZipFile,
-      );
+
+      if (proceedWithUnCommitedChanges == 'no') {
+        publishProgress.cancel();
+        return ExitCode.success.code;
+      }
     }
+
+    await publishBuilds(
+      cliArgs: ciArgsData,
+      ciArgs: ciArgs,
+      gitDir: gitDir,
+      publishProgress: publishProgress,
+      getZipFile: getZipFile,
+    );
 
     return ExitCode.success.code;
   }

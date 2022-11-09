@@ -17,6 +17,7 @@ import '../../bin/review/devices/device_parser.dart';
 import '../../bin/review/locales/locales_parser.dart';
 import '../../bin/review/text_scale_factors/text_scale_factor_parser.dart';
 import '../../bin/review/themes/theme_parser.dart';
+import '../../bin/std/stdin_wrapper.dart';
 import '../helpers/test_data.dart';
 import '../mocks/mocks.dart';
 
@@ -33,6 +34,7 @@ void main() {
     late Logger logger;
     late GitDir gitDir;
     late CiWrapper ciWrapper;
+    late StdInWrapper stdInWrapper;
     late ArgResults argResults;
     late PublishCommand publishCommand;
     late WidgetbookHttpClient widgetbookHttpClient;
@@ -53,6 +55,7 @@ void main() {
       gitDir = MockGitDir();
       argResults = MockArgResults();
       ciWrapper = MockCiWrapper();
+      stdInWrapper = MockStdInWrapper();
       widgetbookHttpClient = MockWidgetbookHttpClient();
       widgetbookZipEncoder = MockWidgetbookZipEncoder();
       localFileSystem = MockLocalFileSystem();
@@ -141,6 +144,7 @@ void main() {
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
       when(() => gitDir.getActorName())
           .thenAnswer((_) => Future.value('John Doe'));
+      when(() => stdInWrapper.hasTerminal).thenReturn(true);
       when(
         () => logger.chooseOne(
           'Would you like to proceed anyways?',
