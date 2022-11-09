@@ -1,6 +1,6 @@
 name: widgetbook_cli
 description: A command-line application to upload Widgetbook builds to Widgetbook Cloud.
-version: 2.0.3-beta.2
+version: 3.0.0-beta.4
 homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=widgetbook_models
 repository: https://github.com/widgetbook/widgetbook
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
@@ -26,6 +26,7 @@ dependencies:
   freezed_annotation: ^2.0.3
   http_parser: ^4.0.1 
   mason_logger: ^0.1.3
+  meta: ^1.8.0
   path: ^1.8.2
   pub_updater: ^0.2.2 
   pubspec: ^2.3.0
