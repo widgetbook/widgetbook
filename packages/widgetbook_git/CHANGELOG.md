@@ -1,3 +1,7 @@
+## 2.2.0-beta.5
+
+- feat: add `getActorName`, `getRepositoryName`
+
 ## 2.1.0
 
 - feat: add API for `git diff`

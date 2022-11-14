@@ -1,3 +1,7 @@
+## 3.0.0-beta.12
+
+- feat: add command for `publish`
+
 ## 2.0.3-beta.1
 
 - fix(cli): `UseCaseParser` uses `ref` instead of `base` branch

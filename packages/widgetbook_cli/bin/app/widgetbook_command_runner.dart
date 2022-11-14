@@ -107,7 +107,7 @@ class WidgetbookCommandRunner extends CommandRunner<int> {
   Future<int?> runCommand(ArgResults topLevelResults) async {
     int? exitCode = ExitCode.unavailable.code;
     if (topLevelResults['version'] == true) {
-      _logger.info(currentVersion);
+      _logger.info(packageVersion);
       exitCode = ExitCode.success.code;
     } else {
       exitCode = await super.runCommand(topLevelResults);
@@ -119,7 +119,7 @@ class WidgetbookCommandRunner extends CommandRunner<int> {
   Future<void> _checkForUpdates() async {
     try {
       final latestVersion = await _pubUpdater.getLatestVersion(packageName);
-      final isUpToDate = currentVersion == latestVersion;
+      final isUpToDate = packageVersion == latestVersion;
       if (!isUpToDate) {
         final changelogLink = lightCyan.wrap(
           styleUnderlined.wrap(
@@ -134,7 +134,7 @@ class WidgetbookCommandRunner extends CommandRunner<int> {
           ..info('')
           ..info(
             '''
-${lightYellow.wrap('Update available!')} ${lightCyan.wrap(currentVersion)} \u2192 ${lightCyan.wrap(latestVersion)}
+${lightYellow.wrap('Update available!')} ${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}
 ${lightYellow.wrap('Changelog:')} $changelogLink
 Run ${cyan.wrap('$executableName update')} to update''',
           );
