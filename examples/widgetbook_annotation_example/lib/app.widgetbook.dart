@@ -35,6 +35,7 @@ class HotReload extends StatelessWidget {
       appInfo: AppInfo(
         name: 'Meal App',
       ),
+      appBuilder: appBuilder2,
       supportedLocales: locales,
       localizationsDelegates: delegates,
       themes: [
