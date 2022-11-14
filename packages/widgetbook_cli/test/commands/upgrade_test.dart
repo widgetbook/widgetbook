@@ -22,7 +22,7 @@ void main() {
       when(() => logger.progress(any())).thenReturn(MockProgress());
       when(
         () => pubUpdater.getLatestVersion(any()),
-      ).thenAnswer((_) async => currentVersion);
+      ).thenAnswer((_) async => packageVersion);
       when(
         () => pubUpdater.update(packageName: packageName),
       ).thenAnswer((_) => Future.value(FakeProcessResult()));
@@ -77,7 +77,7 @@ void main() {
     test('does not update when already on latest version', () async {
       when(
         () => pubUpdater.getLatestVersion(any()),
-      ).thenAnswer((_) async => currentVersion);
+      ).thenAnswer((_) async => packageVersion);
       when(() => logger.progress(any())).thenReturn(MockProgress());
       final result = await widgetbookCommandRunner.run(['upgrade']);
       expect(result, equals(ExitCode.success.code));

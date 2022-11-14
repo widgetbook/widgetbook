@@ -290,6 +290,80 @@ class PublishCommand extends WidgetbookCommand {
     );
   }
 
+  // TODO sha is pretty much not used an is just being overriden with the most
+  // recent sha of the branch
+  // If this will be included do we need to check if the sha exists on the
+  // branch?
+  @visibleForTesting
+  Future<BranchReference?> getBaseBranch({
+    required Progress progress,
+    required GitDir gitDir,
+    required String? branch,
+    required String? sha,
+  }) async {
+    if (branch == null) {
+      return null;
+    }
+
+    progress.update('fetching remote branches');
+    await gitDir.fetch();
+
+    progress.update('reading existing branches');
+    final branches = await gitDir.allBranches();
+    final branchesMap = {
+      for (var k in branches) k.reference: k,
+    };
+
+    final branchRef = BranchReference(
+      // This is not used, we are just using BranchReference to check if this is
+      // a heads or remote branch (if at all)
+      'a' * 40,
+      branch,
+    );
+
+    const headsPrefix = 'refs/heads/';
+    const headsPrefixRegex = '(?<=$headsPrefix)';
+    const remotesPrefix = 'refs/remotes/origin/';
+    const remotesPrefixRegex = '(?<=$remotesPrefix)';
+    const endOfLine = r'$';
+
+    if (branchRef.isHeads || branchRef.isRemote) {
+      if (branchesMap.containsKey(branchRef.reference)) {
+        return branchesMap[branchRef.reference];
+      }
+
+      // Azure provides the ref as 'refs/heads/<branch-name>'
+      // This branch won't be found as of default.
+      // But a branch 'refs/remotes/origin/<branch-name>' will exist
+      final headsRefAsRemoteRef = '$remotesPrefix${branchRef.branchName}';
+      if (branchesMap.containsKey(headsRefAsRemoteRef)) {
+        return branchesMap[headsRefAsRemoteRef];
+      }
+
+      return null;
+    } else {
+      final headsRegex = RegExp(
+        '$headsPrefixRegex${branchRef.reference}$endOfLine',
+      );
+      final remotesRegex = RegExp(
+        '$remotesPrefixRegex${branchRef.reference}$endOfLine',
+      );
+      for (final branch in branches) {
+        if (headsRegex.hasMatch(branch.reference)) {
+          return branch;
+        }
+      }
+
+      for (final branch in branches) {
+        if (remotesRegex.hasMatch(branch.reference)) {
+          return branch;
+        }
+      }
+    }
+
+    return null;
+  }
+
   @visibleForTesting
   Future<void> publishBuilds({
     required CliArgs cliArgs,
@@ -307,20 +381,12 @@ class PublishCommand extends WidgetbookCommand {
     }
 
     publishProgress.update('Getting branches');
-    final branches = (await gitDir.branches()).toList();
-
-    final branchExists = branches.any(
-      (element) => element.branchName == cliArgs.baseBranch,
+    final baseBranch = await getBaseBranch(
+      progress: publishProgress,
+      gitDir: gitDir,
+      branch: cliArgs.baseBranch,
+      sha: results['base-commit'] as String?,
     );
-    var baseCommit = results['base-commit'] as String?;
-
-    if (branchExists) {
-      baseCommit = branches
-          .firstWhere(
-            (element) => element.branchName == cliArgs.baseBranch,
-          )
-          .sha;
-    }
 
     final buildPath = p.join(
       cliArgs.path,
@@ -329,11 +395,11 @@ class PublishCommand extends WidgetbookCommand {
     );
 
     final directory = _fileSystem.directory(buildPath);
-    final useCases = cliArgs.baseBranch == null
+    final useCases = baseBranch == null
         ? <ChangedUseCase>[]
         : await UseCaseParser(
             projectPath: cliArgs.path,
-            baseBranch: cliArgs.baseBranch!,
+            baseBranch: baseBranch.reference,
           ).parse();
 
     final themes = await themeParser?.parse() ??
@@ -390,7 +456,7 @@ class PublishCommand extends WidgetbookCommand {
           );
         }
 
-        if (cliArgs.baseBranch != null && baseCommit != null) {
+        if (baseBranch != null) {
           publishProgress.update('Uploading review');
           try {
             await uploadReview(
@@ -401,7 +467,7 @@ class PublishCommand extends WidgetbookCommand {
                 useCases: useCases,
                 buildId: uploadInfo['build'] as String,
                 projectId: uploadInfo['project'] as String,
-                baseSha: baseCommit,
+                baseSha: baseBranch.sha,
                 themes: themes,
                 locales: locales,
                 devices: devices,

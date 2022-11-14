@@ -1,7 +1,6 @@
 // ignore_for_file: no_adjacent_strings_in_list
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
-
 import 'package:mocktail/mocktail.dart';
 import 'package:pub_updater/pub_updater.dart';
 import 'package:test/test.dart';
@@ -38,7 +37,7 @@ final changelogLink = lightCyan.wrap(
   ),
 );
 final updateMessage = '''
-${lightYellow.wrap('Update available!')} ${lightCyan.wrap(currentVersion)} \u2192 ${lightCyan.wrap(latestVersion)}
+${lightYellow.wrap('Update available!')} ${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}
 ${lightYellow.wrap('Changelog:')} $changelogLink
 Run ${cyan.wrap('widgetbook update')} to update''';
 
@@ -57,7 +56,7 @@ void main() {
 
       when(
         () => pubUpdater.getLatestVersion(any()),
-      ).thenAnswer((_) async => currentVersion);
+      ).thenAnswer((_) async => packageVersion);
 
       commandRunner = WidgetbookCommandRunner(
         logger: logger,
@@ -150,7 +149,7 @@ void main() {
         test('outputs current version', () async {
           final result = await commandRunner.run(['--version']);
           expect(result, equals(ExitCode.success.code));
-          verify(() => logger.info(currentVersion)).called(1);
+          verify(() => logger.info(packageVersion)).called(1);
         });
       });
     });

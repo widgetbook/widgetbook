@@ -12,9 +12,6 @@ class CommitReference {
 
   CommitReference(this.sha, this.reference) {
     requireArgumentValidSha1(sha, 'sha');
-
-    // TODO: probably a better way to verify...but this is fine for now
-    assert(reference.startsWith(r'refs/') || reference == 'HEAD');
   }
 
   static List<CommitReference> fromShowRefOutput(String input) {

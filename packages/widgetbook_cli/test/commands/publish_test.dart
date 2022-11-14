@@ -44,6 +44,7 @@ void main() {
     late LocaleParser localeParser;
     late DeviceParser deviceParser;
     late TextScaleFactorParser textScaleFactorsParser;
+    late Progress progress;
     final tempDir = const LocalFileSystem().currentDirectory;
 
     Progress publishProgress() => logger.progress(
@@ -60,6 +61,7 @@ void main() {
       widgetbookZipEncoder = MockWidgetbookZipEncoder();
       localFileSystem = MockLocalFileSystem();
       themeParser = MockThemeParser();
+      progress = MockProgress();
 
       localeParser = MockLocaleParser();
       deviceParser = MockDeviceParser();
@@ -69,8 +71,7 @@ void main() {
         widgetbookHttpClient: widgetbookHttpClient,
       )..testArgResults = argResults;
 
-      when(() => logger.progress(any())).thenReturn(MockProgress());
-      when(() => logger.progress(any())).thenReturn(MockProgress());
+      when(() => logger.progress(any())).thenReturn(progress);
 
       when(() => argResults['api-key'] as String).thenReturn('Api-Key');
       when(() => argResults['git-provider'] as String).thenReturn('Local');
@@ -84,6 +85,195 @@ void main() {
     test('can be instantiated without any parameters', () {
       expect(PublishCommand.new, returnsNormally);
     });
+
+    group(
+      'getBaseBranch',
+      () {
+        final branchRefA = BranchReference(
+          '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf',
+          'refs/heads/a',
+        );
+        final branchRefB = BranchReference(
+          'f1c882189d0b341e435a58992c6b78a6a3f5ebfc',
+          'refs/heads/b',
+        );
+        final branchRefC = BranchReference(
+          '20dbdee64ee73e4be43b9c949492e05437d0e5dc',
+          'refs/remotes/origin/c',
+        );
+        final branchRefD = BranchReference(
+          'd4b6472e1566eb2c9897e4fc4d8c4858628bca01',
+          'refs/remotes/origin/d',
+        );
+
+        setUp(
+          () {
+            when(
+              () => gitDir.fetch(),
+            ).thenAnswer((_) => Future.value());
+          },
+        );
+
+        group('without branches', () {
+          setUp(() {
+            when(() => gitDir.allBranches()).thenAnswer(
+              (_) => Future.value(
+                [],
+              ),
+            );
+          });
+
+          test(
+            "returns null when invoked with 'a'",
+            () async {
+              final branch = await publishCommand.getBaseBranch(
+                progress: progress,
+                gitDir: gitDir,
+                branch: 'a',
+                sha: null,
+              );
+              expect(branch, isNull);
+            },
+          );
+
+          test(
+            "returns null when invoked with 'refs/heads/a'",
+            () async {
+              final branch = await publishCommand.getBaseBranch(
+                progress: progress,
+                gitDir: gitDir,
+                branch: 'refs/heads/a',
+                sha: null,
+              );
+              expect(branch, isNull);
+            },
+          );
+
+          test(
+            "returns null when invoked with 'c'",
+            () async {
+              final branch = await publishCommand.getBaseBranch(
+                progress: progress,
+                gitDir: gitDir,
+                branch: 'c',
+                sha: null,
+              );
+              expect(branch, isNull);
+            },
+          );
+
+          test(
+            "returns null when invoked with 'refs/remotes/c'",
+            () async {
+              final branch = await publishCommand.getBaseBranch(
+                progress: progress,
+                gitDir: gitDir,
+                branch: 'refs/remotes/c',
+                sha: null,
+              );
+              expect(branch, isNull);
+            },
+          );
+        });
+
+        group(
+          'with only remote branches',
+          () {
+            setUp(() {
+              when(() => gitDir.allBranches()).thenAnswer(
+                (_) => Future.value(
+                  [
+                    branchRefC,
+                    branchRefD,
+                  ],
+                ),
+              );
+            });
+
+            test(
+              "returns 'refs/origin/c' with SHA when invoked "
+              "with 'refs/heads/c'",
+              () async {
+                final branch = await publishCommand.getBaseBranch(
+                  progress: progress,
+                  gitDir: gitDir,
+                  branch: 'refs/heads/c',
+                  sha: null,
+                );
+                expect(branch, equals(branchRefC));
+              },
+            );
+          },
+        );
+
+        group('with existing branches', () {
+          setUp(() {
+            when(() => gitDir.allBranches()).thenAnswer(
+              (_) => Future.value(
+                [
+                  branchRefA,
+                  branchRefB,
+                  branchRefC,
+                  branchRefD,
+                ],
+              ),
+            );
+          });
+
+          test(
+            "returns 'refs/heads/a' with SHA when invoked with 'a'",
+            () async {
+              final branch = await publishCommand.getBaseBranch(
+                progress: progress,
+                gitDir: gitDir,
+                branch: 'a',
+                sha: null,
+              );
+              expect(branch, equals(branchRefA));
+            },
+          );
+
+          test(
+            "returns 'refs/heads/a' with SHA when invoked with 'refs/heads/a'",
+            () async {
+              final branch = await publishCommand.getBaseBranch(
+                progress: progress,
+                gitDir: gitDir,
+                branch: 'refs/heads/a',
+                sha: null,
+              );
+              expect(branch, equals(branchRefA));
+            },
+          );
+
+          test(
+            "returns 'refs/remotes/c' with SHA when invoked with 'c'",
+            () async {
+              final branch = await publishCommand.getBaseBranch(
+                progress: progress,
+                gitDir: gitDir,
+                branch: 'c',
+                sha: null,
+              );
+              expect(branch, equals(branchRefC));
+            },
+          );
+
+          test(
+            "returns 'refs/remotes/c' with SHA when invoked with 'refs/remotes/c'",
+            () async {
+              final branch = await publishCommand.getBaseBranch(
+                progress: progress,
+                gitDir: gitDir,
+                branch: 'refs/remotes/c',
+                sha: null,
+              );
+              expect(branch, equals(branchRefC));
+            },
+          );
+        });
+      },
+    );
 
     test(
         'exits with code 70 when Directory '
@@ -139,6 +329,7 @@ void main() {
         'proceed with un-commited changes', () async {
       final publishCommand = PublishCommand(
         logger: logger,
+        stdInWrapper: stdInWrapper,
         ciParserRunner: CiParserRunner(argResults: argResults, gitDir: gitDir),
       )..testArgResults = argResults;
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
@@ -215,10 +406,13 @@ void main() {
     );
 
     test(
-      'throws $UnableToCreateZipFileException when .zip file Could '
+      'throws $UnableToCreateZipFileException when zip file could '
       'not be create for upload',
       () {
-        when(() => gitDir.branches()).thenAnswer((_) => Future.value([]));
+        when(() => gitDir.allBranches()).thenAnswer((_) => Future.value([]));
+        when(() => gitDir.fetch()).thenAnswer(
+          (_) => Future.value(),
+        );
 
         expect(
           () => publishCommand.publishBuilds(

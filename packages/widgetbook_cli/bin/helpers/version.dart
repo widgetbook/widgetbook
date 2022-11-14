@@ -1,1 +1,2 @@
-const String currentVersion = '2.0.3-beta.2';
+// Generated code. Do not modify.
+const packageVersion = '3.0.0-beta.12';

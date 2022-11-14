@@ -55,7 +55,7 @@ class UpgradeCommand extends WidgetbookCommand {
     }
     updateCheckProgress.complete('Checked for updates');
 
-    final isUpToDate = currentVersion == latestVersion;
+    final isUpToDate = packageVersion == latestVersion;
     if (isUpToDate) {
       logger.info('Widgetbook CLI is already at the latest version.');
       return ExitCode.success.code;

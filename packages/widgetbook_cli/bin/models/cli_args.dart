@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'cli_args.freezed.dart';
-part 'cli_args.g.dart';
 
 @freezed
 class CliArgs with _$CliArgs {
