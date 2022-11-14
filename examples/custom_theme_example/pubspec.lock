@@ -224,6 +224,13 @@ packages:
       relative: true
     source: path
     version: "2.4.1"
+  widgetbook_annotation:
+    dependency: "direct main"
+    description:
+      name: widgetbook_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   widgetbook_models:
     dependency: "direct overridden"
     description:
