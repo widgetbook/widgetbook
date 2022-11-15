@@ -37,6 +37,13 @@
             "type": "dart",
         },
         {
+            "name": "Debug custom_widgetbook_example",
+            "cwd": "examples/custom_theme_example",
+            "request": "launch",
+            "program": "lib/main.widgetbook.dart",
+            "type": "dart",
+        },
+        {
             "name": "Profile widgetbook_example",
             "cwd": "examples/widgetbook_example",
             "request": "launch",

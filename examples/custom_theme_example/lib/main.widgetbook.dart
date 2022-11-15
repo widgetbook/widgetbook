@@ -1,6 +1,7 @@
 import 'package:custom_theme_example/app_theme.dart';
 import 'package:custom_theme_example/awesome_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as anno;
 
@@ -16,6 +17,17 @@ AppThemeData themeData = AppThemeData(
 
 class HotReload extends StatelessWidget {
   const HotReload({super.key});
+
+  GoRouter getRouter(Widget child) {
+    return GoRouter(
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (context, state) => child,
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,17 +66,28 @@ class HotReload extends StatelessWidget {
           ],
         )
       ],
-      appBuilder: (context, child) {
-        // This is actually important
-        return AppTheme(
-          data: context.theme(),
-          child: WidgetsApp(
-            // This is not so important
-            color: context.theme<AppThemeData>().color,
-            home: child,
-          ),
-        );
-      },
+      // appBuilder: (context, child) {
+      //   final router = getRouter(child);
+      //   // This is actually important
+      //   // final frameBuilder = context.frameBuilder;
+      //   return
+      //       // frameBuilder.builder(
+      //       //     context,
+      //       AppTheme(
+      //           data: context.theme(),
+      //           child: WidgetsApp.router(
+      //             color: context.theme<AppThemeData>().color,
+      //             builder: (context, childWidget) {
+      //               return childWidget ?? child;
+      //             },
+      //             debugShowCheckedModeBanner: false,
+      //             routeInformationParser: router.routeInformationParser,
+      //             routerDelegate: router.routerDelegate,
+      //           )
+
+      //           // )
+      //           );
+      // },
     );
   }
 }

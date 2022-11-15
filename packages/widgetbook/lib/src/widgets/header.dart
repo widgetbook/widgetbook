@@ -4,9 +4,9 @@ import 'package:widgetbook/src/constants/constants.dart';
 
 class Header extends StatelessWidget {
   const Header({
-    Key? key,
+    super.key,
     required this.appInfo,
-  }) : super(key: key);
+  });
 
   final AppInfo appInfo;
 

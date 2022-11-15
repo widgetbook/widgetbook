@@ -87,7 +87,7 @@ packages:
     source: hosted
     version: "2.2.0"
   go_router:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: go_router
       url: "https://pub.dartlang.org"
@@ -227,9 +227,9 @@ packages:
   widgetbook_annotation:
     dependency: "direct main"
     description:
-      name: widgetbook_annotation
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../../packages/widgetbook_annotation"
+      relative: true
+    source: path
     version: "2.1.0"
   widgetbook_models:
     dependency: "direct overridden"

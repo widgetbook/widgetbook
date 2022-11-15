@@ -6,8 +6,8 @@ import 'package:widgetbook/src/utils/utils.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _SearchBarState createState() => _SearchBarState();

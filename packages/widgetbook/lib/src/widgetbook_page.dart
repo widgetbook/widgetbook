@@ -12,11 +12,11 @@ import 'package:widgetbook/src/workbench/workbench.dart';
 
 class WidgetbookPage extends StatelessWidget {
   const WidgetbookPage({
-    Key? key,
+    super.key,
     required this.disableNavigation,
     required this.disableProperties,
     required this.routerData,
-  }) : super(key: key);
+  });
 
   final bool disableNavigation;
   final bool disableProperties;
