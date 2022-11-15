@@ -9,11 +9,11 @@ class TypographyData {
 
 class AppThemeData {
   final Color color;
-  final TypographyData typography;
+//  final TypographyData typography;
 
   AppThemeData({
     required this.color,
-    required this.typography,
+    //  required this.typography,
   });
 }
 

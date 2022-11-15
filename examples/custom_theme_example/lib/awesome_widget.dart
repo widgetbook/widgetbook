@@ -6,7 +6,7 @@ class AwesomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppTheme.of(context).typography.parameter1;
+    // AppTheme.of(context).typography.parameter1;
     return ColoredBox(
       color: AppTheme.of(context).color,
     );

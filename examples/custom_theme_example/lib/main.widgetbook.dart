@@ -12,7 +12,7 @@ void main() {
 @anno.WidgetbookTheme(name: 'Default')
 AppThemeData themeData = AppThemeData(
   color: Colors.yellow,
-  typography: TypographyData(123),
+  // typography: TypographyData(123),
 );
 
 class HotReload extends StatelessWidget {
@@ -20,6 +20,7 @@ class HotReload extends StatelessWidget {
 
   GoRouter getRouter(Widget child) {
     return GoRouter(
+      
       routes: [
         GoRoute(
           path: '/',
@@ -66,28 +67,25 @@ class HotReload extends StatelessWidget {
           ],
         )
       ],
-      // appBuilder: (context, child) {
-      //   final router = getRouter(child);
-      //   // This is actually important
-      //   // final frameBuilder = context.frameBuilder;
-      //   return
-      //       // frameBuilder.builder(
-      //       //     context,
-      //       AppTheme(
-      //           data: context.theme(),
-      //           child: WidgetsApp.router(
-      //             color: context.theme<AppThemeData>().color,
-      //             builder: (context, childWidget) {
-      //               return childWidget ?? child;
-      //             },
-      //             debugShowCheckedModeBanner: false,
-      //             routeInformationParser: router.routeInformationParser,
-      //             routerDelegate: router.routerDelegate,
-      //           )
-
-      //           // )
-      //           );
-      // },
+      appBuilder: (context, child) {
+       
+        final router = getRouter(child);
+        // This is actually important
+        final frameBuilder = context.frameBuilder;
+        return frameBuilder.builder(
+            context,
+            AppTheme(
+                data: context.theme(),
+                child: WidgetsApp.router(
+                  color: context.theme<AppThemeData>().color,
+                  builder: (context, childWidget) {
+                    return childWidget ?? child;
+                  },
+                  debugShowCheckedModeBanner: false,
+                  routeInformationParser: router.routeInformationParser,
+                  routerDelegate: router.routerDelegate,
+                )));
+      },
     );
   }
 }
