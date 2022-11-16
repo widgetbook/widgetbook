@@ -96,7 +96,9 @@ class HotReload extends StatelessWidget {
                 useCases: [
                   WidgetbookUseCase(
                     name: 'Default',
-                    builder: (context) => const MyApp(),
+                    builder: (context) => const MyHomePage(
+                      title: 'test',
+                    ),
                   )
                 ],
               ),
@@ -107,7 +109,11 @@ class HotReload extends StatelessWidget {
         // still  looking into it
         appBuilder: (context, child) {
           final frameBuilder = context.frameBuilder;
-          return frameBuilder.builder(context, child);
+          final theme = context.customTheme<AppThemeData>();
+          return AppTheme(
+            data: theme,
+            child: frameBuilder.builder(context, child),
+          );
         }
 
         //This Didn't work

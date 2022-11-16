@@ -23,6 +23,13 @@
             "type": "dart"
         },
         {
+            "name": "Debug custom_theme",
+            "cwd": "examples/custom_theme_example",
+            "request": "launch",
+            "program": "lib/main.widgetbook.dart",
+            "type": "dart"
+        },
+        {
             "name": "Debug knobs_example",
             "cwd": "examples/knobs_example",
             "request": "launch",
