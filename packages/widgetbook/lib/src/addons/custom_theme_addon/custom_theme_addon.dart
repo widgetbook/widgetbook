@@ -10,5 +10,5 @@ class CustomThemeAddon<T> extends ThemeAddon<T> {
 }
 
 extension CustomThemeExtension on BuildContext {
-  T theme<T>() => watch<ThemeProvider<T>>().value.data;
+  T customTheme<T>() => watch<ThemeProvider<T>>().value.data;
 }

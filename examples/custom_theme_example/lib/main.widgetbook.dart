@@ -1,15 +1,21 @@
 import 'package:custom_theme_example/app_theme.dart';
 import 'package:custom_theme_example/awesome_widget.dart';
+import 'package:custom_theme_example/main.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as anno;
 
 void main() {
   runApp(const HotReload());
 }
 
-// @anno.WidgetbookTheme(name: 'Default')
+@anno.WidgetbookTheme(name: 'Default')
 AppThemeData themeData = AppThemeData(
+  color: Colors.blue,
+);
+@anno.WidgetbookTheme(name: 'Appthem2')
+AppThemeData themeData2 = AppThemeData(
   color: Colors.yellow,
 );
 
@@ -33,17 +39,41 @@ class HotReload extends StatelessWidget {
       data: themeData,
       name: 'App Theme',
     );
-
+    final widgetbookTheme2 = WidgetbookTheme(
+      data: themeData2,
+      name: 'App Theme2',
+    );
+    final devices = [
+      Apple.iPhone11,
+      Apple.iPhone12,
+      const Device.special(
+        name: 'Test',
+        resolution: Resolution(
+          nativeSize: DeviceSize(width: 400, height: 400),
+          scaleFactor: 1,
+        ),
+      ),
+    ];
+    final deviceFrameBuilder = DeviceFrameBuilder(
+      devices: devices,
+    );
+    final activeFrameBuilder = WidgetbookFrameBuilder(
+      devices: devices,
+    );
     return Widgetbook(
         addons: [
-          CustomThemeAddon<AppThemeData>(
-            themeSetting: CustomThemeSetting(
-              themes: [
-                widgetbookTheme,
+          DeviceAddon(
+            data: DeviceSelection(
+              activeFrameBuilder: activeFrameBuilder,
+              frameBuilders: [
+                activeFrameBuilder,
+                deviceFrameBuilder,
               ],
-              activeThemes: {
-                widgetbookTheme,
-              },
+            ),
+          ),
+          CustomThemeAddon<AppThemeData>(
+            themeSetting: CustomThemeSetting.firstAsSelected(
+              themes: [widgetbookTheme, widgetbookTheme2],
             ),
           ),
         ],
@@ -61,12 +91,24 @@ class HotReload extends StatelessWidget {
                   )
                 ],
               ),
+              WidgetbookComponent(
+                name: 'App Launch Screen',
+                useCases: [
+                  WidgetbookUseCase(
+                    name: 'Default',
+                    builder: (context) => const MyApp(),
+                  )
+                ],
+              ),
             ],
           )
         ],
         //THis did work but the theme is not injected in the widget tree
         // still  looking into it
-        appBuilder: (context, child) => child
+        appBuilder: (context, child) {
+          final frameBuilder = context.frameBuilder;
+          return frameBuilder.builder(context, child);
+        }
 
         //This Didn't work
         //We should investigate why.
