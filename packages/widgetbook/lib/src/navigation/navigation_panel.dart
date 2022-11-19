@@ -5,6 +5,7 @@ import 'package:widgetbook/src/models/organizers/organizers.dart';
 import 'package:widgetbook/src/widgets/expanders/expander_row.dart';
 import 'package:widgetbook/src/widgets/header.dart';
 import 'package:widgetbook/src/widgets/search_bar.dart';
+import 'package:widgetbook/src/widgets/sorters/sorter_row.dart';
 import 'package:widgetbook/src/widgets/tiles/category_tile.dart';
 
 class NavigationPanel extends StatefulWidget {
@@ -51,8 +52,9 @@ class _NavigationPanelState extends State<NavigationPanel> {
             height: 16,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              const SorterRow(),
               ExpanderRow.large(
                 organizers: widget.categories,
               ),
