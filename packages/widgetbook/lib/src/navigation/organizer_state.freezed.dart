@@ -21,6 +21,7 @@ mixin _$OrganizerState {
   List<WidgetbookCategory> get filteredCategories =>
       throw _privateConstructorUsedError;
   String get searchTerm => throw _privateConstructorUsedError;
+  Sorting? get sorting => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $OrganizerStateCopyWith<OrganizerState> get copyWith =>
@@ -35,7 +36,8 @@ abstract class $OrganizerStateCopyWith<$Res> {
   $Res call(
       {List<WidgetbookCategory> allCategories,
       List<WidgetbookCategory> filteredCategories,
-      String searchTerm});
+      String searchTerm,
+      Sorting? sorting});
 }
 
 /// @nodoc
@@ -52,6 +54,7 @@ class _$OrganizerStateCopyWithImpl<$Res>
     Object? allCategories = freezed,
     Object? filteredCategories = freezed,
     Object? searchTerm = freezed,
+    Object? sorting = freezed,
   }) {
     return _then(_value.copyWith(
       allCategories: allCategories == freezed
@@ -66,6 +69,10 @@ class _$OrganizerStateCopyWithImpl<$Res>
           ? _value.searchTerm
           : searchTerm // ignore: cast_nullable_to_non_nullable
               as String,
+      sorting: sorting == freezed
+          ? _value.sorting
+          : sorting // ignore: cast_nullable_to_non_nullable
+              as Sorting?,
     ));
   }
 }
@@ -80,7 +87,8 @@ abstract class _$$_OrganizerStateCopyWith<$Res>
   $Res call(
       {List<WidgetbookCategory> allCategories,
       List<WidgetbookCategory> filteredCategories,
-      String searchTerm});
+      String searchTerm,
+      Sorting? sorting});
 }
 
 /// @nodoc
@@ -99,6 +107,7 @@ class __$$_OrganizerStateCopyWithImpl<$Res>
     Object? allCategories = freezed,
     Object? filteredCategories = freezed,
     Object? searchTerm = freezed,
+    Object? sorting = freezed,
   }) {
     return _then(_$_OrganizerState(
       allCategories: allCategories == freezed
@@ -113,6 +122,10 @@ class __$$_OrganizerStateCopyWithImpl<$Res>
           ? _value.searchTerm
           : searchTerm // ignore: cast_nullable_to_non_nullable
               as String,
+      sorting: sorting == freezed
+          ? _value.sorting
+          : sorting // ignore: cast_nullable_to_non_nullable
+              as Sorting?,
     ));
   }
 }
@@ -123,7 +136,8 @@ class _$_OrganizerState implements _OrganizerState {
   _$_OrganizerState(
       {required final List<WidgetbookCategory> allCategories,
       required final List<WidgetbookCategory> filteredCategories,
-      required this.searchTerm})
+      required this.searchTerm,
+      this.sorting})
       : _allCategories = allCategories,
         _filteredCategories = filteredCategories;
 
@@ -143,10 +157,12 @@ class _$_OrganizerState implements _OrganizerState {
 
   @override
   final String searchTerm;
+  @override
+  final Sorting? sorting;
 
   @override
   String toString() {
-    return 'OrganizerState(allCategories: $allCategories, filteredCategories: $filteredCategories, searchTerm: $searchTerm)';
+    return 'OrganizerState(allCategories: $allCategories, filteredCategories: $filteredCategories, searchTerm: $searchTerm, sorting: $sorting)';
   }
 
   @override
@@ -159,7 +175,8 @@ class _$_OrganizerState implements _OrganizerState {
             const DeepCollectionEquality()
                 .equals(other._filteredCategories, _filteredCategories) &&
             const DeepCollectionEquality()
-                .equals(other.searchTerm, searchTerm));
+                .equals(other.searchTerm, searchTerm) &&
+            const DeepCollectionEquality().equals(other.sorting, sorting));
   }
 
   @override
@@ -167,7 +184,8 @@ class _$_OrganizerState implements _OrganizerState {
       runtimeType,
       const DeepCollectionEquality().hash(_allCategories),
       const DeepCollectionEquality().hash(_filteredCategories),
-      const DeepCollectionEquality().hash(searchTerm));
+      const DeepCollectionEquality().hash(searchTerm),
+      const DeepCollectionEquality().hash(sorting));
 
   @JsonKey(ignore: true)
   @override
@@ -179,7 +197,8 @@ abstract class _OrganizerState implements OrganizerState {
   factory _OrganizerState(
       {required final List<WidgetbookCategory> allCategories,
       required final List<WidgetbookCategory> filteredCategories,
-      required final String searchTerm}) = _$_OrganizerState;
+      required final String searchTerm,
+      final Sorting? sorting}) = _$_OrganizerState;
 
   @override
   List<WidgetbookCategory> get allCategories =>
@@ -189,6 +208,8 @@ abstract class _OrganizerState implements OrganizerState {
       throw _privateConstructorUsedError;
   @override
   String get searchTerm => throw _privateConstructorUsedError;
+  @override
+  Sorting? get sorting => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_OrganizerStateCopyWith<_$_OrganizerState> get copyWith =>

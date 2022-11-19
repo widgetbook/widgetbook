@@ -3,6 +3,7 @@ import 'package:widgetbook/src/models/organizers/organizer_helper/organizer_help
 import 'package:widgetbook/src/navigation/organizer_state.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/services/filter_service.dart';
+import 'package:widgetbook/src/services/sort_service.dart';
 import 'package:widgetbook/src/state_change_notifier.dart';
 
 class OrganizerProvider extends StateChangeNotifier<OrganizerState> {
@@ -10,10 +11,12 @@ class OrganizerProvider extends StateChangeNotifier<OrganizerState> {
     required OrganizerState state,
     required this.storyRepository,
     this.filterService = const FilterService(),
+    this.sortService = const SortService(),
   }) : super(state: state);
 
   final StoryRepository storyRepository;
   final FilterService filterService;
+  final SortService sortService;
 
   void openStory(WidgetbookUseCase? story) {
     if (story == null) {
@@ -76,21 +79,57 @@ class OrganizerProvider extends StateChangeNotifier<OrganizerState> {
   }
 
   void resetFilter() {
-    state = OrganizerState.unfiltered(
-      categories: state.allCategories,
+    _applySortingAndFiltering(
+      searchTerm: '',
+      sorting: state.sorting,
     );
   }
 
   void filter(String searchTerm) {
-    final categories = filterService.filter(
-      searchTerm,
-      state.allCategories,
+    _applySortingAndFiltering(
+      searchTerm: searchTerm,
+      sorting: state.sorting,
     );
+  }
 
-    state = OrganizerState(
-      allCategories: state.allCategories,
+  void sort(Sorting? sorting) {
+    _applySortingAndFiltering(
+      searchTerm: state.searchTerm,
+      sorting: sorting,
+    );
+  }
+
+  void resetSort() {
+    _applySortingAndFiltering(
+      searchTerm: state.searchTerm,
+      sorting: null,
+    );
+  }
+
+  void _applySortingAndFiltering({
+    required String searchTerm,
+    required Sorting? sorting,
+  }) {
+    var categories = state.allCategories;
+
+    if (searchTerm.isNotEmpty) {
+      categories = filterService.filter(
+        searchTerm,
+        categories,
+      );
+    }
+
+    if (sorting != null) {
+      categories = sortService.sort(
+        categories,
+        sorting,
+      );
+    }
+
+    state = state.copyWith(
       filteredCategories: categories,
       searchTerm: searchTerm,
+      sorting: sorting,
     );
   }
 

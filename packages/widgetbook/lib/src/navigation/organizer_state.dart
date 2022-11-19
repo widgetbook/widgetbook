@@ -9,6 +9,7 @@ class OrganizerState with _$OrganizerState {
     required List<WidgetbookCategory> allCategories,
     required List<WidgetbookCategory> filteredCategories,
     required String searchTerm,
+    Sorting? sorting,
   }) = _OrganizerState;
 
   factory OrganizerState.unfiltered({
