@@ -24,7 +24,7 @@ class ResetSortButton extends StatelessWidget {
             size: size,
           ),
         ),
-        onTap: () => context.read<OrganizerProvider>().sort(null),
+        onTap: () => context.read<OrganizerProvider>().resetSort(),
       ),
     );
   }

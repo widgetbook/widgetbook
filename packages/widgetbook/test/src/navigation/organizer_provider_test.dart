@@ -6,8 +6,9 @@ import 'package:widgetbook/src/navigation/organizer_provider.dart';
 import 'package:widgetbook/src/navigation/organizer_state.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
 import 'package:widgetbook/src/services/filter_service.dart';
+import 'package:widgetbook/src/services/sort_service.dart';
 
-import '../../mocks/filter_service_mock.dart';
+import '../../mocks/mocks.dart';
 
 void main() {
   late StoryRepository storyRepository;
@@ -526,6 +527,160 @@ void main() {
           );
         },
       );
+
+      test('invokes $SortService when sort is called', () {
+        final category1 = WidgetbookCategory(name: 'Category 1');
+        final category2 = WidgetbookCategory(name: 'Category 2');
+
+        final sortService = SortServiceMock();
+        when(() => sortService.sort([category2, category1], Sorting.asc))
+            .thenReturn([category1, category2]);
+
+        final provider = OrganizerProvider(
+          state: OrganizerState.unfiltered(categories: [category2, category1]),
+          storyRepository: storyRepository,
+          sortService: sortService,
+        )..sort(Sorting.asc);
+
+        verify(() => sortService.sort([category2, category1], Sorting.asc))
+            .called(1);
+
+        expect(
+          provider.state,
+          equals(
+            OrganizerState(
+              allCategories: [category2, category1],
+              filteredCategories: [category1, category2],
+              searchTerm: '',
+              sorting: Sorting.asc,
+            ),
+          ),
+        );
+      });
+
+      test('resets sorting when resetSort is called', () {
+        final category1 = WidgetbookCategory(name: 'Category 1');
+        final category2 = WidgetbookCategory(name: 'Category 2');
+
+        final sortService = SortServiceMock();
+
+        final provider = OrganizerProvider(
+          state: OrganizerState(
+            allCategories: [category2, category1],
+            filteredCategories: [category1, category2],
+            searchTerm: '',
+            sorting: Sorting.asc,
+          ),
+          storyRepository: storyRepository,
+          sortService: sortService,
+        )..resetSort();
+
+        verifyZeroInteractions(sortService);
+        expect(
+          provider.state,
+          equals(
+            OrganizerState(
+              allCategories: [category2, category1],
+              filteredCategories: [category2, category1],
+              searchTerm: '',
+            ),
+          ),
+        );
+      });
+
+      test('keeps items sorted when new filter is applied', () {
+        final category1 = WidgetbookCategory(name: 'Category 1');
+        final category2 = WidgetbookCategory(name: 'Category 2');
+        final category3 = WidgetbookCategory(name: 'Category 3');
+        const tSearchTerm = 'filter out category2 at all costs';
+        final tAllCategories = [category3, category2, category1];
+        final tFilteredCategories = [category3, category1];
+        final expectedFilteredCategories = [category1, category3];
+
+        final filterService = FilterServiceMock();
+        when(() => filterService.filter(tSearchTerm, tAllCategories))
+            .thenReturn(tFilteredCategories);
+
+        final sortService = SortServiceMock();
+        when(() => sortService.sort(tFilteredCategories, Sorting.asc))
+            .thenReturn(expectedFilteredCategories);
+
+        final provider = OrganizerProvider(
+          state: OrganizerState(
+            allCategories: tAllCategories,
+            filteredCategories: tAllCategories.reversed.toList(),
+            searchTerm: '',
+            sorting: Sorting.asc,
+          ),
+          storyRepository: storyRepository,
+          sortService: sortService,
+          filterService: filterService,
+        )..filter(tSearchTerm);
+
+        verify(() => filterService.filter(tSearchTerm, tAllCategories))
+            .called(1);
+        verify(() => sortService.sort(tFilteredCategories, Sorting.asc))
+            .called(1);
+
+        expect(
+          provider.state,
+          equals(
+            OrganizerState(
+              allCategories: tAllCategories,
+              filteredCategories: expectedFilteredCategories,
+              searchTerm: tSearchTerm,
+              sorting: Sorting.asc,
+            ),
+          ),
+        );
+      });
+
+      test('keeps items filtered when new sorting is applied', () {
+        final category1 = WidgetbookCategory(name: 'Category 1');
+        final category2 = WidgetbookCategory(name: 'Category 2');
+        final category3 = WidgetbookCategory(name: 'Category 3');
+        const tSearchTerm = "doesn't really matter";
+        final tAllCategories = [category3, category2, category1];
+        final tFilteredCategories = [category3, category1];
+        final expectedFilteredCategories = [category1, category3];
+
+        final filterService = FilterServiceMock();
+        when(() => filterService.filter(tSearchTerm, tAllCategories))
+            .thenReturn(tFilteredCategories);
+
+        final sortService = SortServiceMock();
+        when(() => sortService.sort(tFilteredCategories, Sorting.asc))
+            .thenReturn(expectedFilteredCategories);
+
+        final provider = OrganizerProvider(
+          state: OrganizerState(
+            allCategories: tAllCategories,
+            filteredCategories: tFilteredCategories,
+            searchTerm: tSearchTerm,
+            sorting: Sorting.desc,
+          ),
+          storyRepository: storyRepository,
+          sortService: sortService,
+          filterService: filterService,
+        )..sort(Sorting.asc);
+
+        verify(() => filterService.filter(tSearchTerm, tAllCategories))
+            .called(1);
+        verify(() => sortService.sort(tFilteredCategories, Sorting.asc))
+            .called(1);
+
+        expect(
+          provider.state,
+          equals(
+            OrganizerState(
+              allCategories: tAllCategories,
+              filteredCategories: expectedFilteredCategories,
+              searchTerm: tSearchTerm,
+              sorting: Sorting.asc,
+            ),
+          ),
+        );
+      });
     },
   );
 }
