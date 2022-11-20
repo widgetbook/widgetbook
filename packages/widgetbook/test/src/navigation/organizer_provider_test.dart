@@ -46,7 +46,7 @@ void main() {
           );
 
           final provider = OrganizerProvider(
-            state: OrganizerState.unfiltered(
+            state: OrganizerState.initial(
               categories: [
                 WidgetbookCategory(
                   name: 'Category 1',
@@ -60,7 +60,7 @@ void main() {
           expect(
             provider.state,
             equals(
-              OrganizerState.unfiltered(
+              OrganizerState.initial(
                 categories: [
                   WidgetbookCategory(
                     name: 'Category 1',
@@ -93,7 +93,7 @@ void main() {
           );
 
           final provider = OrganizerProvider(
-            state: OrganizerState.unfiltered(
+            state: OrganizerState.initial(
               categories: [
                 widgetbookCategory,
               ],
@@ -107,7 +107,7 @@ void main() {
           expect(
             provider.state,
             equals(
-              OrganizerState.unfiltered(
+              OrganizerState.initial(
                 categories: [
                   WidgetbookCategory(
                     name: 'Category 1',
@@ -164,7 +164,7 @@ void main() {
           );
 
           final provider = OrganizerProvider(
-            state: OrganizerState.unfiltered(
+            state: OrganizerState.initial(
               categories: [widgetCategory],
             ),
             storyRepository: storyRepository,
@@ -176,7 +176,7 @@ void main() {
           expect(
             provider.state,
             equals(
-              OrganizerState.unfiltered(
+              OrganizerState.initial(
                 categories: [
                   WidgetbookCategory(
                     name: 'Category 1',
@@ -264,7 +264,7 @@ void main() {
           );
 
           final provider = OrganizerProvider(
-            state: OrganizerState.unfiltered(
+            state: OrganizerState.initial(
               categories: [widgetCategory],
             ),
             storyRepository: storyRepository,
@@ -276,7 +276,7 @@ void main() {
           expect(
             provider.state,
             equals(
-              OrganizerState.unfiltered(
+              OrganizerState.initial(
                 categories: [
                   WidgetbookCategory(
                     name: 'Category 1',
@@ -323,7 +323,7 @@ void main() {
         'expands $WidgetbookComponent when the selected story changes',
         () {
           final provider = OrganizerProvider(
-            state: OrganizerState.unfiltered(
+            state: OrganizerState.initial(
               categories: [
                 WidgetbookCategory(
                   name: 'Category 1',
@@ -371,7 +371,7 @@ void main() {
           expect(
             provider.state,
             equals(
-              OrganizerState.unfiltered(
+              OrganizerState.initial(
                 categories: [
                   WidgetbookCategory(
                     name: 'Category 1',
@@ -431,10 +431,10 @@ void main() {
 
           final provider = OrganizerProvider(
             state: OrganizerState(
-              allCategories: [
+              initialCategories: [
                 category,
               ],
-              filteredCategories: [
+              categories: [
                 filteredCategory,
               ],
               searchTerm: 'does not really matter',
@@ -445,7 +445,7 @@ void main() {
           expect(
             provider.state,
             equals(
-              OrganizerState.unfiltered(
+              OrganizerState.initial(
                 categories: [
                   category,
                 ],
@@ -495,7 +495,7 @@ void main() {
           );
 
           final provider = OrganizerProvider(
-            state: OrganizerState.unfiltered(
+            state: OrganizerState.initial(
               categories: [
                 category,
               ],
@@ -517,10 +517,10 @@ void main() {
             provider.state,
             equals(
               OrganizerState(
-                allCategories: [
+                initialCategories: [
                   category,
                 ],
-                filteredCategories: [category],
+                categories: [category],
                 searchTerm: searchTerm,
               ),
             ),
@@ -537,7 +537,7 @@ void main() {
             .thenReturn([category1, category2]);
 
         final provider = OrganizerProvider(
-          state: OrganizerState.unfiltered(categories: [category2, category1]),
+          state: OrganizerState.initial(categories: [category2, category1]),
           storyRepository: storyRepository,
           sortService: sortService,
         )..sort(Sorting.asc);
@@ -549,8 +549,8 @@ void main() {
           provider.state,
           equals(
             OrganizerState(
-              allCategories: [category2, category1],
-              filteredCategories: [category1, category2],
+              initialCategories: [category2, category1],
+              categories: [category1, category2],
               searchTerm: '',
               sorting: Sorting.asc,
             ),
@@ -566,8 +566,8 @@ void main() {
 
         final provider = OrganizerProvider(
           state: OrganizerState(
-            allCategories: [category2, category1],
-            filteredCategories: [category1, category2],
+            initialCategories: [category2, category1],
+            categories: [category1, category2],
             searchTerm: '',
             sorting: Sorting.asc,
           ),
@@ -580,8 +580,8 @@ void main() {
           provider.state,
           equals(
             OrganizerState(
-              allCategories: [category2, category1],
-              filteredCategories: [category2, category1],
+              initialCategories: [category2, category1],
+              categories: [category2, category1],
               searchTerm: '',
             ),
           ),
@@ -607,8 +607,8 @@ void main() {
 
         final provider = OrganizerProvider(
           state: OrganizerState(
-            allCategories: tAllCategories,
-            filteredCategories: tAllCategories.reversed.toList(),
+            initialCategories: tAllCategories,
+            categories: tAllCategories.reversed.toList(),
             searchTerm: '',
             sorting: Sorting.asc,
           ),
@@ -626,8 +626,8 @@ void main() {
           provider.state,
           equals(
             OrganizerState(
-              allCategories: tAllCategories,
-              filteredCategories: expectedFilteredCategories,
+              initialCategories: tAllCategories,
+              categories: expectedFilteredCategories,
               searchTerm: tSearchTerm,
               sorting: Sorting.asc,
             ),
@@ -654,8 +654,8 @@ void main() {
 
         final provider = OrganizerProvider(
           state: OrganizerState(
-            allCategories: tAllCategories,
-            filteredCategories: tFilteredCategories,
+            initialCategories: tAllCategories,
+            categories: tFilteredCategories,
             searchTerm: tSearchTerm,
             sorting: Sorting.desc,
           ),
@@ -673,8 +673,8 @@ void main() {
           provider.state,
           equals(
             OrganizerState(
-              allCategories: tAllCategories,
-              filteredCategories: expectedFilteredCategories,
+              initialCategories: tAllCategories,
+              categories: expectedFilteredCategories,
               searchTerm: tSearchTerm,
               sorting: Sorting.asc,
             ),

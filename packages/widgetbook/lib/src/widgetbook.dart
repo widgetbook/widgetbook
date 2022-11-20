@@ -279,7 +279,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   @override
   void initState() {
     organizerProvider = OrganizerProvider(
-      state: OrganizerState.unfiltered(categories: widget.categories),
+      state: OrganizerState.initial(categories: widget.categories),
       storyRepository: storyRepository,
     )..hotReload(widget.categories);
     previewProvider = PreviewProvider(

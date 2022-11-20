@@ -32,7 +32,7 @@ class WidgetbookPage<CustomTheme> extends StatelessWidget {
               isRightDisabled: disableProperties,
               leftChild: NavigationPanel(
                 appInfo: appInfo,
-                categories: state.filteredCategories,
+                categories: state.categories,
               ),
               centerChild: Workbench<CustomTheme>(),
               rightChild: SettingsPanel<CustomTheme>(),

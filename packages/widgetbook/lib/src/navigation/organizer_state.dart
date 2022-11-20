@@ -6,18 +6,20 @@ part 'organizer_state.freezed.dart';
 @freezed
 class OrganizerState with _$OrganizerState {
   factory OrganizerState({
-    required List<WidgetbookCategory> allCategories,
-    required List<WidgetbookCategory> filteredCategories,
+    /// The categories before any filter or sorting has been applied
+    required List<WidgetbookCategory> initialCategories,
+    /// The categories that are filtered and sorted.
+    required List<WidgetbookCategory> categories,
     required String searchTerm,
     Sorting? sorting,
   }) = _OrganizerState;
 
-  factory OrganizerState.unfiltered({
+  factory OrganizerState.initial({
     required List<WidgetbookCategory> categories,
   }) {
     return OrganizerState(
-      allCategories: categories,
-      filteredCategories: categories,
+      initialCategories: categories,
+      categories: categories,
       searchTerm: '',
     );
   }

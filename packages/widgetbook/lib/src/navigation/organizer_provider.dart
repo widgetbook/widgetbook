@@ -31,7 +31,7 @@ class OrganizerProvider extends StateChangeNotifier<OrganizerState> {
 
   void _updateFolders(List<WidgetbookCategory> categories) {
     final oldFolders = FolderHelper.getAllFoldersFromCategories(
-      state.allCategories,
+      state.initialCategories,
     );
     final newFolders = FolderHelper.getAllFoldersFromCategories(
       categories,
@@ -50,7 +50,7 @@ class OrganizerProvider extends StateChangeNotifier<OrganizerState> {
 
   void _updateWidgets(List<WidgetbookCategory> categories) {
     final oldWidgets = WidgetHelper.getAllWidgetElementsFromCategories(
-      state.allCategories,
+      state.initialCategories,
     );
     final newWidgets = WidgetHelper.getAllWidgetElementsFromCategories(
       categories,
@@ -70,7 +70,7 @@ class OrganizerProvider extends StateChangeNotifier<OrganizerState> {
   void hotReload(List<WidgetbookCategory> categories) {
     _updateFolders(categories);
     _updateWidgets(categories);
-    state = OrganizerState.unfiltered(categories: categories);
+    state = OrganizerState.initial(categories: categories);
 
     final stories = StoryHelper.getAllStoriesFromCategories(categories);
     storyRepository
@@ -110,7 +110,7 @@ class OrganizerProvider extends StateChangeNotifier<OrganizerState> {
     required String searchTerm,
     required Sorting? sorting,
   }) {
-    var categories = state.allCategories;
+    var categories = state.initialCategories;
 
     if (searchTerm.isNotEmpty) {
       categories = filterService.filter(
@@ -127,7 +127,7 @@ class OrganizerProvider extends StateChangeNotifier<OrganizerState> {
     }
 
     state = state.copyWith(
-      filteredCategories: categories,
+      categories: categories,
       searchTerm: searchTerm,
       sorting: sorting,
     );

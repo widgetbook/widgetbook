@@ -48,7 +48,7 @@ void main() {
         'behaves correctly',
         (WidgetTester tester) async {
           final organizerProvider = OrganizerProvider(
-            state: OrganizerState.unfiltered(
+            state: OrganizerState.initial(
               categories: [],
             ),
             storyRepository: StoryRepository(),

@@ -16,10 +16,12 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$OrganizerState {
-  List<WidgetbookCategory> get allCategories =>
+  /// The categories before any filter or sorting has been applied
+  List<WidgetbookCategory> get initialCategories =>
       throw _privateConstructorUsedError;
-  List<WidgetbookCategory> get filteredCategories =>
-      throw _privateConstructorUsedError;
+
+  /// The categories that are filtered and sorted.
+  List<WidgetbookCategory> get categories => throw _privateConstructorUsedError;
   String get searchTerm => throw _privateConstructorUsedError;
   Sorting? get sorting => throw _privateConstructorUsedError;
 
@@ -34,8 +36,8 @@ abstract class $OrganizerStateCopyWith<$Res> {
           OrganizerState value, $Res Function(OrganizerState) then) =
       _$OrganizerStateCopyWithImpl<$Res>;
   $Res call(
-      {List<WidgetbookCategory> allCategories,
-      List<WidgetbookCategory> filteredCategories,
+      {List<WidgetbookCategory> initialCategories,
+      List<WidgetbookCategory> categories,
       String searchTerm,
       Sorting? sorting});
 }
@@ -51,19 +53,19 @@ class _$OrganizerStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? allCategories = freezed,
-    Object? filteredCategories = freezed,
+    Object? initialCategories = freezed,
+    Object? categories = freezed,
     Object? searchTerm = freezed,
     Object? sorting = freezed,
   }) {
     return _then(_value.copyWith(
-      allCategories: allCategories == freezed
-          ? _value.allCategories
-          : allCategories // ignore: cast_nullable_to_non_nullable
+      initialCategories: initialCategories == freezed
+          ? _value.initialCategories
+          : initialCategories // ignore: cast_nullable_to_non_nullable
               as List<WidgetbookCategory>,
-      filteredCategories: filteredCategories == freezed
-          ? _value.filteredCategories
-          : filteredCategories // ignore: cast_nullable_to_non_nullable
+      categories: categories == freezed
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
               as List<WidgetbookCategory>,
       searchTerm: searchTerm == freezed
           ? _value.searchTerm
@@ -85,8 +87,8 @@ abstract class _$$_OrganizerStateCopyWith<$Res>
       __$$_OrganizerStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {List<WidgetbookCategory> allCategories,
-      List<WidgetbookCategory> filteredCategories,
+      {List<WidgetbookCategory> initialCategories,
+      List<WidgetbookCategory> categories,
       String searchTerm,
       Sorting? sorting});
 }
@@ -104,19 +106,19 @@ class __$$_OrganizerStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? allCategories = freezed,
-    Object? filteredCategories = freezed,
+    Object? initialCategories = freezed,
+    Object? categories = freezed,
     Object? searchTerm = freezed,
     Object? sorting = freezed,
   }) {
     return _then(_$_OrganizerState(
-      allCategories: allCategories == freezed
-          ? _value._allCategories
-          : allCategories // ignore: cast_nullable_to_non_nullable
+      initialCategories: initialCategories == freezed
+          ? _value._initialCategories
+          : initialCategories // ignore: cast_nullable_to_non_nullable
               as List<WidgetbookCategory>,
-      filteredCategories: filteredCategories == freezed
-          ? _value._filteredCategories
-          : filteredCategories // ignore: cast_nullable_to_non_nullable
+      categories: categories == freezed
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
               as List<WidgetbookCategory>,
       searchTerm: searchTerm == freezed
           ? _value.searchTerm
@@ -134,25 +136,31 @@ class __$$_OrganizerStateCopyWithImpl<$Res>
 
 class _$_OrganizerState implements _OrganizerState {
   _$_OrganizerState(
-      {required final List<WidgetbookCategory> allCategories,
-      required final List<WidgetbookCategory> filteredCategories,
+      {required final List<WidgetbookCategory> initialCategories,
+      required final List<WidgetbookCategory> categories,
       required this.searchTerm,
       this.sorting})
-      : _allCategories = allCategories,
-        _filteredCategories = filteredCategories;
+      : _initialCategories = initialCategories,
+        _categories = categories;
 
-  final List<WidgetbookCategory> _allCategories;
+  /// The categories before any filter or sorting has been applied
+  final List<WidgetbookCategory> _initialCategories;
+
+  /// The categories before any filter or sorting has been applied
   @override
-  List<WidgetbookCategory> get allCategories {
+  List<WidgetbookCategory> get initialCategories {
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_allCategories);
+    return EqualUnmodifiableListView(_initialCategories);
   }
 
-  final List<WidgetbookCategory> _filteredCategories;
+  /// The categories that are filtered and sorted.
+  final List<WidgetbookCategory> _categories;
+
+  /// The categories that are filtered and sorted.
   @override
-  List<WidgetbookCategory> get filteredCategories {
+  List<WidgetbookCategory> get categories {
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_filteredCategories);
+    return EqualUnmodifiableListView(_categories);
   }
 
   @override
@@ -162,7 +170,7 @@ class _$_OrganizerState implements _OrganizerState {
 
   @override
   String toString() {
-    return 'OrganizerState(allCategories: $allCategories, filteredCategories: $filteredCategories, searchTerm: $searchTerm, sorting: $sorting)';
+    return 'OrganizerState(initialCategories: $initialCategories, categories: $categories, searchTerm: $searchTerm, sorting: $sorting)';
   }
 
   @override
@@ -171,9 +179,9 @@ class _$_OrganizerState implements _OrganizerState {
         (other.runtimeType == runtimeType &&
             other is _$_OrganizerState &&
             const DeepCollectionEquality()
-                .equals(other._allCategories, _allCategories) &&
+                .equals(other._initialCategories, _initialCategories) &&
             const DeepCollectionEquality()
-                .equals(other._filteredCategories, _filteredCategories) &&
+                .equals(other._categories, _categories) &&
             const DeepCollectionEquality()
                 .equals(other.searchTerm, searchTerm) &&
             const DeepCollectionEquality().equals(other.sorting, sorting));
@@ -182,8 +190,8 @@ class _$_OrganizerState implements _OrganizerState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_allCategories),
-      const DeepCollectionEquality().hash(_filteredCategories),
+      const DeepCollectionEquality().hash(_initialCategories),
+      const DeepCollectionEquality().hash(_categories),
       const DeepCollectionEquality().hash(searchTerm),
       const DeepCollectionEquality().hash(sorting));
 
@@ -195,17 +203,20 @@ class _$_OrganizerState implements _OrganizerState {
 
 abstract class _OrganizerState implements OrganizerState {
   factory _OrganizerState(
-      {required final List<WidgetbookCategory> allCategories,
-      required final List<WidgetbookCategory> filteredCategories,
+      {required final List<WidgetbookCategory> initialCategories,
+      required final List<WidgetbookCategory> categories,
       required final String searchTerm,
       final Sorting? sorting}) = _$_OrganizerState;
 
   @override
-  List<WidgetbookCategory> get allCategories =>
+
+  /// The categories before any filter or sorting has been applied
+  List<WidgetbookCategory> get initialCategories =>
       throw _privateConstructorUsedError;
   @override
-  List<WidgetbookCategory> get filteredCategories =>
-      throw _privateConstructorUsedError;
+
+  /// The categories that are filtered and sorted.
+  List<WidgetbookCategory> get categories => throw _privateConstructorUsedError;
   @override
   String get searchTerm => throw _privateConstructorUsedError;
   @override
