@@ -3,6 +3,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 export './cupertino_theme_addon/addon.dart';
 export './cupertino_theme_addon/cupertino_theme_addon.dart';
+export './custom_theme_addon/addon.dart';
 export './device_addon/device_addon.dart';
 export './localization_addon/addon.dart';
 export './material_theme_addon/addon.dart';
