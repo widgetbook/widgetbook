@@ -1,4 +1,4 @@
-## 3.0.0-beta.12
+## 3.0.0-beta.13
 
 - feat: add command for `publish`
 
