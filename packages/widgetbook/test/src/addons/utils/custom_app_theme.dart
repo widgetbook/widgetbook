@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 class AppThemeData {
   AppThemeData({
@@ -27,3 +27,15 @@ class AppTheme extends InheritedWidget {
     return data != oldWidget.data;
   }
 }
+
+const colorBlue = Colors.blue;
+final customTheme = WidgetbookTheme<AppThemeData>(
+  name: 'Blue',
+  data: AppThemeData(color: colorBlue),
+);
+
+const colorYellow = Colors.yellow;
+final customTheme2 = WidgetbookTheme<AppThemeData>(
+  name: 'Yellow',
+  data: AppThemeData(color: colorYellow),
+);

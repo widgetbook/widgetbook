@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/addons/addons.dart';
 import 'package:widgetbook/src/addons/theme_addon/theme_selection_provider.dart';
+
 import 'package:widgetbook/src/workbench/renderer.dart';
 
 import 'utils/custom_app_theme.dart';
-import 'utils/custom_widget_wrapper.dart';
+import 'utils/default_theme_wrapper.dart';
+import 'utils/material_app_theme.dart';
 
 void main() {
   late Renderer sut;
@@ -14,19 +15,9 @@ void main() {
   setUpAll(() {
     sut = Renderer(
       key: rendererKey,
-      appBuilder: (context, child) {
-        final frameBuilder = context.frameBuilder;
-        final theme = context.theme<AppThemeData>();
-        return AppTheme(
-          data: theme,
-          child: frameBuilder.builder(
-            context,
-            child,
-          ),
-        );
-      },
+      appBuilder: materialAppBuilder,
       useCaseBuilder: (context) => Scaffold(
-        backgroundColor: AppTheme.of(context).color,
+        backgroundColor: Theme.of(context).primaryColor,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -46,8 +37,11 @@ void main() {
       'renders correctly',
       (WidgetTester tester) async {
         await tester.pumpWidget(
-          customAddOnProviderWrapper(
+          addOnProviderWrapper<ThemeData>(
             child: sut,
+            themeAddon: materialThemeAddon,
+            themeSetting: materialThemeSetting,
+            theme: blueMaterialWidgetbookTheme,
           ),
         );
 
@@ -58,8 +52,11 @@ void main() {
       'renders one Text Widget',
       (WidgetTester tester) async {
         await tester.pumpWidget(
-          customAddOnProviderWrapper(
+          addOnProviderWrapper<ThemeData>(
             child: sut,
+            themeAddon: materialThemeAddon,
+            themeSetting: materialThemeSetting,
+            theme: blueMaterialWidgetbookTheme,
           ),
         );
 
@@ -71,8 +68,11 @@ void main() {
       'renders the correct text',
       (WidgetTester tester) async {
         await tester.pumpWidget(
-          customAddOnProviderWrapper(
+          addOnProviderWrapper<ThemeData>(
             child: sut,
+            themeAddon: materialThemeAddon,
+            themeSetting: materialThemeSetting,
+            theme: blueMaterialWidgetbookTheme,
           ),
         );
 
@@ -83,8 +83,11 @@ void main() {
       'renders the correct theme',
       (WidgetTester tester) async {
         await tester.pumpWidget(
-          customAddOnProviderWrapper(
+          addOnProviderWrapper<ThemeData>(
             child: sut,
+            themeAddon: materialThemeAddon,
+            themeSetting: materialThemeSetting,
+            theme: blueMaterialWidgetbookTheme,
           ),
         );
         await tester.pumpAndSettle();
@@ -100,17 +103,20 @@ void main() {
     testWidgets(
       'renders theme side by side when 2 active themes are activated',
       (WidgetTester tester) async {
-        final provider = ThemeSettingProvider(
-          CustomThemeSetting<AppThemeData>(
-            activeThemes: {customTheme},
-            themes: [customTheme, customTheme2],
-          ),
+        final provider = ThemeSettingProvider<ThemeData>(
+          materialThemeSetting,
         );
 
         await tester.pumpWidget(
-          customAddOnProviderWrapper(child: sut, provider: provider),
+          addOnProviderWrapper<ThemeData>(
+            child: sut,
+            themeAddon: materialThemeAddon,
+            themeSetting: materialThemeSetting,
+            provider: provider,
+            theme: blueMaterialWidgetbookTheme,
+          ),
         );
-        provider.tapped(customTheme2);
+        provider.tapped(yellowMaterialWidgetbookTheme);
 
         await tester.pumpAndSettle();
 
@@ -144,21 +150,21 @@ void main() {
       'can de-activate $customTheme2 when $ThemeSettingProvider..tapped(customTheme2) is called',
       (WidgetTester tester) async {
         final provider = ThemeSettingProvider(
-          CustomThemeSetting<AppThemeData>(
-            activeThemes: {customTheme},
-            themes: [customTheme, customTheme2],
-          ),
+          materialThemeSetting,
         );
 
         await tester.pumpWidget(
-          customAddOnProviderWrapper(
+          addOnProviderWrapper<ThemeData>(
             child: sut,
+            themeAddon: materialThemeAddon,
+            themeSetting: materialThemeSetting,
             provider: provider,
+            theme: blueMaterialWidgetbookTheme,
           ),
         );
 
         await tester.pumpAndSettle();
-        provider.tapped(customTheme2);
+        provider.tapped(yellowMaterialWidgetbookTheme);
         await tester.pumpAndSettle();
 
         final scaffoldFinderUpdated = find.byType(Scaffold);
@@ -187,7 +193,7 @@ void main() {
           ),
         );
 
-        provider.tapped(customTheme2);
+        provider.tapped(yellowMaterialWidgetbookTheme);
         await tester.pumpAndSettle();
 
         final updatedScaffold = find.byType(Scaffold);
