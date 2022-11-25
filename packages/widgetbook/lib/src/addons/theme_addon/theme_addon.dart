@@ -63,6 +63,7 @@ Widget _wrapperBuilder<T>(
   ThemeSetting<T> data,
 ) {
   return ChangeNotifierProvider(
+    key: const ValueKey('agdliuahsdflkjhasdflkjhasdglkjh'),
     create: (_) => ThemeSettingProvider<T>(
       data,
     ),
