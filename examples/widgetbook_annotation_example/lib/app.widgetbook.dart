@@ -123,9 +123,7 @@ class HotReload extends StatelessWidget {
         ),
       ],
       deviceFrameBuilder: frameBuilder,
-      localizationBuilder: localizationBuilder,
       scaffoldBuilder: scaffoldBuilder,
-      themeBuilder: themeBuilder(),
     );
   }
 }
