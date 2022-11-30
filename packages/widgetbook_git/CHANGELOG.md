@@ -1,4 +1,4 @@
-## 2.2.0-beta.5
+## 2.2.0-beta.6
 
 - feat: add `getActorName`, `getRepositoryName`
 

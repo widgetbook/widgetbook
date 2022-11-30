@@ -5,7 +5,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 class CustomThemeAddon<T> extends ThemeAddon<T> {
   CustomThemeAddon({
-    required CustomThemeSetting<T> themeSetting,
+    required ThemeSetting<T> themeSetting,
   }) : super(setting: themeSetting);
 }
 
