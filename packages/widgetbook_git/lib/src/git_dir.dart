@@ -38,12 +38,14 @@ class GitDir {
 
   Future<String> getActorName() async {
     final results = await runCommand(['config', 'user.name']);
-    return results.stdout as String;
+    final output = results.stdout as String;
+    return output.trim();
   }
 
   Future<String> getRepositoryName() async {
     final results = await runCommand(['rev-parse', '--show-toplevel']);
-    return results.stdout.toString().split('/').last;
+    final output = results.stdout.toString().split('/').last;
+    return output.trim();
   }
 
   /// [revision] should probably be a sha1 to a commit.
