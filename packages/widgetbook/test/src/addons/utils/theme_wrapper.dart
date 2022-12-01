@@ -118,4 +118,3 @@ List<String?> textDataList(Finder text) => text.evaluate().map((e) {
       final text = e.widget as Text;
       return text.data;
     }).toList();
- 
