@@ -17,6 +17,10 @@ AppThemeData themeData = AppThemeData(
 AppThemeData themeData2 = AppThemeData(
   color: Colors.yellow,
 );
+@anno.WidgetbookTheme(name: 'Appthem3')
+AppThemeData themeData3 = AppThemeData(
+  color: Colors.brown,
+);
 
 class HotReload extends StatelessWidget {
   const HotReload({super.key});
@@ -30,6 +34,10 @@ class HotReload extends StatelessWidget {
     final widgetbookTheme2 = WidgetbookTheme(
       data: themeData2,
       name: 'App Theme2',
+    );
+    final widgetbookTheme3 = WidgetbookTheme(
+      data: themeData3,
+      name: 'App Theme3',
     );
     final devices = [
       Apple.iPhone11,
@@ -61,7 +69,11 @@ class HotReload extends StatelessWidget {
           ),
           CustomThemeAddon<AppThemeData>(
             themeSetting: CustomThemeSetting.firstAsSelected(
-              themes: [widgetbookTheme, widgetbookTheme2],
+              themes: [
+                widgetbookTheme,
+                widgetbookTheme2,
+                widgetbookTheme3,
+              ],
             ),
           ),
         ],

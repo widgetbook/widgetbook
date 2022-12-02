@@ -30,6 +30,7 @@ class AppTheme extends InheritedWidget {
 
 const colorBlue = Colors.blue;
 const colorYellow = Colors.yellow;
+const colorBrown = Colors.brown;
 
 final blueCustomWidgetbookTheme = WidgetbookTheme<AppThemeData>(
   name: 'Blue',
@@ -41,9 +42,18 @@ final yellowCustomWidgetbookTheme = WidgetbookTheme<AppThemeData>(
   data: AppThemeData(color: colorYellow),
 );
 
+final brownCustomWidgetbookTheme = WidgetbookTheme<AppThemeData>(
+  name: 'brown',
+  data: AppThemeData(color: colorBrown),
+);
+
 final customThemeSetting = CustomThemeSetting(
   activeThemes: {blueCustomWidgetbookTheme},
-  themes: [blueCustomWidgetbookTheme, yellowCustomWidgetbookTheme],
+  themes: [
+    blueCustomWidgetbookTheme,
+    yellowCustomWidgetbookTheme,
+    brownCustomWidgetbookTheme,
+  ],
 );
 
 final customThemeAddon = CustomThemeAddon<AppThemeData>(

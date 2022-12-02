@@ -45,6 +45,7 @@ class HotreloadWidgetbook extends StatelessWidget {
             themes: [
               WidgetbookTheme(name: 'Light', data: lightTheme),
               WidgetbookTheme(name: 'Dark', data: darkTheme),
+              WidgetbookTheme(name: 'Darker', data: darkTheme3),
             ],
           ),
           textScaleSetting: TextScaleSetting.firstAsSelected(
