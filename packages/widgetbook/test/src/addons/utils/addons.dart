@@ -24,12 +24,3 @@ final activeFrameBuilder = WidgetbookFrameBuilder(
 const coloredBoxKey = Key('coloredBox');
 
 const textKey = Key('textKey');
-
-final textScaleSetting = TextScaleSetting(
-  activeTextScales: {1},
-  textScales: [1, 2],
-);
-
-final textScaleAddon = TextScaleAddon(
-  setting: textScaleSetting,
-);
