@@ -5,9 +5,8 @@
 // **************************************************************************
 
 import 'dart:core';
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 import 'package:widgetbook_for_widgetbook/app.dart';
@@ -36,19 +35,25 @@ class HotReload extends StatelessWidget {
           name: 'use cases',
           folders: [
             WidgetbookFolder(
-              name: 'container',
-              widgets: [
-                WidgetbookComponent(
-                  name: 'ContainerAlternative',
-                  useCases: [
-                    WidgetbookUseCase(
-                      name: 'ContainerAlternative',
-                      builder: (context) => buildContainer(context),
+              name: 'navigation_tree',
+              widgets: [],
+              folders: [
+                WidgetbookFolder(
+                  name: 'widgets',
+                  widgets: [
+                    WidgetbookComponent(
+                      name: 'ExpanderButton',
+                      useCases: [
+                        WidgetbookUseCase(
+                          name: 'Default',
+                          builder: (context) => expanderButton(context),
+                        ),
+                      ],
                     ),
                   ],
+                  folders: [],
                 ),
               ],
-              folders: [],
             ),
           ],
           widgets: [],
