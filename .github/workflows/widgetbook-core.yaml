@@ -1,0 +1,18 @@
+on: 
+  push:
+    paths:
+      - "packages/widgetbook_core/**"
+      - ".github/workflows/widgetbook-core.yaml"
+
+jobs:
+  semantic-pull-request:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
+
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    with:
+      flutter_channel: stable
+      working_directory: "packages/widgetbook_core"
+      setup: |
+        dart pub global activate melos
+        melos bs

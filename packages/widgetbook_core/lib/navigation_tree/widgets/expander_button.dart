@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
 class ExpanderButton extends StatelessWidget {
@@ -19,12 +17,9 @@ class ExpanderButton extends StatelessWidget {
     return InkWell(
       onTap: () => onPressed?.call(),
       borderRadius: BorderRadius.circular(size),
-      child: Transform.rotate(
-        angle: isExpanded ? math.pi / 2 : 0,
-        child: Icon(
-          Icons.arrow_right_rounded,
-          size: size,
-        ),
+      child: Icon(
+        isExpanded ? Icons.arrow_downward_rounded : Icons.arrow_right_rounded,
+        size: size,
       ),
     );
   }
