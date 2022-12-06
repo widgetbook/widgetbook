@@ -64,44 +64,57 @@ class Renderer<CustomTheme> extends StatelessWidget {
                 context,
                 Builder(
                   builder: (context) {
-                    return renderingState.localizationBuilder(
+                    return renderingState.deviceFrameBuilder(
                       context,
-                      workbenchProvider.locales,
-                      localizationsDelegates?.toList(),
-                      locale,
+                      device,
+                      frame,
+                      orientation,
                       Builder(
                         builder: (context) {
-                          return renderingState.themeBuilder(
+                          return renderingState.localizationBuilder(
                             context,
-                            theme,
+                            workbenchProvider.locales,
+                            localizationsDelegates?.toList(),
+                            locale,
                             Builder(
                               builder: (context) {
-                                return Builder(
-                                  builder: (context) {
-                                    return renderingState.textScaleBuilder(
-                                      context,
-                                      textScaleFactor,
-                                      Builder(
+                                return renderingState.themeBuilder(
+                                  context,
+                                  theme,
+                                  Builder(
+                                    builder: (context) {
+                                      return Builder(
                                         builder: (context) {
-                                          return renderingState.scaffoldBuilder(
+                                          return renderingState
+                                              .textScaleBuilder(
                                             context,
-                                            frame,
+                                            textScaleFactor,
                                             Builder(
                                               builder: (context) {
                                                 return renderingState
-                                                    .useCaseBuilder(
+                                                    .scaffoldBuilder(
                                                   context,
+                                                  frame,
                                                   Builder(
-                                                    builder: useCaseBuilder,
+                                                    builder: (context) {
+                                                      return renderingState
+                                                          .useCaseBuilder(
+                                                        context,
+                                                        Builder(
+                                                          builder:
+                                                              useCaseBuilder,
+                                                        ),
+                                                      );
+                                                    },
                                                   ),
                                                 );
                                               },
                                             ),
                                           );
                                         },
-                                      ),
-                                    );
-                                  },
+                                      );
+                                    },
+                                  ),
                                 );
                               },
                             ),
