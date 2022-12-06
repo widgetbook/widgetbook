@@ -175,6 +175,7 @@ class __$$_CliArgsCopyWithImpl<$Res> extends _$CliArgsCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_CliArgs implements _CliArgs {
   _$_CliArgs(
       {required this.apiKey,
