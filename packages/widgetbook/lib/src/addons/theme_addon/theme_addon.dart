@@ -32,7 +32,7 @@ String _getQueryParameter<T>(BuildContext context) {
   final selectedItems =
       context.read<ThemeSettingProvider<T>>().value.activeThemes;
 
-  return selectedItems.map((e) => e).join(',');
+  return selectedItems.map((e) => e.name).join(',');
 }
 
 int _selectionCount<T>(BuildContext context) {
