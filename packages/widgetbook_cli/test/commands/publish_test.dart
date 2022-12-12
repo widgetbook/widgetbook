@@ -10,6 +10,7 @@ import 'package:widgetbook_git/widgetbook_git.dart';
 import '../../bin/api/widgetbook_http_client.dart';
 import '../../bin/ci_parser/ci_parser.dart';
 import '../../bin/commands/commands.dart';
+import '../../bin/git/git_wrapper.dart';
 import '../../bin/helpers/helpers.dart';
 import '../../bin/models/deployment_data.dart';
 import '../../bin/models/review_data.dart';
@@ -32,6 +33,7 @@ class FakeDirectory extends Fake implements Directory {}
 void main() {
   group('$PublishCommand', () {
     late Logger logger;
+    late GitWrapper gitWrapper;
     late GitDir gitDir;
     late CiWrapper ciWrapper;
     late StdInWrapper stdInWrapper;
@@ -53,6 +55,7 @@ void main() {
 
     setUp(() async {
       logger = MockLogger();
+      gitWrapper = MockGitWrapper();
       gitDir = MockGitDir();
       argResults = MockArgResults();
       ciWrapper = MockCiWrapper();
@@ -66,12 +69,11 @@ void main() {
       localeParser = MockLocaleParser();
       deviceParser = MockDeviceParser();
       textScaleFactorsParser = MockTextScaleFactorParser();
+      when(() => logger.progress(any<String>())).thenReturn(progress);
       publishCommand = PublishCommand(
         logger: logger,
         widgetbookHttpClient: widgetbookHttpClient,
       )..testArgResults = argResults;
-
-      when(() => logger.progress(any())).thenReturn(progress);
 
       when(() => argResults['api-key'] as String).thenReturn('Api-Key');
       when(() => argResults['git-provider'] as String).thenReturn('Local');
@@ -275,27 +277,113 @@ void main() {
       },
     );
 
-    test(
-        'exits with code 70 when Directory '
-        'from "path" is not a Git folder', () async {
-      const invalidPath = '/';
-      when(() => argResults['path'] as String).thenReturn(invalidPath);
+    group(
+      '.checkIfPathIsGitDirectory',
+      () {
+        late PublishCommand command;
+        setUp(() {
+          when(() => argResults['path'] as String).thenReturn('/');
+          command = PublishCommand(
+            logger: logger,
+            gitWrapper: gitWrapper,
+          )..testArgResults = argResults;
+        });
 
-      final result = await publishCommand.run();
-      expect(result, equals(ExitCode.software.code));
+        test(
+          'completes when isGitDir returns true',
+          () async {
+            when(() => gitWrapper.isGitDir('/')).thenAnswer(
+              (_) => Future.value(true),
+            );
 
-      verify(
-        () => logger
-            .progress(
-              'Uploading build',
-            )
-            .fail(),
-      ).called(1);
+            expect(
+              command.checkIfPathIsGitDirectory('/'),
+              completes,
+            );
+          },
+        );
 
-      verify(
-        () => logger.err('Directory from "path" is not a Git folder'),
-      ).called(1);
-    });
+        test(
+          'throws $GitDirectoryNotFound when isGitDir returns false',
+          () async {
+            when(() => gitWrapper.isGitDir('/')).thenAnswer(
+              (_) => Future.value(false),
+            );
+
+            expect(
+              command.checkIfPathIsGitDirectory('/'),
+              throwsA(const TypeMatcher<GitDirectoryNotFound>()),
+            );
+          },
+        );
+      },
+    );
+
+    group(
+      '.checkIfWorkingTreeIsClean',
+      () {
+        late PublishCommand command;
+        late GitDir gitDir;
+        setUp(() {
+          command = PublishCommand(
+            logger: logger,
+            stdInWrapper: stdInWrapper,
+          )..testArgResults = argResults;
+          gitDir = MockGitDir();
+        });
+
+        test(
+          'completes when working dir is clean',
+          () async {
+            when(
+              gitDir.isWorkingTreeClean,
+            ).thenAnswer((_) => Future.value(true));
+
+            expect(
+              command.checkIfWorkingTreeIsClean(gitDir),
+              completes,
+            );
+          },
+        );
+
+        test(
+          'completes when environment has no terminal',
+          () async {
+            when(
+              gitDir.isWorkingTreeClean,
+            ).thenAnswer((_) => Future.value(false));
+            when(() => stdInWrapper.hasTerminal).thenReturn(false);
+
+            expect(
+              command.checkIfWorkingTreeIsClean(gitDir),
+              completes,
+            );
+          },
+        );
+
+        test(
+          'throws $ExitedByUser when environment has no terminal',
+          () async {
+            when(
+              gitDir.isWorkingTreeClean,
+            ).thenAnswer((_) => Future.value(false));
+            when(() => stdInWrapper.hasTerminal).thenReturn(true);
+            when(
+              () => logger.chooseOne(
+                'Would you like to proceed anyways?',
+                choices: ['no', 'yes'],
+                defaultValue: 'no',
+              ),
+            ).thenReturn('no');
+
+            expect(
+              command.checkIfWorkingTreeIsClean(gitDir),
+              throwsA(const TypeMatcher<ExitedByUser>()),
+            );
+          },
+        );
+      },
+    );
 
     test(
         'exits with code 70 when CI/CD pipeline '
@@ -325,7 +413,7 @@ void main() {
     });
 
     test(
-        'exits with code 0 when user decides not to '
+        'throws a $ExitedByUser when user decides not to '
         'proceed with un-commited changes', () async {
       final publishCommand = PublishCommand(
         logger: logger,
@@ -346,19 +434,12 @@ void main() {
 
       when(() => gitDir.getRepositoryName())
           .thenAnswer((_) => Future.value('widgetbook'));
-      final result = await publishCommand.run();
-      expect(result, equals(ExitCode.success.code));
-
-      verify(
-        () => logger.warn('You have un-commited changes'),
-      ).called(1);
-      verify(
-        () => logger.warn(
-            'Uploading a new build to Widgetbook Cloud requires a commit SHA. '
-            'Due to un-committed changes, we are using the commit SHA '
-            'of your previous commit which can lead to the build being '
-            'rejected due to an already existing build.'),
-      ).called(1);
+      expect(
+        publishCommand.run,
+        throwsA(
+          const TypeMatcher<ExitedByUser>(),
+        ),
+      );
     });
 
     test(
@@ -441,7 +522,7 @@ void main() {
         when(() => gitDir.branches()).thenAnswer((_) => Future.value([]));
 
         when(
-          () => widgetbookHttpClient.uploadDeployment(
+          () => widgetbookHttpClient.uploadBuild(
             deploymentFile: any(
               named: 'deploymentFile',
             ),
@@ -532,7 +613,7 @@ void main() {
         when(() => gitDir.branches()).thenAnswer((_) => Future.value([]));
 
         when(
-          () => widgetbookHttpClient.uploadDeployment(
+          () => widgetbookHttpClient.uploadBuild(
             deploymentFile: any(
               named: 'deploymentFile',
             ),
@@ -611,7 +692,7 @@ void main() {
           .thenAnswer((_) => Future.value('widgetbook'));
 
       when(
-        () => widgetbookHttpClient.uploadDeployment(
+        () => widgetbookHttpClient.uploadBuild(
           deploymentFile: any(
             named: 'deploymentFile',
           ),
@@ -698,7 +779,7 @@ void main() {
           .thenAnswer((_) => Future.value('widgetbook'));
 
       when(
-        () => widgetbookHttpClient.uploadDeployment(
+        () => widgetbookHttpClient.uploadBuild(
           deploymentFile: any(
             named: 'deploymentFile',
           ),

@@ -9,6 +9,7 @@ import 'package:widgetbook_git/widgetbook_git.dart';
 
 import '../../bin/api/widgetbook_http_client.dart';
 import '../../bin/ci_parser/ci_parser.dart';
+import '../../bin/git/git_wrapper.dart';
 import '../../bin/helpers/widgetbook_zip_encoder.dart';
 import '../../bin/review/devices/device_parser.dart';
 import '../../bin/review/locales/locales_parser.dart';
@@ -17,6 +18,8 @@ import '../../bin/review/themes/theme_parser.dart';
 import '../../bin/std/stdin_wrapper.dart';
 
 class MockLogger extends Mock implements Logger {}
+
+class MockGitWrapper extends Mock implements GitWrapper {}
 
 class MockPubUpdater extends Mock implements PubUpdater {}
 

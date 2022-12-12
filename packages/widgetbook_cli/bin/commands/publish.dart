@@ -32,6 +32,7 @@ import './command.dart';
 import '../api/widgetbook_http_client.dart';
 import '../ci_parser/ci_parser.dart';
 import '../git-provider/github/github.dart';
+import '../git/git_wrapper.dart';
 import '../helpers/exceptions.dart';
 import '../helpers/widgetbook_zip_encoder.dart';
 import '../models/models.dart';
@@ -55,12 +56,15 @@ class PublishCommand extends WidgetbookCommand {
     this.textScaleFactorsParser,
     this.themeParser,
     CiWrapper? ciWrapper,
+    GitWrapper? gitWrapper,
     StdInWrapper? stdInWrapper,
   })  : _widgetbookHttpClient = widgetbookHttpClient ?? WidgetbookHttpClient(),
         _widgetbookZipEncoder = widgetbookZipEncoder ?? WidgetbookZipEncoder(),
         _ciWrapper = ciWrapper ?? CiWrapper(),
+        _gitWrapper = gitWrapper ?? GitWrapper(),
         _stdInWrapper = stdInWrapper ?? StdInWrapper(),
         _fileSystem = fileSystem ?? const LocalFileSystem() {
+    progress = logger.progress('Publishing Widgetbook');
     argParser
       ..addOption(
         'path',
@@ -136,7 +140,54 @@ class PublishCommand extends WidgetbookCommand {
   final DeviceParser? deviceParser;
   final TextScaleFactorParser? textScaleFactorsParser;
   final CiWrapper _ciWrapper;
+  final GitWrapper _gitWrapper;
   final StdInWrapper _stdInWrapper;
+
+  late final Progress progress;
+
+  @visibleForTesting
+  Future<void> checkIfPathIsGitDirectory(String path) async {
+    final isGitDir = await _gitWrapper.isGitDir(path);
+    if (!isGitDir) {
+      throw GitDirectoryNotFound();
+    }
+  }
+
+  @visibleForTesting
+  Future<GitDir> getGitDir(String path) {
+    return _gitWrapper.fromExisting(
+      path,
+      allowSubdirectory: true,
+    );
+  }
+
+  @visibleForTesting
+  Future<void> checkIfWorkingTreeIsClean(
+    GitDir gitDir,
+  ) async {
+    final isWorkingTreeClean = await gitDir.isWorkingTreeClean();
+    if (!isWorkingTreeClean) {
+      logger
+        ..warn('You have un-commited changes')
+        ..warn('Uploading a new build to Widgetbook Cloud requires a commit '
+            'SHA. Due to un-committed changes, we are using the commit SHA '
+            'of your previous commit which can lead to the build being '
+            'rejected due to an already existing build.');
+      var proceedWithUnCommitedChanges = 'yes';
+      if (_stdInWrapper.hasTerminal) {
+        proceedWithUnCommitedChanges = logger.chooseOne(
+          'Would you like to proceed anyways?',
+          choices: ['no', 'yes'],
+          defaultValue: 'no',
+        );
+      }
+
+      if (proceedWithUnCommitedChanges == 'no') {
+        progress.cancel();
+        throw ExitedByUser();
+      }
+    }
+  }
 
   @override
   Future<int> run() async {
@@ -146,24 +197,11 @@ class PublishCommand extends WidgetbookCommand {
 
     final path = results['path'] as String;
 
-    if (!await GitDir.isGitDir(path)) {
-      publishProgress.fail();
-
-      logger.err(
-        'Directory from "path" is not a Git folder',
-      );
-
-      return ExitCode.software.code;
-    }
-
-    final gitDir = await GitDir.fromExisting(
-      path,
-      allowSubdirectory: true,
-    );
+    await checkIfPathIsGitDirectory(path);
+    final gitDir = await getGitDir(path);
+    await checkIfWorkingTreeIsClean(gitDir);
 
     publishProgress.update('Obtaining data from Git');
-
-    final isWorkingTreeClean = await gitDir.isWorkingTreeClean();
 
     final apiKey = results['api-key'] as String;
     final currentBranch = await gitDir.currentBranch();
@@ -206,27 +244,6 @@ class PublishCommand extends WidgetbookCommand {
     }
 
     publishProgress.update('Checking for un-commited changes');
-    if (!isWorkingTreeClean) {
-      logger
-        ..warn('You have un-commited changes')
-        ..warn('Uploading a new build to Widgetbook Cloud requires a commit '
-            'SHA. Due to un-committed changes, we are using the commit SHA '
-            'of your previous commit which can lead to the build being '
-            'rejected due to an already existing build.');
-      var proceedWithUnCommitedChanges = 'yes';
-      if (_stdInWrapper.hasTerminal) {
-        proceedWithUnCommitedChanges = logger.chooseOne(
-          'Would you like to proceed anyways?',
-          choices: ['no', 'yes'],
-          defaultValue: 'no',
-        );
-      }
-
-      if (proceedWithUnCommitedChanges == 'no') {
-        publishProgress.cancel();
-        return ExitCode.success.code;
-      }
-    }
 
     await publishBuilds(
       cliArgs: ciArgsData,
@@ -254,7 +271,7 @@ class PublishCommand extends WidgetbookCommand {
     required CliArgs cliArgs,
     required CiArgs ciArgs,
   }) {
-    return _widgetbookHttpClient.uploadDeployment(
+    return _widgetbookHttpClient.uploadBuild(
       deploymentFile: file,
       data: DeploymentData(
         branchName: cliArgs.branch,

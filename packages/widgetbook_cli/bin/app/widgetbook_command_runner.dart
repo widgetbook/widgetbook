@@ -79,9 +79,15 @@ class WidgetbookCommandRunner extends CommandRunner<int> {
     } on ProcessException catch (error) {
       _logger.err(error.message);
       return ExitCode.unavailable.code;
+    } on GitDirectoryNotFound catch (error) {
+      _logger.err(error.message);
+      return ExitCode.data.code;
     } on DirectoryNotFoundException catch (error) {
       _logger.err(error.message);
       return ExitCode.usage.code;
+    } on ExitedByUser catch (error) {
+      _logger.info(error.message);
+      return ExitCode.success.code;
     } on FileNotFoundException catch (error) {
       _logger.err(error.message);
       return ExitCode.usage.code;

@@ -87,7 +87,7 @@ class WidgetbookHttpClient {
   }
 
   /// Uploads the deployment .zip file to the Widgetbook Cloud backend
-  Future<Map<String, dynamic>?> uploadDeployment({
+  Future<Map<String, dynamic>?> uploadBuild({
     required File deploymentFile,
     required DeploymentData data,
   }) async {
