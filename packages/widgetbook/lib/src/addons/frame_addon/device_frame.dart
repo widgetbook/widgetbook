@@ -1,6 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/addons/device_addon/frame_builders/frame_builder.dart';
 import 'package:widgetbook/widgetbook.dart';
+
+class DefaultDeviceFrame extends Frame {
+  DefaultDeviceFrame({required DeviceSetting setting})
+      : super(
+          name: 'Device Frame',
+          addon: DeviceFrameAddon(setting: setting),
+        );
+
+  @override
+  Widget builder(BuildContext context, Widget child) {
+    return DeviceFrame(
+      key: const Key('device_frame'),
+      orientation: context.orientation,
+      device: mapDeviceToDeviceInfo(context.device),
+      screen: child,
+    );
+  }
+}
 
 DeviceInfo mapDeviceToDeviceInfo(Device device) {
   final map = {
@@ -30,20 +47,4 @@ DeviceInfo mapDeviceToDeviceInfo(Device device) {
       );
 
   return mappedDevice;
-}
-
-class DeviceFrameBuilder extends FrameBuilder {
-  DeviceFrameBuilder({
-    required super.devices,
-  }) : super(
-          name: 'Device Frame',
-        );
-
-  @override
-  Widget builder(BuildContext context, Widget child) {
-    return DeviceFrame(
-      device: mapDeviceToDeviceInfo(context.device),
-      screen: child,
-    );
-  }
 }

@@ -33,7 +33,7 @@ Widget _defaultAppBuilderMethod(BuildContext context, Widget child) {
 AppBuilderFunction get materialAppBuilder =>
     (BuildContext context, Widget child) {
       final frameBuilder = context.frameBuilder;
-      return frameBuilder.builder(
+      return frameBuilder(
         context,
         MaterialApp(
           theme: context.materialTheme,

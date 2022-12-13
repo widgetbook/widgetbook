@@ -31,12 +31,6 @@ class HotreloadWidgetbook extends StatelessWidget {
         ),
       ),
     ];
-    final deviceFrameBuilder = DeviceFrameBuilder(
-      devices: devices,
-    );
-    final activeFrameBuilder = WidgetbookFrameBuilder(
-      devices: devices,
-    );
 
     return Widgetbook.material(
       addons: [
@@ -47,6 +41,15 @@ class HotreloadWidgetbook extends StatelessWidget {
               WidgetbookTheme(name: 'Dark', data: darkTheme),
             ],
           ),
+          frameSetting: FrameSetting.firstAsSelected(frames: [
+            DefaultDeviceFrame(
+              setting: DeviceSetting.firstAsSelected(devices: devices),
+            ),
+            NoFrame(),
+            WidgetbookFrameBuilder(
+              setting: DeviceSetting.firstAsSelected(devices: devices),
+            )
+          ]),
           textScaleSetting: TextScaleSetting.firstAsSelected(
             textScales: [
               1,
@@ -55,9 +58,7 @@ class HotreloadWidgetbook extends StatelessWidget {
             ],
           ),
           localizationSetting: LocalizationSetting(
-            activeLocales: {
-              Locale('en'),
-            },
+            activeLocale: Locale('en'),
             localizationsDelegates: [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -68,13 +69,6 @@ class HotreloadWidgetbook extends StatelessWidget {
               Locale('en'),
               Locale('de'),
               Locale('fr'),
-            ],
-          ),
-          deviceSetting: DeviceSelection(
-            activeFrameBuilder: activeFrameBuilder,
-            frameBuilders: [
-              activeFrameBuilder,
-              deviceFrameBuilder,
             ],
           ),
         ),

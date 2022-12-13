@@ -5,6 +5,7 @@ import 'package:widgetbook/src/addons/addon.dart';
 import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/addons/theme_addon/theme_provider.dart';
 import 'package:widgetbook/src/addons/theme_addon/theme_selection_provider.dart';
+import 'package:widgetbook/src/addons/utilities/utilities.dart';
 import 'package:widgetbook/src/addons/widgets/addon_option_list.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -18,36 +19,36 @@ abstract class ThemeAddon<T> extends WidgetbookAddOn {
           wrapperBuilder: (context, routerData, child) => _wrapperBuilder<T>(
             context,
             child,
+            routerData,
             setting,
           ),
           builder: (context) => _builder<T>(context),
-          providerBuilder: (context, index) =>
-              _providerBuilder<T>(context, index),
-          selectionCount: (context) => _selectionCount<T>(context),
+          providerBuilder: (
+            context,
+          ) =>
+              _providerBuilder<T>(context),
           getQueryParameter: (context) => _getQueryParameter<T>(context),
         );
 }
 
-String _getQueryParameter<T>(BuildContext context) {
-  final selectedItems =
-      context.read<ThemeSettingProvider<T>>().value.activeThemes;
+Map<String, dynamic> _getQueryParameter<T>(BuildContext context) {
+  final selectedItem =
+      context.read<ThemeSettingProvider<T>>().value.activeTheme;
 
-  return selectedItems.map((e) => e).join(',');
-}
-
-int _selectionCount<T>(BuildContext context) {
-  return context.read<ThemeSettingProvider<T>>().value.activeThemes.length;
+  return <String, dynamic>{
+    'theme': selectedItem.name,
+  };
 }
 
 Widget _builder<T>(BuildContext context) {
   final data = context.watch<ThemeSettingProvider<T>>().value;
   final themes = data.themes;
-  final activeThemes = data.activeThemes;
+  final activeTheme = data.activeTheme;
 
   return AddonOptionList<WidgetbookTheme<T>>(
     name: 'Themes',
     options: themes,
-    selectedOptions: activeThemes,
+    selectedOption: activeTheme,
     builder: (item) => Text(item.name),
     onTap: (item) {
       context.read<ThemeSettingProvider<T>>().tapped(item);
@@ -60,11 +61,37 @@ Widget _builder<T>(BuildContext context) {
 Widget _wrapperBuilder<T>(
   BuildContext context,
   Widget child,
+  Map<String, dynamic> routerData,
   ThemeSetting<T> data,
 ) {
+  final activeThemeStringData = routerData['themes'] as String?;
+
+  final activeThemeString = activeThemeStringData != null
+      ? context.jsonToString(
+          data: activeThemeStringData,
+          addonItem: 'theme',
+        )
+      : null;
+
+  WidgetbookTheme<T>? selectedTheme;
+
+  if (activeThemeString != null) {
+    final activeThemes = activeThemeString.split(',');
+    final mapThemes = {for (var e in data.themes) e.name: e};
+
+    for (final activeTheme in activeThemes) {
+      if (mapThemes.containsKey(activeTheme)) {
+        selectedTheme = mapThemes[activeTheme];
+      }
+    }
+  }
+
+  final initialData =
+      selectedTheme != null ? data.copyWith(activeTheme: selectedTheme) : data;
+
   return ChangeNotifierProvider(
     create: (_) => ThemeSettingProvider<T>(
-      data,
+      initialData,
     ),
     child: child,
   );
@@ -72,13 +99,12 @@ Widget _wrapperBuilder<T>(
 
 SingleChildWidget _providerBuilder<T>(
   BuildContext context,
-  int index,
 ) {
   final selection = context.watch<ThemeSettingProvider<T>>().value;
-  final theme = selection.activeThemes.isEmpty
-      ? selection.themes.first
-      : selection.activeThemes.elementAt(index);
+  final theme = selection.activeTheme;
+
   return ChangeNotifierProvider(
+    key: ValueKey(theme),
     create: (_) => ThemeProvider(theme),
   );
 }

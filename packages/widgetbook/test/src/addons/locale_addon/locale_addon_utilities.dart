@@ -24,9 +24,7 @@ List<LocalizationsDelegate<dynamic>> localizationsDelegates = [
 ];
 
 LocalizationSetting localizationSetting = LocalizationSetting(
-  activeLocales: {
-    engLocaleGb,
-  },
+  activeLocale: engLocaleGb,
   localizationsDelegates: localizationsDelegates,
   locales: locales,
 );

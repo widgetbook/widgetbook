@@ -4,10 +4,10 @@ import 'package:widgetbook/widgetbook.dart';
 
 class Preview extends StatelessWidget {
   const Preview({
-    Key? key,
+    super.key,
     required this.useCase,
     required this.appBuilder,
-  }) : super(key: key);
+  });
 
   final WidgetbookUseCase useCase;
   final Widget Function(BuildContext, Widget child) appBuilder;

@@ -17,15 +17,15 @@ class Renderer extends StatelessWidget {
     BuildContext context, {
     required List<WidgetbookAddOn> addons,
     WidgetbookAddOn? multiPropertyAddon,
-    required int index,
   }) {
     return MultiProvider(
+      key: ValueKey(useCaseBuilder),
       providers: [
         if (multiPropertyAddon != null)
-          multiPropertyAddon.providerBuilder(context, index),
+          multiPropertyAddon.providerBuilder!(context),
         ...addons
             .where((element) => element != multiPropertyAddon)
-            .map((e) => e.providerBuilder(context, 0))
+            .map((e) => e.providerBuilder!(context))
             .toList(),
       ],
       child: Builder(
@@ -33,6 +33,7 @@ class Renderer extends StatelessWidget {
           return appBuilder(
             context,
             Builder(
+              key: const Key('app_builder_key'),
               builder: useCaseBuilder,
             ),
           );
@@ -46,42 +47,10 @@ class Renderer extends StatelessWidget {
     BuildContext context,
   ) {
     final addons = context.watch<AddOnProvider>().value;
-    final multiPropertyAddons =
-        addons.where((addon) => addon.selectionCount(context) > 1).toList();
-    final multiPropertyAddon =
-        multiPropertyAddons.isNotEmpty ? multiPropertyAddons.first : null;
 
-    if (multiPropertyAddon == null) {
-      return _buildPreview(
-        context,
-        addons: addons,
-        index: 0,
-      );
-    } else {
-      final renders = Iterable.generate(
-        multiPropertyAddon.selectionCount(context),
-        (value) => Padding(
-          padding: const EdgeInsets.all(8),
-          child: _buildPreview(
-            context,
-            addons: addons,
-            multiPropertyAddon: multiPropertyAddon,
-            index: value,
-          ),
-        ),
-      ).toList();
-      return ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: renders.length,
-        itemBuilder: (context, index) {
-          final item = renders.elementAt(index);
-          return item;
-        },
-        separatorBuilder: (context, index) => const SizedBox(
-          width: 8,
-          height: 8,
-        ),
-      );
-    }
+    return _buildPreview(
+      context,
+      addons: addons,
+    );
   }
 }

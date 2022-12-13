@@ -5,17 +5,35 @@ import 'package:widgetbook/src/addons/theme_addon/theme_selection_provider.dart'
 import 'package:widgetbook/src/workbench/renderer.dart';
 import 'package:widgetbook/widgetbook.dart';
 
+import 'utils/addon_test_helper.dart';
 import 'utils/addons.dart';
 import 'utils/cupertino_app_theme.dart';
 import 'utils/custom_app_theme.dart';
+import 'utils/extensions/widget_tester_extension.dart';
 import 'utils/theme_wrapper.dart';
 
+Widget cupertinoThemeAddonWrapper({
+  required Widget child,
+  WidgetbookTheme<CupertinoThemeData>? activeTheme,
+}) {
+  return addOnProviderWrapper<dynamic>(
+    child: child,
+    addons: [
+      CupertinoThemeAddon(
+        themeSetting: cupertinoThemeSetting.copyWith(
+          activeTheme: blueCupertinoWidgetbookTheme,
+        ),
+      ),
+    ],
+  );
+}
+
 void main() {
-  late Renderer sut;
+  late Renderer renderer;
   final rendererKey = GlobalKey();
 
   setUp(() {
-    sut = Renderer(
+    renderer = Renderer(
       key: rendererKey,
       appBuilder: cupertinoAppBuilder,
       useCaseBuilder: (context) => ColoredBox(
@@ -31,7 +49,7 @@ void main() {
       (WidgetTester tester) async {
         await ensureCorrectThemeIsRendered<CupertinoThemeData>(
           tester: tester,
-          sut: sut,
+          sut: renderer,
           addons: [
             cupertinoThemeAddon,
           ],
@@ -40,27 +58,27 @@ void main() {
     );
 
     testWidgets(
-      'renders theme side by side when 2 active themes are activated',
+      'renders with 1 active theme',
       (WidgetTester tester) async {
-        await renderAddonSideBySide<CupertinoThemeData>(
-          itemsCollection: coloredBoxColorList,
-          expectedValues: <Color>[
-            colorBlue,
-            colorYellow,
-          ],
-          itemsKey: coloredBoxKey,
+        await testAddon(
           tester: tester,
-          sut: sut,
-          addons: [
-            CupertinoThemeAddon(
-              themeSetting: cupertinoThemeSetting.copyWith(
-                activeThemes: {
-                  blueCupertinoWidgetbookTheme,
-                  yellowCupertinoWidgetbookTheme
-                },
-              ),
-            ),
-          ],
+          build: (child) => cupertinoThemeAddonWrapper(
+            child: child,
+            activeTheme: blueCupertinoWidgetbookTheme,
+          ),
+          child: renderer,
+          expect: () {
+            final context = tester.findContextByKey(coloredBoxKey);
+
+            final coloredBoxFromContext =
+                context.read<ThemeSettingProvider<CupertinoThemeData>>();
+            expect(
+              coloredBoxFromContext.value.activeTheme,
+              equals(blueCupertinoWidgetbookTheme),
+            );
+
+            expectThemeColor(colorData: colorBlue);
+          },
         );
       },
     );
@@ -68,52 +86,57 @@ void main() {
     testWidgets(
       'can activate yellowCupertinoWidgetbookTheme when $ThemeSettingProvider..tapped(yellowCupertinoWidgetbookTheme) is called',
       (WidgetTester tester) async {
-        await renderAddonSideBySide<CupertinoThemeData>(
-          itemsKey: coloredBoxKey,
-          itemsCollection: coloredBoxColorList,
+        await testAddon(
           tester: tester,
-          sut: sut,
-          addons: [
-            cupertinoThemeAddon,
-          ],
-          shouldUpdate: true,
-          updateAddon: (context) async =>
-              context.read<ThemeSettingProvider<CupertinoThemeData>>().tapped(
-                    yellowCupertinoWidgetbookTheme,
-                  ),
-          expectedValues: <Color>[
-            colorBlue,
-            colorYellow,
-          ],
+          build: (child) => cupertinoThemeAddonWrapper(
+            child: child,
+            activeTheme: blueCupertinoWidgetbookTheme,
+          ),
+          child: renderer,
+          act: (context) async => context
+              .read<ThemeSettingProvider<CupertinoThemeData>>()
+              .tapped(yellowCupertinoWidgetbookTheme),
+          expect: () {
+            final context = tester.findContextByKey(coloredBoxKey);
+
+            final coloredBoxFromContext =
+                context.read<ThemeSettingProvider<CupertinoThemeData>>();
+            expect(
+              coloredBoxFromContext.value.activeTheme,
+              equals(yellowCupertinoWidgetbookTheme),
+            );
+
+            expectThemeColor(colorData: colorYellow);
+          },
         );
       },
     );
     testWidgets(
-      'can de-activate yellowCupertinoWidgetbookTheme when $ThemeSettingProvider..tapped(yellowCupertinoWidgetbookTheme) is called',
+      'activates theme in order',
       (WidgetTester tester) async {
-        await renderAddonSideBySide<AppThemeData>(
-          itemsKey: coloredBoxKey,
-          itemsCollection: coloredBoxColorList,
+        await testAddon(
           tester: tester,
-          sut: sut,
-          addons: [
-            CupertinoThemeAddon(
-              themeSetting: cupertinoThemeSetting.copyWith(
-                activeThemes: {
-                  blueCupertinoWidgetbookTheme,
-                  yellowCupertinoWidgetbookTheme
-                },
-              ),
-            ),
-          ],
-          shouldUpdate: true,
-          updateAddon: (context) async =>
-              context.read<ThemeSettingProvider<CupertinoThemeData>>().tapped(
-                    yellowCupertinoWidgetbookTheme,
-                  ),
-          expectedValues: <Color>[
-            colorBlue,
-          ],
+          build: (child) => cupertinoThemeAddonWrapper(
+            child: child,
+            activeTheme: blueCupertinoWidgetbookTheme,
+          ),
+          child: renderer,
+          act: (context) async =>
+              context.read<ThemeSettingProvider<CupertinoThemeData>>()
+                ..tapped(yellowCupertinoWidgetbookTheme)
+                ..tapped(blueCupertinoWidgetbookTheme),
+          expect: () {
+            final context = tester.findContextByKey(coloredBoxKey);
+
+            final coloredBoxFromContext =
+                context.read<ThemeSettingProvider<CupertinoThemeData>>();
+            expect(
+              coloredBoxFromContext.value.activeTheme,
+              equals(blueCupertinoWidgetbookTheme),
+            );
+
+            expectThemeColor(colorData: colorBlue);
+          },
         );
       },
     );

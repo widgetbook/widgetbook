@@ -7,14 +7,14 @@ class AddonOptionList<T> extends StatelessWidget {
     super.key,
     required this.name,
     required this.options,
-    required this.selectedOptions,
+    required this.selectedOption,
     required this.onTap,
     required this.builder,
   });
 
   final String name;
   final List<T> options;
-  final Set<T> selectedOptions;
+  final T selectedOption;
   final void Function(T item) onTap;
   final Widget Function(T item) builder;
 
@@ -40,7 +40,7 @@ class AddonOptionList<T> extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = options[index];
                 return AddonOption(
-                  isSelected: selectedOptions.contains(item),
+                  isSelected: selectedOption == item,
                   onTap: () {
                     onTap(item);
                   },

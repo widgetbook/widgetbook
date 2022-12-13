@@ -6,7 +6,7 @@ part 'localization_setting.freezed.dart';
 @freezed
 class LocalizationSetting with _$LocalizationSetting {
   factory LocalizationSetting({
-    required Set<Locale> activeLocales,
+    required Locale activeLocale,
     required List<Locale> locales,
     required List<LocalizationsDelegate<dynamic>> localizationsDelegates,
   }) = _LocalizationSetting;

@@ -5,6 +5,7 @@ import 'package:widgetbook/src/addons/addon.dart';
 import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/addons/localization_addon/localization_provider.dart';
 import 'package:widgetbook/src/addons/localization_addon/localization_selection_provider.dart';
+import 'package:widgetbook/src/addons/utilities/utilities.dart';
 import 'package:widgetbook/src/addons/widgets/addon_option_list.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -19,31 +20,26 @@ class LocalizationAddon extends WidgetbookAddOn {
               _wrapperBuilder(context, child, routerData, data),
           builder: _builder,
           providerBuilder: _providerBuilder,
-          selectionCount: _selectionCount,
           getQueryParameter: _getQueryParameter,
         );
 }
 
-String _getQueryParameter(BuildContext context) {
-  final selectedItems =
-      context.read<LocalizationSettingProvider>().value.activeLocales;
+Map<String, dynamic> _getQueryParameter(BuildContext context) {
+  final selectedItem =
+      context.read<LocalizationSettingProvider>().value.activeLocale;
 
-  return selectedItems.map((e) => e.languageCode).join(',');
-}
-
-int _selectionCount(BuildContext context) {
-  return context.read<LocalizationSettingProvider>().value.activeLocales.length;
+  return <String, dynamic>{'languageCode': selectedItem.languageCode};
 }
 
 Widget _builder(BuildContext context) {
   final data = context.watch<LocalizationSettingProvider>().value;
   final locales = data.locales;
-  final activeLocales = data.activeLocales;
+  final activeLocale = data.activeLocale;
 
   return AddonOptionList<Locale>(
     name: 'Locales',
     options: locales,
-    selectedOptions: activeLocales,
+    selectedOption: activeLocale,
     builder: (item) => Text(item.toString()),
     onTap: (item) {
       context.read<LocalizationSettingProvider>().tapped(item);
@@ -59,21 +55,29 @@ Widget _wrapperBuilder(
   Map<String, dynamic> routerData,
   LocalizationSetting data,
 ) {
-  final activeLocalesString = routerData['locales'] as String?;
-  final selectedLocales = <Locale>[];
+  final activeLocalesStringData = routerData['localization'] as String?;
+
+  final activeLocalesString = activeLocalesStringData != null
+      ? context.jsonToString(
+          data: activeLocalesStringData,
+          addonItem: 'languageCode',
+        )
+      : null;
+
+  Locale? selectedLocale;
   if (activeLocalesString != null) {
     final activeLocales = activeLocalesString.split(',');
     final mapLocales = {for (var e in data.locales) e.languageCode: e};
 
     for (final activeLocale in activeLocales) {
       if (mapLocales.containsKey(activeLocale)) {
-        selectedLocales.add(mapLocales[activeLocale]!);
+        selectedLocale = mapLocales[activeLocale];
       }
     }
   }
 
-  final initialData = selectedLocales.isNotEmpty
-      ? data.copyWith(activeLocales: selectedLocales.toSet())
+  final initialData = selectedLocale != null
+      ? data.copyWith(activeLocale: selectedLocale)
       : data;
 
   return ChangeNotifierProvider(
@@ -84,13 +88,11 @@ Widget _wrapperBuilder(
 
 SingleChildWidget _providerBuilder(
   BuildContext context,
-  int index,
 ) {
   final selection = context.watch<LocalizationSettingProvider>().value;
-  final locale = selection.activeLocales.isEmpty
-      ? selection.locales.first
-      : selection.activeLocales.elementAt(index);
+  final locale = selection.activeLocale;
   return ChangeNotifierProvider(
+    key: ValueKey(locale),
     create: (context) => LocalizationProvider(
       LocalizationData(
         activeLocale: locale,

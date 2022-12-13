@@ -5,7 +5,7 @@ part 'text_scale_setting.freezed.dart';
 @freezed
 class TextScaleSetting with _$TextScaleSetting {
   factory TextScaleSetting({
-    required Set<double> activeTextScales,
+    required double activeTextScale,
     required List<double> textScales,
   }) = _TextScaleSetting;
 
@@ -17,18 +17,7 @@ class TextScaleSetting with _$TextScaleSetting {
     required List<double> textScales,
   }) {
     return TextScaleSetting(
-      activeTextScales: textScales.take(1).toSet(),
-      textScales: textScales,
-    );
-  }
-
-  /// Sets all `textScales` as the active text scales on
-  /// startup
-  factory TextScaleSetting.allAsSelected({
-    required List<double> textScales,
-  }) {
-    return TextScaleSetting(
-      activeTextScales: textScales.toSet(),
+      activeTextScale: textScales.first,
       textScales: textScales,
     );
   }

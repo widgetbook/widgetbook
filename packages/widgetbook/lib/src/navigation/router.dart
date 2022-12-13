@@ -7,8 +7,12 @@ import 'package:widgetbook/src/widgetbook_page.dart';
 
 void navigate(BuildContext context) {
   final addons = context.read<AddOnProvider>().value;
+
+  //final queryParameters = addons.map((addon) => addon) as Map<String, String>;
+
   final queryParameters = {
-    for (final addon in addons) addon.name: addon.getQueryParameter(context)
+    for (final addon in addons)
+      addon.name: addon.getQueryParameter(context).toString()
   };
 
   final usecase = context.read<PreviewProvider>().state.selectedUseCase;

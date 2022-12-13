@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LocalizationSetting {
-  Set<Locale> get activeLocales => throw _privateConstructorUsedError;
+  Locale get activeLocale => throw _privateConstructorUsedError;
   List<Locale> get locales => throw _privateConstructorUsedError;
   List<LocalizationsDelegate<dynamic>> get localizationsDelegates =>
       throw _privateConstructorUsedError;
@@ -32,7 +32,7 @@ abstract class $LocalizationSettingCopyWith<$Res> {
           LocalizationSetting value, $Res Function(LocalizationSetting) then) =
       _$LocalizationSettingCopyWithImpl<$Res>;
   $Res call(
-      {Set<Locale> activeLocales,
+      {Locale activeLocale,
       List<Locale> locales,
       List<LocalizationsDelegate<dynamic>> localizationsDelegates});
 }
@@ -48,15 +48,15 @@ class _$LocalizationSettingCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? activeLocales = freezed,
+    Object? activeLocale = freezed,
     Object? locales = freezed,
     Object? localizationsDelegates = freezed,
   }) {
     return _then(_value.copyWith(
-      activeLocales: activeLocales == freezed
-          ? _value.activeLocales
-          : activeLocales // ignore: cast_nullable_to_non_nullable
-              as Set<Locale>,
+      activeLocale: activeLocale == freezed
+          ? _value.activeLocale
+          : activeLocale // ignore: cast_nullable_to_non_nullable
+              as Locale,
       locales: locales == freezed
           ? _value.locales
           : locales // ignore: cast_nullable_to_non_nullable
@@ -77,7 +77,7 @@ abstract class _$$_LocalizationSettingCopyWith<$Res>
       __$$_LocalizationSettingCopyWithImpl<$Res>;
   @override
   $Res call(
-      {Set<Locale> activeLocales,
+      {Locale activeLocale,
       List<Locale> locales,
       List<LocalizationsDelegate<dynamic>> localizationsDelegates});
 }
@@ -95,15 +95,15 @@ class __$$_LocalizationSettingCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? activeLocales = freezed,
+    Object? activeLocale = freezed,
     Object? locales = freezed,
     Object? localizationsDelegates = freezed,
   }) {
     return _then(_$_LocalizationSetting(
-      activeLocales: activeLocales == freezed
-          ? _value._activeLocales
-          : activeLocales // ignore: cast_nullable_to_non_nullable
-              as Set<Locale>,
+      activeLocale: activeLocale == freezed
+          ? _value.activeLocale
+          : activeLocale // ignore: cast_nullable_to_non_nullable
+              as Locale,
       locales: locales == freezed
           ? _value._locales
           : locales // ignore: cast_nullable_to_non_nullable
@@ -120,21 +120,15 @@ class __$$_LocalizationSettingCopyWithImpl<$Res>
 
 class _$_LocalizationSetting implements _LocalizationSetting {
   _$_LocalizationSetting(
-      {required final Set<Locale> activeLocales,
+      {required this.activeLocale,
       required final List<Locale> locales,
       required final List<LocalizationsDelegate<dynamic>>
           localizationsDelegates})
-      : _activeLocales = activeLocales,
-        _locales = locales,
+      : _locales = locales,
         _localizationsDelegates = localizationsDelegates;
 
-  final Set<Locale> _activeLocales;
   @override
-  Set<Locale> get activeLocales {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableSetView(_activeLocales);
-  }
-
+  final Locale activeLocale;
   final List<Locale> _locales;
   @override
   List<Locale> get locales {
@@ -151,7 +145,7 @@ class _$_LocalizationSetting implements _LocalizationSetting {
 
   @override
   String toString() {
-    return 'LocalizationSetting(activeLocales: $activeLocales, locales: $locales, localizationsDelegates: $localizationsDelegates)';
+    return 'LocalizationSetting(activeLocale: $activeLocale, locales: $locales, localizationsDelegates: $localizationsDelegates)';
   }
 
   @override
@@ -160,7 +154,7 @@ class _$_LocalizationSetting implements _LocalizationSetting {
         (other.runtimeType == runtimeType &&
             other is _$_LocalizationSetting &&
             const DeepCollectionEquality()
-                .equals(other._activeLocales, _activeLocales) &&
+                .equals(other.activeLocale, activeLocale) &&
             const DeepCollectionEquality().equals(other._locales, _locales) &&
             const DeepCollectionEquality().equals(
                 other._localizationsDelegates, _localizationsDelegates));
@@ -169,7 +163,7 @@ class _$_LocalizationSetting implements _LocalizationSetting {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_activeLocales),
+      const DeepCollectionEquality().hash(activeLocale),
       const DeepCollectionEquality().hash(_locales),
       const DeepCollectionEquality().hash(_localizationsDelegates));
 
@@ -182,13 +176,13 @@ class _$_LocalizationSetting implements _LocalizationSetting {
 
 abstract class _LocalizationSetting implements LocalizationSetting {
   factory _LocalizationSetting(
-      {required final Set<Locale> activeLocales,
+      {required final Locale activeLocale,
       required final List<Locale> locales,
       required final List<LocalizationsDelegate<dynamic>>
           localizationsDelegates}) = _$_LocalizationSetting;
 
   @override
-  Set<Locale> get activeLocales;
+  Locale get activeLocale;
   @override
   List<Locale> get locales;
   @override

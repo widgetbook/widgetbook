@@ -6,6 +6,7 @@ import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/addons/text_scale_addon/text_scale_provider.dart';
 import 'package:widgetbook/src/addons/text_scale_addon/text_scale_selection_provider.dart';
 import 'package:widgetbook/src/addons/text_scale_addon/text_scale_setting.dart';
+import 'package:widgetbook/src/addons/utilities/utilities.dart';
 import 'package:widgetbook/src/addons/widgets/addon_option_list.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 
@@ -19,35 +20,26 @@ class TextScaleAddon extends WidgetbookAddOn {
               _wrapperBuilder(context, child, routerData, setting),
           builder: _builder,
           providerBuilder: _providerBuilder,
-          selectionCount: _selectionCount,
           getQueryParameter: _getQueryParameter,
         );
 }
 
-String _getQueryParameter(BuildContext context) {
-  final selectedItems =
-      context.read<TextScaleSettingProvider>().value.activeTextScales;
+Map _getQueryParameter(BuildContext context) {
+  final selectedItem =
+      context.read<TextScaleSettingProvider>().value.activeTextScale;
 
-  return selectedItems
-      .map(
-        (e) => e.toStringAsExponential(2),
-      )
-      .join(',');
-}
-
-int _selectionCount(BuildContext context) {
-  return context.read<TextScaleSettingProvider>().value.activeTextScales.length;
+  return <String, dynamic>{'selection': selectedItem.toStringAsExponential(2)};
 }
 
 Widget _builder(BuildContext context) {
   final data = context.watch<TextScaleSettingProvider>().value;
   final textScales = data.textScales;
-  final activeTextScales = data.activeTextScales;
+  final activeTextScale = data.activeTextScale;
 
   return AddonOptionList<double>(
     name: 'Text scales',
     options: textScales,
-    selectedOptions: activeTextScales,
+    selectedOption: activeTextScale,
     builder: (item) => Text(item.toStringAsFixed(2)),
     onTap: (item) {
       context.read<TextScaleSettingProvider>().tapped(item);
@@ -63,8 +55,17 @@ Widget _wrapperBuilder(
   Map<String, dynamic> routerData,
   TextScaleSetting data,
 ) {
-  final activeTextScalesString = routerData['text-scales'] as String?;
-  final selectedTextScales = <double>[];
+  final activeTextScalesStringData = routerData['text-scales'] as String?;
+
+  final activeTextScalesString = activeTextScalesStringData != null
+      ? context.jsonToString(
+          data: activeTextScalesStringData,
+          addonItem: 'selection',
+        )
+      : null;
+
+  double? selectedTextScale;
+
   if (activeTextScalesString != null) {
     final activeTextScales = activeTextScalesString.split(',');
     final mapTextScales = {
@@ -73,13 +74,13 @@ Widget _wrapperBuilder(
 
     for (final activeTextScale in activeTextScales) {
       if (mapTextScales.containsKey(activeTextScale)) {
-        selectedTextScales.add(mapTextScales[activeTextScale]!);
+        selectedTextScale = mapTextScales[activeTextScale];
       }
     }
   }
 
-  final initialData = selectedTextScales.isNotEmpty
-      ? data.copyWith(activeTextScales: selectedTextScales.toSet())
+  final initialData = selectedTextScale != null
+      ? data.copyWith(activeTextScale: selectedTextScale)
       : data;
 
   return ChangeNotifierProvider(
@@ -90,12 +91,10 @@ Widget _wrapperBuilder(
 
 SingleChildWidget _providerBuilder(
   BuildContext context,
-  int index,
 ) {
   final selection = context.watch<TextScaleSettingProvider>().value;
-  final textScale = selection.activeTextScales.isEmpty
-      ? selection.textScales.first
-      : selection.activeTextScales.elementAt(index);
+  final textScale = selection.activeTextScale;
+
   return ChangeNotifierProvider(
     key: ValueKey(textScale),
     create: (context) => TextScaleProvider(textScale),
