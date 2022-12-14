@@ -35,6 +35,7 @@ AppBuilderFunction get materialAppBuilder =>
       final frameBuilder = context.frameBuilder;
       return frameBuilder(
         context,
+        // This is the culprit. The MaterialApp takes the context of Widgetbook
         MaterialApp(
           theme: context.materialTheme,
           locale: context.localization.activeLocale,
@@ -52,7 +53,7 @@ AppBuilderFunction get materialAppBuilder =>
         ),
       );
     };
-
+// This is the culprit. The CupertinoApp takes the context of Widgetbook
 AppBuilderFunction get cupertinoAppBuilder =>
     (BuildContext context, Widget child) {
       final _router = getRouter(child);

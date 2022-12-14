@@ -30,16 +30,18 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppTheme.of(context).color,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Text(
-              'This is the home page',
-            ),
-          ],
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: AppTheme.of(context).color,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Screen Widgth ${MediaQuery.of(context).size.width} -  Screen Height ${MediaQuery.of(context).size.height}',
+              ),
+            ],
+          ),
         ),
       ),
     );

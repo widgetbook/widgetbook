@@ -5,6 +5,7 @@ import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_example/models/meal.dart';
 import 'package:widgetbook_example/themes/dark_theme.dart';
 import 'package:widgetbook_example/themes/light_theme.dart';
+import 'package:widgetbook_example/widgets/attributes/media_query_performance_widget.dart';
 import 'package:widgetbook_example/widgets/attributes/price_attribute.dart';
 import 'package:widgetbook_example/widgets/attributes/weight_attribute.dart';
 import 'package:widgetbook_example/widgets/ingredients.dart';
@@ -250,6 +251,10 @@ class HotreloadWidgetbook extends StatelessWidget {
                       builder: (context) => WeightAttribute(
                         weight: 1050,
                       ),
+                    ),
+                    WidgetbookUseCase(
+                      name: 'Media Query',
+                      builder: (context) => MediaQueryPerformanceWidget(),
                     ),
                   ],
                 ),
