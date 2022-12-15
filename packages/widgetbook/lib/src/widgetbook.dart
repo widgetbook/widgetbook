@@ -155,7 +155,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
         ChangeNotifierProvider.value(value: organizerProvider),
         ChangeNotifierProvider.value(value: previewProvider),
         ChangeNotifierProvider.value(value: appInfoProvider),
-        ChangeNotifierProvider.value(value: builderProvider),
+        ChangeNotifierProvider(create: (context) => builderProvider),
         ChangeNotifierProvider(
           create: (_) => AddOnProvider(widget.addons),
         ),
