@@ -1,6 +1,7 @@
 import 'package:widgetbook_git/widgetbook_git.dart';
 
 import '../../bin/models/models.dart';
+import '../../bin/models/publish_args.dart';
 import '../../bin/review/devices/models/device_data.dart';
 import '../../bin/review/locales/models/locale_data.dart';
 import '../../bin/review/text_scale_factors/models/text_scale_factor_data.dart';
@@ -18,8 +19,26 @@ class TestData {
     path: 'path',
   );
 
-  static final ciArgs =
-      CiArgs(vendor: 'Local', repository: 'respository', actor: 'John Doe');
+  static final args = PublishArgs(
+    apiKey: 'apiKey',
+    branch: 'branch',
+    commit: 'commit',
+    gitProvider: 'gitProvider',
+    gitHubToken: 'gitHubToken',
+    prNumber: 'prNumber',
+    baseBranch: 'baseBranch',
+    baseSha: 'a' * 40,
+    path: 'path',
+    vendor: 'Local',
+    repository: 'respository',
+    actor: 'John Doe',
+  );
+
+  static const ciArgs = CiArgs(
+    vendor: 'Local',
+    repository: 'respository',
+    actor: 'John Doe',
+  );
 
   static final branches = BranchReference(
     'sha',
