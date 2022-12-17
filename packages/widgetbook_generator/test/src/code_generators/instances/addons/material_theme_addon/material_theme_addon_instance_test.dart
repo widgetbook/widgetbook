@@ -1,5 +1,4 @@
-import 'package:test/expect.dart';
-import 'package:test/scaffolding.dart';
+import 'package:test/test.dart';
 import 'package:widgetbook_generator/code_generators/instances/instances.dart';
 
 import '../../../../mocks/mocks.dart';

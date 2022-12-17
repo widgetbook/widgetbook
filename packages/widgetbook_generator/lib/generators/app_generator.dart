@@ -1,6 +1,6 @@
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/code_generators/instances/addons/addon_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/addons/material_theme_addon/material_theme_addon_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/addons/addons.dart';
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/variable_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
@@ -37,6 +37,8 @@ String generateWidgetbook({
   if (constructor == WidgetbookConstructor.material) {
     addons.add(MaterialThemeAddonInstance(themes: themes));
   }
+
+  addons.add(TextScaleAddonInstance(textScales: textScaleFactors));
 
   final widgetbookInstanceCode = WidgetbookInstance(
     constructor: constructor,

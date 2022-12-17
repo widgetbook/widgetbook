@@ -1,7 +1,8 @@
 ## 3.0.0-beta.1
 
-- feat: add `MaterialThemeAddon` to generator
 - **BREAKING**: refactor: remove `DeviceFrameBuilderResolver`, `LocalizationBuilderResolver`, `ScaffoldBuilderResolver`, `ThemeBuilderResolver`, `UseCaseBuilderResolver`.
+- feat: add `MaterialThemeAddon` to generator
+- feat: add `TextScaleAddon` to generator
 
 ## 2.4.1
 
