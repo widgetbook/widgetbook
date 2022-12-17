@@ -4,6 +4,7 @@
         "widgetbook",
         "cli",
         "core",
-        "annotation"
+        "annotation",
+        "generator"
     ]
 }
