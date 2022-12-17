@@ -11,15 +11,10 @@ import 'package:widgetbook_generator/generators/app_generator.dart';
 import 'package:widgetbook_generator/generators/imports_generator.dart';
 import 'package:widgetbook_generator/generators/main_generator.dart';
 import 'package:widgetbook_generator/models/widgetbook_app_builder_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_device_frame_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_localization_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_localizations_delegates_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_scaffold_builder_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_theme_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_type_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_use_case_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
 import 'package:widgetbook_generator/readers/device_reader.dart';
 
@@ -40,44 +35,10 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
       WidgetbookUseCaseData.fromJson,
     );
 
-    final deviceFrameBuilder =
-        await _loadDataFromJson<WidgetbookDeviceFrameData>(
-      buildStep,
-      '**.deviceframebuilder.widgetbook.json',
-      WidgetbookDeviceFrameData.fromJson,
-    );
-
-    final localizationBuilder =
-        await _loadDataFromJson<WidgetbookLocalizationBuilderData>(
-      buildStep,
-      '**.localizationbuilder.widgetbook.json',
-      WidgetbookLocalizationBuilderData.fromJson,
-    );
-
     final appBuilder = await _loadDataFromJson<WidgetbookAppBuilderData>(
       buildStep,
       '**.appbuilder.widgetbook.json',
-      (json) => WidgetbookAppBuilderData.fromJson(json),
-    );
-
-    final scaffoldBuilder =
-        await _loadDataFromJson<WidgetbookScaffoldBuilderData>(
-      buildStep,
-      '**.scaffoldbuilder.widgetbook.json',
-      WidgetbookScaffoldBuilderData.fromJson,
-    );
-
-    final themeBuilder = await _loadDataFromJson<WidgetbookThemeBuilderData>(
-      buildStep,
-      '**.themebuilder.widgetbook.json',
-      WidgetbookThemeBuilderData.fromJson,
-    );
-
-    final useCaseBuilder =
-        await _loadDataFromJson<WidgetbookUseCaseBuilderData>(
-      buildStep,
-      '**.usecasebuilder.widgetbook.json',
-      WidgetbookUseCaseBuilderData.fromJson,
+      WidgetbookAppBuilderData.fromJson,
     );
 
     final locales = await _getLocales(buildStep);
@@ -120,16 +81,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
           widgetsExpanded: widgetsExpanded,
           localesData: locales,
           localizationDelegatesData: localizationDelegates,
-          deviceFrameBuilder:
-              deviceFrameBuilder.isNotEmpty ? deviceFrameBuilder.first : null,
-          localizationBuilder:
-              localizationBuilder.isNotEmpty ? localizationBuilder.first : null,
           appBuilder: appBuilder.isNotEmpty ? appBuilder.first : null,
-          scaffoldBuilder:
-              scaffoldBuilder.isNotEmpty ? scaffoldBuilder.first : null,
-          themeBuilder: themeBuilder.isNotEmpty ? themeBuilder.first : null,
-          useCaseBuilder:
-              useCaseBuilder.isNotEmpty ? useCaseBuilder.first : null,
         ),
       );
 
