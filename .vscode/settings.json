@@ -3,6 +3,7 @@
     "conventionalCommits.scopes": [
         "widgetbook",
         "cli",
-        "core"
+        "core",
+        "annotation"
     ]
 }
