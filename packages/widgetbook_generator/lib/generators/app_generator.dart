@@ -1,5 +1,4 @@
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
-import 'package:widgetbook_generator/code_generators/instances/addons/addon_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/addons/addons.dart';
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/variable_instance.dart';
@@ -39,6 +38,14 @@ String generateWidgetbook({
   }
 
   addons.add(TextScaleAddonInstance(textScales: textScaleFactors));
+  if (localesData != null && localizationDelegatesData != null) {
+    addons.add(
+      LocalizationAddonInstance(
+        localesData: localesData,
+        localizationDelegatesData: localizationDelegatesData,
+      ),
+    );
+  }
 
   final widgetbookInstanceCode = WidgetbookInstance(
     constructor: constructor,

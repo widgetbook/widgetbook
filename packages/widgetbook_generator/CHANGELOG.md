@@ -3,6 +3,7 @@
 - **BREAKING**: refactor: remove `DeviceFrameBuilderResolver`, `LocalizationBuilderResolver`, `ScaffoldBuilderResolver`, `ThemeBuilderResolver`, `UseCaseBuilderResolver`.
 - feat: add `MaterialThemeAddon` to generator
 - feat: add `TextScaleAddon` to generator
+- feat: add `LocalizationAddon` to generator
 
 ## 2.4.1
 
