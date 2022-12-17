@@ -31,6 +31,8 @@ class MockArgResults extends Mock implements ArgResults {}
 
 class MockCiParserRunner extends Mock implements CiParserRunner {}
 
+class MockCiParser extends Mock implements CiParser {}
+
 class MockWidgetbookZipEncoder extends Mock implements WidgetbookZipEncoder {}
 
 class MockGitDir extends Mock implements GitDir {}

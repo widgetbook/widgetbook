@@ -105,7 +105,7 @@ class __$$_CiArgsCopyWithImpl<$Res> extends _$CiArgsCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_CiArgs implements _CiArgs {
-  _$_CiArgs({this.actor, this.repository, required this.vendor});
+  const _$_CiArgs({this.actor, this.repository, required this.vendor});
 
   @override
   final String? actor;
@@ -144,7 +144,7 @@ class _$_CiArgs implements _CiArgs {
 }
 
 abstract class _CiArgs implements CiArgs {
-  factory _CiArgs(
+  const factory _CiArgs(
       {final String? actor,
       final String? repository,
       required final String vendor}) = _$_CiArgs;

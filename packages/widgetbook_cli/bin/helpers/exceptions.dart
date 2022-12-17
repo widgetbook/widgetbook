@@ -24,6 +24,14 @@ class WidgetbookPublishReviewException implements WidgetbookException {
   String get message => _message!;
 }
 
+class CiVendorNotSupported extends WidgetbookException {
+  CiVendorNotSupported({
+    String? message,
+  }) : super(
+          message ?? 'Your CI/CD pipeline provider is currently not supported.',
+        );
+}
+
 class ExitedByUser extends WidgetbookException {
   ExitedByUser({
     String? message,
@@ -44,6 +52,13 @@ class GitDirectoryNotFound extends WidgetbookException {
   GitDirectoryNotFound({
     String? message,
   }) : super(message ?? 'Argument "path" is not a Git directory.');
+}
+
+class ReviewNotFoundException extends WidgetbookException {
+  ReviewNotFoundException({String? message})
+      : super(
+          message ?? 'No review information found',
+        );
 }
 
 class FileNotFoundException implements WidgetbookException {
