@@ -3,16 +3,11 @@ import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_generator/builders/json_builder.dart';
 import 'package:widgetbook_generator/generators/widgetbook_generator.dart';
 import 'package:widgetbook_generator/resolvers/app_builder_resolver.dart';
-import 'package:widgetbook_generator/resolvers/device_frame_builder_resolver.dart';
 import 'package:widgetbook_generator/resolvers/device_resolver.dart';
 import 'package:widgetbook_generator/resolvers/locales_resolver.dart';
-import 'package:widgetbook_generator/resolvers/localization_builder_resolver.dart';
 import 'package:widgetbook_generator/resolvers/localization_delegates_resolver.dart';
-import 'package:widgetbook_generator/resolvers/scaffold_builder_resolver.dart';
 import 'package:widgetbook_generator/resolvers/text_scale_factor_resolver.dart';
-import 'package:widgetbook_generator/resolvers/theme_builder_resolver.dart';
 import 'package:widgetbook_generator/resolvers/theme_resolver.dart';
-import 'package:widgetbook_generator/resolvers/use_case_builder_resolver.dart';
 import 'package:widgetbook_generator/resolvers/use_case_resolver.dart';
 
 /// Builder for the WidgetbookTheme annotation.
@@ -80,24 +75,6 @@ Builder localizationDelegatesBuilder(BuilderOptions options) {
   );
 }
 
-/// Builder for [DeviceFrameBuilderResolver]
-Builder deviceFrameBuilder(BuilderOptions options) {
-  return JsonLibraryBuilder(
-    DeviceFrameBuilderResolver(),
-    formatOutput: _formatOutput,
-    generatedExtension: '.deviceframebuilder.widgetbook.json',
-  );
-}
-
-/// Builder for [LocalizationBuilderResolver]
-Builder localizationBuilder(BuilderOptions options) {
-  return JsonLibraryBuilder(
-    LocalizationBuilderResolver(),
-    formatOutput: _formatOutput,
-    generatedExtension: '.localizationbuilder.widgetbook.json',
-  );
-}
-
 /// Builder for the AppBuilder annotation.
 /// Creates a .appbuilder.widgetbook.json file for each .dart file containing a
 /// AppBuilder annotation
@@ -106,33 +83,6 @@ Builder appResolverBuilder(BuilderOptions options) {
     AppBuilderResolver(),
     generatedExtension: '.appbuilder.widgetbook.json',
     formatOutput: _formatOutput,
-  );
-}
-
-/// Builder for [ScaffoldBuilderResolver]
-Builder scaffoldBuilder(BuilderOptions options) {
-  return JsonLibraryBuilder(
-    ScaffoldBuilderResolver(),
-    formatOutput: _formatOutput,
-    generatedExtension: '.scaffoldbuilder.widgetbook.json',
-  );
-}
-
-/// Builder for [ThemeBuilderResolver]
-Builder themeResolverBuilder(BuilderOptions options) {
-  return JsonLibraryBuilder(
-    ThemeBuilderResolver(),
-    formatOutput: _formatOutput,
-    generatedExtension: '.themebuilder.widgetbook.json',
-  );
-}
-
-/// Builder for [UseCaseBuilderResolver]
-Builder useCaseBuilder(BuilderOptions options) {
-  return JsonLibraryBuilder(
-    UseCaseBuilderResolver(),
-    formatOutput: _formatOutput,
-    generatedExtension: '.usecasebuilder.widgetbook.json',
   );
 }
 
