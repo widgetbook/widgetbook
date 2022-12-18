@@ -46,6 +46,7 @@ String generateWidgetbook({
       ),
     );
   }
+  addons.add(FrameAddonInstance(devices: devices));
 
   final widgetbookInstanceCode = WidgetbookInstance(
     constructor: constructor,
