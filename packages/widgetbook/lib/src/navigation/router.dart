@@ -54,7 +54,7 @@ GoRouter createRouter({
   required PreviewProvider previewProvider,
 }) {
   final router = GoRouter(
-    redirect: (context, routerState) {
+    redirect: (routerState) {
       final path = routerState.queryParams['path'];
 
       previewProvider.selectUseCaseByPath(path);
