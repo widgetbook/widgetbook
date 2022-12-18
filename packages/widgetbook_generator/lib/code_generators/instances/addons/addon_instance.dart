@@ -5,8 +5,10 @@ class AddOnInstance extends Instance {
   const AddOnInstance({
     required String name,
     required List<Property> properties,
+    List<String> genericParameters = const <String>[],
   }) : super(
           name: name,
           properties: properties,
+          genericParameters: genericParameters,
         );
 }

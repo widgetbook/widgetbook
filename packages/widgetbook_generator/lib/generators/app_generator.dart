@@ -1,5 +1,6 @@
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/code_generators/instances/addons/addons.dart';
+import 'package:widgetbook_generator/code_generators/instances/addons/theme_addon/theme_addon.dart';
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/variable_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
@@ -33,8 +34,35 @@ String generateWidgetbook({
       _generateCategoryInstance(useCases, foldersExpanded, widgetsExpanded);
 
   final addons = <AddOnInstance>[];
-  if (constructor == WidgetbookConstructor.material) {
-    addons.add(MaterialThemeAddonInstance(themes: themes));
+  switch (constructor) {
+    case WidgetbookConstructor.material:
+      addons.add(
+        CustomThemeAddonInstance(
+          themes: themes,
+          themeType: 'ThemeData',
+        ),
+      );
+      break;
+    case WidgetbookConstructor.cupertino:
+      addons.add(
+        CustomThemeAddonInstance(
+          themes: themes,
+          themeType: 'CupertinoThemeData',
+        ),
+      );
+      break;
+    case WidgetbookConstructor.custom:
+      if (widgetbookThemeData != null) {
+        addons.add(
+          CustomThemeAddonInstance(
+            themes: themes,
+            themeType: widgetbookThemeData.name,
+          ),
+        );
+      } else {
+        // TODO handle error
+      }
+      break;
   }
 
   addons.add(TextScaleAddonInstance(textScales: textScaleFactors));

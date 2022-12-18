@@ -4,6 +4,8 @@
 - feat: add `MaterialThemeAddon` to generator
 - feat: add `TextScaleAddon` to generator
 - feat: add `LocalizationAddon` to generator
+- feat: add `FrameAddon` to generator
+- feat: add `CustomThemeAddon` to generator
 
 ## 2.4.1
 
