@@ -11,7 +11,7 @@ class LocalizationAddonInstance extends AddOnInstance {
           name: 'LocalizationAddon',
           properties: [
             Property(
-              key: 'settings',
+              key: 'setting',
               instance: LocalizationSettingInstance(
                 localesData: localesData,
                 localizationDelegatesData: localizationDelegatesData,

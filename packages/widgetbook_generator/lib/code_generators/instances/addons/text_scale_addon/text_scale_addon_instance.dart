@@ -9,7 +9,7 @@ class TextScaleAddonInstance extends AddOnInstance {
           name: 'TextScaleAddon',
           properties: [
             Property(
-              key: 'settings',
+              key: 'setting',
               instance: TextScaleSettingInstance(
                 textScales: textScales,
               ),

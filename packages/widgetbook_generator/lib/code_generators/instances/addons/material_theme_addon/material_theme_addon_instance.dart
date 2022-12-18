@@ -10,7 +10,7 @@ class MaterialThemeAddonInstance extends AddOnInstance {
           name: 'MaterialThemeAddon',
           properties: [
             Property(
-              key: 'settings',
+              key: 'setting',
               instance: MaterialThemeSettingInstance(
                 themes: themes,
                 defaultTheme: themes.firstWhere(
