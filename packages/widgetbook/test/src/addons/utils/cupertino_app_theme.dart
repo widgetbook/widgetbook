@@ -19,7 +19,7 @@ final yellowCupertinoWidgetbookTheme =
     WidgetbookTheme(name: 'Yellow', data: yellowtheme);
 
 final cupertinoThemeSetting = CupertinoThemeSetting(
-  activeThemes: {blueCupertinoWidgetbookTheme},
+  activeTheme: blueCupertinoWidgetbookTheme,
   themes: [blueCupertinoWidgetbookTheme, yellowCupertinoWidgetbookTheme],
 );
 

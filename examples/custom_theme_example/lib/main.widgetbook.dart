@@ -42,23 +42,22 @@ class HotReload extends StatelessWidget {
         ),
       ),
     ];
-    final deviceFrameBuilder = DeviceFrameBuilder(
-      devices: devices,
+    final deviceFrameBuilder = DefaultDeviceFrame(
+      setting: DeviceSetting.firstAsSelected(devices: devices),
     );
-    final activeFrameBuilder = WidgetbookFrameBuilder(
-      devices: devices,
+
+    final activeFrameBuilder = WidgetbookFrame(
+      setting: DeviceSetting.firstAsSelected(devices: devices),
     );
+
     return Widgetbook(
         addons: [
-          DeviceAddon(
-            data: DeviceSelection(
-              activeFrameBuilder: activeFrameBuilder,
-              frameBuilders: [
-                activeFrameBuilder,
-                deviceFrameBuilder,
-              ],
-            ),
-          ),
+          FrameAddon(
+              setting: FrameSetting.firstAsSelected(frames: [
+            deviceFrameBuilder,
+            NoFrame(),
+            activeFrameBuilder,
+          ])),
           CustomThemeAddon<AppThemeData>(
             themeSetting: CustomThemeSetting.firstAsSelected(
               themes: [widgetbookTheme, widgetbookTheme2],
@@ -96,7 +95,7 @@ class HotReload extends StatelessWidget {
           final theme = context.theme<AppThemeData>();
           return AppTheme(
             data: theme,
-            child: frameBuilder.builder(context, child),
+            child: frameBuilder(context, child),
           );
         });
   }

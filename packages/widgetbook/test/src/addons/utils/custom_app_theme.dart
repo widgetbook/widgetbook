@@ -42,7 +42,7 @@ final yellowCustomWidgetbookTheme = WidgetbookTheme<AppThemeData>(
 );
 
 final customThemeSetting = CustomThemeSetting(
-  activeThemes: {blueCustomWidgetbookTheme},
+  activeTheme: blueCustomWidgetbookTheme,
   themes: [blueCustomWidgetbookTheme, yellowCustomWidgetbookTheme],
 );
 

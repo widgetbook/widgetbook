@@ -5,11 +5,28 @@ import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/navigation/preview_provider.dart';
 import 'package:widgetbook/src/widgetbook_page.dart';
 
+T? parseRouterData<T>({
+  required String name,
+  required Map<String, dynamic> routerData,
+  required Map<String, T> mappedData,
+}) {
+  final value = routerData[name] as String?;
+  T? selectedValue;
+
+  if (value != null) {
+    if (mappedData.containsKey(value)) {
+      selectedValue = mappedData[value];
+    }
+  }
+  return selectedValue;
+}
+
 void navigate(BuildContext context) {
   final addons = context.read<AddOnProvider>().value;
-  final queryParameters = {
-    for (final addon in addons) addon.name: addon.getQueryParameter(context)
-  };
+  final queryParameters = <String, String>{};
+  for (final addon in addons) {
+    queryParameters.addAll(addon.getQueryParameter(context));
+  }
 
   final usecase = context.read<PreviewProvider>().state.selectedUseCase;
   if (usecase != null) {

@@ -1,20 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/addons/addons.dart';
 import 'package:widgetbook/src/addons/theme_addon/theme_selection_provider.dart';
 import 'package:widgetbook/src/workbench/renderer.dart';
+import 'package:widgetbook/widgetbook.dart';
 
+import 'utils/addon_test_helper.dart';
 import 'utils/addons.dart';
 import 'utils/custom_app_theme.dart';
+import 'utils/extensions/widget_tester_extension.dart';
 import 'utils/theme_wrapper.dart';
 
+Widget customThemeAddonWrapper({
+  required Widget child,
+  WidgetbookTheme<AppThemeData>? activeTheme,
+}) {
+  return addOnProviderWrapper<dynamic>(
+    child: child,
+    addons: [
+      CustomThemeAddon<AppThemeData>(
+        themeSetting: customThemeSetting.copyWith(
+          activeTheme: activeTheme,
+        ),
+      ),
+    ],
+  );
+}
+
 void main() {
-  late Renderer sut;
+  late Renderer renderer;
   final rendererKey = GlobalKey();
 
   setUp(() {
-    sut = Renderer(
+    renderer = Renderer(
       key: rendererKey,
       appBuilder: (context, child) {
         final theme = context.theme<AppThemeData>();
@@ -36,7 +54,7 @@ void main() {
       (WidgetTester tester) async {
         await ensureCorrectThemeIsRendered<AppThemeData>(
           tester: tester,
-          sut: sut,
+          sut: renderer,
           addons: [
             customThemeAddon,
           ],
@@ -45,79 +63,84 @@ void main() {
     );
 
     testWidgets(
-      'renders theme side by side when 2 active themes are activated',
+      'renders with 1 active theme',
       (WidgetTester tester) async {
-        await renderAddonSideBySide<AppThemeData>(
-          itemsCollection: coloredBoxColorList,
-          expectedValues: <Color>[
-            colorBlue,
-            colorYellow,
-          ],
-          itemsKey: coloredBoxKey,
+        await testAddon(
           tester: tester,
-          sut: sut,
-          addons: [
-            CustomThemeAddon<AppThemeData>(
-              themeSetting: customThemeSetting.copyWith(
-                activeThemes: {
-                  blueCustomWidgetbookTheme,
-                  yellowCustomWidgetbookTheme
-                },
-              ),
-            ),
-          ],
+          build: (child) => customThemeAddonWrapper(
+            child: child,
+            activeTheme: blueCustomWidgetbookTheme,
+          ),
+          child: renderer,
+          expect: () {
+            final context = tester.findContextByKey(coloredBoxKey);
+
+            final coloredBoxFromContext =
+                context.read<ThemeSettingProvider<AppThemeData>>();
+            expect(
+              coloredBoxFromContext.value.activeTheme,
+              equals(blueCustomWidgetbookTheme),
+            );
+
+            expectThemeColor(colorData: colorBlue);
+          },
         );
       },
     );
     testWidgets(
-      'can activate yellowCustomWidgetbookTheme when $ThemeSettingProvider..tapped(yellowCustomWidgetbookThemeomTheme2) is called',
+      'can activate yellowCustomWidgetbookTheme when $ThemeSettingProvider..tapped(yellowCustomWidgetbookTheme) is called',
       (WidgetTester tester) async {
-        await renderAddonSideBySide<AppThemeData>(
-          itemsKey: coloredBoxKey,
-          itemsCollection: coloredBoxColorList,
+        await testAddon(
           tester: tester,
-          sut: sut,
-          addons: [
-            customThemeAddon,
-          ],
-          shouldUpdate: true,
-          updateAddon: (context) async =>
-              context.read<ThemeSettingProvider<AppThemeData>>().tapped(
-                    yellowCustomWidgetbookTheme,
-                  ),
-          expectedValues: <Color>[
-            colorBlue,
-            colorYellow,
-          ],
+          build: (child) => customThemeAddonWrapper(
+            child: child,
+            activeTheme: blueCustomWidgetbookTheme,
+          ),
+          child: renderer,
+          act: (context) async => context
+              .read<ThemeSettingProvider<AppThemeData>>()
+              .tapped(yellowCustomWidgetbookTheme),
+          expect: () {
+            final context = tester.findContextByKey(coloredBoxKey);
+
+            final coloredBoxFromContext =
+                context.read<ThemeSettingProvider<AppThemeData>>();
+            expect(
+              coloredBoxFromContext.value.activeTheme,
+              equals(yellowCustomWidgetbookTheme),
+            );
+
+            expectThemeColor(colorData: colorYellow);
+          },
         );
       },
     );
     testWidgets(
-      'can de-activate yellowCustomWidgetbookTheme when $ThemeSettingProvider..tapped(yellowCustomWidgetbookTheme) is called',
+      'activates theme in order',
       (WidgetTester tester) async {
-        await renderAddonSideBySide<AppThemeData>(
-          itemsKey: coloredBoxKey,
-          itemsCollection: coloredBoxColorList,
+        await testAddon(
           tester: tester,
-          sut: sut,
-          addons: [
-            CustomThemeAddon<AppThemeData>(
-              themeSetting: customThemeSetting.copyWith(
-                activeThemes: {
-                  blueCustomWidgetbookTheme,
-                  yellowCustomWidgetbookTheme
-                },
-              ),
-            ),
-          ],
-          shouldUpdate: true,
-          updateAddon: (context) async =>
-              context.read<ThemeSettingProvider<AppThemeData>>().tapped(
-                    yellowCustomWidgetbookTheme,
-                  ),
-          expectedValues: <Color>[
-            colorBlue,
-          ],
+          build: (child) => customThemeAddonWrapper(
+            child: child,
+            activeTheme: blueCustomWidgetbookTheme,
+          ),
+          child: renderer,
+          act: (context) async =>
+              context.read<ThemeSettingProvider<AppThemeData>>()
+                ..tapped(yellowCustomWidgetbookTheme)
+                ..tapped(blueCustomWidgetbookTheme),
+          expect: () {
+            final context = tester.findContextByKey(coloredBoxKey);
+
+            final coloredBoxFromContext =
+                context.read<ThemeSettingProvider<AppThemeData>>();
+            expect(
+              coloredBoxFromContext.value.activeTheme,
+              equals(blueCustomWidgetbookTheme),
+            );
+
+            expectThemeColor(colorData: colorBlue);
+          },
         );
       },
     );

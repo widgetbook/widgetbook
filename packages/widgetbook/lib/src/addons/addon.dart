@@ -10,7 +10,6 @@ class WidgetbookAddOn {
     required this.wrapperBuilder,
     required this.builder,
     required this.providerBuilder,
-    required this.selectionCount,
     required this.getQueryParameter,
     this.panelSize = PanelSize.small,
   });
@@ -34,10 +33,7 @@ class WidgetbookAddOn {
 
   final SingleChildWidget Function(
     BuildContext context,
-    int index,
   ) providerBuilder;
 
-  final int Function(BuildContext context) selectionCount;
-
-  final String Function(BuildContext context) getQueryParameter;
+  final Map<String, String> Function(BuildContext context) getQueryParameter;
 }

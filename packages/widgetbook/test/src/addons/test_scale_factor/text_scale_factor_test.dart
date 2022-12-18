@@ -6,17 +6,36 @@ import 'package:widgetbook/src/addons/text_scale_addon/text_scale_selection_prov
 import 'package:widgetbook/src/workbench/renderer.dart';
 import 'package:widgetbook/widgetbook.dart';
 
+import '../utils/addon_test_helper.dart';
 import '../utils/addons.dart';
-import '../utils/custom_app_theme.dart';
+import '../utils/extensions/widget_tester_extension.dart';
 import '../utils/theme_wrapper.dart';
 
+Widget textScaleAddonWrapper({
+  required Widget child,
+  required List<double> textScales,
+  double? activeTextScale,
+}) {
+  return addOnProviderWrapper<dynamic>(
+    child: child,
+    addons: [
+      TextScaleAddon(
+        setting: TextScaleSetting(
+          activeTextScale: activeTextScale ?? textScales.first,
+          textScales: textScales,
+        ),
+      )
+    ],
+  );
+}
+
 void main() {
-  late Renderer sut;
+  late Renderer renderer;
   final rendererKey = GlobalKey();
   const mediaQueryKey = Key('MediaQuery');
 
   setUp(() {
-    sut = Renderer(
+    renderer = Renderer(
       key: rendererKey,
       appBuilder: (context, child) {
         return MediaQuery(
@@ -39,128 +58,72 @@ void main() {
     testWidgets(
       'can access text scale factor via the context',
       (WidgetTester tester) async {
-        await tester.pumpWidget(
-          addOnProviderWrapper<AppThemeData>(
-            child: sut,
-            addons: [
-              textScaleAddon,
-            ],
+        await testAddon(
+          tester: tester,
+          build: (child) => textScaleAddonWrapper(
+            child: child,
+            textScales: [1, 2],
+            activeTextScale: 1,
+          ),
+          child: renderer,
+          expect: () {
+            final context = tester.findContextByKey(textKey);
+
+            // Check if provider has expected text scale
+            final scaleFactor = context.read<TextScaleProvider>();
+            expect(scaleFactor.value, 1);
+
+            expectTextScale(textScales: 1);
+
+            // Check if media query has expected text scale
+            final mediaQueryFinder = find.byKey(mediaQueryKey);
+            final mediaQuery =
+                mediaQueryFinder.evaluate().last.widget as MediaQuery;
+            expect(mediaQuery.data.textScaleFactor, equals(1));
+          },
+        );
+      },
+    );
+
+    testWidgets(
+      'can activate a text scale factor',
+      (WidgetTester tester) async {
+        await testAddon(
+          tester: tester,
+          build: (child) => textScaleAddonWrapper(
+            child: child,
+            textScales: [1, 2],
+            activeTextScale: 1,
+          ),
+          child: renderer,
+          act: (context) async =>
+              context.read<TextScaleSettingProvider>().tapped(2),
+          expect: () => expectTextScale(
+            textScales: 2,
           ),
         );
-        await tester.pumpAndSettle();
-
-        final BuildContext context = tester.element(
-          find
-              .byKey(
-                textKey,
-              )
-              .first,
-        );
-
-        final scaleFactor = context.read<TextScaleProvider>();
-
-        expect(scaleFactor.value, 1);
-
-        final textFinder = find.byKey(textKey);
-
-        expect(textFinder, findsOneWidget);
-        final text = textFinder.evaluate().single.widget as Text;
-
-        expect(text.textScaleFactor, equals(1));
-
-        final mediaQueryFinder = find.byKey(mediaQueryKey);
-        final mediaQuery =
-            mediaQueryFinder.evaluate().last.widget as MediaQuery;
-
-        expect(mediaQuery.data.textScaleFactor, equals(1));
       },
     );
 
     testWidgets(
-      'renders text scale factor side by side when 2 text scale factor are activated',
+      'activates text scale factor in order',
       (WidgetTester tester) async {
-        await renderAddonSideBySide<AppThemeData>(
-          itemsCollection: textDoubleList,
-          expectedValues: <double>[
-            1,
-            2,
-          ],
-          itemsKey: textKey,
+        await testAddon(
           tester: tester,
-          sut: sut,
-          addons: [
-            TextScaleAddon(
-              setting: TextScaleSetting(
-                activeTextScales: {1, 2},
-                textScales: [
-                  1,
-                  2,
-                ],
-              ),
-            ),
-          ],
-        );
-      },
-    );
-    testWidgets(
-      'can set textScaleFactor 2 when $TextScaleSettingProvider..tapped(2) is called',
-      (WidgetTester tester) async {
-        await renderAddonSideBySide<AppThemeData>(
-          itemsCollection: textDoubleList,
-          expectedValues: <double>[
-            1,
-            2,
-          ],
-          itemsKey: textKey,
-          tester: tester,
-          sut: sut,
-          shouldUpdate: true,
-          updateAddon: (context) async =>
-              context.read<TextScaleSettingProvider>().tapped(
-                    2,
-                  ),
-          addons: [
-            TextScaleAddon(
-              setting: TextScaleSetting(
-                activeTextScales: {1},
-                textScales: [
-                  1,
-                  2,
-                ],
-              ),
-            ),
-          ],
-        );
-      },
-    );
-
-    testWidgets(
-      'can de-activate textScaleFactor 2 when $TextScaleSettingProvider..tapped(2) is called',
-      (WidgetTester tester) async {
-        await renderAddonSideBySide<AppThemeData>(
-          itemsCollection: textDoubleList,
-          expectedValues: <double>[
-            1,
-          ],
-          itemsKey: textKey,
-          tester: tester,
-          sut: sut,
-          shouldUpdate: true,
-          updateAddon: (context) async =>
-              context.read<TextScaleSettingProvider>().tapped(
-                    2,
-                  ),
-          addons: [
-            TextScaleAddon(
-              setting: TextScaleSetting(
-                activeTextScales: {1, 2},
-                textScales: [
-                  1,
-                  2,
-                ],
-              ),
-            ),
-          ],
+          child: renderer,
+          build: (child) => textScaleAddonWrapper(
+            child: child,
+            textScales: [1, 2, 3],
+            activeTextScale: 1,
+          ),
+          act: (context) async {
+            context.read<TextScaleSettingProvider>()
+              ..tapped(3)
+              ..tapped(2);
+          },
+          expect: () => expectTextScale(
+            textScales: 2,
+          ),
         );
       },
     );
