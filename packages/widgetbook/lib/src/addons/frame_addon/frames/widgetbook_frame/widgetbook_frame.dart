@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/addons/device_addon/frame_builders/frame_builder.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-class WidgetbookFrameBuilder extends FrameBuilder {
-  WidgetbookFrameBuilder({
-    required super.devices,
+class WidgetbookFrame extends Frame {
+  WidgetbookFrame({
+    required DeviceSetting setting,
   }) : super(
-          name: 'Widgetbook',
+          name: 'Widgetbook Frame',
+          addon: DeviceAddon(setting: setting),
+          getDefaultQueryParameters: {
+            'orientation': Orientation.portrait.name,
+            'device': setting.activeDevice.name,
+          },
         );
 
   static MediaQueryData mediaQuery({
@@ -55,7 +59,7 @@ class WidgetbookFrameBuilder extends FrameBuilder {
         width: width,
         height: height,
         child: MediaQuery(
-          data: WidgetbookFrameBuilder.mediaQuery(
+          data: WidgetbookFrame.mediaQuery(
             info: info,
             orientation: Orientation.portrait,
             context: context,
@@ -105,6 +109,7 @@ class WidgetbookFrameBuilder extends FrameBuilder {
     const isRotated = false; // device.isLandscape(orientation);
 
     return FittedBox(
+      key: const Key('widgetbook_device_edge_bond'),
       child: RotatedBox(
         quarterTurns: isRotated ? -1 : 0,
         child: stack,

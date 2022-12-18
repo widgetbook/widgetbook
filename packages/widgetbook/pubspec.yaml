@@ -23,11 +23,15 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.2.0
+  flutter_localizations:
+    sdk: flutter   
   flutter_test:
     sdk: flutter
   freezed: ^2.1.0+1
+  intl: ^0.17.0 
   mocktail: ^0.3.0
   very_good_analysis: ^3.0.0
+
 
 flutter:
   assets:

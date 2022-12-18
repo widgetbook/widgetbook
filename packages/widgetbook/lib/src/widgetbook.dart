@@ -15,7 +15,6 @@ import 'package:widgetbook/src/navigation/preview_provider.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 import 'package:widgetbook/src/repositories/selected_story_repository.dart';
 import 'package:widgetbook/src/repositories/story_repository.dart';
-import 'package:widgetbook/src/theming/widgetbook_theme.dart';
 import 'package:widgetbook/src/utils/styles.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
 
@@ -64,15 +63,9 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
   /// A [Widgetbook] which uses cupertino theming via [CupertinoThemeData].
   static Widgetbook<CupertinoThemeData> cupertino({
     required List<WidgetbookCategory> categories,
-    required List<WidgetbookTheme<CupertinoThemeData>> themes,
     required AppInfo appInfo,
     required List<WidgetbookAddOn> addons,
-    List<Device>? devices,
-    List<WidgetbookFrame>? frames,
-    List<Locale>? supportedLocales,
-    List<LocalizationsDelegate<dynamic>>? localizationsDelegates,
     AppBuilderFunction? appBuilder,
-    List<double>? textScaleFactors,
     Key? key,
   }) {
     return Widgetbook<CupertinoThemeData>(
