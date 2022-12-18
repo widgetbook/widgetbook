@@ -1,3 +1,7 @@
+## 3.0.0-beta.1
+
+- **BREAKING**: refactor: remove `DeviceFrameBuilderResolver`, `LocalizationBuilderResolver`, `ScaffoldBuilderResolver`, `ThemeBuilderResolver`, `UseCaseBuilderResolver`.
+
 ## 2.4.1
 
 - fix: imports of generated file not deterministic ([#167](https://github.com/widgetbook/widgetbook/issues/167))

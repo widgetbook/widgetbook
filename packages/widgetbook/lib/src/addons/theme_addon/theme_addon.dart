@@ -30,9 +30,11 @@ abstract class ThemeAddon<T> extends WidgetbookAddOn {
         );
 }
 
+
 Map<String, String> _getQueryParameter<T>(BuildContext context) {
   final selectedItem =
       context.read<ThemeSettingProvider<T>>().value.activeTheme;
+
 
   return {
     'theme': selectedItem.name,

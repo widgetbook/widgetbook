@@ -32,9 +32,11 @@ import './command.dart';
 import '../api/widgetbook_http_client.dart';
 import '../ci_parser/ci_parser.dart';
 import '../git-provider/github/github.dart';
+import '../git/git_wrapper.dart';
 import '../helpers/exceptions.dart';
 import '../helpers/widgetbook_zip_encoder.dart';
 import '../models/models.dart';
+import '../models/publish_args.dart';
 import '../review/devices/device_parser.dart';
 import '../review/locales/locales_parser.dart';
 import '../review/text_scale_factors/text_scale_factor_parser.dart';
@@ -55,12 +57,15 @@ class PublishCommand extends WidgetbookCommand {
     this.textScaleFactorsParser,
     this.themeParser,
     CiWrapper? ciWrapper,
+    GitWrapper? gitWrapper,
     StdInWrapper? stdInWrapper,
   })  : _widgetbookHttpClient = widgetbookHttpClient ?? WidgetbookHttpClient(),
         _widgetbookZipEncoder = widgetbookZipEncoder ?? WidgetbookZipEncoder(),
         _ciWrapper = ciWrapper ?? CiWrapper(),
+        _gitWrapper = gitWrapper ?? GitWrapper(),
         _stdInWrapper = stdInWrapper ?? StdInWrapper(),
         _fileSystem = fileSystem ?? const LocalFileSystem() {
+    progress = logger.progress('Publishing Widgetbook');
     argParser
       ..addOption(
         'path',
@@ -127,7 +132,7 @@ class PublishCommand extends WidgetbookCommand {
   @override
   final String name = 'publish';
 
-  final CiParserRunner? ciParserRunner;
+  CiParserRunner? ciParserRunner;
   final WidgetbookHttpClient _widgetbookHttpClient;
   final WidgetbookZipEncoder _widgetbookZipEncoder;
   final FileSystem _fileSystem;
@@ -136,76 +141,32 @@ class PublishCommand extends WidgetbookCommand {
   final DeviceParser? deviceParser;
   final TextScaleFactorParser? textScaleFactorsParser;
   final CiWrapper _ciWrapper;
+  final GitWrapper _gitWrapper;
   final StdInWrapper _stdInWrapper;
 
-  @override
-  Future<int> run() async {
-    final publishProgress = logger.progress(
-      'Uploading build',
-    );
+  late final Progress progress;
 
-    final path = results['path'] as String;
-
-    if (!await GitDir.isGitDir(path)) {
-      publishProgress.fail();
-
-      logger.err(
-        'Directory from "path" is not a Git folder',
-      );
-
-      return ExitCode.software.code;
+  @visibleForTesting
+  Future<void> checkIfPathIsGitDirectory(String path) async {
+    final isGitDir = await _gitWrapper.isGitDir(path);
+    if (!isGitDir) {
+      throw GitDirectoryNotFound();
     }
+  }
 
-    final gitDir = await GitDir.fromExisting(
+  @visibleForTesting
+  Future<GitDir> getGitDir(String path) {
+    return _gitWrapper.fromExisting(
       path,
       allowSubdirectory: true,
     );
+  }
 
-    publishProgress.update('Obtaining data from Git');
-
+  @visibleForTesting
+  Future<void> checkIfWorkingTreeIsClean(
+    GitDir gitDir,
+  ) async {
     final isWorkingTreeClean = await gitDir.isWorkingTreeClean();
-
-    final apiKey = results['api-key'] as String;
-    final currentBranch = await gitDir.currentBranch();
-    final branch = results['branch'] as String? ?? currentBranch.branchName;
-
-    final commit = results['commit'] as String? ?? currentBranch.sha;
-
-    final gitProvider = results['git-provider'] as String;
-    final gitHubToken = results['github-token'] as String?;
-    final prNumber = results['pr'] as String?;
-
-    final baseBranch = results['base-branch'] as String?;
-
-    final ciArgsData = CliArgs(
-      apiKey: apiKey,
-      branch: branch,
-      commit: commit,
-      gitProvider: gitProvider,
-      gitHubToken: gitHubToken,
-      prNumber: prNumber,
-      baseBranch: baseBranch,
-      path: path,
-    );
-
-    final ciArgs = ciParserRunner == null
-        ? await CiParserRunner(
-            argResults: results,
-            gitDir: gitDir,
-          ).getParser()?.getCiArgs()
-        : await ciParserRunner!.getParser()?.getCiArgs();
-
-    if (ciArgs == null) {
-      publishProgress.fail();
-
-      logger.err(
-        'Your CI/CD pipeline provider is currently not supported.',
-      );
-
-      return ExitCode.software.code;
-    }
-
-    publishProgress.update('Checking for un-commited changes');
     if (!isWorkingTreeClean) {
       logger
         ..warn('You have un-commited changes')
@@ -223,16 +184,87 @@ class PublishCommand extends WidgetbookCommand {
       }
 
       if (proceedWithUnCommitedChanges == 'no') {
-        publishProgress.cancel();
-        return ExitCode.success.code;
+        progress.cancel();
+        throw ExitedByUser();
       }
     }
+  }
+
+  @visibleForTesting
+  Future<CiArgs> getArgumentsFromCi(GitDir gitDir) async {
+    // Due to the fact that the CiParserRunner requires a gitDir to be
+    // initialized, we have this implementation to make the code testable
+    ciParserRunner ??= CiParserRunner(argResults: results, gitDir: gitDir);
+    final args = await ciParserRunner!.getParser()?.getCiArgs();
+
+    if (args == null) {
+      throw CiVendorNotSupported();
+    }
+
+    return args;
+  }
+
+  @visibleForTesting
+  Future<PublishArgs> getArguments({
+    required GitDir gitDir,
+  }) async {
+    final path = results['path'] as String;
+    final apiKey = results['api-key'] as String;
+    final currentBranch = await gitDir.currentBranch();
+    final branch = results['branch'] as String? ?? currentBranch.branchName;
+
+    final commit = results['commit'] as String? ?? currentBranch.sha;
+
+    final gitProvider = results['git-provider'] as String;
+    final gitHubToken = results['github-token'] as String?;
+    final prNumber = results['pr'] as String?;
+
+    final baseBranch = await getBaseBranch(
+      gitDir: gitDir,
+      branch: results['base-branch'] as String?,
+      sha: results['base-commit'] as String?,
+    );
+
+    final ciArgs = await getArgumentsFromCi(gitDir);
+    final actor = ciArgs.actor;
+
+    if (actor == null) {
+      throw ActorNotFoundException();
+    }
+
+    final repository = ciArgs.repository;
+    if (repository == null) {
+      throw RepositoryNotFoundException();
+    }
+
+    return PublishArgs(
+      apiKey: apiKey,
+      branch: branch,
+      commit: commit,
+      gitProvider: gitProvider,
+      path: path,
+      vendor: ciArgs.vendor,
+      actor: actor,
+      repository: repository,
+      baseBranch: baseBranch?.reference,
+      baseSha: baseBranch?.sha,
+      prNumber: prNumber,
+      gitHubToken: gitHubToken,
+    );
+  }
+
+  @override
+  Future<int> run() async {
+    final path = results['path'] as String;
+
+    await checkIfPathIsGitDirectory(path);
+    final gitDir = await getGitDir(path);
+    await checkIfWorkingTreeIsClean(gitDir);
+    final args = await getArguments(gitDir: gitDir);
 
     await publishBuilds(
-      cliArgs: ciArgsData,
-      ciArgs: ciArgs,
+      args: args,
       gitDir: gitDir,
-      publishProgress: publishProgress,
       getZipFile: getZipFile,
     );
 
@@ -251,18 +283,17 @@ class PublishCommand extends WidgetbookCommand {
   @visibleForTesting
   Future<Map<String, dynamic>?> uploadDeploymentInfo({
     required File file,
-    required CliArgs cliArgs,
-    required CiArgs ciArgs,
+    required PublishArgs args,
   }) {
-    return _widgetbookHttpClient.uploadDeployment(
+    return _widgetbookHttpClient.uploadBuild(
       deploymentFile: file,
       data: DeploymentData(
-        branchName: cliArgs.branch,
-        repositoryName: ciArgs.repository!,
-        commitSha: cliArgs.commit,
-        actor: ciArgs.actor!,
-        apiKey: cliArgs.apiKey,
-        provider: ciArgs.vendor,
+        branchName: args.branch,
+        repositoryName: args.repository,
+        commitSha: args.commit,
+        actor: args.actor,
+        apiKey: args.apiKey,
+        provider: args.vendor,
       ),
     );
   }
@@ -270,19 +301,18 @@ class PublishCommand extends WidgetbookCommand {
   @visibleForTesting
   Future<void> uploadReview({
     required File file,
-    required CliArgs cliArgs,
-    required CiArgs ciArgs,
+    required PublishArgs args,
     required ReviewData reviewData,
   }) {
     return _widgetbookHttpClient.uploadReview(
-      apiKey: cliArgs.apiKey,
+      apiKey: args.apiKey,
       useCases: reviewData.useCases,
       buildId: reviewData.buildId,
       projectId: reviewData.projectId,
-      baseBranch: cliArgs.baseBranch!,
+      baseBranch: args.baseBranch!,
       baseSha: reviewData.baseSha,
-      headBranch: cliArgs.branch,
-      headSha: cliArgs.commit,
+      headBranch: args.branch,
+      headSha: args.commit,
       themes: reviewData.themes,
       locales: reviewData.locales,
       devices: reviewData.devices,
@@ -296,7 +326,6 @@ class PublishCommand extends WidgetbookCommand {
   // branch?
   @visibleForTesting
   Future<BranchReference?> getBaseBranch({
-    required Progress progress,
     required GitDir gitDir,
     required String? branch,
     required String? sha,
@@ -366,77 +395,62 @@ class PublishCommand extends WidgetbookCommand {
 
   @visibleForTesting
   Future<void> publishBuilds({
-    required CliArgs cliArgs,
-    required CiArgs ciArgs,
+    required PublishArgs args,
     required GitDir gitDir,
-    required Progress publishProgress,
     required File? Function(Directory) getZipFile,
   }) async {
-    if (ciArgs.actor == null) {
-      throw ActorNotFoundException();
-    }
-
-    if (ciArgs.repository == null) {
-      throw RepositoryNotFoundException();
-    }
-
-    publishProgress.update('Getting branches');
-    final baseBranch = await getBaseBranch(
-      progress: publishProgress,
-      gitDir: gitDir,
-      branch: cliArgs.baseBranch,
-      sha: results['base-commit'] as String?,
-    );
+    progress.update('Getting branches');
 
     final buildPath = p.join(
-      cliArgs.path,
+      args.path,
       'build',
       'web',
     );
 
+    final baseBranch = args.baseBranch;
+    final baseSha = args.baseSha;
     final directory = _fileSystem.directory(buildPath);
     final useCases = baseBranch == null
         ? <ChangedUseCase>[]
         : await UseCaseParser(
-            projectPath: cliArgs.path,
-            baseBranch: baseBranch.reference,
+            projectPath: args.path,
+            baseBranch: baseBranch,
           ).parse();
 
     final themes = await themeParser?.parse() ??
-        await ThemeParser(projectPath: cliArgs.path).parse();
+        await ThemeParser(projectPath: args.path).parse();
 
     final locales = await localeParser?.parse() ??
-        await LocaleParser(projectPath: cliArgs.path).parse();
+        await LocaleParser(projectPath: args.path).parse();
     final devices = await deviceParser?.parse() ??
-        await DeviceParser(projectPath: cliArgs.path).parse();
+        await DeviceParser(projectPath: args.path).parse();
     final textScaleFactors = await textScaleFactorsParser?.parse() ??
-        await TextScaleFactorParser(projectPath: cliArgs.path).parse();
+        await TextScaleFactorParser(projectPath: args.path).parse();
 
     try {
-      publishProgress.update('Generating zip');
+      progress.update('Generating zip');
       final file = getZipFile(directory);
 
       if (file != null) {
-        publishProgress.update('Uploading build');
+        progress.update('Uploading build');
         final uploadInfo = await uploadDeploymentInfo(
           file: file,
-          cliArgs: cliArgs,
-          ciArgs: ciArgs,
+          args: args,
         );
 
         if (uploadInfo == null) {
           throw WidgetbookApiException();
         } else {
-          publishProgress.complete('Uploaded build');
+          progress.complete('Uploaded build');
         }
 
-        if (cliArgs.prNumber != null) {
-          if (cliArgs.gitHubToken != null) {
+        if (args.prNumber != null) {
+          if (args.gitHubToken != null) {
             await GithubProvider(
-              apiKey: cliArgs.gitHubToken!,
+              apiKey: args.gitHubToken!,
             ).addBuildComment(
               buildInfo: uploadInfo,
-              number: cliArgs.prNumber!,
+              number: args.prNumber!,
             );
           }
         }
@@ -451,30 +465,27 @@ class PublishCommand extends WidgetbookCommand {
             'See https://docs.widgetbook.io/widgetbook-cloud/review for more '
             'information.',
           );
-          throw FileNotFoundException(
-            message: 'Could not find generator files. ',
-          );
+          throw ReviewNotFoundException();
         }
 
-        if (baseBranch != null) {
-          publishProgress.update('Uploading review');
+        if (baseBranch != null && baseSha != null) {
+          progress.update('Uploading review');
           try {
             await uploadReview(
               file: file,
-              cliArgs: cliArgs,
-              ciArgs: ciArgs,
+              args: args,
               reviewData: ReviewData(
                 useCases: useCases,
                 buildId: uploadInfo['build'] as String,
                 projectId: uploadInfo['project'] as String,
-                baseSha: baseBranch.sha,
+                baseSha: baseSha,
                 themes: themes,
                 locales: locales,
                 devices: devices,
                 textScaleFactors: textScaleFactors,
               ),
             );
-            publishProgress.complete('Uploaded review');
+            progress.complete('Uploaded review');
           } catch (_) {
             throw WidgetbookApiException();
           }
@@ -491,7 +502,7 @@ class PublishCommand extends WidgetbookCommand {
         throw UnableToCreateZipFileException();
       }
     } catch (e) {
-      publishProgress.fail();
+      progress.fail();
       rethrow;
     }
   }
