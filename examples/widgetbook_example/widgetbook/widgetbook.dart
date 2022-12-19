@@ -7,6 +7,7 @@ import 'package:widgetbook_example/themes/dark_theme.dart';
 import 'package:widgetbook_example/themes/light_theme.dart';
 import 'package:widgetbook_example/widgets/attributes/price_attribute.dart';
 import 'package:widgetbook_example/widgets/attributes/weight_attribute.dart';
+import 'package:widgetbook_example/widgets/attributes/multiline_knob.dart';
 import 'package:widgetbook_example/widgets/ingredients.dart';
 import 'package:widgetbook_example/widgets/meal_detail.dart';
 import 'package:widgetbook_example/widgets/new_tag.dart';
@@ -251,7 +252,15 @@ class HotreloadWidgetbook extends StatelessWidget {
                         weight: 1050,
                       ),
                     ),
-                    
+                  ],
+                ),
+                WidgetbookComponent(
+                  name: 'Knobs',
+                  useCases: [
+                    WidgetbookUseCase(
+                      name: 'Multiline Knob',
+                      builder: (context) => MultiLineKnob(),
+                    ),
                   ],
                 ),
               ],
