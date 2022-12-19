@@ -30,5 +30,5 @@ LocalizationSetting localizationSetting = LocalizationSetting(
 );
 
 LocalizationAddon localizationAddon = LocalizationAddon(
-  data: localizationSetting,
+  setting: localizationSetting,
 );

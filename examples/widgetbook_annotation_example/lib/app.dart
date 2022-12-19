@@ -22,16 +22,6 @@ final delegates = [
 
 @WidgetbookApp.material(
   name: 'Meal App',
-  frames: const [
-    WidgetbookFrame(
-      name: 'Widgetbook',
-      allowsDevices: true,
-    ),
-    WidgetbookFrame(
-      name: 'None',
-      allowsDevices: false,
-    ),
-  ],
   devices: [Apple.iPhone12],
   textScaleFactors: [
     1,

@@ -47,7 +47,6 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
     final name = _getName(annotation);
     final themeType = _getThemeType(annotation);
     final devices = _getDevices(annotation);
-    final frames = _getFrames(annotation);
     final textScaleFactors = _getTextScaleFactors(annotation);
     final themes = await _getThemes(buildStep);
     final foldersExpanded = _getFoldersExpanded(annotation);
@@ -75,7 +74,6 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
           themes: themes,
           useCases: useCases,
           devices: devices,
-          frames: frames,
           textScaleFactors: textScaleFactors,
           foldersExpanded: foldersExpanded,
           widgetsExpanded: widgetsExpanded,
@@ -150,20 +148,6 @@ List<Device> _getDevices(ConstantReader annotation) {
   }
 
   return devices;
-}
-
-List<WidgetbookFrame> _getFrames(ConstantReader annotation) {
-  final frames = <WidgetbookFrame>[];
-
-  for (final deviceObject in annotation.read('frames').listValue) {
-    final name = deviceObject.getField('name')!.toStringValue()!;
-    final allowsDevices =
-        deviceObject.getField('allowsDevices')!.toBoolValue()!;
-
-    frames.add(WidgetbookFrame(name: name, allowsDevices: allowsDevices));
-  }
-
-  return frames;
 }
 
 List<double> _getTextScaleFactors(ConstantReader annotation) {

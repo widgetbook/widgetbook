@@ -22,7 +22,7 @@ Widget localeAddonWrapper({
     child: child,
     addons: [
       LocalizationAddon(
-        data: LocalizationSetting(
+        setting: LocalizationSetting(
           activeLocale: activeLocale ?? locales.first,
           localizationsDelegates: localizationsDelegates,
           locales: locales,

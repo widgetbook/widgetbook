@@ -1,6 +1,5 @@
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/code_generators/instances/addons/addons.dart';
-import 'package:widgetbook_generator/code_generators/instances/addons/theme_addon/theme_addon.dart';
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/variable_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
@@ -19,7 +18,6 @@ String generateWidgetbook({
   required WidgetbookConstructor constructor,
   required List<WidgetbookUseCaseData> useCases,
   required List<Device> devices,
-  required List<WidgetbookFrame> frames,
   required List<double> textScaleFactors,
   required bool foldersExpanded,
   required bool widgetsExpanded,

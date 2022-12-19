@@ -11,12 +11,12 @@ import 'package:widgetbook/widgetbook.dart';
 
 class LocalizationAddon extends WidgetbookAddOn {
   LocalizationAddon({
-    required LocalizationSetting data,
+    required LocalizationSetting setting,
   }) : super(
           icon: const Icon(Icons.translate),
           name: 'localization',
           wrapperBuilder: (context, routerData, child) =>
-              _wrapperBuilder(context, child, routerData, data),
+              _wrapperBuilder(context, child, routerData, setting),
           builder: _builder,
           providerBuilder: _providerBuilder,
           getQueryParameter: _getQueryParameter,

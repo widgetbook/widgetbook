@@ -47,5 +47,5 @@ final customThemeSetting = CustomThemeSetting(
 );
 
 final customThemeAddon = CustomThemeAddon<AppThemeData>(
-  themeSetting: customThemeSetting,
+  setting: customThemeSetting,
 );
