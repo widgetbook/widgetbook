@@ -11,6 +11,7 @@ class WidgetbookUseCase {
   const WidgetbookUseCase({
     required this.name,
     required this.type,
+    this.designLink,
   });
 
   /// The name of the UseCase.
@@ -19,4 +20,7 @@ class WidgetbookUseCase {
   /// The type of the Widget shown in the UseCase.
   /// It is used to generate the WidgetbookComponent of the Widgetbook.
   final Type type;
+
+  /// A link to the design for the component or use-case.
+  final String? designLink;
 }

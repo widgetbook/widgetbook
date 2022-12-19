@@ -6,6 +6,8 @@
 - feat: add `LocalizationAddon` to generator
 - feat: add `FrameAddon` to generator
 - feat: add `CustomThemeAddon` to generator
+- feat: add `designLink` property to resolver
+
 
 ## 2.4.1
 
