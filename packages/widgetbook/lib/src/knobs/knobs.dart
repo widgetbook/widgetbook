@@ -112,12 +112,14 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     required String label,
     String? description,
     String initialValue = '',
+    bool multiline = false,
   }) =>
       _addKnob(
         TextKnob(
           label: label,
           value: initialValue,
           description: description,
+          multiline: multiline,
         ),
       );
 
@@ -126,12 +128,14 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     required String label,
     String? description,
     String? initialValue,
+    bool multiline = false,
   }) =>
       _addKnob(
         NullableTextKnob(
           label: label,
           value: initialValue,
           description: description,
+          multiline: multiline,
         ),
       );
 
@@ -237,8 +241,8 @@ class KnobWrapper extends StatelessWidget {
     required this.description,
     required this.title,
     this.nullableCheckbox,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget child;
   final String? description;
