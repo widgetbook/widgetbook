@@ -59,7 +59,7 @@ class HotReload extends StatelessWidget {
             activeFrameBuilder,
           ])),
           CustomThemeAddon<AppThemeData>(
-            themeSetting: CustomThemeSetting.firstAsSelected(
+            setting: CustomThemeSetting.firstAsSelected(
               themes: [widgetbookTheme, widgetbookTheme2],
             ),
           ),

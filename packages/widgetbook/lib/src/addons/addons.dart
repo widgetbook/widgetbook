@@ -19,10 +19,10 @@ List<WidgetbookAddOn> configureMaterialAddons({
 }) {
   return [
     MaterialThemeAddon(
-      themeSetting: themeSetting,
+      setting: themeSetting,
     ),
     TextScaleAddon(setting: textScaleSetting),
-    LocalizationAddon(data: localizationSetting),
+    LocalizationAddon(setting: localizationSetting),
     FrameAddon(setting: frameSetting),
   ];
 }
@@ -35,10 +35,10 @@ List<WidgetbookAddOn> configureCupertinoAddons({
 }) {
   return [
     CupertinoThemeAddon(
-      themeSetting: themeSetting,
+      setting: themeSetting,
     ),
     TextScaleAddon(setting: textScaleSetting),
-    LocalizationAddon(data: localizationSetting),
+    LocalizationAddon(setting: localizationSetting),
     FrameAddon(setting: frameSetting),
   ];
 }

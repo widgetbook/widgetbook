@@ -20,7 +20,7 @@ Widget materialThemeAddonWrapper({
     child: child,
     addons: [
       MaterialThemeAddon(
-        themeSetting: materialThemeSetting.copyWith(
+        setting: materialThemeSetting.copyWith(
           activeTheme: blueMaterialWidgetbookTheme,
         ),
       ),

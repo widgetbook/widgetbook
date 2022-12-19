@@ -20,7 +20,7 @@ Widget cupertinoThemeAddonWrapper({
     child: child,
     addons: [
       CupertinoThemeAddon(
-        themeSetting: cupertinoThemeSetting.copyWith(
+        setting: cupertinoThemeSetting.copyWith(
           activeTheme: blueCupertinoWidgetbookTheme,
         ),
       ),
