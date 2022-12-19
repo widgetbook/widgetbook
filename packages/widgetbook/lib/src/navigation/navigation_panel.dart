@@ -9,10 +9,10 @@ import 'package:widgetbook/src/widgets/tiles/category_tile.dart';
 
 class NavigationPanel extends StatefulWidget {
   const NavigationPanel({
-    Key? key,
+    super.key,
     required this.appInfo,
     required this.categories,
-  }) : super(key: key);
+  });
 
   final AppInfo appInfo;
   final List<WidgetbookCategory> categories;

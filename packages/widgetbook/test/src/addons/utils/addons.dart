@@ -13,12 +13,12 @@ final devices = [
   ),
 ];
 
-final deviceFrameBuilder = DeviceFrameBuilder(
-  devices: devices,
-);
-
-final activeFrameBuilder = WidgetbookFrameBuilder(
-  devices: devices,
+final deviceFrameFrame = DefaultDeviceFrame(
+  setting: DeviceSetting.firstAsSelected(devices: devices),
 );
 
 const coloredBoxKey = Key('coloredBox');
+
+const textKey = Key('textKey');
+
+final rendererKey = GlobalKey();

@@ -19,9 +19,7 @@ final yellowMaterialWidgetbookTheme =
     WidgetbookTheme(name: 'Yellow', data: yellowtheme);
 
 final materialThemeSetting = MaterialThemeSetting(
-  activeThemes: {
-    blueMaterialWidgetbookTheme,
-  },
+  activeTheme: blueMaterialWidgetbookTheme,
   themes: [blueMaterialWidgetbookTheme, yellowMaterialWidgetbookTheme],
 );
 

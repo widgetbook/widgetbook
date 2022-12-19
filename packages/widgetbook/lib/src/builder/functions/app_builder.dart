@@ -17,6 +17,7 @@ GoRouter getRouter(Widget child) {
   );
 }
 
+// TODO make this work
 Widget _defaultAppBuilderMethod(BuildContext context, Widget child) {
   final _router = getRouter(child);
   return WidgetsApp.router(
@@ -33,26 +34,32 @@ Widget _defaultAppBuilderMethod(BuildContext context, Widget child) {
 AppBuilderFunction get materialAppBuilder =>
     (BuildContext context, Widget child) {
       final frameBuilder = context.frameBuilder;
-      return frameBuilder.builder(
+      return frameBuilder(
         context,
-        MaterialApp(
-          theme: context.materialTheme,
-          locale: context.localization.activeLocale,
-          supportedLocales: context.localization.supportedLocales,
-          localizationsDelegates: context.localization.localizationsDelegates,
-          debugShowCheckedModeBanner: false,
-          home: Scaffold(
-            body: MediaQuery(
-              data: MediaQuery.of(context).copyWith(
-                textScaleFactor: context.textScale,
+        Builder(
+          builder: (context) {
+            return MaterialApp(
+              theme: context.materialTheme,
+              locale: context.localization.activeLocale,
+              supportedLocales: context.localization.supportedLocales,
+              localizationsDelegates:
+                  context.localization.localizationsDelegates,
+              debugShowCheckedModeBanner: false,
+              home: Scaffold(
+                body: MediaQuery(
+                  data: MediaQuery.of(context).copyWith(
+                    textScaleFactor: context.textScale,
+                  ),
+                  child: child,
+                ),
               ),
-              child: child,
-            ),
-          ),
+            );
+          },
         ),
       );
     };
 
+// TODO make this work
 AppBuilderFunction get cupertinoAppBuilder =>
     (BuildContext context, Widget child) {
       final _router = getRouter(child);

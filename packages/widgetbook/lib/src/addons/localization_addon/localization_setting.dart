@@ -5,9 +5,23 @@ part 'localization_setting.freezed.dart';
 
 @freezed
 class LocalizationSetting with _$LocalizationSetting {
+  @Assert('locales.isNotEmpty', 'locales cannot be empty')
   factory LocalizationSetting({
-    required Set<Locale> activeLocales,
+    required Locale activeLocale,
     required List<Locale> locales,
     required List<LocalizationsDelegate<dynamic>> localizationsDelegates,
   }) = _LocalizationSetting;
+
+  /// Sets the first locale within `locales` as the active locale on
+  /// startup
+  factory LocalizationSetting.firstAsSelected({
+    required List<Locale> locales,
+    required List<LocalizationsDelegate<dynamic>> localizationsDelegates,
+  }) {
+    return LocalizationSetting(
+      activeLocale: locales.first,
+      locales: locales,
+      localizationsDelegates: localizationsDelegates,
+    );
+  }
 }

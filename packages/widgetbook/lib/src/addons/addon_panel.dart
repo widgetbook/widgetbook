@@ -4,11 +4,11 @@ import 'package:widgetbook/src/addons/models/panel_size.dart';
 
 class AddonPanel extends StatefulWidget {
   const AddonPanel({
-    Key? key,
+    super.key,
     required this.plugins,
     required this.layerLink,
     required this.overlayKey,
-  }) : super(key: key);
+  });
 
   final List<WidgetbookAddOn> plugins;
   final LayerLink layerLink;
