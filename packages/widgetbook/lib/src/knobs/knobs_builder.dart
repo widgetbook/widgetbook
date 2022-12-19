@@ -23,6 +23,7 @@ abstract class KnobsBuilder {
     required String label,
     String? description,
     String initialValue,
+    bool multiline,
   });
 
   /// Creates a textfield that can be typed in and optionally hold a
@@ -31,6 +32,7 @@ abstract class KnobsBuilder {
     required String label,
     String? description,
     String? initialValue,
+    bool multiline,
   });
 
   /// Creates a slider that can be slid to specific double values. You can use
