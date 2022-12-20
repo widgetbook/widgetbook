@@ -261,6 +261,16 @@ class HotreloadWidgetbook extends StatelessWidget {
                       name: 'Multiline Knob',
                       builder: (context) => MultiLineKnob(),
                     ),
+                    WidgetbookUseCase(
+                      name: 'Color Knob',
+                      builder: (context) => Icon(
+                        Icons.thumb_up_sharp,
+                        color: context.knobs.color(
+                          label: 'Color',
+                          initialValue: Colors.blue,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ],
