@@ -1,6 +1,13 @@
 ## 3.0.0-beta.1
 
 - **BREAKING**: refactor: remove `DeviceFrameBuilderResolver`, `LocalizationBuilderResolver`, `ScaffoldBuilderResolver`, `ThemeBuilderResolver`, `UseCaseBuilderResolver`.
+- feat: add `MaterialThemeAddon` to generator
+- feat: add `TextScaleAddon` to generator
+- feat: add `LocalizationAddon` to generator
+- feat: add `FrameAddon` to generator
+- feat: add `CustomThemeAddon` to generator
+- feat: add `designLink` property to resolver
+
 
 ## 2.4.1
 

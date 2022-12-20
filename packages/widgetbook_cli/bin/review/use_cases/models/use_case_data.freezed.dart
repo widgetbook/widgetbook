@@ -35,7 +35,9 @@ mixin _$UseCaseData {
       throw _privateConstructorUsedError; // The path to the file containing the component
   String get componentDefinitionPath =>
       throw _privateConstructorUsedError; // The path to the file containing the use-case definition
-  String get useCaseDefinitionPath => throw _privateConstructorUsedError;
+  String get useCaseDefinitionPath =>
+      throw _privateConstructorUsedError; // A link to a component or variant
+  String? get designLink => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -56,7 +58,8 @@ abstract class $UseCaseDataCopyWith<$Res> {
       String componentImportStatement,
       List<String> dependencies,
       String componentDefinitionPath,
-      String useCaseDefinitionPath});
+      String useCaseDefinitionPath,
+      String? designLink});
 }
 
 /// @nodoc
@@ -77,6 +80,7 @@ class _$UseCaseDataCopyWithImpl<$Res> implements $UseCaseDataCopyWith<$Res> {
     Object? dependencies = freezed,
     Object? componentDefinitionPath = freezed,
     Object? useCaseDefinitionPath = freezed,
+    Object? designLink = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -111,6 +115,10 @@ class _$UseCaseDataCopyWithImpl<$Res> implements $UseCaseDataCopyWith<$Res> {
           ? _value.useCaseDefinitionPath
           : useCaseDefinitionPath // ignore: cast_nullable_to_non_nullable
               as String,
+      designLink: designLink == freezed
+          ? _value.designLink
+          : designLink // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -130,7 +138,8 @@ abstract class _$$_UseCaseDataCopyWith<$Res>
       String componentImportStatement,
       List<String> dependencies,
       String componentDefinitionPath,
-      String useCaseDefinitionPath});
+      String useCaseDefinitionPath,
+      String? designLink});
 }
 
 /// @nodoc
@@ -153,6 +162,7 @@ class __$$_UseCaseDataCopyWithImpl<$Res> extends _$UseCaseDataCopyWithImpl<$Res>
     Object? dependencies = freezed,
     Object? componentDefinitionPath = freezed,
     Object? useCaseDefinitionPath = freezed,
+    Object? designLink = freezed,
   }) {
     return _then(_$_UseCaseData(
       name: name == freezed
@@ -187,6 +197,10 @@ class __$$_UseCaseDataCopyWithImpl<$Res> extends _$UseCaseDataCopyWithImpl<$Res>
           ? _value.useCaseDefinitionPath
           : useCaseDefinitionPath // ignore: cast_nullable_to_non_nullable
               as String,
+      designLink: designLink == freezed
+          ? _value.designLink
+          : designLink // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -202,7 +216,8 @@ class _$_UseCaseData implements _UseCaseData {
       required this.componentImportStatement,
       required final List<String> dependencies,
       required this.componentDefinitionPath,
-      required this.useCaseDefinitionPath})
+      required this.useCaseDefinitionPath,
+      this.designLink})
       : _dependencies = dependencies;
 
   factory _$_UseCaseData.fromJson(Map<String, dynamic> json) =>
@@ -237,10 +252,13 @@ class _$_UseCaseData implements _UseCaseData {
 // The path to the file containing the use-case definition
   @override
   final String useCaseDefinitionPath;
+// A link to a component or variant
+  @override
+  final String? designLink;
 
   @override
   String toString() {
-    return 'UseCaseData(name: $name, useCaseName: $useCaseName, componentName: $componentName, importStatement: $importStatement, componentImportStatement: $componentImportStatement, dependencies: $dependencies, componentDefinitionPath: $componentDefinitionPath, useCaseDefinitionPath: $useCaseDefinitionPath)';
+    return 'UseCaseData(name: $name, useCaseName: $useCaseName, componentName: $componentName, importStatement: $importStatement, componentImportStatement: $componentImportStatement, dependencies: $dependencies, componentDefinitionPath: $componentDefinitionPath, useCaseDefinitionPath: $useCaseDefinitionPath, designLink: $designLink)';
   }
 
   @override
@@ -262,7 +280,9 @@ class _$_UseCaseData implements _UseCaseData {
             const DeepCollectionEquality().equals(
                 other.componentDefinitionPath, componentDefinitionPath) &&
             const DeepCollectionEquality()
-                .equals(other.useCaseDefinitionPath, useCaseDefinitionPath));
+                .equals(other.useCaseDefinitionPath, useCaseDefinitionPath) &&
+            const DeepCollectionEquality()
+                .equals(other.designLink, designLink));
   }
 
   @JsonKey(ignore: true)
@@ -276,7 +296,8 @@ class _$_UseCaseData implements _UseCaseData {
       const DeepCollectionEquality().hash(componentImportStatement),
       const DeepCollectionEquality().hash(_dependencies),
       const DeepCollectionEquality().hash(componentDefinitionPath),
-      const DeepCollectionEquality().hash(useCaseDefinitionPath));
+      const DeepCollectionEquality().hash(useCaseDefinitionPath),
+      const DeepCollectionEquality().hash(designLink));
 
   @JsonKey(ignore: true)
   @override
@@ -298,7 +319,8 @@ abstract class _UseCaseData implements UseCaseData {
       required final String componentImportStatement,
       required final List<String> dependencies,
       required final String componentDefinitionPath,
-      required final String useCaseDefinitionPath}) = _$_UseCaseData;
+      required final String useCaseDefinitionPath,
+      final String? designLink}) = _$_UseCaseData;
 
   factory _UseCaseData.fromJson(Map<String, dynamic> json) =
       _$_UseCaseData.fromJson;
@@ -320,6 +342,8 @@ abstract class _UseCaseData implements UseCaseData {
   String get componentDefinitionPath => throw _privateConstructorUsedError;
   @override // The path to the file containing the use-case definition
   String get useCaseDefinitionPath => throw _privateConstructorUsedError;
+  @override // A link to a component or variant
+  String? get designLink => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_UseCaseDataCopyWith<_$_UseCaseData> get copyWith =>

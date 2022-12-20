@@ -24,7 +24,7 @@ final materialThemeSetting = MaterialThemeSetting(
 );
 
 final materialThemeAddon = MaterialThemeAddon(
-  themeSetting: materialThemeSetting,
+  setting: materialThemeSetting,
 );
 
 AppBuilderFunction get materialAppBuilder =>

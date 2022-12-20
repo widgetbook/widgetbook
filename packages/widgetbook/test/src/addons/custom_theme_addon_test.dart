@@ -19,7 +19,7 @@ Widget customThemeAddonWrapper({
     child: child,
     addons: [
       CustomThemeAddon<AppThemeData>(
-        themeSetting: customThemeSetting.copyWith(
+        setting: customThemeSetting.copyWith(
           activeTheme: activeTheme,
         ),
       ),

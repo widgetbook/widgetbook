@@ -1,8 +1,8 @@
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+import 'package:widgetbook_generator/code_generators/instances/addons/addon_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/theme_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
@@ -18,10 +18,10 @@ void main() {
     testName(
       'Widgetbook',
       instance: WidgetbookInstance(
+        addons: const [],
         constructor: WidgetbookConstructor.material,
         appInfoInstance: AppInfoInstance(name: appInfoName),
         categories: const [],
-        themes: const [],
       ),
     );
 
@@ -39,6 +39,13 @@ void main() {
       ),
     );
 
+    const expectedAddonsProperty = Property(
+      key: 'addons',
+      instance: ListInstance<AddOnInstance>(
+        instances: [],
+      ),
+    );
+
     const expectedThemesInstance = Property(
       key: 'themes',
       instance: ListInstance<ThemeInstance>(
@@ -51,17 +58,17 @@ void main() {
       'List<$WidgetbookCategoryInstance>',
       () {
         final instance = WidgetbookInstance(
+          addons: const [],
           constructor: WidgetbookConstructor.material,
           appInfoInstance: AppInfoInstance(name: appInfoName),
           categories: const [],
-          themes: const [],
         );
 
         expect(
           instance.properties,
           equals([
             expectedAppInfoProperty,
-            expectedThemesInstance,
+            expectedAddonsProperty,
             expectedCategoryInstance,
           ]),
         );
@@ -72,13 +79,9 @@ void main() {
       '.properties returns all properties',
       () {
         final instance = WidgetbookInstance(
+          addons: const [],
           constructor: WidgetbookConstructor.material,
           appInfoInstance: AppInfoInstance(name: appInfoName),
-          themes: const [],
-          devices: [
-            DeviceInstance(device: Apple.iPhone11),
-            DeviceInstance(device: Apple.iPhone12),
-          ],
           categories: const [],
         );
 
@@ -86,21 +89,7 @@ void main() {
           instance.properties,
           equals([
             expectedAppInfoProperty,
-            const Property(
-              key: 'themes',
-              instance: ListInstance(
-                instances: <ThemeInstance>[],
-              ),
-            ),
-            Property(
-              key: 'devices',
-              instance: ListInstance(
-                instances: [
-                  DeviceInstance(device: Apple.iPhone11),
-                  DeviceInstance(device: Apple.iPhone12)
-                ],
-              ),
-            ),
+            expectedAddonsProperty,
             expectedCategoryInstance,
           ]),
         );
@@ -112,17 +101,17 @@ void main() {
       'List<$WidgetbookCategoryInstance> and dark theme',
       () {
         final instance = WidgetbookInstance(
+          addons: const [],
           constructor: WidgetbookConstructor.material,
           appInfoInstance: AppInfoInstance(name: appInfoName),
           categories: const [],
-          themes: const [],
         );
 
         expect(
           instance.properties,
           equals([
             expectedAppInfoProperty,
-            expectedThemesInstance,
+            expectedAddonsProperty,
             expectedCategoryInstance,
           ]),
         );
@@ -134,17 +123,17 @@ void main() {
       'List<$WidgetbookCategoryInstance> and light theme',
       () {
         final instance = WidgetbookInstance(
+          addons: const [],
           constructor: WidgetbookConstructor.material,
           appInfoInstance: AppInfoInstance(name: appInfoName),
           categories: const [],
-          themes: const [],
         );
 
         expect(
           instance.properties,
           equals([
             expectedAppInfoProperty,
-            expectedThemesInstance,
+            expectedAddonsProperty,
             expectedCategoryInstance,
           ]),
         );

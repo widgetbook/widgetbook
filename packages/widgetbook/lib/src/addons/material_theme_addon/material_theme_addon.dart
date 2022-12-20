@@ -3,8 +3,8 @@ import 'package:widgetbook/widgetbook.dart';
 
 class MaterialThemeAddon extends ThemeAddon<ThemeData> {
   MaterialThemeAddon({
-    required ThemeSetting<ThemeData> themeSetting,
-  }) : super(setting: themeSetting);
+    required super.setting,
+  });
 }
 
 extension MaterialThemeExtension on BuildContext {
