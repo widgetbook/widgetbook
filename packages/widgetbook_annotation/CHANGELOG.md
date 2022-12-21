@@ -1,3 +1,7 @@
+## 3.0.0-beta.2
+
+- chore: bumped `widgetbook_models` version
+
 ## 3.0.0-beta.1
 
 - **BREAKING**: refactor: removed `WidgetbookUseCaseBuilder`, `WidgetbookDeviceFrameBuilder`, `WidgetbookLocalizationBuilder`, `WidgetbookScaffoldBuilder`, `WidgetbookThemeBuilder` annotations because [widgetbook](https://pub.dev/packages/widgetbook) does not longer support the builders.
