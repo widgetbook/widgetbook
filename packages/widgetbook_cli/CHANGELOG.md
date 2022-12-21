@@ -1,3 +1,7 @@
+## 3.0.0-beta.16
+
+- fix: upload of locales, devices, themes and text scales
+
 ## 3.0.0-beta.15
 
 - fix: `designLink` is not uploaded
