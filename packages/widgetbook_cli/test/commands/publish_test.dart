@@ -25,7 +25,7 @@ import '../mocks/models/models.dart';
 
 class FakeFile extends Fake implements File {}
 
-class FakeDeploymentData extends Fake implements DeploymentData {}
+class FakeCreateBuildRequest extends Fake implements CreateBuildRequest {}
 
 class FakeReviewData extends Fake implements ReviewData {}
 
@@ -86,7 +86,7 @@ void main() {
       when(() => argResults['git-provider'] as String).thenReturn(gitProvider);
 
       registerFallbackValue(FakeFile());
-      registerFallbackValue(FakeDeploymentData());
+      registerFallbackValue(FakeCreateBuildRequest());
       registerFallbackValue(FakeReviewData());
       registerFallbackValue(FakeDirectory());
     });
@@ -641,6 +641,10 @@ void main() {
           () => publishCommand.uploadDeploymentInfo(
             file: file,
             args: TestData.args,
+            themes: [],
+            locales: [],
+            devices: [],
+            textScaleFactors: [],
           ),
           throwsA(const TypeMatcher<WidgetbookDeployException>()),
         );
@@ -682,18 +686,6 @@ void main() {
             headSha: any(
               named: 'headSha',
             ),
-            themes: any(
-              named: 'themes',
-            ),
-            locales: any(
-              named: 'locales',
-            ),
-            devices: any(
-              named: 'devices',
-            ),
-            textScaleFactors: any(
-              named: 'textScaleFactors',
-            ),
           ),
         ).thenThrow(WidgetbookPublishReviewException(message: 'Dio Error'));
         expect(
@@ -730,6 +722,10 @@ void main() {
         final results = await publishCommand.uploadDeploymentInfo(
           file: file,
           args: TestData.args,
+          themes: [],
+          locales: [],
+          devices: [],
+          textScaleFactors: [],
         );
 
         expect(
@@ -901,18 +897,6 @@ void main() {
           ),
           headSha: any(
             named: 'headSha',
-          ),
-          themes: any(
-            named: 'themes',
-          ),
-          locales: any(
-            named: 'locales',
-          ),
-          devices: any(
-            named: 'devices',
-          ),
-          textScaleFactors: any(
-            named: 'textScaleFactors',
           ),
         ),
       ).thenAnswer((_) => Future.value());

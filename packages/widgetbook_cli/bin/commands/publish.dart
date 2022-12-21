@@ -38,8 +38,12 @@ import '../helpers/widgetbook_zip_encoder.dart';
 import '../models/models.dart';
 import '../models/publish_args.dart';
 import '../review/devices/device_parser.dart';
+import '../review/devices/models/device_data.dart';
 import '../review/locales/locales_parser.dart';
+import '../review/locales/models/locale_data.dart';
+import '../review/text_scale_factors/models/text_scale_factor_data.dart';
 import '../review/text_scale_factors/text_scale_factor_parser.dart';
+import '../review/themes/models/theme_data.dart';
 import '../review/themes/theme_parser.dart';
 import '../review/use_cases/models/changed_use_case.dart';
 import '../review/use_cases/use_case_parser.dart';
@@ -284,16 +288,24 @@ class PublishCommand extends WidgetbookCommand {
   Future<Map<String, dynamic>?> uploadDeploymentInfo({
     required File file,
     required PublishArgs args,
+    required List<ThemeData> themes,
+    required List<LocaleData> locales,
+    required List<DeviceData> devices,
+    required List<TextScaleFactorData> textScaleFactors,
   }) {
     return _widgetbookHttpClient.uploadBuild(
       deploymentFile: file,
-      data: DeploymentData(
+      data: CreateBuildRequest(
         branchName: args.branch,
         repositoryName: args.repository,
         commitSha: args.commit,
         actor: args.actor,
         apiKey: args.apiKey,
         provider: args.vendor,
+        themes: themes,
+        locales: locales,
+        devices: devices,
+        textScaleFactors: textScaleFactors,
       ),
     );
   }
@@ -313,10 +325,6 @@ class PublishCommand extends WidgetbookCommand {
       baseSha: reviewData.baseSha,
       headBranch: args.branch,
       headSha: args.commit,
-      themes: reviewData.themes,
-      locales: reviewData.locales,
-      devices: reviewData.devices,
-      textScaleFactors: reviewData.textScaleFactors,
     );
   }
 
@@ -436,6 +444,10 @@ class PublishCommand extends WidgetbookCommand {
         final uploadInfo = await uploadDeploymentInfo(
           file: file,
           args: args,
+          themes: themes,
+          locales: locales,
+          devices: devices,
+          textScaleFactors: textScaleFactors,
         );
 
         if (uploadInfo == null) {
@@ -479,10 +491,6 @@ class PublishCommand extends WidgetbookCommand {
                 buildId: uploadInfo['build'] as String,
                 projectId: uploadInfo['project'] as String,
                 baseSha: baseSha,
-                themes: themes,
-                locales: locales,
-                devices: devices,
-                textScaleFactors: textScaleFactors,
               ),
             );
             progress.complete('Uploaded review');
