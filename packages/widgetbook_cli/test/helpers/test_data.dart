@@ -50,24 +50,11 @@ class TestData {
     'build': 'buildId'
   };
 
-  static final DeploymentData deploymentData = DeploymentData(
-    branchName: 'branch',
-    repositoryName: 'respository',
-    commitSha: 'commit',
-    actor: 'John Doe',
-    apiKey: 'apiKey',
-    provider: 'Local',
-  );
-
   static final ReviewData reviewData = ReviewData(
     useCases: [],
     buildId: 'buildId',
     projectId: 'projectId',
     baseSha: 'baseSha',
-    themes: [],
-    locales: [],
-    devices: [],
-    textScaleFactors: [],
   );
 
   static final ThemeData themeData = ThemeData(name: 'name');

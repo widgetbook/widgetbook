@@ -19,18 +19,6 @@ _$_CreateUseCasesRequest _$$_CreateUseCasesRequestFromJson(
       headBranch: json['headBranch'] as String,
       baseSha: json['baseSha'] as String,
       headSha: json['headSha'] as String,
-      themes: (json['themes'] as List<dynamic>)
-          .map((e) => ThemeData.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      locales: (json['locales'] as List<dynamic>)
-          .map((e) => LocaleData.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      devices: (json['devices'] as List<dynamic>)
-          .map((e) => DeviceData.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      textScaleFactors: (json['textScaleFactors'] as List<dynamic>)
-          .map((e) => TextScaleFactorData.fromJson(e as Map<String, dynamic>))
-          .toList(),
     );
 
 Map<String, dynamic> _$$_CreateUseCasesRequestToJson(
@@ -44,8 +32,4 @@ Map<String, dynamic> _$$_CreateUseCasesRequestToJson(
       'headBranch': instance.headBranch,
       'baseSha': instance.baseSha,
       'headSha': instance.headSha,
-      'themes': instance.themes,
-      'locales': instance.locales,
-      'devices': instance.devices,
-      'textScaleFactors': instance.textScaleFactors,
     };
