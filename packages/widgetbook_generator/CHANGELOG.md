@@ -1,3 +1,7 @@
+## 3.0.0-beta.2
+
+- chore: bumped `widgetbook_models` version
+
 ## 3.0.0-beta.1
 
 - **BREAKING**: refactor: remove `DeviceFrameBuilderResolver`, `LocalizationBuilderResolver`, `ScaffoldBuilderResolver`, `ThemeBuilderResolver`, `UseCaseBuilderResolver`.

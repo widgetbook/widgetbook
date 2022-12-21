@@ -17,6 +17,7 @@ void main() {
         name: widgetName,
         stories: [
           WidgetbookUseCaseData(
+            designLink: null,
             name: 'story1',
             importStatement: '',
             componentImportStatement: '',
@@ -27,6 +28,7 @@ void main() {
             componentDefinitionPath: 'a',
           ),
           WidgetbookUseCaseData(
+            designLink: null,
             name: 'story2',
             importStatement: '',
             componentImportStatement: '',
@@ -57,9 +59,13 @@ void main() {
                   instance: ListInstance(
                     instances: [
                       WidgetbookUseCaseInstance(
-                          useCaseName: 'Story1', functionName: 'story1'),
+                        useCaseName: 'Story1',
+                        functionName: 'story1',
+                      ),
                       WidgetbookUseCaseInstance(
-                          useCaseName: 'Story2', functionName: 'story2'),
+                        useCaseName: 'Story2',
+                        functionName: 'story2',
+                      ),
                     ],
                   ),
                 ),
