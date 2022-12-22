@@ -8,13 +8,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
-  bloc:
-    dependency: "direct main"
-    description:
-      name: bloc
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "7.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -49,21 +42,14 @@ packages:
       name: cupertino_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.5"
   device_frame:
-    dependency: "direct dev"
+    dependency: transitive
     description:
       name: device_frame
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  equatable:
-    dependency: "direct main"
-    description:
-      name: equatable
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -76,18 +62,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_bloc:
-    dependency: "direct main"
+  flutter_lints:
+    dependency: "direct dev"
     description:
-      name: flutter_bloc
+      name: flutter_lints
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.2.0"
-  flutter_localizations:
-    dependency: "direct main"
-    description: flutter
-    source: sdk
-    version: "0.0.0"
+    version: "2.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -98,13 +79,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  font_awesome_flutter:
-    dependency: "direct main"
-    description:
-      name: font_awesome_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "9.1.0"
   freezed_annotation:
     dependency: transitive
     description:
@@ -113,19 +87,12 @@ packages:
     source: hosted
     version: "2.2.0"
   go_router:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: go_router
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.2.4"
-  intl:
-    dependency: "direct main"
-    description:
-      name: intl
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.17.0"
   js:
     dependency: transitive
     description:
@@ -140,13 +107,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.7.0"
+  lints:
+    dependency: transitive
+    description:
+      name: lints
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   logging:
     dependency: transitive
     description:
       name: logging
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.1.0"
   matcher:
     dependency: transitive
     description:
@@ -188,7 +162,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.2"
+    version: "6.0.5"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -250,6 +224,13 @@ packages:
       relative: true
     source: path
     version: "3.0.0-beta.3"
+  widgetbook_annotation:
+    dependency: "direct main"
+    description:
+      path: "../../packages/widgetbook_annotation"
+      relative: true
+    source: path
+    version: "3.0.0-beta.3"
   widgetbook_models:
     dependency: "direct overridden"
     description:
@@ -258,5 +239,5 @@ packages:
     source: path
     version: "3.0.0-beta.1"
 sdks:
-  dart: ">=2.17.0 <3.0.0"
+  dart: ">=2.18.2 <3.0.0"
   flutter: ">=3.3.0"

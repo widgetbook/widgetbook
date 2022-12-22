@@ -1,4 +1,4 @@
-## 0.0.8
+## 3.0.0-beta.1
 
 - refactor: removed `WidgetbookFrame` model
 

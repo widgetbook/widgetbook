@@ -1,6 +1,10 @@
+## 3.0.0-beta.4
+
+- chore: bumped `widgetbook_models` version
+
 ## 3.0.0-beta.3
 
--fix: locales are not correctly generated 
+- fix: locales are not correctly generated 
 
 ## 3.0.0-beta.2
 
