@@ -26,12 +26,6 @@ void main() {
       final categories = [
         WidgetbookCategory(name: 'A'),
       ];
-      final themes = [
-        WidgetbookTheme(
-          name: 'Light',
-          data: ThemeData.light(),
-        ),
-      ];
 
       group(
         'constructor throws $AssertionError when',
@@ -40,11 +34,10 @@ void main() {
             'categories is empty',
             () {
               expect(
-                () => Widgetbook(
+                () => Widgetbook<ThemeData>(
                   addons: const [],
                   categories: const [],
                   appInfo: appInfo,
-                  themes: themes,
                 ),
                 expectAssertionErrorWithMessage(
                   message: 'Please specify at least one $WidgetbookCategory.',
@@ -57,15 +50,25 @@ void main() {
             'devices is empty',
             () {
               expect(
-                () => Widgetbook(
-                  addons: const [],
+                () => Widgetbook<ThemeData>(
+                  addons: [
+                    FrameAddon(
+                      setting: FrameSetting.firstAsSelected(
+                        frames: [
+                          DefaultDeviceFrame(
+                            setting: DeviceSetting.firstAsSelected(
+                              devices: [],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                   categories: categories,
                   appInfo: appInfo,
-                  themes: themes,
-                  devices: const [],
                 ),
                 expectAssertionErrorWithMessage(
-                  message: 'Please specify at least one $Device.',
+                  message: 'Please specify at least one $Device',
                 ),
               );
             },
@@ -75,15 +78,19 @@ void main() {
             'textScaleFactors is empty',
             () {
               expect(
-                () => Widgetbook(
-                  addons: const [],
+                () => Widgetbook<ThemeData>(
+                  addons: [
+                    TextScaleAddon(
+                      setting: TextScaleSetting.firstAsSelected(
+                        textScales: [],
+                      ),
+                    )
+                  ],
                   categories: categories,
                   appInfo: appInfo,
-                  themes: themes,
-                  textScaleFactors: const [],
                 ),
                 expectAssertionErrorWithMessage(
-                  message: 'Please specify at least one textScaleFactor.',
+                  message: 'Please specify at least one TextScaleFactor',
                 ),
               );
             },
@@ -93,14 +100,19 @@ void main() {
             'themes is empty',
             () {
               expect(
-                () => Widgetbook(
-                  addons: const [],
+                () => Widgetbook<ThemeData>(
+                  addons: [
+                    MaterialThemeAddon(
+                      setting: MaterialThemeSetting.firstAsSelected(
+                        themes: [],
+                      ),
+                    ),
+                  ],
                   categories: categories,
                   appInfo: appInfo,
-                  themes: const [],
                 ),
                 expectAssertionErrorWithMessage(
-                  message: 'Please specify at least one $WidgetbookTheme.',
+                  message: 'Please specify at least one Theme',
                 ),
               );
             },
@@ -110,15 +122,19 @@ void main() {
             'frames is empty',
             () {
               expect(
-                () => Widgetbook(
-                  addons: const [],
+                () => Widgetbook<ThemeData>(
+                  addons: [
+                    FrameAddon(
+                      setting: FrameSetting.firstAsSelected(
+                        frames: [],
+                      ),
+                    ),
+                  ],
                   categories: categories,
                   appInfo: appInfo,
-                  themes: themes,
-                  frames: const [],
                 ),
                 expectAssertionErrorWithMessage(
-                  message: 'Please specify at least one $WidgetbookFrame.',
+                  message: 'Please specify at least one Frame',
                 ),
               );
             },
@@ -128,12 +144,17 @@ void main() {
             'supportedLocales is empty',
             () {
               expect(
-                () => Widgetbook(
-                  addons: const [],
+                () => Widgetbook<ThemeData>(
+                  addons: [
+                    LocalizationAddon(
+                      setting: LocalizationSetting.firstAsSelected(
+                        locales: [],
+                        localizationsDelegates: [],
+                      ),
+                    )
+                  ],
                   categories: categories,
                   appInfo: appInfo,
-                  themes: themes,
-                  supportedLocales: const [],
                 ),
                 expectAssertionErrorWithMessage(
                   message: 'Please specify at least one supported $Locale.',

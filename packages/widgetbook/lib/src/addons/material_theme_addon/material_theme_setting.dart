@@ -12,6 +12,10 @@ class MaterialThemeSetting extends ThemeSetting<ThemeData> {
   factory MaterialThemeSetting.firstAsSelected({
     required List<WidgetbookTheme<ThemeData>> themes,
   }) {
+    assert(
+      themes.isNotEmpty,
+      'Please specify at least one Theme',
+    );
     return MaterialThemeSetting(
       activeTheme: themes.first,
       themes: themes,

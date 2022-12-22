@@ -15,6 +15,10 @@ class DeviceSetting with _$DeviceSetting {
   factory DeviceSetting.firstAsSelected({
     required List<Device> devices,
   }) {
+    assert(
+      devices.isNotEmpty,
+      'Please specify at least one $Device',
+    );
     return DeviceSetting(
       activeDevice: devices.first,
       devices: devices,
