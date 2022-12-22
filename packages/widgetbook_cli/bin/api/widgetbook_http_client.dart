@@ -8,10 +8,6 @@ import 'package:path/path.dart';
 import '../flavor/flavor.dart';
 import '../helpers/helpers.dart';
 import '../models/models.dart';
-import '../review/devices/models/device_data.dart';
-import '../review/locales/models/locale_data.dart';
-import '../review/text_scale_factors/models/text_scale_factor_data.dart';
-import '../review/themes/models/theme_data.dart';
 import '../review/use_cases/models/changed_use_case.dart';
 import '../review/use_cases/requests/create_use_cases_request.dart';
 
@@ -47,10 +43,6 @@ class WidgetbookHttpClient {
     required String headBranch,
     required String baseSha,
     required String headSha,
-    required List<ThemeData> themes,
-    required List<LocaleData> locales,
-    required List<DeviceData> devices,
-    required List<TextScaleFactorData> textScaleFactors,
   }) async {
     if (useCases.isNotEmpty) {
       try {
@@ -65,10 +57,6 @@ class WidgetbookHttpClient {
             headBranch: headBranch,
             baseSha: baseSha,
             headSha: headSha,
-            themes: themes,
-            locales: locales,
-            devices: devices,
-            textScaleFactors: textScaleFactors,
           ).toJson(),
         );
       } on DioError catch (e) {
@@ -89,7 +77,7 @@ class WidgetbookHttpClient {
   /// Uploads the deployment .zip file to the Widgetbook Cloud backend
   Future<Map<String, dynamic>?> uploadBuild({
     required File deploymentFile,
-    required DeploymentData data,
+    required CreateBuildRequest data,
   }) async {
     try {
       final response = await client.post<Map<String, dynamic>>(
@@ -101,6 +89,10 @@ class WidgetbookHttpClient {
               filename: basename(deploymentFile.path),
               contentType: MediaType.parse('application/zip'),
             ),
+            'themes': jsonEncode(data.themes),
+            'devices': jsonEncode(data.devices),
+            'locales': jsonEncode(data.locales),
+            'textScaleFactors': jsonEncode(data.textScaleFactors),
             'branch': data.branchName,
             'repository': data.repositoryName,
             'actor': data.actor,

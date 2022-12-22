@@ -1,6 +1,11 @@
+## 3.0.0-beta.2
+
+- chore: bumped `widgetbook_models` version
+
 ## 3.0.0-beta.1
 
 - **BREAKING**: refactor: removed `WidgetbookUseCaseBuilder`, `WidgetbookDeviceFrameBuilder`, `WidgetbookLocalizationBuilder`, `WidgetbookScaffoldBuilder`, `WidgetbookThemeBuilder` annotations because [widgetbook](https://pub.dev/packages/widgetbook) does not longer support the builders.
+- feat: add `designLink` property to `WidgetbookUseCase` annotation.
 
 ## 2.1.0 
 - fix: Custom painter Widgets are incorrectly rendered ([#191](https://github.com/widgetbook/widgetbook/issues/191))

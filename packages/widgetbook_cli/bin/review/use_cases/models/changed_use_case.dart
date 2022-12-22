@@ -12,6 +12,7 @@ class ChangedUseCase with _$ChangedUseCase {
     required String componentName,
     required String componentDefinitionPath,
     required Modification modification,
+    required String? designLink,
   }) = _ChangedUseCase;
 
   factory ChangedUseCase.fromJson(Map<String, dynamic> json) =>

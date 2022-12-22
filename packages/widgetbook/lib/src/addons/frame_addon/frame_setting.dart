@@ -16,6 +16,10 @@ class FrameSetting with _$FrameSetting {
   factory FrameSetting.firstAsSelected({
     required List<Frame> frames,
   }) {
+    assert(
+      frames.isNotEmpty,
+      'Please specify at least one Frame',
+    );
     return FrameSetting(
       activeFrame: frames.first,
       frames: frames,

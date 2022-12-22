@@ -17,6 +17,10 @@ class TextScaleSetting with _$TextScaleSetting {
   factory TextScaleSetting.firstAsSelected({
     required List<double> textScales,
   }) {
+    assert(
+      textScales.isNotEmpty,
+      'Please specify at least one TextScaleFactor',
+    );
     return TextScaleSetting(
       activeTextScale: textScales.first,
       textScales: textScales,

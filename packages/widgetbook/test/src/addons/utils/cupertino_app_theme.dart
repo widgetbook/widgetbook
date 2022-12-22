@@ -24,7 +24,7 @@ final cupertinoThemeSetting = CupertinoThemeSetting(
 );
 
 final cupertinoThemeAddon = CupertinoThemeAddon(
-  themeSetting: cupertinoThemeSetting,
+  setting: cupertinoThemeSetting,
 );
 
 AppBuilderFunction get cupertinoAppBuilder =>

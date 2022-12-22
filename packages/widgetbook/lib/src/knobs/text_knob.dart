@@ -10,7 +10,7 @@ class TextKnob extends Knob<String> {
     required super.value,
     required this.multiline,
   });
-  bool multiline;
+  final bool multiline;
   @override
   Widget build() => TextKnobWidget(
         label: label,
@@ -28,7 +28,7 @@ class NullableTextKnob extends Knob<String?> {
     required super.value,
     required this.multiline,
   });
-  bool multiline;
+  final bool multiline;
   @override
   Widget build() => TextKnobWidget(
         label: label,

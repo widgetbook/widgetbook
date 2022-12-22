@@ -82,11 +82,11 @@ class _$WidgetbookLocalesDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$WidgetbookLocalesDataCopyWith<$Res>
+abstract class _$$_WidgetbookLocalesDataCopyWith<$Res>
     implements $WidgetbookLocalesDataCopyWith<$Res> {
-  factory _$WidgetbookLocalesDataCopyWith(_WidgetbookLocalesData value,
-          $Res Function(_WidgetbookLocalesData) then) =
-      __$WidgetbookLocalesDataCopyWithImpl<$Res>;
+  factory _$$_WidgetbookLocalesDataCopyWith(_$_WidgetbookLocalesData value,
+          $Res Function(_$_WidgetbookLocalesData) then) =
+      __$$_WidgetbookLocalesDataCopyWithImpl<$Res>;
   @override
   $Res call(
       {String name,
@@ -96,15 +96,16 @@ abstract class _$WidgetbookLocalesDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$WidgetbookLocalesDataCopyWithImpl<$Res>
+class __$$_WidgetbookLocalesDataCopyWithImpl<$Res>
     extends _$WidgetbookLocalesDataCopyWithImpl<$Res>
-    implements _$WidgetbookLocalesDataCopyWith<$Res> {
-  __$WidgetbookLocalesDataCopyWithImpl(_WidgetbookLocalesData _value,
-      $Res Function(_WidgetbookLocalesData) _then)
-      : super(_value, (v) => _then(v as _WidgetbookLocalesData));
+    implements _$$_WidgetbookLocalesDataCopyWith<$Res> {
+  __$$_WidgetbookLocalesDataCopyWithImpl(_$_WidgetbookLocalesData _value,
+      $Res Function(_$_WidgetbookLocalesData) _then)
+      : super(_value, (v) => _then(v as _$_WidgetbookLocalesData));
 
   @override
-  _WidgetbookLocalesData get _value => super._value as _WidgetbookLocalesData;
+  _$_WidgetbookLocalesData get _value =>
+      super._value as _$_WidgetbookLocalesData;
 
   @override
   $Res call({
@@ -113,7 +114,7 @@ class __$WidgetbookLocalesDataCopyWithImpl<$Res>
     Object? dependencies = freezed,
     Object? locales = freezed,
   }) {
-    return _then(_WidgetbookLocalesData(
+    return _then(_$_WidgetbookLocalesData(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -123,11 +124,11 @@ class __$WidgetbookLocalesDataCopyWithImpl<$Res>
           : importStatement // ignore: cast_nullable_to_non_nullable
               as String,
       dependencies: dependencies == freezed
-          ? _value.dependencies
+          ? _value._dependencies
           : dependencies // ignore: cast_nullable_to_non_nullable
               as List<String>,
       locales: locales == freezed
-          ? _value.locales
+          ? _value._locales
           : locales // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
@@ -175,13 +176,13 @@ class _$_WidgetbookLocalesData implements _WidgetbookLocalesData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _WidgetbookLocalesData &&
+            other is _$_WidgetbookLocalesData &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.importStatement, importStatement) &&
             const DeepCollectionEquality()
-                .equals(other.dependencies, dependencies) &&
-            const DeepCollectionEquality().equals(other.locales, locales));
+                .equals(other._dependencies, _dependencies) &&
+            const DeepCollectionEquality().equals(other._locales, _locales));
   }
 
   @JsonKey(ignore: true)
@@ -190,13 +191,13 @@ class _$_WidgetbookLocalesData implements _WidgetbookLocalesData {
       runtimeType,
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(importStatement),
-      const DeepCollectionEquality().hash(dependencies),
-      const DeepCollectionEquality().hash(locales));
+      const DeepCollectionEquality().hash(_dependencies),
+      const DeepCollectionEquality().hash(_locales));
 
   @JsonKey(ignore: true)
   @override
-  _$WidgetbookLocalesDataCopyWith<_WidgetbookLocalesData> get copyWith =>
-      __$WidgetbookLocalesDataCopyWithImpl<_WidgetbookLocalesData>(
+  _$$_WidgetbookLocalesDataCopyWith<_$_WidgetbookLocalesData> get copyWith =>
+      __$$_WidgetbookLocalesDataCopyWithImpl<_$_WidgetbookLocalesData>(
           this, _$identity);
 
   @override
@@ -225,6 +226,6 @@ abstract class _WidgetbookLocalesData implements WidgetbookLocalesData {
   List<String> get locales => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$WidgetbookLocalesDataCopyWith<_WidgetbookLocalesData> get copyWith =>
+  _$$_WidgetbookLocalesDataCopyWith<_$_WidgetbookLocalesData> get copyWith =>
       throw _privateConstructorUsedError;
 }

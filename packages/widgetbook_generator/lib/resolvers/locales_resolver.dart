@@ -27,11 +27,8 @@ class LocalesResolver extends GeneratorForAnnotation<WidgetbookLocales> {
     final node = await buildStep.resolver.astNodeFor(element);
     if (node != null) {
       final entities = node.childEntities.toList();
-      if (entities[0] is SimpleIdentifier &&
-          entities[1] is Token &&
-          entities[2] is ListLiteral) {
+      if (entities[1] is Token && entities[2] is ListLiteral) {
         final listLiteral = entities[2] as ListLiteral;
-
         // TODO this is likely the most flaky code that has ever been written
         // check the following cases
         // - Locale('en')

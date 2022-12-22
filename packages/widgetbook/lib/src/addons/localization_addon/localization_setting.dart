@@ -18,6 +18,11 @@ class LocalizationSetting with _$LocalizationSetting {
     required List<Locale> locales,
     required List<LocalizationsDelegate<dynamic>> localizationsDelegates,
   }) {
+    assert(
+      locales.isNotEmpty,
+      'Please specify at least one supported $Locale.',
+    );
+
     return LocalizationSetting(
       activeLocale: locales.first,
       locales: locales,
