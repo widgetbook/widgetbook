@@ -14,6 +14,7 @@ class GithubProvider extends GitProvider {
   Future<void> addBuildComment({
     required Map<String, dynamic> buildInfo,
     required String number,
+    required String? reviewId,
   }) async {
     final repository = Platform.environment['GITHUB_REPOSITORY'];
     final projectId = buildInfo['project'] as String;
@@ -32,6 +33,7 @@ class GithubProvider extends GitProvider {
         body: commentBody(
           projectId: projectId,
           buildId: buildId,
+          reviewId: reviewId,
         ),
       ).toJson(),
     );

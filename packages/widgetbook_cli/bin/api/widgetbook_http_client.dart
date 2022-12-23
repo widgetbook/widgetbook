@@ -7,6 +7,7 @@ import 'package:path/path.dart';
 
 import '../flavor/flavor.dart';
 import '../helpers/helpers.dart';
+import '../models/create_review_response.dart';
 import '../models/models.dart';
 import '../review/use_cases/models/changed_use_case.dart';
 import '../review/use_cases/requests/create_use_cases_request.dart';
@@ -34,7 +35,7 @@ class WidgetbookHttpClient {
   /// underlying [Dio] client
   final Dio client;
 
-  Future<void> uploadReview({
+  Future<CreateReviewResponse?> uploadReview({
     required String apiKey,
     required List<ChangedUseCase> useCases,
     required String buildId,
@@ -46,7 +47,7 @@ class WidgetbookHttpClient {
   }) async {
     if (useCases.isNotEmpty) {
       try {
-        await client.post<dynamic>(
+        final createReviewResponse = await client.post<dynamic>(
           '/reviews',
           data: CreateUseCasesRequest(
             apiKey: apiKey,
@@ -59,6 +60,13 @@ class WidgetbookHttpClient {
             headSha: headSha,
           ).toJson(),
         );
+        return CreateReviewResponse.fromJson(
+          jsonDecode(
+            jsonEncode(
+              createReviewResponse.data as Map<String, dynamic>,
+            ),
+          ) as Map<String, dynamic>,
+        );
       } on DioError catch (e) {
         final response = e.response;
         if (response != null) {
@@ -68,10 +76,12 @@ class WidgetbookHttpClient {
             message: errorResponse.toString(),
           );
         }
+        throw WidgetbookPublishReviewException();
       } catch (e) {
         throw WidgetbookPublishReviewException();
       }
     }
+    return null;
   }
 
   /// Uploads the deployment .zip file to the Widgetbook Cloud backend
