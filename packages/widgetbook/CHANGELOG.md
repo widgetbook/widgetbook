@@ -1,3 +1,7 @@
+## 3.0.0-beta.4
+
+- fix: properties not changing `onNavigate` via the browser's URL bar
+
 ## 3.0.0-beta.3
 
 - chore: bumped `widgetbook_models` version
