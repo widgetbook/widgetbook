@@ -1,3 +1,7 @@
+## 3.0.0-beta.17
+
+- feat: add link to review in GitHub comment
+
 ## 3.0.0-beta.16
 
 - fix: upload of locales, devices, themes and text scales

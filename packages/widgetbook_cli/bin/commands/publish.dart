@@ -35,6 +35,7 @@ import '../git-provider/github/github.dart';
 import '../git/git_wrapper.dart';
 import '../helpers/exceptions.dart';
 import '../helpers/widgetbook_zip_encoder.dart';
+import '../models/created_review.dart';
 import '../models/models.dart';
 import '../models/publish_args.dart';
 import '../review/devices/device_parser.dart';
@@ -311,12 +312,12 @@ class PublishCommand extends WidgetbookCommand {
   }
 
   @visibleForTesting
-  Future<void> uploadReview({
+  Future<CreatedReview?> uploadReview({
     required File file,
     required PublishArgs args,
     required ReviewData reviewData,
-  }) {
-    return _widgetbookHttpClient.uploadReview(
+  }) async {
+    final response = await _widgetbookHttpClient.uploadReview(
       apiKey: args.apiKey,
       useCases: reviewData.useCases,
       buildId: reviewData.buildId,
@@ -326,6 +327,7 @@ class PublishCommand extends WidgetbookCommand {
       headBranch: args.branch,
       headSha: args.commit,
     );
+    return response?.review;
   }
 
   // TODO sha is pretty much not used an is just being overriden with the most
@@ -456,17 +458,6 @@ class PublishCommand extends WidgetbookCommand {
           progress.complete('Uploaded build');
         }
 
-        if (args.prNumber != null) {
-          if (args.gitHubToken != null) {
-            await GithubProvider(
-              apiKey: args.gitHubToken!,
-            ).addBuildComment(
-              buildInfo: uploadInfo,
-              number: args.prNumber!,
-            );
-          }
-        }
-
         // If generator is not run or not properly configured
         if (themes.isEmpty) {
           logger.err(
@@ -480,10 +471,11 @@ class PublishCommand extends WidgetbookCommand {
           throw ReviewNotFoundException();
         }
 
+        String? reviewId;
         if (baseBranch != null && baseSha != null) {
           progress.update('Uploading review');
           try {
-            await uploadReview(
+            final review = await uploadReview(
               file: file,
               args: args,
               reviewData: ReviewData(
@@ -493,6 +485,7 @@ class PublishCommand extends WidgetbookCommand {
                 baseSha: baseSha,
               ),
             );
+            reviewId = review?.id;
             progress.complete('Uploaded review');
           } catch (_) {
             throw WidgetbookApiException();
@@ -502,6 +495,18 @@ class PublishCommand extends WidgetbookCommand {
             'HINT: No pull-request information available. Therefore, '
             'no review will be created. See docs for more information.',
           );
+        }
+
+        if (args.prNumber != null) {
+          if (args.gitHubToken != null) {
+            await GithubProvider(
+              apiKey: args.gitHubToken!,
+            ).addBuildComment(
+              buildInfo: uploadInfo,
+              number: args.prNumber!,
+              reviewId: reviewId,
+            );
+          }
         }
 
         deleteZip(file);
