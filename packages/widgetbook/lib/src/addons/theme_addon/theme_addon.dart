@@ -30,11 +30,9 @@ abstract class ThemeAddon<T> extends WidgetbookAddOn {
         );
 }
 
-
 Map<String, String> _getQueryParameter<T>(BuildContext context) {
   final selectedItem =
       context.read<ThemeSettingProvider<T>>().value.activeTheme;
-
 
   return {
     'theme': selectedItem.name,
@@ -75,6 +73,7 @@ Widget _wrapperBuilder<T>(
       selectedTheme != null ? data.copyWith(activeTheme: selectedTheme) : data;
 
   return ChangeNotifierProvider(
+    key: ValueKey(initialData),
     create: (_) => ThemeSettingProvider<T>(
       initialData,
     ),

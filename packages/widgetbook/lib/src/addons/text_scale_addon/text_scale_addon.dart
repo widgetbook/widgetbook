@@ -67,6 +67,7 @@ Widget _wrapperBuilder(
       : data;
 
   return ChangeNotifierProvider(
+    key: ValueKey(initialData),
     create: (_) => TextScaleSettingProvider(initialData),
     child: child,
   );
