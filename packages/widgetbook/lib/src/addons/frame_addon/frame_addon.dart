@@ -75,6 +75,7 @@ Widget _wrapperBuilder(
       selectedFrame != null ? data.copyWith(activeFrame: selectedFrame) : data;
   final activeFrame = initialData.activeFrame;
   return ChangeNotifierProvider(
+    key: ValueKey(initialData),
     create: (_) => FrameSettingProvider(initialData),
     child: activeFrame.addon.wrapperBuilder(
       context,
