@@ -84,5 +84,7 @@ class Themes {
           fontFamily: 'Poppins',
         ),
     useMaterial3: true,
+  ).copyWith(
+    hoverColor: const Color(0xFFE3E2E6).withOpacity(0.08),
   );
 }
