@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="widgetbook_for_widgetbook" type="FlutterRunConfigurationType" factoryName="Flutter">
+    <option name="filePath" value="$PROJECT_DIR$/widgetbook_for_widgetbook/lib/app.widgetbook.dart" />
+    <method v="2" />
+  </configuration>
+</component>

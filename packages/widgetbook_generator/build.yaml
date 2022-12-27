@@ -41,45 +41,10 @@ builders:
     auto_apply: dependents
     runs_before: [":widgetbook_builder"]
     build_to: cache
-  device_frame_builder:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["deviceFrameBuilder"]
-    build_extensions: { ".dart": [".deviceframebuilder.widgetbook.json"] }
-    auto_apply: dependents
-    runs_before: [":widgetbook_builder"]
-    build_to: cache
-  localization_builder:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["localizationBuilder"]
-    build_extensions: { ".dart": [".localizationbuilder.widgetbook.json"] }
-    auto_apply: dependents
-    runs_before: [":widgetbook_builder"]
-    build_to: cache
   app_resolver_builder:
     import: "package:widgetbook_generator/builder.dart"
     builder_factories: ["appResolverBuilder"]
     build_extensions: { ".dart": [".appbuilder.widgetbook.json"] }
-    auto_apply: dependents
-    runs_before: [":widgetbook_builder"]
-    build_to: cache
-  scaffold_builder:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["scaffoldBuilder"]
-    build_extensions: { ".dart": [".scaffoldbuilder.widgetbook.json"] }
-    auto_apply: dependents
-    runs_before: [":widgetbook_builder"]
-    build_to: cache
-  theme_resolver_builder:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["themeResolverBuilder"]
-    build_extensions: { ".dart": [".themebuilder.widgetbook.json"] }
-    auto_apply: dependents
-    runs_before: [":widgetbook_builder"]
-    build_to: cache
-  use_case_builder:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["useCaseBuilder"]
-    build_extensions: { ".dart": [".usecasebuilder.widgetbook.json"] }
     auto_apply: dependents
     runs_before: [":widgetbook_builder"]
     build_to: cache

@@ -1,3 +1,7 @@
+## 3.0.0-beta.1
+
+- refactor: removed `WidgetbookFrame` model
+
 ## 0.0.7
 
 - chore: bumped `freezed` and `freezed_annotation` to `v2.0.3` ([#174](https://github.com/widgetbook/widgetbook/issues/174))

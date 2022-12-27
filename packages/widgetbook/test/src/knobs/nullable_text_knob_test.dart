@@ -10,9 +10,26 @@ void main() {
   testWidgets(
     'Equality operator works correctly',
     (WidgetTester tester) async {
-      final first = NullableTextKnob(label: 'first', value: null);
-      final second = NullableTextKnob(label: 'second', value: 'value');
-      expect(first, equals(NullableTextKnob(label: 'first', value: null)));
+      final first = NullableTextKnob(
+        label: 'first',
+        value: null,
+        multiline: false,
+      );
+      final second = NullableTextKnob(
+        label: 'second',
+        value: 'value',
+        multiline: false,
+      );
+      expect(
+        first,
+        equals(
+          NullableTextKnob(
+            label: 'first',
+            value: null,
+            multiline: false,
+          ),
+        ),
+      );
       expect(first, isNot(equals(second)));
     },
   );

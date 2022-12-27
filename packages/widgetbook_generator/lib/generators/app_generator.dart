@@ -1,23 +1,14 @@
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+import 'package:widgetbook_generator/code_generators/instances/addons/addons.dart';
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/double_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/frame_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/function_call_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/theme_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/variable_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_instance.dart';
 import 'package:widgetbook_generator/models/widgetbook_app_builder_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_device_frame_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_localization_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_localizations_delegates_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_scaffold_builder_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_theme_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_type_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_use_case_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
 
@@ -27,7 +18,6 @@ String generateWidgetbook({
   required WidgetbookConstructor constructor,
   required List<WidgetbookUseCaseData> useCases,
   required List<Device> devices,
-  required List<WidgetbookFrame> frames,
   required List<double> textScaleFactors,
   required bool foldersExpanded,
   required bool widgetsExpanded,
@@ -36,49 +26,64 @@ String generateWidgetbook({
   WidgetbookThemeData? widgetbookThemeData,
   WidgetbookThemeTypeData? themeTypeData,
   required List<WidgetbookThemeData> themes,
-  WidgetbookDeviceFrameData? deviceFrameBuilder,
-  WidgetbookLocalizationBuilderData? localizationBuilder,
   WidgetbookAppBuilderData? appBuilder,
-  WidgetbookScaffoldBuilderData? scaffoldBuilder,
-  WidgetbookThemeBuilderData? themeBuilder,
-  WidgetbookUseCaseBuilderData? useCaseBuilder,
 }) {
   final category =
       _generateCategoryInstance(useCases, foldersExpanded, widgetsExpanded);
+
+  final addons = <AddOnInstance>[];
+  switch (constructor) {
+    case WidgetbookConstructor.material:
+      addons.add(
+        CustomThemeAddonInstance(
+          themes: themes,
+          themeType: 'ThemeData',
+        ),
+      );
+      break;
+    case WidgetbookConstructor.cupertino:
+      addons.add(
+        CustomThemeAddonInstance(
+          themes: themes,
+          themeType: 'CupertinoThemeData',
+        ),
+      );
+      break;
+    case WidgetbookConstructor.custom:
+      if (widgetbookThemeData != null) {
+        addons.add(
+          CustomThemeAddonInstance(
+            themes: themes,
+            themeType: widgetbookThemeData.name,
+          ),
+        );
+      } else {
+        // TODO handle error
+      }
+      break;
+  }
+
+  addons.add(TextScaleAddonInstance(textScales: textScaleFactors));
+  if (localesData != null && localizationDelegatesData != null) {
+    addons.add(
+      LocalizationAddonInstance(
+        localesData: localesData,
+        localizationDelegatesData: localizationDelegatesData,
+      ),
+    );
+  }
+  addons.add(FrameAddonInstance(devices: devices));
+
   final widgetbookInstanceCode = WidgetbookInstance(
     constructor: constructor,
+    addons: addons,
     appInfoInstance: AppInfoInstance(name: name),
-    themes: themes.map((theme) => ThemeInstance(theme: theme)).toList(),
-    devices: devices.map((device) => DeviceInstance(device: device)).toList(),
-    frames: frames.map((frame) => FrameInstance(frame: frame)).toList(),
-    textScaleFactors: textScaleFactors.map(DoubleInstance.value).toList(),
     categories: [
       category,
     ],
     type: themeTypeData?.name,
-    locales: localesData != null
-        ? VariableInstance(variableIdentifier: localesData.name)
-        : null,
-    localizationDelegates: localizationDelegatesData != null
-        ? VariableInstance(variableIdentifier: localizationDelegatesData.name)
-        : null,
-    deviceFrameBuilder: deviceFrameBuilder != null
-        ? VariableInstance(variableIdentifier: deviceFrameBuilder.name)
-        : null,
-    localizationBuilder: localizationBuilder != null
-        ? VariableInstance(variableIdentifier: localizationBuilder.name)
-        : null,
     appBuilder: appBuilder != null
         ? VariableInstance(variableIdentifier: appBuilder.name)
-        : null,
-    scaffoldBuilder: scaffoldBuilder != null
-        ? VariableInstance(variableIdentifier: scaffoldBuilder.name)
-        : null,
-    themeBuilder: themeBuilder != null
-        ? FunctionCallInstance(name: themeBuilder.name)
-        : null,
-    useCaseBuilder: useCaseBuilder != null
-        ? VariableInstance(variableIdentifier: useCaseBuilder.name)
         : null,
   ).toCode();
 

@@ -22,6 +22,8 @@ class UseCaseData with _$UseCaseData {
     required String componentDefinitionPath,
     // The path to the file containing the use-case definition
     required String useCaseDefinitionPath,
+    // A link to a component or variant
+    String? designLink,
   }) = _UseCaseData;
 
   factory UseCaseData.fromJson(Map<String, dynamic> json) =>

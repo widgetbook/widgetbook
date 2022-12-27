@@ -12,7 +12,6 @@ class WidgetbookApp {
     required this.name,
     required Type this.themeType,
     this.devices = const <Device>[],
-    this.frames = const <WidgetbookFrame>[],
     this.textScaleFactors = const <double>[],
     this.foldersExpanded = false,
     this.widgetsExpanded = false,
@@ -24,7 +23,6 @@ class WidgetbookApp {
   const WidgetbookApp.material({
     required this.name,
     this.devices = const <Device>[],
-    this.frames = const <WidgetbookFrame>[],
     this.textScaleFactors = const <double>[],
     this.foldersExpanded = false,
     this.widgetsExpanded = false,
@@ -36,7 +34,6 @@ class WidgetbookApp {
   const WidgetbookApp.cupertino({
     required this.name,
     this.devices = const <Device>[],
-    this.frames = const <WidgetbookFrame>[],
     this.textScaleFactors = const <double>[],
     this.foldersExpanded = false,
     this.widgetsExpanded = false,
@@ -52,9 +49,6 @@ class WidgetbookApp {
 
   /// The devices shown in the Widgetbook
   final List<Device> devices;
-
-  /// The device frames shown in the Widgetbook
-  final List<WidgetbookFrame> frames;
 
   /// A list of text scale factors
   final List<double> textScaleFactors;

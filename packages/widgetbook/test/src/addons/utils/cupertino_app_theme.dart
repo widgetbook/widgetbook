@@ -19,12 +19,12 @@ final yellowCupertinoWidgetbookTheme =
     WidgetbookTheme(name: 'Yellow', data: yellowtheme);
 
 final cupertinoThemeSetting = CupertinoThemeSetting(
-  activeThemes: {blueCupertinoWidgetbookTheme},
+  activeTheme: blueCupertinoWidgetbookTheme,
   themes: [blueCupertinoWidgetbookTheme, yellowCupertinoWidgetbookTheme],
 );
 
 final cupertinoThemeAddon = CupertinoThemeAddon(
-  themeSetting: cupertinoThemeSetting,
+  setting: cupertinoThemeSetting,
 );
 
 AppBuilderFunction get cupertinoAppBuilder =>

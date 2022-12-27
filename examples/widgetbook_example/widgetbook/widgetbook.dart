@@ -7,6 +7,7 @@ import 'package:widgetbook_example/themes/dark_theme.dart';
 import 'package:widgetbook_example/themes/light_theme.dart';
 import 'package:widgetbook_example/widgets/attributes/price_attribute.dart';
 import 'package:widgetbook_example/widgets/attributes/weight_attribute.dart';
+import 'package:widgetbook_example/widgets/attributes/multiline_knob.dart';
 import 'package:widgetbook_example/widgets/ingredients.dart';
 import 'package:widgetbook_example/widgets/meal_detail.dart';
 import 'package:widgetbook_example/widgets/new_tag.dart';
@@ -31,12 +32,6 @@ class HotreloadWidgetbook extends StatelessWidget {
         ),
       ),
     ];
-    final deviceFrameBuilder = DeviceFrameBuilder(
-      devices: devices,
-    );
-    final activeFrameBuilder = WidgetbookFrameBuilder(
-      devices: devices,
-    );
 
     return Widgetbook.material(
       addons: [
@@ -47,6 +42,15 @@ class HotreloadWidgetbook extends StatelessWidget {
               WidgetbookTheme(name: 'Dark', data: darkTheme),
             ],
           ),
+          frameSetting: FrameSetting.firstAsSelected(frames: [
+            DefaultDeviceFrame(
+              setting: DeviceSetting.firstAsSelected(devices: devices),
+            ),
+            NoFrame(),
+            WidgetbookFrame(
+              setting: DeviceSetting.firstAsSelected(devices: devices),
+            )
+          ]),
           textScaleSetting: TextScaleSetting.firstAsSelected(
             textScales: [
               1,
@@ -55,9 +59,7 @@ class HotreloadWidgetbook extends StatelessWidget {
             ],
           ),
           localizationSetting: LocalizationSetting(
-            activeLocales: {
-              Locale('en'),
-            },
+            activeLocale: Locale('en'),
             localizationsDelegates: [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -68,13 +70,6 @@ class HotreloadWidgetbook extends StatelessWidget {
               Locale('en'),
               Locale('de'),
               Locale('fr'),
-            ],
-          ),
-          deviceSetting: DeviceSelection(
-            activeFrameBuilder: activeFrameBuilder,
-            frameBuilders: [
-              activeFrameBuilder,
-              deviceFrameBuilder,
             ],
           ),
         ),
@@ -255,6 +250,25 @@ class HotreloadWidgetbook extends StatelessWidget {
                       name: 'Long weight',
                       builder: (context) => WeightAttribute(
                         weight: 1050,
+                      ),
+                    ),
+                  ],
+                ),
+                WidgetbookComponent(
+                  name: 'Knobs',
+                  useCases: [
+                    WidgetbookUseCase(
+                      name: 'Multiline Knob',
+                      builder: (context) => MultiLineKnob(),
+                    ),
+                    WidgetbookUseCase(
+                      name: 'Color Knob',
+                      builder: (context) => Icon(
+                        Icons.thumb_up_sharp,
+                        color: context.knobs.color(
+                          label: 'Color',
+                          initialValue: Colors.blue,
+                        ),
                       ),
                     ),
                   ],

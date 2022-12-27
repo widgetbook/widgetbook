@@ -4,7 +4,7 @@ import 'package:widgetbook/widgetbook.dart';
 class MaterialThemeSetting extends ThemeSetting<ThemeData> {
   MaterialThemeSetting({
     required super.themes,
-    required super.activeThemes,
+    required super.activeTheme,
   });
 
   /// Sets the first theme within `themes` as the active theme on
@@ -12,19 +12,12 @@ class MaterialThemeSetting extends ThemeSetting<ThemeData> {
   factory MaterialThemeSetting.firstAsSelected({
     required List<WidgetbookTheme<ThemeData>> themes,
   }) {
-    return MaterialThemeSetting(
-      activeThemes: themes.take(1).toSet(),
-      themes: themes,
+    assert(
+      themes.isNotEmpty,
+      'Please specify at least one Theme',
     );
-  }
-
-  /// Sets all `themes` as the active themes on
-  /// startup
-  factory MaterialThemeSetting.allAsSelected({
-    required List<WidgetbookTheme<ThemeData>> themes,
-  }) {
     return MaterialThemeSetting(
-      activeThemes: themes.toSet(),
+      activeTheme: themes.first,
       themes: themes,
     );
   }

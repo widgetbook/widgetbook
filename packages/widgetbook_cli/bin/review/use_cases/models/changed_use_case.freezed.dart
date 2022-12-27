@@ -24,6 +24,7 @@ mixin _$ChangedUseCase {
   String get componentName => throw _privateConstructorUsedError;
   String get componentDefinitionPath => throw _privateConstructorUsedError;
   Modification get modification => throw _privateConstructorUsedError;
+  String? get designLink => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,7 +41,8 @@ abstract class $ChangedUseCaseCopyWith<$Res> {
       {String name,
       String componentName,
       String componentDefinitionPath,
-      Modification modification});
+      Modification modification,
+      String? designLink});
 }
 
 /// @nodoc
@@ -58,6 +60,7 @@ class _$ChangedUseCaseCopyWithImpl<$Res>
     Object? componentName = freezed,
     Object? componentDefinitionPath = freezed,
     Object? modification = freezed,
+    Object? designLink = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -76,6 +79,10 @@ class _$ChangedUseCaseCopyWithImpl<$Res>
           ? _value.modification
           : modification // ignore: cast_nullable_to_non_nullable
               as Modification,
+      designLink: designLink == freezed
+          ? _value.designLink
+          : designLink // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -91,7 +98,8 @@ abstract class _$$_ChangedUseCaseCopyWith<$Res>
       {String name,
       String componentName,
       String componentDefinitionPath,
-      Modification modification});
+      Modification modification,
+      String? designLink});
 }
 
 /// @nodoc
@@ -111,6 +119,7 @@ class __$$_ChangedUseCaseCopyWithImpl<$Res>
     Object? componentName = freezed,
     Object? componentDefinitionPath = freezed,
     Object? modification = freezed,
+    Object? designLink = freezed,
   }) {
     return _then(_$_ChangedUseCase(
       name: name == freezed
@@ -129,6 +138,10 @@ class __$$_ChangedUseCaseCopyWithImpl<$Res>
           ? _value.modification
           : modification // ignore: cast_nullable_to_non_nullable
               as Modification,
+      designLink: designLink == freezed
+          ? _value.designLink
+          : designLink // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -140,7 +153,8 @@ class _$_ChangedUseCase implements _ChangedUseCase {
       {required this.name,
       required this.componentName,
       required this.componentDefinitionPath,
-      required this.modification});
+      required this.modification,
+      required this.designLink});
 
   factory _$_ChangedUseCase.fromJson(Map<String, dynamic> json) =>
       _$$_ChangedUseCaseFromJson(json);
@@ -153,10 +167,12 @@ class _$_ChangedUseCase implements _ChangedUseCase {
   final String componentDefinitionPath;
   @override
   final Modification modification;
+  @override
+  final String? designLink;
 
   @override
   String toString() {
-    return 'ChangedUseCase(name: $name, componentName: $componentName, componentDefinitionPath: $componentDefinitionPath, modification: $modification)';
+    return 'ChangedUseCase(name: $name, componentName: $componentName, componentDefinitionPath: $componentDefinitionPath, modification: $modification, designLink: $designLink)';
   }
 
   @override
@@ -170,7 +186,9 @@ class _$_ChangedUseCase implements _ChangedUseCase {
             const DeepCollectionEquality().equals(
                 other.componentDefinitionPath, componentDefinitionPath) &&
             const DeepCollectionEquality()
-                .equals(other.modification, modification));
+                .equals(other.modification, modification) &&
+            const DeepCollectionEquality()
+                .equals(other.designLink, designLink));
   }
 
   @JsonKey(ignore: true)
@@ -180,7 +198,8 @@ class _$_ChangedUseCase implements _ChangedUseCase {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(componentName),
       const DeepCollectionEquality().hash(componentDefinitionPath),
-      const DeepCollectionEquality().hash(modification));
+      const DeepCollectionEquality().hash(modification),
+      const DeepCollectionEquality().hash(designLink));
 
   @JsonKey(ignore: true)
   @override
@@ -198,7 +217,8 @@ abstract class _ChangedUseCase implements ChangedUseCase {
       {required final String name,
       required final String componentName,
       required final String componentDefinitionPath,
-      required final Modification modification}) = _$_ChangedUseCase;
+      required final Modification modification,
+      required final String? designLink}) = _$_ChangedUseCase;
 
   factory _ChangedUseCase.fromJson(Map<String, dynamic> json) =
       _$_ChangedUseCase.fromJson;
@@ -211,6 +231,8 @@ abstract class _ChangedUseCase implements ChangedUseCase {
   String get componentDefinitionPath => throw _privateConstructorUsedError;
   @override
   Modification get modification => throw _privateConstructorUsedError;
+  @override
+  String? get designLink => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ChangedUseCaseCopyWith<_$_ChangedUseCase> get copyWith =>
