@@ -24,6 +24,8 @@ class WidgetbookUseCaseData extends WidgetbookData
     required String componentDefinitionPath,
     // The path to the file containing the use-case definition
     required String useCaseDefinitionPath,
+    // The link to a design file or design component
+    required String? designLink,
   }) = _WidgetbookUseCaseData;
 
   factory WidgetbookUseCaseData.fromJson(Map<String, dynamic> json) =>

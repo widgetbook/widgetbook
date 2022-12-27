@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
 
 abstract class KnobsBuilder {
@@ -10,8 +11,16 @@ abstract class KnobsBuilder {
     bool initialValue = false,
   });
 
+  /// Creates a textfield that can be typed in and optionally hold a
+  /// color value
+  Color color({
+    required String label,
+    String? description,
+    required Color initialValue,
+  });
+
   /// Creates a checkbox that can be toggled on and off and optionally hold a
-  // null value
+  /// null value
   bool? nullableBoolean({
     required String label,
     String? description,
@@ -23,18 +32,20 @@ abstract class KnobsBuilder {
     required String label,
     String? description,
     String initialValue,
+    bool multiline,
   });
 
   /// Creates a textfield that can be typed in and optionally hold a
-  // null value
+  /// null value
   String? nullableText({
     required String label,
     String? description,
     String? initialValue,
+    bool multiline,
   });
 
   /// Creates a slider that can be slid to specific double values. You can use
-  // the `num.toInt()` function to make this into an integer
+  /// the `num.toInt()` function to make this into an integer
   double slider({
     required String label,
     String? description,

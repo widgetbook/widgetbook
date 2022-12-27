@@ -5,17 +5,13 @@ import 'package:widgetbook/src/knobs/nullable_checkbox.dart';
 
 class SliderKnob extends Knob<double> {
   SliderKnob({
-    required String label,
-    String? description,
-    required double value,
+    required super.label,
+    super.description,
+    required super.value,
     this.max = 1,
     this.min = 0,
     this.divisions,
-  }) : super(
-          label: label,
-          description: description,
-          value: value,
-        );
+  });
 
   final double max;
   final double min;
@@ -35,17 +31,13 @@ class SliderKnob extends Knob<double> {
 
 class NullableSliderKnob extends Knob<double?> {
   NullableSliderKnob({
-    required String label,
-    String? description,
-    required double value,
+    required super.label,
+    super.description,
+    required double super.value,
     this.max = 1,
     this.min = 0,
     this.divisions,
-  }) : super(
-          label: label,
-          description: description,
-          value: value,
-        );
+  });
 
   final double max;
   final double min;
@@ -66,7 +58,7 @@ class NullableSliderKnob extends Knob<double?> {
 
 class SliderKnobWidget extends StatefulWidget {
   const SliderKnobWidget({
-    Key? key,
+    super.key,
     required this.label,
     required this.description,
     required this.value,
@@ -74,7 +66,7 @@ class SliderKnobWidget extends StatefulWidget {
     required this.min,
     required this.divisions,
     this.nullable = false,
-  }) : super(key: key);
+  });
 
   final String label;
   final String? description;

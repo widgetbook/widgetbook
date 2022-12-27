@@ -4,8 +4,11 @@ import 'package:widgetbook/widgetbook.dart';
 class ThemeSetting<T> {
   ThemeSetting({
     required this.themes,
-    required this.activeThemes,
-  });
+    required this.activeTheme,
+  }) : assert(
+          themes.isNotEmpty,
+          'themes cannot be empty',
+        );
 
   /// Sets the first theme within `themes` as the active theme on
   /// startup
@@ -13,32 +16,21 @@ class ThemeSetting<T> {
     required List<WidgetbookTheme<T>> themes,
   }) {
     return ThemeSetting(
-      activeThemes: themes.take(1).toSet(),
-      themes: themes,
-    );
-  }
-
-  /// Sets all `themes` as the active themes on
-  /// startup
-  factory ThemeSetting.allAsSelected({
-    required List<WidgetbookTheme<T>> themes,
-  }) {
-    return ThemeSetting(
-      activeThemes: themes.toSet(),
+      activeTheme: themes.first,
       themes: themes,
     );
   }
 
   final List<WidgetbookTheme<T>> themes;
-  final Set<WidgetbookTheme<T>> activeThemes;
+  final WidgetbookTheme<T> activeTheme;
 
   ThemeSetting<T> copyWith({
     List<WidgetbookTheme<T>>? themes,
-    Set<WidgetbookTheme<T>>? activeThemes,
+    WidgetbookTheme<T>? activeTheme,
   }) {
     return ThemeSetting<T>(
       themes: themes ?? this.themes,
-      activeThemes: activeThemes ?? this.activeThemes,
+      activeTheme: activeTheme ?? this.activeTheme,
     );
   }
 
@@ -48,19 +40,19 @@ class ThemeSetting<T> {
         (other.runtimeType == runtimeType &&
             other is ThemeSetting<T> &&
             const DeepCollectionEquality()
-                .equals(other.activeThemes, activeThemes) &&
+                .equals(other.activeTheme, activeTheme) &&
             const DeepCollectionEquality().equals(other.themes, themes));
   }
 
   @override
   String toString() {
-    return '$ThemeSetting(activeThemes: $activeThemes, themes: $themes)';
+    return '$ThemeSetting(activeTheme: $activeTheme, themes: $themes)';
   }
 
   @override
   int get hashCode => Object.hash(
         runtimeType,
-        const DeepCollectionEquality().hash(activeThemes),
+        const DeepCollectionEquality().hash(activeTheme),
         const DeepCollectionEquality().hash(themes),
       );
 }

@@ -44,13 +44,16 @@ Run ${cyan.wrap('widgetbook update')} to update''';
 void main() {
   group('$WidgetbookCommandRunner', () {
     late Logger logger;
+    late Progress progress;
 
     late PubUpdater pubUpdater;
     late WidgetbookCommandRunner commandRunner;
 
     setUp(() {
       printLogs = [];
+      progress = MockProgress();
       logger = MockLogger();
+      when(() => logger.progress(any<String>())).thenReturn(progress);
 
       pubUpdater = MockPubUpdater();
 
@@ -65,8 +68,7 @@ void main() {
     });
 
     test('can be instantiated without an explicit logger instance', () {
-      final commandRunner = WidgetbookCommandRunner();
-      expect(commandRunner, isNotNull);
+      expect(WidgetbookCommandRunner.new, returnsNormally);
     });
 
     group('run', () {

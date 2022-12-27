@@ -1,3 +1,19 @@
+## 3.0.0-beta.17
+
+- feat: add link to review in GitHub comment
+
+## 3.0.0-beta.16
+
+- fix: upload of locales, devices, themes and text scales
+
+## 3.0.0-beta.15
+
+- fix: `designLink` is not uploaded
+
+## 3.0.0-beta.14
+- feat: add upload of `designLink` property
+- fix: CLI returns code `>0` when no review information is available
+
 ## 3.0.0-beta.13
 
 - feat: add command for `publish`

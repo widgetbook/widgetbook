@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/knobs/bool_knob.dart';
+import 'package:widgetbook/src/knobs/color_knob.dart';
 import 'package:widgetbook/src/knobs/knobs_builder.dart';
 import 'package:widgetbook/src/knobs/nullable_checkbox.dart';
 import 'package:widgetbook/src/knobs/number_knob.dart';
@@ -94,6 +95,20 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
       );
 
   @override
+  Color color({
+    required String label,
+    String? description,
+    required Color initialValue,
+  }) {
+    return _addKnob(
+      ColorKnob(
+        label: label,
+        value: initialValue,
+      ),
+    );
+  }
+
+  @override
   bool? nullableBoolean({
     required String label,
     String? description,
@@ -112,12 +127,14 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     required String label,
     String? description,
     String initialValue = '',
+    bool multiline = false,
   }) =>
       _addKnob(
         TextKnob(
           label: label,
           value: initialValue,
           description: description,
+          multiline: multiline,
         ),
       );
 
@@ -126,12 +143,14 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     required String label,
     String? description,
     String? initialValue,
+    bool multiline = false,
   }) =>
       _addKnob(
         NullableTextKnob(
           label: label,
           value: initialValue,
           description: description,
+          multiline: multiline,
         ),
       );
 
@@ -237,8 +256,8 @@ class KnobWrapper extends StatelessWidget {
     required this.description,
     required this.title,
     this.nullableCheckbox,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget child;
   final String? description;

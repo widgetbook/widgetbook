@@ -113,6 +113,7 @@ class UseCaseParser extends GeneratorParser<ChangedUseCase> {
                 // if a single use-case was added or not
                 // for this, we require AT LEAST line-diff functionality
                 modification: diff.modification,
+                designLink: useCase.designLink,
               ),
             );
             break;

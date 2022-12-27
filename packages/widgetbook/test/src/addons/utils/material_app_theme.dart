@@ -19,14 +19,12 @@ final yellowMaterialWidgetbookTheme =
     WidgetbookTheme(name: 'Yellow', data: yellowtheme);
 
 final materialThemeSetting = MaterialThemeSetting(
-  activeThemes: {
-    blueMaterialWidgetbookTheme,
-  },
+  activeTheme: blueMaterialWidgetbookTheme,
   themes: [blueMaterialWidgetbookTheme, yellowMaterialWidgetbookTheme],
 );
 
 final materialThemeAddon = MaterialThemeAddon(
-  themeSetting: materialThemeSetting,
+  setting: materialThemeSetting,
 );
 
 AppBuilderFunction get materialAppBuilder =>
