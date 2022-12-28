@@ -1,3 +1,7 @@
+## 3.0.0-beta.5
+
+- fix: properties are resetting when changing locale
+
 ## 3.0.0-beta.4
 
 - fix: properties not changing `onNavigate` via the browser's URL bar
