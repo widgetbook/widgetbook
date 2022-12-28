@@ -10,10 +10,7 @@ import 'package:widgetbook/src/workbench/workbench_controls.dart';
 class Workbench extends StatefulWidget {
   const Workbench({
     super.key,
-    required this.routerData,
   });
-
-  final Map<String, dynamic> routerData;
 
   @override
   State<Workbench> createState() => _WorkbenchState();
