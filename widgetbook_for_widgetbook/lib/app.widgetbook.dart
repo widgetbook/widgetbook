@@ -5,12 +5,15 @@
 // **************************************************************************
 
 import 'dart:core';
-
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_core/src/navigation_tree/navigation_tree.dart';
+import 'package:widgetbook_core/widgetbook_core.dart';
 import 'package:widgetbook_for_widgetbook/app.dart';
 import 'package:widgetbook_for_widgetbook/navigation/expander_button.dart';
+import 'package:widgetbook_for_widgetbook/navigation/navigation_tree.dart';
 import 'package:widgetbook_for_widgetbook/navigation/navigation_tree_item.dart';
+import 'package:widgetbook_for_widgetbook/navigation/navigation_tree_node.dart';
 import 'package:widgetbook_for_widgetbook/search/search.dart';
 
 void main() {
@@ -84,42 +87,32 @@ class HotReload extends StatelessWidget {
                   name: 'widgets',
                   widgets: [
                     WidgetbookComponent(
+                      name: 'NavigationTree',
+                      useCases: [
+                        WidgetbookUseCase(
+                          name: 'Default',
+                          builder: (context) =>
+                              navigationTreeDefaultUseCase(context),
+                        ),
+                      ],
+                    ),
+                    WidgetbookComponent(
+                      name: 'NavigationTreeNode',
+                      useCases: [
+                        WidgetbookUseCase(
+                          name: 'Default',
+                          builder: (context) =>
+                              navigationTreeNodeDefaultUseCase(context),
+                        ),
+                      ],
+                    ),
+                    WidgetbookComponent(
                       name: 'NavigationTreeItem',
                       useCases: [
                         WidgetbookUseCase(
                           name: 'Default',
                           builder: (context) =>
                               navigationTreeItemWithout(context),
-                        ),
-                        WidgetbookUseCase(
-                          name: 'Category',
-                          builder: (context) =>
-                              navigationTreeItemCategory(context),
-                        ),
-                        WidgetbookUseCase(
-                          name: 'Package',
-                          builder: (context) =>
-                              navigationTreeItemPackage(context),
-                        ),
-                        WidgetbookUseCase(
-                          name: 'Folder',
-                          builder: (context) =>
-                              navigationTreeItemFolder(context),
-                        ),
-                        WidgetbookUseCase(
-                          name: 'Component',
-                          builder: (context) =>
-                              navigationTreeItemComponent(context),
-                        ),
-                        WidgetbookUseCase(
-                          name: 'Use Case',
-                          builder: (context) =>
-                              navigationTreeItemUseCase(context),
-                        ),
-                        WidgetbookUseCase(
-                          name: 'Wireframe',
-                          builder: (context) =>
-                              navigationTreeItemComposition(context),
                         ),
                       ],
                     ),

@@ -11,40 +11,9 @@ void main() {
   group(
     '$NavigationTreeItem',
     () {
-      testWidgets(
-        'Throws assertion error when both content and label are null',
-        (WidgetTester tester) async {
-          Future<void> pumpWidget() async {
-            await tester.pumpWidgetWithMaterial(
-              child: NavigationTreeItem(
-                icon: Container(),
-              ),
-            );
-          }
-
-          expect(
-            pumpWidget,
-            throwsA(isA<AssertionError>()),
-          );
-        },
-      );
-
-      testWidgets(
-        'Throws assertion error when both icon and iconData are null',
-        (WidgetTester tester) async {
-          Future<void> pumpWidget() async {
-            await tester.pumpWidgetWithMaterial(
-              child: NavigationTreeItem(
-                label: 'Label',
-              ),
-            );
-          }
-
-          expect(
-            pumpWidget,
-            throwsA(isA<AssertionError>()),
-          );
-        },
+      const testNode = NavigationTreeNodeData(
+        name: 'Test Node',
+        type: NavigationNodeType.category,
       );
 
       testWidgets(
@@ -52,8 +21,8 @@ void main() {
         (WidgetTester tester) async {
           final voidCallbackMock = VoidCallbackMock();
           await tester.pumpWidgetWithMaterial(
-            child: NavigationTreeItem.component(
-              label: 'Label',
+            child: NavigationTreeItem(
+              data: testNode,
               onTap: voidCallbackMock,
             ),
           );
@@ -67,9 +36,7 @@ void main() {
         'more menu icon is initially not rendered',
         (WidgetTester tester) async {
           await tester.pumpWidgetWithMaterial(
-            child: const NavigationTreeItem.component(
-              label: 'Label',
-            ),
+            child: const NavigationTreeItem(data: testNode),
           );
 
           final menuIconFinder = find.byWidgetPredicate(
@@ -86,9 +53,7 @@ void main() {
           'MouseRegion onEnter and onExit callbacks toggle more menu icon',
           (WidgetTester tester) async {
             await tester.pumpWidgetWithMaterial(
-              child: const NavigationTreeItem.component(
-                label: 'Label',
-              ),
+              child: const NavigationTreeItem(data: testNode),
             );
 
             final menuIconFinder = find.byWidgetPredicate(
@@ -123,8 +88,8 @@ void main() {
           (WidgetTester tester) async {
             final voidCallbackMock = VoidCallbackMock();
             await tester.pumpWidgetWithMaterial(
-              child: NavigationTreeItem.component(
-                label: 'Label',
+              child: NavigationTreeItem(
+                data: testNode,
                 onMoreIconPressed: voidCallbackMock,
               ),
             );
@@ -154,8 +119,8 @@ void main() {
         (WidgetTester tester) async {
           const level = 2;
           await tester.pumpWidgetWithMaterial(
-            child: const NavigationTreeItem.useCase(
-              label: 'Label',
+            child: const NavigationTreeItem(
+              data: testNode,
               level: level,
             ),
           );
@@ -171,62 +136,106 @@ void main() {
         },
       );
 
-      group('Constructor tests', () {
-        test(
-          '$NavigationTreeItem.category has $Icons.auto_awesome_mosaic icon',
-          () {
-            const navigationTreeItem = NavigationTreeItem.category(
-              label: 'Label',
-            );
+      testWidgets(
+        '$ExpanderIcon is rendered for expandable nodes',
+        (WidgetTester tester) async {
+          const testNode = NavigationTreeNodeData(
+            name: 'Category',
+            type: NavigationNodeType.category,
+          );
 
-            expect(navigationTreeItem.iconData, Icons.auto_awesome_mosaic);
-          },
-        );
+          await tester.pumpWidgetWithMaterial(
+            child: const NavigationTreeItem(data: testNode),
+          );
 
-        test(
-          '$NavigationTreeItem.package has $Icons.inventory icon',
-          () {
-            const navigationTreeItem = NavigationTreeItem.package(
-              label: 'Label',
-            );
+          expect(testNode.isExpandable, isTrue);
+          final finder = find.byType(ExpanderIcon);
+          expect(finder, findsOneWidget);
+        },
+      );
 
-            expect(navigationTreeItem.iconData, Icons.inventory);
-          },
-        );
+      testWidgets(
+        '$ExpanderIcon is not rendered for non expandable nodes',
+        (WidgetTester tester) async {
+          const testNode = NavigationTreeNodeData(
+            name: 'Use Case',
+            type: NavigationNodeType.useCase,
+          );
 
-        test(
-          '$NavigationTreeItem.folder has $Icons.folder icon',
-          () {
-            const navigationTreeItem = NavigationTreeItem.folder(
-              label: 'Label',
-            );
+          await tester.pumpWidgetWithMaterial(
+            child: const NavigationTreeItem(data: testNode),
+          );
 
-            expect(navigationTreeItem.iconData, Icons.folder);
-          },
-        );
+          expect(testNode.isExpandable, isFalse);
+          final finder = find.byType(ExpanderIcon);
+          expect(finder, findsNothing);
+        },
+      );
 
-        test(
-          '$NavigationTreeItem.component has $ComponentIcon icon',
-          () {
-            const navigationTreeItem = NavigationTreeItem.component(
-              label: 'Label',
-            );
+      testWidgets(
+        'renders $ComponentIcon for component navigation node type',
+        (WidgetTester tester) async {
+          const testNode = NavigationTreeNodeData(
+            name: 'Component',
+            type: NavigationNodeType.component,
+          );
 
-            expect(navigationTreeItem.icon, isA<ComponentIcon>());
-          },
-        );
+          await tester.pumpWidgetWithMaterial(
+            child: const NavigationTreeItem(data: testNode),
+          );
 
-        test(
-          '$NavigationTreeItem.useCase has $UseCaseIcon icon',
-          () {
-            const navigationTreeItem = NavigationTreeItem.useCase(
-              label: 'Label',
-            );
+          final finder = find.byType(ComponentIcon);
+          expect(finder, findsOneWidget);
+        },
+      );
 
-            expect(navigationTreeItem.icon, isA<UseCaseIcon>());
-          },
-        );
-      });
+      testWidgets(
+        'renders $UseCaseIcon for use case navigation node type',
+        (WidgetTester tester) async {
+          const testNode = NavigationTreeNodeData(
+            name: 'Use Case',
+            type: NavigationNodeType.useCase,
+          );
+
+          await tester.pumpWidgetWithMaterial(
+            child: const NavigationTreeItem(data: testNode),
+          );
+
+          final finder = find.byType(UseCaseIcon);
+          expect(finder, findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        'renders $UseCaseIcon for use case navigation node type',
+        (WidgetTester tester) async {
+          const testNode = NavigationTreeNodeData(
+            name: 'Use Case',
+            type: NavigationNodeType.useCase,
+          );
+
+          expect(testNode.isSelectable, isTrue);
+
+          await tester.pumpWidgetWithMaterial(
+            child: const NavigationTreeItem(
+              data: testNode,
+              isSelected: true,
+            ),
+          );
+
+          final coloredBoxWidgetFinder = find.byWidgetPredicate(
+            (Widget widget) => widget is ColoredBox && widget.child is InkWell,
+          );
+
+          final coloredBoxWidget =
+              tester.widget(coloredBoxWidgetFinder) as ColoredBox;
+
+          expect(
+            coloredBoxWidget.color,
+            Themes.dark.colorScheme.secondaryContainer,
+          );
+        },
+      );
     },
   );
 }
