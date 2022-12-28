@@ -13,6 +13,7 @@ class ComponentIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
+      heightFactor: 1,
       child: SizedBox(
         width: size,
         height: size,
