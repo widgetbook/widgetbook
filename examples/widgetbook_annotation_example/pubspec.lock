@@ -515,7 +515,7 @@ packages:
       path: "../../packages/widgetbook"
       relative: true
     source: path
-    version: "3.0.0-beta.3"
+    version: "3.0.0-beta.5"
   widgetbook_annotation:
     dependency: "direct main"
     description:

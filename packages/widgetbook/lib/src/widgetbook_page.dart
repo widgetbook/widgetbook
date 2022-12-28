@@ -42,9 +42,7 @@ class WidgetbookPage extends StatelessWidget {
                   appInfo: appInfo,
                   categories: state.filteredCategories,
                 ),
-                centerChild: Workbench(
-                  routerData: routerData,
-                ),
+                centerChild: const Workbench(),
                 rightChild: const SettingsPanel(),
               ),
             );
