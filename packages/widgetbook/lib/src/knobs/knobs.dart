@@ -301,6 +301,21 @@ class KnobWrapper extends StatelessWidget {
 }
 
 /// Data object that is used within the options knob
+///
+/// Example:
+///     iconData: context.knobs.options(
+///       label: 'Icon',
+///       options: [
+///         const Option(
+///           label: 'Add',
+///           value: Icons.add,
+///         ),
+///         const Option(
+///           label: 'Cross',
+///           value: Icons.cross,
+///         ),
+///       ],
+///     ),
 class Option<T> {
   const Option({
     required this.label,

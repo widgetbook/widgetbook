@@ -4,7 +4,7 @@
 
 The Widgetbook Cloud _Review_ feature (currently in beta) allows teams to review added, changed or removed components.
 The Review feature closely relates to reviews known from Pull-Requests. 
-For each Pull-Request, our new `widgetbook-cli` analyzes the changes to your Widgetbook and creates a review.
+For each Pull-Request, our new `widgetbook` CLI analyzes the changes to your Widgetbook and creates a review.
 Members of a frontend-team now can review each _changed_ use-case in isolation and add comments for other team members.
 
 Once all changes from the review are accepted, a developer closes the Pull-Request and the review's status gets updated to `merged`.
@@ -15,16 +15,8 @@ For this to work, a webhook to our services is required.
 To use Widgetbook Cloud _Review_ your setup has to meet the following requirements:
 - Use `widgetbook_generator` package in version `v2.4.1` (no special configuration required).
 - Use `widgetbook` package in version `v2.4.1` (no special configuration required).
-- Use the `widgetbook-cli` from the [widgetbook_cli](https://pub.dev/packages/widgetbook_cli) pub.dev package.
+- Use the `widgetbook` CLI from the [widgetbook_cli](https://pub.dev/packages/widgetbook_cli) package. For instructions see [Hosting](/widgetbook-cloud/hosting).
 - Setup a GitHub webhook
-
-### CLI Example (GitHub)
-
-The CLI extracts information from `widgetbook_generator` and also obtains branch information from git.
-For this to work properly make sure to checkout your code with `fetch-depth: '0'`. 
-Also make sure to run the `build_runner` before calling the `CLI`.
-
-> **NOTE:**  Due to problems with rendering the code within this docs page, please copy the code from [Issue 264](https://github.com/widgetbook/widgetbook/issues/264#issuecomment-1195518533).
 
 ## Setup Webhook (GitHub)
 
