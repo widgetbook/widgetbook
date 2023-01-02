@@ -12,8 +12,8 @@ enum DetectorSide {
 class TrippleSplitView extends StatefulWidget {
   const TrippleSplitView({
     Key? key,
-    this.leftMinWidth = 300,
-    this.rightMinWidth = 400,
+    this.leftMinWidth = 350,
+    this.rightMinWidth = 350,
     required this.leftChild,
     required this.centerChild,
     required this.rightChild,

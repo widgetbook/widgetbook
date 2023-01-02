@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/app_info/app_info.dart';
+import 'package:widgetbook/src/app_info/models/app_info.dart';
 import 'package:widgetbook/src/constants/constants.dart';
 
 class Header extends StatelessWidget {

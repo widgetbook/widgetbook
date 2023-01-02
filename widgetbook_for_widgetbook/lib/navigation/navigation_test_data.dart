@@ -1,6 +1,6 @@
 import 'package:widgetbook_core/widgetbook_core.dart';
 
-const testNode1 = NavigationTreeNodeData(
+final testNode1 = NavigationTreeNodeData(
   name: 'Component',
   type: NavigationNodeType.component,
   children: [
@@ -17,7 +17,7 @@ const testNode1 = NavigationTreeNodeData(
   ],
 );
 
-const testNode2 = NavigationTreeNodeData(
+final testNode2 = NavigationTreeNodeData(
   name: 'Component',
   type: NavigationNodeType.component,
   children: [
@@ -29,7 +29,7 @@ const testNode2 = NavigationTreeNodeData(
   ],
 );
 
-const testNode3 = NavigationTreeNodeData(
+final testNode3 = NavigationTreeNodeData(
   name: 'Category',
   type: NavigationNodeType.category,
   children: [
@@ -38,7 +38,7 @@ const testNode3 = NavigationTreeNodeData(
   ],
 );
 
-const testNode4 = NavigationTreeNodeData(
+final testNode4 = NavigationTreeNodeData(
   name: 'Component',
   type: NavigationNodeType.component,
   children: [
@@ -55,7 +55,7 @@ const testNode4 = NavigationTreeNodeData(
   ],
 );
 
-const testNode5 = NavigationTreeNodeData(
+final testNode5 = NavigationTreeNodeData(
   name: 'Package',
   type: NavigationNodeType.package,
   children: [
@@ -64,7 +64,7 @@ const testNode5 = NavigationTreeNodeData(
   ],
 );
 
-const testNode6 = NavigationTreeNodeData(
+final testNode6 = NavigationTreeNodeData(
   name: 'Package',
   type: NavigationNodeType.package,
   children: [

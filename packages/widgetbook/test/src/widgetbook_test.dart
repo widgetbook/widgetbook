@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_core/widgetbook_core.dart';
 
 Matcher expectAssertionErrorWithMessage({
   required String message,
@@ -23,24 +24,23 @@ void main() {
         name: 'A',
       );
 
-      final categories = [
-        WidgetbookCategory(name: 'A'),
+      final children = [
+        WidgetbookCategory(name: 'A', children: const []),
       ];
 
       group(
         'constructor throws $AssertionError when',
         () {
           test(
-            'categories is empty',
+            'Navigation tree children are empty',
             () {
               expect(
                 () => Widgetbook<ThemeData>(
                   addons: const [],
-                  categories: const [],
                   appInfo: appInfo,
                 ),
                 expectAssertionErrorWithMessage(
-                  message: 'Please specify at least one $WidgetbookCategory.',
+                  message: 'Please specify at least one $MultiChildNavigationNodeData.',
                 ),
               );
             },
@@ -64,7 +64,6 @@ void main() {
                       ),
                     )
                   ],
-                  categories: categories,
                   appInfo: appInfo,
                 ),
                 expectAssertionErrorWithMessage(
@@ -86,7 +85,6 @@ void main() {
                       ),
                     )
                   ],
-                  categories: categories,
                   appInfo: appInfo,
                 ),
                 expectAssertionErrorWithMessage(
@@ -108,7 +106,6 @@ void main() {
                       ),
                     ),
                   ],
-                  categories: categories,
                   appInfo: appInfo,
                 ),
                 expectAssertionErrorWithMessage(
@@ -130,7 +127,6 @@ void main() {
                       ),
                     ),
                   ],
-                  categories: categories,
                   appInfo: appInfo,
                 ),
                 expectAssertionErrorWithMessage(
@@ -153,7 +149,6 @@ void main() {
                       ),
                     )
                   ],
-                  categories: categories,
                   appInfo: appInfo,
                 ),
                 expectAssertionErrorWithMessage(

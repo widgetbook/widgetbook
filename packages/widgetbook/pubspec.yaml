@@ -20,6 +20,8 @@ dependencies:
   meta: ^1.8.0
   nested: ^1.0.0
   provider: ^6.0.2
+  widgetbook_core:
+    path: ../../packages/widgetbook_core
   widgetbook_models: ^3.0.0-beta.1
 
 dev_dependencies:
