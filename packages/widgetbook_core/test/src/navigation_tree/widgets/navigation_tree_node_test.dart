@@ -7,9 +7,10 @@ import '../../../helper/callback_mock.dart';
 import '../../../helper/widget_tester_extension.dart';
 
 void main() {
-  const nodeWithOneLevelOfChildren = NavigationTreeNodeData(
+  final nodeWithOneLevelOfChildren = NavigationTreeNodeData(
     name: 'Component',
     type: NavigationNodeType.component,
+    isInitiallyExpanded: false,
     children: [
       NavigationTreeNodeData(
         id: 'use_case_1_id',
@@ -29,7 +30,7 @@ void main() {
       'Can render correct number of first level child node widgets',
       (WidgetTester tester) async {
         await tester.pumpWidgetWithMaterial(
-          child: const NavigationTreeNode(
+          child: NavigationTreeNode(
             data: nodeWithOneLevelOfChildren,
           ),
         );
@@ -44,7 +45,7 @@ void main() {
     testWidgets(
       'Calls onNodeSelected with selected node id',
       (WidgetTester tester) async {
-        const useCaseNode = NavigationTreeNodeData(
+        final useCaseNode = NavigationTreeNodeData(
           id: 'use_case_id',
           name: 'Use Case',
           type: NavigationNodeType.useCase,
@@ -68,9 +69,8 @@ void main() {
       'Can expand children ListView',
       (WidgetTester tester) async {
         await tester.pumpWidgetWithMaterial(
-          child: const NavigationTreeNode(
+          child: NavigationTreeNode(
             data: nodeWithOneLevelOfChildren,
-            initiallyExpanded: false,
           ),
         );
 

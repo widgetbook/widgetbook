@@ -12,10 +12,10 @@ class HotreloadWidgetbook extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook.material(
       addons: [],
-      categories: [
+      children: [
         WidgetbookCategory(
           name: 'widgets',
-          widgets: [
+          children: [
             WidgetbookComponent(
               name: 'Button',
               useCases: [

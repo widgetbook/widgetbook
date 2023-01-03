@@ -11,7 +11,7 @@ void main() {
     testWidgets(
       'Calls onNodeSelected with selected node id',
       (WidgetTester tester) async {
-        const testTree = [
+        final testTree = [
           NavigationTreeNodeData(
             id: 'use_case_id_1',
             name: 'Use Case',

@@ -8,7 +8,6 @@ import 'package:widgetbook/src/addons/frame_addon/frame_provider.dart';
 import 'package:widgetbook/src/addons/frame_addon/frame_selection_provider.dart';
 import 'package:widgetbook/src/addons/models/models.dart';
 import 'package:widgetbook/src/addons/widgets/widgets.dart';
-import 'package:widgetbook/src/navigation/preview_provider.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 import 'package:widgetbook/widgetbook.dart';
 

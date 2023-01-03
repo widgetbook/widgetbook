@@ -244,7 +244,7 @@ packages:
       name: freezed_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   frontend_server_client:
     dependency: transitive
     description:
@@ -314,7 +314,7 @@ packages:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.4.0"
+    version: "4.7.0"
   logging:
     dependency: transitive
     description:
@@ -523,6 +523,13 @@ packages:
       relative: true
     source: path
     version: "3.0.0-beta.3"
+  widgetbook_core:
+    dependency: "direct overridden"
+    description:
+      path: "../../packages/widgetbook_core"
+      relative: true
+    source: path
+    version: "0.0.1"
   widgetbook_generator:
     dependency: "direct dev"
     description:
@@ -545,5 +552,5 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.17.0 <3.0.0"
+  dart: ">=2.18.0 <3.0.0"
   flutter: ">=3.3.0"

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/addons/addon_provider.dart';
-import 'package:widgetbook/src/navigation/preview_provider.dart';
+import 'package:widgetbook/src/navigation/providers/preview_provider.dart';
 import 'package:widgetbook/src/widgetbook_page.dart';
 
 T? parseRouterData<T>({

@@ -4,17 +4,15 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 class NavigationTreeNode extends StatefulWidget {
   const NavigationTreeNode({
     super.key,
-    required this.data,
     this.level = 0,
-    this.initiallyExpanded = true,
-    this.selectedNodeId,
+    required this.data,
+    this.selectedNode,
     this.onNodeSelected,
   });
 
-  final NavigationTreeNodeData data;
   final int level;
-  final bool initiallyExpanded;
-  final String? selectedNodeId;
+  final NavigationTreeNodeData data;
+  final NavigationTreeNodeData? selectedNode;
   final ValueChanged<NavigationTreeNodeData>? onNodeSelected;
 
   @override
@@ -26,7 +24,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
 
   @override
   void initState() {
-    isExpanded = widget.initiallyExpanded;
+    isExpanded = widget.data.isInitiallyExpanded;
     super.initState();
   }
 
@@ -38,7 +36,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
           data: widget.data,
           isExpanded: isExpanded,
           level: widget.level,
-          isSelected: widget.data.id == widget.selectedNodeId,
+          isSelected: widget.data.id == widget.selectedNode?.id,
           onTap: () {
             setState(() {
               isExpanded = !isExpanded;
@@ -65,7 +63,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
                 itemBuilder: (context, index) => NavigationTreeNode(
                   data: widget.data.children[index],
                   level: widget.level + 1,
-                  selectedNodeId: widget.selectedNodeId,
+                  selectedNode: widget.selectedNode,
                   onNodeSelected: widget.onNodeSelected,
                 ),
               ),

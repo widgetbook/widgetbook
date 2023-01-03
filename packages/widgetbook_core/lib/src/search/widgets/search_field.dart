@@ -4,9 +4,13 @@ class SearchField extends StatefulWidget {
   const SearchField({
     super.key,
     this.onSearchPressed,
+    this.onSearchChanged,
+    this.onSearchCancelled,
   });
 
   final VoidCallback? onSearchPressed;
+  final ValueChanged<String>? onSearchChanged;
+  final VoidCallback? onSearchCancelled;
 
   @override
   State<SearchField> createState() => _SearchFieldState();
@@ -26,6 +30,7 @@ class _SearchFieldState extends State<SearchField> {
         setState(() {
           _searchValue = value;
         });
+        widget.onSearchChanged?.call(value);
       },
       decoration: InputDecoration(
         hintText: 'Search',
@@ -66,6 +71,7 @@ class _SearchFieldState extends State<SearchField> {
                     });
                     textEditingController.clear();
                     focusNode.unfocus();
+                    widget.onSearchCancelled?.call();
                   },
                   hoverColor: Colors.white.withOpacity(0.2),
                   icon: const Padding(

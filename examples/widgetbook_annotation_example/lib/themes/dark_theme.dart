@@ -6,6 +6,8 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 @WidgetbookTheme(name: 'Dark', isDefault: true)
 ThemeData getDarkThemeData() => ThemeData(
       primarySwatch: Colors.blue,
+      scaffoldBackgroundColor: Colors.black,
+      brightness: Brightness.dark,
     );
 
 ThemeData getDarkTheme(BuildContext context) {

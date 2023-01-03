@@ -41,7 +41,8 @@ class _NavigationTreeItemState extends State<NavigationTreeItem> {
       },
       child: Material(
         elevation: isSelected ? 3 : 0,
-        shadowColor: Colors.black,
+        shadowColor: isSelected ? Colors.black : Colors.transparent,
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(NavigationTreeItem.iconSize),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(NavigationTreeItem.iconSize),

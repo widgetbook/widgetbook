@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/models/model.dart';
 import 'package:widgetbook/src/repositories/memory_repository.dart';
+import 'package:widgetbook_core/widgetbook_core.dart';
 
 class _Item extends Model {
   _Item({
