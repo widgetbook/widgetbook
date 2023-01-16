@@ -78,7 +78,7 @@ GoRouter createRouter<CustomTheme>({
   required PreviewProvider previewProvider,
 }) {
   final router = GoRouter(
-    redirect: (routerState) {
+    redirect: (context, routerState) {
       final theme = routerState.queryParams['theme'];
       final locale = routerState.queryParams['locale'];
       final device = routerState.queryParams['device'];

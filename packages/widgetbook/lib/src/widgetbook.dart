@@ -361,6 +361,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
         ChangeNotifierProvider.value(value: appInfoProvider),
       ],
       child: MaterialApp.router(
+        routeInformationProvider: goRouter.routeInformationProvider,
         routeInformationParser: goRouter.routeInformationParser,
         routerDelegate: goRouter.routerDelegate,
         title: widget.appInfo.name,
