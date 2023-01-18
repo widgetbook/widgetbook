@@ -1,28 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_core/src/navigation_tree/navigation_tree.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:widgetbook_core/widgetbook_core.dart';
 
-class NavigationTree extends StatelessWidget {
+typedef NodeSelectedCallback = void Function(
+  String path,
+  dynamic data,
+);
+
+class NavigationTree extends StatefulWidget {
   const NavigationTree({
     super.key,
-    required this.nodes,
     this.onNodeSelected,
-    this.selectedNode,
+    this.initialPath,
   });
 
-  final List<NavigationTreeNodeData> nodes;
-  final NavigationTreeNodeData? selectedNode;
-  final ValueChanged<NavigationTreeNodeData>? onNodeSelected;
+  final NodeSelectedCallback? onNodeSelected;
+  final String? initialPath;
+
+  @override
+  State<NavigationTree> createState() => _NavigationTreeState();
+}
+
+class _NavigationTreeState extends State<NavigationTree> {
+  @override
+  void initState() {
+    if (widget.initialPath != null) {
+      context.read<NavigationBloc>().add(
+            SelectNavigationNodeByPath(path: widget.initialPath!),
+          );
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<NavigationBloc>().state;
+    final nodes = state.filteredNodes;
+
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       itemCount: nodes.length,
       itemBuilder: (context, index) => NavigationTreeNode(
         data: nodes[index],
-        selectedNode: selectedNode,
+        selectedNode: state.selectedNode,
         onNodeSelected: (NavigationTreeNodeData node) {
-          onNodeSelected?.call(node);
+          context.read<NavigationBloc>().add(
+                SelectNavigationNode(node: node),
+              );
+          widget.onNodeSelected?.call(node.path, node.data);
         },
       ),
     );

@@ -6,32 +6,34 @@ class SearchField extends StatefulWidget {
     this.onSearchPressed,
     this.onSearchChanged,
     this.onSearchCancelled,
+    this.searchValue = '',
   });
 
   final VoidCallback? onSearchPressed;
   final ValueChanged<String>? onSearchChanged;
   final VoidCallback? onSearchCancelled;
+  final String searchValue;
 
   @override
   State<SearchField> createState() => _SearchFieldState();
 }
 
 class _SearchFieldState extends State<SearchField> {
-  String _searchValue = '';
-  final TextEditingController textEditingController = TextEditingController();
+  late final TextEditingController textEditingController;
   final FocusNode focusNode = FocusNode();
+
+  @override
+  void initState() {
+    textEditingController = TextEditingController(text: widget.searchValue);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: textEditingController,
       focusNode: focusNode,
-      onChanged: (value) {
-        setState(() {
-          _searchValue = value;
-        });
-        widget.onSearchChanged?.call(value);
-      },
+      onChanged: widget.onSearchChanged,
       decoration: InputDecoration(
         hintText: 'Search',
         border: OutlineInputBorder(
@@ -55,29 +57,20 @@ class _SearchFieldState extends State<SearchField> {
           child: IconButton(
             onPressed: widget.onSearchPressed,
             hoverColor: Colors.white.withOpacity(0.2),
-            icon: const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
-              child: Icon(Icons.search),
-            ),
+            icon: const Icon(Icons.search),
           ),
         ),
-        suffixIcon: _searchValue.isNotEmpty
+        suffixIcon: widget.searchValue.isNotEmpty
             ? Padding(
                 padding: const EdgeInsets.only(right: 5, left: 10),
                 child: IconButton(
                   onPressed: () {
-                    setState(() {
-                      _searchValue = '';
-                    });
                     textEditingController.clear();
                     focusNode.unfocus();
                     widget.onSearchCancelled?.call();
                   },
                   hoverColor: Colors.white.withOpacity(0.2),
-                  icon: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    child: Icon(Icons.close),
-                  ),
+                  icon: const Icon(Icons.close),
                 ),
               )
             : null,

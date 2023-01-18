@@ -1,5 +1,5 @@
 class Model {
-  Model({
+  const Model({
     required this.id,
   });
 

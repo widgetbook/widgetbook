@@ -8,7 +8,7 @@ import 'package:widgetbook/src/knobs/number_knob.dart';
 import 'package:widgetbook/src/knobs/options_knob.dart';
 import 'package:widgetbook/src/knobs/slider_knob.dart';
 import 'package:widgetbook/src/knobs/text_knob.dart';
-import 'package:widgetbook/src/repositories/selected_story_repository.dart';
+import 'package:widgetbook/src/repositories/selected_use_case_repository.dart';
 import 'package:widgetbook/src/utils/styles.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -49,10 +49,10 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     _selectedStoryRepository.getStream().listen((event) => notifyListeners());
   }
 
-  final SelectedStoryRepository _selectedStoryRepository;
+  final SelectedUseCaseRepository _selectedStoryRepository;
 
-  final Map<WidgetbookUseCase, Map<String, Knob>> _knobs =
-      <WidgetbookUseCase, Map<String, Knob>>{};
+  final Map<WidgetbookUseCaseData, Map<String, Knob>> _knobs =
+      <WidgetbookUseCaseData, Map<String, Knob>>{};
 
   List<Knob> all() {
     if (!_selectedStoryRepository.isSet()) {

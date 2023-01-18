@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/knobs/bool_knob.dart';
-import 'package:widgetbook/src/repositories/selected_story_repository.dart';
+import 'package:widgetbook/src/repositories/selected_use_case_repository.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/widget_test_helper.dart';
@@ -10,10 +10,10 @@ import '../../helper/widget_test_helper.dart';
 Widget renderWithKnobs({
   required List<Widget> Function(BuildContext) build,
 }) {
-  final selectedStoryRepository = SelectedStoryRepository();
+  final selectedStoryRepository = SelectedUseCaseRepository();
   final knobsNotifier = KnobsNotifier(selectedStoryRepository);
-  final useCase = WidgetbookUseCase(
-    name: 'use case',
+  final useCase = WidgetbookUseCaseData(
+    path: 'use-case',
     builder: (context) {
       return Column(
         children: [
@@ -39,10 +39,10 @@ void main() {
   testWidgets(
     'Bool knob added',
     (WidgetTester tester) async {
-      final selectedStoryRepository = SelectedStoryRepository();
+      final selectedStoryRepository = SelectedUseCaseRepository();
       final knobsNotifier = KnobsNotifier(selectedStoryRepository);
-      final useCase = WidgetbookUseCase(
-        name: 'use case',
+      final useCase = WidgetbookUseCaseData(
+        path: 'use-case',
         builder: (context) {
           return Column(
             children: [
