@@ -54,7 +54,7 @@ void main() {
           'MouseRegion onEnter and onExit callbacks toggle more menu icon',
           (WidgetTester tester) async {
             await tester.pumpWidgetWithMaterial(
-              child: NavigationTreeItem(data: testNode),
+              child: const NavigationTreeItem(data: testNode),
             );
 
             final menuIconFinder = find.byWidgetPredicate(

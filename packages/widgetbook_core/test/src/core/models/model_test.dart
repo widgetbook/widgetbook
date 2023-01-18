@@ -9,7 +9,7 @@ void main() {
         'returns normally',
         () {
           expect(
-            () => Model(id: '1'),
+            () => const Model(id: '1'),
             returnsNormally,
           );
         },
