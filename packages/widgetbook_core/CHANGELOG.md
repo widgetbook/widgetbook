@@ -1,3 +1,11 @@
-## 0.0.1
+## 3.0.0-beta.3
 
-* TODO: Describe initial release.
+- refactor: `NavigationTree`
+
+## 3.0.0-beta.2
+
+- feat: added `super.id` to `LeafNavigationNodeData`
+
+## 3.0.0-beta.1
+
+- initial release
