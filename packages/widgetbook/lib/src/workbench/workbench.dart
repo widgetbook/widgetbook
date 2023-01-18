@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/builder/provider/builder_provider.dart';
 import 'package:widgetbook/src/constants/radii.dart';
-import 'package:widgetbook/src/navigation/providers/preview_provider.dart';
+import 'package:widgetbook/src/navigation/providers/use_cases_provider.dart';
 import 'package:widgetbook/src/utils/utils.dart';
 import 'package:widgetbook/src/workbench/preview.dart';
 import 'package:widgetbook/src/workbench/workbench_controls.dart';
@@ -22,8 +22,8 @@ class _WorkbenchState extends State<Workbench> {
   @override
   Widget build(BuildContext context) {
     final appBuilder = context.watch<BuilderProvider>().value.appBuilder;
-    final state = context.watch<PreviewProvider>().state;
-    final useCase = state.selectedUseCase;
+    final state = context.watch<UseCasesProvider>().state;
+    final useCaseBuilder = state.selectedUseCase?.builder;
     return Stack(
       children: [
         Column(
@@ -42,10 +42,10 @@ class _WorkbenchState extends State<Workbench> {
                   borderRadius: Radii.defaultRadius,
                   color: context.colorScheme.surface,
                 ),
-                child: useCase == null
+                child: useCaseBuilder == null
                     ? Container()
                     : Preview(
-                        useCase: useCase,
+                        useCaseBuilder: useCaseBuilder,
                         appBuilder: appBuilder,
                       ),
               ),

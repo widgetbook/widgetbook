@@ -5,11 +5,11 @@ import 'package:widgetbook/widgetbook.dart';
 class Preview extends StatelessWidget {
   const Preview({
     super.key,
-    required this.useCase,
+    required this.useCaseBuilder,
     required this.appBuilder,
   });
 
-  final WidgetbookUseCase useCase;
+  final UseCaseBuilder useCaseBuilder;
   final Widget Function(BuildContext, Widget child) appBuilder;
 
   @override
@@ -17,7 +17,7 @@ class Preview extends StatelessWidget {
     return ClipRect(
       child: Renderer(
         appBuilder: appBuilder,
-        useCaseBuilder: useCase.builder,
+        useCaseBuilder: useCaseBuilder,
       ),
     );
   }

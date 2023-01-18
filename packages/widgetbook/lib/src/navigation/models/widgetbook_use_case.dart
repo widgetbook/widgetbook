@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:widgetbook_core/widgetbook_core.dart';
 
+typedef UseCaseBuilder = Widget Function(BuildContext context);
+
 /// UseCases represent a specific configuration of a widget and can be used
 /// to check edge cases of a Widget.
-class WidgetbookUseCase extends LeafNavigationNodeData implements Model {
-  WidgetbookUseCase({
+class WidgetbookUseCase extends LeafNavigationNodeData {
+  const WidgetbookUseCase({
     required super.name,
     required this.builder,
-  }) : super(type: NavigationNodeType.useCase);
+  }) : super(
+          type: NavigationNodeType.useCase,
+          data: builder,
+        );
 
   factory WidgetbookUseCase.center({
     required String name,
@@ -30,14 +35,13 @@ class WidgetbookUseCase extends LeafNavigationNodeData implements Model {
     );
   }
 
-  final Widget Function(BuildContext) builder;
+  final UseCaseBuilder builder;
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is WidgetbookUseCase &&
-        other.id == id &&
         other.name == name &&
         other.builder == builder &&
         other.isInitiallyExpanded == other.isInitiallyExpanded;
@@ -49,13 +53,9 @@ class WidgetbookUseCase extends LeafNavigationNodeData implements Model {
   @override
   String toString() {
     return 'WidgetbookUseCase('
-        'id: $id, '
         'name: $name, '
         'builder: $builder, '
         'isInitiallyExpanded: $isInitiallyExpanded'
         ')';
   }
-
-  @override
-  String get id => path;
 }

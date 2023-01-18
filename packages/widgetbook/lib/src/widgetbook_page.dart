@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/addons/addon_injector_widget.dart';
 import 'package:widgetbook/src/addons/addon_provider.dart';
-import 'package:widgetbook/src/app_info/providers/app_info_provider.dart';
-import 'package:widgetbook/src/navigation/widgets/navigation_panel.dart';
 import 'package:widgetbook/src/settings_panel/settings_panel.dart';
 import 'package:widgetbook/src/styled_widgets/styled_scaffold.dart';
 import 'package:widgetbook/src/widgets/multi_split_view.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 class WidgetbookPage extends StatelessWidget {
   const WidgetbookPage({
@@ -29,7 +28,6 @@ class WidgetbookPage extends StatelessWidget {
         child: Builder(
           builder: (context) {
             final addons = context.watch<AddOnProvider>().value;
-            final appInfo = context.watch<AppInfoProvider>().state;
 
             return AddonInjectorWidget(
               addons: addons,
@@ -37,7 +35,9 @@ class WidgetbookPage extends StatelessWidget {
               child: TrippleSplitView(
                 isLeftDisabled: disableNavigation,
                 isRightDisabled: disableProperties,
-                leftChild: NavigationPanel(appInfo: appInfo),
+                leftChild: NavigationPanelWrapper(
+                  initialPath: routerData['path'] as String?,
+                ),
                 centerChild: const Workbench(),
                 rightChild: const SettingsPanel(),
               ),

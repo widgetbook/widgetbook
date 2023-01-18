@@ -107,10 +107,10 @@ Widget _builder(BuildContext context) {
               queryParameters.addAll(addon.getQueryParameter(context));
             }
 
-            final usecase =
-                context.read<PreviewProvider>().state.selectedUseCase;
-            if (usecase != null) {
-              queryParameters.putIfAbsent('path', () => usecase.path);
+            final useCasePath =
+                context.read<UseCasesProvider>().state.selectedUseCasePath;
+            if (useCasePath != null) {
+              queryParameters.putIfAbsent('path', () => useCasePath);
             }
 
             queryParameters

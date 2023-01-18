@@ -6,11 +6,12 @@
 
 import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_core/src/navigation_tree/navigation_tree.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 import 'package:widgetbook_for_widgetbook/app.dart';
 import 'package:widgetbook_for_widgetbook/navigation/expander_button.dart';
+import 'package:widgetbook_for_widgetbook/navigation/navigation_panel.dart';
 import 'package:widgetbook_for_widgetbook/navigation/navigation_tree.dart';
 import 'package:widgetbook_for_widgetbook/navigation/navigation_tree_item.dart';
 import 'package:widgetbook_for_widgetbook/navigation/navigation_tree_node.dart';
@@ -113,6 +114,16 @@ class HotReload extends StatelessWidget {
                           name: 'Default',
                           builder: (context) =>
                               navigationTreeItemWithout(context),
+                        ),
+                      ],
+                    ),
+                    WidgetbookComponent(
+                      name: 'NavigationPanel',
+                      useCases: [
+                        WidgetbookUseCase(
+                          name: 'Default',
+                          builder: (context) =>
+                              navigationPanelDefaultUseCase(context),
                         ),
                       ],
                     ),

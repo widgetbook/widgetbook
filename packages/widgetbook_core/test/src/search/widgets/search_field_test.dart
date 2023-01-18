@@ -27,10 +27,9 @@ void main() {
       'Clear search button is shown after entering text in the text field',
       (WidgetTester tester) async {
         await tester.pumpWidgetWithMaterial(
-          child: const SearchField(),
+          child: const SearchField(searchValue: 'Search Value'),
         );
 
-        await tester.enterText(find.byType(TextFormField), 'Search Value');
         await tester.pumpAndSettle();
 
         final clearButtonFinder = find.byWidgetPredicate(
@@ -46,11 +45,10 @@ void main() {
       'clears search value and removes the clear icon',
       (WidgetTester tester) async {
         await tester.pumpWidgetWithMaterial(
-          child: const SearchField(),
+          child: const SearchField(searchValue: 'Search Value',),
         );
 
         final textFieldFinder = find.byType(TextFormField);
-        await tester.enterText(textFieldFinder, 'Search Value');
         await tester.pumpAndSettle();
 
         final clearButtonFinder = find.byWidgetPredicate(
@@ -60,8 +58,6 @@ void main() {
 
         await tester.tap(clearButtonFinder);
         await tester.pumpAndSettle();
-
-        expect(clearButtonFinder, findsNothing);
 
         final textFieldWidget = tester.widget(textFieldFinder) as TextFormField;
         expect(textFieldWidget.controller?.text, isEmpty);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/addons/addon_provider.dart';
-import 'package:widgetbook/src/navigation/providers/preview_provider.dart';
+import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook/src/widgetbook_page.dart';
 
 T? parseRouterData<T>({
@@ -28,9 +28,10 @@ void navigate(BuildContext context) {
     queryParameters.addAll(addon.getQueryParameter(context));
   }
 
-  final usecase = context.read<PreviewProvider>().state.selectedUseCase;
-  if (usecase != null) {
-    queryParameters.putIfAbsent('path', () => usecase.path);
+  final useCasePath =
+      context.read<UseCasesProvider>().state.selectedUseCasePath;
+  if (useCasePath != null) {
+    queryParameters.putIfAbsent('path', () => useCasePath);
   }
 
   context.goNamed(
@@ -51,13 +52,15 @@ bool _parseBoolQueryParameter({
 }
 
 GoRouter createRouter({
-  required PreviewProvider previewProvider,
+  required UseCasesProvider useCasesProvider,
 }) {
   final router = GoRouter(
     redirect: (context, routerState) {
       final path = routerState.queryParams['path'];
 
-      previewProvider.selectUseCaseByPath(path);
+      if (path != null) {
+        useCasesProvider.selectUseCaseByPath(path);
+      }
       return null;
     },
     routes: [

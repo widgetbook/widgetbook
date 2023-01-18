@@ -67,7 +67,7 @@ class HotReload extends StatelessWidget {
           ),
         ),
       ],
-      children: [
+      directories: [
         WidgetbookComponent(
           name: 'Test Component',
           isInitiallyExpanded: true,
@@ -104,6 +104,34 @@ class HotReload extends StatelessWidget {
                       name: 'Test Use Case 2',
                       builder: (context) =>
                           const TestWidget(text: 'Test Widget 2'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            WidgetbookFolder(
+              name: 'Test Folder',
+              isInitiallyExpanded: true,
+              children: [
+                WidgetbookComponent(
+                  name: 'Test Component',
+                  isInitiallyExpanded: true,
+                  useCases: [
+                    WidgetbookUseCase(
+                      name: 'Test Use Case 4',
+                      builder: (context) =>
+                      const TestWidget(text: 'Test Widget 4'),
+                    ),
+                  ],
+                ),
+                WidgetbookComponent(
+                  name: 'Test Component',
+                  isInitiallyExpanded: true,
+                  useCases: [
+                    WidgetbookUseCase(
+                      name: 'Test Use Case 5',
+                      builder: (context) =>
+                      const TestWidget(text: 'Test Widget 5'),
                     ),
                   ],
                 ),

@@ -35,6 +35,7 @@ Widget navigationTreeItemWithout(BuildContext context) {
     children: [
       NavigationTreeItem(
         data: NavigationTreeNodeData(
+          path: 'name',
           name: context.knobs.text(
             label: 'Name',
             initialValue: 'Category',
@@ -55,13 +56,17 @@ Widget navigationTreeItemWithout(BuildContext context) {
         isExpanded: context.knobs.boolean(
           label: 'Is Expanded',
           description: 'Only '
-              '(${NavigationNodeType.expandableTypes.map((e) => e.name).join(', ')}) '
+              '(${NavigationNodeType.expandableTypes.map(
+                    (e) => e.name,
+                  ).join(', ')}) '
               'type(s) can be expanded',
         ),
         isSelected: context.knobs.boolean(
           label: 'Is Selected',
           description: 'Only '
-              '(${NavigationNodeType.selectableTypes.map((e) => e.name).join(', ')}) '
+              '(${NavigationNodeType.selectableTypes.map(
+                    (e) => e.name,
+                  ).join(', ')}) '
               'type(s) can be selected',
         ),
       ),

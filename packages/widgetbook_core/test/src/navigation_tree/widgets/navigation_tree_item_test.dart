@@ -11,7 +11,8 @@ void main() {
   group(
     '$NavigationTreeItem',
     () {
-      final testNode = NavigationTreeNodeData(
+      const testNode = NavigationTreeNodeData(
+        path: 'test-node',
         name: 'Test Node',
         type: NavigationNodeType.category,
       );
@@ -36,7 +37,7 @@ void main() {
         'more menu icon is initially not rendered',
         (WidgetTester tester) async {
           await tester.pumpWidgetWithMaterial(
-            child: NavigationTreeItem(data: testNode),
+            child: const NavigationTreeItem(data: testNode),
           );
 
           final menuIconFinder = find.byWidgetPredicate(
@@ -119,7 +120,7 @@ void main() {
         (WidgetTester tester) async {
           const level = 2;
           await tester.pumpWidgetWithMaterial(
-            child: NavigationTreeItem(
+            child: const NavigationTreeItem(
               data: testNode,
               level: level,
             ),
@@ -139,13 +140,14 @@ void main() {
       testWidgets(
         '$ExpanderIcon is rendered for expandable nodes',
         (WidgetTester tester) async {
-          final testNode = NavigationTreeNodeData(
+          const testNode = NavigationTreeNodeData(
+            path: 'category',
             name: 'Category',
             type: NavigationNodeType.category,
           );
 
           await tester.pumpWidgetWithMaterial(
-            child: NavigationTreeItem(data: testNode),
+            child: const NavigationTreeItem(data: testNode),
           );
 
           expect(testNode.isExpandable, isTrue);
@@ -157,13 +159,14 @@ void main() {
       testWidgets(
         '$ExpanderIcon is not rendered for non expandable nodes',
         (WidgetTester tester) async {
-          final testNode = NavigationTreeNodeData(
+          const testNode = NavigationTreeNodeData(
+            path: 'use-case',
             name: 'Use Case',
             type: NavigationNodeType.useCase,
           );
 
           await tester.pumpWidgetWithMaterial(
-            child: NavigationTreeItem(data: testNode),
+            child: const NavigationTreeItem(data: testNode),
           );
 
           expect(testNode.isExpandable, isFalse);
@@ -175,13 +178,14 @@ void main() {
       testWidgets(
         'renders $ComponentIcon for component navigation node type',
         (WidgetTester tester) async {
-          final testNode = NavigationTreeNodeData(
+          const testNode = NavigationTreeNodeData(
+            path: 'component',
             name: 'Component',
             type: NavigationNodeType.component,
           );
 
           await tester.pumpWidgetWithMaterial(
-            child: NavigationTreeItem(data: testNode),
+            child: const NavigationTreeItem(data: testNode),
           );
 
           final finder = find.byType(ComponentIcon);
@@ -192,13 +196,14 @@ void main() {
       testWidgets(
         'renders $UseCaseIcon for use case navigation node type',
         (WidgetTester tester) async {
-          final testNode = NavigationTreeNodeData(
+          const testNode = NavigationTreeNodeData(
+            path: 'use-case',
             name: 'Use Case',
             type: NavigationNodeType.useCase,
           );
 
           await tester.pumpWidgetWithMaterial(
-            child: NavigationTreeItem(data: testNode),
+            child: const NavigationTreeItem(data: testNode),
           );
 
           final finder = find.byType(UseCaseIcon);
@@ -209,7 +214,8 @@ void main() {
       testWidgets(
         'renders $UseCaseIcon for use case navigation node type',
         (WidgetTester tester) async {
-          final testNode = NavigationTreeNodeData(
+          const testNode = NavigationTreeNodeData(
+            path: 'use-case',
             name: 'Use Case',
             type: NavigationNodeType.useCase,
           );
@@ -217,7 +223,7 @@ void main() {
           expect(testNode.isSelectable, isTrue);
 
           await tester.pumpWidgetWithMaterial(
-            child: NavigationTreeItem(
+            child: const NavigationTreeItem(
               data: testNode,
               isSelected: true,
             ),
