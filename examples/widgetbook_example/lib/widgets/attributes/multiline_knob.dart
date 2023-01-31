@@ -10,7 +10,7 @@ class MultiLineKnob extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(context.knobs.text(
       label: 'MultiLine',
-      multiline: true,
+      maxLines: null,
       initialValue: '''// Headers
 for (var level = 1; level <= 6; level++)
   AppHeaderBlot(

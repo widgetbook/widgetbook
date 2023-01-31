@@ -5,9 +5,9 @@ import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_example/models/meal.dart';
 import 'package:widgetbook_example/themes/dark_theme.dart';
 import 'package:widgetbook_example/themes/light_theme.dart';
+import 'package:widgetbook_example/widgets/attributes/multiline_knob.dart';
 import 'package:widgetbook_example/widgets/attributes/price_attribute.dart';
 import 'package:widgetbook_example/widgets/attributes/weight_attribute.dart';
-import 'package:widgetbook_example/widgets/attributes/multiline_knob.dart';
 import 'package:widgetbook_example/widgets/ingredients.dart';
 import 'package:widgetbook_example/widgets/meal_detail.dart';
 import 'package:widgetbook_example/widgets/new_tag.dart';
@@ -74,13 +74,13 @@ class HotreloadWidgetbook extends StatelessWidget {
           ),
         ),
       ],
-      categories: [
+      directories: [
         WidgetbookCategory(
           name: 'widgets test',
-          folders: [
+          children: [
             WidgetbookFolder(
               name: 'attributes',
-              widgets: [
+              children: [
                 WidgetbookComponent(
                   name: 'PriceAttribute',
                   useCases: [
@@ -113,8 +113,6 @@ class HotreloadWidgetbook extends StatelessWidget {
                 ),
               ],
             ),
-          ],
-          widgets: [
             WidgetbookComponent(
               name: 'Ingredients',
               useCases: [
@@ -220,10 +218,10 @@ class HotreloadWidgetbook extends StatelessWidget {
         ),
         WidgetbookCategory(
           name: 'pages',
-          folders: [
+          children: [
             WidgetbookFolder(
               name: 'attributes',
-              widgets: [
+              children: [
                 WidgetbookComponent(
                   name: 'PriceAttribute',
                   useCases: [

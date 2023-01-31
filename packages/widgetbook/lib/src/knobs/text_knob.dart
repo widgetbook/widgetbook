@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
-import 'package:widgetbook/src/knobs/nullable_checkbox.dart';
+import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
 class TextKnob extends Knob<String> {
   TextKnob({
     required super.label,
     super.description,
     required super.value,
-    required this.multiline,
+    this.maxLines = 1,
   });
-  final bool multiline;
+  final int? maxLines;
   @override
-  Widget build() => TextKnobWidget(
-        label: label,
-        multiline: multiline,
+  Widget build(BuildContext context) => core.TextKnob(
+        name: label,
+        maxLines: maxLines,
         description: description,
         value: value,
-        key: ValueKey(this),
+        onChanged: (value) {
+          context.read<KnobsNotifier>().update(label, value);
+        },
       );
 }
 
@@ -26,76 +28,17 @@ class NullableTextKnob extends Knob<String?> {
     required super.label,
     super.description,
     required super.value,
-    required this.multiline,
+    this.maxLines = 1,
   });
-  final bool multiline;
+  final int? maxLines;
   @override
-  Widget build() => TextKnobWidget(
-        label: label,
+  Widget build(BuildContext context) => core.NullableTextKnob(
+        name: label,
+        maxLines: maxLines,
         description: description,
         value: value,
-        nullable: true,
-        multiline: multiline,
-        key: ValueKey(this),
-      );
-}
-
-class TextKnobWidget extends StatefulWidget {
-  const TextKnobWidget({
-    super.key,
-    required this.label,
-    required this.description,
-    required this.value,
-    required this.multiline,
-    this.nullable = false,
-  });
-
-  final String label;
-  final String? description;
-  final String? value;
-  final bool nullable;
-  final bool multiline;
-
-  @override
-  State<TextKnobWidget> createState() => _TextKnobWidgetState();
-}
-
-class _TextKnobWidgetState extends State<TextKnobWidget> {
-  String value = '';
-  final controller = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.value != null) {
-      controller.text = widget.value!;
-      value = widget.value!;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return KnobWrapper(
-      description: widget.description,
-      title: widget.label,
-      nullableCheckbox: widget.nullable
-          ? NullableCheckbox<String?>(
-              cachedValue: value,
-              value: widget.value,
-              label: widget.label,
-            )
-          : null,
-      child: TextField(
-        maxLines: widget.multiline ? null : 1,
-        key: Key('${widget.label}-textKnob'),
-        controller: controller,
-        onChanged: (v) {
-          setState(() {
-            value = v;
-          });
-          context.read<KnobsNotifier>().update(widget.label, v);
+        onChanged: (value) {
+          context.read<KnobsNotifier>().update(label, value);
         },
-      ),
-    );
-  }
+      );
 }

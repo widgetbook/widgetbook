@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'builder_data.dart';
 
@@ -28,28 +28,32 @@ mixin _$BuilderData {
 abstract class $BuilderDataCopyWith<$Res> {
   factory $BuilderDataCopyWith(
           BuilderData value, $Res Function(BuilderData) then) =
-      _$BuilderDataCopyWithImpl<$Res>;
+      _$BuilderDataCopyWithImpl<$Res, BuilderData>;
+  @useResult
   $Res call({Widget Function(BuildContext, Widget) appBuilder});
 }
 
 /// @nodoc
-class _$BuilderDataCopyWithImpl<$Res> implements $BuilderDataCopyWith<$Res> {
+class _$BuilderDataCopyWithImpl<$Res, $Val extends BuilderData>
+    implements $BuilderDataCopyWith<$Res> {
   _$BuilderDataCopyWithImpl(this._value, this._then);
 
-  final BuilderData _value;
   // ignore: unused_field
-  final $Res Function(BuilderData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? appBuilder = freezed,
+    Object? appBuilder = null,
   }) {
     return _then(_value.copyWith(
-      appBuilder: appBuilder == freezed
+      appBuilder: null == appBuilder
           ? _value.appBuilder
           : appBuilder // ignore: cast_nullable_to_non_nullable
               as Widget Function(BuildContext, Widget),
-    ));
+    ) as $Val);
   }
 }
 
@@ -60,25 +64,25 @@ abstract class _$$_BuilderDataCopyWith<$Res>
           _$_BuilderData value, $Res Function(_$_BuilderData) then) =
       __$$_BuilderDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({Widget Function(BuildContext, Widget) appBuilder});
 }
 
 /// @nodoc
-class __$$_BuilderDataCopyWithImpl<$Res> extends _$BuilderDataCopyWithImpl<$Res>
+class __$$_BuilderDataCopyWithImpl<$Res>
+    extends _$BuilderDataCopyWithImpl<$Res, _$_BuilderData>
     implements _$$_BuilderDataCopyWith<$Res> {
   __$$_BuilderDataCopyWithImpl(
       _$_BuilderData _value, $Res Function(_$_BuilderData) _then)
-      : super(_value, (v) => _then(v as _$_BuilderData));
+      : super(_value, _then);
 
-  @override
-  _$_BuilderData get _value => super._value as _$_BuilderData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? appBuilder = freezed,
+    Object? appBuilder = null,
   }) {
     return _then(_$_BuilderData(
-      appBuilder: appBuilder == freezed
+      appBuilder: null == appBuilder
           ? _value.appBuilder
           : appBuilder // ignore: cast_nullable_to_non_nullable
               as Widget Function(BuildContext, Widget),
@@ -113,6 +117,7 @@ class _$_BuilderData implements _BuilderData {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_BuilderDataCopyWith<_$_BuilderData> get copyWith =>
       __$$_BuilderDataCopyWithImpl<_$_BuilderData>(this, _$identity);
 }

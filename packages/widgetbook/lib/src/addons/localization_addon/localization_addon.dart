@@ -5,9 +5,9 @@ import 'package:widgetbook/src/addons/addon.dart';
 import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/addons/localization_addon/localization_provider.dart';
 import 'package:widgetbook/src/addons/localization_addon/localization_selection_provider.dart';
-import 'package:widgetbook/src/addons/widgets/addon_option_list.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_core/widgetbook_core.dart';
 
 class LocalizationAddon extends WidgetbookAddOn {
   LocalizationAddon({
@@ -35,16 +35,18 @@ Widget _builder(BuildContext context) {
   final locales = data.locales;
   final activeLocale = data.activeLocale;
 
-  return AddonOptionList<Locale>(
-    name: 'Locales',
-    options: locales,
-    selectedOption: activeLocale,
-    builder: (item) => Text(item.toString()),
-    onTap: (item) {
-      context.read<LocalizationSettingProvider>().tapped(item);
-      context.read<AddOnProvider>().update();
-      navigate(context);
-    },
+  return Setting(
+    name: 'Locale',
+    child: DropdownSetting<Locale>(
+      options: locales,
+      initialSelection: activeLocale,
+      optionValueBuilder: (locale) => locale.toString(),
+      onSelected: (locale) {
+        context.read<LocalizationSettingProvider>().tapped(locale);
+        context.read<AddOnProvider>().update();
+        navigate(context);
+      },
+    ),
   );
 }
 

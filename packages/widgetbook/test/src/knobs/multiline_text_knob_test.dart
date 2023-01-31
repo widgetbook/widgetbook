@@ -25,9 +25,9 @@ for (var level = 1; level <= 6; level++)
             build: (context) => [
               Text(
                 context.knobs.text(
-                  multiline: true,
                   label: 'label',
                   initialValue: initialTextValue,
+                  maxLines: null,
                 ),
                 key: textFinderKey,
               )
@@ -35,9 +35,7 @@ for (var level = 1; level <= 6; level++)
           ),
         );
 
-        final textFinder = find.byKey(
-          const Key('label-textKnob'),
-        );
+        final textFinder = find.byType(TextField);
 
         expect(textFinder, findsWidgets);
 
@@ -62,9 +60,7 @@ for (var level = 1; level <= 6; level++)
           ),
         );
 
-        final textFinder = find.byKey(
-          const Key('label-textKnob'),
-        );
+        final textFinder = find.byType(TextField);
 
         expect(textFinder, findsWidgets);
 

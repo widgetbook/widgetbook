@@ -5,9 +5,9 @@ import 'package:widgetbook/src/addons/addon.dart';
 import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/addons/theme_addon/theme_provider.dart';
 import 'package:widgetbook/src/addons/theme_addon/theme_selection_provider.dart';
-import 'package:widgetbook/src/addons/widgets/addon_option_list.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_core/widgetbook_core.dart';
 
 abstract class ThemeAddon<T> extends WidgetbookAddOn {
   ThemeAddon({
@@ -44,16 +44,18 @@ Widget _builder<T>(BuildContext context) {
   final themes = data.themes;
   final activeTheme = data.activeTheme;
 
-  return AddonOptionList<WidgetbookTheme<T>>(
-    name: 'Themes',
-    options: themes,
-    selectedOption: activeTheme,
-    builder: (item) => Text(item.name),
-    onTap: (item) {
-      context.read<ThemeSettingProvider<T>>().tapped(item);
-      context.read<AddOnProvider>().update();
-      navigate(context);
-    },
+  return Setting(
+    name: 'Theme',
+    child: DropdownSetting<WidgetbookTheme<T>>(
+      options: themes,
+      initialSelection: activeTheme,
+      optionValueBuilder: (theme) => theme.name,
+      onSelected: (item) {
+        context.read<ThemeSettingProvider<T>>().tapped(item);
+        context.read<AddOnProvider>().update();
+        navigate(context);
+      },
+    ),
   );
 }
 

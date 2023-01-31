@@ -7,28 +7,7 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 Widget navigationTreeItemWithout(BuildContext context) {
   final nodeType = context.knobs.options<NavigationNodeType>(
     label: 'Node Type',
-    options: const [
-      Option(
-        label: 'Category',
-        value: NavigationNodeType.category,
-      ),
-      Option(
-        label: 'Package',
-        value: NavigationNodeType.package,
-      ),
-      Option(
-        label: 'Folder',
-        value: NavigationNodeType.folder,
-      ),
-      Option(
-        label: 'Component',
-        value: NavigationNodeType.component,
-      ),
-      Option(
-        label: 'Use Case',
-        value: NavigationNodeType.useCase,
-      ),
-    ],
+    options: NavigationNodeType.values,
   );
 
   return Column(

@@ -3,9 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:widgetbook/src/builder/provider/builder_provider.dart';
 import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/navigation/providers/use_cases_provider.dart';
-import 'package:widgetbook/src/utils/utils.dart';
 import 'package:widgetbook/src/workbench/preview.dart';
-import 'package:widgetbook/src/workbench/workbench_controls.dart';
 
 class Workbench extends StatefulWidget {
   const Workbench({
@@ -17,46 +15,22 @@ class Workbench extends StatefulWidget {
 }
 
 class _WorkbenchState extends State<Workbench> {
-  final _overlayKey = GlobalKey<OverlayState>();
-  final _layerLink = LayerLink();
   @override
   Widget build(BuildContext context) {
     final appBuilder = context.watch<BuilderProvider>().value.appBuilder;
     final state = context.watch<UseCasesProvider>().state;
     final useCaseBuilder = state.selectedUseCase?.builder;
-    return Stack(
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            WorkbenchControls(
-              layerLink: _layerLink,
-              overlayKey: _overlayKey,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: Radii.defaultRadius,
+        color: Theme.of(context).colorScheme.surface,
+      ),
+      child: useCaseBuilder == null
+          ? Container()
+          : Preview(
+              useCaseBuilder: useCaseBuilder,
+              appBuilder: appBuilder,
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            Expanded(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: Radii.defaultRadius,
-                  color: context.colorScheme.surface,
-                ),
-                child: useCaseBuilder == null
-                    ? Container()
-                    : Preview(
-                        useCaseBuilder: useCaseBuilder,
-                        appBuilder: appBuilder,
-                      ),
-              ),
-            ),
-          ],
-        ),
-        Directionality(
-          textDirection: TextDirection.ltr,
-          child: Overlay(key: _overlayKey),
-        ),
-      ],
     );
   }
 }

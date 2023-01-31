@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'frame_setting.dart';
 
@@ -28,33 +28,37 @@ mixin _$FrameSetting {
 abstract class $FrameSettingCopyWith<$Res> {
   factory $FrameSettingCopyWith(
           FrameSetting value, $Res Function(FrameSetting) then) =
-      _$FrameSettingCopyWithImpl<$Res>;
+      _$FrameSettingCopyWithImpl<$Res, FrameSetting>;
+  @useResult
   $Res call({List<Frame> frames, Frame activeFrame});
 }
 
 /// @nodoc
-class _$FrameSettingCopyWithImpl<$Res> implements $FrameSettingCopyWith<$Res> {
+class _$FrameSettingCopyWithImpl<$Res, $Val extends FrameSetting>
+    implements $FrameSettingCopyWith<$Res> {
   _$FrameSettingCopyWithImpl(this._value, this._then);
 
-  final FrameSetting _value;
   // ignore: unused_field
-  final $Res Function(FrameSetting) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? frames = freezed,
-    Object? activeFrame = freezed,
+    Object? frames = null,
+    Object? activeFrame = null,
   }) {
     return _then(_value.copyWith(
-      frames: frames == freezed
+      frames: null == frames
           ? _value.frames
           : frames // ignore: cast_nullable_to_non_nullable
               as List<Frame>,
-      activeFrame: activeFrame == freezed
+      activeFrame: null == activeFrame
           ? _value.activeFrame
           : activeFrame // ignore: cast_nullable_to_non_nullable
               as Frame,
-    ));
+    ) as $Val);
   }
 }
 
@@ -65,31 +69,30 @@ abstract class _$$_FrameSettingCopyWith<$Res>
           _$_FrameSetting value, $Res Function(_$_FrameSetting) then) =
       __$$_FrameSettingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<Frame> frames, Frame activeFrame});
 }
 
 /// @nodoc
 class __$$_FrameSettingCopyWithImpl<$Res>
-    extends _$FrameSettingCopyWithImpl<$Res>
+    extends _$FrameSettingCopyWithImpl<$Res, _$_FrameSetting>
     implements _$$_FrameSettingCopyWith<$Res> {
   __$$_FrameSettingCopyWithImpl(
       _$_FrameSetting _value, $Res Function(_$_FrameSetting) _then)
-      : super(_value, (v) => _then(v as _$_FrameSetting));
+      : super(_value, _then);
 
-  @override
-  _$_FrameSetting get _value => super._value as _$_FrameSetting;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? frames = freezed,
-    Object? activeFrame = freezed,
+    Object? frames = null,
+    Object? activeFrame = null,
   }) {
     return _then(_$_FrameSetting(
-      frames: frames == freezed
+      frames: null == frames
           ? _value._frames
           : frames // ignore: cast_nullable_to_non_nullable
               as List<Frame>,
-      activeFrame: activeFrame == freezed
+      activeFrame: null == activeFrame
           ? _value.activeFrame
           : activeFrame // ignore: cast_nullable_to_non_nullable
               as Frame,
@@ -108,6 +111,7 @@ class _$_FrameSetting implements _FrameSetting {
   final List<Frame> _frames;
   @override
   List<Frame> get frames {
+    if (_frames is EqualUnmodifiableListView) return _frames;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_frames);
   }
@@ -126,18 +130,17 @@ class _$_FrameSetting implements _FrameSetting {
         (other.runtimeType == runtimeType &&
             other is _$_FrameSetting &&
             const DeepCollectionEquality().equals(other._frames, _frames) &&
-            const DeepCollectionEquality()
-                .equals(other.activeFrame, activeFrame));
+            (identical(other.activeFrame, activeFrame) ||
+                other.activeFrame == activeFrame));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_frames),
-      const DeepCollectionEquality().hash(activeFrame));
+      runtimeType, const DeepCollectionEquality().hash(_frames), activeFrame);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_FrameSettingCopyWith<_$_FrameSetting> get copyWith =>
       __$$_FrameSettingCopyWithImpl<_$_FrameSetting>(this, _$identity);
 }

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'device_setting.dart';
 
@@ -29,7 +29,8 @@ mixin _$DeviceSetting {
 abstract class $DeviceSettingCopyWith<$Res> {
   factory $DeviceSettingCopyWith(
           DeviceSetting value, $Res Function(DeviceSetting) then) =
-      _$DeviceSettingCopyWithImpl<$Res>;
+      _$DeviceSettingCopyWithImpl<$Res, DeviceSetting>;
+  @useResult
   $Res call(
       {List<Device> devices, Device activeDevice, Orientation orientation});
 
@@ -37,40 +38,43 @@ abstract class $DeviceSettingCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DeviceSettingCopyWithImpl<$Res>
+class _$DeviceSettingCopyWithImpl<$Res, $Val extends DeviceSetting>
     implements $DeviceSettingCopyWith<$Res> {
   _$DeviceSettingCopyWithImpl(this._value, this._then);
 
-  final DeviceSetting _value;
   // ignore: unused_field
-  final $Res Function(DeviceSetting) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? devices = freezed,
-    Object? activeDevice = freezed,
-    Object? orientation = freezed,
+    Object? devices = null,
+    Object? activeDevice = null,
+    Object? orientation = null,
   }) {
     return _then(_value.copyWith(
-      devices: devices == freezed
+      devices: null == devices
           ? _value.devices
           : devices // ignore: cast_nullable_to_non_nullable
               as List<Device>,
-      activeDevice: activeDevice == freezed
+      activeDevice: null == activeDevice
           ? _value.activeDevice
           : activeDevice // ignore: cast_nullable_to_non_nullable
               as Device,
-      orientation: orientation == freezed
+      orientation: null == orientation
           ? _value.orientation
           : orientation // ignore: cast_nullable_to_non_nullable
               as Orientation,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $DeviceCopyWith<$Res> get activeDevice {
     return $DeviceCopyWith<$Res>(_value.activeDevice, (value) {
-      return _then(_value.copyWith(activeDevice: value));
+      return _then(_value.copyWith(activeDevice: value) as $Val);
     });
   }
 }
@@ -82,6 +86,7 @@ abstract class _$$_DeviceSettingCopyWith<$Res>
           _$_DeviceSetting value, $Res Function(_$_DeviceSetting) then) =
       __$$_DeviceSettingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<Device> devices, Device activeDevice, Orientation orientation});
 
@@ -91,31 +96,29 @@ abstract class _$$_DeviceSettingCopyWith<$Res>
 
 /// @nodoc
 class __$$_DeviceSettingCopyWithImpl<$Res>
-    extends _$DeviceSettingCopyWithImpl<$Res>
+    extends _$DeviceSettingCopyWithImpl<$Res, _$_DeviceSetting>
     implements _$$_DeviceSettingCopyWith<$Res> {
   __$$_DeviceSettingCopyWithImpl(
       _$_DeviceSetting _value, $Res Function(_$_DeviceSetting) _then)
-      : super(_value, (v) => _then(v as _$_DeviceSetting));
+      : super(_value, _then);
 
-  @override
-  _$_DeviceSetting get _value => super._value as _$_DeviceSetting;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? devices = freezed,
-    Object? activeDevice = freezed,
-    Object? orientation = freezed,
+    Object? devices = null,
+    Object? activeDevice = null,
+    Object? orientation = null,
   }) {
     return _then(_$_DeviceSetting(
-      devices: devices == freezed
+      devices: null == devices
           ? _value._devices
           : devices // ignore: cast_nullable_to_non_nullable
               as List<Device>,
-      activeDevice: activeDevice == freezed
+      activeDevice: null == activeDevice
           ? _value.activeDevice
           : activeDevice // ignore: cast_nullable_to_non_nullable
               as Device,
-      orientation: orientation == freezed
+      orientation: null == orientation
           ? _value.orientation
           : orientation // ignore: cast_nullable_to_non_nullable
               as Orientation,
@@ -135,6 +138,7 @@ class _$_DeviceSetting implements _DeviceSetting {
   final List<Device> _devices;
   @override
   List<Device> get devices {
+    if (_devices is EqualUnmodifiableListView) return _devices;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_devices);
   }
@@ -156,21 +160,19 @@ class _$_DeviceSetting implements _DeviceSetting {
         (other.runtimeType == runtimeType &&
             other is _$_DeviceSetting &&
             const DeepCollectionEquality().equals(other._devices, _devices) &&
-            const DeepCollectionEquality()
-                .equals(other.activeDevice, activeDevice) &&
-            const DeepCollectionEquality()
-                .equals(other.orientation, orientation));
+            (identical(other.activeDevice, activeDevice) ||
+                other.activeDevice == activeDevice) &&
+            (identical(other.orientation, orientation) ||
+                other.orientation == orientation));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_devices),
-      const DeepCollectionEquality().hash(activeDevice),
-      const DeepCollectionEquality().hash(orientation));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_devices), activeDevice, orientation);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_DeviceSettingCopyWith<_$_DeviceSetting> get copyWith =>
       __$$_DeviceSettingCopyWithImpl<_$_DeviceSetting>(this, _$identity);
 }

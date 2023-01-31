@@ -7,9 +7,9 @@ import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/addons/frame_addon/frame_provider.dart';
 import 'package:widgetbook/src/addons/frame_addon/frame_selection_provider.dart';
 import 'package:widgetbook/src/addons/models/models.dart';
-import 'package:widgetbook/src/addons/widgets/widgets.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_core/widgetbook_core.dart';
 
 class FrameAddon extends WidgetbookAddOn {
   FrameAddon({
@@ -89,45 +89,47 @@ Widget _builder(BuildContext context) {
   final frameBuilders = setting.frames;
   final activeFrame = setting.activeFrame;
 
-  return Row(
-    children: [
-      Expanded(
-        child: AddonOptionList<Frame>(
-          name: 'Frames',
-          options: frameBuilders,
-          selectedOption: activeFrame,
-          builder: (item) => Text(item.name),
-          onTap: (item) {
-            context.read<FrameSettingProvider>().tapped(item);
-            context.read<AddOnProvider>().update();
-
-            final addons = context.read<AddOnProvider>().value;
-            final queryParameters = <String, String>{};
-            for (final addon in addons.where((addon) => addon is! FrameAddon)) {
-              queryParameters.addAll(addon.getQueryParameter(context));
-            }
-
-            final useCasePath =
-                context.read<UseCasesProvider>().state.selectedUseCasePath;
-            if (useCasePath != null) {
-              queryParameters.putIfAbsent('path', () => useCasePath);
-            }
-
-            queryParameters
-              ..putIfAbsent('frame', () => item.name)
-              ..addAll(item.getDefaultQueryParameters);
-
-            context.goNamed(
-              '/',
-              queryParams: queryParameters,
-            );
-          },
+  return ComplexSetting(
+    name: 'Frame',
+    sections: [
+      if (activeFrame.getDefaultQueryParameters.isNotEmpty)
+        SettingSectionData(
+          name: 'Properties',
+          settings: [
+            activeFrame.addon.builder(context),
+          ],
         ),
-      ),
-      Expanded(
-        child: activeFrame.addon.builder(context),
-      ),
     ],
+    setting: DropdownSetting<Frame>(
+      options: frameBuilders,
+      initialSelection: activeFrame,
+      optionValueBuilder: (frame) => frame.name,
+      onSelected: (frame) {
+        context.read<FrameSettingProvider>().tapped(frame);
+        context.read<AddOnProvider>().update();
+
+        final addons = context.read<AddOnProvider>().value;
+        final queryParameters = <String, String>{};
+        for (final addon in addons.where((addon) => addon is! FrameAddon)) {
+          queryParameters.addAll(addon.getQueryParameter(context));
+        }
+
+        final useCasePath =
+            context.read<UseCasesProvider>().state.selectedUseCasePath;
+        if (useCasePath != null) {
+          queryParameters.putIfAbsent('path', () => useCasePath);
+        }
+
+        queryParameters
+          ..putIfAbsent('frame', () => frame.name)
+          ..addAll(frame.getDefaultQueryParameters);
+
+        context.goNamed(
+          '/',
+          queryParams: queryParameters,
+        );
+      },
+    ),
   );
 }
 

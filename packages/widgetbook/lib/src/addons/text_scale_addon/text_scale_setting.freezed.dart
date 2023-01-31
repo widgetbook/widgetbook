@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'text_scale_setting.dart';
 
@@ -28,34 +28,37 @@ mixin _$TextScaleSetting {
 abstract class $TextScaleSettingCopyWith<$Res> {
   factory $TextScaleSettingCopyWith(
           TextScaleSetting value, $Res Function(TextScaleSetting) then) =
-      _$TextScaleSettingCopyWithImpl<$Res>;
+      _$TextScaleSettingCopyWithImpl<$Res, TextScaleSetting>;
+  @useResult
   $Res call({double activeTextScale, List<double> textScales});
 }
 
 /// @nodoc
-class _$TextScaleSettingCopyWithImpl<$Res>
+class _$TextScaleSettingCopyWithImpl<$Res, $Val extends TextScaleSetting>
     implements $TextScaleSettingCopyWith<$Res> {
   _$TextScaleSettingCopyWithImpl(this._value, this._then);
 
-  final TextScaleSetting _value;
   // ignore: unused_field
-  final $Res Function(TextScaleSetting) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? activeTextScale = freezed,
-    Object? textScales = freezed,
+    Object? activeTextScale = null,
+    Object? textScales = null,
   }) {
     return _then(_value.copyWith(
-      activeTextScale: activeTextScale == freezed
+      activeTextScale: null == activeTextScale
           ? _value.activeTextScale
           : activeTextScale // ignore: cast_nullable_to_non_nullable
               as double,
-      textScales: textScales == freezed
+      textScales: null == textScales
           ? _value.textScales
           : textScales // ignore: cast_nullable_to_non_nullable
               as List<double>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -66,31 +69,30 @@ abstract class _$$_TextScaleSettingCopyWith<$Res>
           _$_TextScaleSetting value, $Res Function(_$_TextScaleSetting) then) =
       __$$_TextScaleSettingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({double activeTextScale, List<double> textScales});
 }
 
 /// @nodoc
 class __$$_TextScaleSettingCopyWithImpl<$Res>
-    extends _$TextScaleSettingCopyWithImpl<$Res>
+    extends _$TextScaleSettingCopyWithImpl<$Res, _$_TextScaleSetting>
     implements _$$_TextScaleSettingCopyWith<$Res> {
   __$$_TextScaleSettingCopyWithImpl(
       _$_TextScaleSetting _value, $Res Function(_$_TextScaleSetting) _then)
-      : super(_value, (v) => _then(v as _$_TextScaleSetting));
+      : super(_value, _then);
 
-  @override
-  _$_TextScaleSetting get _value => super._value as _$_TextScaleSetting;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? activeTextScale = freezed,
-    Object? textScales = freezed,
+    Object? activeTextScale = null,
+    Object? textScales = null,
   }) {
     return _then(_$_TextScaleSetting(
-      activeTextScale: activeTextScale == freezed
+      activeTextScale: null == activeTextScale
           ? _value.activeTextScale
           : activeTextScale // ignore: cast_nullable_to_non_nullable
               as double,
-      textScales: textScales == freezed
+      textScales: null == textScales
           ? _value._textScales
           : textScales // ignore: cast_nullable_to_non_nullable
               as List<double>,
@@ -112,6 +114,7 @@ class _$_TextScaleSetting extends _TextScaleSetting {
   final List<double> _textScales;
   @override
   List<double> get textScales {
+    if (_textScales is EqualUnmodifiableListView) return _textScales;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_textScales);
   }
@@ -126,20 +129,19 @@ class _$_TextScaleSetting extends _TextScaleSetting {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TextScaleSetting &&
-            const DeepCollectionEquality()
-                .equals(other.activeTextScale, activeTextScale) &&
+            (identical(other.activeTextScale, activeTextScale) ||
+                other.activeTextScale == activeTextScale) &&
             const DeepCollectionEquality()
                 .equals(other._textScales, _textScales));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(activeTextScale),
+  int get hashCode => Object.hash(runtimeType, activeTextScale,
       const DeepCollectionEquality().hash(_textScales));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TextScaleSettingCopyWith<_$_TextScaleSetting> get copyWith =>
       __$$_TextScaleSettingCopyWithImpl<_$_TextScaleSetting>(this, _$identity);
 }

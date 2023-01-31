@@ -1,3 +1,7 @@
+## 3.0.0-beta.4
+
+- feat: added `SettingPanel`
+
 ## 3.0.0-beta.3
 
 - refactor: `NavigationTree`
