@@ -51,8 +51,8 @@ class KnobsExample extends StatelessWidget {
         final frameBuilder = context.frameBuilder;
         final theme = context.theme<ThemeData>();
         return Theme(
-          data: theme,
-          child: frameBuilder(context, child),
+          data: theme!,
+          child: frameBuilder!(context, child),
         );
       },
       directories: [

@@ -52,8 +52,7 @@ SingleChildWidget _providerBuilder(
         key: ValueKey(frame),
         create: (context) => FrameProvider(frame),
       ),
-      if (frame.addon.providerBuilder != null)
-        frame.addon.providerBuilder(context)
+      frame.addon.providerBuilder(context)
     ],
   );
 }
@@ -134,8 +133,8 @@ Widget _builder(BuildContext context) {
 }
 
 extension FrameBuilderExtension on BuildContext {
+  Frame? get frame => watch<FrameProvider?>()?.value;
+
   /// Creates adjustable parameters for the WidgetbookUseCase
-  Widget Function(BuildContext, Widget) get frameBuilder =>
-      watch<FrameProvider>().value.builder;
-  Frame get frame => watch<FrameProvider>().value;
+  Widget Function(BuildContext, Widget)? get frameBuilder => frame?.builder;
 }

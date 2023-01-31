@@ -43,7 +43,7 @@ void main() {
       appBuilder: (context, child) {
         return Localizations(
           key: localizationKey,
-          locale: context.localization.activeLocale,
+          locale: context.localization!.activeLocale,
           delegates: localizationsDelegates,
           child: child,
         );

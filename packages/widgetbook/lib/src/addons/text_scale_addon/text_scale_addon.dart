@@ -89,5 +89,5 @@ SingleChildWidget _providerBuilder(
 
 extension TextScaleExtension on BuildContext {
   /// Creates adjustable parameters for the WidgetbookUseCase
-  double get textScale => watch<TextScaleProvider>().value;
+  double? get textScale => watch<TextScaleProvider?>()?.value;
 }

@@ -92,5 +92,5 @@ SingleChildWidget _providerBuilder(
 
 extension LocalizationExtension on BuildContext {
   /// Creates adjustable parameters for the WidgetbookUseCase
-  LocalizationData get localization => watch<LocalizationProvider>().value;
+  LocalizationData? get localization => watch<LocalizationProvider?>()?.value;
 }

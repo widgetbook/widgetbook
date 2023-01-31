@@ -30,7 +30,7 @@ final cupertinoThemeAddon = CupertinoThemeAddon(
 AppBuilderFunction get cupertinoAppBuilder =>
     (BuildContext context, Widget child) {
       return CupertinoTheme(
-        data: context.cupertinoTheme,
+        data: context.cupertinoTheme!,
         child: child,
       );
     };
