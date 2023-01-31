@@ -19,53 +19,59 @@ GoRouter getRouter(Widget child) {
 
 // TODO make this work
 Widget _defaultAppBuilderMethod(BuildContext context, Widget child) {
-  final _router = getRouter(child);
+  final router = getRouter(child);
   return WidgetsApp.router(
     color: Colors.transparent,
     builder: (context, childWidget) {
       return childWidget ?? child;
     },
     debugShowCheckedModeBanner: false,
-    routeInformationParser: _router.routeInformationParser,
-    routerDelegate: _router.routerDelegate,
+    routeInformationParser: router.routeInformationParser,
+    routerDelegate: router.routerDelegate,
   );
 }
 
 AppBuilderFunction get materialAppBuilder =>
     (BuildContext context, Widget child) {
-      final frameBuilder = context.frameBuilder;
-      return frameBuilder(
-        context,
-        Builder(
-          builder: (context) {
-            return MaterialApp(
-              theme: context.materialTheme,
-              locale: context.localization.activeLocale,
-              supportedLocales: context.localization.supportedLocales,
-              localizationsDelegates:
-                  context.localization.localizationsDelegates,
-              debugShowCheckedModeBanner: false,
-              home: Scaffold(
-                body: MediaQuery(
-                  data: MediaQuery.of(context).copyWith(
-                    textScaleFactor: context.textScale,
-                  ),
-                  child: child,
+      final builder = Builder(
+        builder: (context) {
+          return MaterialApp(
+            theme: context.materialTheme,
+            locale: context.localization?.activeLocale,
+            supportedLocales: context.localization?.supportedLocales ??
+                const <Locale>[
+                  Locale('en', 'US'),
+                ],
+            localizationsDelegates:
+                context.localization?.localizationsDelegates,
+            debugShowCheckedModeBanner: false,
+            home: Scaffold(
+              body: MediaQuery(
+                data: MediaQuery.of(context).copyWith(
+                  textScaleFactor: context.textScale,
                 ),
+                child: child,
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       );
+      final frameBuilder = context.frameBuilder;
+      return frameBuilder == null
+          ? builder
+          : frameBuilder(
+              context,
+              builder,
+            );
     };
 
 // TODO make this work
 AppBuilderFunction get cupertinoAppBuilder =>
     (BuildContext context, Widget child) {
-      final _router = getRouter(child);
+      final router = getRouter(child);
       return CupertinoApp.router(
         debugShowCheckedModeBanner: false,
-        routerDelegate: _router.routerDelegate,
-        routeInformationParser: _router.routeInformationParser,
+        routerDelegate: router.routerDelegate,
+        routeInformationParser: router.routeInformationParser,
       );
     };

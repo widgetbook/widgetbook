@@ -37,7 +37,7 @@ void main() {
       appBuilder: (context, child) {
         final theme = context.theme<AppThemeData>();
         return AppTheme(
-          data: theme,
+          data: theme!,
           child: child,
         );
       },

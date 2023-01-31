@@ -29,6 +29,6 @@ final materialThemeAddon = MaterialThemeAddon(
 
 AppBuilderFunction get materialAppBuilder =>
     (BuildContext context, Widget child) => Theme(
-          data: context.materialTheme,
+          data: context.materialTheme!,
           child: child,
         );

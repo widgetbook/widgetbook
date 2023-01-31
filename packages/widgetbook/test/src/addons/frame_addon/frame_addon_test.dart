@@ -37,7 +37,7 @@ void main() {
       appBuilder: (context, child) {
         final frameBuilder = context.frameBuilder;
 
-        return frameBuilder(context, child);
+        return frameBuilder!(context, child);
       },
       useCaseBuilder: (context) => const Text(
         'Some Frame',

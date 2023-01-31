@@ -28,7 +28,7 @@ ThemeData themeLight() => Themes.light;
 @anno.WidgetbookAppBuilder()
 Widget customAppBuilder(BuildContext context, Widget child) {
   final frameBuilder = context.frameBuilder;
-  return frameBuilder(
+  return frameBuilder!(
     context,
     Builder(
       builder: (context) {
