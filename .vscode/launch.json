@@ -6,7 +6,7 @@
             "cwd": "widgetbook_for_widgetbook",
             "request": "launch",
             "program": "lib/app.widgetbook.dart",
-            "type": "dart"
+            "type": "dart",
         },
         {
             "name": "Debug CLI",

@@ -55,10 +55,10 @@ class KnobsExample extends StatelessWidget {
           child: frameBuilder(context, child),
         );
       },
-      categories: [
+      directories: [
         WidgetbookCategory(
           name: 'Pages',
-          widgets: [
+          children: [
             WidgetbookComponent(
               name: 'On boarding',
               useCases: [
@@ -82,20 +82,14 @@ class KnobsExample extends StatelessWidget {
                       description:
                           'This is the text that appears above the current count of increments',
                     ),
-                    iconData: context.knobs.options(label: 'Icon', options: [
-                      const Option(
-                        label: 'Cross',
-                        value: Icons.add,
-                      ),
-                      const Option(
-                        label: 'Square',
-                        value: Icons.crop_square_sharp,
-                      ),
-                      const Option(
-                        label: 'Circle',
-                        value: Icons.circle,
-                      ),
-                    ]),
+                    iconData: context.knobs.options(
+                      label: 'Icon',
+                      options: [
+                        Icons.add,
+                        Icons.crop_square_sharp,
+                        Icons.circle
+                      ],
+                    ),
                     showToolTip: context.knobs.boolean(
                       label: 'Show Increment Tool Tip',
                       description:

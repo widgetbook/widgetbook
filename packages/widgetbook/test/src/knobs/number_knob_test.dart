@@ -77,7 +77,7 @@ void main() {
           ],
         ),
       );
-      await tester.enterText(find.byKey(const Key('label-numberKnob')), '5.5');
+      await tester.enterText(find.byType(TextField), '5.5');
       await tester.pumpAndSettle();
 
       expect(find.text('5.5'), findsWidgets);

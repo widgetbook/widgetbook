@@ -6,8 +6,8 @@ import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/addons/text_scale_addon/text_scale_provider.dart';
 import 'package:widgetbook/src/addons/text_scale_addon/text_scale_selection_provider.dart';
 import 'package:widgetbook/src/addons/text_scale_addon/text_scale_setting.dart';
-import 'package:widgetbook/src/addons/widgets/addon_option_list.dart';
 import 'package:widgetbook/src/navigation/router.dart';
+import 'package:widgetbook_core/widgetbook_core.dart';
 
 class TextScaleAddon extends WidgetbookAddOn {
   TextScaleAddon({
@@ -37,16 +37,18 @@ Widget _builder(BuildContext context) {
   final textScales = data.textScales;
   final activeTextScale = data.activeTextScale;
 
-  return AddonOptionList<double>(
-    name: 'Text scales',
-    options: textScales,
-    selectedOption: activeTextScale,
-    builder: (item) => Text(item.toStringAsFixed(2)),
-    onTap: (item) {
-      context.read<TextScaleSettingProvider>().tapped(item);
-      context.read<AddOnProvider>().update();
-      navigate(context);
-    },
+  return Setting(
+    name: 'Text scale',
+    child: DropdownSetting<double>(
+      options: textScales,
+      initialSelection: activeTextScale,
+      optionValueBuilder: (scale) => scale.toStringAsFixed(2),
+      onSelected: (item) {
+        context.read<TextScaleSettingProvider>().tapped(item);
+        context.read<AddOnProvider>().update();
+        navigate(context);
+      },
+    ),
   );
 }
 

@@ -24,6 +24,7 @@ class AddonOptionList<T> extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             name,
@@ -35,23 +36,23 @@ class AddonOptionList<T> extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          Expanded(
-            child: ListView.separated(
-              itemBuilder: (context, index) {
-                final item = options[index];
-                return AddonOption(
-                  isSelected: selectedOption == item,
-                  onTap: () {
-                    onTap(item);
-                  },
-                  child: builder(item),
-                );
-              },
-              separatorBuilder: (_, __) {
-                return const AddonOptionSpacing();
-              },
-              itemCount: options.length,
-            ),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final item = options[index];
+              return AddonOption(
+                isSelected: selectedOption == item,
+                onTap: () {
+                  onTap(item);
+                },
+                child: builder(item),
+              );
+            },
+            separatorBuilder: (_, __) {
+              return const AddonOptionSpacing();
+            },
+            itemCount: options.length,
           ),
         ],
       ),

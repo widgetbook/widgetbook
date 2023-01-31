@@ -21,7 +21,7 @@ void main() {
         addons: const [],
         constructor: WidgetbookConstructor.material,
         appInfoInstance: AppInfoInstance(name: appInfoName),
-        categories: const [],
+        directories: const [],
       ),
     );
 
@@ -33,7 +33,7 @@ void main() {
     );
 
     const expectedCategoryInstance = Property(
-      key: 'categories',
+      key: 'directories',
       instance: ListInstance<WidgetbookCategoryInstance>(
         instances: [],
       ),
@@ -61,7 +61,7 @@ void main() {
           addons: const [],
           constructor: WidgetbookConstructor.material,
           appInfoInstance: AppInfoInstance(name: appInfoName),
-          categories: const [],
+          directories: const [],
         );
 
         expect(
@@ -82,7 +82,7 @@ void main() {
           addons: const [],
           constructor: WidgetbookConstructor.material,
           appInfoInstance: AppInfoInstance(name: appInfoName),
-          categories: const [],
+          directories: const [],
         );
 
         expect(
@@ -104,7 +104,7 @@ void main() {
           addons: const [],
           constructor: WidgetbookConstructor.material,
           appInfoInstance: AppInfoInstance(name: appInfoName),
-          categories: const [],
+          directories: const [],
         );
 
         expect(
@@ -126,7 +126,7 @@ void main() {
           addons: const [],
           constructor: WidgetbookConstructor.material,
           appInfoInstance: AppInfoInstance(name: appInfoName),
-          categories: const [],
+          directories: const [],
         );
 
         expect(

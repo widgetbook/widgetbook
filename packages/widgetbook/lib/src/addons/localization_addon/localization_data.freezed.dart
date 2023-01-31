@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'localization_data.dart';
 
@@ -30,7 +30,8 @@ mixin _$LocalizationData {
 abstract class $LocalizationDataCopyWith<$Res> {
   factory $LocalizationDataCopyWith(
           LocalizationData value, $Res Function(LocalizationData) then) =
-      _$LocalizationDataCopyWithImpl<$Res>;
+      _$LocalizationDataCopyWithImpl<$Res, LocalizationData>;
+  @useResult
   $Res call(
       {Locale activeLocale,
       List<Locale> supportedLocales,
@@ -38,34 +39,36 @@ abstract class $LocalizationDataCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LocalizationDataCopyWithImpl<$Res>
+class _$LocalizationDataCopyWithImpl<$Res, $Val extends LocalizationData>
     implements $LocalizationDataCopyWith<$Res> {
   _$LocalizationDataCopyWithImpl(this._value, this._then);
 
-  final LocalizationData _value;
   // ignore: unused_field
-  final $Res Function(LocalizationData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? activeLocale = freezed,
-    Object? supportedLocales = freezed,
-    Object? localizationsDelegates = freezed,
+    Object? activeLocale = null,
+    Object? supportedLocales = null,
+    Object? localizationsDelegates = null,
   }) {
     return _then(_value.copyWith(
-      activeLocale: activeLocale == freezed
+      activeLocale: null == activeLocale
           ? _value.activeLocale
           : activeLocale // ignore: cast_nullable_to_non_nullable
               as Locale,
-      supportedLocales: supportedLocales == freezed
+      supportedLocales: null == supportedLocales
           ? _value.supportedLocales
           : supportedLocales // ignore: cast_nullable_to_non_nullable
               as List<Locale>,
-      localizationsDelegates: localizationsDelegates == freezed
+      localizationsDelegates: null == localizationsDelegates
           ? _value.localizationsDelegates
           : localizationsDelegates // ignore: cast_nullable_to_non_nullable
               as List<LocalizationsDelegate<dynamic>>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -76,6 +79,7 @@ abstract class _$$_LocalizationDataCopyWith<$Res>
           _$_LocalizationData value, $Res Function(_$_LocalizationData) then) =
       __$$_LocalizationDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {Locale activeLocale,
       List<Locale> supportedLocales,
@@ -84,31 +88,29 @@ abstract class _$$_LocalizationDataCopyWith<$Res>
 
 /// @nodoc
 class __$$_LocalizationDataCopyWithImpl<$Res>
-    extends _$LocalizationDataCopyWithImpl<$Res>
+    extends _$LocalizationDataCopyWithImpl<$Res, _$_LocalizationData>
     implements _$$_LocalizationDataCopyWith<$Res> {
   __$$_LocalizationDataCopyWithImpl(
       _$_LocalizationData _value, $Res Function(_$_LocalizationData) _then)
-      : super(_value, (v) => _then(v as _$_LocalizationData));
+      : super(_value, _then);
 
-  @override
-  _$_LocalizationData get _value => super._value as _$_LocalizationData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? activeLocale = freezed,
-    Object? supportedLocales = freezed,
-    Object? localizationsDelegates = freezed,
+    Object? activeLocale = null,
+    Object? supportedLocales = null,
+    Object? localizationsDelegates = null,
   }) {
     return _then(_$_LocalizationData(
-      activeLocale: activeLocale == freezed
+      activeLocale: null == activeLocale
           ? _value.activeLocale
           : activeLocale // ignore: cast_nullable_to_non_nullable
               as Locale,
-      supportedLocales: supportedLocales == freezed
+      supportedLocales: null == supportedLocales
           ? _value._supportedLocales
           : supportedLocales // ignore: cast_nullable_to_non_nullable
               as List<Locale>,
-      localizationsDelegates: localizationsDelegates == freezed
+      localizationsDelegates: null == localizationsDelegates
           ? _value._localizationsDelegates
           : localizationsDelegates // ignore: cast_nullable_to_non_nullable
               as List<LocalizationsDelegate<dynamic>>,
@@ -132,6 +134,8 @@ class _$_LocalizationData implements _LocalizationData {
   final List<Locale> _supportedLocales;
   @override
   List<Locale> get supportedLocales {
+    if (_supportedLocales is EqualUnmodifiableListView)
+      return _supportedLocales;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_supportedLocales);
   }
@@ -139,6 +143,8 @@ class _$_LocalizationData implements _LocalizationData {
   final List<LocalizationsDelegate<dynamic>> _localizationsDelegates;
   @override
   List<LocalizationsDelegate<dynamic>> get localizationsDelegates {
+    if (_localizationsDelegates is EqualUnmodifiableListView)
+      return _localizationsDelegates;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_localizationsDelegates);
   }
@@ -153,8 +159,8 @@ class _$_LocalizationData implements _LocalizationData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LocalizationData &&
-            const DeepCollectionEquality()
-                .equals(other.activeLocale, activeLocale) &&
+            (identical(other.activeLocale, activeLocale) ||
+                other.activeLocale == activeLocale) &&
             const DeepCollectionEquality()
                 .equals(other._supportedLocales, _supportedLocales) &&
             const DeepCollectionEquality().equals(
@@ -164,12 +170,13 @@ class _$_LocalizationData implements _LocalizationData {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(activeLocale),
+      activeLocale,
       const DeepCollectionEquality().hash(_supportedLocales),
       const DeepCollectionEquality().hash(_localizationsDelegates));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LocalizationDataCopyWith<_$_LocalizationData> get copyWith =>
       __$$_LocalizationDataCopyWithImpl<_$_LocalizationData>(this, _$identity);
 }

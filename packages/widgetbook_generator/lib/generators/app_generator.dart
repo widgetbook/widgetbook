@@ -1,9 +1,11 @@
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/code_generators/instances/addons/addons.dart';
 import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/variable_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/widgetbook_folder_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/widgetbook_widget_instance.dart';
 import 'package:widgetbook_generator/models/widgetbook_app_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_localizations_delegates_data.dart';
@@ -28,8 +30,8 @@ String generateWidgetbook({
   required List<WidgetbookThemeData> themes,
   WidgetbookAppBuilderData? appBuilder,
 }) {
-  final category =
-      _generateCategoryInstance(useCases, foldersExpanded, widgetsExpanded);
+  final directories =
+      _generateDirectoriesInstances(useCases, foldersExpanded, widgetsExpanded);
 
   final addons = <AddOnInstance>[];
   switch (constructor) {
@@ -78,9 +80,7 @@ String generateWidgetbook({
     constructor: constructor,
     addons: addons,
     appInfoInstance: AppInfoInstance(name: name),
-    categories: [
-      category,
-    ],
+    directories: directories,
     type: themeTypeData?.name,
     appBuilder: appBuilder != null
         ? VariableInstance(variableIdentifier: appBuilder.name)
@@ -99,7 +99,7 @@ class HotReload extends StatelessWidget {
   ''';
 }
 
-WidgetbookCategoryInstance _generateCategoryInstance(
+List<Instance> _generateDirectoriesInstances(
   List<WidgetbookUseCaseData> useCases,
   bool foldersExpanded,
   bool widgetsExpanded,
@@ -111,9 +111,15 @@ WidgetbookCategoryInstance _generateCategoryInstance(
     service.addStoryToFolder(folder, useCase);
   }
 
-  return WidgetbookCategoryInstance(
-    name: 'use cases',
-    folders: service.folders.values.toList(),
-    widgets: service.rootFolder.widgets.values.toList(),
-  );
+  return [
+    ...service.folders.values.map(
+      (e) => WidgetbookFolderInstance(folder: e),
+    ),
+    ...service.rootFolder.widgets.values.map(
+      (e) => WidgetbookComponentInstance(
+        name: e.name,
+        stories: e.stories,
+      ),
+    ),
+  ];
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:widgetbook/src/knobs/knobs.dart';
 
 abstract class KnobsBuilder {
   const KnobsBuilder();
@@ -32,7 +31,7 @@ abstract class KnobsBuilder {
     required String label,
     String? description,
     String initialValue,
-    bool multiline,
+    int? maxLines = 1,
   });
 
   /// Creates a textfield that can be typed in and optionally hold a
@@ -41,7 +40,7 @@ abstract class KnobsBuilder {
     required String label,
     String? description,
     String? initialValue,
-    bool multiline,
+    int? maxLines = 1,
   });
 
   /// Creates a slider that can be slid to specific double values. You can use
@@ -90,6 +89,7 @@ abstract class KnobsBuilder {
   T options<T>({
     required String label,
     String? description,
-    required List<Option<T>> options,
+    required List<T> options,
+    String Function(T)? labelBuilder,
   });
 }

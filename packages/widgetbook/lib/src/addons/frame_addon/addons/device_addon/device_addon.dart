@@ -5,9 +5,9 @@ import 'package:widgetbook/src/addons/addon.dart';
 import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/addons/frame_addon/addons/device_addon/device_provider.dart';
 import 'package:widgetbook/src/addons/frame_addon/addons/device_addon/device_setting_provider.dart';
-import 'package:widgetbook/src/addons/widgets/widgets.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_core/widgetbook_core.dart';
 
 export './device_setting.dart';
 
@@ -96,55 +96,39 @@ Widget _builder(BuildContext context) {
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisSize: MainAxisSize.min,
     children: [
-      Expanded(
-        child: AddonOptionList<Device>(
-          name: 'Devices',
+      SubSetting(
+        name: 'Device',
+        child: DropdownSetting<Device>(
           options: devices,
-          selectedOption: activeDevice,
-          builder: (item) => Text(item.name),
-          onTap: (item) {
-            context.read<DeviceSettingProvider>().deviceTapped(item);
+          optionValueBuilder: (device) => device.name,
+          initialSelection: activeDevice,
+          onSelected: (device) {
+            context.read<DeviceSettingProvider>().deviceTapped(device);
             context.read<AddOnProvider>().update();
             navigate(context);
           },
         ),
       ),
-      Padding(
-        padding: const EdgeInsets.only(bottom: 10),
-        child: ToggleButtons(
-          borderColor: Colors.black,
-          fillColor: Colors.grey,
-          borderWidth: 1,
-          selectedColor: Colors.white,
-          borderRadius: BorderRadius.circular(5),
-          onPressed: (int index) {
+      // TODO We could make this a reusable property.
+      SubSetting(
+        name: 'Orientation',
+        child: DropdownSetting<Orientation>(
+          options: const [
+            Orientation.portrait,
+            Orientation.landscape,
+          ],
+          optionValueBuilder: (orientation) => orientation.name,
+          // TODO this does not work properly
+          initialSelection: Orientation.portrait,
+          onSelected: (orientation) {
             context.read<DeviceSettingProvider>().orientationTapped(
-                  index == 0 ? Orientation.portrait : Orientation.landscape,
+                  orientation,
                 );
             context.read<AddOnProvider>().update();
             navigate(context);
           },
-          isSelected: [
-            setting.orientation == Orientation.portrait,
-            setting.orientation == Orientation.landscape,
-          ],
-          children: const <Widget>[
-            Padding(
-              padding: EdgeInsets.all(8),
-              child: Text(
-                'Portrait',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(8),
-              child: Text(
-                'Landscape',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ],
         ),
       ),
     ],

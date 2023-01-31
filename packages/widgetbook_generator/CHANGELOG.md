@@ -1,3 +1,15 @@
+## 3.0.0-beta.7
+
+- refactor: generator creating `use case` category as topmost `NavigationTree` element
+
+## 3.0.0-beta.6
+
+- refactor: adjusted generator to the new `NavigationTree`
+
+## 3.0.0-beta.5
+
+- refactor: adjusted generator to follow the new structure
+
 ## 3.0.0-beta.4
 
 - chore: bumped `widgetbook_models` version

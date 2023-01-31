@@ -36,7 +36,7 @@ void main() {
       );
       expect(find.text('Hi'), findsOneWidget);
       await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const Key('label-switchTileKnob')));
+      await tester.tap(find.byType(Switch).first);
       await tester.pumpAndSettle();
       expect(find.text('Bye'), findsOneWidget);
     },

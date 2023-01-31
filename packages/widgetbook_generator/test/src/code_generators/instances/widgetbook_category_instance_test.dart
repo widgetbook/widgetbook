@@ -66,18 +66,11 @@ void main() {
               [
                 Property.string(key: 'name', value: categoryName),
                 Property(
-                  key: 'folders',
-                  instance: ListInstance<WidgetbookFolderInstance>(
+                  key: 'children',
+                  instance: ListInstance(
                     instances: [
                       WidgetbookFolderInstance(folder: folder1),
                       WidgetbookFolderInstance(folder: folder2),
-                    ],
-                  ),
-                ),
-                Property(
-                  key: 'widgets',
-                  instance: ListInstance<WidgetbookComponentInstance>(
-                    instances: [
                       WidgetbookComponentInstance(
                         name: widget1.name,
                         stories: widget1.stories,

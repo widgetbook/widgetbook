@@ -268,10 +268,10 @@ packages:
     dependency: transitive
     description:
       name: go_router
-      sha256: "25ae21384b758eb80daff113fe8bfb785c2dd17b69fe4885008fe764b26fd1ca"
+      sha256: "6d1607d76bb3a6ef52947ddae870948b9fd5bc7a5d1ef992ec4bed2fc2006fc3"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.1"
+    version: "5.2.4"
   graphs:
     dependency: transitive
     description:
@@ -552,42 +552,38 @@ packages:
   widgetbook:
     dependency: "direct main"
     description:
-      name: widgetbook
-      sha256: c42a3d414d19c008d90f0b6df669c18bb151c5f3012ed073498d96cf133e9caf
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
+      path: "../packages/widgetbook"
+      relative: true
+    source: path
+    version: "3.0.0-beta.7"
   widgetbook_annotation:
     dependency: "direct main"
     description:
-      name: widgetbook_annotation
-      sha256: "1f12e090865200191ab6b79b7ed4b108a191bf5de3140f92917c8c75e7e3f916"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.0"
+      path: "../packages/widgetbook_annotation"
+      relative: true
+    source: path
+    version: "3.0.0-beta.3"
   widgetbook_core:
     dependency: "direct main"
     description:
       path: "../packages/widgetbook_core"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "3.0.0-beta.4"
   widgetbook_generator:
     dependency: "direct dev"
     description:
-      name: widgetbook_generator
-      sha256: b6d00fef564fa5c0b98e26a72a27d52d03400c36409e56be25c0f09cfee3307b
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
+      path: "../packages/widgetbook_generator"
+      relative: true
+    source: path
+    version: "3.0.0-beta.7"
   widgetbook_models:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: widgetbook_models
-      sha256: "40899314ab0cce1a52b189ee12b79138ba59f445229f850fb326f579c8f63045"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.7"
+      path: "../packages/widgetbook_models"
+      relative: true
+    source: path
+    version: "3.0.0-beta.1"
   yaml:
     dependency: transitive
     description:
@@ -598,4 +594,4 @@ packages:
     version: "3.1.1"
 sdks:
   dart: ">=2.18.5 <4.0.0"
-  flutter: ">=2.0.0"
+  flutter: ">=3.3.0"

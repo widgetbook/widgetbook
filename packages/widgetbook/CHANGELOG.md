@@ -1,3 +1,12 @@
+## 3.0.0-beta.7
+
+- refactor: navigation
+- feat: adds `SettingPanel`
+
+## 3.0.0-beta.6
+
+- feat: depends on `widgetbook_core`
+
 ## 3.0.0-beta.5
 
 - fix: properties are resetting when changing locale

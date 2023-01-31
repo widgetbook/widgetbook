@@ -4,7 +4,6 @@ import 'package:widgetbook_generator/code_generators/instances/app_info_instance
 import 'package:widgetbook_generator/code_generators/instances/instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/variable_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
 
 /// An instance for Widgetbook
@@ -13,7 +12,7 @@ class WidgetbookInstance extends Instance {
   WidgetbookInstance({
     required AppInfoInstance appInfoInstance,
     required WidgetbookConstructor constructor,
-    required List<WidgetbookCategoryInstance> categories,
+    required List<Instance> directories,
     required List<AddOnInstance> addons,
     String? type,
     VariableInstance? appBuilder,
@@ -28,8 +27,8 @@ class WidgetbookInstance extends Instance {
               instance: ListInstance(instances: addons),
             ),
             Property(
-              key: 'categories',
-              instance: ListInstance(instances: categories),
+              key: 'directories',
+              instance: ListInstance(instances: directories),
             ),
             if (appBuilder != null)
               Property(

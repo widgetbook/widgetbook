@@ -41,11 +41,5 @@ Map<String, String> _getQueryParameter(BuildContext context) {
 }
 
 Widget _builder(BuildContext context) {
-  return Column(
-    children: [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-      )
-    ],
-  );
+  return Container();
 }

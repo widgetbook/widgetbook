@@ -17,7 +17,6 @@ class NavigationPanel extends StatelessWidget {
     return Container(
       constraints: const BoxConstraints(minWidth: 50, maxWidth: 400),
       child: Card(
-        color: Theme.of(context).colorScheme.inversePrimary.withOpacity(0.05),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

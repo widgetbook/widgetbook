@@ -656,14 +656,13 @@ packages:
       path: "../widgetbook_core"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "3.0.0-beta.4"
   widgetbook_models:
     dependency: "direct main"
     description:
-      name: widgetbook_models
-      sha256: "53c76033d793d5233e07d794f8f9b1fa1fb9f3b460c504dcdcd191af5f35cb71"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../widgetbook_models"
+      relative: true
+    source: path
     version: "3.0.0-beta.1"
   yaml:
     dependency: transitive
@@ -674,5 +673,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.18.5 <4.0.0"
+  dart: ">=2.18.0 <4.0.0"
   flutter: ">=3.3.0"

@@ -12,7 +12,6 @@ import 'package:widgetbook/src/knobs/knobs.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 import 'package:widgetbook/src/repositories/selected_use_case_repository.dart';
-import 'package:widgetbook/src/utils/styles.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
 
@@ -159,7 +158,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
           themeMode: ThemeMode.dark,
           debugShowCheckedModeBanner: false,
           darkTheme: Themes.dark,
-          theme: Styles.lightTheme,
+          theme: Themes.light,
         ),
       ),
     );

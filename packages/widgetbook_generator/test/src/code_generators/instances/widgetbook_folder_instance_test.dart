@@ -54,7 +54,7 @@ void main() {
                   value: folder.name,
                 ),
                 Property(
-                  key: 'widgets',
+                  key: 'children',
                   instance: ListInstance(
                     instances: [
                       // Somehow the order of instances injected are in a
@@ -69,13 +69,6 @@ void main() {
                         name: widget1.name,
                         stories: widget1.stories,
                       ),
-                    ],
-                  ),
-                ),
-                Property(
-                  key: 'folders',
-                  instance: ListInstance(
-                    instances: [
                       WidgetbookFolderInstance(folder: folder1),
                       WidgetbookFolderInstance(folder: folder2),
                     ],

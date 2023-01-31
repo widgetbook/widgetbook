@@ -13,12 +13,10 @@ void main() {
       final first = TextKnob(
         label: 'first',
         value: 'hello',
-        multiline: false,
       );
       final second = TextKnob(
         label: 'second',
         value: 'goodbye',
-        multiline: false,
       );
 
       expect(
@@ -27,7 +25,6 @@ void main() {
           TextKnob(
             label: 'first',
             value: 'hello',
-            multiline: false,
           ),
         ),
       );
@@ -88,7 +85,7 @@ void main() {
           ],
         ),
       );
-      await tester.enterText(find.byKey(const Key('label-textKnob')), 'Bye');
+      await tester.enterText(find.byType(TextField), 'Bye');
       await tester.pumpAndSettle();
 
       expect(find.text('Bye'), findsWidgets);

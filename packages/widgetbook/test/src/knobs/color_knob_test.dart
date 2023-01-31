@@ -36,39 +36,5 @@ void main() {
         expect(icon.color, Colors.blue);
       },
     );
-
-    testWidgets(
-      'Equality operator works correctly',
-      (WidgetTester tester) async {
-        await tester.pumpWidgetWithMaterialApp(
-          renderWithKnobs(
-            build: (context) => [
-              Icon(
-                Icons.thumb_up_sharp,
-                color: context.knobs.color(
-                  label: 'Color',
-                  initialValue: Colors.blue,
-                ),
-                key: const Key('coloredIcon'),
-              )
-            ],
-          ),
-        );
-        await tester.enterText(
-          find.byKey(const Key('Color-colorKnob')),
-          '#FFFFFF',
-        );
-        await tester.pumpAndSettle();
-
-        final iconFinder = find.byKey(
-          const Key('coloredIcon'),
-        );
-
-        expect(iconFinder, findsWidgets);
-
-        final icon = iconFinder.evaluate().first.widget as Icon;
-        expect(icon.color, Colors.white);
-      },
-    );
   });
 }

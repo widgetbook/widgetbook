@@ -17,25 +17,20 @@ class WidgetbookCategoryInstance extends Instance {
           properties: [
             Property.string(key: 'name', value: name),
             Property(
-              key: 'folders',
+              key: 'children',
               instance: ListInstance(
-                instances: folders
-                    .map((folder) => WidgetbookFolderInstance(folder: folder))
-                    .toList(),
-              ),
-            ),
-            Property(
-              key: 'widgets',
-              instance: ListInstance(
-                instances: widgets
-                    .map(
-                      (widget) => WidgetbookComponentInstance(
-                        name: widget.name,
-                        stories: widget.stories,
-                        isExpanded: widget.isExpanded,
-                      ),
-                    )
-                    .toList(),
+                instances: [
+                  ...folders.map(
+                    (folder) => WidgetbookFolderInstance(folder: folder),
+                  ),
+                  ...widgets.map(
+                    (widget) => WidgetbookComponentInstance(
+                      name: widget.name,
+                      stories: widget.stories,
+                      isExpanded: widget.isExpanded,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

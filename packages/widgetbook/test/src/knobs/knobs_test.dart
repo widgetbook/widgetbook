@@ -20,7 +20,7 @@ Widget renderWithKnobs({
           ...build(context),
           ...knobsNotifier.all().map(
             (e) {
-              return e.build();
+              return e.build(context);
             },
           )
         ],
@@ -54,7 +54,7 @@ void main() {
                     ? 'Hi'
                     : 'Bye',
               ),
-              ...knobsNotifier.all().map((e) => e.build())
+              ...knobsNotifier.all().map((e) => e.build(context))
             ],
           );
         },
