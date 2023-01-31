@@ -1,3 +1,5 @@
+// TODO(jenshor): put this back in, when issue is resolved, https://github.com/widgetbook/widgetbook/issues/368
+// coverage:ignore-file
 import 'package:flutter/material.dart';
 import 'package:widgetbook_core/src/settings/features/knobs/knob_property.dart';
 import 'package:widgetbook_core/src/settings/widgets/widgets.dart';

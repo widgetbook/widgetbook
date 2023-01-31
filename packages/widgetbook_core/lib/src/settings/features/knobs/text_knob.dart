@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook_core/src/settings/features/knobs/knob_padding.dart';
 import 'package:widgetbook_core/src/settings/features/knobs/knob_property.dart';
 
-// TODO we might be able to make this a stateless widget
 class TextKnob extends StatefulWidget {
   const TextKnob({
     super.key,
@@ -39,20 +39,16 @@ class _TextKnobState extends State<TextKnob> {
       name: widget.name,
       value: widget.value,
       description: widget.description,
-      child: SizedBox(
-        // TODO do we need to have an own widget for this?
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-          child: TextField(
-            controller: controller,
-            maxLines: widget.maxLines,
-            onChanged: (v) {
-              setState(() {
-                value = v;
-              });
-              widget.onChanged?.call(v);
-            },
-          ),
+      child: KnobPadding(
+        child: TextField(
+          controller: controller,
+          maxLines: widget.maxLines,
+          onChanged: (v) {
+            setState(() {
+              value = v;
+            });
+            widget.onChanged?.call(v);
+          },
         ),
       ),
     );
@@ -108,9 +104,7 @@ class _NullableTextKnobState extends State<NullableTextKnob> {
         });
         _callOnChanged();
       },
-      // TODO do we need to have an own widget for this?
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      child: KnobPadding(
         child: TextField(
           controller: controller,
           maxLines: widget.maxLines,

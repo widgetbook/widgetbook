@@ -45,7 +45,9 @@ void main() {
       'clears search value and removes the clear icon',
       (WidgetTester tester) async {
         await tester.pumpWidgetWithMaterial(
-          child: const SearchField(searchValue: 'Search Value',),
+          child: const SearchField(
+            searchValue: 'Search Value',
+          ),
         );
 
         final textFieldFinder = find.byType(TextFormField);
