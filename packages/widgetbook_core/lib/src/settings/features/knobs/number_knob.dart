@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook_core/src/settings/features/knobs/knob_padding.dart';
 import 'package:widgetbook_core/src/settings/features/knobs/knob_property.dart';
 
 String? _errorText(String value) {
@@ -41,9 +42,7 @@ class _NumberKnobState extends State<NumberKnob> {
       value: widget.value,
       description: widget.description,
       child: SizedBox(
-        // TODO do we need to have an own widget for this?
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+        child: KnobPadding(
           child: TextField(
             controller: controller,
             keyboardType: TextInputType.number,
@@ -112,9 +111,7 @@ class _NullableNumberKnobState extends State<NullableNumberKnob> {
         });
         _callOnChanged();
       },
-      // TODO do we need to have an own widget for this?
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      child: KnobPadding(
         child: TextField(
           enabled: !isNull,
           controller: controller,
