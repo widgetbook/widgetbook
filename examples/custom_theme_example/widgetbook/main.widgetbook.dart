@@ -1,22 +1,12 @@
-import 'package:custom_theme_example/app_theme.dart';
-import 'package:custom_theme_example/awesome_widget.dart';
 import 'package:custom_theme_example/main.dart';
+import 'package:custom_theme_example/themes/app_theme.dart';
+import 'package:custom_theme_example/widgets/awesome_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as anno;
 
 void main() {
   runApp(const HotReload());
 }
-
-@anno.WidgetbookTheme(name: 'Default')
-AppThemeData themeData = AppThemeData(
-  color: Colors.blue,
-);
-@anno.WidgetbookTheme(name: 'Appthem2')
-AppThemeData themeData2 = AppThemeData(
-  color: Colors.yellow,
-);
 
 class HotReload extends StatelessWidget {
   const HotReload({super.key});
@@ -24,12 +14,12 @@ class HotReload extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final widgetbookTheme = WidgetbookTheme(
-      data: themeData,
-      name: 'App Theme',
+      data: themeDataBlue,
+      name: 'Blue',
     );
     final widgetbookTheme2 = WidgetbookTheme(
-      data: themeData2,
-      name: 'App Theme2',
+      data: themeDataYellow,
+      name: 'Yellow',
     );
     final devices = [
       Apple.iPhone11,

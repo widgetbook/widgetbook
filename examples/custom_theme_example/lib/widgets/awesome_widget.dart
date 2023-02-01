@@ -1,4 +1,4 @@
-import 'package:custom_theme_example/app_theme.dart';
+import 'package:custom_theme_example/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class AwesomeWidget extends StatelessWidget {
