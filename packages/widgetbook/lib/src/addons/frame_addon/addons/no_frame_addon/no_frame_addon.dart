@@ -7,7 +7,6 @@ import 'package:widgetbook/src/addons/frame_addon/addons/no_frame_addon/no_frame
 class NoFrameAddon extends WidgetbookAddOn {
   NoFrameAddon()
       : super(
-          icon: const Icon(Icons.phone),
           name: 'No Frame',
           wrapperBuilder: (context, routerData, child) => _wrapperBuilder(
             child,

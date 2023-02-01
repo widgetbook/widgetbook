@@ -1,6 +1,5 @@
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/code_generators/instances/addons/addons.dart';
-import 'package:widgetbook_generator/code_generators/instances/app_info_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/variable_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_folder_instance.dart';
@@ -16,7 +15,6 @@ import 'package:widgetbook_generator/services/tree_service.dart';
 
 /// Generates the code of the Widgetbook
 String generateWidgetbook({
-  required String name,
   required WidgetbookConstructor constructor,
   required List<WidgetbookUseCaseData> useCases,
   required List<Device> devices,
@@ -79,7 +77,6 @@ String generateWidgetbook({
   final widgetbookInstanceCode = WidgetbookInstance(
     constructor: constructor,
     addons: addons,
-    appInfoInstance: AppInfoInstance(name: name),
     directories: directories,
     type: themeTypeData?.name,
     appBuilder: appBuilder != null

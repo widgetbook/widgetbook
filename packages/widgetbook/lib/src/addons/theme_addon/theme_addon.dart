@@ -13,7 +13,6 @@ abstract class ThemeAddon<T> extends WidgetbookAddOn {
   ThemeAddon({
     required ThemeSetting<T> setting,
   }) : super(
-          icon: const Icon(Icons.theater_comedy),
           name: 'themes',
           wrapperBuilder: (context, routerData, child) => _wrapperBuilder<T>(
             context,

@@ -6,7 +6,7 @@ class WidgetbookPackage extends MultiChildNavigationNodeData {
     required List<MultiChildNavigationNodeData> children,
     super.isInitiallyExpanded = true,
   }) : super(
-    children: children,
-    type: NavigationNodeType.package,
-  );
+          children: children,
+          type: NavigationNodeType.package,
+        );
 }

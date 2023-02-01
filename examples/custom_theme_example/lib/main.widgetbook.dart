@@ -64,7 +64,6 @@ class HotReload extends StatelessWidget {
             ),
           ),
         ],
-        appInfo: AppInfo(name: 'Custom Theme Example'),
         directories: [
           WidgetbookCategory(
             name: 'Default',

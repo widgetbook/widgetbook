@@ -1,4 +1,0 @@
-enum PanelSize {
-  small,
-  large,
-}

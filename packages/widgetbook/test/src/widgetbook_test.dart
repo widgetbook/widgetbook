@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
@@ -16,18 +17,34 @@ Matcher expectAssertionErrorWithMessage({
   );
 }
 
+GoRouter _getRouter(Widget child) {
+  return GoRouter(
+    routes: [
+      GoRoute(
+        path: '/',
+        builder: (context, state) => child,
+      ),
+    ],
+  );
+}
+
+Widget _defaultAppBuilderMethod(BuildContext context, Widget child) {
+  final router = _getRouter(child);
+  return WidgetsApp.router(
+    color: Colors.transparent,
+    builder: (context, childWidget) {
+      return childWidget ?? child;
+    },
+    debugShowCheckedModeBanner: false,
+    routeInformationParser: router.routeInformationParser,
+    routerDelegate: router.routerDelegate,
+  );
+}
+
 void main() {
   group(
     '$Widgetbook',
     () {
-      final appInfo = AppInfo(
-        name: 'A',
-      );
-
-      final children = [
-        WidgetbookCategory(name: 'A', children: const []),
-      ];
-
       group(
         'constructor throws $AssertionError when',
         () {
@@ -37,10 +54,11 @@ void main() {
               expect(
                 () => Widgetbook<ThemeData>(
                   addons: const [],
-                  appInfo: appInfo,
+                  appBuilder: _defaultAppBuilderMethod,
                 ),
                 expectAssertionErrorWithMessage(
-                  message: 'Please specify at least one $MultiChildNavigationNodeData.',
+                  message:
+                      'Please specify at least one $MultiChildNavigationNodeData.',
                 ),
               );
             },
@@ -51,6 +69,7 @@ void main() {
             () {
               expect(
                 () => Widgetbook<ThemeData>(
+                  appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     FrameAddon(
                       setting: FrameSetting.firstAsSelected(
@@ -64,7 +83,6 @@ void main() {
                       ),
                     )
                   ],
-                  appInfo: appInfo,
                 ),
                 expectAssertionErrorWithMessage(
                   message: 'Please specify at least one $Device',
@@ -78,6 +96,7 @@ void main() {
             () {
               expect(
                 () => Widgetbook<ThemeData>(
+                  appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     TextScaleAddon(
                       setting: TextScaleSetting.firstAsSelected(
@@ -85,7 +104,6 @@ void main() {
                       ),
                     )
                   ],
-                  appInfo: appInfo,
                 ),
                 expectAssertionErrorWithMessage(
                   message: 'Please specify at least one TextScaleFactor',
@@ -99,6 +117,7 @@ void main() {
             () {
               expect(
                 () => Widgetbook<ThemeData>(
+                  appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     MaterialThemeAddon(
                       setting: MaterialThemeSetting.firstAsSelected(
@@ -106,7 +125,6 @@ void main() {
                       ),
                     ),
                   ],
-                  appInfo: appInfo,
                 ),
                 expectAssertionErrorWithMessage(
                   message: 'Please specify at least one Theme',
@@ -120,6 +138,7 @@ void main() {
             () {
               expect(
                 () => Widgetbook<ThemeData>(
+                  appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     FrameAddon(
                       setting: FrameSetting.firstAsSelected(
@@ -127,7 +146,6 @@ void main() {
                       ),
                     ),
                   ],
-                  appInfo: appInfo,
                 ),
                 expectAssertionErrorWithMessage(
                   message: 'Please specify at least one Frame',
@@ -141,6 +159,7 @@ void main() {
             () {
               expect(
                 () => Widgetbook<ThemeData>(
+                  appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     LocalizationAddon(
                       setting: LocalizationSetting.firstAsSelected(
@@ -149,7 +168,6 @@ void main() {
                       ),
                     )
                   ],
-                  appInfo: appInfo,
                 ),
                 expectAssertionErrorWithMessage(
                   message: 'Please specify at least one supported $Locale.',

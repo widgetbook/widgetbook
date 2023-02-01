@@ -3,6 +3,7 @@ analyzer:
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+    - "**/app.widgetbook.dart"
 linter:
   rules:
     public_member_api_docs: false

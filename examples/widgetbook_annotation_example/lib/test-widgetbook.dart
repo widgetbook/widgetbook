@@ -15,9 +15,6 @@ class HotReload extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
-      appInfo: AppInfo(
-        name: 'Test App',
-      ),
       addons: [
         CustomThemeAddon<ThemeData>(
           setting: ThemeSetting<ThemeData>.firstAsSelected(
@@ -120,7 +117,7 @@ class HotReload extends StatelessWidget {
                     WidgetbookUseCase(
                       name: 'Test Use Case 4',
                       builder: (context) =>
-                      const TestWidget(text: 'Test Widget 4'),
+                          const TestWidget(text: 'Test Widget 4'),
                     ),
                   ],
                 ),
@@ -131,7 +128,7 @@ class HotReload extends StatelessWidget {
                     WidgetbookUseCase(
                       name: 'Test Use Case 5',
                       builder: (context) =>
-                      const TestWidget(text: 'Test Widget 5'),
+                          const TestWidget(text: 'Test Widget 5'),
                     ),
                   ],
                 ),

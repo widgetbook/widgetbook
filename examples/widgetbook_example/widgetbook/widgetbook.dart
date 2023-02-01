@@ -14,7 +14,7 @@ import 'package:widgetbook_example/widgets/new_tag.dart';
 import 'package:widgetbook_example/widgets/rotated_image.dart';
 
 void main() {
-  runApp(HotreloadWidgetbook());
+  runApp(const HotreloadWidgetbook());
 }
 
 class HotreloadWidgetbook extends StatelessWidget {
@@ -24,7 +24,7 @@ class HotreloadWidgetbook extends StatelessWidget {
     final devices = [
       Apple.iPhone11,
       Apple.iPhone12,
-      Device.special(
+      const Device.special(
         name: 'Test',
         resolution: Resolution(
           nativeSize: DeviceSize(width: 400, height: 400),
@@ -59,7 +59,7 @@ class HotreloadWidgetbook extends StatelessWidget {
             ],
           ),
           localizationSetting: LocalizationSetting(
-            activeLocale: Locale('en'),
+            activeLocale: const Locale('en'),
             localizationsDelegates: [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -67,9 +67,9 @@ class HotreloadWidgetbook extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             locales: [
-              Locale('en'),
-              Locale('de'),
-              Locale('fr'),
+              const Locale('en'),
+              const Locale('de'),
+              const Locale('fr'),
             ],
           ),
         ),
@@ -86,11 +86,11 @@ class HotreloadWidgetbook extends StatelessWidget {
                   useCases: [
                     WidgetbookUseCase(
                       name: 'Short price',
-                      builder: (context) => PriceAttribute(price: 8.5),
+                      builder: (context) => const PriceAttribute(price: 8.5),
                     ),
                     WidgetbookUseCase(
                       name: 'Long price',
-                      builder: (context) => PriceAttribute(price: 108.5),
+                      builder: (context) => const PriceAttribute(price: 108.5),
                     ),
                   ],
                 ),
@@ -99,13 +99,13 @@ class HotreloadWidgetbook extends StatelessWidget {
                   useCases: [
                     WidgetbookUseCase(
                       name: 'Short weight',
-                      builder: (context) => WeightAttribute(
+                      builder: (context) => const WeightAttribute(
                         weight: 320,
                       ),
                     ),
                     WidgetbookUseCase(
                       name: 'Long weight',
-                      builder: (context) => WeightAttribute(
+                      builder: (context) => const WeightAttribute(
                         weight: 1050,
                       ),
                     ),
@@ -118,7 +118,7 @@ class HotreloadWidgetbook extends StatelessWidget {
               useCases: [
                 WidgetbookUseCase(
                   name: 'Shortl list ',
-                  builder: (context) => Ingredients(
+                  builder: (context) => const Ingredients(
                     ingredients: [
                       'tomato',
                       'beef',
@@ -128,7 +128,7 @@ class HotreloadWidgetbook extends StatelessWidget {
                 ),
                 WidgetbookUseCase(
                   name: 'Medium list',
-                  builder: (context) => Ingredients(
+                  builder: (context) => const Ingredients(
                     ingredients: [
                       'tomato',
                       'beef',
@@ -141,7 +141,7 @@ class HotreloadWidgetbook extends StatelessWidget {
                 ),
                 WidgetbookUseCase(
                   name: 'Long list',
-                  builder: (context) => Ingredients(
+                  builder: (context) => const Ingredients(
                     ingredients: [
                       'tomato',
                       'beef',
@@ -162,7 +162,7 @@ class HotreloadWidgetbook extends StatelessWidget {
               useCases: [
                 WidgetbookUseCase(
                   name: 'Default',
-                  builder: (context) => NewTag(),
+                  builder: (context) => const NewTag(),
                 ),
               ],
             ),
@@ -171,7 +171,7 @@ class HotreloadWidgetbook extends StatelessWidget {
               useCases: [
                 WidgetbookUseCase(
                   name: 'Default',
-                  builder: (context) => RotatedImage(
+                  builder: (context) => const RotatedImage(
                     assetPath: 'assets/burger.jpg',
                   ),
                 ),
@@ -227,11 +227,11 @@ class HotreloadWidgetbook extends StatelessWidget {
                   useCases: [
                     WidgetbookUseCase(
                       name: 'Short price',
-                      builder: (context) => PriceAttribute(price: 8.5),
+                      builder: (context) => const PriceAttribute(price: 8.5),
                     ),
                     WidgetbookUseCase(
                       name: 'Long price',
-                      builder: (context) => PriceAttribute(price: 108.5),
+                      builder: (context) => const PriceAttribute(price: 108.5),
                     ),
                   ],
                 ),
@@ -240,13 +240,13 @@ class HotreloadWidgetbook extends StatelessWidget {
                   useCases: [
                     WidgetbookUseCase(
                       name: 'Short weight',
-                      builder: (context) => WeightAttribute(
+                      builder: (context) => const WeightAttribute(
                         weight: 320,
                       ),
                     ),
                     WidgetbookUseCase(
                       name: 'Long weight',
-                      builder: (context) => WeightAttribute(
+                      builder: (context) => const WeightAttribute(
                         weight: 1050,
                       ),
                     ),
@@ -257,7 +257,7 @@ class HotreloadWidgetbook extends StatelessWidget {
                   useCases: [
                     WidgetbookUseCase(
                       name: 'Multiline Knob',
-                      builder: (context) => MultiLineKnob(),
+                      builder: (context) => const MultiLineKnob(),
                     ),
                     WidgetbookUseCase(
                       name: 'Color Knob',
@@ -276,7 +276,6 @@ class HotreloadWidgetbook extends StatelessWidget {
           ],
         ),
       ],
-      appInfo: AppInfo(name: 'Meal App'),
     );
   }
 

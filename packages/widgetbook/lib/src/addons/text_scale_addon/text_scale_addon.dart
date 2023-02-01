@@ -13,7 +13,6 @@ class TextScaleAddon extends WidgetbookAddOn {
   TextScaleAddon({
     required TextScaleSetting setting,
   }) : super(
-          icon: const Icon(Icons.text_fields_outlined),
           name: 'text-scales',
           wrapperBuilder: (context, routerData, child) =>
               _wrapperBuilder(context, child, routerData, setting),

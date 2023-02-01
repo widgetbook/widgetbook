@@ -37,7 +37,6 @@ class HotreloadWidgetbook extends StatelessWidget {
           ],
         )
       ],
-      appInfo: AppInfo(name: 'Example'),
     );
   }
 }
