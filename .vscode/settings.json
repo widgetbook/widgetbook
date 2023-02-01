@@ -5,6 +5,7 @@
         "cli",
         "core",
         "annotation",
-        "generator"
+        "generator",
+        "examples"
     ]
 }
