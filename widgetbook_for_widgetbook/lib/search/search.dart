@@ -4,5 +4,5 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 
 @WidgetbookUseCase(name: 'Default', type: SearchField)
 Widget searchFieldDefaultUseCase(BuildContext context) {
-    return const SearchField();
+  return const SearchField();
 }

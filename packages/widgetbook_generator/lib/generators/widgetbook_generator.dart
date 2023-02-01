@@ -44,7 +44,6 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
     final locales = await _getLocales(buildStep);
     final localizationDelegates = await _getLocalizationDelegates(buildStep);
 
-    final name = _getName(annotation);
     final themeType = _getThemeType(annotation);
     final devices = _getDevices(annotation);
     final textScaleFactors = _getTextScaleFactors(annotation);
@@ -68,7 +67,6 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
       )
       ..writeln(
         generateWidgetbook(
-          name: name,
           constructor: constructor,
           themeTypeData: themeType,
           themes: themes,
@@ -163,10 +161,6 @@ List<double> _getTextScaleFactors(ConstantReader annotation) {
 WidgetbookConstructor _getConstructor(ConstantReader annotation) {
   final index = annotation.read('constructor').read('index').intValue;
   return WidgetbookConstructor.values[index];
-}
-
-String _getName(ConstantReader annotation) {
-  return annotation.read('name').stringValue;
 }
 
 WidgetbookThemeTypeData? _getThemeType(ConstantReader annotation) {

@@ -70,7 +70,7 @@ void main() {
 
       expect(
         knobsNotifier.all(),
-        equals(<Knob>[
+        equals(<Knob<dynamic>>[
           BoolKnob(
             label: 'label',
             value: true,

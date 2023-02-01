@@ -5,8 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/addons/addon.dart';
 import 'package:widgetbook/src/addons/addon_provider.dart';
-import 'package:widgetbook/src/app_info/models/app_info.dart';
-import 'package:widgetbook/src/app_info/providers/app_info_provider.dart';
 import 'package:widgetbook/src/builder/builder.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
@@ -31,14 +29,13 @@ import 'package:widgetbook_models/widgetbook_models.dart';
 ///
 /// Note: if you use for instance both [CupertinoThemeData] and [ThemeData] in
 /// your app, use the [Widgetbook]<[CustomTheme]> constructor with [CustomTheme]
-/// set to [dynamic] or [Object] and see [ThemeBuilderFunction] for how to
+/// set to [dynamic] or [Object] and see [AppBuilderFunction] for how to
 /// render custom themes.
 class Widgetbook<CustomTheme> extends StatefulWidget {
   const Widgetbook({
     super.key,
     this.directories = const <MultiChildNavigationNodeData>[],
-    required this.appInfo,
-    this.appBuilder = defaultAppBuilder,
+    required this.appBuilder,
     required this.addons,
   }) : assert(
           directories.length > 0,
@@ -53,15 +50,11 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
   /// scale.
   final List<MultiChildNavigationNodeData> directories;
 
-  /// Information about the app that is catalogued in the Widgetbook.
-  final AppInfo appInfo;
-
   final AppBuilderFunction appBuilder;
 
   /// A [Widgetbook] which uses cupertino theming via [CupertinoThemeData].
   static Widgetbook<CupertinoThemeData> cupertino({
     required List<MultiChildNavigationNodeData> directories,
-    required AppInfo appInfo,
     required List<WidgetbookAddOn> addons,
     AppBuilderFunction? appBuilder,
     Key? key,
@@ -69,7 +62,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     return Widgetbook<CupertinoThemeData>(
       key: key,
       directories: directories,
-      appInfo: appInfo,
       addons: addons,
       appBuilder: appBuilder ?? cupertinoAppBuilder,
     );
@@ -78,7 +70,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
   /// A [Widgetbook] which uses material theming via [ThemeData].
   static Widgetbook<ThemeData> material({
     required List<MultiChildNavigationNodeData> directories,
-    required AppInfo appInfo,
     required List<WidgetbookAddOn> addons,
     AppBuilderFunction? appBuilder,
     Key? key,
@@ -86,7 +77,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     return Widgetbook<ThemeData>(
       key: key,
       directories: directories,
-      appInfo: appInfo,
       addons: addons,
       appBuilder: appBuilder ?? materialAppBuilder,
     );
@@ -103,7 +93,6 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
 
   late BuilderProvider builderProvider;
   late UseCasesProvider useCasesProvider;
-  late AppInfoProvider appInfoProvider;
   late KnobsNotifier knobsNotifier;
   late GoRouter goRouter;
 
@@ -116,7 +105,6 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
     )..loadFromDirectories(widget.directories);
 
     knobsNotifier = KnobsNotifier(selectedStoryRepository);
-    appInfoProvider = AppInfoProvider(state: widget.appInfo);
 
     goRouter = createRouter(
       useCasesProvider: useCasesProvider,
@@ -128,7 +116,6 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   @override
   void didUpdateWidget(covariant Widgetbook<CustomTheme> oldWidget) {
     useCasesProvider.loadFromDirectories(widget.directories);
-    appInfoProvider.hotReload(widget.appInfo);
     builderProvider.hotReload(appBuilder: widget.appBuilder);
     super.didUpdateWidget(oldWidget);
   }
@@ -139,7 +126,6 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
       providers: [
         ChangeNotifierProvider.value(value: knobsNotifier),
         ChangeNotifierProvider.value(value: useCasesProvider),
-        ChangeNotifierProvider.value(value: appInfoProvider),
         ChangeNotifierProvider.value(value: builderProvider),
         ChangeNotifierProvider(
           create: (_) => AddOnProvider(widget.addons),
@@ -154,7 +140,6 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
           routeInformationProvider: goRouter.routeInformationProvider,
           routeInformationParser: goRouter.routeInformationParser,
           routerDelegate: goRouter.routerDelegate,
-          title: widget.appInfo.name,
           themeMode: ThemeMode.dark,
           debugShowCheckedModeBanner: false,
           darkTheme: Themes.dark,

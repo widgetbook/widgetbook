@@ -19,7 +19,7 @@ class WidgetbookFrame extends Frame {
     required Orientation orientation,
   }) {
     final mediaQuery = MediaQuery.of(context);
-    const isRotated = false; // info?.isLandscape(orientation) ?? false;
+    final isRotated = context.orientation == Orientation.landscape;
     final viewPadding = mediaQuery.padding;
 
     final screenSize = info != null
@@ -43,7 +43,7 @@ class WidgetbookFrame extends Frame {
 
   Widget _screen(BuildContext context, Widget screen, Device? info) {
     final mediaQuery = MediaQuery.of(context);
-    const isRotated = false;
+    final isRotated = context.orientation == Orientation.landscape;
     final screenSize = info != null
         ? Size(
             info.resolution.logicalSize.width,
@@ -106,7 +106,7 @@ class WidgetbookFrame extends Frame {
       ),
     );
 
-    const isRotated = false; // device.isLandscape(orientation);
+    final isRotated = context.orientation == Orientation.landscape;
 
     return FittedBox(
       key: const Key('widgetbook_device_edge_bond'),

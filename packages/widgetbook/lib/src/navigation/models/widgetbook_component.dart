@@ -2,7 +2,7 @@ import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 class WidgetbookComponent extends MultiChildNavigationNodeData {
-  WidgetbookComponent({
+  const WidgetbookComponent({
     required super.name,
     required this.useCases,
     super.isInitiallyExpanded = true,

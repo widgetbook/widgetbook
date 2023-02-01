@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:widgetbook/src/addons/addon.dart';
 
-// TODO do we still need this?
 class AddonInjectorWidget extends StatelessWidget {
   const AddonInjectorWidget({
     super.key,

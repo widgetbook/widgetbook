@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AddonOptionSpacing extends StatelessWidget {
-  const AddonOptionSpacing({Key? key}) : super(key: key);
+  const AddonOptionSpacing({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

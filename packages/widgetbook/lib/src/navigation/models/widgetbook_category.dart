@@ -1,7 +1,7 @@
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 class WidgetbookCategory extends MultiChildNavigationNodeData {
-  WidgetbookCategory({
+  const WidgetbookCategory({
     required super.name,
     required List<MultiChildNavigationNodeData> children,
     super.isInitiallyExpanded = true,

@@ -49,10 +49,10 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
 
   final SelectedUseCaseRepository _selectedStoryRepository;
 
-  final Map<WidgetbookUseCaseData, Map<String, Knob>> _knobs =
-      <WidgetbookUseCaseData, Map<String, Knob>>{};
+  final Map<WidgetbookUseCaseData, Map<String, Knob<dynamic>>> _knobs =
+      <WidgetbookUseCaseData, Map<String, Knob<dynamic>>>{};
 
-  List<Knob> all() {
+  List<Knob<dynamic>> all() {
     if (!_selectedStoryRepository.isSet()) {
       return [];
     }
@@ -70,7 +70,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
 
   T _addKnob<T>(Knob<T> value) {
     final story = _selectedStoryRepository.item!;
-    final knobs = _knobs.putIfAbsent(story, () => <String, Knob>{});
+    final knobs = _knobs.putIfAbsent(story, () => <String, Knob<dynamic>>{});
     return (knobs.putIfAbsent(value.label, () {
       Future.microtask(notifyListeners);
       return value;

@@ -15,7 +15,6 @@ class DeviceAddon extends WidgetbookAddOn {
   DeviceAddon({
     required DeviceSetting setting,
   }) : super(
-          icon: const Icon(Icons.phone),
           name: 'Device',
           wrapperBuilder: (context, routerData, child) => _wrapperBuilder(
             context,
@@ -111,7 +110,6 @@ Widget _builder(BuildContext context) {
           },
         ),
       ),
-      // TODO We could make this a reusable property.
       SubSetting(
         name: 'Orientation',
         child: DropdownSetting<Orientation>(
@@ -120,8 +118,7 @@ Widget _builder(BuildContext context) {
             Orientation.landscape,
           ],
           optionValueBuilder: (orientation) => orientation.name,
-          // TODO this does not work properly
-          initialSelection: Orientation.portrait,
+          initialSelection: setting.orientation,
           onSelected: (orientation) {
             context.read<DeviceSettingProvider>().orientationTapped(
                   orientation,

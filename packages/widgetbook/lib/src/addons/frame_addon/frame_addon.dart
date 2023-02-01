@@ -6,7 +6,6 @@ import 'package:widgetbook/src/addons/addon.dart';
 import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/addons/frame_addon/frame_provider.dart';
 import 'package:widgetbook/src/addons/frame_addon/frame_selection_provider.dart';
-import 'package:widgetbook/src/addons/models/models.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
@@ -15,7 +14,6 @@ class FrameAddon extends WidgetbookAddOn {
   FrameAddon({
     required FrameSetting setting,
   }) : super(
-          icon: const Icon(Icons.phone),
           name: 'Frame',
           wrapperBuilder: (context, routerData, child) => _wrapperBuilder(
             context,
@@ -23,7 +21,6 @@ class FrameAddon extends WidgetbookAddOn {
             routerData,
             setting,
           ),
-          panelSize: PanelSize.large,
           builder: _builder,
           providerBuilder: _providerBuilder,
           getQueryParameter: _getQueryParameter,

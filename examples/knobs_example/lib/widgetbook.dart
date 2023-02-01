@@ -103,7 +103,6 @@ class KnobsExample extends StatelessWidget {
           ],
         ),
       ],
-      appInfo: AppInfo(name: 'Meal App'),
     );
   }
 }
