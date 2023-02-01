@@ -2,7 +2,7 @@ on:
   pull_request:
     paths:
       - "packages/widgetbook_exception/**"
-      - ".github/workflows/widgetbook_exception.yaml"
+      - ".github/workflows/widgetbook-exception.yaml"
   push:
     branches:
       - main

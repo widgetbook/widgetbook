@@ -9,7 +9,7 @@ jobs:
   build:
     defaults:
       run:
-        working-directory: ./app_widgetbook
+        working-directory: ./widgetbook_for_widgetbook
 
     runs-on: ubuntu-latest
     steps:

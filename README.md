@@ -30,25 +30,13 @@ The following packages exist:
 
 All example apps are located at [/widgetbook/examples/](https://github.com/widgetbook/widgetbook/tree/main/examples/).
 
-## Example for [package:widgetbook](https://pub.dev/packages/widgetbook)
-
-Examples on how to use [package:widgetbook](https://pub.dev/packages/widgetbook) are located at [/widgetbook/examples/widgetbook_example/](https://github.com/widgetbook/widgetbook/tree/main/examples/widgetbook_example).
-
-## Example for Widgetbook with annotation and generator
-
-Examples on how to use [package:widgetbook](https://pub.dev/packages/widgetbook) in combination with [package:widgetbook_annotation](https://pub.dev/packages/widgetbook_annotation) and [package:widgetbook_generator](https://pub.dev/packages/widgetbook_generator) are located at [/widgetbook/examples/widgetbook_annotation_example/](https://github.com/widgetbook/widgetbook/tree/main/examples/widgetbook_annotation_example).
-
 ## Running the examples in VS Code
 
 You can run the example apps in VS Code by using the predefined launch configurations. The following configurations exist:
 
 | Configuration | Description |
 | ------------- | ----------- |
-| Debug widgetbook_example | Starts the widgetbook for [/widgetbook/examples/widgetbook_example/](https://github.com/widgetbook/widgetbook/tree/main/examples/widgetbook_example) as debug |
-| Debug widgetbook_annotation_example | Starts the widgetbook for [/widgetbook/examples/widgetbook_annotation_example/](https://github.com/widgetbook/widgetbook/tree/main/examples/widgetbook_annotation_example) as debug |
-| Debug Example App | Starts the example app without Widgetbook. This is great to see what the actual app feels like and how it transforms into Widgetbook |
 | Debug widgetbook_generator | Launches the generated code from [package:widgetbook_generator](https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_generator). Run `flutter pub run build_runner build` before! This is great to develop [package:widgetbook_generator](https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_generator). |
-
 
 # Contributions
 
