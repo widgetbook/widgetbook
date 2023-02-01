@@ -23,69 +23,11 @@
             ]
         },
         {
-            "name": "Debug widgetbook_example",
-            "cwd": "examples/widgetbook_example",
-            "request": "launch",
-            "program": "widgetbook/main.dart",
-            "type": "dart"
-        },
-        {
             "name": "Debug knobs_example",
             "cwd": "examples/knobs_example",
             "request": "launch",
             "program": "lib/widgetbook.dart",
             "type": "dart"
         },
-        {
-            "name": "Debug widgetbook_example",
-            "cwd": "examples/widgetbook_example",
-            "request": "launch",
-            "program": "widgetbook/main.dart",
-            "type": "dart",
-        },
-        {
-            "name": "Debug custom_widgetbook_example",
-            "cwd": "examples/custom_theme_example",
-            "request": "launch",
-            "program": "lib/main.widgetbook.dart",
-            "type": "dart",
-        },
-        {
-            "name": "Profile widgetbook_example",
-            "cwd": "examples/widgetbook_example",
-            "request": "launch",
-            "program": "widgetbook/main.dart",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "Debug widgetbook_annotation_example",
-            "cwd": "examples/widgetbook_annotation_example",
-            "request": "launch",
-            "program": "lib/app.widgetbook.dart",
-            "type": "dart"
-        },
-        {
-            "name": "Profile widgetbook_annotation_example",
-            "cwd": "examples/widgetbook_annotation_example",
-            "request": "launch",
-            "program": "lib/app.widgetbook.dart",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "Debug Example App",
-            "cwd": "examples/widgetbook_annotation_example",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "Debug widgetbook_generator",
-            "cwd": "examples/widgetbook_annotation_example",
-            "request": "launch",
-            "program": ".dart_tool/build/entrypoint/build.dart",
-            "type": "dart",
-            "args": ["build", "--delete-conflicting-outputs"]
-        }        
     ]
 }
