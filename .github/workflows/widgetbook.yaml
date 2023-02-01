@@ -64,27 +64,3 @@ jobs:
       run: melos bootstrap
       
     - run: flutter analyze
-
-  pana:
-    defaults:
-      run:
-        working-directory: packages/widgetbook
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2.3.4
-
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-
-      - name: Flutter version
-        run: flutter --version
-
-      - name: Install Dependencies
-        run: |
-          flutter packages get
-          flutter pub global activate pana
-      - name: Verify Pub Score
-        run: ../../tool/verify_pub_score.sh

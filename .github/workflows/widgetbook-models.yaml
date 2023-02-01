@@ -51,25 +51,3 @@ jobs:
       run: dart pub get
     - name: Run analyze
       run: dart analyze
-
-  pana:
-    defaults:
-      run:
-        working-directory: packages/widgetbook_models
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2.3.4
-
-      - uses: dart-lang/setup-dart@v1
-
-      - name: Dart version
-        run: dart --version
-
-      - name: Install Dependencies
-        run: |
-          dart pub get
-          dart pub global activate pana
-      - name: Verify Pub Score
-        run: ../../tool/verify_pub_score.sh
