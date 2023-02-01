@@ -1,7 +1,5 @@
-import 'package:custom_theme_example/app_theme.dart';
+import 'package:custom_theme_example/themes/app_theme.dart';
 import 'package:flutter/material.dart';
-
-import 'main.widgetbook.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppTheme(
-        data: themeData,
+        data: themeDataBlue,
         child: MediaQuery.fromWindow(
           child: const Directionality(
             textDirection: TextDirection.ltr,
