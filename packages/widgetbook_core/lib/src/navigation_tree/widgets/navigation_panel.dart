@@ -15,7 +15,7 @@ class NavigationPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minWidth: 50, maxWidth: 400),
+      constraints: const BoxConstraints(minWidth: 50, maxWidth: 300),
       child: Card(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

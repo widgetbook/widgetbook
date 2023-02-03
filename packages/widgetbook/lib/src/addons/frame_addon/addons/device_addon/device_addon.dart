@@ -106,7 +106,7 @@ Widget _builder(BuildContext context) {
           onSelected: (device) {
             context.read<DeviceSettingProvider>().deviceTapped(device);
             context.read<AddOnProvider>().update();
-            navigate(context);
+            context.goTo(queryParams: _getQueryParameter(context));
           },
         ),
       ),
@@ -124,7 +124,7 @@ Widget _builder(BuildContext context) {
                   orientation,
                 );
             context.read<AddOnProvider>().update();
-            navigate(context);
+            context.goTo(queryParams: _getQueryParameter(context));
           },
         ),
       ),

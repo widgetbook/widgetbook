@@ -27,4 +27,11 @@ class WidgetbookAddOn {
   ) providerBuilder;
 
   final Map<String, String> Function(BuildContext context) getQueryParameter;
+
+  @override
+  bool operator ==(Object other) =>
+      other is WidgetbookAddOn && name == other.name;
+
+  @override
+  int get hashCode => name.hashCode;
 }

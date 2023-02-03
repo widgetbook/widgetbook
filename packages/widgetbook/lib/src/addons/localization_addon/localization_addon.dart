@@ -43,7 +43,7 @@ Widget _builder(BuildContext context) {
       onSelected: (locale) {
         context.read<LocalizationSettingProvider>().tapped(locale);
         context.read<AddOnProvider>().update();
-        navigate(context);
+        context.goTo(queryParams: _getQueryParameter(context));
       },
     ),
   );

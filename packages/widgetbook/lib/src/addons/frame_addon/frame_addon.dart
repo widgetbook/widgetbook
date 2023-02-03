@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/addons/addon.dart';
@@ -103,26 +102,11 @@ Widget _builder(BuildContext context) {
       onSelected: (frame) {
         context.read<FrameSettingProvider>().tapped(frame);
         context.read<AddOnProvider>().update();
-
-        final addons = context.read<AddOnProvider>().value;
-        final queryParameters = <String, String>{};
-        for (final addon in addons.where((addon) => addon is! FrameAddon)) {
-          queryParameters.addAll(addon.getQueryParameter(context));
-        }
-
-        final useCasePath =
-            context.read<UseCasesProvider>().state.selectedUseCasePath;
-        if (useCasePath != null) {
-          queryParameters.putIfAbsent('path', () => useCasePath);
-        }
-
-        queryParameters
-          ..putIfAbsent('frame', () => frame.name)
-          ..addAll(frame.getDefaultQueryParameters);
-
-        context.goNamed(
-          '/',
-          queryParams: queryParameters,
+        context.goTo(
+          queryParams: {
+            'frame': frame.name,
+            ...frame.getDefaultQueryParameters,
+          },
         );
       },
     ),

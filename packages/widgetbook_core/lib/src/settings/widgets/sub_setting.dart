@@ -16,11 +16,16 @@ class SubSetting extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Row(
         children: [
-          Expanded(child: Text(name)),
-          const SizedBox(
-            width: 24,
+          Expanded(
+            child: Text(name),
           ),
-          Expanded(child: child),
+          const SizedBox(
+            width: 8,
+          ),
+          Expanded(
+            flex: 2,
+            child: child,
+          ),
         ],
       ),
     );
