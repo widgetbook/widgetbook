@@ -52,7 +52,7 @@ Widget _builder<T>(BuildContext context) {
       onSelected: (item) {
         context.read<ThemeSettingProvider<T>>().tapped(item);
         context.read<AddOnProvider>().update();
-        navigate(context);
+        context.goTo(queryParams: _getQueryParameter<T>(context));
       },
     ),
   );

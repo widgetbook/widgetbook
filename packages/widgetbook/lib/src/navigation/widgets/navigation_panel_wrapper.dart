@@ -18,7 +18,12 @@ class NavigationPanelWrapper extends StatelessWidget {
       initialPath: initialPath,
       onNodeSelected: (path, _) {
         context.read<UseCasesProvider>().selectUseCaseByPath(path);
-        navigate(context);
+
+        context.goTo(
+          queryParams: {
+            'path': path,
+          },
+        );
       },
     );
   }

@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/src/settings/features/knobs/knob_padding.dart';
 import 'package:widgetbook_core/src/settings/features/knobs/knob_property.dart';
+import 'package:widgetbook_core/src/settings/models/settings_panel_data.dart';
 import 'package:widgetbook_core/src/settings/widgets/widgets.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 import 'package:widgetbook_for_widgetbook/app.dart';
@@ -30,6 +31,7 @@ import 'package:widgetbook_for_widgetbook/settings/features/widgets/dropdown_set
 import 'package:widgetbook_for_widgetbook/settings/features/widgets/setting_group.widgetbook.dart';
 import 'package:widgetbook_for_widgetbook/settings/features/widgets/setting_header.widgetbook.dart';
 import 'package:widgetbook_for_widgetbook/settings/features/widgets/setting_section.widgetbook.dart';
+import 'package:widgetbook_for_widgetbook/settings/features/widgets/settings_panel.widgetbook.dart';
 
 void main() {
   runApp(HotReload());
@@ -41,9 +43,6 @@ class HotReload extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
-      appInfo: AppInfo(
-        name: 'Widgetbook',
-      ),
       addons: [
         CustomThemeAddon<ThemeData>(
           setting: ThemeSetting<ThemeData>(
@@ -298,6 +297,15 @@ class HotReload extends StatelessWidget {
                     WidgetbookUseCase(
                       name: 'with Trailing',
                       builder: (context) => trailing(context),
+                    ),
+                  ],
+                ),
+                WidgetbookComponent(
+                  name: 'SettingsPanel',
+                  useCases: [
+                    WidgetbookUseCase(
+                      name: 'Default',
+                      builder: (context) => settingsPanel(context),
                     ),
                   ],
                 ),

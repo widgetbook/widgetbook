@@ -25,20 +25,20 @@ class DefaultDeviceFrame extends Frame {
 
 DeviceInfo mapDeviceToDeviceInfo(Device device) {
   final map = {
-    Apple.iPhone12Mini: Devices.ios.iPhone12Mini,
-    Apple.iPhone12: Devices.ios.iPhone12,
-    Apple.iPhone12ProMax: Devices.ios.iPhone12ProMax,
-    Apple.iPhone13Mini: Devices.ios.iPhone13Mini,
-    Apple.iPhone13: Devices.ios.iPhone13,
-    Apple.iPhone13ProMax: Devices.ios.iPhone13ProMax,
-    Apple.iPhoneSE2020: Devices.ios.iPhoneSE,
+    Apple.iPhone12Mini.name: Devices.ios.iPhone12Mini,
+    Apple.iPhone12.name: Devices.ios.iPhone12,
+    Apple.iPhone12ProMax.name: Devices.ios.iPhone12ProMax,
+    Apple.iPhone13Mini.name: Devices.ios.iPhone13Mini,
+    Apple.iPhone13.name: Devices.ios.iPhone13,
+    Apple.iPhone13ProMax.name: Devices.ios.iPhone13ProMax,
+    Apple.iPhoneSE2020.name: Devices.ios.iPhoneSE,
     // not sure what to map this device to
     // Apple.iPadAir9Inch: Devices.ios.iPadAir4,
-    Apple.iPad10Inch: Devices.ios.iPad,
-    Apple.iPadPro11Inch: Devices.ios.iPadPro11Inches,
+    Apple.iPad10Inch.name: Devices.ios.iPad,
+    Apple.iPadPro11Inch.name: Devices.ios.iPadPro11Inches,
   };
 
-  final mappedDevice = map[device] ??
+  final mappedDevice = map[device.name] ??
       DeviceInfo.genericPhone(
         platform: TargetPlatform.iOS,
         id: 'custom',

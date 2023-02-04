@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook/src/widgetbook_page.dart';
 
@@ -21,23 +19,19 @@ T? parseRouterData<T>({
   return selectedValue;
 }
 
-void navigate(BuildContext context) {
-  final addons = context.read<AddOnProvider>().value;
-  final queryParameters = <String, String>{};
-  for (final addon in addons) {
-    queryParameters.addAll(addon.getQueryParameter(context));
-  }
+extension GoRouterExtension on BuildContext {
+  void goTo({
+    required Map<String, String> queryParams,
+  }) {
+    final goRouter = GoRouter.of(this);
+    final uri = Uri.parse(goRouter.location);
+    final queryParameters = Map<String, String>.from(uri.queryParameters);
+    for (final pair in queryParams.entries) {
+      queryParameters[pair.key] = pair.value;
+    }
 
-  final useCasePath =
-      context.read<UseCasesProvider>().state.selectedUseCasePath;
-  if (useCasePath != null) {
-    queryParameters.putIfAbsent('path', () => useCasePath);
+    goNamed('/', queryParams: queryParameters);
   }
-
-  context.goNamed(
-    '/',
-    queryParams: queryParameters,
-  );
 }
 
 bool _parseBoolQueryParameter({
@@ -63,27 +57,45 @@ GoRouter createRouter({
       }
       return null;
     },
+    debugLogDiagnostics: true,
     routes: [
-      GoRoute(
-        name: '/',
-        path: '/',
-        pageBuilder: (context, state) {
+      ShellRoute(
+        builder: (context, state, child) {
           final disableNavigation = _parseBoolQueryParameter(
             value: state.queryParams['disable-navigation'],
           );
-          final disableProperties = _parseBoolQueryParameter(
-            value: state.queryParams['disable-properties'],
-          );
-
-          return NoTransitionPage<void>(
-            child: WidgetbookPage(
-              disableNavigation: disableNavigation,
-              disableProperties: disableProperties,
-              routerData: state.queryParams,
+          return ColoredBox(
+            color: Theme.of(context).colorScheme.surface,
+            child: Row(
+              children: [
+                if (!disableNavigation)
+                  NavigationPanelWrapper(
+                    initialPath: state.location,
+                  ),
+                Expanded(child: child),
+              ],
             ),
           );
         },
-      ),
+        routes: [
+          GoRoute(
+            name: '/',
+            path: '/',
+            pageBuilder: (context, state) {
+              final disableProperties = _parseBoolQueryParameter(
+                value: state.queryParams['disable-properties'],
+              );
+
+              return NoTransitionPage<void>(
+                child: WidgetbookPage(
+                  disableProperties: disableProperties,
+                  routerData: state.queryParams,
+                ),
+              );
+            },
+          ),
+        ],
+      )
     ],
   );
 

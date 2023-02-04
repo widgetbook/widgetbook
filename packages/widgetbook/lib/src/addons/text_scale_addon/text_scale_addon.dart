@@ -45,7 +45,7 @@ Widget _builder(BuildContext context) {
       onSelected: (item) {
         context.read<TextScaleSettingProvider>().tapped(item);
         context.read<AddOnProvider>().update();
-        navigate(context);
+        context.goTo(queryParams: _getQueryParameter(context));
       },
     ),
   );
