@@ -131,5 +131,31 @@ void main() {
         );
       },
     );
+
+    // Test for https://github.com/widgetbook/widgetbook/issues/232
+    testWidgets(
+      'supports locales with same language code',
+      (tester) async {
+        await testAddon(
+          tester: tester,
+          build: (child) => localeAddonWrapper(
+            child: child,
+            locales: [
+              engLocaleUs,
+              engLocaleGb,
+            ],
+            activeLocale: engLocaleUs,
+          ),
+          child: renderer,
+          act: (context) async =>
+              context.read<LocalizationSettingProvider>()..tapped(engLocaleGb),
+          expect: () {
+            final context = tester.findContextByKey(textKey);
+            final provider = context.read<LocalizationProvider>();
+            expect(provider.value.activeLocale, equals(engLocaleGb));
+          },
+        );
+      },
+    );
   });
 }
