@@ -671,14 +671,14 @@ packages:
       path: "../widgetbook_exception"
       relative: true
     source: path
-    version: "0.0.1-beta.1"
+    version: "0.0.1-beta.2"
   widgetbook_git:
     dependency: "direct main"
     description:
       path: "../widgetbook_git"
       relative: true
     source: path
-    version: "2.2.0-beta.6"
+    version: "2.2.0-beta.7"
   yaml:
     dependency: transitive
     description:
