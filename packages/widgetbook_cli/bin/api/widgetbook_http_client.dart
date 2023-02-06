@@ -109,6 +109,10 @@ class WidgetbookHttpClient {
             'commit': data.commitSha,
             'version-control-provider': data.provider,
             'api-key': data.apiKey,
+            'devices': jsonEncode(data.devices),
+            'themes': jsonEncode(data.themes),
+            'textScaleFactors': jsonEncode(data.textScaleFactors),
+            'locales': jsonEncode(data.locales),
           },
         ),
       );
