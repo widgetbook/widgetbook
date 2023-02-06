@@ -543,14 +543,14 @@ packages:
       path: "../widgetbook_annotation"
       relative: true
     source: path
-    version: "3.0.0-beta.3"
+    version: "3.0.0-beta.4"
   widgetbook_models:
     dependency: "direct main"
     description:
       path: "../widgetbook_models"
       relative: true
     source: path
-    version: "3.0.0-beta.1"
+    version: "3.0.0-beta.2"
   yaml:
     dependency: transitive
     description:

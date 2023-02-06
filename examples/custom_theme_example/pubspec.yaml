@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  widgetbook_annotation: ^2.1.0
+  widgetbook_annotation: ^3.0.0-beta.4
   go_router:
 
 dev_dependencies:

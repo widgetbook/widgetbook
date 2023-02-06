@@ -268,10 +268,10 @@ packages:
     dependency: transitive
     description:
       name: go_router
-      sha256: "6d1607d76bb3a6ef52947ddae870948b9fd5bc7a5d1ef992ec4bed2fc2006fc3"
+      sha256: "9e8cee9969a9f33821a5594e5822d9a7ef3ae8528e5258f5178436e3deb0e095"
       url: "https://pub.dev"
     source: hosted
-    version: "5.2.4"
+    version: "6.0.3"
   graphs:
     dependency: transitive
     description:
@@ -555,35 +555,35 @@ packages:
       path: "../packages/widgetbook"
       relative: true
     source: path
-    version: "3.0.0-beta.7"
+    version: "3.0.0-beta.8"
   widgetbook_annotation:
     dependency: "direct main"
     description:
       path: "../packages/widgetbook_annotation"
       relative: true
     source: path
-    version: "3.0.0-beta.3"
+    version: "3.0.0-beta.4"
   widgetbook_core:
     dependency: "direct main"
     description:
       path: "../packages/widgetbook_core"
       relative: true
     source: path
-    version: "3.0.0-beta.4"
+    version: "3.0.0-beta.5"
   widgetbook_generator:
     dependency: "direct dev"
     description:
       path: "../packages/widgetbook_generator"
       relative: true
     source: path
-    version: "3.0.0-beta.7"
+    version: "3.0.0-beta.8"
   widgetbook_models:
     dependency: "direct overridden"
     description:
       path: "../packages/widgetbook_models"
       relative: true
     source: path
-    version: "3.0.0-beta.1"
+    version: "3.0.0-beta.2"
   yaml:
     dependency: transitive
     description:
