@@ -1,3 +1,11 @@
+## 3.0.0-beta.2
+
+ - **REFACTOR**: :recycle: settings. ([254ebef6](https://github.com/widgetbook/widgetbook/commit/254ebef6fe38b2d8f3fc847366f4725ab9292ccb))
+ - **REFACTOR**: :zap: refactored addons. ([16c007ee](https://github.com/widgetbook/widgetbook/commit/16c007eeb0a8fc6fa601332751a93a87d5e2b77d))
+ - **REFACTOR**: adjusted code to match linter. ([04dd9f1e](https://github.com/widgetbook/widgetbook/commit/04dd9f1e6678e9d9531cb70c777281c4d050aa61))
+ - **FIX**: :test_tube: fixed broken test. ([6e56b79a](https://github.com/widgetbook/widgetbook/commit/6e56b79aada01a782d04f846c5ce2f126c98a575))
+ - **FIX**: custom painter Widgets are incorrectly rendered. ([965c355e](https://github.com/widgetbook/widgetbook/commit/965c355e03cd7e9c9d62c473f1d29a006c07626e))
+
 ## 3.0.0-beta.1
 
 - refactor: removed `WidgetbookFrame` model

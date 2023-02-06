@@ -1,3 +1,15 @@
+## 3.0.0-beta.4
+
+ - **REFACTOR**: :recycle: settings. ([254ebef6](https://github.com/widgetbook/widgetbook/commit/254ebef6fe38b2d8f3fc847366f4725ab9292ccb))
+ - **REFACTOR**: :recycle: remove obsolete annotations. ([c6dd4f54](https://github.com/widgetbook/widgetbook/commit/c6dd4f54a11a8c2e9cd01d2429a866d7a14510ab))
+ - **REFACTOR**: adjusted code to match linter. ([04dd9f1e](https://github.com/widgetbook/widgetbook/commit/04dd9f1e6678e9d9531cb70c777281c4d050aa61))
+ - **FIX**: :test_tube: fixed broken test. ([6e56b79a](https://github.com/widgetbook/widgetbook/commit/6e56b79aada01a782d04f846c5ce2f126c98a575))
+ - **FIX**: custom painter Widgets are incorrectly rendered. ([965c355e](https://github.com/widgetbook/widgetbook/commit/965c355e03cd7e9c9d62c473f1d29a006c07626e))
+ - **FIX**: recommited binary files to git. ([70f38e8f](https://github.com/widgetbook/widgetbook/commit/70f38e8f2427dfd55c6573f357099eb41dbdee63))
+ - **FIX**: example for locales does not compile. ([db880e76](https://github.com/widgetbook/widgetbook/commit/db880e76569d6162f473ea8c3791786325fe0140))
+ - **FIX**: replaced WidgetbookTheme.dark() with the proper WidgetbookTheme annotation. ([49a6cd79](https://github.com/widgetbook/widgetbook/commit/49a6cd79b84b337a2ddef18f3f6041618d3d7e7c))
+ - **FIX**: removed themeType as a property of material and cupertino constructors. ([4f9f488a](https://github.com/widgetbook/widgetbook/commit/4f9f488ab961ec85298ede8da058b187c2afdd94))
+
 ## 3.0.0-beta.3
 
 - chore: bumped `widgetbook_models` version
