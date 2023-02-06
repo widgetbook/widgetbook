@@ -158,7 +158,9 @@ void main() {
         filteredNodes: nodes,
       ),
       act: (bloc) => bloc.add(
-        const SelectNavigationNodeByPath(path: 'package/component/use-case-1'),
+        const SelectNavigationNodeByPath(
+          path: '/?path=package/component/use-case-1',
+        ),
       ),
       expect: () => <NavigationState>[
         NavigationState(
