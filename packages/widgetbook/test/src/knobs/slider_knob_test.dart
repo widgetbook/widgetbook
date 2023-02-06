@@ -40,7 +40,7 @@ void main() {
       expect(find.text('5.0'), findsOneWidget);
       await tester.pumpAndSettle();
       await tester.drag(
-        find.byKey(const Key('label-sliderKnob')),
+        find.byType(Slider),
         const Offset(500, 0),
       );
       await tester.pumpAndSettle();

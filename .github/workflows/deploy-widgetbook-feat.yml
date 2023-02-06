@@ -1,0 +1,48 @@
+name: Upload review
+on:
+  pull_request:
+jobs:
+  build:
+    defaults:
+      run:
+        working-directory: ./widgetbook_for_widgetbook
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Enable melos
+        run: flutter pub global activate melos
+
+      - name: Get packages 
+        run: melos bootstrap
+
+      - name: Run build runner
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Build Website
+        run: flutter build web -t lib/app.widgetbook.dart
+
+      - name: Install Widgetbook CLI
+        run: dart pub global activate widgetbook_cli 3.0.0-beta.12
+
+      - name: Upload Widgetbook
+        run: |
+          widgetbook publish \
+                --api-key ${{ secrets.WIDGETBOOK_CLOUD_API_KEY }} \
+                --repository \
+                $GITHUB_REPOSITORY \
+                --actor \
+                $GITHUB_ACTOR \
+                --branch \
+                $GITHUB_HEAD_REF \
+                --base-branch \
+                $GITHUB_BASE_REF \
+                --pr ${{ github.event.number }} \
+                --github-token ${{ secrets.GITHUB_TOKEN }}

@@ -1,14 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/models/model.dart';
 import 'package:widgetbook/src/repositories/memory_repository.dart';
+import 'package:widgetbook_core/widgetbook_core.dart';
 
 class _Item extends Model {
   _Item({
-    required String id,
+    required super.id,
     required this.value,
-  }) : super(
-          id: id,
-        );
+  });
 
   final int value;
 
@@ -24,10 +22,7 @@ class _Item extends Model {
 }
 
 class _MemoryRepository extends MemoryRepository<_Item> {
-  _MemoryRepository({Map<String, _Item>? initialConfiguration})
-      : super(
-          initialConfiguration: initialConfiguration,
-        );
+  _MemoryRepository({super.initialConfiguration});
 
   Map<String, _Item> getMemory() {
     return memory;

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../modification.dart';
+import '../../../helpers/modification.dart';
 
 part 'changed_use_case.freezed.dart';
 part 'changed_use_case.g.dart';
@@ -12,6 +12,7 @@ class ChangedUseCase with _$ChangedUseCase {
     required String componentName,
     required String componentDefinitionPath,
     required Modification modification,
+    required String? designLink,
   }) = _ChangedUseCase;
 
   factory ChangedUseCase.fromJson(Map<String, dynamic> json) =>

@@ -1,10 +1,35 @@
-## 2.0.1-beta.2
+## 3.0.0-beta.17
 
-- fix: adjust link to match changes from cloud
+- feat: add link to review in GitHub comment
 
-## 2.0.1-beta.1
+## 3.0.0-beta.16
 
-- feat: comment link to Review in PR
+- fix: upload of locales, devices, themes and text scales
+
+## 3.0.0-beta.15
+
+- fix: `designLink` is not uploaded
+
+## 3.0.0-beta.14
+- feat: add upload of `designLink` property
+- fix: CLI returns code `>0` when no review information is available
+
+## 3.0.0-beta.13
+
+- feat: add command for `publish`
+
+## 2.0.3-beta.1
+
+- fix(cli): `UseCaseParser` uses `ref` instead of `base` branch
+- fix(cli): `HttpClient` connects to incorrect endpoint
+
+## 2.0.2
+
+- fix(cli): `UseCaseParser` contains hard-coded branch name
+
+## 2.0.1
+
+- feat: improve comment link markdown. 
 
 ## 2.0.0
 

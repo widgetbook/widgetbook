@@ -1,0 +1,27 @@
+name: custom_theme_example
+description: An example of how to use a custom theme.
+
+publish_to: none
+
+environment:
+  sdk: '>=2.18.2 <3.0.0'
+ 
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  widgetbook_annotation: ^2.1.0
+  go_router:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+ 
+  flutter_lints: ^2.0.0
+  widgetbook: 
+    path: ../../packages/widgetbook
+
+ 
+flutter:
+  uses-material-design: true
+ 

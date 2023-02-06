@@ -2,6 +2,10 @@
     "mdx-preview.preview.useVscodeMarkdownStyles": false,
     "conventionalCommits.scopes": [
         "widgetbook",
-        "cli"
+        "cli",
+        "core",
+        "annotation",
+        "generator",
+        "examples"
     ]
 }

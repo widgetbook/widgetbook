@@ -1,3 +1,28 @@
+## 3.0.0-beta.7
+
+- refactor: navigation
+- feat: adds `SettingPanel`
+
+## 3.0.0-beta.6
+
+- feat: depends on `widgetbook_core`
+
+## 3.0.0-beta.5
+
+- fix: properties are resetting when changing locale
+
+## 3.0.0-beta.4
+
+- fix: properties not changing `onNavigate` via the browser's URL bar
+
+## 3.0.0-beta.3
+
+- chore: bumped `widgetbook_models` version
+
+## 3.0.0-beta.1
+
+- improvements
+
 ## 2.4.1
 
 - fix: failed to load font Nunito ([#206](https://github.com/widgetbook/widgetbook/issues/206)) 

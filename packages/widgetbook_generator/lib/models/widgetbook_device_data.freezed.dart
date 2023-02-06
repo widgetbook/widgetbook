@@ -59,31 +59,31 @@ class _$WidgetbookDeviceDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$WidgetbookDeviceDataCopyWith<$Res>
+abstract class _$$_WidgetbookDeviceDataCopyWith<$Res>
     implements $WidgetbookDeviceDataCopyWith<$Res> {
-  factory _$WidgetbookDeviceDataCopyWith(_WidgetbookDeviceData value,
-          $Res Function(_WidgetbookDeviceData) then) =
-      __$WidgetbookDeviceDataCopyWithImpl<$Res>;
+  factory _$$_WidgetbookDeviceDataCopyWith(_$_WidgetbookDeviceData value,
+          $Res Function(_$_WidgetbookDeviceData) then) =
+      __$$_WidgetbookDeviceDataCopyWithImpl<$Res>;
   @override
   $Res call({String name});
 }
 
 /// @nodoc
-class __$WidgetbookDeviceDataCopyWithImpl<$Res>
+class __$$_WidgetbookDeviceDataCopyWithImpl<$Res>
     extends _$WidgetbookDeviceDataCopyWithImpl<$Res>
-    implements _$WidgetbookDeviceDataCopyWith<$Res> {
-  __$WidgetbookDeviceDataCopyWithImpl(
-      _WidgetbookDeviceData _value, $Res Function(_WidgetbookDeviceData) _then)
-      : super(_value, (v) => _then(v as _WidgetbookDeviceData));
+    implements _$$_WidgetbookDeviceDataCopyWith<$Res> {
+  __$$_WidgetbookDeviceDataCopyWithImpl(_$_WidgetbookDeviceData _value,
+      $Res Function(_$_WidgetbookDeviceData) _then)
+      : super(_value, (v) => _then(v as _$_WidgetbookDeviceData));
 
   @override
-  _WidgetbookDeviceData get _value => super._value as _WidgetbookDeviceData;
+  _$_WidgetbookDeviceData get _value => super._value as _$_WidgetbookDeviceData;
 
   @override
   $Res call({
     Object? name = freezed,
   }) {
-    return _then(_WidgetbookDeviceData(
+    return _then(_$_WidgetbookDeviceData(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -112,7 +112,7 @@ class _$_WidgetbookDeviceData implements _WidgetbookDeviceData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _WidgetbookDeviceData &&
+            other is _$_WidgetbookDeviceData &&
             const DeepCollectionEquality().equals(other.name, name));
   }
 
@@ -123,8 +123,8 @@ class _$_WidgetbookDeviceData implements _WidgetbookDeviceData {
 
   @JsonKey(ignore: true)
   @override
-  _$WidgetbookDeviceDataCopyWith<_WidgetbookDeviceData> get copyWith =>
-      __$WidgetbookDeviceDataCopyWithImpl<_WidgetbookDeviceData>(
+  _$$_WidgetbookDeviceDataCopyWith<_$_WidgetbookDeviceData> get copyWith =>
+      __$$_WidgetbookDeviceDataCopyWithImpl<_$_WidgetbookDeviceData>(
           this, _$identity);
 
   @override
@@ -144,6 +144,6 @@ abstract class _WidgetbookDeviceData implements WidgetbookDeviceData {
   String get name => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$WidgetbookDeviceDataCopyWith<_WidgetbookDeviceData> get copyWith =>
+  _$$_WidgetbookDeviceDataCopyWith<_$_WidgetbookDeviceData> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:path/path.dart' as p;
@@ -35,6 +36,18 @@ class GitDir {
     return int.parse(pr.stdout as String);
   }
 
+  Future<String> getActorName() async {
+    final results = await runCommand(['config', 'user.name']);
+    final output = results.stdout as String;
+    return output.trim();
+  }
+
+  Future<String> getRepositoryName() async {
+    final results = await runCommand(['rev-parse', '--show-toplevel']);
+    final output = results.stdout.toString().split('/').last;
+    return output.trim();
+  }
+
   /// [revision] should probably be a sha1 to a commit.
   /// But GIT lets you do other things.
   /// See http://git-scm.com/docs/gitrevisions.html
@@ -63,6 +76,42 @@ class GitDir {
   Future<List<BranchReference>> branches() async {
     final refs = await showRef(heads: true);
     return refs.map((cr) => cr.toBranchReference()).toList();
+  }
+
+  Future<List<BranchReference>> allBranches() async {
+    final refs = await showRef();
+    return refs.map((cr) => cr.toBranchReference()).toList();
+  }
+
+  Future<void> fetch() async {
+    await runCommand(['fetch'], throwOnError: false);
+  }
+
+  Future<List<String>> branch({
+    bool all = false,
+  }) async {
+    final args = ['branch'];
+
+    if (all) {
+      args.add('-a');
+    }
+
+    final pr = await runCommand(args, throwOnError: false);
+    if (pr.exitCode == 1) {
+      // no heads present, return empty collection
+      return [];
+    }
+
+    final branches = const LineSplitter()
+        .convert(
+          pr.stdout as String,
+        )
+        .map(
+          (e) => e.substring(2).split(' ->').first,
+        )
+        .toList();
+
+    return branches;
   }
 
   // TODO: Test this! No tags. Many tags. Etc.
@@ -244,7 +293,7 @@ class GitDir {
     if (base != null && ref != null) {
       args.add('$base...$ref');
     } else if (base != null) {
-      args.add('$base...');
+      args.add(base);
     } else if (ref != null) {
       args.add('...$ref');
     }

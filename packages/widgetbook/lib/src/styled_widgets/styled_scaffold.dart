@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class StyledScaffold extends StatelessWidget {
-  const StyledScaffold({Key? key, this.body}) : super(key: key);
+  const StyledScaffold({
+    super.key,
+    this.body,
+  });
 
   final Widget? body;
 

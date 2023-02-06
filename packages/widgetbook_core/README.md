@@ -1,0 +1,1 @@
+`widgetbook_core` contains core components for Widgetbook and Widgetbook Cloud.

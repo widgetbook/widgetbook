@@ -49,15 +49,15 @@ void main() {
 
       expect(find.text('idk'), findsOneWidget);
 
-      await tester.tap(find.byKey(const Key('label-nullableCheckbox')));
+      await tester.tap(find.byType(Switch).first);
       await tester.pumpAndSettle();
       expect(find.text('bye'), findsOneWidget);
 
-      await tester.tap(find.byKey(const Key('label-switchTileKnob')));
+      await tester.tap(find.byType(Switch).last);
       await tester.pumpAndSettle();
       expect(find.text('hi'), findsOneWidget);
 
-      await tester.tap(find.byKey(const Key('label-nullableCheckbox')));
+      await tester.tap(find.byType(Switch).first);
       await tester.pumpAndSettle();
       expect(find.text('idk'), findsOneWidget);
 
@@ -98,19 +98,19 @@ void main() {
 
       expect(find.text('idk'), findsOneWidget);
 
-      await tester.tap(find.byKey(const Key('label-nullableCheckbox')));
+      await tester.tap(find.byType(Switch).first);
       await tester.pumpAndSettle();
       expect(find.text('bye'), findsOneWidget);
 
-      await tester.tap(find.byKey(const Key('label-switchTileKnob')));
+      await tester.tap(find.byType(Switch).last);
       await tester.pumpAndSettle();
       expect(find.text('hi'), findsOneWidget);
 
-      await tester.tap(find.byKey(const Key('label-nullableCheckbox')));
+      await tester.tap(find.byType(Switch).first);
       await tester.pumpAndSettle();
       expect(find.text('idk'), findsOneWidget);
 
-      await tester.tap(find.byKey(const Key('label-nullableCheckbox')));
+      await tester.tap(find.byType(Switch).first);
       await tester.pumpAndSettle();
       expect(find.text('hi'), findsOneWidget);
     },

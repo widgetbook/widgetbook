@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 
+import '../flavor/flavor.dart';
+
 abstract class GitProvider {
   GitProvider({
     required this.apiKey,
@@ -19,13 +21,14 @@ abstract class GitProvider {
   String commentBody({
     required String projectId,
     required String buildId,
-    String? reviewId,
+    required String? reviewId,
   }) {
+    final prefix = Flavor().isProduction ? 'https://' : 'https://dev.';
     final buffer = StringBuffer()
       ..writeln('### 📦 Build')
       ..writeln()
       ..writeln(
-        '- 🔗 [Widgetbook Cloud - Build](https://app.widgetbook.io/#/projects/$projectId/builds/$buildId)',
+        '- 🔗 [Widgetbook Cloud - Build](${prefix}app.widgetbook.io/#/projects/$projectId/builds/$buildId)',
       );
 
     if (reviewId != null) {
@@ -34,7 +37,7 @@ abstract class GitProvider {
         ..writeln('### 📑 Review')
         ..writeln()
         ..writeln(
-          '- 🔗 [Widgetbook Cloud - Review](https://app.widgetbook.io/#/projects/$projectId/reviews/$reviewId/overview)',
+          '- 🔗 [Widgetbook Cloud - Review](${prefix}app.widgetbook.io/#/projects/$projectId/reviews/$reviewId/use-cases)',
         );
     }
 
@@ -45,5 +48,6 @@ abstract class GitProvider {
     // TODO refactor to a proper type
     required Map<String, dynamic> buildInfo,
     required String number,
+    required String? reviewId,
   });
 }

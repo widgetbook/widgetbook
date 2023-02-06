@@ -1,65 +1,37 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:widgetbook/src/extensions/enum_extension.dart';
-import 'package:widgetbook/src/navigation/preview_provider.dart';
+import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook/src/widgetbook_page.dart';
-import 'package:widgetbook/src/workbench/workbench_provider.dart';
 
-void refreshRoute<CustomTheme>(
-  GoRouter router, {
-  required WorkbenchProvider<CustomTheme> workbenchProvider,
-  required PreviewProvider previewProvider,
+T? parseRouterData<T>({
+  required String name,
+  required Map<String, dynamic> routerData,
+  required Map<String, T> mappedData,
 }) {
-  final previewState = previewProvider.state;
-  final workbenchState = workbenchProvider.state;
+  final value = routerData[name] as String?;
+  T? selectedValue;
 
-  final queryParameters = <String, String>{};
-
-  if (workbenchState.hasSelectedTheme) {
-    queryParameters.putIfAbsent(
-      'theme',
-      () => workbenchState.theme!.name,
-    );
+  if (value != null) {
+    if (mappedData.containsKey(value)) {
+      selectedValue = mappedData[value];
+    }
   }
+  return selectedValue;
+}
 
-  if (workbenchState.hasSelectedLocale) {
-    queryParameters.putIfAbsent(
-      'locale',
-      () => workbenchState.locale!.languageCode,
-    );
+extension GoRouterExtension on BuildContext {
+  void goTo({
+    required Map<String, String> queryParams,
+  }) {
+    final goRouter = GoRouter.of(this);
+    final uri = Uri.parse(goRouter.location);
+    final queryParameters = Map<String, String>.from(uri.queryParameters);
+    for (final pair in queryParams.entries) {
+      queryParameters[pair.key] = pair.value;
+    }
+
+    goNamed('/', queryParams: queryParameters);
   }
-
-  if (workbenchState.hasSelectedDevice) {
-    queryParameters.putIfAbsent(
-      'device',
-      () => workbenchState.device!.name,
-    );
-  }
-
-  if (workbenchState.hasSelectedTextScaleFactor) {
-    queryParameters.putIfAbsent(
-      'text-scale-factor',
-      () => workbenchState.textScaleFactor!.toStringAsFixed(1),
-    );
-  }
-
-  queryParameters
-    ..putIfAbsent(
-      'orientation',
-      () => workbenchState.orientation.toShortString(),
-    )
-    ..putIfAbsent(
-      'frame',
-      () => workbenchState.frame.name,
-    );
-
-  if (previewState.isUseCaseSelected) {
-    queryParameters.putIfAbsent(
-      'path',
-      () => previewState.selectedUseCase!.path,
-    );
-  }
-
-  router.goNamed('/', queryParams: queryParameters);
 }
 
 bool _parseBoolQueryParameter({
@@ -73,68 +45,62 @@ bool _parseBoolQueryParameter({
   return value == 'true';
 }
 
-GoRouter createRouter<CustomTheme>({
-  required WorkbenchProvider<CustomTheme> workbenchProvider,
-  required PreviewProvider previewProvider,
+GoRouter createRouter({
+  required UseCasesProvider useCasesProvider,
+  // Used for testing
+  String? initialLocation,
 }) {
   final router = GoRouter(
-    redirect: (routerState) {
-      final theme = routerState.queryParams['theme'];
-      final locale = routerState.queryParams['locale'];
-      final device = routerState.queryParams['device'];
-      final textScaleFactor = routerState.queryParams['text-scale-factor'];
-      final orientation = routerState.queryParams['orientation'];
-      final frame = routerState.queryParams['frame'];
+    redirect: (context, routerState) {
       final path = routerState.queryParams['path'];
 
-      workbenchProvider
-        ..setThemeByName(theme)
-        ..setLocaleByName(locale)
-        ..setDeviceByName(device)
-        ..setTextScaleFactorByName(textScaleFactor)
-        ..setOrientationByName(orientation)
-        ..setFrameByName(frame);
-      previewProvider.selectUseCaseByPath(path);
+      if (path != null) {
+        useCasesProvider.selectUseCaseByPath(path);
+      }
       return null;
     },
+    initialLocation: initialLocation,
+    debugLogDiagnostics: true,
     routes: [
-      GoRoute(
-        name: '/',
-        path: '/',
-        pageBuilder: (context, state) {
+      ShellRoute(
+        builder: (context, state, child) {
           final disableNavigation = _parseBoolQueryParameter(
             value: state.queryParams['disable-navigation'],
           );
-          final disableProperties = _parseBoolQueryParameter(
-            value: state.queryParams['disable-properties'],
-          );
-
-          return NoTransitionPage<void>(
-            child: WidgetbookPage<CustomTheme>(
-              disableNavigation: disableNavigation,
-              disableProperties: disableProperties,
+          return ColoredBox(
+            color: Theme.of(context).colorScheme.surface,
+            child: Row(
+              children: [
+                if (!disableNavigation)
+                  NavigationPanelWrapper(
+                    initialPath: state.location,
+                  ),
+                Expanded(child: child),
+              ],
             ),
           );
         },
-      ),
+        routes: [
+          GoRoute(
+            name: '/',
+            path: '/',
+            pageBuilder: (context, state) {
+              final disableProperties = _parseBoolQueryParameter(
+                value: state.queryParams['disable-properties'],
+              );
+
+              return NoTransitionPage<void>(
+                child: WidgetbookPage(
+                  disableProperties: disableProperties,
+                  routerData: state.queryParams,
+                ),
+              );
+            },
+          ),
+        ],
+      )
     ],
   );
-
-  previewProvider.addListener(() {
-    refreshRoute(
-      router,
-      workbenchProvider: workbenchProvider,
-      previewProvider: previewProvider,
-    );
-  });
-
-  workbenchProvider.addListener(() {
-    refreshRoute(
-      router,
-      workbenchProvider: workbenchProvider,
-      previewProvider: previewProvider,
-    );
-  });
 
   return router;
 }

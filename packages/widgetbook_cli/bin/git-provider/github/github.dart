@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:path/path.dart' as path;
 
-import '../../review/models/review.dart';
 import '../git_provider.dart';
 import 'comment.dart';
 
@@ -15,7 +14,7 @@ class GithubProvider extends GitProvider {
   Future<void> addBuildComment({
     required Map<String, dynamic> buildInfo,
     required String number,
-    Review? review,
+    required String? reviewId,
   }) async {
     final repository = Platform.environment['GITHUB_REPOSITORY'];
     final projectId = buildInfo['project'] as String;
@@ -34,7 +33,7 @@ class GithubProvider extends GitProvider {
         body: commentBody(
           projectId: projectId,
           buildId: buildId,
-          reviewId: review?.id,
+          reviewId: reviewId,
         ),
       ).toJson(),
     );

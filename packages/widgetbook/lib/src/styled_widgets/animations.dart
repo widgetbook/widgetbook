@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class StatefulAnimatedSize extends StatefulWidget {
   const StatefulAnimatedSize({
-    Key? key,
+    super.key,
     required this.child,
     required this.duration,
     this.curve = Curves.linear,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final Duration duration;

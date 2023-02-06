@@ -7,35 +7,34 @@ import 'package:widgetbook_generator/services/tree_service.dart';
 /// Defines an instance to create code for a [Folder]
 class WidgetbookFolderInstance extends Instance {
   /// Creates a new instance of [WidgetbookFolderInstance]
-  WidgetbookFolderInstance({required Folder folder})
-      : super(
+  WidgetbookFolderInstance({
+    required Folder folder,
+  }) : super(
           name: 'WidgetbookFolder',
           properties: [
             Property.string(key: 'name', value: folder.name),
             Property(
-              key: 'widgets',
-              instance: ListInstance<WidgetbookComponentInstance>(
-                instances: folder.widgets.values
-                    .map(
-                      (widget) => WidgetbookComponentInstance(
-                        name: widget.name,
-                        stories: widget.stories,
-                        isExpanded: widget.isExpanded,
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
-            Property(
-              key: 'folders',
-              instance: ListInstance<WidgetbookFolderInstance>(
-                instances: folder.subFolders.values
-                    .map((folder) => WidgetbookFolderInstance(folder: folder))
-                    .toList(),
+              key: 'children',
+              instance: ListInstance(
+                instances: [
+                  ...folder.widgets.values.map(
+                    (widget) => WidgetbookComponentInstance(
+                      name: widget.name,
+                      stories: widget.stories,
+                      isExpanded: widget.isExpanded,
+                    ),
+                  ),
+                  ...folder.subFolders.values.map(
+                    (folder) => WidgetbookFolderInstance(folder: folder),
+                  ),
+                ],
               ),
             ),
             if (folder.isExpanded)
-              Property.bool(key: 'isExpanded', value: true),
+              Property.bool(
+                key: 'isInitiallyExpanded',
+                value: true,
+              ),
           ],
         );
 }

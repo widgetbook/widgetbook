@@ -10,10 +10,24 @@ void main() {
   testWidgets(
     'Equality operator works correctly',
     (WidgetTester tester) async {
-      final first = TextKnob(label: 'first', value: 'hello');
-      final second = TextKnob(label: 'second', value: 'goodbye');
+      final first = TextKnob(
+        label: 'first',
+        value: 'hello',
+      );
+      final second = TextKnob(
+        label: 'second',
+        value: 'goodbye',
+      );
 
-      expect(first, equals(TextKnob(label: 'first', value: 'hello')));
+      expect(
+        first,
+        equals(
+          TextKnob(
+            label: 'first',
+            value: 'hello',
+          ),
+        ),
+      );
       expect(first, isNot(equals(second)));
     },
   );
@@ -71,7 +85,7 @@ void main() {
           ],
         ),
       );
-      await tester.enterText(find.byKey(const Key('label-textKnob')), 'Bye');
+      await tester.enterText(find.byType(TextField), 'Bye');
       await tester.pumpAndSettle();
 
       expect(find.text('Bye'), findsWidgets);

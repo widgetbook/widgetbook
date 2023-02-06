@@ -11,21 +11,54 @@ class KnobsExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final devices = [
+      Apple.iPhone11,
+      Apple.iPhone12,
+    ];
+    final deviceFrameBuilder = DefaultDeviceFrame(
+      setting: DeviceSetting.firstAsSelected(devices: devices),
+    );
+
+    final activeFrameBuilder = WidgetbookFrame(
+      setting: DeviceSetting.firstAsSelected(devices: devices),
+    );
+
     return Widgetbook.material(
-      devices: const [
-        Apple.iPhone11,
+      addons: [
+        FrameAddon(
+          setting: FrameSetting.firstAsSelected(
+            frames: [
+              deviceFrameBuilder,
+              NoFrame(),
+              activeFrameBuilder,
+            ],
+          ),
+        ),
+        TextScaleAddon(
+          setting: TextScaleSetting.firstAsSelected(
+            textScales: [1, 2],
+          ),
+        ),
+        CustomThemeAddon<ThemeData>(
+          setting: CustomThemeSetting.firstAsSelected(
+            themes: [
+              WidgetbookTheme(data: ThemeData.dark(), name: 'dark'),
+            ],
+          ),
+        ),
       ],
-      themes: [
-        WidgetbookTheme(data: ThemeData.dark(), name: 'dark'),
-      ],
-      textScaleFactors: const [
-        1,
-        2,
-      ],
-      categories: [
+      appBuilder: (context, child) {
+        final frameBuilder = context.frameBuilder;
+        final theme = context.theme<ThemeData>();
+        return Theme(
+          data: theme!,
+          child: frameBuilder!(context, child),
+        );
+      },
+      directories: [
         WidgetbookCategory(
           name: 'Pages',
-          widgets: [
+          children: [
             WidgetbookComponent(
               name: 'On boarding',
               useCases: [
@@ -49,20 +82,14 @@ class KnobsExample extends StatelessWidget {
                       description:
                           'This is the text that appears above the current count of increments',
                     ),
-                    iconData: context.knobs.options(label: 'Icon', options: [
-                      const Option(
-                        label: 'Cross',
-                        value: Icons.add,
-                      ),
-                      const Option(
-                        label: 'Square',
-                        value: Icons.crop_square_sharp,
-                      ),
-                      const Option(
-                        label: 'Circle',
-                        value: Icons.circle,
-                      ),
-                    ]),
+                    iconData: context.knobs.options(
+                      label: 'Icon',
+                      options: [
+                        Icons.add,
+                        Icons.crop_square_sharp,
+                        Icons.circle
+                      ],
+                    ),
                     showToolTip: context.knobs.boolean(
                       label: 'Show Increment Tool Tip',
                       description:
@@ -76,7 +103,6 @@ class KnobsExample extends StatelessWidget {
           ],
         ),
       ],
-      appInfo: AppInfo(name: 'Meal App'),
     );
   }
 }

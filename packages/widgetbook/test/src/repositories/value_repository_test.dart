@@ -3,8 +3,8 @@ import 'package:widgetbook/src/repositories/value_repository.dart';
 
 class _ValueRepository extends ValueRepository<int> {
   _ValueRepository({
-    int? item,
-  }) : super(item: item);
+    super.item,
+  });
 
   int? getCurrentValue() {
     return item;

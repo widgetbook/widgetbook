@@ -18,6 +18,7 @@ _$_UseCaseData _$$_UseCaseDataFromJson(Map<String, dynamic> json) =>
           .toList(),
       componentDefinitionPath: json['componentDefinitionPath'] as String,
       useCaseDefinitionPath: json['useCaseDefinitionPath'] as String,
+      designLink: json['designLink'] as String?,
     );
 
 Map<String, dynamic> _$$_UseCaseDataToJson(_$_UseCaseData instance) =>
@@ -30,4 +31,5 @@ Map<String, dynamic> _$$_UseCaseDataToJson(_$_UseCaseData instance) =>
       'dependencies': instance.dependencies,
       'componentDefinitionPath': instance.componentDefinitionPath,
       'useCaseDefinitionPath': instance.useCaseDefinitionPath,
+      'designLink': instance.designLink,
     };

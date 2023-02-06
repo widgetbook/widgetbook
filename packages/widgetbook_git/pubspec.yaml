@@ -1,5 +1,5 @@
 name: widgetbook_git
-version: 2.1.0
+version: 2.2.0-beta.6
 description: >-
   Git command line wrapper. Exposes a Git directory abstraction that makes it
   easy to inspect and manipulate a local Git repository.

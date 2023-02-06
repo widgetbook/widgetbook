@@ -1,0 +1,58 @@
+on: 
+  pull_request:
+    paths:
+      - "packages/widgetbook_cli/**"
+      - ".github/workflows/widgetbook-cli.yaml"
+  push:
+    branches:
+      - main
+name: widgetbook_cli
+jobs:
+  test:
+    name: test
+    defaults:
+      run:
+        working-directory: packages/widgetbook_cli
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+    - uses: dart-lang/setup-dart@v1.3
+
+    - name: Dart version
+      run: dart --version
+
+    - name: Enable melos
+      run: dart pub global activate melos
+
+    - name: Get packages 
+      run: melos bootstrap --no-flutter
+
+
+
+  code-quality:
+    defaults:
+      run:
+        working-directory: packages/widgetbook_cli
+    name: code quality
+    runs-on: ubuntu-latest 
+
+    steps:
+
+    - uses: actions/checkout@v2
+    - uses: dart-lang/setup-dart@v1.3
+
+    - name: Get packages 
+      run: dart pub get
+
+    - name: Dart version
+      run: dart --version
+
+    - name: Enable melos
+      run: dart pub global activate melos
+
+    - name: Get packages 
+      run: melos bootstrap --no-flutter
+
+    - name: Run analyze
+      run: dart analyze

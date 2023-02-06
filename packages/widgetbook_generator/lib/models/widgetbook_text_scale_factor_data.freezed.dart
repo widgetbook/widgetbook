@@ -61,34 +61,34 @@ class _$WidgetbookTextScaleFactorDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$WidgetbookTextScaleFactorDataCopyWith<$Res>
+abstract class _$$_WidgetbookTextScaleFactorDataCopyWith<$Res>
     implements $WidgetbookTextScaleFactorDataCopyWith<$Res> {
-  factory _$WidgetbookTextScaleFactorDataCopyWith(
-          _WidgetbookTextScaleFactorData value,
-          $Res Function(_WidgetbookTextScaleFactorData) then) =
-      __$WidgetbookTextScaleFactorDataCopyWithImpl<$Res>;
+  factory _$$_WidgetbookTextScaleFactorDataCopyWith(
+          _$_WidgetbookTextScaleFactorData value,
+          $Res Function(_$_WidgetbookTextScaleFactorData) then) =
+      __$$_WidgetbookTextScaleFactorDataCopyWithImpl<$Res>;
   @override
   $Res call({double value});
 }
 
 /// @nodoc
-class __$WidgetbookTextScaleFactorDataCopyWithImpl<$Res>
+class __$$_WidgetbookTextScaleFactorDataCopyWithImpl<$Res>
     extends _$WidgetbookTextScaleFactorDataCopyWithImpl<$Res>
-    implements _$WidgetbookTextScaleFactorDataCopyWith<$Res> {
-  __$WidgetbookTextScaleFactorDataCopyWithImpl(
-      _WidgetbookTextScaleFactorData _value,
-      $Res Function(_WidgetbookTextScaleFactorData) _then)
-      : super(_value, (v) => _then(v as _WidgetbookTextScaleFactorData));
+    implements _$$_WidgetbookTextScaleFactorDataCopyWith<$Res> {
+  __$$_WidgetbookTextScaleFactorDataCopyWithImpl(
+      _$_WidgetbookTextScaleFactorData _value,
+      $Res Function(_$_WidgetbookTextScaleFactorData) _then)
+      : super(_value, (v) => _then(v as _$_WidgetbookTextScaleFactorData));
 
   @override
-  _WidgetbookTextScaleFactorData get _value =>
-      super._value as _WidgetbookTextScaleFactorData;
+  _$_WidgetbookTextScaleFactorData get _value =>
+      super._value as _$_WidgetbookTextScaleFactorData;
 
   @override
   $Res call({
     Object? value = freezed,
   }) {
-    return _then(_WidgetbookTextScaleFactorData(
+    return _then(_$_WidgetbookTextScaleFactorData(
       value: value == freezed
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -119,7 +119,7 @@ class _$_WidgetbookTextScaleFactorData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _WidgetbookTextScaleFactorData &&
+            other is _$_WidgetbookTextScaleFactorData &&
             const DeepCollectionEquality().equals(other.value, value));
   }
 
@@ -130,9 +130,9 @@ class _$_WidgetbookTextScaleFactorData
 
   @JsonKey(ignore: true)
   @override
-  _$WidgetbookTextScaleFactorDataCopyWith<_WidgetbookTextScaleFactorData>
-      get copyWith => __$WidgetbookTextScaleFactorDataCopyWithImpl<
-          _WidgetbookTextScaleFactorData>(this, _$identity);
+  _$$_WidgetbookTextScaleFactorDataCopyWith<_$_WidgetbookTextScaleFactorData>
+      get copyWith => __$$_WidgetbookTextScaleFactorDataCopyWithImpl<
+          _$_WidgetbookTextScaleFactorData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -152,6 +152,6 @@ abstract class _WidgetbookTextScaleFactorData
   double get value => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$WidgetbookTextScaleFactorDataCopyWith<_WidgetbookTextScaleFactorData>
+  _$$_WidgetbookTextScaleFactorDataCopyWith<_$_WidgetbookTextScaleFactorData>
       get copyWith => throw _privateConstructorUsedError;
 }
