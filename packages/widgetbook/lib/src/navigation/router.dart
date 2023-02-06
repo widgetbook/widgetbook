@@ -47,6 +47,8 @@ bool _parseBoolQueryParameter({
 
 GoRouter createRouter({
   required UseCasesProvider useCasesProvider,
+  // Used for testing
+  String? initialLocation,
 }) {
   final router = GoRouter(
     redirect: (context, routerState) {
@@ -57,6 +59,7 @@ GoRouter createRouter({
       }
       return null;
     },
+    initialLocation: initialLocation,
     debugLogDiagnostics: true,
     routes: [
       ShellRoute(

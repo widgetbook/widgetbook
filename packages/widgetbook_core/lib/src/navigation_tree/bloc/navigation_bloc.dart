@@ -3,9 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 part 'navigation_bloc.freezed.dart';
-
 part 'navigation_event.dart';
-
 part 'navigation_state.dart';
 
 class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
@@ -69,7 +67,10 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     SelectNavigationNodeByPath event,
     Emitter<NavigationState> emit,
   ) {
-    final targetNode = _filterNodesByPath(event.path);
+    final uri = Uri.parse(event.path);
+    final finalPath = uri.queryParameters['path'];
+    if (finalPath == null) return;
+    final targetNode = _filterNodesByPath(finalPath);
     if (targetNode != null) {
       emit(
         state.copyWith(selectedNode: targetNode),
