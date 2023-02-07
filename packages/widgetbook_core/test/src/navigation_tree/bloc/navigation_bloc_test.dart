@@ -4,89 +4,94 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 
 void main() {
   group('$NavigationBloc', () {
+    const packageDirectory = MultiChildNavigationNodeData(
+      name: 'Package',
+      type: NavigationNodeType.package,
+      children: [
+        MultiChildNavigationNodeData(
+          name: 'Component',
+          type: NavigationNodeType.component,
+          children: [
+            LeafNavigationNodeData(
+              name: 'Use Case 1',
+              type: NavigationNodeType.useCase,
+            ),
+          ],
+        )
+      ],
+    );
+    const categoryDirectory = MultiChildNavigationNodeData(
+      name: 'Category',
+      type: NavigationNodeType.category,
+      children: [
+        MultiChildNavigationNodeData(
+          name: 'Component',
+          type: NavigationNodeType.component,
+          children: [
+            LeafNavigationNodeData(
+              name: 'Use Case 2',
+              type: NavigationNodeType.useCase,
+            ),
+            LeafNavigationNodeData(
+              name: 'Use Case 3',
+              type: NavigationNodeType.useCase,
+            ),
+          ],
+        ),
+      ],
+    );
     const directories = [
-      MultiChildNavigationNodeData(
-        name: 'Package',
-        type: NavigationNodeType.package,
-        children: [
-          MultiChildNavigationNodeData(
-            name: 'Component',
-            type: NavigationNodeType.component,
-            children: [
-              LeafNavigationNodeData(
-                name: 'Use Case 1',
-                type: NavigationNodeType.useCase,
-              ),
-            ],
-          )
-        ],
-      ),
-      MultiChildNavigationNodeData(
-        name: 'Category',
-        type: NavigationNodeType.category,
-        children: [
-          MultiChildNavigationNodeData(
-            name: 'Component',
-            type: NavigationNodeType.component,
-            children: [
-              LeafNavigationNodeData(
-                name: 'Use Case 2',
-                type: NavigationNodeType.useCase,
-              ),
-              LeafNavigationNodeData(
-                name: 'Use Case 3',
-                type: NavigationNodeType.useCase,
-              ),
-            ],
-          ),
-        ],
-      ),
+      packageDirectory,
+      categoryDirectory,
     ];
 
+    const packageNode = NavigationTreeNodeData(
+      path: 'package',
+      name: 'Package',
+      type: NavigationNodeType.package,
+      children: [
+        NavigationTreeNodeData(
+          path: 'package/component',
+          name: 'Component',
+          type: NavigationNodeType.component,
+          children: [
+            NavigationTreeNodeData(
+              path: 'package/component/use-case-1',
+              name: 'Use Case 1',
+              type: NavigationNodeType.useCase,
+            ),
+          ],
+        ),
+      ],
+    );
+    const categoryNode = NavigationTreeNodeData(
+      path: 'category',
+      name: 'Category',
+      type: NavigationNodeType.category,
+      children: [
+        NavigationTreeNodeData(
+          path: 'category/component',
+          name: 'Component',
+          type: NavigationNodeType.component,
+          children: [
+            NavigationTreeNodeData(
+              path: 'category/component/use-case-2',
+              name: 'Use Case 2',
+              type: NavigationNodeType.useCase,
+            ),
+            NavigationTreeNodeData(
+              path: 'category/component/use-case-3',
+              name: 'Use Case 3',
+              type: NavigationNodeType.useCase,
+            ),
+          ],
+        ),
+      ],
+    );
+
     const nodes = [
-      NavigationTreeNodeData(
-        path: 'package',
-        name: 'Package',
-        type: NavigationNodeType.package,
-        children: [
-          NavigationTreeNodeData(
-            path: 'package/component',
-            name: 'Component',
-            type: NavigationNodeType.component,
-            children: [
-              NavigationTreeNodeData(
-                path: 'package/component/use-case-1',
-                name: 'Use Case 1',
-                type: NavigationNodeType.useCase,
-              ),
-            ],
-          ),
-        ],
-      ),
-      NavigationTreeNodeData(
-        path: 'category',
-        name: 'Category',
-        type: NavigationNodeType.category,
-        children: [
-          NavigationTreeNodeData(
-            path: 'category/component',
-            name: 'Component',
-            type: NavigationNodeType.component,
-            children: [
-              NavigationTreeNodeData(
-                path: 'category/component/use-case-2',
-                name: 'Use Case 2',
-                type: NavigationNodeType.useCase,
-              ),
-              NavigationTreeNodeData(
-                path: 'category/component/use-case-3',
-                name: 'Use Case 3',
-                type: NavigationNodeType.useCase,
-              ),
-            ],
-          ),
-        ],
-      ),
+      packageNode,
+      categoryNode,
     ];
 
     const selectedNode = NavigationTreeNodeData(
@@ -127,6 +132,23 @@ void main() {
         NavigationState(
           nodes: nodes,
           filteredNodes: nodes,
+        ),
+      ],
+    );
+
+    blocTest<NavigationBloc, NavigationState>(
+      'Emits state with filtered nodes when $LoadNavigationTree event is added '
+      'on an existing query',
+      build: NavigationBloc.new,
+      act: (bloc) => bloc.add(
+        const LoadNavigationTree(directories: directories),
+      ),
+      seed: () => NavigationState(searchQuery: 'package'),
+      expect: () => <NavigationState>[
+        NavigationState(
+          searchQuery: 'package',
+          nodes: nodes,
+          filteredNodes: [packageNode],
         ),
       ],
     );

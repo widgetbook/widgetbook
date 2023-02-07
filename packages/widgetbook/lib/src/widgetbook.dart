@@ -95,6 +95,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   late UseCasesProvider useCasesProvider;
   late KnobsNotifier knobsNotifier;
   late GoRouter goRouter;
+  final NavigationBloc navigationBloc = NavigationBloc();
 
   @override
   void initState() {
@@ -105,6 +106,11 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
     )..loadFromDirectories(widget.directories);
 
     knobsNotifier = KnobsNotifier(selectedStoryRepository);
+    navigationBloc.add(
+      LoadNavigationTree(
+        directories: widget.directories,
+      ),
+    );
 
     goRouter = createRouter(
       useCasesProvider: useCasesProvider,
@@ -116,6 +122,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   @override
   void didUpdateWidget(covariant Widgetbook<CustomTheme> oldWidget) {
     useCasesProvider.loadFromDirectories(widget.directories);
+    navigationBloc.add(LoadNavigationTree(directories: widget.directories));
     builderProvider.hotReload(appBuilder: widget.appBuilder);
     super.didUpdateWidget(oldWidget);
   }
@@ -131,11 +138,8 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
           create: (_) => AddOnProvider(widget.addons),
         ),
       ],
-      child: BlocProvider(
-        create: (context) => NavigationBloc()
-          ..add(
-            LoadNavigationTree(directories: widget.directories),
-          ),
+      child: BlocProvider.value(
+        value: navigationBloc,
         child: MaterialApp.router(
           routeInformationProvider: goRouter.routeInformationProvider,
           routeInformationParser: goRouter.routeInformationParser,
