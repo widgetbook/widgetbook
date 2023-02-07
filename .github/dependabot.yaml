@@ -9,31 +9,39 @@ updates:
     directory: "/packages/widgetbook"
     schedule:
       interval: "daily"
+    versioning-strategy: increase
   - package-ecosystem: "pub"
     directory: "/packages/widgetbook_annotation"
     schedule:
       interval: "daily"
+    versioning-strategy: increase
   - package-ecosystem: "pub"
     directory: "/packages/widgetbook_cli"
     schedule:
       interval: "daily"
+    versioning-strategy: increase
   - package-ecosystem: "pub"
     directory: "/packages/widgetbook_core"
     schedule:
       interval: "daily"
+    versioning-strategy: increase
   - package-ecosystem: "pub"
     directory: "/packages/widgetbook_exception"
     schedule:
       interval: "daily"
+    versioning-strategy: increase
   - package-ecosystem: "pub"
     directory: "/packages/widgetbook_generator"
     schedule:
       interval: "daily"
+    versioning-strategy: increase
   - package-ecosystem: "pub"
     directory: "/packages/widgetbook_git"
     schedule:
       interval: "daily"
+    versioning-strategy: increase
   - package-ecosystem: "pub"
     directory: "/packages/widgetbook_models"
     schedule:
       interval: "daily"
+    versioning-strategy: increase
