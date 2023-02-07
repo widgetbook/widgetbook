@@ -20,10 +20,15 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     Emitter<NavigationState> emit,
   ) {
     final nodes = _generateNodes(children: event.directories);
+    final filteredNodes = _filterNodes(
+      searchQuery: state.searchQuery,
+      nodes: nodes,
+    );
+
     emit(
       state.copyWith(
         nodes: nodes,
-        filteredNodes: nodes,
+        filteredNodes: filteredNodes,
       ),
     );
   }
@@ -41,7 +46,10 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     FilterNavigationNodes event,
     Emitter<NavigationState> emit,
   ) {
-    final filteredNodes = _filterNodes(event.searchQuery);
+    final filteredNodes = _filterNodes(
+      searchQuery: event.searchQuery,
+      nodes: state.nodes,
+    );
 
     emit(
       state.copyWith(
@@ -103,8 +111,10 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     return nodes;
   }
 
-  List<NavigationTreeNodeData> _filterNodes(String searchQuery) {
-    final nodes = state.nodes;
+  List<NavigationTreeNodeData> _filterNodes({
+    required String searchQuery,
+    required List<NavigationTreeNodeData> nodes,
+  }) {
     final filteredNodes = <NavigationTreeNodeData>[];
     for (final node in nodes) {
       final matchedNode = _filterNodeByQuery(node, searchQuery);
