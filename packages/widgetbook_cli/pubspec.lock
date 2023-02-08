@@ -553,7 +553,7 @@ packages:
       name: very_good_analysis
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.0"
+    version: "4.0.0+1"
   vm_service:
     dependency: transitive
     description:
