@@ -1,22 +1,39 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../utils/addon_test_helper.dart';
+import 'helper.dart';
 
 void main() {
   group(
-    '$TextScaleAddon',
+    '$CupertinoThemeAddon',
     () {
-      const textScales = [
-        1.0,
-        2.0,
-        3.0,
-      ];
-      final setting = TextScaleSetting.firstAsSelected(
-        textScales: textScales,
+      const bluetheme = CupertinoThemeData(
+        primaryColor: colorBlue,
       );
-      final addon = TextScaleAddon(
+
+      const yellowTheme = CupertinoThemeData(
+        primaryColor: colorYellow,
+      );
+
+      const blueWidgetbookTheme = WidgetbookTheme<CupertinoThemeData>(
+        name: 'Blue',
+        data: bluetheme,
+      );
+
+      const yellowWidgetbookTheme = WidgetbookTheme(
+        name: 'Yellow',
+        data: yellowTheme,
+      );
+
+      final setting = CupertinoThemeSetting(
+        activeTheme: blueWidgetbookTheme,
+        themes: [blueWidgetbookTheme, yellowWidgetbookTheme],
+      );
+
+      final addon = CupertinoThemeAddon(
         setting: setting,
       );
 
@@ -27,8 +44,8 @@ void main() {
             tester: tester,
             addon: addon,
             expect: (context) => expect(
-              context.textScale,
-              equals(1),
+              context.cupertinoTheme,
+              equals(blueWidgetbookTheme.data),
             ),
           );
         },
@@ -42,11 +59,11 @@ void main() {
             addon: addon,
             act: (context) async => addon.onChanged(
               context,
-              setting.copyWith(activeTextScale: 2),
+              setting.copyWith(activeTheme: yellowWidgetbookTheme),
             ),
             expect: (context) => expect(
-              context.textScale,
-              equals(2),
+              context.cupertinoTheme,
+              equals(yellowWidgetbookTheme.data),
             ),
           );
         },
@@ -59,19 +76,21 @@ void main() {
             tester: tester,
             addon: addon,
             act: (context) async {
-              final dropdownFinder = find.byType(DropdownMenu<double>);
+              final dropdownFinder = find.byType(
+                DropdownMenu<WidgetbookTheme<CupertinoThemeData>>,
+              );
               await tester.tap(dropdownFinder);
               await tester.pumpAndSettle();
 
               final textFinder = find.byWidgetPredicate(
-                (widget) => widget is Text && widget.data == '2.00',
+                (widget) => widget is Text && widget.data == 'Yellow',
               );
               await tester.tap(textFinder.last);
               await tester.pumpAndSettle();
             },
             expect: (context) => expect(
-              context.textScale,
-              equals(2),
+              context.cupertinoTheme,
+              equals(yellowWidgetbookTheme.data),
             ),
           );
         },

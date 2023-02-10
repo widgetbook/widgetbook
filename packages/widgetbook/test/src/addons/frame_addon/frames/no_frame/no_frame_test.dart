@@ -3,13 +3,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../../../../helper/widget_test_helper.dart';
-import '../../../utils/addons.dart';
 import '../../../utils/extensions/widget_tester_extension.dart';
 
 void main() {
   group(
     '$NoFrame',
     () {
+      const key = ValueKey('key');
       testWidgets(
         'overrides $MediaQuery',
         (tester) async {
@@ -22,14 +22,14 @@ void main() {
                   context,
                   const Text(
                     'Text',
-                    key: textKey,
+                    key: key,
                   ),
                 );
               },
             ),
           );
 
-          final context = tester.findContextByKey(textKey);
+          final context = tester.findContextByKey(key);
           final mediaQuery = MediaQuery.of(context);
           final window = tester.binding.window;
 

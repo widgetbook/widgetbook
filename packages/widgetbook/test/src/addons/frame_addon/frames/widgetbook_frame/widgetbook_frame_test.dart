@@ -1,14 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:provider/provider.dart';
-import 'package:widgetbook/src/addons/frame_addon/addons/device_addon/device_provider.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../../../../helper/widget_test_helper.dart';
-import '../../../utils/addons.dart';
 import '../../../utils/extensions/widget_tester_extension.dart';
 
 void main() {
+  const key = ValueKey('key');
   group(
     '$WidgetbookFrame',
     () {
@@ -16,6 +14,14 @@ void main() {
         'overrides $MediaQuery',
         (tester) async {
           const phone = Apple.iPhone13;
+          final addon = DeviceAddon(
+            setting: DeviceSetting.firstAsSelected(
+              devices: [
+                phone,
+              ],
+            ),
+          );
+
           final devices = [phone];
           final frame = WidgetbookFrame(
             setting: DeviceSetting.firstAsSelected(
@@ -23,25 +29,30 @@ void main() {
             ),
           );
           await tester.pumpWidgetWithMaterialApp(
-            ChangeNotifierProvider(
-              create: (c) => DeviceProvider(
-                DeviceSetting(devices: devices, activeDevice: phone),
-              ),
-              child: Builder(
-                builder: (context) {
-                  return frame.builder(
-                    context,
-                    const Text(
-                      'Text',
-                      key: textKey,
-                    ),
-                  );
-                },
-              ),
+            Builder(
+              builder: (context) {
+                return addon.buildProvider(
+                  context,
+                  {
+                    'device': phone.name,
+                  },
+                  Builder(
+                    builder: (context) {
+                      return frame.builder(
+                        context,
+                        const Text(
+                          'Text',
+                          key: key,
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
             ),
           );
 
-          final context = tester.findContextByKey(textKey);
+          final context = tester.findContextByKey(key);
           final mediaQuery = MediaQuery.of(context);
 
           expect(

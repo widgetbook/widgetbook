@@ -10,7 +10,7 @@ AppBuilderFunction get materialAppBuilder =>
           return MaterialApp(
             theme: context.materialTheme,
             locale: context.localization?.activeLocale,
-            supportedLocales: context.localization?.supportedLocales ??
+            supportedLocales: context.localization?.locales ??
                 const <Locale>[
                   Locale('en', 'US'),
                 ],
@@ -44,7 +44,7 @@ AppBuilderFunction get cupertinoAppBuilder =>
           return CupertinoApp(
             theme: context.cupertinoTheme,
             locale: context.localization?.activeLocale,
-            supportedLocales: context.localization?.supportedLocales ??
+            supportedLocales: context.localization?.locales ??
                 const <Locale>[
                   Locale('en', 'US'),
                 ],

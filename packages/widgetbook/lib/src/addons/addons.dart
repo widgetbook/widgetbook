@@ -1,6 +1,6 @@
-import 'package:widgetbook/src/addons/addon.dart';
 import 'package:widgetbook/widgetbook.dart';
 
+export './addon.dart';
 export './cupertino_theme_addon/addon.dart';
 export './cupertino_theme_addon/cupertino_theme_addon.dart';
 export './custom_theme_addon/addon.dart';

@@ -3,12 +3,12 @@ import 'package:go_router/go_router.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook/src/widgetbook_page.dart';
 
-T? parseRouterData<T>({
+T? parseQueryParameters<T>({
   required String name,
-  required Map<String, dynamic> routerData,
+  required Map<String, dynamic> queryParameters,
   required Map<String, T> mappedData,
 }) {
-  final value = routerData[name] as String?;
+  final value = queryParameters[name] as String?;
   T? selectedValue;
 
   if (value != null) {

@@ -1,120 +1,78 @@
 import 'package:flutter/material.dart';
-import 'package:nested/nested.dart';
-import 'package:provider/provider.dart';
-import 'package:widgetbook/src/addons/addon.dart';
-import 'package:widgetbook/src/addons/addon_provider.dart';
-import 'package:widgetbook/src/addons/frame_addon/frame_provider.dart';
-import 'package:widgetbook/src/addons/frame_addon/frame_selection_provider.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
-class FrameAddon extends WidgetbookAddOn {
+class FrameAddon extends WidgetbookAddOn<FrameSetting> {
   FrameAddon({
-    required FrameSetting setting,
+    required super.setting,
   }) : super(
           name: 'Frame',
-          wrapperBuilder: (context, routerData, child) => _wrapperBuilder(
-            context,
-            child,
-            routerData,
-            setting,
+        );
+
+  @override
+  Widget build(BuildContext context) {
+    final frameBuilders = value.frames;
+    final activeFrame = value.activeFrame;
+
+    return ComplexSetting(
+      name: 'Frame',
+      sections: [
+        if (activeFrame.addon.value.toQueryParameter().isNotEmpty)
+          SettingSectionData(
+            name: 'Properties',
+            settings: [
+              activeFrame.addon.build(context),
+            ],
           ),
-          builder: _builder,
-          providerBuilder: _providerBuilder,
-          getQueryParameter: _getQueryParameter,
-        );
-}
-
-Map<String, String> _getQueryParameter(BuildContext context) {
-  final selectedItem = context.read<FrameSettingProvider>().value.activeFrame;
-
-  return {
-    'frame': selectedItem.name,
-  }..addAll(
-      selectedItem.addon.getQueryParameter(context),
-    );
-}
-
-SingleChildWidget _providerBuilder(
-  BuildContext context,
-) {
-  final selection = context.watch<FrameSettingProvider>().value;
-  final frame = selection.activeFrame;
-
-  return MultiProvider(
-    providers: [
-      ChangeNotifierProvider(
-        key: ValueKey(frame),
-        create: (context) => FrameProvider(frame),
+      ],
+      setting: DropdownSetting<Frame>(
+        options: frameBuilders,
+        initialSelection: activeFrame,
+        optionValueBuilder: (frame) => frame.name,
+        onSelected: (frame) {
+          onChanged(context, value.copyWith(activeFrame: frame));
+        },
       ),
-      frame.addon.providerBuilder(context)
-    ],
-  );
-}
+    );
+  }
 
-Widget _wrapperBuilder(
-  BuildContext context,
-  Widget child,
-  Map<String, dynamic> routerData,
-  FrameSetting data,
-) {
-  final Frame? selectedFrame = parseRouterData(
-    name: 'frame',
-    routerData: routerData,
-    mappedData: {for (var e in data.frames) e.name: e},
-  );
-
-  final initialData =
-      selectedFrame != null ? data.copyWith(activeFrame: selectedFrame) : data;
-  final activeFrame = initialData.activeFrame;
-  return ChangeNotifierProvider(
-    key: ValueKey(initialData),
-    create: (_) => FrameSettingProvider(initialData),
-    child: activeFrame.addon.wrapperBuilder(
+  @override
+  Widget buildProvider(
+    BuildContext context,
+    Map<String, String> queryParameters,
+    Widget child,
+  ) {
+    final initialData = settingFromQueryParameters(
+      queryParameters: queryParameters,
+      setting: setting,
+    );
+    return super.buildProvider(
       context,
-      routerData,
-      child,
-    ),
-  );
-}
+      queryParameters,
+      initialData.activeFrame.addon
+          .buildProvider(context, queryParameters, child),
+    );
+  }
 
-Widget _builder(BuildContext context) {
-  final setting = context.watch<FrameSettingProvider>().value;
-  final frameBuilders = setting.frames;
-  final activeFrame = setting.activeFrame;
+  @override
+  FrameSetting settingFromQueryParameters({
+    required Map<String, String> queryParameters,
+    required FrameSetting setting,
+  }) {
+    final activeFrame = parseQueryParameters(
+          name: 'frame',
+          queryParameters: queryParameters,
+          mappedData: {for (var e in setting.frames) e.name: e},
+        ) ??
+        setting.activeFrame;
 
-  return ComplexSetting(
-    name: 'Frame',
-    sections: [
-      if (activeFrame.getDefaultQueryParameters.isNotEmpty)
-        SettingSectionData(
-          name: 'Properties',
-          settings: [
-            activeFrame.addon.builder(context),
-          ],
-        ),
-    ],
-    setting: DropdownSetting<Frame>(
-      options: frameBuilders,
-      initialSelection: activeFrame,
-      optionValueBuilder: (frame) => frame.name,
-      onSelected: (frame) {
-        context.read<FrameSettingProvider>().tapped(frame);
-        context.read<AddOnProvider>().update();
-        context.goTo(
-          queryParams: {
-            'frame': frame.name,
-            ...frame.getDefaultQueryParameters,
-          },
-        );
-      },
-    ),
-  );
+    return setting.copyWith(activeFrame: activeFrame);
+  }
 }
 
 extension FrameBuilderExtension on BuildContext {
-  Frame? get frame => watch<FrameProvider?>()?.value;
+  Frame? get frame => getAddonValue<FrameSetting>()?.activeFrame;
 
   /// Creates adjustable parameters for the WidgetbookUseCase
   Widget Function(BuildContext, Widget)? get frameBuilder => frame?.builder;

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:widgetbook/src/addons/addon.dart';
 
 part 'localization_setting.freezed.dart';
 
 @freezed
-class LocalizationSetting with _$LocalizationSetting {
+class LocalizationSetting extends WidgetbookAddOnModel
+    with _$LocalizationSetting {
   @Assert('locales.isNotEmpty', 'locales cannot be empty')
   factory LocalizationSetting({
     required Locale activeLocale,
@@ -28,5 +30,14 @@ class LocalizationSetting with _$LocalizationSetting {
       locales: locales,
       localizationsDelegates: localizationsDelegates,
     );
+  }
+
+  const LocalizationSetting._();
+
+  @override
+  Map<String, String> toQueryParameter() {
+    return {
+      'locale': activeLocale.toString(),
+    };
   }
 }

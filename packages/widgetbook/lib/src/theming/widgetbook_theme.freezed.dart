@@ -106,7 +106,7 @@ class __$$_WidgetbookThemeCopyWithImpl<CustomTheme, $Res>
 /// @nodoc
 
 class _$_WidgetbookTheme<CustomTheme> implements _WidgetbookTheme<CustomTheme> {
-  _$_WidgetbookTheme({required this.name, required this.data});
+  const _$_WidgetbookTheme({required this.name, required this.data});
 
   @override
   final String name;
@@ -141,7 +141,7 @@ class _$_WidgetbookTheme<CustomTheme> implements _WidgetbookTheme<CustomTheme> {
 
 abstract class _WidgetbookTheme<CustomTheme>
     implements WidgetbookTheme<CustomTheme> {
-  factory _WidgetbookTheme(
+  const factory _WidgetbookTheme(
       {required final String name,
       required final CustomTheme data}) = _$_WidgetbookTheme<CustomTheme>;
 
