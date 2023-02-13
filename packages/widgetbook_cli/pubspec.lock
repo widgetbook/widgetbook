@@ -168,7 +168,7 @@ packages:
       name: dio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.6"
+    version: "5.0.0"
   file:
     dependency: "direct main"
     description:

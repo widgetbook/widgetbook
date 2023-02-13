@@ -22,7 +22,7 @@ dependencies:
   archive: ^3.3.0
   args: ^2.3.0
   ci: ^0.1.0
-  dio: ^4.0.6
+  dio: ^5.0.0
   file: ^6.1.2
   freezed_annotation: ^2.0.3
   http_parser: ^4.0.1 
