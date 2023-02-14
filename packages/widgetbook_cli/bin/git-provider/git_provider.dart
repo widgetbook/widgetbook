@@ -37,7 +37,7 @@ abstract class GitProvider {
         ..writeln('### 📑 Review')
         ..writeln()
         ..writeln(
-          '- 🔗 [Widgetbook Cloud - Review](${prefix}app.widgetbook.io/#/projects/$projectId/reviews/$reviewId/use-cases)',
+          '- 🔗 [Widgetbook Cloud - Review](${prefix}app.widgetbook.io/#/projects/$projectId/reviews/$reviewId/builds/$buildId/use-cases)',
         );
     }
 
