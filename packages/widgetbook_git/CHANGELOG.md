@@ -1,3 +1,10 @@
+## 2.2.0-beta.8
+
+ - **FIX**: :bug: reads actor and repository including newline. ([3bc05624](https://github.com/widgetbook/widgetbook/commit/3bc05624c608a5cbd7abb70cf20fda703110ca53))
+ - **FIX**: :bug: bad revision on git diff. ([7019e1a9](https://github.com/widgetbook/widgetbook/commit/7019e1a91b09f8d7702f605f9cec8888d6d6e428))
+ - **FEAT**: :memo: updated widgetbook git license and add 2 features. ([097be845](https://github.com/widgetbook/widgetbook/commit/097be8458ad5cfd16d2eaf886644e6a85f753e41))
+ - **FEAT**: :sparkles: add forked git package. ([a7f77ebd](https://github.com/widgetbook/widgetbook/commit/a7f77ebd60e22ae62e39af201bf600e0fa098a8a))
+
 ## 2.2.0-beta.7
 
  - **FIX**: :bug: reads actor and repository including newline. ([3bc05624](https://github.com/widgetbook/widgetbook/commit/3bc05624c608a5cbd7abb70cf20fda703110ca53))
