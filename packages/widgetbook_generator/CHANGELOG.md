@@ -1,3 +1,24 @@
+## 3.0.0-beta.9
+
+ - **REFACTOR**: :recycle: warnings. ([8bf0b124](https://github.com/widgetbook/widgetbook/commit/8bf0b12447bf05ac35879000d5ff64ce27244290))
+ - **REFACTOR**: :recycle: settings. ([254ebef6](https://github.com/widgetbook/widgetbook/commit/254ebef6fe38b2d8f3fc847366f4725ab9292ccb))
+ - **REFACTOR**: :recycle: adjust generator to `AddOn` implemementation. ([a91edbbf](https://github.com/widgetbook/widgetbook/commit/a91edbbf91500329bda9eb3882861b84527b9c4a))
+ - **REFACTOR**: :recycle: rename `settings` to `setting` for `AddOn`s. ([c88b7327](https://github.com/widgetbook/widgetbook/commit/c88b7327ace63cb2d2fd4b4dc8f699611f6a4998))
+ - **REFACTOR**: :recycle: remove resolvers. ([59565b2a](https://github.com/widgetbook/widgetbook/commit/59565b2a2b49803dff8f3d5824c39c35a68eeeac))
+ - **REFACTOR**: adjusted code to match linter. ([04dd9f1e](https://github.com/widgetbook/widgetbook/commit/04dd9f1e6678e9d9531cb70c777281c4d050aa61))
+ - **FIX**: :bug: locales are not correctly generated. ([dd2807d0](https://github.com/widgetbook/widgetbook/commit/dd2807d0f34f1c4dc0d084e5e07d08d8c8c1f95c))
+ - **FIX**: imports of file not deterministic. ([2ffb120d](https://github.com/widgetbook/widgetbook/commit/2ffb120ddbb269d7a63494acfeb6adb009a1f6d3))
+ - **FIX**: custom painter Widgets are incorrectly rendered. ([965c355e](https://github.com/widgetbook/widgetbook/commit/965c355e03cd7e9c9d62c473f1d29a006c07626e))
+ - **FIX**: recommited binary files to git. ([70f38e8f](https://github.com/widgetbook/widgetbook/commit/70f38e8f2427dfd55c6573f357099eb41dbdee63))
+ - **FIX**: added error when WidgetbookTheme is used on non-function code elements. ([b7e65c24](https://github.com/widgetbook/widgetbook/commit/b7e65c24a7f61ebe0e7e5f498c9c64de8bfea45b))
+ - **FEAT**: :sparkles: add design link property. ([7aa22dca](https://github.com/widgetbook/widgetbook/commit/7aa22dcab851ab0ca42a1902b8e6c08c2caae195))
+ - **FEAT**: :sparkles: add CustomThemeAddon to generator. ([ed199af2](https://github.com/widgetbook/widgetbook/commit/ed199af20c0644cce762dc2d002b1e9b6e2f0a89))
+ - **FEAT**: :sparkles: add FrameAddon to generator. ([c77fddeb](https://github.com/widgetbook/widgetbook/commit/c77fddeb09567cea874185ed6ffed0f5e408d0c2))
+ - **FEAT**: :sparkles: add LocalizationAddon to generator. ([0df318ec](https://github.com/widgetbook/widgetbook/commit/0df318ecae3e8737aabc7c94a70011d162fade33))
+ - **FEAT**: :sparkles: add TextScaleThemeAddon to generator. ([563d6697](https://github.com/widgetbook/widgetbook/commit/563d6697cc5e354e6adc3a72a3b7d6b905f67ac0))
+ - **FEAT**: :sparkles: add MaterialThemeAddon to generator. ([ba1b8f82](https://github.com/widgetbook/widgetbook/commit/ba1b8f82ec7ed86fd4fcc9a6181c4ab9a82b9a4e))
+ - **FEAT**: generator reads use-case definition. ([84298485](https://github.com/widgetbook/widgetbook/commit/84298485ce2d9ec35fec68188dc91a52e5ab7764))
+
 ## 3.0.0-beta.8
 
  - **REFACTOR**: :recycle: warnings. ([8bf0b124](https://github.com/widgetbook/widgetbook/commit/8bf0b12447bf05ac35879000d5ff64ce27244290))

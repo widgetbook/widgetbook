@@ -1,6 +1,6 @@
 name: widgetbook_cli
 description: A CLI to interact with Widgetbook Cloud.
-version: 3.0.0-beta.18
+version: 3.0.0-beta.19
 homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=widgetbook_models
 repository: https://github.com/widgetbook/widgetbook
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
@@ -33,8 +33,8 @@ dependencies:
   pubspec: ^2.3.0
   test: ^1.12.1
   version: ^2.0.0
-  widgetbook_exception: ^0.0.1-beta.2
-  widgetbook_git: ^2.2.0-beta.7
+  widgetbook_exception: ^0.0.1-beta.3
+  widgetbook_git: ^2.2.0-beta.8
 executables:
   widgetbook: cli_production
   widgetbook_staging: cli_staging
