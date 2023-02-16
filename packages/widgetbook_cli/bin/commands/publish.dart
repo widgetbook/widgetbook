@@ -216,7 +216,7 @@ class PublishCommand extends WidgetbookCommand {
     final commits = await gitDir.commits();
     if (_ciWrapper.isGithub()) {
       final commitEntry = commits.entries.first;
-      if (commitEntry.value.message.startsWith('Merge: ')) {
+      if (commitEntry.value.message.startsWith('Merge ')) {
         return commits.entries.toList()[1].key;
       }
 
