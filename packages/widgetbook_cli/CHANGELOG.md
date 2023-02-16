@@ -1,3 +1,7 @@
+## 3.0.0-beta.20
+
+ - **FIX**: :bug: identifying merge commits with incorrect keywords. ([984f1bfb](https://github.com/widgetbook/widgetbook/commit/984f1bfb0c2eb516057056605bdb5210b97e8142))
+
 ## 3.0.0-beta.19
 
  - **REFACTOR**: :recycle: settings. ([254ebef6](https://github.com/widgetbook/widgetbook/commit/254ebef6fe38b2d8f3fc847366f4725ab9292ccb))
