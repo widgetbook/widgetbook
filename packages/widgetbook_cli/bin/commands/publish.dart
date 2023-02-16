@@ -210,6 +210,22 @@ class PublishCommand extends WidgetbookCommand {
   }
 
   @visibleForTesting
+  Future<String?> gitProviderSha({
+    required GitDir gitDir,
+  }) async {
+    final commits = await gitDir.commits();
+    if (_ciWrapper.isGithub()) {
+      final commitEntry = commits.entries.first;
+      if (commitEntry.value.message.startsWith('Merge: ')) {
+        return commits.entries.toList()[1].key;
+      }
+
+      return commitEntry.key;
+    }
+    return null;
+  }
+
+  @visibleForTesting
   Future<PublishArgs> getArguments({
     required GitDir gitDir,
   }) async {
@@ -218,7 +234,9 @@ class PublishCommand extends WidgetbookCommand {
     final currentBranch = await gitDir.currentBranch();
     final branch = results['branch'] as String? ?? currentBranch.branchName;
 
-    final commit = results['commit'] as String? ?? currentBranch.sha;
+    final commit = results['commit'] as String? ??
+        await gitProviderSha(gitDir: gitDir) ??
+        currentBranch.sha;
 
     final gitProvider = results['git-provider'] as String;
     final gitHubToken = results['github-token'] as String?;
