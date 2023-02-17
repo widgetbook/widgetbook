@@ -1,3 +1,7 @@
+## 3.0.0-beta.22
+
+ - **FEAT**: support for Codemagic. ([a2271e5f](https://github.com/widgetbook/widgetbook/commit/a2271e5f2361855b5046ed5ff946a39559288afc))
+
 ## 3.0.0-beta.21
 
  - **FIX**: :bug: skips most recent commit on base ref. ([1e23ec58](https://github.com/widgetbook/widgetbook/commit/1e23ec5868cebb9883e7b9b14da2d8e9db373ab5))
