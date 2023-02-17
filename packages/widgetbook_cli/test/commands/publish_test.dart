@@ -450,6 +450,7 @@ gpgsig -----BEGIN PGP SIGNATURE-----
             (_) => Future.value({}),
           );
           when(() => ciWrapper.isGithub()).thenReturn(false);
+          when(() => ciWrapper.isCodemagic()).thenReturn(false);
           expect(
             await command.gitProviderSha(gitDir: gitDir),
             isNull,
@@ -466,6 +467,7 @@ gpgsig -----BEGIN PGP SIGNATURE-----
             }),
           );
           when(() => ciWrapper.isGithub()).thenReturn(false);
+          when(() => ciWrapper.isCodemagic()).thenReturn(false);
           expect(
             await command.gitProviderSha(gitDir: gitDir),
             isNull,
@@ -480,6 +482,7 @@ gpgsig -----BEGIN PGP SIGNATURE-----
             (_) => Future.value(commits),
           );
           when(() => ciWrapper.isGithub()).thenReturn(true);
+          when(() => ciWrapper.isCodemagic()).thenReturn(true);
           expect(
             await command.gitProviderSha(gitDir: gitDir),
             commits.entries.last.key,
@@ -649,6 +652,7 @@ gpgsig -----BEGIN PGP SIGNATURE-----
       when(() => ciWrapper.isBitBucket()).thenReturn(false);
       when(() => ciWrapper.isGitLab()).thenReturn(false);
       when(() => ciWrapper.isAzure()).thenReturn(false);
+      when(() => ciWrapper.isCodemagic()).thenReturn(false);
 
       expect(
         publishCommand.run,

@@ -20,4 +20,8 @@ class CiWrapper {
   bool isBitBucket() {
     return ci.Vendor.IS_BITBUCKET;
   }
+
+  bool isCodemagic() {
+    return ci.Vendor.IS_CODEMAGIC;
+  }
 }

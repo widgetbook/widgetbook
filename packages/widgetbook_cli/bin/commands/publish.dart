@@ -214,11 +214,24 @@ class PublishCommand extends WidgetbookCommand {
     required GitDir gitDir,
   }) async {
     final commits = await gitDir.commits();
+
     if (_ciWrapper.isGithub()) {
       final commitEntry = commits.entries.first;
       if (commitEntry.value.message.startsWith(
         RegExp(
           'Merge [0-9a-f]{40} into [0-9a-f]{40}',
+        ),
+      )) {
+        return commits.entries.toList()[1].key;
+      }
+
+      return commitEntry.key;
+    }
+    if (_ciWrapper.isCodemagic()) {
+      final commitEntry = commits.entries.first;
+      if (commitEntry.value.message.startsWith(
+        RegExp(
+          'Merge remote-tracking branch',
         ),
       )) {
         return commits.entries.toList()[1].key;
