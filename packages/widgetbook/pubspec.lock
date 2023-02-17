@@ -251,7 +251,7 @@ packages:
       name: go_router
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.6"
+    version: "6.0.8"
   graphs:
     dependency: transitive
     description:
@@ -578,14 +578,14 @@ packages:
       name: widgetbook_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0-beta.5"
+    version: "3.0.0-beta.6"
   widgetbook_models:
     dependency: "direct main"
     description:
       name: widgetbook_models
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0-beta.2"
+    version: "3.0.0-beta.3"
   yaml:
     dependency: transitive
     description:
