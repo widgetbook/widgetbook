@@ -216,7 +216,11 @@ class PublishCommand extends WidgetbookCommand {
     final commits = await gitDir.commits();
     if (_ciWrapper.isGithub()) {
       final commitEntry = commits.entries.first;
-      if (commitEntry.value.message.startsWith('Merge ')) {
+      if (commitEntry.value.message.startsWith(
+        RegExp(
+          'Merge [0-9a-f]{40} into [0-9a-f]{40}',
+        ),
+      )) {
         return commits.entries.toList()[1].key;
       }
 
