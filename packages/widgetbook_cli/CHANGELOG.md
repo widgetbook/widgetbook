@@ -1,3 +1,7 @@
+## 3.0.0-beta.21
+
+ - **FIX**: :bug: skips most recent commit on base ref. ([1e23ec58](https://github.com/widgetbook/widgetbook/commit/1e23ec5868cebb9883e7b9b14da2d8e9db373ab5))
+
 ## 3.0.0-beta.20
 
  - **FIX**: :bug: identifying merge commits with incorrect keywords. ([984f1bfb](https://github.com/widgetbook/widgetbook/commit/984f1bfb0c2eb516057056605bdb5210b97e8142))
