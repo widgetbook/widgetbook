@@ -52,6 +52,12 @@ class CiParserRunner {
         platformWrapper: _platformWrapper,
       );
     }
+    if (_ciWrapper.isCodemagic()) {
+      return CodemagicParser(
+        argResults: argResults,
+        platformWrapper: _platformWrapper,
+      );
+    }
 
     return null;
   }
