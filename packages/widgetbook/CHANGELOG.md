@@ -1,3 +1,7 @@
+## 3.0.0-beta.11
+
+ - **FIX**: :bug: requires `directories` to be not empty. ([8e9b7aa1](https://github.com/widgetbook/widgetbook/commit/8e9b7aa168052f604e634b778c1fc500a9d0c6cb))
+
 ## 3.0.0-beta.10
 
  - **REFACTOR**: :recycle: `AddOn` API. ([31734f9e](https://github.com/widgetbook/widgetbook/commit/31734f9ed6b5de14979308c9bf1825dab2ecc99e))
