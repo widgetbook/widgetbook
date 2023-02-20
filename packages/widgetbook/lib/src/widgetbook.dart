@@ -37,10 +37,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     this.directories = const <MultiChildNavigationNodeData>[],
     required this.appBuilder,
     required this.addons,
-  }) : assert(
-          directories.length > 0,
-          'Please specify at least one $MultiChildNavigationNodeData.',
-        );
+  });
 
   final List<WidgetbookAddOn> addons;
 

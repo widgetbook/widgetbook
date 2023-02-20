@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
 
 Matcher expectAssertionErrorWithMessage({
   required String message,
@@ -48,22 +47,6 @@ void main() {
       group(
         'constructor throws $AssertionError when',
         () {
-          test(
-            'Navigation tree children are empty',
-            () {
-              expect(
-                () => Widgetbook<ThemeData>(
-                  addons: const [],
-                  appBuilder: _defaultAppBuilderMethod,
-                ),
-                expectAssertionErrorWithMessage(
-                  message:
-                      'Please specify at least one $MultiChildNavigationNodeData.',
-                ),
-              );
-            },
-          );
-
           test(
             'devices is empty',
             () {
