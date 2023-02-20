@@ -29,19 +29,24 @@ See [Setting up a webhook](https://docs.github.com/en/developers/webhooks-and-ev
 
 You need to meet the following requirements to setup a webhook to Widgetbook Cloud:
 - Webhook Secret
+- Repository Name
 - Payload URL
 
 ### Obtaining the Webhook Secret
 
-The webhook secret can be obtained by going to the project overview and click the `Get secret` button within the webhook card.
+1. Navigate to your project overview in Widgetbook Cloud, then the settings page.
+2. Click the `Get secret` button within the webhook card.
+3. Enter your full repository name in the text field. It is important for the repository name to be in the format `user-name/repository-name`.
+4. Click on `I understand` and the secret will be copied into your clipboard.
 
 ### Setting up the webhook
 
 1. Go to https://github.com/user-name/repo-name/settings/hooks. Make sure to replace `user-name` and `repo-name` with your appropriate values.
-1. Click `Add webhook`
-1. Paste `https://api.widgetbook.io/v1/webhooks/github` into the `Payload URL` field.
-1. Set `Content type` to `application/json`
-1. Paste your Widgetbook Cloud webhook secret into the `Secret` field.
-1. Select when to trigger the webhook.
+2. Click `Add webhook`
+3. Paste `https://api.widgetbook.io/v1/webhooks/github` into the `Payload URL` field.
+4. Set `Content type` to `application/json`
+5. Paste your Widgetbook Cloud webhook secret into the `Secret` field.
+    * Note that you will need to do this every time you obtain a new webhook secret from your Widgetbook Cloud project settings.
+6. Select when to trigger the webhook.
     1. Select `Send me everything` or
     2. Select `Let me select individual events` and enable `Pull requests` and `Pushes`. You can disable all other options. 
