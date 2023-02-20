@@ -7,6 +7,23 @@
             "Overview", "/"
         ],
         [
+            "Getting Started", 
+            [
+                [
+                    "Overview", "/getting-started/overview"
+                ],
+                [
+                    "Getting Started", "/getting-started/getting-started"
+                ],
+                [
+                    "Installation", "/getting-started/installation"
+                ],
+                [
+                    "Installation for mono repos", "/getting-started/installation-mono-repo"
+                ]
+            ]
+        ],
+        [
             "Package: widgetbook",
             [
                 [
