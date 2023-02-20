@@ -32,38 +32,43 @@ String generateWidgetbook({
       _generateDirectoriesInstances(useCases, foldersExpanded, widgetsExpanded);
 
   final addons = <AddOnInstance>[];
-  switch (constructor) {
-    case WidgetbookConstructor.material:
-      addons.add(
-        CustomThemeAddonInstance(
-          themes: themes,
-          themeType: 'ThemeData',
-        ),
-      );
-      break;
-    case WidgetbookConstructor.cupertino:
-      addons.add(
-        CustomThemeAddonInstance(
-          themes: themes,
-          themeType: 'CupertinoThemeData',
-        ),
-      );
-      break;
-    case WidgetbookConstructor.custom:
-      if (widgetbookThemeData != null) {
+  if (themes.isNotEmpty) {
+    switch (constructor) {
+      case WidgetbookConstructor.material:
         addons.add(
           CustomThemeAddonInstance(
             themes: themes,
-            themeType: widgetbookThemeData.name,
+            themeType: 'ThemeData',
           ),
         );
-      } else {
-        // TODO handle error
-      }
-      break;
+        break;
+      case WidgetbookConstructor.cupertino:
+        addons.add(
+          CustomThemeAddonInstance(
+            themes: themes,
+            themeType: 'CupertinoThemeData',
+          ),
+        );
+        break;
+      case WidgetbookConstructor.custom:
+        if (widgetbookThemeData != null) {
+          addons.add(
+            CustomThemeAddonInstance(
+              themes: themes,
+              themeType: widgetbookThemeData.name,
+            ),
+          );
+        } else {
+          // TODO handle error
+        }
+        break;
+    }
   }
 
-  addons.add(TextScaleAddonInstance(textScales: textScaleFactors));
+  if (textScaleFactors.isNotEmpty) {
+    addons.add(TextScaleAddonInstance(textScales: textScaleFactors));
+  }
+
   if (localesData != null && localizationDelegatesData != null) {
     addons.add(
       LocalizationAddonInstance(
@@ -72,7 +77,10 @@ String generateWidgetbook({
       ),
     );
   }
-  addons.add(FrameAddonInstance(devices: devices));
+
+  if (devices.isNotEmpty) {
+    addons.add(FrameAddonInstance(devices: devices));
+  }
 
   final widgetbookInstanceCode = WidgetbookInstance(
     constructor: constructor,
