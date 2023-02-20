@@ -16,20 +16,22 @@ class AddonInjectorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Nested(
-      key: ValueKey(routerData),
-      children: [
-        ...addons.map(
-          (e) => SingleChildBuilder(
-            builder: (context, child) => e.buildProvider(
-              context,
-              routerData,
-              child!,
-            ),
-          ),
-        ),
-      ],
-      child: child,
-    );
+    return addons.isEmpty
+        ? child
+        : Nested(
+            key: ValueKey(routerData),
+            children: [
+              ...addons.map(
+                (e) => SingleChildBuilder(
+                  builder: (context, child) => e.buildProvider(
+                    context,
+                    routerData,
+                    child!,
+                  ),
+                ),
+              ),
+            ],
+            child: child,
+          );
   }
 }
