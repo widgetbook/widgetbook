@@ -504,7 +504,7 @@ packages:
       name: test
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.22.2"
+    version: "1.23.1"
   test_api:
     dependency: transitive
     description:
@@ -518,7 +518,7 @@ packages:
       name: test_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.22"
+    version: "0.4.24"
   timing:
     dependency: transitive
     description:
@@ -588,14 +588,14 @@ packages:
       name: widgetbook_exception
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1-beta.2"
+    version: "0.0.1-beta.3"
   widgetbook_git:
     dependency: "direct main"
     description:
       name: widgetbook_git
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.0-beta.7"
+    version: "2.2.0-beta.8"
   yaml:
     dependency: transitive
     description:
