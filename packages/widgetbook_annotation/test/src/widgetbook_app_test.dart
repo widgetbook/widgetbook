@@ -7,7 +7,7 @@ void main() {
     '$WidgetbookApp',
     () {
       test('defaults to empty list', () {
-        const instance = WidgetbookApp.material(name: 'Test');
+        const instance = WidgetbookApp.material();
 
         expect(
           instance.devices,
