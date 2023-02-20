@@ -4,7 +4,6 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as anno;
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 @anno.WidgetbookApp.material(
-  name: 'Widgetbook',
   devices: [
     Apple.iPhone11,
     Apple.iPhone12,
