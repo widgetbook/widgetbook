@@ -1,3 +1,7 @@
+## 3.0.0-beta.10
+
+ - **FIX**: :bug: expects data that does not exist. ([6396e411](https://github.com/widgetbook/widgetbook/commit/6396e41129c586fdbcde5ce6dabb0f1a8fbfbe9e))
+
 ## 3.0.0-beta.9
 
  - **REFACTOR**: :recycle: warnings. ([8bf0b124](https://github.com/widgetbook/widgetbook/commit/8bf0b12447bf05ac35879000d5ff64ce27244290))

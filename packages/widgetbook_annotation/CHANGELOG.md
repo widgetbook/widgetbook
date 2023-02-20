@@ -1,3 +1,7 @@
+## 3.0.0-beta.6
+
+ - **FIX**: :bug: remove obsolete `name` property. ([0e681371](https://github.com/widgetbook/widgetbook/commit/0e68137119af6a73e8f182ff833421f196589283))
+
 ## 3.0.0-beta.5
 
  - **REFACTOR**: :recycle: settings. ([254ebef6](https://github.com/widgetbook/widgetbook/commit/254ebef6fe38b2d8f3fc847366f4725ab9292ccb))

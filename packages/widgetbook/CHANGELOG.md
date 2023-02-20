@@ -1,3 +1,8 @@
+## 3.0.0-beta.10
+
+ - **REFACTOR**: :recycle: `AddOn` API. ([31734f9e](https://github.com/widgetbook/widgetbook/commit/31734f9ed6b5de14979308c9bf1825dab2ecc99e))
+ - **FIX**: :bug: addons property cannot be empty. ([67e1734f](https://github.com/widgetbook/widgetbook/commit/67e1734f556df61fbbbd8231464bbb66b86c38d2))
+
 ## 3.0.0-beta.9
 
  - **REFACTOR**: :zap: refactored addons. ([16c007ee](https://github.com/widgetbook/widgetbook/commit/16c007eeb0a8fc6fa601332751a93a87d5e2b77d))
