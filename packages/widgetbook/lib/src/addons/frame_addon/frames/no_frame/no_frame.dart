@@ -6,7 +6,6 @@ class NoFrame extends Frame {
       : super(
           name: 'No Frame',
           addon: NoFrameAddon(),
-          getDefaultQueryParameters: {},
         );
 
   @override

@@ -3,88 +3,93 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../utils/addon_test_helper.dart';
+import 'helper.dart';
 
 void main() {
   group(
-    '$FrameAddon',
+    '$MaterialThemeAddon',
     () {
-      final deviceSetting = DeviceSetting.firstAsSelected(
-        devices: [
-          Apple.iPhone12,
-          Apple.iPhone13,
-          Apple.iPhone13Mini,
-        ],
+      final bluetheme = ThemeData(
+        primaryColor: colorBlue,
       );
 
-      final noFrame = NoFrame();
-      final deviceFrame = DefaultDeviceFrame(setting: deviceSetting);
-      final widgetbookFrame = WidgetbookFrame(setting: deviceSetting);
-
-      final setting = FrameSetting.firstAsSelected(
-        frames: [
-          noFrame,
-          deviceFrame,
-          widgetbookFrame,
-        ],
+      final yellowTheme = ThemeData(
+        primaryColor: colorYellow,
       );
-      final addon = FrameAddon(
+
+      final blueWidgetbookTheme = WidgetbookTheme(
+        name: 'Blue',
+        data: bluetheme,
+      );
+
+      final yellowWidgetbookTheme = WidgetbookTheme(
+        name: 'Yellow',
+        data: yellowTheme,
+      );
+
+      final setting = MaterialThemeSetting(
+        activeTheme: blueWidgetbookTheme,
+        themes: [blueWidgetbookTheme, yellowWidgetbookTheme],
+      );
+
+      final addon = MaterialThemeAddon(
         setting: setting,
       );
 
       testWidgets(
-        'can access $Frame via the context',
+        'can access text scale factor via the context',
         (WidgetTester tester) async {
           await testAddon(
             tester: tester,
             addon: addon,
             expect: (context) => expect(
-              context.frame,
-              equals(noFrame),
+              context.materialTheme,
+              equals(blueWidgetbookTheme.data),
             ),
           );
         },
       );
 
       testWidgets(
-        'can activate a $Frame',
+        'can activate a text scale factor',
         (WidgetTester tester) async {
           await testAddon(
             tester: tester,
             addon: addon,
             act: (context) async => addon.onChanged(
               context,
-              setting.copyWith(
-                activeFrame: deviceFrame,
-              ),
+              setting.copyWith(activeTheme: yellowWidgetbookTheme),
             ),
             expect: (context) => expect(
-              context.frame,
-              equals(deviceFrame),
+              context.materialTheme,
+              equals(yellowWidgetbookTheme.data),
             ),
           );
         },
       );
 
       testWidgets(
-        'can activate $Frame via Widget',
+        'can activate text scale factor via Widget',
         (WidgetTester tester) async {
           await testAddon(
             tester: tester,
             addon: addon,
             act: (context) async {
-              final dropdownFinder = find.byType(DropdownMenu<Frame>);
+              final dropdownFinder = find.byType(
+                DropdownMenu<WidgetbookTheme<ThemeData>>,
+              );
               await tester.tap(dropdownFinder);
               await tester.pumpAndSettle();
 
               final textFinder = find.byWidgetPredicate(
-                (widget) => widget is Text && widget.data == 'Widgetbook Frame',
+                (widget) => widget is Text && widget.data == 'Yellow',
               );
               await tester.tap(textFinder.last);
               await tester.pumpAndSettle();
             },
             expect: (context) => expect(
-              context.frame,
-              equals(widgetbookFrame),
+              context.materialTheme,
+              equals(yellowWidgetbookTheme.data),
             ),
           );
         },

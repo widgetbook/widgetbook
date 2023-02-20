@@ -102,11 +102,12 @@ class __$$_FrameSettingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_FrameSetting implements _FrameSetting {
+class _$_FrameSetting extends _FrameSetting {
   _$_FrameSetting(
       {required final List<Frame> frames, required this.activeFrame})
       : assert(frames.isNotEmpty, 'frames cannot be empty'),
-        _frames = frames;
+        _frames = frames,
+        super._();
 
   final List<Frame> _frames;
   @override
@@ -145,10 +146,11 @@ class _$_FrameSetting implements _FrameSetting {
       __$$_FrameSettingCopyWithImpl<_$_FrameSetting>(this, _$identity);
 }
 
-abstract class _FrameSetting implements FrameSetting {
+abstract class _FrameSetting extends FrameSetting {
   factory _FrameSetting(
       {required final List<Frame> frames,
       required final Frame activeFrame}) = _$_FrameSetting;
+  _FrameSetting._() : super._();
 
   @override
   List<Frame> get frames;

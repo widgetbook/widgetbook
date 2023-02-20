@@ -4,8 +4,8 @@ part 'widgetbook_theme.freezed.dart';
 
 @freezed
 class WidgetbookTheme<CustomTheme> with _$WidgetbookTheme<CustomTheme> {
-  factory WidgetbookTheme({
+  const factory WidgetbookTheme({
     required String name,
     required CustomTheme data,
-  }) = _WidgetbookTheme;
+  }) = _WidgetbookTheme<CustomTheme>;
 }

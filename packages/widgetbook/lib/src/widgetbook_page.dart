@@ -14,7 +14,7 @@ class WidgetbookPage extends StatelessWidget {
   });
 
   final bool disableProperties;
-  final Map<String, dynamic> routerData;
+  final Map<String, String> routerData;
 
   @override
   Widget build(BuildContext context) {

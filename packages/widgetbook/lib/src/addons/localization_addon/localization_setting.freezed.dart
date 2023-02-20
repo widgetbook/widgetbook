@@ -120,7 +120,7 @@ class __$$_LocalizationSettingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LocalizationSetting implements _LocalizationSetting {
+class _$_LocalizationSetting extends _LocalizationSetting {
   _$_LocalizationSetting(
       {required this.activeLocale,
       required final List<Locale> locales,
@@ -128,7 +128,8 @@ class _$_LocalizationSetting implements _LocalizationSetting {
           localizationsDelegates})
       : assert(locales.isNotEmpty, 'locales cannot be empty'),
         _locales = locales,
-        _localizationsDelegates = localizationsDelegates;
+        _localizationsDelegates = localizationsDelegates,
+        super._();
 
   @override
   final Locale activeLocale;
@@ -181,12 +182,13 @@ class _$_LocalizationSetting implements _LocalizationSetting {
           this, _$identity);
 }
 
-abstract class _LocalizationSetting implements LocalizationSetting {
+abstract class _LocalizationSetting extends LocalizationSetting {
   factory _LocalizationSetting(
       {required final Locale activeLocale,
       required final List<Locale> locales,
       required final List<LocalizationsDelegate<dynamic>>
           localizationsDelegates}) = _$_LocalizationSetting;
+  _LocalizationSetting._() : super._();
 
   @override
   Locale get activeLocale;

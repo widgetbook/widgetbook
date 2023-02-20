@@ -6,10 +6,6 @@ class DefaultDeviceFrame extends Frame {
       : super(
           name: 'Device Frame',
           addon: DeviceAddon(setting: setting),
-          getDefaultQueryParameters: {
-            'orientation': Orientation.portrait.name,
-            'device': setting.activeDevice.name,
-          },
         );
 
   @override

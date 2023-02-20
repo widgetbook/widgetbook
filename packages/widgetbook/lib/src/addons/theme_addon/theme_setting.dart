@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-class ThemeSetting<T> {
+class ThemeSetting<T> extends WidgetbookAddOnModel {
   ThemeSetting({
     required this.themes,
     required this.activeTheme,
@@ -32,6 +32,13 @@ class ThemeSetting<T> {
       themes: themes ?? this.themes,
       activeTheme: activeTheme ?? this.activeTheme,
     );
+  }
+
+  @override
+  Map<String, String> toQueryParameter() {
+    return {
+      'theme': activeTheme.name,
+    };
   }
 
   @override

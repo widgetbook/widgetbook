@@ -12,23 +12,23 @@ class AddonInjectorWidget extends StatelessWidget {
 
   final List<WidgetbookAddOn> addons;
   final Widget child;
-  final Map<String, dynamic> routerData;
+  final Map<String, String> routerData;
 
   @override
   Widget build(BuildContext context) {
     return Nested(
       key: ValueKey(routerData),
-      children: addons
-          .map(
-            (e) => SingleChildBuilder(
-              builder: (context, child) => e.wrapperBuilder(
-                context,
-                routerData,
-                child!,
-              ),
+      children: [
+        ...addons.map(
+          (e) => SingleChildBuilder(
+            builder: (context, child) => e.buildProvider(
+              context,
+              routerData,
+              child!,
             ),
-          )
-          .toList(),
+          ),
+        ),
+      ],
       child: child,
     );
   }

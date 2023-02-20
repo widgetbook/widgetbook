@@ -128,12 +128,13 @@ class __$$_DeviceSettingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_DeviceSetting implements _DeviceSetting {
+class _$_DeviceSetting extends _DeviceSetting {
   _$_DeviceSetting(
       {required final List<Device> devices,
       required this.activeDevice,
       this.orientation = Orientation.portrait})
-      : _devices = devices;
+      : _devices = devices,
+        super._();
 
   final List<Device> _devices;
   @override
@@ -177,11 +178,12 @@ class _$_DeviceSetting implements _DeviceSetting {
       __$$_DeviceSettingCopyWithImpl<_$_DeviceSetting>(this, _$identity);
 }
 
-abstract class _DeviceSetting implements DeviceSetting {
+abstract class _DeviceSetting extends DeviceSetting {
   factory _DeviceSetting(
       {required final List<Device> devices,
       required final Device activeDevice,
       final Orientation orientation}) = _$_DeviceSetting;
+  _DeviceSetting._() : super._();
 
   @override
   List<Device> get devices;

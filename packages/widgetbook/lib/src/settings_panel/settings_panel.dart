@@ -22,7 +22,7 @@ class SettingsPanel extends StatelessWidget {
                 settings: [
                   core.SettingsPanelData(
                     name: 'Properties',
-                    settings: addons.map((e) => e.builder(context)).toList(),
+                    settings: addons.map((e) => e.build(context)).toList(),
                   ),
                   core.SettingsPanelData(
                     name: 'Knobs',

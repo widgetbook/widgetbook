@@ -7,10 +7,6 @@ class WidgetbookFrame extends Frame {
   }) : super(
           name: 'Widgetbook Frame',
           addon: DeviceAddon(setting: setting),
-          getDefaultQueryParameters: {
-            'orientation': Orientation.portrait.name,
-            'device': setting.activeDevice.name,
-          },
         );
 
   static MediaQueryData mediaQuery({
