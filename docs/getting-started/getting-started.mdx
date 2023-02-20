@@ -62,14 +62,85 @@ Make sure to depend on the Widgetbook packages.
   ]}
 >
   <TabItem value="generator">
-    ```dart
-    @WidgetbookApp.material(
-        name: 'A name',
-    )
+
+    Create a new file in your `lib` folder called `app.dart` or annotate an existing code element using the `@WidgetbookApp` annotation. 
+
+    <Info>Dependending of the file in which `@WidgetbookApp` is used, a corresponding `.widgetbook.dart` file will be created by the [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator). The annotated code element does not have an inpact of the generated output code.</Info>
+
+    ```dart title="Setup of Widgetbook: app.dart"
+    @WidgetbookApp.material()
     int notUsed = 0;
     ```
+
+    Run the [build_runner](https://pub.dev/packages/build_runner) by executing `flutter run build_runner build`.
+    The command generates the `app.widgetbook.dart` file. 
+
+    ```dart title="Generated Widgetbook file: app.widgetbook.dart"
+    import 'package:flutter/material.dart';
+    import 'package:widgetbook/widgetbook.dart';
+
+    void main() {
+      runApp(HotReload());
+    }
+
+    class HotReload extends StatelessWidget {
+      const HotReload({Key? key}) : super(key: key);
+
+      @override
+      Widget build(BuildContext context) {
+        return Widgetbook.material(
+          addons: [],
+          directories: [],
+        );
+      }
+    }
+    ```
+
   </TabItem>
   <TabItem value="manual">
+    Create a new file `app.widgetbook.dart` in your `lib` folder.
 
+    ```dart title="Widgetbook file: app.widgetbook.dart"
+    import 'package:flutter/material.dart';
+    import 'package:widgetbook/widgetbook.dart';
+
+    void main() {
+      runApp(const HotReload());
+    }
+
+    class HotReload extends StatelessWidget {
+      const HotReload({Key? key}) : super(key: key);
+
+      @override
+      Widget build(BuildContext context) {
+        return Widgetbook.material(
+          addons: [],
+          directories: [],
+        );
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+## Run the empty Widgetbook
+
+Check if everything works by running `flutter run` with the newly created Widgetbook:
+
+<Tabs
+  values={[
+    { label: 'MacOS', value: 'macos' },
+    { label: 'Web', value: 'web' },
+  ]}
+>
+  <TabItem value="macos">
+    ```bash
+    flutter run -d macos -t lib/app.widgetbook.dart
+    ```
+  </TabItem>
+  <TabItem value="web">
+    ```bash
+    flutter run -d chrome -t lib/app.widgetbook.dart
+    ```
   </TabItem>
 </Tabs>
