@@ -16,20 +16,26 @@ The **Generator** approach uses the [widgetbook_generator package](https://pub.d
 <Tabs
   groupId="approach"
   values={[
-    { label: 'Genenrator', value: 'generator' },
+    { label: 'Generator', value: 'generator' },
     { label: 'Manual', value: 'manual' },
   ]}
 >
-  <TabItem value="generator">👋 This is the content for the first tab.</TabItem>
-  <TabItem value="manual">...and this is the content for the second tab!</TabItem>
+  <TabItem value="generator">
+
+  </TabItem>
+  <TabItem value="manual">
+
+  </TabItem>
 </Tabs>
 
 ## Install dependencies
 
+Make sure to depend on the Widgetbook packages.
+
 <Tabs
   groupId="approach"
   values={[
-    { label: 'Genenrator', value: 'generator' },
+    { label: 'Generator', value: 'generator' },
     { label: 'Manual', value: 'manual' },
   ]}
 >
@@ -43,5 +49,27 @@ The **Generator** approach uses the [widgetbook_generator package](https://pub.d
     ```bash
     flutter pub add widgetbook --dev
     ```
+  </TabItem>
+</Tabs>
+
+## Setup empty Widgetbook
+
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+  <TabItem value="generator">
+    ```dart
+    @WidgetbookApp.material(
+        name: 'A name',
+    )
+    int notUsed = 0;
+    ```
+  </TabItem>
+  <TabItem value="manual">
+
   </TabItem>
 </Tabs>
