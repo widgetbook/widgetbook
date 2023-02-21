@@ -1,25 +1,23 @@
 # Widgetbook Hosting
 
 The Widgetbook Hosting allows users to upload the Flutter web version of a Widgetbook to Widgetbook Cloud.
-To upload any widgetbook, you require an API key.
+To upload any Widgetbook, you require an API key.
 
 ## How to create an API key
 
 To create an API key, you need to login with your account on Widgetbook Cloud.
 API keys are bound to projects. 
-Therefore, you require a project to retrieve an API key. 
-Furthermore, only users with the `Owner` role can fetch the API key of a project.
-This helps to keep sensitive information safe. 
+Therefore, you require a project to retrieve an API key.
+
+<Info>Only users users with the `Owner` role can fetch the API key of a project.</Info>
 
 If you are not the owner of your project but would still like to fetch the API key, please ask your project owner to promote you from member to owner. 
 For information on member management, please see [member management](/widgetbook-cloud/projects#member-management).
 
-If you are just starting out, make sure to create a new project. 
-To create a project, make sure to also [create a billing account](/widgetbook-cloud/billing).
-
 On the detail page of a project, a card which allows to fetch the API key is displayed. 
 Click the button on the card to fetch the API key. 
-The key will be copied to your clipboard.
+
+<Success>The API key will be copied to your clipboard.</Success>
 
 ## Hosting with CI/CD vendors
 
@@ -27,51 +25,16 @@ If youd like to upload a Widgetbook Build and create Reviews your CI/CD pipeline
 1. Install Flutter SDK
 1. Run the [`build_runner`](https://pub.dev/packages/build_runner) package via `flutter pub run build_runner build --delete-conflicting-outputs`
 1. Build your Widgetbook via `flutter build web -t path/to/widgetbook/main/file`
-1. Activate the [Widgetbook CLI](https://pub.dev/packages/widgetbook_cli) via `dart pub global activate widgetbook_cli`
-1. Run the CLI as described in the docs
+1. Activate the [Widgetbook CLI](/widgetbook-cli/overview) via `dart pub global activate widgetbook_cli 3.0.0-beta.22`
+1. Run the CLI [as described in the docs](/widgetbook-cli/overview)
 
 ### Examples
 
 | CI/CD Vendor | Link |
 | ------------ | ---- |
 | GitHub       | [🔗](https://github.com/widgetbook/widgetbook-demo/blob/staging/.github/workflows/upload-review.yml) |
+| GitHub with Codemagic | [🔗](https://github.com/widgetbook/widgetbook-demo/blob/staging/codemagic.yaml) |
 | Azure        | [🔗](https://github.com/widgetbook/widgetbook-demo/blob/staging/.azure/pipelines.yml) |
 | GitLab       | [🔗](https://github.com/widgetbook/widgetbook-demo/blob/staging/.gitlab-ci.yml) |
 
-> Are we missing your CI/CD vendor? [Let us know via Discord](https://discord.com/invite/zT4AMStAJA), we'd love to help you. 
-
-## BitBucket
-The Widgetbook Hosting docker image allows Widgetbook Cloud users to upload the widgetbook version which has been uploaded to BitBucket.
-
-The docker image is provided at Docker Hub and is named widgetbook-hosting-bitbucket. 
-You can access the executable by calling /widgetbook-hosting.
-
-``` yaml
-pipelines:
-  branches:
-    dev:
-      - step:
-          name: Build web
-          image: 
-            name: cirrusci/flutter
-          script:
-            - flutter build web -t lib/main.widgetbook.dart
-          artifacts:
-            - build/**
-      - step:
-          name: Host on widgetbook
-          image: 
-            name: widgetbook/widgetbook-hosting-bitbucket:dev
-          script:
-            - /widgetbook-hosting
-```
-
-### Environment variables
-
-The docker image reads git specific information like branch name, repository name, etc from the environment variables but also requires two mandatory environment variables provided by the user:
-In BitBucket you can add _repository variables_ by going to the repository settings and then selecting _repository variables_.
-
-| Environment variable | Description | Is required |
-| ----- | ------- | ----------- |
-| `WIDGETBOOK_BUILD_PATH` | The path to the web build of the widgetbook. For small repositories this is likely `build/web/` | ✅ |
-| `WIDGETBOOK_API_KEY` | The API key for your company. See [How to create an API key](/widgetbook-cloud/hosting#how-to-create-an-api-key)| ✅ |
+> Are we missing your CI/CD vendor? [Let us know via Discord](https://discord.com/invite/zT4AMStAJA), we'd love to help you.
