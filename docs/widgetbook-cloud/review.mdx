@@ -13,9 +13,9 @@ For this to work, a webhook to our services is required.
 ## Requirements
 
 To use Widgetbook Cloud _Review_ your setup has to meet the following requirements:
-- Use `widgetbook_generator` package in version `v2.4.1` (no special configuration required).
-- Use `widgetbook` package in version `v2.4.1` (no special configuration required).
-- Use the `widgetbook` CLI from the [widgetbook_cli](https://pub.dev/packages/widgetbook_cli) package. For instructions see [Hosting](/widgetbook-cloud/hosting).
+- Use `widgetbook_generator` package in version `v3.0.0-beta.10` (no special configuration required).
+- Use `widgetbook` package in version `v3.0.0-beta.11` (no special configuration required).
+- Use the `widgetbook` in version `v3.0.0-beta.22` CLI from the [widgetbook_cli](https://pub.dev/packages/widgetbook_cli) package. For instructions see [Hosting](/widgetbook-cloud/hosting).
 - Setup a GitHub webhook
 
 ## Setup Webhook (GitHub)
@@ -41,12 +41,13 @@ You need to meet the following requirements to setup a webhook to Widgetbook Clo
 
 ### Setting up the webhook
 
-1. Go to https://github.com/user-name/repo-name/settings/hooks. Make sure to replace `user-name` and `repo-name` with your appropriate values.
+1. Go to https://github.com/user-name/repository-name/settings/hooks. Make sure to replace `user-name` and `repository-name` with your appropriate values.
 2. Click `Add webhook`
 3. Paste `https://api.widgetbook.io/v1/webhooks/github` into the `Payload URL` field.
 4. Set `Content type` to `application/json`
 5. Paste your Widgetbook Cloud webhook secret into the `Secret` field.
-    * Note that you will need to do this every time you obtain a new webhook secret from your Widgetbook Cloud project settings.
-6. Select when to trigger the webhook.
+    * Note that you will update the webhook secret every time you obtain a new webhook secret from your Widgetbook Cloud project settings as the old webhook secret will be deleted.
+6. Select when to trigger the webhook:
     1. Select `Send me everything` or
     2. Select `Let me select individual events` and enable `Pull requests` and `Pushes`. You can disable all other options. 
+7. Enable the `Active` checkbox
