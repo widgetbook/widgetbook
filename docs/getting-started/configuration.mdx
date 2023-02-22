@@ -10,13 +10,13 @@ You can heavily customize Widgetbook by
 This documentation refers to Widgets as components since design tools like Figma use this terminology to describe their reusable UI elements. 
 Components in Figma might be resembled by one or multiple variants which are variations of a component. 
 In Flutter, the `TextButton`, `ElevatedButton` and `OutlineButton` are variants of a _Button_ component. 
-In addition, different Flutter states of a button (e.g. `elevated` or `hovered`) might be resembled in Figma as additional variants. 
+In addition, different Flutter states of a button (e.g. `focused` or `hovered`) might be resembled in Figma as additional variants. 
 
 <Image 
     zoom
     src="/assets/getting-started/figma-button-component.svg" 
-    alt="Material button component in Figma with various variants" 
-    caption="Material button component in Figma with various variants" 
+    alt="Figma Material button component with variants" 
+    caption="Figma Material button component with variants" 
 />
 
 ## Adding components to the catalogue
@@ -69,13 +69,24 @@ Components and use-cases are shown in the Widgetbook navigation.
 
     #### `type` property
     The `type` property is used by the generator to create the component entry within the navigation. 
-    As a developer you want to specify the type of the catalogued component (in the example `Container`) instead of the one that might be returned by the builder method (in the example `Column`).
+    As a developer you want to specify the type of the catalogued component (`Container`) instead of the one that might be returned by the builder method (`Column`).
 
     #### `name` property
     The `name` property of the annotation allows you to specify the name of the use-case. 
     In the case of the example this is `with green color`.
 
     <Warning>Run the `build_runner` again via `flutter pub run build_runner build` or `flutter pub run build_runner watch` to update the Widgetbook with the newly created use-case.</Warning>
+
+    ### Navigation structure with the generator
+
+    The generator creates the navigation tree based on the file location of the component that has been specified for the `type` parameter of the `@WidgetbookUseCase` annotation so the navigations structure of the Widgetbook will resemble the structure of your application or package.
+
+    <Warning>
+        As of now, it's not possible to configure a different navigation structure using the generator. 
+        The Widgetbook team aims to provide a solution in the future.
+    </Warning>
+
+
   </TabItem>
   <TabItem value="manual">
 
