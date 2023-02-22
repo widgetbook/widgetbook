@@ -30,7 +30,7 @@ jobs:
         run: flutter build web -t lib/app.widgetbook.dart
 
       - name: Install Widgetbook CLI
-        run: dart pub global activate widgetbook_cli 3.0.0-beta.12
+        run: dart pub global activate widgetbook_cli 3.0.0-beta.22
 
       - name: Upload Widgetbook
         run: |
