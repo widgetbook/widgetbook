@@ -12,22 +12,6 @@ The **Generator** approach uses the [widgetbook_generator package](https://pub.d
 
 <Info>The generator approach is recommended over the Manual approach since it simplified maintanance of Widgetbook. In addition, the Generator approach has integration with [Widgetbook Cloud](/widgetbook-cloud/overview).</Info>
 
-## Tab template
-<Tabs
-  groupId="approach"
-  values={[
-    { label: 'Generator', value: 'generator' },
-    { label: 'Manual', value: 'manual' },
-  ]}
->
-  <TabItem value="generator">
-
-  </TabItem>
-  <TabItem value="manual">
-
-  </TabItem>
-</Tabs>
-
 ## Install dependencies
 
 Make sure to depend on the Widgetbook packages.
@@ -40,12 +24,17 @@ Make sure to depend on the Widgetbook packages.
   ]}
 >
   <TabItem value="generator">
+
+    <Warn>The documentation refers to the latest Widgetbook 3.0 release which is currently in beta. You might need to manually bump the dependencies to the most recent beta release version!</Warn>
+
     ```bash
     flutter pub add widgetbook_annotation
     flutter pub add widgetbook widgetbook_generator build_runner --dev
     ```
   </TabItem>
   <TabItem value="manual">
+    <Warn>The documentation refers to the latest Widgetbook 3.0 release which is currently in beta. You might need to manually bump the dependencies to the most recent beta release version!</Warn>
+    
     ```bash
     flutter pub add widgetbook --dev
     ```
@@ -145,4 +134,4 @@ Check if everything works by running `flutter run` with the newly created Widget
   </TabItem>
 </Tabs>
 
-<Success>Widgetbook is now running, but no components are shown yet. The learn how to add components and how to configure Widgetbook to your liking, view the [configuration documentation](/getting-started/configuration).</Success>
+<Success>Widgetbook is now running, but no components are shown yet. To learn how to add components and how to configure Widgetbook to your liking, view the [configuration documentation](/getting-started/configuration).</Success>
