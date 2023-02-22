@@ -8,14 +8,14 @@ You can heavily customize Widgetbook by
 ## Components and variants
 
 This documentation refers to Widgets as components since design tools like Figma use this terminoligy to describe their reusable UI elements. 
-Components in Figma might be resembled by one or multiple variants which are variations of component. 
+Components in Figma might be resembled by one or multiple variants which are variations of a component. 
 In Flutter, the `TextButton`, `ElevatedButton` and `OutlineButton` are variants of a _Button_ component. 
 In addition, different Flutter states of a button (e.g. `elevated` or `hovered`) might be resembled in Figma as additional variants. 
 
 ## Adding components to the catalogue
 
 In Widgetbook, developers create a folder tree structure to organize and catalogue components. 
-Besides various elements to categorize all the component,s Widgetbook features a _component_ and _use-case_ approach in which a single component has one or multiple use-cases.
+Besides various elements to categorize all the components, Widgetbook features a _component_ and _use-case_ approach in which a single component has one or multiple use-cases.
 A use-case might resemble a variant of a component or just a specific state of the component.
 
 Components and use-cases are shown in the Widgetbook navigation 
@@ -32,6 +32,7 @@ Components and use-cases are shown in the Widgetbook navigation
   <TabItem value="generator">
     Adding use-cases with the generator is based on the `@WidgetbookUseCase` annotation provided by the [widgetbook_annotation package](https://pub.dev/packages/widgetbook_annotation).
     The annotation is used on a builder method with a return type of `Widget` and a single required parameter `BuildContext`.
+    
     <Note>
         You can freely pick the name of the method, but make sure the name of a newly created use-case builder method does not have a name conflict with already existing methods.
     </Note>
