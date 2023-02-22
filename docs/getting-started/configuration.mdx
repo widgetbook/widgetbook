@@ -7,17 +7,17 @@ You can heavily customize Widgetbook by
 
 ## Components and variants
 
-<Image 
-    zoom
-    src="/assets/getting-started/figma-button-component.svg" 
-    alt="Material button component in Figma" 
-    caption="Material button component in Figma" 
-/>
-
 This documentation refers to Widgets as components since design tools like Figma use this terminology to describe their reusable UI elements. 
 Components in Figma might be resembled by one or multiple variants which are variations of a component. 
 In Flutter, the `TextButton`, `ElevatedButton` and `OutlineButton` are variants of a _Button_ component. 
 In addition, different Flutter states of a button (e.g. `elevated` or `hovered`) might be resembled in Figma as additional variants. 
+
+<Image 
+    zoom
+    src="/assets/getting-started/figma-button-component.svg" 
+    alt="Material button component in Figma with various variants" 
+    caption="Material button component in Figma with various variants" 
+/>
 
 ## Adding components to the catalogue
 
@@ -25,7 +25,7 @@ In Widgetbook, developers create a folder tree structure to organize and catalog
 Besides various elements to categorize all the components, Widgetbook features a _component_ and _use-case_ approach in which a single component has one or multiple use-cases.
 A use-case might resemble a variant of a component or just a specific state of the component.
 
-Components and use-cases are shown in the Widgetbook navigation 
+Components and use-cases are shown in the Widgetbook navigation.
 
 <Info>Adding components to Widgetbook works different regarding the usage of the [manual approach](/getting-started/getting-started#approaches) or [generator approach](/getting-started/getting-started#approaches).</Info>
 
@@ -38,6 +38,8 @@ Components and use-cases are shown in the Widgetbook navigation
 >
   <TabItem value="generator">
     ```dart title="Use-case definition for Container component"
+    import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
     @WidgetbookUseCase(
       name: 'with green color',
       type: Container,
@@ -72,6 +74,8 @@ Components and use-cases are shown in the Widgetbook navigation
     #### `name` property
     The `name` property of the annotation allows you to specify the name of the use-case. 
     In the case of the example this is `with green color`.
+
+    <Warning>Run the `build_runner` again via `flutter pub run build_runner build` or `flutter pub run build_runner watch` to update the Widgetbook with the newly created use-case.</Warning>
   </TabItem>
   <TabItem value="manual">
 
