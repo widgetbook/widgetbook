@@ -36,13 +36,17 @@
         [
             "Knobs",
             [
-                "Overview", "/knobs/overview"
+                [
+                    "Overview", "/knobs/overview"
+                ]
             ]
         ],
         [
             "Add-ons",
             [
-                "Overview", "/add-ons/overview"
+                [
+                    "Overview", "/add-ons/overview"
+                ]
             ]
         ],
         [
