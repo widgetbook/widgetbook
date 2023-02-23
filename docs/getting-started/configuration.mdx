@@ -57,9 +57,9 @@ Components and use-cases are shown in the Widgetbook navigation.
 
     Adding use-cases with the generator is based on the `@WidgetbookUseCase` annotation provided by the [widgetbook_annotation package](https://pub.dev/packages/widgetbook_annotation).
 
-    #### Builder method
+    #### Use-case builder method
 
-    The annotation is used on a builder method with a return type of `Widget` and a single required parameter `BuildContext`.
+    The annotation is used on a use-case builder method with a return type of `Widget` and a single required parameter `BuildContext`.
     
     <Info>
         You can freely pick the name of the method, but make sure the name of a newly created use-case builder method does not have a name conflict with already existing methods.
@@ -79,7 +79,8 @@ Components and use-cases are shown in the Widgetbook navigation.
 
     <Heading type="h3">Navigation structure with the generator</Heading>
 
-    The generator creates the navigation tree based on the file location of the component that has been specified for the `type` parameter of the `@WidgetbookUseCase` annotation so the navigations structure of the Widgetbook will resemble the structure of your application or package.
+    The generator creates the navigation tree based on the file location of the component that has been specified for the `type` parameter of the `@WidgetbookUseCase` annotation. 
+    Therefore, the navigation structure of the Widgetbook resembles the structure of your application or package.
 
     <Warning>
         As of now, it's not possible to configure a different navigation structure using the generator. 
@@ -87,11 +88,65 @@ Components and use-cases are shown in the Widgetbook navigation.
     </Warning>
   </TabItem>
   <TabItem value="manual">
-
+    <Info>
+      This section is to be done and will be completed soon.
+    </Info>
   </TabItem>
 </Tabs>
 
-## Tab template
+## Knobs
+
+Knobs allow developers to customize how users of Widgetbook interact with a use-case of a component. 
+Due to knobs, users of Widgetbook can change parameters of a use-case to test different inputs and states.
+Changing parameters helps developers and designers to better understand the functionality of a component.
+
+[Follow the documentation](/knobs/overview) to understand how to configure knobs.
+
+## Add-ons
+
+Add-ons allow developers to customize Widgetbook which impacts how all components are previewed in Widgetbook.
+Due to add-ons, developers are enabled to add different themes, localization, devices and many more functionalities.
+
+[Follow the documentation](/add-ons/overview) to understand how to configure add-ons.
+
+## Customize how use-cases are previewed
+
+Widgetbook allows developers to fully customize how use-cases are previewed based on the selected add-on properties.
+
+To customize Widgetbook, define a function that returns a `Widget` and accepts two required parameters `context` of type `BuildContext` and `child` of type `Widget`.
+The `context` parameter provides access to the add-on properties as descriped [here](/add-ons/overview).
+The `child` parameter provides the build use-case.
+
+```dart title="Custom Material app builder"
+Widget customAppBuilder(BuildContext context, Widget child) {
+  final builder = Builder(
+    builder: (context) {
+      return MaterialApp(
+        theme: context.materialTheme,
+        locale: context.localization!.activeLocale,
+        supportedLocales: context.localization!.locales,
+        localizationsDelegates:
+            context.localization!.localizationsDelegates,
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaleFactor: context.textScale,
+            ),
+            child: child,
+          ),
+        ),
+      );
+    },
+  );
+  final frameBuilder = context.frameBuilder!;
+  return frameBuilder(
+    context,
+    builder,
+  );
+}
+```
+
 <Tabs
   groupId="approach"
   values={[
@@ -100,9 +155,32 @@ Components and use-cases are shown in the Widgetbook navigation.
   ]}
 >
   <TabItem value="generator">
+    Annotate the `AppBuilder` method with the `@WidgetbookAppBuilder` annotation to generate the Widgetbook with your custom implementation instead of the default one. 
 
+    ```dart title="Annotated custom Material app builder"
+    @WidgetbookAppBuilder()
+    Widget customAppBuilder(BuildContext context, Widget child) {
+      // Your code
+    }
+    ```
+
+    <Success>
+      Widgetbook now uses your custom `AppBuilder` method.
+    </Success>
   </TabItem>
   <TabItem value="manual">
+    Use the `appBuilder` property of `WidgetbookApp` to specify your custom `AppBuilder` method.
 
+    ```dart title="Custom Material app builder"
+    return Widgetbook.material(
+      addons: [],
+      directories: [],
+      appBuilder: customAppBuilder,
+    );
+    ```
+
+    <Success>
+      Widgetbook now uses your custom `AppBuilder` method.
+    </Success>
   </TabItem>
 </Tabs>

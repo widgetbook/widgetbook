@@ -34,6 +34,18 @@
             ]
         ],
         [
+            "Knobs",
+            [
+                "Overview", "/knobs/overview"
+            ]
+        ],
+        [
+            "Add-ons",
+            [
+                "Overview", "/add-ons/overview"
+            ]
+        ],
+        [
             "Package: widgetbook",
             [
                 [
