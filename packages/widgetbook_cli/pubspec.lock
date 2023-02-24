@@ -168,7 +168,7 @@ packages:
       name: dio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.6"
+    version: "5.0.1"
   file:
     dependency: "direct main"
     description:
@@ -588,14 +588,14 @@ packages:
       name: widgetbook_exception
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1-beta.2"
+    version: "0.0.1-beta.3"
   widgetbook_git:
     dependency: "direct main"
     description:
       name: widgetbook_git
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.0-beta.7"
+    version: "2.2.0-beta.8"
   yaml:
     dependency: transitive
     description:
