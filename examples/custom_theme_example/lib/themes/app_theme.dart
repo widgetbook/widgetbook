@@ -31,10 +31,10 @@ class AppTheme extends InheritedWidget {
   }
 }
 
-AppThemeData themeDataBlue = AppThemeData(
+final themeDataBlue = AppThemeData(
   color: Colors.blue,
 );
 
-AppThemeData themeDataYellow = AppThemeData(
+final themeDataYellow = AppThemeData(
   color: Colors.yellow,
 );

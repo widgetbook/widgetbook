@@ -46,6 +46,18 @@
             [
                 [
                     "Overview", "/add-ons/overview"
+                ],
+                [
+                    "Theme Add-on", "add-ons/theme-addon"
+                ],
+                [
+                    "Frame Add-on", "add-ons/frame-addon"
+                ],
+                [
+                    "Localization Add-on", "add-ons/localization-addon"
+                ],
+                [
+                    "Text Scale Add-on", "add-ons/text-scale-addon"
                 ]
             ]
         ],
