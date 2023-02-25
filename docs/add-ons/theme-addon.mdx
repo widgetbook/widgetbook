@@ -18,6 +18,7 @@ The Material Theme Add-on provides your Material theme based on the `ThemeData` 
     To use the `MaterialThemeAddon` with the [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) annotate a function that returns your `ThemeData` with the `@WidgetbookTheme` annotation.
 
     ```dart title="Example: @WidgetbookTheme for MaterialThemeAddon"
+    @WidgetbookTheme(name: 'Dark', isDefault: true)
     ThemeData getTheme() => ThemeData.dark();
     ```
 
@@ -67,7 +68,8 @@ The Cupertino Theme Add-on provides your Cupertino theme based on the `Cupertino
     To use the `CupertinoThemeAddon` with the [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) annotate a function that returns your `ThemeData` with the `@WidgetbookTheme` annotation.
 
     ```dart title="Example: @WidgetbookTheme for CupertinoThemeAddon"
-    CupertinoThemeData getTheme() => ThemeData.dark();
+    @WidgetbookTheme(name: 'Default', isDefault: true)
+    CupertinoThemeData getTheme() => CupertinoThemeData();
     ```
 
     <Info>
@@ -177,6 +179,7 @@ final yellowTheme = AppThemeData(
     To use the `CustomThemeAddon` with the [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) annotate a function that returns your `AppThemeData` with the `@WidgetbookTheme` annotation.
 
     ```dart title="Example: @WidgetbookTheme for custom theme"
+    @WidgetbookTheme(name: 'Blue', isDefault: true)
     AppThemeData getTheme() => blueTheme;
     ```
 
