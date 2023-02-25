@@ -21,31 +21,45 @@ Out of the box, Widgetbook features the following Add-ons:
 
 ## Customizing an Add-on
 
-Most Add-ons follow the pattern to require a `setting` property that allows developers to populate an Add-on with the required data.
-The `Setting` data model has one or more properties to provide the data that can be selected in the user-interface and also has one or more properties to define the active data item. 
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+  <TabItem value="generator">
+    As of now, Add-ons are supported via custon `widgetbook_generator` annotations. 
+    The the corresponding documentation for more information.
+  </TabItem>
+  <TabItem value="manual">
+    Most Add-ons follow the pattern to require a `setting` property that allows developers to populate an Add-on with the required data.
+    The `Setting` data model has one or more properties to provide the data that can be selected in the user-interface and also has one or more properties to define the active data item. 
 
-```dart title="MaterialThemeAddon example"
-final themeAddon = MaterialThemeAddon(
-  setting: MaterialThemeSetting(
-    themes: [
-      WidgetbookTheme(
-        name: 'Light',
-        data: lightTheme(),
+    ```dart title="MaterialThemeAddon example"
+    final themeAddon = MaterialThemeAddon(
+      setting: MaterialThemeSetting(
+        themes: [
+          WidgetbookTheme(
+            name: 'Light',
+            data: lightTheme(),
+          ),
+          WidgetbookTheme(
+            name: 'Dark',
+            data: darkTheme(),
+          ),
+        ],
+        activeTheme: WidgetbookTheme(
+          name: 'Light',
+          data: lightTheme(),
+        ),
       ),
-      WidgetbookTheme(
-        name: 'Dark',
-        data: darkTheme(),
-      ),
-    ],
-    activeTheme: WidgetbookTheme(
-      name: 'Light',
-      data: lightTheme(),
-    ),
-  ),
-);
-```
+    );
+    ```
 
-In the `MaterialThemeAddon` Add-on example, the available themes are defined with the `themes` property while the active selection on startup of the Widgetbook app is defined with the `activeTheme` property.
+    In the `MaterialThemeAddon` Add-on example, the available themes are defined with the `themes` property while the active selection on startup of the Widgetbook app is defined with the `activeTheme` property.
+  </TabItem>
+</Tabs>
 
 ## Accessing Add-on values
 
