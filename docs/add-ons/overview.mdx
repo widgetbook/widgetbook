@@ -3,6 +3,11 @@
 Add-ons are a fully customizable way of configuring Widgetbook with changable properties.
 Developers can use the existing Add-ons or define their own custom Add-ons.
 
+<Info>
+    This section describes Add-ons in general.
+    As every Add-on works a bit different, make sure to also read into the documentation of the Add-on implementation that you are using for your Widgetbook.
+</Info>
+
 Out of the box, Widgetbook features the following Add-ons:
 - `ThemeAddon` for theming
     - `MaterialThemeAddon`
@@ -11,3 +16,36 @@ Out of the box, Widgetbook features the following Add-ons:
 - `FrameAddon` for previewing use-cases on specific device sizes
 - `LocalizationAddon` for testing different locales
 - `TextScaleAddon` for different test scales and accessibility
+
+## Customizing an Add-on
+
+Most Add-ons follow the pattern to require a `setting` property that allows developers to populate an Add-on with the required data.
+The `Setting` data model has one or more properties to provide the data that can be selected in the user-interface and also has one or more properties to define the active data item. 
+
+```dart title="MaterialThemeAddon example"
+final themeAddon = MaterialThemeAddon(
+  setting: MaterialThemeSetting(
+    themes: [
+      WidgetbookTheme(
+        name: 'Light',
+        data: lightTheme(),
+      ),
+      WidgetbookTheme(
+        name: 'Dark',
+        data: darkTheme(),
+      ),
+    ],
+    activeTheme: WidgetbookTheme(
+      name: 'Light',
+      data: lightTheme(),
+    ),
+  ),
+);
+```
+
+In the `MaterialThemeAddon` Add-on example, the available themes are defined with the `themes` property while the active selection on startup of the Widgetbook app is defined with the `activeTheme` property.
+
+## Accessing Add-on values
+
+Add-ons follow the pattern to expose the selected value(s) via the `BuildContext`.
+Therefore, the selected option is accessible in the [`appBuilder` method](/getting-started/configuration#customize-how-use-cases-are-previewed) and [use-case builder method](/getting-started/configuration#adding-components-to-the-catalogue).
