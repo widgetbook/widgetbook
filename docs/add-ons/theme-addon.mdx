@@ -3,7 +3,7 @@
 The theme Add-on provides theming for previewing your use-cases. 
 Therefore, your components are previewed in the same design language than your app.
 
-# Material Theme Add-on
+## Material Theme Add-on
 
 The Material Theme Add-on provides your Material theme based on the `ThemeData` class. 
 
@@ -52,7 +52,7 @@ The Material Theme Add-on provides your Material theme based on the `ThemeData` 
   </TabItem>
 </Tabs>
 
-# Cupertino Theme Add-on
+## Cupertino Theme Add-on
 
 The Cupertino Theme Add-on provides your Cupertino theme based on the `CupertinoThemeData` class. 
 
@@ -101,9 +101,9 @@ The Cupertino Theme Add-on provides your Cupertino theme based on the `Cupertino
   </TabItem>
 </Tabs>
 
-# Custom Theme Add-on
+## Custom Theme Add-on
 
-In addition to Material and Cupertino themes, Widgetbook allows to define completely custom themes as well. 
+In addition to Material and Cupertino themes, Widgetbook allows to define completely custom themes. 
 
 Let us assume you have defined a very simple custom theme `AppThemeData` that just holds a single color.
 
@@ -166,8 +166,6 @@ final yellowTheme = AppThemeData(
 );
 ```
 
-The Custom Theme Add-on provides your custom theme based on the `AppThemeData` class. 
-
 <Tabs
   groupId="approach"
   values={[
@@ -213,4 +211,4 @@ The Custom Theme Add-on provides your custom theme based on the `AppThemeData` c
   </TabItem>
 </Tabs>
 
-<Warning>For the theme to be properly injected into Widgetbook's Widget tree, make sure to implement a custom [`appBuilder` method](/getting-started/configuration#customize-how-use-cases-are-previewed) function.</Warning>
+<Warning>For the theme to be properly injected into Widgetbook's Widget tree, make sure to implement a custom [`appBuilder` method](/getting-started/configuration#customize-how-use-cases-are-previewed).</Warning>
