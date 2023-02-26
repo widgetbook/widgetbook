@@ -1,1 +1,65 @@
 # Overview
+
+The text scale Add-on lets users change the active text scale for previewing your use-cases.
+Previwing different text scales can be interesting for teams as the layout changes due to text scale and therefore text size.
+
+Texts scale of 1.00             |  Text scale of 1.25
+:-------------------------:|:-------------------------:
+<Image zoom src="/assets/add-ons/text-scales/text-scale-1.png" height="650" />  |  <Image zoom src="/assets/add-ons/text-scales/text-scale-1.25.png" height="650" />
+
+## Setup
+
+Specify the `Locale`s and `LocalizationDelegate`s for the localization Add-on.
+
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+  <TabItem value="generator">
+    First, define the available `Locale`s using the `@WidgetbookLocales` annotation:
+
+    ```dart title="Example: Define available Locales"
+    @WidgetbookLocales()
+    List<Locale> locales = const [
+      Locale('en'),
+      Locale('ar'),
+    ];
+    ```
+
+    Next, define the available `LocalizationDelegate`s using the `@WidgetbookLocalizationDelegates` annotation:
+    ```dart title="Exmaple: Define LocalizationDelegates"
+    @WidgetbookLocalizationDelegates()
+    List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+        AppLocalizations.localizationsDelegates;
+    ```
+  </TabItem>
+  <TabItem value="manual">
+    First, define your available `Locale`s:
+    ```dart title="Example: Define available Locales"
+    List<Locale> locales = const [
+      Locale('en'),
+      Locale('ar'),
+    ];
+    ```
+
+    Next, define the available `LocalizationDelegate`s:
+    ```dart title="Exmaple: Define LocalizationDelegates"
+    List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+        AppLocalizations.localizationsDelegates;
+    ```
+
+    Create your localization Add-on using the `LocalizationAddon` and `LocalizationSetting` classes:
+    ```dart title="Example: Create the LocalizationAddon"
+    final localizationAddon = LocalizationAddon(
+      setting: LocalizationSetting(
+        locales: locales,
+        activeLocale: locales.first,
+        localizationsDelegates: localizationsDelegates,
+      ),
+    );
+    ```
+  </TabItem>
+</Tabs>
