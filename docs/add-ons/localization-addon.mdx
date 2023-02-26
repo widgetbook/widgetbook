@@ -55,6 +55,29 @@ Specify the `Locale`s and `LocalizationDelegate`s for the localization Add-on.
     ```
   </TabItem>
   <TabItem value="manual">
+    First, define your available `Locale`s:
+    ```dart title="Example: Define available Locales"
+    List<Locale> locales = const [
+      Locale('en'),
+      Locale('ar'),
+    ];
+    ```
 
+    Next, define the available `LocalizationDelegate`s:
+    ```dart title="Exmaple: Define LocalizationDelegates"
+    List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+        AppLocalizations.localizationsDelegates;
+    ```
+
+    Create your localization Add-on using the `LocalizationAddon` and `LocalizationSetting` classes:
+    ```dart title="Example: Create the LocalizationAddon"
+    final localizationAddon = LocalizationAddon(
+      setting: LocalizationSetting(
+        locales: locales,
+        activeLocale: locales.first,
+        localizationsDelegates: localizationsDelegates,
+      ),
+    );
+    ```
   </TabItem>
 </Tabs>
