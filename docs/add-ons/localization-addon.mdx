@@ -7,3 +7,54 @@ English locale             |  Arabic locale
 :-------------------------:|:-------------------------:
 <Image zoom src="/assets/add-ons/localization/english-locale.png" caption="English locale with left to right layout" height="650" />  |  <Image zoom src="/assets/add-ons/localization/arabic-locale.png" caption="Arabic locale with right to left layout" height="650" />
 
+## Tab template
+
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+  <TabItem value="generator">
+  
+  </TabItem>
+  <TabItem value="manual">
+
+  </TabItem>
+</Tabs>
+
+
+## Setup
+
+Specify the `Locale`s and `LocalizationDelegate`s for the localization Add-on.
+
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+  <TabItem value="generator">
+    First, define the available `Locale`s using the `@WidgetbookLocales` annotation:
+
+    ```dart title="Example: Define available Locales"
+    @WidgetbookLocales()
+    List<Locale> locales = const [
+      Locale('en'),
+      Locale('ar'),
+    ];
+    ```
+
+    Next, define the available `LocalizationDelegate`s using the `@WidgetbookLocalizationDelegates` annotation:
+    ```dart title="Exmaple: Define LocalizationDelegates"
+    @WidgetbookLocalizationDelegates()
+    List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+        AppLocalizations.localizationsDelegates;
+    ```
+  </TabItem>
+  <TabItem value="manual">
+
+  </TabItem>
+</Tabs>
