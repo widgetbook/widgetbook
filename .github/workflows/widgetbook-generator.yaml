@@ -15,7 +15,7 @@ jobs:
         working-directory: packages/widgetbook_generator
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         lfs: true
     - name: Checkout LFS objects
@@ -44,7 +44,7 @@ jobs:
     name: code quality
     runs-on: ubuntu-latest 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         lfs: true
 
