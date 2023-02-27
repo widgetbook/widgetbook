@@ -15,7 +15,9 @@ iPhone 13             |  iPad Mini
 | WidgetbookFrame    | ✅ | A minimal, borderless frame |
 | NoFrame            | ➖ | A device-less frame that resized whenever the Widgetbook window is changed |
 
-## Tab template
+## Specify
+
+Specify the `Frame`s and (if available) the `Frame`'s `Device`s for the frame Add-on.
 
 <Tabs
   groupId="approach"
@@ -25,9 +27,72 @@ iPhone 13             |  iPad Mini
   ]}
 >
   <TabItem value="generator">
-  
+    <Warning>
+      As of now, the generator always sets up all available `Frame`s. 
+    </Warning>
+
+    `Frames` are defined over `Devices` and are specified via the `@WidgetbookApp` annotation.
+    ```dart title="Example: Frames with devices"
+    @WidgetbookApp.material(
+      devices: [
+        Apple.iPhone12,
+        Apple.iPhone13,
+        Apple.iPadMini,
+        Desktop.desktop1080p,
+      ],
+    )
+    class App extends StatelessWidget { ... }
+    ```
   </TabItem>
   <TabItem value="manual">
+    First, make sure to define the devices you want to use.
+    ```dart title="Example: Devices"
+    final devices = [
+      Apple.iPhone12,
+      Apple.iPhone13,
+      Apple.iPadMini,
+      Desktop.desktop1080p,
+    ];
+    ```
 
+    Second, define the frame Add-on.
+    ```dart title="Exmaple: Setup frame Add-on"
+    final frameAddon = FrameAddon(
+      setting: FrameSetting(
+        frames: [
+          NoFrame(),
+          DefaultDeviceFrame(
+            setting: DeviceSetting(
+               devices: devices,
+               activeDevice:  Apple.iPhone13,
+            ),
+          ),
+          WidgetbookFrame(
+            setting: DeviceSetting(
+               devices: devices,
+              activeDevice: Apple.iPhone13,
+            ),
+          ),          
+        ],
+        activeFrame: NoFrame(),
+      ),
+    ),
+    ```
   </TabItem>
 </Tabs>
+
+## Custom devices
+
+You can define your own custom device by using the `Device` class:
+
+```dart
+Device(
+  name: 'Custom Device',
+  resolution: Resolution.dimensions(
+    width: 500,
+    height: 500,
+    scaleFactor: 2,
+  ),
+  type: DeviceType.tablet,
+),
+```
