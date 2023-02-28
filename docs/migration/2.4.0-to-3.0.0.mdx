@@ -11,9 +11,223 @@
 
 ## Background
 
-In order to support features as [#363](https://github.com/widgetbook/widgetbook/issues/363), the Widgetbook API needed to be refactored to allow for generic implementation of the property panel. 
+In order to support features as [#363](https://github.com/widgetbook/widgetbook/issues/363), the Widgetbook API needed to be refactored to allow for generic implementation of the properties. 
 The Add-on implementation now allows for developers to fully customize which properties are available. 
 In addition, the `builder` functions have been refactored as these have been hard to understand. 
 All builder functions have been combined to the `appBuilder` function. 
 The selected properties from the Add-ons are now accessed via the single `BuildContext` parameter which further simplifies usage of the builder function.
 Furthermore, the refactor of the API allowed to fix the existing `MediaQuery` issues.
+
+## Migration Plan
+
+The migration plan features documentation for using [widgetbook_generator](https://pub.dev/packages/widgetbook_generator) and the manual approach.
+
+### Tab template
+
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+  <TabItem value="generator">
+  </TabItem>
+  <TabItem value="manual">
+  </TabItem>
+</Tabs>
+
+### Removed `AppInfo`
+
+The `AppInfo` model that was used to display the name of the Widgetbook in the upper right corner has been removed
+
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+  <TabItem value="generator">
+    The existing app:
+    ```dart
+    @WidgetbookApp.material(
+      name: 'Widgetbook Name',
+      ...
+    )
+    class App extends StatelessWidget { ... }
+    ```
+
+    After migration: 
+    ```dart
+    @WidgetbookApp.material(
+      ...
+    )
+    class App extends StatelessWidget { ... }
+    ```
+  </TabItem>
+  <TabItem value="manual">
+    The existing app:
+    ```dart 
+    Widgetbook.material(
+      appInfo: AppInfo(name: 'Widgetbook Name'),
+      ...
+    )
+    ```
+
+    After migration:
+
+    ```dart 
+    Widgetbook.material(
+      ...
+    )
+    ```
+  </TabItem>
+</Tabs>
+
+### Removed `themes` property from `WidgetbookApp`
+
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+  <TabItem value="generator">
+    <Success>
+        No migration necessary.
+    </Success>
+  </TabItem>
+  <TabItem value="manual">
+    The functionality of the `themes` property has been replaced by the `ThemeAddon` for more information see [the documentation](/add-ons/theme-addon).
+  </TabItem>
+</Tabs>
+
+### Removed `frames` property from `WidgetbookApp`
+
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+  <TabItem value="generator">
+    <Success>
+        No migration necessary.
+    </Success>
+  </TabItem>
+  <TabItem value="manual">
+    The functionality of the `frames` property has been replaced by the `FrameAddon` for more information see [the documentation](/add-ons/frame-addon).
+  </TabItem>
+</Tabs>
+
+### Removed `supportedLocales` and `localizationsDelegates` property from `WidgetbookApp`
+
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+  <TabItem value="generator">
+    <Success>
+        No migration necessary.
+    </Success>
+  </TabItem>
+  <TabItem value="manual">
+    The functionality of the `supportedLocales` and `localizationsDelegates` properties has been replaced by the `LocalizationAddon` for more information see [the documentation](/add-ons/localization-addon).
+  </TabItem>
+</Tabs>
+
+### Removed `supportedLocales` and `localizationsDelegates` properties from `WidgetbookApp`
+
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+  <TabItem value="generator">
+    <Success>
+        No migration necessary.
+    </Success>
+  </TabItem>
+  <TabItem value="manual">
+    The functionality of the `supportedLocales` and `localizationsDelegates` properties has been replaced by the `LocalizationAddon` for more information see [the documentation](/add-ons/localization-addon).
+  </TabItem>
+</Tabs>
+
+### Changes on how Widgets are catalogued
+
+
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+  <TabItem value="generator">
+    <Success>
+        No migration necessary.
+    </Success>
+  </TabItem>
+  <TabItem value="manual">
+    The `categories` property of the `Widgetbook` Widget has been renamed to `directories`. 
+    In addition, `WidgetbookCategory` and `WidgetbookFolder` got their `folders` and `widget` properties refactors to a `children` property that can contain any strucuturing tree element.
+
+    The existing app:
+    ```dart 
+    Widgetbook.material(
+      categories: [
+        WidgetbookCategory(
+          name: 'Category',
+          folders: [
+            WidgetbookFolder(
+              name: 'widgets',
+              widgets: [
+                WidgetbookComponent(
+                  name: '$Container',
+                  useCases: [ /* ... */ ]
+                )
+              ]
+            )
+          ]
+        )
+      ],
+      /* ... */
+    )
+    ```
+
+    After migration:
+    ```dart 
+    Widgetbook.material(
+      directories: [
+        WidgetbookCategory(
+          name: 'Category',
+          children: [
+            WidgetbookFolder(
+              name: 'widgets',
+              children: [
+                WidgetbookComponent(
+                  name: '$Container',
+                  useCases: [ /* ... */ ]
+                )
+              ]
+            )
+          ]
+        )
+      ],
+      /* ... */
+    )
+  </TabItem>
+</Tabs>
+
+### Removed builder functions
+
+All builder functions have been combined into the `appBuilder` function. 
+For more infos [read the documentation](/getting-started/configuration#customize-how-use-cases-are-previewed) regarding the function.
