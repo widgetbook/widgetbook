@@ -11,9 +11,6 @@
     ],
     "sidebar": [
         [
-            "Overview", "/"
-        ],
-        [
             "Getting Started", 
             [
                 [
@@ -70,60 +67,6 @@
             ]
         ],
         [
-            "Package: widgetbook",
-            [
-                [
-                    "Overview", "/widgetbook/overview"
-                ],
-                [
-                    "Setup", "/widgetbook/setup"
-                ],
-                [
-                    "Run", "/widgetbook/run"
-                ],
-                [
-                    "Constructors", "/widgetbook/constructors"
-                ],
-                [
-                    "Properties", "/widgetbook/properties"
-                ],
-                [
-                    "Knobs", "/widgetbook/knobs"
-                ],
-                [
-                    "Advanced", "/widgetbook/advanced"
-                ]
-            ]
-        ],
-        [
-            "Package: widgetbook_annotation",
-            [
-                [
-                    "Overview", "/widgetbook-annotation/overview"
-                ],
-                [
-                    "Setup", "/widgetbook-annotation/setup"
-                ],
-                [
-                    "Annotations", "/widgetbook-annotation/annotations"
-                ]
-            ]
-        ],
-        [
-            "Package: widgetbook_generator",
-            [
-                [
-                    "Overview", "/widgetbook-generator/overview"
-                ],
-                [
-                    "Setup", "/widgetbook-generator/setup"
-                ],
-                [
-                    "Run", "/widgetbook-generator/run" 
-                ]
-            ]
-        ],
-        [
             "Widgetbook Cloud",
             [
                 [
@@ -148,7 +91,8 @@
                     "Billing", "/widgetbook-cloud/billing"
                 ]
             ]
-        ],[
+        ],
+        [
             "CLI",
             [
                 [
