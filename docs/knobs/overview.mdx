@@ -1,1 +1,67 @@
 # Overview
+
+Knobs can be used to dynamically change the parameters passed to a usecase.
+
+## Usage
+
+Use `context.knobs` to access the knobs builder and add knobs to your `Widget`:
+
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+  <TabItem value="generator">
+    ```dart title="Example: Knobs with generator"
+    import 'package:widgetbook/widgetbook.dart' show Knobs;
+    import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+    @WidgetbookUseCase(name: 'Default', type: Container)
+    Widget use-Case(BuildContext context) {
+      /* ... */
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="manual">
+    ```dart title="Example: Knobs"
+    WidgetbookUseCase(
+      name: 'elevated',
+      builder: (context) => MyHomePage(
+        title: context.knobs.text(
+          label: 'Title Label',
+          initialValue: 'HomePage',
+        ),
+      )
+    )
+    ```
+  </TabItem>
+</Tabs>
+
+## Properties
+
+All `Knob`s have the following inherited properties to customize how the knobs are displayed in the UI of `Widgetbook`:
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `label` | `String` | Labels the knob by giving it a title. The `label` must be unique for the `WidgetbookUseCase`. |
+| `description` | `String?` | A text which describes what the knob does. This can be used as a documentation within Widgetbook and helps your team member understand how to operate the knob. |
+
+## Available Knobs
+
+| Name            | Type      |
+|-----------------|-----------|
+| boolean         | `bool`    |
+| nullableBoolean | `bool?`   |
+| text            | `String`  |
+| nullableText    | `String?` |
+| slider          | `double`  |
+| nullableSlider  | `double?` |
+| number          | `num`     |
+| nullableNumber  | `num?`    |
+| options         | `T`       |
+
+You can see an example of this and different knobs available
+[here](https://github.com/widgetbook/widgetbook/blob/main/examples/knobs_example/lib/widgetbook.dart).
