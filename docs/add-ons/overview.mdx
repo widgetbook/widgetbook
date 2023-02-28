@@ -1,11 +1,11 @@
 # Overview
 
-Add-ons are a fully customizable way of configuring Widgetbook with changable properties.
+Add-ons are a fully customizable way of configuring Widgetbook with changeable properties.
 Developers can use the existing Add-ons or define their own custom Add-ons.
 
 <Info>
     This section describes Add-ons in general.
-    As every Add-on works a bit different, make sure to also read into the documentation of the Add-on implementation that you are using for your Widgetbook.
+    As every Add-on works a bit differently, make sure to also read into the documentation of the Add-on implementation that you are using for your Widgetbook.
 </Info>
 
 ## Available Add-ons
@@ -17,7 +17,7 @@ Out of the box, Widgetbook features the following Add-ons:
     - [Custom Theme Addon](/add-ons/theme-addon#custom-theme-add-on)
 - [Frame Addon](/add-ons/frame-addon) for previewing use-cases on specific device sizes
 - [Localization Addon](/add-ons/localization-addon) for testing different locales
-- [Text Scale Addon](/add-ons/text-scacle-addon) for different test scales and accessibility
+- [Text Scale Addon](/add-ons/text-scale-addon) for different test scales and accessibility
 
 ## Customizing an Add-on
 
@@ -30,11 +30,11 @@ Out of the box, Widgetbook features the following Add-ons:
 >
   <TabItem value="generator">
     As of now, Add-ons are supported via custom annotations. 
-    See the the corresponding documentation for each Add-on for more information.
+    See the corresponding documentation for each Add-on for more information.
   </TabItem>
   <TabItem value="manual">
     Most Add-ons follow the pattern to require a `setting` property that allows developers to populate an Add-on with the required data.
-    The `Setting` data model has one or more properties to provide the data that can be selected in the user-interface and also has one or more properties to define the active data item. 
+    The `Setting` data model has one or more properties to provide the data that can be selected in the user interface and also has one or more properties to define the active data item. 
 
     ```dart title="MaterialThemeAddon example"
     final themeAddon = MaterialThemeAddon(
