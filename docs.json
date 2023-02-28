@@ -26,10 +26,7 @@
                     "Configuration", "/getting-started/configuration"
                 ],
                 [
-                    "Installation", "/getting-started/installation"
-                ],
-                [
-                    "Installation for mono repos", "/getting-started/installation-mono-repo"
+                    "Configuration for mono repos", "/getting-started/configuration-mono-repo"
                 ]
             ]
         ],
