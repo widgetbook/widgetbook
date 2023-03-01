@@ -544,6 +544,7 @@ void main() {
       when(() => ciWrapper.isBitBucket()).thenReturn(false);
       when(() => ciWrapper.isGitLab()).thenReturn(false);
       when(() => ciWrapper.isAzure()).thenReturn(false);
+      when(() => ciWrapper.isCodemagic()).thenReturn(false);
 
       expect(
         publishCommand.run,

@@ -13,14 +13,19 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  widgetbook_annotation: 
+    path: ../../packages/widgetbook_annotation
   widgetbook: 
     path: ../../packages/widgetbook
 
 dev_dependencies:
+  build_runner: 2.3.3
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^1.0.0
+  widgetbook_generator:
+    path: ../../packages/widgetbook_generator
 
 flutter:
   uses-material-design: true
