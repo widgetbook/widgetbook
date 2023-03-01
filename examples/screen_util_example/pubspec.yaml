@@ -1,0 +1,31 @@
+name: screen_util_example
+description: An example on how to use flutter_screenutil with Widgetbook. 
+
+publish_to: 'none'
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  widgetbook_annotation: ^3.0.0-beta.6 
+  flutter_screenutil: ^5.6.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  widgetbook: ^3.0.0-beta.13
+  widgetbook_generator: ^3.0.0-beta.10
+  build_runner: ^2.3.3
+
+flutter:
+
+  uses-material-design: true

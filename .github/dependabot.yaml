@@ -45,3 +45,8 @@ updates:
     schedule:
       interval: "daily"
     versioning-strategy: increase
+  - package-ecosystem: "pub"
+    directory: "/examples/screen_util_example"
+    schedule:
+      interval: "daily"
+    versioning-strategy: increase

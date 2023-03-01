@@ -29,5 +29,12 @@
             "program": "lib/widgetbook.dart",
             "type": "dart"
         },
+        {
+            "name": "Debug screen_util_example",
+            "cwd": "examples/screen_util_example",
+            "request": "launch",
+            "program": "lib/main.widgetbook.dart",
+            "type": "dart"
+        },
     ]
 }
