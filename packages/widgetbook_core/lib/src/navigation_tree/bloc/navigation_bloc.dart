@@ -99,6 +99,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
           name: child.name,
           type: child.type,
           data: child.data,
+          isInitiallyExpanded: child.isInitiallyExpanded,
           children: child.children.isNotEmpty
               ? _generateNodes(
                   children: child.children,
