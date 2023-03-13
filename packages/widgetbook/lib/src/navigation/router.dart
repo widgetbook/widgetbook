@@ -60,7 +60,6 @@ GoRouter createRouter({
       return null;
     },
     initialLocation: initialLocation,
-    debugLogDiagnostics: true,
     routes: [
       ShellRoute(
         builder: (context, state, child) {
