@@ -15,6 +15,27 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`widgetbook` - `v3.0.0-beta.13`](#widgetbook---v300-beta13)
+
+---
+
+#### `widgetbook` - `v3.0.0-beta.13`
+
+ - **FIX**(widgetbook): :bug: remove `go_router` diagnostics. ([a5395ee7](https://github.com/widgetbook/widgetbook/commit/a5395ee71461debfe22eaeef0b830c619ca01678))
+
+
+## 2023-03-13
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`widgetbook_core` - `v3.0.0-beta.7`](#widgetbook_core---v300-beta7)
  - [`widgetbook` - `v3.0.0-beta.12`](#widgetbook---v300-beta12)
 

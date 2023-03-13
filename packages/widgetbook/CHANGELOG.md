@@ -1,3 +1,7 @@
+## 3.0.0-beta.13
+
+ - **FIX**(widgetbook): :bug: remove `go_router` diagnostics. ([a5395ee7](https://github.com/widgetbook/widgetbook/commit/a5395ee71461debfe22eaeef0b830c619ca01678))
+
 ## 3.0.0-beta.12
 
  - Update a dependency to the latest release.

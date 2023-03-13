@@ -14,7 +14,7 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   widgetbook_annotation: ^3.0.0-beta.6
-  widgetbook: ^3.0.0-beta.12
+  widgetbook: ^3.0.0-beta.13
   flutter_bloc: ^8.1.1
   widgetbook_core:
     path: ../packages/widgetbook_core
