@@ -1,3 +1,7 @@
+## 3.0.0-beta.7
+
+ - **FIX**(widgetbook): :bug: setting `isInitiallyExpanded` to `false` has no impact. ([90aeace1](https://github.com/widgetbook/widgetbook/commit/90aeace1210a8e35c07eb279c7a2ce6c1e003793))
+
 ## 3.0.0-beta.6
 
  - **REFACTOR**: :recycle: settings. ([254ebef6](https://github.com/widgetbook/widgetbook/commit/254ebef6fe38b2d8f3fc847366f4725ab9292ccb))
