@@ -268,10 +268,10 @@ packages:
     dependency: transitive
     description:
       name: go_router
-      sha256: "9e8cee9969a9f33821a5594e5822d9a7ef3ae8528e5258f5178436e3deb0e095"
+      sha256: b4bb06205ec607278b6fc23db238278417bca84a3905779cc68d1eb7afae37e2
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.3"
+    version: "6.2.0"
   graphs:
     dependency: transitive
     description:
@@ -555,35 +555,35 @@ packages:
       path: "../packages/widgetbook"
       relative: true
     source: path
-    version: "3.0.0-beta.8"
+    version: "3.0.0-beta.11"
   widgetbook_annotation:
     dependency: "direct main"
     description:
       path: "../packages/widgetbook_annotation"
       relative: true
     source: path
-    version: "3.0.0-beta.4"
+    version: "3.0.0-beta.6"
   widgetbook_core:
     dependency: "direct main"
     description:
       path: "../packages/widgetbook_core"
       relative: true
     source: path
-    version: "3.0.0-beta.5"
+    version: "3.0.0-beta.6"
   widgetbook_generator:
     dependency: "direct dev"
     description:
       path: "../packages/widgetbook_generator"
       relative: true
     source: path
-    version: "3.0.0-beta.8"
+    version: "3.0.0-beta.10"
   widgetbook_models:
     dependency: "direct overridden"
     description:
       path: "../packages/widgetbook_models"
       relative: true
     source: path
-    version: "3.0.0-beta.2"
+    version: "3.0.0-beta.3"
   yaml:
     dependency: transitive
     description:
@@ -593,5 +593,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.18.5 <4.0.0"
+  dart: ">=2.18.5 <3.0.0"
   flutter: ">=3.3.0"
