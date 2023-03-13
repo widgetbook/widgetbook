@@ -7,6 +7,7 @@ void main() {
     const packageDirectory = MultiChildNavigationNodeData(
       name: 'Package',
       type: NavigationNodeType.package,
+      isInitiallyExpanded: false,
       children: [
         MultiChildNavigationNodeData(
           name: 'Component',
@@ -49,6 +50,7 @@ void main() {
       path: 'package',
       name: 'Package',
       type: NavigationNodeType.package,
+      isInitiallyExpanded: false,
       children: [
         NavigationTreeNodeData(
           path: 'package/component',
