@@ -4,7 +4,7 @@ repository: https://github.com/widgetbook/widgetbook
 packages:
   - packages/**
   - examples/**
-  - widgetbook_for_widgetbook/**
+  - widgetbook_for_widgetbook/
 
 command:
   version:
