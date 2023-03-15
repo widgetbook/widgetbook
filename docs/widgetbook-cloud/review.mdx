@@ -13,10 +13,40 @@ For this to work, a webhook to our services is required.
 ## Requirements
 
 To use Widgetbook Cloud _Review_ your setup has to meet the following requirements:
-- Use `widgetbook_generator` package in version `v2.4.1` (no special configuration required).
-- Use `widgetbook` package in version `v2.4.1` (no special configuration required).
-- Use the `widgetbook` CLI from the [widgetbook_cli](https://pub.dev/packages/widgetbook_cli) package. For instructions see [Hosting](/widgetbook-cloud/hosting).
+- Use [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) in version `v3.0.0-beta` (no special configuration required).
+- Use [widgetbook package](https://pub.dev/packages/widgetbook) in version `v3.0.0-beta` (no special configuration required).
+- Use the `widgetbook` CLI from the [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli).
 - Setup a GitHub webhook
+
+# How the Review feature works
+
+In a pull request (sometimes called merge request) developers compare a _base_ branch (sometimes called _base ref_) with a _feature_ branch (sometimes called _head_ branch or _head ref_) based on the lines of code changed.
+The Widgetbook Review feature has some similarities to how pull requests work. 
+Therefore, for each pull request the Widgetbook Cloud solution created a Review that corresponds to a pull request in your Git provider.
+Similar to how the base code is compared to the head code on a line by line basis, in Widgetbook Cloud teams compare a base build with a head build on a visual use-case basis.
+Therefore, Widgetbook Cloud requires an uploaded build for the base branch and feature branch.
+
+## Builds for review
+Use the [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli) to upload a build for the base and feature branch. 
+We recommend to have a first pipeline that runs whenever a new commit is pushed to your base branch (e.g. `main`, `dev`, `staging`). 
+In addition, we recommend to have a second pipeline that runs whenever a new commit is pushed to the pull request (and its feature branch).
+In comparison to the first pipeline, the second pipeline should specify the base branch by using the `--base-branch` argument. 
+The described configuration ensures that builds are available for the base and feature branches. 
+
+## Review information
+
+In addition to the required builds, a review has to be populated with information about which use-cases changed.
+The information on which use-cases changed is extracted by the CLI when the `--base-branch` argument is specified.
+
+<Info>
+    Widgetbook Cloud shows Reviews for each pull-request. 
+    However, only Reviews that have changes to use-cases are accessible.
+</Info>
+
+<Warning>
+    Currently, Widgetbook Cloud only shows use-cases that have been changed, added or removed within the freature branch in comparison to the base branch. 
+    That means, that already existing use-cases will not be shown.
+</Warning>
 
 ## Setup Webhook (GitHub)
 
