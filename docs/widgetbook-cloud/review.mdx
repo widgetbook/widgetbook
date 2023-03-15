@@ -22,7 +22,7 @@ To use Widgetbook Cloud _Review_ your setup has to meet the following requiremen
 
 In a pull request (sometimes called merge request) developers compare a _base_ branch (sometimes called _base ref_) with a _feature_ branch (sometimes called _head_ branch or _head ref_) based on the lines of code changed.
 The Widgetbook Review feature has some similarities to how pull requests work. 
-Therefore, for each pull request the Widgetbook Cloud solution created a Review that corresponds to a pull request in your Git provider.
+Therefore, for each pull request Widgetbook Cloud creates a Review that corresponds to a pull request in your Git provider.
 Similar to how the base code is compared to the head code on a line by line basis, in Widgetbook Cloud teams compare a base build with a head build on a visual use-case basis.
 Therefore, Widgetbook Cloud requires an uploaded build for the base branch and feature branch.
 
@@ -45,7 +45,7 @@ The information on which use-cases changed is extracted by the CLI when the `--b
 
 <Warning>
     Currently, Widgetbook Cloud only shows use-cases that have been changed, added or removed within the freature branch in comparison to the base branch. 
-    That means, that already existing use-cases will not be shown.
+    That means, that already existing use-cases will not be shown even if they have never been reviewed.
 </Warning>
 
 ## Setup Webhook (GitHub)
