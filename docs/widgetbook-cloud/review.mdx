@@ -53,7 +53,7 @@ Use the [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli) to upl
     # Install the CLI
     dart pub global activate widgetbook_cli 3.0.0-beta.22
     # Run the CLI
-    widgetbook publish --api-key <API-KEY>
+    widgetbook publish --api-key API-KEY
     ```
   </TabItem>
   <TabItem value="feature">
@@ -73,12 +73,13 @@ Use the [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli) to upl
     # Install the CLI
     dart pub global activate widgetbook_cli 3.0.0-beta.22
     # Run the CLI
-    widgetbook publish --api-key <API-KEY> --base-branch <BASE-BRANCH>
+    widgetbook publish --api-key API-KEY --base-branch BASE-BRANCH
     ```
 
     <Note>
-    All CI/CD provider expose the `<BASE-BRANCH>` via environment variables for pull requests. 
-    Please have a look at our [CI/CD provider examples](/widgetbook-cloud/hosting#examples).</Note> 
+        All CI/CD provider expose the `BASE-BRANCH` via environment variables for pull requests. 
+        Please have a look at our [CI/CD provider examples](/widgetbook-cloud/hosting#examples).
+    </Note> 
   </TabItem>
 </Tabs>
 
