@@ -61,7 +61,9 @@ Use the [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli) to upl
     The feature branch can be any branch that is merged into your base branch.
     The base branch is likely your `main`, `master`, `dev` or `staging` branch.
 
-    <Note>To successfully upload review information you must define the `--base-branch` argument for the Widgetbook CLI.</Note>
+    <Info>
+        To successfully upload review information you must define the `--base-branch` argument for the Widgetbook CLI.
+    </Info>
 
     ```bash title="CI/CD upload feature build and review"
     # Install dependencies
@@ -76,10 +78,10 @@ Use the [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli) to upl
     widgetbook publish --api-key API-KEY --base-branch BASE-BRANCH
     ```
 
-    <Note>
+    <Info>
         All CI/CD provider expose the `BASE-BRANCH` via environment variables for pull requests. 
         Please have a look at our [CI/CD provider examples](/widgetbook-cloud/hosting#examples).
-    </Note> 
+    </Info> 
   </TabItem>
 </Tabs>
 
