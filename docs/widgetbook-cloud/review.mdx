@@ -20,18 +20,67 @@ To use Widgetbook Cloud _Review_ your setup has to meet the following requiremen
 
 # How the Review feature works
 
-In a pull request (sometimes called merge request) developers compare a _base_ branch (sometimes called _base ref_) with a _feature_ branch (sometimes called _head_ branch or _head ref_) based on the lines of code changed.
-The Widgetbook Review feature has some similarities to how pull requests work. 
-Therefore, for each pull request Widgetbook Cloud creates a Review that corresponds to a pull request in your Git provider.
-Similar to how the base code is compared to the head code on a line by line basis, in Widgetbook Cloud teams compare a base build with a head build on a visual use-case basis.
+A Widgetbook Review allows Flutter teams to compare changes in the user interface.
+Within the review the team compares the current version with a previous version. 
+In addition, the review feature also offeres to compare the current version of a Widget with the Figma design of a component.
+
+The structure of a review has similarities with how pull requests work.
+In a pull request developers compare a `base` branch (previous version) with a `feature` branch (new version) based on the lines of code changed.
+For the review, our integration creates a Widgetbook Cloud review for each pull request in your Git provider.
+Similar to how the previous code is compared to the current code on a line by line basis, in Widgetbook Cloud teams compare a base build (previous version) with a feature build (current version) on a visual use-case basis.
 Therefore, Widgetbook Cloud requires an uploaded build for the base branch and feature branch.
 
 ## Builds for review
-Use the [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli) to upload a build for the base and feature branch. 
-We recommend to have a first pipeline that runs whenever a new commit is pushed to your base branch (e.g. `main`, `dev`, `staging`). 
-In addition, we recommend to have a second pipeline that runs whenever a new commit is pushed to the pull request (and its feature branch).
-In comparison to the first pipeline, the second pipeline should specify the base branch by using the `--base-branch` argument. 
-The described configuration ensures that builds are available for the base and feature branches. 
+Use the [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli) to upload a build for the base and feature branch.
+
+<Tabs
+  values={[
+    { label: 'Upload base build', value: 'base' },
+    { label: 'Upload feature build', value: 'feature' },
+  ]}
+>
+  <TabItem value="base">
+    Define a CI/CD pipeline that uploads a build for each push to your base branch.
+    The base branch is likely your `main`, `master`, `dev` or `staging` branch.
+
+    ```bash title="CI/CD upload base build"
+    # Install dependencies
+    flutter pub get
+    # Run the build runner
+    flutter pub run build_runner build --delete-conflicting-outputs
+    # Build the Widgetbook
+    flutter build web -t lib/app.widgetbook.dart
+    # Install the CLI
+    dart pub global activate widgetbook_cli 3.0.0-beta.22
+    # Run the CLI
+    widgetbook publish --api-key <API-KEY>
+    ```
+  </TabItem>
+  <TabItem value="feature">
+    Define a CI/CD pipeline that uploads a build for each push to your pull request.
+    The feature branch can be any branch that is merged into your base branch.
+    The base branch is likely your `main`, `master`, `dev` or `staging` branch.
+
+    <Note>To successfully upload review information you must define the `--base-branch` argument for the Widgetbook CLI.</Note>
+
+    ```bash title="CI/CD upload feature build and review"
+    # Install dependencies
+    flutter pub get
+    # Run the build runner
+    flutter pub run build_runner build --delete-conflicting-outputs
+    # Build the Widgetbook
+    flutter build web -t lib/app.widgetbook.dart
+    # Install the CLI
+    dart pub global activate widgetbook_cli 3.0.0-beta.22
+    # Run the CLI
+    widgetbook publish --api-key <API-KEY> --base-branch <BASE-BRANCH>
+    ```
+
+    <Note>
+    All CI/CD provider expose the `<BASE-BRANCH>` via environment variables for pull requests. 
+    Please have a look at our [CI/CD provider examples](/widgetbook-cloud/hosting#examples).</Note> 
+  </TabItem>
+</Tabs>
 
 ## Review information
 
