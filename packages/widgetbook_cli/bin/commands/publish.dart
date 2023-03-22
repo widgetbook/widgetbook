@@ -462,6 +462,8 @@ class PublishCommand extends WidgetbookCommand {
             baseBranch: baseBranch,
           ).parse();
 
+    progress.update('Detected ${useCases.length} changed use-case(s)');
+
     final themes = await themeParser?.parse() ??
         await ThemeParser(projectPath: args.path).parse();
 
