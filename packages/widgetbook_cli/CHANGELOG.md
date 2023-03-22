@@ -1,3 +1,7 @@
+## 3.0.0-beta.23
+
+ - **FEAT**: :sparkles: log number of use-cases.
+
 ## 3.0.0-beta.22
 
  - **FEAT**: support for Codemagic. ([a2271e5f](https://github.com/widgetbook/widgetbook/commit/a2271e5f2361855b5046ed5ff946a39559288afc))
