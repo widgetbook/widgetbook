@@ -68,8 +68,10 @@ class UseCaseParser extends GeneratorParser<ChangedUseCase> {
   }) {
     if (diffPath == null) {
       return false;
+    } else if (usecasePath.endsWith(diffPath)) {
+      return true;
     } else {
-      return usecasePath.endsWith(diffPath);
+      return diffPath.endsWith(usecasePath);
     }
   }
 
