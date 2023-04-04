@@ -11,7 +11,7 @@ Widgetbook is the custom widget library specifically created for Flutter applica
 
 Widgetbook Cloud is the collaboration platform for Flutter frontend teams. Developers can easily share their Widgetbook with designers, project managers, clients, and more to simplify review processes.
 
-[Get access to Widgetbook Cloud!](https://www.widgetbook.io/pilot-customer?utm_source=github&utm_medium=github&utm_campaign=read_me)
+[Get access to Widgetbook Cloud!](https://www.widgetbook.io/)
 
 # Packages
 
