@@ -15,11 +15,11 @@ Widget customPaddingStory(BuildContext context) {
 }
 
 class CustomPadding extends StatelessWidget {
-  final Widget widget;
   const CustomPadding({
     Key? key,
     required this.widget,
   }) : super(key: key);
+  final Widget widget;
 
   @override
   Widget build(BuildContext context) {

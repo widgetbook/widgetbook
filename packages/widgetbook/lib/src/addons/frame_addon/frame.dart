@@ -1,15 +1,16 @@
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/src/addons/addon.dart';
 
+@immutable
 abstract class Frame {
-  Frame({
+  const Frame({
     required this.name,
     required this.addon,
   });
 
   final String name;
+  final WidgetbookAddOn addon;
 
-  WidgetbookAddOn addon;
   Widget builder(BuildContext context, Widget child);
 
   @override

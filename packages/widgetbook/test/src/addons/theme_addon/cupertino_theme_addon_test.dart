@@ -30,7 +30,10 @@ void main() {
 
       final setting = CupertinoThemeSetting(
         activeTheme: blueWidgetbookTheme,
-        themes: [blueWidgetbookTheme, yellowWidgetbookTheme],
+        themes: const [
+          blueWidgetbookTheme,
+          yellowWidgetbookTheme,
+        ],
       );
 
       final addon = CupertinoThemeAddon(

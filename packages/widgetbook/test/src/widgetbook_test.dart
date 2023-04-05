@@ -104,7 +104,7 @@ void main() {
                   addons: [
                     MaterialThemeAddon(
                       setting: MaterialThemeSetting.firstAsSelected(
-                        themes: [],
+                        themes: const [],
                       ),
                     ),
                   ],

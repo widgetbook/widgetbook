@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/repositories/memory_repository.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
+@immutable
 class _Item extends Model {
-  _Item({
+  const _Item({
     required super.id,
     required this.value,
   });
@@ -48,7 +50,7 @@ void main() {
               <dynamic>[
                 <_Item>[],
                 <_Item>[
-                  _Item(
+                  const _Item(
                     id: defaultId,
                     value: 0,
                   ),
@@ -59,7 +61,7 @@ void main() {
           );
 
           repository.addItem(
-            _Item(
+            const _Item(
               id: defaultId,
               value: 0,
             ),
@@ -70,7 +72,7 @@ void main() {
             repository.memory,
             equals(
               <String, _Item>{
-                defaultId: _Item(
+                defaultId: const _Item(
                   id: defaultId,
                   value: 0,
                 ),
@@ -85,7 +87,7 @@ void main() {
         () async {
           final repository = _MemoryRepository(
             initialConfiguration: <String, _Item>{
-              defaultId: _Item(
+              defaultId: const _Item(
                 id: defaultId,
                 value: 0,
               ),
@@ -98,7 +100,7 @@ void main() {
             emitsInOrder(
               <dynamic>[
                 <_Item>[
-                  _Item(
+                  const _Item(
                     id: defaultId,
                     value: 0,
                   ),
@@ -110,7 +112,7 @@ void main() {
           );
 
           repository.deleteItem(
-            _Item(
+            const _Item(
               id: defaultId,
               value: 0,
             ),
@@ -131,7 +133,7 @@ void main() {
         () async {
           final repository = _MemoryRepository(
             initialConfiguration: <String, _Item>{
-              defaultId: _Item(
+              defaultId: const _Item(
                 id: defaultId,
                 value: 0,
               ),
@@ -144,13 +146,13 @@ void main() {
             emitsInOrder(
               <dynamic>[
                 <_Item>[
-                  _Item(
+                  const _Item(
                     id: defaultId,
                     value: 0,
                   ),
                 ],
                 <_Item>[
-                  _Item(
+                  const _Item(
                     id: defaultId,
                     value: 1,
                   ),
@@ -161,7 +163,7 @@ void main() {
           );
 
           repository.setItem(
-            _Item(
+            const _Item(
               id: defaultId,
               value: 1,
             ),
@@ -172,7 +174,7 @@ void main() {
             repository.memory,
             equals(
               <String, _Item>{
-                defaultId: _Item(
+                defaultId: const _Item(
                   id: defaultId,
                   value: 1,
                 ),
@@ -194,7 +196,7 @@ void main() {
               <dynamic>[
                 <_Item>[],
                 <_Item>[
-                  _Item(
+                  const _Item(
                     id: defaultId,
                     value: 0,
                   ),
@@ -205,7 +207,7 @@ void main() {
           );
 
           repository.setItem(
-            _Item(
+            const _Item(
               id: defaultId,
               value: 0,
             ),
@@ -216,7 +218,7 @@ void main() {
             repository.memory,
             equals(
               <String, _Item>{
-                defaultId: _Item(
+                defaultId: const _Item(
                   id: defaultId,
                   value: 0,
                 ),
@@ -231,7 +233,7 @@ void main() {
         () async {
           final repository = _MemoryRepository(
             initialConfiguration: <String, _Item>{
-              defaultId: _Item(
+              defaultId: const _Item(
                 id: defaultId,
                 value: 0,
               ),
@@ -264,7 +266,7 @@ void main() {
         () async {
           final repository = _MemoryRepository(
             initialConfiguration: <String, _Item>{
-              defaultId: _Item(
+              defaultId: const _Item(
                 id: defaultId,
                 value: 0,
               ),
@@ -275,7 +277,7 @@ void main() {
           expect(
             result,
             equals(
-              _Item(
+              const _Item(
                 id: defaultId,
                 value: 0,
               ),
@@ -289,11 +291,11 @@ void main() {
         () async {
           final repository = _MemoryRepository(
             initialConfiguration: <String, _Item>{
-              defaultId: _Item(
+              defaultId: const _Item(
                 id: defaultId,
                 value: 0,
               ),
-              alternateId: _Item(
+              alternateId: const _Item(
                 id: alternateId,
                 value: 1,
               ),
@@ -306,11 +308,11 @@ void main() {
             emitsInOrder(
               <dynamic>[
                 <_Item>[
-                  _Item(
+                  const _Item(
                     id: defaultId,
                     value: 0,
                   ),
-                  _Item(
+                  const _Item(
                     id: alternateId,
                     value: 1,
                   ),
@@ -345,11 +347,11 @@ void main() {
               <dynamic>[
                 <_Item>[],
                 <_Item>[
-                  _Item(
+                  const _Item(
                     id: defaultId,
                     value: 0,
                   ),
-                  _Item(
+                  const _Item(
                     id: alternateId,
                     value: 1,
                   ),
@@ -360,11 +362,11 @@ void main() {
           );
 
           repository.addAll([
-            _Item(
+            const _Item(
               id: defaultId,
               value: 0,
             ),
-            _Item(
+            const _Item(
               id: alternateId,
               value: 1,
             ),
@@ -375,11 +377,11 @@ void main() {
             repository.memory,
             equals(
               <String, _Item>{
-                defaultId: _Item(
+                defaultId: const _Item(
                   id: defaultId,
                   value: 0,
                 ),
-                alternateId: _Item(
+                alternateId: const _Item(
                   id: alternateId,
                   value: 1,
                 ),
