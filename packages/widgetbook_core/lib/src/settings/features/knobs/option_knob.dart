@@ -8,11 +8,11 @@ String _defaultLabelBuilder<T>(T option) {
 
 class OptionKnob<T> extends StatelessWidget {
   const OptionKnob({
-    super.key,
     required this.name,
-    this.description,
     required this.value,
     required this.values,
+    super.key,
+    this.description,
     String Function(T option)? labelBuilder,
     this.onChanged,
   }) : labelBuilder = labelBuilder ?? _defaultLabelBuilder;

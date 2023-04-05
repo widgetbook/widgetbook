@@ -72,7 +72,7 @@ void main() {
         final voidCallbackMock = VoidCallbackMock();
         await tester.pumpWidgetWithMaterial(
           child: SearchField(
-            onSearchPressed: voidCallbackMock,
+            onSearchPressed: voidCallbackMock.call,
           ),
         );
         final searchButtonFinder = find.byWidgetPredicate(

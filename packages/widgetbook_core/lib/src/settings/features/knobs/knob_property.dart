@@ -4,11 +4,11 @@ import 'package:widgetbook_core/src/settings/widgets/widgets.dart';
 
 class KnobProperty<T> extends StatefulWidget {
   const KnobProperty({
-    super.key,
     required this.name,
     required this.description,
     required this.value,
     required this.child,
+    super.key,
     this.trailing,
     this.changedNullable,
   });

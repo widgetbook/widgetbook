@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class SettingGroup extends StatelessWidget {
   const SettingGroup({
-    super.key,
     required this.settings,
+    super.key,
   });
 
   final List<Widget> settings;

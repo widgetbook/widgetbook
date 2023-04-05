@@ -18,7 +18,7 @@ void main() {
             child: NumberKnob(
               name: '$NumberKnob',
               value: 10,
-              onChanged: valueChangedCallbackMock,
+              onChanged: valueChangedCallbackMock.call,
             ),
           );
 
@@ -44,7 +44,7 @@ void main() {
             child: NullableNumberKnob(
               name: '$NullableNumberKnob',
               value: 10,
-              onChanged: valueChangedCallbackMock,
+              onChanged: valueChangedCallbackMock.call,
             ),
           );
 
@@ -65,7 +65,7 @@ void main() {
             child: NullableNumberKnob(
               name: '$NullableNumberKnob',
               value: 10,
-              onChanged: valueChangedCallbackMock,
+              onChanged: valueChangedCallbackMock.call,
             ),
           );
 
@@ -86,7 +86,7 @@ void main() {
             child: NullableNumberKnob(
               name: '$NullableNumberKnob',
               value: 10,
-              onChanged: valueChangedCallbackMock,
+              onChanged: valueChangedCallbackMock.call,
             ),
           );
 

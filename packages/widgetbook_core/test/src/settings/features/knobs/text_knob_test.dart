@@ -20,7 +20,7 @@ void main() {
             child: TextKnob(
               name: '$TextKnob',
               value: initialValue,
-              onChanged: valueChangedCallbackMock,
+              onChanged: valueChangedCallbackMock.call,
             ),
           );
 
@@ -46,7 +46,7 @@ void main() {
             child: NullableTextKnob(
               name: '$NullableTextKnob',
               value: initialValue,
-              onChanged: valueChangedCallbackMock,
+              onChanged: valueChangedCallbackMock.call,
             ),
           );
 
@@ -67,7 +67,7 @@ void main() {
             child: NullableTextKnob(
               name: '$NullableTextKnob',
               value: initialValue,
-              onChanged: valueChangedCallbackMock,
+              onChanged: valueChangedCallbackMock.call,
             ),
           );
 

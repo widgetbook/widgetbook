@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class KnobPadding extends StatelessWidget {
   const KnobPadding({
-    super.key,
     required this.child,
+    super.key,
   });
 
   final Widget child;

@@ -24,7 +24,7 @@ void main() {
           await tester.pumpWidgetWithMaterial(
             child: NavigationTreeItem(
               data: testNode,
-              onTap: voidCallbackMock,
+              onTap: voidCallbackMock.call,
             ),
           );
 
@@ -91,7 +91,7 @@ void main() {
             await tester.pumpWidgetWithMaterial(
               child: NavigationTreeItem(
                 data: testNode,
-                onMoreIconPressed: voidCallbackMock,
+                onMoreIconPressed: voidCallbackMock.call,
               ),
             );
 

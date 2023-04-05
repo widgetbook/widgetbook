@@ -3,10 +3,10 @@ import 'package:widgetbook_core/src/settings/features/knobs/knob_property.dart';
 
 class BoolKnob extends StatefulWidget {
   const BoolKnob({
-    super.key,
     required this.name,
-    this.description,
     required this.value,
+    super.key,
+    this.description,
     this.onChanged,
   });
 
@@ -54,10 +54,10 @@ class _BoolKnobState extends State<BoolKnob> {
 
 class NullableBoolKnob extends StatefulWidget {
   const NullableBoolKnob({
-    super.key,
     required this.name,
-    this.description,
     required this.value,
+    super.key,
+    this.description,
     this.onChanged,
   });
 

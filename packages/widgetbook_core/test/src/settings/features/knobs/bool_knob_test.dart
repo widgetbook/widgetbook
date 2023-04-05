@@ -18,7 +18,7 @@ void main() {
             child: BoolKnob(
               name: '$BoolKnob',
               value: true,
-              onChanged: valueChangedCallbackMock,
+              onChanged: valueChangedCallbackMock.call,
             ),
           );
 
@@ -44,7 +44,7 @@ void main() {
             child: NullableBoolKnob(
               name: '$NullableBoolKnob',
               value: true,
-              onChanged: valueChangedCallbackMock,
+              onChanged: valueChangedCallbackMock.call,
             ),
           );
 
@@ -70,7 +70,7 @@ void main() {
             child: NullableBoolKnob(
               name: '$NullableBoolKnob',
               value: true,
-              onChanged: valueChangedCallbackMock,
+              onChanged: valueChangedCallbackMock.call,
             ),
           );
 
