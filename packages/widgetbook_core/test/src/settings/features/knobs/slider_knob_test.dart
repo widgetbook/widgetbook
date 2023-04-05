@@ -36,7 +36,7 @@ void main() {
             child: SliderKnob(
               name: '$SliderKnob',
               value: 0.1,
-              onChanged: valueChangedCallbackMock,
+              onChanged: valueChangedCallbackMock.call,
             ),
           );
 
@@ -62,7 +62,7 @@ void main() {
             child: NullableSliderKnob(
               name: '$SliderKnob',
               value: 0.1,
-              onChanged: valueChangedCallbackMock,
+              onChanged: valueChangedCallbackMock.call,
             ),
           );
 
@@ -85,7 +85,7 @@ void main() {
             child: NullableSliderKnob(
               name: '$SliderKnob',
               value: 0.1,
-              onChanged: valueChangedCallbackMock,
+              onChanged: valueChangedCallbackMock.call,
             ),
           );
 

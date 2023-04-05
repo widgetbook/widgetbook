@@ -39,10 +39,10 @@ String? colorErrorText(String value) {
 
 class ColorKnob extends StatefulWidget {
   const ColorKnob({
-    super.key,
     required this.name,
-    this.description,
     required this.value,
+    super.key,
+    this.description,
     this.onChanged,
   });
 

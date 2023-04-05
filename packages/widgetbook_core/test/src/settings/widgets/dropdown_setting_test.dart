@@ -16,7 +16,7 @@ void main() {
           await tester.pumpWidgetWithMaterial(
             child: DropdownSetting<String>(
               options: const ['A', 'B'],
-              onSelected: valueChangedCallbackMock,
+              onSelected: valueChangedCallbackMock.call,
             ),
           );
 

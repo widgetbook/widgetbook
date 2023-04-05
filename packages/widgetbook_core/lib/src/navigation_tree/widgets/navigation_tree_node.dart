@@ -3,9 +3,9 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 
 class NavigationTreeNode extends StatefulWidget {
   const NavigationTreeNode({
+    required this.data,
     super.key,
     this.level = 0,
-    required this.data,
     this.selectedNode,
     this.onNodeSelected,
   });

@@ -3,10 +3,10 @@ import 'package:widgetbook_core/src/settings/features/knobs/knob_property.dart';
 
 class SliderKnob extends StatefulWidget {
   const SliderKnob({
-    super.key,
     required this.name,
-    this.description,
     required this.value,
+    super.key,
+    this.description,
     this.max = 1,
     this.min = 0,
     this.divisions,
@@ -60,10 +60,10 @@ class _SliderKnobState extends State<SliderKnob> {
 
 class NullableSliderKnob extends StatefulWidget {
   const NullableSliderKnob({
-    super.key,
     required this.name,
-    this.description,
     required this.value,
+    super.key,
+    this.description,
     this.max = 1,
     this.min = 0,
     this.divisions,

@@ -57,7 +57,7 @@ void main() {
         await tester.pumpWidgetWithMaterial(
           child: NavigationTreeNode(
             data: useCaseNode,
-            onNodeSelected: valueChangedCallbackMock,
+            onNodeSelected: valueChangedCallbackMock.call,
           ),
         );
 

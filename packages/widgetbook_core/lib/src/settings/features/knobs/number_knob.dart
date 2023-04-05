@@ -8,10 +8,10 @@ String? _errorText(String value) {
 
 class NumberKnob extends StatefulWidget {
   const NumberKnob({
-    super.key,
     required this.name,
-    this.description,
     required this.value,
+    super.key,
+    this.description,
     this.onChanged,
   });
 
@@ -66,10 +66,10 @@ class _NumberKnobState extends State<NumberKnob> {
 
 class NullableNumberKnob extends StatefulWidget {
   const NullableNumberKnob({
-    super.key,
     required this.name,
-    this.description,
     required this.value,
+    super.key,
+    this.description,
     this.onChanged,
   });
 

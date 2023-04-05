@@ -20,7 +20,7 @@ void main() {
               name: '$OptionKnob',
               values: values,
               value: values.first,
-              onChanged: valueChangedCallbackMock,
+              onChanged: valueChangedCallbackMock.call,
             ),
           );
 

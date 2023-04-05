@@ -3,8 +3,8 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 
 class SettingSection extends StatelessWidget {
   const SettingSection({
-    super.key,
     required this.data,
+    super.key,
   });
 
   final SettingSectionData data;

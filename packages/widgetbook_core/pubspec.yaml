@@ -23,7 +23,7 @@ dev_dependencies:
     sdk: flutter
   freezed: ^2.2.0
   mocktail: ^0.3.0
-  very_good_analysis: ^3.0.0
+  very_good_analysis: ^4.0.0+1
 
 flutter:
   fonts:

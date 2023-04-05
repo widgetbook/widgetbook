@@ -3,9 +3,9 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 
 class NavigationTreeItem extends StatefulWidget {
   const NavigationTreeItem({
+    required this.data,
     super.key,
     this.level = 0,
-    required this.data,
     this.onTap,
     this.isExpanded = false,
     this.onMoreIconPressed,

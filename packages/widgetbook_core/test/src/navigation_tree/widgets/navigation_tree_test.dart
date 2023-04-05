@@ -158,7 +158,7 @@ void main() {
             child: BlocProvider.value(
               value: navigationBloc,
               child: NavigationTree(
-                onNodeSelected: onNodeSelectedCallbackMock,
+                onNodeSelected: onNodeSelectedCallbackMock.call,
               ),
             ),
           );

@@ -4,10 +4,10 @@ import 'package:widgetbook_core/src/settings/features/knobs/knob_property.dart';
 
 class TextKnob extends StatefulWidget {
   const TextKnob({
-    super.key,
     required this.name,
-    this.description,
     required this.value,
+    super.key,
+    this.description,
     this.maxLines = 1,
     this.onChanged,
   });
@@ -57,10 +57,10 @@ class _TextKnobState extends State<TextKnob> {
 
 class NullableTextKnob extends StatefulWidget {
   const NullableTextKnob({
-    super.key,
     required this.name,
-    this.description,
     required this.value,
+    super.key,
+    this.description,
     this.maxLines = 1,
     this.onChanged,
   });
