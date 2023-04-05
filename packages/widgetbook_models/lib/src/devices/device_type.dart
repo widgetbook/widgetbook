@@ -1,5 +1,4 @@
 /// Category of different device types.
-
 enum DeviceType {
   /// A smart watch
   watch,

@@ -6,13 +6,12 @@
 
 import 'dart:core';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:screen_util_example/image_page.dart';
 import 'package:screen_util_example/main.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 void main() {
-  runApp(HotReload());
+  runApp(const HotReload());
 }
 
 class HotReload extends StatelessWidget {
@@ -29,7 +28,7 @@ class HotReload extends StatelessWidget {
               DefaultDeviceFrame(
                 setting: DeviceSetting(
                   devices: [
-                    Device(
+                    const Device(
                       name: 'iPhone 13',
                       resolution: Resolution(
                         nativeSize: DeviceSize(
@@ -41,7 +40,7 @@ class HotReload extends StatelessWidget {
                       type: DeviceType.mobile,
                     ),
                   ],
-                  activeDevice: Device(
+                  activeDevice: const Device(
                     name: 'iPhone 13',
                     resolution: Resolution(
                       nativeSize: DeviceSize(
@@ -57,7 +56,7 @@ class HotReload extends StatelessWidget {
               WidgetbookFrame(
                 setting: DeviceSetting(
                   devices: [
-                    Device(
+                    const Device(
                       name: 'iPhone 13',
                       resolution: Resolution(
                         nativeSize: DeviceSize(
@@ -69,7 +68,7 @@ class HotReload extends StatelessWidget {
                       type: DeviceType.mobile,
                     ),
                   ],
-                  activeDevice: Device(
+                  activeDevice: const Device(
                     name: 'iPhone 13',
                     resolution: Resolution(
                       nativeSize: DeviceSize(

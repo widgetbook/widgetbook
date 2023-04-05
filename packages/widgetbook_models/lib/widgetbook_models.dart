@@ -1,4 +1,3 @@
-library widgetbook_models;
 
 export './src/devices/apple_devices.dart';
 export './src/devices/desktop_screens.dart';

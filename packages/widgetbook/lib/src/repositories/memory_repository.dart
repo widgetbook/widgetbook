@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'dart:collection';
 
 import 'package:meta/meta.dart';
@@ -92,7 +91,7 @@ class MemoryRepository<Item extends Model> extends Repository<Item> {
   void addAll(Iterable<Item> items) {
     final map = HashMap<String, Item>.fromIterable(
       items,
-      key: (dynamic k) => k.id as String,
+      key: (dynamic v) => (v as Item).id,
       value: (dynamic v) => v as Item,
     );
     memory.addAll(map);

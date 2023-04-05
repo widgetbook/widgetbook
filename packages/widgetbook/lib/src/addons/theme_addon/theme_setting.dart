@@ -1,6 +1,8 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:widgetbook/widgetbook.dart';
 
+@immutable
 class ThemeSetting<T> extends WidgetbookAddOnModel {
   ThemeSetting({
     required this.themes,
