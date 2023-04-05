@@ -5,6 +5,11 @@
     "logoDark": "/assets/logos/logo-dark.png",
     "theme": "0060A7",
     "googleAnalytics": "G-74GW877FF8",
+    "docsearch": {
+        "appId": "325TRD6FM7",
+        "apiKey": "c17e610333f601d9831da60a8c8f6bbe",
+        "indexName": "widgetbook"
+    },
     "anchors": [
         { "title": "Homepage", "icon": "house", "link": "https://widgetbook.io" },
         { "title": "Discord", "icon": "discord", "link": "https://discord.com/invite/zT4AMStAJA" }
