@@ -32,7 +32,6 @@ linter:
     - close_sinks
     - comment_references
     - directives_ordering
-    - invariant_booleans
     - join_return_with_assignment
     - lines_longer_than_80_chars
     - literal_only_boolean_expressions

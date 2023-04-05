@@ -12,7 +12,7 @@ void main() {
         '.toCode returns correct code',
         () {
           const instance = BooleanInstance.value(
-            value,
+            value: value,
           );
 
           expect(

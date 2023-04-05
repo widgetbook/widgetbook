@@ -1,3 +1,5 @@
+// ignore_for_file: one_member_abstracts
+
 import 'package:analyzer/dart/constant/value.dart';
 
 /// A abstract represenation of a reader capable of parsing a [DartObject] into

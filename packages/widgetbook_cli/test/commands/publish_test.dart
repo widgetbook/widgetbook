@@ -56,10 +56,6 @@ void main() {
     late Progress progress;
     final tempDir = const LocalFileSystem().currentDirectory;
 
-    Progress publishProgress() => logger.progress(
-          'Uploading build',
-        );
-
     setUp(() async {
       logger = MockLogger();
       gitWrapper = MockGitWrapper();
@@ -839,7 +835,7 @@ gpgsig -----BEGIN PGP SIGNATURE-----
 
         expect(
           results,
-          isA<Map>(),
+          isA<Map<String, dynamic>>(),
         );
       },
     );

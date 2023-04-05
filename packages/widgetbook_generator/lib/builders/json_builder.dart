@@ -34,14 +34,14 @@ class JsonLibraryBuilder extends Builder {
   final String generatedExtension;
 
   @override
-  Future build(BuildStep buildStep) async {
+  Future<void> build(BuildStep buildStep) async {
     final resolver = buildStep.resolver;
     if (!await resolver.isLibrary(buildStep.inputId)) return;
     final lib = await buildStep.inputLibrary;
     await _generateForLibrary(lib, buildStep);
   }
 
-  Future _generateForLibrary(
+  Future<void> _generateForLibrary(
     LibraryElement library,
     BuildStep buildStep,
   ) async {

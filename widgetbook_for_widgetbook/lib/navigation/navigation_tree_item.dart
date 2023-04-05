@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/widgetbook.dart' show Knobs, Option;
+import 'package:widgetbook/widgetbook.dart' show Knobs;
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 

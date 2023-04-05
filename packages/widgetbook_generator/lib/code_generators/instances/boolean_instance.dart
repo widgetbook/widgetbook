@@ -2,8 +2,9 @@ import 'package:widgetbook_generator/code_generators/instances/primary_instance.
 
 /// Implements a [bool] instance
 class BooleanInstance extends PrimaryInstance<bool> {
-  const BooleanInstance.value(bool value)
-      : super(
+  const BooleanInstance.value({
+    required bool value,
+  }) : super(
           value: value,
         );
 

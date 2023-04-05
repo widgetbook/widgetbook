@@ -3,8 +3,8 @@ import 'package:widgetbook_generator/code_generators/instances/base_instance.dar
 class Parameter extends BaseInstance {
   /// Creates a new instance of [Parameter].
   const Parameter({
-    this.key,
     required this.instance,
+    this.key,
   });
 
   final String? key;
