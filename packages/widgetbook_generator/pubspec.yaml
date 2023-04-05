@@ -16,7 +16,7 @@ dependencies:
   freezed_annotation: ^2.0.3
   glob: ^2.0.2
   json_annotation: ^4.4.0
-  meta: ^1.7.0
+  meta: ^1.9.1
   source_gen: ^1.1.0
   widgetbook_annotation: ^3.0.0-beta.6
   widgetbook_models: ^3.0.0-beta.3
