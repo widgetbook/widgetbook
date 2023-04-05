@@ -1,8 +1,6 @@
-# Review (beta)
+# Review
 
-> **NOTE:** Since the Review feature is currently in beta, we're not aiming to migrate any data created previous to the official (non-beta) release to make changes to the feature easier for our development team.
-
-The Widgetbook Cloud _Review_ feature (currently in beta) allows teams to review added, changed or removed components.
+The Widgetbook Cloud _Review_ feature allows teams to review added, changed or removed components.
 The Review feature closely relates to reviews known from Pull-Requests. 
 For each Pull-Request, our new `widgetbook` CLI analyzes the changes to your Widgetbook and creates a review.
 Members of a frontend-team now can review each _changed_ use-case in isolation and add comments for other team members.
@@ -99,6 +97,39 @@ The information on which use-cases changed is extracted by the CLI when the `--b
     Currently, Widgetbook Cloud only shows use-cases that have been changed, added or removed within the freature branch in comparison to the base branch. 
     That means, that already existing use-cases will not be shown even if they have never been reviewed.
 </Warning>
+
+## Integrate with Figma
+
+Widgetbook Cloud offers an integration with Figma that allows comparing the Figma design with the Flutter implementation. 
+
+Let's assume we want to show the following component in Widgetbook Cloud:
+
+<Image 
+    zoom
+    src="/assets/getting-started/figma-button-component.svg" 
+    alt="Figma Material button component with variants" 
+    caption="Figma Material button component with variants" 
+/>
+
+For the integration to work properly, we need to make a connection between the component in the code and the component in Figma by using the `designLink` property of the `@WidgetbookUseCase` annotation. 
+The `designLink` property accepts a link to a Figma component. 
+
+To extract the Figma link follow these steps:
+1. Right-click the component or multiple components in Figma. 
+1. The context menu will open. 
+1. Select `Copy/Paste as` ➡️ `Copy link` from the context menu.
+1. Past the link from the clipboard into the `designLink` property of your `@WidgetbookUseCase` annotation.
+
+```dart title="designLink example"
+@WidgetbookUseCase(
+  name: 'Defaut',
+  type: ElevatedButton,
+	designLink: 'https://www.figma.com/file/...'
+)
+Widget button(BuildContext context) {
+  return ElevatedButton(...);
+}
+```
 
 ## Setup Webhook (GitHub)
 
