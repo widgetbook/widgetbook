@@ -21,11 +21,11 @@ String generateWidgetbook({
   required List<double> textScaleFactors,
   required bool foldersExpanded,
   required bool widgetsExpanded,
+  required List<WidgetbookThemeData> themes,
   WidgetbookLocalesData? localesData,
   WidgetbookLocalizationsDelegatesData? localizationDelegatesData,
   WidgetbookThemeData? widgetbookThemeData,
   WidgetbookThemeTypeData? themeTypeData,
-  required List<WidgetbookThemeData> themes,
   WidgetbookAppBuilderData? appBuilder,
 }) {
   final directories =
@@ -109,7 +109,10 @@ List<Instance> _generateDirectoriesInstances(
   bool foldersExpanded,
   bool widgetsExpanded,
 ) {
-  final service = TreeService(foldersExpanded, widgetsExpanded);
+  final service = TreeService(
+    foldersExpanded: foldersExpanded,
+    widgetsExpanded: widgetsExpanded,
+  );
 
   for (final useCase in useCases) {
     final folder = service.addFolderByImport(useCase.componentImportStatement);

@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'widgetbook_command_runner.dart';
 
 void main(List<String> arguments) async {
@@ -13,7 +14,7 @@ void main(List<String> arguments) async {
 /// This returns a Future that will never complete, since the program will have
 /// exited already. This is useful to prevent Future chains from proceeding
 /// after you've decided to exit.
-Future flushThenExit(int status) {
+Future<void> flushThenExit(int status) {
   return Future.wait<void>([stdout.close(), stderr.close()])
       .then<void>((_) => exit(status));
 }

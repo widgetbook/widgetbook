@@ -38,8 +38,10 @@ class Folder {
 }
 
 class TreeService {
-  TreeService([this.foldersExpanded = false, this.widgetsExpanded = false])
-      : rootFolder = Folder(name: 'root', isExpanded: foldersExpanded);
+  TreeService({
+    this.foldersExpanded = false,
+    this.widgetsExpanded = false,
+  }) : rootFolder = Folder(name: 'root', isExpanded: foldersExpanded);
 
   final bool foldersExpanded;
   final bool widgetsExpanded;
@@ -70,10 +72,9 @@ class TreeService {
     WidgetbookUseCaseData useCase,
   ) {
     final widgetName = useCase.componentName;
+    final folderOrRoot = folder ?? rootFolder;
 
-    folder ??= rootFolder;
-
-    final widgets = folder.widgets;
+    final widgets = folderOrRoot.widgets;
     if (!widgets.containsKey(widgetName)) {
       widgets.putIfAbsent(
         widgetName,

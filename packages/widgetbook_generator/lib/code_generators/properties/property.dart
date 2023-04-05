@@ -25,7 +25,7 @@ class Property {
   Property.bool({
     required this.key,
     required bool value,
-  }) : instance = BooleanInstance.value(value);
+  }) : instance = BooleanInstance.value(value: value);
 
   final String key;
   final BaseInstance instance;

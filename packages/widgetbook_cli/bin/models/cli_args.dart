@@ -9,9 +9,9 @@ class CliArgs with _$CliArgs {
     required String branch,
     required String commit,
     required String gitProvider,
+    required String path,
     String? gitHubToken,
     String? prNumber,
     String? baseBranch,
-    required String path,
   }) = _CliArgs;
 }
