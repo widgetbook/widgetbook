@@ -5,8 +5,8 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 
 class UseCasesProvider extends StateChangeNotifier<UseCasesState> {
   UseCasesProvider({
-    UseCasesState? state,
     required this.selectedStoryRepository,
+    UseCasesState? state,
   }) : super(state: state ?? UseCasesState());
 
   final SelectedUseCaseRepository selectedStoryRepository;

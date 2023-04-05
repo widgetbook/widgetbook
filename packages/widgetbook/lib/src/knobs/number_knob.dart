@@ -6,8 +6,8 @@ import 'package:widgetbook_core/widgetbook_core.dart' as core;
 class NumberKnob extends Knob<num> {
   NumberKnob({
     required super.label,
-    super.description,
     required super.value,
+    super.description,
   });
 
   @override
@@ -24,8 +24,8 @@ class NumberKnob extends Knob<num> {
 class NullableNumberKnob extends Knob<num?> {
   NullableNumberKnob({
     required super.label,
-    super.description,
     required super.value,
+    super.description,
   });
 
   @override

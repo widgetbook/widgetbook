@@ -6,8 +6,8 @@ import 'package:widgetbook_core/widgetbook_core.dart' as core;
 class TextKnob extends Knob<String> {
   TextKnob({
     required super.label,
-    super.description,
     required super.value,
+    super.description,
     this.maxLines = 1,
   });
   final int? maxLines;
@@ -26,8 +26,8 @@ class TextKnob extends Knob<String> {
 class NullableTextKnob extends Knob<String?> {
   NullableTextKnob({
     required super.label,
-    super.description,
     required super.value,
+    super.description,
     this.maxLines = 1,
   });
   final int? maxLines;

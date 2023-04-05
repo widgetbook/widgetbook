@@ -7,8 +7,8 @@ import 'package:widgetbook_core/widgetbook_core.dart' as core;
 class BoolKnob extends Knob<bool> {
   BoolKnob({
     required super.label,
-    super.description,
     required super.value,
+    super.description,
   });
 
   @override
@@ -25,8 +25,8 @@ class BoolKnob extends Knob<bool> {
 class NullableBoolKnob extends Knob<bool?> {
   NullableBoolKnob({
     required super.label,
-    super.description,
     required super.value,
+    super.description,
   });
 
   @override

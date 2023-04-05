@@ -14,8 +14,8 @@ abstract class KnobsBuilder {
   /// color value
   Color color({
     required String label,
-    String? description,
     required Color initialValue,
+    String? description,
   });
 
   /// Creates a checkbox that can be toggled on and off and optionally hold a
@@ -88,8 +88,8 @@ abstract class KnobsBuilder {
   /// Must contain at least one value
   T options<T>({
     required String label,
-    String? description,
     required List<T> options,
+    String? description,
     String Function(T)? labelBuilder,
   });
 }

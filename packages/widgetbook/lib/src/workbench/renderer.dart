@@ -5,9 +5,9 @@ import 'package:widgetbook/src/addons/addon_provider.dart';
 
 class Renderer extends StatelessWidget {
   const Renderer({
-    super.key,
     required this.useCaseBuilder,
     required this.appBuilder,
+    super.key,
   });
 
   final Widget Function(BuildContext) useCaseBuilder;

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class AddonOption extends StatelessWidget {
   const AddonOption({
-    super.key,
     required this.child,
     required this.onTap,
     required this.isSelected,
+    super.key,
   });
 
   final Widget child;

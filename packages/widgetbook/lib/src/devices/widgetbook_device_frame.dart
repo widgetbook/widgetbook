@@ -3,10 +3,10 @@ import 'package:widgetbook/widgetbook.dart';
 
 class WidgetbookDeviceFrame extends StatelessWidget {
   const WidgetbookDeviceFrame({
-    super.key,
     required this.device,
     required this.child,
     required this.orientation,
+    super.key,
   });
 
   final Device device;

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class StatefulAnimatedSize extends StatefulWidget {
   const StatefulAnimatedSize({
-    super.key,
     required this.child,
     required this.duration,
+    super.key,
     this.curve = Curves.linear,
   });
 

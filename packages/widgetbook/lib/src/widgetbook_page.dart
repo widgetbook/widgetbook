@@ -8,9 +8,9 @@ import 'package:widgetbook/src/workbench/workbench.dart';
 
 class WidgetbookPage extends StatelessWidget {
   const WidgetbookPage({
-    super.key,
     required this.disableProperties,
     required this.routerData,
+    super.key,
   });
 
   final bool disableProperties;

@@ -3,8 +3,8 @@ import 'package:widgetbook/src/constants/radii.dart';
 
 class WidgetbookCard extends StatelessWidget {
   const WidgetbookCard({
-    super.key,
     required this.child,
+    super.key,
   });
 
   final Widget child;
