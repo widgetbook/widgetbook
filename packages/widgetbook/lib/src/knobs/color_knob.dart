@@ -6,8 +6,8 @@ import 'package:widgetbook_core/widgetbook_core.dart' as core;
 class ColorKnob extends Knob<Color> {
   ColorKnob({
     required super.label,
-    super.description,
     required super.value,
+    super.description,
   });
 
   @override

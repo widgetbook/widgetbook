@@ -14,8 +14,8 @@ import 'package:widgetbook/widgetbook.dart';
 abstract class Knob<T> {
   Knob({
     required this.label,
-    this.description,
     required this.value,
+    this.description,
   });
 
   /// This is the current value the knob is set to
@@ -95,8 +95,8 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   @override
   Color color({
     required String label,
-    String? description,
     required Color initialValue,
+    String? description,
   }) {
     return _addKnob(
       ColorKnob(
@@ -227,8 +227,8 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
   @override
   T options<T>({
     required String label,
-    String? description,
     required List<T> options,
+    String? description,
     String Function(T)? labelBuilder,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');

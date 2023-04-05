@@ -4,10 +4,10 @@ import 'package:widgetbook/src/addons/addon.dart';
 
 class AddonInjectorWidget extends StatelessWidget {
   const AddonInjectorWidget({
-    super.key,
     required this.addons,
     required this.routerData,
     required this.child,
+    super.key,
   });
 
   final List<WidgetbookAddOn> addons;

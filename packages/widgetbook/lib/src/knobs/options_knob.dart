@@ -6,9 +6,9 @@ import 'package:widgetbook_core/widgetbook_core.dart' as core;
 class OptionsKnob<T> extends Knob<T> {
   OptionsKnob({
     required super.label,
-    super.description,
     required super.value,
     required this.options,
+    super.description,
     this.labelBuilder,
   });
 

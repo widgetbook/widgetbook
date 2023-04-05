@@ -6,8 +6,8 @@ import 'package:widgetbook_core/widgetbook_core.dart' as core;
 class SliderKnob extends Knob<double> {
   SliderKnob({
     required super.label,
-    super.description,
     required super.value,
+    super.description,
     this.max = 1,
     this.min = 0,
     this.divisions,
@@ -34,8 +34,8 @@ class SliderKnob extends Knob<double> {
 class NullableSliderKnob extends Knob<double?> {
   NullableSliderKnob({
     required super.label,
-    super.description,
     required double super.value,
+    super.description,
     this.max = 1,
     this.min = 0,
     this.divisions,
