@@ -10,18 +10,18 @@ environment:
   sdk: ">=2.15.0 <3.0.0"
 
 dependencies:
-  analyzer: ^4.0.0
-  build: ^2.1.0
-  collection: ^1.15.0
-  freezed_annotation: ^2.0.3
-  glob: ^2.0.2
-  json_annotation: ^4.4.0
-  meta: ^1.7.0
-  source_gen: ^1.1.0
+  analyzer: ^5.10.0
+  build: ^2.3.1
+  collection: ^1.17.1
+  freezed_annotation: ^2.2.0
+  glob: ^2.1.1
+  json_annotation: ^4.8.0
+  meta: ^1.9.1
+  source_gen: ^1.2.7
   widgetbook_annotation: ^3.0.0-beta.6
   widgetbook_models: ^3.0.0-beta.3
 dev_dependencies:
-  build_runner: ^2.1.2
-  freezed: ^2.0.3
-  json_serializable: ^6.1.4
-  test: ^1.18.2
+  build_runner: ^2.3.3
+  freezed: ^2.3.2
+  json_serializable: ^6.6.1
+  test: ^1.24.1
