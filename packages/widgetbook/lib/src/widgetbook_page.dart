@@ -9,11 +9,13 @@ import 'package:widgetbook/src/workbench/workbench.dart';
 class WidgetbookPage extends StatelessWidget {
   const WidgetbookPage({
     required this.disableProperties,
+    required this.disableAddOns,
     required this.routerData,
     super.key,
   });
 
   final bool disableProperties;
+  final bool disableAddOns;
   final Map<String, String> routerData;
 
   @override
@@ -35,9 +37,11 @@ class WidgetbookPage extends StatelessWidget {
                   ),
                 ),
                 if (!disableProperties)
-                  const SizedBox(
+                  SizedBox(
                     width: 400,
-                    child: SettingsPanel(),
+                    child: SettingsPanel(
+                      disableAddOns: disableAddOns,
+                    ),
                   ),
               ],
             ),

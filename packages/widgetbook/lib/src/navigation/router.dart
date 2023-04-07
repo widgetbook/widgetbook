@@ -88,9 +88,14 @@ GoRouter createRouter({
                 value: state.queryParams['disable-properties'],
               );
 
+              final disableAddOns = _parseBoolQueryParameter(
+                value: state.queryParams['disable-add-ons'],
+              );
+
               return NoTransitionPage<void>(
                 child: WidgetbookPage(
                   disableProperties: disableProperties,
+                  disableAddOns: disableAddOns,
                   routerData: state.queryParams,
                 ),
               );
