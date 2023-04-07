@@ -44,6 +44,7 @@ void main() {
     late GitDir gitDir;
     late CiWrapper ciWrapper;
     late StdInWrapper stdInWrapper;
+    late PlatformWrapper platformWrapper;
     late ArgResults argResults;
     late PublishCommand publishCommand;
     late WidgetbookHttpClient widgetbookHttpClient;
@@ -381,107 +382,61 @@ void main() {
 
     group('gitProviderSha', () {
       late PublishCommand command;
+      const commitSha = '0be60db261a03a8f52682c08059f64aee7f95266';
+
       setUp(() {
         gitDir = MockGitDir();
         ciWrapper = MockCiWrapper();
+        platformWrapper = MockPlatformWrapper();
         command = PublishCommand(
           logger: logger,
           ciWrapper: ciWrapper,
+          platformWrapper: platformWrapper,
         )..testArgResults = argResults;
       });
 
-      final commits = Commit.parseRawRevList('''
-commit 0be60db261a03a8f52682c08059f64aee7f95266
-tree 267fb23ff1f1068036daa3b22d718bd60f13fe58
-parent 38b0f7a07a6167d8ea3784bfbe3daed621d3d06a
-author Jens Horstmann <jens@widgetbook.io> 1629798144 +0200
-committer Jens Horstmann <jens@widgetbook.io> 1629798144 +0200
-gpgsig -----BEGIN PGP SIGNATURE-----
- 
- iQIzBAABCAAdFiEEreLD3+J+h9tJRnIoeg4vq5dWIsAFAmEkvwAACgkQeg4vq5dW
- IsAr4A//Q5X1Eapxz9YTDHC9/S9IdbfcUHek80L+7sgMIG0dLHcR+TLqBiiuHT06
- qWLvYjER+dDruGGs8+7umqKpeudj45/FlwBSZrnjhZT1Ne1p5DjfL6HnSTzZfODr
- ddrGO7KhOqRYb2kmeZFl9CdpYXRXCwsyIH1kOJpBa/rzZHy2IIzFThqAxmf0SCi6
- WRNfkTe0dHYfwqJ9GLsKm+iJDi814xUn4oLjiL5+AbyfhMnIBNqgwU05jhLRIRAz
- FCnrA4LBeo0LyEDWwLYaH+wIkmrcvNgWwrpx+sHa5L3IgLKtYk4Q041VIbQE6RQC
- 6d43kC5mtbaiGOFMQ8Medw7UmebPvSgSJgPINvXJv4FoH8X2D1jbH7ILQFyHoQ6G
- ng1T6QRioNtPWwSoJrZMhJ1PL8UYgLs54KiqfSGcyRJeYXrzhUzH+FV1g+GNWNzN
- MQZkYRHGeBPgjxArIBQ5PMbrFQ509wJPkvstD1F2dUhvoAJn8dvIxgW7yQ0+QR0E
- qjfr7IrWTa67N42YW+hp0F03JcFO4WR6KiWJ8di0s+80f8IsJzEHVX931uQPPHdv
- UYIWXp6dHxI8dE/8ig9GJWpz5lR9YNL+E19y6sqkOGxsx4jcYJ0aPNG2Wnq4328q
- DZpzQwA3HzkANdX96ZhaFse73cHwpFgu+SK/8UjCNxEoDR+lzIQ=
- =dlq9
- -----END PGP SIGNATURE-----
-
-    Merge 8c2d7c9020ffdf6e472114c280e33d022acdd0aa into aa79e17758855284bbf37e784a4a3828b89e27c0
-
-commit 38b0f7a07a6167d8ea3784bfbe3daed621d3d06a
-tree da1e88aa7b662db17d7516da4fd8680c88202f53
-author Jens Horstmann <jens@widgetbook.io> 1629797227 +0200
-committer Jens Horstmann <jens@widgetbook.io> 1629797227 +0200
-gpgsig -----BEGIN PGP SIGNATURE-----
- 
- iQIzBAABCAAdFiEEreLD3+J+h9tJRnIoeg4vq5dWIsAFAmEku2sACgkQeg4vq5dW
- IsCzIg/+MzhMs+wgkgC8aRjYD+jOIH9bK+3sm1ELKTsb7KSjlc7bKkUWjpo/hrdZ
- qD6twDkWlRr9xPDGegaqAI184KdEvv1vOliU2nR55FipmKEp0mMTx8ayLaX/nBNN
- dTWsUvP9rsEw4PbP2kIWEFFn98uu9WedkP41730Hc4PawAKCLHAUCbee6DjWsLzq
- D6pppPYI0m9q4brFWFzxp9jpTFE4JJMDiq88vSkeTSsYZ64OnpZGwP9gyh0Q+pkc
- pchgB9PwyX0TdyiAiZKTUtCzs8GiNTJIa9l0gERjvtpWu0UTSBawDy1zDXbyDm0x
- oghCKRq58CGbqf9ztpnYuYW7TOguIwNZp5Er9nHv/sV2lYV0Y4CZoy6Dq+QmJIIq
- yV7jHoRKpSATxbCHM4p5rF+jZqrsuX2I0aSGqpRS2b8TQVncT17LXpj4pqyct9rd
- IZ8XQIgcu+4aZdvNDyruEKI6J4pnKlyiqfMa90xUcC5NXT6uNbjrrTfoWRTxyVGW
- Bq4lA1rQ0NNAG/bNWYOLpxOUt8/+GChsJI7b9JcELjvv5BzTpyfqllo5yAF3c54r
- JmrEJIqFL5pvPCGyn2v52W7AZSAszDchnQ2Qu9fr3n9exmkTBWaS+utYbdbPgkQN
- E/2uzTTGrfZw/6jlzj17hQbfKTAdUJhWBqhuP8DTdmOgxQmJGZQ=
- =lDxu
- -----END PGP SIGNATURE-----
-
-    a commit
-''');
-
       test(
-        'returns null when not running on GitHub',
+        'returns null when not running on CI',
         () async {
-          when(() => gitDir.commits()).thenAnswer(
-            (_) => Future.value({}),
-          );
           when(() => ciWrapper.isGithub()).thenReturn(false);
           when(() => ciWrapper.isCodemagic()).thenReturn(false);
           expect(
-            await command.gitProviderSha(gitDir: gitDir),
+            command.gitProviderSha(),
             isNull,
           );
         },
       );
 
       test(
-        'returns null when not running on PR',
+        'returns SHA of second commit when running on GitHub',
         () async {
-          when(() => gitDir.commits()).thenAnswer(
-            (_) => Future.value({
-              commits.entries.first.key: commits.entries.first.value,
-            }),
-          );
-          when(() => ciWrapper.isGithub()).thenReturn(false);
-          when(() => ciWrapper.isCodemagic()).thenReturn(false);
-          expect(
-            await command.gitProviderSha(gitDir: gitDir),
-            isNull,
-          );
-        },
-      );
-
-      test(
-        'returns SHA of second commit when running on PR',
-        () async {
-          when(() => gitDir.commits()).thenAnswer(
-            (_) => Future.value(commits),
-          );
+          when(
+            () => platformWrapper.environmentVariable(
+              variable: 'GITHUB_SHA',
+            ),
+          ).thenReturn(commitSha);
           when(() => ciWrapper.isGithub()).thenReturn(true);
+          when(() => ciWrapper.isCodemagic()).thenReturn(false);
+          expect(
+            command.gitProviderSha(),
+            commitSha,
+          );
+        },
+      );
+
+      test(
+        'returns null when not running on Codemagic',
+        () async {
+          when(
+            () => platformWrapper.environmentVariable(
+              variable: 'CM_COMMIT',
+            ),
+          ).thenReturn(commitSha);
+          when(() => ciWrapper.isGithub()).thenReturn(false);
           when(() => ciWrapper.isCodemagic()).thenReturn(true);
           expect(
-            await command.gitProviderSha(gitDir: gitDir),
-            commits.entries.last.key,
+            command.gitProviderSha(),
+            commitSha,
           );
         },
       );

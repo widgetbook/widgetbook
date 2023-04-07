@@ -64,11 +64,13 @@ class PublishCommand extends WidgetbookCommand {
     CiWrapper? ciWrapper,
     GitWrapper? gitWrapper,
     StdInWrapper? stdInWrapper,
+    PlatformWrapper? platformWrapper,
   })  : _widgetbookHttpClient = widgetbookHttpClient ?? WidgetbookHttpClient(),
         _widgetbookZipEncoder = widgetbookZipEncoder ?? WidgetbookZipEncoder(),
         _ciWrapper = ciWrapper ?? CiWrapper(),
         _gitWrapper = gitWrapper ?? GitWrapper(),
         _stdInWrapper = stdInWrapper ?? StdInWrapper(),
+        _platformWrapper = platformWrapper ?? PlatformWrapper(),
         _fileSystem = fileSystem ?? const LocalFileSystem() {
     progress = logger.progress('Publishing Widgetbook');
     argParser
@@ -148,6 +150,7 @@ class PublishCommand extends WidgetbookCommand {
   final CiWrapper _ciWrapper;
   final GitWrapper _gitWrapper;
   final StdInWrapper _stdInWrapper;
+  final PlatformWrapper _platformWrapper;
 
   late final Progress progress;
 
@@ -210,34 +213,16 @@ class PublishCommand extends WidgetbookCommand {
   }
 
   @visibleForTesting
-  Future<String?> gitProviderSha({
-    required GitDir gitDir,
-  }) async {
-    final commits = await gitDir.commits();
-
+  String? gitProviderSha() {
     if (_ciWrapper.isGithub()) {
-      final commitEntry = commits.entries.first;
-      if (commitEntry.value.message.startsWith(
-        RegExp(
-          'Merge [0-9a-f]{40} into [0-9a-f]{40}',
-        ),
-      )) {
-        return commits.entries.toList()[1].key;
-      }
-
-      return commitEntry.key;
+      return _platformWrapper.environmentVariable(
+        variable: 'GITHUB_SHA',
+      );
     }
     if (_ciWrapper.isCodemagic()) {
-      final commitEntry = commits.entries.first;
-      if (commitEntry.value.message.startsWith(
-        RegExp(
-          'Merge remote-tracking branch',
-        ),
-      )) {
-        return commits.entries.toList()[1].key;
-      }
-
-      return commitEntry.key;
+      return _platformWrapper.environmentVariable(
+        variable: 'CM_COMMIT',
+      );
     }
     return null;
   }
@@ -251,9 +236,8 @@ class PublishCommand extends WidgetbookCommand {
     final currentBranch = await gitDir.currentBranch();
     final branch = results['branch'] as String? ?? currentBranch.branchName;
 
-    final commit = results['commit'] as String? ??
-        await gitProviderSha(gitDir: gitDir) ??
-        currentBranch.sha;
+    final commit =
+        results['commit'] as String? ?? gitProviderSha() ?? currentBranch.sha;
 
     final gitProvider = results['git-provider'] as String;
     final gitHubToken = results['github-token'] as String?;
