@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
+import 'package:widgetbook/src/routing/widgetbook_panel.dart';
 import 'package:widgetbook/src/widgetbook_page.dart';
 
 T? parseQueryParameters<T>({
@@ -34,6 +35,50 @@ extension GoRouterExtension on BuildContext {
   }
 }
 
+Set<WidgetbookPanel> _getPanelsFromQueryParams(
+  Map<String, String> queryParams,
+) {
+  // `panels` query parameter has higher precednce than the deprecated
+  // `disable-navigation` and `disable-properties` query parameters
+  if (queryParams.containsKey('panels')) {
+    return _parsePanelsQueryParam(queryParams['panels']);
+  }
+
+  // Deprecated
+  final disableNavigation = _parseBoolQueryParameter(
+    value: queryParams['disable-navigation'],
+  );
+
+  // Deprecated
+  final disableProperties = _parseBoolQueryParameter(
+    value: queryParams['disable-properties'],
+  );
+
+  return {
+    if (!disableNavigation) ...{
+      WidgetbookPanel.navigation,
+    },
+    if (!disableProperties) ...{
+      WidgetbookPanel.addons,
+      WidgetbookPanel.knobs,
+    }
+  };
+}
+
+Set<WidgetbookPanel> _parsePanelsQueryParam(
+  String? value,
+) {
+  if (value == null || value.isEmpty) {
+    return {};
+  }
+
+  return value
+      .replaceAll(RegExp('[{}]'), '')
+      .split(',')
+      .map((name) => WidgetbookPanel.values.byName(name))
+      .toSet();
+}
+
 bool _parseBoolQueryParameter({
   required String? value,
   bool defaultValue = false,
@@ -63,14 +108,13 @@ GoRouter createRouter({
     routes: [
       ShellRoute(
         builder: (context, state, child) {
-          final disableNavigation = _parseBoolQueryParameter(
-            value: state.queryParams['disable-navigation'],
-          );
+          final panels = _getPanelsFromQueryParams(state.queryParams);
+
           return ColoredBox(
             color: Theme.of(context).colorScheme.surface,
             child: Row(
               children: [
-                if (!disableNavigation)
+                if (panels.contains(WidgetbookPanel.navigation))
                   NavigationPanelWrapper(
                     initialPath: state.location,
                   ),
@@ -84,13 +128,11 @@ GoRouter createRouter({
             name: '/',
             path: '/',
             pageBuilder: (context, state) {
-              final disableProperties = _parseBoolQueryParameter(
-                value: state.queryParams['disable-properties'],
-              );
+              final panels = _getPanelsFromQueryParams(state.queryParams);
 
               return NoTransitionPage<void>(
                 child: WidgetbookPage(
-                  disableProperties: disableProperties,
+                  activePanels: panels,
                   routerData: state.queryParams,
                 ),
               );
