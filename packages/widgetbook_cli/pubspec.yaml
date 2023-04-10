@@ -17,7 +17,7 @@ dev_dependencies:
   mocktail: ^0.3.0
  
 dependencies: 
-  archive: ^3.3.0
+  archive: ^3.3.7
   args: ^2.3.0
   ci: ^0.1.0
   dio: ^5.1.1
