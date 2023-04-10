@@ -199,6 +199,140 @@ void main() {
               expect(navigationBloc.state.selectedNode, isNull);
             },
           );
+
+          testWidgets(
+            'navigation panel only (deprecated)',
+            (tester) async {
+              final router = createRouter(
+                useCasesProvider: useCasesProvider,
+                initialLocation: '/?disable-properties=true',
+              );
+
+              await pumpRouter(
+                tester: tester,
+                router: router,
+              );
+
+              final navigationFinder = find.byType(NavigationPanelWrapper);
+              final settingsFinder = find.byType(SettingsPanel);
+
+              expect(navigationFinder, findsOneWidget);
+              expect(settingsFinder, findsNothing);
+            },
+          );
+
+          testWidgets(
+            'navigation panel only',
+            (tester) async {
+              final router = createRouter(
+                useCasesProvider: useCasesProvider,
+                initialLocation: '/?panels={navigation}',
+              );
+
+              await pumpRouter(
+                tester: tester,
+                router: router,
+              );
+
+              final navigationFinder = find.byType(NavigationPanelWrapper);
+              final settingsFinder = find.byType(SettingsPanel);
+
+              expect(navigationFinder, findsOneWidget);
+              expect(settingsFinder, findsNothing);
+            },
+          );
+
+          testWidgets(
+            'settings panel only (deprecated)',
+            (tester) async {
+              final router = createRouter(
+                useCasesProvider: useCasesProvider,
+                initialLocation: '/?disable-navigation=true',
+              );
+
+              await pumpRouter(
+                tester: tester,
+                router: router,
+              );
+
+              final navigationFinder = find.byType(NavigationPanelWrapper);
+              final settingsFinder = find.byType(SettingsPanel);
+
+              expect(navigationFinder, findsNothing);
+              expect(settingsFinder, findsOneWidget);
+            },
+          );
+
+          testWidgets(
+            'settings panel only',
+            (tester) async {
+              final router = createRouter(
+                useCasesProvider: useCasesProvider,
+                initialLocation: '/?panels={knobs,addons}',
+              );
+
+              await pumpRouter(
+                tester: tester,
+                router: router,
+              );
+
+              final navigationFinder = find.byType(NavigationPanelWrapper);
+              final settingsFinder = find.byType(SettingsPanel);
+
+              expect(navigationFinder, findsNothing);
+              expect(settingsFinder, findsOneWidget);
+            },
+          );
+
+          testWidgets(
+            'addons panel only',
+            (tester) async {
+              final router = createRouter(
+                useCasesProvider: useCasesProvider,
+                initialLocation: '/?panels={addons}',
+              );
+
+              await pumpRouter(
+                tester: tester,
+                router: router,
+              );
+
+              final navigationFinder = find.byType(NavigationPanelWrapper);
+              final settingsFinder = find.byType(SettingsPanel);
+              final addonsFinder = find.text('Properties');
+              final knobsFinder = find.text('Knobs');
+
+              expect(navigationFinder, findsNothing);
+              expect(settingsFinder, findsOneWidget);
+              expect(addonsFinder, findsOneWidget);
+              expect(knobsFinder, findsNothing);
+            },
+          );
+
+          testWidgets(
+            'knobs panel only',
+            (tester) async {
+              final router = createRouter(
+                useCasesProvider: useCasesProvider,
+                initialLocation: '/?panels={knobs}',
+              );
+
+              await pumpRouter(
+                tester: tester,
+                router: router,
+              );
+
+              final navigationFinder = find.byType(NavigationPanelWrapper);
+              final settingsFinder = find.byType(SettingsPanel);
+              final addonsFinder = find.text('Properties');
+              final knobsFinder = find.text('Knobs');
+
+              expect(navigationFinder, findsNothing);
+              expect(settingsFinder, findsOneWidget);
+              expect(addonsFinder, findsNothing);
+              expect(knobsFinder, findsOneWidget);
+            },
+          );
         },
       );
     },
