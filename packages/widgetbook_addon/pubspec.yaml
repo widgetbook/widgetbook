@@ -1,6 +1,6 @@
 name: widgetbook_addon
 description: A placeholder for Widgetbook's Add-ons.
-version: 0.0.1
+version: 3.0.0-beta.0
 homepage: https://www.widgetbook.io?utm_source=youtube&utm_medium=link&utm_campaign=widgetbook
 repository: https://github.com/widgetbook/widgetbook
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
