@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/addons/addon_provider.dart';
 import 'package:widgetbook/src/builder/functions/app_builder.dart';
 import 'package:widgetbook/src/builder/provider/builder_provider.dart';
 import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook/src/repositories/selected_use_case_repository.dart';
 import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_addon/widgetbook_addon.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 void main() {
