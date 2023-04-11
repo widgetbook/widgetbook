@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/addons/addon_injector_widget.dart';
-import 'package:widgetbook/src/addons/addon_provider.dart';
+import 'package:widgetbook_addon/widgetbook_addon.dart';
 import 'package:widgetbook/src/routing/widgetbook_panel.dart';
 import 'package:widgetbook/src/settings_panel/settings_panel.dart';
 import 'package:widgetbook/src/styled_widgets/styled_scaffold.dart';
