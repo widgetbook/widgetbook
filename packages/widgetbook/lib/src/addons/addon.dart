@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_addon/widgetbook_addon.dart';
 
@@ -26,6 +25,9 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel> {
   final T setting;
   late ValueNotifier<T> provider;
 
+  /// Updates the router's query parameters using the changed [value].
+  void updateQueryParameters(BuildContext context, T value);
+
   /// Allows for parsing of [queryParameters] by using information from the
   /// router and from the initially provided [setting].
   ///
@@ -44,7 +46,7 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel> {
 
   void onChanged(BuildContext context, T value) {
     provider.value = value;
-    context.goTo(queryParams: value.toQueryParameter());
+    updateQueryParameters(context, value);
   }
 
   Widget buildProvider(
