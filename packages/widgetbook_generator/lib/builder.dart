@@ -2,6 +2,7 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_generator/builders/json_builder.dart';
 import 'package:widgetbook_generator/generators/widgetbook_generator.dart';
+import 'package:widgetbook_generator/resolvers/addon_resolver.dart';
 import 'package:widgetbook_generator/resolvers/app_builder_resolver.dart';
 import 'package:widgetbook_generator/resolvers/device_resolver.dart';
 import 'package:widgetbook_generator/resolvers/locales_resolver.dart';
@@ -61,6 +62,17 @@ Builder localesBuilder(BuilderOptions options) {
     LocalesResolver(),
     formatOutput: _formatOutput,
     generatedExtension: '.locales.widgetbook.json',
+  );
+}
+
+/// Builder for the WidgetbookAddonAnnotation.
+/// Creates a .addons.widgetbook.json file for each .dart file containing a
+/// WidgetbookAddonAnnotation
+Builder addonsBuilder(BuilderOptions options) {
+  return JsonLibraryBuilder(
+    AddonResolver(),
+    formatOutput: _formatOutput,
+    generatedExtension: '.addons.widgetbook.json',
   );
 }
 

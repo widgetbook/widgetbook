@@ -36,39 +36,44 @@ abstract class $WidgetbookUseCaseBuilderDataCopyWith<$Res> {
   factory $WidgetbookUseCaseBuilderDataCopyWith(
           WidgetbookUseCaseBuilderData value,
           $Res Function(WidgetbookUseCaseBuilderData) then) =
-      _$WidgetbookUseCaseBuilderDataCopyWithImpl<$Res>;
+      _$WidgetbookUseCaseBuilderDataCopyWithImpl<$Res,
+          WidgetbookUseCaseBuilderData>;
+  @useResult
   $Res call({String name, String importStatement, List<String> dependencies});
 }
 
 /// @nodoc
-class _$WidgetbookUseCaseBuilderDataCopyWithImpl<$Res>
+class _$WidgetbookUseCaseBuilderDataCopyWithImpl<$Res,
+        $Val extends WidgetbookUseCaseBuilderData>
     implements $WidgetbookUseCaseBuilderDataCopyWith<$Res> {
   _$WidgetbookUseCaseBuilderDataCopyWithImpl(this._value, this._then);
 
-  final WidgetbookUseCaseBuilderData _value;
   // ignore: unused_field
-  final $Res Function(WidgetbookUseCaseBuilderData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? importStatement = freezed,
-    Object? dependencies = freezed,
+    Object? name = null,
+    Object? importStatement = null,
+    Object? dependencies = null,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      importStatement: importStatement == freezed
+      importStatement: null == importStatement
           ? _value.importStatement
           : importStatement // ignore: cast_nullable_to_non_nullable
               as String,
-      dependencies: dependencies == freezed
+      dependencies: null == dependencies
           ? _value.dependencies
           : dependencies // ignore: cast_nullable_to_non_nullable
               as List<String>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -80,38 +85,37 @@ abstract class _$$_WidgetbookUseCaseBuilderDataCopyWith<$Res>
           $Res Function(_$_WidgetbookUseCaseBuilderData) then) =
       __$$_WidgetbookUseCaseBuilderDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String name, String importStatement, List<String> dependencies});
 }
 
 /// @nodoc
 class __$$_WidgetbookUseCaseBuilderDataCopyWithImpl<$Res>
-    extends _$WidgetbookUseCaseBuilderDataCopyWithImpl<$Res>
+    extends _$WidgetbookUseCaseBuilderDataCopyWithImpl<$Res,
+        _$_WidgetbookUseCaseBuilderData>
     implements _$$_WidgetbookUseCaseBuilderDataCopyWith<$Res> {
   __$$_WidgetbookUseCaseBuilderDataCopyWithImpl(
       _$_WidgetbookUseCaseBuilderData _value,
       $Res Function(_$_WidgetbookUseCaseBuilderData) _then)
-      : super(_value, (v) => _then(v as _$_WidgetbookUseCaseBuilderData));
+      : super(_value, _then);
 
-  @override
-  _$_WidgetbookUseCaseBuilderData get _value =>
-      super._value as _$_WidgetbookUseCaseBuilderData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? importStatement = freezed,
-    Object? dependencies = freezed,
+    Object? name = null,
+    Object? importStatement = null,
+    Object? dependencies = null,
   }) {
     return _then(_$_WidgetbookUseCaseBuilderData(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      importStatement: importStatement == freezed
+      importStatement: null == importStatement
           ? _value.importStatement
           : importStatement // ignore: cast_nullable_to_non_nullable
               as String,
-      dependencies: dependencies == freezed
+      dependencies: null == dependencies
           ? _value._dependencies
           : dependencies // ignore: cast_nullable_to_non_nullable
               as List<String>,
@@ -152,30 +156,30 @@ class _$_WidgetbookUseCaseBuilderData implements _WidgetbookUseCaseBuilderData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_WidgetbookUseCaseBuilderData &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.importStatement, importStatement) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.importStatement, importStatement) ||
+                other.importStatement == importStatement) &&
             const DeepCollectionEquality()
                 .equals(other._dependencies, _dependencies));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(importStatement),
+  int get hashCode => Object.hash(runtimeType, name, importStatement,
       const DeepCollectionEquality().hash(_dependencies));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_WidgetbookUseCaseBuilderDataCopyWith<_$_WidgetbookUseCaseBuilderData>
       get copyWith => __$$_WidgetbookUseCaseBuilderDataCopyWithImpl<
           _$_WidgetbookUseCaseBuilderData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_WidgetbookUseCaseBuilderDataToJson(this);
+    return _$$_WidgetbookUseCaseBuilderDataToJson(
+      this,
+    );
   }
 }
 
@@ -191,11 +195,11 @@ abstract class _WidgetbookUseCaseBuilderData
       _$_WidgetbookUseCaseBuilderData.fromJson;
 
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String get importStatement => throw _privateConstructorUsedError;
+  String get importStatement;
   @override
-  List<String> get dependencies => throw _privateConstructorUsedError;
+  List<String> get dependencies;
   @override
   @JsonKey(ignore: true)
   _$$_WidgetbookUseCaseBuilderDataCopyWith<_$_WidgetbookUseCaseBuilderData>

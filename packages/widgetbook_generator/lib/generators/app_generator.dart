@@ -1,10 +1,12 @@
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/code_generators/instances/addons/addons.dart';
+import 'package:widgetbook_generator/code_generators/instances/addons/custom_addon/custom_addon_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/variable_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_folder_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_widget_instance.dart';
+import 'package:widgetbook_generator/models/widgetbook_addon_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_app_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_localizations_delegates_data.dart';
@@ -21,6 +23,7 @@ String generateWidgetbook({
   required List<double> textScaleFactors,
   required bool foldersExpanded,
   required bool widgetsExpanded,
+  required List<WidgetbookAddonData> customAddons,
   WidgetbookLocalesData? localesData,
   WidgetbookLocalizationsDelegatesData? localizationDelegatesData,
   WidgetbookThemeData? widgetbookThemeData,
@@ -31,7 +34,11 @@ String generateWidgetbook({
   final directories =
       _generateDirectoriesInstances(useCases, foldersExpanded, widgetsExpanded);
 
-  final addons = <AddOnInstance>[];
+  final addons = <Instance>[
+    ...customAddons.map(
+      (e) => CustomAddonInstance(addon: e),
+    )
+  ];
   switch (constructor) {
     case WidgetbookConstructor.material:
       addons.add(

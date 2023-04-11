@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:widgetbook/src/navigation/router.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-abstract class WidgetbookAddOnModel {
-  const WidgetbookAddOnModel();
+abstract class WidgetbookAddOnSetting {
+  const WidgetbookAddOnSetting();
 
   /// Required to allow proper deep linking including AddOn property selection
   ///
@@ -27,7 +27,7 @@ abstract class WidgetbookAddOnModel {
 ///
 /// You must not have multiple [WidgetbookAddOn]s that are of the same generic
 /// type
-abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel> {
+abstract class WidgetbookAddOn<T extends WidgetbookAddOnSetting> {
   WidgetbookAddOn({
     required this.name,
     required this.setting,
@@ -82,7 +82,7 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel> {
 }
 
 extension AddonExtension on BuildContext {
-  T? getAddonValue<T extends WidgetbookAddOnModel>() {
+  T? getAddonValue<T extends WidgetbookAddOnSetting>() {
     return read<ValueNotifier<T>?>()?.value;
   }
 }

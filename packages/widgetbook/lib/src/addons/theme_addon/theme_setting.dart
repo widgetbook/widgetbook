@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-class ThemeSetting<T> extends WidgetbookAddOnModel {
+class ThemeSetting<T> extends WidgetbookAddOnSetting {
   ThemeSetting({
     required this.themes,
     required this.activeTheme,

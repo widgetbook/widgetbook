@@ -4,7 +4,7 @@ import 'package:widgetbook/src/addons/addons.dart';
 part 'frame_setting.freezed.dart';
 
 @freezed
-class FrameSetting extends WidgetbookAddOnModel with _$FrameSetting {
+class FrameSetting extends WidgetbookAddOnSetting with _$FrameSetting {
   @Assert('frames.isNotEmpty', 'frames cannot be empty')
   factory FrameSetting({
     required List<Frame> frames,

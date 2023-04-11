@@ -10,6 +10,7 @@ import 'package:widgetbook_generator/extensions/list_extension.dart';
 import 'package:widgetbook_generator/generators/app_generator.dart';
 import 'package:widgetbook_generator/generators/imports_generator.dart';
 import 'package:widgetbook_generator/generators/main_generator.dart';
+import 'package:widgetbook_generator/models/widgetbook_addon_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_app_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_localizations_delegates_data.dart';
@@ -40,6 +41,8 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
       '**.appbuilder.widgetbook.json',
       WidgetbookAppBuilderData.fromJson,
     );
+
+    final customAddons = await _getCustomAddons(buildStep);
 
     final locales = await _getLocales(buildStep);
     final localizationDelegates = await _getLocalizationDelegates(buildStep);
@@ -72,6 +75,7 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
           themes: themes,
           useCases: useCases,
           devices: devices,
+          customAddons: customAddons,
           textScaleFactors: textScaleFactors,
           foldersExpanded: foldersExpanded,
           widgetsExpanded: widgetsExpanded,
@@ -83,6 +87,15 @@ class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
 
     return buffer.toString();
   }
+}
+
+Future<List<WidgetbookAddonData>> _getCustomAddons(BuildStep buildStep) async {
+  final addons = await _loadDataFromJson<WidgetbookAddonData>(
+    buildStep,
+    '**.addons.widgetbook.json',
+    WidgetbookAddonData.fromJson,
+  );
+  return addons;
 }
 
 Future<List<WidgetbookThemeData>> _getThemes(BuildStep buildStep) async {

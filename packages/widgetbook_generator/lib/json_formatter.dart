@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:widgetbook_generator/models/widgetbook_addon_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_device_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_text_scale_factor_data.dart';
@@ -16,6 +17,11 @@ extension JsonListDeviceExtension on List<WidgetbookDeviceData> {
 
 extension JsonListTextScaleFactorExtension
     on List<WidgetbookTextScaleFactorData> {
+  String toJson() => const JsonEncoder.withIndent('  ')
+      .convert(map((data) => data.toJson()).toList());
+}
+
+extension JsonListWidgetbookAddonDataExtension on List<WidgetbookAddonData> {
   String toJson() => const JsonEncoder.withIndent('  ')
       .convert(map((data) => data.toJson()).toList());
 }

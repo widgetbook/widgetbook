@@ -5,7 +5,7 @@ import 'package:widgetbook/src/addons/addon.dart';
 part 'localization_setting.freezed.dart';
 
 @freezed
-class LocalizationSetting extends WidgetbookAddOnModel
+class LocalizationSetting extends WidgetbookAddOnSetting
     with _$LocalizationSetting {
   @Assert('locales.isNotEmpty', 'locales cannot be empty')
   factory LocalizationSetting({

@@ -1,0 +1,32 @@
+name: addon_example
+description: A new Flutter project.
+
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.0 <3.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  freezed_annotation: ^2.2.0
+  widgetbook_annotation: ^3.0.0-beta.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+  flutter_lints: ^2.0.0
+  build_runner: ^2.3.3
+  widgetbook_generator: ^3.0.0-beta.8
+  widgetbook: ^3.0.0-beta.8
+  freezed: ^2.2.0
+
+flutter:
+  uses-material-design: true

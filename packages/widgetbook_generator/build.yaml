@@ -13,6 +13,13 @@ builders:
     auto_apply: dependents
     runs_before: [":widgetbook_builder"]
     build_to: cache
+  addons_builder:
+    import: "package:widgetbook_generator/builder.dart"
+    builder_factories: ["addonsBuilder"]
+    build_extensions: { ".dart": [".addons.widgetbook.json"] }
+    auto_apply: dependents
+    runs_before: [":widgetbook_builder"]
+    build_to: cache
   localization_delegates_builder:
     import: "package:widgetbook_generator/builder.dart"
     builder_factories: ["localizationDelegatesBuilder"]

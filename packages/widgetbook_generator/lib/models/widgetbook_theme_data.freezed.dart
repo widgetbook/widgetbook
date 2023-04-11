@@ -36,7 +36,8 @@ mixin _$WidgetbookThemeData {
 abstract class $WidgetbookThemeDataCopyWith<$Res> {
   factory $WidgetbookThemeDataCopyWith(
           WidgetbookThemeData value, $Res Function(WidgetbookThemeData) then) =
-      _$WidgetbookThemeDataCopyWithImpl<$Res>;
+      _$WidgetbookThemeDataCopyWithImpl<$Res, WidgetbookThemeData>;
+  @useResult
   $Res call(
       {String name,
       String importStatement,
@@ -46,44 +47,46 @@ abstract class $WidgetbookThemeDataCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$WidgetbookThemeDataCopyWithImpl<$Res>
+class _$WidgetbookThemeDataCopyWithImpl<$Res, $Val extends WidgetbookThemeData>
     implements $WidgetbookThemeDataCopyWith<$Res> {
   _$WidgetbookThemeDataCopyWithImpl(this._value, this._then);
 
-  final WidgetbookThemeData _value;
   // ignore: unused_field
-  final $Res Function(WidgetbookThemeData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? importStatement = freezed,
-    Object? dependencies = freezed,
-    Object? isDefault = freezed,
-    Object? themeName = freezed,
+    Object? name = null,
+    Object? importStatement = null,
+    Object? dependencies = null,
+    Object? isDefault = null,
+    Object? themeName = null,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      importStatement: importStatement == freezed
+      importStatement: null == importStatement
           ? _value.importStatement
           : importStatement // ignore: cast_nullable_to_non_nullable
               as String,
-      dependencies: dependencies == freezed
+      dependencies: null == dependencies
           ? _value.dependencies
           : dependencies // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      isDefault: isDefault == freezed
+      isDefault: null == isDefault
           ? _value.isDefault
           : isDefault // ignore: cast_nullable_to_non_nullable
               as bool,
-      themeName: themeName == freezed
+      themeName: null == themeName
           ? _value.themeName
           : themeName // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -94,6 +97,7 @@ abstract class _$$_WidgetbookThemeDataCopyWith<$Res>
           $Res Function(_$_WidgetbookThemeData) then) =
       __$$_WidgetbookThemeDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String name,
       String importStatement,
@@ -104,41 +108,39 @@ abstract class _$$_WidgetbookThemeDataCopyWith<$Res>
 
 /// @nodoc
 class __$$_WidgetbookThemeDataCopyWithImpl<$Res>
-    extends _$WidgetbookThemeDataCopyWithImpl<$Res>
+    extends _$WidgetbookThemeDataCopyWithImpl<$Res, _$_WidgetbookThemeData>
     implements _$$_WidgetbookThemeDataCopyWith<$Res> {
   __$$_WidgetbookThemeDataCopyWithImpl(_$_WidgetbookThemeData _value,
       $Res Function(_$_WidgetbookThemeData) _then)
-      : super(_value, (v) => _then(v as _$_WidgetbookThemeData));
+      : super(_value, _then);
 
-  @override
-  _$_WidgetbookThemeData get _value => super._value as _$_WidgetbookThemeData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? importStatement = freezed,
-    Object? dependencies = freezed,
-    Object? isDefault = freezed,
-    Object? themeName = freezed,
+    Object? name = null,
+    Object? importStatement = null,
+    Object? dependencies = null,
+    Object? isDefault = null,
+    Object? themeName = null,
   }) {
     return _then(_$_WidgetbookThemeData(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      importStatement: importStatement == freezed
+      importStatement: null == importStatement
           ? _value.importStatement
           : importStatement // ignore: cast_nullable_to_non_nullable
               as String,
-      dependencies: dependencies == freezed
+      dependencies: null == dependencies
           ? _value._dependencies
           : dependencies // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      isDefault: isDefault == freezed
+      isDefault: null == isDefault
           ? _value.isDefault
           : isDefault // ignore: cast_nullable_to_non_nullable
               as bool,
-      themeName: themeName == freezed
+      themeName: null == themeName
           ? _value.themeName
           : themeName // ignore: cast_nullable_to_non_nullable
               as String,
@@ -186,34 +188,34 @@ class _$_WidgetbookThemeData implements _WidgetbookThemeData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_WidgetbookThemeData &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.importStatement, importStatement) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.importStatement, importStatement) ||
+                other.importStatement == importStatement) &&
             const DeepCollectionEquality()
                 .equals(other._dependencies, _dependencies) &&
-            const DeepCollectionEquality().equals(other.isDefault, isDefault) &&
-            const DeepCollectionEquality().equals(other.themeName, themeName));
+            (identical(other.isDefault, isDefault) ||
+                other.isDefault == isDefault) &&
+            (identical(other.themeName, themeName) ||
+                other.themeName == themeName));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(importStatement),
-      const DeepCollectionEquality().hash(_dependencies),
-      const DeepCollectionEquality().hash(isDefault),
-      const DeepCollectionEquality().hash(themeName));
+  int get hashCode => Object.hash(runtimeType, name, importStatement,
+      const DeepCollectionEquality().hash(_dependencies), isDefault, themeName);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_WidgetbookThemeDataCopyWith<_$_WidgetbookThemeData> get copyWith =>
       __$$_WidgetbookThemeDataCopyWithImpl<_$_WidgetbookThemeData>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_WidgetbookThemeDataToJson(this);
+    return _$$_WidgetbookThemeDataToJson(
+      this,
+    );
   }
 }
 
@@ -229,15 +231,15 @@ abstract class _WidgetbookThemeData implements WidgetbookThemeData {
       _$_WidgetbookThemeData.fromJson;
 
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String get importStatement => throw _privateConstructorUsedError;
+  String get importStatement;
   @override
-  List<String> get dependencies => throw _privateConstructorUsedError;
+  List<String> get dependencies;
   @override
-  bool get isDefault => throw _privateConstructorUsedError;
+  bool get isDefault;
   @override
-  String get themeName => throw _privateConstructorUsedError;
+  String get themeName;
   @override
   @JsonKey(ignore: true)
   _$$_WidgetbookThemeDataCopyWith<_$_WidgetbookThemeData> get copyWith =>

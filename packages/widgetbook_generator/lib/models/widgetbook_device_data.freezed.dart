@@ -32,29 +32,33 @@ mixin _$WidgetbookDeviceData {
 abstract class $WidgetbookDeviceDataCopyWith<$Res> {
   factory $WidgetbookDeviceDataCopyWith(WidgetbookDeviceData value,
           $Res Function(WidgetbookDeviceData) then) =
-      _$WidgetbookDeviceDataCopyWithImpl<$Res>;
+      _$WidgetbookDeviceDataCopyWithImpl<$Res, WidgetbookDeviceData>;
+  @useResult
   $Res call({String name});
 }
 
 /// @nodoc
-class _$WidgetbookDeviceDataCopyWithImpl<$Res>
+class _$WidgetbookDeviceDataCopyWithImpl<$Res,
+        $Val extends WidgetbookDeviceData>
     implements $WidgetbookDeviceDataCopyWith<$Res> {
   _$WidgetbookDeviceDataCopyWithImpl(this._value, this._then);
 
-  final WidgetbookDeviceData _value;
   // ignore: unused_field
-  final $Res Function(WidgetbookDeviceData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
+    Object? name = null,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -65,26 +69,25 @@ abstract class _$$_WidgetbookDeviceDataCopyWith<$Res>
           $Res Function(_$_WidgetbookDeviceData) then) =
       __$$_WidgetbookDeviceDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String name});
 }
 
 /// @nodoc
 class __$$_WidgetbookDeviceDataCopyWithImpl<$Res>
-    extends _$WidgetbookDeviceDataCopyWithImpl<$Res>
+    extends _$WidgetbookDeviceDataCopyWithImpl<$Res, _$_WidgetbookDeviceData>
     implements _$$_WidgetbookDeviceDataCopyWith<$Res> {
   __$$_WidgetbookDeviceDataCopyWithImpl(_$_WidgetbookDeviceData _value,
       $Res Function(_$_WidgetbookDeviceData) _then)
-      : super(_value, (v) => _then(v as _$_WidgetbookDeviceData));
+      : super(_value, _then);
 
-  @override
-  _$_WidgetbookDeviceData get _value => super._value as _$_WidgetbookDeviceData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
+    Object? name = null,
   }) {
     return _then(_$_WidgetbookDeviceData(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
@@ -113,23 +116,25 @@ class _$_WidgetbookDeviceData implements _WidgetbookDeviceData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_WidgetbookDeviceData &&
-            const DeepCollectionEquality().equals(other.name, name));
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(name));
+  int get hashCode => Object.hash(runtimeType, name);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_WidgetbookDeviceDataCopyWith<_$_WidgetbookDeviceData> get copyWith =>
       __$$_WidgetbookDeviceDataCopyWithImpl<_$_WidgetbookDeviceData>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_WidgetbookDeviceDataToJson(this);
+    return _$$_WidgetbookDeviceDataToJson(
+      this,
+    );
   }
 }
 
@@ -141,7 +146,7 @@ abstract class _WidgetbookDeviceData implements WidgetbookDeviceData {
       _$_WidgetbookDeviceData.fromJson;
 
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
   @JsonKey(ignore: true)
   _$$_WidgetbookDeviceDataCopyWith<_$_WidgetbookDeviceData> get copyWith =>

@@ -29,5 +29,16 @@
             "program": "lib/widgetbook.dart",
             "type": "dart"
         },
+        {
+            "name": "Debug addon_example generator",
+            "cwd": "examples/addon_example",
+            "request": "launch",
+            "program": ".dart_tool/build/entrypoint/build.dart",
+            "args": [
+                "build", 
+                "--delete-conflicting-outputs"
+            ],
+            "type": "dart"
+        },
     ]
 }

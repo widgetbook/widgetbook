@@ -50,7 +50,8 @@ mixin _$WidgetbookUseCaseData {
 abstract class $WidgetbookUseCaseDataCopyWith<$Res> {
   factory $WidgetbookUseCaseDataCopyWith(WidgetbookUseCaseData value,
           $Res Function(WidgetbookUseCaseData) then) =
-      _$WidgetbookUseCaseDataCopyWithImpl<$Res>;
+      _$WidgetbookUseCaseDataCopyWithImpl<$Res, WidgetbookUseCaseData>;
+  @useResult
   $Res call(
       {String name,
       String useCaseName,
@@ -64,64 +65,67 @@ abstract class $WidgetbookUseCaseDataCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$WidgetbookUseCaseDataCopyWithImpl<$Res>
+class _$WidgetbookUseCaseDataCopyWithImpl<$Res,
+        $Val extends WidgetbookUseCaseData>
     implements $WidgetbookUseCaseDataCopyWith<$Res> {
   _$WidgetbookUseCaseDataCopyWithImpl(this._value, this._then);
 
-  final WidgetbookUseCaseData _value;
   // ignore: unused_field
-  final $Res Function(WidgetbookUseCaseData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? useCaseName = freezed,
-    Object? componentName = freezed,
-    Object? importStatement = freezed,
-    Object? componentImportStatement = freezed,
-    Object? dependencies = freezed,
-    Object? componentDefinitionPath = freezed,
-    Object? useCaseDefinitionPath = freezed,
+    Object? name = null,
+    Object? useCaseName = null,
+    Object? componentName = null,
+    Object? importStatement = null,
+    Object? componentImportStatement = null,
+    Object? dependencies = null,
+    Object? componentDefinitionPath = null,
+    Object? useCaseDefinitionPath = null,
     Object? designLink = freezed,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      useCaseName: useCaseName == freezed
+      useCaseName: null == useCaseName
           ? _value.useCaseName
           : useCaseName // ignore: cast_nullable_to_non_nullable
               as String,
-      componentName: componentName == freezed
+      componentName: null == componentName
           ? _value.componentName
           : componentName // ignore: cast_nullable_to_non_nullable
               as String,
-      importStatement: importStatement == freezed
+      importStatement: null == importStatement
           ? _value.importStatement
           : importStatement // ignore: cast_nullable_to_non_nullable
               as String,
-      componentImportStatement: componentImportStatement == freezed
+      componentImportStatement: null == componentImportStatement
           ? _value.componentImportStatement
           : componentImportStatement // ignore: cast_nullable_to_non_nullable
               as String,
-      dependencies: dependencies == freezed
+      dependencies: null == dependencies
           ? _value.dependencies
           : dependencies // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      componentDefinitionPath: componentDefinitionPath == freezed
+      componentDefinitionPath: null == componentDefinitionPath
           ? _value.componentDefinitionPath
           : componentDefinitionPath // ignore: cast_nullable_to_non_nullable
               as String,
-      useCaseDefinitionPath: useCaseDefinitionPath == freezed
+      useCaseDefinitionPath: null == useCaseDefinitionPath
           ? _value.useCaseDefinitionPath
           : useCaseDefinitionPath // ignore: cast_nullable_to_non_nullable
               as String,
-      designLink: designLink == freezed
+      designLink: freezed == designLink
           ? _value.designLink
           : designLink // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -132,6 +136,7 @@ abstract class _$$_WidgetbookUseCaseDataCopyWith<$Res>
           $Res Function(_$_WidgetbookUseCaseData) then) =
       __$$_WidgetbookUseCaseDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String name,
       String useCaseName,
@@ -146,62 +151,59 @@ abstract class _$$_WidgetbookUseCaseDataCopyWith<$Res>
 
 /// @nodoc
 class __$$_WidgetbookUseCaseDataCopyWithImpl<$Res>
-    extends _$WidgetbookUseCaseDataCopyWithImpl<$Res>
+    extends _$WidgetbookUseCaseDataCopyWithImpl<$Res, _$_WidgetbookUseCaseData>
     implements _$$_WidgetbookUseCaseDataCopyWith<$Res> {
   __$$_WidgetbookUseCaseDataCopyWithImpl(_$_WidgetbookUseCaseData _value,
       $Res Function(_$_WidgetbookUseCaseData) _then)
-      : super(_value, (v) => _then(v as _$_WidgetbookUseCaseData));
+      : super(_value, _then);
 
-  @override
-  _$_WidgetbookUseCaseData get _value =>
-      super._value as _$_WidgetbookUseCaseData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? useCaseName = freezed,
-    Object? componentName = freezed,
-    Object? importStatement = freezed,
-    Object? componentImportStatement = freezed,
-    Object? dependencies = freezed,
-    Object? componentDefinitionPath = freezed,
-    Object? useCaseDefinitionPath = freezed,
+    Object? name = null,
+    Object? useCaseName = null,
+    Object? componentName = null,
+    Object? importStatement = null,
+    Object? componentImportStatement = null,
+    Object? dependencies = null,
+    Object? componentDefinitionPath = null,
+    Object? useCaseDefinitionPath = null,
     Object? designLink = freezed,
   }) {
     return _then(_$_WidgetbookUseCaseData(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      useCaseName: useCaseName == freezed
+      useCaseName: null == useCaseName
           ? _value.useCaseName
           : useCaseName // ignore: cast_nullable_to_non_nullable
               as String,
-      componentName: componentName == freezed
+      componentName: null == componentName
           ? _value.componentName
           : componentName // ignore: cast_nullable_to_non_nullable
               as String,
-      importStatement: importStatement == freezed
+      importStatement: null == importStatement
           ? _value.importStatement
           : importStatement // ignore: cast_nullable_to_non_nullable
               as String,
-      componentImportStatement: componentImportStatement == freezed
+      componentImportStatement: null == componentImportStatement
           ? _value.componentImportStatement
           : componentImportStatement // ignore: cast_nullable_to_non_nullable
               as String,
-      dependencies: dependencies == freezed
+      dependencies: null == dependencies
           ? _value._dependencies
           : dependencies // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      componentDefinitionPath: componentDefinitionPath == freezed
+      componentDefinitionPath: null == componentDefinitionPath
           ? _value.componentDefinitionPath
           : componentDefinitionPath // ignore: cast_nullable_to_non_nullable
               as String,
-      useCaseDefinitionPath: useCaseDefinitionPath == freezed
+      useCaseDefinitionPath: null == useCaseDefinitionPath
           ? _value.useCaseDefinitionPath
           : useCaseDefinitionPath // ignore: cast_nullable_to_non_nullable
               as String,
-      designLink: designLink == freezed
+      designLink: freezed == designLink
           ? _value.designLink
           : designLink // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -270,48 +272,53 @@ class _$_WidgetbookUseCaseData implements _WidgetbookUseCaseData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_WidgetbookUseCaseData &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.useCaseName, useCaseName) &&
-            const DeepCollectionEquality()
-                .equals(other.componentName, componentName) &&
-            const DeepCollectionEquality()
-                .equals(other.importStatement, importStatement) &&
-            const DeepCollectionEquality().equals(
-                other.componentImportStatement, componentImportStatement) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.useCaseName, useCaseName) ||
+                other.useCaseName == useCaseName) &&
+            (identical(other.componentName, componentName) ||
+                other.componentName == componentName) &&
+            (identical(other.importStatement, importStatement) ||
+                other.importStatement == importStatement) &&
+            (identical(
+                    other.componentImportStatement, componentImportStatement) ||
+                other.componentImportStatement == componentImportStatement) &&
             const DeepCollectionEquality()
                 .equals(other._dependencies, _dependencies) &&
-            const DeepCollectionEquality().equals(
-                other.componentDefinitionPath, componentDefinitionPath) &&
-            const DeepCollectionEquality()
-                .equals(other.useCaseDefinitionPath, useCaseDefinitionPath) &&
-            const DeepCollectionEquality()
-                .equals(other.designLink, designLink));
+            (identical(
+                    other.componentDefinitionPath, componentDefinitionPath) ||
+                other.componentDefinitionPath == componentDefinitionPath) &&
+            (identical(other.useCaseDefinitionPath, useCaseDefinitionPath) ||
+                other.useCaseDefinitionPath == useCaseDefinitionPath) &&
+            (identical(other.designLink, designLink) ||
+                other.designLink == designLink));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(useCaseName),
-      const DeepCollectionEquality().hash(componentName),
-      const DeepCollectionEquality().hash(importStatement),
-      const DeepCollectionEquality().hash(componentImportStatement),
+      name,
+      useCaseName,
+      componentName,
+      importStatement,
+      componentImportStatement,
       const DeepCollectionEquality().hash(_dependencies),
-      const DeepCollectionEquality().hash(componentDefinitionPath),
-      const DeepCollectionEquality().hash(useCaseDefinitionPath),
-      const DeepCollectionEquality().hash(designLink));
+      componentDefinitionPath,
+      useCaseDefinitionPath,
+      designLink);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_WidgetbookUseCaseDataCopyWith<_$_WidgetbookUseCaseData> get copyWith =>
       __$$_WidgetbookUseCaseDataCopyWithImpl<_$_WidgetbookUseCaseData>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_WidgetbookUseCaseDataToJson(this);
+    return _$$_WidgetbookUseCaseDataToJson(
+      this,
+    );
   }
 }
 
@@ -331,24 +338,24 @@ abstract class _WidgetbookUseCaseData implements WidgetbookUseCaseData {
       _$_WidgetbookUseCaseData.fromJson;
 
   @override // Name of the builder function defining the use-case
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override // Name of the use-case, e.g. 'Default'
-  String get useCaseName => throw _privateConstructorUsedError;
+  String get useCaseName;
   @override // Name of the use-case, e.g. 'ElevatedButton'
 // This will be extracted from the type
-  String get componentName => throw _privateConstructorUsedError;
+  String get componentName;
   @override // Import statement of the use-case definition
-  String get importStatement => throw _privateConstructorUsedError;
+  String get importStatement;
   @override // Import statement of the component
-  String get componentImportStatement => throw _privateConstructorUsedError;
+  String get componentImportStatement;
   @override
-  List<String> get dependencies => throw _privateConstructorUsedError;
+  List<String> get dependencies;
   @override // The path to the file containing the component
-  String get componentDefinitionPath => throw _privateConstructorUsedError;
+  String get componentDefinitionPath;
   @override // The path to the file containing the use-case definition
-  String get useCaseDefinitionPath => throw _privateConstructorUsedError;
+  String get useCaseDefinitionPath;
   @override // The link to a design file or design component
-  String? get designLink => throw _privateConstructorUsedError;
+  String? get designLink;
   @override
   @JsonKey(ignore: true)
   _$$_WidgetbookUseCaseDataCopyWith<_$_WidgetbookUseCaseData> get copyWith =>

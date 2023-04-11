@@ -5,7 +5,7 @@ import 'package:widgetbook/widgetbook.dart';
 part 'device_setting.freezed.dart';
 
 @freezed
-class DeviceSetting extends WidgetbookAddOnModel with _$DeviceSetting {
+class DeviceSetting extends WidgetbookAddOnSetting with _$DeviceSetting {
   factory DeviceSetting({
     required List<Device> devices,
     required Device activeDevice,

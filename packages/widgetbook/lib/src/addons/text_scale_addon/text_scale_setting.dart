@@ -4,7 +4,7 @@ import 'package:widgetbook/src/addons/addon.dart';
 part 'text_scale_setting.freezed.dart';
 
 @freezed
-class TextScaleSetting extends WidgetbookAddOnModel with _$TextScaleSetting {
+class TextScaleSetting extends WidgetbookAddOnSetting with _$TextScaleSetting {
   @Assert('textScales.isNotEmpty', 'textScales cannot be empty')
   factory TextScaleSetting({
     required double activeTextScale,

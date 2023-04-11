@@ -1,5 +1,4 @@
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
-import 'package:widgetbook_generator/code_generators/instances/addons/addon_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/variable_instance.dart';
@@ -11,7 +10,7 @@ class WidgetbookInstance extends Instance {
   WidgetbookInstance({
     required WidgetbookConstructor constructor,
     required List<Instance> directories,
-    required List<AddOnInstance> addons,
+    required List<Instance> addons,
     String? type,
     VariableInstance? appBuilder,
   }) : super(
