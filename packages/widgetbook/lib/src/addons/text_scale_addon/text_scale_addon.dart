@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/src/addons/addon.dart';
 import 'package:widgetbook/src/addons/text_scale_addon/text_scale_setting.dart';
-import 'package:widgetbook/src/navigation/router.dart';
+import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {

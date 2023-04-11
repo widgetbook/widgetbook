@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
+import 'package:widgetbook/src/routing/widgetbook_panel.dart';
 import 'package:widgetbook/src/widgetbook_page.dart';
 
 T? parseQueryParameters<T>({
@@ -34,6 +35,24 @@ extension GoRouterExtension on BuildContext {
   }
 }
 
+Set<WidgetbookPanel> _parsePanelsQueryParam(
+  String? value,
+) {
+  if (value == null) {
+    return WidgetbookPanel.values.toSet();
+  }
+
+  if (value.isEmpty || value == '{}') {
+    return {};
+  }
+
+  return value
+      .replaceAll(RegExp('[{}]'), '')
+      .split(',')
+      .map((name) => WidgetbookPanel.values.byName(name))
+      .toSet();
+}
+
 bool _parseBoolQueryParameter({
   required String? value,
   bool defaultValue = false,
@@ -51,26 +70,51 @@ GoRouter createRouter({
   String? initialLocation,
 }) {
   final router = GoRouter(
-    redirect: (context, routerState) {
-      final path = routerState.queryParams['path'];
+    redirect: (context, state) {
+      // Redirect deprecated `disable-navigation` and `disable-properties`
+      // query params to their equivalent `panels` query param.
+      if (state.queryParams.containsKey('disable-navigation') ||
+          state.queryParams.containsKey('disable-properties')) {
+        final disableNavigation = _parseBoolQueryParameter(
+          value: state.queryParams['disable-navigation'],
+        );
+
+        final disableProperties = _parseBoolQueryParameter(
+          value: state.queryParams['disable-properties'],
+        );
+
+        final panels = {
+          if (!disableNavigation) ...{
+            WidgetbookPanel.navigation,
+          },
+          if (!disableProperties) ...{
+            WidgetbookPanel.addons,
+            WidgetbookPanel.knobs,
+          }
+        };
+
+        return '/?panels={${panels.map((x) => x.name).join(",")}}';
+      }
+
+      final path = state.queryParams['path'];
 
       if (path != null) {
         useCasesProvider.selectUseCaseByPath(path);
       }
+
       return null;
     },
     initialLocation: initialLocation,
     routes: [
       ShellRoute(
         builder: (context, state, child) {
-          final disableNavigation = _parseBoolQueryParameter(
-            value: state.queryParams['disable-navigation'],
-          );
+          final panels = _parsePanelsQueryParam(state.queryParams['panels']);
+
           return ColoredBox(
             color: Theme.of(context).colorScheme.surface,
             child: Row(
               children: [
-                if (!disableNavigation)
+                if (panels.contains(WidgetbookPanel.navigation))
                   NavigationPanelWrapper(
                     initialPath: state.location,
                   ),
@@ -84,13 +128,12 @@ GoRouter createRouter({
             name: '/',
             path: '/',
             pageBuilder: (context, state) {
-              final disableProperties = _parseBoolQueryParameter(
-                value: state.queryParams['disable-properties'],
-              );
+              final panels =
+                  _parsePanelsQueryParam(state.queryParams['panels']);
 
               return NoTransitionPage<void>(
                 child: WidgetbookPage(
-                  disableProperties: disableProperties,
+                  activePanels: panels,
                   routerData: state.queryParams,
                 ),
               );
