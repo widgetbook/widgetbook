@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
-import 'package:widgetbook_addon/widgetbook_addon.dart';
+
+import 'widgetbook_addon.dart';
 
 class AddonInjectorWidget extends StatelessWidget {
   const AddonInjectorWidget({
