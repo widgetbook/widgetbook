@@ -14,15 +14,15 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  widgetbook_annotation: ^3.0.0-beta.6 
+  widgetbook_annotation: ^3.0.0-beta.7
   flutter_screenutil: ^5.7.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  widgetbook: ^3.0.0-beta.13
-  widgetbook_generator: ^3.0.0-beta.10
+  widgetbook: ^3.0.0-beta.14
+  widgetbook_generator: ^3.0.0-beta.11
   build_runner: ^2.3.3
 
 flutter:

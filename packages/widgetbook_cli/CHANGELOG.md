@@ -1,3 +1,39 @@
+## 3.0.0-beta.27
+
+ - **REFACTOR**: :recycle: removed lint package from projects.
+ - **REFACTOR**: :recycle: removed package analysis_options files.
+ - **REFACTOR**: :recycle: warnings.
+ - **REFACTOR**: :recycle: settings.
+ - **REFACTOR**: :recycle: git usage.
+ - **FIX**: use CI's commit environment variables ([#608](https://github.com/widgetbook/widgetbook/issues/608)).
+ - **FIX**: :bug: use cases not found.
+ - **FIX**: :bug: skips most recent commit on base ref.
+ - **FIX**: :bug: identifying merge commits with incorrect keywords.
+ - **FIX**: :bug: provides wrong `sha` when running on GitHub action pull-requests.
+ - **FIX**: :bug: directing to incorrect route.
+ - **FIX**: :bug: upload of properties.
+ - **FIX**: :bug: fails pipeline when no generator files exist.
+ - **FIX**: :bug: reads actor and repository including newline.
+ - **FIX**: :bug: bad revision on git diff.
+ - **FIX**: 🐛 CLI fails on environments without terminal.
+ - **FIX**: :bug: HttpClient connects to incorrect endpoint.
+ - **FIX**: :bug: UseCaseParser contains hard-coded branch name.
+ - **FIX**: :bug: ambiguous warning for no generator themes.
+ - **FIX**: :bug: rename cli to widgetbook.
+ - **FEAT**: :sparkles: log number of use-cases.
+ - **FEAT**: support for Codemagic.
+ - **FEAT**: :sparkles: link to review.
+ - **FEAT**: :sparkles: add `designLink` property.
+ - **FEAT**: :sparkles: implement ci parser class to parse ci/cd runner information.
+ - **FEAT**: comment link to review.
+ - **FEAT**: :sparkles: improve markdown on PR comments.
+ - **FEAT**: :sparkles: comment link to Build in PR.
+ - **FEAT**: :sparkles: changed branch and commit argument to optional.
+ - **FEAT**: :bookmark: publish CLI to pub.dev.
+ - **DOCS**: :memo: add `pr` and `github-token` args.
+ - **DOCS**: :bug: change relative links to global links.
+ - **DOCS**: :memo: add documentation for CLI.
+
 ## 3.0.0-beta.26
 
  - **REFACTOR**: :recycle: settings.

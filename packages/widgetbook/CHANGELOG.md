@@ -1,3 +1,62 @@
+## 3.0.0-beta.14
+
+ - **REFACTOR**: :recycle: addon multi property preview.
+ - **REFACTOR**: :recycle: removed package analysis_options files.
+ - **REFACTOR**: :recycle: warnings.
+ - **REFACTOR**: :recycle: `AddOn` API.
+ - **REFACTOR**: :recycle: improve API interface of addons.
+ - **REFACTOR**: :recycle: warnings.
+ - **REFACTOR**: :recycle: settings.
+ - **REFACTOR**: navigation logic.
+ - **REFACTOR**: 🛠️ uses new `NavigationTree`.
+ - **REFACTOR**: :recycle: adjust content.
+ - **REFACTOR**: :recycle: adjust generator to `AddOn` implemementation.
+ - **REFACTOR**: :zap: refactored addons.
+ - **REFACTOR**: `DeviceAddon`.
+ - **REFACTOR**: adjusted code to match linter.
+ - **FIX**: :test_tube: fixed broken test.
+ - **FIX**: :bug: requires `directories` to be not empty.
+ - **FIX**: :bug: properties resetting when changing locale.
+ - **FIX**: :bug: properties not changing on navigate.
+ - **FIX**: inserted scaffold messenger.
+ - **FIX**: expanding of elements within the navigation is not working.
+ - **FIX**: :bug: addons property cannot be empty.
+ - **FIX**: navigation tree collapsing and expanding does not work.
+ - **FIX**: orientation defaults to landscape.
+ - **FIX**: :bug: provider not found.
+ - **FIX**: knob values do not update when usecase changes.
+ - **FIX**: :bug: remove `go_router` diagnostics.
+ - **FIX**: :bug: improve Canvas.
+ - **FIX**: :bug: navigation resets when use case changes.
+ - **FIX**: :bug: addons show incorrect item.
+ - **FIX**: custom painter Widgets are incorrectly rendered.
+ - **FIX**: :bug: hot reload of directories.
+ - **FIX**: :bug: selected items not shown for addon.
+ - **FIX**: dialog shows up in Widgetbook instead of the simulated device.
+ - **FIX**: add packages/widgetbook prefix.
+ - **FIX**: change ttf files with fonts.google ones.
+ - **FIX**: :bug: ignores country codes.
+ - **FIX**: added MediaQuery for WidgetbookDeviceFrame.
+ - **FIX**: preview app shows debug banner.
+ - **FIX**: preview app shows debug banner in other theme than material.
+ - **FIX**: useCaseBuilder is called with old context.
+ - **FEAT**: :sparkles: addon multi property preview.
+ - **FEAT**: :sparkles: addon routing.
+ - **FEAT**: :sparkles: text scale addon.
+ - **FEAT**: :sparkles: device addon.
+ - **FEAT**: :sparkles: cupertino theme addon.
+ - **FEAT**: :sparkles: remove obsolete classes.
+ - **FEAT**: :sparkles: theme addon.
+ - **FEAT**: :sparkles: Theme needs to be accessible via the app builder function.
+ - **FEAT**: :zap: added text knob multiline.
+ - **FEAT**: :zap: added text knob multiline.
+ - **FEAT**: :zap: added color knob.
+ - **FEAT**: add `panels` query param ([#612](https://github.com/widgetbook/widgetbook/issues/612)).
+ - **FEAT**: added feature to toggle the orientation of a device.
+ - **FEAT**: added textScaleFactors for font accessibility.
+ - **FEAT**: :sparkles: addons and localization addon.
+ - **DOCS**: added how to use widgetbook with a package.
+
 ## 3.0.0-beta.13
 
  - **FIX**(widgetbook): :bug: remove `go_router` diagnostics. ([a5395ee7](https://github.com/widgetbook/widgetbook/commit/a5395ee71461debfe22eaeef0b830c619ca01678))
