@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/ambiguate.dart';
+
 class StyledScaffold extends StatelessWidget {
   const StyledScaffold({
     super.key,
@@ -11,7 +13,10 @@ class StyledScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus,
+      onTap: ambiguate(WidgetsBinding.instance)!
+          .focusManager
+          .primaryFocus
+          ?.unfocus,
       child: Scaffold(
         body: body,
       ),
