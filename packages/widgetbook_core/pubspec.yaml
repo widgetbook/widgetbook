@@ -1,7 +1,7 @@
 name: widgetbook_core
 description: Core components for Widgetbook and Widgetbook Cloud. 
 version: 3.0.0-beta.7
-homepage: https://www.widgetbook.io?utm_source=youtube&utm_medium=link&utm_campaign=widgetbook
+homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=widgetbook
 repository: https://github.com/widgetbook/widgetbook
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
 documentation: https://docs.widgetbook.io
