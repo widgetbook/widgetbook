@@ -1,3 +1,7 @@
+## 3.0.0-beta.8
+
+ - **REFACTOR**: :recycle: removed package analysis_options files.
+
 ## 3.0.0-beta.7
 
  - **FIX**(widgetbook): :bug: setting `isInitiallyExpanded` to `false` has no impact. ([90aeace1](https://github.com/widgetbook/widgetbook/commit/90aeace1210a8e35c07eb279c7a2ce6c1e003793))

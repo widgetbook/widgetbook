@@ -5,18 +5,18 @@ packages:
     dependency: transitive
     description:
       name: _fe_analyzer_shared
-      sha256: "4897882604d919befd350648c7f91926a9d5de99e67b455bf0917cc2362f4bb8"
+      sha256: a36ec4843dc30ea6bf652bf25e3448db6c5e8bcf4aa55f063a5d1dad216d8214
       url: "https://pub.dev"
     source: hosted
-    version: "47.0.0"
+    version: "58.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
-      sha256: "690e335554a8385bc9d787117d9eb52c0c03ee207a607e593de3c9d71b1cfe80"
+      sha256: cc4242565347e98424ce9945c819c192ec0838cb9d1f6aa4a97cc96becbc5b27
       url: "https://pub.dev"
     source: hosted
-    version: "4.7.0"
+    version: "5.10.0"
   args:
     dependency: transitive
     description:
@@ -555,35 +555,35 @@ packages:
       path: "../../packages/widgetbook"
       relative: true
     source: path
-    version: "3.0.0-beta.13"
+    version: "3.0.0-beta.14"
   widgetbook_annotation:
     dependency: "direct main"
     description:
       path: "../../packages/widgetbook_annotation"
       relative: true
     source: path
-    version: "3.0.0-beta.6"
+    version: "3.0.0-beta.7"
   widgetbook_core:
     dependency: "direct overridden"
     description:
       path: "../../packages/widgetbook_core"
       relative: true
     source: path
-    version: "3.0.0-beta.7"
+    version: "3.0.0-beta.8"
   widgetbook_generator:
     dependency: "direct dev"
     description:
       path: "../../packages/widgetbook_generator"
       relative: true
     source: path
-    version: "3.0.0-beta.10"
+    version: "3.0.0-beta.11"
   widgetbook_models:
     dependency: "direct overridden"
     description:
       path: "../../packages/widgetbook_models"
       relative: true
     source: path
-    version: "3.0.0-beta.3"
+    version: "3.0.0-beta.4"
   yaml:
     dependency: transitive
     description:

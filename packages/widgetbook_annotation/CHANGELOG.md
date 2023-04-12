@@ -1,3 +1,8 @@
+## 3.0.0-beta.7
+
+ - **REFACTOR**: :recycle: removed package analysis_options files.
+ - **REFACTOR**: :recycle: warnings.
+
 ## 3.0.0-beta.6
 
  - **FIX**: :bug: remove obsolete `name` property. ([0e681371](https://github.com/widgetbook/widgetbook/commit/0e68137119af6a73e8f182ff833421f196589283))

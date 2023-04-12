@@ -1,3 +1,7 @@
+## 2.2.0-beta.9
+
+ - **REFACTOR**: :recycle: warnings.
+
 ## 2.2.0-beta.8
 
  - **FIX**: :bug: reads actor and repository including newline. ([3bc05624](https://github.com/widgetbook/widgetbook/commit/3bc05624c608a5cbd7abb70cf20fda703110ca53))

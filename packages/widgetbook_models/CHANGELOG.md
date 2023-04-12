@@ -1,3 +1,7 @@
+## 3.0.0-beta.4
+
+ - **REFACTOR**: :recycle: removed package analysis_options files.
+
 ## 3.0.0-beta.3
 
  - **REFACTOR**: :recycle: settings. ([254ebef6](https://github.com/widgetbook/widgetbook/commit/254ebef6fe38b2d8f3fc847366f4725ab9292ccb))
