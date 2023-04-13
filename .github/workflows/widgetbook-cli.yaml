@@ -15,6 +15,7 @@ jobs:
     with:
       flutter_channel: stable
       working_directory: packages/widgetbook_cli
+      analyze_directories: bin test
       setup: |
         dart pub global activate melos
         melos bootstrap --scope='widgetbook_cli'

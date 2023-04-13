@@ -15,6 +15,7 @@ jobs:
     with:
       flutter_channel: stable
       working_directory: packages/widgetbook_git
+      min_coverage: 75
       setup: |
         # Setup dummy Git user
         git config --global user.email "you@example.com"

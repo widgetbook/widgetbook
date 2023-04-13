@@ -307,7 +307,7 @@ class GitDir {
 
     final diff = pr.stdout as String;
 
-    DiffHeader _parseHeader(String fileDiff) {
+    DiffHeader parseHeader(String fileDiff) {
       // Header might look like this:
       // diff --git a/builtin-http-fetch.c b/http-fetch.c
       // similarity index 95%
@@ -325,7 +325,7 @@ class GitDir {
       );
     }
 
-    HunkRange _parseHunkRange(
+    HunkRange parseHunkRange(
       RegExpMatch match,
     ) {
       final startLineGroup = match.group(1);
@@ -349,13 +349,13 @@ class GitDir {
       );
     }
 
-    Hunk _parseHunk({
+    Hunk parseHunk({
       required RegExpMatch baseHunkMatch,
       required RegExpMatch refHunkMatch,
       required int? nextHunkStart,
     }) {
-      final baseHunk = _parseHunkRange(baseHunkMatch);
-      final refHunk = _parseHunkRange(refHunkMatch);
+      final baseHunk = parseHunkRange(baseHunkMatch);
+      final refHunk = parseHunkRange(refHunkMatch);
       final content = baseHunkMatch.input
           .substring(
             baseHunkMatch.start,
@@ -372,7 +372,7 @@ class GitDir {
       );
     }
 
-    Iterable<Hunk> _parseHunks(String fileDiff) sync* {
+    Iterable<Hunk> parseHunks(String fileDiff) sync* {
       // Hunk might look like this:
       // @@ -54,6 +54,10 @@ class HotReload extends StatelessWidget {
       //                        name: 'FAB',
@@ -399,7 +399,7 @@ class GitDir {
 
       for (var counter = 0; counter < baseMatches.length; counter++) {
         final isLast = counter + 1 == baseMatches.length;
-        yield _parseHunk(
+        yield parseHunk(
           baseHunkMatch: baseMatches[counter],
           refHunkMatch: refMatches[counter],
           nextHunkStart: isLast ? null : baseMatches[counter].start,
@@ -408,8 +408,8 @@ class GitDir {
     }
 
     FileDiff getFileDiff(String fileDiff) {
-      final header = _parseHeader(fileDiff);
-      final hunks = _parseHunks(fileDiff).toList();
+      final header = parseHeader(fileDiff);
+      final hunks = parseHunks(fileDiff).toList();
       return FileDiff(
         basePath: header.baseFile,
         refPath: header.refFile,

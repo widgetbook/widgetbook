@@ -21,7 +21,7 @@ class UseCaseResolver extends GeneratorForAnnotation<WidgetbookUseCase> {
     }
 
     final useCaseName = annotation.read('name').stringValue;
-    final typeElement = annotation.read('type').typeValue.element2!;
+    final typeElement = annotation.read('type').typeValue.element!;
     final designLinkReader = annotation.read('designLink');
     String? designLink;
     if (!designLinkReader.isNull) {
@@ -33,7 +33,7 @@ class UseCaseResolver extends GeneratorForAnnotation<WidgetbookUseCase> {
       withNullability: false,
     );
 
-    final componentDefinitionPath = typeValue.element2!.librarySource!.fullName;
+    final componentDefinitionPath = typeValue.element!.librarySource!.fullName;
 
     final data = WidgetbookUseCaseData(
       name: element.name!,

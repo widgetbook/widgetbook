@@ -1,4 +1,3 @@
-
 export './src/devices/apple_devices.dart';
 export './src/devices/desktop_screens.dart';
 export './src/devices/device.dart';
