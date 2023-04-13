@@ -1,66 +1,20 @@
-on: 
+name: widgetbook
+
+on:
   pull_request:
     paths:
-      - "packages/widgetbook/**"
-      - ".github/workflows/widgetbook.yaml"
+      - packages/widgetbook/**
+      - .github/workflows/widgetbook.yaml
   push:
     branches:
       - main
-name: widgetbook
+
 jobs:
   build:
-    defaults:
-      run:
-        working-directory: packages/widgetbook
-    name: test
-    runs-on: ubuntu-latest 
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        lfs: true
-    - name: Checkout LFS objects
-      run: git lfs checkout
-
-    - uses: subosito/flutter-action@v2
-      with:
-        channel: stable
-
-    - name: Flutter version
-      run: flutter --version
-
-    - name: Enable melos
-      run: dart pub global activate melos
-
-    - name: Get packages 
-      run: melos bootstrap
-
-    - name: Run Tests
-      run: flutter test --coverage
-
-  code-quality:
-    defaults:
-      run:
-        working-directory: packages/widgetbook
-    name: code quality
-    runs-on: ubuntu-latest 
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        lfs: true
-    - name: Checkout LFS objects
-      run: git lfs checkout
-
-    - uses: subosito/flutter-action@v2
-      with:
-        channel: stable
-
-    - name: Flutter version
-      run: flutter --version
-
-    - name: Enable melos
-      run: dart pub global activate melos
-
-    - name: Get packages 
-      run: melos bootstrap
-      
-    - run: flutter analyze
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    with:
+      flutter_channel: stable
+      working_directory: packages/widgetbook
+      setup: |
+        dart pub global activate melos
+        melos bootstrap --scope='widgetbook'
