@@ -5,3 +5,23 @@ on: pull_request
 jobs:
   semantic-pull-request:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
+
+  validate-uncommitted-changes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Enable melos
+        run: dart pub global activate melos
+
+      - name: Get packages 
+        run: melos bootstrap
+
+      - name: Validate all changes are committed
+        run: git diff-index HEAD -p --exit-code
