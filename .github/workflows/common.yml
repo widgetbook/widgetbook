@@ -23,5 +23,8 @@ jobs:
       - name: Get packages 
         run: melos bootstrap
 
+      - name: Generate diff
+        run: git --no-pager diff
+
       - name: Validate all changes are committed
-        run: git diff-index HEAD -p --exit-code
+        run: git diff-index HEAD --exit-code -p
