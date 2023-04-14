@@ -19,4 +19,5 @@ jobs:
       test_optimization: false
       setup: |
         dart pub global activate melos
-        melos bootstrap --scope='widgetbook'
+        melos bootstrap
+        melos run generate

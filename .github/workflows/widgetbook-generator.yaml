@@ -18,4 +18,5 @@ jobs:
       min_coverage: 67
       setup: |
         dart pub global activate melos
-        melos bootstrap --scope='widgetbook_generator'
+        melos bootstrap
+        melos run generate
