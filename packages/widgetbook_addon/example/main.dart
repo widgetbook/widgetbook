@@ -41,7 +41,7 @@ class CustomAddOn extends WidgetbookAddOn<CustomAddOnSetting> {
     required CustomAddOnSetting setting,
   }) {
     return CustomAddOnSetting(
-      data: queryParameters['data'],
+      data: queryParameters['data'] ?? 'Unknown',
     );
   }
 }
