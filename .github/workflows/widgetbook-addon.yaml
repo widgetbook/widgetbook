@@ -15,6 +15,7 @@ jobs:
     with:
       flutter_channel: stable
       working_directory: packages/widgetbook_addon
+      min_coverage: 68
       setup: |
         dart pub global activate melos
         melos bootstrap --scope='widgetbook_addon'
