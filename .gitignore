@@ -86,3 +86,4 @@ packages/**/pubspec.lock
 # Generated files
 *.freezed.dart
 *.g.dart
+version.dart
