@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_addon/widgetbook_addon.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 class FrameAddon extends WidgetbookAddOn<FrameSetting> {
@@ -8,6 +9,17 @@ class FrameAddon extends WidgetbookAddOn<FrameSetting> {
   }) : super(
           name: 'Frame',
         );
+
+  @override
+  void addListener(ValueChanged<FrameSetting> listener) {
+    super.addListener(listener);
+
+    value.frames.forEach((frame) {
+      frame.addon.addListener(
+        listener as ValueChanged<WidgetbookAddOnModel>,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
