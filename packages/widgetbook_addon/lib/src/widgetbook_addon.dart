@@ -25,9 +25,6 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel> {
   final T setting;
   late ValueNotifier<T> provider;
 
-  /// Updates the router's query parameters using the changed [value].
-  void updateQueryParameters(BuildContext context, T value);
-
   /// Allows for parsing of [queryParameters] by using information from the
   /// router and from the initially provided [setting].
   ///
@@ -44,9 +41,14 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel> {
 
   T get value => provider.value;
 
+  void addListener(ValueChanged<T> listener) {
+    provider.addListener(
+      () => listener(provider.value),
+    );
+  }
+
   void onChanged(BuildContext context, T value) {
     provider.value = value;
-    updateQueryParameters(context, value);
   }
 
   Widget buildProvider(
@@ -54,14 +56,13 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel> {
     Map<String, String> queryParameters,
     Widget child,
   ) {
-    final initialData = settingFromQueryParameters(
+    provider.value = settingFromQueryParameters(
       queryParameters: queryParameters,
       setting: setting,
     );
-    provider = ValueNotifier<T>(initialData);
 
     return ChangeNotifierProvider.value(
-      key: ValueKey(initialData),
+      key: ValueKey(provider.value),
       value: provider,
       child: child,
     );

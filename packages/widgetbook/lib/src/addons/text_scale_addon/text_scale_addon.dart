@@ -33,11 +33,6 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
   }
 
   @override
-  void updateQueryParameters(BuildContext context, TextScaleSetting value) {
-    context.goTo(queryParams: value.toQueryParameter());
-  }
-
-  @override
   TextScaleSetting settingFromQueryParameters({
     required Map<String, String> queryParameters,
     required TextScaleSetting setting,

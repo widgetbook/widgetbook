@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook_addon/widgetbook_addon.dart';
 import 'package:widgetbook/src/routing/widgetbook_panel.dart';
 import 'package:widgetbook/src/settings_panel/settings_panel.dart';
@@ -32,6 +33,9 @@ class WidgetbookPage extends StatelessWidget {
           return AddonInjectorWidget(
             addons: addons,
             routerData: routerData,
+            onChanged: (setting) => context.goTo(
+              queryParams: setting.toQueryParameter(),
+            ),
             child: Row(
               children: [
                 const Expanded(

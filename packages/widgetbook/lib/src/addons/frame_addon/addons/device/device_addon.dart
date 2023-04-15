@@ -13,11 +13,6 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
         );
 
   @override
-  void updateQueryParameters(BuildContext context, DeviceSetting value) {
-    context.goTo(queryParams: value.toQueryParameter());
-  }
-
-  @override
   DeviceSetting settingFromQueryParameters({
     required Map<String, String> queryParameters,
     required DeviceSetting setting,

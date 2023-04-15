@@ -32,11 +32,6 @@ abstract class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
   }
 
   @override
-  void updateQueryParameters(BuildContext context, ThemeSetting<T> value) {
-    context.goTo(queryParams: value.toQueryParameter());
-  }
-
-  @override
   ThemeSetting<T> settingFromQueryParameters({
     required Map<String, String> queryParameters,
     required ThemeSetting<T> setting,

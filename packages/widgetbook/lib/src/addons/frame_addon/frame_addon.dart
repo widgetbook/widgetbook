@@ -56,11 +56,6 @@ class FrameAddon extends WidgetbookAddOn<FrameSetting> {
   }
 
   @override
-  void updateQueryParameters(BuildContext context, FrameSetting value) {
-    context.goTo(queryParams: value.toQueryParameter());
-  }
-
-  @override
   FrameSetting settingFromQueryParameters({
     required Map<String, String> queryParameters,
     required FrameSetting setting,

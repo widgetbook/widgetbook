@@ -17,6 +17,7 @@ void main() {
             AddonInjectorWidget(
               routerData: {},
               addons: [],
+              onChanged: (_) {},
               child: Text('single child'),
             ),
           );
@@ -43,6 +44,7 @@ void main() {
                   ),
                 )
               ],
+              onChanged: (_) {},
               child: Text('single child'),
             ),
           );
