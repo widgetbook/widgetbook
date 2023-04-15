@@ -17,4 +17,5 @@ jobs:
       working_directory: packages/widgetbook_core
       setup: |
         dart pub global activate melos
-        melos bootstrap --scope='widgetbook_core'
+        melos bootstrap
+        melos run generate

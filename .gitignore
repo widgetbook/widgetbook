@@ -82,3 +82,8 @@ build/
 
 # Libraries should not include pubspec.lock, per https://dart.dev/guides/libraries/private-files#pubspeclock.
 packages/**/pubspec.lock
+
+# Generated files
+*.freezed.dart
+*.g.dart
+version.dart

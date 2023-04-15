@@ -18,4 +18,5 @@ jobs:
       analyze_directories: bin test
       setup: |
         dart pub global activate melos
-        melos bootstrap --scope='widgetbook_cli'
+        melos bootstrap
+        melos run generate
