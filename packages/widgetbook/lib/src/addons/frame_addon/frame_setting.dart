@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:widgetbook/src/addons/addons.dart';
+import 'package:widgetbook_addon/widgetbook_addon.dart';
 
 part 'frame_setting.freezed.dart';
 

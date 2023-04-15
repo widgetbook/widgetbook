@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/addons/addon.dart';
+
+import 'widgetbook_addon.dart';
 
 class AddOnProvider extends ValueNotifier<List<WidgetbookAddOn>> {
   AddOnProvider(super.value);

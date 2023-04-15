@@ -29,6 +29,11 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
   }
 
   @override
+  void updateQueryParameters(BuildContext context, LocalizationSetting value) {
+    context.goTo(queryParams: value.toQueryParameter());
+  }
+
+  @override
   LocalizationSetting settingFromQueryParameters({
     required Map<String, String> queryParameters,
     required LocalizationSetting setting,

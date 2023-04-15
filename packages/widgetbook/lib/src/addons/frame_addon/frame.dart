@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:widgetbook/src/addons/addon.dart';
+import 'package:widgetbook_addon/widgetbook_addon.dart';
 
 @immutable
 abstract class Frame {

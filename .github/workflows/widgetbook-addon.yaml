@@ -1,0 +1,21 @@
+name: widgetbook_addon
+
+on:
+  pull_request:
+    paths:
+      - packages/widgetbook_addon/**
+      - .github/workflows/widgetbook-addon.yaml
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    with:
+      flutter_channel: stable
+      working_directory: packages/widgetbook_addon
+      min_coverage: 68
+      setup: |
+        dart pub global activate melos
+        melos bootstrap --scope='widgetbook_addon'
