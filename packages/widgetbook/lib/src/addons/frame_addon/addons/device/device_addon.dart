@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
@@ -11,33 +10,6 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
   }) : super(
           name: 'Device',
         );
-
-  @override
-  DeviceSetting settingFromQueryParameters({
-    required Map<String, String> queryParameters,
-    required DeviceSetting setting,
-  }) {
-    final activeDevice = parseQueryParameters(
-          name: 'device',
-          queryParameters: queryParameters,
-          mappedData: {for (var e in setting.devices) e.name: e},
-        ) ??
-        setting.activeDevice;
-    final activeOrientation = parseQueryParameters(
-          name: 'orientation',
-          queryParameters: queryParameters,
-          mappedData: {
-            Orientation.portrait.name: Orientation.portrait,
-            Orientation.landscape.name: Orientation.landscape,
-          },
-        ) ??
-        setting.orientation;
-
-    return setting.copyWith(
-      activeDevice: activeDevice,
-      orientation: activeOrientation,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

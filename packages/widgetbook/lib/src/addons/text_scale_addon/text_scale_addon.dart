@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook_addon/widgetbook_addon.dart';
 import 'package:widgetbook/src/addons/text_scale_addon/text_scale_setting.dart';
-import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
@@ -30,23 +29,6 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
         },
       ),
     );
-  }
-
-  @override
-  TextScaleSetting settingFromQueryParameters({
-    required Map<String, String> queryParameters,
-    required TextScaleSetting setting,
-  }) {
-    final activeTextScale = parseQueryParameters(
-          name: 'text-scale',
-          queryParameters: queryParameters,
-          mappedData: {
-            for (var e in setting.textScales) e.toStringAsFixed(2): e
-          },
-        ) ??
-        setting.activeTextScale;
-
-    return setting.copyWith(activeTextScale: activeTextScale);
   }
 }
 

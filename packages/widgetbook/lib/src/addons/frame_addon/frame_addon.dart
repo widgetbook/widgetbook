@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
@@ -43,31 +42,17 @@ class FrameAddon extends WidgetbookAddOn<FrameSetting> {
     Map<String, String> queryParameters,
     Widget child,
   ) {
-    final initialData = settingFromQueryParameters(
-      queryParameters: queryParameters,
-      setting: setting,
-    );
+    final newSetting = setting.fromQueryParameter(queryParameters) ?? setting;
+
     return super.buildProvider(
       context,
       queryParameters,
-      initialData.activeFrame.addon
-          .buildProvider(context, queryParameters, child),
+      newSetting.activeFrame.addon.buildProvider(
+        context,
+        queryParameters,
+        child,
+      ),
     );
-  }
-
-  @override
-  FrameSetting settingFromQueryParameters({
-    required Map<String, String> queryParameters,
-    required FrameSetting setting,
-  }) {
-    final activeFrame = parseQueryParameters(
-          name: 'frame',
-          queryParameters: queryParameters,
-          mappedData: {for (var e in setting.frames) e.name: e},
-        ) ??
-        setting.activeFrame;
-
-    return setting.copyWith(activeFrame: activeFrame);
   }
 }
 

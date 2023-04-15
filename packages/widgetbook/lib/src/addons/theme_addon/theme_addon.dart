@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
@@ -29,19 +28,5 @@ abstract class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
         },
       ),
     );
-  }
-
-  @override
-  ThemeSetting<T> settingFromQueryParameters({
-    required Map<String, String> queryParameters,
-    required ThemeSetting<T> setting,
-  }) {
-    final WidgetbookTheme<T>? activeTheme = parseQueryParameters(
-      name: 'theme',
-      queryParameters: queryParameters,
-      mappedData: {for (var e in setting.themes) e.name: e},
-    );
-
-    return setting.copyWith(activeTheme: activeTheme);
   }
 }

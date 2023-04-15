@@ -14,6 +14,13 @@ class CustomAddOnSetting extends WidgetbookAddOnModel {
       'data': data,
     };
   }
+
+  @override
+  CustomAddOnSetting? fromQueryParameter(Map<String, String> queryParameters) {
+    return queryParameters.containsKey('data')
+        ? CustomAddOnSetting(data: queryParameters['data']!)
+        : null;
+  }
 }
 
 class CustomAddOn extends WidgetbookAddOn<CustomAddOnSetting> {
@@ -26,16 +33,6 @@ class CustomAddOn extends WidgetbookAddOn<CustomAddOnSetting> {
   @override
   Widget build(BuildContext context) {
     return Text(value.data);
-  }
-
-  @override
-  CustomAddOnSetting settingFromQueryParameters({
-    required Map<String, String> queryParameters,
-    required CustomAddOnSetting setting,
-  }) {
-    return CustomAddOnSetting(
-      data: queryParameters['data'] ?? 'Unknown',
-    );
   }
 }
 

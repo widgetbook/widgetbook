@@ -25,20 +25,6 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel> {
   final T setting;
   late ValueNotifier<T> provider;
 
-  /// Allows for parsing of [queryParameters] by using information from the
-  /// router and from the initially provided [setting].
-  ///
-  /// If no [queryParameters] are available, return [setting].
-  /// If [queryParameters] are avaialbe return a propert `Setting` object.
-  ///
-  /// If not overriden, returns the initially provided [setting].
-  T settingFromQueryParameters({
-    required Map<String, String> queryParameters,
-    required T setting,
-  }) {
-    return setting;
-  }
-
   T get value => provider.value;
 
   void addListener(ValueChanged<T> listener) {
@@ -56,13 +42,12 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel> {
     Map<String, String> queryParameters,
     Widget child,
   ) {
-    provider.value = settingFromQueryParameters(
-      queryParameters: queryParameters,
-      setting: setting,
-    );
+    final newSetting = setting.fromQueryParameter(queryParameters) ?? setting;
+
+    provider.value = newSetting;
 
     return ChangeNotifierProvider.value(
-      key: ValueKey(provider.value),
+      key: ValueKey(newSetting),
       value: provider,
       child: child,
     );
