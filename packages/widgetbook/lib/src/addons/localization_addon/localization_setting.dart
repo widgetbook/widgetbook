@@ -43,11 +43,12 @@ class LocalizationSetting extends WidgetbookAddOnModel
 
   @override
   fromQueryParameter(Map<String, String> queryParameters) {
-    return this.copyWith(
-      activeLocale: locales.firstWhere(
-        (locale) => locale == queryParameters['locale'].toString(),
-        orElse: () => activeLocale,
-      ),
-    );
+    return queryParameters.containsKey('locale')
+        ? this.copyWith(
+            activeLocale: locales.firstWhere(
+              (locale) => locale == queryParameters['locale']!,
+            ),
+          )
+        : null;
   }
 }

@@ -41,11 +41,12 @@ class FrameSetting extends WidgetbookAddOnModel<FrameSetting>
 
   @override
   FrameSetting? fromQueryParameter(Map<String, String> queryParameters) {
-    return this.copyWith(
-      activeFrame: frames.firstWhere(
-        (frame) => frame.name == queryParameters['frame'],
-        orElse: () => activeFrame,
-      ),
-    );
+    return queryParameters.containsKey('frame')
+        ? this.copyWith(
+            activeFrame: frames.firstWhere(
+              (frame) => frame.name == queryParameters['frame']!,
+            ),
+          )
+        : null;
   }
 }

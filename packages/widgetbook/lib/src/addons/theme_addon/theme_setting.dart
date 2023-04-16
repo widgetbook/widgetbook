@@ -46,12 +46,13 @@ class ThemeSetting<T> extends WidgetbookAddOnModel<ThemeSetting<T>> {
 
   @override
   ThemeSetting<T>? fromQueryParameter(Map<String, String> queryParameters) {
-    return this.copyWith(
-      activeTheme: themes.firstWhere(
-        (theme) => theme.name == queryParameters['theme'],
-        orElse: () => activeTheme,
-      ),
-    );
+    return queryParameters.containsKey('theme')
+        ? this.copyWith(
+            activeTheme: themes.firstWhere(
+              (theme) => theme.name == queryParameters['theme']!,
+            ),
+          )
+        : null;
   }
 
   @override

@@ -39,14 +39,16 @@ class DeviceSetting extends WidgetbookAddOnModel<DeviceSetting>
 
   @override
   DeviceSetting? fromQueryParameter(Map<String, String> queryParameters) {
-    return this.copyWith(
-      orientation: Orientation.values.byName(
-        queryParameters['orientation'] ?? orientation.name,
-      ),
-      activeDevice: devices.firstWhere(
-        (device) => device.name == queryParameters['device'],
-        orElse: () => activeDevice,
-      ),
-    );
+    return queryParameters.containsKey('orientation') &&
+            queryParameters.containsKey('device')
+        ? this.copyWith(
+            orientation: Orientation.values.byName(
+              queryParameters['orientation']!,
+            ),
+            activeDevice: devices.firstWhere(
+              (device) => device.name == queryParameters['device']!,
+            ),
+          )
+        : null;
   }
 }
