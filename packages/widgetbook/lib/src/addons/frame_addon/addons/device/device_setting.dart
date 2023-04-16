@@ -6,7 +6,8 @@ import 'package:widgetbook_addon/widgetbook_addon.dart';
 part 'device_setting.freezed.dart';
 
 @freezed
-class DeviceSetting extends WidgetbookAddOnModel with _$DeviceSetting {
+class DeviceSetting extends WidgetbookAddOnModel<DeviceSetting>
+    with _$DeviceSetting {
   factory DeviceSetting({
     required List<Device> devices,
     required Device activeDevice,
@@ -34,5 +35,20 @@ class DeviceSetting extends WidgetbookAddOnModel with _$DeviceSetting {
       'orientation': orientation.name,
       'device': activeDevice.name,
     };
+  }
+
+  @override
+  DeviceSetting? fromQueryParameter(Map<String, String> queryParameters) {
+    return queryParameters.containsKey('orientation') &&
+            queryParameters.containsKey('device')
+        ? this.copyWith(
+            orientation: Orientation.values.byName(
+              queryParameters['orientation']!,
+            ),
+            activeDevice: devices.firstWhere(
+              (device) => device.name == queryParameters['device']!,
+            ),
+          )
+        : null;
   }
 }

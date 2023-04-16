@@ -4,7 +4,7 @@ import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_addon/widgetbook_addon.dart';
 
 @immutable
-class ThemeSetting<T> extends WidgetbookAddOnModel {
+class ThemeSetting<T> extends WidgetbookAddOnModel<ThemeSetting<T>> {
   ThemeSetting({
     required this.themes,
     required this.activeTheme,
@@ -42,6 +42,17 @@ class ThemeSetting<T> extends WidgetbookAddOnModel {
     return {
       'theme': activeTheme.name,
     };
+  }
+
+  @override
+  ThemeSetting<T>? fromQueryParameter(Map<String, String> queryParameters) {
+    return queryParameters.containsKey('theme')
+        ? this.copyWith(
+            activeTheme: themes.firstWhere(
+              (theme) => theme.name == queryParameters['theme']!,
+            ),
+          )
+        : null;
   }
 
   @override

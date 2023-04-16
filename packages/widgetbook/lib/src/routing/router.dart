@@ -4,22 +4,6 @@ import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook/src/routing/widgetbook_panel.dart';
 import 'package:widgetbook/src/widgetbook_page.dart';
 
-T? parseQueryParameters<T>({
-  required String name,
-  required Map<String, dynamic> queryParameters,
-  required Map<String, T> mappedData,
-}) {
-  final value = queryParameters[name] as String?;
-  T? selectedValue;
-
-  if (value != null) {
-    if (mappedData.containsKey(value)) {
-      selectedValue = mappedData[value];
-    }
-  }
-  return selectedValue;
-}
-
 extension GoRouterExtension on BuildContext {
   void goTo({
     required Map<String, String> queryParams,

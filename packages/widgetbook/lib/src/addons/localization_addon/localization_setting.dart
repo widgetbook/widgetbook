@@ -40,4 +40,15 @@ class LocalizationSetting extends WidgetbookAddOnModel
       'locale': activeLocale.toString(),
     };
   }
+
+  @override
+  fromQueryParameter(Map<String, String> queryParameters) {
+    return queryParameters.containsKey('locale')
+        ? this.copyWith(
+            activeLocale: locales.firstWhere(
+              (locale) => locale == queryParameters['locale']!,
+            ),
+          )
+        : null;
+  }
 }

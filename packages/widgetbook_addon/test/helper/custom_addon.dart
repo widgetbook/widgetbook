@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook_addon/widgetbook_addon.dart';
 
-class CustomAddOnSetting extends WidgetbookAddOnModel {
+class CustomAddOnSetting extends WidgetbookAddOnModel<CustomAddOnSetting> {
   const CustomAddOnSetting({
     required this.data,
   });
@@ -14,6 +14,13 @@ class CustomAddOnSetting extends WidgetbookAddOnModel {
       'data': data,
     };
   }
+
+  @override
+  CustomAddOnSetting? fromQueryParameter(Map<String, String> queryParameters) {
+    return queryParameters.containsKey('data')
+        ? CustomAddOnSetting(data: queryParameters['data']!)
+        : null;
+  }
 }
 
 class CustomAddOn extends WidgetbookAddOn<CustomAddOnSetting> {
@@ -22,19 +29,6 @@ class CustomAddOn extends WidgetbookAddOn<CustomAddOnSetting> {
   }) : super(
           name: 'Custom',
         );
-
-  @override
-  void updateQueryParameters(BuildContext context, CustomAddOnSetting value) {}
-
-  @override
-  CustomAddOnSetting settingFromQueryParameters({
-    required Map<String, String> queryParameters,
-    required CustomAddOnSetting setting,
-  }) {
-    return CustomAddOnSetting(
-      data: queryParameters['data'] ?? 'Unknown',
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
