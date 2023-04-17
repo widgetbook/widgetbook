@@ -3,8 +3,8 @@ import 'package:widgetbook_models/widgetbook_models.dart';
 
 import 'frame_builder.dart';
 
-class WidgetbookFrame extends FrameBuilder {
-  WidgetbookFrame({
+class WidgetbookFrameBuilder extends FrameBuilder {
+  WidgetbookFrameBuilder({
     required super.setting,
   }) : assert(
           setting.activeDevice != null,

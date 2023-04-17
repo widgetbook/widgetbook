@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/addons/device_addon/frames/no_frame.dart';
+import 'package:widgetbook/src/addons/device_addon/frames/no_frame_builder.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../../../helper/widget_test_helper.dart';

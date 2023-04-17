@@ -1,4 +1,4 @@
-export 'device_frame.dart';
+export 'device_frame_builder.dart';
 export 'frame_builder.dart';
-export 'no_frame.dart';
-export 'widgetbook_frame.dart';
+export 'no_frame_builder.dart';
+export 'widgetbook_frame_builder.dart';

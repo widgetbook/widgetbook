@@ -63,7 +63,7 @@ class DeviceSetting extends WidgetbookAddOnModel with _$DeviceSetting {
     }
 
     if (!hasFrame) {
-      return WidgetbookFrame(
+      return WidgetbookFrameBuilder(
         setting: this,
       );
     }

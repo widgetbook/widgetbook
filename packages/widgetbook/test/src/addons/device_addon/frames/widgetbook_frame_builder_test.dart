@@ -9,7 +9,7 @@ import '../../utils/extensions/widget_tester_extension.dart';
 void main() {
   const key = ValueKey('key');
   group(
-    '$WidgetbookFrame',
+    '$WidgetbookFrameBuilder',
     () {
       testWidgets(
         'overrides $MediaQuery',
@@ -21,7 +21,7 @@ void main() {
             devices: devices,
           );
 
-          final frame = WidgetbookFrame(
+          final frame = WidgetbookFrameBuilder(
             setting: DeviceSetting.firstAsSelected(
               devices: devices,
             ),
