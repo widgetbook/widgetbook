@@ -50,7 +50,7 @@ class DeviceSetting extends WidgetbookAddOnModel with _$DeviceSetting {
             orientation: Orientation.values.byName(
               queryParameters['orientation']!,
             ),
-            hasFrame: queryParameters['orientation'] == 'true',
+            hasFrame: queryParameters['frame'] == 'true',
           )
         : null;
   }
