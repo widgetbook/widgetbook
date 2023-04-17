@@ -17,37 +17,32 @@ class HotReload extends StatelessWidget {
       data: themeDataBlue,
       name: 'Blue',
     );
+
     final widgetbookTheme2 = WidgetbookTheme(
       data: themeDataYellow,
       name: 'Yellow',
     );
+
     final devices = [
       Apple.iPhone11,
       Apple.iPhone12,
       const Device.special(
         name: 'Test',
         resolution: Resolution(
-          nativeSize: DeviceSize(width: 400, height: 400),
           scaleFactor: 1,
+          nativeSize: DeviceSize(
+            width: 400,
+            height: 400,
+          ),
         ),
       ),
     ];
-    final deviceFrameBuilder = DefaultDeviceFrame(
-      setting: DeviceSetting.firstAsSelected(devices: devices),
-    );
-
-    final activeFrameBuilder = WidgetbookFrame(
-      setting: DeviceSetting.firstAsSelected(devices: devices),
-    );
 
     return Widgetbook(
         addons: [
-          FrameAddon(
-              setting: FrameSetting.firstAsSelected(frames: [
-            deviceFrameBuilder,
-            NoFrame(),
-            activeFrameBuilder,
-          ])),
+          DeviceAddon(
+            devices: devices,
+          ),
           CustomThemeAddon<AppThemeData>(
             setting: CustomThemeSetting.firstAsSelected(
               themes: [widgetbookTheme, widgetbookTheme2],
