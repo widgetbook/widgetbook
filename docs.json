@@ -21,6 +21,9 @@
             [
                 [
                     "Overview", "/index"
+                ],
+                 [
+                    "Terminology", "/terminology"
                 ]
             ]
         ],
@@ -41,9 +44,6 @@
         [
             "Getting Started", 
             [
-                [
-                    "0. Terminology", "/getting-started/terminology"
-                ],
                 [
                     "1. Install", "/getting-started/install"
                 ],
