@@ -15,7 +15,6 @@ class KnobsExample extends StatelessWidget {
       addons: [
         DeviceAddon(
           devices: [
-            null,
             Apple.iPhone11,
             Apple.iPhone12,
           ],

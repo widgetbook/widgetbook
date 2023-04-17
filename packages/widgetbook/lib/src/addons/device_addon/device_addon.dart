@@ -6,12 +6,13 @@ import 'device_setting.dart';
 
 class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
   DeviceAddon({
-    required List<Device?> devices,
+    required List<Device> devices,
   }) : super(
           name: 'Device',
           setting: DeviceSetting(
-            devices: devices,
-            activeDevice: devices.first,
+            // [null] represents a "none" device
+            devices: [null, ...devices],
+            activeDevice: null,
           ),
         );
 

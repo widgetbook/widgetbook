@@ -55,7 +55,7 @@ void main() {
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     DeviceAddon(
-                      devices: [null],
+                      devices: [],
                     )
                   ],
                 ),
@@ -116,7 +116,7 @@ void main() {
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     DeviceAddon(
-                      devices: [null],
+                      devices: [],
                     ),
                   ],
                 ),

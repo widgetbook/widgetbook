@@ -15,7 +15,7 @@ List<WidgetbookAddOn> configureMaterialAddons({
   required MaterialThemeSetting themeSetting,
   required TextScaleSetting textScaleSetting,
   required LocalizationSetting localizationSetting,
-  required List<Device?> devices,
+  required List<Device> devices,
 }) {
   return [
     MaterialThemeAddon(setting: themeSetting),
@@ -29,7 +29,7 @@ List<WidgetbookAddOn> configureCupertinoAddons({
   required CupertinoThemeSetting themeSetting,
   required TextScaleSetting textScaleSetting,
   required LocalizationSetting localizationSetting,
-  required List<Device?> devices,
+  required List<Device> devices,
 }) {
   return [
     CupertinoThemeAddon(setting: themeSetting),
