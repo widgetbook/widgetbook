@@ -1,29 +1,28 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/src/addons/device_addon/frames/device_frame.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-import '../../../../../helper/widget_test_helper.dart';
-import '../../../utils/extensions/widget_tester_extension.dart';
+import '../../../../helper/widget_test_helper.dart';
+import '../../utils/extensions/widget_tester_extension.dart';
 
 void main() {
   const key = ValueKey('key');
   group(
-    '$WidgetbookFrame',
+    '$DeviceFrame',
     () {
       testWidgets(
         'overrides $MediaQuery',
         (tester) async {
           const phone = Apple.iPhone13;
           final addon = DeviceAddon(
-            setting: DeviceSetting.firstAsSelected(
-              devices: [
-                phone,
-              ],
-            ),
+            devices: [
+              phone,
+            ],
           );
 
           final devices = [phone];
-          final frame = WidgetbookFrame(
+          final frame = DeviceFrameBuilder(
             setting: DeviceSetting.firstAsSelected(
               devices: devices,
             ),
@@ -38,7 +37,7 @@ void main() {
                   },
                   Builder(
                     builder: (context) {
-                      return frame.builder(
+                      return frame.build(
                         context,
                         const Text(
                           'Text',

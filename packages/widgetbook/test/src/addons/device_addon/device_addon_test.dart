@@ -2,61 +2,55 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-import '../../../utils/addon_test_helper.dart';
+import '../utils/addon_test_helper.dart';
 
 void main() {
   group(
     '$DeviceAddon',
     () {
-      final setting = DeviceSetting(
-        activeDevice: Apple.iPhone13,
-        devices: [
-          Apple.iPhone12,
-          Apple.iPhone13,
-          Apple.iPhone13Mini,
-        ],
+      final devices = [
+        Apple.iPhone12,
+        Apple.iPhone13,
+        Apple.iPhone13Mini,
+      ];
+
+      final setting = DeviceSetting.firstAsSelected(
+        devices: devices,
       );
 
-      late DeviceAddon addon;
+      final addon = DeviceAddon(
+        devices: devices,
+      );
 
-      setUp(() {
-        addon = DeviceAddon(
-          setting: setting,
+      group('can access', () {
+        testWidgets(
+          '$Device via the context',
+          (WidgetTester tester) async {
+            await testAddon(
+              tester: tester,
+              addon: addon,
+              expect: (context) => expect(
+                context.device,
+                equals(devices.first),
+              ),
+            );
+          },
+        );
+
+        testWidgets(
+          '$Orientation via the context',
+          (WidgetTester tester) async {
+            await testAddon(
+              tester: tester,
+              addon: addon,
+              expect: (context) => expect(
+                context.orientation,
+                equals(Orientation.portrait),
+              ),
+            );
+          },
         );
       });
-
-      group(
-        'can access',
-        () {
-          testWidgets(
-            '$Device via the context',
-            (WidgetTester tester) async {
-              await testAddon(
-                tester: tester,
-                addon: addon,
-                expect: (context) => expect(
-                  context.device,
-                  equals(Apple.iPhone13),
-                ),
-              );
-            },
-          );
-
-          testWidgets(
-            '$Orientation via the context',
-            (WidgetTester tester) async {
-              await testAddon(
-                tester: tester,
-                addon: addon,
-                expect: (context) => expect(
-                  context.orientation,
-                  equals(Orientation.portrait),
-                ),
-              );
-            },
-          );
-        },
-      );
 
       group('can activate another', () {
         testWidgets(
@@ -85,7 +79,9 @@ void main() {
               addon: addon,
               act: (context) async => addon.onChanged(
                 context,
-                setting.copyWith(orientation: Orientation.landscape),
+                setting.copyWith(
+                  orientation: Orientation.landscape,
+                ),
               ),
               expect: (context) => expect(
                 context.orientation,
@@ -107,7 +103,7 @@ void main() {
                 addon: addon,
                 act: (context) async {
                   final dropdownFinder = find.byType(
-                    DropdownMenu<Device>,
+                    DropdownMenu<Device?>,
                   );
                   await tester.tap(dropdownFinder);
                   await tester.pumpAndSettle();

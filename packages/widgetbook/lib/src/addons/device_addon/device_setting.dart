@@ -16,6 +16,16 @@ class DeviceSetting extends WidgetbookAddOnModel with _$DeviceSetting {
     @Default(true) bool hasFrame,
   }) = _DeviceSetting;
 
+  /// Sets the first [Device] within [devices] as the [activeDevice] on startup
+  factory DeviceSetting.firstAsSelected({
+    required List<Device?> devices,
+  }) {
+    return DeviceSetting(
+      devices: devices,
+      activeDevice: devices.first,
+    );
+  }
+
   DeviceSetting._();
 
   @override

@@ -54,16 +54,8 @@ void main() {
                 () => Widgetbook<ThemeData>(
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
-                    FrameAddon(
-                      setting: FrameSetting.firstAsSelected(
-                        frames: [
-                          DefaultDeviceFrame(
-                            setting: DeviceSetting.firstAsSelected(
-                              devices: [],
-                            ),
-                          ),
-                        ],
-                      ),
+                    DeviceAddon(
+                      devices: [null],
                     )
                   ],
                 ),
@@ -123,10 +115,8 @@ void main() {
                 () => Widgetbook<ThemeData>(
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
-                    FrameAddon(
-                      setting: FrameSetting.firstAsSelected(
-                        frames: [],
-                      ),
+                    DeviceAddon(
+                      devices: [null],
                     ),
                   ],
                 ),
