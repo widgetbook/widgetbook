@@ -1,28 +1,26 @@
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/code_generators/instances/device_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/instances.dart';
 import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
 import 'package:widgetbook_generator/code_generators/properties/property.dart';
-import 'package:widgetbook_models/widgetbook_models.dart';
 
-class DeviceFrameSettingInstance extends Instance {
-  DeviceFrameSettingInstance({
+class DeviceAddonInstance extends AddOnInstance {
+  DeviceAddonInstance({
     required List<Device> devices,
   }) : super(
-          name: 'DeviceSetting',
+          name: 'DeviceAddon',
           properties: [
             Property(
               key: 'devices',
               instance: ListInstance(
                 instances: devices
                     .map(
-                      (e) => DeviceInstance(device: e),
+                      (device) => DeviceInstance(
+                        device: device,
+                      ),
                     )
                     .toList(),
               ),
-            ),
-            Property(
-              key: 'activeDevice',
-              instance: DeviceInstance(device: devices.first),
             ),
           ],
         );
