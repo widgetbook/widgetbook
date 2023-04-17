@@ -1,11 +1,12 @@
 {
-    "mdx-preview.preview.useVscodeMarkdownStyles": false,
-    "conventionalCommits.scopes": [
-        "widgetbook",
-        "cli",
-        "core",
-        "annotation",
-        "generator",
-        "examples"
-    ]
+  "mdx-preview.preview.useVscodeMarkdownStyles": false,
+  "conventionalCommits.scopes": [
+    "widgetbook",
+    "cli",
+    "core",
+    "annotation",
+    "generator",
+    "examples"
+  ],
+  "cSpell.words": ["Widgetbook"]
 }
