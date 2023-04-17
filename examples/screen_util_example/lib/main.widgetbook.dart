@@ -6,12 +6,13 @@
 
 import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:screen_util_example/image_page.dart';
 import 'package:screen_util_example/main.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 void main() {
-  runApp(const HotReload());
+  runApp(HotReload());
 }
 
 class HotReload extends StatelessWidget {
@@ -21,69 +22,20 @@ class HotReload extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook.material(
       addons: [
-        FrameAddon(
-          setting: FrameSetting(
-            frames: [
-              NoFrame(),
-              DefaultDeviceFrame(
-                setting: DeviceSetting(
-                  devices: [
-                    const Device(
-                      name: 'iPhone 13',
-                      resolution: Resolution(
-                        nativeSize: DeviceSize(
-                          height: 2532.0,
-                          width: 1170.0,
-                        ),
-                        scaleFactor: 3.0,
-                      ),
-                      type: DeviceType.mobile,
-                    ),
-                  ],
-                  activeDevice: const Device(
-                    name: 'iPhone 13',
-                    resolution: Resolution(
-                      nativeSize: DeviceSize(
-                        height: 2532.0,
-                        width: 1170.0,
-                      ),
-                      scaleFactor: 3.0,
-                    ),
-                    type: DeviceType.mobile,
-                  ),
+        DeviceAddon(
+          devices: [
+            Device(
+              name: 'iPhone 13',
+              resolution: Resolution(
+                nativeSize: DeviceSize(
+                  height: 2532.0,
+                  width: 1170.0,
                 ),
+                scaleFactor: 3.0,
               ),
-              WidgetbookFrame(
-                setting: DeviceSetting(
-                  devices: [
-                    const Device(
-                      name: 'iPhone 13',
-                      resolution: Resolution(
-                        nativeSize: DeviceSize(
-                          height: 2532.0,
-                          width: 1170.0,
-                        ),
-                        scaleFactor: 3.0,
-                      ),
-                      type: DeviceType.mobile,
-                    ),
-                  ],
-                  activeDevice: const Device(
-                    name: 'iPhone 13',
-                    resolution: Resolution(
-                      nativeSize: DeviceSize(
-                        height: 2532.0,
-                        width: 1170.0,
-                      ),
-                      scaleFactor: 3.0,
-                    ),
-                    type: DeviceType.mobile,
-                  ),
-                ),
-              ),
-            ],
-            activeFrame: NoFrame(),
-          ),
+              type: DeviceType.mobile,
+            ),
+          ],
         ),
       ],
       directories: [
