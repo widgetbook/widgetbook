@@ -7,16 +7,17 @@ import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
 class SettingsPanel extends StatelessWidget {
   const SettingsPanel({
-    required this.activePanels,
+    required this.panels,
     super.key,
   });
 
-  final Set<WidgetbookPanel> activePanels;
+  final Set<WidgetbookPanel> panels;
 
   @override
   Widget build(BuildContext context) {
     final addons = context.watch<AddOnProvider>().value;
     final knobs = context.watch<KnobsNotifier>().all();
+
     return Card(
       child: Column(
         children: [
@@ -24,13 +25,13 @@ class SettingsPanel extends StatelessWidget {
             child: SingleChildScrollView(
               child: core.SettingsPanel(
                 settings: [
-                  if (activePanels.contains(WidgetbookPanel.addons)) ...{
+                  if (panels.contains(WidgetbookPanel.addons)) ...{
                     core.SettingsPanelData(
                       name: 'Properties',
                       settings: addons.map((e) => e.build(context)).toList(),
                     ),
                   },
-                  if (activePanels.contains(WidgetbookPanel.knobs)) ...{
+                  if (panels.contains(WidgetbookPanel.knobs)) ...{
                     core.SettingsPanelData(
                       name: 'Knobs',
                       settings: knobs.map((e) => e.build(context)).toList(),
