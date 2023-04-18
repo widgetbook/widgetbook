@@ -18,7 +18,7 @@ class _WorkbenchState extends State<Workbench> {
   @override
   Widget build(BuildContext context) {
     final appBuilder = context.watch<BuilderProvider>().value.appBuilder;
-    final state = context.watch<UseCasesProvider>().state;
+    final state = context.watch<UseCasesProvider>().value;
     final useCaseBuilder = state.selectedUseCase?.builder;
     return DecoratedBox(
       decoration: BoxDecoration(

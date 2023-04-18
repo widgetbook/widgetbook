@@ -76,7 +76,7 @@ void main() {
       )..loadFromDirectories(directories);
 
       expect(
-        useCaseProvider.state.useCases,
+        useCaseProvider.value.useCases,
         equals(expectedUseCases),
       );
     });
@@ -95,7 +95,7 @@ void main() {
         )..selectUseCaseByPath('component/use-case-1');
 
         expect(
-          useCasesProvider.state.selectedUseCase,
+          useCasesProvider.value.selectedUseCase,
           equals(useCase1),
         );
       },
