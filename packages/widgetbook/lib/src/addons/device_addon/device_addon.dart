@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
-import 'device_setting.dart';
-
 class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
   DeviceAddon({
     required List<Device> devices,
@@ -18,13 +16,11 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SubSetting(
-          name: '$Device',
-          child: DropdownSetting<Device?>(
+    return Setting(
+      name: 'Device',
+      child: Row(
+        children: [
+          DropdownSetting<Device?>(
             options: value.devices,
             optionValueBuilder: (device) => device?.name ?? 'None',
             initialSelection: value.activeDevice,
@@ -37,46 +33,46 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
               );
             },
           ),
-        ),
-        SubSetting(
-          name: '$Orientation',
-          child: DropdownSetting<Orientation>(
-            options: const [
-              Orientation.portrait,
-              Orientation.landscape,
-            ],
-            optionValueBuilder: (orientation) => orientation.name,
-            initialSelection: value.orientation,
-            onSelected: (orientation) {
-              onChanged(
-                context,
-                value.copyWith(
-                  orientation: orientation,
-                ),
-              );
-            },
-          ),
-        ),
-        SubSetting(
-          name: 'Frame',
-          child: DropdownSetting<bool>(
-            options: const [
-              true,
-              false,
-            ],
-            optionValueBuilder: (hasFrame) => hasFrame ? 'Device' : 'None',
-            initialSelection: value.hasFrame,
-            onSelected: (hasFrame) {
-              onChanged(
-                context,
-                value.copyWith(
-                  hasFrame: hasFrame,
-                ),
-              );
-            },
-          ),
-        ),
-      ],
+          if (value.activeDevice != null) ...{
+            IconButton(
+              tooltip: 'Orientation',
+              onPressed: () {
+                onChanged(
+                  context,
+                  value.copyWith(
+                    orientation: value.orientation == Orientation.portrait
+                        ? Orientation.landscape
+                        : Orientation.portrait,
+                  ),
+                );
+              },
+              icon: Icon(
+                value.orientation == Orientation.portrait
+                    ? Icons.screen_lock_portrait
+                    : Icons.screen_lock_landscape,
+                color: Theme.of(context).iconTheme.color,
+              ),
+            ),
+            IconButton(
+              tooltip: 'Frame',
+              onPressed: () {
+                onChanged(
+                  context,
+                  value.copyWith(
+                    hasFrame: !value.hasFrame,
+                  ),
+                );
+              },
+              icon: Icon(
+                Icons.smartphone,
+                color: value.hasFrame
+                    ? Theme.of(context).iconTheme.color
+                    : Theme.of(context).disabledColor,
+              ),
+            ),
+          }
+        ],
+      ),
     );
   }
 }
