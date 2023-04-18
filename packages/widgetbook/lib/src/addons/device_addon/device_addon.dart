@@ -12,7 +12,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
           'Please specify at least one Device',
         ),
         assert(
-          devices.contains(initialDevice),
+          initialDevice == null || devices.contains(initialDevice),
           '[initialDevice] must be in [devices]',
         ),
         super(
