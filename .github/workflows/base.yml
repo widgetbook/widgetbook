@@ -1,0 +1,43 @@
+name: Package Workflow
+
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        required: true
+        type: string
+
+jobs:
+  flutter:
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install Melos
+        run: flutter pub global activate melos
+
+      - name: Install Dependencies
+        run: melos bootstrap
+
+      - name: Generate Files
+        run: melos generate
+
+      - name: Check Formatting
+        run: dart format --set-exit-if-changed .
+
+      - name: Analyze
+        run: dart analyze .
+
+      - name: Run Tests
+        run: flutter test --coverage
