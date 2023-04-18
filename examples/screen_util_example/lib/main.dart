@@ -88,7 +88,7 @@ Widget appBuilder(BuildContext context, Widget child) {
   // [DeviceAddon] is active
   return frameBuilder == null
       ? builder
-      : frameBuilder(
+      : frameBuilder.build(
           context,
           builder,
         );

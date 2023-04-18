@@ -14,78 +14,106 @@ void main() {
         Apple.iPhone13Mini,
       ];
 
-      final setting = DeviceSetting.firstAsSelected(
-        devices: devices,
-      );
-
       final addon = DeviceAddon(
         devices: devices,
+        initialDevice: devices.first,
       );
 
-      group('can access', () {
+      final setting = addon.value;
+
+      group('context has', () {
         testWidgets(
-          '$Device via the context',
+          'device',
           (WidgetTester tester) async {
             await testAddon(
               tester: tester,
               addon: addon,
               expect: (context) => expect(
                 context.device,
-                equals(devices.first),
+                equals(addon.value.activeDevice),
               ),
             );
           },
         );
 
         testWidgets(
-          '$Orientation via the context',
+          'orientation',
           (WidgetTester tester) async {
             await testAddon(
               tester: tester,
               addon: addon,
               expect: (context) => expect(
                 context.orientation,
-                equals(Orientation.portrait),
+                equals(addon.value.orientation),
+              ),
+            );
+          },
+        );
+
+        testWidgets(
+          'frameBuilder',
+          (WidgetTester tester) async {
+            await testAddon(
+              tester: tester,
+              addon: addon,
+              expect: (context) => expect(
+                context.frameBuilder.runtimeType,
+                equals(addon.value.frameBuilder.runtimeType),
               ),
             );
           },
         );
       });
 
-      group('can activate another', () {
+      group('Device can be activated via', () {
         testWidgets(
-          '$Device',
+          'onChanged',
           (WidgetTester tester) async {
-            await testAddon(
-              tester: tester,
-              addon: addon,
-              act: (context) async => addon.onChanged(
-                context,
-                setting.copyWith(activeDevice: Apple.iPhone13Mini),
-              ),
-              expect: (context) => expect(
-                context.device,
-                equals(Apple.iPhone13Mini),
-              ),
-            );
-          },
-        );
+            final device = devices.first;
 
-        testWidgets(
-          '$Orientation',
-          (WidgetTester tester) async {
             await testAddon(
               tester: tester,
               addon: addon,
               act: (context) async => addon.onChanged(
                 context,
                 setting.copyWith(
-                  orientation: Orientation.landscape,
+                  activeDevice: device,
                 ),
               ),
               expect: (context) => expect(
-                context.orientation,
-                equals(Orientation.landscape),
+                context.device,
+                equals(device),
+              ),
+            );
+          },
+        );
+
+        testWidgets(
+          'widget',
+          (WidgetTester tester) async {
+            final device = devices.last;
+
+            await testAddon(
+              tester: tester,
+              addon: addon,
+              act: (context) async {
+                final dropdownFinder = find.byType(
+                  DropdownMenu<Device?>,
+                );
+
+                await tester.tap(dropdownFinder);
+                await tester.pumpAndSettle();
+
+                final textFinder = find.byWidgetPredicate(
+                  (widget) => widget is Text && widget.data == device.name,
+                );
+
+                await tester.tap(textFinder.last);
+                await tester.pumpAndSettle();
+              },
+              expect: (context) => expect(
+                context.device,
+                equals(device),
               ),
             );
           },
@@ -93,57 +121,86 @@ void main() {
       });
 
       group(
-        'can activate another',
+        '$Orientation can be activated via',
         () {
           testWidgets(
-            '$Device via Widget',
+            'onChanged',
             (WidgetTester tester) async {
               await testAddon(
                 tester: tester,
                 addon: addon,
-                act: (context) async {
-                  final dropdownFinder = find.byType(
-                    DropdownMenu<Device?>,
-                  );
-                  await tester.tap(dropdownFinder);
-                  await tester.pumpAndSettle();
-
-                  final textFinder = find.byWidgetPredicate(
-                    (widget) => widget is Text && widget.data == 'iPhone 12',
-                  );
-                  await tester.tap(textFinder.last);
-                  await tester.pumpAndSettle();
-                },
+                act: (context) async => addon.onChanged(
+                  context,
+                  setting.copyWith(
+                    orientation: Orientation.landscape,
+                  ),
+                ),
                 expect: (context) => expect(
-                  context.device,
-                  equals(Apple.iPhone12),
+                  context.orientation,
+                  equals(Orientation.landscape),
                 ),
               );
             },
           );
 
           testWidgets(
-            '$Orientation via Widget',
+            'widget',
             (WidgetTester tester) async {
               await testAddon(
                 tester: tester,
                 addon: addon,
                 act: (context) async {
-                  final dropdownFinder = find.byType(
-                    DropdownMenu<Orientation>,
-                  );
-                  await tester.tap(dropdownFinder);
-                  await tester.pumpAndSettle();
-
-                  final textFinder = find.byWidgetPredicate(
-                    (widget) => widget is Text && widget.data == 'landscape',
-                  );
-                  await tester.tap(textFinder.last);
+                  final finder = find.byTooltip('Orientation');
+                  await tester.tap(finder);
                   await tester.pumpAndSettle();
                 },
                 expect: (context) => expect(
                   context.orientation,
                   equals(Orientation.landscape),
+                ),
+              );
+            },
+          );
+        },
+      );
+
+      group(
+        'Frame can be activated via',
+        () {
+          testWidgets(
+            'onChanged',
+            (WidgetTester tester) async {
+              await testAddon(
+                tester: tester,
+                addon: addon,
+                act: (context) async => addon.onChanged(
+                  context,
+                  setting.copyWith(
+                    hasFrame: true,
+                  ),
+                ),
+                expect: (context) => expect(
+                  addon.value.hasFrame,
+                  equals(true),
+                ),
+              );
+            },
+          );
+
+          testWidgets(
+            'widget',
+            (WidgetTester tester) async {
+              await testAddon(
+                tester: tester,
+                addon: addon,
+                act: (context) async {
+                  final finder = find.byTooltip('Frame');
+                  await tester.tap(finder);
+                  await tester.pumpAndSettle();
+                },
+                expect: (context) => expect(
+                  addon.value.hasFrame,
+                  equals(false),
                 ),
               );
             },

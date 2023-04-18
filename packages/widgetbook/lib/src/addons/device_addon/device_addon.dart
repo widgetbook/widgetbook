@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/src/addons/device_addon/frames/frames.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
   DeviceAddon({
     required List<Device> devices,
-  }) : super(
+    Device? initialDevice,
+  })  : assert(
+          devices.isNotEmpty,
+          'Please specify at least one Device',
+        ),
+        assert(
+          devices.contains(initialDevice),
+          '[initialDevice] must be in [devices]',
+        ),
+        super(
           name: 'Device',
           setting: DeviceSetting(
             // [null] represents a "none" device
             devices: [null, ...devices],
-            activeDevice: null,
+            activeDevice: initialDevice,
           ),
         );
 
@@ -82,7 +92,7 @@ extension DeviceExtension on BuildContext {
 
   Orientation get orientation => getAddonValue<DeviceSetting>()!.orientation;
 
-  Widget Function(BuildContext, Widget)? get frameBuilder {
-    return getAddonValue<DeviceSetting>()!.frameBuilder.build;
+  FrameBuilder? get frameBuilder {
+    return getAddonValue<DeviceSetting>()?.frameBuilder;
   }
 }

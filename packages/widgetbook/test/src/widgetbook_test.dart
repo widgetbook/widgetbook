@@ -109,7 +109,7 @@ void main() {
           );
 
           test(
-            'frames is empty',
+            'devices is empty',
             () {
               expect(
                 () => Widgetbook<ThemeData>(
@@ -121,7 +121,7 @@ void main() {
                   ],
                 ),
                 expectAssertionErrorWithMessage(
-                  message: 'Please specify at least one Frame',
+                  message: 'Please specify at least one Device',
                 ),
               );
             },

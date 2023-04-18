@@ -31,7 +31,7 @@ AppBuilderFunction get materialAppBuilder =>
       final frameBuilder = context.frameBuilder;
       return frameBuilder == null
           ? builder
-          : frameBuilder(
+          : frameBuilder.build(
               context,
               builder,
             );
@@ -65,7 +65,7 @@ AppBuilderFunction get cupertinoAppBuilder =>
       final frameBuilder = context.frameBuilder;
       return frameBuilder == null
           ? builder
-          : frameBuilder(
+          : frameBuilder.build(
               context,
               builder,
             );

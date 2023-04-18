@@ -25,7 +25,7 @@ Future<void> testAddon({
               // It's also required to make some tests work
               // (not totally clear why).
               body: SizedBox(
-                width: 400,
+                width: 500,
                 child: Builder(
                   builder: (context) {
                     return addon.buildProvider(

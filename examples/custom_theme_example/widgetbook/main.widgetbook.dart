@@ -79,7 +79,7 @@ class HotReload extends StatelessWidget {
           final theme = context.theme<AppThemeData>();
           return AppTheme(
             data: theme!,
-            child: frameBuilder!(context, child),
+            child: frameBuilder!.build(context, child),
           );
         });
   }
