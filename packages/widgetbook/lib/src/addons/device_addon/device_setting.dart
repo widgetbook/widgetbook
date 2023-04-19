@@ -7,7 +7,8 @@ import 'package:widgetbook_addon/widgetbook_addon.dart';
 part 'device_setting.freezed.dart';
 
 @freezed
-class DeviceSetting extends WidgetbookAddOnModel with _$DeviceSetting {
+class DeviceSetting extends WidgetbookAddOnModel<DeviceSetting>
+    with _$DeviceSetting {
   @Assert('devices.isNotEmpty', 'devices cannot be empty')
   factory DeviceSetting({
     required List<Device?> devices,
@@ -38,7 +39,7 @@ class DeviceSetting extends WidgetbookAddOnModel with _$DeviceSetting {
   }
 
   @override
-  fromQueryParameter(Map<String, String> queryParameters) {
+  DeviceSetting? fromQueryParameter(Map<String, String> queryParameters) {
     return queryParameters.containsKey('device') &&
             queryParameters.containsKey('orientation') &&
             queryParameters.containsKey('frame')

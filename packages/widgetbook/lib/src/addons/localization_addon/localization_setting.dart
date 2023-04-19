@@ -5,7 +5,7 @@ import 'package:widgetbook_addon/widgetbook_addon.dart';
 part 'localization_setting.freezed.dart';
 
 @freezed
-class LocalizationSetting extends WidgetbookAddOnModel
+class LocalizationSetting extends WidgetbookAddOnModel<LocalizationSetting>
     with _$LocalizationSetting {
   @Assert('locales.isNotEmpty', 'locales cannot be empty')
   factory LocalizationSetting({
@@ -42,7 +42,7 @@ class LocalizationSetting extends WidgetbookAddOnModel
   }
 
   @override
-  fromQueryParameter(Map<String, String> queryParameters) {
+  LocalizationSetting? fromQueryParameter(Map<String, String> queryParameters) {
     return queryParameters.containsKey('locale')
         ? this.copyWith(
             activeLocale: locales.firstWhere(
