@@ -12,12 +12,12 @@ on:
         default: ""
 
 jobs:
-  build:
+  doctor:
+    runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: ${{ inputs.working_directory }}
-
-    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
