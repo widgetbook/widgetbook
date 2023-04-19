@@ -10,13 +10,7 @@ on:
       - main
 
 jobs:
-  build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+  _:
+    uses: ./.github/workflows/_package.yml
     with:
-      flutter_channel: stable
       working_directory: packages/widgetbook_cli
-      analyze_directories: bin test
-      setup: |
-        dart pub global activate melos
-        melos bootstrap
-        melos run generate

@@ -10,17 +10,11 @@ on:
       - main
 
 jobs:
-  build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+  _:
+    uses: ./.github/workflows/_package.yml
     with:
-      flutter_channel: stable
       working_directory: packages/widgetbook_git
-      min_coverage: 75
-      setup: |
+      post_checkout: |
         # Setup dummy Git user
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
-
-        # Melos Bootstrap
-        dart pub global activate melos
-        melos bootstrap --scope='widgetbook_git'

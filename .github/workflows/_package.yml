@@ -1,0 +1,51 @@
+name: Package Workflow
+
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        required: true
+        type: string
+      post_checkout:
+        required: false
+        type: string
+        default: ""
+
+jobs:
+  doctor:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Run Post Checkout Script
+        if: "${{ inputs.post_checkout != '' }}"
+        run: ${{ inputs.post_checkout }}
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install Melos
+        run: flutter pub global activate melos
+
+      - name: Install Dependencies
+        run: melos bootstrap
+
+      - name: Generate Files
+        run: melos generate
+
+      - name: Check Formatting
+        run: dart format --set-exit-if-changed .
+
+      - name: Analyze
+        run: dart analyze .
+
+      - name: Run Tests
+        run: flutter test --coverage
