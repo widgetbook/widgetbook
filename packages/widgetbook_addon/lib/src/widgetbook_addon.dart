@@ -37,11 +37,13 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
     notifier.value = value;
   }
 
-  Widget buildProvider(
+  WidgetbookAddonScope<T> buildWithScope(
     Map<String, String> queryParameters,
     Widget child,
   ) {
-    notifier.value = setting.fromQueryParameter(queryParameters) ?? setting;
+    onChanged(
+      setting.fromQueryParameter(queryParameters) ?? setting,
+    );
 
     return WidgetbookAddonScope<T>(
       key: ValueKey(notifier.value),
