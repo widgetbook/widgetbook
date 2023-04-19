@@ -54,16 +54,8 @@ void main() {
                 () => Widgetbook<ThemeData>(
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
-                    FrameAddon(
-                      setting: FrameSetting.firstAsSelected(
-                        frames: [
-                          DefaultDeviceFrame(
-                            setting: DeviceSetting.firstAsSelected(
-                              devices: [],
-                            ),
-                          ),
-                        ],
-                      ),
+                    DeviceAddon(
+                      devices: [],
                     )
                   ],
                 ),
@@ -117,21 +109,19 @@ void main() {
           );
 
           test(
-            'frames is empty',
+            'devices is empty',
             () {
               expect(
                 () => Widgetbook<ThemeData>(
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
-                    FrameAddon(
-                      setting: FrameSetting.firstAsSelected(
-                        frames: [],
-                      ),
+                    DeviceAddon(
+                      devices: [],
                     ),
                   ],
                 ),
                 expectAssertionErrorWithMessage(
-                  message: 'Please specify at least one Frame',
+                  message: 'Please specify at least one Device',
                 ),
               );
             },

@@ -79,7 +79,7 @@ String generateWidgetbook({
   }
 
   if (devices.isNotEmpty) {
-    addons.add(FrameAddonInstance(devices: devices));
+    addons.add(DeviceAddonInstance(devices: devices));
   }
 
   final widgetbookInstanceCode = WidgetbookInstance(

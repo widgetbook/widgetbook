@@ -11,28 +11,13 @@ class KnobsExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final devices = [
-      Apple.iPhone11,
-      Apple.iPhone12,
-    ];
-    final deviceFrameBuilder = DefaultDeviceFrame(
-      setting: DeviceSetting.firstAsSelected(devices: devices),
-    );
-
-    final activeFrameBuilder = WidgetbookFrame(
-      setting: DeviceSetting.firstAsSelected(devices: devices),
-    );
-
     return Widgetbook.material(
       addons: [
-        FrameAddon(
-          setting: FrameSetting.firstAsSelected(
-            frames: [
-              deviceFrameBuilder,
-              NoFrame(),
-              activeFrameBuilder,
-            ],
-          ),
+        DeviceAddon(
+          devices: [
+            Apple.iPhone11,
+            Apple.iPhone12,
+          ],
         ),
         TextScaleAddon(
           setting: TextScaleSetting.firstAsSelected(
@@ -52,7 +37,7 @@ class KnobsExample extends StatelessWidget {
         final theme = context.theme<ThemeData>();
         return Theme(
           data: theme!,
-          child: frameBuilder!(context, child),
+          child: frameBuilder!.build(context, child),
         );
       },
       directories: [

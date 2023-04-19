@@ -71,113 +71,42 @@ class HotReload extends StatelessWidget {
             activeTextScale: 1.0,
           ),
         ),
-        FrameAddon(
-          setting: FrameSetting(
-            frames: [
-              NoFrame(),
-              DefaultDeviceFrame(
-                setting: DeviceSetting(
-                  devices: [
-                    Device(
-                      name: 'iPhone 11',
-                      resolution: Resolution(
-                        nativeSize: DeviceSize(
-                          height: 1792.0,
-                          width: 828.0,
-                        ),
-                        scaleFactor: 2.0,
-                      ),
-                      type: DeviceType.mobile,
-                    ),
-                    Device(
-                      name: 'iPhone 12',
-                      resolution: Resolution(
-                        nativeSize: DeviceSize(
-                          height: 2532.0,
-                          width: 1170.0,
-                        ),
-                        scaleFactor: 3.0,
-                      ),
-                      type: DeviceType.mobile,
-                    ),
-                    Device(
-                      name: 'iPhone 13',
-                      resolution: Resolution(
-                        nativeSize: DeviceSize(
-                          height: 2532.0,
-                          width: 1170.0,
-                        ),
-                        scaleFactor: 3.0,
-                      ),
-                      type: DeviceType.mobile,
-                    ),
-                  ],
-                  activeDevice: Device(
-                    name: 'iPhone 11',
-                    resolution: Resolution(
-                      nativeSize: DeviceSize(
-                        height: 1792.0,
-                        width: 828.0,
-                      ),
-                      scaleFactor: 2.0,
-                    ),
-                    type: DeviceType.mobile,
-                  ),
+        DeviceAddon(
+          devices: [
+            Device(
+              name: 'iPhone 11',
+              resolution: Resolution(
+                nativeSize: DeviceSize(
+                  height: 1792.0,
+                  width: 828.0,
                 ),
+                scaleFactor: 2.0,
               ),
-              WidgetbookFrame(
-                setting: DeviceSetting(
-                  devices: [
-                    Device(
-                      name: 'iPhone 11',
-                      resolution: Resolution(
-                        nativeSize: DeviceSize(
-                          height: 1792.0,
-                          width: 828.0,
-                        ),
-                        scaleFactor: 2.0,
-                      ),
-                      type: DeviceType.mobile,
-                    ),
-                    Device(
-                      name: 'iPhone 12',
-                      resolution: Resolution(
-                        nativeSize: DeviceSize(
-                          height: 2532.0,
-                          width: 1170.0,
-                        ),
-                        scaleFactor: 3.0,
-                      ),
-                      type: DeviceType.mobile,
-                    ),
-                    Device(
-                      name: 'iPhone 13',
-                      resolution: Resolution(
-                        nativeSize: DeviceSize(
-                          height: 2532.0,
-                          width: 1170.0,
-                        ),
-                        scaleFactor: 3.0,
-                      ),
-                      type: DeviceType.mobile,
-                    ),
-                  ],
-                  activeDevice: Device(
-                    name: 'iPhone 11',
-                    resolution: Resolution(
-                      nativeSize: DeviceSize(
-                        height: 1792.0,
-                        width: 828.0,
-                      ),
-                      scaleFactor: 2.0,
-                    ),
-                    type: DeviceType.mobile,
-                  ),
+              type: DeviceType.mobile,
+            ),
+            Device(
+              name: 'iPhone 12',
+              resolution: Resolution(
+                nativeSize: DeviceSize(
+                  height: 2532.0,
+                  width: 1170.0,
                 ),
+                scaleFactor: 3.0,
               ),
-            ],
-            activeFrame: NoFrame(),
-          ),
+              type: DeviceType.mobile,
+            ),
+            Device(
+              name: 'iPhone 13',
+              resolution: Resolution(
+                nativeSize: DeviceSize(
+                  height: 2532.0,
+                  width: 1170.0,
+                ),
+                scaleFactor: 3.0,
+              ),
+              type: DeviceType.mobile,
+            ),
+          ],
         ),
       ],
       directories: [

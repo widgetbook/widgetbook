@@ -46,14 +46,14 @@ Widget exampleBuilder(BuildContext context) {
 @anno.WidgetbookAppBuilder()
 Widget appBuilder(BuildContext context, Widget child) {
   // This builder exposes a [BuildContext] that contains the [MediaQuery]
-  // information of the [FrameAddon]
+  // information of the [DeviceAddon]
   final frameBuilder = context.frameBuilder;
   final theme = context.theme<ThemeData>();
 
   final builder = Builder(
     builder: (context) {
       return MaterialApp(
-        // Enable this property so the [MediaQuery] of the [FrameAddon] is used.
+        // Enable this property so the [MediaQuery] of [DeviceAddon] is used.
         useInheritedMediaQuery: true,
         theme: theme,
         locale: context.localization?.activeLocale,
@@ -66,7 +66,7 @@ Widget appBuilder(BuildContext context, Widget child) {
         home: ScreenUtilInit(
           minTextAdapt: true,
           designSize: const Size(375, 812),
-          // Enable this property so the [MediaQuery] of the [FrameAddon] is used.
+          // Enable this property so the [MediaQuery] of [DeviceAddon] is used.
           useInheritedMediaQuery: true,
           builder: (context, child) {
             return Scaffold(
@@ -84,11 +84,11 @@ Widget appBuilder(BuildContext context, Widget child) {
     },
   );
 
-  // Note, that the ScreenUtilInit [Widget] only works properly iff the
-  // [FrameAddon] is active!
+  // Note, that the ScreenUtilInit [Widget] only works properly if the
+  // [DeviceAddon] is active
   return frameBuilder == null
       ? builder
-      : frameBuilder(
+      : frameBuilder.build(
           context,
           builder,
         );
@@ -103,11 +103,11 @@ void main() {
 
 /// [App] is just an abstract representation of what you App might look like.
 ///
-/// Note: The [WidgetbokApp] annotation can used on ANY code element.
+/// Note: The [WidgetbookApp] annotation can used on ANY code element.
 /// For more information, see the documentation
 @anno.WidgetbookApp.material(
-  // Adding devices is mandatory as it enables the FrameAddon that is required
-  // to properly set [MediaQuery] parameters
+  // Adding devices is mandatory as it enables the [DeviceAddon] that is
+  // required to properly set [MediaQuery] parameters
   devices: [
     Apple.iPhone13,
   ],
