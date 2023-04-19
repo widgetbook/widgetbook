@@ -19,7 +19,7 @@ class FramelessBuilder extends FrameBuilder {
             ),
           ),
           child: Builder(
-            key: const Key('no_frame'),
+            key: const Key('frameless'),
             builder: (builder) {
               return child;
             },
