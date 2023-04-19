@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook/src/routing/widgetbook_panel.dart';
-import 'package:widgetbook/src/widgetbook_page.dart';
+import 'package:widgetbook/src/widgetbook_shell.dart';
+import 'package:widgetbook/src/workbench/workbench.dart';
 
 extension GoRouterExtension on BuildContext {
   void goTo({
@@ -94,31 +95,20 @@ GoRouter createRouter({
         builder: (context, state, child) {
           final panels = _parsePanelsQueryParam(state.queryParams['panels']);
 
-          return ColoredBox(
-            color: Theme.of(context).colorScheme.surface,
-            child: Row(
-              children: [
-                if (panels.contains(WidgetbookPanel.navigation))
-                  NavigationPanelWrapper(
-                    initialPath: state.location,
-                  ),
-                Expanded(child: child),
-              ],
-            ),
+          return WidgetbookShell(
+            panels: panels,
+            initialLocation: state.location,
+            child: child,
           );
         },
         routes: [
           GoRoute(
             name: '/',
             path: '/',
-            pageBuilder: (context, state) {
-              final panels =
-                  _parsePanelsQueryParam(state.queryParams['panels']);
-
+            pageBuilder: (_, state) {
               return NoTransitionPage<void>(
-                child: WidgetbookPage(
-                  activePanels: panels,
-                  routerData: state.queryParams,
+                child: Workbench(
+                  queryParams: state.queryParams,
                 ),
               );
             },
