@@ -33,12 +33,11 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel> {
     );
   }
 
-  void onChanged(BuildContext context, T value) {
+  void onChanged(T value) {
     provider.value = value;
   }
 
   Widget buildProvider(
-    BuildContext context,
     Map<String, String> queryParameters,
     Widget child,
   ) {

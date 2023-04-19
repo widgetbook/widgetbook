@@ -35,9 +35,10 @@ void main() {
         await testAddon(
           tester: tester,
           addon: addon,
-          act: (context) async => addon.onChanged(
-            context,
-            setting.copyWith(activeLocale: frenchLocale),
+          act: () async => addon.onChanged(
+            setting.copyWith(
+              activeLocale: frenchLocale,
+            ),
           ),
           expect: (context) => expect(
             context.localization!.activeLocale,
@@ -53,7 +54,7 @@ void main() {
         await testAddon(
           tester: tester,
           addon: addon,
-          act: (context) async {
+          act: () async {
             final dropdownFinder = find.byType(DropdownMenu<Locale>);
             await tester.tap(dropdownFinder);
             await tester.pumpAndSettle();
@@ -78,8 +79,7 @@ void main() {
         await testAddon(
           tester: tester,
           addon: addon,
-          act: (context) async => addon.onChanged(
-            context,
+          act: () async => addon.onChanged(
             setting.copyWith(
               activeLocale: engLocaleGb,
             ),

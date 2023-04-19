@@ -74,8 +74,7 @@ void main() {
             await testAddon(
               tester: tester,
               addon: addon,
-              act: (context) async => addon.onChanged(
-                context,
+              act: () async => addon.onChanged(
                 setting.copyWith(
                   activeDevice: device,
                 ),
@@ -96,7 +95,7 @@ void main() {
             await testAddon(
               tester: tester,
               addon: addon,
-              act: (context) async {
+              act: () async {
                 final dropdownFinder = find.byType(
                   DropdownMenu<Device?>,
                 );
@@ -129,8 +128,7 @@ void main() {
               await testAddon(
                 tester: tester,
                 addon: addon,
-                act: (context) async => addon.onChanged(
-                  context,
+                act: () async => addon.onChanged(
                   setting.copyWith(
                     orientation: Orientation.landscape,
                   ),
@@ -149,7 +147,7 @@ void main() {
               await testAddon(
                 tester: tester,
                 addon: addon,
-                act: (context) async {
+                act: () async {
                   final finder = find.byTooltip('Orientation');
                   await tester.tap(finder);
                   await tester.pumpAndSettle();
@@ -173,8 +171,7 @@ void main() {
               await testAddon(
                 tester: tester,
                 addon: addon,
-                act: (context) async => addon.onChanged(
-                  context,
+                act: () async => addon.onChanged(
                   setting.copyWith(
                     hasFrame: true,
                   ),
@@ -193,7 +190,7 @@ void main() {
               await testAddon(
                 tester: tester,
                 addon: addon,
-                act: (context) async {
+                act: () async {
                   final finder = find.byTooltip('Frame');
                   await tester.tap(finder);
                   await tester.pumpAndSettle();

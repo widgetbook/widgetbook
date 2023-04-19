@@ -31,7 +31,6 @@ void main() {
             Builder(
               builder: (context) {
                 return addon.buildProvider(
-                  context,
                   {
                     'device': phone.name,
                   },

@@ -12,19 +12,17 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
 
   @override
   Widget build(BuildContext context) {
-    final textScales = value.textScales;
-    final activeTextScale = value.activeTextScale;
-
     return Setting(
       name: 'Text scale',
       child: DropdownSetting<double>(
-        options: textScales,
-        initialSelection: activeTextScale,
+        options: setting.textScales,
+        initialSelection: setting.activeTextScale,
         optionValueBuilder: (scale) => scale.toStringAsFixed(2),
-        onSelected: (newTextScale) {
+        onSelected: (scale) {
           onChanged(
-            context,
-            value.copyWith(activeTextScale: newTextScale),
+            value.copyWith(
+              activeTextScale: scale,
+            ),
           );
         },
       ),

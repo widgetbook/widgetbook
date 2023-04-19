@@ -9,7 +9,7 @@ Future<void> testAddon({
   required WidgetTester tester,
   required WidgetbookAddOn addon,
   required void Function(BuildContext context) expect,
-  Future<void> Function(BuildContext context)? act,
+  Future<void> Function()? act,
 }) async {
   const key = ValueKey('RandomKey');
 
@@ -29,7 +29,6 @@ Future<void> testAddon({
                 child: Builder(
                   builder: (context) {
                     return addon.buildProvider(
-                      context,
                       state.queryParams,
                       Builder(
                         key: key,
@@ -53,9 +52,10 @@ Future<void> testAddon({
       routerDelegate: router.routerDelegate,
     ),
   );
-  final context = tester.findContextByKey(key);
-  await act?.call(context);
+
+  await act?.call();
   await tester.pumpAndSettle();
-  final refreshedContext = tester.findContextByKey(key);
-  expect(refreshedContext);
+
+  final context = tester.findContextByKey(key);
+  expect(context);
 }
