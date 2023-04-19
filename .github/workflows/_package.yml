@@ -8,7 +8,7 @@ on:
         type: string
 
 jobs:
-  flutter:
+  build:
     defaults:
       run:
         working-directory: ${{ inputs.working_directory }}

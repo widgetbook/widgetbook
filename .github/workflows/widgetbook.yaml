@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  build:
-    uses: ./.github/workflows/base.yml
+  _:
+    uses: ./.github/workflows/_package.yml
     with:
       working_directory: packages/widgetbook
