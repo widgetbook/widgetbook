@@ -77,9 +77,10 @@ void main() {
           await testAddon(
             tester: tester,
             addon: addon,
-            act: (context) async => addon.onChanged(
-              context,
-              setting.copyWith(activeTheme: yellowCustomWidgetbookTheme),
+            act: () async => addon.onChanged(
+              setting.copyWith(
+                activeTheme: yellowCustomWidgetbookTheme,
+              ),
             ),
             expect: (context) => expect(
               context.theme<AppThemeData>(),
@@ -95,7 +96,7 @@ void main() {
           await testAddon(
             tester: tester,
             addon: addon,
-            act: (context) async {
+            act: () async {
               final dropdownFinder = find.byType(
                 DropdownMenu<WidgetbookTheme<AppThemeData>>,
               );

@@ -40,9 +40,10 @@ void main() {
           await testAddon(
             tester: tester,
             addon: addon,
-            act: (context) async => addon.onChanged(
-              context,
-              setting.copyWith(activeTextScale: 2),
+            act: () async => addon.onChanged(
+              setting.copyWith(
+                activeTextScale: 2,
+              ),
             ),
             expect: (context) => expect(
               context.textScale,
@@ -58,7 +59,7 @@ void main() {
           await testAddon(
             tester: tester,
             addon: addon,
-            act: (context) async {
+            act: () async {
               final dropdownFinder = find.byType(DropdownMenu<double>);
               await tester.tap(dropdownFinder);
               await tester.pumpAndSettle();
