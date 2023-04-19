@@ -2,8 +2,8 @@ import 'package:flutter/widgets.dart';
 
 import 'frame_builder.dart';
 
-class NoFrameBuilder extends FrameBuilder {
-  NoFrameBuilder({
+class FramelessBuilder extends FrameBuilder {
+  FramelessBuilder({
     required super.setting,
   });
 

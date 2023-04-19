@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/addons/device_addon/frames/no_frame_builder.dart';
+import 'package:widgetbook/src/addons/device_addon/frames/frameless_builder.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../../../helper/widget_test_helper.dart';
@@ -8,7 +8,7 @@ import '../../utils/extensions/widget_tester_extension.dart';
 
 void main() {
   group(
-    '$NoFrameBuilder',
+    '$FramelessBuilder',
     () {
       const key = ValueKey('key');
       testWidgets(
@@ -16,7 +16,7 @@ void main() {
         (tester) async {
           tester.binding.window.physicalSizeTestValue = const Size(800, 600);
 
-          final frame = NoFrameBuilder(
+          final frame = FramelessBuilder(
             setting: DeviceSetting.firstAsSelected(
               devices: [null],
             ),

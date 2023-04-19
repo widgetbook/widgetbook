@@ -57,7 +57,7 @@ class DeviceSetting extends WidgetbookAddOnModel with _$DeviceSetting {
 
   FrameBuilder get frameBuilder {
     if (activeDevice == null) {
-      return NoFrameBuilder(
+      return FramelessBuilder(
         setting: this,
       );
     }
