@@ -11,19 +11,17 @@ abstract class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final themes = value.themes;
-    final activeTheme = value.activeTheme;
-
     return Setting(
       name: 'Theme',
       child: DropdownSetting<WidgetbookTheme<T>>(
-        options: themes,
-        initialSelection: activeTheme,
+        options: setting.themes,
+        initialSelection: setting.activeTheme,
         optionValueBuilder: (theme) => theme.name,
-        onSelected: (newActiveTheme) {
+        onSelected: (theme) {
           onChanged(
-            context,
-            value.copyWith(activeTheme: newActiveTheme),
+            value.copyWith(
+              activeTheme: theme,
+            ),
           );
         },
       ),

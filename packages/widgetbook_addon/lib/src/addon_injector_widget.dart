@@ -32,7 +32,6 @@ class AddonInjectorWidget extends StatelessWidget {
               ...addons.map(
                 (e) => SingleChildBuilder(
                   builder: (context, child) => e.buildProvider(
-                    context,
                     routerData,
                     child!,
                   ),
