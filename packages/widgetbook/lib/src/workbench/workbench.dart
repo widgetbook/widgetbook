@@ -26,7 +26,7 @@ class _WorkbenchState extends State<Workbench> {
   Widget build(BuildContext context) {
     final addons = context.watch<AddOnProvider>().value;
     final appBuilder = context.watch<BuilderProvider>().value.appBuilder;
-    final state = context.watch<UseCasesProvider>().state;
+    final state = context.watch<UseCasesProvider>().value;
     final useCaseBuilder = state.selectedUseCase?.builder;
 
     return StyledScaffold(

@@ -1,22 +1,22 @@
+import 'package:flutter/material.dart';
 import 'package:widgetbook/src/repositories/selected_use_case_repository.dart';
-import 'package:widgetbook/src/state_change_notifier.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
-class UseCasesProvider extends StateChangeNotifier<UseCasesState> {
+class UseCasesProvider extends ValueNotifier<UseCasesState> {
   UseCasesProvider({
     required this.selectedStoryRepository,
     UseCasesState? state,
-  }) : super(state: state ?? UseCasesState());
+  }) : super(state ?? UseCasesState());
 
   final SelectedUseCaseRepository selectedStoryRepository;
 
   void selectUseCaseByPath(String path) {
-    final useCase = state.useCases[path];
+    final useCase = value.useCases[path];
     if (useCase != null) {
-      state = state.copyWith(
+      value = value.copyWith(
         selectedUseCasePath: path,
-        selectedUseCase: state.useCases[path],
+        selectedUseCase: value.useCases[path],
       );
       selectedStoryRepository.setItem(
         WidgetbookUseCaseData(
@@ -29,10 +29,10 @@ class UseCasesProvider extends StateChangeNotifier<UseCasesState> {
 
   void loadFromDirectories(List<MultiChildNavigationNodeData> directories) {
     final useCases = _getUseCases(directories);
-    state = state.copyWith(
+    value = value.copyWith(
       useCases: useCases,
-      selectedUseCase: state.selectedUseCasePath != null
-          ? useCases[state.selectedUseCasePath]
+      selectedUseCase: value.selectedUseCasePath != null
+          ? useCases[value.selectedUseCasePath]
           : null,
     );
   }
