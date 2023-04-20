@@ -27,6 +27,15 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
       ),
     );
   }
+
+  @override
+  Widget buildUseCaseWrapper(BuildContext context, Widget child) {
+    return Localizations(
+      locale: value.activeLocale,
+      delegates: value.localizationsDelegates,
+      child: child,
+    );
+  }
 }
 
 extension LocalizationExtension on BuildContext {
