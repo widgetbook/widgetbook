@@ -31,6 +31,8 @@ class _WorkbenchState extends State<Workbench> {
 
     return StyledScaffold(
       body: MultiAddonBuilder(
+        // Key is important here for correct rebuilds.
+        key: ValueKey(widget.queryParams),
         addons: addons,
         builder: (_, addon, child) => addon.buildWithScope(
           widget.queryParams,

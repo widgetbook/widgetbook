@@ -16,21 +16,16 @@ class Renderer extends StatelessWidget {
     BuildContext context, {
     required List<WidgetbookAddOn> addons,
   }) {
-    return Builder(
-      key: const Key('app_builder_key'),
-      builder: (context) {
-        return MultiAddonBuilder(
-          addons: addons,
-          builder: (context, addon, child) => addon.buildUseCaseWrapper(
-            context,
-            child,
-          ),
-          child: appBuilder(
-            context,
-            useCaseBuilder(context),
-          ),
-        );
-      },
+    return MultiAddonBuilder(
+      addons: addons,
+      builder: (context, addon, child) => addon.buildUseCaseWrapper(
+        context,
+        child,
+      ),
+      child: appBuilder(
+        context,
+        useCaseBuilder(context),
+      ),
     );
   }
 
