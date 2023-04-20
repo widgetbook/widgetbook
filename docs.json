@@ -54,7 +54,19 @@
                     "3. Run", "/getting-started/run"
                 ],
                 [
-                    "4. Configure", "/getting-started/configure"
+                    "4. Components", "/getting-started/components"
+                ],
+                [
+                    "5. Structure", "/getting-started/structure"
+                ],
+                [
+                    "6. Knobs", "/getting-started/knobs"
+                ],
+                [
+                    "7. Add-ons", "/getting-started/add-ons"
+                ],
+                [
+                    "8. Configure", "/getting-started/configure"
                 ]
             ]
         ],
