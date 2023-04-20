@@ -28,6 +28,16 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
       ),
     );
   }
+
+  @override
+  Widget buildUseCaseWrapper(BuildContext context, Widget child) {
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(
+        textScaleFactor: value.activeTextScale,
+      ),
+      child: child,
+    );
+  }
 }
 
 extension TextScaleExtension on BuildContext {

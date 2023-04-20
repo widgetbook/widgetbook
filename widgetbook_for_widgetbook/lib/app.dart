@@ -31,12 +31,7 @@ Widget customAppBuilder(BuildContext context, Widget child) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          body: MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-              textScaleFactor: context.textScale,
-            ),
-            child: child,
-          ),
+          body: child,
         ),
       );
     },
