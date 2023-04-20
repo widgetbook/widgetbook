@@ -5,7 +5,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 AppBuilderFunction get materialAppBuilder =>
     (BuildContext context, Widget child) {
-      final builder = Builder(
+      return Builder(
         builder: (context) {
           return MaterialApp(
             theme: context.materialTheme,
@@ -28,18 +28,11 @@ AppBuilderFunction get materialAppBuilder =>
           );
         },
       );
-      final frameBuilder = context.frameBuilder;
-      return frameBuilder == null
-          ? builder
-          : frameBuilder.build(
-              context,
-              builder,
-            );
     };
 
 AppBuilderFunction get cupertinoAppBuilder =>
     (BuildContext context, Widget child) {
-      final builder = Builder(
+      return Builder(
         builder: (context) {
           return CupertinoApp(
             theme: context.cupertinoTheme,
@@ -62,11 +55,4 @@ AppBuilderFunction get cupertinoAppBuilder =>
           );
         },
       );
-      final frameBuilder = context.frameBuilder;
-      return frameBuilder == null
-          ? builder
-          : frameBuilder.build(
-              context,
-              builder,
-            );
     };

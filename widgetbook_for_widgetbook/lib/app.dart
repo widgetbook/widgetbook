@@ -26,24 +26,20 @@ ThemeData themeLight() => Themes.light;
 
 @anno.WidgetbookAppBuilder()
 Widget customAppBuilder(BuildContext context, Widget child) {
-  final frameBuilder = context.frameBuilder;
-  return frameBuilder!.build(
-    context,
-    Builder(
-      builder: (context) {
-        return MaterialApp(
-          theme: context.materialTheme,
-          debugShowCheckedModeBanner: false,
-          home: Scaffold(
-            body: MediaQuery(
-              data: MediaQuery.of(context).copyWith(
-                textScaleFactor: context.textScale,
-              ),
-              child: child,
+  return Builder(
+    builder: (context) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: context.materialTheme,
+        home: Scaffold(
+          body: MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaleFactor: context.textScale,
             ),
+            child: child,
           ),
-        );
-      },
-    ),
+        ),
+      );
+    },
   );
 }

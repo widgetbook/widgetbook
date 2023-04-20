@@ -49,20 +49,6 @@ void main() {
             );
           },
         );
-
-        testWidgets(
-          'frameBuilder',
-          (WidgetTester tester) async {
-            await testAddon(
-              tester: tester,
-              addon: addon,
-              expect: (context) => expect(
-                context.frameBuilder.runtimeType,
-                equals(addon.value.frameBuilder.runtimeType),
-              ),
-            );
-          },
-        );
       });
 
       group('Device can be activated via', () {

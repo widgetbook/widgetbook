@@ -45,12 +45,9 @@ Widget exampleBuilder(BuildContext context) {
 /// or have a look at the documentation.
 @anno.WidgetbookAppBuilder()
 Widget appBuilder(BuildContext context, Widget child) {
-  // This builder exposes a [BuildContext] that contains the [MediaQuery]
-  // information of the [DeviceAddon]
-  final frameBuilder = context.frameBuilder;
   final theme = context.theme<ThemeData>();
 
-  final builder = Builder(
+  return Builder(
     builder: (context) {
       return MaterialApp(
         // Enable this property so the [MediaQuery] of [DeviceAddon] is used.
@@ -83,15 +80,6 @@ Widget appBuilder(BuildContext context, Widget child) {
       );
     },
   );
-
-  // Note, that the ScreenUtilInit [Widget] only works properly if the
-  // [DeviceAddon] is active
-  return frameBuilder == null
-      ? builder
-      : frameBuilder.build(
-          context,
-          builder,
-        );
 }
 
 /// The main method of the [App].
