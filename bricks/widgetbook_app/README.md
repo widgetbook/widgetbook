@@ -43,8 +43,8 @@ mason make widgetbook_starter --name "Awesome" --package "awesome_package"
     └── widgetbooks
         └── awesome_package_widgetbook
             ├── lib
-            │   ├── app.dart
-            │   ├── app.widgetbook.dart 
+            │   ├── ui_catalogs.dart
+            │   ├── ui_catalogs.widgetbook.dart 
             │   └── components.dart
             ├── macos
             ├── web

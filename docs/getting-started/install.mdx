@@ -2,26 +2,13 @@
 
 Welcome to Widgetbook! This guide will help you get started with integrating Widgetbook into your Flutter projects and streamline your widget management process.
 
-## Configuration Approaches
+Make sure to depend on the Widgetbook packages.
 
 There are two approaches to configure Widgetbook:
 
 1- **Manual Approach**: This approach involves using the [widgetbook package](https://pub.dev/packages/widgetbook) and manually maintaining the widget structure in Widgetbook to keep it in sync with your application.
 
 2- **Generator Approach**: This approach utilizes the [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) in combination with the [widgetbook_annotation package](https://pub.dev/packages/widgetbook_annotation). It automatically configures the widget structure in Widgetbook based on the structure defined in your application, keeping Widgetbook in sync with your app.
-
-<Info>
-  We recommend using the Generator approach over the Manual approach, as it simplifies the
-  maintenance of Widgetbook. Additionally, the Generator approach offers seamless integration with
-  [Widgetbook Cloud](/widgetbook-cloud/overview), further enhancing the review and collaboration
-  process.
-</Info>
-
-With these approaches in mind, you can now begin integrating Widgetbook into your project and enjoy the benefits of streamlined widget management and collaboration.
-
-## Install dependencies
-
-Make sure to depend on the Widgetbook packages.
 
 <Tabs
   groupId="approach"
@@ -32,20 +19,45 @@ Make sure to depend on the Widgetbook packages.
 >
   <TabItem value="generator">
 
-    <Warning>The documentation refers to the latest Widgetbook 3.0 release which is currently in beta. You might need to manually bump the dependencies to the most recent beta release version!</Warning>
-
     ```bash
-    flutter pub add widgetbook_annotation
-    flutter pub add widgetbook widgetbook_generator build_runner --dev
+    flutter pub add widgetbook_annotation widgetbook
+    flutter pub add widgetbook_generator build_runner --dev
     ```
+
+    This will add a line like this to your package's pubspec.yaml (and run an implicit flutter pub get):
+
+```yaml
+dependencies:
+  widgetbook_annotation: ^3.0.0-beta.7
+
+dev_dependencies:
+  widgetbook: ^3.0.0-beta.14
+  widgetbook_generator: ^3.0.0-beta.11
+  build_runner:
+```
 
   </TabItem>
   <TabItem value="manual">
-    <Warning>The documentation refers to the latest Widgetbook 3.0 release which is currently in beta. You might need to manually bump the dependencies to the most recent beta release version!</Warning>
 
     ```bash
     flutter pub add widgetbook --dev
     ```
 
+This will add a line like this to your package's pubspec.yaml (and run an implicit flutter pub get):
+
+```yaml
+dev_dependencies:
+  widgetbook: ^3.0.0-beta.14
+```
+
   </TabItem>
 </Tabs>
+
+<Info>
+  We recommend using the Generator approach over the Manual approach, as it simplifies the
+  maintenance of Widgetbook. Additionally, the Generator approach offers seamless integration with
+  [Widgetbook Cloud](/widgetbook-cloud/overview), further enhancing the review and collaboration
+  process.
+</Info>
+
+With these approaches in mind, you can now begin integrating Widgetbook into your project and enjoy the benefits of streamlined widget management and collaboration.
