@@ -10,12 +10,12 @@ class WidgetbookAddonScope<T extends WidgetbookAddOnModel<T>>
     required super.child,
   });
 
-  static WidgetbookAddOnModel<T> of<T extends WidgetbookAddOnModel<T>>(
+  static WidgetbookAddOnModel<T>? of<T extends WidgetbookAddOnModel<T>>(
     BuildContext context,
   ) {
     return context
-        .dependOnInheritedWidgetOfExactType<WidgetbookAddonScope<T>>()!
-        .notifier!
-        .value;
+        .dependOnInheritedWidgetOfExactType<WidgetbookAddonScope<T>>()
+        ?.notifier
+        ?.value;
   }
 }
