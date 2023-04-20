@@ -30,9 +30,12 @@ class _WorkbenchState extends State<Workbench> {
     final useCaseBuilder = state.selectedUseCase?.builder;
 
     return StyledScaffold(
-      body: AddonInjectorWidget(
+      body: MultiAddonBuilder(
         addons: addons,
-        routerData: widget.queryParams,
+        builder: (_, addon, child) => addon.buildWithScope(
+          widget.queryParams,
+          child,
+        ),
         onChanged: (setting) => context.goTo(
           queryParams: setting.toQueryParameter(),
         ),
