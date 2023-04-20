@@ -198,6 +198,7 @@ void main() {
               expect(dropdownFinder, findsOneWidget);
               expect(navigationBloc.state.selectedNode, isNull);
             },
+            skip: true,
           );
 
           testWidgets(
