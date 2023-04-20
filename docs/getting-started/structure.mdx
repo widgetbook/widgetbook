@@ -5,12 +5,13 @@ Widgetbook is flexible and powerful enough that fits into your projects structur
 The structure of your components can be divided into two parts:
 
 1- The folder structure in your project, where you place files
+
 2- The navigation that will be created in Widgetbook
 
 Let's take a look at an typical Flutter example.
 In this case, you may add a `components` or `widgets` folder to your projects where you can manage your Ui catalogs structure.
 
-```dart
+```bash
 your_flutter_project/
 ├─ android/
 ├─ ios/
@@ -49,26 +50,26 @@ The navigation structure in widgetbook is depending on which approach you select
 >
   <TabItem value="generator">
    The generator creates the navigation tree based on the file location of the component that has been specified for the `type` parameter of the `@WidgetbookUseCase` annotation. 
-    Therefore, the navigation structure of the Widgetbook resembles the structure of your application or package.
+   Therefore, the navigation structure of the Widgetbook resembles the structure of your application or package.
 
     <Warning>
         As of now, it's not possible to configure a different navigation structure using the generator.
         The Widgetbook team aims to provide a solution in the future.
     </Warning>
 
-</TabItem>
+  </TabItem>
 
   <TabItem value="manual">
     While you can directly add `WidgetbookComponent` to `directories` project on `Widgetbook` constructors, it will not be scalable and easy access as project grows.
 
 The alternatives are:
 
-1- `WidgetbookCategory`
-2- `WidgetbookFolder`
+1- WidgetbookCategory
+2- ¬WidgetbookFolder
 
-Both `WidgetbookCategory` and `WidgetbookFolder` can contain sub folders and `WidgetbookComponent` elements. However, `WidgetbookComponent` can only contain `WidgetbookUseCases`.
+Both WidgetbookCategory and WidgetbookFolder can contain sub folders and WidgetbookComponent elements. However, WidgetbookComponent can only contain WidgetbookUseCases.
 
-````dart
+```dart
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -120,16 +121,11 @@ class HotReload extends StatelessWidget {
     );
   }
 }
-    ```
+```
 
     Running this example will look like the screenshot below.
-<Image
-    zoom
-    src="/assets/screenshots/manual_structure.png"
-    alt="Figma Material button component with variants"
-    caption="Figma Material button component with variants"
-/>
+
+<Image zoom src="/assets/screenshots/manual_structure.png" alt="Structure" caption="Structure" />
 
   </TabItem>
 </Tabs>
-````
