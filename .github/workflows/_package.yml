@@ -38,6 +38,12 @@ jobs:
       - name: Install Dependencies
         run: melos bootstrap
 
+      - name: Filter Melos Packages
+        run: |
+          PACKAGE_NAME=$(head -1 pubspec.yaml | cut -c7-)
+          PACKAGES_LIST=$(melos list --scope="$PACKAGE_NAME" --include-dependencies | paste -s -d, -)
+          echo "MELOS_PACKAGES=$PACKAGES_LIST" >> $GITHUB_ENV
+
       - name: Generate Files
         run: melos generate
 
