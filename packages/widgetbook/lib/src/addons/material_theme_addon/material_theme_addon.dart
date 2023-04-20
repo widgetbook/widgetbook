@@ -5,6 +5,14 @@ class MaterialThemeAddon extends ThemeAddon<ThemeData> {
   MaterialThemeAddon({
     required super.setting,
   });
+
+  @override
+  Widget buildUseCaseWrapper(BuildContext context, Widget child) {
+    return Theme(
+      data: value.activeTheme.data,
+      child: child,
+    );
+  }
 }
 
 extension MaterialThemeExtension on BuildContext {

@@ -30,7 +30,6 @@ Widget customAppBuilder(BuildContext context, Widget child) {
     builder: (context) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: context.materialTheme,
         home: Scaffold(
           body: MediaQuery(
             data: MediaQuery.of(context).copyWith(
