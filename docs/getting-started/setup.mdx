@@ -33,7 +33,7 @@ To initialize Widgetbook in your Flutter project, follow the steps below:
 >
   <TabItem value="generator">
 
-1- Create a new file in your `lib` folder called `ui_catalogs.dart`. Alternatively, you can annotate an existing code element using the `@WidgetbookApp` annotation.
+1. Create a new file in your `lib` folder called `ui_catalogs.dart`. Alternatively, you can annotate an existing code element using the `@WidgetbookApp` annotation.
 
 ```dart
 your_flutter_project/
@@ -52,24 +52,27 @@ your_flutter_project/
   generated output code.
 </Info>
 
-2- Add the following code snippet to your `ui_catalogs.dart` file:
+2. Add the following code snippet to your `ui_catalogs.dart` file:
 
-    ```dart title="ui_catalogs.dart"
-    // Setup of Widgetbook: ui_catalogs.dart
-    import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+   ```dart title="ui_catalogs.dart"
+   // Setup of Widgetbook: ui_catalogs.dart
+   import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-    @WidgetbookApp.material()
-    late int notUsed;
-    ```
+   @WidgetbookApp.material()
+   late int notUsed;
+   ```
 
-    3- Execute the `build_runner` by running the following command:
-    ```bash
-    flutter pub run build_runner build
-    ```
-    or 
-    ```bash
-    flutter pub run build_runner watch
-    ```
+   3. Execute the `build_runner` by running the following command:
+
+   ```bash
+   flutter pub run build_runner build
+   ```
+
+   or
+
+   ```bash
+   flutter pub run build_runner watch
+   ```
 
 <Info>You may rename `ui_catalogs.dart` to your preferred name that fits your project.</Info>
 
@@ -87,7 +90,7 @@ your_flutter_project/
 └─ ...
 ```
 
-    4- The generated app.widgetbook.dart file should look like this:
+    4. The generated app.widgetbook.dart file should look like this:
 
     ```dart title="app.widgetbook.dart"
         // Generated Widgetbook file: app.widgetbook.dart
@@ -115,7 +118,7 @@ With these steps, you have successfully set up Widgetbook using the generator ap
 
   </TabItem>
   <TabItem value="manual">
-    1- Create a new file `app.widgetbook.dart` in your `lib` folder.
+    1. Create a new file `app.widgetbook.dart` in your `lib` folder.
 
 <Info>You may rename `app.widgetbook.dart` to your preferred name that fits your project.</Info>
 
@@ -130,7 +133,7 @@ your_flutter_project/
 └─ ...
 ```
 
-    2- Add the following code snippet to your `app.widgetbook.dart` file:
+    2. Add the following code snippet to your `app.widgetbook.dart` file:
 
     ```dart title="app.widgetbook.dart"
     // Widgetbook file: app.widgetbook.dart
@@ -156,18 +159,6 @@ your_flutter_project/
 
   </TabItem>
 </Tabs>
-
-## Custom Theme
-
-`Widgetbook` allows developers to define whatever `Theme` they have defined for their app. To accompany every theme and the ones defined by Flutter, the following constructors exist:
-
-| Theme        | Constructor             | Defaults to                      |
-| ------------ | ----------------------- | -------------------------------- |
-| Custom Theme | `Widgetbook<YourTheme>` | ➖                               |
-| Material     | `Widgetbook.material`   | `Widgetbook<ThemeData>`          |
-| Cupertino    | `Widgetbook.cupertino`  | `Widgetbook<CupertinoThemeData>` |
-
-Check out [Custom Theme](#) docs to learn more.
 
 ## Next
 
