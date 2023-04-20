@@ -98,11 +98,11 @@ Update the `lib/ui_catalogs.widgetbook.dart` file to add the new components and 
   ]}
 >
   <TabItem value="generator">
-1- Update the `lib/components/custom_card.dart` and `lib/components/custom_text_field.dart` files to add the `@WidgetbookUseCase` annotation for the new components:
+1. Update the `lib/components/custom_card.dart` and `lib/components/custom_text_field.dart` files to add the `@WidgetbookUseCase` annotation for the new components:
 
 ```dart
 // lib/components/custom_card.dart
-...
+/// ... [Rest of the code]
 
 @WidgetbookUseCase(
   name: 'Default Style',
@@ -152,13 +152,13 @@ CustomTextField hintTextCustomTextField() {
 }
 ```
 
-2- run `flutter pub build_runner build`;
+2. run `flutter pub build_runner build`;
 
-3- run `flutter run -d chrome -t lib/ui_catalogs_g.widgetbook.dart`
+3. run `flutter run -d chrome -t lib/ui_catalogs_g.widgetbook.dart`
 
   </TabItem>
   <TabItem value="manual">
-  1- Add both component to your directories under `WidgetbookFolder` names `Widgets`;
+1. Add both component to your directories under `WidgetbookFolder` names `Widgets`;
 
 ```dart
 import 'package:flutter/material.dart';
@@ -239,9 +239,12 @@ class HotReload extends StatelessWidget {
 }
 ```
 
-2- run `flutter run -d chrome -t lib/ui_catalogs.widgetbook.dart`
+2. run `flutter run -d chrome -t lib/ui_catalogs.widgetbook.dart`
 
   </TabItem>
 </Tabs>
 
-<Image zoom src="/assets/screenshots/complete.gif" alt="Complete step" caption="Complete step" />
+<video width="100%" height="720px" autoplay muted loop>
+  <source src="/assets/screenshots/complete.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>

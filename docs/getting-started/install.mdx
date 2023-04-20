@@ -6,9 +6,16 @@ Make sure to depend on the Widgetbook packages.
 
 There are two approaches to configure Widgetbook:
 
-1- **Manual Approach**: This approach involves using the [widgetbook package](https://pub.dev/packages/widgetbook) and manually maintaining the widget structure in Widgetbook to keep it in sync with your application.
+1. **Manual Approach**: This approach involves using the [widgetbook package](https://pub.dev/packages/widgetbook) and manually maintaining the widget structure in Widgetbook to keep it in sync with your application.
 
-2- **Generator Approach**: This approach utilizes the [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) in combination with the [widgetbook_annotation package](https://pub.dev/packages/widgetbook_annotation). It automatically configures the widget structure in Widgetbook based on the structure defined in your application, keeping Widgetbook in sync with your app.
+2. **Generator Approach**: This approach utilizes the [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) in combination with the [widgetbook_annotation package](https://pub.dev/packages/widgetbook_annotation). It automatically configures the widget structure in Widgetbook based on the structure defined in your application, keeping Widgetbook in sync with your app.
+
+<Info>
+  We recommend using the Generator approach over the Manual approach, as it simplifies the
+  maintenance of Widgetbook. Additionally, the Generator approach offers seamless integration with
+  [Widgetbook Cloud](/widgetbook-cloud/overview), further enhancing the review and collaboration
+  process.
+</Info>
 
 <Tabs
   groupId="approach"
@@ -52,12 +59,5 @@ dev_dependencies:
 
   </TabItem>
 </Tabs>
-
-<Info>
-  We recommend using the Generator approach over the Manual approach, as it simplifies the
-  maintenance of Widgetbook. Additionally, the Generator approach offers seamless integration with
-  [Widgetbook Cloud](/widgetbook-cloud/overview), further enhancing the review and collaboration
-  process.
-</Info>
 
 With these approaches in mind, you can now begin integrating Widgetbook into your project and enjoy the benefits of streamlined widget management and collaboration.

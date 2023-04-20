@@ -4,12 +4,12 @@ To understand better, let's review a few tips before you can add your first comp
 
 ## Components
 
-This documentation refers to widgets as components since design tools like Figma use this terminology to describe their reusable UI elements.
-
 Components in Figma might be resembled by one or multiple variants which are variations of a component.
 
+<Info>Read what is a Component in [Terminology](/terminology) page.</Info>
 In Flutter, the `TextButton`, `ElevatedButton`, and `OutlineButton` are variants of a _Button_ component.
-In addition, different Flutter states of a button (e.g. `focused` or `hovered`) might resemble in Figma as additional variants.
+In addition, different Flutter states of a button (e.g. `focused` or `hovered`) might resemble in Figma
+as additional variants.
 
 <Image
   zoom
@@ -39,7 +39,7 @@ Adding components to Widgetbook works differently based on your choice: manual a
   ]}
 >
   <TabItem value="generator">
-  1- To add component in generator approach, you can start by adding use-cases with the generator is based on the `@WidgetbookUseCase` annotation.
+  1. To add component in generator approach, you can start adding use-cases with `@WidgetbookUseCase` annotation.
 
     ```dart
     import 'package:flutter/material.dart';
@@ -60,61 +60,64 @@ Adding components to Widgetbook works differently based on your choice: manual a
     }
     ```
 
-2- The annotation is used on a use-case builder method with a return type of `Widget` and a single required parameter `BuildContext`.
+2. The annotation is used on a use-case builder method with a return type of `Widget` and a single required parameter `BuildContext`.
 
-    <Info>
-        You can freely pick the name of the method, but make sure the name of a newly created use-case builder method does not have a name conflict with already existing methods.
-    </Info>
+   <Info>
+     You can freely pick the name of the method, but make sure the name of a newly created use-case
+     builder method does not have a name conflict with already existing methods.
+   </Info>
 
-3- In addition, `@WidgetbookUseCase` requires two mandatory parameters `type` and `name` that allow you to customize how the use-case is shown in the navigation of Widgetbook.
+3. In addition, `@WidgetbookUseCase` requires two mandatory parameters `type` and `name` that allow you to customize how the use-case is shown in the navigation of Widgetbook.
 
-    #### `type` property
-    The `type` property is used by the generator to create the component entry within the navigation.
-    As a developer, you want to specify the type of the cataloged component (`Container`) instead of the one that might be returned by the builder method (`Column`).
+   #### `type` property
 
-    #### `name` property
-    The `name` property of the annotation allows you to specify the name of the use-case.
-    In the case of the example, this is `with green color`.
+   The `type` property is used by the generator to create the component entry within the navigation.
+   As a developer, you want to specify the type of the cataloged component (`Container`) instead of the one that might be returned by the builder method (`Column`).
 
-    4- Execute the `build_runner` by running the following command:
-    ```bash
-    flutter pub run build_runner build
-    ```
-    or
-    ```bash
-    flutter pub run build_runner watch
-    ```
+   #### `name` property
+
+   The `name` property of the annotation allows you to specify the name of the use-case.
+   In the case of the example, this is `with green color`.
+
+   4- Execute the `build_runner` by running the following command:
+
+   ```bash
+   flutter pub run build_runner build
+   ```
+
+   or
+
+   ```bash
+   flutter pub run build_runner watch
+   ```
 
   </TabItem>
   <TabItem value="manual">
-    1- Let's create a Widgetbook component using `WidgetbookComponent`
+    1. Let's create a Widgetbook component using `WidgetbookComponent`
 
 ```dart
 WidgetbookComponent(
-          name: 'Container',
-          useCases: [
+  name: 'Container',
+  useCases: [
 
-          ],
-        ),
+  ],
+),
 ```
 
-2- Each component can have one or multiple use-cases which can be created by `WidgetbookUseCase`.
+2. Each component can have one or multiple use-cases which can be created by `WidgetbookUseCase`.
 
 ```dart
-
-
-
-            WidgetbookUseCase(
-              name: 'with green color',
-              builder: (context) => Container(
-    width: 100,
-    height: 100,
-    color: Colors.green,
+  WidgetbookUseCase(
+    name: 'with green color',
+    builder: (context) => Container(
+      width: 100,
+      height: 100,
+      color: Colors.green,
+    ),
   ),
-            ),
 ```
 
-3- You can add components directly to `directories`
+3. You can add components directly to `directories`
 
 ```dart
 Widgetbook.material(
@@ -126,10 +129,10 @@ Widgetbook.material(
             WidgetbookUseCase(
               name: 'with green color',
               builder: (context) => Container(
-    width: 100,
-    height: 100,
-    color: Colors.green,
-  ),
+                width: 100,
+                height: 100,
+                color: Colors.green,
+              ),
             ),
           ],
         ),
@@ -141,7 +144,7 @@ Then, run again and you should be able to see your container in Widgetbook.
 
 <Image
   zoom
-  src="/assets/screenshot/first_component.png"
+  src="/assets/screenshots/first_component.png"
   alt="First Component"
   caption="First Component"
 />

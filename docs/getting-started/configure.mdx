@@ -1,7 +1,5 @@
 # Configuration
 
-## Customize how use-cases are previewed
-
 Widgetbook allows developers to fully customize how use-cases are previewed based on the selected add-on properties.
 
 To customize Widgetbook, define a function that returns a `Widget` and accepts two required parameters `context` of type `BuildContext` and `child` of type `Widget`.
@@ -46,7 +44,7 @@ Widget customAppBuilder(BuildContext context, Widget child) {
   ]}
 >
   <TabItem value="generator">
-    Annotate the `AppBuilder` method with the `@WidgetbookAppBuilder` annotation to generate the Widgetbook with your custom implementation instead of the default one. 
+    Annotate the `AppBuilder` method with the `@WidgetbookAppBuilder` annotation to generate the Widgetbook with your custom implementation instead of the default one.
 
     ```dart title="Annotated custom Material app builder"
     @WidgetbookAppBuilder()
@@ -58,6 +56,7 @@ Widget customAppBuilder(BuildContext context, Widget child) {
     <Success>
       Widgetbook now uses your custom `AppBuilder` method.
     </Success>
+
   </TabItem>
   <TabItem value="manual">
     Use the `appBuilder` property of `WidgetbookApp` to specify your custom `AppBuilder` method.
@@ -73,5 +72,6 @@ Widget customAppBuilder(BuildContext context, Widget child) {
     <Success>
       Widgetbook now uses your custom `AppBuilder` method.
     </Success>
+
   </TabItem>
 </Tabs>

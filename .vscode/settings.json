@@ -8,5 +8,6 @@
     "generator",
     "examples"
   ],
-  "cSpell.words": ["Widgetbook"]
+  "cSpell.words": ["Widgetbook"],
+  "cmake.sourceDirectory": "${workspaceFolder}/examples/knobs_example/linux/flutter"
 }
