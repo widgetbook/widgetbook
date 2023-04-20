@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'widgetbook_addon_model.dart';
+import 'widgetbook_addon_scope.dart';
 
 /// A class that can be used to extend the selection of Widgetbook properties.
 ///
@@ -15,39 +15,39 @@ import 'widgetbook_addon_model.dart';
 ///
 /// You must not have multiple [WidgetbookAddOn]s that are of the same generic
 /// type
-abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel> {
+abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
   WidgetbookAddOn({
     required this.name,
     required this.setting,
-  }) : provider = ValueNotifier<T>(setting);
+  }) : notifier = ValueNotifier<T>(setting);
 
   final String name;
   final T setting;
-  late ValueNotifier<T> provider;
+  late ValueNotifier<T> notifier;
 
-  T get value => provider.value;
+  T get value => notifier.value;
 
   void addListener(ValueChanged<T> listener) {
-    provider.addListener(
-      () => listener(provider.value),
+    notifier.addListener(
+      () => listener(notifier.value),
     );
   }
 
   void onChanged(T value) {
-    provider.value = value;
+    notifier.value = value;
   }
 
-  Widget buildProvider(
+  WidgetbookAddonScope<T> buildWithScope(
     Map<String, String> queryParameters,
     Widget child,
   ) {
-    final newSetting = setting.fromQueryParameter(queryParameters) ?? setting;
+    onChanged(
+      setting.fromQueryParameter(queryParameters) ?? setting,
+    );
 
-    provider.value = newSetting;
-
-    return ChangeNotifierProvider.value(
-      key: ValueKey(newSetting),
-      value: provider,
+    return WidgetbookAddonScope<T>(
+      key: ValueKey(notifier.value),
+      notifier: notifier,
       child: child,
     );
   }
@@ -58,7 +58,7 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel> {
 }
 
 extension AddonExtension on BuildContext {
-  T? getAddonValue<T extends WidgetbookAddOnModel>() {
-    return read<ValueNotifier<T>?>()?.value;
+  T? getAddonValue<T extends WidgetbookAddOnModel<T>>() {
+    return WidgetbookAddonScope.of<T>(this) as T?;
   }
 }

@@ -30,8 +30,8 @@ class AddonInjectorWidget extends StatelessWidget {
             key: ValueKey(routerData),
             children: [
               ...addons.map(
-                (e) => SingleChildBuilder(
-                  builder: (context, child) => e.buildProvider(
+                (addon) => SingleChildBuilder(
+                  builder: (_, child) => addon.buildWithScope(
                     routerData,
                     child!,
                   ),

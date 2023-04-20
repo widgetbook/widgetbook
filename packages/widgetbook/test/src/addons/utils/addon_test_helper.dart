@@ -28,7 +28,7 @@ Future<void> testAddon({
                 width: 500,
                 child: Builder(
                   builder: (context) {
-                    return addon.buildProvider(
+                    return addon.buildWithScope(
                       state.queryParams,
                       Builder(
                         key: key,
