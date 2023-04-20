@@ -52,9 +52,12 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
     );
   }
 
-  Widget buildSetting(
-    BuildContext context,
-  );
+  Widget buildSetting(BuildContext context);
+
+  /// Wraps use cases with a custom widget depending on the addon [setting].
+  Widget buildUseCaseWrapper(BuildContext context, Widget child) {
+    return child;
+  }
 }
 
 extension AddonExtension on BuildContext {
