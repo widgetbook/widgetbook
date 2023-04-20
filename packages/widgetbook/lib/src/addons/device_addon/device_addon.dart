@@ -25,7 +25,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
         );
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildSetting(BuildContext context) {
     return Setting(
       name: 'Device',
       child: Row(

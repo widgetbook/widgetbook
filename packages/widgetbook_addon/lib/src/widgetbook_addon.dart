@@ -52,7 +52,7 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
     );
   }
 
-  Widget build(
+  Widget buildSetting(
     BuildContext context,
   );
 }

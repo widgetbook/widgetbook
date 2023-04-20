@@ -11,7 +11,7 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
         );
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildSetting(BuildContext context) {
     return Setting(
       name: 'Text scale',
       child: DropdownSetting<double>(

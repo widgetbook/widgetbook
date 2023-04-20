@@ -32,7 +32,7 @@ Future<void> testAddon({
                       state.queryParams,
                       Builder(
                         key: key,
-                        builder: addon.build,
+                        builder: addon.buildSetting,
                       ),
                     );
                   },
