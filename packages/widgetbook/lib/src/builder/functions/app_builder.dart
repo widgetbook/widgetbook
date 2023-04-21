@@ -6,9 +6,7 @@ AppBuilderFunction get materialAppBuilder =>
     (BuildContext context, Widget child) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: child,
-        ),
+        home: child,
       );
     };
 
@@ -16,8 +14,6 @@ AppBuilderFunction get cupertinoAppBuilder =>
     (BuildContext context, Widget child) {
       return CupertinoApp(
         debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: child,
-        ),
+        home: child,
       );
     };

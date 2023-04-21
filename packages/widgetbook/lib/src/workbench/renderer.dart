@@ -12,32 +12,22 @@ class Renderer extends StatelessWidget {
   final Widget Function(BuildContext) useCaseBuilder;
   final Widget Function(BuildContext, Widget child) appBuilder;
 
-  Widget _buildPreview(
-    BuildContext context, {
-    required List<WidgetbookAddOn> addons,
-  }) {
-    return MultiAddonBuilder(
-      addons: addons,
-      builder: (context, addon, child) => addon.buildUseCaseWrapper(
-        context,
-        child,
-      ),
-      child: appBuilder(
-        context,
-        useCaseBuilder(context),
-      ),
-    );
-  }
-
   @override
-  Widget build(
-    BuildContext context,
-  ) {
+  Widget build(BuildContext context) {
     final addons = context.watch<AddOnProvider>().value;
 
-    return _buildPreview(
+    return appBuilder(
       context,
-      addons: addons,
+      MultiAddonBuilder(
+        addons: addons,
+        builder: (context, addon, child) => addon.buildUseCaseWrapper(
+          context,
+          child,
+        ),
+        child: Scaffold(
+          body: useCaseBuilder(context),
+        ),
+      ),
     );
   }
 }
