@@ -5,6 +5,7 @@ on:
     paths:
       - packages/widgetbook_core/**
       - .github/workflows/widgetbook-core.yaml
+      - .github/workflows/_package.yml
   push:
     branches:
       - main
