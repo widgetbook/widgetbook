@@ -35,12 +35,11 @@ jobs:
       - name: Install Melos
         run: flutter pub global activate melos
 
-      - name: Install Melos
-        run: flutter pub global activate melos
-
-      - name: Bootstrap Melos Workspace
+      - name: Build Melos Workspace
         working-directory: ${{ github.workspace }}
-        run: flutter pub get && melos
+        run: |
+          flutter pub get
+          melos --version # Needed to build melos executable
 
       - name: Filter Melos Packages
         run: |
