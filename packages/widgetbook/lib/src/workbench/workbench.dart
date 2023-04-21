@@ -34,7 +34,7 @@ class _WorkbenchState extends State<Workbench> {
         // Key is important here for correct rebuilds.
         key: ValueKey(widget.queryParams),
         addons: addons,
-        builder: (_, addon, child) => addon.buildWithScope(
+        builder: (_, addon, child) => addon.buildScope(
           widget.queryParams,
           child,
         ),

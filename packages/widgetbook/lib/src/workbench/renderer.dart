@@ -20,7 +20,7 @@ class Renderer extends StatelessWidget {
       context,
       MultiAddonBuilder(
         addons: addons,
-        builder: (context, addon, child) => addon.buildUseCaseWrapper(
+        builder: (context, addon, child) => addon.buildUseCase(
           context,
           child,
         ),

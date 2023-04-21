@@ -85,7 +85,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
   }
 
   @override
-  Widget buildUseCaseWrapper(BuildContext context, Widget child) {
+  Widget buildUseCase(BuildContext context, Widget child) {
     if (value.activeDevice == null) {
       return FramelessBuilder(
         setting: value,

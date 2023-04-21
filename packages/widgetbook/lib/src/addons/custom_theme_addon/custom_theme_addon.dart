@@ -10,7 +10,7 @@ class CustomThemeAddon<T> extends ThemeAddon<T> {
   final Widget Function(T themeData, Widget useCase) useCaseBuilder;
 
   @override
-  Widget buildUseCaseWrapper(BuildContext context, Widget child) {
+  Widget buildUseCase(BuildContext context, Widget child) {
     return useCaseBuilder(
       setting.activeTheme.data,
       child,

@@ -7,7 +7,7 @@ class CupertinoThemeAddon extends ThemeAddon<CupertinoThemeData> {
   });
 
   @override
-  Widget buildUseCaseWrapper(BuildContext context, Widget child) {
+  Widget buildUseCase(BuildContext context, Widget child) {
     return CupertinoTheme(
       data: value.activeTheme.data,
       child: child,

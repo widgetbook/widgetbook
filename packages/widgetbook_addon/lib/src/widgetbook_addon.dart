@@ -37,7 +37,7 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
     notifier.value = value;
   }
 
-  WidgetbookAddonScope<T> buildWithScope(
+  WidgetbookAddonScope<T> buildScope(
     Map<String, String> queryParameters,
     Widget child,
   ) {
@@ -55,7 +55,7 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
   Widget buildSetting(BuildContext context);
 
   /// Wraps use cases with a custom widget depending on the addon [setting].
-  Widget buildUseCaseWrapper(BuildContext context, Widget child) {
+  Widget buildUseCase(BuildContext context, Widget child) {
     return child;
   }
 }
