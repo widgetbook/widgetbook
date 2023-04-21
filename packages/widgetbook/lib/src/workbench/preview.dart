@@ -19,7 +19,7 @@ class Preview extends StatelessWidget {
         builder: (context, constrains) {
           // Sets safe boundaries for proper rendering inside them.
           // This is needed for widgets that depend on [MediaQuery],
-          // for example: widgets from `flutter_screenutil` package. 
+          // for example: widgets from `flutter_screenutil` package.
           return MediaQuery(
             data: MediaQuery.of(context).copyWith(
               size: Size(
