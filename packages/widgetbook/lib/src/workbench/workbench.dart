@@ -4,10 +4,11 @@ import 'package:widgetbook/src/builder/provider/builder_provider.dart';
 import 'package:widgetbook/src/constants/radii.dart';
 import 'package:widgetbook/src/navigation/providers/use_cases_provider.dart';
 import 'package:widgetbook/src/routing/router.dart';
-import 'package:widgetbook/src/workbench/preview.dart';
 import 'package:widgetbook_addon/widgetbook_addon.dart';
 
 import '../styled_widgets/styled_widgets.dart';
+import 'renderer.dart';
+import 'safe_boundaries.dart';
 
 class Workbench extends StatefulWidget {
   const Workbench({
@@ -46,12 +47,14 @@ class _WorkbenchState extends State<Workbench> {
             borderRadius: Radii.defaultRadius,
             color: Theme.of(context).colorScheme.surface,
           ),
-          child: useCaseBuilder == null
-              ? Container()
-              : Preview(
-                  useCaseBuilder: useCaseBuilder,
-                  appBuilder: appBuilder,
-                ),
+          child: SafeBoundaries(
+            child: useCaseBuilder == null
+                ? Container()
+                : Renderer(
+                    appBuilder: appBuilder,
+                    useCaseBuilder: useCaseBuilder,
+                  ),
+          ),
         ),
       ),
     );
