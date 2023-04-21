@@ -45,40 +45,20 @@ Widget exampleBuilder(BuildContext context) {
 /// or have a look at the documentation.
 @anno.WidgetbookAppBuilder()
 Widget appBuilder(BuildContext context, Widget child) {
-  final theme = context.theme<ThemeData>();
-
-  return Builder(
-    builder: (context) {
+  return ScreenUtilInit(
+    designSize: const Size(375, 812),
+    minTextAdapt: true,
+    splitScreenMode: true,
+    // This is needed to use the workbench [MediaQuery]
+    useInheritedMediaQuery: true,
+    builder: (context, child) {
       return MaterialApp(
-        // Enable this property so the [MediaQuery] of [DeviceAddon] is used.
         useInheritedMediaQuery: true,
-        theme: theme,
-        locale: context.localization?.activeLocale,
-        supportedLocales: context.localization?.locales ??
-            const <Locale>[
-              Locale('en', 'US'),
-            ],
-        localizationsDelegates: context.localization?.localizationsDelegates,
         debugShowCheckedModeBanner: false,
-        home: ScreenUtilInit(
-          minTextAdapt: true,
-          designSize: const Size(375, 812),
-          // Enable this property so the [MediaQuery] of [DeviceAddon] is used.
-          useInheritedMediaQuery: true,
-          builder: (context, child) {
-            return Scaffold(
-              body: MediaQuery(
-                data: MediaQuery.of(context).copyWith(
-                  textScaleFactor: context.textScale,
-                ),
-                child: child!,
-              ),
-            );
-          },
-          child: child,
-        ),
+        home: child,
       );
     },
+    child: child,
   );
 }
 

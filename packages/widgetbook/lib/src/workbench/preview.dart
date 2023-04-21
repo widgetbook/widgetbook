@@ -15,9 +15,24 @@ class Preview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRect(
-      child: Renderer(
-        appBuilder: appBuilder,
-        useCaseBuilder: useCaseBuilder,
+      child: LayoutBuilder(
+        builder: (context, constrains) {
+          // Sets safe boundaries for proper rendering inside them.
+          // This is needed for widgets that depend on [MediaQuery],
+          // for example: widgets from `flutter_screenutil` package. 
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              size: Size(
+                constrains.maxWidth,
+                constrains.maxHeight,
+              ),
+            ),
+            child: Renderer(
+              appBuilder: appBuilder,
+              useCaseBuilder: useCaseBuilder,
+            ),
+          );
+        },
       ),
     );
   }
