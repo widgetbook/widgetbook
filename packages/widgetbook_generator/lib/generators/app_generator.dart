@@ -36,9 +36,8 @@ String generateWidgetbook({
     switch (constructor) {
       case WidgetbookConstructor.material:
         addons.add(
-          CustomThemeAddonInstance(
+          MaterialThemeAddonInstance(
             themes: themes,
-            themeType: 'ThemeData',
           ),
         );
         break;
