@@ -6,12 +6,9 @@ import '../utils/addon_test_helper.dart';
 import 'locale_addon_utilities.dart';
 
 void main() {
-  final setting = LocalizationSetting.firstAsSelected(
+  final addon = LocalizationAddon(
     locales: locales,
     localizationsDelegates: localizationsDelegates,
-  );
-  final addon = LocalizationAddon(
-    setting: setting,
   );
 
   group('$LocalizationAddon', () {
@@ -23,7 +20,7 @@ void main() {
           addon: addon,
           expect: (context) => expect(
             context.localization,
-            equals(setting),
+            equals(addon.setting),
           ),
         );
       },
@@ -36,7 +33,7 @@ void main() {
           tester: tester,
           addon: addon,
           act: () async => addon.onChanged(
-            setting.copyWith(
+            addon.setting.copyWith(
               activeLocale: frenchLocale,
             ),
           ),
@@ -80,7 +77,7 @@ void main() {
           tester: tester,
           addon: addon,
           act: () async => addon.onChanged(
-            setting.copyWith(
+            addon.setting.copyWith(
               activeLocale: engLocaleGb,
             ),
           ),

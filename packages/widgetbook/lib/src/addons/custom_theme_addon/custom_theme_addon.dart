@@ -3,9 +3,14 @@ import 'package:widgetbook/widgetbook.dart';
 
 class CustomThemeAddon<T> extends ThemeAddon<T> {
   CustomThemeAddon({
-    required super.initialSetting,
+    required List<WidgetbookTheme<T>> themes,
     required this.themeBuilder,
-  });
+  }) : super(
+          initialSetting: ThemeSetting(
+            themes: themes,
+            activeTheme: themes.first,
+          ),
+        );
 
   final Widget Function(T theme, Widget child) themeBuilder;
 

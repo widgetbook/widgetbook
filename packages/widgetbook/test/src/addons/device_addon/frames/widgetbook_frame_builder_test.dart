@@ -22,8 +22,9 @@ void main() {
           );
 
           final frame = WidgetbookFrameBuilder(
-            setting: DeviceSetting.firstAsSelected(
+            setting: DeviceSetting(
               devices: devices,
+              activeDevice: devices.first,
             ),
           );
 

@@ -23,10 +23,12 @@ void main() {
 
           final devices = [phone];
           final frame = DeviceFrameBuilder(
-            setting: DeviceSetting.firstAsSelected(
+            setting: DeviceSetting(
               devices: devices,
+              activeDevice: devices.first,
             ),
           );
+
           await tester.pumpWidgetWithMaterialApp(
             Builder(
               builder: (context) {

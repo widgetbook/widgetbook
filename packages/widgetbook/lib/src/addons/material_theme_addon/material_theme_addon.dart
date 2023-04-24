@@ -3,8 +3,13 @@ import 'package:widgetbook/widgetbook.dart';
 
 class MaterialThemeAddon extends ThemeAddon<ThemeData> {
   MaterialThemeAddon({
-    required super.initialSetting,
-  });
+    required List<WidgetbookTheme<ThemeData>> themes,
+  }) : super(
+          initialSetting: MaterialThemeSetting(
+            themes: themes,
+            activeTheme: themes.first,
+          ),
+        );
 
   @override
   Widget buildUseCase(BuildContext context, Widget child) {

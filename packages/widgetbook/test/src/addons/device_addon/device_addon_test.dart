@@ -19,8 +19,6 @@ void main() {
         initialDevice: devices.first,
       );
 
-      final setting = addon.setting;
-
       group('context has', () {
         testWidgets(
           'device',
@@ -61,7 +59,7 @@ void main() {
               tester: tester,
               addon: addon,
               act: () async => addon.onChanged(
-                setting.copyWith(
+                addon.setting.copyWith(
                   activeDevice: device,
                 ),
               ),
@@ -115,7 +113,7 @@ void main() {
                 tester: tester,
                 addon: addon,
                 act: () async => addon.onChanged(
-                  setting.copyWith(
+                  addon.setting.copyWith(
                     orientation: Orientation.landscape,
                   ),
                 ),
@@ -158,7 +156,7 @@ void main() {
                 tester: tester,
                 addon: addon,
                 act: () async => addon.onChanged(
-                  setting.copyWith(
+                  addon.setting.copyWith(
                     hasFrame: true,
                   ),
                 ),

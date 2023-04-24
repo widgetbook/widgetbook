@@ -14,26 +14,6 @@ class LocalizationSetting extends WidgetbookAddOnModel<LocalizationSetting>
     required List<LocalizationsDelegate<dynamic>> localizationsDelegates,
   }) = _LocalizationSetting;
 
-  /// Sets the first locale within `locales` as the active locale on
-  /// startup
-  factory LocalizationSetting.firstAsSelected({
-    required List<Locale> locales,
-    required List<LocalizationsDelegate<dynamic>> localizationsDelegates,
-  }) {
-    assert(
-      locales.isNotEmpty,
-      'Please specify at least one supported $Locale.',
-    );
-
-    return LocalizationSetting(
-      activeLocale: locales.first,
-      locales: locales,
-      localizationsDelegates: localizationsDelegates,
-    );
-  }
-
-  const LocalizationSetting._();
-
   @override
   Map<String, String> toQueryParameter() {
     return {

@@ -5,9 +5,13 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 
 class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
   TextScaleAddon({
-    required super.initialSetting,
+    required List<double> scales,
   }) : super(
           name: 'text-scales',
+          initialSetting: TextScaleSetting(
+            activeTextScale: scales.first,
+            textScales: scales,
+          ),
         );
 
   @override

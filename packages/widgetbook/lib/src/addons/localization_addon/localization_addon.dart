@@ -4,9 +4,15 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 
 class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
   LocalizationAddon({
-    required super.initialSetting,
+    required List<Locale> locales,
+    required List<LocalizationsDelegate> localizationsDelegates,
   }) : super(
-          name: 'localization',
+          name: 'Localization',
+          initialSetting: LocalizationSetting(
+            activeLocale: locales.first,
+            locales: locales,
+            localizationsDelegates: localizationsDelegates,
+          ),
         );
 
   @override

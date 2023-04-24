@@ -23,12 +23,10 @@ void main() {
 
   final addons = [
     MaterialThemeAddon(
-      setting: ThemeSetting.firstAsSelected(
-        themes: [
-          wbThemeLight,
-          wbThemeDark,
-        ],
-      ),
+      themes: [
+        wbThemeLight,
+        wbThemeDark,
+      ],
     ),
   ];
   final directories = [

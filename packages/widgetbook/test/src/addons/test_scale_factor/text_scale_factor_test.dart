@@ -8,16 +8,8 @@ void main() {
   group(
     '$TextScaleAddon',
     () {
-      const textScales = [
-        1.0,
-        2.0,
-        3.0,
-      ];
-      final setting = TextScaleSetting.firstAsSelected(
-        textScales: textScales,
-      );
       final addon = TextScaleAddon(
-        setting: setting,
+        scales: [1.0, 2.0, 3.0],
       );
 
       testWidgets(
@@ -41,7 +33,7 @@ void main() {
             tester: tester,
             addon: addon,
             act: () async => addon.onChanged(
-              setting.copyWith(
+              addon.setting.copyWith(
                 activeTextScale: 2,
               ),
             ),

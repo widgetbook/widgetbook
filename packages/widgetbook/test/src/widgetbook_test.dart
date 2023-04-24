@@ -74,9 +74,7 @@ void main() {
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     TextScaleAddon(
-                      setting: TextScaleSetting.firstAsSelected(
-                        textScales: [],
-                      ),
+                      scales: [],
                     )
                   ],
                 ),
@@ -95,9 +93,7 @@ void main() {
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     MaterialThemeAddon(
-                      setting: MaterialThemeSetting.firstAsSelected(
-                        themes: const [],
-                      ),
+                      themes: const [],
                     ),
                   ],
                 ),
@@ -135,11 +131,9 @@ void main() {
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     LocalizationAddon(
-                      setting: LocalizationSetting.firstAsSelected(
-                        locales: [],
-                        localizationsDelegates: [],
-                      ),
-                    )
+                      locales: [],
+                      localizationsDelegates: [],
+                    ),
                   ],
                 ),
                 expectAssertionErrorWithMessage(

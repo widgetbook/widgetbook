@@ -3,8 +3,13 @@ import 'package:widgetbook/widgetbook.dart';
 
 class CupertinoThemeAddon extends ThemeAddon<CupertinoThemeData> {
   CupertinoThemeAddon({
-    required super.initialSetting,
-  });
+    required List<WidgetbookTheme<CupertinoThemeData>> themes,
+  }) : super(
+          initialSetting: CupertinoThemeSetting(
+            themes: themes,
+            activeTheme: themes.first,
+          ),
+        );
 
   @override
   Widget buildUseCase(BuildContext context, Widget child) {

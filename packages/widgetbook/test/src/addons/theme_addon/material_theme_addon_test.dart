@@ -9,7 +9,7 @@ void main() {
   group(
     '$MaterialThemeAddon',
     () {
-      final bluetheme = ThemeData(
+      final blueTheme = ThemeData(
         primaryColor: colorBlue,
       );
 
@@ -19,7 +19,7 @@ void main() {
 
       final blueWidgetbookTheme = WidgetbookTheme(
         name: 'Blue',
-        data: bluetheme,
+        data: blueTheme,
       );
 
       final yellowWidgetbookTheme = WidgetbookTheme(
@@ -27,13 +27,8 @@ void main() {
         data: yellowTheme,
       );
 
-      final setting = MaterialThemeSetting(
-        activeTheme: blueWidgetbookTheme,
-        themes: [blueWidgetbookTheme, yellowWidgetbookTheme],
-      );
-
       final addon = MaterialThemeAddon(
-        setting: setting,
+        themes: [blueWidgetbookTheme, yellowWidgetbookTheme],
       );
 
       testWidgets(
@@ -57,7 +52,7 @@ void main() {
             tester: tester,
             addon: addon,
             act: () async => addon.onChanged(
-              setting.copyWith(
+              addon.setting.copyWith(
                 activeTheme: yellowWidgetbookTheme,
               ),
             ),
