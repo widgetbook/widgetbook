@@ -5,7 +5,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/json_formatter.dart';
 import 'package:widgetbook_generator/models/widgetbook_device_data.dart';
 
-class DeviceResolver extends GeneratorForAnnotation<WidgetbookApp> {
+class DeviceResolver extends GeneratorForAnnotation<App> {
   @override
   dynamic generateForAnnotatedElement(
     Element element,

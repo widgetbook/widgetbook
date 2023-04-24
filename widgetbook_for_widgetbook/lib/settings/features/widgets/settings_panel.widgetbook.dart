@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
-@WidgetbookUseCase(name: 'Default', type: SettingsPanel)
+@UseCase(name: 'Default', type: SettingsPanel)
 Widget settingsPanel(BuildContext context) {
   return SettingsPanel(
     settings: [

@@ -5,7 +5,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/json_formatter.dart';
 import 'package:widgetbook_generator/models/widgetbook_text_scale_factor_data.dart';
 
-class TextScaleFactorResolver extends GeneratorForAnnotation<WidgetbookApp> {
+class TextScaleFactorResolver extends GeneratorForAnnotation<App> {
   @override
   dynamic generateForAnnotatedElement(
     Element element,

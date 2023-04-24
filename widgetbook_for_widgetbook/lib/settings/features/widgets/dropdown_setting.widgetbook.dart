@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as anno;
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
-@anno.WidgetbookUseCase(name: 'Test', type: DropdownSetting)
+@UseCase(name: 'Test', type: DropdownSetting)
 Widget test(BuildContext context) {
   return DropdownSetting(
     onSelected: (p0) {},

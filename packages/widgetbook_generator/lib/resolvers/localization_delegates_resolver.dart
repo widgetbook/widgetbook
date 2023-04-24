@@ -7,7 +7,7 @@ import 'package:widgetbook_generator/json_formatter.dart';
 import 'package:widgetbook_generator/models/widgetbook_localization_builder_data.dart';
 
 class LocalizationDelegatesResolver
-    extends GeneratorForAnnotation<WidgetbookLocalizationDelegates> {
+    extends GeneratorForAnnotation<LocalizationDelegates> {
   @override
   String generateForAnnotatedElement(
     Element element,

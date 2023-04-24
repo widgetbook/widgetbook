@@ -4,10 +4,10 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 void main() {
   group(
-    '$WidgetbookApp',
+    '$App',
     () {
       test('defaults to empty list', () {
-        const instance = WidgetbookApp.material();
+        const instance = App.material();
 
         expect(
           instance.devices,

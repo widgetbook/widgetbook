@@ -1,7 +1,7 @@
 /// Annotates a function returning a Theme.
-class WidgetbookTheme {
-  /// Creates a new instance of [WidgetbookTheme].
-  const WidgetbookTheme({
+class Theme {
+  /// Creates a new instance of [Theme].
+  const Theme({
     required this.name,
     this.isDefault = false,
   });

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
-@WidgetbookUseCase(name: 'Default', type: SliderKnob)
+@UseCase(name: 'Default', type: SliderKnob)
 Widget sliderKnob(BuildContext context) {
   return const SliderKnob(
     name: 'Is enabled',
@@ -13,7 +13,7 @@ Widget sliderKnob(BuildContext context) {
   );
 }
 
-@WidgetbookUseCase(name: 'Default', type: NullableSliderKnob)
+@UseCase(name: 'Default', type: NullableSliderKnob)
 Widget nullableSliderKnob(BuildContext context) {
   return const NullableSliderKnob(
     name: 'Is enabled',

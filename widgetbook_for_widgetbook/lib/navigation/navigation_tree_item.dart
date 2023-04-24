@@ -3,7 +3,7 @@ import 'package:widgetbook/widgetbook.dart' show Knobs;
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
-@WidgetbookUseCase(name: 'Default', type: NavigationTreeItem)
+@UseCase(name: 'Default', type: NavigationTreeItem)
 Widget navigationTreeItemWithout(BuildContext context) {
   final nodeType = context.knobs.options<NavigationNodeType>(
     label: 'Node Type',

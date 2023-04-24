@@ -15,7 +15,7 @@ import 'package:widgetbook_generator/services/tree_service.dart';
 
 /// Generates the code of the Widgetbook
 String generateWidgetbook({
-  required WidgetbookConstructor constructor,
+  required Constructor constructor,
   required List<WidgetbookUseCaseData> useCases,
   required List<Device> devices,
   required List<double> textScaleFactors,
@@ -34,14 +34,14 @@ String generateWidgetbook({
   final addons = <AddOnInstance>[];
   if (themes.isNotEmpty) {
     switch (constructor) {
-      case WidgetbookConstructor.material:
+      case Constructor.material:
         addons.add(
           MaterialThemeAddonInstance(
             themes: themes,
           ),
         );
         break;
-      case WidgetbookConstructor.cupertino:
+      case Constructor.cupertino:
         addons.add(
           CustomThemeAddonInstance(
             themes: themes,
@@ -49,7 +49,7 @@ String generateWidgetbook({
           ),
         );
         break;
-      case WidgetbookConstructor.custom:
+      case Constructor.custom:
         if (widgetbookThemeData != null) {
           addons.add(
             CustomThemeAddonInstance(

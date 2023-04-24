@@ -1,5 +1,5 @@
 /// Specifies the type of constructor used to create the widgetbook
-enum WidgetbookConstructor {
+enum Constructor {
   /// Generates a Widgetbook.material(...)
   material,
 
@@ -11,15 +11,15 @@ enum WidgetbookConstructor {
 }
 
 /// Extension to create a named constructor from the enum
-extension WidgetbookConstructorExtension on WidgetbookConstructor {
+extension ConstructorExtension on Constructor {
   /// transforms the enum into text
   String? get toCode {
     switch (this) {
-      case WidgetbookConstructor.material:
+      case Constructor.material:
         return 'material';
-      case WidgetbookConstructor.cupertino:
+      case Constructor.cupertino:
         return 'cupertino';
-      case WidgetbookConstructor.custom:
+      case Constructor.custom:
         return null;
     }
   }

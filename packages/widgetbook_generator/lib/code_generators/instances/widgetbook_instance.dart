@@ -9,7 +9,7 @@ import 'package:widgetbook_generator/code_generators/properties/property.dart';
 class WidgetbookInstance extends Instance {
   /// Creates a new instance of [WidgetbookInstance]
   WidgetbookInstance({
-    required WidgetbookConstructor constructor,
+    required Constructor constructor,
     required List<Instance> directories,
     required List<AddOnInstance> addons,
     String? type,
