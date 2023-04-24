@@ -17,7 +17,6 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
           'initialDevice must be in devices',
         ),
         super(
-          name: 'Device',
           initialSetting: DeviceSetting(
             // [null] represents a "none" device
             devices: [null, ...devices],

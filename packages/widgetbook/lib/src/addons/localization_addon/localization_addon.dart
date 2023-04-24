@@ -7,7 +7,6 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
     required List<Locale> locales,
     required List<LocalizationsDelegate> localizationsDelegates,
   }) : super(
-          name: 'Localization',
           initialSetting: LocalizationSetting(
             activeLocale: locales.first,
             locales: locales,

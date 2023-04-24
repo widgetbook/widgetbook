@@ -17,11 +17,9 @@ import 'widgetbook_addon_scope.dart';
 /// type
 abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
   WidgetbookAddOn({
-    required this.name,
     required this.initialSetting,
   }) : notifier = ValueNotifier<T>(initialSetting);
 
-  final String name;
   final T initialSetting;
   late ValueNotifier<T> notifier;
 

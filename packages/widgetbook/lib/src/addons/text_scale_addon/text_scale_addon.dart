@@ -7,7 +7,6 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
   TextScaleAddon({
     required List<double> scales,
   }) : super(
-          name: 'text-scales',
           initialSetting: TextScaleSetting(
             activeTextScale: scales.first,
             textScales: scales,

@@ -5,9 +5,7 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 abstract class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
   ThemeAddon({
     required super.initialSetting,
-  }) : super(
-          name: 'themes',
-        );
+  });
 
   @override
   Widget buildSetting(BuildContext context) {
