@@ -6,10 +6,7 @@ class CustomThemeAddon<T> extends ThemeAddon<T> {
     required List<WidgetbookTheme<T>> themes,
     required this.themeBuilder,
   }) : super(
-          initialSetting: ThemeSetting(
-            themes: themes,
-            activeTheme: themes.first,
-          ),
+          themes: themes,
         );
 
   final Widget Function(T theme, Widget child) themeBuilder;

@@ -5,10 +5,7 @@ class MaterialThemeAddon extends ThemeAddon<ThemeData> {
   MaterialThemeAddon({
     required List<WidgetbookTheme<ThemeData>> themes,
   }) : super(
-          initialSetting: MaterialThemeSetting(
-            themes: themes,
-            activeTheme: themes.first,
-          ),
+          themes: themes,
         );
 
   @override

@@ -5,10 +5,7 @@ class CupertinoThemeAddon extends ThemeAddon<CupertinoThemeData> {
   CupertinoThemeAddon({
     required List<WidgetbookTheme<CupertinoThemeData>> themes,
   }) : super(
-          initialSetting: CupertinoThemeSetting(
-            themes: themes,
-            activeTheme: themes.first,
-          ),
+          themes: themes,
         );
 
   @override
