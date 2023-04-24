@@ -130,7 +130,10 @@ void main() {
             (WidgetTester tester) async {
               await testAddon(
                 tester: tester,
-                addon: addon,
+                addon: DeviceAddon(
+                  devices: devices,
+                  initialDevice: devices.first,
+                ),
                 act: () async {
                   final finder = find.byTooltip('Orientation');
                   await tester.tap(finder);
