@@ -14,6 +14,8 @@ class LocalizationSetting extends WidgetbookAddOnModel<LocalizationSetting>
     required List<LocalizationsDelegate<dynamic>> localizationsDelegates,
   }) = _LocalizationSetting;
 
+  LocalizationSetting._();
+
   @override
   Map<String, String> toQueryParameter() {
     return {

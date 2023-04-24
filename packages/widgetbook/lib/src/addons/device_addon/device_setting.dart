@@ -16,6 +16,8 @@ class DeviceSetting extends WidgetbookAddOnModel<DeviceSetting>
     @Default(true) bool hasFrame,
   }) = _DeviceSetting;
 
+  DeviceSetting._();
+
   @override
   Map<String, String> toQueryParameter() {
     return {
