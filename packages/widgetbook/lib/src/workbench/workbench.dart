@@ -6,7 +6,6 @@ import 'package:widgetbook/src/navigation/providers/use_cases_provider.dart';
 import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook_addon/widgetbook_addon.dart';
 
-import '../styled_widgets/styled_widgets.dart';
 import 'renderer.dart';
 import 'safe_boundaries.dart';
 
@@ -30,31 +29,29 @@ class _WorkbenchState extends State<Workbench> {
     final state = context.watch<UseCasesProvider>().value;
     final useCaseBuilder = state.selectedUseCase?.builder;
 
-    return StyledScaffold(
-      body: MultiAddonBuilder(
-        // Key is important here for correct rebuilds.
-        key: ValueKey(widget.queryParams),
-        addons: addons,
-        builder: (_, addon, child) => addon.buildScope(
-          widget.queryParams,
-          child,
+    return MultiAddonBuilder(
+      // Key is important here for correct rebuilds.
+      key: ValueKey(widget.queryParams),
+      addons: addons,
+      builder: (_, addon, child) => addon.buildScope(
+        widget.queryParams,
+        child,
+      ),
+      onChanged: (setting) => context.goTo(
+        queryParams: setting.toQueryParameter(),
+      ),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: Radii.defaultRadius,
+          color: Theme.of(context).colorScheme.surface,
         ),
-        onChanged: (setting) => context.goTo(
-          queryParams: setting.toQueryParameter(),
-        ),
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: Radii.defaultRadius,
-            color: Theme.of(context).colorScheme.surface,
-          ),
-          child: SafeBoundaries(
-            child: useCaseBuilder == null
-                ? Container()
-                : Renderer(
-                    appBuilder: appBuilder,
-                    useCaseBuilder: useCaseBuilder,
-                  ),
-          ),
+        child: SafeBoundaries(
+          child: useCaseBuilder == null
+              ? Container()
+              : Renderer(
+                  appBuilder: appBuilder,
+                  useCaseBuilder: useCaseBuilder,
+                ),
         ),
       ),
     );
