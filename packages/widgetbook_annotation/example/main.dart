@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-@WidgetbookTheme(name: 'Dark', isDefault: true)
+@widgetbook.Theme(name: 'Dark', isDefault: true)
 ThemeData darkTheme() => ThemeData.dark();
 
-@WidgetbookUseCase(name: 'Default', type: CustomPadding)
+@widgetbook.Theme(name: 'Default', type: CustomPadding)
 Widget customPaddingStory(BuildContext context) {
   return Container(
     color: Colors.green,
@@ -30,7 +30,7 @@ class CustomPadding extends StatelessWidget {
   }
 }
 
-@WidgetbookApp(name: 'Example App')
+@widgetbook.App(name: 'Example App')
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
