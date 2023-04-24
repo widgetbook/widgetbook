@@ -20,9 +20,9 @@ import 'package:widgetbook_generator/readers/device_reader.dart';
 
 /// Generates the code for Widgetbook
 ///
-/// The code is located at the same location in which the [WidgetbookApp]
+/// The code is located at the same location in which the [App]
 /// annotation is used.
-class WidgetbookGenerator extends GeneratorForAnnotation<WidgetbookApp> {
+class WidgetbookGenerator extends GeneratorForAnnotation<App> {
   @override
   Future<String> generateForAnnotatedElement(
     Element element,
@@ -158,9 +158,9 @@ List<double> _getTextScaleFactors(ConstantReader annotation) {
   return factors;
 }
 
-WidgetbookConstructor _getConstructor(ConstantReader annotation) {
+Constructor _getConstructor(ConstantReader annotation) {
   final index = annotation.read('constructor').read('index').intValue;
-  return WidgetbookConstructor.values[index];
+  return Constructor.values[index];
 }
 
 WidgetbookThemeTypeData? _getThemeType(ConstantReader annotation) {

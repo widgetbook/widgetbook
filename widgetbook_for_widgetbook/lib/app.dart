@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as anno;
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import 'package:widgetbook_core/widgetbook_core.dart';
 
-@anno.WidgetbookApp.material(
+@widgetbook.App.material(
   devices: [
     Apple.iPhone11,
     Apple.iPhone12,
@@ -16,10 +16,8 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 )
 const int notUsed = 0;
 
-@anno.WidgetbookTheme(name: 'Dark', isDefault: true)
+@widgetbook.Theme(name: 'Dark', isDefault: true)
 ThemeData themeDark() => Themes.dark;
 
-@anno.WidgetbookTheme(
-  name: 'Light',
-)
+@widgetbook.Theme(name: 'Light')
 ThemeData themeLight() => Themes.light;

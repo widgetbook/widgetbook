@@ -3,7 +3,7 @@ import 'package:widgetbook/widgetbook.dart' show Knobs;
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
-@WidgetbookUseCase(name: 'Default', type: TextKnob)
+@UseCase(name: 'Default', type: TextKnob)
 Widget textKnob(BuildContext context) {
   return TextKnob(
     name: 'Is enabled',
@@ -15,7 +15,7 @@ Widget textKnob(BuildContext context) {
   );
 }
 
-@WidgetbookUseCase(name: 'Default', type: NullableTextKnob)
+@UseCase(name: 'Default', type: NullableTextKnob)
 Widget nullableTextKnob(BuildContext context) {
   return NullableTextKnob(
     name: 'Is enabled',

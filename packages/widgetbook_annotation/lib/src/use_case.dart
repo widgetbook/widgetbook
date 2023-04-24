@@ -1,14 +1,14 @@
 /// Annotates a builder function which is used to create the WidgetbookComponent
-/// and [WidgetbookUseCase] for the Widgetbook
-class WidgetbookUseCase {
+/// and [UseCase] for the Widgetbook
+class UseCase {
   /// Creates a new annotation with [name] and [type].
   ///
-  /// The [name] defines how the [WidgetbookUseCase] will show in the navigation
+  /// The [name] defines how the [UseCase] will show in the navigation
   /// area of the widgetbook.
   ///
   /// The [type] defines the Widget rendered with the UseCase. Therefore, it is
   /// used to create the WidgetElement of the Widgetbook
-  const WidgetbookUseCase({
+  const UseCase({
     required this.name,
     required this.type,
     this.designLink,

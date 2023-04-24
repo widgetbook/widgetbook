@@ -12,7 +12,7 @@ class Person {
   final int age;
 }
 
-@WidgetbookUseCase(name: 'Default', type: OptionKnob)
+@UseCase(name: 'Default', type: OptionKnob)
 Widget optionKnob(BuildContext context) {
   const john = Person(name: 'John Doe', age: 24);
   const jane = Person(name: 'Jane Doe', age: 20);

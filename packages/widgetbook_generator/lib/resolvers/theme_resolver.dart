@@ -6,7 +6,7 @@ import 'package:widgetbook_generator/extensions/element_extensions.dart';
 import 'package:widgetbook_generator/json_formatter.dart';
 import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
 
-class ThemeResolver extends GeneratorForAnnotation<WidgetbookTheme> {
+class ThemeResolver extends GeneratorForAnnotation<Theme> {
   @override
   String generateForAnnotatedElement(
     Element element,
@@ -23,7 +23,7 @@ class ThemeResolver extends GeneratorForAnnotation<WidgetbookTheme> {
     if (element.kind != ElementKind.FUNCTION ||
         !(element as FunctionElement).isStatic) {
       throw InvalidGenerationSourceError(
-        'The $WidgetbookTheme annotation cannot be applied to static '
+        'The $Theme annotation cannot be applied to static '
         'functions.',
         element: element,
       );

@@ -8,7 +8,7 @@ import 'package:widgetbook_generator/extensions/element_extensions.dart';
 import 'package:widgetbook_generator/json_formatter.dart';
 import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
 
-class LocalesResolver extends GeneratorForAnnotation<WidgetbookLocales> {
+class LocalesResolver extends GeneratorForAnnotation<Locales> {
   @override
   Future<String> generateForAnnotatedElement(
     Element element,

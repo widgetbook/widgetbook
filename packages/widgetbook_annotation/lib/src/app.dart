@@ -1,40 +1,41 @@
-import 'package:widgetbook_annotation/src/widgetbook_constructor.dart';
 import 'package:widgetbook_models/widgetbook_models.dart';
+
+import 'constructor.dart';
 
 /// Annotates a code element to create the widgetbook main file in the same
 /// folder in which the annotated element is defined.
-class WidgetbookApp {
+class App {
   /// Creates a new annotation optional [devices] and [textScaleFactors].
   /// If devices is not set or set to an empty list, no code for the
   /// Widgetbook.devices property will be generated.
   /// Therefore, the default of Widgetbook will be used.
-  const WidgetbookApp({
+  const App({
     required Type this.themeType,
     this.devices = const <Device>[],
     this.textScaleFactors = const <double>[],
     this.foldersExpanded = false,
     this.widgetsExpanded = false,
-    this.constructor = WidgetbookConstructor.custom,
+    this.constructor = Constructor.custom,
   });
 
   /// Annotates a code element to creat a Material-themed widgetbook main file
   /// in the same folder in which the annotated element is defined.
-  const WidgetbookApp.material({
+  const App.material({
     this.devices = const <Device>[],
     this.textScaleFactors = const <double>[],
     this.foldersExpanded = false,
     this.widgetsExpanded = false,
-    this.constructor = WidgetbookConstructor.material,
+    this.constructor = Constructor.material,
   }) : themeType = null;
 
   /// Annotates a code element to creat a Cupertino-themed widgetbook main
   /// file in the same folder in which the annotated element is defined.
-  const WidgetbookApp.cupertino({
+  const App.cupertino({
     this.devices = const <Device>[],
     this.textScaleFactors = const <double>[],
     this.foldersExpanded = false,
     this.widgetsExpanded = false,
-    this.constructor = WidgetbookConstructor.cupertino,
+    this.constructor = Constructor.cupertino,
   }) : themeType = null;
 
   /// The type of the ThemeData.
@@ -42,7 +43,7 @@ class WidgetbookApp {
 
   /// Indicates which type of theme is used for the generic Widgetbook
   /// implementation.
-  final WidgetbookConstructor constructor;
+  final Constructor constructor;
 
   /// The devices shown in the Widgetbook
   final List<Device> devices;

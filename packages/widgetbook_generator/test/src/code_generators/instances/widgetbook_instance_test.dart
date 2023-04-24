@@ -15,7 +15,7 @@ void main() {
       'Widgetbook',
       instance: WidgetbookInstance(
         addons: const [],
-        constructor: WidgetbookConstructor.material,
+        constructor: Constructor.material,
         directories: const [],
       ),
     );
@@ -40,7 +40,7 @@ void main() {
       () {
         final instance = WidgetbookInstance(
           addons: const [],
-          constructor: WidgetbookConstructor.material,
+          constructor: Constructor.material,
           directories: const [],
         );
 
@@ -59,7 +59,7 @@ void main() {
       () {
         final instance = WidgetbookInstance(
           addons: const [],
-          constructor: WidgetbookConstructor.material,
+          constructor: Constructor.material,
           directories: const [],
         );
 
@@ -79,7 +79,7 @@ void main() {
       () {
         final instance = WidgetbookInstance(
           addons: const [],
-          constructor: WidgetbookConstructor.material,
+          constructor: Constructor.material,
           directories: const [],
         );
 
@@ -99,7 +99,7 @@ void main() {
       () {
         final instance = WidgetbookInstance(
           addons: const [],
-          constructor: WidgetbookConstructor.material,
+          constructor: Constructor.material,
           directories: const [],
         );
 

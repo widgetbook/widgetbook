@@ -6,7 +6,7 @@ import 'package:widgetbook_generator/extensions/element_extensions.dart';
 import 'package:widgetbook_generator/json_formatter.dart';
 import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
 
-class UseCaseResolver extends GeneratorForAnnotation<WidgetbookUseCase> {
+class UseCaseResolver extends GeneratorForAnnotation<UseCase> {
   @override
   String generateForAnnotatedElement(
     Element element,

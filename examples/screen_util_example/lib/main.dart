@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as anno;
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 /// An example [Widget] that uses [ScreenUtil].
 class ScreenUtilExample extends StatelessWidget {
@@ -30,7 +30,7 @@ class ScreenUtilExample extends StatelessWidget {
   }
 }
 
-@anno.WidgetbookUseCase(
+@widgetbook.UseCase(
   name: 'show screen height and width',
   type: ScreenUtilExample,
 )
@@ -43,7 +43,7 @@ Widget exampleBuilder(BuildContext context) {
 ///
 /// For more context on how to create the app builder see [materialAppBuilder]
 /// or have a look at the documentation.
-@anno.WidgetbookAppBuilder()
+@widgetbook.AppBuilder()
 Widget appBuilder(BuildContext context, Widget child) {
   return ScreenUtilInit(
     designSize: const Size(375, 812),
@@ -73,7 +73,7 @@ void main() {
 ///
 /// Note: The [WidgetbookApp] annotation can used on ANY code element.
 /// For more information, see the documentation
-@anno.WidgetbookApp.material(
+@widgetbook.App.material(
   // Adding devices is mandatory as it enables the [DeviceAddon] that is
   // required to properly set [MediaQuery] parameters
   devices: [

@@ -1,11 +1,11 @@
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
-import 'package:widgetbook_annotation/src/widgetbook_use_case.dart';
+import 'package:widgetbook_annotation/src/use_case.dart';
 
 void main() {
-  group('$WidgetbookUseCase', () {
+  group('$UseCase', () {
     test('creates instance', () {
-      const instance = WidgetbookUseCase(name: 'Test', type: int);
+      const instance = UseCase(name: 'Test', type: int);
 
       expect(
         instance.name,
