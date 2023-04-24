@@ -35,13 +35,6 @@ class KnobsExample extends StatelessWidget {
           ),
         ),
       ],
-      appBuilder: (context, child) {
-        final theme = context.theme<ThemeData>();
-        return Theme(
-          data: theme!,
-          child: child,
-        );
-      },
       directories: [
         WidgetbookCategory(
           name: 'Pages',
