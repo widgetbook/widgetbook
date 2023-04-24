@@ -3,7 +3,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 class CustomThemeAddon<T> extends ThemeAddon<T> {
   CustomThemeAddon({
-    required super.setting,
+    required super.initialSetting,
     required this.themeBuilder,
   });
 
@@ -12,7 +12,7 @@ class CustomThemeAddon<T> extends ThemeAddon<T> {
   @override
   Widget buildUseCase(BuildContext context, Widget child) {
     return themeBuilder(
-      setting.activeTheme.data,
+      initialSetting.activeTheme.data,
       child,
     );
   }

@@ -18,7 +18,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
         ),
         super(
           name: 'Device',
-          setting: DeviceSetting(
+          initialSetting: DeviceSetting(
             // [null] represents a "none" device
             devices: [null, ...devices],
             activeDevice: initialDevice,
@@ -32,31 +32,31 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
       child: Row(
         children: [
           DropdownSetting<Device?>(
-            options: setting.devices,
+            options: initialSetting.devices,
             optionValueBuilder: (device) => device?.name ?? 'None',
-            initialSelection: setting.activeDevice,
+            initialSelection: initialSetting.activeDevice,
             onSelected: (device) {
               onChanged(
-                value.copyWith(
+                setting.copyWith(
                   activeDevice: device,
                 ),
               );
             },
           ),
-          if (value.activeDevice != null) ...{
+          if (setting.activeDevice != null) ...{
             IconButton(
               tooltip: 'Orientation',
               onPressed: () {
                 onChanged(
-                  value.copyWith(
-                    orientation: value.orientation == Orientation.portrait
+                  setting.copyWith(
+                    orientation: setting.orientation == Orientation.portrait
                         ? Orientation.landscape
                         : Orientation.portrait,
                   ),
                 );
               },
               icon: Icon(
-                value.orientation == Orientation.portrait
+                setting.orientation == Orientation.portrait
                     ? Icons.screen_lock_portrait
                     : Icons.screen_lock_landscape,
                 color: Theme.of(context).iconTheme.color,
@@ -66,14 +66,14 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
               tooltip: 'Frame',
               onPressed: () {
                 onChanged(
-                  value.copyWith(
-                    hasFrame: !value.hasFrame,
+                  setting.copyWith(
+                    hasFrame: !setting.hasFrame,
                   ),
                 );
               },
               icon: Icon(
                 Icons.smartphone,
-                color: value.hasFrame
+                color: setting.hasFrame
                     ? Theme.of(context).iconTheme.color
                     : Theme.of(context).disabledColor,
               ),
@@ -86,18 +86,18 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
 
   @override
   Widget buildUseCase(BuildContext context, Widget child) {
-    if (value.activeDevice == null) {
+    if (setting.activeDevice == null) {
       return child;
     }
 
-    if (!value.hasFrame) {
+    if (!setting.hasFrame) {
       return WidgetbookFrameBuilder(
-        setting: value,
+        setting: setting,
       ).build(context, child);
     }
 
     return DeviceFrameBuilder(
-      setting: value,
+      setting: setting,
     ).build(context, child);
   }
 }

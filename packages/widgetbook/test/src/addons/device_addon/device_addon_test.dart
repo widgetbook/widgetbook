@@ -19,7 +19,7 @@ void main() {
         initialDevice: devices.first,
       );
 
-      final setting = addon.value;
+      final setting = addon.setting;
 
       group('context has', () {
         testWidgets(
@@ -30,7 +30,7 @@ void main() {
               addon: addon,
               expect: (context) => expect(
                 context.device,
-                equals(addon.value.activeDevice),
+                equals(addon.setting.activeDevice),
               ),
             );
           },
@@ -44,7 +44,7 @@ void main() {
               addon: addon,
               expect: (context) => expect(
                 context.orientation,
-                equals(addon.value.orientation),
+                equals(addon.setting.orientation),
               ),
             );
           },
@@ -163,7 +163,7 @@ void main() {
                   ),
                 ),
                 expect: (context) => expect(
-                  addon.value.hasFrame,
+                  addon.setting.hasFrame,
                   equals(true),
                 ),
               );
@@ -182,7 +182,7 @@ void main() {
                   await tester.pumpAndSettle();
                 },
                 expect: (context) => expect(
-                  addon.value.hasFrame,
+                  addon.setting.hasFrame,
                   equals(false),
                 ),
               );

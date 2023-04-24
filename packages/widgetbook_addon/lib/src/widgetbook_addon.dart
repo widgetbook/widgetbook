@@ -18,14 +18,14 @@ import 'widgetbook_addon_scope.dart';
 abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
   WidgetbookAddOn({
     required this.name,
-    required this.setting,
-  }) : notifier = ValueNotifier<T>(setting);
+    required this.initialSetting,
+  }) : notifier = ValueNotifier<T>(initialSetting);
 
   final String name;
-  final T setting;
+  final T initialSetting;
   late ValueNotifier<T> notifier;
 
-  T get value => notifier.value;
+  T get setting => notifier.value;
 
   void addListener(ValueChanged<T> listener) {
     notifier.addListener(
@@ -54,7 +54,7 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
 
   Widget buildSetting(BuildContext context);
 
-  /// Wraps use cases with a custom widget depending on the addon [setting].
+  /// Wraps use cases with a custom widget depending on the addon [initialSetting].
   Widget buildUseCase(BuildContext context, Widget child) {
     return child;
   }
