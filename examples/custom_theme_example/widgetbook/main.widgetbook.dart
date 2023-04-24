@@ -47,10 +47,10 @@ class HotReload extends StatelessWidget {
           setting: CustomThemeSetting.firstAsSelected(
             themes: [widgetbookTheme, widgetbookTheme2],
           ),
-          useCaseBuilder: (themeData, useCase) {
+          themeBuilder: (theme, child) {
             return AppTheme(
-              data: themeData,
-              child: useCase,
+              data: theme,
+              child: child,
             );
           },
         ),
