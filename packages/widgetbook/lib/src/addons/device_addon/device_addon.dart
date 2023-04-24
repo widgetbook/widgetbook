@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/addons/device_addon/frames/frames.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
+
+import 'frames/frames.dart';
 
 class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
   DeviceAddon({
@@ -25,7 +26,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
         );
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildSetting(BuildContext context) {
     return Setting(
       name: 'Device',
       child: Row(
@@ -82,14 +83,27 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
       ),
     );
   }
+
+  @override
+  Widget buildUseCase(BuildContext context, Widget child) {
+    if (value.activeDevice == null) {
+      return child;
+    }
+
+    if (!value.hasFrame) {
+      return WidgetbookFrameBuilder(
+        setting: value,
+      ).build(context, child);
+    }
+
+    return DeviceFrameBuilder(
+      setting: value,
+    ).build(context, child);
+  }
 }
 
 extension DeviceExtension on BuildContext {
   Device? get device => getAddonValue<DeviceSetting>()!.activeDevice;
 
   Orientation get orientation => getAddonValue<DeviceSetting>()!.orientation;
-
-  FrameBuilder? get frameBuilder {
-    return getAddonValue<DeviceSetting>()?.frameBuilder;
-  }
 }

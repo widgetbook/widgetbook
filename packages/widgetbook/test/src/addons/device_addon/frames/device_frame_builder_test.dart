@@ -30,7 +30,7 @@ void main() {
           await tester.pumpWidgetWithMaterialApp(
             Builder(
               builder: (context) {
-                return addon.buildWithScope(
+                return addon.buildScope(
                   {
                     'device': phone.name,
                   },

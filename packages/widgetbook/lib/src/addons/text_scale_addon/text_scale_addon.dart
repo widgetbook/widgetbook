@@ -11,7 +11,7 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
         );
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildSetting(BuildContext context) {
     return Setting(
       name: 'Text scale',
       child: DropdownSetting<double>(
@@ -26,6 +26,16 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
           );
         },
       ),
+    );
+  }
+
+  @override
+  Widget buildUseCase(BuildContext context, Widget child) {
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(
+        textScaleFactor: value.activeTextScale,
+      ),
+      child: child,
     );
   }
 }

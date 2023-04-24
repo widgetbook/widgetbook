@@ -44,8 +44,8 @@ class HotReload extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook.material(
       addons: [
-        CustomThemeAddon<ThemeData>(
-          setting: ThemeSetting<ThemeData>(
+        MaterialThemeAddon(
+          setting: MaterialThemeSetting(
             themes: [
               WidgetbookTheme(
                 name: 'Dark',
@@ -361,7 +361,6 @@ class HotReload extends StatelessWidget {
           ],
         ),
       ],
-      appBuilder: customAppBuilder,
     );
   }
 }

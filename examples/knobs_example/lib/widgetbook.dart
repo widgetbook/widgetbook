@@ -24,22 +24,17 @@ class KnobsExample extends StatelessWidget {
             textScales: [1, 2],
           ),
         ),
-        CustomThemeAddon<ThemeData>(
-          setting: CustomThemeSetting.firstAsSelected(
+        MaterialThemeAddon(
+          setting: MaterialThemeSetting.firstAsSelected(
             themes: [
-              WidgetbookTheme(data: ThemeData.dark(), name: 'dark'),
+              WidgetbookTheme(
+                data: ThemeData.dark(),
+                name: 'dark',
+              ),
             ],
           ),
         ),
       ],
-      appBuilder: (context, child) {
-        final frameBuilder = context.frameBuilder;
-        final theme = context.theme<ThemeData>();
-        return Theme(
-          data: theme!,
-          child: frameBuilder!.build(context, child),
-        );
-      },
       directories: [
         WidgetbookCategory(
           name: 'Pages',

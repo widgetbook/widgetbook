@@ -23,27 +23,3 @@ ThemeData themeDark() => Themes.dark;
   name: 'Light',
 )
 ThemeData themeLight() => Themes.light;
-
-@anno.WidgetbookAppBuilder()
-Widget customAppBuilder(BuildContext context, Widget child) {
-  final frameBuilder = context.frameBuilder;
-  return frameBuilder!.build(
-    context,
-    Builder(
-      builder: (context) {
-        return MaterialApp(
-          theme: context.materialTheme,
-          debugShowCheckedModeBanner: false,
-          home: Scaffold(
-            body: MediaQuery(
-              data: MediaQuery.of(context).copyWith(
-                textScaleFactor: context.textScale,
-              ),
-              child: child,
-            ),
-          ),
-        );
-      },
-    ),
-  );
-}

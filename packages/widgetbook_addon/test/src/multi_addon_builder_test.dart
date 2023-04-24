@@ -8,22 +8,22 @@ import '../helper/widget_test_helper.dart';
 
 void main() {
   group(
-    '$AddonInjectorWidget',
+    '$MultiAddonBuilder',
     () {
       testWidgets(
         'returns child widget when addons are empty',
         (WidgetTester tester) async {
           await tester.pumpWidgetWithMaterialApp(
-            AddonInjectorWidget(
-              routerData: {},
+            MultiAddonBuilder(
               addons: [],
               onChanged: (_) {},
+              builder: (_, __, ___) => Text('stub'),
               child: Text('single child'),
             ),
           );
 
           final childFinder = find.descendant(
-            of: find.byType(AddonInjectorWidget),
+            of: find.byType(MultiAddonBuilder),
             matching: find.byType(Text),
           );
 
@@ -35,8 +35,7 @@ void main() {
         'returns [Nested] widget when addons are available',
         (WidgetTester tester) async {
           await tester.pumpWidgetWithMaterialApp(
-            AddonInjectorWidget(
-              routerData: {},
+            MultiAddonBuilder(
               addons: [
                 CustomAddOn(
                   setting: CustomAddOnSetting(
@@ -45,17 +44,18 @@ void main() {
                 )
               ],
               onChanged: (_) {},
+              builder: (_, __, ___) => Text('stub'),
               child: Text('single child'),
             ),
           );
 
           final nestedFinder = find.descendant(
-            of: find.byType(AddonInjectorWidget),
+            of: find.byType(MultiAddonBuilder),
             matching: find.byType(Nested),
           );
 
           final childFinder = find.descendant(
-            of: find.byType(AddonInjectorWidget),
+            of: find.byType(MultiAddonBuilder),
             matching: find.byType(Text),
           );
 

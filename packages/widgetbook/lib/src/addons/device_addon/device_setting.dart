@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:widgetbook/src/addons/device_addon/frames/frames.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_addon/widgetbook_addon.dart';
 
@@ -54,23 +53,5 @@ class DeviceSetting extends WidgetbookAddOnModel<DeviceSetting>
             hasFrame: queryParameters['frame'] == 'true',
           )
         : null;
-  }
-
-  FrameBuilder get frameBuilder {
-    if (activeDevice == null) {
-      return FramelessBuilder(
-        setting: this,
-      );
-    }
-
-    if (!hasFrame) {
-      return WidgetbookFrameBuilder(
-        setting: this,
-      );
-    }
-
-    return DeviceFrameBuilder(
-      setting: this,
-    );
   }
 }

@@ -10,7 +10,7 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
         );
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildSetting(BuildContext context) {
     return Setting(
       name: 'Locale',
       child: DropdownSetting<Locale>(
@@ -25,6 +25,15 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
           );
         },
       ),
+    );
+  }
+
+  @override
+  Widget buildUseCase(BuildContext context, Widget child) {
+    return Localizations(
+      locale: value.activeLocale,
+      delegates: value.localizationsDelegates,
+      child: child,
     );
   }
 }

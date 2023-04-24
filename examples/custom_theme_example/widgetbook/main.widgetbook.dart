@@ -39,48 +39,50 @@ class HotReload extends StatelessWidget {
     ];
 
     return Widgetbook(
-        addons: [
-          DeviceAddon(
-            devices: devices,
+      addons: [
+        DeviceAddon(
+          devices: devices,
+        ),
+        CustomThemeAddon<AppThemeData>(
+          setting: CustomThemeSetting.firstAsSelected(
+            themes: [widgetbookTheme, widgetbookTheme2],
           ),
-          CustomThemeAddon<AppThemeData>(
-            setting: CustomThemeSetting.firstAsSelected(
-              themes: [widgetbookTheme, widgetbookTheme2],
+          themeBuilder: (theme, child) {
+            return AppTheme(
+              data: theme,
+              child: child,
+            );
+          },
+        ),
+      ],
+      directories: [
+        WidgetbookCategory(
+          name: 'Default',
+          children: [
+            WidgetbookComponent(
+              name: 'Awesome Widget',
+              useCases: [
+                WidgetbookUseCase(
+                  name: 'Default',
+                  builder: (context) => const AwesomeWidget(),
+                )
+              ],
             ),
-          ),
-        ],
-        directories: [
-          WidgetbookCategory(
-            name: 'Default',
-            children: [
-              WidgetbookComponent(
-                name: 'Awesome Widget',
-                useCases: [
-                  WidgetbookUseCase(
-                    name: 'Default',
-                    builder: (context) => const AwesomeWidget(),
-                  )
-                ],
-              ),
-              WidgetbookComponent(
-                name: 'App Launch Screen',
-                useCases: [
-                  WidgetbookUseCase(
-                    name: 'Default',
-                    builder: (context) => const MyHomePage(),
-                  )
-                ],
-              ),
-            ],
-          )
-        ],
-        appBuilder: (context, child) {
-          final frameBuilder = context.frameBuilder;
-          final theme = context.theme<AppThemeData>();
-          return AppTheme(
-            data: theme!,
-            child: frameBuilder!.build(context, child),
-          );
-        });
+            WidgetbookComponent(
+              name: 'App Launch Screen',
+              useCases: [
+                WidgetbookUseCase(
+                  name: 'Default',
+                  builder: (context) => const MyHomePage(),
+                )
+              ],
+            ),
+          ],
+        )
+      ],
+      appBuilder: (context, child) => Container(
+        child: child,
+      ),
+    );
   }
 }

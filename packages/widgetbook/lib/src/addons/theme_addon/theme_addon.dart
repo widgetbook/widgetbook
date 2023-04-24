@@ -10,7 +10,7 @@ abstract class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
         );
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildSetting(BuildContext context) {
     return Setting(
       name: 'Theme',
       child: DropdownSetting<WidgetbookTheme<T>>(

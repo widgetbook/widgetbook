@@ -55,6 +55,7 @@ void main() {
       );
       final addon = CustomThemeAddon<AppThemeData>(
         setting: setting,
+        themeBuilder: (_, __) => Placeholder(),
       );
 
       testWidgets(
