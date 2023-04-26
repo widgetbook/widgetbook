@@ -43,9 +43,9 @@ class HotReload extends StatelessWidget {
         DeviceAddon(
           devices: devices,
         ),
-        CustomThemeAddon<AppThemeData>(
+        ThemeAddon<AppThemeData>(
           themes: [widgetbookTheme, widgetbookTheme2],
-          themeBuilder: (theme, child) {
+          themeBuilder: (_, theme, child) {
             return AppTheme(
               data: theme,
               child: child,
