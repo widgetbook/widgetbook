@@ -48,25 +48,6 @@ void main() {
         'constructor throws $AssertionError when',
         () {
           test(
-            'devices is empty',
-            () {
-              expect(
-                () => Widgetbook<ThemeData>(
-                  appBuilder: _defaultAppBuilderMethod,
-                  addons: [
-                    DeviceAddon(
-                      devices: [],
-                    )
-                  ],
-                ),
-                expectAssertionErrorWithMessage(
-                  message: 'Please specify at least one $Device',
-                ),
-              );
-            },
-          );
-
-          test(
             'textScaleFactors is empty',
             () {
               expect(
@@ -79,7 +60,7 @@ void main() {
                   ],
                 ),
                 expectAssertionErrorWithMessage(
-                  message: 'Please specify at least one TextScaleFactor',
+                  message: 'scales cannot be empty',
                 ),
               );
             },
@@ -98,7 +79,7 @@ void main() {
                   ],
                 ),
                 expectAssertionErrorWithMessage(
-                  message: 'Please specify at least one Theme',
+                  message: 'themes cannot be empty',
                 ),
               );
             },
@@ -117,7 +98,7 @@ void main() {
                   ],
                 ),
                 expectAssertionErrorWithMessage(
-                  message: 'Please specify at least one Device',
+                  message: 'devices cannot be empty',
                 ),
               );
             },
@@ -137,7 +118,7 @@ void main() {
                   ],
                 ),
                 expectAssertionErrorWithMessage(
-                  message: 'Please specify at least one supported $Locale.',
+                  message: 'locales cannot be empty',
                 ),
               );
             },

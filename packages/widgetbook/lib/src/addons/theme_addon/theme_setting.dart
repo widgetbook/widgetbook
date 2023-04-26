@@ -8,10 +8,7 @@ class ThemeSetting<T> extends WidgetbookAddOnModel<ThemeSetting<T>> {
   ThemeSetting({
     required this.themes,
     required this.activeTheme,
-  }) : assert(
-          themes.isNotEmpty,
-          'themes cannot be empty',
-        );
+  });
 
   final List<WidgetbookTheme<T>> themes;
   final WidgetbookTheme<T> activeTheme;

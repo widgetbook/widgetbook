@@ -8,7 +8,6 @@ part 'device_setting.freezed.dart';
 @freezed
 class DeviceSetting extends WidgetbookAddOnModel<DeviceSetting>
     with _$DeviceSetting {
-  @Assert('devices.isNotEmpty', 'devices cannot be empty')
   factory DeviceSetting({
     required List<Device?> devices,
     required Device? activeDevice,

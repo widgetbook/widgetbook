@@ -10,7 +10,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
     Device? initialDevice,
   })  : assert(
           devices.isNotEmpty,
-          'Please specify at least one Device',
+          'devices cannot be empty',
         ),
         assert(
           initialDevice == null || devices.contains(initialDevice),
