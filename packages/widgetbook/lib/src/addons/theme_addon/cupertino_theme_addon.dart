@@ -8,15 +8,13 @@ class CupertinoThemeAddon extends ThemeAddon<CupertinoThemeData> {
   }) : super(
           themes: themes,
           initialTheme: initialTheme,
+          themeBuilder: (context, theme, child) {
+            return CupertinoTheme(
+              data: theme,
+              child: child,
+            );
+          },
         );
-
-  @override
-  Widget buildUseCase(BuildContext context, Widget child) {
-    return CupertinoTheme(
-      data: setting.activeTheme.data,
-      child: child,
-    );
-  }
 }
 
 extension CupertinoThemeExtension on BuildContext {

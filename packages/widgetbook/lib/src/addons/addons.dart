@@ -4,13 +4,8 @@ import 'package:widgetbook/widgetbook.dart';
 
 export 'package:widgetbook_addon/src/widgetbook_addon.dart';
 
-export './cupertino_theme_addon/addon.dart';
-export './cupertino_theme_addon/cupertino_theme_addon.dart';
-export './custom_theme_addon/addon.dart';
 export './device_addon/addon.dart';
 export './localization_addon/addon.dart';
-export './material_theme_addon/addon.dart';
-export './material_theme_addon/material_theme_addon.dart';
 export './text_scale_addon/addon.dart';
 export './theme_addon/addon.dart';
 

@@ -8,15 +8,13 @@ class MaterialThemeAddon extends ThemeAddon<ThemeData> {
   }) : super(
           themes: themes,
           initialTheme: initialTheme,
+          themeBuilder: (context, theme, child) {
+            return Theme(
+              data: theme,
+              child: child,
+            );
+          },
         );
-
-  @override
-  Widget buildUseCase(BuildContext context, Widget child) {
-    return Theme(
-      data: setting.activeTheme.data,
-      child: child,
-    );
-  }
 }
 
 extension MaterialThemeExtension on BuildContext {
