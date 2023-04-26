@@ -5,14 +5,19 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 abstract class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
   ThemeAddon({
     required List<WidgetbookTheme<T>> themes,
+    WidgetbookTheme<T>? initialTheme,
   })  : assert(
           themes.isNotEmpty,
           'themes cannot be empty',
         ),
+        assert(
+          initialTheme == null || themes.contains(initialTheme),
+          'initialTheme must be in themes',
+        ),
         super(
           initialSetting: ThemeSetting(
             themes: themes,
-            activeTheme: themes.first,
+            activeTheme: initialTheme ?? themes.first,
           ),
         );
 

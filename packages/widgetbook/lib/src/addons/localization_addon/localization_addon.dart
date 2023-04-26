@@ -6,15 +6,20 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
   LocalizationAddon({
     required List<Locale> locales,
     required List<LocalizationsDelegate> localizationsDelegates,
+    Locale? initialLocale,
   })  : assert(
           locales.isNotEmpty,
           'locales cannot be empty',
         ),
+        assert(
+          initialLocale == null || locales.contains(initialLocale),
+          'initialLocale must be in locales',
+        ),
         super(
           initialSetting: LocalizationSetting(
-            activeLocale: locales.first,
             locales: locales,
             localizationsDelegates: localizationsDelegates,
+            activeLocale: initialLocale ?? locales.first,
           ),
         );
 

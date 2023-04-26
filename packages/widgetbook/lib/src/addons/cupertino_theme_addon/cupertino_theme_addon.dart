@@ -4,8 +4,10 @@ import 'package:widgetbook/widgetbook.dart';
 class CupertinoThemeAddon extends ThemeAddon<CupertinoThemeData> {
   CupertinoThemeAddon({
     required List<WidgetbookTheme<CupertinoThemeData>> themes,
+    WidgetbookTheme<CupertinoThemeData>? initialTheme,
   }) : super(
           themes: themes,
+          initialTheme: initialTheme,
         );
 
   @override

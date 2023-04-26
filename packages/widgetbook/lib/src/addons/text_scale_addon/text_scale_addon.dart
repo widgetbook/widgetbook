@@ -6,14 +6,19 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
   TextScaleAddon({
     required List<double> scales,
+    double? initialScale,
   })  : assert(
           scales.isNotEmpty,
           'scales cannot be empty',
         ),
+        assert(
+          initialScale == null || scales.contains(initialScale),
+          'initialScale must be in scales',
+        ),
         super(
           initialSetting: TextScaleSetting(
-            activeTextScale: scales.first,
             textScales: scales,
+            activeTextScale: initialScale ?? scales.first,
           ),
         );
 
