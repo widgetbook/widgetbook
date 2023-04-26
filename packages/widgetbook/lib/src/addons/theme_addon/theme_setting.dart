@@ -13,17 +13,6 @@ class ThemeSetting<T> extends WidgetbookAddOnModel<ThemeSetting<T>> {
           'themes cannot be empty',
         );
 
-  /// Sets the first theme within `themes` as the active theme on
-  /// startup
-  factory ThemeSetting.firstAsSelected({
-    required List<WidgetbookTheme<T>> themes,
-  }) {
-    return ThemeSetting(
-      activeTheme: themes.first,
-      themes: themes,
-    );
-  }
-
   final List<WidgetbookTheme<T>> themes;
   final WidgetbookTheme<T> activeTheme;
 
