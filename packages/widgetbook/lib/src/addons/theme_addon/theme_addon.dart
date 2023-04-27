@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
-abstract class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
+typedef ThemeBuilder<T> = Widget Function(
+  BuildContext context,
+  T theme,
+  Widget child,
+);
+
+class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
   ThemeAddon({
     required List<WidgetbookTheme<T>> themes,
     WidgetbookTheme<T>? initialTheme,
+    required this.themeBuilder,
   })  : assert(
           themes.isNotEmpty,
           'themes cannot be empty',
@@ -20,6 +27,8 @@ abstract class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
             activeTheme: initialTheme ?? themes.first,
           ),
         );
+
+  final ThemeBuilder<T> themeBuilder;
 
   @override
   Widget buildSetting(BuildContext context) {
@@ -39,4 +48,17 @@ abstract class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
       ),
     );
   }
+
+  @override
+  Widget buildUseCase(BuildContext context, Widget child) {
+    return themeBuilder(
+      context,
+      setting.activeTheme.data,
+      child,
+    );
+  }
+}
+
+extension CustomThemeExtension on BuildContext {
+  T? theme<T>() => getAddonValue<ThemeSetting<T>>()?.activeTheme.data;
 }

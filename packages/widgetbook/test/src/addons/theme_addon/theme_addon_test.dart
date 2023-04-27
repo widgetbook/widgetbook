@@ -34,7 +34,7 @@ class AppTheme extends InheritedWidget {
 
 void main() {
   group(
-    '$CustomThemeAddon',
+    '$ThemeAddon',
     () {
       const blueCustomWidgetbookTheme = WidgetbookTheme<AppThemeData>(
         name: 'Blue',
@@ -46,12 +46,12 @@ void main() {
         data: AppThemeData(color: colorYellow),
       );
 
-      final addon = CustomThemeAddon<AppThemeData>(
+      final addon = ThemeAddon<AppThemeData>(
         themes: [
           blueCustomWidgetbookTheme,
           yellowCustomWidgetbookTheme,
         ],
-        themeBuilder: (_, __) => Placeholder(),
+        themeBuilder: (_, __, ___) => Placeholder(),
       );
 
       testWidgets(
