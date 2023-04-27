@@ -25,10 +25,8 @@ class CustomAddOnSetting extends WidgetbookAddOnModel<CustomAddOnSetting> {
 
 class CustomAddOn extends WidgetbookAddOn<CustomAddOnSetting> {
   CustomAddOn({
-    required super.setting,
-  }) : super(
-          name: 'Custom',
-        );
+    required super.initialSetting,
+  });
 
   @override
   Widget buildSetting(BuildContext context) {

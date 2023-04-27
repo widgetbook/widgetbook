@@ -3,16 +3,20 @@ import 'package:widgetbook/widgetbook.dart';
 
 class CustomThemeAddon<T> extends ThemeAddon<T> {
   CustomThemeAddon({
-    required super.setting,
+    required List<WidgetbookTheme<T>> themes,
     required this.themeBuilder,
-  });
+    WidgetbookTheme<T>? initialTheme,
+  }) : super(
+          themes: themes,
+          initialTheme: initialTheme,
+        );
 
   final Widget Function(T theme, Widget child) themeBuilder;
 
   @override
   Widget buildUseCase(BuildContext context, Widget child) {
     return themeBuilder(
-      setting.activeTheme.data,
+      initialSetting.activeTheme.data,
       child,
     );
   }

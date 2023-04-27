@@ -23,12 +23,7 @@ List<LocalizationsDelegate<dynamic>> localizationsDelegates = [
   GlobalCupertinoLocalizations.delegate,
 ];
 
-LocalizationSetting localizationSetting = LocalizationSetting(
-  activeLocale: engLocaleGb,
+LocalizationAddon localizationAddon = LocalizationAddon(
   localizationsDelegates: localizationsDelegates,
   locales: locales,
-);
-
-LocalizationAddon localizationAddon = LocalizationAddon(
-  setting: localizationSetting,
 );

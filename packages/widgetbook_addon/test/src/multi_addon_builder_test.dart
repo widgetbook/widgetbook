@@ -38,7 +38,7 @@ void main() {
             MultiAddonBuilder(
               addons: [
                 CustomAddOn(
-                  setting: CustomAddOnSetting(
+                  initialSetting: CustomAddOnSetting(
                     data: 'test',
                   ),
                 )

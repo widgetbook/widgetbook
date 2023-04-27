@@ -28,16 +28,11 @@ void main() {
         data: yellowTheme,
       );
 
-      final setting = CupertinoThemeSetting(
-        activeTheme: blueWidgetbookTheme,
-        themes: const [
+      final addon = CupertinoThemeAddon(
+        themes: [
           blueWidgetbookTheme,
           yellowWidgetbookTheme,
         ],
-      );
-
-      final addon = CupertinoThemeAddon(
-        setting: setting,
       );
 
       testWidgets(
@@ -61,7 +56,7 @@ void main() {
             tester: tester,
             addon: addon,
             act: () async => addon.onChanged(
-              setting.copyWith(
+              addon.setting.copyWith(
                 activeTheme: yellowWidgetbookTheme,
               ),
             ),

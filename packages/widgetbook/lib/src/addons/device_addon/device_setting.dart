@@ -8,23 +8,12 @@ part 'device_setting.freezed.dart';
 @freezed
 class DeviceSetting extends WidgetbookAddOnModel<DeviceSetting>
     with _$DeviceSetting {
-  @Assert('devices.isNotEmpty', 'devices cannot be empty')
   factory DeviceSetting({
     required List<Device?> devices,
     required Device? activeDevice,
     @Default(Orientation.portrait) Orientation orientation,
     @Default(true) bool hasFrame,
   }) = _DeviceSetting;
-
-  /// Sets the first [Device] within [devices] as the [activeDevice] on startup
-  factory DeviceSetting.firstAsSelected({
-    required List<Device?> devices,
-  }) {
-    return DeviceSetting(
-      devices: devices,
-      activeDevice: devices.first,
-    );
-  }
 
   DeviceSetting._();
 

@@ -4,9 +4,23 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 
 class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
   LocalizationAddon({
-    required super.setting,
-  }) : super(
-          name: 'localization',
+    required List<Locale> locales,
+    required List<LocalizationsDelegate> localizationsDelegates,
+    Locale? initialLocale,
+  })  : assert(
+          locales.isNotEmpty,
+          'locales cannot be empty',
+        ),
+        assert(
+          initialLocale == null || locales.contains(initialLocale),
+          'initialLocale must be in locales',
+        ),
+        super(
+          initialSetting: LocalizationSetting(
+            locales: locales,
+            localizationsDelegates: localizationsDelegates,
+            activeLocale: initialLocale ?? locales.first,
+          ),
         );
 
   @override
@@ -14,12 +28,12 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
     return Setting(
       name: 'Locale',
       child: DropdownSetting<Locale>(
-        options: setting.locales,
-        initialSelection: setting.activeLocale,
+        options: initialSetting.locales,
+        initialSelection: initialSetting.activeLocale,
         optionValueBuilder: (locale) => locale.toString(),
         onSelected: (locale) {
           onChanged(
-            value.copyWith(
+            setting.copyWith(
               activeLocale: locale,
             ),
           );
@@ -31,8 +45,8 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
   @override
   Widget buildUseCase(BuildContext context, Widget child) {
     return Localizations(
-      locale: value.activeLocale,
-      delegates: value.localizationsDelegates,
+      locale: setting.activeLocale,
+      delegates: setting.localizationsDelegates,
       child: child,
     );
   }

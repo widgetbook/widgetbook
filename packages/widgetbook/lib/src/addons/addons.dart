@@ -1,40 +1,63 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 export 'package:widgetbook_addon/src/widgetbook_addon.dart';
+
 export './cupertino_theme_addon/addon.dart';
 export './cupertino_theme_addon/cupertino_theme_addon.dart';
 export './custom_theme_addon/addon.dart';
+export './device_addon/addon.dart';
 export './localization_addon/addon.dart';
 export './material_theme_addon/addon.dart';
 export './material_theme_addon/material_theme_addon.dart';
 export './text_scale_addon/addon.dart';
 export './theme_addon/addon.dart';
-export './device_addon/addon.dart';
 
 List<WidgetbookAddOn> configureMaterialAddons({
-  required MaterialThemeSetting themeSetting,
-  required TextScaleSetting textScaleSetting,
-  required LocalizationSetting localizationSetting,
+  required List<WidgetbookTheme<ThemeData>> themes,
+  required List<double> textScales,
+  required List<Locale> locales,
+  required List<LocalizationsDelegate> localizationsDelegates,
   required List<Device> devices,
 }) {
   return [
-    MaterialThemeAddon(setting: themeSetting),
-    TextScaleAddon(setting: textScaleSetting),
-    LocalizationAddon(setting: localizationSetting),
-    DeviceAddon(devices: devices),
+    MaterialThemeAddon(
+      themes: themes,
+    ),
+    TextScaleAddon(
+      scales: textScales,
+    ),
+    LocalizationAddon(
+      locales: locales,
+      localizationsDelegates: localizationsDelegates,
+    ),
+    DeviceAddon(
+      devices: devices,
+    ),
   ];
 }
 
 List<WidgetbookAddOn> configureCupertinoAddons({
-  required CupertinoThemeSetting themeSetting,
-  required TextScaleSetting textScaleSetting,
-  required LocalizationSetting localizationSetting,
+  required List<WidgetbookTheme<CupertinoThemeData>> themes,
+  required List<double> textScales,
+  required List<Locale> locales,
+  required List<LocalizationsDelegate> localizationsDelegates,
   required List<Device> devices,
 }) {
   return [
-    CupertinoThemeAddon(setting: themeSetting),
-    TextScaleAddon(setting: textScaleSetting),
-    LocalizationAddon(setting: localizationSetting),
-    DeviceAddon(devices: devices),
+    CupertinoThemeAddon(
+      themes: themes,
+    ),
+    TextScaleAddon(
+      scales: textScales,
+    ),
+    LocalizationAddon(
+      locales: locales,
+      localizationsDelegates: localizationsDelegates,
+    ),
+    DeviceAddon(
+      devices: devices,
+    ),
   ];
 }

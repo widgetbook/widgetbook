@@ -45,31 +45,22 @@ class HotReload extends StatelessWidget {
     return Widgetbook.material(
       addons: [
         MaterialThemeAddon(
-          setting: MaterialThemeSetting(
-            themes: [
-              WidgetbookTheme(
-                name: 'Dark',
-                data: themeDark(),
-              ),
-              WidgetbookTheme(
-                name: 'Light',
-                data: themeLight(),
-              ),
-            ],
-            activeTheme: WidgetbookTheme(
+          themes: [
+            WidgetbookTheme(
               name: 'Dark',
               data: themeDark(),
             ),
-          ),
+            WidgetbookTheme(
+              name: 'Light',
+              data: themeLight(),
+            ),
+          ],
         ),
         TextScaleAddon(
-          setting: TextScaleSetting(
-            textScales: [
-              1.0,
-              2.0,
-            ],
-            activeTextScale: 1.0,
-          ),
+          scales: [
+            1.0,
+            2.0,
+          ],
         ),
         DeviceAddon(
           devices: [

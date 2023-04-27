@@ -46,15 +46,11 @@ void main() {
         data: AppThemeData(color: colorYellow),
       );
 
-      const themes = [
-        blueCustomWidgetbookTheme,
-        yellowCustomWidgetbookTheme,
-      ];
-      final setting = ThemeSetting<AppThemeData>.firstAsSelected(
-        themes: themes,
-      );
       final addon = CustomThemeAddon<AppThemeData>(
-        setting: setting,
+        themes: [
+          blueCustomWidgetbookTheme,
+          yellowCustomWidgetbookTheme,
+        ],
         themeBuilder: (_, __) => Placeholder(),
       );
 
@@ -79,7 +75,7 @@ void main() {
             tester: tester,
             addon: addon,
             act: () async => addon.onChanged(
-              setting.copyWith(
+              addon.setting.copyWith(
                 activeTheme: yellowCustomWidgetbookTheme,
               ),
             ),

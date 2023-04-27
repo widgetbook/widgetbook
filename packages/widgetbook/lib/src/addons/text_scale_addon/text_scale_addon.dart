@@ -5,9 +5,21 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 
 class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
   TextScaleAddon({
-    required super.setting,
-  }) : super(
-          name: 'text-scales',
+    required List<double> scales,
+    double? initialScale,
+  })  : assert(
+          scales.isNotEmpty,
+          'scales cannot be empty',
+        ),
+        assert(
+          initialScale == null || scales.contains(initialScale),
+          'initialScale must be in scales',
+        ),
+        super(
+          initialSetting: TextScaleSetting(
+            textScales: scales,
+            activeTextScale: initialScale ?? scales.first,
+          ),
         );
 
   @override
@@ -15,12 +27,12 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
     return Setting(
       name: 'Text scale',
       child: DropdownSetting<double>(
-        options: setting.textScales,
-        initialSelection: setting.activeTextScale,
+        options: initialSetting.textScales,
+        initialSelection: initialSetting.activeTextScale,
         optionValueBuilder: (scale) => scale.toStringAsFixed(2),
         onSelected: (scale) {
           onChanged(
-            value.copyWith(
+            setting.copyWith(
               activeTextScale: scale,
             ),
           );
@@ -33,7 +45,7 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
   Widget buildUseCase(BuildContext context, Widget child) {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
-        textScaleFactor: value.activeTextScale,
+        textScaleFactor: setting.activeTextScale,
       ),
       child: child,
     );

@@ -4,9 +4,21 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 
 abstract class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
   ThemeAddon({
-    required super.setting,
-  }) : super(
-          name: 'themes',
+    required List<WidgetbookTheme<T>> themes,
+    WidgetbookTheme<T>? initialTheme,
+  })  : assert(
+          themes.isNotEmpty,
+          'themes cannot be empty',
+        ),
+        assert(
+          initialTheme == null || themes.contains(initialTheme),
+          'initialTheme must be in themes',
+        ),
+        super(
+          initialSetting: ThemeSetting(
+            themes: themes,
+            activeTheme: initialTheme ?? themes.first,
+          ),
         );
 
   @override
@@ -14,12 +26,12 @@ abstract class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
     return Setting(
       name: 'Theme',
       child: DropdownSetting<WidgetbookTheme<T>>(
-        options: setting.themes,
-        initialSelection: setting.activeTheme,
+        options: initialSetting.themes,
+        initialSelection: initialSetting.activeTheme,
         optionValueBuilder: (theme) => theme.name,
         onSelected: (theme) {
           onChanged(
-            value.copyWith(
+            setting.copyWith(
               activeTheme: theme,
             ),
           );

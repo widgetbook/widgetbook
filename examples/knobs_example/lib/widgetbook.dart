@@ -20,19 +20,15 @@ class KnobsExample extends StatelessWidget {
           ],
         ),
         TextScaleAddon(
-          setting: TextScaleSetting.firstAsSelected(
-            textScales: [1, 2],
-          ),
+          scales: [1, 2],
         ),
         MaterialThemeAddon(
-          setting: MaterialThemeSetting.firstAsSelected(
-            themes: [
-              WidgetbookTheme(
-                data: ThemeData.dark(),
-                name: 'dark',
-              ),
-            ],
-          ),
+          themes: [
+            WidgetbookTheme(
+              data: ThemeData.dark(),
+              name: 'dark',
+            ),
+          ],
         ),
       ],
       directories: [

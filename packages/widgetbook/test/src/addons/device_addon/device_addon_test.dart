@@ -19,8 +19,6 @@ void main() {
         initialDevice: devices.first,
       );
 
-      final setting = addon.value;
-
       group('context has', () {
         testWidgets(
           'device',
@@ -30,7 +28,7 @@ void main() {
               addon: addon,
               expect: (context) => expect(
                 context.device,
-                equals(addon.value.activeDevice),
+                equals(addon.setting.activeDevice),
               ),
             );
           },
@@ -44,7 +42,7 @@ void main() {
               addon: addon,
               expect: (context) => expect(
                 context.orientation,
-                equals(addon.value.orientation),
+                equals(addon.setting.orientation),
               ),
             );
           },
@@ -61,7 +59,7 @@ void main() {
               tester: tester,
               addon: addon,
               act: () async => addon.onChanged(
-                setting.copyWith(
+                addon.setting.copyWith(
                   activeDevice: device,
                 ),
               ),
@@ -115,7 +113,7 @@ void main() {
                 tester: tester,
                 addon: addon,
                 act: () async => addon.onChanged(
-                  setting.copyWith(
+                  addon.setting.copyWith(
                     orientation: Orientation.landscape,
                   ),
                 ),
@@ -132,7 +130,10 @@ void main() {
             (WidgetTester tester) async {
               await testAddon(
                 tester: tester,
-                addon: addon,
+                addon: DeviceAddon(
+                  devices: devices,
+                  initialDevice: devices.first,
+                ),
                 act: () async {
                   final finder = find.byTooltip('Orientation');
                   await tester.tap(finder);
@@ -158,12 +159,12 @@ void main() {
                 tester: tester,
                 addon: addon,
                 act: () async => addon.onChanged(
-                  setting.copyWith(
+                  addon.setting.copyWith(
                     hasFrame: true,
                   ),
                 ),
                 expect: (context) => expect(
-                  addon.value.hasFrame,
+                  addon.setting.hasFrame,
                   equals(true),
                 ),
               );
@@ -182,7 +183,7 @@ void main() {
                   await tester.pumpAndSettle();
                 },
                 expect: (context) => expect(
-                  addon.value.hasFrame,
+                  addon.setting.hasFrame,
                   equals(false),
                 ),
               );
