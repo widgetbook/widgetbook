@@ -31,10 +31,7 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
   final ThemeBuilder<T> themeBuilder;
 
   @override
-  Widget buildSetting(
-    BuildContext context,
-    ThemeSetting<T> setting,
-  ) {
+  Widget buildSetting(BuildContext context) {
     return Setting(
       name: 'Theme',
       child: DropdownSetting<WidgetbookTheme<T>>(
@@ -42,7 +39,7 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
         initialSelection: setting.activeTheme,
         optionValueBuilder: (theme) => theme.name,
         onSelected: (theme) {
-          onChanged(
+          updateSetting(
             setting.copyWith(
               activeTheme: theme,
             ),
@@ -53,11 +50,7 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
   }
 
   @override
-  Widget buildUseCase(
-    BuildContext context,
-    ThemeSetting<T> setting,
-    Widget child,
-  ) {
+  Widget buildUseCase(BuildContext context, Widget child) {
     return themeBuilder(
       context,
       setting.activeTheme.data,

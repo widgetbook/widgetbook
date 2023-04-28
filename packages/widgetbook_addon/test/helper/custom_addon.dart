@@ -29,7 +29,7 @@ class CustomAddOn extends WidgetbookAddOn<CustomAddOnSetting> {
   });
 
   @override
-  Widget buildSetting(BuildContext context, CustomAddOnSetting setting) {
+  Widget buildSetting(BuildContext context) {
     return Placeholder();
   }
 }

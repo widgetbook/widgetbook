@@ -22,7 +22,7 @@ class MultiAddonBuilder extends StatelessWidget {
     if (onChanged == null) return;
 
     addons.forEach((addon) {
-      addon.addListener(onChanged!);
+      addon.setListener(onChanged!);
     });
   }
 

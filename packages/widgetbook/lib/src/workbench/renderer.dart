@@ -27,9 +27,9 @@ class Renderer extends StatelessWidget {
           queryParams: setting.toQueryParameter(),
         ),
         builder: (context, addon, child) {
+          addon.updateFromQueryParameters(queryParams);
           return addon.buildUseCase(
             context,
-            addon.setting.fromQueryParameter(queryParams) ?? addon.setting,
             child,
           );
         },

@@ -31,15 +31,12 @@ class SettingsPanel extends StatelessWidget {
                   if (panels.contains(WidgetbookPanel.addons)) ...{
                     core.SettingsPanelData(
                       name: 'Properties',
-                      settings: addons
-                          .map(
-                            (addon) => addon.buildSetting(
-                              context,
-                              addon.setting.fromQueryParameter(queryParams) ??
-                                  addon.setting,
-                            ),
-                          )
-                          .toList(),
+                      settings: addons.map(
+                        (addon) {
+                          addon.updateFromQueryParameters(queryParams);
+                          return addon.buildSetting(context);
+                        },
+                      ).toList(),
                     ),
                   },
                   if (panels.contains(WidgetbookPanel.knobs)) ...{
