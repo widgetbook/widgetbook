@@ -25,15 +25,18 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
         );
 
   @override
-  Widget buildSetting(BuildContext context) {
+  Widget buildSetting(
+    BuildContext context,
+    DeviceSetting setting,
+  ) {
     return Setting(
       name: 'Device',
       child: Row(
         children: [
           DropdownSetting<Device?>(
-            options: initialSetting.devices,
+            options: setting.devices,
             optionValueBuilder: (device) => device?.name ?? 'None',
-            initialSelection: initialSetting.activeDevice,
+            initialSelection: setting.activeDevice,
             onSelected: (device) {
               onChanged(
                 setting.copyWith(

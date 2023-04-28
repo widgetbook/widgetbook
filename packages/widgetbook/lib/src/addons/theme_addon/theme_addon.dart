@@ -31,12 +31,15 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
   final ThemeBuilder<T> themeBuilder;
 
   @override
-  Widget buildSetting(BuildContext context) {
+  Widget buildSetting(
+    BuildContext context,
+    ThemeSetting<T> setting,
+  ) {
     return Setting(
       name: 'Theme',
       child: DropdownSetting<WidgetbookTheme<T>>(
-        options: initialSetting.themes,
-        initialSelection: initialSetting.activeTheme,
+        options: setting.themes,
+        initialSelection: setting.activeTheme,
         optionValueBuilder: (theme) => theme.name,
         onSelected: (theme) {
           onChanged(

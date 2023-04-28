@@ -34,9 +34,9 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
     notifier.value = value;
   }
 
-  Widget buildSetting(BuildContext context);
+  Widget buildSetting(BuildContext context, T setting);
 
-  /// Wraps use cases with a custom widget depending on the addon [initialSetting].
+  /// Wraps use cases with a custom widget depending on the addon [setting].
   Widget buildUseCase(BuildContext context, T setting, Widget child) {
     return child;
   }

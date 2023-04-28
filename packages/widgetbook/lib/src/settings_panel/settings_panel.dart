@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/routing/widgetbook_panel.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -17,8 +18,10 @@ class SettingsPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final addons = context.watch<AddOnProvider>().value;
     final knobs = context.watch<KnobsNotifier>().all();
+    final queryParams = GoRouterState.of(context).queryParams;
 
     return Card(
+      key: ValueKey(queryParams),
       child: Column(
         children: [
           Expanded(
@@ -30,7 +33,11 @@ class SettingsPanel extends StatelessWidget {
                       name: 'Properties',
                       settings: addons
                           .map(
-                            (e) => e.buildSetting(context),
+                            (addon) => addon.buildSetting(
+                              context,
+                              addon.setting.fromQueryParameter(queryParams) ??
+                                  addon.setting,
+                            ),
                           )
                           .toList(),
                     ),
