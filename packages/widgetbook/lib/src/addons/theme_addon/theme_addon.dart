@@ -50,7 +50,11 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child) {
+  Widget buildUseCase(
+    BuildContext context,
+    ThemeSetting<T> setting,
+    Widget child,
+  ) {
     return themeBuilder(
       context,
       setting.activeTheme.data,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'widgetbook_addon_model.dart';
-import 'widgetbook_addon_scope.dart';
 
 /// A class that can be used to extend the selection of Widgetbook properties.
 ///
@@ -35,25 +34,10 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
     notifier.value = value;
   }
 
-  WidgetbookAddonScope<T> buildScope(
-    Map<String, String> queryParameters,
-    Widget child,
-  ) {
-    onChanged(
-      setting.fromQueryParameter(queryParameters) ?? setting,
-    );
-
-    return WidgetbookAddonScope<T>(
-      key: ValueKey(notifier.value),
-      notifier: notifier,
-      child: child,
-    );
-  }
-
   Widget buildSetting(BuildContext context);
 
   /// Wraps use cases with a custom widget depending on the addon [initialSetting].
-  Widget buildUseCase(BuildContext context, Widget child) {
+  Widget buildUseCase(BuildContext context, T setting, Widget child) {
     return child;
   }
 }

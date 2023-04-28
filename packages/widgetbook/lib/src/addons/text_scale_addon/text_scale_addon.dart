@@ -42,7 +42,11 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child) {
+  Widget buildUseCase(
+    BuildContext context,
+    TextScaleSetting setting,
+    Widget child,
+  ) {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
         textScaleFactor: setting.activeTextScale,

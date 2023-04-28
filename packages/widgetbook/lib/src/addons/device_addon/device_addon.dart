@@ -84,7 +84,11 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child) {
+  Widget buildUseCase(
+    BuildContext context,
+    DeviceSetting setting,
+    Widget child,
+  ) {
     if (setting.activeDevice == null) {
       return child;
     }

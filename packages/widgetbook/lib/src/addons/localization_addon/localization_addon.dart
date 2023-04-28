@@ -43,7 +43,11 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child) {
+  Widget buildUseCase(
+    BuildContext context,
+    LocalizationSetting setting,
+    Widget child,
+  ) {
     return Localizations(
       locale: setting.activeLocale,
       delegates: setting.localizationsDelegates,

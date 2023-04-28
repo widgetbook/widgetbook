@@ -29,30 +29,18 @@ class _WorkbenchState extends State<Workbench> {
     final state = context.watch<UseCasesProvider>().value;
     final useCaseBuilder = state.selectedUseCase?.builder;
 
-    return MultiAddonBuilder(
-      // Key is important here for correct rebuilds.
-      key: ValueKey(widget.queryParams),
-      addons: addons,
-      builder: (_, addon, child) => addon.buildScope(
-        widget.queryParams,
-        child,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: Radii.defaultRadius,
+        color: Theme.of(context).colorScheme.surface,
       ),
-      onChanged: (setting) => context.goTo(
-        queryParams: setting.toQueryParameter(),
-      ),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: Radii.defaultRadius,
-          color: Theme.of(context).colorScheme.surface,
-        ),
-        child: SafeBoundaries(
-          child: useCaseBuilder == null
-              ? Container()
-              : Renderer(
-                  appBuilder: appBuilder,
-                  useCaseBuilder: useCaseBuilder,
-                ),
-        ),
+      child: SafeBoundaries(
+        child: useCaseBuilder == null
+            ? Container()
+            : Renderer(
+                appBuilder: appBuilder,
+                useCaseBuilder: useCaseBuilder,
+              ),
       ),
     );
   }
