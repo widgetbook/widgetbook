@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook/src/routing/widgetbook_panel.dart';
@@ -104,9 +103,7 @@ GoRouter createRouter({
             path: '/',
             pageBuilder: (_, state) {
               return NoTransitionPage<void>(
-                child: Workbench(
-                  queryParams: state.queryParams,
-                ),
+                child: Workbench(),
               );
             },
           ),
