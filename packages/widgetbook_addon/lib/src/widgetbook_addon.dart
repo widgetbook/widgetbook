@@ -57,9 +57,3 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
     return child;
   }
 }
-
-extension AddonExtension on BuildContext {
-  T? getAddonValue<T extends WidgetbookAddOnModel<T>>() {
-    return WidgetbookAddonScope.of<T>(this) as T?;
-  }
-}

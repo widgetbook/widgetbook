@@ -16,7 +16,3 @@ class CupertinoThemeAddon extends ThemeAddon<CupertinoThemeData> {
           },
         );
 }
-
-extension CupertinoThemeExtension on BuildContext {
-  CupertinoThemeData? get cupertinoTheme => theme<CupertinoThemeData>();
-}

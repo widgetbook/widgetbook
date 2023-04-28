@@ -16,7 +16,3 @@ class MaterialThemeAddon extends ThemeAddon<ThemeData> {
           },
         );
 }
-
-extension MaterialThemeExtension on BuildContext {
-  ThemeData? get materialTheme => theme<ThemeData>();
-}

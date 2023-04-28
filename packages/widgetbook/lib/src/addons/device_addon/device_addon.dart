@@ -100,9 +100,3 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
     ).build(context, child);
   }
 }
-
-extension DeviceExtension on BuildContext {
-  Device? get device => getAddonValue<DeviceSetting>()!.activeDevice;
-
-  Orientation get orientation => getAddonValue<DeviceSetting>()!.orientation;
-}

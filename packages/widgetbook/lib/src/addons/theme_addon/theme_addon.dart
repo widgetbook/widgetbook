@@ -58,7 +58,3 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
     );
   }
 }
-
-extension CustomThemeExtension on BuildContext {
-  T? theme<T>() => getAddonValue<ThemeSetting<T>>()?.activeTheme.data;
-}

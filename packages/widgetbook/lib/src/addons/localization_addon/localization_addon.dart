@@ -51,8 +51,3 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
     );
   }
 }
-
-extension LocalizationExtension on BuildContext {
-  /// Creates adjustable parameters for the WidgetbookUseCase
-  LocalizationSetting? get localization => getAddonValue<LocalizationSetting>();
-}

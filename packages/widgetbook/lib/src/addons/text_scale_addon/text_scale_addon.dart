@@ -51,8 +51,3 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
     );
   }
 }
-
-extension TextScaleExtension on BuildContext {
-  /// Creates adjustable parameters for the WidgetbookUseCase
-  double? get textScale => getAddonValue<TextScaleSetting>()?.activeTextScale;
-}
