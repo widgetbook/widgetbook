@@ -16,7 +16,6 @@ void main() {
           await tester.pumpWidgetWithMaterialApp(
             MultiAddonBuilder(
               addons: [],
-              onChanged: (_) {},
               builder: (_, __, ___) => Text('stub'),
               child: Text('single child'),
             ),
@@ -43,7 +42,6 @@ void main() {
                   ),
                 )
               ],
-              onChanged: (_) {},
               builder: (_, __, ___) => Text('stub'),
               child: Text('single child'),
             ),

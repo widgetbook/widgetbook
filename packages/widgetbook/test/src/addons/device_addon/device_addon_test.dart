@@ -19,52 +19,22 @@ void main() {
         initialDevice: devices.first,
       );
 
-      group('context has', () {
-        testWidgets(
-          'device',
-          (WidgetTester tester) async {
-            await testAddon(
-              tester: tester,
-              addon: addon,
-              expect: (context) => expect(
-                context.device,
-                equals(addon.setting.activeDevice),
-              ),
-            );
-          },
-        );
-
-        testWidgets(
-          'orientation',
-          (WidgetTester tester) async {
-            await testAddon(
-              tester: tester,
-              addon: addon,
-              expect: (context) => expect(
-                context.orientation,
-                equals(addon.setting.orientation),
-              ),
-            );
-          },
-        );
-      });
-
       group('Device can be activated via', () {
         testWidgets(
-          'onChanged',
+          'updateSetting',
           (WidgetTester tester) async {
             final device = devices.first;
 
             await testAddon(
               tester: tester,
               addon: addon,
-              act: () async => addon.onChanged(
+              act: () async => addon.updateSetting(
                 addon.setting.copyWith(
                   activeDevice: device,
                 ),
               ),
               expect: (context) => expect(
-                context.device,
+                addon.setting.activeDevice,
                 equals(device),
               ),
             );
@@ -95,7 +65,7 @@ void main() {
                 await tester.pumpAndSettle();
               },
               expect: (context) => expect(
-                context.device,
+                addon.setting.activeDevice,
                 equals(device),
               ),
             );
@@ -107,18 +77,18 @@ void main() {
         '$Orientation can be activated via',
         () {
           testWidgets(
-            'onChanged',
+            'updateSetting',
             (WidgetTester tester) async {
               await testAddon(
                 tester: tester,
                 addon: addon,
-                act: () async => addon.onChanged(
+                act: () async => addon.updateSetting(
                   addon.setting.copyWith(
                     orientation: Orientation.landscape,
                   ),
                 ),
                 expect: (context) => expect(
-                  context.orientation,
+                  addon.setting.orientation,
                   equals(Orientation.landscape),
                 ),
               );
@@ -140,7 +110,7 @@ void main() {
                   await tester.pumpAndSettle();
                 },
                 expect: (context) => expect(
-                  context.orientation,
+                  addon.setting.orientation,
                   equals(Orientation.landscape),
                 ),
               );
@@ -153,12 +123,12 @@ void main() {
         'Frame can be activated via',
         () {
           testWidgets(
-            'onChanged',
+            'updateSetting',
             (WidgetTester tester) async {
               await testAddon(
                 tester: tester,
                 addon: addon,
-                act: () async => addon.onChanged(
+                act: () async => addon.updateSetting(
                   addon.setting.copyWith(
                     hasFrame: true,
                   ),

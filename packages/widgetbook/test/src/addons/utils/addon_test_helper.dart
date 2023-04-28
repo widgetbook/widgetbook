@@ -27,15 +27,8 @@ Future<void> testAddon({
               body: SizedBox(
                 width: 500,
                 child: Builder(
-                  builder: (context) {
-                    return addon.buildScope(
-                      state.queryParams,
-                      Builder(
-                        key: key,
-                        builder: addon.buildSetting,
-                      ),
-                    );
-                  },
+                  key: key,
+                  builder: addon.buildSetting,
                 ),
               ),
             ),
