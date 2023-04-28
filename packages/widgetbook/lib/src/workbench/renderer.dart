@@ -23,9 +23,6 @@ class Renderer extends StatelessWidget {
       context,
       MultiAddonBuilder(
         addons: addons,
-        onChanged: (setting) => context.goTo(
-          queryParams: setting.toQueryParameter(),
-        ),
         builder: (context, addon, child) {
           addon.updateFromQueryParameters(queryParams);
           return addon.buildUseCase(

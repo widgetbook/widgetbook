@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:nested/nested.dart';
 
 import 'widgetbook_addon.dart';
-import 'widgetbook_addon_model.dart';
 
 typedef AddonBuilder = Widget Function(
   BuildContext context,
@@ -16,19 +15,11 @@ class MultiAddonBuilder extends StatelessWidget {
     super.key,
     required this.addons,
     required this.builder,
-    this.onChanged,
     required this.child,
-  }) {
-    if (onChanged == null) return;
-
-    addons.forEach((addon) {
-      addon.setListener(onChanged!);
-    });
-  }
+  });
 
   final List<WidgetbookAddOn> addons;
   final AddonBuilder builder;
-  final ValueChanged<WidgetbookAddOnModel>? onChanged;
   final Widget child;
 
   @override
