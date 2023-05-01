@@ -16,6 +16,7 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
           'initialScale must be in scales',
         ),
         super(
+          name: 'Text scale',
           initialSetting: TextScaleSetting(
             textScales: scales,
             activeTextScale: initialScale ?? scales.first,
@@ -25,7 +26,7 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
   @override
   Widget buildSetting(BuildContext context) {
     return Setting(
-      name: 'Text scale',
+      name: name,
       child: DropdownSetting<double>(
         options: setting.textScales,
         initialSelection: setting.activeTextScale,

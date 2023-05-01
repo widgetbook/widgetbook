@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'widgetbook_addon_model.dart';
@@ -16,9 +18,11 @@ import 'widgetbook_addon_model.dart';
 /// type
 abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
   WidgetbookAddOn({
+    required this.name,
     required T initialSetting,
   }) : setting = initialSetting;
 
+  final String name;
   T setting;
   ValueChanged<T>? _listener;
 
@@ -36,7 +40,19 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
   /// Used sync the [setting] with the current URI's [queryParams], in case
   /// it was changed from the URL bar and not from the settings panel.
   void updateFromQueryParameters(Map<String, String> queryParams) {
-    setting = setting.fromQueryParameter(queryParams) ?? setting;
+    final value = jsonDecode(queryParams[name] ?? '{}') as Map<String, dynamic>;
+
+    setting = setting.fromQueryParameter(
+          Map<String, String>.fromEntries(
+            value.entries.map(
+              (e) => MapEntry(
+                e.key,
+                e.value.toString(),
+              ),
+            ),
+          ),
+        ) ??
+        setting;
   }
 
   Widget buildSetting(BuildContext context);

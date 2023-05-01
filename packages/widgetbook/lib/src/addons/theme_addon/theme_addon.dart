@@ -22,6 +22,7 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
           'initialTheme must be in themes',
         ),
         super(
+          name: 'Theme',
           initialSetting: ThemeSetting(
             themes: themes,
             activeTheme: initialTheme ?? themes.first,
@@ -33,7 +34,7 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
   @override
   Widget buildSetting(BuildContext context) {
     return Setting(
-      name: 'Theme',
+      name: name,
       child: DropdownSetting<WidgetbookTheme<T>>(
         options: setting.themes,
         initialSelection: setting.activeTheme,
