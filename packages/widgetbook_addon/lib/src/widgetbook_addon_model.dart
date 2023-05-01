@@ -9,6 +9,16 @@ abstract class WidgetbookAddOnModel<T> {
     return {};
   }
 
+  /// Encodes this into a JSON-like format without double quotes.
+  /// For example: `{foo:bar,baz:qux}`
+  String get encoded {
+    final pairs = toQueryParameter()
+        .entries
+        .map((entry) => '${entry.key}:${entry.value}');
+
+    return '{${pairs.join(',')}}';
+  }
+
   /// Allows for parsing of [queryParameters] by using information from the
   /// router and from the initially provided [WidgetbookAddOnModel].
   ///
@@ -20,5 +30,23 @@ abstract class WidgetbookAddOnModel<T> {
     Map<String, String> queryParameters,
   ) {
     return null;
+  }
+
+  /// Decodes an [encoded] value into an instance of [T].
+  T? fromEncoded(String value) {
+    if (value.isEmpty) return null;
+
+    final pairs = value.substring(1, value.length - 1).split(',');
+
+    final map = Map<String, String>.fromEntries(
+      pairs.map(
+        (pair) {
+          final parts = pair.split(':');
+          return MapEntry(parts[0], parts[1]);
+        },
+      ),
+    );
+
+    return fromQueryParameter(map);
   }
 }

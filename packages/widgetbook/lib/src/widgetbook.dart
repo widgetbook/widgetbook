@@ -118,7 +118,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
       addon.setListener(
         (setting) => goRouter.mergeQueryParams(
           {
-            addon.name: jsonEncode(setting.toQueryParameter()),
+            addon.slugName: addon.setting.encoded,
           },
         ),
       );
