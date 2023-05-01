@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -116,10 +114,9 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
 
     widget.addons.forEach((addon) {
       addon.setListener(
-        (setting) => goRouter.mergeQueryParams(
-          {
-            addon.slugName: addon.setting.encoded,
-          },
+        (setting) => goRouter.updateQueryParam(
+          addon.slugName,
+          addon.setting.encoded,
         ),
       );
     });

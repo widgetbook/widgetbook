@@ -5,13 +5,15 @@ import 'package:widgetbook/src/widgetbook_shell.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 
 extension GoRouterExtension on GoRouter {
-  void mergeQueryParams(Map<String, String> other) {
+  void updateQueryParam(String name, String value) {
     final uri = Uri.parse(location);
-    final queryParams = Map<String, String>.from(uri.queryParameters);
 
     goNamed(
       '/',
-      queryParams: queryParams..addAll(other),
+      queryParams: {
+        ...uri.queryParameters,
+        name: value,
+      },
     );
   }
 }
