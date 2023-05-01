@@ -24,21 +24,8 @@
                 ],
                  [
                     "Terminology", "/terminology"
-                ]
-            ]
-        ],
-        [
-            "Design System", 
-            [
-                [
-                    "Introduction", "/design-system/introduction"
                 ],
-                [
-                    "Cataloguing", "/design-system/cataloguing"
-                ],
-                [
-                    "Why Widgetbook", "/design-system/why-widgetbook"
-                ]
+                ["Why Widgetbook", "/why-widgetbook"]
             ]
         ],
         [
