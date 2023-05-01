@@ -26,7 +26,7 @@ class ThemeSetting<T> extends WidgetbookAddOnModel<ThemeSetting<T>> {
   @override
   Map<String, String> toMap() {
     return {
-      'theme': activeTheme.name,
+      'name': activeTheme.name,
     };
   }
 
@@ -34,7 +34,7 @@ class ThemeSetting<T> extends WidgetbookAddOnModel<ThemeSetting<T>> {
   ThemeSetting<T> fromMap(Map<String, String> map) {
     return this.copyWith(
       activeTheme: themes.firstWhere(
-        (theme) => theme.name == map['theme'],
+        (theme) => theme.name == map['name'],
         orElse: () => activeTheme,
       ),
     );

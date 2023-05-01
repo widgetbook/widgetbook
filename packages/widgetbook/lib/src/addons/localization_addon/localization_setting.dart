@@ -18,7 +18,7 @@ class LocalizationSetting extends WidgetbookAddOnModel<LocalizationSetting>
   @override
   Map<String, String> toMap() {
     return {
-      'locale': activeLocale.toLanguageTag(),
+      'name': activeLocale.toLanguageTag(),
     };
   }
 
@@ -26,7 +26,7 @@ class LocalizationSetting extends WidgetbookAddOnModel<LocalizationSetting>
   LocalizationSetting fromMap(Map<String, String> map) {
     return this.copyWith(
       activeLocale: locales.firstWhere(
-        (locale) => locale.toLanguageTag() == map['locale'],
+        (locale) => locale.toLanguageTag() == map['name'],
         orElse: () => activeLocale,
       ),
     );

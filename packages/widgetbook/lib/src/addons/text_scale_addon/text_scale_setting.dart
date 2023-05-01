@@ -16,7 +16,7 @@ class TextScaleSetting extends WidgetbookAddOnModel<TextScaleSetting>
   @override
   Map<String, String> toMap() {
     return {
-      'text-scale': activeTextScale.toStringAsFixed(2),
+      'factor': activeTextScale.toStringAsFixed(2),
     };
   }
 
@@ -24,7 +24,7 @@ class TextScaleSetting extends WidgetbookAddOnModel<TextScaleSetting>
   TextScaleSetting fromMap(Map<String, String> map) {
     return this.copyWith(
       activeTextScale: textScales.firstWhere(
-        (scale) => scale.toStringAsFixed(2) == map['text-scale'],
+        (scale) => scale.toStringAsFixed(2) == map['factor'],
         orElse: () => activeTextScale,
       ),
     );

@@ -20,7 +20,7 @@ class DeviceSetting extends WidgetbookAddOnModel<DeviceSetting>
   @override
   Map<String, String> toMap() {
     return {
-      'device': activeDevice?.name ?? 'none',
+      'name': activeDevice?.name ?? 'none',
       'orientation': orientation.name,
       'frame': hasFrame.toString(),
     };
@@ -30,7 +30,7 @@ class DeviceSetting extends WidgetbookAddOnModel<DeviceSetting>
   DeviceSetting fromMap(Map<String, String> map) {
     return this.copyWith(
       activeDevice: devices.firstWhere(
-        (device) => device?.name == map['device'],
+        (device) => device?.name == map['name'],
         orElse: () => null,
       ),
       orientation: Orientation.values.byName(
