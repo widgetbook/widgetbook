@@ -40,8 +40,12 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
   /// Used sync the [setting] with the current URI's [queryParams], in case
   /// it was changed from the URL bar and not from the settings panel.
   void updateFromQueryParameters(Map<String, String> queryParams) {
-    final value = queryParams[slugName] ?? '';
-    setting = setting.fromEncoded(value) ?? setting;
+    if (!queryParams.containsKey(slugName) || queryParams[slugName]!.isEmpty)
+      return;
+
+    setting = setting.fromEncoded(
+      queryParams[slugName]!,
+    );
   }
 
   Widget buildSetting(BuildContext context);

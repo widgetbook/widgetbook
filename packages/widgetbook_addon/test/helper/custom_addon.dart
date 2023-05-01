@@ -9,17 +9,17 @@ class CustomAddOnSetting extends WidgetbookAddOnModel<CustomAddOnSetting> {
   final String data;
 
   @override
-  Map<String, String> toQueryParameter() {
+  Map<String, String> toMap() {
     return {
       'data': data,
     };
   }
 
   @override
-  CustomAddOnSetting? fromQueryParameter(Map<String, String> queryParameters) {
-    return queryParameters.containsKey('data')
-        ? CustomAddOnSetting(data: queryParameters['data']!)
-        : null;
+  CustomAddOnSetting fromMap(Map<String, String> map) {
+    return CustomAddOnSetting(
+      data: map['data'] ?? 'Unknown',
+    );
   }
 }
 

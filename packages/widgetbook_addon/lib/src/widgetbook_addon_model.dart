@@ -1,41 +1,23 @@
 abstract class WidgetbookAddOnModel<T> {
   const WidgetbookAddOnModel();
 
-  /// Required to allow proper deep linking including AddOn property selection
-  ///
-  /// Defaults to an empty Map, which means no query parameters are set for the
-  /// route
-  Map<String, String> toQueryParameter() {
-    return {};
-  }
+  /// Converts this to a [Map] that's used in the deep-linking of the addon
+  /// via the query parameters of the router.
+  Map<String, String> toMap();
+
+  /// Converts a [map] to an instance to [T].
+  T fromMap(Map<String, String> map);
 
   /// Encodes this into a JSON-like format without double quotes.
   /// For example: `{foo:bar,baz:qux}`
   String get encoded {
-    final pairs = toQueryParameter()
-        .entries
-        .map((entry) => '${entry.key}:${entry.value}');
+    final pairs = toMap().entries.map((entry) => '${entry.key}:${entry.value}');
 
     return '{${pairs.join(',')}}';
   }
 
-  /// Allows for parsing of [queryParameters] by using information from the
-  /// router and from the initially provided [WidgetbookAddOnModel].
-  ///
-  /// If no [queryParameters] are available, return `null`.
-  /// If [queryParameters] are available return a property `Setting` object.
-  ///
-  /// If not overridden, returns `null`.
-  T? fromQueryParameter(
-    Map<String, String> queryParameters,
-  ) {
-    return null;
-  }
-
   /// Decodes an [encoded] value into an instance of [T].
-  T? fromEncoded(String value) {
-    if (value.isEmpty) return null;
-
+  T fromEncoded(String value) {
     final pairs = value.substring(1, value.length - 1).split(',');
 
     final map = Map<String, String>.fromEntries(
@@ -47,6 +29,6 @@ abstract class WidgetbookAddOnModel<T> {
       ),
     );
 
-    return fromQueryParameter(map);
+    return fromMap(map);
   }
 }

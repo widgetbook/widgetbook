@@ -18,7 +18,7 @@ class DeviceSetting extends WidgetbookAddOnModel<DeviceSetting>
   DeviceSetting._();
 
   @override
-  Map<String, String> toQueryParameter() {
+  Map<String, String> toMap() {
     return {
       'device': activeDevice?.name ?? 'none',
       'orientation': orientation.name,
@@ -27,20 +27,16 @@ class DeviceSetting extends WidgetbookAddOnModel<DeviceSetting>
   }
 
   @override
-  DeviceSetting? fromQueryParameter(Map<String, String> queryParameters) {
-    return queryParameters.containsKey('device') &&
-            queryParameters.containsKey('orientation') &&
-            queryParameters.containsKey('frame')
-        ? this.copyWith(
-            activeDevice: devices.firstWhere(
-              (device) => device?.name == queryParameters['device']!,
-              orElse: () => null,
-            ),
-            orientation: Orientation.values.byName(
-              queryParameters['orientation']!,
-            ),
-            hasFrame: queryParameters['frame'] == 'true',
-          )
-        : null;
+  DeviceSetting fromMap(Map<String, String> map) {
+    return this.copyWith(
+      activeDevice: devices.firstWhere(
+        (device) => device?.name == map['device'],
+        orElse: () => null,
+      ),
+      orientation: Orientation.values.byName(
+        map['orientation'] ?? Orientation.portrait.name,
+      ),
+      hasFrame: map['frame'] == 'true',
+    );
   }
 }
