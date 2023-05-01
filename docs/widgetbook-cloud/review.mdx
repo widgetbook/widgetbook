@@ -99,31 +99,3 @@ The information on which use-cases changed is extracted by the CLI when the `--b
     Currently, Widgetbook Cloud only shows use-cases that have been changed, added or removed within the freature branch in comparison to the base branch. 
     That means, that already existing use-cases will not be shown even if they have never been reviewed.
 </Warning>
-
-## Setup Webhook (GitHub)
-
-A GitHub Webhook allows Widgetbook Cloud to receive information about changes within your repository.
-Widgetbook Cloud can automatically set the state of a Review to `closed` or `merged` when a corresponding Pull-Request is `closed` or `merged`.
-For this to work, you need to configure a webhook. 
-See [Setting up a webhook](https://docs.github.com/en/developers/webhooks-and-events/webhooks/creating-webhooks#setting-up-a-webhook) for instructions on how to do this.
-
-### Requirements
-
-You need to meet the following requirements to setup a webhook to Widgetbook Cloud:
-- Webhook Secret
-- Payload URL
-
-### Obtaining the Webhook Secret
-
-The webhook secret can be obtained by going to the project overview and click the `Get secret` button within the webhook card.
-
-### Setting up the webhook
-
-1. Go to https://github.com/user-name/repo-name/settings/hooks. Make sure to replace `user-name` and `repo-name` with your appropriate values.
-1. Click `Add webhook`
-1. Paste `https://api.widgetbook.io/v1/webhooks/github` into the `Payload URL` field.
-1. Set `Content type` to `application/json`
-1. Paste your Widgetbook Cloud webhook secret into the `Secret` field.
-1. Select when to trigger the webhook.
-    1. Select `Send me everything` or
-    2. Select `Let me select individual events` and enable `Pull requests` and `Pushes`. You can disable all other options. 
