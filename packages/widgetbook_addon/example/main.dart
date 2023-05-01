@@ -18,7 +18,7 @@ class CustomAddOnSetting extends WidgetbookAddOnModel<CustomAddOnSetting> {
   @override
   CustomAddOnSetting fromMap(Map<String, String> map) {
     return CustomAddOnSetting(
-      data: map['data']!,
+      data: map['data'] ?? 'Unknown',
     );
   }
 }
