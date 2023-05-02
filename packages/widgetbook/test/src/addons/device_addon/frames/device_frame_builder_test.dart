@@ -33,7 +33,7 @@ void main() {
             Builder(
               builder: (context) {
                 addon.updateFromQueryParameters({
-                  'device': phone.name,
+                  'device': '{name: ${phone.name}}',
                 });
 
                 return frame.build(
