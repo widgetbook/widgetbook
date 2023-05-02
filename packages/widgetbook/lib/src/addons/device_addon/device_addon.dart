@@ -31,11 +31,11 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
       child: Row(
         children: [
           DropdownSetting<Device?>(
-            options: initialSetting.devices,
+            options: setting.devices,
             optionValueBuilder: (device) => device?.name ?? 'None',
-            initialSelection: initialSetting.activeDevice,
+            initialSelection: setting.activeDevice,
             onSelected: (device) {
-              onChanged(
+              updateSetting(
                 setting.copyWith(
                   activeDevice: device,
                 ),
@@ -46,7 +46,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
             IconButton(
               tooltip: 'Orientation',
               onPressed: () {
-                onChanged(
+                updateSetting(
                   setting.copyWith(
                     orientation: setting.orientation == Orientation.portrait
                         ? Orientation.landscape
@@ -64,7 +64,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
             IconButton(
               tooltip: 'Frame',
               onPressed: () {
-                onChanged(
+                updateSetting(
                   setting.copyWith(
                     hasFrame: !setting.hasFrame,
                   ),
@@ -99,10 +99,4 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
       setting: setting,
     ).build(context, child);
   }
-}
-
-extension DeviceExtension on BuildContext {
-  Device? get device => getAddonValue<DeviceSetting>()!.activeDevice;
-
-  Orientation get orientation => getAddonValue<DeviceSetting>()!.orientation;
 }

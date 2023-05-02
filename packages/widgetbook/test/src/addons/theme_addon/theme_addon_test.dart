@@ -55,32 +55,18 @@ void main() {
       );
 
       testWidgets(
-        'can access text scale factor via the context',
+        'can activate a theme',
         (WidgetTester tester) async {
           await testAddon(
             tester: tester,
             addon: addon,
-            expect: (context) => expect(
-              context.theme<AppThemeData>(),
-              equals(blueCustomWidgetbookTheme.data),
-            ),
-          );
-        },
-      );
-
-      testWidgets(
-        'can activate a text scale factor',
-        (WidgetTester tester) async {
-          await testAddon(
-            tester: tester,
-            addon: addon,
-            act: () async => addon.onChanged(
+            act: () async => addon.updateSetting(
               addon.setting.copyWith(
                 activeTheme: yellowCustomWidgetbookTheme,
               ),
             ),
             expect: (context) => expect(
-              context.theme<AppThemeData>(),
+              addon.setting.activeTheme.data,
               equals(yellowCustomWidgetbookTheme.data),
             ),
           );
@@ -88,7 +74,7 @@ void main() {
       );
 
       testWidgets(
-        'can activate text scale factor via Widget',
+        'can activate theme via Widget',
         (WidgetTester tester) async {
           await testAddon(
             tester: tester,
@@ -107,7 +93,7 @@ void main() {
               await tester.pumpAndSettle();
             },
             expect: (context) => expect(
-              context.theme<AppThemeData>(),
+              addon.setting.activeTheme.data,
               equals(yellowCustomWidgetbookTheme.data),
             ),
           );

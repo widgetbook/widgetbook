@@ -35,11 +35,11 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
     return Setting(
       name: 'Theme',
       child: DropdownSetting<WidgetbookTheme<T>>(
-        options: initialSetting.themes,
-        initialSelection: initialSetting.activeTheme,
+        options: setting.themes,
+        initialSelection: setting.activeTheme,
         optionValueBuilder: (theme) => theme.name,
         onSelected: (theme) {
-          onChanged(
+          updateSetting(
             setting.copyWith(
               activeTheme: theme,
             ),
@@ -57,8 +57,4 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
       child,
     );
   }
-}
-
-extension CustomThemeExtension on BuildContext {
-  T? theme<T>() => getAddonValue<ThemeSetting<T>>()?.activeTheme.data;
 }

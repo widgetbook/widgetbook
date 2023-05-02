@@ -13,32 +13,18 @@ void main() {
       );
 
       testWidgets(
-        'can access text scale factor via the context',
-        (WidgetTester tester) async {
-          await testAddon(
-            tester: tester,
-            addon: addon,
-            expect: (context) => expect(
-              context.textScale,
-              equals(1),
-            ),
-          );
-        },
-      );
-
-      testWidgets(
         'can activate a text scale factor',
         (WidgetTester tester) async {
           await testAddon(
             tester: tester,
             addon: addon,
-            act: () async => addon.onChanged(
+            act: () async => addon.updateSetting(
               addon.setting.copyWith(
                 activeTextScale: 2,
               ),
             ),
             expect: (context) => expect(
-              context.textScale,
+              addon.setting.activeTextScale,
               equals(2),
             ),
           );
@@ -63,7 +49,7 @@ void main() {
               await tester.pumpAndSettle();
             },
             expect: (context) => expect(
-              context.textScale,
+              addon.setting.activeTextScale,
               equals(2),
             ),
           );

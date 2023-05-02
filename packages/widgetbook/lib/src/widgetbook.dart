@@ -112,6 +112,14 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
       useCasesProvider: useCasesProvider,
     );
 
+    widget.addons.forEach((addon) {
+      addon.setListener(
+        (setting) => goRouter.mergeQueryParams(
+          setting.toQueryParameter(),
+        ),
+      );
+    });
+
     super.initState();
   }
 

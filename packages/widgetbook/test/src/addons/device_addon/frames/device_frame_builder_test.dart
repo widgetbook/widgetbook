@@ -32,20 +32,15 @@ void main() {
           await tester.pumpWidgetWithMaterialApp(
             Builder(
               builder: (context) {
-                return addon.buildScope(
-                  {
-                    'device': phone.name,
-                  },
-                  Builder(
-                    builder: (context) {
-                      return frame.build(
-                        context,
-                        const Text(
-                          'Text',
-                          key: key,
-                        ),
-                      );
-                    },
+                addon.updateFromQueryParameters({
+                  'device': phone.name,
+                });
+
+                return frame.build(
+                  context,
+                  const Text(
+                    'Text',
+                    key: key,
                   ),
                 );
               },

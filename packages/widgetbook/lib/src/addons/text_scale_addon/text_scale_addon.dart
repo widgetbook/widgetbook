@@ -27,11 +27,11 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
     return Setting(
       name: 'Text scale',
       child: DropdownSetting<double>(
-        options: initialSetting.textScales,
-        initialSelection: initialSetting.activeTextScale,
+        options: setting.textScales,
+        initialSelection: setting.activeTextScale,
         optionValueBuilder: (scale) => scale.toStringAsFixed(2),
         onSelected: (scale) {
-          onChanged(
+          updateSetting(
             setting.copyWith(
               activeTextScale: scale,
             ),
@@ -50,9 +50,4 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
       child: child,
     );
   }
-}
-
-extension TextScaleExtension on BuildContext {
-  /// Creates adjustable parameters for the WidgetbookUseCase
-  double? get textScale => getAddonValue<TextScaleSetting>()?.activeTextScale;
 }

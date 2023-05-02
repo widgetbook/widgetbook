@@ -1,22 +1,18 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook/src/routing/widgetbook_panel.dart';
 import 'package:widgetbook/src/widgetbook_shell.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 
-extension GoRouterExtension on BuildContext {
-  void goTo({
-    required Map<String, String> queryParams,
-  }) {
-    final goRouter = GoRouter.of(this);
-    final uri = Uri.parse(goRouter.location);
-    final queryParameters = Map<String, String>.from(uri.queryParameters);
-    for (final pair in queryParams.entries) {
-      queryParameters[pair.key] = pair.value;
-    }
+extension GoRouterExtension on GoRouter {
+  void mergeQueryParams(Map<String, String> other) {
+    final uri = Uri.parse(location);
+    final queryParams = Map<String, String>.from(uri.queryParameters);
 
-    goNamed('/', queryParams: queryParameters);
+    goNamed(
+      '/',
+      queryParams: queryParams..addAll(other),
+    );
   }
 }
 
@@ -107,9 +103,7 @@ GoRouter createRouter({
             path: '/',
             pageBuilder: (_, state) {
               return NoTransitionPage<void>(
-                child: Workbench(
-                  queryParams: state.queryParams,
-                ),
+                child: Workbench(),
               );
             },
           ),

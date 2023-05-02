@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -17,13 +18,9 @@ class NavigationPanelWrapper extends StatelessWidget {
     return NavigationPanel(
       initialPath: initialPath,
       onNodeSelected: (path, _) {
+        final router = GoRouter.of(context);
+        router.mergeQueryParams({'path': path});
         context.read<UseCasesProvider>().selectUseCaseByPath(path);
-
-        context.goTo(
-          queryParams: {
-            'path': path,
-          },
-        );
       },
     );
   }

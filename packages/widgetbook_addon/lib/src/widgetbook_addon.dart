@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'widgetbook_addon_model.dart';
-import 'widgetbook_addon_scope.dart';
 
 /// A class that can be used to extend the selection of Widgetbook properties.
 ///
@@ -17,49 +16,33 @@ import 'widgetbook_addon_scope.dart';
 /// type
 abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
   WidgetbookAddOn({
-    required this.initialSetting,
-  }) : notifier = ValueNotifier<T>(initialSetting);
+    required T initialSetting,
+  }) : setting = initialSetting;
 
-  final T initialSetting;
-  late ValueNotifier<T> notifier;
+  T setting;
+  ValueChanged<T>? _listener;
 
-  T get setting => notifier.value;
-
-  void addListener(ValueChanged<T> listener) {
-    notifier.addListener(
-      () => listener(notifier.value),
-    );
+  void setListener(ValueChanged<T> listener) {
+    _listener = listener;
   }
 
-  void onChanged(T value) {
-    notifier.value = value;
+  /// Updates [setting] with the [newSetting] and calls the listeners.
+  void updateSetting(T newSetting) {
+    setting = newSetting;
+    _listener?.call(newSetting);
   }
 
-  WidgetbookAddonScope<T> buildScope(
-    Map<String, String> queryParameters,
-    Widget child,
-  ) {
-    onChanged(
-      setting.fromQueryParameter(queryParameters) ?? setting,
-    );
-
-    return WidgetbookAddonScope<T>(
-      key: ValueKey(notifier.value),
-      notifier: notifier,
-      child: child,
-    );
+  /// Updates [setting] from [queryParams] **without** calling any listeners.
+  /// Used sync the [setting] with the current URI's [queryParams], in case
+  /// it was changed from the URL bar and not from the settings panel.
+  void updateFromQueryParameters(Map<String, String> queryParams) {
+    setting = setting.fromQueryParameter(queryParams) ?? setting;
   }
 
   Widget buildSetting(BuildContext context);
 
-  /// Wraps use cases with a custom widget depending on the addon [initialSetting].
+  /// Wraps use cases with a custom widget depending on the addon [setting].
   Widget buildUseCase(BuildContext context, Widget child) {
     return child;
-  }
-}
-
-extension AddonExtension on BuildContext {
-  T? getAddonValue<T extends WidgetbookAddOnModel<T>>() {
-    return WidgetbookAddonScope.of<T>(this) as T?;
   }
 }
