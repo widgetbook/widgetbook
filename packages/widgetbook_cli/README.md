@@ -1,5 +1,7 @@
 # Overview
 
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/widgetbook/widgetbook/widgetbook-cli.yaml?branch=main)
+
 The CLI supports:
 - uploading a [Widgetbook Build](https://docs.widgetbook.io/widgetbook-cloud/hosting)
 - uploading a [Widgetbook Review](https://docs.widgetbook.io/widgetbook-cloud/review)
