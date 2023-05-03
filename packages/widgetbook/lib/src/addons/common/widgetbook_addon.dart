@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../../fields/fields.dart';
 import '../addons.dart';
 
 /// A class that can be used to extend the selection of Widgetbook properties.
@@ -47,7 +49,7 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
     );
   }
 
-  Widget buildSetting(BuildContext context);
+  List<Field> get fields;
 
   /// Wraps use cases with a custom widget depending on the addon [setting].
   Widget buildUseCase(BuildContext context, Widget child) {

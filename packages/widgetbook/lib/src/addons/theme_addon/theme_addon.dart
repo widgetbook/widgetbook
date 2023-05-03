@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
+
+import '../../fields/fields.dart';
 
 typedef ThemeBuilder<T> = Widget Function(
   BuildContext context,
@@ -32,14 +33,14 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
   final ThemeBuilder<T> themeBuilder;
 
   @override
-  Widget buildSetting(BuildContext context) {
-    return Setting(
-      name: name,
-      child: DropdownSetting<WidgetbookTheme<T>>(
-        options: setting.themes,
-        initialSelection: setting.activeTheme,
-        optionValueBuilder: (theme) => theme.name,
-        onSelected: (theme) {
+  List<Field> get fields {
+    return [
+      ListField<WidgetbookTheme<T>>(
+        name: 'name',
+        values: setting.themes,
+        value: setting.activeTheme,
+        labelBuilder: (theme) => theme.name,
+        onChanged: (theme) {
           updateSetting(
             setting.copyWith(
               activeTheme: theme,
@@ -47,7 +48,7 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
           );
         },
       ),
-    );
+    ];
   }
 
   @override

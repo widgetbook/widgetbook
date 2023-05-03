@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:widgetbook/src/addons/common/common.dart';
+import 'package:widgetbook/src/fields/fields.dart';
 
 class CustomAddOnSetting extends WidgetbookAddOnModel<CustomAddOnSetting> {
   const CustomAddOnSetting({
@@ -31,7 +31,5 @@ class CustomAddOn extends WidgetbookAddOn<CustomAddOnSetting> {
         );
 
   @override
-  Widget buildSetting(BuildContext context) {
-    return Placeholder();
-  }
+  List<Field> get fields => [];
 }

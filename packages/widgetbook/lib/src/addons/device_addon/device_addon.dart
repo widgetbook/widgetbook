@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
 
+import '../../fields/fields.dart';
 import 'frames/frames.dart';
 
 class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
@@ -26,62 +26,50 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
         );
 
   @override
-  Widget buildSetting(BuildContext context) {
-    return Setting(
-      name: name,
-      child: Row(
-        children: [
-          DropdownSetting<Device?>(
-            options: setting.devices,
-            optionValueBuilder: (device) => device?.name ?? 'None',
-            initialSelection: setting.activeDevice,
-            onSelected: (device) {
-              updateSetting(
-                setting.copyWith(
-                  activeDevice: device,
-                ),
-              );
-            },
-          ),
-          if (setting.activeDevice != null) ...{
-            IconButton(
-              tooltip: 'Orientation',
-              onPressed: () {
-                updateSetting(
-                  setting.copyWith(
-                    orientation: setting.orientation == Orientation.portrait
-                        ? Orientation.landscape
-                        : Orientation.portrait,
-                  ),
-                );
-              },
-              icon: Icon(
-                setting.orientation == Orientation.portrait
-                    ? Icons.screen_lock_portrait
-                    : Icons.screen_lock_landscape,
-                color: Theme.of(context).iconTheme.color,
-              ),
+  List<Field> get fields {
+    return [
+      ListField<Device?>(
+        name: 'name',
+        values: setting.devices,
+        value: setting.activeDevice,
+        labelBuilder: (device) => device?.name ?? 'None',
+        onChanged: (device) {
+          updateSetting(
+            setting.copyWith(
+              activeDevice: device,
             ),
-            IconButton(
-              tooltip: 'Frame',
-              onPressed: () {
-                updateSetting(
-                  setting.copyWith(
-                    hasFrame: !setting.hasFrame,
-                  ),
-                );
-              },
-              icon: Icon(
-                Icons.smartphone,
-                color: setting.hasFrame
-                    ? Theme.of(context).iconTheme.color
-                    : Theme.of(context).disabledColor,
-              ),
-            ),
-          }
-        ],
+          );
+        },
       ),
-    );
+      ListField<Orientation>(
+        name: 'orientation',
+        values: Orientation.values,
+        value: setting.orientation,
+        labelBuilder: (orientation) =>
+            orientation.name.substring(0, 1).toUpperCase() +
+            orientation.name.substring(1),
+        onChanged: (orientation) {
+          updateSetting(
+            setting.copyWith(
+              orientation: orientation,
+            ),
+          );
+        },
+      ),
+      ListField<bool>(
+        name: 'frame',
+        values: [false, true],
+        value: setting.hasFrame,
+        labelBuilder: (hasFrame) => hasFrame ? 'Device Frame' : 'None',
+        onChanged: (hasFrame) {
+          updateSetting(
+            setting.copyWith(
+              hasFrame: hasFrame,
+            ),
+          );
+        },
+      ),
+    ];
   }
 
   @override

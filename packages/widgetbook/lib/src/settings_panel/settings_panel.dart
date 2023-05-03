@@ -33,7 +33,16 @@ class SettingsPanel extends StatelessWidget {
                       settings: addons.map(
                         (addon) {
                           addon.updateFromQueryParameters(queryParams);
-                          return addon.buildSetting(context);
+
+                          return core.Setting(
+                            name: addon.name,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: addon.fields
+                                  .map((field) => field.build(context))
+                                  .toList(),
+                            ),
+                          );
                         },
                       ).toList(),
                     ),

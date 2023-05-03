@@ -28,7 +28,13 @@ Future<void> testAddon({
                 width: 500,
                 child: Builder(
                   key: key,
-                  builder: addon.buildSetting,
+                  builder: (context) {
+                    return Column(
+                      children: addon.fields
+                          .map((field) => field.build(context))
+                          .toList(),
+                    );
+                  },
                 ),
               ),
             ),
