@@ -16,6 +16,7 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
           'initialLocale must be in locales',
         ),
         super(
+          name: 'Locale',
           initialSetting: LocalizationSetting(
             locales: locales,
             localizationsDelegates: localizationsDelegates,
@@ -26,7 +27,7 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
   @override
   Widget buildSetting(BuildContext context) {
     return Setting(
-      name: 'Locale',
+      name: name,
       child: DropdownSetting<Locale>(
         options: setting.locales,
         initialSelection: setting.activeLocale,

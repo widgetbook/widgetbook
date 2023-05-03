@@ -17,6 +17,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
           'initialDevice must be in devices',
         ),
         super(
+          name: 'Device',
           initialSetting: DeviceSetting(
             // [null] represents a "none" device
             devices: [null, ...devices],
@@ -27,7 +28,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
   @override
   Widget buildSetting(BuildContext context) {
     return Setting(
-      name: 'Device',
+      name: name,
       child: Row(
         children: [
           DropdownSetting<Device?>(

@@ -114,8 +114,9 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
 
     widget.addons.forEach((addon) {
       addon.setListener(
-        (setting) => goRouter.mergeQueryParams(
-          setting.toQueryParameter(),
+        (setting) => goRouter.updateQueryParam(
+          addon.slugName,
+          addon.setting.encoded,
         ),
       );
     });

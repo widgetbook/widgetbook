@@ -19,7 +19,7 @@ class NavigationPanelWrapper extends StatelessWidget {
       initialPath: initialPath,
       onNodeSelected: (path, _) {
         final router = GoRouter.of(context);
-        router.mergeQueryParams({'path': path});
+        router.updateQueryParam('path', path);
         context.read<UseCasesProvider>().selectUseCaseByPath(path);
       },
     );

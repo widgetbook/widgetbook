@@ -16,11 +16,15 @@ import 'widgetbook_addon_model.dart';
 /// type
 abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
   WidgetbookAddOn({
+    required this.name,
     required T initialSetting,
   }) : setting = initialSetting;
 
+  final String name;
   T setting;
   ValueChanged<T>? _listener;
+
+  String get slugName => name.trim().toLowerCase().replaceAll(RegExp(' '), '-');
 
   void setListener(ValueChanged<T> listener) {
     _listener = listener;
@@ -36,7 +40,12 @@ abstract class WidgetbookAddOn<T extends WidgetbookAddOnModel<T>> {
   /// Used sync the [setting] with the current URI's [queryParams], in case
   /// it was changed from the URL bar and not from the settings panel.
   void updateFromQueryParameters(Map<String, String> queryParams) {
-    setting = setting.fromQueryParameter(queryParams) ?? setting;
+    if (!queryParams.containsKey(slugName) || queryParams[slugName]!.isEmpty)
+      return;
+
+    setting = setting.fromEncoded(
+      queryParams[slugName]!,
+    );
   }
 
   Widget buildSetting(BuildContext context);

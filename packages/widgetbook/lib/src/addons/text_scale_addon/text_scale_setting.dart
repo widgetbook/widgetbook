@@ -14,21 +14,19 @@ class TextScaleSetting extends WidgetbookAddOnModel<TextScaleSetting>
   TextScaleSetting._();
 
   @override
-  Map<String, String> toQueryParameter() {
+  Map<String, String> toMap() {
     return {
-      'text-scale': activeTextScale.toStringAsFixed(2),
+      'factor': activeTextScale.toStringAsFixed(2),
     };
   }
 
   @override
-  TextScaleSetting? fromQueryParameter(Map<String, String> queryParameters) {
-    return queryParameters.containsKey('text-scale')
-        ? this.copyWith(
-            activeTextScale: textScales.firstWhere(
-              (scale) =>
-                  scale.toStringAsFixed(2) == queryParameters['text-scale']!,
-            ),
-          )
-        : null;
+  TextScaleSetting fromMap(Map<String, String> map) {
+    return this.copyWith(
+      activeTextScale: textScales.firstWhere(
+        (scale) => scale.toStringAsFixed(2) == map['factor'],
+        orElse: () => activeTextScale,
+      ),
+    );
   }
 }
