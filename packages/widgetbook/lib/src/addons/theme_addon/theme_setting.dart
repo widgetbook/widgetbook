@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_addon/widgetbook_addon.dart';
 
 @immutable
 class ThemeSetting<T> extends WidgetbookAddOnModel<ThemeSetting<T>> {

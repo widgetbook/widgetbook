@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_addon/widgetbook_addon.dart';
+import 'package:widgetbook/src/addons/common/common.dart';
 
 class CustomAddOnSetting extends WidgetbookAddOnModel<CustomAddOnSetting> {
   const CustomAddOnSetting({

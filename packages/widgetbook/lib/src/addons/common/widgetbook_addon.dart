@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'widgetbook_addon_model.dart';
+import '../addons.dart';
 
 /// A class that can be used to extend the selection of Widgetbook properties.
 ///

@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:widgetbook_addon/widgetbook_addon.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 part 'text_scale_setting.freezed.dart';
 

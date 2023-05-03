@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook_addon/widgetbook_addon.dart';
 import 'package:widgetbook/src/builder/builder.dart';
-import 'package:widgetbook/src/knobs/knobs.dart';
-import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook/src/repositories/selected_use_case_repository.dart';
+import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
-import 'package:widgetbook_models/widgetbook_models.dart';
 
 /// Describes the configuration for your [Widget] library.
 ///
