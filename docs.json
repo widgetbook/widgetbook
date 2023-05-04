@@ -103,31 +103,28 @@
             "Widgetbook Cloud",
             [
                 [
-                    "01- Overview", "/widgetbook-cloud/overview"
+                    "01. Overview", "/widgetbook-cloud/overview"
                 ],
                 [
-                    "02- QuickStart", "/widgetbook-cloud/quick-start"
+                    "02. Quick Start", "/widgetbook-cloud/quick-start"
                 ],
                 [
-                    "03- Sign Up", "/widgetbook-cloud/signup"
-                ],
-                           [
-                    "04- Billing", "/widgetbook-cloud/billing"
+                    "03. Sign Up", "/widgetbook-cloud/signup"
                 ],
                 [
-                    "05- Projects", "/widgetbook-cloud/projects"
+                    "04. Projects", "/widgetbook-cloud/projects"
                 ],
                 [
-                    "06- Hosting", "/widgetbook-cloud/hosting"
+                    "05. Hosting", "/widgetbook-cloud/hosting"
                 ],
                 [
-                    "07- Review (beta)", "/widgetbook-cloud/review"
+                    "06. Review (beta)", "/widgetbook-cloud/review"
                 ],
                 [
-                    "08- Accessing Resources", "/widgetbook-cloud/accessing-resources"
+                    "07. Accessing Resources", "/widgetbook-cloud/accessing-resources"
                 ],
                 [
-                    "09- Setup Webhook", "/widgetbook-cloud/setup-webhook"
+                    "08. Setup Webhook", "/widgetbook-cloud/setup-webhook"
                 ]
             ]
         ],

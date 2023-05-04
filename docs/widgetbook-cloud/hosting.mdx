@@ -32,31 +32,7 @@ To upload a Widgetbook Build and create Reviews in your CI/CD pipeline, follow t
 
 > Is your CI/CD vendor missing? [Let us know via Discord](https://discord.com/invite/zT4AMStAJA), and we'll be happy to help.
 
-## BitBucket
-
-The Widgetbook Hosting Docker image allows Widgetbook Cloud users to upload the Widgetbook version hosted on BitBucket.
-
-The Docker image, named `widgetbook-hosting-bitbucket`, is available on Docker Hub. Access the executable by calling `/widgetbook-hosting`.
-
-```yaml
-pipelines:
-  branches:
-    dev:
-      - step:
-          name: Build web
-          image:
-            name: cirrusci/flutter
-          script:
-            - flutter build web -t lib/main.widgetbook.dart
-          artifacts:
-            - build/**
-      - step:
-          name: Host on widgetbook
-          image:
-            name: widgetbook/widgetbook-hosting-bitbucket:dev
-          script:
-            - /widgetbook-hosting
-```
+<Info>Are you using BitBucket? You can [read more here](/widgetbook-cloud/bitbucket)</Info>
 
 ## Environment Variables
 
