@@ -28,7 +28,7 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
   @override
   List<Field> get fields {
     return [
-      ListField<Locale>(
+      DropdownField<Locale>(
         group: slugName,
         name: 'name',
         values: setting.locales,

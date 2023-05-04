@@ -1,1 +1,1 @@
-enum FieldType { list }
+enum FieldType { dropdown }

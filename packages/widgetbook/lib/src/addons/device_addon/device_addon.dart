@@ -28,7 +28,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
   @override
   List<Field> get fields {
     return [
-      ListField<Device?>(
+      DropdownField<Device?>(
         group: slugName,
         name: 'name',
         values: setting.devices,
@@ -50,7 +50,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
           );
         },
       ),
-      ListField<Orientation>(
+      DropdownField<Orientation>(
         group: slugName,
         name: 'orientation',
         values: Orientation.values,
@@ -73,7 +73,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
           );
         },
       ),
-      ListField<bool>(
+      DropdownField<bool>(
         group: slugName,
         name: 'frame',
         values: [false, true],

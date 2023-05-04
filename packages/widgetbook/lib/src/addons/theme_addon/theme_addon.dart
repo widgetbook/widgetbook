@@ -35,7 +35,7 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
   @override
   List<Field> get fields {
     return [
-      ListField<WidgetbookTheme<T>>(
+      DropdownField<WidgetbookTheme<T>>(
         group: slugName,
         name: 'name',
         values: setting.themes,
