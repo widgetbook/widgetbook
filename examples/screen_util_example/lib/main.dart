@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 /// An example [Widget] that uses [ScreenUtil].
@@ -73,13 +72,7 @@ void main() {
 ///
 /// Note: The [WidgetbookApp] annotation can used on ANY code element.
 /// For more information, see the documentation
-@widgetbook.App.material(
-  // Adding devices is mandatory as it enables the [DeviceAddon] that is
-  // required to properly set [MediaQuery] parameters
-  devices: [
-    Apple.iPhone13,
-  ],
-)
+@widgetbook.App.material()
 class App extends StatelessWidget {
   const App({super.key});
 

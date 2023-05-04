@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' hide Theme;
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 @UseCase(name: 'Example', type: ImagePage)
 Widget testUseCase(BuildContext context) {
