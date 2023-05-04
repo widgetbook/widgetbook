@@ -41,6 +41,8 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
           ),
         ),
         onChanged: (locale) {
+          if (locale == null) return;
+
           updateSetting(
             setting.copyWith(
               activeLocale: locale,

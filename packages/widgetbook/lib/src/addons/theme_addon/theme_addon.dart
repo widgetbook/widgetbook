@@ -48,6 +48,8 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
           ),
         ),
         onChanged: (theme) {
+          if (theme == null) return;
+
           updateSetting(
             setting.copyWith(
               activeTheme: theme,

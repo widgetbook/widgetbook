@@ -31,7 +31,7 @@ abstract class Field<T> {
 
   final FieldCodec<T> codec;
 
-  final void Function(T value) onChanged;
+  final void Function(T? value) onChanged;
 
   Widget build(BuildContext context);
 }

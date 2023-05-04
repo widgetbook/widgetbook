@@ -39,6 +39,8 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
           ),
         ),
         onChanged: (scale) {
+          if (scale == null) return;
+
           updateSetting(
             setting.copyWith(
               activeTextScale: scale,

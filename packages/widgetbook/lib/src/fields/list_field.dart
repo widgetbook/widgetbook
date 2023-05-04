@@ -26,10 +26,15 @@ class ListField<T> extends Field<T> {
   Widget build(BuildContext context) {
     final queryParams = GoRouterState.of(context).queryParams;
     final groupMap = FieldCodec.decodeQueryGroup(queryParams[group]);
+    final value = codec.toValue(groupMap[name]);
+
+    // Notify change when field is built from new query params,
+    // to keep query params and locale state (e.g. addon's setting) in sync.
+    onChanged(value);
 
     return DropdownSetting<T>(
       options: values,
-      initialSelection: codec.toValue(groupMap[name]),
+      initialSelection: value,
       optionValueBuilder: labelBuilder,
       onSelected: (value) {
         onChanged(value);

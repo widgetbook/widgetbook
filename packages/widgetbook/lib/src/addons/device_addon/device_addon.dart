@@ -41,6 +41,8 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
           ),
         ),
         onChanged: (device) {
+          if (device == null) return;
+
           updateSetting(
             setting.copyWith(
               activeDevice: device,
@@ -62,6 +64,8 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
           ),
         ),
         onChanged: (orientation) {
+          if (orientation == null) return;
+
           updateSetting(
             setting.copyWith(
               orientation: orientation,
@@ -79,6 +83,8 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
           toValue: (param) => param == 'true',
         ),
         onChanged: (hasFrame) {
+          if (hasFrame == null) return;
+
           updateSetting(
             setting.copyWith(
               hasFrame: hasFrame,
