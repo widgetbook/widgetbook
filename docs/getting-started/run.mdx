@@ -1,6 +1,6 @@
 # Run
 
-`Widgetbook` is supported on the following environments.
+`Widgetbook` is supported in the following environments.
 
 | Environment | Status | Comment                                                                                           |
 | ----------- | ------ | ------------------------------------------------------------------------------------------------- |
@@ -8,15 +8,15 @@
 | Windows     | ✅     |
 | Linux       | ✅     |
 | Web         | ✅     | No hot reload, but hot restart (see [Issue 4](https://github.com/widgetbook/widgetbook/issues/4)) |
-| Mobile      | ➖     | Will run, but is not optimized. If you see a usecase for `Widgetbook` on mobile let us know.      |
+| Mobile      | ➖     | Will run but is not optimized. Let us know if you see a mobile use-case for `Widgetbook`.         |
 
 See the [Desktop support for Flutter](https://docs.flutter.dev/desktop) page for setup instructions.
 
 Check if everything works by running `flutter run` with the newly created Widgetbook:
 
 <Info>
-  If you have renamed `ui_catalogs.widgetbook.dart`, ensure that you pass correct name to `-t` as
-  entry point.
+  If you have renamed `ui_catalogs.widgetbook.dart`, ensure that you pass the correct name to `-t`
+  as an entry point.
 </Info>
 
 <Tabs
@@ -31,17 +31,17 @@ Check if everything works by running `flutter run` with the newly created Widget
   <TabItem value="macos">
     ```bash flutter run -d macos -t lib/ui_catalogs.widgetbook.dart ```
   </TabItem>
-  <TabItem value="macos">
+  <TabItem value="windows">
     ```bash flutter run -d windows -t lib/ui_catalogs.widgetbook.dart ```
   </TabItem>
-  <TabItem value="macos">
+  <TabItem value="linux">
     ```bash flutter run -d linux -t lib/ui_catalogs.widgetbook.dart ```
   </TabItem>
   <TabItem value="web">
     ```bash flutter run -d chrome -t lib/ui_catalogs.widgetbook.dart ```
   </TabItem>
-  <TabItem value="web">
-    It will run, but is not optimized. If you see a use-case for Widgetbook on mobile let us know.
+  <TabItem value="mobile">
+    It will run but is not optimized. If you see a use-case for Widgetbook on mobile let us know.
   </TabItem>
 </Tabs>
 

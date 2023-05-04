@@ -9,5 +9,11 @@
     "examples"
   ],
   "cSpell.words": ["Widgetbook"],
-  "cmake.sourceDirectory": "${workspaceFolder}/examples/knobs_example/linux/flutter"
+  "cmake.sourceDirectory": "${workspaceFolder}/examples/knobs_example/linux/flutter",
+  "grammarly.selectors": [
+    {
+      "language": "plaintext",
+      "scheme": "file"
+    }
+  ]
 }
