@@ -23,6 +23,7 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
           ),
         );
 
+  /// ?text-scale={factor:1.00}
   @override
   List<Field> get fields {
     return [
@@ -30,6 +31,7 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
         group: slugName,
         name: 'factor',
         values: setting.textScales,
+        initialValue: setting.activeTextScale,
         labelBuilder: (scale) => scale.toStringAsFixed(2),
         codec: FieldCodec(
           toParam: (scale) => scale.toStringAsFixed(2),

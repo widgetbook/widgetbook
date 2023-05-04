@@ -53,6 +53,11 @@
         return appRunner.runApp();
       });
     });
+
+    /// Log dart's web messages
+    window.addEventListener('message', function(ev) {
+      console.log(ev.data);
+    });
   </script>
 </body>
 </html>

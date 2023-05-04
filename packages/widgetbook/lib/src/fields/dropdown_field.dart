@@ -12,6 +12,7 @@ class DropdownField<T> extends Field<T> {
     required super.group,
     required super.name,
     required this.values,
+    required super.initialValue,
     required this.labelBuilder,
     required super.codec,
     required super.onChanged,
@@ -53,5 +54,12 @@ class DropdownField<T> extends Field<T> {
         );
       },
     );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'values': values.map((codec.toParam)).toList(),
+    };
   }
 }

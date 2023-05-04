@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/builder/builder.dart';
+import 'package:widgetbook/src/messaging/messaging.dart';
 import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook/src/repositories/selected_use_case_repository.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -108,6 +109,23 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
     goRouter = createRouter(
       useCasesProvider: useCasesProvider,
     );
+
+    // Sends a message with the json representation of Addon fields
+
+    sendMessage(widget.addons.fold(
+      {},
+      (json, addon) {
+        return json
+          ..putIfAbsent(
+            addon.slugName,
+            () => addon.fields
+                .map(
+                  (field) => field.toFullJson(),
+                )
+                .toList(),
+          );
+      },
+    ));
 
     super.initState();
   }
