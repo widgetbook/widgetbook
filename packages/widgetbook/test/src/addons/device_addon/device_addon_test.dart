@@ -100,13 +100,20 @@ void main() {
             (WidgetTester tester) async {
               await testAddon(
                 tester: tester,
-                addon: DeviceAddon(
-                  devices: devices,
-                  initialDevice: devices.first,
-                ),
+                addon: addon,
                 act: () async {
-                  final finder = find.byTooltip('Orientation');
-                  await tester.tap(finder);
+                  final dropdownFinder = find.byType(
+                    DropdownMenu<Orientation>,
+                  );
+
+                  await tester.tap(dropdownFinder);
+                  await tester.pumpAndSettle();
+
+                  final textFinder = find.byWidgetPredicate(
+                    (widget) => widget is Text && widget.data == 'Landscape',
+                  );
+
+                  await tester.tap(textFinder.last);
                   await tester.pumpAndSettle();
                 },
                 expect: (context) => expect(
@@ -148,8 +155,18 @@ void main() {
                 tester: tester,
                 addon: addon,
                 act: () async {
-                  final finder = find.byTooltip('Frame');
-                  await tester.tap(finder);
+                  final dropdownFinder = find.byType(
+                    DropdownMenu<bool>,
+                  );
+
+                  await tester.tap(dropdownFinder);
+                  await tester.pumpAndSettle();
+
+                  final textFinder = find.byWidgetPredicate(
+                    (widget) => widget is Text && widget.data == 'None',
+                  );
+
+                  await tester.tap(textFinder.last);
                   await tester.pumpAndSettle();
                 },
                 expect: (context) => expect(
