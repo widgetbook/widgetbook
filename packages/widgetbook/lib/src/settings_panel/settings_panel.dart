@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/routing/widgetbook_panel.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_addon/widgetbook_addon.dart';
 import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
 class SettingsPanel extends StatelessWidget {

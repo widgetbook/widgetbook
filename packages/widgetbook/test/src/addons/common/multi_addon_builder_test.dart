@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nested/nested.dart';
-import 'package:widgetbook_addon/widgetbook_addon.dart';
+import 'package:widgetbook/src/addons/common/common.dart';
 
-import '../helper/custom_addon.dart';
-import '../helper/widget_test_helper.dart';
+import '../../../helper/widget_test_helper.dart';
+import 'custom_addon.dart';
 
 void main() {
   group(

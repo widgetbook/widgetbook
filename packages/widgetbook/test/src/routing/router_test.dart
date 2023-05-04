@@ -8,7 +8,6 @@ import 'package:widgetbook/src/builder/provider/builder_provider.dart';
 import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook/src/repositories/selected_use_case_repository.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_addon/widgetbook_addon.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 void main() {

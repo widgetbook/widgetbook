@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_addon/widgetbook_addon.dart';
 
 part 'device_setting.freezed.dart';
 

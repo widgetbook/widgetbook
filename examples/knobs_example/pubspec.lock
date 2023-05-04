@@ -252,13 +252,6 @@ packages:
       relative: true
     source: path
     version: "3.0.0-beta.14"
-  widgetbook_addon:
-    dependency: "direct overridden"
-    description:
-      path: "../../packages/widgetbook_addon"
-      relative: true
-    source: path
-    version: "3.0.0-beta.0"
   widgetbook_core:
     dependency: "direct overridden"
     description:
