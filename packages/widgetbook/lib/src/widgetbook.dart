@@ -111,21 +111,22 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
     );
 
     // Sends a message with the json representation of Addon fields
-
-    sendMessage(widget.addons.fold(
-      {},
-      (json, addon) {
-        return json
-          ..putIfAbsent(
-            addon.slugName,
-            () => addon.fields
-                .map(
-                  (field) => field.toFullJson(),
-                )
-                .toList(),
-          );
-      },
-    ));
+    sendMessage(
+      widget.addons.fold(
+        {},
+        (json, addon) {
+          return json
+            ..putIfAbsent(
+              addon.slugName,
+              () => addon.fields
+                  .map(
+                    (field) => field.toFullJson(),
+                  )
+                  .toList(),
+            );
+        },
+      ),
+    );
 
     super.initState();
   }
