@@ -37,10 +37,8 @@ void main() {
             MultiAddonBuilder(
               addons: [
                 CustomAddOn(
-                  initialSetting: CustomAddOnSetting(
-                    data: 'test',
-                  ),
-                )
+                  initialSetting: 'test',
+                ),
               ],
               builder: (_, __, ___) => Text('stub'),
               child: Text('single child'),

@@ -27,10 +27,17 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
   List<Field> get fields {
     return [
       ListField<double>(
+        group: slugName,
         name: 'factor',
         values: setting.textScales,
-        value: setting.activeTextScale,
         labelBuilder: (scale) => scale.toStringAsFixed(2),
+        codec: FieldCodec(
+          toParam: (scale) => scale.toStringAsFixed(2),
+          toValue: (param) => setting.textScales.firstWhere(
+            (scale) => scale.toStringAsFixed(2) == param,
+            orElse: () => setting.activeTextScale,
+          ),
+        ),
         onChanged: (scale) {
           updateSetting(
             setting.copyWith(

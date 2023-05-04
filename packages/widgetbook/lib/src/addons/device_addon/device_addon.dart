@@ -29,10 +29,17 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
   List<Field> get fields {
     return [
       ListField<Device?>(
+        group: slugName,
         name: 'name',
         values: setting.devices,
-        value: setting.activeDevice,
         labelBuilder: (device) => device?.name ?? 'None',
+        codec: FieldCodec(
+          toParam: (device) => device?.name ?? 'None',
+          toValue: (param) => setting.devices.firstWhere(
+            (device) => device?.name == param,
+            orElse: () => null,
+          ),
+        ),
         onChanged: (device) {
           updateSetting(
             setting.copyWith(
@@ -42,12 +49,18 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
         },
       ),
       ListField<Orientation>(
+        group: slugName,
         name: 'orientation',
         values: Orientation.values,
-        value: setting.orientation,
         labelBuilder: (orientation) =>
             orientation.name.substring(0, 1).toUpperCase() +
             orientation.name.substring(1),
+        codec: FieldCodec(
+          toParam: (orientation) => orientation.name,
+          toValue: (param) => Orientation.values.byName(
+            param ?? Orientation.portrait.name,
+          ),
+        ),
         onChanged: (orientation) {
           updateSetting(
             setting.copyWith(
@@ -57,10 +70,14 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
         },
       ),
       ListField<bool>(
+        group: slugName,
         name: 'frame',
         values: [false, true],
-        value: setting.hasFrame,
         labelBuilder: (hasFrame) => hasFrame ? 'Device Frame' : 'None',
+        codec: FieldCodec(
+          toParam: (hasFrame) => hasFrame.toString(),
+          toValue: (param) => param == 'true',
+        ),
         onChanged: (hasFrame) {
           updateSetting(
             setting.copyWith(

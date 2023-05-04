@@ -15,13 +15,8 @@ void main() {
         'overrides $MediaQuery',
         (tester) async {
           const phone = Apple.iPhone13;
-          final addon = DeviceAddon(
-            devices: [
-              phone,
-            ],
-          );
-
           final devices = [phone];
+
           final frame = DeviceFrameBuilder(
             setting: DeviceSetting(
               devices: devices,
@@ -32,10 +27,6 @@ void main() {
           await tester.pumpWidgetWithMaterialApp(
             Builder(
               builder: (context) {
-                addon.updateFromQueryParameters({
-                  'device': '{name: ${phone.name}}',
-                });
-
                 return frame.build(
                   context,
                   const Text(

@@ -36,10 +36,17 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
   List<Field> get fields {
     return [
       ListField<WidgetbookTheme<T>>(
+        group: slugName,
         name: 'name',
         values: setting.themes,
-        value: setting.activeTheme,
         labelBuilder: (theme) => theme.name,
+        codec: FieldCodec(
+          toParam: (theme) => theme.name,
+          toValue: (param) => setting.themes.firstWhere(
+            (theme) => theme.name == param,
+            orElse: () => setting.activeTheme,
+          ),
+        ),
         onChanged: (theme) {
           updateSetting(
             setting.copyWith(

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:widgetbook/widgetbook.dart';
 
 part 'localization_setting.freezed.dart';
 
 @freezed
-class LocalizationSetting extends WidgetbookAddOnModel<LocalizationSetting>
-    with _$LocalizationSetting {
+class LocalizationSetting with _$LocalizationSetting {
   factory LocalizationSetting({
     required Locale activeLocale,
     required List<Locale> locales,
@@ -14,21 +12,4 @@ class LocalizationSetting extends WidgetbookAddOnModel<LocalizationSetting>
   }) = _LocalizationSetting;
 
   LocalizationSetting._();
-
-  @override
-  Map<String, String> toMap() {
-    return {
-      'name': activeLocale.toLanguageTag(),
-    };
-  }
-
-  @override
-  LocalizationSetting fromMap(Map<String, String> map) {
-    return this.copyWith(
-      activeLocale: locales.firstWhere(
-        (locale) => locale.toLanguageTag() == map['name'],
-        orElse: () => activeLocale,
-      ),
-    );
-  }
 }

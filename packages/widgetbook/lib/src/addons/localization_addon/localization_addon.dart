@@ -29,10 +29,17 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
   List<Field> get fields {
     return [
       ListField<Locale>(
+        group: slugName,
         name: 'name',
         values: setting.locales,
-        value: setting.activeLocale,
         labelBuilder: (locale) => locale.toLanguageTag(),
+        codec: FieldCodec(
+          toParam: (locale) => locale.toLanguageTag(),
+          toValue: (param) => setting.locales.firstWhere(
+            (locale) => locale.toLanguageTag() == param,
+            orElse: () => setting.activeLocale,
+          ),
+        ),
         onChanged: (locale) {
           updateSetting(
             setting.copyWith(
