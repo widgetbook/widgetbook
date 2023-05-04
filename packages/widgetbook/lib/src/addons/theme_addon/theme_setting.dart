@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 @immutable
-class ThemeSetting<T> extends WidgetbookAddOnModel<ThemeSetting<T>> {
+class ThemeSetting<T> {
   ThemeSetting({
     required this.themes,
     required this.activeTheme,
@@ -19,23 +19,6 @@ class ThemeSetting<T> extends WidgetbookAddOnModel<ThemeSetting<T>> {
     return ThemeSetting<T>(
       themes: themes ?? this.themes,
       activeTheme: activeTheme ?? this.activeTheme,
-    );
-  }
-
-  @override
-  Map<String, String> toMap() {
-    return {
-      'name': activeTheme.name,
-    };
-  }
-
-  @override
-  ThemeSetting<T> fromMap(Map<String, String> map) {
-    return this.copyWith(
-      activeTheme: themes.firstWhere(
-        (theme) => theme.name == map['name'],
-        orElse: () => activeTheme,
-      ),
     );
   }
 

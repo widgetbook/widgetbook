@@ -1,29 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:widgetbook/src/addons/common/common.dart';
+import 'package:widgetbook/src/fields/fields.dart';
 
-class CustomAddOnSetting extends WidgetbookAddOnModel<CustomAddOnSetting> {
-  const CustomAddOnSetting({
-    required this.data,
-  });
-
-  final String data;
-
-  @override
-  Map<String, String> toMap() {
-    return {
-      'data': data,
-    };
-  }
-
-  @override
-  CustomAddOnSetting fromMap(Map<String, String> map) {
-    return CustomAddOnSetting(
-      data: map['data'] ?? 'Unknown',
-    );
-  }
-}
-
-class CustomAddOn extends WidgetbookAddOn<CustomAddOnSetting> {
+class CustomAddOn extends WidgetbookAddOn<String> {
   CustomAddOn({
     required super.initialSetting,
   }) : super(
@@ -31,7 +9,5 @@ class CustomAddOn extends WidgetbookAddOn<CustomAddOnSetting> {
         );
 
   @override
-  Widget buildSetting(BuildContext context) {
-    return Placeholder();
-  }
+  List<Field> get fields => [];
 }

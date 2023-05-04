@@ -5,8 +5,7 @@ import 'package:widgetbook/widgetbook.dart';
 part 'device_setting.freezed.dart';
 
 @freezed
-class DeviceSetting extends WidgetbookAddOnModel<DeviceSetting>
-    with _$DeviceSetting {
+class DeviceSetting with _$DeviceSetting {
   factory DeviceSetting({
     required List<Device?> devices,
     required Device? activeDevice,
@@ -15,27 +14,4 @@ class DeviceSetting extends WidgetbookAddOnModel<DeviceSetting>
   }) = _DeviceSetting;
 
   DeviceSetting._();
-
-  @override
-  Map<String, String> toMap() {
-    return {
-      'name': activeDevice?.name ?? 'none',
-      'orientation': orientation.name,
-      'frame': hasFrame.toString(),
-    };
-  }
-
-  @override
-  DeviceSetting fromMap(Map<String, String> map) {
-    return this.copyWith(
-      activeDevice: devices.firstWhere(
-        (device) => device?.name == map['name'],
-        orElse: () => null,
-      ),
-      orientation: Orientation.values.byName(
-        map['orientation'] ?? Orientation.portrait.name,
-      ),
-      hasFrame: map['frame'] == 'true',
-    );
-  }
 }

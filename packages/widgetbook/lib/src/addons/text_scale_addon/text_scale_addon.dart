@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
+
+import '../../fields/fields.dart';
 
 class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
   TextScaleAddon({
@@ -23,14 +24,23 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
         );
 
   @override
-  Widget buildSetting(BuildContext context) {
-    return Setting(
-      name: name,
-      child: DropdownSetting<double>(
-        options: setting.textScales,
-        initialSelection: setting.activeTextScale,
-        optionValueBuilder: (scale) => scale.toStringAsFixed(2),
-        onSelected: (scale) {
+  List<Field> get fields {
+    return [
+      DropdownField<double>(
+        group: slugName,
+        name: 'factor',
+        values: setting.textScales,
+        labelBuilder: (scale) => scale.toStringAsFixed(2),
+        codec: FieldCodec(
+          toParam: (scale) => scale.toStringAsFixed(2),
+          toValue: (param) => setting.textScales.firstWhere(
+            (scale) => scale.toStringAsFixed(2) == param,
+            orElse: () => setting.activeTextScale,
+          ),
+        ),
+        onChanged: (scale) {
+          if (scale == null) return;
+
           updateSetting(
             setting.copyWith(
               activeTextScale: scale,
@@ -38,7 +48,7 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
           );
         },
       ),
-    );
+    ];
   }
 
   @override

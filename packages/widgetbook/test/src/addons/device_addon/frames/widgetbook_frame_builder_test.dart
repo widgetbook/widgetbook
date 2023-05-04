@@ -17,10 +17,6 @@ void main() {
           const phone = Apple.iPhone13;
           final devices = [phone];
 
-          final addon = DeviceAddon(
-            devices: devices,
-          );
-
           final frame = WidgetbookFrameBuilder(
             setting: DeviceSetting(
               devices: devices,
@@ -31,10 +27,6 @@ void main() {
           await tester.pumpWidgetWithMaterialApp(
             Builder(
               builder: (context) {
-                addon.updateFromQueryParameters({
-                  'device': '{name: ${phone.name}}',
-                });
-
                 return frame.build(
                   context,
                   const Text(

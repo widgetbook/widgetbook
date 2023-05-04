@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
+
+import '../../fields/fields.dart';
 
 class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
   LocalizationAddon({
@@ -25,14 +26,23 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
         );
 
   @override
-  Widget buildSetting(BuildContext context) {
-    return Setting(
-      name: name,
-      child: DropdownSetting<Locale>(
-        options: setting.locales,
-        initialSelection: setting.activeLocale,
-        optionValueBuilder: (locale) => locale.toString(),
-        onSelected: (locale) {
+  List<Field> get fields {
+    return [
+      DropdownField<Locale>(
+        group: slugName,
+        name: 'name',
+        values: setting.locales,
+        labelBuilder: (locale) => locale.toLanguageTag(),
+        codec: FieldCodec(
+          toParam: (locale) => locale.toLanguageTag(),
+          toValue: (param) => setting.locales.firstWhere(
+            (locale) => locale.toLanguageTag() == param,
+            orElse: () => setting.activeLocale,
+          ),
+        ),
+        onChanged: (locale) {
+          if (locale == null) return;
+
           updateSetting(
             setting.copyWith(
               activeLocale: locale,
@@ -40,7 +50,7 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
           );
         },
       ),
-    );
+    ];
   }
 
   @override
