@@ -38,14 +38,6 @@ import '../helpers/widgetbook_zip_encoder.dart';
 import '../models/created_review.dart';
 import '../models/models.dart';
 import '../models/publish_args.dart';
-import '../review/devices/device_parser.dart';
-import '../review/devices/models/device_data.dart';
-import '../review/locales/locales_parser.dart';
-import '../review/locales/models/locale_data.dart';
-import '../review/text_scale_factors/models/text_scale_factor_data.dart';
-import '../review/text_scale_factors/text_scale_factor_parser.dart';
-import '../review/themes/models/theme_data.dart';
-import '../review/themes/theme_parser.dart';
 import '../review/use_cases/models/changed_use_case.dart';
 import '../review/use_cases/use_case_parser.dart';
 import '../std/stdin_wrapper.dart';
@@ -57,10 +49,6 @@ class PublishCommand extends WidgetbookCommand {
     WidgetbookHttpClient? widgetbookHttpClient,
     WidgetbookZipEncoder? widgetbookZipEncoder,
     FileSystem? fileSystem,
-    this.localeParser,
-    this.deviceParser,
-    this.textScaleFactorsParser,
-    this.themeParser,
     CiWrapper? ciWrapper,
     GitWrapper? gitWrapper,
     StdInWrapper? stdInWrapper,
@@ -143,10 +131,6 @@ class PublishCommand extends WidgetbookCommand {
   final WidgetbookHttpClient _widgetbookHttpClient;
   final WidgetbookZipEncoder _widgetbookZipEncoder;
   final FileSystem _fileSystem;
-  final ThemeParser? themeParser;
-  final LocaleParser? localeParser;
-  final DeviceParser? deviceParser;
-  final TextScaleFactorParser? textScaleFactorsParser;
   final CiWrapper _ciWrapper;
   final GitWrapper _gitWrapper;
   final StdInWrapper _stdInWrapper;
@@ -308,10 +292,6 @@ class PublishCommand extends WidgetbookCommand {
   Future<Map<String, dynamic>?> uploadDeploymentInfo({
     required File file,
     required PublishArgs args,
-    required List<ThemeData> themes,
-    required List<LocaleData> locales,
-    required List<DeviceData> devices,
-    required List<TextScaleFactorData> textScaleFactors,
   }) {
     return _widgetbookHttpClient.uploadBuild(
       deploymentFile: file,
@@ -322,10 +302,6 @@ class PublishCommand extends WidgetbookCommand {
         actor: args.actor,
         apiKey: args.apiKey,
         provider: args.vendor,
-        themes: themes,
-        locales: locales,
-        devices: devices,
-        textScaleFactors: textScaleFactors,
       ),
     );
   }
@@ -448,16 +424,6 @@ class PublishCommand extends WidgetbookCommand {
 
     progress.update('Detected ${useCases.length} changed use-case(s)');
 
-    final themes = await themeParser?.parse() ??
-        await ThemeParser(projectPath: args.path).parse();
-
-    final locales = await localeParser?.parse() ??
-        await LocaleParser(projectPath: args.path).parse();
-    final devices = await deviceParser?.parse() ??
-        await DeviceParser(projectPath: args.path).parse();
-    final textScaleFactors = await textScaleFactorsParser?.parse() ??
-        await TextScaleFactorParser(projectPath: args.path).parse();
-
     try {
       progress.update('Generating zip');
       final file = getZipFile(directory);
@@ -467,29 +433,12 @@ class PublishCommand extends WidgetbookCommand {
         final uploadInfo = await uploadDeploymentInfo(
           file: file,
           args: args,
-          themes: themes,
-          locales: locales,
-          devices: devices,
-          textScaleFactors: textScaleFactors,
         );
 
         if (uploadInfo == null) {
           throw WidgetbookApiException();
         } else {
           progress.complete('Uploaded build');
-        }
-
-        // If generator is not run or not properly configured
-        if (themes.isEmpty) {
-          logger.err(
-            'HINT: Could not find generator files. '
-            'Therefore, no review has been created. '
-            'Make sure to use widgetbook_generator and '
-            'run build_runner before this CLI. '
-            'See https://docs.widgetbook.io/widgetbook-cloud/review for more '
-            'information.',
-          );
-          throw ReviewNotFoundException();
         }
 
         String? reviewId;

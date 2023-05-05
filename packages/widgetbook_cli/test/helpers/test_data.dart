@@ -2,10 +2,6 @@ import 'package:widgetbook_git/widgetbook_git.dart';
 
 import '../../bin/models/models.dart';
 import '../../bin/models/publish_args.dart';
-import '../../bin/review/devices/models/device_data.dart';
-import '../../bin/review/locales/models/locale_data.dart';
-import '../../bin/review/text_scale_factors/models/text_scale_factor_data.dart';
-import '../../bin/review/themes/models/theme_data.dart';
 
 class TestData {
   static final ciArgsData = CliArgs(
@@ -56,16 +52,4 @@ class TestData {
     projectId: 'projectId',
     baseSha: 'baseSha',
   );
-
-  static final ThemeData themeData = ThemeData(name: 'name');
-  static final LocaleData localeData = LocaleData(name: 'name');
-  static final DeviceData deviceData = DeviceData(name: 'name');
-  static final TextScaleFactorData textScaleFactorData =
-      TextScaleFactorData(value: 1);
-
-  static final List<ThemeData> themes = <ThemeData>[themeData];
-  static final List<LocaleData> locales = <LocaleData>[localeData];
-  static final List<DeviceData> devices = <DeviceData>[deviceData];
-  static final List<TextScaleFactorData> testScaleFactors =
-      <TextScaleFactorData>[textScaleFactorData];
 }
