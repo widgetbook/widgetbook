@@ -8,7 +8,6 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/generators/app_generator.dart';
 import 'package:widgetbook_generator/generators/imports_generator.dart';
 import 'package:widgetbook_generator/generators/main_generator.dart';
-import 'package:widgetbook_generator/models/widgetbook_app_builder_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
 
 /// Generates the code for Widgetbook
@@ -28,23 +27,13 @@ class WidgetbookGenerator extends GeneratorForAnnotation<App> {
       WidgetbookUseCaseData.fromJson,
     );
 
-    final appBuilder = await _loadDataFromJson<WidgetbookAppBuilderData>(
-      buildStep,
-      '**.appbuilder.widgetbook.json',
-      WidgetbookAppBuilderData.fromJson,
-    );
-
     final foldersExpanded = _getFoldersExpanded(annotation);
     final widgetsExpanded = _getWidgetsExpanded(annotation);
     final constructor = _getConstructor(annotation);
 
     final buffer = StringBuffer()
       ..writeln(
-        generateImports(
-          [
-            ...useCases,
-          ],
-        ),
+        generateImports(useCases),
       )
       ..writeln(
         generateMain(),
@@ -55,7 +44,6 @@ class WidgetbookGenerator extends GeneratorForAnnotation<App> {
           useCases: useCases,
           foldersExpanded: foldersExpanded,
           widgetsExpanded: widgetsExpanded,
-          appBuilder: appBuilder.isNotEmpty ? appBuilder.first : null,
         ),
       );
 

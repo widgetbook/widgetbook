@@ -2,7 +2,6 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_generator/builders/json_builder.dart';
 import 'package:widgetbook_generator/generators/widgetbook_generator.dart';
-import 'package:widgetbook_generator/resolvers/app_builder_resolver.dart';
 import 'package:widgetbook_generator/resolvers/use_case_resolver.dart';
 
 /// Builder for the WidgetbookUseCase annotation.
@@ -12,17 +11,6 @@ Builder storyBuilder(BuilderOptions options) {
   return JsonLibraryBuilder(
     UseCaseResolver(),
     generatedExtension: '.usecase.widgetbook.json',
-    formatOutput: _formatOutput,
-  );
-}
-
-/// Builder for the AppBuilder annotation.
-/// Creates a .appbuilder.widgetbook.json file for each .dart file containing a
-/// AppBuilder annotation
-Builder appResolverBuilder(BuilderOptions options) {
-  return JsonLibraryBuilder(
-    AppBuilderResolver(),
-    generatedExtension: '.appbuilder.widgetbook.json',
     formatOutput: _formatOutput,
   );
 }

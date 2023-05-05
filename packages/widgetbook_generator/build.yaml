@@ -6,13 +6,6 @@ builders:
     auto_apply: dependents
     runs_before: [":widgetbook_builder"]
     build_to: cache
-  app_resolver_builder:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["appResolverBuilder"]
-    build_extensions: { ".dart": [".appbuilder.widgetbook.json"] }
-    auto_apply: dependents
-    runs_before: [":widgetbook_builder"]
-    build_to: cache
   widgetbook_builder:
     import: "package:widgetbook_generator/builder.dart"
     builder_factories: ["widgetbookBuilder"]
