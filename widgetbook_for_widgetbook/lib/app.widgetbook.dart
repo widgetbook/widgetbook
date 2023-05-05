@@ -31,8 +31,253 @@ import 'package:widgetbook_for_widgetbook/settings/features/widgets/setting_grou
 import 'package:widgetbook_for_widgetbook/settings/features/widgets/setting_header.widgetbook.dart';
 import 'package:widgetbook_for_widgetbook/settings/features/widgets/setting_section.widgetbook.dart';
 import 'package:widgetbook_for_widgetbook/settings/features/widgets/settings_panel.widgetbook.dart';
-void main() {
-  runApp(HotReload());
-}
 
-final directories = [WidgetbookFolder(name: 'search', children: [WidgetbookFolder(name: 'widgets', children: [WidgetbookComponent(name: 'SearchField', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => searchFieldDefaultUseCase(context),),],),],),],), WidgetbookFolder(name: 'icons', children: [WidgetbookComponent(name: 'ExpanderIcon', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => expanderButton(context),),],),],), WidgetbookFolder(name: 'navigation_tree', children: [WidgetbookFolder(name: 'widgets', children: [WidgetbookComponent(name: 'NavigationTree', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => navigationTreeDefaultUseCase(context),),],), WidgetbookComponent(name: 'NavigationTreeNode', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => navigationTreeNodeDefaultUseCase(context),),],), WidgetbookComponent(name: 'NavigationTreeItem', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => navigationTreeItemWithout(context),),],), WidgetbookComponent(name: 'NavigationPanel', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => navigationPanelDefaultUseCase(context),),],),],),],), WidgetbookFolder(name: 'settings', children: [WidgetbookFolder(name: 'widgets', children: [WidgetbookComponent(name: 'SettingSection', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => settingSection(context),),],), WidgetbookComponent(name: 'ComplexSetting', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => complexSettingUseCase(context),),],), WidgetbookComponent(name: 'SettingHeader', useCases: [WidgetbookUseCase(name: 'Text only', builder: (context) => textOnly(context),), WidgetbookUseCase(name: 'with Trailing', builder: (context) => trailing(context),),],), WidgetbookComponent(name: 'SettingsPanel', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => settingsPanel(context),),],), WidgetbookComponent(name: 'DropdownSetting<dynamic>', useCases: [WidgetbookUseCase(name: 'Test', builder: (context) => test(context),),],), WidgetbookComponent(name: 'SettingGroup', useCases: [WidgetbookUseCase(name: 'default', builder: (context) => settingGroupUseCase(context),),],),],), WidgetbookFolder(name: 'features', children: [WidgetbookFolder(name: 'knobs', children: [WidgetbookComponent(name: 'TextKnob', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => textKnob(context),),],), WidgetbookComponent(name: 'SliderKnob', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => sliderKnob(context),),],), WidgetbookComponent(name: 'NullableNumberKnob', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => nullableNumberKniob(context),),],), WidgetbookComponent(name: 'NullableBoolKnob', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => nullableBoolKnob(context),),],), WidgetbookComponent(name: 'NullableTextKnob', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => nullableTextKnob(context),),],), WidgetbookComponent(name: 'ColorKnob', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => colorKnob(context),),],), WidgetbookComponent(name: 'OptionKnob<dynamic>', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => optionKnob(context),),],), WidgetbookComponent(name: 'BoolKnob', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => boolKnob(context),),],), WidgetbookComponent(name: 'NumberKnob', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => numberKnob(context),),],), WidgetbookComponent(name: 'NullableSliderKnob', useCases: [WidgetbookUseCase(name: 'Default', builder: (context) => nullableSliderKnob(context),),],),],),],),],),]
+final directories = [
+  WidgetbookFolder(
+    name: 'search',
+    children: [
+      WidgetbookFolder(
+        name: 'widgets',
+        children: [
+          WidgetbookComponent(
+            name: 'SearchField',
+            useCases: [
+              WidgetbookUseCase(
+                name: 'Default',
+                builder: (context) => searchFieldDefaultUseCase(context),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ],
+  ),
+  WidgetbookFolder(
+    name: 'icons',
+    children: [
+      WidgetbookComponent(
+        name: 'ExpanderIcon',
+        useCases: [
+          WidgetbookUseCase(
+            name: 'Default',
+            builder: (context) => expanderButton(context),
+          ),
+        ],
+      ),
+    ],
+  ),
+  WidgetbookFolder(
+    name: 'navigation_tree',
+    children: [
+      WidgetbookFolder(
+        name: 'widgets',
+        children: [
+          WidgetbookComponent(
+            name: 'NavigationTree',
+            useCases: [
+              WidgetbookUseCase(
+                name: 'Default',
+                builder: (context) => navigationTreeDefaultUseCase(context),
+              ),
+            ],
+          ),
+          WidgetbookComponent(
+            name: 'NavigationTreeNode',
+            useCases: [
+              WidgetbookUseCase(
+                name: 'Default',
+                builder: (context) => navigationTreeNodeDefaultUseCase(context),
+              ),
+            ],
+          ),
+          WidgetbookComponent(
+            name: 'NavigationTreeItem',
+            useCases: [
+              WidgetbookUseCase(
+                name: 'Default',
+                builder: (context) => navigationTreeItemWithout(context),
+              ),
+            ],
+          ),
+          WidgetbookComponent(
+            name: 'NavigationPanel',
+            useCases: [
+              WidgetbookUseCase(
+                name: 'Default',
+                builder: (context) => navigationPanelDefaultUseCase(context),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ],
+  ),
+  WidgetbookFolder(
+    name: 'settings',
+    children: [
+      WidgetbookFolder(
+        name: 'widgets',
+        children: [
+          WidgetbookComponent(
+            name: 'SettingSection',
+            useCases: [
+              WidgetbookUseCase(
+                name: 'Default',
+                builder: (context) => settingSection(context),
+              ),
+            ],
+          ),
+          WidgetbookComponent(
+            name: 'ComplexSetting',
+            useCases: [
+              WidgetbookUseCase(
+                name: 'Default',
+                builder: (context) => complexSettingUseCase(context),
+              ),
+            ],
+          ),
+          WidgetbookComponent(
+            name: 'SettingHeader',
+            useCases: [
+              WidgetbookUseCase(
+                name: 'Text only',
+                builder: (context) => textOnly(context),
+              ),
+              WidgetbookUseCase(
+                name: 'with Trailing',
+                builder: (context) => trailing(context),
+              ),
+            ],
+          ),
+          WidgetbookComponent(
+            name: 'SettingsPanel',
+            useCases: [
+              WidgetbookUseCase(
+                name: 'Default',
+                builder: (context) => settingsPanel(context),
+              ),
+            ],
+          ),
+          WidgetbookComponent(
+            name: 'DropdownSetting<dynamic>',
+            useCases: [
+              WidgetbookUseCase(
+                name: 'Test',
+                builder: (context) => test(context),
+              ),
+            ],
+          ),
+          WidgetbookComponent(
+            name: 'SettingGroup',
+            useCases: [
+              WidgetbookUseCase(
+                name: 'default',
+                builder: (context) => settingGroupUseCase(context),
+              ),
+            ],
+          ),
+        ],
+      ),
+      WidgetbookFolder(
+        name: 'features',
+        children: [
+          WidgetbookFolder(
+            name: 'knobs',
+            children: [
+              WidgetbookComponent(
+                name: 'TextKnob',
+                useCases: [
+                  WidgetbookUseCase(
+                    name: 'Default',
+                    builder: (context) => textKnob(context),
+                  ),
+                ],
+              ),
+              WidgetbookComponent(
+                name: 'SliderKnob',
+                useCases: [
+                  WidgetbookUseCase(
+                    name: 'Default',
+                    builder: (context) => sliderKnob(context),
+                  ),
+                ],
+              ),
+              WidgetbookComponent(
+                name: 'NullableNumberKnob',
+                useCases: [
+                  WidgetbookUseCase(
+                    name: 'Default',
+                    builder: (context) => nullableNumberKniob(context),
+                  ),
+                ],
+              ),
+              WidgetbookComponent(
+                name: 'NullableBoolKnob',
+                useCases: [
+                  WidgetbookUseCase(
+                    name: 'Default',
+                    builder: (context) => nullableBoolKnob(context),
+                  ),
+                ],
+              ),
+              WidgetbookComponent(
+                name: 'NullableTextKnob',
+                useCases: [
+                  WidgetbookUseCase(
+                    name: 'Default',
+                    builder: (context) => nullableTextKnob(context),
+                  ),
+                ],
+              ),
+              WidgetbookComponent(
+                name: 'ColorKnob',
+                useCases: [
+                  WidgetbookUseCase(
+                    name: 'Default',
+                    builder: (context) => colorKnob(context),
+                  ),
+                ],
+              ),
+              WidgetbookComponent(
+                name: 'OptionKnob<dynamic>',
+                useCases: [
+                  WidgetbookUseCase(
+                    name: 'Default',
+                    builder: (context) => optionKnob(context),
+                  ),
+                ],
+              ),
+              WidgetbookComponent(
+                name: 'BoolKnob',
+                useCases: [
+                  WidgetbookUseCase(
+                    name: 'Default',
+                    builder: (context) => boolKnob(context),
+                  ),
+                ],
+              ),
+              WidgetbookComponent(
+                name: 'NumberKnob',
+                useCases: [
+                  WidgetbookUseCase(
+                    name: 'Default',
+                    builder: (context) => numberKnob(context),
+                  ),
+                ],
+              ),
+              WidgetbookComponent(
+                name: 'NullableSliderKnob',
+                useCases: [
+                  WidgetbookUseCase(
+                    name: 'Default',
+                    builder: (context) => nullableSliderKnob(context),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    ],
+  ),
+];
