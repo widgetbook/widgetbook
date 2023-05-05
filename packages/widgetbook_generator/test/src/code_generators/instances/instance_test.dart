@@ -69,7 +69,7 @@ void main() {
 
           expect(
             instance.toCode(),
-            equals("PropertyInstance(p1: 10.0, p2: 'value')"),
+            equals("PropertyInstance(p2: 'value')"),
           );
         },
       );
@@ -81,7 +81,7 @@ void main() {
 
           expect(
             instance.toCode(),
-            equals("PropertyInstance(p1: 10.0, p2: 'value',)"),
+            equals("PropertyInstance(p2: 'value',)"),
           );
         },
       );
