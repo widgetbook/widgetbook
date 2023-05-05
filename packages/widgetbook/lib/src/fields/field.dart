@@ -7,6 +7,7 @@ abstract class Field<T> {
     required this.group,
     required this.name,
     required this.type,
+    required this.initialValue,
     required this.codec,
     required this.onChanged,
   });
@@ -29,9 +30,22 @@ abstract class Field<T> {
   /// to help rendering proper widget by external listeners.
   final FieldType type;
 
+  final T initialValue;
+
   final FieldCodec<T> codec;
 
   final void Function(T? value) onChanged;
 
   Widget build(BuildContext context);
+
+  Map<String, dynamic> toFullJson() {
+    return {
+      'name': name,
+      'type': type.name,
+      'initialValue': codec.toParam(initialValue),
+      ...toJson(),
+    };
+  }
+
+  Map<String, dynamic> toJson();
 }

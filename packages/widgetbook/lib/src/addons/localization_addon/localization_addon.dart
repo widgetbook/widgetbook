@@ -32,6 +32,7 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
         group: slugName,
         name: 'name',
         values: setting.locales,
+        initialValue: setting.activeLocale,
         labelBuilder: (locale) => locale.toLanguageTag(),
         codec: FieldCodec(
           toParam: (locale) => locale.toLanguageTag(),

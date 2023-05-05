@@ -39,6 +39,7 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
         group: slugName,
         name: 'name',
         values: setting.themes,
+        initialValue: setting.activeTheme,
         labelBuilder: (theme) => theme.name,
         codec: FieldCodec(
           toParam: (theme) => theme.name,
