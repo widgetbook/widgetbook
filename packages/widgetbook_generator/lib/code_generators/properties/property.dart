@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:widgetbook_generator/code_generators/instances/base_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/boolean_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/double_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/string_instance.dart';
 
 /// A property which is set when a new instance is created
@@ -16,11 +15,6 @@ class Property {
     required this.key,
     required String value,
   }) : instance = StringInstance.value(value);
-
-  Property.double({
-    required this.key,
-    required double value,
-  }) : instance = DoubleInstance.value(value);
 
   Property.bool({
     required this.key,

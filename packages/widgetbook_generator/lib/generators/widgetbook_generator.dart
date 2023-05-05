@@ -7,7 +7,6 @@ import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/generators/app_generator.dart';
 import 'package:widgetbook_generator/generators/imports_generator.dart';
-import 'package:widgetbook_generator/generators/main_generator.dart';
 import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
 
 /// Generates the code for Widgetbook

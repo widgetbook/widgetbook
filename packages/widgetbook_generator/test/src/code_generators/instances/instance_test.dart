@@ -36,10 +36,7 @@ class PropertyInstance extends Instance {
     required bool trailingComma,
   }) : super(
           name: 'PropertyInstance',
-          properties: [
-            Property.double(key: 'p1', value: 10),
-            Property.string(key: 'p2', value: 'value')
-          ],
+          properties: [Property.string(key: 'p2', value: 'value')],
           trailingComma: trailingComma,
         );
 }
