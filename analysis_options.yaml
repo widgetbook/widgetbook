@@ -4,7 +4,6 @@ analyzer:
     - "bricks"
     - "**/*.g.dart"
     - "**/*.freezed.dart"
-    - "examples/screen_util_example/lib/main.widgetbook.dart" # The only generated .widgetbook.dart file
     - "**/example/*.dart"
     - "**/example/**/*.dart"
 

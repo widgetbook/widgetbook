@@ -3,7 +3,7 @@ import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import 'package:widgetbook_core/widgetbook_core.dart';
 
-import 'app.widgetbook.dart';
+import 'widgetbook.g.dart';
 
 void main() {
   runApp(const WidgetbookApp());

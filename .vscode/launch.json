@@ -5,7 +5,7 @@
             "name": "Debug widgetbook_for_widgetbook",
             "cwd": "widgetbook_for_widgetbook",
             "request": "launch",
-            "program": "lib/app.dart",
+            "program": "lib/widgetbook.dart",
             "type": "dart",
         },
         {
@@ -33,7 +33,7 @@
             "name": "Debug screen_util_example",
             "cwd": "examples/screen_util_example",
             "request": "launch",
-            "program": "lib/app.dart",
+            "program": "lib/widgetbook.dart",
             "type": "dart"
         },
     ]

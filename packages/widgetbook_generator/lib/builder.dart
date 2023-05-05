@@ -16,12 +16,12 @@ Builder storyBuilder(BuilderOptions options) {
 }
 
 /// Builder for the WidgetbookApp annotation.
-/// Creates exactly one app.widgetbook.dart file next to the file containing
-/// the WidgetbookApp annotation.
+/// Creates exactly one .g.dart file next to the file containing
+/// the [App] annotation.
 Builder widgetbookBuilder(BuilderOptions options) {
   return LibraryBuilder(
     WidgetbookGenerator(),
-    generatedExtension: '.widgetbook.dart',
+    generatedExtension: '.g.dart',
   );
 }
 

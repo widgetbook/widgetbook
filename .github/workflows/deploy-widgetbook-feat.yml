@@ -27,7 +27,7 @@ jobs:
         run: melos run generate
 
       - name: Build Website
-        run: flutter build web -t lib/app.widgetbook.dart
+        run: flutter build web -t lib/widgetbook.dart
 
       - name: Install Widgetbook CLI
         run: dart pub global activate --source path ../packages/widgetbook_cli
