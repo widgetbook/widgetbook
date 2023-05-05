@@ -29,18 +29,13 @@ class WidgetbookGenerator extends GeneratorForAnnotation<App> {
 
     final foldersExpanded = _getFoldersExpanded(annotation);
     final widgetsExpanded = _getWidgetsExpanded(annotation);
-    final constructor = _getConstructor(annotation);
 
     final buffer = StringBuffer()
       ..writeln(
         generateImports(useCases),
       )
       ..writeln(
-        generateMain(),
-      )
-      ..writeln(
         generateWidgetbook(
-          constructor: constructor,
           useCases: useCases,
           foldersExpanded: foldersExpanded,
           widgetsExpanded: widgetsExpanded,
@@ -49,11 +44,6 @@ class WidgetbookGenerator extends GeneratorForAnnotation<App> {
 
     return buffer.toString();
   }
-}
-
-Constructor _getConstructor(ConstantReader annotation) {
-  final index = annotation.read('constructor').read('index').intValue;
-  return Constructor.values[index];
 }
 
 bool _getFoldersExpanded(ConstantReader annotation) {

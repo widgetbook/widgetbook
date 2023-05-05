@@ -1,36 +1,27 @@
-import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_generator/code_generators/instances/instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_folder_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widgetbook_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_widget_instance.dart';
 import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
 
 /// Generates the code of the Widgetbook
 String generateWidgetbook({
-  required Constructor constructor,
   required List<WidgetbookUseCaseData> useCases,
   required bool foldersExpanded,
   required bool widgetsExpanded,
 }) {
-  final directories =
-      _generateDirectoriesInstances(useCases, foldersExpanded, widgetsExpanded);
+  final directories = _generateDirectoriesInstances(
+    useCases,
+    foldersExpanded,
+    widgetsExpanded,
+  );
 
-  final widgetbookInstanceCode = WidgetbookInstance(
-    constructor: constructor,
-    directories: directories,
+  final instance = ListInstance(
+    instances: directories,
   ).toCode();
 
-  return '''
-class HotReload extends StatelessWidget {
-  const HotReload({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return $widgetbookInstanceCode;
-  }
-}
-  ''';
+  return 'final directories = $instance;';
 }
 
 List<Instance> _generateDirectoriesInstances(

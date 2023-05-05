@@ -1,5 +1,3 @@
-import 'constructor.dart';
-
 /// Annotates a code element to create the widgetbook main file in the same
 /// folder in which the annotated element is defined.
 class App {
@@ -10,28 +8,7 @@ class App {
   const App({
     this.foldersExpanded = false,
     this.widgetsExpanded = false,
-    this.constructor = Constructor.custom,
   });
-
-  /// Annotates a code element to creat a Material-themed widgetbook main file
-  /// in the same folder in which the annotated element is defined.
-  const App.material({
-    this.foldersExpanded = false,
-    this.widgetsExpanded = false,
-    this.constructor = Constructor.material,
-  });
-
-  /// Annotates a code element to creat a Cupertino-themed widgetbook main
-  /// file in the same folder in which the annotated element is defined.
-  const App.cupertino({
-    this.foldersExpanded = false,
-    this.widgetsExpanded = false,
-    this.constructor = Constructor.cupertino,
-  });
-
-  /// Indicates which type of theme is used for the generic Widgetbook
-  /// implementation.
-  final Constructor constructor;
 
   /// Determines folders are expanded by default
   final bool foldersExpanded;
