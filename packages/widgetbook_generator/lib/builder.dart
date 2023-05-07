@@ -7,7 +7,7 @@ import 'package:widgetbook_generator/resolvers/use_case_resolver.dart';
 /// Builder for the WidgetbookUseCase annotation.
 /// Creates a .usecase.widgetbook.json file for each .dart file containing a
 /// WidgetbookStory annotation
-Builder storyBuilder(BuilderOptions options) {
+Builder useCaseBuilder(BuilderOptions options) {
   return JsonLibraryBuilder(
     UseCaseResolver(),
     generatedExtension: '.usecase.widgetbook.json',
