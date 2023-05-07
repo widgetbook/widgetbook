@@ -441,6 +441,19 @@ class PublishCommand extends WidgetbookCommand {
           progress.complete('Uploaded build');
         }
 
+        // If generator is not run or not properly configured
+        if (useCases.isEmpty) {
+          logger.err(
+            'HINT: Could not find generator files. '
+            'Therefore, no review has been created. '
+            'Make sure to use widgetbook_generator and '
+            'run build_runner before this CLI. '
+            'See https://docs.widgetbook.io/widgetbook-cloud/review for more '
+            'information.',
+          );
+          throw ReviewNotFoundException();
+        }
+
         String? reviewId;
         if (baseBranch != null && baseSha != null) {
           progress.update('Uploading review');
