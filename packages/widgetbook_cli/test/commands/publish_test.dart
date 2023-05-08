@@ -14,10 +14,6 @@ import '../../bin/git/git_wrapper.dart';
 import '../../bin/helpers/helpers.dart';
 import '../../bin/models/models.dart';
 import '../../bin/models/publish_args.dart';
-import '../../bin/review/devices/device_parser.dart';
-import '../../bin/review/locales/locales_parser.dart';
-import '../../bin/review/text_scale_factors/text_scale_factor_parser.dart';
-import '../../bin/review/themes/theme_parser.dart';
 import '../../bin/std/stdin_wrapper.dart';
 import '../helpers/test_data.dart';
 import '../mocks/mocks.dart';
@@ -50,10 +46,6 @@ void main() {
     late WidgetbookHttpClient widgetbookHttpClient;
     late WidgetbookZipEncoder widgetbookZipEncoder;
     late LocalFileSystem localFileSystem;
-    late ThemeParser themeParser;
-    late LocaleParser localeParser;
-    late DeviceParser deviceParser;
-    late TextScaleFactorParser textScaleFactorsParser;
     late Progress progress;
     final tempDir = const LocalFileSystem().currentDirectory;
 
@@ -67,12 +59,8 @@ void main() {
       widgetbookHttpClient = MockWidgetbookHttpClient();
       widgetbookZipEncoder = MockWidgetbookZipEncoder();
       localFileSystem = MockLocalFileSystem();
-      themeParser = MockThemeParser();
       progress = MockProgress();
 
-      localeParser = MockLocaleParser();
-      deviceParser = MockDeviceParser();
-      textScaleFactorsParser = MockTextScaleFactorParser();
       when(() => logger.progress(any<String>())).thenReturn(progress);
       publishCommand = PublishCommand(
         logger: logger,
@@ -701,10 +689,6 @@ void main() {
           () => publishCommand.uploadDeploymentInfo(
             file: file,
             args: TestData.args,
-            themes: [],
-            locales: [],
-            devices: [],
-            textScaleFactors: [],
           ),
           throwsA(const TypeMatcher<WidgetbookDeployException>()),
         );
@@ -782,10 +766,6 @@ void main() {
         final results = await publishCommand.uploadDeploymentInfo(
           file: file,
           args: TestData.args,
-          themes: [],
-          locales: [],
-          devices: [],
-          textScaleFactors: [],
         );
 
         expect(
@@ -814,25 +794,9 @@ void main() {
         fileSystem: localFileSystem,
         widgetbookHttpClient: widgetbookHttpClient,
         logger: logger,
-        themeParser: themeParser,
-        localeParser: localeParser,
-        deviceParser: deviceParser,
-        textScaleFactorsParser: textScaleFactorsParser,
         ciParserRunner: CiParserRunner(argResults: argResults, gitDir: gitDir),
       )..testArgResults = argResults;
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
-
-      when(() => themeParser.parse())
-          .thenAnswer((_) => Future.value(TestData.themes));
-
-      when(() => localeParser.parse())
-          .thenAnswer((_) => Future.value(TestData.locales));
-
-      when(() => deviceParser.parse())
-          .thenAnswer((_) => Future.value(TestData.devices));
-
-      when(() => textScaleFactorsParser.parse())
-          .thenAnswer((_) => Future.value(TestData.testScaleFactors));
 
       when(() => gitDir.getActorName())
           .thenAnswer((_) => Future.value('John Doe'));
@@ -876,10 +840,6 @@ void main() {
         fileSystem: localFileSystem,
         widgetbookHttpClient: widgetbookHttpClient,
         logger: logger,
-        themeParser: themeParser,
-        localeParser: localeParser,
-        deviceParser: deviceParser,
-        textScaleFactorsParser: textScaleFactorsParser,
         ciParserRunner: CiParserRunner(
           argResults: argResults,
           gitDir: gitDir,
@@ -890,18 +850,6 @@ void main() {
       when(() => argResults['base-branch'] as String).thenReturn('main');
 
       when(() => argResults['base-commit'] as String).thenReturn('base-commit');
-
-      when(() => themeParser.parse())
-          .thenAnswer((_) => Future.value(TestData.themes));
-
-      when(() => localeParser.parse())
-          .thenAnswer((_) => Future.value(TestData.locales));
-
-      when(() => deviceParser.parse())
-          .thenAnswer((_) => Future.value(TestData.devices));
-
-      when(() => textScaleFactorsParser.parse())
-          .thenAnswer((_) => Future.value(TestData.testScaleFactors));
 
       when(() => gitDir.getActorName())
           .thenAnswer((_) => Future.value('John Doe'));

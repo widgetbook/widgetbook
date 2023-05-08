@@ -1,106 +1,27 @@
-import 'package:widgetbook_annotation/widgetbook_annotation.dart';
-import 'package:widgetbook_generator/code_generators/instances/addons/addons.dart';
 import 'package:widgetbook_generator/code_generators/instances/instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/variable_instance.dart';
+import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_folder_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widgetbook_instance.dart';
 import 'package:widgetbook_generator/code_generators/instances/widgetbook_widget_instance.dart';
-import 'package:widgetbook_generator/models/widgetbook_app_builder_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_locales_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_localizations_delegates_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_theme_data.dart';
-import 'package:widgetbook_generator/models/widgetbook_theme_type_data.dart';
 import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
 import 'package:widgetbook_generator/services/tree_service.dart';
 
 /// Generates the code of the Widgetbook
 String generateWidgetbook({
-  required Constructor constructor,
   required List<WidgetbookUseCaseData> useCases,
-  required List<Device> devices,
-  required List<double> textScaleFactors,
   required bool foldersExpanded,
   required bool widgetsExpanded,
-  required List<WidgetbookThemeData> themes,
-  WidgetbookLocalesData? localesData,
-  WidgetbookLocalizationsDelegatesData? localizationDelegatesData,
-  WidgetbookThemeData? widgetbookThemeData,
-  WidgetbookThemeTypeData? themeTypeData,
-  WidgetbookAppBuilderData? appBuilder,
 }) {
-  final directories =
-      _generateDirectoriesInstances(useCases, foldersExpanded, widgetsExpanded);
+  final directories = _generateDirectoriesInstances(
+    useCases,
+    foldersExpanded,
+    widgetsExpanded,
+  );
 
-  final addons = <AddOnInstance>[];
-  if (themes.isNotEmpty) {
-    switch (constructor) {
-      case Constructor.material:
-        addons.add(
-          MaterialThemeAddonInstance(
-            themes: themes,
-          ),
-        );
-        break;
-      case Constructor.cupertino:
-        addons.add(
-          CustomThemeAddonInstance(
-            themes: themes,
-            themeType: 'CupertinoThemeData',
-          ),
-        );
-        break;
-      case Constructor.custom:
-        if (widgetbookThemeData != null) {
-          addons.add(
-            CustomThemeAddonInstance(
-              themes: themes,
-              themeType: widgetbookThemeData.name,
-            ),
-          );
-        } else {
-          // TODO handle error
-        }
-        break;
-    }
-  }
-
-  if (textScaleFactors.isNotEmpty) {
-    addons.add(TextScaleAddonInstance(textScales: textScaleFactors));
-  }
-
-  if (localesData != null && localizationDelegatesData != null) {
-    addons.add(
-      LocalizationAddonInstance(
-        localesData: localesData,
-        localizationDelegatesData: localizationDelegatesData,
-      ),
-    );
-  }
-
-  if (devices.isNotEmpty) {
-    addons.add(DeviceAddonInstance(devices: devices));
-  }
-
-  final widgetbookInstanceCode = WidgetbookInstance(
-    constructor: constructor,
-    addons: addons,
-    directories: directories,
-    type: themeTypeData?.name,
-    appBuilder: appBuilder != null
-        ? VariableInstance(variableIdentifier: appBuilder.name)
-        : null,
+  final instance = ListInstance(
+    instances: directories,
   ).toCode();
 
-  return '''
-class HotReload extends StatelessWidget {
-  const HotReload({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return $widgetbookInstanceCode;
-  }
-}
-  ''';
+  return 'final directories = $instance;';
 }
 
 List<Instance> _generateDirectoriesInstances(

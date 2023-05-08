@@ -2,29 +2,12 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_generator/builders/json_builder.dart';
 import 'package:widgetbook_generator/generators/widgetbook_generator.dart';
-import 'package:widgetbook_generator/resolvers/app_builder_resolver.dart';
-import 'package:widgetbook_generator/resolvers/device_resolver.dart';
-import 'package:widgetbook_generator/resolvers/locales_resolver.dart';
-import 'package:widgetbook_generator/resolvers/localization_delegates_resolver.dart';
-import 'package:widgetbook_generator/resolvers/text_scale_factor_resolver.dart';
-import 'package:widgetbook_generator/resolvers/theme_resolver.dart';
 import 'package:widgetbook_generator/resolvers/use_case_resolver.dart';
-
-/// Builder for the WidgetbookTheme annotation.
-/// Creates a .theme.widgetbook.json file for each .dart file containing a
-/// WidgetbookTheme annotation
-Builder themeBuilder(BuilderOptions options) {
-  return JsonLibraryBuilder(
-    ThemeResolver(),
-    generatedExtension: '.theme.widgetbook.json',
-    formatOutput: _formatOutput,
-  );
-}
 
 /// Builder for the WidgetbookUseCase annotation.
 /// Creates a .usecase.widgetbook.json file for each .dart file containing a
 /// WidgetbookStory annotation
-Builder storyBuilder(BuilderOptions options) {
+Builder useCaseBuilder(BuilderOptions options) {
   return JsonLibraryBuilder(
     UseCaseResolver(),
     generatedExtension: '.usecase.widgetbook.json',
@@ -32,67 +15,13 @@ Builder storyBuilder(BuilderOptions options) {
   );
 }
 
-/// Builder for creating a json which contains all used devices.
-/// Creates a .devices.widgetbook.json file for each device used in Widgetbook.
-Builder devicesBuilder(BuilderOptions options) {
-  return JsonLibraryBuilder(
-    DeviceResolver(),
-    generatedExtension: '.devices.widgetbook.json',
-    formatOutput: _formatOutput,
-  );
-}
-
-/// Builder for creating a json which contains all used text scale factors.
-/// Creates a .textscalefactors.widgetbook.json file for each text scale factor
-/// used in Widgetbook.
-Builder textScaleFactorsBuilder(BuilderOptions options) {
-  return JsonLibraryBuilder(
-    TextScaleFactorResolver(),
-    generatedExtension: '.textscalefactors.widgetbook.json',
-    formatOutput: _formatOutput,
-  );
-}
-
-/// Builder for the WidgetbookLocales annotation.
-/// Creates a .locales.widgetbook.json file for each .dart file containing a
-/// WidgetbookLocales annotation
-Builder localesBuilder(BuilderOptions options) {
-  return JsonLibraryBuilder(
-    LocalesResolver(),
-    formatOutput: _formatOutput,
-    generatedExtension: '.locales.widgetbook.json',
-  );
-}
-
-/// Builder for the WidgetbookLocalizationDelegates annotation.
-/// Creates a .delegates.widgetbook.json file for each .dart file containing a
-/// WidgetbookLocales annotation
-Builder localizationDelegatesBuilder(BuilderOptions options) {
-  return JsonLibraryBuilder(
-    LocalizationDelegatesResolver(),
-    formatOutput: _formatOutput,
-    generatedExtension: '.delegates.widgetbook.json',
-  );
-}
-
-/// Builder for the AppBuilder annotation.
-/// Creates a .appbuilder.widgetbook.json file for each .dart file containing a
-/// AppBuilder annotation
-Builder appResolverBuilder(BuilderOptions options) {
-  return JsonLibraryBuilder(
-    AppBuilderResolver(),
-    generatedExtension: '.appbuilder.widgetbook.json',
-    formatOutput: _formatOutput,
-  );
-}
-
 /// Builder for the WidgetbookApp annotation.
-/// Creates exactly one app.widgetbook.dart file next to the file containing
-/// the WidgetbookApp annotation.
+/// Creates exactly one .g.dart file next to the file containing
+/// the [App] annotation.
 Builder widgetbookBuilder(BuilderOptions options) {
   return LibraryBuilder(
     WidgetbookGenerator(),
-    generatedExtension: '.widgetbook.dart',
+    generatedExtension: '.g.dart',
   );
 }
 

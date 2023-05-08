@@ -36,10 +36,7 @@ class PropertyInstance extends Instance {
     required bool trailingComma,
   }) : super(
           name: 'PropertyInstance',
-          properties: [
-            Property.double(key: 'p1', value: 10),
-            Property.string(key: 'p2', value: 'value')
-          ],
+          properties: [Property.string(key: 'p2', value: 'value')],
           trailingComma: trailingComma,
         );
 }
@@ -72,7 +69,7 @@ void main() {
 
           expect(
             instance.toCode(),
-            equals("PropertyInstance(p1: 10.0, p2: 'value')"),
+            equals("PropertyInstance(p2: 'value')"),
           );
         },
       );
@@ -84,7 +81,7 @@ void main() {
 
           expect(
             instance.toCode(),
-            equals("PropertyInstance(p1: 10.0, p2: 'value',)"),
+            equals("PropertyInstance(p2: 'value',)"),
           );
         },
       );
