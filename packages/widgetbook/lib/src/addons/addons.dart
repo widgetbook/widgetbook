@@ -13,7 +13,7 @@ List<WidgetbookAddOn> configureMaterialAddons({
   required List<double> textScales,
   required List<Locale> locales,
   required List<LocalizationsDelegate> localizationsDelegates,
-  required List<Device> devices,
+  required List<DeviceInfo> devices,
 }) {
   return [
     MaterialThemeAddon(
@@ -37,7 +37,7 @@ List<WidgetbookAddOn> configureCupertinoAddons({
   required List<double> textScales,
   required List<Locale> locales,
   required List<LocalizationsDelegate> localizationsDelegates,
-  required List<Device> devices,
+  required List<DeviceInfo> devices,
 }) {
   return [
     CupertinoThemeAddon(

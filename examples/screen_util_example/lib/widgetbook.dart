@@ -41,9 +41,9 @@ class WidgetbookApp extends StatelessWidget {
           DefaultMaterialLocalizations.delegate,
         ],
         devices: [
-          Apple.iPhone11,
-          Apple.iPhone12,
-          Apple.iPhone13,
+          Devices.ios.iPhoneSE,
+          Devices.ios.iPhone12,
+          Devices.ios.iPhone13,
         ],
       ),
 

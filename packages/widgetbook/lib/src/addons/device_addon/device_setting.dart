@@ -7,8 +7,8 @@ part 'device_setting.freezed.dart';
 @freezed
 class DeviceSetting with _$DeviceSetting {
   factory DeviceSetting({
-    required List<Device?> devices,
-    required Device? activeDevice,
+    required List<DeviceInfo?> devices,
+    required DeviceInfo? activeDevice,
     @Default(Orientation.portrait) Orientation orientation,
     @Default(true) bool hasFrame,
   }) = _DeviceSetting;

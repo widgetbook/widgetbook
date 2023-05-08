@@ -24,17 +24,14 @@ class HotReload extends StatelessWidget {
     );
 
     final devices = [
-      Apple.iPhone11,
-      Apple.iPhone12,
-      const Device.special(
+      Devices.ios.iPhoneSE,
+      Devices.ios.iPhone12,
+      DeviceInfo.genericPhone(
+        platform: TargetPlatform.iOS,
+        id: 'Test',
         name: 'Test',
-        resolution: Resolution(
-          scaleFactor: 1,
-          nativeSize: DeviceSize(
-            width: 400,
-            height: 400,
-          ),
-        ),
+        screenSize: Size(400, 800),
+        pixelRatio: 1,
       ),
     ];
 
