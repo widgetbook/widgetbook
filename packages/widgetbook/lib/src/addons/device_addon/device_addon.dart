@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../fields/fields.dart';
-import 'frames/frames.dart';
 
 class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
   DeviceAddon({
@@ -104,14 +103,41 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
       return child;
     }
 
-    if (!setting.hasFrame) {
-      return WidgetbookFrameBuilder(
-        setting: setting,
-      ).build(context, child);
-    }
+    return DeviceFrame(
+      orientation: setting.orientation,
+      device: _mapDeviceToDeviceInfo(setting.activeDevice!),
+      isFrameVisible: setting.hasFrame,
+      screen: child,
+    );
+  }
 
-    return DeviceFrameBuilder(
-      setting: setting,
-    ).build(context, child);
+  DeviceInfo _mapDeviceToDeviceInfo(Device device) {
+    final map = {
+      Apple.iPhone12Mini.name: Devices.ios.iPhone12Mini,
+      Apple.iPhone12.name: Devices.ios.iPhone12,
+      Apple.iPhone12ProMax.name: Devices.ios.iPhone12ProMax,
+      Apple.iPhone13Mini.name: Devices.ios.iPhone13Mini,
+      Apple.iPhone13.name: Devices.ios.iPhone13,
+      Apple.iPhone13ProMax.name: Devices.ios.iPhone13ProMax,
+      Apple.iPhoneSE2020.name: Devices.ios.iPhoneSE,
+      // not sure what to map this device to
+      // Apple.iPadAir9Inch: Devices.ios.iPadAir4,
+      Apple.iPad10Inch.name: Devices.ios.iPad,
+      Apple.iPadPro11Inch.name: Devices.ios.iPadPro11Inches,
+    };
+
+    final mappedDevice = map[device.name] ??
+        DeviceInfo.genericPhone(
+          platform: TargetPlatform.iOS,
+          id: 'custom',
+          name: 'custom',
+          screenSize: Size(
+            device.resolution.logicalSize.width,
+            device.resolution.logicalSize.height,
+          ),
+          pixelRatio: device.resolution.scaleFactor,
+        );
+
+    return mappedDevice;
   }
 }
