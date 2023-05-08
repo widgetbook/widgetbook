@@ -41,16 +41,16 @@ jobs:
           flutter pub get
           melos --version # Needed to build melos executable
 
-      - name: Filter Melos Packages
+      - name: Create `MELOS_FILTERS`
         run: |
           PACKAGE_NAME=$(head -1 pubspec.yaml | cut -c7-)
-          PACKAGES_LIST=$(melos list --scope="$PACKAGE_NAME" --include-dependencies | paste -s -d, -)
+          FILTERS="--scope=$PACKAGE_NAME --include-dependencies"
 
-          # Melos commands will only work on these packages
-          echo "MELOS_PACKAGES=$PACKAGES_LIST" >> $GITHUB_ENV
+          # This variable is used to apply filters to melos scripts
+          echo "MELOS_FILTERS=$FILTERS" >> $GITHUB_ENV
 
       - name: Install Dependencies
-        run: melos bootstrap
+        run: melos bootstrap $MELOS_FILTERS
 
       - name: Generate Files
         run: melos generate
