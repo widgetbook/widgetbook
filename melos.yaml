@@ -16,11 +16,8 @@ scripts:
     description: Run flutter test with coverage and generates coverage report
 
   generate:
+    run: melos exec $MELOS_FILTERS -c 1 --depends-on="build_runner" -- "dart pub run build_runner build --delete-conflicting-outputs"
     description: Build all generated files.
-    run: |
-      rm packages/widgetbook_generator/build.yaml # Causes build runner to fail inside widgetbook_generator
-      melos exec $MELOS_FILTERS -c 1 --depends-on="build_runner" -- "dart pub run build_runner build --delete-conflicting-outputs"
-      git checkout packages/widgetbook_generator/build.yaml # Revert the file back
 
   pana:
     run: melos exec -c 10 -- "../../tool/verify_pub_score.sh"
