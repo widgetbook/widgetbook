@@ -23,7 +23,6 @@ The following packages exist:
 | [widgetbook](https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook) | [![Pub Version](https://img.shields.io/pub/v/widgetbook?style=flat-square)](https://pub.dev/packages/widgetbook) | 
 | [widgetbook_annotation](https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_annotation) | [![Pub Version](https://img.shields.io/pub/v/widgetbook_annotation?style=flat-square)](https://pub.dev/packages/widgetbook_annotation)  | 
 | [widgetbook_generator](https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_generator) | [![Pub Version](https://img.shields.io/pub/v/widgetbook_generator?style=flat-square)](https://pub.dev/packages/widgetbook_generator) | 
-[widgetbook_models](https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_models) | [![Pub Version](https://img.shields.io/pub/v/widgetbook_models?style=flat-square)](https://pub.dev/packages/widgetbook_models) | 
 
 # Examples
 
