@@ -15,8 +15,8 @@ class KnobsExample extends StatelessWidget {
       addons: [
         DeviceAddon(
           devices: [
-            Apple.iPhone11,
-            Apple.iPhone12,
+            Devices.ios.iPhoneSE,
+            Devices.ios.iPhone12,
           ],
         ),
         TextScaleAddon(

@@ -9,9 +9,9 @@ void main() {
     '$DeviceAddon',
     () {
       final devices = [
-        Apple.iPhone12,
-        Apple.iPhone13,
-        Apple.iPhone13Mini,
+        Devices.ios.iPhone12,
+        Devices.ios.iPhone13,
+        Devices.ios.iPhone13Mini,
       ];
 
       final addon = DeviceAddon(
@@ -51,7 +51,7 @@ void main() {
               addon: addon,
               act: () async {
                 final dropdownFinder = find.byType(
-                  DropdownMenu<Device?>,
+                  DropdownMenu<DeviceInfo?>,
                 );
 
                 await tester.tap(dropdownFinder);
