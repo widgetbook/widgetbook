@@ -23,11 +23,8 @@ jobs:
       - name: Get packages 
         run: melos bootstrap
 
-      - name: Run build runner for packages
-        run: melos run generate
-
-      - name: Run build runner for app
-        run: flutter pub run build_runner build -d
+      - name: Run build runner
+        run: melos generate
 
       - name: Build Website
         run: flutter build web -t lib/widgetbook.dart
