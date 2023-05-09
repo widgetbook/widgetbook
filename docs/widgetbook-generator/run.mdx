@@ -4,11 +4,11 @@
 
 The `widgetbook_generator` uses [package:build_runner](https://pub.dev/packages/build_runner) to generate the desired code.
 
-You can execute the generator by running `flutter pub run build_runner build`. 
+You can execute the generator by running `flutter pub run build_runner build`.
 If you are making a lot of changes while developing, you can also run `flutter pub run build_runner watch` so [package:build_runner](https://pub.dev/packages/build_runner) will listen for changes in the file system and update Widgetbook accordingly.
 
 ## Start the generated app
 
-The generator will create the `app.widgetbook.dart` file in the same directory as the file in which `@WidgetbookApp` is used. For details about this, see the documentation of [package:widgetbook_annotation](https://pub.dev/packages/widgetbook_annotation).
+The generator will create the `ui_catalogs.widgetbook.dart` file in the same directory as the file in which `@WidgetbookApp` is used. For details about this, see the documentation of [package:widgetbook_annotation](https://pub.dev/packages/widgetbook_annotation).
 
-Start the app by running `flutter run -t lib/app.widgetbook.dart -d macos`.
+Start the app by running `flutter run -t lib/ui_catalogs.widgetbook.dart -d macos`.

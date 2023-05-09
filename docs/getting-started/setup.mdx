@@ -1,0 +1,167 @@
+# Setup
+
+The Widgetbook package offers a Flutter Widget called `Widgetbook`, which enables you to inject custom widgets from your app. Before we start, let's look at the folder structure in Flutter projects.
+
+```dart
+your_flutter_project/
+├─ android/
+├─ ios/
+├─ lib/
+│ ├─ main.dart
+│ ├─ src/
+│ │ ├─ widgets/
+│ │ ├─ models/
+│ │ └─ services/
+│ └─ ...
+├─ assets/
+│ ├─ images/
+│ ├─ fonts/
+│ └─ ...
+├─ test/
+├─ pubspec.yaml
+└─ ...
+```
+
+To initialize Widgetbook in your Flutter project, follow the steps below:
+
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+  <TabItem value="generator">
+
+1. Create a new file in your `lib` folder called `ui_catalogs.dart`. Alternatively, you can annotate an existing code element using the `@WidgetbookApp` annotation.
+
+```dart
+your_flutter_project/
+│─ ...
+├─ lib/
+│ ├─ main.dart
+│ ├─ ui_catalogs.dart
+│ ├─ src/
+├─ pubspec.yaml
+└─ ...
+```
+
+<Info>
+  The `widgetbook_generator` package will create a corresponding `.widgetbook.dart` file based on
+  the location of the `@WidgetbookApp` annotation. The annotated code element does not affect the
+  generated output code.
+</Info>
+
+2. Add the following code snippet to your `ui_catalogs.dart` file:
+
+   ```dart title="ui_catalogs.dart"
+   // Setup of Widgetbook: ui_catalogs.dart
+   import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+   @WidgetbookApp.material()
+   late int notUsed;
+   ```
+
+   3. Execute the `build_runner` by running the following command:
+
+   ```bash
+   flutter pub run build_runner build
+   ```
+
+   or
+
+   ```bash
+   flutter pub run build_runner watch
+   ```
+
+<Info>You may rename `ui_catalogs.dart` to your preferred name that fits your project.</Info>
+
+The command generates the `ui_catalogs.widgetbook.dart` file.
+
+```dart
+your_flutter_project/
+│─ ...
+├─ lib/
+│ ├─ main.dart
+│ ├─ ui_catalogs.dart
+│ ├─ ui_catalogs.widgetbook.dart
+│ ├─ src/
+├─ pubspec.yaml
+└─ ...
+```
+
+    4. The generated ui_catalogs.widgetbook.dart file should look like this:
+
+    ```dart title="ui_catalogs.widgetbook.dart"
+        // Generated Widgetbook file: ui_catalogs.widgetbook.dart
+        import 'package:flutter/material.dart';
+        import 'package:widgetbook/widgetbook.dart';
+
+        void main() {
+        runApp(HotReload());
+        }
+
+        class HotReload extends StatelessWidget {
+        const HotReload({Key? key}) : super(key: key);
+
+        @override
+        Widget build(BuildContext context) {
+            return Widgetbook.material(
+            addons: [],
+            directories: [],
+            );
+        }
+    }
+    ```
+
+With these steps, you have successfully set up Widgetbook using the generator approach with annotations.
+
+  </TabItem>
+  <TabItem value="manual">
+    1. Create a new file `ui_catalogs.widgetbook.dart` in your `lib` folder.
+
+<Info>
+  You may rename `ui_catalogs.widgetbook.dart` to your preferred name that fits your project.
+</Info>
+
+```dart
+your_flutter_project/
+│─ ...
+├─ lib/
+│ ├─ main.dart
+│ ├─ ui_catalogs.widgetbook.dart
+│ ├─ src/
+├─ pubspec.yaml
+└─ ...
+```
+
+    2. Add the following code snippet to your `ui_catalogs.widgetbook.dart` file:
+
+    ```dart title="ui_catalogs.widgetbook.dart"
+    // Widgetbook file: ui_catalogs.widgetbook.dart
+    import 'package:flutter/material.dart';
+    import 'package:widgetbook/widgetbook.dart';
+
+    void main() {
+      runApp(const HotReload());
+    }
+
+    class HotReload extends StatelessWidget {
+      const HotReload({Key? key}) : super(key: key);
+
+      @override
+      Widget build(BuildContext context) {
+        return Widgetbook.material(
+          addons: [],
+          directories: [],
+        );
+      }
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Next
+
+Now you can start cataloging your widgets and take advantage of the streamlined widget management and collaboration features offered by Widgetbook.

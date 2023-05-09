@@ -1,78 +1,44 @@
 # Widgetbook Hosting
 
-The Widgetbook Hosting allows users to upload the Flutter web version of a Widgetbook to Widgetbook Cloud.
-To upload any widgetbook, you require an API key.
+Widgetbook Hosting enables users to upload the Flutter web version of a Widgetbook to Widgetbook Cloud. To upload any Widgetbook, you need an API key.
 
-## How to create an API key
+## How to Create an API Key
 
-To create an API key, you need to login with your account on Widgetbook Cloud.
-API keys are bound to projects. 
-Therefore, you require a project to retrieve an API key. 
-Furthermore, only users with the `Owner` role can fetch the API key of a project.
-This helps to keep sensitive information safe. 
+1. Log in to Widgetbook Cloud with your account.
+2. API keys are tied to projects, so you need a project to obtain an API key.
+3. Only users with the `Owner` role can fetch a project's API key to protect sensitive information.
+4. If you are not a project owner but need the API key, ask your project owner to promote you from member to owner. For more information on member management, see [Member Management](/widgetbook-cloud/projects#member-management).
+5. To create a new project, [create a billing account](/widgetbook-cloud/billing) first.
+6. On the project's detail page, a card with a button to fetch the API key is displayed. Click the button to copy the API key to your clipboard.
 
-If you are not the owner of your project but would still like to fetch the API key, please ask your project owner to promote you from member to owner. 
-For information on member management, please see [member management](/widgetbook-cloud/projects#member-management).
+## Hosting with CI/CD Vendors
 
-If you are just starting out, make sure to create a new project. 
-To create a project, make sure to also [create a billing account](/widgetbook-cloud/billing).
+To upload a Widgetbook Build and create Reviews in your CI/CD pipeline, follow these steps:
 
-On the detail page of a project, a card which allows to fetch the API key is displayed. 
-Click the button on the card to fetch the API key. 
-The key will be copied to your clipboard.
-
-## Hosting with CI/CD vendors
-
-If youd like to upload a Widgetbook Build and create Reviews your CI/CD pipeline requires the following:
-1. Install Flutter SDK
-1. Run the [`build_runner`](https://pub.dev/packages/build_runner) package via `flutter pub run build_runner build --delete-conflicting-outputs`
-1. Build your Widgetbook via `flutter build web -t path/to/widgetbook/main/file`
-1. Activate the [Widgetbook CLI](https://pub.dev/packages/widgetbook_cli) via `dart pub global activate widgetbook_cli`
-1. Run the CLI as described in the docs
+1. Install the Flutter SDK.
+2. Run the [`build_runner`](https://pub.dev/packages/build_runner) package: `flutter pub run build_runner build --delete-conflicting-outputs`.
+3. Build your Widgetbook: `flutter build web -t path/to/widgetbook/main/file`.
+4. Activate the [Widgetbook CLI](https://pub.dev/packages/widgetbook_cli): `dart pub global activate widgetbook_cli`.
+5. Run the CLI as described in the documentation.
 
 ### Examples
 
-| CI/CD Vendor | Link |
-| ------------ | ---- |
+| CI/CD Vendor | Link                                                                                                 |
+| ------------ | ---------------------------------------------------------------------------------------------------- |
 | GitHub       | [🔗](https://github.com/widgetbook/widgetbook-demo/blob/staging/.github/workflows/upload-review.yml) |
-| Codemagic    | [🔗](https://github.com/widgetbook/widgetbook-demo/blob/staging/codemagic.yaml) |
-| Azure        | [🔗](https://github.com/widgetbook/widgetbook-demo/blob/staging/.azure/pipelines.yml) |
-| GitLab       | [🔗](https://github.com/widgetbook/widgetbook-demo/blob/staging/.gitlab-ci.yml) |
+| Codemagic    | [🔗](https://github.com/widgetbook/widgetbook-demo/blob/staging/codemagic.yaml)                      |
+| Azure        | [🔗](https://github.com/widgetbook/widgetbook-demo/blob/staging/.azure/pipelines.yml)                |
+| GitLab       | [🔗](https://github.com/widgetbook/widgetbook-demo/blob/staging/.gitlab-ci.yml)                      |
 
-> Are we missing your CI/CD vendor? [Let us know via Discord](https://discord.com/invite/zT4AMStAJA), we'd love to help you. 
+> Is your CI/CD vendor missing? [Let us know via Discord](https://discord.com/invite/zT4AMStAJA), and we'll be happy to help.
 
-## BitBucket
-The Widgetbook Hosting docker image allows Widgetbook Cloud users to upload the widgetbook version which has been uploaded to BitBucket.
+<Info>Are you using BitBucket? You can [read more here](/widgetbook-cloud/bitbucket)</Info>
 
-The docker image is provided at Docker Hub and is named widgetbook-hosting-bitbucket. 
-You can access the executable by calling /widgetbook-hosting.
+## Environment Variables
 
-``` yaml
-pipelines:
-  branches:
-    dev:
-      - step:
-          name: Build web
-          image: 
-            name: cirrusci/flutter
-          script:
-            - flutter build web -t lib/main.widgetbook.dart
-          artifacts:
-            - build/**
-      - step:
-          name: Host on widgetbook
-          image: 
-            name: widgetbook/widgetbook-hosting-bitbucket:dev
-          script:
-            - /widgetbook-hosting
-```
+The Docker image reads Git-specific information, like branch name and repository name, from environment variables. It also requires two mandatory user-provided environment variables. In BitBucket, add repository variables by navigating to the repository settings and selecting repository variables.
 
-### Environment variables
-
-The docker image reads git specific information like branch name, repository name, etc from the environment variables but also requires two mandatory environment variables provided by the user:
-In BitBucket you can add _repository variables_ by going to the repository settings and then selecting _repository variables_.
-
-| Environment variable | Description | Is required |
-| ----- | ------- | ----------- |
-| `WIDGETBOOK_BUILD_PATH` | The path to the web build of the widgetbook. For small repositories this is likely `build/web/` | ✅ |
-| `WIDGETBOOK_API_KEY` | The API key for your company. See [How to create an API key](/widgetbook-cloud/hosting#how-to-create-an-api-key)| ✅ |
+| Environment Variable    | Description                                                                                                      | Is Required |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------- | ----------- |
+| `WIDGETBOOK_BUILD_PATH` | The path to the web build of the Widgetbook. For small repositories, this is likely `build/web/`.                | ✅          |
+| `WIDGETBOOK_API_KEY`    | The API key for your company. See [How to Create an API Key](/widgetbook-cloud/hosting#how-to-create-an-api-key) | ✅          |

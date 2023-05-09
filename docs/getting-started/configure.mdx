@@ -1,0 +1,77 @@
+# Configuration
+
+Widgetbook allows developers to fully customize how use cases are previewed based on the selected add-on properties.
+
+To customize Widgetbook, define a function that returns a `Widget` and accepts two required parameters, `context` of type `BuildContext` and `child` of type `Widget`.
+The `context` parameter provides access to the add-on properties as described [here](/add-ons/overview).
+The `child` parameter provides the build use case.
+
+```dart title="Custom Material app builder"
+Widget customAppBuilder(BuildContext context, Widget child) {
+  final builder = Builder(
+    builder: (context) {
+      return MaterialApp(
+        theme: context.materialTheme,
+        locale: context.localization!.activeLocale,
+        supportedLocales: context.localization!.locales,
+        localizationsDelegates:
+            context.localization!.localizationsDelegates,
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaleFactor: context.textScale,
+            ),
+            child: child,
+          ),
+        ),
+      );
+    },
+  );
+  final frameBuilder = context.frameBuilder!;
+  return frameBuilder(
+    context,
+    builder,
+  );
+}
+```
+
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+  <TabItem value="generator">
+    Annotate the `AppBuilder` method with the `@WidgetbookAppBuilder` annotation to generate the Widgetbook with your custom implementation instead of the default one.
+
+    ```dart title="Annotated custom Material app builder"
+    @WidgetbookAppBuilder()
+    Widget customAppBuilder(BuildContext context, Widget child) {
+      // Your code
+    }
+    ```
+
+    <Success>
+      Widgetbook now uses your custom `AppBuilder` method.
+    </Success>
+
+  </TabItem>
+  <TabItem value="manual">
+    Use the `appBuilder` property of `WidgetbookApp` to specify your custom `AppBuilder` method.
+
+    ```dart title="Custom Material app builder"
+    return Widgetbook.material(
+      addons: [],
+      directories: [],
+      appBuilder: customAppBuilder,
+    );
+    ```
+
+    <Success>
+      Widgetbook now uses your custom `AppBuilder` method.
+    </Success>
+
+  </TabItem>
+</Tabs>

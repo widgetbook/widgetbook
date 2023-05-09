@@ -1,9 +1,11 @@
-# Review
+# Review (beta)
 
-The Widgetbook Cloud _Review_ feature allows teams to review added, changed or removed components.
-The Review feature closely relates to reviews known from Pull-Requests. 
+> **NOTE:** Since the Review feature is currently in beta, we're not aiming to migrate any data created previous to the official (non-beta) release to make changes to the feature easier for our development team.
+
+The Widgetbook Cloud _Review_ feature (currently in beta) allows teams to review added, changed or removed components.
+The Review feature closely relates to reviews known from Pull-Requests.
 For each Pull-Request, our new `widgetbook` CLI analyzes the changes to your Widgetbook and creates a review.
-Members of a frontend-team now can review each _changed_ use-case in isolation and add comments for other team members.
+Frontend team members can now review each _changed_ use-case in isolation and add comments for other team members.
 
 Once all changes from the review are accepted, a developer closes the Pull-Request and the review's status gets updated to `merged`.
 For this to work, a webhook to our services is required.
@@ -11,6 +13,7 @@ For this to work, a webhook to our services is required.
 ## Requirements
 
 To use Widgetbook Cloud _Review_ your setup has to meet the following requirements:
+
 - Use [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) in version `v3.0.0-beta` (no special configuration required).
 - Use [widgetbook package](https://pub.dev/packages/widgetbook) in version `v3.0.0-beta` (no special configuration required).
 - Use the `widgetbook` CLI from the [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli).
@@ -19,16 +22,17 @@ To use Widgetbook Cloud _Review_ your setup has to meet the following requiremen
 # How the Review feature works
 
 A Widgetbook Review allows Flutter teams to compare changes in the user interface.
-Within the review the team compares the current version with a previous version. 
-In addition, the review feature also offeres to compare the current version of a Widget with the Figma design of a component.
+Within the review, the team compares the current version with a previous version.
+In addition, the review feature also offers to compare the current version of a Widget with the Figma design of a component.
 
 The structure of a review has similarities to the pull request workflow.
-In a pull request developers compare a `base` branch (previous version) with a `feature` branch (new version) based on the lines of code changed.
+In a pull request, developers compare a `base` branch (previous version) with a `feature` branch (new version) based on the lines of code changed.
 For the review, our integration creates a Widgetbook Cloud review for each pull request in your Git provider.
-Similar to how the previous code is compared to the current code on a line by line basis, in Widgetbook Cloud teams compare a base build (previous version) with a feature build (current version) on a visual use-case basis.
-Therefore, Widgetbook Cloud requires an uploaded build for the base branch and feature branch.
+Like how the previous code is compared to the current code on a line-by-line basis, Widgetbook Cloud teams compare a base build (last version) with a feature build (current version) on a visual use-case basis.
+Therefore, Widgetbook Cloud requires an uploaded build for the base and feature branches.
 
 ## Builds for review
+
 Use the [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli) to upload a build for the base and feature branch.
 
 <Tabs
@@ -47,29 +51,30 @@ Use the [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli) to upl
     # Run the build runner
     flutter pub run build_runner build --delete-conflicting-outputs
     # Build the Widgetbook
-    flutter build web -t lib/app.widgetbook.dart
+    flutter build web -t lib/ui_catalogs.widgetbook.dart
     # Install the CLI
     dart pub global activate widgetbook_cli 3.0.0-beta.22
     # Run the CLI
     widgetbook publish --api-key API-KEY
     ```
+
   </TabItem>
   <TabItem value="feature">
     Define a CI/CD pipeline that uploads a build for each push to your pull request.
-    The feature branch can be any branch that is merged into your base branch.
+    The feature branch can be any branch merged into your base branch.
     The base branch is likely your `main`, `master`, `dev` or `staging` branch.
 
     <Info>
-        To successfully upload review information you must define the `--base-branch` argument for the Widgetbook CLI.
+        To successfully upload review information, you must define the `--base-branch` argument for the Widgetbook CLI.
     </Info>
 
-    ```bash title="CI/CD upload feature build and review"
+    ```bash title="CI/CD upload feature build and review."
     # Install dependencies
     flutter pub get
     # Run the build runner
     flutter pub run build_runner build --delete-conflicting-outputs
     # Build the Widgetbook
-    flutter build web -t lib/app.widgetbook.dart
+    flutter build web -t lib/ui_catalogs.widgetbook.dart
     # Install the CLI
     dart pub global activate widgetbook_cli 3.0.0-beta.22
     # Run the CLI
@@ -77,84 +82,25 @@ Use the [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli) to upl
     ```
 
     <Info>
-        All CI/CD provider expose the `BASE-BRANCH` via environment variables for pull requests. 
+        All CI/CD providers expose the `BASE-BRANCH` via environment variables for pull requests.
         Please have a look at our [CI/CD provider examples](/widgetbook-cloud/hosting#examples).
-    </Info> 
+    </Info>
+
   </TabItem>
 </Tabs>
 
 ## Review information
 
-In addition to the required builds, a review has to be populated with information about which use-cases changed.
-The information on which use-cases changed is extracted by the CLI when the `--base-branch` argument is specified.
+In addition to the required builds, a review has to be populated with information about which use cases changed.
+The information on which use cases changed is extracted by the CLI when the `--base-branch` argument is specified.
 
 <Info>
-    Widgetbook Cloud shows Reviews for each pull-request. 
-    However, only Reviews that have changes to use-cases are accessible.
+  Widgetbook Cloud shows Reviews for each pull-request. However, only Reviews that have changes to
+  use cases are accessible.
 </Info>
 
 <Warning>
-    Currently, Widgetbook Cloud only shows use-cases that have been changed, added or removed within the freature branch in comparison to the base branch. 
-    That means, that already existing use-cases will not be shown even if they have never been reviewed.
+  Currently, Widgetbook Cloud only shows use cases that have been changed, added or removed within
+  the feature branch in comparison to the base branch. That means, that already existing use cases
+  will not be shown even if they have never been reviewed.
 </Warning>
-
-## Integrate with Figma
-
-Widgetbook Cloud offers an integration with Figma that allows comparing the Figma design with the Flutter implementation. 
-
-Let's assume we want to show the following component in Widgetbook Cloud:
-
-<Image 
-    zoom
-    src="/assets/getting-started/figma-button-component.svg" 
-    alt="Figma Material button component with variants" 
-    caption="Figma Material button component with variants" 
-/>
-
-For the integration to work properly, we need to make a connection between the component in the code and the component in Figma by using the `designLink` property of the `@WidgetbookUseCase` annotation. 
-The `designLink` property accepts a link to a Figma component. 
-
-To extract the Figma link follow these steps:
-1. Right-click the component or multiple components in Figma. 
-1. The context menu will open. 
-1. Select `Copy/Paste as` ➡️ `Copy link` from the context menu.
-1. Past the link from the clipboard into the `designLink` property of your `@WidgetbookUseCase` annotation.
-
-```dart title="designLink example"
-@WidgetbookUseCase(
-  name: 'Defaut',
-  type: ElevatedButton,
-  designLink: 'https://www.figma.com/file/...'
-)
-Widget button(BuildContext context) {
-  return ElevatedButton(...);
-}
-```
-
-## Setup Webhook (GitHub)
-
-A GitHub Webhook allows Widgetbook Cloud to receive information about changes within your repository.
-Widgetbook Cloud can automatically set the state of a Review to `closed` or `merged` when a corresponding Pull-Request is `closed` or `merged`.
-For this to work, you need to configure a webhook. 
-See [Setting up a webhook](https://docs.github.com/en/developers/webhooks-and-events/webhooks/creating-webhooks#setting-up-a-webhook) for instructions on how to do this.
-
-### Requirements
-
-You need to meet the following requirements to setup a webhook to Widgetbook Cloud:
-- Webhook Secret
-- Payload URL
-
-### Obtaining the Webhook Secret
-
-The webhook secret can be obtained by going to the project overview and click the `Get secret` button within the webhook card.
-
-### Setting up the webhook
-
-1. Go to https://github.com/user-name/repo-name/settings/hooks. Make sure to replace `user-name` and `repo-name` with your appropriate values.
-1. Click `Add webhook`
-1. Paste `https://api.widgetbook.io/v1/webhooks/github` into the `Payload URL` field.
-1. Set `Content type` to `application/json`
-1. Paste your Widgetbook Cloud webhook secret into the `Secret` field.
-1. Select when to trigger the webhook.
-    1. Select `Send me everything` or
-    2. Select `Let me select individual events` and enable `Pull requests` and `Pushes`. You can disable all other options. 

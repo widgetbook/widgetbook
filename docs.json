@@ -14,21 +14,54 @@
         { "title": "Homepage", "icon": "house", "link": "https://widgetbook.io" },
         { "title": "Discord", "icon": "discord", "link": "https://discord.com/invite/zT4AMStAJA" }
     ],
+    "variables": {
+        "versions": {
+            "latest": "2.4.1",
+            "next": "3.0.0-beta.22"
+        }
+    },
     "sidebar": [
+        [
+            "Overview", 
+            [
+                [
+                    "Overview", "/index"
+                ],
+                 [
+                    "Terminology", "/terminology"
+                ],
+                ["Why Widgetbook", "/why-widgetbook"]
+            ]
+        ],
         [
             "Getting Started", 
             [
                 [
-                    "Overview", "/getting-started/overview"
+                    "1. Install", "/getting-started/install"
                 ],
                 [
-                    "Getting Started", "/getting-started/getting-started"
+                    "2. Setup", "/getting-started/setup"
                 ],
                 [
-                    "Configuration", "/getting-started/configuration"
+                    "3. Run", "/getting-started/run"
                 ],
                 [
-                    "Configuration for mono repos", "/getting-started/configuration-mono-repo"
+                    "4. Components", "/getting-started/components"
+                ],
+                [
+                    "5. Structure", "/getting-started/structure"
+                ],
+                [
+                    "6. Knobs", "/getting-started/knobs"
+                ],
+                [
+                    "7. Add-ons", "/getting-started/add-ons"
+                ],
+                [
+                    "8. Configure", "/getting-started/configure"
+                ],
+                [
+                    "9. Complete Example", "/getting-started/complete-example"
                 ]
             ]
         ],
@@ -75,22 +108,28 @@
             "Widgetbook Cloud",
             [
                 [
-                    "Overview", "/widgetbook-cloud/overview"
+                    "1. Overview", "/widgetbook-cloud/overview"
                 ],
                 [
-                    "Getting started", "/widgetbook-cloud/getting-started"
+                    "2. Quick Start", "/widgetbook-cloud/quick-start"
                 ],
                 [
-                    "Projects", "/widgetbook-cloud/projects"
+                    "3. Sign Up", "/widgetbook-cloud/signup"
                 ],
                 [
-                    "Hosting", "/widgetbook-cloud/hosting"
+                    "4. Projects", "/widgetbook-cloud/projects"
                 ],
                 [
-                    "Review", "/widgetbook-cloud/review"
+                    "5. Hosting", "/widgetbook-cloud/hosting"
                 ],
                 [
-                    "Accessing Resources", "/widgetbook-cloud/accessing-resources"
+                    "6. Review (beta)", "/widgetbook-cloud/review"
+                ],
+                [
+                    "7. Accessing Resources", "/widgetbook-cloud/accessing-resources"
+                ],
+                [
+                    "8. Setup Webhook", "/widgetbook-cloud/setup-webhook"
                 ]
             ]
         ],
@@ -100,6 +139,12 @@
                 [
                     "Overview", "/widgetbook-cli/overview"
                 ]
+            ]
+        ],
+        [
+            "Mono-repo",
+            [
+                ["Setup", "/mono-repo/index"]
             ]
         ]
     ]
