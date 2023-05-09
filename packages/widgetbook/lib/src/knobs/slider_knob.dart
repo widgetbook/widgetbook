@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
 import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
+import '../fields/fields.dart';
+
 class SliderKnob extends Knob<double> {
   SliderKnob({
     required super.label,
@@ -18,6 +20,8 @@ class SliderKnob extends Knob<double> {
   final int? divisions;
 
   @override
+  List<Field> get fields => [];
+
   Widget build(BuildContext context) => core.SliderKnob(
         name: label,
         description: description,
@@ -46,6 +50,8 @@ class NullableSliderKnob extends Knob<double?> {
   final int? divisions;
 
   @override
+  List<Field> get fields => [];
+
   Widget build(BuildContext context) => core.NullableSliderKnob(
         name: label,
         description: description,

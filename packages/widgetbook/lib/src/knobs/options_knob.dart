@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:widgetbook/src/fields/fields.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
-import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
 class OptionsKnob<T> extends Knob<T> {
   OptionsKnob({
@@ -9,21 +8,37 @@ class OptionsKnob<T> extends Knob<T> {
     required super.value,
     required this.options,
     super.description,
-    this.labelBuilder,
-  });
+    String Function(T)? labelBuilder,
+  }) : this.labelBuilder = labelBuilder ?? _defaultLabelBuilder;
 
   final List<T> options;
-  final String Function(T)? labelBuilder;
+  final String Function(T) labelBuilder;
+
+  static String _defaultLabelBuilder(dynamic value) {
+    return value.toString();
+  }
 
   @override
-  Widget build(BuildContext context) => core.OptionKnob(
+  List<Field> get fields {
+    return [
+      DropdownField<T>(
+        group: 'knobs',
         name: label,
-        description: description,
-        value: value,
         values: options,
+        initialValue: value,
         labelBuilder: labelBuilder,
-        onChanged: (T value) {
+        codec: FieldCodec(
+          toParam: labelBuilder,
+          toValue: (param) => options.firstWhere(
+            (option) => labelBuilder(option) == param,
+            orElse: () => value,
+          ),
+        ),
+        onChanged: (context, T? value) {
+          if (value == null) return;
           context.read<KnobsNotifier>().update<T>(label, value);
         },
-      );
+      ),
+    ];
+  }
 }

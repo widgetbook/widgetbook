@@ -4,3 +4,4 @@ export './number_knob.dart';
 export './option_knob.dart';
 export './slider_knob.dart';
 export './text_knob.dart';
+export './knob_property.dart';

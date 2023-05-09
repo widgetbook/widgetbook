@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:widgetbook/src/fields/field.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
 import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
@@ -12,6 +13,8 @@ class BoolKnob extends Knob<bool> {
   });
 
   @override
+  List<Field> get fields => [];
+
   Widget build(BuildContext context) => core.BoolKnob(
         name: label,
         description: description,
@@ -30,6 +33,8 @@ class NullableBoolKnob extends Knob<bool?> {
   });
 
   @override
+  List<Field> get fields => [];
+
   Widget build(BuildContext context) => core.NullableBoolKnob(
         name: label,
         description: description,

@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
 import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
+import '../fields/fields.dart';
+
 class TextKnob extends Knob<String> {
   TextKnob({
     required super.label,
@@ -11,7 +13,10 @@ class TextKnob extends Knob<String> {
     this.maxLines = 1,
   });
   final int? maxLines;
+
   @override
+  List<Field> get fields => [];
+
   Widget build(BuildContext context) => core.TextKnob(
         name: label,
         maxLines: maxLines,
@@ -30,8 +35,12 @@ class NullableTextKnob extends Knob<String?> {
     super.description,
     this.maxLines = 1,
   });
+
   final int? maxLines;
+
   @override
+  List<Field> get fields => [];
+
   Widget build(BuildContext context) => core.NullableTextKnob(
         name: label,
         maxLines: maxLines,

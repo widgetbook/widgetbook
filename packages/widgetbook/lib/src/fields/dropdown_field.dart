@@ -30,14 +30,14 @@ class DropdownField<T> extends Field<T> {
 
     // Notify change when field is built from new query params,
     // to keep query params and locale state (e.g. addon's setting) in sync.
-    onChanged(value);
+    onChanged(context, value);
 
     return DropdownSetting<T>(
       options: values,
       initialSelection: value,
       optionValueBuilder: labelBuilder,
       onSelected: (value) {
-        onChanged(value);
+        onChanged(context, value);
 
         final newGroupMap = Map<String, String>.from(groupMap)
           ..update(

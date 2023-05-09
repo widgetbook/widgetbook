@@ -48,7 +48,7 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
             orElse: () => setting.activeTheme,
           ),
         ),
-        onChanged: (theme) {
+        onChanged: (_, theme) {
           if (theme == null) return;
 
           updateSetting(

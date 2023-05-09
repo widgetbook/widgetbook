@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:widgetbook/src/fields/fields.dart';
 import 'package:widgetbook/src/knobs/bool_knob.dart';
 import 'package:widgetbook/src/knobs/color_knob.dart';
 import 'package:widgetbook/src/knobs/knobs_builder.dart';
@@ -36,7 +37,7 @@ abstract class Knob<T> {
   @override
   int get hashCode => label.hashCode;
 
-  Widget build(BuildContext context);
+  List<Field> get fields;
 }
 
 /// Updates listeners on changes with the knobs
@@ -70,14 +71,15 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     required String label,
     String? description,
     bool initialValue = false,
-  }) =>
-      _addKnob(
-        BoolKnob(
-          label: label,
-          description: description,
-          value: initialValue,
-        ),
-      );
+  }) {
+    return _addKnob(
+      BoolKnob(
+        label: label,
+        description: description,
+        value: initialValue,
+      ),
+    );
+  }
 
   @override
   Color color({
@@ -98,14 +100,15 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     required String label,
     String? description,
     bool? initialValue = false,
-  }) =>
-      _addKnob(
-        NullableBoolKnob(
-          label: label,
-          description: description,
-          value: initialValue,
-        ),
-      );
+  }) {
+    return _addKnob(
+      NullableBoolKnob(
+        label: label,
+        description: description,
+        value: initialValue,
+      ),
+    );
+  }
 
   @override
   String text({
@@ -113,15 +116,16 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String? description,
     String initialValue = '',
     int? maxLines = 1,
-  }) =>
-      _addKnob(
-        TextKnob(
-          label: label,
-          value: initialValue,
-          description: description,
-          maxLines: maxLines,
-        ),
-      );
+  }) {
+    return _addKnob(
+      TextKnob(
+        label: label,
+        value: initialValue,
+        description: description,
+        maxLines: maxLines,
+      ),
+    );
+  }
 
   @override
   String? nullableText({
@@ -129,15 +133,16 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String? description,
     String? initialValue,
     int? maxLines = 1,
-  }) =>
-      _addKnob(
-        NullableTextKnob(
-          label: label,
-          value: initialValue,
-          description: description,
-          maxLines: maxLines,
-        ),
-      );
+  }) {
+    return _addKnob(
+      NullableTextKnob(
+        label: label,
+        value: initialValue,
+        description: description,
+        maxLines: maxLines,
+      ),
+    );
+  }
 
   @override
   double slider({
@@ -188,28 +193,30 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     required String label,
     String? description,
     num initialValue = 0,
-  }) =>
-      _addKnob(
-        NumberKnob(
-          label: label,
-          value: initialValue,
-          description: description,
-        ),
-      );
+  }) {
+    return _addKnob(
+      NumberKnob(
+        label: label,
+        value: initialValue,
+        description: description,
+      ),
+    );
+  }
 
   @override
   num? nullableNumber({
     required String label,
     String? description,
     num? initialValue = 0,
-  }) =>
-      _addKnob(
-        NullableNumberKnob(
-          label: label,
-          value: initialValue,
-          description: description,
-        ),
-      );
+  }) {
+    return _addKnob(
+      NullableNumberKnob(
+        label: label,
+        value: initialValue,
+        description: description,
+      ),
+    );
+  }
 
   @override
   T options<T>({

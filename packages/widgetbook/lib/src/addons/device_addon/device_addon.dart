@@ -40,7 +40,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
             orElse: () => null,
           ),
         ),
-        onChanged: (device) {
+        onChanged: (_, device) {
           if (device == null) return;
 
           updateSetting(
@@ -64,7 +64,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
             param ?? Orientation.portrait.name,
           ),
         ),
-        onChanged: (orientation) {
+        onChanged: (_, orientation) {
           if (orientation == null) return;
 
           updateSetting(
@@ -84,7 +84,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
           toParam: (hasFrame) => hasFrame.toString(),
           toValue: (param) => param == 'true',
         ),
-        onChanged: (hasFrame) {
+        onChanged: (_, hasFrame) {
           if (hasFrame == null) return;
 
           updateSetting(

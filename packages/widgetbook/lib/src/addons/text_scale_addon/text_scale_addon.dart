@@ -40,7 +40,7 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
             orElse: () => setting.activeTextScale,
           ),
         ),
-        onChanged: (scale) {
+        onChanged: (_, scale) {
           if (scale == null) return;
 
           updateSetting(
