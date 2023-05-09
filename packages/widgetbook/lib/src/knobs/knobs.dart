@@ -7,8 +7,6 @@ import 'package:widgetbook/src/knobs/number_knob.dart';
 import 'package:widgetbook/src/knobs/options_knob.dart';
 import 'package:widgetbook/src/knobs/slider_knob.dart';
 import 'package:widgetbook/src/knobs/text_knob.dart';
-import 'package:widgetbook/src/repositories/selected_use_case_repository.dart';
-import 'package:widgetbook/widgetbook.dart';
 
 /// This allows stories to have dynamically adjustable parameters.
 abstract class Knob<T> {
@@ -43,39 +41,28 @@ abstract class Knob<T> {
 
 /// Updates listeners on changes with the knobs
 class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
-  KnobsNotifier(this._selectedStoryRepository) {
-    _selectedStoryRepository.getStream().listen((event) => notifyListeners());
-  }
+  final Map<String, Knob> _knobs = <String, Knob>{};
 
-  final SelectedUseCaseRepository _selectedStoryRepository;
-
-  final Map<WidgetbookUseCaseData, Map<String, Knob<dynamic>>> _knobs =
-      <WidgetbookUseCaseData, Map<String, Knob<dynamic>>>{};
-
-  List<Knob<dynamic>> all() {
-    if (!_selectedStoryRepository.isSet()) {
-      return [];
-    }
-    final story = _selectedStoryRepository.item;
-    return _knobs[story]?.values.toList() ?? [];
-  }
-
-  void update<T>(String label, T value) {
-    if (!_selectedStoryRepository.isSet()) {
-      return;
-    }
-    _knobs[_selectedStoryRepository.item]![label]!.value = value;
+  void clear() {
+    _knobs.clear();
     notifyListeners();
   }
 
-  T _addKnob<T>(Knob<T> value) {
-    final story = _selectedStoryRepository.item!;
-    final knobs = _knobs.putIfAbsent(story, () => <String, Knob<dynamic>>{});
-    return (knobs.putIfAbsent(value.label, () {
-      Future.microtask(notifyListeners);
-      return value;
-    }) as Knob<T>)
-        .value;
+  List<Knob> all() => _knobs.values.toList();
+
+  void update<T>(String label, T value) {
+    _knobs[label]!.value = value;
+    notifyListeners();
+  }
+
+  T _addKnob<T>(Knob<T> knob) {
+    return _knobs.putIfAbsent(
+      knob.label,
+      () {
+        Future.microtask(notifyListeners);
+        return knob;
+      },
+    ).value;
   }
 
   @override

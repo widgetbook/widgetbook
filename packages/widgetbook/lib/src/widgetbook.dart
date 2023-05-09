@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:widgetbook/src/builder/builder.dart';
 import 'package:widgetbook/src/messaging/messaging.dart';
 import 'package:widgetbook/src/routing/router.dart';
-import 'package:widgetbook/src/repositories/selected_use_case_repository.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
@@ -82,11 +81,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
 }
 
 class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
-  final SelectedUseCaseRepository selectedStoryRepository =
-      SelectedUseCaseRepository();
-
   late BuilderProvider builderProvider;
-  late UseCasesProvider useCasesProvider;
   late KnobsNotifier knobsNotifier;
   late GoRouter goRouter;
   final NavigationBloc navigationBloc = NavigationBloc();
@@ -94,12 +89,8 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   @override
   void initState() {
     builderProvider = BuilderProvider(appBuilder: widget.appBuilder);
+    knobsNotifier = KnobsNotifier();
 
-    useCasesProvider = UseCasesProvider(
-      selectedStoryRepository: selectedStoryRepository,
-    )..loadFromDirectories(widget.directories);
-
-    knobsNotifier = KnobsNotifier(selectedStoryRepository);
     navigationBloc.add(
       LoadNavigationTree(
         directories: widget.directories,
@@ -107,7 +98,9 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
     );
 
     goRouter = createRouter(
-      useCasesProvider: useCasesProvider,
+      catalogue: WidgetbookCatalogue.fromDirectories(
+        widget.directories,
+      ),
     );
 
     // Sends a message with the json representation of Addon fields
@@ -133,7 +126,6 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
 
   @override
   void didUpdateWidget(covariant Widgetbook<CustomTheme> oldWidget) {
-    useCasesProvider.loadFromDirectories(widget.directories);
     navigationBloc.add(LoadNavigationTree(directories: widget.directories));
     builderProvider.hotReload(appBuilder: widget.appBuilder);
     super.didUpdateWidget(oldWidget);
@@ -143,9 +135,8 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: knobsNotifier),
-        ChangeNotifierProvider.value(value: useCasesProvider),
         ChangeNotifierProvider.value(value: builderProvider),
+        ChangeNotifierProvider.value(value: knobsNotifier),
         ChangeNotifierProvider(
           create: (_) => AddOnProvider(widget.addons),
         ),
