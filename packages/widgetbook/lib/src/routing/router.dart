@@ -1,8 +1,9 @@
 import 'package:go_router/go_router.dart';
-import 'package:widgetbook/src/navigation/navigation.dart';
+import 'package:provider/provider.dart';
 import 'package:widgetbook/src/routing/widgetbook_panel.dart';
 import 'package:widgetbook/src/widgetbook_shell.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 extension GoRouterExtension on GoRouter {
   void updateQueryParam(String name, String value) {
@@ -48,7 +49,7 @@ bool _parseBoolQueryParameter({
 }
 
 GoRouter createRouter({
-  required UseCasesProvider useCasesProvider,
+  required WidgetbookCatalogue catalogue,
   // Used for testing
   String? initialLocation,
 }) {
@@ -78,14 +79,6 @@ GoRouter createRouter({
 
         return '/?panels={${panels.map((x) => x.name).join(",")}}';
       }
-
-      final path = state.queryParams['path'];
-
-      if (path != null) {
-        useCasesProvider.selectUseCaseByPath(path);
-      }
-
-      return null;
     },
     initialLocation: initialLocation,
     routes: [
@@ -104,8 +97,12 @@ GoRouter createRouter({
             name: '/',
             path: '/',
             pageBuilder: (_, state) {
+              final path = state.queryParams['path'];
+
               return NoTransitionPage<void>(
-                child: Workbench(),
+                child: Workbench(
+                  useCase: catalogue.get(path ?? ''),
+                ),
               );
             },
           ),

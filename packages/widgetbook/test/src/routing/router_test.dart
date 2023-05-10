@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:widgetbook/src/builder/functions/app_builder.dart';
 import 'package:widgetbook/src/builder/provider/builder_provider.dart';
 import 'package:widgetbook/src/routing/router.dart';
-import 'package:widgetbook/src/repositories/selected_use_case_repository.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
@@ -28,6 +27,7 @@ void main() {
       ],
     ),
   ];
+
   final directories = [
     WidgetbookComponent(
       name: 'Component 1',
@@ -69,9 +69,11 @@ void main() {
     )
   ];
 
+  final catalogue = WidgetbookCatalogue.fromDirectories(
+    directories,
+  );
+
   late BuilderProvider builderProvider;
-  late SelectedUseCaseRepository selectedStoryRepository;
-  late UseCasesProvider useCasesProvider;
   late KnobsNotifier knobsNotifier;
   late NavigationBloc navigationBloc;
 
@@ -80,11 +82,7 @@ void main() {
       builderProvider = BuilderProvider(
         appBuilder: materialAppBuilder,
       );
-      selectedStoryRepository = SelectedUseCaseRepository();
-      useCasesProvider = UseCasesProvider(
-        selectedStoryRepository: selectedStoryRepository,
-      )..loadFromDirectories(directories);
-      knobsNotifier = KnobsNotifier(selectedStoryRepository);
+      knobsNotifier = KnobsNotifier();
       navigationBloc = NavigationBloc();
     },
   );
@@ -97,7 +95,6 @@ void main() {
       MultiProvider(
         providers: [
           ChangeNotifierProvider.value(value: knobsNotifier),
-          ChangeNotifierProvider.value(value: useCasesProvider),
           ChangeNotifierProvider.value(value: builderProvider),
           ChangeNotifierProvider(
             create: (_) => AddOnProvider(addons),
@@ -128,8 +125,8 @@ void main() {
             'default route',
             (tester) async {
               final router = createRouter(
-                useCasesProvider: useCasesProvider,
                 initialLocation: '/',
+                catalogue: catalogue,
               );
 
               await pumpRouter(
@@ -152,8 +149,8 @@ void main() {
             'custom route',
             (tester) async {
               final router = createRouter(
-                useCasesProvider: useCasesProvider,
                 initialLocation: '/?path=component-2%2Fuse-case-2.1',
+                catalogue: catalogue,
               );
 
               await pumpRouter(
@@ -177,8 +174,8 @@ void main() {
             'theme addon value',
             (tester) async {
               final router = createRouter(
-                useCasesProvider: useCasesProvider,
                 initialLocation: '/?theme=Dark',
+                catalogue: catalogue,
               );
 
               await pumpRouter(
@@ -202,8 +199,8 @@ void main() {
             'navigation panel only (deprecated)',
             (tester) async {
               final router = createRouter(
-                useCasesProvider: useCasesProvider,
                 initialLocation: '/?disable-properties=true',
+                catalogue: catalogue,
               );
 
               await pumpRouter(
@@ -223,8 +220,8 @@ void main() {
             'navigation panel only',
             (tester) async {
               final router = createRouter(
-                useCasesProvider: useCasesProvider,
                 initialLocation: '/?panels={navigation}',
+                catalogue: catalogue,
               );
 
               await pumpRouter(
@@ -244,8 +241,8 @@ void main() {
             'settings panel only (deprecated)',
             (tester) async {
               final router = createRouter(
-                useCasesProvider: useCasesProvider,
                 initialLocation: '/?disable-navigation=true',
+                catalogue: catalogue,
               );
 
               await pumpRouter(
@@ -265,8 +262,8 @@ void main() {
             'settings panel only',
             (tester) async {
               final router = createRouter(
-                useCasesProvider: useCasesProvider,
                 initialLocation: '/?panels={knobs,addons}',
+                catalogue: catalogue,
               );
 
               await pumpRouter(
@@ -286,8 +283,8 @@ void main() {
             'addons panel only',
             (tester) async {
               final router = createRouter(
-                useCasesProvider: useCasesProvider,
                 initialLocation: '/?panels={addons}',
+                catalogue: catalogue,
               );
 
               await pumpRouter(
@@ -311,8 +308,8 @@ void main() {
             'knobs panel only',
             (tester) async {
               final router = createRouter(
-                useCasesProvider: useCasesProvider,
                 initialLocation: '/?panels={knobs}',
+                catalogue: catalogue,
               );
 
               await pumpRouter(
