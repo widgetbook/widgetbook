@@ -34,13 +34,6 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
         values: setting.locales,
         initialValue: setting.activeLocale,
         labelBuilder: (locale) => locale.toLanguageTag(),
-        codec: FieldCodec(
-          toParam: (locale) => locale.toLanguageTag(),
-          toValue: (param) => setting.locales.firstWhere(
-            (locale) => locale.toLanguageTag() == param,
-            orElse: () => setting.activeLocale,
-          ),
-        ),
         onChanged: (_, locale) {
           if (locale == null) return;
 

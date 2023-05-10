@@ -8,15 +8,11 @@ class OptionsKnob<T> extends Knob<T> {
     required super.value,
     required this.options,
     super.description,
-    String Function(T)? labelBuilder,
-  }) : this.labelBuilder = labelBuilder ?? _defaultLabelBuilder;
+    this.labelBuilder,
+  });
 
   final List<T> options;
-  final String Function(T) labelBuilder;
-
-  static String _defaultLabelBuilder(dynamic value) {
-    return value.toString();
-  }
+  final String Function(T)? labelBuilder;
 
   @override
   List<Field> get fields {
@@ -27,13 +23,6 @@ class OptionsKnob<T> extends Knob<T> {
         values: options,
         initialValue: value,
         labelBuilder: labelBuilder,
-        codec: FieldCodec(
-          toParam: labelBuilder,
-          toValue: (param) => options.firstWhere(
-            (option) => labelBuilder(option) == param,
-            orElse: () => value,
-          ),
-        ),
         onChanged: (context, T? value) {
           if (value == null) return;
           context.read<KnobsNotifier>().update<T>(label, value);

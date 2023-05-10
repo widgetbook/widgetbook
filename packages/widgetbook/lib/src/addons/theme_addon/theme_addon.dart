@@ -41,13 +41,6 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
         values: setting.themes,
         initialValue: setting.activeTheme,
         labelBuilder: (theme) => theme.name,
-        codec: FieldCodec(
-          toParam: (theme) => theme.name,
-          toValue: (param) => setting.themes.firstWhere(
-            (theme) => theme.name == param,
-            orElse: () => setting.activeTheme,
-          ),
-        ),
         onChanged: (_, theme) {
           if (theme == null) return;
 

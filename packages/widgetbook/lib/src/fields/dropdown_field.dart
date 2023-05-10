@@ -1,9 +1,13 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 import '../state/state.dart';
 import 'field.dart';
+import 'field_codec.dart';
 import 'field_type.dart';
+
+typedef LabelBuilder<T> = String Function(T value);
 
 class DropdownField<T> extends Field<T> {
   DropdownField({
@@ -11,15 +15,31 @@ class DropdownField<T> extends Field<T> {
     required super.name,
     required this.values,
     required super.initialValue,
-    required this.labelBuilder,
-    required super.codec,
+    this.labelBuilder,
     required super.onChanged,
   }) : super(
           type: FieldType.dropdown,
+          codec: FieldCodec(
+            toParam: (item) {
+              return labelBuilder == null
+                  ? item.toString()
+                  : labelBuilder(item);
+            },
+            toValue: (param) => param == null
+                ? null
+                : values.firstWhereOrNull(
+                    (item) {
+                      final label = labelBuilder == null
+                          ? item.toString()
+                          : labelBuilder(item);
+                      return label == param;
+                    },
+                  ),
+          ),
         );
 
   final List<T> values;
-  final String Function(T value) labelBuilder;
+  final LabelBuilder<T>? labelBuilder;
 
   @override
   Widget buildField(BuildContext context, T? value) {

@@ -33,13 +33,6 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
         values: setting.textScales,
         initialValue: setting.activeTextScale,
         labelBuilder: (scale) => scale.toStringAsFixed(2),
-        codec: FieldCodec(
-          toParam: (scale) => scale.toStringAsFixed(2),
-          toValue: (param) => setting.textScales.firstWhere(
-            (scale) => scale.toStringAsFixed(2) == param,
-            orElse: () => setting.activeTextScale,
-          ),
-        ),
         onChanged: (_, scale) {
           if (scale == null) return;
 

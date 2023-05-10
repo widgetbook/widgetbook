@@ -33,13 +33,6 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
         values: setting.devices,
         initialValue: setting.activeDevice,
         labelBuilder: (device) => device?.name ?? 'None',
-        codec: FieldCodec(
-          toParam: (device) => device?.name ?? 'None',
-          toValue: (param) => setting.devices.firstWhere(
-            (device) => device?.name == param,
-            orElse: () => null,
-          ),
-        ),
         onChanged: (_, device) {
           if (device == null) return;
 
@@ -58,12 +51,6 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
         labelBuilder: (orientation) =>
             orientation.name.substring(0, 1).toUpperCase() +
             orientation.name.substring(1),
-        codec: FieldCodec(
-          toParam: (orientation) => orientation.name,
-          toValue: (param) => Orientation.values.byName(
-            param ?? Orientation.portrait.name,
-          ),
-        ),
         onChanged: (_, orientation) {
           if (orientation == null) return;
 
@@ -80,10 +67,6 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
         values: [false, true],
         initialValue: setting.hasFrame,
         labelBuilder: (hasFrame) => hasFrame ? 'Device Frame' : 'None',
-        codec: FieldCodec(
-          toParam: (hasFrame) => hasFrame.toString(),
-          toValue: (param) => param == 'true',
-        ),
         onChanged: (_, hasFrame) {
           if (hasFrame == null) return;
 
