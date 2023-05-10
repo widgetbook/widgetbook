@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
-import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
 import '../fields/fields.dart';
 
@@ -20,19 +18,22 @@ class SliderKnob extends Knob<double> {
   final int? divisions;
 
   @override
-  List<Field> get fields => [];
-
-  Widget build(BuildContext context) => core.SliderKnob(
+  List<Field> get fields {
+    return [
+      SliderField(
+        group: 'knobs',
         name: label,
-        description: description,
+        initialValue: value,
         min: min,
         max: max,
         divisions: divisions,
-        value: value,
-        onChanged: (value) {
+        onChanged: (context, num? value) {
+          if (value == null) return;
           context.read<KnobsNotifier>().update(label, value);
         },
-      );
+      ),
+    ];
+  }
 }
 
 class NullableSliderKnob extends Knob<double?> {
@@ -50,17 +51,20 @@ class NullableSliderKnob extends Knob<double?> {
   final int? divisions;
 
   @override
-  List<Field> get fields => [];
-
-  Widget build(BuildContext context) => core.NullableSliderKnob(
+  List<Field> get fields {
+    return [
+      SliderField(
+        group: 'knobs',
         name: label,
-        description: description,
+        initialValue: value ?? 0, // TODO: allow nullable
         min: min,
         max: max,
         divisions: divisions,
-        value: value,
-        onChanged: (value) {
+        onChanged: (context, num? value) {
+          if (value == null) return;
           context.read<KnobsNotifier>().update(label, value);
         },
-      );
+      ),
+    ];
+  }
 }

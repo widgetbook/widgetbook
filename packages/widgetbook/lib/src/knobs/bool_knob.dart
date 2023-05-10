@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/fields/field.dart';
+import 'package:widgetbook/src/fields/fields.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
-import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
 class BoolKnob extends Knob<bool> {
   BoolKnob({
@@ -13,16 +10,19 @@ class BoolKnob extends Knob<bool> {
   });
 
   @override
-  List<Field> get fields => [];
-
-  Widget build(BuildContext context) => core.BoolKnob(
+  List<Field> get fields {
+    return [
+      ToggleField(
+        group: 'knobs',
         name: label,
-        description: description,
-        value: value,
-        onChanged: (value) {
+        initialValue: value,
+        onChanged: (context, bool? value) {
+          if (value == null) return;
           context.read<KnobsNotifier>().update(label, value);
         },
-      );
+      ),
+    ];
+  }
 }
 
 class NullableBoolKnob extends Knob<bool?> {
@@ -33,14 +33,17 @@ class NullableBoolKnob extends Knob<bool?> {
   });
 
   @override
-  List<Field> get fields => [];
-
-  Widget build(BuildContext context) => core.NullableBoolKnob(
+  List<Field> get fields {
+    return [
+      ToggleField(
+        group: 'knobs',
         name: label,
-        description: description,
-        value: value,
-        onChanged: (value) {
+        initialValue: value ?? true, // TODO: allow nullable
+        onChanged: (context, bool? value) {
+          if (value == null) return;
           context.read<KnobsNotifier>().update(label, value);
         },
-      );
+      ),
+    ];
+  }
 }
