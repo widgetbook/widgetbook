@@ -42,7 +42,7 @@ class ListField<T> extends Field<T> {
   final LabelBuilder<T>? labelBuilder;
 
   @override
-  Widget buildField(BuildContext context, T? value) {
+  Widget toWidget(BuildContext context, T? value) {
     return DropdownSetting<T>(
       options: values,
       initialSelection: value,

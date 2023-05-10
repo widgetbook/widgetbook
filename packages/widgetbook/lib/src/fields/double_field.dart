@@ -26,7 +26,7 @@ class DoubleField extends Field<double> {
   final int? divisions;
 
   @override
-  Widget buildField(BuildContext context, double? value) {
+  Widget toWidget(BuildContext context, double? value) {
     return Slider(
       value: value ?? initialValue,
       min: min,

@@ -47,10 +47,10 @@ abstract class Field<T> {
     // to keep query params and locale state (e.g. addon's setting) in sync.
     onChanged(context, value);
 
-    return buildField(context, value);
+    return toWidget(context, value);
   }
 
-  Widget buildField(BuildContext context, T? value);
+  Widget toWidget(BuildContext context, T? value);
 
   void updateField(BuildContext context, T value) {
     final state = WidgetbookState.of(context);

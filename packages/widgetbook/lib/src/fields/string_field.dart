@@ -22,7 +22,7 @@ class StringField extends Field<String> {
   final int maxLines;
 
   @override
-  Widget buildField(BuildContext context, String? value) {
+  Widget toWidget(BuildContext context, String? value) {
     return TextFormField(
       initialValue: value ?? initialValue,
       onChanged: (value) => updateField(context, value),

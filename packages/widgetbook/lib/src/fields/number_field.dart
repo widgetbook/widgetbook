@@ -19,7 +19,7 @@ class NumberField extends Field<num> {
         );
 
   @override
-  Widget buildField(BuildContext context, num? value) {
+  Widget toWidget(BuildContext context, num? value) {
     return TextFormField(
       initialValue: codec.toParam(value ?? initialValue),
       keyboardType: TextInputType.number,

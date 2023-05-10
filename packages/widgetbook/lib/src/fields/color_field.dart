@@ -24,7 +24,7 @@ class ColorField extends Field<Color> {
         );
 
   @override
-  Widget buildField(BuildContext context, Color? value) {
+  Widget toWidget(BuildContext context, Color? value) {
     return TextFormField(
       initialValue: codec.toParam(value ?? initialValue),
       onChanged: (value) => updateField(

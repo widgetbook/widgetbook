@@ -19,7 +19,7 @@ class ToggleField extends Field<bool> {
         );
 
   @override
-  Widget buildField(BuildContext context, bool? value) {
+  Widget toWidget(BuildContext context, bool? value) {
     return Switch(
       value: value ?? initialValue,
       onChanged: (value) => updateField(context, value),
