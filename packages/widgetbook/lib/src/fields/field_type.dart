@@ -1,8 +1,8 @@
 enum FieldType {
   color,
-  dropdown,
+  list,
   number,
-  slider,
-  text,
-  toggle,
+  double,
+  string,
+  boolean,
 }

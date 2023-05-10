@@ -11,7 +11,7 @@ class NumberField extends Field<num> {
     super.initialValue = 0,
     required super.onChanged,
   }) : super(
-          type: FieldType.text,
+          type: FieldType.number,
           codec: FieldCodec(
             toParam: (value) => value.toString(),
             toValue: (param) => num.tryParse(param ?? ''),
@@ -22,6 +22,7 @@ class NumberField extends Field<num> {
   Widget buildField(BuildContext context, num? value) {
     return TextFormField(
       initialValue: codec.toParam(value ?? initialValue),
+      keyboardType: TextInputType.number,
       onChanged: (value) => updateField(
         context,
         codec.toValue(value) ?? initialValue,

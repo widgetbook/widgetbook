@@ -27,7 +27,7 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
   @override
   List<Field> get fields {
     return [
-      DropdownField<double>(
+      ListField<double>(
         group: slugName,
         name: 'factor',
         values: setting.textScales,

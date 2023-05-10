@@ -17,7 +17,7 @@ class OptionsKnob<T> extends Knob<T> {
   @override
   List<Field> get fields {
     return [
-      DropdownField<T>(
+      ListField<T>(
         group: 'knobs',
         name: label,
         values: options,

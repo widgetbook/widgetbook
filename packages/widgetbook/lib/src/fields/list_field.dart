@@ -9,8 +9,8 @@ import 'field_type.dart';
 
 typedef LabelBuilder<T> = String Function(T value);
 
-class DropdownField<T> extends Field<T> {
-  DropdownField({
+class ListField<T> extends Field<T> {
+  ListField({
     required super.group,
     required super.name,
     required this.values,
@@ -18,20 +18,20 @@ class DropdownField<T> extends Field<T> {
     this.labelBuilder,
     required super.onChanged,
   }) : super(
-          type: FieldType.dropdown,
+          type: FieldType.list,
           codec: FieldCodec(
-            toParam: (item) {
+            toParam: (value) {
               return labelBuilder == null
-                  ? item.toString()
-                  : labelBuilder(item);
+                  ? value.toString()
+                  : labelBuilder(value);
             },
             toValue: (param) => param == null
                 ? null
                 : values.firstWhereOrNull(
-                    (item) {
+                    (value) {
                       final label = labelBuilder == null
-                          ? item.toString()
-                          : labelBuilder(item);
+                          ? value.toString()
+                          : labelBuilder(value);
                       return label == param;
                     },
                   ),

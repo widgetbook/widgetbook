@@ -4,8 +4,8 @@ import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
 
-class SliderField extends Field<double> {
-  SliderField({
+class DoubleField extends Field<double> {
+  DoubleField({
     required super.group,
     required super.name,
     super.initialValue = 0,
@@ -14,7 +14,7 @@ class SliderField extends Field<double> {
     this.divisions,
     required super.onChanged,
   }) : super(
-          type: FieldType.text,
+          type: FieldType.double,
           codec: FieldCodec(
             toParam: (value) => value.toString(),
             toValue: (param) => double.tryParse(param ?? ''),

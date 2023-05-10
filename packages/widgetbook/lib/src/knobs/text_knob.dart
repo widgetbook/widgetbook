@@ -15,7 +15,7 @@ class TextKnob extends Knob<String> {
   @override
   List<Field> get fields {
     return [
-      InputField(
+      StringField(
         group: 'knobs',
         name: label,
         initialValue: value,
@@ -41,7 +41,7 @@ class NullableTextKnob extends Knob<String?> {
   @override
   List<Field> get fields {
     return [
-      InputField(
+      StringField(
         group: 'knobs',
         name: label,
         initialValue: value ?? '', // TODO: allow nullable

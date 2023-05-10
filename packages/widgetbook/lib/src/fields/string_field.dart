@@ -4,24 +4,27 @@ import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
 
-class ToggleField extends Field<bool> {
-  ToggleField({
+class StringField extends Field<String> {
+  StringField({
     required super.group,
     required super.name,
-    super.initialValue = true,
+    super.initialValue = '',
+    this.maxLines = 1,
     required super.onChanged,
   }) : super(
-          type: FieldType.toggle,
+          type: FieldType.string,
           codec: FieldCodec(
-            toParam: (value) => value.toString(),
-            toValue: (param) => param == 'true',
+            toParam: (value) => value,
+            toValue: (param) => param,
           ),
         );
 
+  final int maxLines;
+
   @override
-  Widget buildField(BuildContext context, bool? value) {
-    return Switch(
-      value: value ?? initialValue,
+  Widget buildField(BuildContext context, String? value) {
+    return TextFormField(
+      initialValue: value ?? initialValue,
       onChanged: (value) => updateField(context, value),
     );
   }
@@ -30,6 +33,7 @@ class ToggleField extends Field<bool> {
   Map<String, dynamic> toJson() {
     return {
       'value': initialValue,
+      'maxLines': maxLines,
     };
   }
 }
