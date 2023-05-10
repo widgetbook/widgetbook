@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/knobs/bool_knob.dart';
 import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
 import '../../helper/widget_test_helper.dart';
 
@@ -17,8 +18,19 @@ Widget renderWithKnobs({
         children: [
           ...build(context),
           ...knobsNotifier.all().map(
-            (e) {
-              return e.build(context);
+            (knob) {
+              return core.KnobProperty(
+                name: knob.label,
+                description: knob.description,
+                value: knob.value,
+                child: Column(
+                  children: knob.fields
+                      .map(
+                        (field) => field.build(context),
+                      )
+                      .toList(),
+                ),
+              );
             },
           )
         ],
@@ -50,7 +62,22 @@ void main() {
                     ? 'Hi'
                     : 'Bye',
               ),
-              ...knobsNotifier.all().map((e) => e.build(context))
+              ...knobsNotifier.all().map(
+                (knob) {
+                  return core.KnobProperty(
+                    name: knob.label,
+                    description: knob.description,
+                    value: knob.value,
+                    child: Column(
+                      children: knob.fields
+                          .map(
+                            (field) => field.build(context),
+                          )
+                          .toList(),
+                    ),
+                  );
+                },
+              )
             ],
           );
         },
