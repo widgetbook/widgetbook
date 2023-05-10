@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:widgetbook/src/routing/router.dart';
 
 import 'field.dart';
 import 'field_codec.dart';
@@ -28,37 +26,14 @@ class SliderField extends Field<double> {
   final int? divisions;
 
   @override
-  Widget build(BuildContext context) {
-    final queryParams = GoRouterState.of(context).queryParams;
-    final groupMap = FieldCodec.decodeQueryGroup(queryParams[group]);
-    final value = codec.toValue(groupMap[name]);
-
-    // Notify change when field is built from new query params,
-    // to keep query params and locale state (e.g. addon's setting) in sync.
-    onChanged(context, value);
-
+  Widget buildField(BuildContext context, double? value) {
     return Slider(
       value: value ?? initialValue,
       min: min,
       max: max,
       label: (value ?? initialValue).toStringAsFixed(2),
       divisions: divisions,
-      onChanged: (value) {
-        onChanged(context, value);
-
-        final router = GoRouter.of(context);
-        final newGroupMap = Map<String, String>.from(groupMap)
-          ..update(
-            name,
-            (_) => codec.toParam(value),
-            ifAbsent: () => codec.toParam(value),
-          );
-
-        router.updateQueryParam(
-          group,
-          FieldCodec.encodeQueryGroup(newGroupMap),
-        );
-      },
+      onChanged: (value) => updateField(context, value),
     );
   }
 
