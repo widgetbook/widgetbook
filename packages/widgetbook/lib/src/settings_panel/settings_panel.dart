@@ -43,6 +43,7 @@ class SettingsPanel extends StatelessWidget {
                           name: knob.label,
                           description: knob.description,
                           value: knob.value,
+                          isNullable: knob.isNullable,
                           child: Column(
                             children: knob.fields
                                 .map((field) => field.build(context))

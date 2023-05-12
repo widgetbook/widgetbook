@@ -15,6 +15,7 @@ abstract class Knob<T> {
     required this.label,
     required this.value,
     this.description,
+    this.isNullable = false,
   });
 
   /// This is the current value the knob is set to
@@ -25,6 +26,8 @@ abstract class Knob<T> {
 
   /// This is the label that's put above a knob
   final String label;
+
+  final bool isNullable;
 
   @override
   bool operator ==(Object other) {

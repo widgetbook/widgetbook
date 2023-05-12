@@ -34,7 +34,9 @@ class NullableTextKnob extends Knob<String?> {
     required super.value,
     super.description,
     this.maxLines = 1,
-  });
+  }) : super(
+          isNullable: true,
+        );
 
   final int? maxLines;
 

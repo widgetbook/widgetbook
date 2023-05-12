@@ -30,7 +30,9 @@ class NullableNumberKnob extends Knob<num?> {
     required super.label,
     required super.value,
     super.description,
-  });
+  }) : super(
+          isNullable: true,
+        );
 
   @override
   List<Field> get fields {

@@ -30,7 +30,9 @@ class NullableBoolKnob extends Knob<bool?> {
     required super.label,
     required super.value,
     super.description,
-  });
+  }) : super(
+          isNullable: true,
+        );
 
   @override
   List<Field> get fields {
