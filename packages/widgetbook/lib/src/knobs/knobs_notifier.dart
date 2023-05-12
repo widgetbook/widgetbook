@@ -26,18 +26,21 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     notifyListeners();
   }
 
-  T register<T>(Knob<T> knob) {
-    return _knobs.putIfAbsent(
+  void updateNullability(String label, bool isNull) {
+    _knobs[label]!.isNull = isNull;
+    notifyListeners();
+  }
+
+  T? register<T>(Knob<T> knob) {
+    final cachedKnob = _knobs.putIfAbsent(
       knob.label,
       () {
         Future.microtask(notifyListeners);
         return knob;
       },
-    ).value;
-  }
+    );
 
-  void unregister(Knob knob) {
-    _knobs.remove(knob.label);
+    return cachedKnob.isNull ? null : cachedKnob.value;
   }
 
   @override
@@ -52,7 +55,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
         description: description,
         value: initialValue,
       ),
-    );
+    )!;
   }
 
   @override
@@ -66,7 +69,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
         label: label,
         value: initialValue,
       ),
-    );
+    )!;
   }
 
   @override
@@ -75,7 +78,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String? description,
     bool? initialValue = false,
   }) {
-    return register(
+    return register<bool?>(
       NullableBoolKnob(
         label: label,
         description: description,
@@ -98,7 +101,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
         description: description,
         maxLines: maxLines,
       ),
-    );
+    )!;
   }
 
   @override
@@ -108,7 +111,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String? initialValue,
     int? maxLines = 1,
   }) {
-    return register(
+    return register<String?>(
       NullableTextKnob(
         label: label,
         value: initialValue,
@@ -137,7 +140,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
         max: max ?? initialValue + 10,
         divisions: divisions,
       ),
-    );
+    )!;
   }
 
   @override
@@ -150,7 +153,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     int? divisions,
   }) {
     initialValue ??= max ?? min ?? 10;
-    return register(
+    return register<double?>(
       NullableSliderKnob(
         label: label,
         value: initialValue,
@@ -174,7 +177,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
         value: initialValue,
         description: description,
       ),
-    );
+    )!;
   }
 
   @override
@@ -183,7 +186,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String? description,
     num? initialValue = 0,
   }) {
-    return register(
+    return register<num?>(
       NullableNumberKnob(
         label: label,
         value: initialValue,
@@ -208,7 +211,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
         options: options,
         labelBuilder: labelBuilder,
       ),
-    );
+    )!;
   }
 }
 

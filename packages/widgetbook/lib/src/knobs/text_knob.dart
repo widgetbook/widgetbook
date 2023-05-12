@@ -11,6 +11,7 @@ class TextKnob extends Knob<String> {
     super.description,
     this.maxLines = 1,
   });
+
   final int? maxLines;
 
   @override
@@ -35,9 +36,7 @@ class NullableTextKnob extends Knob<String?> {
     required super.value,
     super.description,
     this.maxLines = 1,
-  }) : super(
-          isNullable: true,
-        );
+  });
 
   final int? maxLines;
 

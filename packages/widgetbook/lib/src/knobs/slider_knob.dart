@@ -45,9 +45,7 @@ class NullableSliderKnob extends Knob<double?> {
     this.max = 1,
     this.min = 0,
     this.divisions,
-  }) : super(
-          isNullable: true,
-        );
+  });
 
   final double max;
   final double min;

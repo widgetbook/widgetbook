@@ -44,9 +44,9 @@ class SettingsPanel extends StatelessWidget {
                           description: knob.description,
                           value: knob.value,
                           isNullable: knob.isNullable,
-                          changedNullable: (isNull) {
-                            if (isNull) return;
-                            context.read<KnobsNotifier>().unregister(knob);
+                          changedNullable: (isEnabled) {
+                            final notifier = context.read<KnobsNotifier>();
+                            notifier.updateNullability(knob.label, !isEnabled);
                           },
                           child: Column(
                             children: knob.fields
