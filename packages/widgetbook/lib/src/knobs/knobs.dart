@@ -59,7 +59,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     notifyListeners();
   }
 
-  T _addKnob<T>(Knob<T> knob) {
+  T register<T>(Knob<T> knob) {
     return _knobs.putIfAbsent(
       knob.label,
       () {
@@ -69,13 +69,17 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     ).value;
   }
 
+  void unregister(Knob knob) {
+    _knobs.remove(knob.label);
+  }
+
   @override
   bool boolean({
     required String label,
     String? description,
     bool initialValue = false,
   }) {
-    return _addKnob(
+    return register(
       BoolKnob(
         label: label,
         description: description,
@@ -90,7 +94,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     required Color initialValue,
     String? description,
   }) {
-    return _addKnob(
+    return register(
       ColorKnob(
         label: label,
         value: initialValue,
@@ -104,7 +108,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String? description,
     bool? initialValue = false,
   }) {
-    return _addKnob(
+    return register(
       NullableBoolKnob(
         label: label,
         description: description,
@@ -120,7 +124,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String initialValue = '',
     int? maxLines = 1,
   }) {
-    return _addKnob(
+    return register(
       TextKnob(
         label: label,
         value: initialValue,
@@ -137,7 +141,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String? initialValue,
     int? maxLines = 1,
   }) {
-    return _addKnob(
+    return register(
       NullableTextKnob(
         label: label,
         value: initialValue,
@@ -157,7 +161,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     int? divisions,
   }) {
     initialValue ??= max ?? min ?? 10;
-    return _addKnob(
+    return register(
       SliderKnob(
         label: label,
         value: initialValue,
@@ -179,7 +183,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     int? divisions,
   }) {
     initialValue ??= max ?? min ?? 10;
-    return _addKnob(
+    return register(
       NullableSliderKnob(
         label: label,
         value: initialValue,
@@ -197,7 +201,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String? description,
     num initialValue = 0,
   }) {
-    return _addKnob(
+    return register(
       NumberKnob(
         label: label,
         value: initialValue,
@@ -212,7 +216,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String? description,
     num? initialValue = 0,
   }) {
-    return _addKnob(
+    return register(
       NullableNumberKnob(
         label: label,
         value: initialValue,
@@ -229,7 +233,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String Function(T)? labelBuilder,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
-    return _addKnob(
+    return register(
       OptionsKnob(
         label: label,
         value: options.first,
