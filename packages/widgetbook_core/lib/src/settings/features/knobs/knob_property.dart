@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_core/src/settings/features/knobs/knob_description.dart';
 import 'package:widgetbook_core/src/settings/widgets/widgets.dart';
 
 class KnobProperty<T> extends StatefulWidget {
@@ -63,15 +62,24 @@ class _KnobPropertyState<T> extends State<KnobProperty<T>> {
               ],
             )
           : null,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          KnobDescription(
-            description: widget.description,
-          ),
-          widget.child
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 24,
+          vertical: 8,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (widget.description != null) ...{
+              Text(widget.description!),
+              SizedBox(
+                height: 4,
+              ),
+            },
+            widget.child
+          ],
+        ),
       ),
     );
   }
