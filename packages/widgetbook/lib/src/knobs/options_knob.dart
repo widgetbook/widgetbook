@@ -1,6 +1,8 @@
 import 'package:provider/provider.dart';
 import 'package:widgetbook/src/fields/fields.dart';
-import 'package:widgetbook/src/knobs/knobs.dart';
+
+import 'knob.dart';
+import 'knobs_notifier.dart';
 
 class OptionsKnob<T> extends Knob<T> {
   OptionsKnob({

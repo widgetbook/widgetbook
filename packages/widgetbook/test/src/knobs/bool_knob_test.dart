@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/knobs/bool_knob.dart';
-import 'package:widgetbook/src/knobs/knobs.dart';
+import 'package:widgetbook/src/knobs/knobs_notifier.dart';
 
 import '../../helper/widget_test_helper.dart';
 import 'knobs_test.dart';

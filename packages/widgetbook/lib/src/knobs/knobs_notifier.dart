@@ -1,47 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/fields/fields.dart';
-import 'package:widgetbook/src/knobs/bool_knob.dart';
-import 'package:widgetbook/src/knobs/color_knob.dart';
-import 'package:widgetbook/src/knobs/knobs_builder.dart';
-import 'package:widgetbook/src/knobs/number_knob.dart';
-import 'package:widgetbook/src/knobs/options_knob.dart';
-import 'package:widgetbook/src/knobs/slider_knob.dart';
-import 'package:widgetbook/src/knobs/text_knob.dart';
 
-/// This allows stories to have dynamically adjustable parameters.
-abstract class Knob<T> {
-  Knob({
-    required this.label,
-    required this.value,
-    this.description,
-    this.isNullable = false,
-  });
-
-  /// This is the current value the knob is set to
-  T value;
-
-  /// This is a description the user can put on the knob
-  final String? description;
-
-  /// This is the label that's put above a knob
-  final String label;
-
-  final bool isNullable;
-
-  @override
-  bool operator ==(Object other) {
-    return other is Knob<T> &&
-        other.value == value &&
-        other.label == label &&
-        other.description == description;
-  }
-
-  @override
-  int get hashCode => label.hashCode;
-
-  List<Field> get fields;
-}
+import 'bool_knob.dart';
+import 'color_knob.dart';
+import 'knob.dart';
+import 'knobs_builder.dart';
+import 'number_knob.dart';
+import 'options_knob.dart';
+import 'slider_knob.dart';
+import 'text_knob.dart';
 
 /// Updates listeners on changes with the knobs
 class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {

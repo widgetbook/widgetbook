@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
+import 'dart:ui';
+
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/knobs/knobs.dart';
 
 import '../fields/fields.dart';
+import 'knob.dart';
+import 'knobs_notifier.dart';
 
 class ColorKnob extends Knob<Color> {
   ColorKnob({
