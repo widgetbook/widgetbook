@@ -1,4 +1,3 @@
-export './widgetbook_catalogue.dart';
 export './widgetbook_category.dart';
 export './widgetbook_component.dart';
 export './widgetbook_folder.dart';

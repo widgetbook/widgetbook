@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/builder/builder.dart';
 import 'package:widgetbook/src/messaging/messaging.dart';
 import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
+
+import 'state/state.dart';
 
 /// Describes the configuration for your [Widget] library.
 ///
@@ -43,13 +44,13 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
   /// scale.
   final List<MultiChildNavigationNodeData> directories;
 
-  final AppBuilderFunction appBuilder;
+  final AppBuilder appBuilder;
 
   /// A [Widgetbook] which uses cupertino theming via [CupertinoThemeData].
   static Widgetbook<CupertinoThemeData> cupertino({
     required List<MultiChildNavigationNodeData> directories,
     required List<WidgetbookAddOn> addons,
-    AppBuilderFunction? appBuilder,
+    AppBuilder? appBuilder,
     Key? key,
   }) {
     return Widgetbook<CupertinoThemeData>(
@@ -64,7 +65,7 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
   static Widgetbook<ThemeData> material({
     required List<MultiChildNavigationNodeData> directories,
     required List<WidgetbookAddOn> addons,
-    AppBuilderFunction? appBuilder,
+    AppBuilder? appBuilder,
     Key? key,
   }) {
     return Widgetbook<ThemeData>(
@@ -81,25 +82,21 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
 }
 
 class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
-  late BuilderProvider builderProvider;
-  late KnobsNotifier knobsNotifier;
-  late GoRouter goRouter;
+  late final GoRouter router;
+  final KnobsNotifier knobsNotifier = KnobsNotifier();
   final NavigationBloc navigationBloc = NavigationBloc();
 
   @override
   void initState() {
-    builderProvider = BuilderProvider(appBuilder: widget.appBuilder);
-    knobsNotifier = KnobsNotifier();
+    router = createRouter(
+      addons: widget.addons,
+      catalogue: WidgetbookCatalogue.fromDirectories(widget.directories),
+      appBuilder: widget.appBuilder,
+    );
 
     navigationBloc.add(
       LoadNavigationTree(
         directories: widget.directories,
-      ),
-    );
-
-    goRouter = createRouter(
-      catalogue: WidgetbookCatalogue.fromDirectories(
-        widget.directories,
       ),
     );
 
@@ -127,7 +124,6 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   @override
   void didUpdateWidget(covariant Widgetbook<CustomTheme> oldWidget) {
     navigationBloc.add(LoadNavigationTree(directories: widget.directories));
-    builderProvider.hotReload(appBuilder: widget.appBuilder);
     super.didUpdateWidget(oldWidget);
   }
 
@@ -135,18 +131,12 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: builderProvider),
         ChangeNotifierProvider.value(value: knobsNotifier),
-        ChangeNotifierProvider(
-          create: (_) => AddOnProvider(widget.addons),
-        ),
       ],
       child: BlocProvider.value(
         value: navigationBloc,
         child: MaterialApp.router(
-          routeInformationProvider: goRouter.routeInformationProvider,
-          routeInformationParser: goRouter.routeInformationParser,
-          routerDelegate: goRouter.routerDelegate,
+          routerConfig: router,
           themeMode: ThemeMode.dark,
           debugShowCheckedModeBanner: false,
           darkTheme: Themes.dark,

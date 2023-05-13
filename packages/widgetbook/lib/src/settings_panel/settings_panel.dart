@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/routing/widgetbook_panel.dart';
+import 'package:widgetbook/src/state/state.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
 class SettingsPanel extends StatelessWidget {
-  const SettingsPanel({
-    required this.panels,
-    super.key,
-  });
-
-  final Set<WidgetbookPanel> panels;
-
   @override
   Widget build(BuildContext context) {
-    final addons = context.watch<AddOnProvider>().value;
+    final panels = WidgetbookScope.of(context).panels;
+    final addons = WidgetbookScope.of(context).addons;
     final knobs = context.watch<KnobsNotifier>().all();
 
     return Card(

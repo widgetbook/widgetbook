@@ -1,10 +1,9 @@
 import 'package:flutter/widgets.dart';
-import 'package:go_router/go_router.dart';
-import 'package:widgetbook/src/fields/field_codec.dart';
-import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
+import '../state/state.dart';
 import 'field.dart';
+import 'field_codec.dart';
 import 'field_type.dart';
 
 class DropdownField<T> extends Field<T> {
@@ -25,7 +24,8 @@ class DropdownField<T> extends Field<T> {
 
   @override
   Widget build(BuildContext context) {
-    final queryParams = GoRouterState.of(context).queryParams;
+    final scope = WidgetbookScope.of(context);
+    final queryParams = WidgetbookScope.of(context).queryParams;
     final groupMap = FieldCodec.decodeQueryGroup(queryParams[group]);
     final value = codec.toValue(groupMap[name]);
 
@@ -40,7 +40,6 @@ class DropdownField<T> extends Field<T> {
       onSelected: (value) {
         onChanged(value);
 
-        final router = GoRouter.of(context);
         final newGroupMap = Map<String, String>.from(groupMap)
           ..update(
             name,
@@ -48,7 +47,7 @@ class DropdownField<T> extends Field<T> {
             ifAbsent: () => codec.toParam(value),
           );
 
-        router.updateQueryParam(
+        scope.updateQueryParam(
           group,
           FieldCodec.encodeQueryGroup(newGroupMap),
         );

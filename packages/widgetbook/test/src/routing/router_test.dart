@@ -3,9 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/builder/functions/app_builder.dart';
-import 'package:widgetbook/src/builder/provider/builder_provider.dart';
 import 'package:widgetbook/src/routing/router.dart';
+import 'package:widgetbook/src/state/state.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
@@ -73,15 +72,11 @@ void main() {
     directories,
   );
 
-  late BuilderProvider builderProvider;
   late KnobsNotifier knobsNotifier;
   late NavigationBloc navigationBloc;
 
   setUp(
     () {
-      builderProvider = BuilderProvider(
-        appBuilder: materialAppBuilder,
-      );
       knobsNotifier = KnobsNotifier();
       navigationBloc = NavigationBloc();
     },
@@ -95,10 +90,6 @@ void main() {
       MultiProvider(
         providers: [
           ChangeNotifierProvider.value(value: knobsNotifier),
-          ChangeNotifierProvider.value(value: builderProvider),
-          ChangeNotifierProvider(
-            create: (_) => AddOnProvider(addons),
-          ),
         ],
         child: BlocProvider(
           create: (context) => navigationBloc
@@ -125,9 +116,9 @@ void main() {
             'default route',
             (tester) async {
               final router = createRouter(
-                initialLocation: '/',
-                catalogue: catalogue,
-              );
+                  addons: addons,
+                  catalogue: catalogue,
+                  appBuilder: materialAppBuilder);
 
               await pumpRouter(
                 tester: tester,
@@ -150,7 +141,9 @@ void main() {
             (tester) async {
               final router = createRouter(
                 initialLocation: '/?path=component-2%2Fuse-case-2.1',
+                addons: addons,
                 catalogue: catalogue,
+                appBuilder: materialAppBuilder,
               );
 
               await pumpRouter(
@@ -175,7 +168,9 @@ void main() {
             (tester) async {
               final router = createRouter(
                 initialLocation: '/?theme=Dark',
+                addons: addons,
                 catalogue: catalogue,
+                appBuilder: materialAppBuilder,
               );
 
               await pumpRouter(
@@ -200,7 +195,9 @@ void main() {
             (tester) async {
               final router = createRouter(
                 initialLocation: '/?disable-properties=true',
+                addons: addons,
                 catalogue: catalogue,
+                appBuilder: materialAppBuilder,
               );
 
               await pumpRouter(
@@ -221,7 +218,9 @@ void main() {
             (tester) async {
               final router = createRouter(
                 initialLocation: '/?panels={navigation}',
+                addons: addons,
                 catalogue: catalogue,
+                appBuilder: materialAppBuilder,
               );
 
               await pumpRouter(
@@ -242,7 +241,9 @@ void main() {
             (tester) async {
               final router = createRouter(
                 initialLocation: '/?disable-navigation=true',
+                addons: addons,
                 catalogue: catalogue,
+                appBuilder: materialAppBuilder,
               );
 
               await pumpRouter(
@@ -263,7 +264,9 @@ void main() {
             (tester) async {
               final router = createRouter(
                 initialLocation: '/?panels={knobs,addons}',
+                addons: addons,
                 catalogue: catalogue,
+                appBuilder: materialAppBuilder,
               );
 
               await pumpRouter(
@@ -284,7 +287,9 @@ void main() {
             (tester) async {
               final router = createRouter(
                 initialLocation: '/?panels={addons}',
+                addons: addons,
                 catalogue: catalogue,
+                appBuilder: materialAppBuilder,
               );
 
               await pumpRouter(
@@ -309,7 +314,9 @@ void main() {
             (tester) async {
               final router = createRouter(
                 initialLocation: '/?panels={knobs}',
+                addons: addons,
                 catalogue: catalogue,
+                appBuilder: materialAppBuilder,
               );
 
               await pumpRouter(
