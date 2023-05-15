@@ -90,7 +90,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   void initState() {
     router = createRouter(
       addons: widget.addons,
-      catalogue: WidgetbookCatalogue.fromDirectories(widget.directories),
+      catalog: WidgetbookCatalog.fromDirectories(widget.directories),
       appBuilder: widget.appBuilder,
     );
 

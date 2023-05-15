@@ -29,7 +29,7 @@ Future<void> testAddon({
               queryParams: {...state.queryParams}, // Copy from UnmodifiableMap
               addons: [addon],
               appBuilder: materialAppBuilder,
-              catalogue: WidgetbookCatalogue.fromDirectories([]),
+              catalog: WidgetbookCatalog.fromDirectories([]),
             ),
             child: Scaffold(
               // Simulates the approximate width of the panel.

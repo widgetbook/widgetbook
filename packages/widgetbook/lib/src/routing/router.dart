@@ -19,7 +19,7 @@ bool _parseBoolQueryParameter({
 GoRouter createRouter({
   String? initialLocation = '/',
   required List<WidgetbookAddOn> addons,
-  required WidgetbookCatalogue catalogue,
+  required WidgetbookCatalog catalog,
   required AppBuilder appBuilder,
 }) {
   return GoRouter(
@@ -63,7 +63,7 @@ GoRouter createRouter({
             queryParams: {...state.queryParams}, // Copy from UnmodifiableMap
             addons: addons,
             appBuilder: appBuilder,
-            catalogue: catalogue,
+            catalog: catalog,
           ),
           child: WidgetbookShell(
             child: child,

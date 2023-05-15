@@ -68,7 +68,7 @@ void main() {
     )
   ];
 
-  final catalogue = WidgetbookCatalogue.fromDirectories(
+  final catalog = WidgetbookCatalog.fromDirectories(
     directories,
   );
 
@@ -117,7 +117,7 @@ void main() {
             (tester) async {
               final router = createRouter(
                   addons: addons,
-                  catalogue: catalogue,
+                  catalog: catalog,
                   appBuilder: materialAppBuilder);
 
               await pumpRouter(
@@ -142,7 +142,7 @@ void main() {
               final router = createRouter(
                 initialLocation: '/?path=component-2%2Fuse-case-2.1',
                 addons: addons,
-                catalogue: catalogue,
+                catalog: catalog,
                 appBuilder: materialAppBuilder,
               );
 
@@ -169,7 +169,7 @@ void main() {
               final router = createRouter(
                 initialLocation: '/?theme=Dark',
                 addons: addons,
-                catalogue: catalogue,
+                catalog: catalog,
                 appBuilder: materialAppBuilder,
               );
 
@@ -196,7 +196,7 @@ void main() {
               final router = createRouter(
                 initialLocation: '/?disable-properties=true',
                 addons: addons,
-                catalogue: catalogue,
+                catalog: catalog,
                 appBuilder: materialAppBuilder,
               );
 
@@ -219,7 +219,7 @@ void main() {
               final router = createRouter(
                 initialLocation: '/?panels={navigation}',
                 addons: addons,
-                catalogue: catalogue,
+                catalog: catalog,
                 appBuilder: materialAppBuilder,
               );
 
@@ -242,7 +242,7 @@ void main() {
               final router = createRouter(
                 initialLocation: '/?disable-navigation=true',
                 addons: addons,
-                catalogue: catalogue,
+                catalog: catalog,
                 appBuilder: materialAppBuilder,
               );
 
@@ -265,7 +265,7 @@ void main() {
               final router = createRouter(
                 initialLocation: '/?panels={knobs,addons}',
                 addons: addons,
-                catalogue: catalogue,
+                catalog: catalog,
                 appBuilder: materialAppBuilder,
               );
 
@@ -288,7 +288,7 @@ void main() {
               final router = createRouter(
                 initialLocation: '/?panels={addons}',
                 addons: addons,
-                catalogue: catalogue,
+                catalog: catalog,
                 appBuilder: materialAppBuilder,
               );
 
@@ -315,7 +315,7 @@ void main() {
               final router = createRouter(
                 initialLocation: '/?panels={knobs}',
                 addons: addons,
-                catalogue: catalogue,
+                catalog: catalog,
                 appBuilder: materialAppBuilder,
               );
 

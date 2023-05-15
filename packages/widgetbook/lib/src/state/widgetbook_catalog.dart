@@ -1,16 +1,16 @@
 import 'package:widgetbook/src/navigation/models/models.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
-class WidgetbookCatalogue {
-  WidgetbookCatalogue._(
+class WidgetbookCatalog {
+  WidgetbookCatalog._(
     Map<String, WidgetbookUseCase> useCases,
   ) : _useCases = useCases;
 
-  factory WidgetbookCatalogue.fromDirectories(
+  factory WidgetbookCatalog.fromDirectories(
     List<NavigationNodeDataInterface> directories,
   ) {
     final useCases = _getUseCases(directories);
-    return WidgetbookCatalogue._(useCases);
+    return WidgetbookCatalog._(useCases);
   }
 
   final Map<String, WidgetbookUseCase> _useCases;
