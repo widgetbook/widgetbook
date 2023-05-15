@@ -24,8 +24,8 @@ class DropdownField<T> extends Field<T> {
 
   @override
   Widget build(BuildContext context) {
-    final queryParams = WidgetbookState.of(context).queryParams;
-    final groupMap = FieldCodec.decodeQueryGroup(queryParams[group]);
+    final state = WidgetbookState.of(context);
+    final groupMap = FieldCodec.decodeQueryGroup(state.queryParams[group]);
     final value = codec.toValue(groupMap[name]);
 
     // Notify change when field is built from new query params,
@@ -46,7 +46,7 @@ class DropdownField<T> extends Field<T> {
             ifAbsent: () => codec.toParam(value),
           );
 
-        WidgetbookState.of(context).updateQueryParam(
+        state.updateQueryParam(
           group,
           FieldCodec.encodeQueryGroup(newGroupMap),
         );

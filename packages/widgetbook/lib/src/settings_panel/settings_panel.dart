@@ -7,8 +7,7 @@ import 'package:widgetbook_core/widgetbook_core.dart' as core;
 class SettingsPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final panels = WidgetbookState.of(context).panels;
-    final addons = WidgetbookState.of(context).addons;
+    final state = WidgetbookState.of(context);
     final knobs = context.watch<KnobsNotifier>().all();
 
     return Card(
@@ -18,10 +17,10 @@ class SettingsPanel extends StatelessWidget {
             child: SingleChildScrollView(
               child: core.SettingsPanel(
                 settings: [
-                  if (panels.contains(WidgetbookPanel.addons)) ...{
+                  if (state.panels.contains(WidgetbookPanel.addons)) ...{
                     core.SettingsPanelData(
                       name: 'Properties',
-                      settings: addons.map(
+                      settings: state.addons.map(
                         (addon) {
                           return core.Setting(
                             name: addon.name,
@@ -36,7 +35,7 @@ class SettingsPanel extends StatelessWidget {
                       ).toList(),
                     ),
                   },
-                  if (panels.contains(WidgetbookPanel.knobs)) ...{
+                  if (state.panels.contains(WidgetbookPanel.knobs)) ...{
                     core.SettingsPanelData(
                       name: 'Knobs',
                       settings: knobs.map((e) => e.build(context)).toList(),

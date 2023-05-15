@@ -14,14 +14,13 @@ class WidgetbookShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final panels = WidgetbookState.of(context).panels;
-    final path = WidgetbookState.of(context).path;
+    final state = WidgetbookState.of(context);
 
-    final enableNavigation = panels.contains(
+    final enableNavigation = state.panels.contains(
       WidgetbookPanel.navigation,
     );
 
-    final enableSettings = panels.any(
+    final enableSettings = state.panels.any(
       (x) => x == WidgetbookPanel.addons || x == WidgetbookPanel.knobs,
     );
 
@@ -31,7 +30,7 @@ class WidgetbookShell extends StatelessWidget {
         children: [
           if (enableNavigation) ...{
             NavigationPanelWrapper(
-              initialPath: path,
+              initialPath: state.uri.toString(),
             ),
           },
           Expanded(
