@@ -8,8 +8,8 @@ import 'safe_boundaries.dart';
 class Workbench extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final appBuilder = WidgetbookScope.of(context).appBuilder;
-    final useCase = WidgetbookScope.of(context).useCase;
+    final appBuilder = WidgetbookState.of(context).appBuilder;
+    final useCase = WidgetbookState.of(context).useCase;
 
     return DecoratedBox(
       decoration: BoxDecoration(

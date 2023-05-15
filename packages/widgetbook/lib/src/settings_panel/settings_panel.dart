@@ -7,8 +7,8 @@ import 'package:widgetbook_core/widgetbook_core.dart' as core;
 class SettingsPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final panels = WidgetbookScope.of(context).panels;
-    final addons = WidgetbookScope.of(context).addons;
+    final panels = WidgetbookState.of(context).panels;
+    final addons = WidgetbookState.of(context).addons;
     final knobs = context.watch<KnobsNotifier>().all();
 
     return Card(

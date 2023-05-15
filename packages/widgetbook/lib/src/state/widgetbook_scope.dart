@@ -9,10 +9,4 @@ class WidgetbookScope extends InheritedNotifier<WidgetbookState> {
   }) : super(
           notifier: state,
         );
-
-  static WidgetbookState of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<WidgetbookScope>()!
-        .notifier!;
-  }
 }

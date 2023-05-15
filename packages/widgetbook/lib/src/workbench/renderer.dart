@@ -14,7 +14,7 @@ class Renderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final addons = WidgetbookScope.of(context).addons;
+    final addons = WidgetbookState.of(context).addons;
 
     return appBuilder(
       context,

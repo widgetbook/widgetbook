@@ -14,8 +14,8 @@ class WidgetbookShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final panels = WidgetbookScope.of(context).panels;
-    final path = WidgetbookScope.of(context).path;
+    final panels = WidgetbookState.of(context).panels;
+    final path = WidgetbookState.of(context).path;
 
     final enableNavigation = panels.contains(
       WidgetbookPanel.navigation,

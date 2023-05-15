@@ -4,6 +4,7 @@ import '../addons/addons.dart';
 import '../navigation/navigation.dart';
 import 'widgetbook_catalogue.dart';
 import 'widgetbook_panel.dart';
+import 'widgetbook_scope.dart';
 
 typedef AppBuilder = Widget Function(BuildContext context, Widget child);
 
@@ -25,6 +26,12 @@ class WidgetbookState extends ChangeNotifier {
   final AppBuilder appBuilder;
 
   WidgetbookUseCase? get useCase => catalogue.get(path);
+
+  static WidgetbookState of(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<WidgetbookScope>()!
+        .notifier!;
+  }
 
   void updateQueryParam(String name, String value) {
     queryParams[name] = value;
