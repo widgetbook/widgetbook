@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
 
 import '../addons/addons.dart';
 import '../navigation/navigation.dart';
@@ -31,6 +33,28 @@ class WidgetbookState extends ChangeNotifier {
     return context
         .dependOnInheritedWidgetOfExactType<WidgetbookScope>()!
         .notifier!;
+  }
+
+  @override
+  void notifyListeners() {
+    super.notifyListeners();
+    syncRouteInformation();
+  }
+
+  /// Syncs this with the router's location using [SystemNavigator].
+  @internal
+  void syncRouteInformation() {
+    final uri = Uri(
+      path: '/',
+      queryParameters: {
+        'path': path,
+        ...queryParams,
+      },
+    );
+
+    SystemNavigator.routeInformationUpdated(
+      location: uri.toString(),
+    );
   }
 
   void updateQueryParam(String name, String value) {
