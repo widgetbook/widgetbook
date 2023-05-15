@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:widgetbook/src/state/state.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 class Renderer extends StatelessWidget {
@@ -14,7 +14,7 @@ class Renderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final addons = context.watch<AddOnProvider>().value;
+    final addons = WidgetbookState.of(context).addons;
 
     return appBuilder(
       context,

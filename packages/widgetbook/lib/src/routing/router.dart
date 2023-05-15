@@ -1,41 +1,9 @@
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:widgetbook/src/routing/widgetbook_panel.dart';
 import 'package:widgetbook/src/widgetbook_shell.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
-import 'package:widgetbook/widgetbook.dart';
 
-extension GoRouterExtension on GoRouter {
-  void updateQueryParam(String name, String value) {
-    final uri = Uri.parse(location);
-
-    goNamed(
-      '/',
-      queryParams: {
-        ...uri.queryParameters,
-        name: value,
-      },
-    );
-  }
-}
-
-Set<WidgetbookPanel> _parsePanelsQueryParam(
-  String? value,
-) {
-  if (value == null) {
-    return WidgetbookPanel.values.toSet();
-  }
-
-  if (value.isEmpty || value == '{}') {
-    return {};
-  }
-
-  return value
-      .replaceAll(RegExp('[{}]'), '')
-      .split(',')
-      .map((name) => WidgetbookPanel.values.byName(name))
-      .toSet();
-}
+import '../addons/addons.dart';
+import '../state/state.dart';
 
 bool _parseBoolQueryParameter({
   required String? value,
@@ -49,11 +17,13 @@ bool _parseBoolQueryParameter({
 }
 
 GoRouter createRouter({
-  required WidgetbookCatalogue catalogue,
-  // Used for testing
-  String? initialLocation,
+  String? initialLocation = '/',
+  required List<WidgetbookAddOn> addons,
+  required WidgetbookCatalog catalog,
+  required AppBuilder appBuilder,
 }) {
-  final router = GoRouter(
+  return GoRouter(
+    initialLocation: initialLocation,
     redirect: (context, state) {
       // Redirect deprecated `disable-navigation` and `disable-properties`
       // query params to their equivalent `panels` query param.
@@ -79,37 +49,34 @@ GoRouter createRouter({
 
         return '/?panels={${panels.map((x) => x.name).join(",")}}';
       }
+
+      return null;
     },
-    initialLocation: initialLocation,
     routes: [
       ShellRoute(
-        builder: (context, state, child) {
-          final panels = _parsePanelsQueryParam(state.queryParams['panels']);
-
-          return WidgetbookShell(
-            panels: panels,
-            initialLocation: state.location,
+        builder: (_, state, child) => WidgetbookScope(
+          state: WidgetbookState(
+            path: state.queryParams['path'] ?? '',
+            panels: state.queryParams['panels'] == null
+                ? WidgetbookPanel.values.toSet()
+                : WidgetbookPanelParser.parse(state.queryParams['panels']!),
+            queryParams: {...state.queryParams}, // Copy from UnmodifiableMap
+            addons: addons,
+            appBuilder: appBuilder,
+            catalog: catalog,
+          ),
+          child: WidgetbookShell(
             child: child,
-          );
-        },
+          ),
+        ),
         routes: [
           GoRoute(
             name: '/',
             path: '/',
-            pageBuilder: (_, state) {
-              final path = state.queryParams['path'];
-
-              return NoTransitionPage<void>(
-                child: Workbench(
-                  useCase: catalogue.get(path ?? ''),
-                ),
-              );
-            },
+            builder: (_, __) => Workbench(),
           ),
         ],
       )
     ],
   );
-
-  return router;
 }
