@@ -15,7 +15,7 @@ jobs:
       - name: Setup flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          flutter-version: 3.7.x
 
       - name: Enable melos
         run: dart pub global activate melos
