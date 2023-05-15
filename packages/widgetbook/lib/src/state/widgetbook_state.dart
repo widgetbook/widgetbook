@@ -29,6 +29,14 @@ class WidgetbookState extends ChangeNotifier {
 
   WidgetbookUseCase? get useCase => catalogue.get(path);
 
+  Uri get uri => Uri(
+        path: '/',
+        queryParameters: {
+          'path': path,
+          ...queryParams,
+        },
+      );
+
   static WidgetbookState of(BuildContext context) {
     return context
         .dependOnInheritedWidgetOfExactType<WidgetbookScope>()!
@@ -44,14 +52,6 @@ class WidgetbookState extends ChangeNotifier {
   /// Syncs this with the router's location using [SystemNavigator].
   @internal
   void syncRouteInformation() {
-    final uri = Uri(
-      path: '/',
-      queryParameters: {
-        'path': path,
-        ...queryParams,
-      },
-    );
-
     SystemNavigator.routeInformationUpdated(
       location: uri.toString(),
     );

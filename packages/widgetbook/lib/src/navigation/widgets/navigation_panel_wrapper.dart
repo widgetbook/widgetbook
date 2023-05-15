@@ -15,11 +15,13 @@ class NavigationPanelWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = WidgetbookState.of(context);
+
     return NavigationPanel(
-      initialPath: initialPath,
+      initialPath: state.uri.toString(),
       onNodeSelected: (path, _) {
         context.read<KnobsNotifier>().clear();
-        WidgetbookState.of(context).updatePath(path);
+        state.updatePath(path);
       },
     );
   }
