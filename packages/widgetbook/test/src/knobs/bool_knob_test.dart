@@ -23,19 +23,19 @@ void main() {
         (context) => Text(
           context.knobs.boolean(
             label: 'label',
-            initialValue: true,
           )
               ? 'Hi'
               : 'Bye',
         ),
       );
 
-      expect(find.text('Hi'), findsOneWidget);
+      expect(find.text('Bye'), findsOneWidget);
+
       await tester.pumpAndSettle();
-      await tester.tap(find.byType(Switch).first);
+      await tester.tap(find.byType(Switch));
       await tester.pumpAndSettle();
 
-      expect(find.text('Bye'), findsOneWidget);
+      expect(find.text('Hi'), findsOneWidget);
     },
   );
 }
