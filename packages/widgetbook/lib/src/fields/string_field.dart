@@ -9,7 +9,7 @@ class StringField extends Field<String> {
     required super.group,
     required super.name,
     super.initialValue = '',
-    this.maxLines = 1,
+    this.maxLines,
     required super.onChanged,
   }) : super(
           type: FieldType.string,
@@ -19,11 +19,12 @@ class StringField extends Field<String> {
           ),
         );
 
-  final int maxLines;
+  final int? maxLines;
 
   @override
   Widget toWidget(BuildContext context, String? value) {
     return TextFormField(
+      maxLines: maxLines,
       initialValue: value ?? initialValue,
       onChanged: (value) => updateField(context, value),
     );

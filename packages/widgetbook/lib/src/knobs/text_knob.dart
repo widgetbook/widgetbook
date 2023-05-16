@@ -9,7 +9,7 @@ class TextKnob extends Knob<String> {
     required super.label,
     required super.value,
     super.description,
-    this.maxLines = 1,
+    this.maxLines,
   });
 
   final int? maxLines;
@@ -21,6 +21,7 @@ class TextKnob extends Knob<String> {
         group: 'knobs',
         name: label,
         initialValue: value,
+        maxLines: maxLines,
         onChanged: (context, String? value) {
           if (value == null) return;
           context.read<KnobsNotifier>().update(label, value);
@@ -35,7 +36,7 @@ class NullableTextKnob extends Knob<String?> {
     required super.label,
     required super.value,
     super.description,
-    this.maxLines = 1,
+    this.maxLines,
   });
 
   final int? maxLines;
@@ -47,6 +48,7 @@ class NullableTextKnob extends Knob<String?> {
         group: 'knobs',
         name: label,
         initialValue: value ?? '', // TODO: allow nullable
+        maxLines: maxLines,
         onChanged: (context, String? value) {
           if (value == null) return;
           context.read<KnobsNotifier>().update(label, value);

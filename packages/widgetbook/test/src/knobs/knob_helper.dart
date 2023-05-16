@@ -28,7 +28,9 @@ extension KnobHelper on WidgetTester {
               builder: (context) {
                 return Column(
                   children: [
-                    builder(context),
+                    Expanded(
+                      child: builder(context),
+                    ),
                     ...knobsNotifier.all().map(
                           (knob) => Material(
                             child: KnobProperty(

@@ -22,12 +22,12 @@ for (var level = 1; level <= 6; level++)
       (WidgetTester tester) async {
         await tester.pumpWithKnob(
           (context) => Text(
+            key: textFinderKey,
             context.knobs.text(
               label: 'label',
               initialValue: initialTextValue,
               maxLines: null,
             ),
-            key: textFinderKey,
           ),
         );
 
