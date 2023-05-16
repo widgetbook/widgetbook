@@ -43,9 +43,12 @@ abstract class Field<T> {
     final groupMap = FieldCodec.decodeQueryGroup(state.queryParams[group]);
     final value = codec.toValue(groupMap[name]);
 
-    // Notify change when field is built from new query params,
-    // to keep query params and locale state (e.g. addon's setting) in sync.
-    onChanged(context, value);
+    // TODO: remove this workaround
+    if (group != 'knobs') {
+      // Notify change when field is built from new query params,
+      // to keep query params and locale state (e.g. addon's setting) in sync.
+      onChanged(context, value);
+    }
 
     return toWidget(context, value);
   }
