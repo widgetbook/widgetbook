@@ -7,51 +7,22 @@ import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
 import '../../helper/widget_test_helper.dart';
+import 'knob_helper.dart';
 
 void main() {
   testWidgets(
     'Bool knob added',
     (WidgetTester tester) async {
       final knobsNotifier = KnobsNotifier();
-
-      final useCase = WidgetbookUseCaseData(
-        path: 'use-case',
-        builder: (context) {
-          return Column(
-            children: [
-              Text(
-                context.knobs.boolean(
-                  label: 'label',
-                  initialValue: true,
-                )
-                    ? 'Hi'
-                    : 'Bye',
-              ),
-              ...knobsNotifier.all().map(
-                (knob) {
-                  return core.KnobProperty(
-                    name: knob.label,
-                    description: knob.description,
-                    value: knob.value,
-                    child: Column(
-                      children: knob.fields
-                          .map(
-                            (field) => field.build(context),
-                          )
-                          .toList(),
-                    ),
-                  );
-                },
-              )
-            ],
-          );
-        },
-      );
-
-      await tester.pumpWidgetWithMaterialApp(
-        ChangeNotifierProvider(
-          create: (context) => knobsNotifier,
-          child: Builder(builder: useCase.builder),
+      await tester.pumpWithKnob(
+        notifier: knobsNotifier,
+        (context) => Text(
+          context.knobs.boolean(
+            label: 'label',
+            initialValue: true,
+          )
+              ? 'Hi'
+              : 'Bye',
         ),
       );
 

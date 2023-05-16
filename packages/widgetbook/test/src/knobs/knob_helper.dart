@@ -8,8 +8,11 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 typedef WidgetBuilder = Widget Function(BuildContext context);
 
 extension KnobHelper on WidgetTester {
-  Future<void> pumpWithKnob(WidgetBuilder builder) async {
-    final knobsNotifier = KnobsNotifier();
+  Future<void> pumpWithKnob(
+    WidgetBuilder builder, {
+    KnobsNotifier? notifier,
+  }) async {
+    final knobsNotifier = notifier ?? KnobsNotifier();
 
     return pumpWidget(
       ChangeNotifierProvider.value(
