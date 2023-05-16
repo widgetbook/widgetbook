@@ -4,8 +4,8 @@ import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
 
-class ToggleField extends Field<bool> {
-  ToggleField({
+class BooleanField extends Field<bool> {
+  BooleanField({
     required super.group,
     required super.name,
     super.initialValue = true,

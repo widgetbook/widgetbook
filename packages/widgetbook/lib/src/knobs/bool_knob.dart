@@ -14,7 +14,7 @@ class BoolKnob extends Knob<bool> {
   @override
   List<Field> get fields {
     return [
-      ToggleField(
+      BooleanField(
         group: 'knobs',
         name: label,
         initialValue: value,
@@ -37,7 +37,7 @@ class NullableBoolKnob extends Knob<bool?> {
   @override
   List<Field> get fields {
     return [
-      ToggleField(
+      BooleanField(
         group: 'knobs',
         name: label,
         initialValue: value ?? true, // TODO: allow nullable
