@@ -1,5 +1,5 @@
 name: widgetbook_core
-description: Core components for Widgetbook and Widgetbook Cloud. 
+description: Core components for Widgetbook and Widgetbook Cloud.
 version: 3.0.0-beta.8
 homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=widgetbook
 repository: https://github.com/widgetbook/widgetbook
@@ -7,7 +7,8 @@ issue_tracker: https://github.com/widgetbook/widgetbook/issues
 documentation: https://docs.widgetbook.io
 
 environment:
-  sdk: '>=2.18.5 <3.0.0'
+  sdk: '>=2.17.0 <4.0.0'
+  flutter: '>=3.0.0'
 
 dependencies:
   collection: ^1.15.0
@@ -74,4 +75,3 @@ flutter:
         - asset: assets/fonts/Poppins-BlackItalic.ttf
           weight: 900
           style: italic
-        

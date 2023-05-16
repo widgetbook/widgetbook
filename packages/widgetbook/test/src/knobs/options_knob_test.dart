@@ -69,7 +69,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('B').first);
       await tester.pumpAndSettle();
-      expect(find.text('B'), findsOneWidget);
+      expect(find.text('B'), findsWidgets);
     },
   );
 }

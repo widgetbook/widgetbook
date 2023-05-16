@@ -126,7 +126,7 @@ class _ColorKnobState extends State<ColorKnob> {
       value: widget.value,
       child: Row(
         children: [
-          DropdownSetting(
+          DropdownSetting<ColorOptions>(
             options: ColorOptions.values,
             optionValueBuilder: (option) => option.name,
             onSelected: (option) {},
