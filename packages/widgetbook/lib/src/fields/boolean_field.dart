@@ -25,11 +25,4 @@ class BooleanField extends Field<bool> {
       onChanged: (value) => updateField(context, value),
     );
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'value': initialValue,
-    };
-  }
 }

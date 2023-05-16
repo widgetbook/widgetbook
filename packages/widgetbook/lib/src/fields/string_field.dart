@@ -33,7 +33,6 @@ class StringField extends Field<String> {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'value': initialValue,
       'maxLines': maxLines,
     };
   }

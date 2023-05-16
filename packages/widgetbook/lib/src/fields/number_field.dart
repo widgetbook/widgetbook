@@ -29,11 +29,4 @@ class NumberField extends Field<num> {
       ),
     );
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'value': initialValue,
-    };
-  }
 }

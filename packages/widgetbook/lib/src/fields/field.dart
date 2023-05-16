@@ -78,11 +78,10 @@ abstract class Field<T> {
     return {
       'name': name,
       'type': type.name,
-      'initialValue':
-          initialValue == null ? null : codec.toParam(initialValue!),
+      'value': initialValue == null ? null : codec.toParam(initialValue!),
       ...toJson(),
     };
   }
 
-  Map<String, dynamic> toJson();
+  Map<String, dynamic> toJson() => {};
 }

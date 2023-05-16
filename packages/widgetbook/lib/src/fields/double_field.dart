@@ -40,7 +40,6 @@ class DoubleField extends Field<double> {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'value': initialValue,
       'min': min,
       'max': max,
       'divisions': divisions,

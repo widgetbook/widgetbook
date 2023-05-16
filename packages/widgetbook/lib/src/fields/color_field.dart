@@ -35,11 +35,4 @@ class ColorField extends Field<Color> {
       ),
     );
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'value': initialValue == null ? null : codec.toParam(initialValue!),
-    };
-  }
 }
