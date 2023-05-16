@@ -57,7 +57,7 @@ class NullableSliderKnob extends Knob<double?> {
       DoubleField(
         group: 'knobs',
         name: label,
-        initialValue: value ?? 0, // TODO: allow nullable
+        initialValue: value ?? 0,
         min: min,
         max: max,
         divisions: divisions,

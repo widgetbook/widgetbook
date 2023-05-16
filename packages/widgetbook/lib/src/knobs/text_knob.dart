@@ -47,7 +47,7 @@ class NullableTextKnob extends Knob<String?> {
       StringField(
         group: 'knobs',
         name: label,
-        initialValue: value ?? '', // TODO: allow nullable
+        initialValue: value ?? '',
         maxLines: maxLines,
         onChanged: (context, String? value) {
           if (value == null) return;

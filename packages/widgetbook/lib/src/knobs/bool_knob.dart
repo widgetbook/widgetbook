@@ -40,7 +40,7 @@ class NullableBoolKnob extends Knob<bool?> {
       BooleanField(
         group: 'knobs',
         name: label,
-        initialValue: value ?? true, // TODO: allow nullable
+        initialValue: value ?? true,
         onChanged: (context, bool? value) {
           if (value == null) return;
           context.read<KnobsNotifier>().update(label, value);
