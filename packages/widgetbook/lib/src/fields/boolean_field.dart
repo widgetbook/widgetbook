@@ -21,7 +21,7 @@ class BooleanField extends Field<bool> {
   @override
   Widget toWidget(BuildContext context, bool? value) {
     return Switch(
-      value: value ?? initialValue,
+      value: value ?? initialValue ?? true,
       onChanged: (value) => updateField(context, value),
     );
   }

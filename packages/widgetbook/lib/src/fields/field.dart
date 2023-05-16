@@ -32,7 +32,7 @@ abstract class Field<T> {
   /// to help rendering proper widget by external listeners.
   final FieldType type;
 
-  final T initialValue;
+  final T? initialValue;
 
   final FieldCodec<T> codec;
 
@@ -78,7 +78,8 @@ abstract class Field<T> {
     return {
       'name': name,
       'type': type.name,
-      'initialValue': codec.toParam(initialValue),
+      'initialValue':
+          initialValue == null ? null : codec.toParam(initialValue!),
       ...toJson(),
     };
   }

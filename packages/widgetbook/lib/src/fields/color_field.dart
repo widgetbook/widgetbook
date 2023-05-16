@@ -8,7 +8,7 @@ class ColorField extends Field<Color> {
   ColorField({
     required super.group,
     required super.name,
-    super.initialValue = Colors.white,
+    super.initialValue = defaultColor,
     required super.onChanged,
   }) : super(
           type: FieldType.color,
@@ -23,13 +23,15 @@ class ColorField extends Field<Color> {
           ),
         );
 
+  static const defaultColor = Colors.white;
+
   @override
   Widget toWidget(BuildContext context, Color? value) {
     return TextFormField(
-      initialValue: codec.toParam(value ?? initialValue),
+      initialValue: codec.toParam(value ?? initialValue ?? defaultColor),
       onChanged: (value) => updateField(
         context,
-        codec.toValue(value) ?? initialValue,
+        codec.toValue(value) ?? initialValue ?? defaultColor,
       ),
     );
   }
@@ -37,7 +39,7 @@ class ColorField extends Field<Color> {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'value': codec.toParam(initialValue),
+      'value': initialValue == null ? null : codec.toParam(initialValue!),
     };
   }
 }

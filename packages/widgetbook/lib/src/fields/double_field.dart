@@ -28,10 +28,10 @@ class DoubleField extends Field<double> {
   @override
   Widget toWidget(BuildContext context, double? value) {
     return Slider(
-      value: value ?? initialValue,
+      value: value ?? initialValue ?? 0,
       min: min,
       max: max,
-      label: (value ?? initialValue).toStringAsFixed(2),
+      label: (value ?? initialValue ?? 0).toStringAsFixed(2),
       divisions: divisions,
       onChanged: (value) => updateField(context, value),
     );

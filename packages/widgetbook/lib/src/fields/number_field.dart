@@ -21,11 +21,11 @@ class NumberField extends Field<num> {
   @override
   Widget toWidget(BuildContext context, num? value) {
     return TextFormField(
-      initialValue: codec.toParam(value ?? initialValue),
+      initialValue: codec.toParam(value ?? initialValue ?? 0),
       keyboardType: TextInputType.number,
       onChanged: (value) => updateField(
         context,
-        codec.toValue(value) ?? initialValue,
+        codec.toValue(value) ?? initialValue ?? 0,
       ),
     );
   }

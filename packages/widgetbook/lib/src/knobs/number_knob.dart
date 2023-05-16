@@ -40,7 +40,7 @@ class NullableNumberKnob extends Knob<num?> {
       NumberField(
         group: 'knobs',
         name: label,
-        initialValue: value ?? 0,
+        initialValue: value,
         onChanged: (context, num? value) {
           if (value == null) return;
           context.read<KnobsNotifier>().update(label, value);
