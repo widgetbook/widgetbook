@@ -1,8 +1,6 @@
 include: package:lints/recommended.yaml
 
 analyzer:
-  strong-mode:
-    implicit-casts: false
 
 linter:
   rules:
@@ -19,8 +17,6 @@ linter:
     - avoid_js_rounded_ints
     - avoid_private_typedef_functions
     - avoid_redundant_argument_values
-    - avoid_returning_null
-    - avoid_returning_null_for_future
     - avoid_returning_this
     - avoid_setters_without_getters
     - avoid_slow_async_io

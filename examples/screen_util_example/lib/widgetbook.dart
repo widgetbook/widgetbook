@@ -61,7 +61,6 @@ class WidgetbookApp extends StatelessWidget {
           useInheritedMediaQuery: true,
           builder: (context, child) {
             return MaterialApp(
-              useInheritedMediaQuery: true,
               debugShowCheckedModeBanner: false,
               home: child,
             );

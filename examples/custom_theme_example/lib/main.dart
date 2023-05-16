@@ -13,13 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppTheme(
-        data: themeDataBlue,
-        child: MediaQuery.fromWindow(
-          child: const Directionality(
-            textDirection: TextDirection.ltr,
-            child: MyHomePage(),
-          ),
-        ));
+      data: themeDataBlue,
+      child: MyHomePage(),
+    );
   }
 }
 

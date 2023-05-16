@@ -30,7 +30,7 @@ class OptionKnob<T> extends StatelessWidget {
       name: name,
       value: value,
       description: description,
-      child: DropdownSetting(
+      child: DropdownSetting<T>(
         options: values,
         initialSelection: value,
         optionValueBuilder: labelBuilder,
