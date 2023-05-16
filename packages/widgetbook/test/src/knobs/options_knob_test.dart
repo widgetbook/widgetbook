@@ -3,8 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/knobs/knobs_notifier.dart';
 import 'package:widgetbook/src/knobs/options_knob.dart';
 
-import '../../helper/widget_test_helper.dart';
-import 'knobs_test.dart';
+import 'knob_helper.dart';
 
 void main() {
   testWidgets(
@@ -43,27 +42,25 @@ void main() {
   testWidgets(
     'Options knob functions',
     (WidgetTester tester) async {
-      await tester.pumpWidgetWithMaterialApp(
-        renderWithKnobs(
-          build: (context) => [
-            Text(
-              context.knobs.options<String>(
-                label: 'label',
-                options: [
-                  'A',
-                  'B',
-                ],
-              ),
-            )
-          ],
+      await tester.pumpWithKnob(
+        (context) => Text(
+          context.knobs.options<String>(
+            label: 'label',
+            options: [
+              'A',
+              'B',
+            ],
+          ),
         ),
       );
+
       expect(
         find.byWidgetPredicate(
           (widget) => widget is Text && widget.data == 'A',
         ),
         findsNWidgets(2),
       );
+
       await tester.pumpAndSettle();
       await tester.tap(find.byType(DropdownMenu<String>));
       await tester.pumpAndSettle();

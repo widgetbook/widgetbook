@@ -3,8 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/knobs/bool_knob.dart';
 import 'package:widgetbook/src/knobs/knobs_notifier.dart';
 
-import '../../helper/widget_test_helper.dart';
-import 'knobs_test.dart';
+import 'knob_helper.dart';
 
 void main() {
   testWidgets(
@@ -20,24 +19,22 @@ void main() {
   testWidgets(
     'Bool knob functions',
     (WidgetTester tester) async {
-      await tester.pumpWidgetWithMaterialApp(
-        renderWithKnobs(
-          build: (context) => [
-            Text(
-              context.knobs.boolean(
-                label: 'label',
-                initialValue: true,
-              )
-                  ? 'Hi'
-                  : 'Bye',
-            )
-          ],
+      await tester.pumpWithKnob(
+        (context) => Text(
+          context.knobs.boolean(
+            label: 'label',
+            initialValue: true,
+          )
+              ? 'Hi'
+              : 'Bye',
         ),
       );
+
       expect(find.text('Hi'), findsOneWidget);
       await tester.pumpAndSettle();
       await tester.tap(find.byType(Switch).first);
       await tester.pumpAndSettle();
+
       expect(find.text('Bye'), findsOneWidget);
     },
   );
