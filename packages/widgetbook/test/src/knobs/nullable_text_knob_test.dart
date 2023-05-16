@@ -6,9 +6,6 @@ import 'package:widgetbook/widgetbook.dart';
 import 'knob_helper.dart';
 
 void main() {
-  const value1 = 'Value 1';
-  const value2 = 'Value 2';
-
   testWidgets(
     'Equality operator works correctly',
     (WidgetTester tester) async {
@@ -36,64 +33,76 @@ void main() {
   testWidgets(
     'Nullable String knob functions',
     (WidgetTester tester) async {
+      final text = 'widgetbook';
+      final key = ValueKey(text);
+
       await tester.pumpWithKnob(
         (context) {
           final value = context.knobs.nullableText(
             label: 'label',
           );
 
-          return Text(value ?? value2);
+          return value == null
+              ? SizedBox.shrink()
+              : Text(
+                  key: key,
+                  value,
+                );
         },
       );
 
-      expect(find.text(value2), findsOneWidget);
-
-      await tester.tap(find.byType(Switch));
       await tester.pumpAndSettle();
       await tester.enterText(
         find.byType(TextField),
-        value1,
+        text,
       );
 
       await tester.pumpAndSettle();
-      expect(find.text(value1), findsWidgets);
-      expect(find.text(value2), findsNothing);
+      expect(find.byKey(key), findsWidgets);
+
+      await tester.tap(find.byType(Checkbox));
+      await tester.pumpAndSettle();
+      expect(find.byKey(key), findsNothing);
     },
   );
 
   testWidgets(
-    'Nullable String remembers previosu value',
+    'Nullable String remembers previous value',
     (WidgetTester tester) async {
+      final text = 'widgetbook';
+      final key = ValueKey(text);
+
       await tester.pumpWithKnob(
         (context) {
           final value = context.knobs.nullableText(
             label: 'label',
           );
 
-          final text = value ?? value2;
-
-          return Text(text);
+          return value == null
+              ? SizedBox.shrink()
+              : Text(
+                  key: key,
+                  value,
+                );
         },
       );
 
-      expect(find.text(value2), findsOneWidget);
-
-      await tester.tap(find.byType(Switch));
       await tester.pumpAndSettle();
       await tester.enterText(
         find.byType(TextField),
-        value1,
+        text,
       );
-      await tester.pumpAndSettle();
-      expect(find.text(value1), findsWidgets);
-      expect(find.text(value2), findsNothing);
 
-      await tester.tap(find.byType(Switch));
       await tester.pumpAndSettle();
+      expect(find.byKey(key), findsWidgets);
 
-      await tester.tap(find.byType(Switch));
+      await tester.tap(find.byType(Checkbox));
       await tester.pumpAndSettle();
-      expect(find.text(value1), findsWidgets);
+      expect(find.byKey(key), findsNothing);
+
+      await tester.tap(find.byType(Checkbox));
+      await tester.pumpAndSettle();
+      expect(find.byKey(key), findsWidgets);
     },
   );
 }
