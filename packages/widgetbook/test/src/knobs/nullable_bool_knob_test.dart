@@ -23,7 +23,6 @@ void main() {
         (context) {
           final value = context.knobs.nullableBoolean(
             label: 'label',
-            initialValue: null,
           );
           String text;
 
@@ -45,22 +44,17 @@ void main() {
         },
       );
 
-      expect(find.text('idk'), findsOneWidget);
-
-      await tester.tap(find.byType(Switch).first);
+      await tester.tap(find.byType(Checkbox));
       await tester.pumpAndSettle();
       expect(find.text('bye'), findsOneWidget);
 
-      await tester.tap(find.byType(Switch).last);
+      await tester.tap(find.byType(Switch));
       await tester.pumpAndSettle();
       expect(find.text('hi'), findsOneWidget);
 
-      await tester.tap(find.byType(Switch).first);
+      await tester.tap(find.byType(Checkbox));
       await tester.pumpAndSettle();
       expect(find.text('idk'), findsOneWidget);
-
-      expect(find.text('idk'), findsOneWidget);
-      await tester.pumpAndSettle();
     },
   );
 
@@ -71,7 +65,6 @@ void main() {
         (context) {
           final value = context.knobs.nullableBoolean(
             label: 'label',
-            initialValue: null,
           );
           String text;
 
@@ -93,21 +86,19 @@ void main() {
         },
       );
 
-      expect(find.text('idk'), findsOneWidget);
-
-      await tester.tap(find.byType(Switch).first);
+      await tester.tap(find.byType(Checkbox));
       await tester.pumpAndSettle();
       expect(find.text('bye'), findsOneWidget);
 
-      await tester.tap(find.byType(Switch).last);
+      await tester.tap(find.byType(Switch));
       await tester.pumpAndSettle();
       expect(find.text('hi'), findsOneWidget);
 
-      await tester.tap(find.byType(Switch).first);
+      await tester.tap(find.byType(Checkbox));
       await tester.pumpAndSettle();
       expect(find.text('idk'), findsOneWidget);
 
-      await tester.tap(find.byType(Switch).first);
+      await tester.tap(find.byType(Checkbox));
       await tester.pumpAndSettle();
       expect(find.text('hi'), findsOneWidget);
     },
