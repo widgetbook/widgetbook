@@ -1,4 +1,4 @@
-import 'package:widgetbook_git/widgetbook_git.dart';
+import 'git_dir.dart';
 
 class GitWrapper {
   Future<bool> isGitDir(String path) {

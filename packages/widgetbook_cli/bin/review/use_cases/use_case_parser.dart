@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:file/file.dart';
 import 'package:file/local.dart';
-import 'package:widgetbook_git/widgetbook_git.dart';
 
-import '../../helpers/modification.dart';
+import '../../git/file_diff.dart';
+import '../../git/git_dir.dart';
 import '../../parsers/generator_parser.dart';
 import 'models/changed_use_case.dart';
 import 'models/use_case_data.dart';

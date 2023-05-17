@@ -26,8 +26,9 @@ import 'package:file/local.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
-import 'package:widgetbook_git/widgetbook_git.dart';
 
+import '../git/branch_reference.dart';
+import '../git/git_dir.dart';
 import './command.dart';
 import '../api/widgetbook_http_client.dart';
 import '../ci_parser/ci_parser.dart';

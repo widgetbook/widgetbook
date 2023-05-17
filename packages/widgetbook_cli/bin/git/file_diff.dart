@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 
 import 'hunk.dart';
+import 'modification.dart';
 
 class FileDiff {
   final String? basePath;
@@ -17,6 +18,18 @@ class FileDiff {
   bool get isRemoved => basePath != null && refPath == null;
   bool get isRenamed =>
       basePath != refPath && basePath != null && refPath != null;
+
+  Modification get modification {
+    if (isRemoved) {
+      return Modification.removed;
+    }
+
+    if (isNew) {
+      return Modification.added;
+    }
+
+    return Modification.changed;
+  }
 
   @override
   bool operator ==(Object other) =>

@@ -5,11 +5,12 @@ import 'package:file/memory.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
-import 'package:widgetbook_git/widgetbook_git.dart';
 
 import '../../bin/api/widgetbook_http_client.dart';
 import '../../bin/ci_parser/ci_parser.dart';
 import '../../bin/commands/commands.dart';
+import '../../bin/git/branch_reference.dart';
+import '../../bin/git/git_dir.dart';
 import '../../bin/git/git_wrapper.dart';
 import '../../bin/helpers/helpers.dart';
 import '../../bin/models/models.dart';
