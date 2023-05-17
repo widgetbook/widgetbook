@@ -18,34 +18,37 @@ class WidgetbookApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook.material(
       directories: directories,
-      addons: configureMaterialAddons(
-        themes: [
-          WidgetbookTheme(
-            name: 'Dark',
-            data: Themes.dark,
-          ),
-          WidgetbookTheme(
-            name: 'Dark',
-            data: Themes.dark,
-          ),
-        ],
-        textScales: [
-          1.0,
-          2.0,
-        ],
-        locales: [
-          Locale('en', 'US'),
-        ],
-        localizationsDelegates: [
-          DefaultWidgetsLocalizations.delegate,
-          DefaultMaterialLocalizations.delegate,
-        ],
-        devices: [
-          Devices.ios.iPhoneSE,
-          Devices.ios.iPhone12,
-          Devices.ios.iPhone13,
-        ],
-      ),
+      addons: [
+        MaterialThemeAddon(
+          themes: [
+            WidgetbookTheme(
+              name: 'Light',
+              data: Themes.light,
+            ),
+            WidgetbookTheme(
+              name: 'Dark',
+              data: Themes.dark,
+            ),
+          ],
+        ),
+        TextScaleAddon(
+          scales: [1.0, 2.0],
+        ),
+        LocalizationAddon(
+          locales: [Locale('en', 'US')],
+          localizationsDelegates: [
+            DefaultWidgetsLocalizations.delegate,
+            DefaultMaterialLocalizations.delegate,
+          ],
+        ),
+        DeviceAddon(
+          devices: [
+            Devices.ios.iPhoneSE,
+            Devices.ios.iPhone12,
+            Devices.ios.iPhone13,
+          ],
+        ),
+      ],
 
       /// Customize your appBuilder function so the [ScreenUtilInit] widget is
       /// injected into the [Widget] tree.
