@@ -4,9 +4,13 @@ import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
-import 'package:widgetbook_git/src/bot.dart';
-import 'package:widgetbook_git/src/hunk.dart';
-import 'package:widgetbook_git/widgetbook_git.dart';
+
+import '../../bin/git/bot.dart';
+import '../../bin/git/commit.dart';
+import '../../bin/git/file_diff.dart';
+import '../../bin/git/git_dir.dart';
+import '../../bin/git/git_error.dart';
+import '../../bin/git/hunk.dart';
 
 void main() {
   group('diff', () {

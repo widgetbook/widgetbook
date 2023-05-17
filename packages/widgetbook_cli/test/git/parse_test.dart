@@ -1,6 +1,9 @@
 import 'package:test/test.dart';
-import 'package:widgetbook_git/src/util.dart';
-import 'package:widgetbook_git/widgetbook_git.dart';
+
+import '../../bin/git/commit_reference.dart';
+import '../../bin/git/top_level.dart';
+import '../../bin/git/tree_entry.dart';
+import '../../bin/git/util.dart';
 
 void main() {
   test('valid sha', () {

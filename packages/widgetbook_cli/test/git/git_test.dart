@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:test/test.dart';
-import 'package:widgetbook_git/widgetbook_git.dart';
+
+import '../../bin/git/top_level.dart';
 
 void main() {
   test('bad git command', () async {

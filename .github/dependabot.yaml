@@ -31,11 +31,6 @@ updates:
       interval: "daily"
     versioning-strategy: increase
   - package-ecosystem: "pub"
-    directory: "/packages/widgetbook_git"
-    schedule:
-      interval: "daily"
-    versioning-strategy: increase
-  - package-ecosystem: "pub"
     directory: "/examples/screen_util_example"
     schedule:
       interval: "daily"

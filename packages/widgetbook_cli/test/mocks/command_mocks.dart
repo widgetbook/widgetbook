@@ -5,8 +5,8 @@ import 'package:file/local.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:pub_updater/pub_updater.dart';
-import 'package:widgetbook_git/widgetbook_git.dart';
 
+import '../../bin/git/git_dir.dart';
 import '../../bin/api/widgetbook_http_client.dart';
 import '../../bin/ci_parser/ci_parser.dart';
 import '../../bin/git/git_wrapper.dart';

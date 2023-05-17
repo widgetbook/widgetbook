@@ -1,5 +1,4 @@
-import 'package:widgetbook_git/widgetbook_git.dart';
-
+import '../../bin/git/branch_reference.dart';
 import '../../bin/models/models.dart';
 import '../../bin/models/publish_args.dart';
 
