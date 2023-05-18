@@ -1,6 +1,7 @@
 name: custom_theme_example
 description: An example of how to use a custom theme.
 publish_to: none
+version: 1.0.0+1
 
 environment:
   sdk: ">=2.18.2 <3.0.0"
