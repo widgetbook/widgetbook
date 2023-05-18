@@ -4,15 +4,15 @@ import 'hunk.dart';
 import 'modification.dart';
 
 class FileDiff {
-  final String? basePath;
-  final String? refPath;
-  final List<Hunk> hunks;
-
   FileDiff({
     required this.hunks,
     this.basePath,
     this.refPath,
   });
+
+  final String? basePath;
+  final String? refPath;
+  final List<Hunk> hunks;
 
   bool get isNew => basePath == null && refPath != null;
   bool get isRemoved => basePath != null && refPath == null;

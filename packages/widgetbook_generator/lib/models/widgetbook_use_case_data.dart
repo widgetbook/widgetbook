@@ -17,6 +17,22 @@ class WidgetbookUseCaseData extends WidgetbookData {
           dependencies: dependencies,
         );
 
+  factory WidgetbookUseCaseData.fromJson(Map<String, dynamic> json) {
+    return WidgetbookUseCaseData(
+      name: json['name'] as String,
+      importStatement: json['importStatement'] as String,
+      dependencies: (json['dependencies'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      useCaseName: json['useCaseName'] as String,
+      componentName: json['componentName'] as String,
+      componentImportStatement: json['componentImportStatement'] as String,
+      componentDefinitionPath: json['componentDefinitionPath'] as String,
+      useCaseDefinitionPath: json['useCaseDefinitionPath'] as String,
+      designLink: json['designLink'] as String?,
+    );
+  }
+
   /// Name of the use-case, e.g. 'Default'
   final String useCaseName;
 
@@ -35,22 +51,6 @@ class WidgetbookUseCaseData extends WidgetbookData {
 
   /// The link to a design file or design component
   final String? designLink;
-
-  factory WidgetbookUseCaseData.fromJson(Map<String, dynamic> json) {
-    return WidgetbookUseCaseData(
-      name: json['name'] as String,
-      importStatement: json['importStatement'] as String,
-      dependencies: (json['dependencies'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
-      useCaseName: json['useCaseName'] as String,
-      componentName: json['componentName'] as String,
-      componentImportStatement: json['componentImportStatement'] as String,
-      componentDefinitionPath: json['componentDefinitionPath'] as String,
-      useCaseDefinitionPath: json['useCaseDefinitionPath'] as String,
-      designLink: json['designLink'] as String?,
-    );
-  }
 
   @override
   Map<String, dynamic> toJson() {

@@ -35,7 +35,9 @@ class WidgetbookApp extends StatelessWidget {
           scales: [1.0, 2.0],
         ),
         LocalizationAddon(
-          locales: [Locale('en', 'US')],
+          locales: [
+            const Locale('en', 'US'),
+          ],
           localizationsDelegates: [
             DefaultWidgetsLocalizations.delegate,
             DefaultMaterialLocalizations.delegate,

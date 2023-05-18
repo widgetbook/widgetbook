@@ -73,7 +73,7 @@ GoRouter createRouter({
           GoRoute(
             name: '/',
             path: '/',
-            builder: (_, __) => Workbench(),
+            builder: (_, __) => const Workbench(),
           ),
         ],
       )

@@ -4,6 +4,12 @@ const _localBranchPrefix = r'refs/heads/';
 const _remoteBranchPrefix = r'refs/remotes/';
 
 class BranchReference extends CommitReference {
+  factory BranchReference(String sha, String reference) =>
+      BranchReference._internal(sha, reference);
+
+  BranchReference._internal(String sha, String reference)
+      : super(sha, reference);
+
   /// The name of the associated branch.
   ///
   /// When in the detached head state, the value may be "HEAD". In this case
@@ -18,12 +24,6 @@ class BranchReference extends CommitReference {
 
     return reference;
   }
-
-  factory BranchReference(String sha, String reference) =>
-      BranchReference._internal(sha, reference);
-
-  BranchReference._internal(String sha, String reference)
-      : super(sha, reference);
 
   /// Returns `true` if the current checked out commit is in a detached head
   /// state.

@@ -11,3 +11,9 @@ analyzer:
 linter:
   rules:
     public_member_api_docs: false
+
+    # Constructors
+    sort_unnamed_constructors_first: true
+    sort_constructors_first: true
+    prefer_const_constructors: true
+    use_key_in_widget_constructors: true

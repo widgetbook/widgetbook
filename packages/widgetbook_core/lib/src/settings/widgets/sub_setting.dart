@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class SubSetting extends StatelessWidget {
   const SubSetting({
+    super.key,
     required this.name,
     required this.child,
-    super.key,
   });
 
   final String name;

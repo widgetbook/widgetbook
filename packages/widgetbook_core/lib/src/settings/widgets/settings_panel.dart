@@ -3,8 +3,8 @@ import 'package:widgetbook_core/src/settings/models/settings_panel_data.dart';
 
 class SettingsPanel extends StatelessWidget {
   const SettingsPanel({
-    required this.settings,
     super.key,
+    required this.settings,
   });
 
   final List<SettingsPanelData> settings;

@@ -2,17 +2,17 @@ import 'bot.dart';
 import 'util.dart';
 
 class Tag {
-  final String objectSha;
-  final String type;
-  final String tag;
-  final String tagger;
-
   Tag._internal(this.objectSha, this.type, this.tag, this.tagger) {
     requireArgumentValidSha1(objectSha, 'objectSha');
     requireArgumentNotNullOrEmpty(type, 'type');
     requireArgumentNotNullOrEmpty(tag, 'tag');
     requireArgumentNotNullOrEmpty(tagger, 'tagger');
   }
+
+  final String objectSha;
+  final String type;
+  final String tag;
+  final String tagger;
 
   static Tag parseCatFile(String content) {
     final headers = <String, List<String>>{};

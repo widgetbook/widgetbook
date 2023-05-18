@@ -38,16 +38,16 @@ void metaRequireArgumentNotNullOrEmpty(String argName) {
 }
 
 class _InvalidOperationError implements Exception {
-  final String message;
-
   const _InvalidOperationError([this.message = '']);
+
+  final String message;
 }
 
 class Tuple<T1, T2> {
+  const Tuple(this.item1, this.item2);
+
   final T1 item1;
   final T2 item2;
-
-  const Tuple(this.item1, this.item2);
 
   @override
   bool operator ==(Object other) =>
@@ -63,13 +63,13 @@ class Tuple<T1, T2> {
 }
 
 class StringLineReader {
-  final String source;
-
-  int? _position = 0;
-
   StringLineReader(this.source) {
     ArgumentError.checkNotNull(source, 'source');
   }
+
+  final String source;
+
+  int? _position = 0;
 
   int? get position => _position;
 

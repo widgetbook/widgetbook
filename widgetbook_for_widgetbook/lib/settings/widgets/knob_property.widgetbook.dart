@@ -20,6 +20,6 @@ Widget knobPropertyUseCase(BuildContext context) {
     isNullable: context.knobs.boolean(
       label: 'Is Nullable',
     ),
-    child: Placeholder(),
+    child: const Placeholder(),
   );
 }

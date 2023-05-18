@@ -30,7 +30,7 @@ class HotReload extends StatelessWidget {
         platform: TargetPlatform.iOS,
         id: 'Test',
         name: 'Test',
-        screenSize: Size(400, 800),
+        screenSize: const Size(400, 800),
         pixelRatio: 1,
       ),
     ];

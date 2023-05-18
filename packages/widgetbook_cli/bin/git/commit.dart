@@ -4,13 +4,6 @@ import 'bot.dart';
 import 'util.dart';
 
 class Commit {
-  final String treeSha;
-  final String author;
-  final String committer;
-  final String message;
-  final String content;
-  final List<String> parents;
-
   Commit._(this.treeSha, this.author, this.committer, this.message,
       this.content, List<String> parents)
       : parents = UnmodifiableListView<String>(parents) {
@@ -22,6 +15,13 @@ class Commit {
     // null checks on many things
     // unique checks on parents
   }
+
+  final String treeSha;
+  final String author;
+  final String committer;
+  final String message;
+  final String content;
+  final List<String> parents;
 
   static Commit parse(String content) {
     final stringLineReader = StringLineReader(content);

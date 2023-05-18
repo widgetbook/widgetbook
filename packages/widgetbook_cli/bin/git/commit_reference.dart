@@ -5,14 +5,14 @@ import 'util.dart';
 
 /// Represents the output from `git show-ref`
 class CommitReference {
+  CommitReference(this.sha, this.reference) {
+    requireArgumentValidSha1(sha, 'sha');
+  }
+
   static final RegExp _lsRemoteRegExp = RegExp('^($shaRegexPattern) (.+)\$');
 
   final String sha;
   final String reference;
-
-  CommitReference(this.sha, this.reference) {
-    requireArgumentValidSha1(sha, 'sha');
-  }
 
   static List<CommitReference> fromShowRefOutput(String input) {
     final lines = const LineSplitter().convert(input);

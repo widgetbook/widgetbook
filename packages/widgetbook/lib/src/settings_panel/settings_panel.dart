@@ -5,6 +5,8 @@ import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
 class SettingsPanel extends StatelessWidget {
+  const SettingsPanel({super.key});
+
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);

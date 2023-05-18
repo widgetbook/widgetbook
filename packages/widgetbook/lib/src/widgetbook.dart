@@ -30,9 +30,9 @@ import 'state/state.dart';
 /// render custom themes.
 class Widgetbook<CustomTheme> extends StatefulWidget {
   const Widgetbook({
+    super.key,
     required this.appBuilder,
     required this.addons,
-    super.key,
     this.directories = const <MultiChildNavigationNodeData>[],
   });
 

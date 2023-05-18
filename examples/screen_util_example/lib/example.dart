@@ -12,9 +12,7 @@ Widget exampleBuilder(BuildContext context) {
 
 /// An example [Widget] that uses [ScreenUtil].
 class ScreenUtilExample extends StatelessWidget {
-  const ScreenUtilExample({
-    super.key,
-  });
+  const ScreenUtilExample({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -6,8 +6,8 @@ import 'state/state.dart';
 
 class WidgetbookShell extends StatelessWidget {
   const WidgetbookShell({
-    required this.child,
     super.key,
+    required this.child,
   });
 
   final Widget child;
@@ -35,14 +35,14 @@ class WidgetbookShell extends StatelessWidget {
           },
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 vertical: 2,
               ),
               child: child,
             ),
           ),
           if (enableSettings) ...{
-            SizedBox(
+            const SizedBox(
               width: 400,
               child: SettingsPanel(),
             ),

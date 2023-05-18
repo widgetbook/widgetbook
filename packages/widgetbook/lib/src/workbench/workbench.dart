@@ -6,6 +6,8 @@ import 'renderer.dart';
 import 'safe_boundaries.dart';
 
 class Workbench extends StatelessWidget {
+  const Workbench({super.key});
+
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);

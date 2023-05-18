@@ -18,16 +18,16 @@ import 'tree_entry.dart';
 import 'util.dart';
 
 class GitDir {
+  GitDir._raw(this._path, [this._gitWorkTree])
+      : assert(p.isAbsolute(_path)),
+        assert(_gitWorkTree == null || p.isAbsolute(_gitWorkTree));
+
   static const _workTreeArg = '--work-tree=';
   static const _gitDirArg = '--git-dir=';
   static final RegExp _shaRegExp = RegExp(r'^[a-f0-9]{40}$');
 
   final String _path;
   final String? _gitWorkTree;
-
-  GitDir._raw(this._path, [this._gitWorkTree])
-      : assert(p.isAbsolute(_path)),
-        assert(_gitWorkTree == null || p.isAbsolute(_gitWorkTree));
 
   String get path => _path;
 

@@ -6,9 +6,9 @@ String defaultOptionValueBuilder<T>(T value) {
 
 class DropdownSetting<T> extends StatelessWidget {
   DropdownSetting({
+    super.key,
     required this.options,
     required this.onSelected,
-    super.key,
     T? initialSelection,
     String Function(T)? optionValueBuilder,
   })  : initialSelection = initialSelection ?? options.first,

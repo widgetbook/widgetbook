@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AppThemeData {
-  final Color color;
-
   AppThemeData({
     required this.color,
   });
+
+  final Color color;
 }
 
 class AppTheme extends InheritedWidget {
