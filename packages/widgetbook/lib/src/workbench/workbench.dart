@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/constants/radii.dart';
 
+import '../constants/radii.dart';
 import '../state/state.dart';
 import 'renderer.dart';
 import 'safe_boundaries.dart';

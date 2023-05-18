@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 
-import 'package:widgetbook_generator/code_generators/instances/base_instance.dart';
+import 'base_instance.dart';
 
 /// An instance that allows to define multiple types of [BaseInstance]s as a
 /// List.

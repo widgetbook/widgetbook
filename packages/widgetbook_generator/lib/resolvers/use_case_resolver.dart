@@ -2,9 +2,10 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
-import 'package:widgetbook_generator/extensions/element_extensions.dart';
-import 'package:widgetbook_generator/json_formatter.dart';
-import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
+
+import '../extensions/element_extensions.dart';
+import '../json_formatter.dart';
+import '../models/widgetbook_use_case_data.dart';
 
 class UseCaseResolver extends GeneratorForAnnotation<UseCase> {
   @override

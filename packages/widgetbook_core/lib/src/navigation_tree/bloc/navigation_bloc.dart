@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
+
+import '../navigation_tree.dart';
 
 part 'navigation_bloc.freezed.dart';
 part 'navigation_event.dart';

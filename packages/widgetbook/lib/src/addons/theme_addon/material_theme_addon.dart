@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/widgetbook.dart';
+
+import '../../theming/widgetbook_theme.dart';
+import 'theme_addon.dart';
 
 class MaterialThemeAddon extends ThemeAddon<ThemeData> {
   MaterialThemeAddon({

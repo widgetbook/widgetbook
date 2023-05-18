@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:knobs_example/main.dart';
 import 'package:widgetbook/widgetbook.dart';
+
+import 'main.dart';
 
 void main() {
   runApp(const KnobsExample());

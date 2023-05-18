@@ -1,7 +1,9 @@
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
-import 'package:widgetbook/widgetbook.dart';
 
 import '../../fields/fields.dart';
+import '../common/common.dart';
+import 'device_setting.dart';
 
 class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
   DeviceAddon({

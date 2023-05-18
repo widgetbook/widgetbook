@@ -2,9 +2,9 @@ import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:mason_logger/mason_logger.dart';
 
-import './command.dart';
 import '../helpers/helpers.dart';
 import '../models/models.dart';
+import 'command.dart';
 
 typedef PackageList = List<Package>;
 

@@ -24,9 +24,9 @@
 import 'package:mason_logger/mason_logger.dart';
 import 'package:pub_updater/pub_updater.dart';
 
-import './command.dart';
 import '../app/widgetbook_command_runner.dart';
 import '../helpers/version.dart';
+import 'command.dart';
 
 class UpgradeCommand extends WidgetbookCommand {
   UpgradeCommand({

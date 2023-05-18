@@ -1,4 +1,4 @@
-import 'package:widgetbook_core/widgetbook_core.dart';
+import 'navigation_node_data_interface.dart';
 
 class LeafNavigationNodeData extends NavigationNodeDataInterface {
   const LeafNavigationNodeData({

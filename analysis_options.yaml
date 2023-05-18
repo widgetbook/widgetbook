@@ -17,3 +17,7 @@ linter:
     sort_constructors_first: true
     prefer_const_constructors: true
     use_key_in_widget_constructors: true
+
+    # Imports
+    prefer_relative_imports: true
+    directives_ordering: true

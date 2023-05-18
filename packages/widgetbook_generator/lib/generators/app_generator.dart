@@ -1,9 +1,9 @@
-import 'package:widgetbook_generator/code_generators/instances/instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widgetbook_folder_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widgetbook_widget_instance.dart';
-import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
-import 'package:widgetbook_generator/services/tree_service.dart';
+import '../code_generators/instances/instance.dart';
+import '../code_generators/instances/list_instance.dart';
+import '../code_generators/instances/widgetbook_folder_instance.dart';
+import '../code_generators/instances/widgetbook_widget_instance.dart';
+import '../models/widgetbook_use_case_data.dart';
+import '../services/tree_service.dart';
 
 /// Generates the code of the Widgetbook
 String generateWidgetbook({

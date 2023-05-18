@@ -1,1 +1,1 @@
-export './model.dart';
+export 'model.dart';

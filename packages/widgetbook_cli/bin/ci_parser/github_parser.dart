@@ -1,4 +1,4 @@
-import './ci_parser.dart';
+import 'ci_parser.dart';
 
 class GitHubParser extends CiParser {
   GitHubParser({

@@ -1,5 +1,4 @@
-import 'package:widgetbook_core/src/navigation_tree/models/navigation_node_data_interface.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
+import 'navigation_node_data_interface.dart';
 
 class MultiChildNavigationNodeData extends NavigationNodeDataInterface {
   const MultiChildNavigationNodeData({

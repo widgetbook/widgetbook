@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/settings_panel/settings_panel.dart';
 
 import 'navigation/navigation.dart';
+import 'settings_panel/settings_panel.dart';
 import 'state/state.dart';
 
 class WidgetbookShell extends StatelessWidget {

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:widgetbook/widgetbook.dart';
+
+import 'widgetbook_use_case.dart';
 
 part 'widgetbook_use_case_data.freezed.dart';
 

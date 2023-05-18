@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/widgetbook.dart';
 
 import '../../fields/fields.dart';
+import '../common/common.dart';
+import 'localization_setting.dart';
 
 class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
   LocalizationAddon({

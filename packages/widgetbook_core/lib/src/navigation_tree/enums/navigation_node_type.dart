@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
+
+import '../../icons/icons.dart';
 
 enum NavigationNodeType {
   package,

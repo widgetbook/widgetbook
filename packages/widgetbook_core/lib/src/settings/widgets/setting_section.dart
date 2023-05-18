@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
+
+import '../models/setting_section_data.dart';
 
 class SettingSection extends StatelessWidget {
   const SettingSection({

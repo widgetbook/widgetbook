@@ -1,9 +1,9 @@
 import 'package:go_router/go_router.dart';
-import 'package:widgetbook/src/widgetbook_shell.dart';
-import 'package:widgetbook/src/workbench/workbench.dart';
 
 import '../addons/addons.dart';
 import '../state/state.dart';
+import '../widgetbook_shell.dart';
+import '../workbench/workbench.dart';
 
 bool _parseBoolQueryParameter({
   required String? value,

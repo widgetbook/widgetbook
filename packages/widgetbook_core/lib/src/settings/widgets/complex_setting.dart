@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
+
+import '../settings.dart';
 
 class ComplexSetting extends StatelessWidget {
   const ComplexSetting({

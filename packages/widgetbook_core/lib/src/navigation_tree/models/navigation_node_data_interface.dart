@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
+
+import '../enums/navigation_node_type.dart';
 
 @immutable
 abstract class NavigationNodeDataInterface {

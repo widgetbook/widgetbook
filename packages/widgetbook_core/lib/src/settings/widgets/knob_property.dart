@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_core/src/settings/widgets/widgets.dart';
+
+import 'setting.dart';
 
 class KnobProperty<T> extends StatefulWidget {
   const KnobProperty({

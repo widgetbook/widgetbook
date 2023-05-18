@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
-import 'package:widgetbook/widgetbook.dart';
+
+import '../../theming/widgetbook_theme.dart';
 
 @immutable
 class ThemeSetting<T> {

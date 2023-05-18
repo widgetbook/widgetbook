@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
+
+import '../navigation_tree.dart';
 
 class NavigationTreeNode extends StatefulWidget {
   const NavigationTreeNode({

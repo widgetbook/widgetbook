@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
+
+import '../navigation_tree.dart';
 
 typedef NodeSelectedCallback = void Function(
   String path,

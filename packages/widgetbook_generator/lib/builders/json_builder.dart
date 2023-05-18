@@ -7,7 +7,8 @@ import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:widgetbook_generator/models/generated_output.dart';
+
+import '../models/generated_output.dart';
 
 /// Builder for the .json file which contains the necessary information to
 /// generate code for Widgetbook. The information is saved as a .json file
