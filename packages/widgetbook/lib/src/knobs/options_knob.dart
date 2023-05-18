@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/knobs/knobs.dart';
-import 'package:widgetbook_core/widgetbook_core.dart' as core;
+import 'package:widgetbook/src/fields/fields.dart';
+
+import 'knob.dart';
+import 'knobs_notifier.dart';
 
 class OptionsKnob<T> extends Knob<T> {
   OptionsKnob({
@@ -16,14 +17,19 @@ class OptionsKnob<T> extends Knob<T> {
   final String Function(T)? labelBuilder;
 
   @override
-  Widget build(BuildContext context) => core.OptionKnob(
+  List<Field> get fields {
+    return [
+      ListField<T>(
+        group: 'knobs',
         name: label,
-        description: description,
-        value: value,
         values: options,
+        initialValue: value,
         labelBuilder: labelBuilder,
-        onChanged: (T value) {
+        onChanged: (context, T? value) {
+          if (value == null) return;
           context.read<KnobsNotifier>().update<T>(label, value);
         },
-      );
+      ),
+    ];
+  }
 }

@@ -1,26 +1,34 @@
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/knobs/knobs.dart';
-import 'package:widgetbook_core/widgetbook_core.dart' as core;
+
+import '../fields/fields.dart';
+import 'knob.dart';
+import 'knobs_notifier.dart';
 
 class TextKnob extends Knob<String> {
   TextKnob({
     required super.label,
     required super.value,
     super.description,
-    this.maxLines = 1,
+    this.maxLines,
   });
+
   final int? maxLines;
+
   @override
-  Widget build(BuildContext context) => core.TextKnob(
+  List<Field> get fields {
+    return [
+      StringField(
+        group: 'knobs',
         name: label,
+        initialValue: value,
         maxLines: maxLines,
-        description: description,
-        value: value,
-        onChanged: (value) {
+        onChanged: (context, String? value) {
+          if (value == null) return;
           context.read<KnobsNotifier>().update(label, value);
         },
-      );
+      ),
+    ];
+  }
 }
 
 class NullableTextKnob extends Knob<String?> {
@@ -28,17 +36,24 @@ class NullableTextKnob extends Knob<String?> {
     required super.label,
     required super.value,
     super.description,
-    this.maxLines = 1,
+    this.maxLines,
   });
+
   final int? maxLines;
+
   @override
-  Widget build(BuildContext context) => core.NullableTextKnob(
+  List<Field> get fields {
+    return [
+      StringField(
+        group: 'knobs',
         name: label,
+        initialValue: value,
         maxLines: maxLines,
-        description: description,
-        value: value,
-        onChanged: (value) {
+        onChanged: (context, String? value) {
+          if (value == null) return;
           context.read<KnobsNotifier>().update(label, value);
         },
-      );
+      ),
+    ];
+  }
 }

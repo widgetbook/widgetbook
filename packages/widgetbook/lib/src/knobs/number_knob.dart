@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/knobs/knobs.dart';
-import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
-class NumberKnob extends Knob<num> {
+import '../fields/fields.dart';
+import 'knob.dart';
+import 'knobs_notifier.dart';
+
+class NumberKnob extends Knob<double> {
   NumberKnob({
     required super.label,
     required super.value,
@@ -11,17 +12,22 @@ class NumberKnob extends Knob<num> {
   });
 
   @override
-  Widget build(BuildContext context) => core.NumberKnob(
+  List<Field> get fields {
+    return [
+      DoubleInputField(
+        group: 'knobs',
         name: label,
-        description: description,
-        value: value,
-        onChanged: (value) {
+        initialValue: value,
+        onChanged: (context, num? value) {
+          if (value == null) return;
           context.read<KnobsNotifier>().update(label, value);
         },
-      );
+      ),
+    ];
+  }
 }
 
-class NullableNumberKnob extends Knob<num?> {
+class NullableNumberKnob extends Knob<double?> {
   NullableNumberKnob({
     required super.label,
     required super.value,
@@ -29,12 +35,17 @@ class NullableNumberKnob extends Knob<num?> {
   });
 
   @override
-  Widget build(BuildContext context) => core.NullableNumberKnob(
+  List<Field> get fields {
+    return [
+      DoubleInputField(
+        group: 'knobs',
         name: label,
-        description: description,
-        value: value,
-        onChanged: (value) {
+        initialValue: value,
+        onChanged: (context, num? value) {
+          if (value == null) return;
           context.read<KnobsNotifier>().update(label, value);
         },
-      );
+      ),
+    ];
+  }
 }

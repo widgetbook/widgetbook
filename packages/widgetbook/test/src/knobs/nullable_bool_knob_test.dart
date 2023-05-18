@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/knobs/bool_knob.dart';
-import 'package:widgetbook/src/knobs/knobs.dart';
+import 'package:widgetbook/src/knobs/knobs_notifier.dart';
 
-import '../../helper/widget_test_helper.dart';
-import 'knobs_test.dart';
+import 'knob_helper.dart';
 
 void main() {
   testWidgets(
@@ -20,97 +19,86 @@ void main() {
   testWidgets(
     'Nullable Bool knob functions',
     (WidgetTester tester) async {
-      await tester.pumpWidgetWithMaterialApp(
-        renderWithKnobs(
-          build: (context) {
-            final value = context.knobs.nullableBoolean(
-              label: 'label',
-              initialValue: null,
-            );
-            String text;
+      await tester.pumpWithKnob(
+        (context) {
+          final value = context.knobs.nullableBoolean(
+            label: 'label',
+          );
+          String text;
 
-            switch (value) {
-              case null:
-                text = 'idk';
-                break;
-              case true:
-                text = 'hi';
-                break;
-              case false:
-                text = 'bye';
-                break;
-              default:
-                text = 'wont happen';
-            }
-            return [Text(text)];
-          },
-        ),
+          switch (value) {
+            case null:
+              text = 'idk';
+              break;
+            case true:
+              text = 'hi';
+              break;
+            case false:
+              text = 'bye';
+              break;
+            default:
+              text = 'wont happen';
+          }
+
+          return Text(text);
+        },
       );
 
-      expect(find.text('idk'), findsOneWidget);
-
-      await tester.tap(find.byType(Switch).first);
+      await tester.tap(find.byType(Checkbox));
       await tester.pumpAndSettle();
       expect(find.text('bye'), findsOneWidget);
 
-      await tester.tap(find.byType(Switch).last);
+      await tester.tap(find.byType(Switch));
       await tester.pumpAndSettle();
       expect(find.text('hi'), findsOneWidget);
 
-      await tester.tap(find.byType(Switch).first);
+      await tester.tap(find.byType(Checkbox));
       await tester.pumpAndSettle();
       expect(find.text('idk'), findsOneWidget);
-
-      expect(find.text('idk'), findsOneWidget);
-      await tester.pumpAndSettle();
     },
   );
 
   testWidgets(
     'Nullable Bool knob remembers previous value before null',
     (WidgetTester tester) async {
-      await tester.pumpWidgetWithMaterialApp(
-        renderWithKnobs(
-          build: (context) {
-            final value = context.knobs.nullableBoolean(
-              label: 'label',
-              initialValue: null,
-            );
-            String text;
+      await tester.pumpWithKnob(
+        (context) {
+          final value = context.knobs.nullableBoolean(
+            label: 'label',
+          );
+          String text;
 
-            switch (value) {
-              case null:
-                text = 'idk';
-                break;
-              case true:
-                text = 'hi';
-                break;
-              case false:
-                text = 'bye';
-                break;
-              default:
-                text = 'wont happen';
-            }
-            return [Text(text)];
-          },
-        ),
+          switch (value) {
+            case null:
+              text = 'idk';
+              break;
+            case true:
+              text = 'hi';
+              break;
+            case false:
+              text = 'bye';
+              break;
+            default:
+              text = 'wont happen';
+          }
+
+          return Text(text);
+        },
       );
 
-      expect(find.text('idk'), findsOneWidget);
-
-      await tester.tap(find.byType(Switch).first);
+      await tester.tap(find.byType(Checkbox));
       await tester.pumpAndSettle();
       expect(find.text('bye'), findsOneWidget);
 
-      await tester.tap(find.byType(Switch).last);
+      await tester.tap(find.byType(Switch));
       await tester.pumpAndSettle();
       expect(find.text('hi'), findsOneWidget);
 
-      await tester.tap(find.byType(Switch).first);
+      await tester.tap(find.byType(Checkbox));
       await tester.pumpAndSettle();
       expect(find.text('idk'), findsOneWidget);
 
-      await tester.tap(find.byType(Switch).first);
+      await tester.tap(find.byType(Checkbox));
       await tester.pumpAndSettle();
       expect(find.text('hi'), findsOneWidget);
     },

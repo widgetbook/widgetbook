@@ -62,6 +62,11 @@ class WidgetbookState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeQueryParam(String name) {
+    queryParams.remove(name);
+    notifyListeners();
+  }
+
   void updatePath(String newPath) {
     path = newPath;
     notifyListeners();

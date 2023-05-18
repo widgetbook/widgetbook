@@ -27,20 +27,13 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
   @override
   List<Field> get fields {
     return [
-      DropdownField<DeviceInfo?>(
+      ListField<DeviceInfo?>(
         group: slugName,
         name: 'name',
         values: setting.devices,
         initialValue: setting.activeDevice,
         labelBuilder: (device) => device?.name ?? 'None',
-        codec: FieldCodec(
-          toParam: (device) => device?.name ?? 'None',
-          toValue: (param) => setting.devices.firstWhere(
-            (device) => device?.name == param,
-            orElse: () => null,
-          ),
-        ),
-        onChanged: (device) {
+        onChanged: (_, device) {
           if (device == null) return;
 
           updateSetting(
@@ -50,7 +43,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
           );
         },
       ),
-      DropdownField<Orientation>(
+      ListField<Orientation>(
         group: slugName,
         name: 'orientation',
         values: Orientation.values,
@@ -58,13 +51,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
         labelBuilder: (orientation) =>
             orientation.name.substring(0, 1).toUpperCase() +
             orientation.name.substring(1),
-        codec: FieldCodec(
-          toParam: (orientation) => orientation.name,
-          toValue: (param) => Orientation.values.byName(
-            param ?? Orientation.portrait.name,
-          ),
-        ),
-        onChanged: (orientation) {
+        onChanged: (_, orientation) {
           if (orientation == null) return;
 
           updateSetting(
@@ -74,17 +61,13 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
           );
         },
       ),
-      DropdownField<bool>(
+      ListField<bool>(
         group: slugName,
         name: 'frame',
         values: [false, true],
         initialValue: setting.hasFrame,
         labelBuilder: (hasFrame) => hasFrame ? 'Device Frame' : 'None',
-        codec: FieldCodec(
-          toParam: (hasFrame) => hasFrame.toString(),
-          toValue: (param) => param == 'true',
-        ),
-        onChanged: (hasFrame) {
+        onChanged: (_, hasFrame) {
           if (hasFrame == null) return;
 
           updateSetting(

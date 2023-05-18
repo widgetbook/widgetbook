@@ -19,7 +19,10 @@ class NavigationPanelWrapper extends StatelessWidget {
       initialPath: initialPath,
       onNodeSelected: (path, _) {
         context.read<KnobsNotifier>().clear();
-        WidgetbookState.of(context).updatePath(path);
+
+        final state = WidgetbookState.of(context);
+        state.removeQueryParam('knobs');
+        state.updatePath(path);
       },
     );
   }

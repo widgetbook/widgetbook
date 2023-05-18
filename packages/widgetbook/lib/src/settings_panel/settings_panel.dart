@@ -38,7 +38,23 @@ class SettingsPanel extends StatelessWidget {
                   if (state.panels.contains(WidgetbookPanel.knobs)) ...{
                     core.SettingsPanelData(
                       name: 'Knobs',
-                      settings: knobs.map((e) => e.build(context)).toList(),
+                      settings: knobs.map((knob) {
+                        return core.KnobProperty(
+                          name: knob.label,
+                          description: knob.description,
+                          value: knob.value,
+                          isNullable: knob.isNullable,
+                          changedNullable: (isEnabled) {
+                            final notifier = context.read<KnobsNotifier>();
+                            notifier.updateNullability(knob.label, !isEnabled);
+                          },
+                          child: Column(
+                            children: knob.fields
+                                .map((field) => field.build(context))
+                                .toList(),
+                          ),
+                        );
+                      }).toList(),
                     ),
                   },
                 ],

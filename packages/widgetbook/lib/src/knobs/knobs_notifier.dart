@@ -1,43 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/knobs/bool_knob.dart';
-import 'package:widgetbook/src/knobs/color_knob.dart';
-import 'package:widgetbook/src/knobs/knobs_builder.dart';
-import 'package:widgetbook/src/knobs/number_knob.dart';
-import 'package:widgetbook/src/knobs/options_knob.dart';
-import 'package:widgetbook/src/knobs/slider_knob.dart';
-import 'package:widgetbook/src/knobs/text_knob.dart';
 
-/// This allows stories to have dynamically adjustable parameters.
-abstract class Knob<T> {
-  Knob({
-    required this.label,
-    required this.value,
-    this.description,
-  });
-
-  /// This is the current value the knob is set to
-  T value;
-
-  /// This is a description the user can put on the knob
-  final String? description;
-
-  /// This is the label that's put above a knob
-  final String label;
-
-  @override
-  bool operator ==(Object other) {
-    return other is Knob<T> &&
-        other.value == value &&
-        other.label == label &&
-        other.description == description;
-  }
-
-  @override
-  int get hashCode => label.hashCode;
-
-  Widget build(BuildContext context);
-}
+import 'bool_knob.dart';
+import 'color_knob.dart';
+import 'knob.dart';
+import 'knobs_builder.dart';
+import 'number_knob.dart';
+import 'options_knob.dart';
+import 'slider_knob.dart';
+import 'text_knob.dart';
 
 /// Updates listeners on changes with the knobs
 class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
@@ -55,14 +26,21 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     notifyListeners();
   }
 
-  T _addKnob<T>(Knob<T> knob) {
-    return _knobs.putIfAbsent(
+  void updateNullability(String label, bool isNull) {
+    _knobs[label]!.isNull = isNull;
+    notifyListeners();
+  }
+
+  T? register<T>(Knob<T> knob) {
+    final cachedKnob = _knobs.putIfAbsent(
       knob.label,
       () {
         Future.microtask(notifyListeners);
         return knob;
       },
-    ).value;
+    );
+
+    return cachedKnob.isNull ? null : cachedKnob.value;
   }
 
   @override
@@ -70,14 +48,15 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     required String label,
     String? description,
     bool initialValue = false,
-  }) =>
-      _addKnob(
-        BoolKnob(
-          label: label,
-          description: description,
-          value: initialValue,
-        ),
-      );
+  }) {
+    return register(
+      BoolKnob(
+        label: label,
+        description: description,
+        value: initialValue,
+      ),
+    )!;
+  }
 
   @override
   Color color({
@@ -85,12 +64,12 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     required Color initialValue,
     String? description,
   }) {
-    return _addKnob(
+    return register(
       ColorKnob(
         label: label,
         value: initialValue,
       ),
-    );
+    )!;
   }
 
   @override
@@ -98,14 +77,15 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     required String label,
     String? description,
     bool? initialValue = false,
-  }) =>
-      _addKnob(
-        NullableBoolKnob(
-          label: label,
-          description: description,
-          value: initialValue,
-        ),
-      );
+  }) {
+    return register<bool?>(
+      NullableBoolKnob(
+        label: label,
+        description: description,
+        value: initialValue,
+      ),
+    );
+  }
 
   @override
   String text({
@@ -113,15 +93,16 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String? description,
     String initialValue = '',
     int? maxLines = 1,
-  }) =>
-      _addKnob(
-        TextKnob(
-          label: label,
-          value: initialValue,
-          description: description,
-          maxLines: maxLines,
-        ),
-      );
+  }) {
+    return register(
+      TextKnob(
+        label: label,
+        value: initialValue,
+        description: description,
+        maxLines: maxLines,
+      ),
+    )!;
+  }
 
   @override
   String? nullableText({
@@ -129,15 +110,16 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String? description,
     String? initialValue,
     int? maxLines = 1,
-  }) =>
-      _addKnob(
-        NullableTextKnob(
-          label: label,
-          value: initialValue,
-          description: description,
-          maxLines: maxLines,
-        ),
-      );
+  }) {
+    return register<String?>(
+      NullableTextKnob(
+        label: label,
+        value: initialValue,
+        description: description,
+        maxLines: maxLines,
+      ),
+    );
+  }
 
   @override
   double slider({
@@ -149,7 +131,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     int? divisions,
   }) {
     initialValue ??= max ?? min ?? 10;
-    return _addKnob(
+    return register(
       SliderKnob(
         label: label,
         value: initialValue,
@@ -158,7 +140,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
         max: max ?? initialValue + 10,
         divisions: divisions,
       ),
-    );
+    )!;
   }
 
   @override
@@ -171,7 +153,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     int? divisions,
   }) {
     initialValue ??= max ?? min ?? 10;
-    return _addKnob(
+    return register<double?>(
       NullableSliderKnob(
         label: label,
         value: initialValue,
@@ -188,28 +170,30 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     required String label,
     String? description,
     num initialValue = 0,
-  }) =>
-      _addKnob(
-        NumberKnob(
-          label: label,
-          value: initialValue,
-          description: description,
-        ),
-      );
+  }) {
+    return register(
+      NumberKnob(
+        label: label,
+        value: initialValue.toDouble(),
+        description: description,
+      ),
+    )!;
+  }
 
   @override
   num? nullableNumber({
     required String label,
     String? description,
     num? initialValue = 0,
-  }) =>
-      _addKnob(
-        NullableNumberKnob(
-          label: label,
-          value: initialValue,
-          description: description,
-        ),
-      );
+  }) {
+    return register<num?>(
+      NullableNumberKnob(
+        label: label,
+        value: initialValue?.toDouble(),
+        description: description,
+      ),
+    );
+  }
 
   @override
   T options<T>({
@@ -219,7 +203,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     String Function(T)? labelBuilder,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
-    return _addKnob(
+    return register(
       OptionsKnob(
         label: label,
         value: options.first,
@@ -227,7 +211,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
         options: options,
         labelBuilder: labelBuilder,
       ),
-    );
+    )!;
   }
 }
 

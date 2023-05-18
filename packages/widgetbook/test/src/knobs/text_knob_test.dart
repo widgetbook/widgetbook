@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/knobs/knobs.dart';
+import 'package:widgetbook/src/knobs/knobs_notifier.dart';
 import 'package:widgetbook/src/knobs/text_knob.dart';
 
-import '../../helper/widget_test_helper.dart';
-import 'knobs_test.dart';
+import 'knob_helper.dart';
 
 void main() {
   testWidgets(
@@ -35,18 +34,15 @@ void main() {
   testWidgets(
     'Text knob initial value works',
     (WidgetTester tester) async {
-      await tester.pumpWidgetWithMaterialApp(
-        renderWithKnobs(
-          build: (context) => [
-            Text(
-              context.knobs.text(
-                label: 'label',
-                initialValue: 'Hi dude',
-              ),
-            )
-          ],
+      await tester.pumpWithKnob(
+        (context) => Text(
+          context.knobs.text(
+            label: 'label',
+            initialValue: 'Hi dude',
+          ),
         ),
       );
+
       expect(find.text('Hi dude'), findsWidgets);
     },
   );
@@ -54,19 +50,16 @@ void main() {
   testWidgets(
     'Text knob description displays',
     (WidgetTester tester) async {
-      await tester.pumpWidgetWithMaterialApp(
-        renderWithKnobs(
-          build: (context) => [
-            Text(
-              context.knobs.text(
-                label: 'label',
-                initialValue: 'Hi dude',
-                description: 'test description',
-              ),
-            )
-          ],
+      await tester.pumpWithKnob(
+        (context) => Text(
+          context.knobs.text(
+            label: 'label',
+            initialValue: 'Hi dude',
+            description: 'test description',
+          ),
         ),
       );
+
       expect(find.text('test description'), findsOneWidget);
     },
   );
@@ -74,17 +67,14 @@ void main() {
   testWidgets(
     'Text knob functions',
     (WidgetTester tester) async {
-      await tester.pumpWidgetWithMaterialApp(
-        renderWithKnobs(
-          build: (context) => [
-            Text(
-              context.knobs.text(
-                label: 'label',
-              ),
-            )
-          ],
+      await tester.pumpWithKnob(
+        (context) => Text(
+          context.knobs.text(
+            label: 'label',
+          ),
         ),
       );
+
       await tester.enterText(find.byType(TextField), 'Bye');
       await tester.pumpAndSettle();
 

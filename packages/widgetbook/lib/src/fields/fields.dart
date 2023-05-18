@@ -1,4 +1,9 @@
-export 'dropdown_field.dart';
+export 'boolean_field.dart';
+export 'color_field.dart';
+export 'double_input_field.dart';
+export 'double_slider_field.dart';
 export 'field.dart';
 export 'field_codec.dart';
 export 'field_type.dart';
+export 'list_field.dart';
+export 'string_field.dart';

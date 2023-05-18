@@ -35,20 +35,13 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
   @override
   List<Field> get fields {
     return [
-      DropdownField<WidgetbookTheme<T>>(
+      ListField<WidgetbookTheme<T>>(
         group: slugName,
         name: 'name',
         values: setting.themes,
         initialValue: setting.activeTheme,
         labelBuilder: (theme) => theme.name,
-        codec: FieldCodec(
-          toParam: (theme) => theme.name,
-          toValue: (param) => setting.themes.firstWhere(
-            (theme) => theme.name == param,
-            orElse: () => setting.activeTheme,
-          ),
-        ),
-        onChanged: (theme) {
+        onChanged: (_, theme) {
           if (theme == null) return;
 
           updateSetting(

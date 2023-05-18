@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/knobs/knobs.dart';
 import 'package:widgetbook/src/knobs/number_knob.dart';
+import 'package:widgetbook/widgetbook.dart';
 
-import '../../helper/widget_test_helper.dart';
-import 'knobs_test.dart';
+import 'knob_helper.dart';
 
 void main() {
   testWidgets(
@@ -21,62 +20,53 @@ void main() {
   testWidgets(
     'Number knob initial value works',
     (WidgetTester tester) async {
-      await tester.pumpWidgetWithMaterialApp(
-        renderWithKnobs(
-          build: (context) => [
-            Text(
-              context.knobs
-                  .number(
-                    label: 'label',
-                    initialValue: 5,
-                  )
-                  .toString(),
-            )
-          ],
+      await tester.pumpWithKnob(
+        (context) => Text(
+          context.knobs
+              .number(
+                label: 'label',
+                initialValue: 5,
+              )
+              .toString(),
         ),
       );
-      expect(find.text('5'), findsWidgets);
+
+      expect(find.text('5.0'), findsWidgets);
     },
   );
 
   testWidgets(
     'Number knob description displays',
     (WidgetTester tester) async {
-      await tester.pumpWidgetWithMaterialApp(
-        renderWithKnobs(
-          build: (context) => [
-            Text(
-              context.knobs
-                  .number(
-                    label: 'label',
-                    initialValue: 200,
-                    description: 'test description',
-                  )
-                  .toString(),
-            )
-          ],
+      await tester.pumpWithKnob(
+        (context) => Text(
+          context.knobs
+              .number(
+                label: 'label',
+                initialValue: 200,
+                description: 'test description',
+              )
+              .toString(),
         ),
       );
-      expect(find.text('200'), findsWidgets);
+
+      expect(find.text('200.0'), findsWidgets);
     },
   );
 
   testWidgets(
     'Number knob functions',
     (WidgetTester tester) async {
-      await tester.pumpWidgetWithMaterialApp(
-        renderWithKnobs(
-          build: (context) => [
-            Text(
-              context.knobs
-                  .number(
-                    label: 'label',
-                  )
-                  .toString(),
-            )
-          ],
+      await tester.pumpWithKnob(
+        (context) => Text(
+          context.knobs
+              .number(
+                label: 'label',
+              )
+              .toString(),
         ),
       );
+
       await tester.enterText(find.byType(TextField), '5.5');
       await tester.pumpAndSettle();
 
