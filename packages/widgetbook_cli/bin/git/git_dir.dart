@@ -581,7 +581,7 @@ class GitDir {
     }
   }
 
-  String get _processWorkingDir => _path.toString();
+  String get _processWorkingDir => _path;
 
   static Future<bool> isGitDir(String path) async {
     final dir = Directory(path);
@@ -630,7 +630,7 @@ class GitDir {
 
     final pr = await runGit(
       ['rev-parse', '--git-dir'],
-      processWorkingDir: path.toString(),
+      processWorkingDir: path,
     );
 
     var returnedPath = (pr.stdout as String).trim();
