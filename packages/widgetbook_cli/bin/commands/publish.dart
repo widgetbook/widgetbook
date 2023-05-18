@@ -66,7 +66,7 @@ class PublishCommand extends WidgetbookCommand {
       ..addOption(
         'path',
         help: 'The path to the build folder of your application.',
-        defaultsTo: '',
+        defaultsTo: './',
       )
       ..addOption(
         'api-key',
