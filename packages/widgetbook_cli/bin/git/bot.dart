@@ -21,11 +21,17 @@ void requireArgumentNotNullOrEmpty(String? argument, String argName) {
 }
 
 void requireArgumentContainsPattern(
-    Pattern pattern, String argValue, String argName) {
+  Pattern pattern,
+  String argValue,
+  String argName,
+) {
   ArgumentError.checkNotNull(argValue, argName);
   if (!argValue.contains(pattern)) {
-    throw ArgumentError.value(argValue, argName,
-        'The value "$argValue" does not contain the pattern "$pattern"');
+    throw ArgumentError.value(
+      argValue,
+      argName,
+      'The value "$argValue" does not contain the pattern "$pattern"',
+    );
   }
 }
 

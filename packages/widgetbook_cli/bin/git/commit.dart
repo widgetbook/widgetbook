@@ -4,9 +4,14 @@ import 'bot.dart';
 import 'util.dart';
 
 class Commit {
-  Commit._(this.treeSha, this.author, this.committer, this.message,
-      this.content, List<String> parents)
-      : parents = UnmodifiableListView<String>(parents) {
+  Commit._(
+    this.treeSha,
+    this.author,
+    this.committer,
+    this.message,
+    this.content,
+    List<String> parents,
+  ) : parents = UnmodifiableListView<String>(parents) {
     requireArgumentValidSha1(treeSha, 'treeSha');
     for (final parent in parents) {
       requireArgumentValidSha1(parent, 'parents');
@@ -102,7 +107,9 @@ class Commit {
 
     final content = slr.source.substring(startSpot, endSpot);
 
-    return Tuple(commitSha,
-        Commit._(treeSha, author, committer, message, content, parents));
+    return Tuple(
+      commitSha,
+      Commit._(treeSha, author, committer, message, content, parents),
+    );
   }
 }
