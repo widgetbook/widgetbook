@@ -28,3 +28,6 @@ linter:
 
     # Dependencies
     sort_pub_dependencies: true
+
+    # Style
+    prefer_single_quotes: true
