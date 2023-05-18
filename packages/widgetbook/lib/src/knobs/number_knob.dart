@@ -4,7 +4,7 @@ import '../fields/fields.dart';
 import 'knob.dart';
 import 'knobs_notifier.dart';
 
-class NumberKnob extends Knob<num> {
+class NumberKnob extends Knob<double> {
   NumberKnob({
     required super.label,
     required super.value,
@@ -14,7 +14,7 @@ class NumberKnob extends Knob<num> {
   @override
   List<Field> get fields {
     return [
-      NumberField(
+      DoubleInputField(
         group: 'knobs',
         name: label,
         initialValue: value,
@@ -27,7 +27,7 @@ class NumberKnob extends Knob<num> {
   }
 }
 
-class NullableNumberKnob extends Knob<num?> {
+class NullableNumberKnob extends Knob<double?> {
   NullableNumberKnob({
     required super.label,
     required super.value,
@@ -37,7 +37,7 @@ class NullableNumberKnob extends Knob<num?> {
   @override
   List<Field> get fields {
     return [
-      NumberField(
+      DoubleInputField(
         group: 'knobs',
         name: label,
         initialValue: value,

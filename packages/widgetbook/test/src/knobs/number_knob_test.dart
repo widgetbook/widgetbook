@@ -31,7 +31,7 @@ void main() {
         ),
       );
 
-      expect(find.text('5'), findsWidgets);
+      expect(find.text('5.0'), findsWidgets);
     },
   );
 
@@ -50,7 +50,7 @@ void main() {
         ),
       );
 
-      expect(find.text('200'), findsWidgets);
+      expect(find.text('200.0'), findsWidgets);
     },
   );
 

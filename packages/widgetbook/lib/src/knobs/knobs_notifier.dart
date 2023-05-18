@@ -174,7 +174,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     return register(
       NumberKnob(
         label: label,
-        value: initialValue,
+        value: initialValue.toDouble(),
         description: description,
       ),
     )!;
@@ -189,7 +189,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
     return register<num?>(
       NullableNumberKnob(
         label: label,
-        value: initialValue,
+        value: initialValue?.toDouble(),
         description: description,
       ),
     );

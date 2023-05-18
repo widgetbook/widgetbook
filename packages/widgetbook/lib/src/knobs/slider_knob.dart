@@ -21,7 +21,7 @@ class SliderKnob extends Knob<double> {
   @override
   List<Field> get fields {
     return [
-      DoubleField(
+      DoubleSliderField(
         group: 'knobs',
         name: label,
         initialValue: value,
@@ -54,7 +54,7 @@ class NullableSliderKnob extends Knob<double?> {
   @override
   List<Field> get fields {
     return [
-      DoubleField(
+      DoubleSliderField(
         group: 'knobs',
         name: label,
         initialValue: value,

@@ -4,22 +4,22 @@ import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
 
-class NumberField extends Field<num> {
-  NumberField({
+class DoubleInputField extends Field<double> {
+  DoubleInputField({
     required super.group,
     required super.name,
     super.initialValue = 0,
     required super.onChanged,
   }) : super(
-          type: FieldType.number,
+          type: FieldType.doubleSlider,
           codec: FieldCodec(
             toParam: (value) => value.toString(),
-            toValue: (param) => num.tryParse(param ?? ''),
+            toValue: (param) => double.tryParse(param ?? ''),
           ),
         );
 
   @override
-  Widget toWidget(BuildContext context, num? value) {
+  Widget toWidget(BuildContext context, double? value) {
     return TextFormField(
       initialValue: codec.toParam(value ?? initialValue ?? 0),
       keyboardType: TextInputType.number,
