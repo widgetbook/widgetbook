@@ -1,7 +1,7 @@
 import 'package:args/args.dart';
 
 import '../git/git_dir.dart';
-import './ci_parser.dart';
+import 'ci_parser.dart';
 
 class CiParserRunner {
   CiParserRunner({

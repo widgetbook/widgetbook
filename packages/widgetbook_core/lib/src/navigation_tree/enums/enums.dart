@@ -1,1 +1,1 @@
-export './navigation_node_type.dart';
+export 'navigation_node_type.dart';

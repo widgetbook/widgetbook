@@ -1,8 +1,6 @@
 name: knobs_example
 description: A new Flutter project.
-
-publish_to: 'none' 
-
+publish_to: none
 version: 1.0.0+1
 
 environment:
@@ -11,9 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^1.0.2
-  widgetbook: 
+  widgetbook:
     path: ../../packages/widgetbook
 
 dev_dependencies:

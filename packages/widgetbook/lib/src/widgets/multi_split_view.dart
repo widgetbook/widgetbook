@@ -11,12 +11,12 @@ enum DetectorSide {
 /// controls
 class TrippleSplitView extends StatefulWidget {
   const TrippleSplitView({
+    super.key,
     required this.leftChild,
     required this.centerChild,
     required this.rightChild,
     required this.isLeftDisabled,
     required this.isRightDisabled,
-    super.key,
     this.leftMinWidth = 350,
     this.rightMinWidth = 350,
   });

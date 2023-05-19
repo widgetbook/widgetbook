@@ -40,7 +40,7 @@ class KnobsNotifier extends ChangeNotifier implements KnobsBuilder {
       },
     );
 
-    return cachedKnob.isNull ? null : cachedKnob.value;
+    return cachedKnob.isNull ? null : (cachedKnob.value as T);
   }
 
   @override

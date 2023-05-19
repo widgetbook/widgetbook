@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_core/src/settings/models/settings_panel_data.dart';
+
+import '../models/settings_panel_data.dart';
 
 class SettingsPanel extends StatelessWidget {
   const SettingsPanel({
-    required this.settings,
     super.key,
+    required this.settings,
   });
 
   final List<SettingsPanelData> settings;
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;

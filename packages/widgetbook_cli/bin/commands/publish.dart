@@ -27,12 +27,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
 
-import '../git/branch_reference.dart';
-import '../git/git_dir.dart';
-import './command.dart';
 import '../api/widgetbook_http_client.dart';
 import '../ci_parser/ci_parser.dart';
 import '../git-provider/github/github.dart';
+import '../git/branch_reference.dart';
+import '../git/git_dir.dart';
 import '../git/git_wrapper.dart';
 import '../helpers/exceptions.dart';
 import '../helpers/widgetbook_zip_encoder.dart';
@@ -42,6 +41,7 @@ import '../models/publish_args.dart';
 import '../review/use_cases/models/changed_use_case.dart';
 import '../review/use_cases/use_case_parser.dart';
 import '../std/stdin_wrapper.dart';
+import 'command.dart';
 
 class PublishCommand extends WidgetbookCommand {
   PublishCommand({

@@ -14,9 +14,9 @@ class AppThemeData {
 
 class AppTheme extends InheritedWidget {
   const AppTheme({
+    super.key,
     required this.data,
     required super.child,
-    super.key,
   });
 
   final AppThemeData data;
@@ -51,7 +51,7 @@ void main() {
           blueCustomWidgetbookTheme,
           yellowCustomWidgetbookTheme,
         ],
-        themeBuilder: (_, __, ___) => Placeholder(),
+        themeBuilder: (_, __, ___) => const Placeholder(),
       );
 
       testWidgets(

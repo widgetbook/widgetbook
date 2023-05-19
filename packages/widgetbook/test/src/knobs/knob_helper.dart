@@ -44,7 +44,9 @@ extension KnobHelper on WidgetTester {
                               changedNullable: (isEnabled) {
                                 final notifier = context.read<KnobsNotifier>();
                                 notifier.updateNullability(
-                                    knob.label, !isEnabled);
+                                  knob.label,
+                                  !isEnabled,
+                                );
                               },
                               child: Column(
                                 children: knob.fields

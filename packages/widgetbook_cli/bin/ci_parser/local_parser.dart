@@ -1,5 +1,5 @@
 import '../git/git_dir.dart';
-import './ci_parser.dart';
+import 'ci_parser.dart';
 
 class LocalParser extends CiParser {
   LocalParser({

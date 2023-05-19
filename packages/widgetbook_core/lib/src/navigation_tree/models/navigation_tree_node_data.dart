@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:widgetbook_core/src/navigation_tree/enums/navigation_node_type.dart';
+
+import '../enums/navigation_node_type.dart';
 
 part 'navigation_tree_node_data.freezed.dart';
 

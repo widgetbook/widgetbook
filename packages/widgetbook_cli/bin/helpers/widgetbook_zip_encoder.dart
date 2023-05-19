@@ -2,7 +2,7 @@ import 'package:archive/archive_io.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 
-import './exceptions.dart';
+import 'exceptions.dart';
 
 /// Encoder to create the zip file required by Widgetbook Core backend
 class WidgetbookZipEncoder {

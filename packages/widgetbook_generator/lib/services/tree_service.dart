@@ -1,7 +1,8 @@
 import 'dart:collection';
 
 import 'package:meta/meta.dart';
-import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
+
+import '../models/widgetbook_use_case_data.dart';
 
 class Widget {
   Widget(

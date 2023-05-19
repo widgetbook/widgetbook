@@ -1,5 +1,6 @@
-import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
+
+import 'widgetbook_use_case.dart';
 
 class WidgetbookComponent extends MultiChildNavigationNodeData {
   const WidgetbookComponent({

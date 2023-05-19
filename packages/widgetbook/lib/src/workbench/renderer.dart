@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/state/state.dart';
-import 'package:widgetbook/widgetbook.dart';
+
+import '../addons/addons.dart';
+import '../state/state.dart';
 
 class Renderer extends StatelessWidget {
   const Renderer({
+    super.key,
     required this.useCaseBuilder,
     required this.appBuilder,
-    super.key,
   });
 
   final Widget Function(BuildContext) useCaseBuilder;

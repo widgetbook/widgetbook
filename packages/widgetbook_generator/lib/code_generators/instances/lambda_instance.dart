@@ -1,14 +1,13 @@
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
-import 'package:widgetbook_generator/code_generators/instances/base_instance.dart';
-
-@immutable
+import 'base_instance.dart';
 
 /// Defines a lambda function instance.
 ///
 /// Example:
 /// `(context) => buildStory(context)`
+@immutable
 class LambdaInstance extends BaseInstance {
   /// Creates a new instance of [LambdaInstance]
   const LambdaInstance({

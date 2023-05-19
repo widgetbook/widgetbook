@@ -1,1 +1,1 @@
-export './navigation_panel_wrapper.dart';
+export 'navigation_panel_wrapper.dart';

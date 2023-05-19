@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_core/src/settings/widgets/widgets.dart';
+
+import 'setting_header.dart';
 
 class Setting extends StatelessWidget {
   const Setting({
+    super.key,
     required this.name,
     required this.child,
-    super.key,
     this.trailing,
   });
 

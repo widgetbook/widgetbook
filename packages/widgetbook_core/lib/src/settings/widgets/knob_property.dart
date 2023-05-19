@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_core/src/settings/widgets/widgets.dart';
+
+import 'setting.dart';
 
 class KnobProperty<T> extends StatefulWidget {
   const KnobProperty({
+    super.key,
     required this.name,
     this.description,
     required this.value,
@@ -10,7 +12,6 @@ class KnobProperty<T> extends StatefulWidget {
     this.isNullable = false,
     this.trailing,
     this.changedNullable,
-    super.key,
   });
 
   final String name;
@@ -73,7 +74,7 @@ class _KnobPropertyState<T> extends State<KnobProperty<T>> {
           children: [
             if (widget.description != null) ...{
               Text(widget.description!),
-              SizedBox(
+              const SizedBox(
                 height: 4,
               ),
             },

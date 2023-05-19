@@ -1,4 +1,4 @@
-import 'package:widgetbook_generator/models/widgetbook_data.dart';
+import '../models/widgetbook_data.dart';
 
 /// generates the imports for all the types used in widgetbook.g.dart
 ///

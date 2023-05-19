@@ -43,7 +43,7 @@ void main() {
           );
 
           return value == null
-              ? SizedBox.shrink()
+              ? const SizedBox.shrink()
               : Text(
                   key: key,
                   value,
@@ -79,7 +79,7 @@ void main() {
           );
 
           return value == null
-              ? SizedBox.shrink()
+              ? const SizedBox.shrink()
               : Text(
                   key: key,
                   value,

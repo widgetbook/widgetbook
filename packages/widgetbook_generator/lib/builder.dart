@@ -1,8 +1,9 @@
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:widgetbook_generator/builders/json_builder.dart';
-import 'package:widgetbook_generator/generators/widgetbook_generator.dart';
-import 'package:widgetbook_generator/resolvers/use_case_resolver.dart';
+
+import 'builders/json_builder.dart';
+import 'generators/widgetbook_generator.dart';
+import 'resolvers/use_case_resolver.dart';
 
 /// Builder for the WidgetbookUseCase annotation.
 /// Creates a .usecase.widgetbook.json file for each .dart file containing a

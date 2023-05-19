@@ -1,7 +1,8 @@
 import 'package:meta/meta.dart';
-import 'package:widgetbook_generator/code_generators/instances/base_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/boolean_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/string_instance.dart';
+
+import '../instances/base_instance.dart';
+import '../instances/boolean_instance.dart';
+import '../instances/string_instance.dart';
 
 /// A property which is set when a new instance is created
 @immutable

@@ -1,1 +1,1 @@
-export './widgets/search_field.dart';
+export 'widgets/search_field.dart';

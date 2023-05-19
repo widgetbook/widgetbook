@@ -116,9 +116,10 @@ void main() {
             'default route',
             (tester) async {
               final router = createRouter(
-                  addons: addons,
-                  catalog: catalog,
-                  appBuilder: materialAppBuilder);
+                addons: addons,
+                catalog: catalog,
+                appBuilder: materialAppBuilder,
+              );
 
               await pumpRouter(
                 tester: tester,

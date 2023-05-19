@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:knobs_example/main.dart';
 import 'package:widgetbook/widgetbook.dart';
+
+import 'main.dart';
 
 void main() {
   runApp(const KnobsExample());
@@ -45,11 +46,12 @@ class KnobsExample extends StatelessWidget {
                         .text(label: 'Title', initialValue: 'Title'),
                     incrementBy: context.knobs
                             .nullableSlider(
-                                label: 'Increment By',
-                                min: 0,
-                                initialValue: 5,
-                                max: 10,
-                                divisions: 10)
+                              label: 'Increment By',
+                              min: 0,
+                              initialValue: 5,
+                              max: 10,
+                              divisions: 10,
+                            )
                             ?.toInt() ??
                         0,
                     countLabel: context.knobs.nullableText(

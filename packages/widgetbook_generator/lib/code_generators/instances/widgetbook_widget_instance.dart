@@ -1,8 +1,8 @@
-import 'package:widgetbook_generator/code_generators/instances/instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widgetbook_use_case_instance.dart';
-import 'package:widgetbook_generator/code_generators/properties/property.dart';
-import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
+import '../../models/widgetbook_use_case_data.dart';
+import '../properties/property.dart';
+import 'instance.dart';
+import 'list_instance.dart';
+import 'widgetbook_use_case_instance.dart';
 
 /// An instance for WidgetElementInstance
 class WidgetbookComponentInstance extends Instance {

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/state/state.dart';
-import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
+import '../knobs/knobs_notifier.dart';
+import '../state/state.dart';
+
 class SettingsPanel extends StatelessWidget {
+  const SettingsPanel({super.key});
+
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);

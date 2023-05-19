@@ -1,11 +1,11 @@
 class DiffHeader {
-  final String? baseFile;
-  final String? refFile;
-
   DiffHeader({
     required this.baseFile,
     required this.refFile,
   });
+
+  final String? baseFile;
+  final String? refFile;
 
   bool get isNew => baseFile == null && refFile != null;
   bool get isRemoved => baseFile != null && refFile == null;

@@ -10,7 +10,10 @@ Widget testUseCase(BuildContext context) {
 }
 
 class ImagePage extends StatefulWidget {
-  const ImagePage({super.key, required this.title});
+  const ImagePage({
+    super.key,
+    required this.title,
+  });
 
   final String title;
 

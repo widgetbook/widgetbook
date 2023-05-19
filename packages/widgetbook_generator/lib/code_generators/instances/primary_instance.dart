@@ -1,4 +1,4 @@
-import 'package:widgetbook_generator/code_generators/instances/base_instance.dart';
+import 'base_instance.dart';
 
 /// An abstract representation of a instance creating a primary datatype like
 /// int, double, num, String or enums

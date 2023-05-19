@@ -5,9 +5,10 @@ import 'package:build/build.dart';
 import 'package:glob/glob.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
-import 'package:widgetbook_generator/generators/app_generator.dart';
-import 'package:widgetbook_generator/generators/imports_generator.dart';
-import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
+
+import '../models/widgetbook_use_case_data.dart';
+import 'app_generator.dart';
+import 'imports_generator.dart';
 
 /// Generates the code for Widgetbook
 ///

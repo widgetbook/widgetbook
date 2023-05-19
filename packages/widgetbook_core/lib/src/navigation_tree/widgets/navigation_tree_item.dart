@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
+
+import '../../icons/icons.dart';
+import '../models/navigation_tree_node_data.dart';
 
 class NavigationTreeItem extends StatefulWidget {
   const NavigationTreeItem({
-    required this.data,
     super.key,
+    required this.data,
     this.level = 0,
     this.onTap,
     this.isExpanded = false,

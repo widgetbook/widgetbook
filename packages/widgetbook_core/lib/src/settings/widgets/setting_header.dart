@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class SettingHeader extends StatelessWidget {
   const SettingHeader({
-    required this.content,
     super.key,
+    required this.content,
     this.trailing,
   });
 

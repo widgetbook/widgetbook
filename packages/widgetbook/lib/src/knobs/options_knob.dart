@@ -1,6 +1,6 @@
 import 'package:provider/provider.dart';
-import 'package:widgetbook/src/fields/fields.dart';
 
+import '../fields/fields.dart';
 import 'knob.dart';
 import 'knobs_notifier.dart';
 
