@@ -21,7 +21,7 @@ void main() {
       );
 
       expect(
-        find.byType(KnobProperty),
+        find.byType(KnobProperty<bool>),
         findsOneWidget,
       );
     },

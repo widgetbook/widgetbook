@@ -20,40 +20,17 @@ class SettingsPanel extends StatelessWidget {
                   if (state.panels.contains(WidgetbookPanel.addons)) ...{
                     core.SettingsPanelData(
                       name: 'Properties',
-                      settings: state.addons.map(
-                        (addon) {
-                          return core.Setting(
-                            name: addon.name,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: addon.fields
-                                  .map((field) => field.build(context))
-                                  .toList(),
-                            ),
-                          );
-                        },
-                      ).toList(),
+                      settings: state.addons
+                          .map((addon) => addon.buildSetting(context))
+                          .toList(),
                     ),
                   },
                   if (state.panels.contains(WidgetbookPanel.knobs)) ...{
                     core.SettingsPanelData(
                       name: 'Knobs',
-                      settings: state.knobs.values.map((knob) {
-                        return core.KnobProperty(
-                          name: knob.label,
-                          description: knob.description,
-                          value: knob.value,
-                          isNullable: knob.isNullable,
-                          changedNullable: (isEnabled) {
-                            state.updateKnobNullability(knob.label, !isEnabled);
-                          },
-                          child: Column(
-                            children: knob.fields
-                                .map((field) => field.build(context))
-                                .toList(),
-                          ),
-                        );
-                      }).toList(),
+                      settings: state.knobs.values
+                          .map((knob) => knob.build(context))
+                          .toList(),
                     ),
                   },
                 ],

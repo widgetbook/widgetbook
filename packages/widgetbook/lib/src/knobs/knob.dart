@@ -1,4 +1,8 @@
+import 'package:flutter/widgets.dart';
+import 'package:widgetbook_core/widgetbook_core.dart';
+
 import '../fields/field.dart';
+import '../state/state.dart';
 
 /// This allows stories to have dynamically adjustable parameters.
 abstract class Knob<T> {
@@ -34,4 +38,22 @@ abstract class Knob<T> {
   int get hashCode => label.hashCode;
 
   List<Field> get fields;
+
+  Widget build(BuildContext context) {
+    return KnobProperty<T>(
+      name: label,
+      description: description,
+      value: value,
+      isNullable: isNullable,
+      changedNullable: (isEnabled) {
+        WidgetbookState.of(context).updateKnobNullability(
+          label,
+          !isEnabled,
+        );
+      },
+      child: Column(
+        children: fields.map((field) => field.build(context)).toList(),
+      ),
+    );
+  }
 }

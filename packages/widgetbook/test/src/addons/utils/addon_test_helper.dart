@@ -40,11 +40,7 @@ Future<void> testAddon({
                 child: Builder(
                   key: key,
                   builder: (context) {
-                    return Column(
-                      children: addon.fields
-                          .map((field) => field.build(context))
-                          .toList(),
-                    );
+                    return addon.buildSetting(context);
                   },
                 ),
               ),
