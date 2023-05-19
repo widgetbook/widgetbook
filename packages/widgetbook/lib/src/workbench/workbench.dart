@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../constants/radii.dart';
 import '../state/state.dart';
 import 'renderer.dart';
 import 'safe_boundaries.dart';
@@ -14,7 +13,11 @@ class Workbench extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        borderRadius: Radii.defaultRadius,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(
+            8,
+          ),
+        ),
         color: Theme.of(context).colorScheme.surface,
       ),
       child: SafeBoundaries(
