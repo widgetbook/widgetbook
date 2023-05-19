@@ -4,7 +4,7 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 
 @UseCase(name: 'Default', type: SettingsPanel)
 Widget settingsPanel(BuildContext context) {
-  return SettingsPanel(
+  return const SettingsPanel(
     settings: [
       SettingsPanelData(
         name: 'Properties',

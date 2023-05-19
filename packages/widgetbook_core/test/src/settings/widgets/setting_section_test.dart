@@ -15,15 +15,15 @@ void main() {
           const key1 = ValueKey('Key 1');
           const key2 = ValueKey('Key 2');
           await tester.pumpWidgetWithMaterial(
-            child: SettingSection(
+            child: const SettingSection(
               data: SettingSectionData(
                 name: content,
                 settings: [
-                  const Text(
+                  Text(
                     'Text 1',
                     key: key1,
                   ),
-                  const Text(
+                  Text(
                     'Text 2',
                     key: key2,
                   ),

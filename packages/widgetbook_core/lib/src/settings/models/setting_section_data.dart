@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/widgets.dart';
 
-part 'setting_section_data.freezed.dart';
+class SettingSectionData {
+  const SettingSectionData({
+    required this.name,
+    required this.settings,
+  });
 
-@freezed
-class SettingSectionData with _$SettingSectionData {
-  factory SettingSectionData({
-    required String name,
-    required List<Widget> settings,
-  }) = _SettingSectionData;
+  final String name;
+  final List<Widget> settings;
 }

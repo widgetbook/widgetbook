@@ -19,14 +19,14 @@ void main() {
           const key1 = ValueKey('Key 1');
           const key2 = ValueKey('Key 2');
           await tester.pumpWidgetWithMaterial(
-            child: ComplexSetting(
+            child: const ComplexSetting(
               name: 'Frame',
               setting: widget,
               sections: [
                 SettingSectionData(
                   name: 'Section 1',
                   settings: [
-                    const Text(
+                    Text(
                       'Text 1',
                       key: key1,
                     ),
@@ -35,7 +35,7 @@ void main() {
                 SettingSectionData(
                   name: 'Section 2',
                   settings: [
-                    const Text(
+                    Text(
                       'Text 2',
                       key: key2,
                     ),
