@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../widgetbook.dart';
 import '../state/state.dart';
-import 'renderer.dart';
 import 'safe_boundaries.dart';
 
 class Workbench extends StatelessWidget {
@@ -11,22 +11,25 @@ class Workbench extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(
-            8,
+    if (state.useCase == null) {
+      return const SizedBox.shrink();
+    }
+
+    return SafeBoundaries(
+      child: state.appBuilder(
+        context,
+        MultiAddonBuilder(
+          addons: state.addons,
+          builder: (context, addon, child) {
+            return addon.buildUseCase(
+              context,
+              child,
+            );
+          },
+          child: Scaffold(
+            body: state.useCase!.builder(context),
           ),
         ),
-        color: Theme.of(context).colorScheme.surface,
-      ),
-      child: SafeBoundaries(
-        child: state.useCase == null
-            ? Container()
-            : Renderer(
-                appBuilder: state.appBuilder,
-                useCaseBuilder: state.useCase!.builder,
-              ),
       ),
     );
   }
