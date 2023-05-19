@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
-import 'settings_panel/settings_panel.dart';
-import 'state/state.dart';
+import '../state/state.dart';
+import 'settings_panel.dart';
 
 class WidgetbookShell extends StatelessWidget {
   const WidgetbookShell({

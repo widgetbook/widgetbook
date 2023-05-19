@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 import 'addons/addons.dart';
+import 'app/router.dart';
 import 'messaging/messaging.dart';
-import 'routing/router.dart';
 import 'state/state.dart';
 
 /// Describes the configuration for your [Widget] library.
