@@ -6,6 +6,7 @@ import '../addons/addons.dart';
 import '../integrations/widgetbook_integration.dart';
 import '../knobs/knob.dart';
 import '../models/models.dart';
+import '../routing/routing.dart';
 import 'widgetbook_catalog.dart';
 import 'widgetbook_scope.dart';
 
@@ -106,11 +107,14 @@ class WidgetbookState extends ChangeNotifier {
     return cachedKnob.isNull ? null : (cachedKnob.value as T);
   }
 
-  WidgetbookState copyWithQueryParams(Map<String, String> params) {
+  WidgetbookState copyFromRouteConfig(AppRouteConfig configuration) {
     return WidgetbookState(
-      path: params['path'] ?? '',
-      previewMode: params.containsKey('preview'),
-      queryParams: {...params}, // Copy from UnmodifiableMap
+      path: configuration.path,
+      previewMode: configuration.previewMode,
+      queryParams: {
+        // Copy from UnmodifiableMap
+        ...configuration.queryParameters
+      },
       catalog: catalog,
       appBuilder: appBuilder,
       addons: addons,

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
-import 'package:widgetbook/src/app/router.dart';
 import 'package:widgetbook/src/app/widgetbook_shell.dart';
+import 'package:widgetbook/src/routing/routing.dart';
 import 'package:widgetbook/src/state/state.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
@@ -88,18 +87,18 @@ void main() {
 
   Future<void> pumpRouter({
     required WidgetTester tester,
-    required GoRouter router,
+    required AppRouter router,
   }) async {
     await tester.pumpWidget(
       BlocProvider(
         create: (context) => navigationBloc
           ..add(
-            LoadNavigationTree(directories: directories),
+            LoadNavigationTree(
+              directories: directories,
+            ),
           ),
         child: MaterialApp.router(
-          routeInformationProvider: router.routeInformationProvider,
-          routeInformationParser: router.routeInformationParser,
-          routerDelegate: router.routerDelegate,
+          routerConfig: router,
         ),
       ),
     );
@@ -114,7 +113,7 @@ void main() {
           testWidgets(
             'default route',
             (tester) async {
-              final router = createRouter(
+              final router = AppRouter(
                 initialState: initialState,
               );
 
@@ -137,8 +136,8 @@ void main() {
           testWidgets(
             'custom route',
             (tester) async {
-              final router = createRouter(
-                initialLocation: '/?path=component-2%2Fuse-case-2.1',
+              final router = AppRouter(
+                initialRoute: '/?path=component-2%2Fuse-case-2.1',
                 initialState: initialState,
               );
 
@@ -162,8 +161,8 @@ void main() {
           testWidgets(
             'theme addon value',
             (tester) async {
-              final router = createRouter(
-                initialLocation: '/?theme=Dark',
+              final router = AppRouter(
+                initialRoute: '/?theme=Dark',
                 initialState: initialState,
               );
 
@@ -187,8 +186,8 @@ void main() {
           testWidgets(
             'preview mode',
             (tester) async {
-              final router = createRouter(
-                initialLocation: '/?preview',
+              final router = AppRouter(
+                initialRoute: '/?preview',
                 initialState: initialState,
               );
 

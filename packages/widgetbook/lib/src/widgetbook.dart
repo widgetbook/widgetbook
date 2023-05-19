@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 import 'addons/addons.dart';
-import 'app/router.dart';
 import 'integrations/integrations.dart';
+import 'routing/app_router.dart';
 import 'state/state.dart';
 
 /// Describes the configuration for your [Widget] library.
@@ -82,8 +81,8 @@ class Widgetbook extends StatefulWidget {
 }
 
 class _WidgetbookState extends State<Widgetbook> {
-  late final GoRouter router;
   final NavigationBloc navigationBloc = NavigationBloc();
+  late final AppRouter router;
 
   @override
   void initState() {
@@ -96,7 +95,7 @@ class _WidgetbookState extends State<Widgetbook> {
       integrations: widget.integrations,
     );
 
-    router = createRouter(
+    router = AppRouter(
       initialState: initialState,
     );
 

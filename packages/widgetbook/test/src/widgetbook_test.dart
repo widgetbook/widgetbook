@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 Matcher expectAssertionErrorWithMessage({
@@ -16,27 +15,16 @@ Matcher expectAssertionErrorWithMessage({
   );
 }
 
-GoRouter _getRouter(Widget child) {
-  return GoRouter(
-    routes: [
-      GoRoute(
-        path: '/',
-        builder: (context, state) => child,
-      ),
-    ],
-  );
-}
-
-Widget _defaultAppBuilderMethod(BuildContext context, Widget child) {
-  final router = _getRouter(child);
-  return WidgetsApp.router(
+Widget _defaultAppBuilderMethod(
+  BuildContext context,
+  Widget child,
+) {
+  return WidgetsApp(
     color: Colors.transparent,
+    debugShowCheckedModeBanner: false,
     builder: (context, childWidget) {
       return childWidget ?? child;
     },
-    debugShowCheckedModeBanner: false,
-    routeInformationParser: router.routeInformationParser,
-    routerDelegate: router.routerDelegate,
   );
 }
 
