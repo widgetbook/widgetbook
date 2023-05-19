@@ -35,7 +35,7 @@ class HotReload extends StatelessWidget {
       ),
     ];
 
-    return Widgetbook<AppThemeData>(
+    return Widgetbook(
       addons: [
         DeviceAddon(
           devices: devices,
