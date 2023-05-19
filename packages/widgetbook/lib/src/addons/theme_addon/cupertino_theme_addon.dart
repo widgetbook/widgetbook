@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../theming/widgetbook_theme.dart';
 import 'theme_addon.dart';
+import 'widgetbook_theme.dart';
 
 class CupertinoThemeAddon extends ThemeAddon<CupertinoThemeData> {
   CupertinoThemeAddon({

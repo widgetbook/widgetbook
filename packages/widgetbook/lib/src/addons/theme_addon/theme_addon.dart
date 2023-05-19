@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../fields/fields.dart';
-import '../../theming/widgetbook_theme.dart';
 import '../common/common.dart';
 import 'theme_setting.dart';
+import 'widgetbook_theme.dart';
 
 typedef ThemeBuilder<T> = Widget Function(
   BuildContext context,
