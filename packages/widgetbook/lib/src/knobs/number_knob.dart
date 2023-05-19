@@ -1,8 +1,6 @@
-import 'package:provider/provider.dart';
-
 import '../fields/fields.dart';
+import '../state/widgetbook_state.dart';
 import 'knob.dart';
-import 'knobs_notifier.dart';
 
 class NumberKnob extends Knob<double> {
   NumberKnob({
@@ -20,7 +18,7 @@ class NumberKnob extends Knob<double> {
         initialValue: value,
         onChanged: (context, num? value) {
           if (value == null) return;
-          context.read<KnobsNotifier>().update(label, value);
+          WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];
@@ -43,7 +41,7 @@ class NullableNumberKnob extends Knob<double?> {
         initialValue: value,
         onChanged: (context, num? value) {
           if (value == null) return;
-          context.read<KnobsNotifier>().update(label, value);
+          WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];

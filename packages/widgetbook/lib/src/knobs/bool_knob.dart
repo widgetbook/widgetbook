@@ -1,8 +1,6 @@
-import 'package:provider/provider.dart';
-
 import '../fields/fields.dart';
+import '../state/state.dart';
 import 'knob.dart';
-import 'knobs_notifier.dart';
 
 class BoolKnob extends Knob<bool> {
   BoolKnob({
@@ -20,7 +18,7 @@ class BoolKnob extends Knob<bool> {
         initialValue: value,
         onChanged: (context, bool? value) {
           if (value == null) return;
-          context.read<KnobsNotifier>().update(label, value);
+          WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];
@@ -43,7 +41,7 @@ class NullableBoolKnob extends Knob<bool?> {
         initialValue: value,
         onChanged: (context, bool? value) {
           if (value == null) return;
-          context.read<KnobsNotifier>().update(label, value);
+          WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];

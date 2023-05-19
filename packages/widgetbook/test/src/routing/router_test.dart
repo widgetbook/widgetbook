@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:widgetbook/src/routing/router.dart';
 import 'package:widgetbook/src/state/state.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -72,12 +71,10 @@ void main() {
     directories,
   );
 
-  late KnobsNotifier knobsNotifier;
   late NavigationBloc navigationBloc;
 
   setUp(
     () {
-      knobsNotifier = KnobsNotifier();
       navigationBloc = NavigationBloc();
     },
   );
@@ -87,20 +84,15 @@ void main() {
     required GoRouter router,
   }) async {
     await tester.pumpWidget(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(value: knobsNotifier),
-        ],
-        child: BlocProvider(
-          create: (context) => navigationBloc
-            ..add(
-              LoadNavigationTree(directories: directories),
-            ),
-          child: MaterialApp.router(
-            routeInformationProvider: router.routeInformationProvider,
-            routeInformationParser: router.routeInformationParser,
-            routerDelegate: router.routerDelegate,
+      BlocProvider(
+        create: (context) => navigationBloc
+          ..add(
+            LoadNavigationTree(directories: directories),
           ),
+        child: MaterialApp.router(
+          routeInformationProvider: router.routeInformationProvider,
+          routeInformationParser: router.routeInformationParser,
+          routerDelegate: router.routerDelegate,
         ),
       ),
     );

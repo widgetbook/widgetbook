@@ -1,8 +1,6 @@
-import 'package:provider/provider.dart';
-
 import '../fields/fields.dart';
+import '../state/state.dart';
 import 'knob.dart';
-import 'knobs_notifier.dart';
 
 class OptionsKnob<T> extends Knob<T> {
   OptionsKnob({
@@ -27,7 +25,7 @@ class OptionsKnob<T> extends Knob<T> {
         labelBuilder: labelBuilder,
         onChanged: (context, T? value) {
           if (value == null) return;
-          context.read<KnobsNotifier>().update<T>(label, value);
+          WidgetbookState.of(context).updateKnobValue<T>(label, value);
         },
       ),
     ];

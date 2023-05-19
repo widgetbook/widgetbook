@@ -2,11 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 import 'addons/addons.dart';
-import 'knobs/knobs_notifier.dart';
 import 'messaging/messaging.dart';
 import 'routing/router.dart';
 import 'state/state.dart';
@@ -84,7 +82,6 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
 
 class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   late final GoRouter router;
-  final KnobsNotifier knobsNotifier = KnobsNotifier();
   final NavigationBloc navigationBloc = NavigationBloc();
 
   @override
@@ -130,19 +127,14 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(value: knobsNotifier),
-      ],
-      child: BlocProvider.value(
-        value: navigationBloc,
-        child: MaterialApp.router(
-          routerConfig: router,
-          themeMode: ThemeMode.dark,
-          debugShowCheckedModeBanner: false,
-          darkTheme: Themes.dark,
-          theme: Themes.light,
-        ),
+    return BlocProvider.value(
+      value: navigationBloc,
+      child: MaterialApp.router(
+        routerConfig: router,
+        themeMode: ThemeMode.dark,
+        debugShowCheckedModeBanner: false,
+        darkTheme: Themes.dark,
+        theme: Themes.light,
       ),
     );
   }

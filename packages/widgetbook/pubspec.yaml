@@ -20,7 +20,6 @@ dependencies:
   go_router: ^6.5.5
   meta: ^1.8.0
   nested: ^1.0.0
-  provider: ^6.0.2
   widgetbook_core: ^3.0.0-beta.8
 
 dev_dependencies:

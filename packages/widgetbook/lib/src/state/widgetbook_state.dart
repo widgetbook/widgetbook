@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
 import '../addons/addons.dart';
+import '../knobs/knob.dart';
 import '../navigation/navigation.dart';
 import 'widgetbook_catalog.dart';
 import 'widgetbook_panel.dart';
@@ -18,9 +19,10 @@ class WidgetbookState extends ChangeNotifier {
     required this.addons,
     required this.catalog,
     required this.appBuilder,
-  });
+  }) : this.knobs = {};
 
   String path;
+  final Map<String, Knob> knobs;
   final Set<WidgetbookPanel> panels;
   final Map<String, String> queryParams;
   final List<WidgetbookAddOn> addons;
@@ -62,13 +64,34 @@ class WidgetbookState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeQueryParam(String name) {
-    queryParams.remove(name);
+  void updatePath(String newPath) {
+    path = newPath;
+    knobs.clear(); // Reset Knobs
+    queryParams.remove('knobs');
     notifyListeners();
   }
 
-  void updatePath(String newPath) {
-    path = newPath;
+  void updateKnobValue<T>(String label, T value) {
+    knobs[label]!.value = value;
     notifyListeners();
+  }
+
+  void updateKnobNullability(String label, bool isNull) {
+    knobs[label]!.isNull = isNull;
+    notifyListeners();
+  }
+
+  T? registerKnob<T>(Knob<T> knob) {
+    final cachedKnob = knobs.putIfAbsent(
+      knob.label,
+      () {
+        Future.microtask(notifyListeners);
+        return knob;
+      },
+    );
+
+    // Return `null` even if the knob has value, but it was marked as null
+    // using [updateKnobNullability].
+    return cachedKnob.isNull ? null : (cachedKnob.value as T);
   }
 }

@@ -1,10 +1,8 @@
 import 'dart:ui';
 
-import 'package:provider/provider.dart';
-
 import '../fields/fields.dart';
+import '../state/state.dart';
 import 'knob.dart';
-import 'knobs_notifier.dart';
 
 class ColorKnob extends Knob<Color> {
   ColorKnob({
@@ -22,7 +20,7 @@ class ColorKnob extends Knob<Color> {
         initialValue: value,
         onChanged: (context, Color? value) {
           if (value == null) return;
-          context.read<KnobsNotifier>().update(label, value);
+          WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];
