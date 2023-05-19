@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/knobs/knobs_notifier.dart';
+import 'package:widgetbook/src/knobs/knobs_builder.dart';
 import 'package:widgetbook/src/knobs/options_knob.dart';
 
 import 'knob_helper.dart';
