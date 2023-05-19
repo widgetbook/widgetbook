@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 import '../addons/addons.dart';
 import '../knobs/knob.dart';
-import '../navigation/navigation.dart';
+import '../models/models.dart';
 import 'widgetbook_catalog.dart';
 import 'widgetbook_panel.dart';
 import 'widgetbook_scope.dart';
