@@ -198,7 +198,7 @@ void main() {
                 router: router,
               );
 
-              final navigationFinder = find.byType(NavigationPanelWrapper);
+              final navigationFinder = find.byType(NavigationPanel);
               final settingsFinder = find.byType(SettingsPanel);
 
               expect(navigationFinder, findsOneWidget);
@@ -221,7 +221,7 @@ void main() {
                 router: router,
               );
 
-              final navigationFinder = find.byType(NavigationPanelWrapper);
+              final navigationFinder = find.byType(NavigationPanel);
               final settingsFinder = find.byType(SettingsPanel);
 
               expect(navigationFinder, findsOneWidget);
@@ -244,7 +244,7 @@ void main() {
                 router: router,
               );
 
-              final navigationFinder = find.byType(NavigationPanelWrapper);
+              final navigationFinder = find.byType(NavigationPanel);
               final settingsFinder = find.byType(SettingsPanel);
 
               expect(navigationFinder, findsNothing);
@@ -267,7 +267,7 @@ void main() {
                 router: router,
               );
 
-              final navigationFinder = find.byType(NavigationPanelWrapper);
+              final navigationFinder = find.byType(NavigationPanel);
               final settingsFinder = find.byType(SettingsPanel);
 
               expect(navigationFinder, findsNothing);
@@ -290,7 +290,7 @@ void main() {
                 router: router,
               );
 
-              final navigationFinder = find.byType(NavigationPanelWrapper);
+              final navigationFinder = find.byType(NavigationPanel);
               final settingsFinder = find.byType(SettingsPanel);
               final addonsFinder = find.text('Properties');
               final knobsFinder = find.text('Knobs');
@@ -317,7 +317,7 @@ void main() {
                 router: router,
               );
 
-              final navigationFinder = find.byType(NavigationPanelWrapper);
+              final navigationFinder = find.byType(NavigationPanel);
               final settingsFinder = find.byType(SettingsPanel);
               final addonsFinder = find.text('Properties');
               final knobsFinder = find.text('Knobs');

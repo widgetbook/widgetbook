@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
-import 'navigation/navigation.dart';
 import 'settings_panel/settings_panel.dart';
 import 'state/state.dart';
 
@@ -29,9 +29,12 @@ class WidgetbookShell extends StatelessWidget {
       child: Row(
         children: [
           if (enableNavigation) ...{
-            NavigationPanelWrapper(
+            core.NavigationPanel(
               initialPath: state.uri.toString(),
-            ),
+              onNodeSelected: (path, _) {
+                WidgetbookState.of(context).updatePath(path);
+              },
+            )
           },
           Expanded(
             child: Padding(
