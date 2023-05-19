@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:widgetbook_generator/code_generators/instances/instance.dart';
+import 'package:widgetbook_generator/instances/instance.dart';
 
 void testName(
   String name, {

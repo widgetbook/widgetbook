@@ -1,8 +1,8 @@
 import 'package:meta/meta.dart';
 
-import '../instances/base_instance.dart';
-import '../instances/boolean_instance.dart';
-import '../instances/string_instance.dart';
+import 'base_instance.dart';
+import 'boolean_instance.dart';
+import 'string_instance.dart';
 
 /// A property which is set when a new instance is created
 @immutable

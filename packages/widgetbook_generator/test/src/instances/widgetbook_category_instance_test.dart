@@ -1,12 +1,12 @@
 import 'package:test/test.dart';
-import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widgetbook_category_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widgetbook_folder_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widgetbook_widget_instance.dart';
-import 'package:widgetbook_generator/code_generators/properties/property.dart';
-import 'package:widgetbook_generator/services/tree_service.dart';
+import 'package:widgetbook_generator/generators/tree_service.dart';
+import 'package:widgetbook_generator/instances/list_instance.dart';
+import 'package:widgetbook_generator/instances/property.dart';
+import 'package:widgetbook_generator/instances/widgetbook_category_instance.dart';
+import 'package:widgetbook_generator/instances/widgetbook_folder_instance.dart';
+import 'package:widgetbook_generator/instances/widgetbook_widget_instance.dart';
 
-import '../instance_helper.dart';
+import 'instance_helper.dart';
 
 void main() {
   group(

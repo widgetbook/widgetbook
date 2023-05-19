@@ -4,7 +4,7 @@ import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 import '../extensions/element_extensions.dart';
-import '../json_formatter.dart';
+import '../extensions/json_list_formatter.dart';
 import '../models/widgetbook_use_case_data.dart';
 
 class UseCaseResolver extends GeneratorForAnnotation<UseCase> {

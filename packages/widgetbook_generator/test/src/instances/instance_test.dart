@@ -1,9 +1,9 @@
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
-import 'package:widgetbook_generator/code_generators/instances/instance.dart';
-import 'package:widgetbook_generator/code_generators/properties/property.dart';
+import 'package:widgetbook_generator/instances/instance.dart';
+import 'package:widgetbook_generator/instances/property.dart';
 
-import '../instance_helper.dart';
+import 'instance_helper.dart';
 
 class EmptyInstance extends Instance {
   EmptyInstance()

@@ -1,7 +1,7 @@
-import '../../services/tree_service.dart';
-import '../properties/property.dart';
+import '../generators/tree_service.dart';
 import 'instance.dart';
 import 'list_instance.dart';
+import 'property.dart';
 import 'widgetbook_folder_instance.dart';
 import 'widgetbook_widget_instance.dart';
 

@@ -1,6 +1,6 @@
-import '../properties/property.dart';
 import 'instance.dart';
 import 'lambda_instance.dart';
+import 'property.dart';
 
 /// An instance for WidgetbookUseCase
 class WidgetbookUseCaseInstance extends Instance {

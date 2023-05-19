@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
-import '../properties/property.dart';
 import 'base_instance.dart';
+import 'property.dart';
 
 /// An [Instance] specifies a code element like `Container()`.
 /// [Instance] is used to specify and generate code structures so the Widgetbook

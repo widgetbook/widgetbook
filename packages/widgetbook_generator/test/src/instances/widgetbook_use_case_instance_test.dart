@@ -1,9 +1,9 @@
 import 'package:test/test.dart';
-import 'package:widgetbook_generator/code_generators/instances/lambda_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/widgetbook_use_case_instance.dart';
-import 'package:widgetbook_generator/code_generators/properties/property.dart';
+import 'package:widgetbook_generator/instances/lambda_instance.dart';
+import 'package:widgetbook_generator/instances/property.dart';
+import 'package:widgetbook_generator/instances/widgetbook_use_case_instance.dart';
 
-import '../instance_helper.dart';
+import 'instance_helper.dart';
 
 void main() {
   group(

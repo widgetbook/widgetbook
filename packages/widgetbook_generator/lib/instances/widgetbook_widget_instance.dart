@@ -1,7 +1,7 @@
-import '../../models/widgetbook_use_case_data.dart';
-import '../properties/property.dart';
+import '../models/widgetbook_use_case_data.dart';
 import 'instance.dart';
 import 'list_instance.dart';
+import 'property.dart';
 import 'widgetbook_use_case_instance.dart';
 
 /// An instance for WidgetElementInstance

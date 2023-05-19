@@ -1,6 +1,6 @@
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
-import 'package:widgetbook_generator/code_generators/instances/boolean_instance.dart';
+import 'package:widgetbook_generator/instances/boolean_instance.dart';
 
 void main() {
   group(

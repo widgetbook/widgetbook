@@ -1,7 +1,7 @@
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
-import 'package:widgetbook_generator/code_generators/instances/list_instance.dart';
-import 'package:widgetbook_generator/code_generators/instances/string_instance.dart';
+import 'package:widgetbook_generator/instances/list_instance.dart';
+import 'package:widgetbook_generator/instances/string_instance.dart';
 
 void main() {
   group(

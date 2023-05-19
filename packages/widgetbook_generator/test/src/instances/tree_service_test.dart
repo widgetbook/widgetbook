@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:widgetbook_generator/services/tree_service.dart';
+import 'package:widgetbook_generator/generators/tree_service.dart';
 
 void main() {
   group('$TreeService', () {
