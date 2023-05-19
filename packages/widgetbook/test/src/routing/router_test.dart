@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:widgetbook/src/routing/router.dart';
+import 'package:widgetbook/src/app/router.dart';
 import 'package:widgetbook/src/state/state.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
