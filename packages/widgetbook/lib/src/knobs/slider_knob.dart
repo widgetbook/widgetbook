@@ -1,8 +1,6 @@
-import 'package:provider/provider.dart';
-
 import '../fields/fields.dart';
+import '../state/state.dart';
 import 'knob.dart';
-import 'knobs_notifier.dart';
 
 class SliderKnob extends Knob<double> {
   SliderKnob({
@@ -30,7 +28,7 @@ class SliderKnob extends Knob<double> {
         divisions: divisions,
         onChanged: (context, num? value) {
           if (value == null) return;
-          context.read<KnobsNotifier>().update(label, value);
+          WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];
@@ -63,7 +61,7 @@ class NullableSliderKnob extends Knob<double?> {
         divisions: divisions,
         onChanged: (context, num? value) {
           if (value == null) return;
-          context.read<KnobsNotifier>().update(label, value);
+          WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
-import '../knobs/knobs_notifier.dart';
 import '../state/state.dart';
 
 class SettingsPanel extends StatelessWidget {
@@ -11,7 +9,6 @@ class SettingsPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
-    final knobs = context.watch<KnobsNotifier>().all();
 
     return Card(
       child: Column(
@@ -41,15 +38,14 @@ class SettingsPanel extends StatelessWidget {
                   if (state.panels.contains(WidgetbookPanel.knobs)) ...{
                     core.SettingsPanelData(
                       name: 'Knobs',
-                      settings: knobs.map((knob) {
+                      settings: state.knobs.values.map((knob) {
                         return core.KnobProperty(
                           name: knob.label,
                           description: knob.description,
                           value: knob.value,
                           isNullable: knob.isNullable,
                           changedNullable: (isEnabled) {
-                            final notifier = context.read<KnobsNotifier>();
-                            notifier.updateNullability(knob.label, !isEnabled);
+                            state.updateKnobNullability(knob.label, !isEnabled);
                           },
                           child: Column(
                             children: knob.fields

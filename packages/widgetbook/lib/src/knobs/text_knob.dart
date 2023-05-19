@@ -1,8 +1,6 @@
-import 'package:provider/provider.dart';
-
 import '../fields/fields.dart';
+import '../state/state.dart';
 import 'knob.dart';
-import 'knobs_notifier.dart';
 
 class TextKnob extends Knob<String> {
   TextKnob({
@@ -24,7 +22,7 @@ class TextKnob extends Knob<String> {
         maxLines: maxLines,
         onChanged: (context, String? value) {
           if (value == null) return;
-          context.read<KnobsNotifier>().update(label, value);
+          WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];
@@ -51,7 +49,7 @@ class NullableTextKnob extends Knob<String?> {
         maxLines: maxLines,
         onChanged: (context, String? value) {
           if (value == null) return;
-          context.read<KnobsNotifier>().update(label, value);
+          WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];
