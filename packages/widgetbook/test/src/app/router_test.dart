@@ -204,48 +204,6 @@ void main() {
               expect(shellFinder, findsNothing);
             },
           );
-
-          testWidgets(
-            'disables settings panel (deprecated)',
-            (tester) async {
-              final router = createRouter(
-                initialLocation: '/?disable-properties=true',
-                addons: addons,
-                catalog: catalog,
-                appBuilder: materialAppBuilder,
-              );
-
-              await pumpRouter(
-                tester: tester,
-                router: router,
-              );
-
-              final shellFinder = find.byType(WidgetbookShell);
-
-              expect(shellFinder, findsNothing);
-            },
-          );
-
-          testWidgets(
-            'disable navigation panel (deprecated)',
-            (tester) async {
-              final router = createRouter(
-                initialLocation: '/?disable-navigation=true',
-                addons: addons,
-                catalog: catalog,
-                appBuilder: materialAppBuilder,
-              );
-
-              await pumpRouter(
-                tester: tester,
-                router: router,
-              );
-
-              final shellFinder = find.byType(WidgetbookShell);
-
-              expect(shellFinder, findsNothing);
-            },
-          );
         },
       );
     },
