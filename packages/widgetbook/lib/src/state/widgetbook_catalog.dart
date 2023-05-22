@@ -1,6 +1,6 @@
 import 'package:widgetbook_core/widgetbook_core.dart';
 
-import '../navigation/models/models.dart';
+import '../models/models.dart';
 
 class WidgetbookCatalog {
   WidgetbookCatalog._(

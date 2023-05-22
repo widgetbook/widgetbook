@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook_core/widgetbook_core.dart';
 
 import '../../fields/fields.dart';
 import '../addons.dart';
@@ -32,6 +33,16 @@ abstract class WidgetbookAddOn<T> {
   }
 
   List<Field> get fields;
+
+  Widget buildSetting(BuildContext context) {
+    return Setting(
+      name: name,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: fields.map((field) => field.build(context)).toList(),
+      ),
+    );
+  }
 
   /// Wraps use cases with a custom widget depending on the addon [setting].
   Widget buildUseCase(BuildContext context, Widget child) {

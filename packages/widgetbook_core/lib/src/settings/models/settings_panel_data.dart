@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/widgets.dart';
 
-part 'settings_panel_data.freezed.dart';
+class SettingsPanelData {
+  const SettingsPanelData({
+    required this.name,
+    required this.settings,
+  });
 
-@freezed
-class SettingsPanelData with _$SettingsPanelData {
-  factory SettingsPanelData({
-    required String name,
-    required List<Widget> settings,
-  }) = _SettingsPanelData;
+  final String name;
+  final List<Widget> settings;
 }

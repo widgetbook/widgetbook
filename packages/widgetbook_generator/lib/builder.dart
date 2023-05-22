@@ -1,9 +1,9 @@
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 
-import 'builders/json_builder.dart';
-import 'generators/widgetbook_generator.dart';
-import 'resolvers/use_case_resolver.dart';
+import 'generators/app_generator.dart';
+import 'generators/json_builder.dart';
+import 'generators/use_case_resolver.dart';
 
 /// Builder for the WidgetbookUseCase annotation.
 /// Creates a .usecase.widgetbook.json file for each .dart file containing a
@@ -19,9 +19,9 @@ Builder useCaseBuilder(BuilderOptions options) {
 /// Builder for the WidgetbookApp annotation.
 /// Creates exactly one .g.dart file next to the file containing
 /// the [App] annotation.
-Builder widgetbookBuilder(BuilderOptions options) {
+Builder appBuilder(BuilderOptions options) {
   return LibraryBuilder(
-    WidgetbookGenerator(),
+    AppGenerator(),
     generatedExtension: '.g.dart',
   );
 }

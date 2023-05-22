@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 import 'addons/addons.dart';
+import 'app/router.dart';
 import 'messaging/messaging.dart';
-import 'routing/router.dart';
 import 'state/state.dart';
 
 /// Describes the configuration for your [Widget] library.
@@ -19,15 +19,10 @@ import 'state/state.dart';
 /// - the [Locale]s used by your application
 ///
 /// [Widgetbook] defines the following constructors for different themes
-/// - [Widgetbook]<[CustomTheme]> if you use a [CustomTheme] for your app
-/// - [Widgetbook.cupertino] if you use [CupertinoThemeData] for your app
-/// - [Widgetbook.material] if you use [ThemeData] for your app
-///
-/// Note: if you use for instance both [CupertinoThemeData] and [ThemeData] in
-/// your app, use the [Widgetbook]<[CustomTheme]> constructor with [CustomTheme]
-/// set to [dynamic] or [Object] and see [AppBuilderFunction] for how to
-/// render custom themes.
-class Widgetbook<CustomTheme> extends StatefulWidget {
+/// - [Widgetbook] if you use a [WidgetsApp] for your app
+/// - [Widgetbook.cupertino] if you use [CupertinoApp] for your app
+/// - [Widgetbook.material] if you use [MaterialApp] for your app
+class Widgetbook extends StatefulWidget {
   const Widgetbook({
     super.key,
     required this.appBuilder,
@@ -45,14 +40,14 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
 
   final AppBuilder appBuilder;
 
-  /// A [Widgetbook] which uses cupertino theming via [CupertinoThemeData].
-  static Widgetbook<CupertinoThemeData> cupertino({
+  /// A [Widgetbook] which uses cupertino theming via [CupertinoApp].
+  static Widgetbook cupertino({
     required List<MultiChildNavigationNodeData> directories,
     required List<WidgetbookAddOn> addons,
     AppBuilder? appBuilder,
     Key? key,
   }) {
-    return Widgetbook<CupertinoThemeData>(
+    return Widgetbook(
       key: key,
       directories: directories,
       addons: addons,
@@ -60,14 +55,14 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
     );
   }
 
-  /// A [Widgetbook] which uses material theming via [ThemeData].
-  static Widgetbook<ThemeData> material({
+  /// A [Widgetbook] which uses material theming via [MaterialApp].
+  static Widgetbook material({
     required List<MultiChildNavigationNodeData> directories,
     required List<WidgetbookAddOn> addons,
     AppBuilder? appBuilder,
     Key? key,
   }) {
-    return Widgetbook<ThemeData>(
+    return Widgetbook(
       key: key,
       directories: directories,
       addons: addons,
@@ -76,11 +71,10 @@ class Widgetbook<CustomTheme> extends StatefulWidget {
   }
 
   @override
-  State<Widgetbook<CustomTheme>> createState() =>
-      _WidgetbookState<CustomTheme>();
+  State<Widgetbook> createState() => _WidgetbookState();
 }
 
-class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
+class _WidgetbookState extends State<Widgetbook> {
   late final GoRouter router;
   final NavigationBloc navigationBloc = NavigationBloc();
 
@@ -120,7 +114,7 @@ class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
   }
 
   @override
-  void didUpdateWidget(covariant Widgetbook<CustomTheme> oldWidget) {
+  void didUpdateWidget(covariant Widgetbook oldWidget) {
     navigationBloc.add(LoadNavigationTree(directories: widget.directories));
     super.didUpdateWidget(oldWidget);
   }

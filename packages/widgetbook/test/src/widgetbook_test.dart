@@ -51,7 +51,7 @@ void main() {
             'textScaleFactors is empty',
             () {
               expect(
-                () => Widgetbook<ThemeData>(
+                () => Widgetbook(
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     TextScaleAddon(
@@ -70,7 +70,7 @@ void main() {
             'themes is empty',
             () {
               expect(
-                () => Widgetbook<ThemeData>(
+                () => Widgetbook(
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     MaterialThemeAddon(
@@ -89,7 +89,7 @@ void main() {
             'devices is empty',
             () {
               expect(
-                () => Widgetbook<ThemeData>(
+                () => Widgetbook(
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     DeviceAddon(
@@ -108,7 +108,7 @@ void main() {
             'supportedLocales is empty',
             () {
               expect(
-                () => Widgetbook<ThemeData>(
+                () => Widgetbook(
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     LocalizationAddon(

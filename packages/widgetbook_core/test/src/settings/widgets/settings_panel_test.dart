@@ -13,9 +13,9 @@ void main() {
         'shows Tab and hint text',
         (tester) async {
           await tester.pumpWidgetWithMaterial(
-            child: SettingsPanel(
+            child: const SettingsPanel(
               settings: [
-                SettingsPanelData(name: content, settings: const []),
+                SettingsPanelData(name: content, settings: []),
               ],
             ),
           );
@@ -40,11 +40,11 @@ void main() {
             key: ValueKey('Text'),
           );
           await tester.pumpWidgetWithMaterial(
-            child: SettingsPanel(
+            child: const SettingsPanel(
               settings: [
                 SettingsPanelData(
                   name: content,
-                  settings: const [
+                  settings: [
                     widget,
                   ],
                 ),

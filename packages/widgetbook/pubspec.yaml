@@ -34,21 +34,21 @@ dev_dependencies:
 
 flutter:
   assets:
-    - google_fonts/
+    - assets/
   fonts:
     - family: Nunito
       fonts:
-        - asset: google_fonts/Nunito-Black.ttf
-        - asset: google_fonts/Nunito-BlackItalic.ttf
-        - asset: google_fonts/Nunito-Bold.ttf
-        - asset: google_fonts/Nunito-BoldItalic.ttf
-        - asset: google_fonts/Nunito-ExtraBold.ttf
-        - asset: google_fonts/Nunito-ExtraBoldItalic.ttf
-        - asset: google_fonts/Nunito-ExtraLight.ttf
-        - asset: google_fonts/Nunito-ExtraLightItalic.ttf
-        - asset: google_fonts/Nunito-Italic.ttf
-        - asset: google_fonts/Nunito-Light.ttf
-        - asset: google_fonts/Nunito-LightItalic.ttf
-        - asset: google_fonts/Nunito-Regular.ttf
-        - asset: google_fonts/Nunito-SemiBold.ttf
-        - asset: google_fonts/Nunito-SemiBoldItalic.ttf
+        - asset: assets/fonts/Nunito-Black.ttf
+        - asset: assets/fonts/Nunito-BlackItalic.ttf
+        - asset: assets/fonts/Nunito-Bold.ttf
+        - asset: assets/fonts/Nunito-BoldItalic.ttf
+        - asset: assets/fonts/Nunito-ExtraBold.ttf
+        - asset: assets/fonts/Nunito-ExtraBoldItalic.ttf
+        - asset: assets/fonts/Nunito-ExtraLight.ttf
+        - asset: assets/fonts/Nunito-ExtraLightItalic.ttf
+        - asset: assets/fonts/Nunito-Italic.ttf
+        - asset: assets/fonts/Nunito-Light.ttf
+        - asset: assets/fonts/Nunito-LightItalic.ttf
+        - asset: assets/fonts/Nunito-Regular.ttf
+        - asset: assets/fonts/Nunito-SemiBold.ttf
+        - asset: assets/fonts/Nunito-SemiBoldItalic.ttf

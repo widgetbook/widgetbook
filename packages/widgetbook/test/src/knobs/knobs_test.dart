@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook/src/knobs/knobs.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 import 'knob_helper.dart';
@@ -21,7 +21,7 @@ void main() {
       );
 
       expect(
-        find.byType(KnobProperty),
+        find.byType(KnobProperty<bool>),
         findsOneWidget,
       );
     },

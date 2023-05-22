@@ -4,12 +4,12 @@ builders:
     builder_factories: ["useCaseBuilder"]
     build_extensions: { ".dart": [".usecase.widgetbook.json"] }
     auto_apply: dependents
-    runs_before: [":widgetbook_builder"]
+    runs_before: [":app_builder"]
     build_to: cache
 
-  widgetbook_builder:
+  app_builder:
     import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["widgetbookBuilder"]
+    builder_factories: ["appBuilder"]
     build_extensions: { ".dart": [".g.dart"] }
     auto_apply: dependents
     build_to: source

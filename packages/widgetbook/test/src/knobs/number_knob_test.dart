@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/knobs/number_knob.dart';
-import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook/src/knobs/knobs.dart';
 
 import 'knob_helper.dart';
 
