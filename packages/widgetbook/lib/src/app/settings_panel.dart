@@ -17,12 +17,14 @@ class SettingsPanel extends StatelessWidget {
             child: SingleChildScrollView(
               child: core.SettingsPanel(
                 settings: [
-                  core.SettingsPanelData(
-                    name: 'Properties',
-                    settings: state.addons
-                        .map((addon) => addon.buildSetting(context))
-                        .toList(),
-                  ),
+                  if (state.addons != null) ...{
+                    core.SettingsPanelData(
+                      name: 'Properties',
+                      settings: state.addons!
+                          .map((addon) => addon.buildSetting(context))
+                          .toList(),
+                    ),
+                  },
                   core.SettingsPanelData(
                     name: 'Knobs',
                     settings: state.knobs.values

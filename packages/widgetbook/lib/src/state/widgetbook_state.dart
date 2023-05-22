@@ -18,7 +18,7 @@ class WidgetbookState extends ChangeNotifier {
     this.queryParams = const {},
     required this.catalog,
     required this.appBuilder,
-    required this.addons,
+    this.addons,
     this.integrations,
   }) : this.knobs = {};
 
@@ -28,7 +28,7 @@ class WidgetbookState extends ChangeNotifier {
   final Map<String, String> queryParams;
   final WidgetbookCatalog catalog;
   final AppBuilder appBuilder;
-  final List<WidgetbookAddOn> addons;
+  final List<WidgetbookAddOn>? addons;
   final List<WidgetbookIntegration>? integrations;
 
   WidgetbookUseCase? get useCase => catalog.get(path);
