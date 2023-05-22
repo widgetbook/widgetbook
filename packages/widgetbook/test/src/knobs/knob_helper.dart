@@ -12,7 +12,7 @@ extension KnobHelper on WidgetTester {
       WidgetbookScope(
         state: WidgetbookState(
           path: '/',
-          panels: {},
+          previewMode: false,
           queryParams: {},
           addons: [],
           catalog: WidgetbookCatalog.fromDirectories([]),

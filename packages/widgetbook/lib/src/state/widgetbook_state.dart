@@ -6,7 +6,6 @@ import '../addons/addons.dart';
 import '../knobs/knob.dart';
 import '../models/models.dart';
 import 'widgetbook_catalog.dart';
-import 'widgetbook_panel.dart';
 import 'widgetbook_scope.dart';
 
 typedef AppBuilder = Widget Function(BuildContext context, Widget child);
@@ -14,7 +13,7 @@ typedef AppBuilder = Widget Function(BuildContext context, Widget child);
 class WidgetbookState extends ChangeNotifier {
   WidgetbookState({
     required this.path,
-    required this.panels,
+    required this.previewMode,
     required this.queryParams,
     required this.addons,
     required this.catalog,
@@ -23,7 +22,7 @@ class WidgetbookState extends ChangeNotifier {
 
   String path;
   final Map<String, Knob> knobs;
-  final Set<WidgetbookPanel> panels;
+  final bool previewMode;
   final Map<String, String> queryParams;
   final List<WidgetbookAddOn> addons;
   final WidgetbookCatalog catalog;

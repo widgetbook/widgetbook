@@ -23,9 +23,7 @@ Future<void> testAddon({
           return WidgetbookScope(
             state: WidgetbookState(
               path: state.queryParams['path'] ?? '',
-              panels: state.queryParams['panels'] == null
-                  ? WidgetbookPanel.values.toSet()
-                  : WidgetbookPanelParser.parse(state.queryParams['panels']!),
+              previewMode: false,
               queryParams: {...state.queryParams}, // Copy from UnmodifiableMap
               addons: [addon],
               appBuilder: materialAppBuilder,
