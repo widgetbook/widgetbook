@@ -72,6 +72,12 @@ void main() {
     directories,
   );
 
+  final initialState = WidgetbookState(
+    addons: addons,
+    catalog: catalog,
+    appBuilder: materialAppBuilder,
+  );
+
   late NavigationBloc navigationBloc;
 
   setUp(
@@ -109,9 +115,7 @@ void main() {
             'default route',
             (tester) async {
               final router = createRouter(
-                addons: addons,
-                catalog: catalog,
-                appBuilder: materialAppBuilder,
+                initialState: initialState,
               );
 
               await pumpRouter(
@@ -135,9 +139,7 @@ void main() {
             (tester) async {
               final router = createRouter(
                 initialLocation: '/?path=component-2%2Fuse-case-2.1',
-                addons: addons,
-                catalog: catalog,
-                appBuilder: materialAppBuilder,
+                initialState: initialState,
               );
 
               await pumpRouter(
@@ -162,9 +164,7 @@ void main() {
             (tester) async {
               final router = createRouter(
                 initialLocation: '/?theme=Dark',
-                addons: addons,
-                catalog: catalog,
-                appBuilder: materialAppBuilder,
+                initialState: initialState,
               );
 
               await pumpRouter(
@@ -189,9 +189,7 @@ void main() {
             (tester) async {
               final router = createRouter(
                 initialLocation: '/?preview',
-                addons: addons,
-                catalog: catalog,
-                appBuilder: materialAppBuilder,
+                initialState: initialState,
               );
 
               await pumpRouter(
