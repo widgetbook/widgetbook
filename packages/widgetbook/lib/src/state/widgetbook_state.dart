@@ -47,7 +47,12 @@ class WidgetbookState extends ChangeNotifier {
   @override
   void notifyListeners() {
     super.notifyListeners();
-    syncRouteInformation();
+
+    // Do not sync route in preview mode, since the widget state is already
+    // controlled by using the URL.
+    if (!previewMode) {
+      syncRouteInformation();
+    }
   }
 
   /// Syncs this with the router's location using [SystemNavigator].
