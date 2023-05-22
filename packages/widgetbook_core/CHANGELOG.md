@@ -1,3 +1,9 @@
+## Unreleased
+
+ - **REFACTOR**: Remove all knobs-related widgets.
+ - **REFACTOR**: Make `KnobProperty`'s `description` optional.
+ - **REFACTOR**: Add `isNullable` parameter to `KnobProperty` instead of a getter based on the type parameter `T`.
+
 ## 3.0.0-beta.8
 
  - **REFACTOR**: :recycle: removed package analysis_options files.
