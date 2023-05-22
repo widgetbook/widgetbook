@@ -52,6 +52,7 @@ void main() {
             () {
               expect(
                 () => Widgetbook(
+                  directories: [],
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     TextScaleAddon(
@@ -71,6 +72,7 @@ void main() {
             () {
               expect(
                 () => Widgetbook(
+                  directories: [],
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     MaterialThemeAddon(
@@ -90,6 +92,7 @@ void main() {
             () {
               expect(
                 () => Widgetbook(
+                  directories: [],
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     DeviceFrameAddon(
@@ -109,6 +112,7 @@ void main() {
             () {
               expect(
                 () => Widgetbook(
+                  directories: [],
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
                     LocalizationAddon(

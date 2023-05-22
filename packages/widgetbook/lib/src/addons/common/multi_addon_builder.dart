@@ -18,27 +18,29 @@ class MultiAddonBuilder extends StatelessWidget {
     required this.child,
   });
 
-  final List<WidgetbookAddOn> addons;
+  final List<WidgetbookAddOn>? addons;
   final AddonBuilder builder;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return addons.isEmpty
-        ? child
-        : Nested(
-            children: addons
-                .map(
-                  (addon) => SingleChildBuilder(
-                    builder: (context, child) => builder(
-                      context,
-                      addon,
-                      child!,
-                    ),
-                  ),
-                )
-                .toList(),
-            child: child,
-          );
+    if (addons == null || addons!.isEmpty) {
+      return child;
+    }
+
+    return Nested(
+      children: addons!
+          .map(
+            (addon) => SingleChildBuilder(
+              builder: (context, child) => builder(
+                context,
+                addon,
+                child!,
+              ),
+            ),
+          )
+          .toList(),
+      child: child,
+    );
   }
 }

@@ -25,9 +25,9 @@ import 'state/state.dart';
 class Widgetbook extends StatefulWidget {
   const Widgetbook({
     super.key,
-    this.directories = const <MultiChildNavigationNodeData>[],
+    required this.directories,
     required this.appBuilder,
-    required this.addons,
+    this.addons,
     this.integrations,
   });
 
@@ -39,7 +39,7 @@ class Widgetbook extends StatefulWidget {
 
   final AppBuilder appBuilder;
 
-  final List<WidgetbookAddOn> addons;
+  final List<WidgetbookAddOn>? addons;
 
   final List<WidgetbookIntegration>? integrations;
 
@@ -48,7 +48,7 @@ class Widgetbook extends StatefulWidget {
     Key? key,
     required List<MultiChildNavigationNodeData> directories,
     AppBuilder? appBuilder,
-    required List<WidgetbookAddOn> addons,
+    List<WidgetbookAddOn>? addons,
     List<WidgetbookIntegration>? integrations,
   }) {
     return Widgetbook(
@@ -65,7 +65,7 @@ class Widgetbook extends StatefulWidget {
     Key? key,
     required List<MultiChildNavigationNodeData> directories,
     AppBuilder? appBuilder,
-    required List<WidgetbookAddOn> addons,
+    List<WidgetbookAddOn>? addons,
     List<WidgetbookIntegration>? integrations,
   }) {
     return Widgetbook(
