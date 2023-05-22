@@ -17,6 +17,9 @@ class WidgetbookApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook.material(
       directories: directories,
+      integrations: [
+        WidgetbookCloudIntegration(),
+      ],
       addons: [
         MaterialThemeAddon(
           themes: [

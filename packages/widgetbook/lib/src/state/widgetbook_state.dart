@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
 import '../addons/addons.dart';
+import '../integrations/widgetbook_integration.dart';
 import '../knobs/knob.dart';
 import '../models/models.dart';
 import 'widgetbook_catalog.dart';
@@ -12,21 +13,23 @@ typedef AppBuilder = Widget Function(BuildContext context, Widget child);
 
 class WidgetbookState extends ChangeNotifier {
   WidgetbookState({
-    required this.path,
-    required this.previewMode,
-    required this.queryParams,
-    required this.addons,
+    this.path = '',
+    this.previewMode = false,
+    this.queryParams = const {},
     required this.catalog,
     required this.appBuilder,
+    required this.addons,
+    this.integrations,
   }) : this.knobs = {};
 
   String path;
   final Map<String, Knob> knobs;
   final bool previewMode;
   final Map<String, String> queryParams;
-  final List<WidgetbookAddOn> addons;
   final WidgetbookCatalog catalog;
   final AppBuilder appBuilder;
+  final List<WidgetbookAddOn> addons;
+  final List<WidgetbookIntegration>? integrations;
 
   WidgetbookUseCase? get useCase => catalog.get(path);
 
@@ -53,6 +56,10 @@ class WidgetbookState extends ChangeNotifier {
     if (!previewMode) {
       syncRouteInformation();
     }
+
+    integrations?.forEach(
+      (integration) => integration.onChange(this),
+    );
   }
 
   /// Syncs this with the router's location using [SystemNavigator].
@@ -97,5 +104,17 @@ class WidgetbookState extends ChangeNotifier {
     // Return `null` even if the knob has value, but it was marked as null
     // using [updateKnobNullability].
     return cachedKnob.isNull ? null : (cachedKnob.value as T);
+  }
+
+  WidgetbookState copyWithQueryParams(Map<String, String> params) {
+    return WidgetbookState(
+      path: params['path'] ?? '',
+      previewMode: params.containsKey('preview'),
+      queryParams: {...params}, // Copy from UnmodifiableMap
+      catalog: catalog,
+      appBuilder: appBuilder,
+      addons: addons,
+      integrations: integrations,
+    );
   }
 }

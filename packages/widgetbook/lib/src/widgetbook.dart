@@ -6,7 +6,7 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 
 import 'addons/addons.dart';
 import 'app/router.dart';
-import 'messaging/messaging.dart';
+import 'integrations/integrations.dart';
 import 'state/state.dart';
 
 /// Describes the configuration for your [Widget] library.
@@ -25,12 +25,11 @@ import 'state/state.dart';
 class Widgetbook extends StatefulWidget {
   const Widgetbook({
     super.key,
+    this.directories = const <MultiChildNavigationNodeData>[],
     required this.appBuilder,
     required this.addons,
-    this.directories = const <MultiChildNavigationNodeData>[],
+    this.integrations,
   });
-
-  final List<WidgetbookAddOn> addons;
 
   /// Children which host Packages, Folders, Categories, Components
   /// and Use cases.
@@ -40,33 +39,41 @@ class Widgetbook extends StatefulWidget {
 
   final AppBuilder appBuilder;
 
+  final List<WidgetbookAddOn> addons;
+
+  final List<WidgetbookIntegration>? integrations;
+
   /// A [Widgetbook] which uses cupertino theming via [CupertinoApp].
   static Widgetbook cupertino({
-    required List<MultiChildNavigationNodeData> directories,
-    required List<WidgetbookAddOn> addons,
-    AppBuilder? appBuilder,
     Key? key,
+    required List<MultiChildNavigationNodeData> directories,
+    AppBuilder? appBuilder,
+    required List<WidgetbookAddOn> addons,
+    List<WidgetbookIntegration>? integrations,
   }) {
     return Widgetbook(
       key: key,
       directories: directories,
-      addons: addons,
       appBuilder: appBuilder ?? cupertinoAppBuilder,
+      addons: addons,
+      integrations: integrations,
     );
   }
 
   /// A [Widgetbook] which uses material theming via [MaterialApp].
   static Widgetbook material({
-    required List<MultiChildNavigationNodeData> directories,
-    required List<WidgetbookAddOn> addons,
-    AppBuilder? appBuilder,
     Key? key,
+    required List<MultiChildNavigationNodeData> directories,
+    AppBuilder? appBuilder,
+    required List<WidgetbookAddOn> addons,
+    List<WidgetbookIntegration>? integrations,
   }) {
     return Widgetbook(
       key: key,
       directories: directories,
-      addons: addons,
       appBuilder: appBuilder ?? materialAppBuilder,
+      addons: addons,
+      integrations: integrations,
     );
   }
 
@@ -80,10 +87,21 @@ class _WidgetbookState extends State<Widgetbook> {
 
   @override
   void initState() {
-    router = createRouter(
-      addons: widget.addons,
+    super.initState();
+
+    final initialState = WidgetbookState(
       catalog: WidgetbookCatalog.fromDirectories(widget.directories),
       appBuilder: widget.appBuilder,
+      addons: widget.addons,
+      integrations: widget.integrations,
+    );
+
+    router = createRouter(
+      initialState: initialState,
+    );
+
+    widget.integrations?.forEach(
+      (integration) => integration.onInit(initialState),
     );
 
     navigationBloc.add(
@@ -91,26 +109,6 @@ class _WidgetbookState extends State<Widgetbook> {
         directories: widget.directories,
       ),
     );
-
-    // Sends a message with the json representation of Addon fields
-    sendMessage(
-      widget.addons.fold(
-        {},
-        (json, addon) {
-          return json
-            ..putIfAbsent(
-              addon.slugName,
-              () => addon.fields
-                  .map(
-                    (field) => field.toFullJson(),
-                  )
-                  .toList(),
-            );
-        },
-      ),
-    );
-
-    super.initState();
   }
 
   @override
