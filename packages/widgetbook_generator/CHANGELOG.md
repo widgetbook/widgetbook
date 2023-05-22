@@ -1,3 +1,7 @@
+## Unreleased
+
+ - **BREAKING**: Remove code generation support for everything except `@App` and `@UseCase` that generate a list called `directories`. You should now configure Widgetbook's properties (i.e. `addons`, `appBuilder`, etc.) manually. ([#663](https://github.com/widgetbook/widgetbook/pull/663))
+
 ## 3.0.0-beta.11
 
  - **REFACTOR**: :recycle: removed package analysis_options files.
