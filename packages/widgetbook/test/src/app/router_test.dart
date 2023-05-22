@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgetbook/src/app/router.dart';
+import 'package:widgetbook/src/app/widgetbook_shell.dart';
 import 'package:widgetbook/src/state/state.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
@@ -184,10 +185,10 @@ void main() {
           );
 
           testWidgets(
-            'navigation panel only (deprecated)',
+            'preview mode',
             (tester) async {
               final router = createRouter(
-                initialLocation: '/?disable-properties=true',
+                initialLocation: '/?preview',
                 addons: addons,
                 catalog: catalog,
                 appBuilder: materialAppBuilder,
@@ -198,134 +199,9 @@ void main() {
                 router: router,
               );
 
-              final navigationFinder = find.byType(NavigationPanel);
-              final settingsFinder = find.byType(SettingsPanel);
+              final shellFinder = find.byType(WidgetbookShell);
 
-              expect(navigationFinder, findsOneWidget);
-              expect(settingsFinder, findsNothing);
-            },
-          );
-
-          testWidgets(
-            'navigation panel only',
-            (tester) async {
-              final router = createRouter(
-                initialLocation: '/?panels={navigation}',
-                addons: addons,
-                catalog: catalog,
-                appBuilder: materialAppBuilder,
-              );
-
-              await pumpRouter(
-                tester: tester,
-                router: router,
-              );
-
-              final navigationFinder = find.byType(NavigationPanel);
-              final settingsFinder = find.byType(SettingsPanel);
-
-              expect(navigationFinder, findsOneWidget);
-              expect(settingsFinder, findsNothing);
-            },
-          );
-
-          testWidgets(
-            'settings panel only (deprecated)',
-            (tester) async {
-              final router = createRouter(
-                initialLocation: '/?disable-navigation=true',
-                addons: addons,
-                catalog: catalog,
-                appBuilder: materialAppBuilder,
-              );
-
-              await pumpRouter(
-                tester: tester,
-                router: router,
-              );
-
-              final navigationFinder = find.byType(NavigationPanel);
-              final settingsFinder = find.byType(SettingsPanel);
-
-              expect(navigationFinder, findsNothing);
-              expect(settingsFinder, findsOneWidget);
-            },
-          );
-
-          testWidgets(
-            'settings panel only',
-            (tester) async {
-              final router = createRouter(
-                initialLocation: '/?panels={knobs,addons}',
-                addons: addons,
-                catalog: catalog,
-                appBuilder: materialAppBuilder,
-              );
-
-              await pumpRouter(
-                tester: tester,
-                router: router,
-              );
-
-              final navigationFinder = find.byType(NavigationPanel);
-              final settingsFinder = find.byType(SettingsPanel);
-
-              expect(navigationFinder, findsNothing);
-              expect(settingsFinder, findsOneWidget);
-            },
-          );
-
-          testWidgets(
-            'addons panel only',
-            (tester) async {
-              final router = createRouter(
-                initialLocation: '/?panels={addons}',
-                addons: addons,
-                catalog: catalog,
-                appBuilder: materialAppBuilder,
-              );
-
-              await pumpRouter(
-                tester: tester,
-                router: router,
-              );
-
-              final navigationFinder = find.byType(NavigationPanel);
-              final settingsFinder = find.byType(SettingsPanel);
-              final addonsFinder = find.text('Properties');
-              final knobsFinder = find.text('Knobs');
-
-              expect(navigationFinder, findsNothing);
-              expect(settingsFinder, findsOneWidget);
-              expect(addonsFinder, findsOneWidget);
-              expect(knobsFinder, findsNothing);
-            },
-          );
-
-          testWidgets(
-            'knobs panel only',
-            (tester) async {
-              final router = createRouter(
-                initialLocation: '/?panels={knobs}',
-                addons: addons,
-                catalog: catalog,
-                appBuilder: materialAppBuilder,
-              );
-
-              await pumpRouter(
-                tester: tester,
-                router: router,
-              );
-
-              final navigationFinder = find.byType(NavigationPanel);
-              final settingsFinder = find.byType(SettingsPanel);
-              final addonsFinder = find.text('Properties');
-              final knobsFinder = find.text('Knobs');
-
-              expect(navigationFinder, findsNothing);
-              expect(settingsFinder, findsOneWidget);
-              expect(addonsFinder, findsNothing);
-              expect(knobsFinder, findsOneWidget);
+              expect(shellFinder, findsNothing);
             },
           );
         },
