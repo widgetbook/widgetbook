@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 import '../../fields/fields.dart';
 import '../common/common.dart';
-import 'device_setting.dart';
+import 'device_frame_setting.dart';
 
-class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
-  DeviceAddon({
+class DeviceFrameAddon extends WidgetbookAddOn<DeviceFrameSetting> {
+  DeviceFrameAddon({
     required List<DeviceInfo> devices,
     DeviceInfo? initialDevice,
   })  : assert(
@@ -19,7 +19,7 @@ class DeviceAddon extends WidgetbookAddOn<DeviceSetting> {
         ),
         super(
           name: 'Device',
-          initialSetting: DeviceSetting(
+          initialSetting: DeviceFrameSetting(
             // [null] represents a "none" device
             devices: [null, ...devices],
             activeDevice: initialDevice,

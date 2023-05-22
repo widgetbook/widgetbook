@@ -42,7 +42,7 @@ class WidgetbookApp extends StatelessWidget {
             DefaultMaterialLocalizations.delegate,
           ],
         ),
-        DeviceAddon(
+        DeviceFrameAddon(
           devices: [
             Devices.ios.iPhoneSE,
             Devices.ios.iPhone12,

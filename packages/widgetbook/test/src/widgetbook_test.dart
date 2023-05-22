@@ -92,7 +92,7 @@ void main() {
                 () => Widgetbook(
                   appBuilder: _defaultAppBuilderMethod,
                   addons: [
-                    DeviceAddon(
+                    DeviceFrameAddon(
                       devices: [],
                     ),
                   ],
