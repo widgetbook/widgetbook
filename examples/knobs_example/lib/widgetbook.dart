@@ -14,7 +14,7 @@ class KnobsExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook.material(
       addons: [
-        DeviceAddon(
+        DeviceFrameAddon(
           devices: [
             Devices.ios.iPhoneSE,
             Devices.ios.iPhone12,

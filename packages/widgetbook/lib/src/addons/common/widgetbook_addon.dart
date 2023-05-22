@@ -11,7 +11,7 @@ import '../addons.dart';
 /// * [ThemeAddon], a generic implementation of a [WidgetbookAddOn].
 /// * [MaterialThemeAddon], an [WidgetbookAddOn] to change the active
 ///   [ThemeData] of the [WidgetbookUseCase].
-/// * [DeviceAddon], an [WidgetbookAddOn] to change the active [Device] that
+/// * [DeviceFrameAddon], an [WidgetbookAddOn] to change the active [Device] that
 ///   allows to view the [WidgetbookUseCase] on different screens.
 ///
 /// You must not have multiple [WidgetbookAddOn]s that are of the same generic

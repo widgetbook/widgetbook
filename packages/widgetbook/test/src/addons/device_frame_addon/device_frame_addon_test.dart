@@ -6,7 +6,7 @@ import '../utils/addon_test_helper.dart';
 
 void main() {
   group(
-    '$DeviceAddon',
+    '$DeviceFrameAddon',
     () {
       final devices = [
         Devices.ios.iPhone12,
@@ -14,7 +14,7 @@ void main() {
         Devices.ios.iPhone13Mini,
       ];
 
-      final addon = DeviceAddon(
+      final addon = DeviceFrameAddon(
         devices: devices,
         initialDevice: devices.first,
       );
