@@ -44,13 +44,13 @@ class KnobsBuilder {
 
   /// Creates a checkbox that can be toggled on and off and optionally hold a
   /// null value
-  bool? nullableBoolean({
+  bool? booleanOrNull({
     required String label,
     String? description,
     bool? initialValue = false,
   }) {
     return onKnobAdded<bool?>(
-      NullableBooleanKnob(
+      BooleanOrNullKnob(
         label: label,
         description: description,
         value: initialValue,
@@ -92,14 +92,14 @@ class KnobsBuilder {
 
   /// Creates a textfield that can be typed in and optionally hold a
   /// null value
-  String? nullableString({
+  String? stringOrNull({
     required String label,
     String? description,
     String? initialValue,
     int? maxLines = 1,
   }) {
     return onKnobAdded<String?>(
-      NullableStringKnob(
+      StringOrNullKnob(
         label: label,
         value: initialValue,
         description: description,
@@ -134,7 +134,7 @@ class KnobsBuilder {
   /// Creates a slider that can be slid to specific double values. You can use
   /// the `num?.toInt()` function to make this into an integer.
   /// Can optionally hold a null value
-  double? nullableDoubleSlider({
+  double? doubleOrNullSlider({
     required String label,
     String? description,
     double? initialValue,
@@ -144,7 +144,7 @@ class KnobsBuilder {
   }) {
     initialValue ??= max ?? min ?? 10;
     return onKnobAdded<double?>(
-      NullableDoubleSliderKnob(
+      DoubleOrNullSliderKnob(
         label: label,
         value: initialValue,
         description: description,
@@ -174,13 +174,13 @@ class KnobsBuilder {
   /// Creates a textfield which users can type double values into. You can use
   /// the `num?.toInt()` function to turn this into an integer
   /// Can optionally hold a null value
-  double? nullableDoubleInput({
+  double? doubleOrNullInput({
     required String label,
     String? description,
     double? initialValue,
   }) {
     return onKnobAdded<double?>(
-      NullableDoubleInputKnob(
+      DoubleOrNullInputKnob(
         label: label,
         value: initialValue,
         description: description,

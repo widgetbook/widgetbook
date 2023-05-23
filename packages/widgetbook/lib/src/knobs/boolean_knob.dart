@@ -25,8 +25,8 @@ class BooleanKnob extends Knob<bool> {
   }
 }
 
-class NullableBooleanKnob extends Knob<bool?> {
-  NullableBooleanKnob({
+class BooleanOrNullKnob extends Knob<bool?> {
+  BooleanOrNullKnob({
     required super.label,
     required super.value,
     super.description,

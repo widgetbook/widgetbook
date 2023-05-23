@@ -45,7 +45,7 @@ class KnobsExample extends StatelessWidget {
                     title: context.knobs
                         .string(label: 'Title', initialValue: 'Title'),
                     incrementBy: context.knobs
-                            .nullableDoubleSlider(
+                            .doubleOrNullSlider(
                               label: 'Increment By',
                               min: 0,
                               initialValue: 5,
@@ -54,7 +54,7 @@ class KnobsExample extends StatelessWidget {
                             )
                             ?.toInt() ??
                         0,
-                    countLabel: context.knobs.nullableString(
+                    countLabel: context.knobs.stringOrNull(
                       label: 'Count Label',
                       initialValue: 'Current Count',
                       description:

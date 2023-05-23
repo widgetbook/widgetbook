@@ -35,8 +35,8 @@ class DoubleSliderKnob extends Knob<double> {
   }
 }
 
-class NullableDoubleSliderKnob extends Knob<double?> {
-  NullableDoubleSliderKnob({
+class DoubleOrNullSliderKnob extends Knob<double?> {
+  DoubleOrNullSliderKnob({
     required super.label,
     required double super.value,
     super.description,

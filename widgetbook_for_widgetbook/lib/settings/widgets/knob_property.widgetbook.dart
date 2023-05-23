@@ -14,7 +14,7 @@ Widget knobPropertyUseCase(BuildContext context) {
       initialValue: 'Knob',
     ),
     value: true,
-    description: context.knobs.nullableString(
+    description: context.knobs.stringOrNull(
       label: 'Description',
     ),
     isNullable: context.knobs.boolean(

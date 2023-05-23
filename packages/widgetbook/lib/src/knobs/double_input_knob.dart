@@ -25,8 +25,8 @@ class DoubleInputKnob extends Knob<double> {
   }
 }
 
-class NullableDoubleInputKnob extends Knob<double?> {
-  NullableDoubleInputKnob({
+class DoubleOrNullInputKnob extends Knob<double?> {
+  DoubleOrNullInputKnob({
     required super.label,
     required super.value,
     super.description,

@@ -29,8 +29,8 @@ class StringKnob extends Knob<String> {
   }
 }
 
-class NullableStringKnob extends Knob<String?> {
-  NullableStringKnob({
+class StringOrNullKnob extends Knob<String?> {
+  StringOrNullKnob({
     required super.label,
     required super.value,
     super.description,
