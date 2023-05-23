@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/widgetbook.dart' show Knobs;
+import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 Widget complexSetting(BuildContext context) {
@@ -32,8 +32,8 @@ SettingSectionData sizeSettingData(BuildContext context) {
       SubSetting(
         name: 'Width',
         child: Text(
-          context.knobs
-              .doubleSlider(
+          context.knobs.double
+              .slider(
                 label: 'Width',
                 min: 1,
                 max: 300,
@@ -44,8 +44,8 @@ SettingSectionData sizeSettingData(BuildContext context) {
       SubSetting(
         name: 'Height',
         child: Text(
-          context.knobs
-              .doubleSlider(
+          context.knobs.double
+              .slider(
                 label: 'Height',
                 min: 1,
                 max: 300,

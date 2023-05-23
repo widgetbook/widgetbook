@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/widgetbook.dart' show Knobs;
+import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
@@ -7,7 +7,7 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 Widget expanderButton(BuildContext context) {
   return ExpanderIcon(
     isExpanded: context.knobs.boolean(label: 'Is expanded'),
-    size: context.knobs.doubleSlider(
+    size: context.knobs.double.slider(
       label: 'Size',
       min: 12,
       initialValue: 24,

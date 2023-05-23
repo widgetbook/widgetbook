@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/widgetbook.dart' show Knobs;
+import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
@@ -21,8 +21,8 @@ Widget navigationTreeItemWithout(BuildContext context) {
           ),
           type: nodeType,
         ),
-        level: context.knobs
-            .doubleSlider(
+        level: context.knobs.double
+            .slider(
               label: 'Level',
               initialValue: 0,
               min: 0,

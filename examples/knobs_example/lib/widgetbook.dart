@@ -44,8 +44,8 @@ class KnobsExample extends StatelessWidget {
                   builder: (context) => MyHomePage(
                     title: context.knobs
                         .string(label: 'Title', initialValue: 'Title'),
-                    incrementBy: context.knobs
-                            .doubleOrNullSlider(
+                    incrementBy: context.knobs.doubleOrNull
+                            .slider(
                               label: 'Increment By',
                               min: 0,
                               initialValue: 5,

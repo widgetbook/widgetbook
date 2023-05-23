@@ -21,8 +21,8 @@ void main() {
     (WidgetTester tester) async {
       await tester.pumpWithKnob(
         (context) => Text(
-          context.knobs
-              .doubleInput(
+          context.knobs.double
+              .slider(
                 label: 'label',
                 initialValue: 5,
               )
@@ -39,8 +39,8 @@ void main() {
     (WidgetTester tester) async {
       await tester.pumpWithKnob(
         (context) => Text(
-          context.knobs
-              .doubleInput(
+          context.knobs.double
+              .input(
                 label: 'label',
                 initialValue: 200,
                 description: 'test description',
@@ -58,8 +58,8 @@ void main() {
     (WidgetTester tester) async {
       await tester.pumpWithKnob(
         (context) => Text(
-          context.knobs
-              .doubleInput(
+          context.knobs.double
+              .input(
                 label: 'label',
               )
               .toString(),

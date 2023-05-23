@@ -20,8 +20,8 @@ void main() {
     (WidgetTester tester) async {
       await tester.pumpWithKnob(
         (context) => Text(
-          context.knobs
-              .doubleSlider(
+          context.knobs.double
+              .slider(
                 label: 'label',
                 initialValue: 5,
                 max: 7,
