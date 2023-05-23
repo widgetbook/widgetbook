@@ -8,18 +8,18 @@ void main() {
   testWidgets(
     'Equality operator works correctly',
     (WidgetTester tester) async {
-      final first = NullableTextKnob(
+      final first = NullableStringKnob(
         label: 'first',
         value: null,
       );
-      final second = NullableTextKnob(
+      final second = NullableStringKnob(
         label: 'second',
         value: 'value',
       );
       expect(
         first,
         equals(
-          NullableTextKnob(
+          NullableStringKnob(
             label: 'first',
             value: null,
           ),
@@ -37,7 +37,7 @@ void main() {
 
       await tester.pumpWithKnob(
         (context) {
-          final value = context.knobs.nullableText(
+          final value = context.knobs.nullableString(
             label: 'label',
           );
 
@@ -73,7 +73,7 @@ void main() {
 
       await tester.pumpWithKnob(
         (context) {
-          final value = context.knobs.nullableText(
+          final value = context.knobs.nullableString(
             label: 'label',
           );
 

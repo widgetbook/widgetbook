@@ -8,9 +8,9 @@ void main() {
   testWidgets(
     'Equality operator works correctly',
     (WidgetTester tester) async {
-      final first = SliderKnob(label: 'first', value: 3);
-      final second = SliderKnob(label: 'second', value: 3);
-      expect(first, equals(SliderKnob(label: 'first', value: 3)));
+      final first = DoubleSliderKnob(label: 'first', value: 3);
+      final second = DoubleSliderKnob(label: 'second', value: 3);
+      expect(first, equals(DoubleSliderKnob(label: 'first', value: 3)));
       expect(first, isNot(equals(second)));
     },
   );
@@ -21,7 +21,7 @@ void main() {
       await tester.pumpWithKnob(
         (context) => Text(
           context.knobs
-              .slider(
+              .doubleSlider(
                 label: 'label',
                 initialValue: 5,
                 max: 7,

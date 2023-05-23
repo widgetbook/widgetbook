@@ -2,8 +2,8 @@ import '../fields/fields.dart';
 import '../state/state.dart';
 import 'knob.dart';
 
-class OptionsKnob<T> extends Knob<T> {
-  OptionsKnob({
+class ListKnob<T> extends Knob<T> {
+  ListKnob({
     required super.label,
     required super.value,
     required this.options,

@@ -9,12 +9,12 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 )
 Widget knobPropertyUseCase(BuildContext context) {
   return KnobProperty(
-    name: context.knobs.text(
+    name: context.knobs.string(
       label: 'Name',
       initialValue: 'Knob',
     ),
     value: true,
-    description: context.knobs.nullableText(
+    description: context.knobs.nullableString(
       label: 'Description',
     ),
     isNullable: context.knobs.boolean(

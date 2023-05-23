@@ -33,7 +33,7 @@ SettingSectionData sizeSettingData(BuildContext context) {
         name: 'Width',
         child: Text(
           context.knobs
-              .slider(
+              .doubleSlider(
                 label: 'Width',
                 min: 1,
                 max: 300,
@@ -45,7 +45,7 @@ SettingSectionData sizeSettingData(BuildContext context) {
         name: 'Height',
         child: Text(
           context.knobs
-              .slider(
+              .doubleSlider(
                 label: 'Height',
                 min: 1,
                 max: 300,

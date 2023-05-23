@@ -1,13 +1,13 @@
 import 'package:flutter/widgets.dart';
 
 import '../state/state.dart';
-import 'bool_knob.dart';
+import 'boolean_knob.dart';
 import 'color_knob.dart';
+import 'double_input_knob.dart';
+import 'double_slider_knob.dart';
 import 'knob.dart';
-import 'number_knob.dart';
-import 'options_knob.dart';
-import 'slider_knob.dart';
-import 'text_knob.dart';
+import 'list_knob.dart';
+import 'string_knob.dart';
 
 extension Knobs on BuildContext {
   /// Creates adjustable parameters for the WidgetbookUseCase
@@ -34,7 +34,7 @@ class KnobsBuilder {
     bool initialValue = false,
   }) {
     return onKnobAdded(
-      BoolKnob(
+      BooleanKnob(
         label: label,
         description: description,
         value: initialValue,
@@ -50,7 +50,7 @@ class KnobsBuilder {
     bool? initialValue = false,
   }) {
     return onKnobAdded<bool?>(
-      NullableBoolKnob(
+      NullableBooleanKnob(
         label: label,
         description: description,
         value: initialValue,
@@ -74,14 +74,14 @@ class KnobsBuilder {
   }
 
   /// Creates a textfield that can be typed in
-  String text({
+  String string({
     required String label,
     String? description,
     String initialValue = '',
     int? maxLines = 1,
   }) {
     return onKnobAdded(
-      TextKnob(
+      StringKnob(
         label: label,
         value: initialValue,
         description: description,
@@ -92,14 +92,14 @@ class KnobsBuilder {
 
   /// Creates a textfield that can be typed in and optionally hold a
   /// null value
-  String? nullableText({
+  String? nullableString({
     required String label,
     String? description,
     String? initialValue,
     int? maxLines = 1,
   }) {
     return onKnobAdded<String?>(
-      NullableTextKnob(
+      NullableStringKnob(
         label: label,
         value: initialValue,
         description: description,
@@ -110,7 +110,7 @@ class KnobsBuilder {
 
   /// Creates a slider that can be slid to specific double values. You can use
   /// the `num.toInt()` function to make this into an integer
-  double slider({
+  double doubleSlider({
     required String label,
     String? description,
     double? initialValue,
@@ -120,7 +120,7 @@ class KnobsBuilder {
   }) {
     initialValue ??= max ?? min ?? 10;
     return onKnobAdded(
-      SliderKnob(
+      DoubleSliderKnob(
         label: label,
         value: initialValue,
         description: description,
@@ -134,7 +134,7 @@ class KnobsBuilder {
   /// Creates a slider that can be slid to specific double values. You can use
   /// the `num?.toInt()` function to make this into an integer.
   /// Can optionally hold a null value
-  double? nullableSlider({
+  double? nullableDoubleSlider({
     required String label,
     String? description,
     double? initialValue,
@@ -144,7 +144,7 @@ class KnobsBuilder {
   }) {
     initialValue ??= max ?? min ?? 10;
     return onKnobAdded<double?>(
-      NullableSliderKnob(
+      NullableDoubleSliderKnob(
         label: label,
         value: initialValue,
         description: description,
@@ -157,15 +157,15 @@ class KnobsBuilder {
 
   /// Creates a textfield which users can type double values into. You can use
   /// the `num?.toInt()` function to turn this into an integer
-  num number({
+  double doubleInput({
     required String label,
     String? description,
-    num initialValue = 0,
+    double initialValue = 0,
   }) {
     return onKnobAdded(
-      NumberKnob(
+      DoubleInputKnob(
         label: label,
-        value: initialValue.toDouble(),
+        value: initialValue,
         description: description,
       ),
     )!;
@@ -174,15 +174,15 @@ class KnobsBuilder {
   /// Creates a textfield which users can type double values into. You can use
   /// the `num?.toInt()` function to turn this into an integer
   /// Can optionally hold a null value
-  num? nullableNumber({
+  double? nullableDoubleInput({
     required String label,
     String? description,
-    num? initialValue,
+    double? initialValue,
   }) {
-    return onKnobAdded<num?>(
-      NullableNumberKnob(
+    return onKnobAdded<double?>(
+      NullableDoubleInputKnob(
         label: label,
-        value: initialValue?.toDouble(),
+        value: initialValue,
         description: description,
       ),
     );
@@ -191,7 +191,7 @@ class KnobsBuilder {
   /// Allow the users to select from a list of options in a drop down box.
   /// The initial value is the first item in the list of options
   /// Must contain at least one value
-  T options<T>({
+  T list<T>({
     required String label,
     required List<T> options,
     String? description,
@@ -199,7 +199,7 @@ class KnobsBuilder {
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return onKnobAdded(
-      OptionsKnob(
+      ListKnob(
         label: label,
         value: options.first,
         description: description,

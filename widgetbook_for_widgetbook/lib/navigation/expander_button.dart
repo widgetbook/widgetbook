@@ -7,7 +7,7 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 Widget expanderButton(BuildContext context) {
   return ExpanderIcon(
     isExpanded: context.knobs.boolean(label: 'Is expanded'),
-    size: context.knobs.slider(
+    size: context.knobs.doubleSlider(
       label: 'Size',
       min: 12,
       initialValue: 24,

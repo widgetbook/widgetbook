@@ -2,31 +2,25 @@ import '../fields/fields.dart';
 import '../state/state.dart';
 import 'knob.dart';
 
-class SliderKnob extends Knob<double> {
-  SliderKnob({
+class StringKnob extends Knob<String> {
+  StringKnob({
     required super.label,
     required super.value,
     super.description,
-    this.max = 1,
-    this.min = 0,
-    this.divisions,
+    this.maxLines,
   });
 
-  final double max;
-  final double min;
-  final int? divisions;
+  final int? maxLines;
 
   @override
   List<Field> get fields {
     return [
-      DoubleSliderField(
+      StringField(
         group: 'knobs',
         name: label,
         initialValue: value,
-        min: min,
-        max: max,
-        divisions: divisions,
-        onChanged: (context, num? value) {
+        maxLines: maxLines,
+        onChanged: (context, String? value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue(label, value);
         },
@@ -35,31 +29,25 @@ class SliderKnob extends Knob<double> {
   }
 }
 
-class NullableSliderKnob extends Knob<double?> {
-  NullableSliderKnob({
+class NullableStringKnob extends Knob<String?> {
+  NullableStringKnob({
     required super.label,
-    required double super.value,
+    required super.value,
     super.description,
-    this.max = 1,
-    this.min = 0,
-    this.divisions,
+    this.maxLines,
   });
 
-  final double max;
-  final double min;
-  final int? divisions;
+  final int? maxLines;
 
   @override
   List<Field> get fields {
     return [
-      DoubleSliderField(
+      StringField(
         group: 'knobs',
         name: label,
         initialValue: value,
-        min: min,
-        max: max,
-        divisions: divisions,
-        onChanged: (context, num? value) {
+        maxLines: maxLines,
+        onChanged: (context, String? value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue(label, value);
         },

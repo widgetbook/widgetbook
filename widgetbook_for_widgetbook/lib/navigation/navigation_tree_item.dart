@@ -5,7 +5,7 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 
 @UseCase(name: 'Default', type: NavigationTreeItem)
 Widget navigationTreeItemWithout(BuildContext context) {
-  final nodeType = context.knobs.options<NavigationNodeType>(
+  final nodeType = context.knobs.list<NavigationNodeType>(
     label: 'Node Type',
     options: NavigationNodeType.values,
   );
@@ -15,14 +15,14 @@ Widget navigationTreeItemWithout(BuildContext context) {
       NavigationTreeItem(
         data: NavigationTreeNodeData(
           path: 'name',
-          name: context.knobs.text(
+          name: context.knobs.string(
             label: 'Name',
             initialValue: 'Category',
           ),
           type: nodeType,
         ),
         level: context.knobs
-            .slider(
+            .doubleSlider(
               label: 'Level',
               initialValue: 0,
               min: 0,

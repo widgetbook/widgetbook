@@ -8,9 +8,9 @@ void main() {
   testWidgets(
     'Equality operator works correctly',
     (WidgetTester tester) async {
-      final first = NullableBoolKnob(label: 'first', value: null);
-      final second = NullableBoolKnob(label: 'second', value: null);
-      expect(first, equals(NullableBoolKnob(label: 'first', value: null)));
+      final first = NullableBooleanKnob(label: 'first', value: null);
+      final second = NullableBooleanKnob(label: 'second', value: null);
+      expect(first, equals(NullableBooleanKnob(label: 'first', value: null)));
       expect(first, isNot(equals(second)));
     },
   );

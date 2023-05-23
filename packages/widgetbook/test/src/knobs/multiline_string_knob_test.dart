@@ -15,14 +15,14 @@ for (var level = 1; level <= 6; level++)
   ),
 ''';
 
-  group('$TextKnob', () {
+  group('$StringKnob', () {
     testWidgets(
       'is multiline',
       (WidgetTester tester) async {
         await tester.pumpWithKnob(
           (context) => Text(
             key: textFinderKey,
-            context.knobs.text(
+            context.knobs.string(
               label: 'label',
               initialValue: initialTextValue,
               maxLines: null,
@@ -44,7 +44,7 @@ for (var level = 1; level <= 6; level++)
       (WidgetTester tester) async {
         await tester.pumpWithKnob(
           (context) => Text(
-            context.knobs.text(
+            context.knobs.string(
               label: 'label',
               initialValue: initialTextValue,
             ),

@@ -1,9 +1,9 @@
 import '../fields/fields.dart';
-import '../state/state.dart';
+import '../state/widgetbook_state.dart';
 import 'knob.dart';
 
-class BoolKnob extends Knob<bool> {
-  BoolKnob({
+class DoubleInputKnob extends Knob<double> {
+  DoubleInputKnob({
     required super.label,
     required super.value,
     super.description,
@@ -12,11 +12,11 @@ class BoolKnob extends Knob<bool> {
   @override
   List<Field> get fields {
     return [
-      BooleanField(
+      DoubleInputField(
         group: 'knobs',
         name: label,
         initialValue: value,
-        onChanged: (context, bool? value) {
+        onChanged: (context, num? value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue(label, value);
         },
@@ -25,8 +25,8 @@ class BoolKnob extends Knob<bool> {
   }
 }
 
-class NullableBoolKnob extends Knob<bool?> {
-  NullableBoolKnob({
+class NullableDoubleInputKnob extends Knob<double?> {
+  NullableDoubleInputKnob({
     required super.label,
     required super.value,
     super.description,
@@ -35,11 +35,11 @@ class NullableBoolKnob extends Knob<bool?> {
   @override
   List<Field> get fields {
     return [
-      BooleanField(
+      DoubleInputField(
         group: 'knobs',
         name: label,
         initialValue: value,
-        onChanged: (context, bool? value) {
+        onChanged: (context, num? value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue(label, value);
         },

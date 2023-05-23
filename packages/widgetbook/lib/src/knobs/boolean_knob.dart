@@ -2,25 +2,21 @@ import '../fields/fields.dart';
 import '../state/state.dart';
 import 'knob.dart';
 
-class TextKnob extends Knob<String> {
-  TextKnob({
+class BooleanKnob extends Knob<bool> {
+  BooleanKnob({
     required super.label,
     required super.value,
     super.description,
-    this.maxLines,
   });
-
-  final int? maxLines;
 
   @override
   List<Field> get fields {
     return [
-      StringField(
+      BooleanField(
         group: 'knobs',
         name: label,
         initialValue: value,
-        maxLines: maxLines,
-        onChanged: (context, String? value) {
+        onChanged: (context, bool? value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue(label, value);
         },
@@ -29,25 +25,21 @@ class TextKnob extends Knob<String> {
   }
 }
 
-class NullableTextKnob extends Knob<String?> {
-  NullableTextKnob({
+class NullableBooleanKnob extends Knob<bool?> {
+  NullableBooleanKnob({
     required super.label,
     required super.value,
     super.description,
-    this.maxLines,
   });
-
-  final int? maxLines;
 
   @override
   List<Field> get fields {
     return [
-      StringField(
+      BooleanField(
         group: 'knobs',
         name: label,
         initialValue: value,
-        maxLines: maxLines,
-        onChanged: (context, String? value) {
+        onChanged: (context, bool? value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue(label, value);
         },
