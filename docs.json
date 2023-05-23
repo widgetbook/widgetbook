@@ -129,7 +129,7 @@
                     "7. Accessing Resources", "/widgetbook-cloud/accessing-resources"
                 ],
                 [
-                    "8. Setup Webhook", "/widgetbook-cloud/setup-webhook"
+                    "8. Github Integration", "/widgetbook-cloud/integrating-github"
                 ]
             ]
         ],
@@ -145,6 +145,12 @@
             "Mono-repo",
             [
                 ["Setup", "/mono-repo/index"]
+            ]
+        ],
+        [
+            "Contribution",
+            [
+                ["Getting Started", "/contribution/get-started"]
             ]
         ]
     ]
