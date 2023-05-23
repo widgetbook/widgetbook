@@ -1,9 +1,11 @@
 ## Unreleased
 
+ - **FEAT**: Add Dart 3 and Flutter 3.10 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
  - **FEAT**: Add `buildUseCase` methods to Addons, that act as micro-`appBuilder`s. ([#646](https://github.com/widgetbook/widgetbook/pull/646))
  - **FEAT**: Add `preview` query param instead of `disable-navigation`, `disable-properties` and `panels` query params. ([#687](https://github.com/widgetbook/widgetbook/issues/687))
  - **FEAT**: Create `WidgetbookState`. ([#674](https://github.com/widgetbook/widgetbook/issues/674))
  - **FEAT**: Add `integrations` and `WidgetbookCloudIntegration`. ([#689](https://github.com/widgetbook/widgetbook/issues/689))
+ - **BREAKING**: Drop Flutter 2 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
  - **BREAKING**: Use type-based knob names. ([#695](https://github.com/widgetbook/widgetbook/pull/695))
  - **BREAKING**: Cleanup Addons constructors by removing the `setting` parameter. ([#652](https://github.com/widgetbook/widgetbook/pull/652))
  - **BREAKING**: Remove `FrameAddon` in favor of the new `DeviceFrameAddon`. ([#632](https://github.com/widgetbook/widgetbook/issues/632), [#686](https://github.com/widgetbook/widgetbook/issues/686))
