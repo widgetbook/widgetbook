@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/widgetbook.dart' show Knobs;
+import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 @UseCase(name: 'Default', type: NavigationTreeItem)
 Widget navigationTreeItemWithout(BuildContext context) {
-  final nodeType = context.knobs.options<NavigationNodeType>(
+  final nodeType = context.knobs.list<NavigationNodeType>(
     label: 'Node Type',
     options: NavigationNodeType.values,
   );
@@ -15,13 +15,13 @@ Widget navigationTreeItemWithout(BuildContext context) {
       NavigationTreeItem(
         data: NavigationTreeNodeData(
           path: 'name',
-          name: context.knobs.text(
+          name: context.knobs.string(
             label: 'Name',
             initialValue: 'Category',
           ),
           type: nodeType,
         ),
-        level: context.knobs
+        level: context.knobs.double
             .slider(
               label: 'Level',
               initialValue: 0,

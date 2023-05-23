@@ -8,14 +8,14 @@ void main() {
   testWidgets(
     'Equality operator works correctly',
     (WidgetTester tester) async {
-      final first = OptionsKnob<int>(
+      final first = ListKnob<int>(
         label: 'first',
         value: 10,
         options: [
           10,
         ],
       );
-      final second = OptionsKnob<int>(
+      final second = ListKnob<int>(
         label: 'second',
         value: 3,
         options: [
@@ -25,7 +25,7 @@ void main() {
       expect(
         first,
         equals(
-          OptionsKnob(
+          ListKnob(
             value: 10,
             label: 'first',
             options: [
@@ -43,7 +43,7 @@ void main() {
     (WidgetTester tester) async {
       await tester.pumpWithKnob(
         (context) => Text(
-          context.knobs.options<String>(
+          context.knobs.list<String>(
             label: 'label',
             options: [
               'A',
