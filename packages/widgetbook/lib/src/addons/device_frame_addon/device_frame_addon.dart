@@ -36,8 +36,6 @@ class DeviceFrameAddon extends WidgetbookAddOn<DeviceFrameSetting> {
         initialValue: setting.activeDevice,
         labelBuilder: (device) => device?.name ?? 'None',
         onChanged: (_, device) {
-          if (device == null) return;
-
           updateSetting(
             setting.copyWith(
               activeDevice: device,
