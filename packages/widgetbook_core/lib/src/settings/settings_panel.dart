@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../models/settings_panel_data.dart';
+class SettingsPanelData {
+  const SettingsPanelData({
+    required this.name,
+    required this.settings,
+  });
+
+  final String name;
+  final List<Widget> settings;
+}
 
 class SettingsPanel extends StatelessWidget {
   const SettingsPanel({
