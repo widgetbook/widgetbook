@@ -1,3 +1,8 @@
+## Unreleased
+
+ - **FEAT**: Add Dart 3 and Flutter 3.10 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
+ - **BREAKING**: Drop Flutter 2 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
+
 ## 3.0.0-beta.27
 
  - **REFACTOR**: :recycle: removed lint package from projects.
