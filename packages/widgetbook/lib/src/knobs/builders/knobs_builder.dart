@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../fields/fields.dart';
 import '../boolean_knob.dart';
 import '../color_knob.dart';
 import '../knob.dart';
@@ -108,7 +109,7 @@ class KnobsBuilder {
     required String label,
     required List<T> options,
     String? description,
-    String Function(T)? labelBuilder,
+    LabelBuilder? labelBuilder,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return _onKnobAdded(

@@ -49,7 +49,7 @@ class AppGenerator extends GeneratorForAnnotation<App> {
   Future<List<T>> loadDataFromJson<T>(
     BuildStep buildStep,
     String extension,
-    T Function(Map<String, dynamic>) fromMap,
+    T Function(Map<String, dynamic> map) fromMap,
   ) async {
     final glob = Glob(extension);
     final widgetbookData = <T>[];

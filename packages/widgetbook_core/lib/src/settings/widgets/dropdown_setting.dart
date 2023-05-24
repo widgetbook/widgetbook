@@ -10,14 +10,14 @@ class DropdownSetting<T> extends StatelessWidget {
     required this.options,
     required this.onSelected,
     T? initialSelection,
-    String Function(T)? optionValueBuilder,
+    String Function(T option)? optionValueBuilder,
   })  : initialSelection = initialSelection ?? options.first,
         optionValueBuilder = optionValueBuilder ?? defaultOptionValueBuilder;
 
   final List<T> options;
   final T initialSelection;
-  final String Function(T) optionValueBuilder;
-  final void Function(T) onSelected;
+  final String Function(T option) optionValueBuilder;
+  final void Function(T option) onSelected;
 
   @override
   Widget build(BuildContext context) {

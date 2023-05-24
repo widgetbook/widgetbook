@@ -27,7 +27,7 @@ class JsonLibraryBuilder extends Builder {
 
   /// A function that creates valid .json files from the information provided
   /// by the generator.
-  final String Function(String) formatOutput;
+  final String Function(String output) formatOutput;
 
   /// The extension of the file.
   /// Must end on .json but might contain additional 'domains'
