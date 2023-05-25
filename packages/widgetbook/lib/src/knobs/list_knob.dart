@@ -12,7 +12,7 @@ class ListKnob<T> extends Knob<T> {
   });
 
   final List<T> options;
-  final String Function(T)? labelBuilder;
+  final LabelBuilder? labelBuilder;
 
   @override
   List<Field> get fields {

@@ -403,7 +403,7 @@ class PublishCommand extends WidgetbookCommand {
   Future<void> publishBuilds({
     required PublishArgs args,
     required GitDir gitDir,
-    required File? Function(Directory) getZipFile,
+    required File? Function(Directory dir) getZipFile,
   }) async {
     progress.update('Getting branches');
 
