@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../search/search.dart';
-import '../navigation_tree.dart';
+import '../bloc/navigation_bloc.dart';
+import 'navigation_tree.dart';
+import 'search_field.dart';
 
 class NavigationPanel extends StatelessWidget {
   const NavigationPanel({
