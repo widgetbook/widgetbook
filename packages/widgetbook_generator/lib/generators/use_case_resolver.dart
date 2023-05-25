@@ -30,9 +30,16 @@ class UseCaseResolver extends GeneratorForAnnotation<UseCase> {
     }
 
     final typeValue = annotation.read('type').typeValue;
-    final componentName = typeValue.getDisplayString(
-      withNullability: false,
-    );
+    final componentName = typeValue
+        .getDisplayString(
+          withNullability: false,
+        )
+        // Generic widgets shouldn't have a "<dynamic>" suffix
+        // if no type parameter is specified.
+        .replaceAll(
+          '<dynamic>',
+          '',
+        );
 
     final componentDefinitionPath = typeValue.element!.librarySource!.fullName;
 
