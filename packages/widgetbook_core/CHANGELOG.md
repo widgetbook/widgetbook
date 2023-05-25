@@ -2,9 +2,10 @@
 
  - **FEAT**: Add Dart 3 and Flutter 3.10 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
  - **BREAKING**: Drop Flutter 2 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
- - **REFACTOR**: Remove all knobs-related widgets.
- - **REFACTOR**: Make `KnobProperty`'s `description` optional.
- - **REFACTOR**: Add `isNullable` parameter to `KnobProperty` instead of a getter based on the type parameter `T`.
+ - **REFACTOR**: Remove all knobs-related widgets. ([#669](https://github.com/widgetbook/widgetbook/pull/669))
+ - **REFACTOR**: Make `KnobProperty`'s `description` optional. ([#669](https://github.com/widgetbook/widgetbook/pull/669))
+ - **REFACTOR**: Add `isNullable` parameter to `KnobProperty` instead of a getter based on the type parameter `T`. ([#669](https://github.com/widgetbook/widgetbook/pull/669))
+ - **REFACTOR**: Remove unused settings widgets, models and repositories. ([#699](https://github.com/widgetbook/widgetbook/pull/699))
 
 ## 3.0.0-beta.8
 
