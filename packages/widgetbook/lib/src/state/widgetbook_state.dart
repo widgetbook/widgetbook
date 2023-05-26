@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:meta/meta.dart';
 
 import '../addons/addons.dart';
 import '../integrations/widgetbook_integration.dart';
@@ -34,6 +33,7 @@ class WidgetbookState extends ChangeNotifier {
 
   WidgetbookUseCase? get useCase => catalog.get(path);
 
+  /// A [Uri] representation of the current state.
   Uri get uri => Uri(
         path: '/',
         queryParameters: {
@@ -42,6 +42,7 @@ class WidgetbookState extends ChangeNotifier {
         },
       );
 
+  /// Gets the current state using [context].
   static WidgetbookState of(BuildContext context) {
     return context
         .dependOnInheritedWidgetOfExactType<WidgetbookScope>()!
@@ -64,18 +65,20 @@ class WidgetbookState extends ChangeNotifier {
   }
 
   /// Syncs this with the router's location using [SystemNavigator].
-  @internal
   void syncRouteInformation() {
     SystemNavigator.routeInformationUpdated(
       location: uri.toString(),
     );
   }
 
+  /// Update the [name] query parameter with the given [value].
   void updateQueryParam(String name, String value) {
     queryParams[name] = value;
     notifyListeners();
   }
 
+  /// Update the [path], causing a new [useCase] to bet returned.
+  /// Resets the [knobs] during the update.
   void updatePath(String newPath) {
     path = newPath;
     knobs.clear(); // Reset Knobs
@@ -83,11 +86,13 @@ class WidgetbookState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Updates [Knob.value] using the [label] to find the [Knob].
   void updateKnobValue<T>(String label, T value) {
     knobs[label]!.value = value;
     notifyListeners();
   }
 
+  /// Updates [Knob.isNull] using the [label] to find the [Knob].
   void updateKnobNullability(String label, bool isNull) {
     knobs[label]!.isNull = isNull;
     notifyListeners();
@@ -107,6 +112,10 @@ class WidgetbookState extends ChangeNotifier {
     return cachedKnob.isNull ? null : (cachedKnob.value as T);
   }
 
+  /// Creates a copy of the current state using [AppRouteConfig] to update
+  /// the [path], [previewMode] and [queryParams] fields. Since these fields
+  /// can be manipulated from the router's query parameters, as opposed to the
+  /// rest of fields that stay unchanged during runtime.
   WidgetbookState copyFromRouteConfig(AppRouteConfig configuration) {
     return WidgetbookState(
       path: configuration.path,
