@@ -4,6 +4,8 @@ import '../../fields/fields.dart';
 import '../common/common.dart';
 import 'text_scale_setting.dart';
 
+/// A [WidgetbookAddOn] for changing the active [MediaQueryData.textScaleFactor]
+/// via [MediaQuery].
 class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
   TextScaleAddon({
     required List<double> scales,

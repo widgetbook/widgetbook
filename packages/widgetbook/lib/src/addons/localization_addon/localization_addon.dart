@@ -4,6 +4,7 @@ import '../../fields/fields.dart';
 import '../common/common.dart';
 import 'localization_setting.dart';
 
+/// A [WidgetbookAddOn] for changing the active [Locale] via [Localizations].
 class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
   LocalizationAddon({
     required List<Locale> locales,

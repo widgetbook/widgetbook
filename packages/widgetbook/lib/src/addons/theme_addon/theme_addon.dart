@@ -11,6 +11,8 @@ typedef ThemeBuilder<T> = Widget Function(
   Widget child,
 );
 
+/// A [WidgetbookAddOn] for changing the active custom theme. A [themeBuilder]
+/// must be provided that returns an [InheritedWidget] or similar [Widget]s.
 class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
   ThemeAddon({
     required List<WidgetbookTheme<T>> themes,
