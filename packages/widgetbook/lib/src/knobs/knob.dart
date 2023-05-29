@@ -2,9 +2,10 @@ import 'package:flutter/widgets.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 import '../fields/field.dart';
+import '../models/models.dart';
 import '../state/state.dart';
 
-/// This allows stories to have dynamically adjustable parameters.
+/// Allows [WidgetbookUseCase]s to have dynamically adjustable parameters.
 abstract class Knob<T> {
   Knob({
     required this.label,
