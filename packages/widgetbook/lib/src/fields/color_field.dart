@@ -4,6 +4,7 @@ import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
 
+/// [Field] that builds [TextFormField] for [Color] values.
 class ColorField extends Field<Color> {
   ColorField({
     required super.group,

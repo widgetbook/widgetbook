@@ -4,6 +4,7 @@ import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
 
+/// [Field] that builds [TextFormField] for [String] values.
 class StringField extends Field<String> {
   StringField({
     required super.group,

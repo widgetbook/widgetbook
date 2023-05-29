@@ -4,6 +4,7 @@ import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
 
+/// [Field] that builds [Switch] for [bool] values.
 class BooleanField extends Field<bool> {
   BooleanField({
     required super.group,
