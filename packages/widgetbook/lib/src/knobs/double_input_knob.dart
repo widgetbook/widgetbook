@@ -1,7 +1,10 @@
+import 'package:meta/meta.dart';
+
 import '../fields/fields.dart';
 import '../state/widgetbook_state.dart';
 import 'knob.dart';
 
+@internal
 class DoubleInputKnob extends Knob<double> {
   DoubleInputKnob({
     required super.label,
@@ -25,6 +28,7 @@ class DoubleInputKnob extends Knob<double> {
   }
 }
 
+@internal
 class DoubleOrNullInputKnob extends Knob<double?> {
   DoubleOrNullInputKnob({
     required super.label,

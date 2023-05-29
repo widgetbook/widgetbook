@@ -1,7 +1,10 @@
+import 'package:meta/meta.dart';
+
 import '../fields/fields.dart';
 import '../state/state.dart';
 import 'knob.dart';
 
+@internal
 class StringKnob extends Knob<String> {
   StringKnob({
     required super.label,
@@ -29,6 +32,7 @@ class StringKnob extends Knob<String> {
   }
 }
 
+@internal
 class StringOrNullKnob extends Knob<String?> {
   StringOrNullKnob({
     required super.label,

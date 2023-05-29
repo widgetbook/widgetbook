@@ -1,7 +1,10 @@
+import 'package:meta/meta.dart';
+
 import '../fields/fields.dart';
 import '../state/state.dart';
 import 'knob.dart';
 
+@internal
 class DoubleSliderKnob extends Knob<double> {
   DoubleSliderKnob({
     required super.label,
@@ -35,6 +38,7 @@ class DoubleSliderKnob extends Knob<double> {
   }
 }
 
+@internal
 class DoubleOrNullSliderKnob extends Knob<double?> {
   DoubleOrNullSliderKnob({
     required super.label,
