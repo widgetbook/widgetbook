@@ -10,4 +10,7 @@ class CustomAddOn extends WidgetbookAddOn<String> {
 
   @override
   List<Field> get fields => [];
+
+  @override
+  String settingFromQueryGroup(Map<String, String> group) => initialSetting;
 }

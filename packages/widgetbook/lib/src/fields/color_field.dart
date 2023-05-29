@@ -10,7 +10,7 @@ class ColorField extends Field<Color> {
     required super.group,
     required super.name,
     super.initialValue = defaultColor,
-    required super.onChanged,
+    super.onChanged,
   }) : super(
           type: FieldType.color,
           codec: FieldCodec(

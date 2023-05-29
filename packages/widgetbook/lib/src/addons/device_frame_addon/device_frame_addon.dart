@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 
@@ -34,56 +35,49 @@ class DeviceFrameAddon extends WidgetbookAddOn<DeviceFrameSetting> {
       ListField<DeviceInfo?>(
         group: slugName,
         name: 'name',
-        values: setting.devices,
-        initialValue: setting.activeDevice,
+        values: initialSetting.devices,
+        initialValue: initialSetting.activeDevice,
         labelBuilder: (device) => device?.name ?? 'None',
-        onChanged: (_, device) {
-          updateSetting(
-            setting.copyWith(
-              activeDevice: device,
-            ),
-          );
-        },
       ),
       ListField<Orientation>(
         group: slugName,
         name: 'orientation',
         values: Orientation.values,
-        initialValue: setting.orientation,
+        initialValue: initialSetting.orientation,
         labelBuilder: (orientation) =>
             orientation.name.substring(0, 1).toUpperCase() +
             orientation.name.substring(1),
-        onChanged: (_, orientation) {
-          if (orientation == null) return;
-
-          updateSetting(
-            setting.copyWith(
-              orientation: orientation,
-            ),
-          );
-        },
       ),
       ListField<bool>(
         group: slugName,
         name: 'frame',
         values: [false, true],
-        initialValue: setting.hasFrame,
+        initialValue: initialSetting.hasFrame,
         labelBuilder: (hasFrame) => hasFrame ? 'Device Frame' : 'None',
-        onChanged: (_, hasFrame) {
-          if (hasFrame == null) return;
-
-          updateSetting(
-            setting.copyWith(
-              hasFrame: hasFrame,
-            ),
-          );
-        },
       ),
     ];
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child) {
+  DeviceFrameSetting settingFromQueryGroup(Map<String, String> group) {
+    return DeviceFrameSetting(
+      devices: initialSetting.devices,
+      activeDevice: initialSetting.devices.firstWhereOrNull(
+        (device) => device?.name == group['name'],
+      ),
+      orientation: Orientation.values.byName(
+        group['orientation']?.toLowerCase() ?? Orientation.portrait.name,
+      ),
+      hasFrame: group['frame'] == true,
+    );
+  }
+
+  @override
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    DeviceFrameSetting setting,
+  ) {
     if (setting.activeDevice == null) {
       return child;
     }

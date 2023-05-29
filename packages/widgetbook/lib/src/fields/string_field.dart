@@ -11,7 +11,7 @@ class StringField extends Field<String> {
     required super.name,
     super.initialValue = '',
     this.maxLines,
-    required super.onChanged,
+    super.onChanged,
   }) : super(
           type: FieldType.string,
           codec: FieldCodec(

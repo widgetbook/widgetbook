@@ -10,7 +10,7 @@ class DoubleInputField extends Field<double> {
     required super.group,
     required super.name,
     super.initialValue = 0,
-    required super.onChanged,
+    super.onChanged,
   }) : super(
           type: FieldType.doubleSlider,
           codec: FieldCodec(

@@ -28,7 +28,7 @@ abstract class Field<T> {
     required this.type,
     required this.initialValue,
     required this.codec,
-    required this.onChanged,
+    this.onChanged,
   });
 
   /// A set of [Field]s can be grouped under the same query parameter
@@ -51,19 +51,12 @@ abstract class Field<T> {
   /// Callback for when [Field]'s value changed through:
   /// 1. [WidgetbookState.queryParams], used for deep linking.
   /// 2. [Field]'s widget from the side panel.
-  final void Function(BuildContext context, T? value) onChanged;
+  final void Function(BuildContext context, T? value)? onChanged;
 
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
     final groupMap = FieldCodec.decodeQueryGroup(state.queryParams[group]);
     final value = codec.toValue(groupMap[name]);
-
-    // TODO: remove this workaround
-    if (group != 'knobs') {
-      // Notify change when field is built from new query params,
-      // to keep query params and locale state (e.g. addon's setting) in sync.
-      onChanged(context, value);
-    }
 
     return toWidget(context, value);
   }
@@ -83,7 +76,7 @@ abstract class Field<T> {
         ifAbsent: () => codec.toParam(value),
       );
 
-    onChanged(context, value);
+    onChanged?.call(context, value);
 
     state.updateQueryParam(
       group,

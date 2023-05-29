@@ -33,24 +33,31 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
       ListField<Locale>(
         group: slugName,
         name: 'name',
-        values: setting.locales,
-        initialValue: setting.activeLocale,
+        values: initialSetting.locales,
+        initialValue: initialSetting.activeLocale,
         labelBuilder: (locale) => locale.toLanguageTag(),
-        onChanged: (_, locale) {
-          if (locale == null) return;
-
-          updateSetting(
-            setting.copyWith(
-              activeLocale: locale,
-            ),
-          );
-        },
       ),
     ];
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child) {
+  LocalizationSetting settingFromQueryGroup(Map<String, String> group) {
+    return LocalizationSetting(
+      locales: initialSetting.locales,
+      localizationsDelegates: initialSetting.localizationsDelegates,
+      activeLocale: initialSetting.locales.firstWhere(
+        (locale) => locale.toLanguageTag() == group['name'],
+        orElse: () => initialSetting.activeLocale,
+      ),
+    );
+  }
+
+  @override
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    LocalizationSetting setting,
+  ) {
     return Localizations(
       locale: setting.activeLocale,
       delegates: setting.localizationsDelegates,

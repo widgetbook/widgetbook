@@ -26,31 +26,35 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
           ),
         );
 
-  /// ?text-scale={factor:1.00}
   @override
   List<Field> get fields {
     return [
       ListField<double>(
         group: slugName,
         name: 'factor',
-        values: setting.textScales,
-        initialValue: setting.activeTextScale,
+        values: initialSetting.textScales,
+        initialValue: initialSetting.activeTextScale,
         labelBuilder: (scale) => scale.toStringAsFixed(2),
-        onChanged: (_, scale) {
-          if (scale == null) return;
-
-          updateSetting(
-            setting.copyWith(
-              activeTextScale: scale,
-            ),
-          );
-        },
       ),
     ];
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child) {
+  TextScaleSetting settingFromQueryGroup(Map<String, String> group) {
+    return TextScaleSetting(
+      textScales: initialSetting.textScales,
+      activeTextScale: double.parse(
+        group['factor'] ?? initialSetting.activeTextScale.toStringAsFixed(2),
+      ),
+    );
+  }
+
+  @override
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    TextScaleSetting setting,
+  ) {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
         textScaleFactor: setting.activeTextScale,
