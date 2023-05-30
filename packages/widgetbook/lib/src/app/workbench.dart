@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../widgetbook.dart';
+import '../addons/addons.dart';
 import '../state/state.dart';
 import 'safe_boundaries.dart';
 

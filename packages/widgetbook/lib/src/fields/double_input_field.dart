@@ -4,6 +4,7 @@ import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
 
+/// [Field] that builds [TextFormField] for [double] values.
 class DoubleInputField extends Field<double> {
   DoubleInputField({
     required super.group,

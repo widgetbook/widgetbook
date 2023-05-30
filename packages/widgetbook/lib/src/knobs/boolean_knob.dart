@@ -1,7 +1,10 @@
+import 'package:meta/meta.dart';
+
 import '../fields/fields.dart';
 import '../state/state.dart';
 import 'knob.dart';
 
+@internal
 class BooleanKnob extends Knob<bool> {
   BooleanKnob({
     required super.label,
@@ -25,6 +28,7 @@ class BooleanKnob extends Knob<bool> {
   }
 }
 
+@internal
 class BooleanOrNullKnob extends Knob<bool?> {
   BooleanOrNullKnob({
     required super.label,

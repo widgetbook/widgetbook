@@ -1,3 +1,6 @@
+import 'package:meta/meta.dart';
+
+@internal
 class AppRouteConfig {
   AppRouteConfig({
     required this.location,

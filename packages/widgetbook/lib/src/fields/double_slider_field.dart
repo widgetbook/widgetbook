@@ -4,6 +4,7 @@ import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
 
+/// [Field] that builds [Slider] for [double] values.
 class DoubleSliderField extends Field<double> {
   DoubleSliderField({
     required super.group,

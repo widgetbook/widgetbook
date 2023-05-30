@@ -1,9 +1,12 @@
 import 'dart:ui';
 
+import 'package:meta/meta.dart';
+
 import '../fields/fields.dart';
 import '../state/state.dart';
 import 'knob.dart';
 
+@internal
 class ColorKnob extends Knob<Color> {
   ColorKnob({
     required super.label,

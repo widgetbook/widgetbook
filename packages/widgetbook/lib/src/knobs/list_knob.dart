@@ -1,7 +1,10 @@
+import 'package:meta/meta.dart';
+
 import '../fields/fields.dart';
 import '../state/state.dart';
 import 'knob.dart';
 
+@internal
 class ListKnob<T> extends Knob<T> {
   ListKnob({
     required super.label,

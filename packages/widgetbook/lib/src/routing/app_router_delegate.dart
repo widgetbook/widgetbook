@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../app/widgetbook_shell.dart';
 import '../app/workbench.dart';
 import '../state/state.dart';
 import 'app_route_config.dart';
 
+@internal
 class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRouteConfig> {
   AppRouterDelegate({

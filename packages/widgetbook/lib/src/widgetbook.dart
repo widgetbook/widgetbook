@@ -5,22 +5,19 @@ import 'package:widgetbook_core/widgetbook_core.dart';
 
 import 'addons/addons.dart';
 import 'integrations/integrations.dart';
+import 'models/models.dart';
 import 'routing/app_router.dart';
 import 'state/state.dart';
 
 /// Describes the configuration for your [Widget] library.
 ///
 /// [Widgetbook] is the central element in organizing your widgets into
-/// Folders and UseCases.
-/// In addition, [Widgetbook] allows you to specify
-/// - the [Theme]s used by your application,
-/// - the [Device]s on which you'd like to preview the catalogued widgets
-/// - the [Locale]s used by your application
+/// folders and use cases.
 ///
-/// [Widgetbook] defines the following constructors for different themes
-/// - [Widgetbook] if you use a [WidgetsApp] for your app
-/// - [Widgetbook.cupertino] if you use [CupertinoApp] for your app
-/// - [Widgetbook.material] if you use [MaterialApp] for your app
+/// [Widgetbook] defines the following constructors for different app types
+/// - [Widgetbook] if you use a custom widget (e.g. [WidgetsApp]) for your app.
+/// - [Widgetbook.cupertino] if you use [CupertinoApp] for your app.
+/// - [Widgetbook.material] if you use [MaterialApp] for your app.
 class Widgetbook extends StatefulWidget {
   const Widgetbook({
     super.key,
@@ -30,47 +27,56 @@ class Widgetbook extends StatefulWidget {
     this.integrations,
   });
 
-  /// Children which host Packages, Folders, Categories, Components
-  /// and Use cases.
-  /// This can be used to organize the structure of the Widgetbook on a large
-  /// scale.
+  /// The directory structure of your [Widget] library.
+  ///
+  /// The available organizers are: [WidgetbookCategory], [WidgetbookFolder],
+  /// [WidgetbookComponent] and [WidgetbookUseCase].
+  ///
+  /// Both [WidgetbookCategory] and [WidgetbookFolder] can contain sub folders
+  /// and [WidgetbookComponent] elements. However, [WidgetbookComponent] can
+  /// only contain [WidgetbookUseCase]s.
   final List<MultiChildNavigationNodeData> directories;
 
+  /// A wrapper builder method for all [WidgetbookUseCase]s.
   final AppBuilder appBuilder;
 
+  /// The list of add-ons for your [Widget] library
   final List<WidgetbookAddOn>? addons;
 
+  /// The list of integrations for your [Widget] library. Primarily used to
+  /// integrate with Widgetbook Cloud via [WidgetbookCloudIntegration], but
+  /// can also be used to integrate with third-party packages.
   final List<WidgetbookIntegration>? integrations;
 
-  /// A [Widgetbook] which uses cupertino theming via [CupertinoApp].
+  /// A [Widgetbook] with [CupertinoApp] as an [appBuilder].
   static Widgetbook cupertino({
     Key? key,
     required List<MultiChildNavigationNodeData> directories,
-    AppBuilder? appBuilder,
+    AppBuilder appBuilder = cupertinoAppBuilder,
     List<WidgetbookAddOn>? addons,
     List<WidgetbookIntegration>? integrations,
   }) {
     return Widgetbook(
       key: key,
       directories: directories,
-      appBuilder: appBuilder ?? cupertinoAppBuilder,
+      appBuilder: appBuilder,
       addons: addons,
       integrations: integrations,
     );
   }
 
-  /// A [Widgetbook] which uses material theming via [MaterialApp].
+  /// A [Widgetbook] with [MaterialApp] as an [appBuilder].
   static Widgetbook material({
     Key? key,
     required List<MultiChildNavigationNodeData> directories,
-    AppBuilder? appBuilder,
+    AppBuilder appBuilder = materialAppBuilder,
     List<WidgetbookAddOn>? addons,
     List<WidgetbookIntegration>? integrations,
   }) {
     return Widgetbook(
       key: key,
       directories: directories,
-      appBuilder: appBuilder ?? materialAppBuilder,
+      appBuilder: appBuilder,
       addons: addons,
       integrations: integrations,
     );

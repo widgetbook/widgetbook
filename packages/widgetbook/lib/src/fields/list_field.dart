@@ -8,6 +8,7 @@ import 'field_type.dart';
 
 typedef LabelBuilder<T> = String Function(T value);
 
+/// [Field] that builds [DropdownSetting] for [List]<[T]> values.
 class ListField<T> extends Field<T> {
   ListField({
     required super.group,
