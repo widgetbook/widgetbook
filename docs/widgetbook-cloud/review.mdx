@@ -7,8 +7,18 @@ The Review feature closely relates to reviews known from Pull-Requests.
 For each Pull-Request, our new `widgetbook` CLI analyzes the changes to your Widgetbook and creates a review.
 Frontend team members can now review each _changed_ use-case in isolation and add comments for other team members.
 
+### Review status definitions in the review process
+
+- **Open:** Reviews awaiting assessment
+- **Merged:** Reviews associated with merged PRs, hence, also considered as merged
+- **Closed:** Reviews linked to closed PRs, therefore, also categorized as closed
+- **Updating:** Reviews lacking essential information for classification as open. A review becomes eligible for review (open) when:
+
+* There is an available head build AND
+* A base build is present or at least one use-case is associated with a DesignLink.
+
 Once all changes from the review are accepted, a developer closes the Pull-Request and the review's status gets updated to `merged`.
-For this to work, a webhook to our services is required.
+For this to work, a GitHub app integration is required.
 
 ## Requirements
 
@@ -17,7 +27,7 @@ To use Widgetbook Cloud _Review_ your setup has to meet the following requiremen
 - Use [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) in version `v3.0.0-beta` (no special configuration required).
 - Use [widgetbook package](https://pub.dev/packages/widgetbook) in version `v3.0.0-beta` (no special configuration required).
 - Use the `widgetbook` CLI from the [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli).
-- Setup a GitHub webhook
+- Setup a GitHub app
 
 # How the Review feature works
 

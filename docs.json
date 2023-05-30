@@ -126,11 +126,12 @@
                     "6. Review (beta)", "/widgetbook-cloud/review"
                 ],
                 [
-                    "7. Accessing Resources", "/widgetbook-cloud/accessing-resources"
+                    "7. Github Integration", "/widgetbook-cloud/integrating-github"
                 ],
                 [
-                    "8. Setup Webhook", "/widgetbook-cloud/setup-webhook"
+                    "8. Accessing Resources", "/widgetbook-cloud/accessing-resources"
                 ]
+                
             ]
         ],
         [
@@ -145,6 +146,12 @@
             "Mono-repo",
             [
                 ["Setup", "/mono-repo/index"]
+            ]
+        ],
+        [
+            "Contribution",
+            [
+                ["Getting Started", "/contribution/get-started"]
             ]
         ]
     ]
