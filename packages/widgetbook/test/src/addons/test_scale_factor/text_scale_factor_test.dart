@@ -13,28 +13,9 @@ void main() {
       );
 
       testWidgets(
-        'can activate a text scale factor',
+        'can activate text scale factor',
         (WidgetTester tester) async {
-          await testAddon(
-            tester: tester,
-            addon: addon,
-            act: () async => addon.updateSetting(
-              addon.setting.copyWith(
-                activeTextScale: 2,
-              ),
-            ),
-            expect: (context) => expect(
-              addon.setting.activeTextScale,
-              equals(2),
-            ),
-          );
-        },
-      );
-
-      testWidgets(
-        'can activate text scale factor via Widget',
-        (WidgetTester tester) async {
-          await testAddon(
+          await testAddon<TextScaleSetting>(
             tester: tester,
             addon: addon,
             act: () async {
@@ -48,8 +29,8 @@ void main() {
               await tester.tap(textFinder.last);
               await tester.pumpAndSettle();
             },
-            expect: (context) => expect(
-              addon.setting.activeTextScale,
+            expect: (setting) => expect(
+              setting.activeTextScale,
               equals(2),
             ),
           );

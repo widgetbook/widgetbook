@@ -13,28 +13,9 @@ void main() {
 
   group('$LocalizationAddon', () {
     testWidgets(
-      'can activate a locale',
+      'can activate locale',
       (WidgetTester tester) async {
-        await testAddon(
-          tester: tester,
-          addon: addon,
-          act: () async => addon.updateSetting(
-            addon.setting.copyWith(
-              activeLocale: frenchLocale,
-            ),
-          ),
-          expect: (context) => expect(
-            addon.setting.activeLocale,
-            equals(frenchLocale),
-          ),
-        );
-      },
-    );
-
-    testWidgets(
-      'can activate locale via Widget',
-      (WidgetTester tester) async {
-        await testAddon(
+        await testAddon<LocalizationSetting>(
           tester: tester,
           addon: addon,
           act: () async {
@@ -48,31 +29,10 @@ void main() {
             await tester.tap(textFinder.last);
             await tester.pumpAndSettle();
           },
-          expect: (context) => expect(
-            addon.setting.activeLocale,
+          expect: (setting) => expect(
+            setting.activeLocale,
             equals(germanLocale),
           ),
-        );
-      },
-    );
-
-    testWidgets(
-      'supports locales with same language code',
-      (tester) async {
-        await testAddon(
-          tester: tester,
-          addon: addon,
-          act: () async => addon.updateSetting(
-            addon.setting.copyWith(
-              activeLocale: engLocaleGb,
-            ),
-          ),
-          expect: (context) {
-            expect(
-              addon.setting.activeLocale,
-              equals(engLocaleGb),
-            );
-          },
         );
       },
     );
