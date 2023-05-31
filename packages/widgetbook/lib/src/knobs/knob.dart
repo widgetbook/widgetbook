@@ -27,18 +27,10 @@ abstract class Knob<T> {
 
   bool get isNullable => null is T;
 
-  @override
-  bool operator ==(Object other) {
-    return other is Knob<T> &&
-        other.value == value &&
-        other.label == label &&
-        other.description == description;
-  }
-
-  @override
-  int get hashCode => label.hashCode;
-
   List<Field> get fields;
+
+  /// Converts a query group to a value of type [T].
+  T valueFromQueryGroup(Map<String, String> group);
 
   Widget build(BuildContext context) {
     return KnobProperty<T>(
@@ -57,4 +49,15 @@ abstract class Knob<T> {
       ),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    return other is Knob<T> &&
+        other.value == value &&
+        other.label == label &&
+        other.description == description;
+  }
+
+  @override
+  int get hashCode => label.hashCode;
 }

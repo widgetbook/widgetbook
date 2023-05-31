@@ -19,12 +19,17 @@ class DoubleInputKnob extends Knob<double> {
         group: 'knobs',
         name: label,
         initialValue: value,
-        onChanged: (context, num? value) {
+        onChanged: (context, value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];
+  }
+
+  @override
+  double valueFromQueryGroup(Map<String, String> group) {
+    return group.containsKey(label) ? double.parse(group[label]!) : value;
   }
 }
 
@@ -43,11 +48,16 @@ class DoubleOrNullInputKnob extends Knob<double?> {
         group: 'knobs',
         name: label,
         initialValue: value,
-        onChanged: (context, num? value) {
+        onChanged: (context, value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];
+  }
+
+  @override
+  double? valueFromQueryGroup(Map<String, String> group) {
+    return group.containsKey(label) ? double.parse(group[label]!) : value;
   }
 }

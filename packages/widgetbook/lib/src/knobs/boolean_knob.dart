@@ -19,12 +19,17 @@ class BooleanKnob extends Knob<bool> {
         group: 'knobs',
         name: label,
         initialValue: value,
-        onChanged: (context, bool? value) {
+        onChanged: (context, value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];
+  }
+
+  @override
+  bool valueFromQueryGroup(Map<String, String> group) {
+    return group.containsKey(label) ? group[label] == 'true' : value;
   }
 }
 
@@ -43,11 +48,16 @@ class BooleanOrNullKnob extends Knob<bool?> {
         group: 'knobs',
         name: label,
         initialValue: value,
-        onChanged: (context, bool? value) {
+        onChanged: (context, value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];
+  }
+
+  @override
+  bool? valueFromQueryGroup(Map<String, String> group) {
+    return group.containsKey(label) ? group[label] == 'true' : value;
   }
 }

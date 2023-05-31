@@ -23,12 +23,17 @@ class StringKnob extends Knob<String> {
         name: label,
         initialValue: value,
         maxLines: maxLines,
-        onChanged: (context, String? value) {
+        onChanged: (context, value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];
+  }
+
+  @override
+  String valueFromQueryGroup(Map<String, String> group) {
+    return group.containsKey(label) ? group[label]! : value;
   }
 }
 
@@ -51,11 +56,16 @@ class StringOrNullKnob extends Knob<String?> {
         name: label,
         initialValue: value,
         maxLines: maxLines,
-        onChanged: (context, String? value) {
+        onChanged: (context, value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];
+  }
+
+  @override
+  String? valueFromQueryGroup(Map<String, String> group) {
+    return group.containsKey(label) ? group[label]! : value;
   }
 }

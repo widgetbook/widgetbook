@@ -26,11 +26,19 @@ class ListKnob<T> extends Knob<T> {
         values: options,
         initialValue: value,
         labelBuilder: labelBuilder,
-        onChanged: (context, T? value) {
+        onChanged: (context, value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue<T>(label, value);
         },
       ),
     ];
+  }
+
+  @override
+  T valueFromQueryGroup(Map<String, String> group) {
+    return options.firstWhere(
+      (option) => option == group[label],
+      orElse: () => value,
+    );
   }
 }
