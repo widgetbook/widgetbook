@@ -15,7 +15,6 @@ dependencies:
   device_frame: ^1.1.0
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.1
   freezed_annotation: ^2.1.0
   meta: ^1.8.0
   nested: ^1.0.0

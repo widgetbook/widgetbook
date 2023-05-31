@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 import 'addons/addons.dart';
@@ -87,7 +86,6 @@ class Widgetbook extends StatefulWidget {
 }
 
 class _WidgetbookState extends State<Widgetbook> {
-  final NavigationBloc navigationBloc = NavigationBloc();
   late final AppRouter router;
 
   @override
@@ -95,10 +93,10 @@ class _WidgetbookState extends State<Widgetbook> {
     super.initState();
 
     final initialState = WidgetbookState(
-      catalog: WidgetbookCatalog.fromDirectories(widget.directories),
       appBuilder: widget.appBuilder,
       addons: widget.addons,
       integrations: widget.integrations,
+      directories: widget.directories,
     );
 
     router = AppRouter(
@@ -108,31 +106,16 @@ class _WidgetbookState extends State<Widgetbook> {
     widget.integrations?.forEach(
       (integration) => integration.onInit(initialState),
     );
-
-    navigationBloc.add(
-      LoadNavigationTree(
-        directories: widget.directories,
-      ),
-    );
-  }
-
-  @override
-  void didUpdateWidget(covariant Widgetbook oldWidget) {
-    navigationBloc.add(LoadNavigationTree(directories: widget.directories));
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: navigationBloc,
-      child: MaterialApp.router(
-        routerConfig: router,
-        themeMode: ThemeMode.dark,
-        debugShowCheckedModeBanner: false,
-        darkTheme: Themes.dark,
-        theme: Themes.light,
-      ),
+    return MaterialApp.router(
+      routerConfig: router,
+      themeMode: ThemeMode.dark,
+      debugShowCheckedModeBanner: false,
+      darkTheme: Themes.dark,
+      theme: Themes.light,
     );
   }
 }

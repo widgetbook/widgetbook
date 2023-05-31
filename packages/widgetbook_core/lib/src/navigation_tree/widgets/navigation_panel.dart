@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/navigation_bloc.dart';
+import '../models/models.dart';
 import 'navigation_tree.dart';
 import 'search_field.dart';
 
-class NavigationPanel extends StatelessWidget {
+class NavigationPanel extends StatefulWidget {
   const NavigationPanel({
     super.key,
-    this.onNodeSelected,
     this.initialPath,
+    this.onNodeSelected,
+    required this.directories,
   });
 
-  final NodeSelectedCallback? onNodeSelected;
   final String? initialPath;
+  final NodeSelectedCallback? onNodeSelected;
+  final List<MultiChildNavigationNodeData> directories;
+
+  @override
+  State<NavigationPanel> createState() => _NavigationPanelState();
+}
+
+class _NavigationPanelState extends State<NavigationPanel> {
+  String searchQuery = '';
 
   @override
   Widget build(BuildContext context) {
@@ -27,24 +35,22 @@ class NavigationPanel extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: SearchField(
-                searchValue: context.select<NavigationBloc, String>(
-                  (bloc) => bloc.state.searchQuery,
-                ),
+                searchValue: searchQuery,
                 onSearchChanged: (String value) {
-                  context.read<NavigationBloc>().add(
-                        FilterNavigationNodes(searchQuery: value),
-                      );
+                  setState(() => searchQuery = value);
                 },
                 onSearchCancelled: () {
-                  context.read<NavigationBloc>().add(const ResetNodesFilter());
+                  setState(() => searchQuery = '');
                 },
               ),
             ),
             const SizedBox(height: 16),
             Expanded(
               child: NavigationTree(
-                initialPath: initialPath,
-                onNodeSelected: onNodeSelected,
+                initialPath: widget.initialPath,
+                onNodeSelected: widget.onNodeSelected,
+                directories: widget.directories,
+                searchQuery: searchQuery,
               ),
             ),
           ],

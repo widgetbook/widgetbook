@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:widgetbook_core/widgetbook_core.dart';
 
 import '../addons/addons.dart';
 import '../fields/fields.dart';
@@ -17,11 +18,14 @@ class WidgetbookState extends ChangeNotifier {
     this.path = '',
     this.previewMode = false,
     this.queryParams = const {},
-    required this.catalog,
     required this.appBuilder,
     this.addons,
     this.integrations,
-  }) : this.knobs = {};
+    required this.directories,
+  })  : this.knobs = {},
+        this.catalog = WidgetbookCatalog.fromDirectories(
+          directories,
+        );
 
   String path;
   final Map<String, Knob> knobs;
@@ -31,6 +35,7 @@ class WidgetbookState extends ChangeNotifier {
   final AppBuilder appBuilder;
   final List<WidgetbookAddOn>? addons;
   final List<WidgetbookIntegration>? integrations;
+  final List<MultiChildNavigationNodeData> directories;
 
   WidgetbookUseCase? get useCase => catalog.get(path);
 
@@ -129,10 +134,10 @@ class WidgetbookState extends ChangeNotifier {
         // Copy from UnmodifiableMap
         ...configuration.queryParameters
       },
-      catalog: catalog,
       appBuilder: appBuilder,
       addons: addons,
       integrations: integrations,
+      directories: directories,
     );
   }
 }
