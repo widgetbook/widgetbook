@@ -15,7 +15,7 @@ void main() {
     testWidgets(
       'can activate locale',
       (WidgetTester tester) async {
-        await testAddon<LocalizationSetting>(
+        await testAddon<Locale>(
           tester: tester,
           addon: addon,
           act: () async {
@@ -30,7 +30,7 @@ void main() {
             await tester.pumpAndSettle();
           },
           expect: (setting) => expect(
-            setting.activeLocale,
+            setting,
             equals(germanLocale),
           ),
         );
