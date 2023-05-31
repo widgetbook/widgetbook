@@ -12,6 +12,7 @@
  - **BREAKING**: Remove `configureMaterialAddons` and `configureCupertinoAddons` functions. ([#677](https://github.com/widgetbook/widgetbook/issues/677))
  - **REFACTOR**: Drop `provider` dependency. ([#682](https://github.com/widgetbook/widgetbook/issues/682))
  - **REFACTOR**: Drop `go_router` dependency. ([#625](https://github.com/widgetbook/widgetbook/issues/625))
+ - **REFACTOR**: Drop `flutter_bloc` dependency. ([#705](https://github.com/widgetbook/widgetbook/issues/705))
  - **REFACTOR**: Made `Widgetbook`'s `addons` parameter optional. ([#690](https://github.com/widgetbook/widgetbook/issues/690))
  - **FIX**: Remove `StyledScaffold` that made focus not work properly. ([#650](https://github.com/widgetbook/widgetbook/issues/650))
  
