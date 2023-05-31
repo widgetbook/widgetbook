@@ -22,10 +22,10 @@ class NavigationTree extends StatefulWidget {
   final String searchQuery;
 
   @override
-  State<NavigationTree> createState() => _NavigationTreeState();
+  State<NavigationTree> createState() => NavigationTreeState();
 }
 
-class _NavigationTreeState extends State<NavigationTree> {
+class NavigationTreeState extends State<NavigationTree> {
   late final List<NavigationTreeNodeData> nodes;
   late final List<NavigationTreeNodeData> filteredNodes;
   NavigationTreeNodeData? selectedNode;
