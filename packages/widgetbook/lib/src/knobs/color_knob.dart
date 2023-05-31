@@ -21,11 +21,23 @@ class ColorKnob extends Knob<Color> {
         group: 'knobs',
         name: label,
         initialValue: value,
-        onChanged: (context, Color? value) {
+        onChanged: (context, value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];
+  }
+
+  @override
+  Color valueFromQueryGroup(Map<String, String> group) {
+    return group.containsKey(label)
+        ? Color(
+            int.parse(
+              group[label]!,
+              radix: 16,
+            ),
+          )
+        : value;
   }
 }

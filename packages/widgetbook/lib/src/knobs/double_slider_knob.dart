@@ -29,12 +29,17 @@ class DoubleSliderKnob extends Knob<double> {
         min: min,
         max: max,
         divisions: divisions,
-        onChanged: (context, num? value) {
+        onChanged: (context, value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];
+  }
+
+  @override
+  double valueFromQueryGroup(Map<String, String> group) {
+    return group.containsKey(label) ? double.parse(group[label]!) : value;
   }
 }
 
@@ -63,11 +68,16 @@ class DoubleOrNullSliderKnob extends Knob<double?> {
         min: min,
         max: max,
         divisions: divisions,
-        onChanged: (context, num? value) {
+        onChanged: (context, value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue(label, value);
         },
       ),
     ];
+  }
+
+  @override
+  double? valueFromQueryGroup(Map<String, String> group) {
+    return group.containsKey(label) ? double.parse(group[label]!) : value;
   }
 }

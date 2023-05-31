@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../addons/addons.dart';
+import '../fields/fields.dart';
 import '../integrations/widgetbook_integration.dart';
 import '../knobs/knob.dart';
 import '../models/models.dart';
@@ -109,7 +110,11 @@ class WidgetbookState extends ChangeNotifier {
 
     // Return `null` even if the knob has value, but it was marked as null
     // using [updateKnobNullability].
-    return cachedKnob.isNull ? null : (cachedKnob.value as T);
+    if (cachedKnob.isNull) return null;
+
+    final knobsQueryGroup = FieldCodec.decodeQueryGroup(queryParams['knobs']);
+
+    return knob.valueFromQueryGroup(knobsQueryGroup);
   }
 
   /// Creates a copy of the current state using [AppRouteConfig] to update
