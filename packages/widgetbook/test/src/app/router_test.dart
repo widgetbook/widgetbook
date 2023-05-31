@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/app/widgetbook_shell.dart';
 import 'package:widgetbook/src/routing/routing.dart';
 import 'package:widgetbook/src/state/state.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
 
 void main() {
   final wbThemeLight = WidgetbookTheme(
@@ -67,22 +65,10 @@ void main() {
     )
   ];
 
-  final catalog = WidgetbookCatalog.fromDirectories(
-    directories,
-  );
-
   final initialState = WidgetbookState(
     addons: addons,
-    catalog: catalog,
+    directories: directories,
     appBuilder: materialAppBuilder,
-  );
-
-  late NavigationBloc navigationBloc;
-
-  setUp(
-    () {
-      navigationBloc = NavigationBloc();
-    },
   );
 
   Future<void> pumpRouter({
@@ -90,16 +76,8 @@ void main() {
     required AppRouter router,
   }) async {
     await tester.pumpWidget(
-      BlocProvider(
-        create: (context) => navigationBloc
-          ..add(
-            LoadNavigationTree(
-              directories: directories,
-            ),
-          ),
-        child: MaterialApp.router(
-          routerConfig: router,
-        ),
+      MaterialApp.router(
+        routerConfig: router,
       ),
     );
   }
@@ -128,8 +106,14 @@ void main() {
                     widget.initialSelection == wbThemeLight,
               );
 
+              final state = WidgetbookState.of(
+                tester.element(
+                  find.byType(WidgetbookScope),
+                ),
+              );
+
               expect(dropdownFinder, findsOneWidget);
-              expect(navigationBloc.state.selectedNode, isNull);
+              expect(state.useCase, isNull);
             },
           );
 
@@ -152,9 +136,15 @@ void main() {
                     widget.initialSelection == wbThemeLight,
               );
 
+              final state = WidgetbookState.of(
+                tester.element(
+                  find.byType(WidgetbookScope),
+                ),
+              );
+
               expect(dropdownFinder, findsOneWidget);
-              expect(navigationBloc.state.selectedNode, isNotNull);
-              expect(navigationBloc.state.selectedNode!.name, 'Use-case 2.1');
+              expect(state.useCase, isNotNull);
+              expect(state.path, contains('use-case-2.1'));
             },
           );
 
@@ -178,7 +168,6 @@ void main() {
               );
 
               expect(dropdownFinder, findsOneWidget);
-              expect(navigationBloc.state.selectedNode, isNull);
             },
             skip: true,
           );
