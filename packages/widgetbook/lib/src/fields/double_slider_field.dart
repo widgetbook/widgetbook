@@ -13,7 +13,7 @@ class DoubleSliderField extends Field<double> {
     required this.min,
     required this.max,
     this.divisions,
-    required super.onChanged,
+    super.onChanged,
   }) : super(
           type: FieldType.doubleSlider,
           codec: FieldCodec(

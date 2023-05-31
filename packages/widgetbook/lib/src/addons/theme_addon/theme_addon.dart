@@ -42,24 +42,30 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
       ListField<WidgetbookTheme<T>>(
         group: slugName,
         name: 'name',
-        values: setting.themes,
-        initialValue: setting.activeTheme,
+        values: initialSetting.themes,
+        initialValue: initialSetting.activeTheme,
         labelBuilder: (theme) => theme.name,
-        onChanged: (_, theme) {
-          if (theme == null) return;
-
-          updateSetting(
-            setting.copyWith(
-              activeTheme: theme,
-            ),
-          );
-        },
       ),
     ];
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child) {
+  ThemeSetting<T> settingFromQueryGroup(Map<String, String> group) {
+    return ThemeSetting<T>(
+      themes: initialSetting.themes,
+      activeTheme: initialSetting.themes.firstWhere(
+        (theme) => theme.name == group['name'],
+        orElse: () => initialSetting.activeTheme,
+      ),
+    );
+  }
+
+  @override
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    ThemeSetting<T> setting,
+  ) {
     return themeBuilder(
       context,
       setting.activeTheme.data,

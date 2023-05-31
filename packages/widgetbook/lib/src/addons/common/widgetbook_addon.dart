@@ -23,20 +23,18 @@ import '../addons.dart';
 abstract class WidgetbookAddOn<T> {
   WidgetbookAddOn({
     required this.name,
-    required T initialSetting,
-  }) : setting = initialSetting;
+    required this.initialSetting,
+  });
 
   final String name;
-  T setting;
+  final T initialSetting;
 
   String get slugName => name.trim().toLowerCase().replaceAll(RegExp(' '), '-');
 
-  /// Updates [setting] with the [newSetting] and calls the listeners.
-  void updateSetting(T newSetting) {
-    setting = newSetting;
-  }
-
   List<Field> get fields;
+
+  /// Converts a query group to a setting of type [T].
+  T settingFromQueryGroup(Map<String, String> group);
 
   /// Converts the [fields] into a [Widget] by calling their [Field.build] and
   /// grouping them inside a [Column].
@@ -50,8 +48,13 @@ abstract class WidgetbookAddOn<T> {
     );
   }
 
-  /// Wraps use cases with a custom widget depending on the addon [setting].
-  Widget buildUseCase(BuildContext context, Widget child) {
+  /// Wraps use cases with a custom widget depending on the addon [setting]
+  /// that is obtained from [settingFromQueryGroup].
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    T setting,
+  ) {
     return child;
   }
 }

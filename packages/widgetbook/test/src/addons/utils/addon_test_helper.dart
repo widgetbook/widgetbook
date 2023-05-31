@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/addons/addons.dart';
+import 'package:widgetbook/src/fields/fields.dart';
 import 'package:widgetbook/src/state/state.dart';
 
-import 'extensions/widget_tester_extension.dart';
-
-Future<void> testAddon({
+Future<void> testAddon<T>({
   required WidgetTester tester,
-  required WidgetbookAddOn addon,
-  required void Function(BuildContext context) expect,
+  required WidgetbookAddOn<T> addon,
+  required void Function(T setting) expect,
   Future<void> Function()? act,
 }) async {
-  const key = ValueKey('RandomKey');
+  final state = WidgetbookState(
+    queryParams: {},
+    addons: [addon],
+    appBuilder: materialAppBuilder,
+    catalog: WidgetbookCatalog.fromDirectories([]),
+  );
 
   await tester.pumpWidget(
     MaterialApp(
       home: WidgetbookScope(
-        state: WidgetbookState(
-          queryParams: {},
-          addons: [addon],
-          appBuilder: materialAppBuilder,
-          catalog: WidgetbookCatalog.fromDirectories([]),
-        ),
+        state: state,
         child: Scaffold(
           body: Builder(
-            key: key,
             builder: addon.buildSetting,
           ),
         ),
@@ -35,6 +33,11 @@ Future<void> testAddon({
   await act?.call();
   await tester.pumpAndSettle();
 
-  final context = tester.findContextByKey(key);
-  expect(context);
+  final groupMap = FieldCodec.decodeQueryGroup(
+    state.queryParams[addon.slugName],
+  );
+
+  final setting = addon.settingFromQueryGroup(groupMap);
+
+  expect(setting);
 }

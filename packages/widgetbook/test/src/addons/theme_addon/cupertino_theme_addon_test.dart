@@ -10,7 +10,7 @@ void main() {
   group(
     '$CupertinoThemeAddon',
     () {
-      const bluetheme = CupertinoThemeData(
+      const blueTheme = CupertinoThemeData(
         primaryColor: colorBlue,
       );
 
@@ -20,7 +20,7 @@ void main() {
 
       const blueWidgetbookTheme = WidgetbookTheme<CupertinoThemeData>(
         name: 'Blue',
-        data: bluetheme,
+        data: blueTheme,
       );
 
       const yellowWidgetbookTheme = WidgetbookTheme(
@@ -36,28 +36,9 @@ void main() {
       );
 
       testWidgets(
-        'can activate a theme',
+        'can activate theme',
         (WidgetTester tester) async {
-          await testAddon(
-            tester: tester,
-            addon: addon,
-            act: () async => addon.updateSetting(
-              addon.setting.copyWith(
-                activeTheme: yellowWidgetbookTheme,
-              ),
-            ),
-            expect: (context) => expect(
-              addon.setting.activeTheme.data,
-              equals(yellowWidgetbookTheme.data),
-            ),
-          );
-        },
-      );
-
-      testWidgets(
-        'can activate theme via Widget',
-        (WidgetTester tester) async {
-          await testAddon(
+          await testAddon<ThemeSetting<CupertinoThemeData>>(
             tester: tester,
             addon: addon,
             act: () async {
@@ -73,8 +54,8 @@ void main() {
               await tester.tap(textFinder.last);
               await tester.pumpAndSettle();
             },
-            expect: (context) => expect(
-              addon.setting.activeTheme.data,
+            expect: (setting) => expect(
+              setting.activeTheme.data,
               equals(yellowWidgetbookTheme.data),
             ),
           );

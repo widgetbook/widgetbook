@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../addons/addons.dart';
+import '../fields/fields.dart';
 import '../state/state.dart';
 import 'safe_boundaries.dart';
 
@@ -21,9 +22,17 @@ class Workbench extends StatelessWidget {
         MultiAddonBuilder(
           addons: state.addons,
           builder: (context, addon, child) {
+            final state = WidgetbookState.of(context);
+            final groupMap = FieldCodec.decodeQueryGroup(
+              state.queryParams[addon.slugName],
+            );
+
+            final newSetting = addon.settingFromQueryGroup(groupMap);
+
             return addon.buildUseCase(
               context,
               child,
+              newSetting,
             );
           },
           child: Scaffold(
