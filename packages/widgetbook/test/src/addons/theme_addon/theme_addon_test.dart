@@ -57,7 +57,7 @@ void main() {
       testWidgets(
         'can activate theme via Widget',
         (WidgetTester tester) async {
-          await testAddon<ThemeSetting<AppThemeData>>(
+          await testAddon<WidgetbookTheme<AppThemeData>>(
             tester: tester,
             addon: addon,
             act: () async {
@@ -74,7 +74,7 @@ void main() {
               await tester.pumpAndSettle();
             },
             expect: (setting) => expect(
-              setting.activeTheme.data,
+              setting.data,
               equals(yellowCustomWidgetbookTheme.data),
             ),
           );

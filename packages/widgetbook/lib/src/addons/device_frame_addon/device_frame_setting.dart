@@ -1,17 +1,14 @@
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'device_frame_setting.freezed.dart';
+class DeviceFrameSetting {
+  DeviceFrameSetting({
+    required this.device,
+    this.orientation = Orientation.portrait,
+    this.hasFrame = true,
+  });
 
-@freezed
-class DeviceFrameSetting with _$DeviceFrameSetting {
-  factory DeviceFrameSetting({
-    required List<DeviceInfo?> devices,
-    required DeviceInfo? activeDevice,
-    @Default(Orientation.portrait) Orientation orientation,
-    @Default(true) bool hasFrame,
-  }) = _DeviceFrameSetting;
-
-  DeviceFrameSetting._();
+  final DeviceInfo? device;
+  final Orientation orientation;
+  final bool hasFrame;
 }

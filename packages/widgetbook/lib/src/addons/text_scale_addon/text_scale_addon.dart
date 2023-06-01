@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../fields/fields.dart';
 import '../common/common.dart';
-import 'text_scale_setting.dart';
 
 /// A [WidgetbookAddOn] for changing the active [MediaQueryData.textScaleFactor]
 /// via [MediaQuery].
-class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
+class TextScaleAddon extends WidgetbookAddOn<double> {
   TextScaleAddon({
-    required List<double> scales,
+    required this.scales,
     double? initialScale,
   })  : assert(
           scales.isNotEmpty,
@@ -20,11 +19,10 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
         ),
         super(
           name: 'Text scale',
-          initialSetting: TextScaleSetting(
-            textScales: scales,
-            activeTextScale: initialScale ?? scales.first,
-          ),
+          initialSetting: initialScale ?? scales.first,
         );
+
+  final List<double> scales;
 
   @override
   List<Field> get fields {
@@ -32,20 +30,17 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
       ListField<double>(
         group: slugName,
         name: 'factor',
-        values: initialSetting.textScales,
-        initialValue: initialSetting.activeTextScale,
+        values: scales,
+        initialValue: initialSetting,
         labelBuilder: (scale) => scale.toStringAsFixed(2),
       ),
     ];
   }
 
   @override
-  TextScaleSetting settingFromQueryGroup(Map<String, String> group) {
-    return TextScaleSetting(
-      textScales: initialSetting.textScales,
-      activeTextScale: double.parse(
-        group['factor'] ?? initialSetting.activeTextScale.toStringAsFixed(2),
-      ),
+  double settingFromQueryGroup(Map<String, String> group) {
+    return double.parse(
+      group['factor'] ?? initialSetting.toStringAsFixed(2),
     );
   }
 
@@ -53,11 +48,11 @@ class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
   Widget buildUseCase(
     BuildContext context,
     Widget child,
-    TextScaleSetting setting,
+    double setting,
   ) {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
-        textScaleFactor: setting.activeTextScale,
+        textScaleFactor: setting,
       ),
       child: child,
     );

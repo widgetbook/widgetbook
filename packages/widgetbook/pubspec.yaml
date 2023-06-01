@@ -15,7 +15,6 @@ dependencies:
   device_frame: ^1.1.0
   flutter:
     sdk: flutter
-  freezed_annotation: ^2.1.0
   meta: ^1.8.0
   nested: ^1.0.0
   widgetbook_core: ^3.0.0-beta.8
@@ -26,7 +25,6 @@ dev_dependencies:
     sdk: flutter
   flutter_test:
     sdk: flutter
-  freezed: ^2.1.0+1
   intl: ^0.18.0
   mocktail: ^0.3.0
 

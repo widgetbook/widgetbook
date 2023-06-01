@@ -15,7 +15,7 @@ void main() {
       testWidgets(
         'can activate text scale factor',
         (WidgetTester tester) async {
-          await testAddon<TextScaleSetting>(
+          await testAddon<double>(
             tester: tester,
             addon: addon,
             act: () async {
@@ -30,7 +30,7 @@ void main() {
               await tester.pumpAndSettle();
             },
             expect: (setting) => expect(
-              setting.activeTextScale,
+              setting,
               equals(2),
             ),
           );

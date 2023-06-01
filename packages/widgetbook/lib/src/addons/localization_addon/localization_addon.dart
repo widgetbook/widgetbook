@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../fields/fields.dart';
 import '../common/common.dart';
-import 'localization_setting.dart';
 
 /// A [WidgetbookAddOn] for changing the active [Locale] via [Localizations].
-class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
+class LocalizationAddon extends WidgetbookAddOn<Locale> {
   LocalizationAddon({
-    required List<Locale> locales,
-    required List<LocalizationsDelegate> localizationsDelegates,
+    required this.locales,
+    required this.localizationsDelegates,
     Locale? initialLocale,
   })  : assert(
           locales.isNotEmpty,
@@ -20,12 +19,11 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
         ),
         super(
           name: 'Locale',
-          initialSetting: LocalizationSetting(
-            locales: locales,
-            localizationsDelegates: localizationsDelegates,
-            activeLocale: initialLocale ?? locales.first,
-          ),
+          initialSetting: initialLocale ?? locales.first,
         );
+
+  final List<Locale> locales;
+  final List<LocalizationsDelegate> localizationsDelegates;
 
   @override
   List<Field> get fields {
@@ -33,22 +31,18 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
       ListField<Locale>(
         group: slugName,
         name: 'name',
-        values: initialSetting.locales,
-        initialValue: initialSetting.activeLocale,
+        values: locales,
+        initialValue: initialSetting,
         labelBuilder: (locale) => locale.toLanguageTag(),
       ),
     ];
   }
 
   @override
-  LocalizationSetting settingFromQueryGroup(Map<String, String> group) {
-    return LocalizationSetting(
-      locales: initialSetting.locales,
-      localizationsDelegates: initialSetting.localizationsDelegates,
-      activeLocale: initialSetting.locales.firstWhere(
-        (locale) => locale.toLanguageTag() == group['name'],
-        orElse: () => initialSetting.activeLocale,
-      ),
+  Locale settingFromQueryGroup(Map<String, String> group) {
+    return locales.firstWhere(
+      (locale) => locale.toLanguageTag() == group['name'],
+      orElse: () => initialSetting,
     );
   }
 
@@ -56,11 +50,11 @@ class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
   Widget buildUseCase(
     BuildContext context,
     Widget child,
-    LocalizationSetting setting,
+    Locale setting,
   ) {
     return Localizations(
-      locale: setting.activeLocale,
-      delegates: setting.localizationsDelegates,
+      locale: setting,
+      delegates: localizationsDelegates,
       child: child,
     );
   }
