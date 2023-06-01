@@ -6,6 +6,7 @@
  - **REFACTOR**: Make `KnobProperty`'s `description` optional. ([#669](https://github.com/widgetbook/widgetbook/pull/669))
  - **REFACTOR**: Add `isNullable` parameter to `KnobProperty` instead of a getter based on the type parameter `T`. ([#669](https://github.com/widgetbook/widgetbook/pull/669))
  - **REFACTOR**: Remove unused settings widgets, models and repositories. ([#699](https://github.com/widgetbook/widgetbook/pull/699))
+ - **REFACTOR**: Drop `flutter_bloc` dependency. ([#705](https://github.com/widgetbook/widgetbook/issues/705))
 
 ## 3.0.0-beta.8
 

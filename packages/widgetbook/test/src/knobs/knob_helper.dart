@@ -15,7 +15,7 @@ extension KnobHelper on WidgetTester {
           previewMode: false,
           queryParams: {},
           addons: [],
-          catalog: WidgetbookCatalog.fromDirectories([]),
+          directories: [],
           appBuilder: materialAppBuilder,
         ),
         child: MaterialApp(
