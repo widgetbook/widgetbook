@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_core/widgetbook_core.dart' as core;
+import 'package:widgetbook_core/widgetbook_core.dart';
 
 import '../state/state.dart';
-import 'settings_panel.dart';
 
 class WidgetbookShell extends StatelessWidget {
   const WidgetbookShell({
@@ -20,7 +19,7 @@ class WidgetbookShell extends StatelessWidget {
       color: Theme.of(context).colorScheme.surface,
       child: Row(
         children: [
-          core.NavigationPanel(
+          NavigationPanel(
             initialPath: state.path,
             directories: state.directories,
             onNodeSelected: (path, _) {
@@ -35,9 +34,27 @@ class WidgetbookShell extends StatelessWidget {
               child: child,
             ),
           ),
-          const SizedBox(
+          SizedBox(
             width: 400,
-            child: SettingsPanel(),
+            child: Card(
+              child: SettingsPanel(
+                settings: [
+                  SettingsPanelData(
+                    name: 'Addons',
+                    settings: state.addons
+                            ?.map((addon) => addon.buildSetting(context))
+                            .toList() ??
+                        [],
+                  ),
+                  SettingsPanelData(
+                    name: 'Knobs',
+                    settings: state.knobs.values
+                        .map((knob) => knob.build(context))
+                        .toList(),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

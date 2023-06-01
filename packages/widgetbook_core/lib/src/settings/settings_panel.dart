@@ -45,28 +45,42 @@ class SettingsPanel extends StatelessWidget {
           ),
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: settings
-            .map(
-              (e) => ExpansionTile(
-                collapsedShape: const RoundedRectangleBorder(),
-                shape: const RoundedRectangleBorder(),
-                initiallyExpanded: true,
-                title: Text(
-                  e.name,
-                ),
-                children: e.settings.isEmpty
-                    ? [
-                        Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Text('No ${e.name} available'),
-                        )
-                      ]
-                    : e.settings,
+      child: DefaultTabController(
+        length: settings.length,
+        child: Column(
+          children: [
+            TabBar(
+              tabs: settings
+                  .map(
+                    (setting) => Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Text(setting.name),
+                    ),
+                  )
+                  .toList(),
+            ),
+            Expanded(
+              child: TabBarView(
+                children: settings
+                    .map(
+                      (setting) => SingleChildScrollView(
+                        child: Column(
+                          children: setting.settings.isEmpty
+                              ? [
+                                  Padding(
+                                    padding: const EdgeInsets.all(32),
+                                    child: Text('No ${setting.name} available'),
+                                  )
+                                ]
+                              : setting.settings,
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
             )
-            .toList(),
+          ],
+        ),
       ),
     );
   }
