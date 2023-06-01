@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../fields/fields.dart';
 import '../common/common.dart';
-import 'theme_setting.dart';
 import 'widgetbook_theme.dart';
 
 typedef ThemeBuilder<T> = Widget Function(
@@ -13,9 +12,9 @@ typedef ThemeBuilder<T> = Widget Function(
 
 /// A [WidgetbookAddOn] for changing the active custom theme. A [themeBuilder]
 /// must be provided that returns an [InheritedWidget] or similar [Widget]s.
-class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
+class ThemeAddon<T> extends WidgetbookAddOn<WidgetbookTheme<T>> {
   ThemeAddon({
-    required List<WidgetbookTheme<T>> themes,
+    required this.themes,
     WidgetbookTheme<T>? initialTheme,
     required this.themeBuilder,
   })  : assert(
@@ -28,12 +27,10 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
         ),
         super(
           name: 'Theme',
-          initialSetting: ThemeSetting(
-            themes: themes,
-            activeTheme: initialTheme ?? themes.first,
-          ),
+          initialSetting: initialTheme ?? themes.first,
         );
 
+  final List<WidgetbookTheme<T>> themes;
   final ThemeBuilder<T> themeBuilder;
 
   @override
@@ -42,21 +39,18 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
       ListField<WidgetbookTheme<T>>(
         group: slugName,
         name: 'name',
-        values: initialSetting.themes,
-        initialValue: initialSetting.activeTheme,
+        values: themes,
+        initialValue: initialSetting,
         labelBuilder: (theme) => theme.name,
       ),
     ];
   }
 
   @override
-  ThemeSetting<T> settingFromQueryGroup(Map<String, String> group) {
-    return ThemeSetting<T>(
-      themes: initialSetting.themes,
-      activeTheme: initialSetting.themes.firstWhere(
-        (theme) => theme.name == group['name'],
-        orElse: () => initialSetting.activeTheme,
-      ),
+  WidgetbookTheme<T> settingFromQueryGroup(Map<String, String> group) {
+    return themes.firstWhere(
+      (theme) => theme.name == group['name'],
+      orElse: () => initialSetting,
     );
   }
 
@@ -64,11 +58,11 @@ class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
   Widget buildUseCase(
     BuildContext context,
     Widget child,
-    ThemeSetting<T> setting,
+    WidgetbookTheme<T> setting,
   ) {
     return themeBuilder(
       context,
-      setting.activeTheme.data,
+      setting.data,
       child,
     );
   }

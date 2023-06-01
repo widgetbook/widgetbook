@@ -1,11 +1,9 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+class WidgetbookTheme<T> {
+  const WidgetbookTheme({
+    required this.name,
+    required this.data,
+  });
 
-part 'widgetbook_theme.freezed.dart';
-
-@freezed
-class WidgetbookTheme<CustomTheme> with _$WidgetbookTheme<CustomTheme> {
-  const factory WidgetbookTheme({
-    required String name,
-    required CustomTheme data,
-  }) = _WidgetbookTheme<CustomTheme>;
+  final String name;
+  final T data;
 }

@@ -43,7 +43,7 @@ void main() {
               await tester.pumpAndSettle();
             },
             expect: (setting) => expect(
-              setting.activeDevice,
+              setting.device,
               equals(device),
             ),
           );

@@ -10,7 +10,7 @@ import 'device_frame_setting.dart';
 /// the [`device_frame`](https://pub.dev/packages/device_frame) package.
 class DeviceFrameAddon extends WidgetbookAddOn<DeviceFrameSetting> {
   DeviceFrameAddon({
-    required List<DeviceInfo> devices,
+    required List<DeviceInfo?> devices,
     DeviceInfo? initialDevice,
   })  : assert(
           devices.isNotEmpty,
@@ -20,14 +20,15 @@ class DeviceFrameAddon extends WidgetbookAddOn<DeviceFrameSetting> {
           initialDevice == null || devices.contains(initialDevice),
           'initialDevice must be in devices',
         ),
+        this.devices = [null, ...devices], // [null] represents a "none" device
         super(
           name: 'Device',
           initialSetting: DeviceFrameSetting(
-            // [null] represents a "none" device
-            devices: [null, ...devices],
-            activeDevice: initialDevice,
+            device: initialDevice,
           ),
         );
+
+  final List<DeviceInfo?> devices;
 
   @override
   List<Field> get fields {
@@ -35,8 +36,8 @@ class DeviceFrameAddon extends WidgetbookAddOn<DeviceFrameSetting> {
       ListField<DeviceInfo?>(
         group: slugName,
         name: 'name',
-        values: initialSetting.devices,
-        initialValue: initialSetting.activeDevice,
+        values: devices,
+        initialValue: initialSetting.device,
         labelBuilder: (device) => device?.name ?? 'None',
       ),
       ListField<Orientation>(
@@ -61,8 +62,7 @@ class DeviceFrameAddon extends WidgetbookAddOn<DeviceFrameSetting> {
   @override
   DeviceFrameSetting settingFromQueryGroup(Map<String, String> group) {
     return DeviceFrameSetting(
-      devices: initialSetting.devices,
-      activeDevice: initialSetting.devices.firstWhereOrNull(
+      device: devices.firstWhereOrNull(
         (device) => device?.name == group['name'],
       ),
       orientation: Orientation.values.byName(
@@ -78,13 +78,13 @@ class DeviceFrameAddon extends WidgetbookAddOn<DeviceFrameSetting> {
     Widget child,
     DeviceFrameSetting setting,
   ) {
-    if (setting.activeDevice == null) {
+    if (setting.device == null) {
       return child;
     }
 
     return DeviceFrame(
       orientation: setting.orientation,
-      device: setting.activeDevice!,
+      device: setting.device!,
       isFrameVisible: setting.hasFrame,
       screen: child,
     );
