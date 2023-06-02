@@ -1,5 +1,6 @@
-## Unreleased
+## 3.0.0-rc.1
 
+ - Check out the [migration guide](https://docs.widgetbook.io/~docs%2Fwidgetbook-3/migration/3.0.0-beta-to-rc) for more details.
  - **FEAT**: Add Dart 3 and Flutter 3.10 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
  - **BREAKING**: Drop Flutter 2 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
  - **BREAKING**: Remove `Widgetbook` prefix from all annotation names. ([#649](https://github.com/widgetbook/widgetbook/pull/649))

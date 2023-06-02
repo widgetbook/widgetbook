@@ -1,4 +1,4 @@
-## Unreleased
+## 3.0.0-rc.1
 
  - **FEAT**: Add Dart 3 and Flutter 3.10 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
  - **BREAKING**: Drop Flutter 2 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
@@ -6,7 +6,8 @@
  - **REFACTOR**: Make `KnobProperty`'s `description` optional. ([#669](https://github.com/widgetbook/widgetbook/pull/669))
  - **REFACTOR**: Add `isNullable` parameter to `KnobProperty` instead of a getter based on the type parameter `T`. ([#669](https://github.com/widgetbook/widgetbook/pull/669))
  - **REFACTOR**: Remove unused settings widgets, models and repositories. ([#699](https://github.com/widgetbook/widgetbook/pull/699))
- - **REFACTOR**: Drop `flutter_bloc` dependency. ([#705](https://github.com/widgetbook/widgetbook/issues/705))
+ - **REFACTOR**: Drop `flutter_bloc` dependency. ([#705](https://github.com/widgetbook/widgetbook/pull/705))
+ - **REFACTOR**: Drop `freezed` dependency. ([#708](https://github.com/widgetbook/widgetbook/pull/708))
 
 ## 3.0.0-beta.8
 

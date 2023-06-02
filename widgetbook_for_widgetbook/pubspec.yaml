@@ -10,16 +10,15 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  widgetbook: ^3.0.0-beta.13
-  widgetbook_annotation: ^3.0.0-beta.6
-  widgetbook_core:
-    path: ../packages/widgetbook_core
+  widgetbook: ^3.0.0-rc.1
+  widgetbook_annotation: ^3.0.0-rc.1
+  widgetbook_core: ^3.0.0-rc.1
 
 dev_dependencies:
   build_runner: ^2.3.2
   flutter_test:
     sdk: flutter
-  widgetbook_generator: ^3.0.0-beta.10
+  widgetbook_generator: ^3.0.0-rc.1
 
 flutter:
   uses-material-design: true
