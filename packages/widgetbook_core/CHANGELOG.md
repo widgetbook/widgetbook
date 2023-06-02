@@ -1,4 +1,4 @@
-## Unreleased
+## 3.0.0-rc.1
 
  - **FEAT**: Add Dart 3 and Flutter 3.10 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
  - **BREAKING**: Drop Flutter 2 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))

@@ -510,28 +510,28 @@ packages:
       path: "../packages/widgetbook"
       relative: true
     source: path
-    version: "3.0.0-beta.14"
+    version: "3.0.0-rc.1"
   widgetbook_annotation:
     dependency: "direct main"
     description:
       path: "../packages/widgetbook_annotation"
       relative: true
     source: path
-    version: "3.0.0-beta.7"
+    version: "3.0.0-rc.1"
   widgetbook_core:
     dependency: "direct main"
     description:
       path: "../packages/widgetbook_core"
       relative: true
     source: path
-    version: "3.0.0-beta.8"
+    version: "3.0.0-rc.1"
   widgetbook_generator:
     dependency: "direct dev"
     description:
       path: "../packages/widgetbook_generator"
       relative: true
     source: path
-    version: "3.0.0-beta.11"
+    version: "3.0.0-rc.1"
   yaml:
     dependency: transitive
     description:

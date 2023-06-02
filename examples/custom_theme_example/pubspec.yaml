@@ -9,13 +9,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  widgetbook_annotation: ^3.0.0-beta.7
+  widgetbook_annotation: ^3.0.0-rc.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  widgetbook:
-    path: ../../packages/widgetbook
+  widgetbook: ^3.0.0-rc.1
 
 flutter:
   uses-material-design: true

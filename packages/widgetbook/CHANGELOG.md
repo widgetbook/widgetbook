@@ -1,4 +1,4 @@
-## Unreleased
+## 3.0.0-rc.1
 
  - **FEAT**: Add Dart 3 and Flutter 3.10 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
  - **FEAT**: Add `buildUseCase` methods to Addons, that act as micro-`appBuilder`s. ([#646](https://github.com/widgetbook/widgetbook/pull/646))
