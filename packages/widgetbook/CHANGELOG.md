@@ -1,21 +1,23 @@
 ## 3.0.0-rc.1
 
+ - Check out the [migration guide](https://docs.widgetbook.io/~docs%2Fwidgetbook-3/migration/3.0.0-beta-to-rc) for more details.
  - **FEAT**: Add Dart 3 and Flutter 3.10 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
  - **FEAT**: Add `buildUseCase` methods to Addons, that act as micro-`appBuilder`s. ([#646](https://github.com/widgetbook/widgetbook/pull/646))
- - **FEAT**: Add `preview` query param instead of `disable-navigation`, `disable-properties` and `panels` query params. ([#687](https://github.com/widgetbook/widgetbook/issues/687))
- - **FEAT**: Create `WidgetbookState`. ([#674](https://github.com/widgetbook/widgetbook/issues/674))
- - **FEAT**: Add `integrations` and `WidgetbookCloudIntegration`. ([#689](https://github.com/widgetbook/widgetbook/issues/689))
+ - **FEAT**: Add `preview` query param instead of `disable-navigation`, `disable-properties` and `panels` query params. ([#687](https://github.com/widgetbook/widgetbook/pull/687))
+ - **FEAT**: Create `WidgetbookState`. ([#674](https://github.com/widgetbook/widgetbook/pull/674))
+ - **FEAT**: Add `integrations` and `WidgetbookCloudIntegration`. ([#689](https://github.com/widgetbook/widgetbook/pull/689))
  - **BREAKING**: Drop Flutter 2 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
  - **BREAKING**: Use type-based knob names. ([#695](https://github.com/widgetbook/widgetbook/pull/695))
  - **BREAKING**: Cleanup Addons constructors by removing the `setting` parameter. ([#652](https://github.com/widgetbook/widgetbook/pull/652))
- - **BREAKING**: Remove `FrameAddon` in favor of the new `DeviceFrameAddon`. ([#632](https://github.com/widgetbook/widgetbook/issues/632), [#686](https://github.com/widgetbook/widgetbook/issues/686))
+ - **BREAKING**: Remove `FrameAddon` in favor of the new `DeviceFrameAddon`. ([#632](https://github.com/widgetbook/widgetbook/pull/632), [#686](https://github.com/widgetbook/widgetbook/pull/686))
  - **BREAKING**: Rename `WidgetbookAddOn` to `WidgetbookAddon`. ([#711](https://github.com/widgetbook/widgetbook/pull/711))
- - **BREAKING**: Remove `configureMaterialAddons` and `configureCupertinoAddons` functions. ([#677](https://github.com/widgetbook/widgetbook/issues/677))
- - **REFACTOR**: Drop `provider` dependency. ([#682](https://github.com/widgetbook/widgetbook/issues/682))
- - **REFACTOR**: Drop `go_router` dependency. ([#625](https://github.com/widgetbook/widgetbook/issues/625))
- - **REFACTOR**: Drop `flutter_bloc` dependency. ([#705](https://github.com/widgetbook/widgetbook/issues/705))
- - **REFACTOR**: Made `Widgetbook`'s `addons` parameter optional. ([#690](https://github.com/widgetbook/widgetbook/issues/690))
- - **FIX**: Remove `StyledScaffold` that made focus not work properly. ([#650](https://github.com/widgetbook/widgetbook/issues/650))
+ - **BREAKING**: Remove `configureMaterialAddons` and `configureCupertinoAddons` functions. ([#677](https://github.com/widgetbook/widgetbook/pull/677))
+ - **REFACTOR**: Drop `provider` dependency. ([#682](https://github.com/widgetbook/widgetbook/pull/682))
+ - **REFACTOR**: Drop `go_router` dependency. ([#625](https://github.com/widgetbook/widgetbook/pull/625))
+ - **REFACTOR**: Drop `flutter_bloc` dependency. ([#705](https://github.com/widgetbook/widgetbook/pull/705))
+ - **REFACTOR**: Drop `freezed` dependency. ([#703](https://github.com/widgetbook/widgetbook/pull/703))
+ - **REFACTOR**: Made `Widgetbook`'s `addons` parameter optional. ([#690](https://github.com/widgetbook/widgetbook/pull/690))
+ - **FIX**: Remove `StyledScaffold` that made focus not work properly. ([#650](https://github.com/widgetbook/widgetbook/pull/650))
  
 ## 3.0.0-beta.14
 
