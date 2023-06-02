@@ -9,6 +9,7 @@
  - **BREAKING**: Use type-based knob names. ([#695](https://github.com/widgetbook/widgetbook/pull/695))
  - **BREAKING**: Cleanup Addons constructors by removing the `setting` parameter. ([#652](https://github.com/widgetbook/widgetbook/pull/652))
  - **BREAKING**: Remove `FrameAddon` in favor of the new `DeviceFrameAddon`. ([#632](https://github.com/widgetbook/widgetbook/issues/632), [#686](https://github.com/widgetbook/widgetbook/issues/686))
+ - **BREAKING**: Rename `WidgetbookAddOn` to `WidgetbookAddon`. ([#711](https://github.com/widgetbook/widgetbook/pull/711))
  - **BREAKING**: Remove `configureMaterialAddons` and `configureCupertinoAddons` functions. ([#677](https://github.com/widgetbook/widgetbook/issues/677))
  - **REFACTOR**: Drop `provider` dependency. ([#682](https://github.com/widgetbook/widgetbook/issues/682))
  - **REFACTOR**: Drop `go_router` dependency. ([#625](https://github.com/widgetbook/widgetbook/issues/625))

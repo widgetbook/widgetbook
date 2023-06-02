@@ -40,7 +40,7 @@ class Widgetbook extends StatefulWidget {
   final AppBuilder appBuilder;
 
   /// The list of add-ons for your [Widget] library
-  final List<WidgetbookAddOn>? addons;
+  final List<WidgetbookAddon>? addons;
 
   /// The list of integrations for your [Widget] library. Primarily used to
   /// integrate with Widgetbook Cloud via [WidgetbookCloudIntegration], but
@@ -52,7 +52,7 @@ class Widgetbook extends StatefulWidget {
     Key? key,
     required List<MultiChildNavigationNodeData> directories,
     AppBuilder appBuilder = cupertinoAppBuilder,
-    List<WidgetbookAddOn>? addons,
+    List<WidgetbookAddon>? addons,
     List<WidgetbookIntegration>? integrations,
   }) {
     return Widgetbook(
@@ -69,7 +69,7 @@ class Widgetbook extends StatefulWidget {
     Key? key,
     required List<MultiChildNavigationNodeData> directories,
     AppBuilder appBuilder = materialAppBuilder,
-    List<WidgetbookAddOn>? addons,
+    List<WidgetbookAddon>? addons,
     List<WidgetbookIntegration>? integrations,
   }) {
     return Widgetbook(

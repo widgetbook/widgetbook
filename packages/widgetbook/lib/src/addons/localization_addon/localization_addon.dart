@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../fields/fields.dart';
 import '../common/common.dart';
 
-/// A [WidgetbookAddOn] for changing the active [Locale] via [Localizations].
-class LocalizationAddon extends WidgetbookAddOn<Locale> {
+/// A [WidgetbookAddon] for changing the active [Locale] via [Localizations].
+class LocalizationAddon extends WidgetbookAddon<Locale> {
   LocalizationAddon({
     required this.locales,
     required this.localizationsDelegates,

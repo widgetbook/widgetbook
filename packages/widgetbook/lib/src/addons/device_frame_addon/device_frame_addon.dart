@@ -6,9 +6,9 @@ import '../../fields/fields.dart';
 import '../common/common.dart';
 import 'device_frame_setting.dart';
 
-/// A [WidgetbookAddOn] for changing the active device/frame. It's based on
+/// A [WidgetbookAddon] for changing the active device/frame. It's based on
 /// the [`device_frame`](https://pub.dev/packages/device_frame) package.
-class DeviceFrameAddon extends WidgetbookAddOn<DeviceFrameSetting> {
+class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
   DeviceFrameAddon({
     required List<DeviceInfo?> devices,
     DeviceInfo? initialDevice,

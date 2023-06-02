@@ -1,8 +1,8 @@
 import 'package:widgetbook/src/addons/common/common.dart';
 import 'package:widgetbook/src/fields/fields.dart';
 
-class CustomAddOn extends WidgetbookAddOn<String> {
-  CustomAddOn({
+class CustomAddon extends WidgetbookAddon<String> {
+  CustomAddon({
     required super.initialSetting,
   }) : super(
           name: 'Custom',

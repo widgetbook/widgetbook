@@ -33,7 +33,7 @@ class WidgetbookState extends ChangeNotifier {
   final Map<String, String> queryParams;
   final WidgetbookCatalog catalog;
   final AppBuilder appBuilder;
-  final List<WidgetbookAddOn>? addons;
+  final List<WidgetbookAddon>? addons;
   final List<WidgetbookIntegration>? integrations;
   final List<MultiChildNavigationNodeData> directories;
 

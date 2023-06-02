@@ -36,7 +36,7 @@ void main() {
           await tester.pumpWidgetWithMaterialApp(
             MultiAddonBuilder(
               addons: [
-                CustomAddOn(
+                CustomAddon(
                   initialSetting: 'test',
                 ),
               ],
