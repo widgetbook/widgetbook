@@ -77,22 +77,22 @@
             "Add-ons",
             [
                 [
-                    "Overview", "/add-ons/overview"
+                    "1. Introduction", "/add-ons/overview"
                 ],
                 [
-                    "Theme Add-on", "/add-ons/theme-addon"
+                    "2. Theme Add-on", "/add-ons/theme-addon"
                 ],
                 [
-                    "Frame Add-on", "/add-ons/frame-addon"
+                    "3. Device Frame Add-on", "/add-ons/device-frame-addon"
                 ],
                 [
-                    "Localization Add-on", "/add-ons/localization-addon"
+                    "4. Localization Add-on", "/add-ons/localization-addon"
                 ],
                 [
-                    "Text Scale Add-on", "/add-ons/text-scale-addon"
+                    "5. Text Scale Add-on", "/add-ons/text-scale-addon"
                 ],
                 [
-                    "Custom Add-on", "/add-ons/custom-addon"
+                    "6. Custom Add-on", "/add-ons/custom-addon"
                 ]
             ]
         ],

@@ -1,65 +1,56 @@
-# Overview
+# Localization Add-on
 
-The localization Add-on provides `Locale`s for previewing your use-cases.
-Previewing different `Locale`s can be interesting for teams as text within the app has a different length, other alphabets, and other layout directions for each language.
+The Localization Add-on in Widgetbook lets developers preview how widgets behave under different localization settings. This becomes essential when developing applications for a global audience, accommodating differences in language, text direction, and regional conventions.
 
-English locale             |  Arabic locale
-:-------------------------:|:-------------------------:
-<Image zoom src="/assets/add-ons/localization/english-locale.png" caption="English locale with left to right layout" height="650" />  |  <Image zoom src="/assets/add-ons/localization/arabic-locale.png" caption="Arabic locale with right to left layout" height="650" />
+|                                                            English locale                                                            |                                                           Arabic locale                                                            |
+| :----------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: |
+| <Image zoom src="/assets/add-ons/localization/english-locale.png" caption="English locale with left to right layout" height="650" /> | <Image zoom src="/assets/add-ons/localization/arabic-locale.png" caption="Arabic locale with right to left layout" height="650" /> |
 
 ## Setup
 
-Specify the `Locale`s and `LocalizationDelegate`s for the localization Add-on.
+Here's how to configure it:
 
-<Tabs
-  groupId="approach"
-  values={[
-    { label: 'Generator', value: 'generator' },
-    { label: 'Manual', value: 'manual' },
-  ]}
->
-  <TabItem value="generator">
-    First, define the available `Locale`s using the `@WidgetbookLocales` annotation:
+### Step 1:
 
-    ```dart title="Example: Define available Locales"
-    @WidgetbookLocales()
-    List<Locale> locales = const [
-      Locale('en'),
-      Locale('ar'),
-    ];
-    ```
+Define `Locales` The first step in setting up the Localization Add-on is to specify the Locale you want to support.
+In our case, we have chosen to use 'en-US' (English - United States).
 
-    Next, define the available `LocalizationDelegate`s using the `@WidgetbookLocalizationDelegates` annotation:
-    ```dart title="Example: Define LocalizationDelegates"
-    @WidgetbookLocalizationDelegates()
-    List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-        AppLocalizations.localizationsDelegates;
-    ```
-  </TabItem>
-  <TabItem value="manual">
-    First, define your available `Locale`s:
-    ```dart title="Example: Define available Locales"
-    List<Locale> locales = const [
-      Locale('en'),
-      Locale('ar'),
-    ];
-    ```
+```dart
+const Locale('en', 'US'),
+```
 
-    Next, define the available `LocalizationDelegate`s:
-    ```dart title="Example: Define LocalizationDelegates"
-    List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-        AppLocalizations.localizationsDelegates;
-    ```
+If your application supports more locales, you can add more Locale objects to the list.
 
-    Create your localization Add-on using the `LocalizationAddon` and `LocalizationSetting` classes:
-    ```dart title="Example: Create the LocalizationAddon"
-    final localizationAddon = LocalizationAddon(
-      setting: LocalizationSetting(
-        locales: locales,
-        activeLocale: locales.first,
-        localizationsDelegates: localizationsDelegates,
-      ),
-    );
-    ```
-  </TabItem>
-</Tabs>
+### Step 2:
+
+Next, you will need to define the `LocalizationDelegates` that are available. These delegates are used to fetch locale-specific strings and other values.
+
+```dart
+localizationsDelegates: [
+    DefaultWidgetsLocalizations.delegate,
+    DefaultMaterialLocalizations.delegate,
+],
+```
+
+In this example, we have used two localization delegates provided by Flutter - `DefaultWidgetsLocalizations.delegate` and `DefaultMaterialLocalizations.delegate`.
+
+### Step 3:
+
+The final step is to construct the Localization Add-on using the `LocalizationAddon` class. This class takes in the locales and `localizationsDelegates` you specified earlier.
+
+```dart
+LocalizationAddon(
+    locales: [
+        const Locale('en', 'US'),
+    ],
+    localizationsDelegates: [
+        DefaultWidgetsLocalizations.delegate,
+        DefaultMaterialLocalizations.delegate,
+    ],
+    initialLocale: const Locale('en', 'US')
+),
+```
+
+**Options:** the `initialLocale` is optional is always read the first value of locales if it is not defined.
+
+This setup lets you preview widgets as they appear with the 'en-US' locale. The Localization Add-on is an excellent tool for ensuring that your application provides an appropriate user experience across various locales.

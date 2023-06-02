@@ -1,44 +1,55 @@
-# Overview
+# Text Scale Add-on
 
-The text scale Add-on lets users change the active text scale for previewing your use-cases.
-Previewing different text scales can be interesting for teams as the layout changes due to text scale and therefore text size.
+The Text Scale Add-on is a Widgetbook utility designed for modifying the active text scale factor using MediaQuery. This enables users to manipulate the MediaQueryData.textScaleFactor value and observe its impact on rendering use-cases.
+Visualizing changes in text scale can prove valuable for developers, as it allows them to understand how layout adjustments correspond to variations in text scale and, consequently, text size.
 
-Texts scale of 1.00             |  Text scale of 1.25
-:-------------------------:|:-------------------------:
-<Image zoom src="/assets/add-ons/text-scales/text-scale-1.png" height="650" />  |  <Image zoom src="/assets/add-ons/text-scales/text-scale-1.25.png" height="650" />
+\Here's how the UI would vary with text scales of 1.00 and 1.25:
+
+|                              Texts scale of 1.00                               |                                Text scale of 1.25                                 |
+| :----------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: |
+| <Image zoom src="/assets/add-ons/text-scales/text-scale-1.png" height="650" /> | <Image zoom src="/assets/add-ons/text-scales/text-scale-1.25.png" height="650" /> |
 
 ## Setup
 
-<Tabs
-  groupId="approach"
-  values={[
-    { label: 'Generator', value: 'generator' },
-    { label: 'Manual', value: 'manual' },
-  ]}
->
-  <TabItem value="generator">
-    As text-scales are just defined as a `double` value, the available text scales within Widgetbook are defined via the `@WidgetbookApp` annotation. 
+The `TextScaleAddon` invocation declares an instance of the Text Scale Add-on for Widgetbook.
 
-    ```dart title="Example: Text scales"
-    @WidgetbookApp.material(
-      textScaleFactors: [1, 1.5, 2],
-    )
-    class App extends StatelessWidget { ... }
-    ```
-  </TabItem>
-  <TabItem value="manual">
-    Create your text scale Add-on using the `TextScaleAddon` and `TextScaleSetting` classes:
-    ```dart title="Example: Create the text scale Addon"
-    final textScaleAddon = TextScaleAddon(
-      setting: TextScaleSetting(
-        textScales: [
-          1.0,
-          1.25,
-          1.5,
-        ],
-        activeTextScale: 1,
-      ),
-    ),
-    ```
-  </TabItem>
-</Tabs>
+```dart
+TextScaleAddon(
+  scales: [1.0, 2.0],
+  initialScale: 1,
+)
+```
+
+This instance is defined with two attributes: `scales` and `initialScale`.
+The scales attribute takes a list of double values representing the available text scales that users can select. In this example, users can choose between a standard scale (1.0) and a larger scale (2.0) when previewing widgets.
+The `initialScale` attribute specifies the default or active text scale when the application is first run. In this case, the application will start with a standard text scale of 1.0.
+
+To understand this better, let's look at an example.
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_core/widgetbook_core.dart';
+
+void main() {
+  runApp(const WidgetbookApp());
+}
+
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook.material(
+      addons: [
+        TextScaleAddon(
+          scales: [1.0, 2.0],
+          initialScale: 1,
+        ),
+      ],
+    );
+  }
+}
+```
+
+This Text Scale Add-on allows users to switch between a regular scale of 1.0 and a larger scale of 2.0, enabling them to investigate how these different scales affect the appearance and layout of the widgets in the application. By offering a way to experiment with different scales, the Text Scale Add-on contributes to creating more accessible and adaptive user interfaces.

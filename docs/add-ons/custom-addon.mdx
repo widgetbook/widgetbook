@@ -1,30 +1,39 @@
-# Overview
+# Custom Add-on
 
-Widgetbook allows developers to define their own Add-on. 
-Therefore, Widgetbook is fully customizable to your needs. 
+Widgetbook offers developers the flexibility to design their own Add-ons, making it fully adaptable to your requirements.
 
 <Warning>
-    As we are currently refining the API, the documentation is a bit sparse.
+  We are currently improving the API, and as a result, the documentation might be brief.
 </Warning>
 
 ## Setup
 
-<Tabs
-  groupId="approach"
-  values={[
-    { label: 'Generator', value: 'generator' },
-    { label: 'Manual', value: 'manual' },
-  ]}
->
-  <TabItem value="generator">
-    Not yet supported, but coming soon.
-  </TabItem>
-  <TabItem value="manual">
-    Create a new class that extends the `WidgetbookAddOn` class with a generic parameter that is of type `WidgetbookAddOnModel`. 
-    Create the model that extends `WidgetbookAddOnModel`. 
+To create a custom add-on, follow these steps:
 
-    <Warning>
-        More infos coming soon.
-    </Warning> 
-  </TabItem>
-</Tabs>
+- Define a model for your custom add-on. This model will hold the data and behavior of your add-on.
+- Create a new class that extends the WidgetbookAddon class with a generic parameter corresponding to your defined model.
+
+Here's an example demonstrating how to create a custom add-on:
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+
+class CustomAddonModel {
+  // define the properties of your custom add-on model here
+}
+
+class CustomAddon extends WidgetbookAddon<CustomAddonModel> {
+  CustomAddon({
+    required CustomAddonModel initialSetting,
+  }) : super(
+          name: 'Your Custom Addon Name',
+          initialSetting: initialSetting,
+        );
+
+  @override
+  Widget buildUseCase(BuildContext context, Widget child, CustomAddonModel setting) {
+    // customize how the use case is built using your custom add-on
+  }
+}
+```
