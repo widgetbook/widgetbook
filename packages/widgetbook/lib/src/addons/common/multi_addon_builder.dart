@@ -5,11 +5,11 @@ import 'widgetbook_addon.dart';
 
 typedef AddonBuilder = Widget Function(
   BuildContext context,
-  WidgetbookAddOn addon,
+  WidgetbookAddon addon,
   Widget child,
 );
 
-/// Nests [WidgetbookAddOn] builders inside each other, using [Nested] widget.
+/// Nests [WidgetbookAddon] builders inside each other, using [Nested] widget.
 class MultiAddonBuilder extends StatelessWidget {
   MultiAddonBuilder({
     super.key,
@@ -18,7 +18,7 @@ class MultiAddonBuilder extends StatelessWidget {
     required this.child,
   });
 
-  final List<WidgetbookAddOn>? addons;
+  final List<WidgetbookAddon>? addons;
   final AddonBuilder builder;
   final Widget child;
 

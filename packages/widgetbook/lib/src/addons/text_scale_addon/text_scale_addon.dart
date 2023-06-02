@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../fields/fields.dart';
 import '../common/common.dart';
 
-/// A [WidgetbookAddOn] for changing the active [MediaQueryData.textScaleFactor]
+/// A [WidgetbookAddon] for changing the active [MediaQueryData.textScaleFactor]
 /// via [MediaQuery].
-class TextScaleAddon extends WidgetbookAddOn<double> {
+class TextScaleAddon extends WidgetbookAddon<double> {
   TextScaleAddon({
     required this.scales,
     double? initialScale,

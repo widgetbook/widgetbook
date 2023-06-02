@@ -7,7 +7,7 @@ import '../../knobs/knobs.dart';
 import '../../models/models.dart';
 import '../addons.dart';
 
-/// [WidgetbookAddOn]s are like global [Knob]s, they change the state for all
+/// [WidgetbookAddon]s are like global [Knob]s, they change the state for all
 /// [WidgetbookUseCase]s. For example, you can manipulate the theme for all
 /// [WidgetbookUseCase]s, instead of doing it one-by-one using [Knob]s.
 ///
@@ -18,10 +18,10 @@ import '../addons.dart';
 /// * [CupertinoThemeAddon], changes the active [CupertinoThemeData].
 /// * [TextScaleAddon], changes the active [MediaQueryData.textScaleFactor].
 /// * [LocalizationAddon], changes the active [Locale].
-/// * [DeviceFrameAddon], an [WidgetbookAddOn] to change the active frame that
+/// * [DeviceFrameAddon], an [WidgetbookAddon] to change the active frame that
 ///   allows to view the [WidgetbookUseCase] on different screens.
-abstract class WidgetbookAddOn<T> {
-  WidgetbookAddOn({
+abstract class WidgetbookAddon<T> {
+  WidgetbookAddon({
     required this.name,
     required this.initialSetting,
   });

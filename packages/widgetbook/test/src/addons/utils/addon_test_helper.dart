@@ -6,7 +6,7 @@ import 'package:widgetbook/src/state/state.dart';
 
 Future<void> testAddon<T>({
   required WidgetTester tester,
-  required WidgetbookAddOn<T> addon,
+  required WidgetbookAddon<T> addon,
   required void Function(T setting) expect,
   Future<void> Function()? act,
 }) async {
