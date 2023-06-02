@@ -80,6 +80,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      # Sets the GitHub-signed OIDC token
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
