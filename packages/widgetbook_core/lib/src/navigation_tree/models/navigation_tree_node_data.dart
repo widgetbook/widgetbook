@@ -1,26 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../enums/navigation_node_type.dart';
 
-part 'navigation_tree_node_data.freezed.dart';
+class NavigationTreeNodeData {
+  const NavigationTreeNodeData({
+    required this.path,
+    required this.name,
+    required this.type,
+    this.isInitiallyExpanded = true,
+    this.children = const [],
+    this.data,
+  });
 
-@freezed
-class NavigationTreeNodeData with _$NavigationTreeNodeData {
-  const factory NavigationTreeNodeData({
-    required String path,
-    required String name,
-    required NavigationNodeType type,
-    @Default(true) bool isInitiallyExpanded,
-    @Default([]) List<NavigationTreeNodeData> children,
-    dynamic data,
-  }) = _NavigationTreeNodeData;
-
-  const NavigationTreeNodeData._();
+  final String path;
+  final String name;
+  final NavigationNodeType type;
+  final bool isInitiallyExpanded;
+  final List<NavigationTreeNodeData> children;
+  final dynamic data;
 
   Widget get icon => type.icon;
 
   bool get isExpandable => type.isExpandable;
 
   bool get isSelectable => type.isSelectable;
+
+  NavigationTreeNodeData copyWith({
+    String? path,
+    String? name,
+    NavigationNodeType? type,
+    bool? isInitiallyExpanded,
+    List<NavigationTreeNodeData>? children,
+    dynamic data,
+  }) {
+    return NavigationTreeNodeData(
+      path: path ?? this.path,
+      name: name ?? this.name,
+      type: type ?? this.type,
+      isInitiallyExpanded: isInitiallyExpanded ?? this.isInitiallyExpanded,
+      children: children ?? this.children,
+      data: data ?? this.data,
+    );
+  }
 }
