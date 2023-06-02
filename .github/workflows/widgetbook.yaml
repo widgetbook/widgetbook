@@ -9,6 +9,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - widgetbook-v[0-9]+.[0-9]+.[0-9]+*
 
 jobs:
   _:
