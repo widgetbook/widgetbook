@@ -26,6 +26,7 @@ linter:
     prefer_relative_imports: true
     directives_ordering: true
     combinators_ordering: true
+    depend_on_referenced_packages: true
 
     # Dependencies
     sort_pub_dependencies: true

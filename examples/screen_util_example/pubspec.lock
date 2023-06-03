@@ -505,7 +505,7 @@ packages:
     source: hosted
     version: "2.4.0"
   widgetbook:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       path: "../../packages/widgetbook"
       relative: true
