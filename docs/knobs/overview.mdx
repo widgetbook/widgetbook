@@ -16,9 +16,9 @@ Use `context.knobs` to access the knobs builder and add knobs to your `Widget`:
   <TabItem value="generator">
     ```dart title="Example: Knobs with generator"
     import 'package:widgetbook/widgetbook.dart' show Knobs;
-    import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+    import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-    @WidgetbookUseCase(name: 'Default', type: Container)
+    @widgetbook.UseCase(name: 'Default', type: Container)
     Widget useCase(BuildContext context) {
       /* ... */
     }
@@ -42,17 +42,18 @@ Use `context.knobs` to access the knobs builder and add knobs to your `Widget`:
 
 ## Properties
 
-All `Knob`s have the following inherited properties to customize how the knobs are displayed in the UI of `Widgetbook`:
+All `Knob`s have the following inherited properties to customize how the knobs
+are displayed in the UI of `Widgetbook`:
 
-| Property | Type | Description |
-| --- | --- | --- |
-| `label` | `String` | Labels the knob by giving it a title. The `label` must be unique for the `WidgetbookUseCase`. |
+| Property      | Type      | Description                                                                                                                                                   |
+| ------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label`       | `String`  | Labels the knob by giving it a title. The `label` must be unique for the `WidgetbookUseCase`.                                                                 |
 | `description` | `String?` | A text which describes what the knob does. This can be used as documentation within Widgetbook and helps your team member understand how to operate the knob. |
 
 ## Available Knobs
 
 | Name            | Type      |
-|-----------------|-----------|
+| --------------- | --------- |
 | boolean         | `bool`    |
 | nullableBoolean | `bool?`   |
 | text            | `String`  |

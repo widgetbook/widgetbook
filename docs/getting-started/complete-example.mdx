@@ -1,6 +1,9 @@
 # Complete Example
 
-Let's add two more components, `CustomCard` and `CustomTextField`, with different use cases for manual and generator approaches.
+Let's add two more components, `CustomCard` and `CustomTextField`, with
+different use cases for manual and generator approaches.
+
+<Image src="/assets/getting-started/full-example.png" zoom />
 
 ## Folder structure
 
@@ -10,8 +13,9 @@ lib/
 │ ├── container.dart
 │ ├── custom_card.dart
 │ └── custom_text_field.dart
-├── ui_catalogs_g.dart (for generator approach)
-└── ui_catalogs.widgetbook.dart (for manual approach)
+├── widgetbook_g.dart (for generator approach)
+├── widgetbook_g.g.dart (will be generated eventually)
+└── widgetbook.dart (for manual approach)
 ```
 
 ## Component
@@ -20,12 +24,12 @@ Let's create both components
 
 ### CustomCard Component
 
-Create a file named `custom_card.dart` in the `lib/components` directory and add the following code:
+Create a file named `custom_card.dart` in the `lib/components` directory and add
+the following code:
 
 ```dart
 // lib/components/custom_card.dart
 import 'package:flutter/material.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 class CustomCard extends StatelessWidget {
   final Widget child;
@@ -50,17 +54,16 @@ class CustomCard extends StatelessWidget {
     );
   }
 }
-
 ```
 
 ### CustomTextField Component
 
-Create a file named `custom_text_field.dart` in the `lib/components` directory and add the following code:
+Create a file named `custom_text_field.dart` in the `lib/components` directory
+and add the following code:
 
 ```dart
 // lib/components/custom_text_field.dart
 import 'package:flutter/material.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -83,12 +86,12 @@ class CustomTextField extends StatelessWidget {
     );
   }
 }
-
 ```
 
 ## Add components
 
-Update the `lib/ui_catalogs.widgetbook.dart` file to add the new components and their use-cases:
+Update the `lib/widgetbook.dart` file to add the new components and their
+use-cases:
 
 <Tabs
   groupId="approach"
@@ -98,27 +101,30 @@ Update the `lib/ui_catalogs.widgetbook.dart` file to add the new components and 
   ]}
 >
   <TabItem value="generator">
-1. Update the `lib/components/custom_card.dart` and `lib/components/custom_text_field.dart` files to add the `@WidgetbookUseCase` annotation for the new components:
+1. Update the `lib/components/custom_card.dart` and `lib/components/custom_text_field.dart` files to add the `@UseCase` annotation for the new components:
 
 ```dart
 // lib/components/custom_card.dart
+
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
 /// ... [Rest of the code]
 
-@WidgetbookUseCase(
+@widgetbook.UseCase(
   name: 'Default Style',
   type: CustomCard,
 )
-CustomCard defaultCustomCard() {
+CustomCard defaultCustomCard(BuildContext context) {
   return const CustomCard(
     child: Text('This is a custom card'),
   );
 }
 
-@WidgetbookUseCase(
+@widgetbook.UseCase(
   name: 'With Custom Background Color',
   type: CustomCard,
 )
-CustomCard customBackgroundCustomCard() {
+CustomCard customBackgroundCustomCard(BuildContext context) {
   return CustomCard(
     backgroundColor: Colors.green.shade100,
     child: const Text('This is a custom card with a custom background color'),
@@ -128,23 +134,25 @@ CustomCard customBackgroundCustomCard() {
 
 ```dart
 // lib/components/custom_text_field.dart
-...
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-@WidgetbookUseCase(
+/// ... [Rest of the code]
+
+@widgetbook.UseCase(
   name: 'Default Style',
   type: CustomTextField,
 )
-CustomTextField defaultCustomTextField() {
+CustomTextField defaultCustomTextField(BuildContext context) {
   return CustomTextField(
     controller: TextEditingController(),
   );
 }
 
-@WidgetbookUseCase(
+@widgetbook.UseCase(
   name: 'With Hint Text',
   type: CustomTextField,
 )
-CustomTextField hintTextCustomTextField() {
+CustomTextField hintTextCustomTextField(BuildContext context) {
   return CustomTextField(
     controller: TextEditingController(),
     hintText: 'Enter your text here',
@@ -152,9 +160,42 @@ CustomTextField hintTextCustomTextField() {
 }
 ```
 
-2. run `flutter pub build_runner build`;
+Then update `widgetbook_g.dart` to include `@App` annotation:
 
-3. run `flutter run -d chrome -t lib/ui_catalogs_g.widgetbook.dart`
+```dart
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+// import generated directories
+import 'widgetbook_g.g.dart';
+
+void main() {
+  runApp(const WidgetbookApp());
+}
+
+// use @App annotation
+@widgetbook.App()
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook.material(
+      // Use the generated directories variable
+      directories: directories,
+      addons: [],
+      appBuilder: (context, child) {
+        return child;
+      },
+    );
+  }
+}
+```
+
+2. run `flutter pub run build_runner build`;
+
+3. run `flutter run -d chrome -t lib/widgetbook_g.dart`
 
   </TabItem>
   <TabItem value="manual">
@@ -239,10 +280,14 @@ class HotReload extends StatelessWidget {
 }
 ```
 
-2. run `flutter run -d chrome -t lib/ui_catalogs.widgetbook.dart`
+2. run `flutter run -d chrome -t lib/widgetbook.dart`
 
   </TabItem>
 </Tabs>
 
-<Video autoPlay muted src="/assets/screenshots/complete.mp4" type="video/mp4" />
+<Info>
+  See [source
+  code](https://github.com/widgetbook/widgetbook/tree/main/examples/full_example)
+</Info>
 
+<Video autoPlay muted src="/assets/screenshots/complete.mp4" type="video/mp4" />

@@ -1,8 +1,10 @@
 # Device Frame Add-on
 
-The Device Frame Add-on is an invaluable tool that lets you preview your use-cases on various device frames.
-These frames provide a realistic environment by introducing constraints for width and height, resembling actual devices.
-They override `MediaQuery` parameters to ensure your component behaves as expected across different devices.
+The Device Frame Add-on is an invaluable tool that lets you preview your
+use-cases on various device frames. These frames provide a realistic environment
+by introducing constraints for width and height, resembling actual devices. They
+override `MediaQuery` parameters to ensure your component behaves as expected
+across different devices.
 
 |                                   iPhone 13                                    |                                   iPad Mini                                    |
 | :----------------------------------------------------------------------------: | :----------------------------------------------------------------------------: |
@@ -18,11 +20,14 @@ They override `MediaQuery` parameters to ensure your component behaves as expect
 
 ## Setup
 
-Setting up the Device Frame Add-on in your Widgetbook is straightforward. Let's walk through the steps:
+Setting up the Device Frame Add-on in your Widgetbook is straightforward. Let's
+walk through the steps:
 
 ###Step 1:
 
-The first step is identifying which devices you want to preview your components. You can select from a predefined list of devices. Here's an example with a selection of iPhone models:
+The first step is identifying which devices you want to preview your components.
+You can select from a predefined list of devices. Here's an example with a
+selection of iPhone models:
 
 ```dart
 devices: [
@@ -34,7 +39,10 @@ devices: [
 
 ### Step 2(Optional)
 
-As an optional step, you can define a default device to be displayed when the Widgetbook app launches. If you do not specify an `initialDevice`, the first device in your list is selected by default. In this example, we're setting the iPhone 12 as the default device:
+As an optional step, you can define a default device to be displayed when the
+Widgetbook app launches. If you do not specify an `initialDevice`, the first
+device in your list is selected by default. In this example, we're setting the
+iPhone 12 as the default device:
 
 ```dart
 initialDevice: Devices.ios.iPhone12,
@@ -42,10 +50,16 @@ initialDevice: Devices.ios.iPhone12,
 
 ### Step 3:
 
-Construct the Device Frame Add-on With your devices and `initialDevice` defined, you can now create the Device Frame Add-on using the DeviceFrameAddon class. This class takes in your device list and, optionally, the initialDevice:
+Construct the Device Frame Add-on With your devices and `initialDevice` defined,
+you can now create the Device Frame Add-on using the DeviceFrameAddon class.
+This class takes in your device list and, optionally, the initialDevice:
 
-This setup will launch your Widgetbook app with the iPhone 12 screen constraints by default, enabling you to swiftly check your widgets' responsiveness and visual consistency on this device. You can then quickly switch to the other defined devices to compare results.
-Please note that the actual appearance of the preview may vary depending on the specific features and constraints of the chosen device models.
+This setup will launch your Widgetbook app with the iPhone 12 screen constraints
+by default, enabling you to swiftly check your widgets' responsiveness and
+visual consistency on this device. You can then quickly switch to the other
+defined devices to compare results. Please note that the actual appearance of
+the preview may vary depending on the specific features and constraints of the
+chosen device models.
 
 ```dart
 DeviceFrameAddon(

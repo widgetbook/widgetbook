@@ -1,6 +1,9 @@
 # Localization Add-on
 
-The Localization Add-on in Widgetbook lets developers preview how widgets behave under different localization settings. This becomes essential when developing applications for a global audience, accommodating differences in language, text direction, and regional conventions.
+The Localization Add-on in Widgetbook lets developers preview how widgets behave
+under different localization settings. This becomes essential when developing
+applications for a global audience, accommodating differences in language, text
+direction, and regional conventions.
 
 |                                                            English locale                                                            |                                                           Arabic locale                                                            |
 | :----------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: |
@@ -12,18 +15,21 @@ Here's how to configure it:
 
 ### Step 1:
 
-Define `Locales` The first step in setting up the Localization Add-on is to specify the Locale you want to support.
-In our case, we have chosen to use 'en-US' (English - United States).
+Define `Locales` The first step in setting up the Localization Add-on is to
+specify the Locale you want to support. In our case, we have chosen to use
+'en-US' (English - United States).
 
 ```dart
 const Locale('en', 'US'),
 ```
 
-If your application supports more locales, you can add more Locale objects to the list.
+If your application supports more locales, you can add more Locale objects to
+the list.
 
 ### Step 2:
 
-Next, you will need to define the `LocalizationDelegates` that are available. These delegates are used to fetch locale-specific strings and other values.
+Next, you will need to define the `LocalizationDelegates` that are available.
+These delegates are used to fetch locale-specific strings and other values.
 
 ```dart
 localizationsDelegates: [
@@ -32,11 +38,15 @@ localizationsDelegates: [
 ],
 ```
 
-In this example, we have used two localization delegates provided by Flutter - `DefaultWidgetsLocalizations.delegate` and `DefaultMaterialLocalizations.delegate`.
+In this example, we have used two localization delegates provided by Flutter -
+`DefaultWidgetsLocalizations.delegate` and
+`DefaultMaterialLocalizations.delegate`.
 
 ### Step 3:
 
-The final step is to construct the Localization Add-on using the `LocalizationAddon` class. This class takes in the locales and `localizationsDelegates` you specified earlier.
+The final step is to construct the Localization Add-on using the
+`LocalizationAddon` class. This class takes in the locales and
+`localizationsDelegates` you specified earlier.
 
 ```dart
 LocalizationAddon(
@@ -51,6 +61,9 @@ LocalizationAddon(
 ),
 ```
 
-**Options:** the `initialLocale` is optional is always read the first value of locales if it is not defined.
+**Options:** the `initialLocale` is optional is always read the first value of
+locales if it is not defined.
 
-This setup lets you preview widgets as they appear with the 'en-US' locale. The Localization Add-on is an excellent tool for ensuring that your application provides an appropriate user experience across various locales.
+This setup lets you preview widgets as they appear with the 'en-US' locale. The
+Localization Add-on is an excellent tool for ensuring that your application
+provides an appropriate user experience across various locales.

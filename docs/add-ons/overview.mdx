@@ -1,35 +1,58 @@
 # Introduction to Add-ons
 
-Add-ons in Widgetbook provide an expandable, customizable way to tweak your development environment. With options to use pre-existing add-ons or to forge your own, the possibilities for tailoring your domain to your specific project needs are substantial.
+Add-ons in Widgetbook provide an expandable, customizable way to tweak your
+development environment. With options to use pre-existing add-ons or to forge
+your own, the possibilities for tailoring your domain to your specific project
+needs are substantial.
 
 <Info>
-  This section provides a general overview of Add-ons. Each Add-on exhibits unique characteristics;
-  therefore, it is recommended to delve into the documentation of the specific Add-on you are
-  employing for your Widgetbook.
+  This section provides a general overview of Add-ons. Each Add-on exhibits
+  unique characteristics; therefore, it is recommended to delve into the
+  documentation of the specific Add-on you are employing for your Widgetbook.
 </Info>
 
 Here are the fundamental components of our add-on system:
 
 - **Fields and Their Significance:**
 
-Fields play a crucial role in our system, representing the data inputs used in the settings panel.
-These predefined and reusable UI elements are used to structure and define the behavior of your add-ons. With the help of Fields, you can specify how your add-ons function and appear within your development environment.
+Fields play a crucial role in our system, representing the data inputs used in
+the settings panel. These predefined and reusable UI elements are used to
+structure and define the behavior of your add-ons. With the help of Fields, you
+can specify how your add-ons function and appear within your development
+environment.
 
-- **Into Widgets:** Fields can morph into Widgets displayed in the settings panel. This transformation helps in visualizing the settings directly within the development environment.
-- **Into JSON Maps:** Fields can convert into JSON representations. The `WidgetbookCloudIntegration` system can interpret this JSON-format data, making Fields instrumental in inter-system communication.
+- **Into Widgets:** Fields can morph into Widgets displayed in the settings
+  panel. This transformation helps in visualizing the settings directly within
+  the development environment.
+- **Into JSON Maps:** Fields can convert into JSON representations. The
+  `WidgetbookCloudIntegration` system can interpret this JSON-format data,
+  making Fields instrumental in inter-system communication.
 
-These characteristics of Fields make them flexible tools for configuring settings within the add-ons and communicating data across different parts of the system.
+These characteristics of Fields make them flexible tools for configuring
+settings within the add-ons and communicating data across different parts of the
+system.
 
-- **Creation of Custom Add-ons:**
-  Creating custom add-ons using fields is essential to our system. This process empowers developers to design add-ons that cater to their unique requirements.
+- **Creation of Custom Add-ons:** Creating custom add-ons using fields is
+  essential to our system. This process empowers developers to design add-ons
+  that cater to their unique requirements.
 
-- **The Role of the `appBuilder` Function:**
-  While the `appBuilder` function is still available for use, developers also have the flexibility to define their add-ons to inject functionality directly into the Widget tree. This feature allows for customization of the previewing experience based on the project's needs.
+- **The Role of the `appBuilder` Function:** While the `appBuilder` function is
+  still available for use, developers also have the flexibility to define their
+  add-ons to inject functionality directly into the Widget tree. This feature
+  allows for customization of the previewing experience based on the project's
+  needs.
 
-- **Order of Injection and Its Effect:**
-  The sequence in which add-ons and their functionalities are injected into the Widgetbook is determined by their specification order. For example, if you specify `Widgetbook(add-ons: [ThemeAddon(...), LocalizationAddon(...)])`, the Theme widget will be a parent to the Localizations widget. This order generally doesn't affect the preview significantly but can subtly alter how widgets are previewed.
+- **Order of Injection and Its Effect:** The sequence in which add-ons and their
+  functionalities are injected into the Widgetbook is determined by their
+  specification order. For example, if you specify
+  `Widgetbook(add-ons: [ThemeAddon(...), LocalizationAddon(...)])`, the Theme
+  widget will be a parent to the Localizations widget. This order generally
+  doesn't affect the preview significantly but can subtly alter how widgets are
+  previewed.
 
-These key aspects combine to make our add-on system versatile and highly customizable, enabling you to tailor your Widgetbook environment to your specific project needs.
+These key aspects combine to make our add-on system versatile and highly
+customizable, enabling you to tailor your Widgetbook environment to your
+specific project needs.
 
 ## Available Add-ons
 
@@ -39,19 +62,24 @@ Widgetbook comes equipped with a variety of ready-to-use Add-ons:
   - [Material Theme Addon](/add-ons/theme-addon#material-theme-add-on)
   - [Cupertino Theme Addon](/add-ons/theme-addon#cupertino-theme-add-on)
   - [Custom Theme Addon](/add-ons/theme-addon#custom-theme-add-on)
-- [Device Frame Addon](/add-ons/device-frame-addon): Facilitates previewing use-cases on specific device sizes.
-- [Localization Addon](/add-ons/localization-addon): Enables testing across different locales.
-- [Text Scale Addon](/add-ons/text-scale-addon): Supports varying text scales and aids in accessibility testing.
+- [Device Frame Addon](/add-ons/device-frame-addon): Facilitates previewing
+  use-cases on specific device sizes.
+- [Localization Addon](/add-ons/localization-addon): Enables testing across
+  different locales.
+- [Text Scale Addon](/add-ons/text-scale-addon): Supports varying text scales
+  and aids in accessibility testing.
 
 ## Custom Add-on
 
-Widgetbook allows developers to define their own Add-on.[Read more here](/add-ons/custom-addon).
+Widgetbook allows developers to define their own
+Add-on.[Read more here](/add-ons/custom-addon).
 
-## Example
+## Example using Generator approach
 
 Below is a code snippet that encapsulates these concepts:
 
 ```dart
+// lib/widgetbook.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -77,11 +105,11 @@ class WidgetbookApp extends StatelessWidget {
           themes: [
             WidgetbookTheme(
               name: 'Light',
-              data: Themes.light,
+              data: Themes.light, // define your Themes class
             ),
             WidgetbookTheme(
               name: 'Dark',
-              data: Themes.dark,
+              data: Themes.dark, // define your Themes class
             ),
           ],
         ),
@@ -125,5 +153,10 @@ class WidgetbookApp extends StatelessWidget {
 }
 ```
 
-The above example demonstrates how you can use different add-ons such as `MaterialThemeAddon`, `TextScaleAddon`, `LocalizationAddon`, and `DeviceFrameAddon` in Widgetbook. It also shows how to customize the appBuilder function to inject the ScreenUtilInit widget into the Widget tree.
-Our add-on system in Widgetbook is designed to enhance flexibility, interoperability, and overall user experience. By understanding and effectively utilizing this system, you can unlock new possibilities and efficiencies in your development process.
+The above example demonstrates how you can use different add-ons such as
+`MaterialThemeAddon`, `TextScaleAddon`, `LocalizationAddon`, and
+`DeviceFrameAddon` in Widgetbook. It also shows how to customize the appBuilder
+function to inject the ScreenUtilInit widget into the Widget tree. Our add-on
+system in Widgetbook is designed to enhance flexibility, interoperability, and
+overall user experience. By understanding and effectively utilizing this system,
+you can unlock new possibilities and efficiencies in your development process.
