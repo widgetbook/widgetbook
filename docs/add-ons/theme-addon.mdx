@@ -1,13 +1,42 @@
 # Theme Add-on
 
-Theme Add-on The Theme Add-on lets you preview your use-cases in different themes. This ensures that your components maintain their look and feel, consistent with the design language of your application.
+Theme Add-on The Theme Add-on lets you preview your use-cases in different
+themes. This ensures that your components maintain their look and feel,
+consistent with the design language of your application.
+
+```dart
+ThemeAddon<AppThemeData>(
+  themes: [
+    WidgetbookTheme(
+      name: 'Light',
+      data: yourCustomLightTheme,
+    ),
+    WidgetbookTheme(
+      name: 'Dark',
+      data: yourCustomDarkTheme,
+    ),
+  ],
+  themeBuilder: (context, theme, child) {
+    return AppTheme(
+      data: theme,
+      child: child,
+    );
+  },
+)
+```
+
+`ThemeAddon` comes with two variants (`MaterialThemeAddon` and
+`CupertinoThemeAddon`), that can be used as follows:
 
 ## Material Theme Add-on
 
-The Material Theme Add-on lets you apply your `Material` themes, based on the `ThemeData` class, to the components you're previewing.
-The `MaterialThemeAddon` class requires a `themes` property, which lists the available themes.
+The Material Theme Add-on lets you apply your `Material` themes, based on the
+`ThemeData` class, to the components you're previewing. The `MaterialThemeAddon`
+class requires a `themes` property, which lists the available themes.
 
-An optional property `initialTheme` can be defined to specify which theme should be active when the application starts. Here's an example of how you can use the Mate
+An optional property `initialTheme` can be defined to specify which theme should
+be active when the application starts. Here's an example of how you can use the
+Mate
 
 Here's an example of how you can use the Material Theme Add-on:
 
@@ -16,27 +45,37 @@ MaterialThemeAddon(
   themes: [
     WidgetbookTheme(
       name: 'Light',
-      data: Themes.light,
+      data: yourMaterialLightTheme,
     ),
     WidgetbookTheme(
       name: 'Dark',
-      data: Themes.dark,
+      data: yourMaterialDarkTheme,
     ),
   ],
   initialTheme: WidgetbookTheme(
     name: 'Light',
-    data: Themes.light,
+    data: yourMaterialLightTheme,
   ),
 ),
 ```
 
-In this example, we have defined two themes: 'Light' and 'Dark'. The `name` property is a user-friendly name that will be displayed in the Widgetbook user interface. The `data` property corresponds to the actual `ThemeData` for each theme. The 'Light' theme is the initial theme when the application starts.
-Once you've set up your themes in this way, Widgetbook will provide an interface to switch between these themes, allowing you to preview how your components will look under different themes quickly.
+In this example, we have defined two themes: 'Light' and 'Dark'. The `name`
+property is a user-friendly name that will be displayed in the Widgetbook user
+interface. The `data` property corresponds to the actual `ThemeData` for each
+theme. The 'Light' theme is the initial theme when the application starts.
+
+Once you've set up your themes in this way, Widgetbook will provide an interface
+to switch between these themes, allowing you to preview how your components will
+look under different themes quickly.
 
 ## Cupertino Theme Add-on
 
-The Cupertino Theme Add-on enables you to implement your Cupertino themes based on the `CupertinoThemeData` class.
-The `CupertinoThemeAddon` class necessitates a themes property to enumerate the available themes. Additionally, an `initialTheme` can be specified to set which theme should be active at the application's start.
+The Cupertino Theme Add-on enables you to implement your Cupertino themes based
+on the `CupertinoThemeData` class.
+
+The `CupertinoThemeAddon` class necessitates a themes property to enumerate the
+available themes. Additionally, an `initialTheme` can be specified to set which
+theme should be active at the application's start.
 
 Here's an example:
 
@@ -45,31 +84,38 @@ CupertinoThemeAddon(
   themes: [
     WidgetbookTheme(
       name: 'Light',
-      data: lightTheme(),
+      data: yourCupertinoLightTheme,
     ),
     WidgetbookTheme(
       name: 'Dark',
-      data: darkTheme(),
+      data: yourCupertinoDarkTheme,
     ),
   ],
   initialTheme: WidgetbookTheme(
     name: 'Light',
-    data: lightTheme(),
+    data: yourCupertinoLightTheme,
   ),
 ),
 ```
 
-In this scenario, two themes: 'Light' and 'Dark', are defined. The name property is a human-readable name displayed in the Widgetbook user interface. The data property corresponds to the actual `CupertinoThemeData` for each theme. 'Light' is selected as the initial theme when the application launches.
+In this scenario, two themes: 'Light' and 'Dark', are defined. The name property
+is a human-readable name displayed in the Widgetbook user interface.
+
+The data property corresponds to the actual `CupertinoThemeData` for each theme.
+'Light' is selected as the initial theme when the application launches.
 
 ## Custom Theme Add-on
 
-Widgetbook also supports defining entirely custom themes in addition to Material and Cupertino themes.
+Widgetbook also supports defining entirely custom themes in addition to Material
+and Cupertino themes.
 
-Assume you have defined a very simple custom theme AppThemeData that includes just a single color.
+Assume you have defined a very simple custom theme `AppThemeData` that includes
+just a single color.
 
 <Info>
-  The `AppThemeData` class can be compared with the `ThemeData` class for the Material design system
-  or the `CupertinoThemeData` class for the Cupertino design system.
+  The `AppThemeData` class can be compared with the `ThemeData` class for the
+  Material design system or the `CupertinoThemeData` class for the Cupertino
+  design system.
 </Info>
 
 ```dart title="Example: AppThemeData"
@@ -82,11 +128,14 @@ class AppThemeData {
 }
 ```
 
-This `AppThemeData` object must now be injected into the Widget tree, which is typically accomplished using an `InheritedWidget`. For instance, you could define an AppTheme `InheritedWidget` to inject your custom theme into the Widget tree.
+This `AppThemeData` object must now be injected into the Widget tree, which is
+typically accomplished using an `InheritedWidget`. For instance, you could
+define an AppTheme `InheritedWidget` to inject your custom theme into the Widget
+tree.
 
 <Info>
-  The `AppTheme` widget can be compared with the `Theme` Widget for the Material design system or
-  the `CupertinoTheme` Widget for the Cupertino design system.
+  The `AppTheme` widget can be compared with the `Theme` Widget for the Material
+  design system or the `CupertinoTheme` Widget for the Cupertino design system.
 </Info>
 
 ```dart title="Example: AppTheme InheritedWidget"
@@ -126,7 +175,9 @@ final yellowTheme = AppThemeData(
 );
 ```
 
-The `CustomThemeAddon` requires two properties. The `themes` property defines which themes are available while the `initialTheme` property defines which theme is active and selected.
+The `CustomThemeAddon` requires two properties. The `themes` property defines
+which themes are available while the `initialTheme` property defines which theme
+is active and selected.
 
 ```dart title="Example: CustomThemeAddon"
 final themeAddon = CustomThemeAddon<AppThemeData>(

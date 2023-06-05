@@ -1,3 +1,91 @@
+# Knob example
+
+This code defines a use case for a hypothetical `MyHomePage` widget in the
+Widgetbook. The knobs provide an interactive way to adjust the widget's
+parameters in the Widgetbook user interface.
+
+<Image src="/assets/knobs/knobs.png" zoom />
+
+```dart
+WidgetbookUseCase(
+  name: 'Home Page',
+  builder: (context) => MyHomePage(
+    // Knobs are coming here
+  ),
+),
+```
+
+The `WidgetbookUseCase` takes a `name` and a `builder` function, which
+constructs a `MyHomePage` widget.
+
+```dart
+title: context.knobs.string(
+  label: 'Title',
+  initialValue: 'Title',
+),
+```
+
+The `title` knob is a `string` that allows the user to modify the `title`
+parameter of the `MyHomePage` widget. The `label` is displayed in the user
+interface, and the `initialValue` is the value that the knob starts with.
+
+```dart
+incrementBy: context.knobs.doubleOrNull.slider(
+  label: 'Increment By',
+  min: 0,
+  initialValue: 5,
+  max: 10,
+  divisions: 10,
+).toInt() ?? 0,
+```
+
+The `incrementBy` knob is a `doubleOrNull.slider` knob that lets the user adjust
+a `double` value using a slider. The slider will have a range from `min` to
+`max`, divided into `divisions` number of parts. If the knob's value is null
+(i.e., the user hasn't set a value), it defaults to `0`.
+
+```dart
+countLabel: context.knobs.stringOrNull(
+  label: 'Count Label',
+  initialValue: 'Current Count',
+  description: 'This is the text that appears above the current count of increments',
+),
+```
+
+The `countLabel` knob is a `stringOrNull` that allows the user to adjust the
+`countLabel` parameter of the `MyHomePage` widget. If the user doesn't set a
+value, the knob's value will be null.
+
+```dart
+iconData: context.knobs.list(
+  label: 'Icon',
+  options: [Icons.add, Icons.crop_square_sharp, Icons.circle]
+),
+```
+
+The `iconData` knob is a `list` knob that allows the user to select an icon from
+a list of options.
+
+```dart
+showToolTip: context.knobs.boolean(
+  label: 'Show Increment Tool Tip',
+  description: 'This is the tooltip that is displayed when hovering over the increment button',
+  initialValue: true,
+),
+```
+
+The `showToolTip` knob is a `boolean` knob that lets the user toggle whether a
+tooltip should be shown when the increment button is hovered over.
+
+The `builder` function ends, returning the `MyHomePage` widget with the
+parameters set according to the knobs' values. The `WidgetbookUseCase` also ends
+here.
+
+<Video autoPlay muted src="/assets/knobs/knobs.mp4" type="video/mp4" />
+
+## Putting it all together
+
+```dart
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -141,3 +229,7 @@ class KnobsExample extends StatelessWidget {
     );
   }
 }
+```
+
+You can see an example of this and different knobs available
+[here](https://github.com/widgetbook/widgetbook/blob/main/examples/knobs_example/lib/widgetbook.dart).

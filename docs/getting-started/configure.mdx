@@ -1,53 +1,24 @@
 # Configuration
 
-Widgetbook allows developers to fully customize how use cases are previewed
-based on the selected add-on properties.
-
-To customize Widgetbook, define a function that returns a `Widget` and accepts
-two required parameters, `context` of type `BuildContext` and `child` of type
-`Widget`. The `context` parameter provides access to the add-on properties as
-described [here](/add-ons/overview). The `child` parameter provides the build
-use case.
+Widgetbook allows developers to fully customize how use cases are previewed. Use
+the `appBuilder` property of `WidgetbookApp` to specify your custom `AppBuilder`
+method.
 
 ```dart title="Custom Material app builder"
-Widget customAppBuilder(BuildContext context, Widget child) {
-  final builder = Builder(
-    builder: (context) {
-      return MaterialApp(
-        theme: context.materialTheme,
-        locale: context.localization!.activeLocale,
-        supportedLocales: context.localization!.locales,
-        localizationsDelegates:
-            context.localization!.localizationsDelegates,
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-              textScaleFactor: context.textScale,
-            ),
-            child: child,
-          ),
-        ),
+@override
+Widget build(BuildContext context) {
+  return Widgetbook.material(
+    // ... rest of the code
+    appBuilder: (context, child) {
+      return AwesomePackage(
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: child,
+        )
       );
-    },
-  );
-  final frameBuilder = context.frameBuilder!;
-  return frameBuilder(
-    context,
-    builder,
+    }
   );
 }
-```
-
-Use the `appBuilder` property of `WidgetbookApp` to specify your custom
-`AppBuilder` method.
-
-```dart title="Custom Material app builder"
-return Widgetbook.material(
-  addons: [],
-  directories: [],
-  appBuilder: customAppBuilder,
-);
 ```
 
 Widgetbook now uses your custom `AppBuilder` method.
@@ -57,3 +28,4 @@ Widgetbook now uses your custom `AppBuilder` method.
   have the flexibility to define their add-ons to inject functionality directly
   into the Widget tree.[Follow the add-on documentation](/add-ons/overview)
 </Info>
+```
