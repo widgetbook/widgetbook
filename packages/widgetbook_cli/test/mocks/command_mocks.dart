@@ -11,6 +11,7 @@ import '../../bin/ci_parser/ci_parser.dart';
 import '../../bin/git/git_dir.dart';
 import '../../bin/git/git_wrapper.dart';
 import '../../bin/helpers/widgetbook_zip_encoder.dart';
+import '../../bin/review/use_cases/use_case_parser.dart';
 import '../../bin/std/stdin_wrapper.dart';
 
 class MockLogger extends Mock implements Logger {}
@@ -42,3 +43,5 @@ class MockCiWrapper extends Mock implements CiWrapper {}
 class MockStdInWrapper extends Mock implements StdInWrapper {}
 
 class MockPlatformWrapper extends Mock implements PlatformWrapper {}
+
+class MockUseCaseParser extends Mock implements UseCaseParser {}
