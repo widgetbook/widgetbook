@@ -1,6 +1,7 @@
 ## Unreleased
 
  - **FIX**: Use related type checks when comparing device's frame state to its query parameter. ([#715](https://github.com/widgetbook/widgetbook/pull/715))
+ - **FIX**: Add missing type parameter to `LabelBuilder`, which affected the `list` knob. ([#718](https://github.com/widgetbook/widgetbook/pull/718))
 
 ## 3.0.0-rc.1
 
