@@ -109,7 +109,7 @@ class KnobsBuilder {
     required String label,
     required List<T> options,
     String? description,
-    LabelBuilder? labelBuilder,
+    LabelBuilder<T>? labelBuilder,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return _onKnobAdded(

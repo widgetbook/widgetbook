@@ -15,7 +15,7 @@ class ListKnob<T> extends Knob<T> {
   });
 
   final List<T> options;
-  final LabelBuilder? labelBuilder;
+  final LabelBuilder<T>? labelBuilder;
 
   @override
   List<Field> get fields {
