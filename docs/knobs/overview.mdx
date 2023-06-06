@@ -23,8 +23,15 @@ access the knobs builder:
 import 'package:widgetbook/widgetbook.dart' show Knobs;
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-@widgetbook.UseCase(name: 'Default', type: Container) Widget
-useCase(BuildContext context) {/* ... */}
+@widgetbook.UseCase(name: 'Default', type: Container) 
+Widget Elevated(BuildContext context) {
+  return MyHomePage(
+    title: context.knobs.string(
+      label: 'Title Label',
+      initialValue: 'HomePage',
+    ),
+  );
+}
 ```
 
 </TabItem>
