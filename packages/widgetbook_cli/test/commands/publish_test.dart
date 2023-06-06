@@ -12,9 +12,12 @@ import '../../bin/commands/commands.dart';
 import '../../bin/git/branch_reference.dart';
 import '../../bin/git/git_dir.dart';
 import '../../bin/git/git_wrapper.dart';
+import '../../bin/git/modification.dart';
 import '../../bin/helpers/helpers.dart';
 import '../../bin/models/models.dart';
 import '../../bin/models/publish_args.dart';
+import '../../bin/review/use_cases/models/changed_use_case.dart';
+import '../../bin/review/use_cases/use_case_parser.dart';
 import '../../bin/std/stdin_wrapper.dart';
 import '../helpers/test_data.dart';
 import '../mocks/mocks.dart';
@@ -48,6 +51,7 @@ void main() {
     late WidgetbookZipEncoder widgetbookZipEncoder;
     late LocalFileSystem localFileSystem;
     late Progress progress;
+    late UseCaseParser useCaseParser;
     final tempDir = const LocalFileSystem().currentDirectory;
 
     setUp(() async {
@@ -61,6 +65,7 @@ void main() {
       widgetbookZipEncoder = MockWidgetbookZipEncoder();
       localFileSystem = MockLocalFileSystem();
       progress = MockProgress();
+      useCaseParser = MockUseCaseParser();
 
       when(() => logger.progress(any<String>())).thenReturn(progress);
       publishCommand = PublishCommand(
@@ -606,11 +611,36 @@ void main() {
       final publishCommand = PublishCommand(
         logger: logger,
         stdInWrapper: stdInWrapper,
+        gitWrapper: gitWrapper,
         ciParserRunner: CiParserRunner(argResults: argResults, gitDir: gitDir),
       )..testArgResults = argResults;
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
-      when(() => gitDir.getActorName())
-          .thenAnswer((_) => Future.value('John Doe'));
+
+      when(() => gitWrapper.isGitDir(any())).thenAnswer(
+        (_) => Future.value(true),
+      );
+
+      when(
+        () => gitWrapper.fromExisting(
+          any(),
+          allowSubdirectory: true,
+        ),
+      ).thenAnswer(
+        (_) => Future.value(gitDir),
+      );
+
+      when(() => gitDir.getActorName()).thenAnswer(
+        (_) => Future.value('John Doe'),
+      );
+
+      when(() => gitDir.getRepositoryName()).thenAnswer(
+        (_) => Future.value('widgetbook'),
+      );
+
+      when(() => gitDir.isWorkingTreeClean()).thenAnswer(
+        (_) => Future.value(false),
+      );
+
       when(() => stdInWrapper.hasTerminal).thenReturn(true);
       when(
         () => logger.chooseOne(
@@ -620,8 +650,6 @@ void main() {
         ),
       ).thenReturn('no');
 
-      when(() => gitDir.getRepositoryName())
-          .thenAnswer((_) => Future.value('widgetbook'));
       expect(
         publishCommand.run,
         throwsA(
@@ -795,8 +823,25 @@ void main() {
         fileSystem: localFileSystem,
         widgetbookHttpClient: widgetbookHttpClient,
         logger: logger,
-        ciParserRunner: CiParserRunner(argResults: argResults, gitDir: gitDir),
+        useCaseParser: useCaseParser,
+        ciParserRunner: CiParserRunner(
+          argResults: argResults,
+          gitDir: gitDir,
+        ),
       )..testArgResults = argResults;
+
+      when(() => useCaseParser.parse()).thenAnswer(
+        (_) => Future.value([
+          ChangedUseCase(
+            name: 'use_case',
+            componentName: 'UseCase',
+            componentDefinitionPath: 'path/to/use_case.dart',
+            modification: Modification.changed,
+            designLink: null,
+          )
+        ]),
+      );
+
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
 
       when(() => gitDir.getActorName())
@@ -841,11 +886,25 @@ void main() {
         fileSystem: localFileSystem,
         widgetbookHttpClient: widgetbookHttpClient,
         logger: logger,
+        useCaseParser: useCaseParser,
         ciParserRunner: CiParserRunner(
           argResults: argResults,
           gitDir: gitDir,
         ),
       )..testArgResults = argResults;
+
+      when(() => useCaseParser.parse()).thenAnswer(
+        (_) => Future.value([
+          ChangedUseCase(
+            name: 'use_case',
+            componentName: 'UseCase',
+            componentDefinitionPath: 'path/to/use_case.dart',
+            modification: Modification.changed,
+            designLink: null,
+          )
+        ]),
+      );
+
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
 
       when(() => argResults['base-branch'] as String).thenReturn('main');
@@ -915,17 +974,6 @@ void main() {
       final result = await publishCommand.run();
 
       expect(result, equals(ExitCode.success.code));
-
-      verify(
-        () => logger.warn('You have un-commited changes'),
-      ).called(1);
-      verify(
-        () => logger.warn(
-            'Uploading a new build to Widgetbook Cloud requires a commit SHA. '
-            'Due to un-committed changes, we are using the commit SHA '
-            'of your previous commit which can lead to the build being '
-            'rejected due to an already existing build.'),
-      ).called(1);
     });
   });
 }

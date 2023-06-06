@@ -49,7 +49,7 @@ void main() {
     test(
       'returns $CiArgs from $LocalParser',
       () async {
-        when(() => ciWrapper.isCI()).thenReturn(true);
+        when(() => ciWrapper.isCI()).thenReturn(false);
 
         when(() => gitDir.getActorName())
             .thenAnswer((_) => Future.value(actorName));
@@ -60,13 +60,14 @@ void main() {
         final sut = CiParserRunner(
           argResults: argResults,
           gitDir: gitDir,
+          ciWrapper: ciWrapper,
         );
 
         final ciArgs = await sut.getParser()?.getCiArgs();
 
+        expect(ciArgs?.vendor, 'Local');
         expect(ciArgs?.actor, actorName);
         expect(ciArgs?.repository, repositoryName);
-        expect(ciArgs?.vendor, 'Local');
       },
     );
 
