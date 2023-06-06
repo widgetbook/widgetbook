@@ -35,3 +35,6 @@ linter:
     prefer_single_quotes: true
     require_trailing_commas: true
     noop_primitive_operations: true
+  
+    # Types
+    unrelated_type_equality_checks: true
