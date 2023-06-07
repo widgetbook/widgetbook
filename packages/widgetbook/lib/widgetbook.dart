@@ -3,6 +3,7 @@
 library widgetbook;
 
 export 'src/addons/addons.dart';
+export 'src/fields/fields.dart';
 export 'src/integrations/integrations.dart';
 export 'src/knobs/knobs.dart'
     hide
