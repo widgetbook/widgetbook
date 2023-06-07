@@ -10,6 +10,6 @@ builders:
   app_builder:
     import: "package:widgetbook_generator/builder.dart"
     builder_factories: ["appBuilder"]
-    build_extensions: { ".dart": [".g.dart"] }
+    build_extensions: { ".dart": [".directories.widgetbook.dart"] }
     auto_apply: dependents
     build_to: source
