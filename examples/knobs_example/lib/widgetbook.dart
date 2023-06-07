@@ -41,40 +41,51 @@ class KnobsExample extends StatelessWidget {
               useCases: [
                 WidgetbookUseCase(
                   name: 'Home Page',
-                  builder: (context) => MyHomePage(
-                    title: context.knobs
-                        .string(label: 'Title', initialValue: 'Title'),
-                    incrementBy: context.knobs.doubleOrNull
-                            .slider(
-                              label: 'Increment By',
-                              min: 0,
-                              initialValue: 5,
-                              max: 10,
-                              divisions: 10,
-                            )
-                            ?.toInt() ??
-                        0,
-                    countLabel: context.knobs.stringOrNull(
-                      label: 'Count Label',
-                      initialValue: 'Current Count',
-                      description:
-                          'This is the text that appears above the current count of increments',
-                    ),
-                    iconData: context.knobs.list(
-                      label: 'Icon',
-                      options: [
-                        Icons.add,
-                        Icons.crop_square_sharp,
-                        Icons.circle
-                      ],
-                    ),
-                    showToolTip: context.knobs.boolean(
-                      label: 'Show Increment Tool Tip',
-                      description:
-                          'This is the tooltip that is displayed when hovering over the increment button',
-                      initialValue: true,
-                    ),
-                  ),
+                  builder: (context) {
+                    return MyHomePage(
+                      title: context.knobs
+                          .string(label: 'Title', initialValue: 'Title'),
+                      incrementBy: context.knobs.doubleOrNull
+                              .slider(
+                                label: 'Increment By',
+                                min: 0,
+                                initialValue: 5,
+                                max: 10,
+                                divisions: 10,
+                              )
+                              ?.toInt() ??
+                          0,
+                      countLabel: context.knobs.stringOrNull(
+                        label: 'Count Label',
+                        initialValue: 'Current Count',
+                        description:
+                            'This is the text that appears above the current count of increments',
+                      ),
+                      addIconData: context.knobs.list(
+                        label: 'AddIcon',
+                        options: [
+                          Icons.add,
+                          Icons.crop_square_sharp,
+                          Icons.circle
+                        ],
+                      ),
+                      removeIconData: context.knobs.list(
+                        label: 'RemoveIcon',
+                        options: [
+                          Icons.remove,
+                          Icons.crop_square_sharp,
+                          Icons.circle
+                        ],
+                        labelBuilder: (value) => value.toString() + ' icon',
+                      ),
+                      showToolTip: context.knobs.boolean(
+                        label: 'Show Increment Tool Tip',
+                        description:
+                            'This is the tooltip that is displayed when hovering over the increment button',
+                        initialValue: true,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
