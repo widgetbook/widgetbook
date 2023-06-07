@@ -107,10 +107,7 @@ class WidgetbookState extends ChangeNotifier {
   T? registerKnob<T>(Knob<T> knob) {
     final cachedKnob = knobs.putIfAbsent(
       knob.label,
-      () {
-        Future.microtask(notifyListeners);
-        return knob;
-      },
+      () => knob,
     );
 
     // Return `null` even if the knob has value, but it was marked as null
