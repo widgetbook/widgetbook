@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
 import 'package:widgetbook_core/widgetbook_core.dart';
 
 import '../addons/addons.dart';
@@ -55,6 +56,7 @@ class WidgetbookState extends ChangeNotifier {
         .notifier!;
   }
 
+  @internal
   @override
   void notifyListeners() {
     super.notifyListeners();
@@ -62,7 +64,7 @@ class WidgetbookState extends ChangeNotifier {
     // Do not sync route in preview mode, since the widget state is already
     // controlled by using the URL.
     if (!previewMode) {
-      syncRouteInformation();
+      _syncRouteInformation();
     }
 
     integrations?.forEach(
@@ -71,13 +73,14 @@ class WidgetbookState extends ChangeNotifier {
   }
 
   /// Syncs this with the router's location using [SystemNavigator].
-  void syncRouteInformation() {
+  void _syncRouteInformation() {
     SystemNavigator.routeInformationUpdated(
       location: uri.toString(),
     );
   }
 
   /// Update the [name] query parameter with the given [value].
+  @internal
   void updateQueryParam(String name, String value) {
     queryParams[name] = value;
     notifyListeners();
@@ -85,6 +88,7 @@ class WidgetbookState extends ChangeNotifier {
 
   /// Update the [path], causing a new [useCase] to bet returned.
   /// Resets the [knobs] during the update.
+  @internal
   void updatePath(String newPath) {
     path = newPath;
     knobs.clear(); // Reset Knobs
@@ -99,11 +103,13 @@ class WidgetbookState extends ChangeNotifier {
   }
 
   /// Updates [Knob.isNull] using the [label] to find the [Knob].
+  @internal
   void updateKnobNullability(String label, bool isNull) {
     knobs[label]!.isNull = isNull;
     notifyListeners();
   }
 
+  @internal
   T? registerKnob<T>(Knob<T> knob) {
     final cachedKnob = knobs.putIfAbsent(
       knob.label,
@@ -123,6 +129,7 @@ class WidgetbookState extends ChangeNotifier {
   /// the [path], [previewMode] and [queryParams] fields. Since these fields
   /// can be manipulated from the router's query parameters, as opposed to the
   /// rest of fields that stay unchanged during runtime.
+  @internal
   WidgetbookState copyFromRouteConfig(AppRouteConfig configuration) {
     return WidgetbookState(
       path: configuration.path,
