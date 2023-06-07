@@ -36,7 +36,10 @@ class Workbench extends StatelessWidget {
             );
           },
           child: Scaffold(
-            body: state.useCase!.builder(context),
+            body: Builder(
+              key: ValueKey(state.uri),
+              builder: state.useCase!.builder,
+            ),
           ),
         ),
       ),
