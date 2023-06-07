@@ -68,4 +68,61 @@ void main() {
       expect(find.text('B'), findsWidgets);
     },
   );
+
+  testWidgets(
+    'Options knob works with non-string types',
+    (WidgetTester tester) async {
+      await tester.pumpWithKnob(
+        (context) => Icon(
+          context.knobs.list<IconData>(
+            label: 'RemoveIcon',
+            options: [Icons.remove, Icons.crop_square_sharp, Icons.circle],
+          ),
+        ),
+      );
+
+      expect(
+        find.byWidgetPredicate(
+          (widget) => widget is Icon && widget.icon == Icons.remove,
+        ),
+        findsOneWidget,
+      );
+
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(DropdownMenu<IconData>));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('${Icons.circle}').first);
+      await tester.pumpAndSettle();
+      expect(find.text('${Icons.circle}'), findsWidgets);
+    },
+  );
+
+  testWidgets(
+    'Options knob works with labelBuilder',
+    (WidgetTester tester) async {
+      await tester.pumpWithKnob(
+        (context) => Icon(
+          context.knobs.list<IconData>(
+            label: 'RemoveIcon',
+            options: [Icons.remove, Icons.crop_square_sharp, Icons.circle],
+            labelBuilder: (value) => value.toString() + ' icon',
+          ),
+        ),
+      );
+
+      expect(
+        find.byWidgetPredicate(
+          (widget) => widget is Icon && widget.icon == Icons.remove,
+        ),
+        findsOneWidget,
+      );
+
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(DropdownMenu<IconData>));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('${Icons.circle} icon').first);
+      await tester.pumpAndSettle();
+      expect(find.text('${Icons.circle} icon'), findsWidgets);
+    },
+  );
 }
