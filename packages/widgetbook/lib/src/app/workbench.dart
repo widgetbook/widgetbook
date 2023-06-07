@@ -4,6 +4,7 @@ import '../addons/addons.dart';
 import '../fields/fields.dart';
 import '../state/state.dart';
 import 'safe_boundaries.dart';
+import 'use_case_builder.dart';
 
 class Workbench extends StatelessWidget {
   const Workbench({super.key});
@@ -36,7 +37,10 @@ class Workbench extends StatelessWidget {
             );
           },
           child: Scaffold(
-            body: state.useCase!.builder(context),
+            body: UseCaseBuilder(
+              key: ValueKey(state.uri),
+              useCase: state.useCase!,
+            ),
           ),
         ),
       ),
