@@ -37,7 +37,10 @@ class ListKnob<T> extends Knob<T> {
   @override
   T valueFromQueryGroup(Map<String, String> group) {
     return options.firstWhere(
-      (option) => option == group[label],
+      (option) {
+        final optionLabel = labelBuilder?.call(option);
+        return (optionLabel ?? option.toString()) == group[label];
+      },
       orElse: () => value,
     );
   }
