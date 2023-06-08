@@ -26,16 +26,14 @@ class MyHomePage extends StatefulWidget {
     required this.title,
     this.incrementBy = 1,
     this.countLabel,
-    this.addIconData,
-    this.removeIconData,
+    this.iconData,
     this.showToolTip = true,
   }) : super(key: key);
 
   final String title;
   final int incrementBy;
   final String? countLabel;
-  final IconData? addIconData;
-  final IconData? removeIconData;
+  final IconData? iconData;
   final bool showToolTip;
 
   @override
@@ -48,12 +46,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void _incrementCounter() {
     setState(() {
       _counter += widget.incrementBy;
-    });
-  }
-
-  void _decrementCounter() {
-    setState(() {
-      _counter -= widget.incrementBy;
     });
   }
 
@@ -78,22 +70,10 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: Row(
-        // crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: _incrementCounter,
-            tooltip: widget.showToolTip ? 'Increment' : null,
-            child: Icon(widget.addIconData ?? Icons.add),
-          ),
-          const SizedBox(width: 10),
-          FloatingActionButton(
-            onPressed: _decrementCounter,
-            tooltip: widget.showToolTip ? 'Decrement' : null,
-            child: Icon(widget.removeIconData ?? Icons.remove),
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: widget.showToolTip ? 'Increment' : null,
+        child: Icon(widget.iconData ?? Icons.add),
       ),
     );
   }
