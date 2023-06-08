@@ -107,6 +107,7 @@ class KnobsBuilder {
   T list<T>({
     required String label,
     required List<T> options,
+    T? initialOption,
     String? description,
     LabelBuilder<T>? labelBuilder,
   }) {
@@ -114,7 +115,7 @@ class KnobsBuilder {
     return onKnobAdded(
       ListKnob(
         label: label,
-        value: options.first,
+        value: initialOption ?? options.first,
         description: description,
         options: options,
         labelBuilder: labelBuilder,
