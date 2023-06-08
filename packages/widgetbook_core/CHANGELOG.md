@@ -1,6 +1,7 @@
 ## Unreleased
 
  - **Fix**: Prevent `onNodeSelected` from being called if the node is already selected. ([#725](https://github.com/widgetbook/widgetbook/pull/725))
+ - **Fix**: Use `ListView` for `SettingsPanel`. ([#732](https://github.com/widgetbook/widgetbook/pull/732))
 
 ## 3.0.0-rc.1
 
