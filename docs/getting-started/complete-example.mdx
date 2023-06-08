@@ -1,7 +1,7 @@
 # Complete Example
 
-Let's add two more components, `CustomCard` and `CustomTextField`, with
-different use cases for manual and generator approaches.
+Let's add two more components, `CustomCard` and `CustomTextField`, with different use
+cases for manual and generator approaches.
 
 <Image src="/assets/getting-started/full-example.png" zoom />
 
@@ -13,8 +13,8 @@ lib/
 │ ├── container.dart
 │ ├── custom_card.dart
 │ └── custom_text_field.dart
-├── widgetbook_g.dart (for generator approach)
-├── widgetbook_g.g.dart (will be generated eventually)
+├── widgetbook_generator.dart (for generator approach)
+├── widgetbook_generator.g.dart (will be generated eventually)
 └── widgetbook.dart (for manual approach)
 ```
 
@@ -24,8 +24,8 @@ Let's create both components
 
 ### CustomCard Component
 
-Create a file named `custom_card.dart` in the `lib/components` directory and add
-the following code:
+Create a file named `custom_card.dart` in the `lib/components` directory and add the
+following code:
 
 ```dart
 // lib/components/custom_card.dart
@@ -58,8 +58,8 @@ class CustomCard extends StatelessWidget {
 
 ### CustomTextField Component
 
-Create a file named `custom_text_field.dart` in the `lib/components` directory
-and add the following code:
+Create a file named `custom_text_field.dart` in the `lib/components` directory and add the
+following code:
 
 ```dart
 // lib/components/custom_text_field.dart
@@ -90,8 +90,7 @@ class CustomTextField extends StatelessWidget {
 
 ## Add components
 
-Update the `lib/widgetbook.dart` file to add the new components and their
-use-cases:
+Update the `lib/widgetbook.dart` file to add the new components and their use-cases:
 
 <Tabs
   groupId="approach"
@@ -160,7 +159,7 @@ CustomTextField hintTextCustomTextField(BuildContext context) {
 }
 ```
 
-Then update `widgetbook_g.dart` to include `@App` annotation:
+Then update `widgetbook_generator.dart` to include `@App` annotation:
 
 ```dart
 import 'package:flutter/material.dart';
@@ -168,7 +167,7 @@ import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 // import generated directories
-import 'widgetbook_g.g.dart';
+import 'widgetbook_generator.g.dart';
 
 void main() {
   runApp(const WidgetbookApp());
@@ -195,7 +194,7 @@ class WidgetbookApp extends StatelessWidget {
 
 2. run `flutter pub run build_runner build`;
 
-3. run `flutter run -d chrome -t lib/widgetbook_g.dart`
+3. run `flutter run -d chrome -t lib/widgetbook_generator.dart`
 
   </TabItem>
   <TabItem value="manual">

@@ -57,7 +57,7 @@
                     "6. Knobs", "/getting-started/knobs"
                 ],
                 [
-                    "7. Add-ons", "/getting-started/add-ons"
+                    "7. Addons", "/getting-started/addons"
                 ],
                 [
                     "8. Configure", "/getting-started/configure"
@@ -79,25 +79,22 @@
             ]
         ],
         [
-            "Add-ons",
+            "Addons",
             [
                 [
-                    "1. Introduction", "/add-ons/overview"
+                    "1. Introduction", "/addons/overview"
                 ],
                 [
-                    "2. Theme Add-on", "/add-ons/theme-addon"
+                    "2. Theme Addon", "/addons/theme-addon"
                 ],
                 [
-                    "3. Device Frame Add-on", "/add-ons/device-frame-addon"
+                    "3. Device Frame Addon", "/addons/device-frame-addon"
                 ],
                 [
-                    "4. Localization Add-on", "/add-ons/localization-addon"
+                    "4. Localization Addon", "/addons/localization-addon"
                 ],
                 [
-                    "5. Text Scale Add-on", "/add-ons/text-scale-addon"
-                ],
-                [
-                    "6. Custom Add-on", "/add-ons/custom-addon"
+                    "5. Text Scale Addon", "/addons/text-scale-addon"
                 ]
             ]
         ],
@@ -147,14 +144,6 @@
             [
                 [
                     "Overview", "/widgetbook-cli/overview"
-                ]
-            ]
-        ],
-        [
-            "Mono-repo",
-            [
-                [
-                    "Setup", "/mono-repo/index"
                 ]
             ]
         ],

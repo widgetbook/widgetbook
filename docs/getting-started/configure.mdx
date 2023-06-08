@@ -1,8 +1,13 @@
 # Configuration
 
-Widgetbook allows developers to fully customize how use cases are previewed. Use
-the `appBuilder` property of `WidgetbookApp` to specify your custom `AppBuilder`
-method.
+Widgetbook allows developers to fully customize how use cases are previewed. Use the
+`appBuilder` property of `WidgetbookApp` to specify your custom `AppBuilder` method.
+
+<Info>
+  While the `appBuilder` function is still available for use, developers also have the
+  flexibility to define their Addons to inject functionality directly into the Widget
+  tree.[Follow the Addons documentation](/addons/overview)
+</Info>
 
 ```dart title="Custom Material app builder"
 @override
@@ -22,9 +27,3 @@ Widget build(BuildContext context) {
 ```
 
 Widgetbook now uses your custom `AppBuilder` method.
-
-<Info>
-  While the `appBuilder` function is still available for use, developers also
-  have the flexibility to define their add-ons to inject functionality directly
-  into the Widget tree.[Follow the add-on documentation](/add-ons/overview)
-</Info>

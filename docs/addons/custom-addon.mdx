@@ -1,0 +1,65 @@
+# Custom Addon
+
+Widgetbook offers developers the flexibility to design their own Addons, making
+it fully adaptable to your requirements.
+
+<Warning>
+  We are currently improving the API, and as a result, the documentation might
+  be brief.
+</Warning>
+
+## Setup
+
+To create a custom Addons, follow these steps:
+
+- Define a model for your custom Addon. This model will hold the data and
+  behavior of your Addon.
+- Create a new class that extends the WidgetbookAddon class with a generic
+  parameter corresponding to your defined model.
+
+Here's an example demonstrating how to create a custom Addon:
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+
+
+class CustomAddon extends WidgetbookAddon<String> {
+  CustomAddon({
+    required this.customValue,
+    String? initialCustomValue,
+  }) : super(
+          name: 'Your Custom Addon Name',
+          initialSetting: initialCustomValue ?? customValue,
+        );
+
+  final String customValue;
+
+  @override
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    String setting,
+  ) {
+    // customize how the use case is built using your custom Addon
+    return Container();
+  }
+
+  @override
+  List<Field> get fields {
+    return StringField<String>(
+      group: slugName,
+      name: 'yourCustomName',
+      values: customValue,
+      initialValue: initialSetting,
+      labelBuilder: (customValue) => customValue.toString(),
+    );
+  }
+
+  @override
+  String settingFromQueryGroup(Map<String, String> group) {
+    final value = group['yourCustomName'];
+    return value ?? initialSetting;
+  }
+}
+```
