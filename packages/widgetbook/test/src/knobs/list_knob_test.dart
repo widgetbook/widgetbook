@@ -125,4 +125,34 @@ void main() {
       expect(find.text('${Icons.circle} icon'), findsWidgets);
     },
   );
+
+  testWidgets(
+    'Options knob respect initial selected option',
+    (WidgetTester tester) async {
+      await tester.pumpWithKnob(
+        (context) => Icon(
+          context.knobs.list<IconData>(
+            label: 'RemoveIcon',
+            options: [Icons.remove, Icons.crop_square_sharp, Icons.circle],
+            initialOption: Icons.circle,
+            labelBuilder: (value) => value.toString() + ' icon',
+          ),
+        ),
+      );
+
+      expect(
+        find.byWidgetPredicate(
+          (widget) => widget is Icon && widget.icon == Icons.circle,
+        ),
+        findsOneWidget,
+      );
+
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(DropdownMenu<IconData>));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('${Icons.remove} icon').first);
+      await tester.pumpAndSettle();
+      expect(find.text('${Icons.remove} icon'), findsWidgets);
+    },
+  );
 }

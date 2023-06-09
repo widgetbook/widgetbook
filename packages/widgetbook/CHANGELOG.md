@@ -1,5 +1,6 @@
 ## Unreleased
 
+ - **FEAT**: Add `initialOption` to `list` knob. ([#733](https://github.com/widgetbook/widgetbook/pull/733))
  - **REFACTOR**: Export `WidgetbookState`. ([#724](https://github.com/widgetbook/widgetbook/pull/724))
  - **REFACTOR**: Export fields to be used for custom addons/knobs. ([#728](https://github.com/widgetbook/widgetbook/pull/728))
  - **REFACTOR**: Make `KnobsBuilder.onKnobAdded` public. ([#727](https://github.com/widgetbook/widgetbook/pull/727))
