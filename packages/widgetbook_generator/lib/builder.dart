@@ -1,19 +1,27 @@
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 import 'generators/app_generator.dart';
+import 'generators/directories_builder.dart';
 import 'generators/json_builder.dart';
 import 'generators/use_case_resolver.dart';
 
 /// Builder for the WidgetbookUseCase annotation.
 /// Creates a .usecase.widgetbook.json file for each .dart file containing a
-/// WidgetbookStory annotation
+/// [UseCase] annotation
 Builder useCaseBuilder(BuilderOptions options) {
   return JsonLibraryBuilder(
     UseCaseResolver(),
     generatedExtension: '.usecase.widgetbook.json',
     formatOutput: _formatOutput,
   );
+}
+
+/// Generates a file containing a single list variable called `directories`,
+/// which is based on the [UseCase] annotations.
+Builder directoriesBuilder(BuilderOptions options) {
+  return DirectoriesBuilder();
 }
 
 /// Builder for the WidgetbookApp annotation.
