@@ -28,13 +28,11 @@ class WidgetbookShell extends StatelessWidget {
               WidgetbookState.of(context).updatePath(path);
             },
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 2,
-              ),
-              child: child,
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 2,
             ),
+            child: child,
           ),
           const SizedBox(
             width: 400,
