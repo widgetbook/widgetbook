@@ -11,19 +11,11 @@ void main() {
   group(
     '$WidgetbookFolderInstance',
     () {
-      final folder = Folder(name: 'Folder');
-      final folder1 = Folder(
-        name: 'Folder1',
-      );
-      final folder2 = Folder(
-        name: 'Folder2',
-        isExpanded: true,
-      );
+      final folder = Folder('Folder');
+      final folder1 = Folder('Folder1');
+      final folder2 = Folder('Folder2');
       final widget1 = Widget('Widget1');
-      final widget2 = Widget(
-        'Widget2',
-        isExpanded: true,
-      );
+      final widget2 = Widget('Widget2');
       folder.subFolders
         ..putIfAbsent(
           folder1.name,
