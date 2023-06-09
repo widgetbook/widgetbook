@@ -12,13 +12,9 @@ void main() {
   group(
     '$WidgetbookCategoryInstance',
     () {
-      final folder = Folder(name: 'Folder');
-      final folder1 = Folder(
-        name: 'Folder1',
-      );
-      final folder2 = Folder(
-        name: 'Folder2',
-      );
+      final folder = Folder('Folder');
+      final folder1 = Folder('Folder1');
+      final folder2 = Folder('Folder2');
       final folders = [
         folder1,
         folder2,

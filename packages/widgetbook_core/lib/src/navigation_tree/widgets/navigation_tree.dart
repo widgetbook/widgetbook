@@ -59,6 +59,7 @@ class NavigationTreeState extends State<NavigationTree> {
         data: filteredNodes[index],
         selectedNode: selectedNode,
         onNodeSelected: (node) {
+          if (node.path == selectedNode?.path) return;
           setState(() => selectedNode = node);
           widget.onNodeSelected?.call(node.path, node.data);
         },

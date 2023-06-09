@@ -5,25 +5,18 @@ import 'package:meta/meta.dart';
 import '../models/widgetbook_use_case_data.dart';
 
 class Widget {
-  Widget(
-    this.name, {
-    this.isExpanded = false,
-  });
+  Widget(this.name);
 
   final String name;
-  final bool isExpanded;
+
   List<WidgetbookUseCaseData> stories = <WidgetbookUseCaseData>[];
 }
 
 @immutable
 class Folder {
-  Folder({
-    required this.name,
-    this.isExpanded = false,
-  });
+  Folder(this.name);
 
   final String name;
-  final bool isExpanded;
   final Map<String, Folder> subFolders = HashMap();
   final Map<String, Widget> widgets = HashMap();
 
@@ -39,13 +32,7 @@ class Folder {
 }
 
 class TreeService {
-  TreeService({
-    this.foldersExpanded = false,
-    this.widgetsExpanded = false,
-  }) : rootFolder = Folder(name: 'root', isExpanded: foldersExpanded);
-
-  final bool foldersExpanded;
-  final bool widgetsExpanded;
+  TreeService() : rootFolder = Folder('root');
 
   Map<String, Folder> folders = HashMap();
   // TODO This is a bit weird but (likely) works
@@ -79,7 +66,7 @@ class TreeService {
     if (!widgets.containsKey(widgetName)) {
       widgets.putIfAbsent(
         widgetName,
-        () => Widget(widgetName, isExpanded: widgetsExpanded),
+        () => Widget(widgetName),
       );
     }
 
@@ -100,10 +87,7 @@ class TreeService {
       if (!folders.containsKey(folderName)) {
         folders.putIfAbsent(
           folderName,
-          () => Folder(
-            name: folderName,
-            isExpanded: foldersExpanded,
-          ),
+          () => Folder(folderName),
         );
       }
 
@@ -117,10 +101,7 @@ class TreeService {
       if (!folder.subFolders.containsKey(folderName)) {
         folder.subFolders.putIfAbsent(
           folderName,
-          () => Folder(
-            name: folderName,
-            isExpanded: foldersExpanded,
-          ),
+          () => Folder(folderName),
         );
       }
 

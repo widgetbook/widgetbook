@@ -3,6 +3,7 @@
 library widgetbook;
 
 export 'src/addons/addons.dart';
+export 'src/fields/fields.dart';
 export 'src/integrations/integrations.dart';
 export 'src/knobs/knobs.dart'
     hide
@@ -17,4 +18,5 @@ export 'src/knobs/knobs.dart'
         StringKnob,
         StringOrNullKnob;
 export 'src/models/models.dart';
+export 'src/state/state.dart' hide WidgetbookCatalog, WidgetbookScope;
 export 'src/widgetbook.dart';

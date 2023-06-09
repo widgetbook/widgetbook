@@ -3,11 +3,9 @@ import '../double_slider_knob.dart';
 import 'knobs_builder.dart';
 
 class DoubleKnobsBuilder {
-  DoubleKnobsBuilder(
-    KnobAdded onKnobAdded,
-  ) : this._onKnobAdded = onKnobAdded;
+  DoubleKnobsBuilder(this.onKnobAdded);
 
-  final KnobAdded _onKnobAdded;
+  final KnobAdded onKnobAdded;
 
   /// Creates a slider that can be slid to specific double values. You can use
   /// the `num.toInt()` function to make this into an integer
@@ -20,7 +18,7 @@ class DoubleKnobsBuilder {
     int? divisions,
   }) {
     initialValue ??= max ?? min ?? 10;
-    return _onKnobAdded(
+    return onKnobAdded(
       DoubleSliderKnob(
         label: label,
         value: initialValue,
@@ -39,7 +37,7 @@ class DoubleKnobsBuilder {
     String? description,
     double initialValue = 0,
   }) {
-    return _onKnobAdded(
+    return onKnobAdded(
       DoubleInputKnob(
         label: label,
         value: initialValue,
@@ -52,9 +50,9 @@ class DoubleKnobsBuilder {
 class DoubleOrNullKnobsBuilder {
   DoubleOrNullKnobsBuilder(
     KnobAdded onKnobAdded,
-  ) : this._onKnobAdded = onKnobAdded;
+  ) : this.onKnobAdded = onKnobAdded;
 
-  final KnobAdded _onKnobAdded;
+  final KnobAdded onKnobAdded;
 
   /// Creates a slider that can be slid to specific double values. You can use
   /// the `num?.toInt()` function to make this into an integer.
@@ -68,7 +66,7 @@ class DoubleOrNullKnobsBuilder {
     int? divisions,
   }) {
     initialValue ??= max ?? min ?? 10;
-    return _onKnobAdded<double?>(
+    return onKnobAdded<double?>(
       DoubleOrNullSliderKnob(
         label: label,
         value: initialValue,
@@ -88,7 +86,7 @@ class DoubleOrNullKnobsBuilder {
     String? description,
     double? initialValue,
   }) {
-    return _onKnobAdded<double?>(
+    return onKnobAdded<double?>(
       DoubleOrNullInputKnob(
         label: label,
         value: initialValue,

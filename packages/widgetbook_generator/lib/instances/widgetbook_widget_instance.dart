@@ -28,11 +28,6 @@ class WidgetbookComponentInstance extends Instance {
                     .toList(),
               ),
             ),
-            if (isExpanded)
-              Property.bool(
-                key: 'isInitiallyExpanded',
-                value: true,
-              ),
           ],
         );
 }
