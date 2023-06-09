@@ -18,24 +18,23 @@ class WidgetbookShell extends StatelessWidget {
 
     return ColoredBox(
       color: Theme.of(context).colorScheme.surface,
-      child: ResizableWidget(
-        children: [
-          core.NavigationPanel(
-            initialPath: state.path,
-            directories: state.directories,
-            onNodeSelected: (path, _) {
-              WidgetbookState.of(context).updatePath(path);
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 2,
+      child: Material(
+        child: ResizableWidget(
+          children: [
+            core.NavigationPanel(
+              initialPath: state.path,
+              directories: state.directories,
+              onNodeSelected: (path, _) {
+                WidgetbookState.of(context).updatePath(path);
+              },
             ),
-            child: child,
-          ),
-          SizedBox(
-            width: 400,
-            child: core.SettingsPanel(
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 2,
+              ),
+              child: child,
+            ),
+            core.SettingsPanel(
               settings: [
                 if (state.addons != null) ...{
                   core.SettingsPanelData(
@@ -53,13 +52,13 @@ class WidgetbookShell extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        ],
-        isHorizontalSeparator: false,
-        isDisabledSmartHide: false,
-        separatorColor: Colors.white24,
-        separatorSize: 2,
-        percentages: [0.2, 0.6, 0.2],
+          ],
+          isHorizontalSeparator: false,
+          isDisabledSmartHide: false,
+          separatorColor: Colors.white24,
+          separatorSize: 2,
+          percentages: [0.2, 0.6, 0.2],
+        ),
       ),
     );
   }
