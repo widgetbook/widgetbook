@@ -31,7 +31,6 @@ Widget navigationTreeItemWithout(BuildContext context) {
             )
             .toInt(),
         onTap: () {},
-        onMoreIconPressed: () {},
         isExpanded: context.knobs.boolean(
           label: 'Is Expanded',
           description: 'Only '

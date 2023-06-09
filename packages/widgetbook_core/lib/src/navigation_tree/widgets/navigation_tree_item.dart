@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import '../../icons/icons.dart';
 import '../models/navigation_tree_node_data.dart';
 
-class NavigationTreeItem extends StatefulWidget {
+class NavigationTreeItem extends StatelessWidget {
   const NavigationTreeItem({
     super.key,
     required this.data,
     this.level = 0,
     this.onTap,
     this.isExpanded = false,
-    this.onMoreIconPressed,
     this.isSelected = false,
   });
 
@@ -20,95 +19,61 @@ class NavigationTreeItem extends StatefulWidget {
   final int level;
   final NavigationTreeNodeData data;
   final VoidCallback? onTap;
-  final VoidCallback? onMoreIconPressed;
   final bool isExpanded;
   final bool isSelected;
 
   @override
-  State<NavigationTreeItem> createState() => _NavigationTreeItemState();
-}
-
-class _NavigationTreeItemState extends State<NavigationTreeItem> {
-  final _showMoreIconNotifier = ValueNotifier<bool>(false);
-
-  @override
   Widget build(BuildContext context) {
-    final isSelected = widget.data.isSelectable && widget.isSelected;
-    return MouseRegion(
-      onEnter: (_) {
-        _showMoreIconNotifier.value = true;
-      },
-      onExit: (_) {
-        _showMoreIconNotifier.value = false;
-      },
-      child: Material(
-        elevation: isSelected ? 3 : 0,
-        shadowColor: isSelected ? Colors.black : Colors.transparent,
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(NavigationTreeItem.iconSize),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(NavigationTreeItem.iconSize),
-          child: ColoredBox(
-            color: isSelected
-                ? Theme.of(context).colorScheme.secondaryContainer
-                : Colors.transparent,
-            child: InkWell(
-              onTap: widget.onTap,
-              borderRadius: BorderRadius.circular(NavigationTreeItem.iconSize),
-              child: Row(
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: List.generate(
-                      widget.level,
-                      (index) =>
-                          const SizedBox(width: NavigationTreeItem.indentation),
-                    ),
+    final _isSelected = data.isSelectable && isSelected;
+
+    return Material(
+      elevation: _isSelected ? 3 : 0,
+      shadowColor: _isSelected ? Colors.black : Colors.transparent,
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(iconSize),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(iconSize),
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            vertical: 2,
+          ),
+          color: _isSelected
+              ? Theme.of(context).colorScheme.secondaryContainer
+              : Colors.transparent,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(iconSize),
+            child: Row(
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: List.generate(
+                    level,
+                    (index) => const SizedBox(width: indentation),
                   ),
-                  SizedBox(
-                    width: NavigationTreeItem.indentation,
-                    child: widget.data.isExpandable
-                        ? ExpanderIcon(
-                            isExpanded: widget.isExpanded,
-                            size: NavigationTreeItem.indentation,
-                          )
-                        : Container(),
+                ),
+                SizedBox(
+                  width: indentation,
+                  child: data.isExpandable
+                      ? ExpanderIcon(
+                          isExpanded: isExpanded,
+                          size: indentation,
+                        )
+                      : Container(),
+                ),
+                SizedBox(
+                  width: indentation,
+                  child: data.icon,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    data.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(
-                    width: NavigationTreeItem.indentation,
-                    child: widget.data.icon,
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      widget.data.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  ValueListenableBuilder(
-                    valueListenable: _showMoreIconNotifier,
-                    builder: (context, bool showMoreIcon, child) {
-                      return SizedBox(
-                        height: NavigationTreeItem.iconSize,
-                        width: NavigationTreeItem.iconSize,
-                        child: showMoreIcon
-                            ? InkWell(
-                                onTap: widget.onMoreIconPressed,
-                                borderRadius: BorderRadius.circular(
-                                  NavigationTreeItem.iconSize,
-                                ),
-                                child: const Icon(
-                                  Icons.more_vert_rounded,
-                                  size: 20,
-                                ),
-                              )
-                            : Container(),
-                      );
-                    },
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
