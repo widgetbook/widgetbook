@@ -32,16 +32,8 @@ class AppGenerator extends GeneratorForAnnotation<App> {
     );
 
     final buffer = StringBuffer()
-      ..writeln(
-        generateImports(useCases),
-      )
-      ..writeln(
-        generateDirectories(
-          useCases: useCases,
-          foldersExpanded: annotation.read('foldersExpanded').boolValue,
-          widgetsExpanded: annotation.read('widgetsExpanded').boolValue,
-        ),
-      );
+      ..writeln(generateImports(useCases))
+      ..writeln(generateDirectories(useCases));
 
     return buffer.toString();
   }
@@ -69,16 +61,10 @@ class AppGenerator extends GeneratorForAnnotation<App> {
   }
 
   /// Generates the directories of Widgetbook
-  String generateDirectories({
-    required List<WidgetbookUseCaseData> useCases,
-    required bool foldersExpanded,
-    required bool widgetsExpanded,
-  }) {
-    final directories = _generateDirectoriesInstances(
-      useCases,
-      foldersExpanded,
-      widgetsExpanded,
-    );
+  String generateDirectories(
+    List<WidgetbookUseCaseData> useCases,
+  ) {
+    final directories = _generateDirectoriesInstances(useCases);
 
     final instance = ListInstance(
       instances: directories,
@@ -119,13 +105,8 @@ class AppGenerator extends GeneratorForAnnotation<App> {
 
   List<Instance> _generateDirectoriesInstances(
     List<WidgetbookUseCaseData> useCases,
-    bool foldersExpanded,
-    bool widgetsExpanded,
   ) {
-    final service = TreeService(
-      foldersExpanded: foldersExpanded,
-      widgetsExpanded: widgetsExpanded,
-    );
+    final service = TreeService();
 
     for (final useCase in useCases) {
       final folder =

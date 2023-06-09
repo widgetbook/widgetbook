@@ -1,3 +1,14 @@
+## Unreleased
+
+ - **FEAT**: Add `initialOption` to `list` knob. ([#733](https://github.com/widgetbook/widgetbook/pull/733))
+ - **REFACTOR**: Export `WidgetbookState`. ([#724](https://github.com/widgetbook/widgetbook/pull/724))
+ - **REFACTOR**: Export fields to be used for custom addons/knobs. ([#728](https://github.com/widgetbook/widgetbook/pull/728))
+ - **REFACTOR**: Make `KnobsBuilder.onKnobAdded` public. ([#727](https://github.com/widgetbook/widgetbook/pull/727))
+ - **FIX**: Use related type checks when comparing device's frame state to its query parameter. ([#715](https://github.com/widgetbook/widgetbook/pull/715))
+ - **FIX**: Add missing type parameter to `LabelBuilder`, which affected the `list` knob. ([#718](https://github.com/widgetbook/widgetbook/pull/718))
+ - **FIX**: Use `labelBuilder`-based string comparison in `list` knob. ([#729](https://github.com/widgetbook/widgetbook/pull/729))
+ - **FIX**: Add `key` to use cases to prevent out-of-sync builds. ([#720](https://github.com/widgetbook/widgetbook/pull/720))
+
 ## 3.0.0-rc.1
 
  - Check out the [migration guide](https://docs.widgetbook.io/~docs%2Fwidgetbook-3/migration/3.0.0-beta-to-rc) for more details.

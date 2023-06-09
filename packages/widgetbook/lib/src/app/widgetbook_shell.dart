@@ -3,7 +3,6 @@ import 'package:resizable_widget/resizable_widget.dart';
 import 'package:widgetbook_core/widgetbook_core.dart' as core;
 
 import '../state/state.dart';
-import 'settings_panel.dart';
 
 class WidgetbookShell extends StatelessWidget {
   const WidgetbookShell({
@@ -34,9 +33,26 @@ class WidgetbookShell extends StatelessWidget {
             ),
             child: child,
           ),
-          const SizedBox(
+          SizedBox(
             width: 400,
-            child: SettingsPanel(),
+            child: core.SettingsPanel(
+              settings: [
+                if (state.addons != null) ...{
+                  core.SettingsPanelData(
+                    name: 'Properties',
+                    settings: state.addons!
+                        .map((addon) => addon.buildSetting(context))
+                        .toList(),
+                  ),
+                },
+                core.SettingsPanelData(
+                  name: 'Knobs',
+                  settings: state.knobs.values
+                      .map((knob) => knob.build(context))
+                      .toList(),
+                ),
+              ],
+            ),
           ),
         ],
         isHorizontalSeparator: false,

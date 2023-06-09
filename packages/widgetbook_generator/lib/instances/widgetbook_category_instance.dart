@@ -27,7 +27,6 @@ class WidgetbookCategoryInstance extends Instance {
                     (widget) => WidgetbookComponentInstance(
                       name: widget.name,
                       stories: widget.stories,
-                      isExpanded: widget.isExpanded,
                     ),
                   ),
                 ],

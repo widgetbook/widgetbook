@@ -68,7 +68,7 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
       orientation: Orientation.values.byName(
         group['orientation']?.toLowerCase() ?? Orientation.portrait.name,
       ),
-      hasFrame: group['frame'] == true,
+      hasFrame: group['frame'] == 'true',
     );
   }
 

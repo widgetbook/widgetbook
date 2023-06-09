@@ -22,51 +22,51 @@ class SettingsPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Theme(
-      data: Theme.of(context).copyWith(
-        inputDecorationTheme: InputDecorationTheme(
-          filled: true,
-          fillColor: colorScheme.surfaceVariant,
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: colorScheme.primary,
+    return Card(
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            fillColor: colorScheme.surfaceVariant,
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: colorScheme.primary,
+              ),
             ),
-          ),
-          isDense: true,
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.transparent,
+            isDense: true,
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.transparent,
+              ),
             ),
-          ),
-          border: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.transparent,
+            border: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.transparent,
+              ),
             ),
           ),
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: settings
-            .map(
-              (e) => ExpansionTile(
-                collapsedShape: const RoundedRectangleBorder(),
-                shape: const RoundedRectangleBorder(),
-                initiallyExpanded: true,
-                title: Text(
-                  e.name,
-                ),
-                children: e.settings.isEmpty
-                    ? [
-                        Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Text('No ${e.name} available'),
-                        )
-                      ]
-                    : e.settings,
-              ),
-            )
-            .toList(),
+        child: ListView.builder(
+          itemCount: settings.length,
+          itemBuilder: (context, index) {
+            final item = settings[index];
+
+            return ExpansionTile(
+              collapsedShape: const RoundedRectangleBorder(),
+              shape: const RoundedRectangleBorder(),
+              initiallyExpanded: true,
+              title: Text(item.name),
+              children: item.settings.isEmpty
+                  ? [
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Text('No ${item.name} available'),
+                      )
+                    ]
+                  : item.settings,
+            );
+          },
+        ),
       ),
     );
   }

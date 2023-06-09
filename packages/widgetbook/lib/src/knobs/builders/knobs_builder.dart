@@ -12,12 +12,11 @@ typedef KnobAdded = T? Function<T>(Knob<T> knob);
 
 class KnobsBuilder {
   KnobsBuilder(
-    KnobAdded onKnobAdded,
-  )   : this._onKnobAdded = onKnobAdded,
-        this.double = DoubleKnobsBuilder(onKnobAdded),
+    this.onKnobAdded,
+  )   : this.double = DoubleKnobsBuilder(onKnobAdded),
         this.doubleOrNull = DoubleOrNullKnobsBuilder(onKnobAdded);
 
-  final KnobAdded _onKnobAdded;
+  final KnobAdded onKnobAdded;
   final DoubleKnobsBuilder double;
   final DoubleOrNullKnobsBuilder doubleOrNull;
 
@@ -27,7 +26,7 @@ class KnobsBuilder {
     String? description,
     bool initialValue = false,
   }) {
-    return _onKnobAdded(
+    return onKnobAdded(
       BooleanKnob(
         label: label,
         description: description,
@@ -43,7 +42,7 @@ class KnobsBuilder {
     String? description,
     bool? initialValue = false,
   }) {
-    return _onKnobAdded<bool?>(
+    return onKnobAdded<bool?>(
       BooleanOrNullKnob(
         label: label,
         description: description,
@@ -59,7 +58,7 @@ class KnobsBuilder {
     required Color initialValue,
     String? description,
   }) {
-    return _onKnobAdded(
+    return onKnobAdded(
       ColorKnob(
         label: label,
         value: initialValue,
@@ -74,7 +73,7 @@ class KnobsBuilder {
     String initialValue = '',
     int? maxLines = 1,
   }) {
-    return _onKnobAdded(
+    return onKnobAdded(
       StringKnob(
         label: label,
         value: initialValue,
@@ -92,7 +91,7 @@ class KnobsBuilder {
     String? initialValue,
     int? maxLines = 1,
   }) {
-    return _onKnobAdded<String?>(
+    return onKnobAdded<String?>(
       StringOrNullKnob(
         label: label,
         value: initialValue,
@@ -108,14 +107,15 @@ class KnobsBuilder {
   T list<T>({
     required String label,
     required List<T> options,
+    T? initialOption,
     String? description,
-    LabelBuilder? labelBuilder,
+    LabelBuilder<T>? labelBuilder,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
-    return _onKnobAdded(
+    return onKnobAdded(
       ListKnob(
         label: label,
-        value: options.first,
+        value: initialOption ?? options.first,
         description: description,
         options: options,
         labelBuilder: labelBuilder,

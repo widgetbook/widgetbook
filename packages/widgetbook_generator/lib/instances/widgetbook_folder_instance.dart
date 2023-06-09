@@ -21,7 +21,6 @@ class WidgetbookFolderInstance extends Instance {
                     (widget) => WidgetbookComponentInstance(
                       name: widget.name,
                       stories: widget.stories,
-                      isExpanded: widget.isExpanded,
                     ),
                   ),
                   ...folder.subFolders.values.map(
@@ -30,11 +29,6 @@ class WidgetbookFolderInstance extends Instance {
                 ],
               ),
             ),
-            if (folder.isExpanded)
-              Property.bool(
-                key: 'isInitiallyExpanded',
-                value: true,
-              ),
           ],
         );
 }
