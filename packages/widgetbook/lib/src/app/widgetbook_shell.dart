@@ -18,45 +18,43 @@ class WidgetbookShell extends StatelessWidget {
 
     return ColoredBox(
       color: Theme.of(context).colorScheme.surface,
-      child: Material(
-        child: ResizableWidget(
-          separatorSize: 2,
-          percentages: [0.2, 0.6, 0.2],
-          separatorColor: Colors.white24,
-          children: [
-            core.NavigationPanel(
-              initialPath: state.path,
-              directories: state.directories,
-              onNodeSelected: (path, _) {
-                WidgetbookState.of(context).updatePath(path);
-              },
+      child: ResizableWidget(
+        separatorSize: 2,
+        percentages: [0.2, 0.6, 0.2],
+        separatorColor: Colors.white24,
+        children: [
+          core.NavigationPanel(
+            initialPath: state.path,
+            directories: state.directories,
+            onNodeSelected: (path, _) {
+              WidgetbookState.of(context).updatePath(path);
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 2,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 2,
-              ),
-              child: child,
-            ),
-            core.SettingsPanel(
-              settings: [
-                if (state.addons != null) ...{
-                  core.SettingsPanelData(
-                    name: 'Properties',
-                    settings: state.addons!
-                        .map((addon) => addon.buildSetting(context))
-                        .toList(),
-                  ),
-                },
+            child: child,
+          ),
+          core.SettingsPanel(
+            settings: [
+              if (state.addons != null) ...{
                 core.SettingsPanelData(
-                  name: 'Knobs',
-                  settings: state.knobs.values
-                      .map((knob) => knob.build(context))
+                  name: 'Properties',
+                  settings: state.addons!
+                      .map((addon) => addon.buildSetting(context))
                       .toList(),
                 ),
-              ],
-            ),
-          ],
-        ),
+              },
+              core.SettingsPanelData(
+                name: 'Knobs',
+                settings: state.knobs.values
+                    .map((knob) => knob.build(context))
+                    .toList(),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
