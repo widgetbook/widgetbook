@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
 
 import '../addons/addons.dart';
 import '../fields/fields.dart';
 import '../integrations/widgetbook_integration.dart';
 import '../knobs/knob.dart';
-import '../models/models.dart';
+import '../navigation/navigation.dart';
 import '../routing/routing.dart';
 import 'widgetbook_catalog.dart';
 import 'widgetbook_scope.dart';

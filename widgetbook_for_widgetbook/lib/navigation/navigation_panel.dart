@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
 
 import 'navigation_test_data.dart';
 

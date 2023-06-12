@@ -12,7 +12,6 @@ dependencies:
     sdk: flutter
   widgetbook: ^3.0.0-rc.1
   widgetbook_annotation: ^3.0.0-rc.1
-  widgetbook_core: ^3.0.0-rc.1
 
 dev_dependencies:
   build_runner: ^2.3.2
