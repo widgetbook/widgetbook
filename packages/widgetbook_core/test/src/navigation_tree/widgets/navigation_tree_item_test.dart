@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -48,72 +47,6 @@ void main() {
           expect(menuIconFinder, findsNothing);
         },
       );
-
-      group('More menu icon tests', () {
-        testWidgets(
-          'MouseRegion onEnter and onExit callbacks toggle more menu icon',
-          (WidgetTester tester) async {
-            await tester.pumpWidgetWithMaterial(
-              child: const NavigationTreeItem(data: testNode),
-            );
-
-            final menuIconFinder = find.byWidgetPredicate(
-              (widget) =>
-                  widget is Icon && widget.icon == Icons.more_vert_rounded,
-            );
-
-            expect(menuIconFinder, findsNothing);
-
-            final gesture = await tester.createGesture(
-              kind: PointerDeviceKind.mouse,
-            );
-            await gesture.addPointer(location: Offset.zero);
-            addTearDown(gesture.removePointer);
-            await tester.pump();
-
-            await gesture.moveTo(tester.getCenter(find.byType(InkWell).first));
-            await tester.pumpAndSettle();
-            expect(menuIconFinder, findsOneWidget);
-
-            await gesture.moveTo(
-              tester.getBottomLeft(find.byType(InkWell).first) +
-                  const Offset(-10, 0),
-            );
-            await tester.pumpAndSettle();
-            expect(menuIconFinder, findsNothing);
-          },
-        );
-
-        testWidgets(
-          'onMoreIconPressed is called',
-          (WidgetTester tester) async {
-            final voidCallbackMock = VoidCallbackMock();
-            await tester.pumpWidgetWithMaterial(
-              child: NavigationTreeItem(
-                data: testNode,
-                onMoreIconPressed: voidCallbackMock.call,
-              ),
-            );
-
-            final menuIconFinder = find.byWidgetPredicate(
-              (widget) =>
-                  widget is Icon && widget.icon == Icons.more_vert_rounded,
-            );
-            final gesture = await tester.createGesture(
-              kind: PointerDeviceKind.mouse,
-            );
-            await gesture.addPointer(location: Offset.zero);
-            addTearDown(gesture.removePointer);
-            await gesture.moveTo(tester.getCenter(find.byType(InkWell).first));
-            await tester.pumpAndSettle();
-            expect(menuIconFinder, findsOneWidget);
-
-            await tester.tap(menuIconFinder);
-
-            verify(voidCallbackMock.call).called(1);
-          },
-        );
-      });
 
       testWidgets(
         "adds indentation SizedBox's from level value",
@@ -230,14 +163,14 @@ void main() {
           );
 
           final coloredBoxWidgetFinder = find.byWidgetPredicate(
-            (Widget widget) => widget is ColoredBox && widget.child is InkWell,
+            (Widget widget) => widget is Container && widget.child is InkWell,
           );
 
-          final coloredBoxWidget =
-              tester.widget(coloredBoxWidgetFinder) as ColoredBox;
+          final containerWidget =
+              tester.widget(coloredBoxWidgetFinder) as Container;
 
           expect(
-            coloredBoxWidget.color,
+            containerWidget.color,
             Themes.dark.colorScheme.secondaryContainer,
           );
         },
