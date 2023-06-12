@@ -20,6 +20,9 @@ class WidgetbookShell extends StatelessWidget {
       color: Theme.of(context).colorScheme.surface,
       child: Material(
         child: ResizableWidget(
+          separatorSize: 2,
+          percentages: [0.2, 0.6, 0.2],
+          separatorColor: Colors.white24,
           children: [
             core.NavigationPanel(
               initialPath: state.path,
@@ -53,11 +56,6 @@ class WidgetbookShell extends StatelessWidget {
               ],
             ),
           ],
-          isHorizontalSeparator: false,
-          isDisabledSmartHide: false,
-          separatorColor: Colors.white24,
-          separatorSize: 2,
-          percentages: [0.2, 0.6, 0.2],
         ),
       ),
     );
