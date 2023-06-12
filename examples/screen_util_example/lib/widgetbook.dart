@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-import 'widgetbook.g.dart';
+import 'widgetbook.directories.g.dart';
 
 void main() {
   runApp(const WidgetbookApp());

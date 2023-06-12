@@ -15,6 +15,7 @@ export 'src/knobs/knobs.dart'
         DoubleOrNullSliderKnob,
         DoubleSliderKnob,
         ListKnob,
+        ListOrNullKnob,
         StringKnob,
         StringOrNullKnob;
 export 'src/models/models.dart';

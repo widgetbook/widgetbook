@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-import 'widgetbook.g.dart';
+import 'main.directories.g.dart';
 
 void main() {
   runApp(const WidgetbookApp());

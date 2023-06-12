@@ -73,7 +73,7 @@ class AppGenerator extends GeneratorForAnnotation<App> {
     return 'final directories = $instance;';
   }
 
-  /// generates the imports for all the types used in widgetbook.g.dart
+  /// generates the imports for all the types used
   ///
   /// the code returned likely contains unneccesary imports
   /// but this implementation is simple in comparison to a complex approach
