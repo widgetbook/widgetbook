@@ -14,6 +14,7 @@ import 'package:flutter/src/widgets/image.dart';
 import 'package:full_example/components/container.dart';
 import 'package:full_example/components/custom_card.dart';
 import 'package:full_example/components/custom_text_field.dart';
+import 'package:full_example/widgetbook_generator.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 final directories = [
@@ -26,6 +27,10 @@ final directories = [
           WidgetbookUseCase(
             name: 'with green color',
             builder: (context) => greenContainerUseCase(context),
+          ),
+          WidgetbookUseCase(
+            name: 'Default',
+            builder: (context) => myWidget(context),
           ),
         ],
       ),
