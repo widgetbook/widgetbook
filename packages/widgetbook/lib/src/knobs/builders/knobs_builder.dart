@@ -102,8 +102,7 @@ class KnobsBuilder {
   }
 
   /// Allow the users to select from a list of options in a drop down box.
-  /// The initial value is the first item in the list of options
-  /// Must contain at least one value
+  /// Must contain at least one value.
   T list<T>({
     required String label,
     required List<T> options,
@@ -113,7 +112,7 @@ class KnobsBuilder {
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return onKnobAdded(
-      ListKnob(
+      ListKnob<T>(
         label: label,
         value: initialOption ?? options.first,
         description: description,
@@ -121,5 +120,26 @@ class KnobsBuilder {
         labelBuilder: labelBuilder,
       ),
     )!;
+  }
+
+  /// Allow the users to select from a list of options in a drop down box that
+  /// might contain a null value.
+  T? listOrNull<T>({
+    required String label,
+    required List<T?> options,
+    T? initialOption,
+    String? description,
+    LabelBuilder<T?>? labelBuilder,
+  }) {
+    assert(options.isNotEmpty, 'Must specify at least one option');
+    return onKnobAdded<T?>(
+      ListOrNullKnob<T>(
+        label: label,
+        value: initialOption ?? options.first,
+        description: description,
+        options: options,
+        labelBuilder: labelBuilder,
+      ),
+    );
   }
 }
