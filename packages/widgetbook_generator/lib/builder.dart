@@ -22,7 +22,7 @@ Builder useCaseBuilder(BuilderOptions options) {
 Builder appBuilder(BuilderOptions options) {
   return LibraryBuilder(
     AppGenerator(),
-    generatedExtension: '.g.dart',
+    generatedExtension: '.directories.g.dart',
   );
 }
 
