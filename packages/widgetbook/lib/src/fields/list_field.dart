@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
 
+import '../settings/settings.dart';
 import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';

@@ -526,13 +526,6 @@ packages:
       relative: true
     source: path
     version: "3.0.0-rc.1"
-  widgetbook_core:
-    dependency: "direct main"
-    description:
-      path: "../packages/widgetbook_core"
-      relative: true
-    source: path
-    version: "3.0.0-rc.1"
   widgetbook_generator:
     dependency: "direct dev"
     description:
