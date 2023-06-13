@@ -1,0 +1,147 @@
+# Introduction to Addons
+
+Addons in Widgetbook provide an expandable, customizable way to tweak your development
+environment. With options to use pre-existing Addons or to forge your own, the
+possibilities for tailoring your domain to your specific project needs are substantial.
+
+<Info>
+  This section provides a general overview of Addons. Each Addon exhibits unique
+  characteristics; therefore, it is recommended to delve into the documentation of the
+  specific Addon you are employing for your Widgetbook.
+</Info>
+
+Here are the fundamental components of our Addon system:
+
+- **Fields and Their Significance:**
+
+Fields play a crucial role in our system, representing the data inputs used in the
+settings panel. These predefined and reusable UI elements are used to structure and define
+the behavior of your Addons. With the help of Fields, you can specify how your Addons
+function and appear within your development environment.
+
+- **Into Widgets:** Fields can morph into Widgets displayed in the settings panel. This
+  transformation helps in visualizing the settings directly within the development
+  environment.
+- **Into JSON Maps:** Fields can convert into JSON representations. The
+  [`WidgetbookCloudIntegration`](/widgetbook-cloud/overview) system can interpret this
+  JSON-format data, making Fields instrumental in inter-system communication.
+
+- **Creation of Custom Addons:** Creating custom Addons using fields is essential to our
+  system. This process empowers developers to design Addons that cater to their unique
+  requirements.
+
+- **The Role of the `appBuilder` Function:** While the `appBuilder` function is still
+  available for use, developers also have the flexibility to define their Addons to inject
+  functionality directly into the Widget tree. This feature allows for customization of
+  the previewing experience based on the project's needs.
+
+- **Order of injection and its Effect:** The sequence in which Addons and their
+  functionalities are injected into the Widgetbook is determined by their specification
+  order. For example, if you specify
+  `Widgetbook(Addons: [ThemeAddon(...), LocalizationAddon(...)])`, the Theme widget will
+  be a parent to the Localizations widget. This order generally doesn't affect the preview
+  significantly but can subtly alter how widgets are previewed.
+
+These key aspects combine to make our Addon system versatile and highly customizable,
+enabling you to tailor your Widgetbook environment to your specific project needs.
+
+## Available Addons
+
+Widgetbook comes equipped with a variety of ready-to-use Addons:
+
+- [Theme Addon](/Addons/theme-addon): Provides theming options.
+  - [Material Theme Addon](/Addons/theme-addon#material-theme-Addon)
+  - [Cupertino Theme Addon](/Addons/theme-addon#cupertino-theme-Addon)
+  - [Custom Theme Addon](/Addons/theme-addon#custom-theme-Addon)
+- [Device Frame Addon](/Addons/device-frame-addon): Facilitates previewing use-cases on
+  specific device sizes.
+- [Localization Addon](/Addons/localization-addon): Enables testing across different
+  locales.
+- [Text Scale Addon](/Addons/text-scale-addon): Supports varying text scales and aids in
+  accessibility testing.
+
+## Example using Generator approach
+
+Below is a code snippet that encapsulates these concepts:
+
+```dart
+// lib/widgetbook.dart
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+import 'package:widgetbook_core/widgetbook_core.dart';
+
+import 'widgetbook.g.dart';
+
+void main() {
+  runApp(const WidgetbookApp());
+}
+
+@widgetbook.App()
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook.material(
+      directories: directories,
+      addons: [
+        MaterialThemeAddon(
+          themes: [
+            WidgetbookTheme(
+              name: 'Light',
+              data: yourCustomLightTheme
+            ),
+            WidgetbookTheme(
+              name: 'Dark',
+              data: yourCustomTheme
+            ),
+          ],
+        ),
+        TextScaleAddon(
+          scales: [1.0, 2.0],
+        ),
+        LocalizationAddon(
+          locales: [
+            const Locale('en', 'US'),
+          ],
+          localizationsDelegates: [
+            DefaultWidgetsLocalizations.delegate,
+            DefaultMaterialLocalizations.delegate,
+          ],
+        ),
+        DeviceFrameAddon(
+          devices: [
+            Devices.ios.iPhoneSE,
+            Devices.ios.iPhone13,
+          ],
+        ),
+      ],
+      appBuilder: (context, child) {
+        return ScreenUtilInit(
+          designSize: const Size(375, 812),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          useInheritedMediaQuery: true,
+          builder: (context, child) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: child,
+            );
+          },
+          child: child,
+        );
+      },
+    );
+  }
+}
+```
+
+The above example demonstrates how you can use different Addons such as
+`MaterialThemeAddon`, `TextScaleAddon`, `LocalizationAddon`, and `DeviceFrameAddon` in
+Widgetbook. It also shows how to customize the `appBuilder` function to inject the
+ScreenUtilInit widget into the Widget tree. Our Addon system in Widgetbook is designed to
+enhance flexibility, interoperability, and overall user experience. By understanding and
+effectively utilizing this system, you can unlock new possibilities and efficiencies in
+your development process.

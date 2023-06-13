@@ -1,34 +1,43 @@
 ## Changes
 
 - fixed issue with `MediaQuery`
-- added implementation of Add-on API which allows for [#363](https://github.com/widgetbook/widgetbook/issues/363)
+- added implementation of Addon API which allows for
+  [#363](https://github.com/widgetbook/widgetbook/issues/363)
 - removed all builder functions except `appBuilder`
 - removed `themes` property from `Widgetbook` Widget
-    - Add-on is replacing this functionality
+  - Addon is replacing this functionality
 - removed `textScaleFactors` property from `Widgetbook` Widget
-    - Add-on is replacing this functionality
+  - Addon is replacing this functionality
 - removed `name` property from `Widgetbook` Widget
 
 ## Background
 
-To support features such as [#363](https://github.com/widgetbook/widgetbook/issues/363), the Widgetbook API needed to be refactored to allow for the generic implementation of the properties. 
-The Add-on implementation now allows developers to fully customize which properties are available. 
-In addition, the `builder` functions have been refactored as these have been hard to understand. 
-All builder functions have been combined with the `appBuilder` function. 
-The selected properties from the Add-ons are now accessed via the single `BuildContext` parameter which further simplifies the usage of the builder function.
-Furthermore, the refactoring of the API allowed us to fix the existing `MediaQuery` issues.
+To support features such as [#363](https://github.com/widgetbook/widgetbook/issues/363),
+the Widgetbook API needed to be refactored to allow for the generic implementation of the
+properties. The Addon implementation now allows developers to fully customize which
+properties are available. In addition, the `builder` functions have been refactored as
+these have been hard to understand. All builder functions have been combined with the
+`appBuilder` function. The selected properties from the Addons are now accessed via the
+single `BuildContext` parameter which further simplifies the usage of the builder
+function. Furthermore, the refactoring of the API allowed us to fix the existing
+`MediaQuery` issues.
 
 ## Feedback
 
-Please let us know via [Discord](https://discord.gg/zT4AMStAJA) or [on GitHub](https://github.com/widgetbook/widgetbook/issues) how we can further improve this migration guide. 
+Please let us know via [Discord](https://discord.gg/zT4AMStAJA) or
+[on GitHub](https://github.com/widgetbook/widgetbook/issues) how we can further improve
+this migration guide.
 
 ## Migration Plan
 
-The migration plan features documentation for using [widgetbook_generator](https://pub.dev/packages/widgetbook_generator) and the manual approach.
+The migration plan features documentation for using
+[widgetbook_generator](https://pub.dev/packages/widgetbook_generator) and the manual
+approach.
 
 ### Removed `AppInfo`
 
-The `AppInfo` model that was used to display the name of the Widgetbook in the upper right corner has been removed
+The `AppInfo` model that was used to display the name of the Widgetbook in the upper right
+corner has been removed
 
 <Tabs
   groupId="approach"
@@ -47,13 +56,14 @@ The `AppInfo` model that was used to display the name of the Widgetbook in the u
     class App extends StatelessWidget { ... }
     ```
 
-    After migration: 
+    After migration:
     ```dart
     @WidgetbookApp.material(
       ...
     )
     class App extends StatelessWidget { ... }
     ```
+
   </TabItem>
   <TabItem value="manual">
     The existing app:
@@ -66,11 +76,12 @@ The `AppInfo` model that was used to display the name of the Widgetbook in the u
 
     After migration:
 
-    ```dart 
+    ```dart
     Widgetbook.material(
       ...
     )
     ```
+
   </TabItem>
 </Tabs>
 
@@ -84,12 +95,11 @@ The `AppInfo` model that was used to display the name of the Widgetbook in the u
   ]}
 >
   <TabItem value="generator">
-    <Success>
-        No migration necessary.
-    </Success>
+    <Success>No migration necessary.</Success>
   </TabItem>
   <TabItem value="manual">
-    The functionality of the `themes` property has been replaced by the `ThemeAddon` for more information see [the documentation](/add-ons/theme-addon).
+    The functionality of the `themes` property has been replaced by the `ThemeAddon` for
+    more information see [the documentation](/Addons/theme-addon).
   </TabItem>
 </Tabs>
 
@@ -103,12 +113,11 @@ The `AppInfo` model that was used to display the name of the Widgetbook in the u
   ]}
 >
   <TabItem value="generator">
-    <Success>
-        No migration necessary.
-    </Success>
+    <Success>No migration necessary.</Success>
   </TabItem>
   <TabItem value="manual">
-    The functionality of the `frames` property has been replaced by the `FrameAddon` for more information see [the documentation](/add-ons/frame-addon).
+    The functionality of the `frames` property has been replaced by the `FrameAddon` for
+    more information see [the documentation](/Addons/frame-addon).
   </TabItem>
 </Tabs>
 
@@ -122,12 +131,12 @@ The `AppInfo` model that was used to display the name of the Widgetbook in the u
   ]}
 >
   <TabItem value="generator">
-    <Success>
-        No migration necessary.
-    </Success>
+    <Success>No migration necessary.</Success>
   </TabItem>
   <TabItem value="manual">
-    The functionality of the `supportedLocales` and `localizationsDelegates` properties has been replaced by the `LocalizationAddon` for more information see [the documentation](/add-ons/localization-addon).
+    The functionality of the `supportedLocales` and `localizationsDelegates` properties
+    has been replaced by the `LocalizationAddon` for more information see [the
+    documentation](/Addons/localization-addon).
   </TabItem>
 </Tabs>
 
@@ -150,7 +159,7 @@ The `AppInfo` model that was used to display the name of the Widgetbook in the u
     In addition, `WidgetbookCategory` and `WidgetbookFolder` got their `folders` and `widget` properties refactor to a `children` property that can contain any structuring tree element.
 
     The existing app:
-    ```dart 
+    ```dart
     Widgetbook.material(
       categories: [
         WidgetbookCategory(
@@ -173,7 +182,7 @@ The `AppInfo` model that was used to display the name of the Widgetbook in the u
     ```
 
     After migration:
-    ```dart 
+    ```dart
     Widgetbook.material(
       directories: [
         WidgetbookCategory(
@@ -194,10 +203,13 @@ The `AppInfo` model that was used to display the name of the Widgetbook in the u
       ...
     )
     ```
+
   </TabItem>
 </Tabs>
 
 ### Removed builder functions
 
-All builder functions have been combined into the `appBuilder` function. 
-For more information [read the documentation](/getting-started/configuration#customize-how-use-cases-are-previewed) regarding the function.
+All builder functions have been combined into the `appBuilder` function. For more
+information
+[read the documentation](/getting-started/configuration#customize-how-use-cases-are-previewed)
+regarding the function.

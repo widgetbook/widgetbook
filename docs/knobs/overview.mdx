@@ -1,10 +1,13 @@
 # Overview
 
-Knobs can be used to dynamically change the parameters passed to a use-case.
+Knobs are dynamic tools in Widgetbook that allow you to modify the parameters passed to a
+use-case on the fly. They allow you to adapt and examine your widgets under various
+conditions and inputs, enhancing the overall understanding of a component's behavior.
 
 ## Usage
 
-Use `context.knobs` to access the knobs builder and add knobs to your `Widget`:
+To incorporate knobs into your widgets, use the `context.knobs` function to access the
+knobs builder:
 
 <Tabs
   groupId="approach"
@@ -13,55 +16,66 @@ Use `context.knobs` to access the knobs builder and add knobs to your `Widget`:
     { label: 'Manual', value: 'manual' },
   ]}
 >
-  <TabItem value="generator">
-    ```dart title="Example: Knobs with generator"
-    import 'package:widgetbook/widgetbook.dart' show Knobs;
-    import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+<TabItem value="generator">
 
-    @WidgetbookUseCase(name: 'Default', type: Container)
-    Widget useCase(BuildContext context) {
-      /* ... */
-    }
-    ```
+```dart title="Example: Knobs with generator"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-  </TabItem>
-  <TabItem value="manual">
-    ```dart title="Example: Knobs"
-    WidgetbookUseCase(
-      name: 'elevated',
-      builder: (context) => MyHomePage(
-        title: context.knobs.text(
-          label: 'Title Label',
-          initialValue: 'HomePage',
-        ),
-      )
-    )
-    ```
-  </TabItem>
+import '../main.dart';
+
+@widgetbook.UseCase(name: 'with different title', type: Container)
+Widget myWidget(BuildContext context) {
+  return MyHomePage(
+    title: context.knobs.string(
+      label: 'Title Label',
+      initialValue: 'HomePage',
+    ),
+  );
+}
+
+```
+
+</TabItem>
+<TabItem value="manual">
+
+```dart title="Example: Knobs"
+WidgetbookUseCase(
+  name: 'elevated',
+  builder: (context) => MyHomePage(
+    title: context.knobs.string(
+      label: 'Title Label',
+      initialValue: 'HomePage',
+    ),
+  )
+)
+```
+
+</TabItem>
 </Tabs>
 
 ## Properties
 
-All `Knob`s have the following inherited properties to customize how the knobs are displayed in the UI of `Widgetbook`:
+Each Knob possesses a set of inherent properties to control its display in the
+Widgetbook's UI:
 
-| Property | Type | Description |
-| --- | --- | --- |
-| `label` | `String` | Labels the knob by giving it a title. The `label` must be unique for the `WidgetbookUseCase`. |
-| `description` | `String?` | A text which describes what the knob does. This can be used as documentation within Widgetbook and helps your team member understand how to operate the knob. |
+- **label:** A String that provides a title to the Knob. Each label must be unique for a
+  WidgetbookUseCase.
+- **description:** An optional String that explains the Knob's functionality. It serves as
+  a form of documentation within Widgetbook, assisting your team members in understanding
+  how to manipulate the Knob.
 
 ## Available Knobs
 
-| Name            | Type      |
-|-----------------|-----------|
-| boolean         | `bool`    |
-| nullableBoolean | `bool?`   |
-| text            | `String`  |
-| nullableText    | `String?` |
-| slider          | `double`  |
-| nullableSlider  | `double?` |
-| number          | `num`     |
-| nullableNumber  | `num?`    |
-| options         | `T`       |
-
-You can see an example of this and different knobs available
-[here](https://github.com/widgetbook/widgetbook/blob/main/examples/knobs_example/lib/widgetbook.dart).
+| Name                | Type      |
+| ------------------- | --------- |
+| boolean             | `bool`    |
+| booleanOrNull       | `bool?`   |
+| string              | `String`  |
+| stringOrNull        | `String?` |
+| double.slider       | `double`  |
+| doubleOrNull.slider | `double?` |
+| double.input        | `num`     |
+| doubleOrNull.input  | `num?`    |
+| list                | `T`       |

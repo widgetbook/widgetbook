@@ -1,21 +1,29 @@
 # Install
 
-Welcome to Widgetbook! This guide will help you integrate Widgetbook into your Flutter projects and streamline your widget management process.
+Welcome to Widgetbook! This guide will help you integrate Widgetbook into your Flutter
+projects and streamline your widget management process.
 
 Make sure to depend on the Widgetbook packages.
 
 There are two approaches to configuring Widgetbook:
 
-1. **Manual Approach**: This approach involves using the [widgetbook package](https://pub.dev/packages/widgetbook) and manually maintaining the widget structure in Widgetbook to keep it in sync with your application.
+1. **Manual Approach**: This approach involves using the
+   [widgetbook package](https://pub.dev/packages/widgetbook) and manually maintaining the
+   widget structure in Widgetbook to keep it in sync with your application.
 
-2. **Generator Approach**: This approach utilizes the [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) in combination with the [widgetbook_annotation package](https://pub.dev/packages/widgetbook_annotation). It automatically configures the widget structure in Widgetbook based on the structure defined in your application, keeping Widgetbook in sync with your app.
+2. **Generator Approach**: `widgetbook_generator` ensures harmony between your codebase
+   and the Widgetbook's navigation panel structure. Its robust features make it a
+   sought-after solution for hassle-free Widgetbook management. Here are some key benefits
+   of using `widgetbook_generator`:
+   - Accurately mirrors your codebase within the Widgetbook's navigation panel, keeping
+     track of file movement or restructuring.
+   - Ensures that the names of all `WidgetbookComponents` correspond to the widgets'
+     names, even when renamed.
+   - It simplifies the setup process, allowing you to get started quickly.
+   - Seamlessly integrates with [Widgetbook Cloud](/widgetbook-cloud/overview) for an
+     optimized workflow.
 
-<Info>
-  We recommend using the Generator approach over the Manual approach, as it simplifies the
-  maintenance of Widgetbook. Additionally, the Generator approach offers seamless integration with
-  [Widgetbook Cloud](/widgetbook-cloud/overview), further enhancing the review and collaboration
-  process.
-</Info>
+<Info>We recommend using the Generator approach over the Manual approach.</Info>
 
 <Tabs
   groupId="approach"
@@ -26,38 +34,58 @@ There are two approaches to configuring Widgetbook:
 >
   <TabItem value="generator">
 
-    ```bash
-    flutter pub add widgetbook_annotation widgetbook
-    flutter pub add widgetbook_generator build_runner --dev
-    ```
+To get started with the `widgetbook` you'll need the following production dependency:
 
-    This will add a line like this to your package's pubspec.yaml (and run an implicit flutter pub get):
+```bash
+flutter pub add widgetbook_annotation widgetbook
+```
+
+and the following dev dependencies:
+
+```bash
+flutter pub add widgetbook_generator  build_runner --dev
+```
+
+This will add a line like this to your package's pubspec.yaml (and run an implicit
+`flutter pub get`):
 
 ```yaml
 dependencies:
-  widgetbook_annotation: ^3.0.0-beta.7
+  widgetbook_annotation: ^3.0.0
+  widgetbook: ^3.0.0
 
 dev_dependencies:
-  widgetbook: ^3.0.0-beta.14
-  widgetbook_generator: ^3.0.0-beta.11
+  widgetbook_generator: ^3.0.0
   build_runner:
 ```
+
+Alternatively, your editor might support `flutter pub get`.
+
+With `widgetbook_generator` at your disposal, managing Widgetbook becomes effortless.
+Start using it today and let the generator take care of the grunt work, allowing you to
+focus on what you do best - creating excellent code.
 
   </TabItem>
   <TabItem value="manual">
 
-    ```bash
-    flutter pub add widgetbook --dev
-    ```
+To get started with the `widgetbook` you'll need the following production dependency:
 
-This will add a line like this to your package's pubspec.yaml (and run an implicit flutter pub get):
+```bash
+flutter pub add widgetbook
+```
+
+This will add a line like this to your package's `pubspec.yaml` (and run an implicit
+`flutter pub get`):
 
 ```yaml
-dev_dependencies:
-  widgetbook: ^3.0.0-beta.14
+dependencies:
+  widgetbook: ^3.0.0
 ```
+
+Alternatively, your editor might support `flutter pub get`.
 
   </TabItem>
 </Tabs>
 
-With these approaches in mind, you can now begin integrating Widgetbook into your project and enjoy the benefits of streamlined widget management and collaboration.
+With these approaches in mind, you can now begin integrating Widgetbook into your project
+and enjoy the benefits of streamlined widget management and collaboration.

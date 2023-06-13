@@ -27,10 +27,12 @@
                 [
                     "Overview", "/index"
                 ],
-                 [
+                [
                     "Terminology", "/terminology"
                 ],
-                ["Why Widgetbook", "/why-widgetbook"]
+                [
+                    "Why Widgetbook", "/why-widgetbook"
+                ]
             ]
         ],
         [
@@ -55,7 +57,7 @@
                     "6. Knobs", "/getting-started/knobs"
                 ],
                 [
-                    "7. Add-ons", "/getting-started/add-ons"
+                    "7. Addons", "/getting-started/addons"
                 ],
                 [
                     "8. Configure", "/getting-started/configure"
@@ -69,30 +71,30 @@
             "Knobs",
             [
                 [
-                    "Overview", "/knobs/overview"
+                    "1. Overview", "/knobs/overview"
+                ],
+                [
+                    "2. Example", "/knobs/example"
                 ]
             ]
         ],
         [
-            "Add-ons",
+            "Addons",
             [
                 [
-                    "Overview", "/add-ons/overview"
+                    "1. Introduction", "/addons/overview"
                 ],
                 [
-                    "Theme Add-on", "/add-ons/theme-addon"
+                    "2. Theme Addon", "/addons/theme-addon"
                 ],
                 [
-                    "Frame Add-on", "/add-ons/frame-addon"
+                    "3. Device Frame Addon", "/addons/device-frame-addon"
                 ],
                 [
-                    "Localization Add-on", "/add-ons/localization-addon"
+                    "4. Localization Addon", "/addons/localization-addon"
                 ],
                 [
-                    "Text Scale Add-on", "/add-ons/text-scale-addon"
-                ],
-                [
-                    "Custom Add-on", "/add-ons/custom-addon"
+                    "5. Text Scale Addon", "/addons/text-scale-addon"
                 ]
             ]
         ],
@@ -143,12 +145,6 @@
                 [
                     "Overview", "/widgetbook-cli/overview"
                 ]
-            ]
-        ],
-        [
-            "Mono-repo",
-            [
-                ["Setup", "/mono-repo/index"]
             ]
         ],
         [

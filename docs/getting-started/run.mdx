@@ -2,21 +2,22 @@
 
 `Widgetbook` is supported in the following environments.
 
-| Environment | Status | Comment                                                                                           |
-| ----------- | ------ | ------------------------------------------------------------------------------------------------- |
+| Environment | Status | Comment                                                                                                                            |
+| ----------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------- |
 | MacOS       | ✅     |
 | Windows     | ✅     |
 | Linux       | ✅     |
-| Web         | ✅     | No hot reload, but hot restart (see [Issue 4](https://github.com/widgetbook/widgetbook/issues/4)) |
-| Mobile      | ➖     | Will run but is not optimized. Let us know if you see a mobile use-case for `Widgetbook`.         |
+| Web         | ✅     | No hot reload, but hot restart                                                                                                     |
+| Mobile      | ➖     | Will run but is not optimized. [Let us know](https://discord.com/invite/XxJGhvWzK3) if you see a mobile use-case for `Widgetbook`. |
 
-See the [Desktop support for Flutter](https://docs.flutter.dev/desktop) page for setup instructions.
+See the [Desktop support for Flutter](https://docs.flutter.dev/desktop) page for setup
+instructions.
 
 Check if everything works by running `flutter run` with the newly created Widgetbook:
 
 <Info>
-  If you have renamed `ui_catalogs.widgetbook.dart`, ensure that you pass the correct name to `-t`
-  as an entry point.
+  If you used another file apart from `main.dart` or have renamed `widgetbook.dart`,
+  ensure that you pass the correct name to `-t` as an entry point.
 </Info>
 
 <Tabs
@@ -28,20 +29,15 @@ Check if everything works by running `flutter run` with the newly created Widget
     { label: 'Mobile', value: 'mobile' },
   ]}
 >
-  <TabItem value="macos">
-    ```bash flutter run -d macos -t lib/ui_catalogs.widgetbook.dart ```
-  </TabItem>
+  <TabItem value="macos">```bash flutter run -d macos -t lib/widgetbook.dart ```</TabItem>
   <TabItem value="windows">
-    ```bash flutter run -d windows -t lib/ui_catalogs.widgetbook.dart ```
+    ```bash flutter run -d windows -t lib/widgetbook.dart ```
   </TabItem>
-  <TabItem value="linux">
-    ```bash flutter run -d linux -t lib/ui_catalogs.widgetbook.dart ```
-  </TabItem>
-  <TabItem value="web">
-    ```bash flutter run -d chrome -t lib/ui_catalogs.widgetbook.dart ```
-  </TabItem>
+  <TabItem value="linux">```bash flutter run -d linux -t lib/widgetbook.dart ```</TabItem>
+  <TabItem value="web">```bash flutter run -d chrome -t lib/widgetbook.dart ```</TabItem>
   <TabItem value="mobile">
-    It will run but is not optimized. If you see a use-case for Widgetbook on mobile let us know.
+    It will run but is not optimized. If you see a use-case for Widgetbook on mobile let
+    us know.
   </TabItem>
 </Tabs>
 
@@ -53,11 +49,9 @@ Check if everything works by running `flutter run` with the newly created Widget
 />
 
 <Success>
-  Widgetbook is now running, but no components are shown yet. To learn how to add components and how
-  to configure Widgetbook to your liking, view the [configuration
+  Widgetbook is now running, but no components are shown yet. To learn how to add
+  components and how to configure Widgetbook to your liking, view the [configuration
   documentation](/getting-started/configuration).
 </Success>
 
 You can check the final getting started on Zapp!
-
-<Zapp id="zl406qol506" />
