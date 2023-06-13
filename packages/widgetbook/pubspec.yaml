@@ -27,23 +27,6 @@ flutter:
   assets:
     - assets/
   fonts:
-    - family: Nunito
-      fonts:
-        - asset: assets/fonts/Nunito/Nunito-Black.ttf
-        - asset: assets/fonts/Nunito/Nunito-BlackItalic.ttf
-        - asset: assets/fonts/Nunito/Nunito-Bold.ttf
-        - asset: assets/fonts/Nunito/Nunito-BoldItalic.ttf
-        - asset: assets/fonts/Nunito/Nunito-ExtraBold.ttf
-        - asset: assets/fonts/Nunito/Nunito-ExtraBoldItalic.ttf
-        - asset: assets/fonts/Nunito/Nunito-ExtraLight.ttf
-        - asset: assets/fonts/Nunito/Nunito-ExtraLightItalic.ttf
-        - asset: assets/fonts/Nunito/Nunito-Italic.ttf
-        - asset: assets/fonts/Nunito/Nunito-Light.ttf
-        - asset: assets/fonts/Nunito/Nunito-LightItalic.ttf
-        - asset: assets/fonts/Nunito/Nunito-Regular.ttf
-        - asset: assets/fonts/Nunito/Nunito-SemiBold.ttf
-        - asset: assets/fonts/Nunito/Nunito-SemiBoldItalic.ttf
-
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins/Poppins-Thin.ttf
