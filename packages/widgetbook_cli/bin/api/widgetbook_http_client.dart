@@ -67,7 +67,7 @@ class WidgetbookHttpClient {
             ),
           ) as Map<String, dynamic>,
         );
-      } on DioError catch (e) {
+      } on DioException catch (e) {
         final response = e.response;
         if (response != null) {
           final errorResponse = _decodeResponse(response.data);
@@ -109,7 +109,7 @@ class WidgetbookHttpClient {
         ),
       );
       return response.data;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       final response = e.response;
       if (response != null) {
         final errorResponse = _decodeResponse(response.data);
