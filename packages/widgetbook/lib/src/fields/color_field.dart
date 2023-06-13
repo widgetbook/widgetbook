@@ -15,12 +15,14 @@ class ColorField extends Field<Color> {
           type: FieldType.color,
           codec: FieldCodec(
             toParam: (color) => color.value.toRadixString(16),
-            toValue: (param) => Color(
-              int.parse(
-                param ?? '0',
-                radix: 16,
-              ),
-            ),
+            toValue: (param) => param == null
+                ? null
+                : Color(
+                    int.parse(
+                      param,
+                      radix: 16,
+                    ),
+                  ),
           ),
         );
 
