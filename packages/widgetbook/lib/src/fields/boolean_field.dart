@@ -15,7 +15,7 @@ class BooleanField extends Field<bool> {
           type: FieldType.boolean,
           codec: FieldCodec(
             toParam: (value) => value.toString(),
-            toValue: (param) => param == 'true',
+            toValue: (param) => param == null ? null : param == 'true',
           ),
         );
 

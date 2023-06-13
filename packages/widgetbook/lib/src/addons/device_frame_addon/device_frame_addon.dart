@@ -62,13 +62,17 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
   @override
   DeviceFrameSetting settingFromQueryGroup(Map<String, String> group) {
     return DeviceFrameSetting(
-      device: devices.firstWhereOrNull(
-        (device) => device?.name == group['name'],
-      ),
+      device: !group.containsKey('name')
+          ? initialSetting.device
+          : devices.firstWhereOrNull(
+              (device) => device?.name == group['name'],
+            ),
       orientation: Orientation.values.byName(
         group['orientation']?.toLowerCase() ?? Orientation.portrait.name,
       ),
-      hasFrame: group['frame'] == 'true',
+      hasFrame: !group.containsKey('frame')
+          ? initialSetting.hasFrame
+          : group['frame'] == 'Device Frame',
     );
   }
 

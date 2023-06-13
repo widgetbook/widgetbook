@@ -56,7 +56,7 @@ abstract class Field<T> {
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
     final groupMap = FieldCodec.decodeQueryGroup(state.queryParams[group]);
-    final value = codec.toValue(groupMap[name]);
+    final value = codec.toValue(groupMap[name]) ?? initialValue;
 
     return toWidget(context, value);
   }
