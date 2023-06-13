@@ -2,6 +2,7 @@
 
  - **BREAKING**: Change generated extension from `.g.dart` to `.directories.g.dart` to avoid conflicting outputs with other generators. ([#737](https://github.com/widgetbook/widgetbook/pull/737))
  - **BREAKING**: Remove `@App` annotation's `foldersExpanded` and `widgetsExpanded` non-working parameters. ([#735](https://github.com/widgetbook/widgetbook/pull/735))
+ - **REFACTOR**: Add meta comments to header. ([#745](https://github.com/widgetbook/widgetbook/pull/745))
 
 ## 3.0.0-rc.1
 
