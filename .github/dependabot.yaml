@@ -21,11 +21,6 @@ updates:
       interval: "daily"
     versioning-strategy: increase
   - package-ecosystem: "pub"
-    directory: "/packages/widgetbook_core"
-    schedule:
-      interval: "daily"
-    versioning-strategy: increase
-  - package-ecosystem: "pub"
     directory: "/packages/widgetbook_generator"
     schedule:
       interval: "daily"

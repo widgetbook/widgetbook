@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/app/widgetbook_shell.dart';
 import 'package:widgetbook/src/routing/routing.dart';
+import 'package:widgetbook/src/routing/widgetbook_shell.dart';
 import 'package:widgetbook/src/state/state.dart';
 import 'package:widgetbook/widgetbook.dart';
 

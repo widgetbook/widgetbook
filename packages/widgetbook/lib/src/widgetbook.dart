@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
 
 import 'addons/addons.dart';
 import 'integrations/integrations.dart';
-import 'models/models.dart';
+import 'navigation/navigation.dart';
 import 'routing/app_router.dart';
 import 'state/state.dart';
+import 'themes.dart';
 
 /// Describes the configuration for your [Widget] library.
 ///

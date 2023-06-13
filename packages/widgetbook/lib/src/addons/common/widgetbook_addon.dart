@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
 
 import '../../fields/fields.dart';
 import '../../knobs/knobs.dart';
-import '../../models/models.dart';
+import '../../navigation/navigation.dart';
+import '../../settings/settings.dart';
 import '../addons.dart';
 
 /// [WidgetbookAddon]s are like global [Knob]s, they change the state for all

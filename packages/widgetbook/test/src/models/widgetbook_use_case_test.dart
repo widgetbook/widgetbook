@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/models/models.dart';
+import 'package:widgetbook/src/navigation/navigation.dart';
 
 void main() {
   group(
