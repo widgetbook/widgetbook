@@ -67,7 +67,7 @@ class WidgetbookHttpClient {
             ),
           ) as Map<String, dynamic>,
         );
-      } on DioError catch (e) {
+      } on DioException catch (e) {
         final response = e.response;
         if (response != null) {
           final errorResponse = _decodeResponse(response.data);
@@ -99,10 +99,6 @@ class WidgetbookHttpClient {
               filename: basename(deploymentFile.path),
               contentType: MediaType.parse('application/zip'),
             ),
-            'themes': jsonEncode(data.themes),
-            'devices': jsonEncode(data.devices),
-            'locales': jsonEncode(data.locales),
-            'textScaleFactors': jsonEncode(data.textScaleFactors),
             'branch': data.branchName,
             'repository': data.repositoryName,
             'actor': data.actor,
@@ -113,7 +109,7 @@ class WidgetbookHttpClient {
         ),
       );
       return response.data;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       final response = e.response;
       if (response != null) {
         final errorResponse = _decodeResponse(response.data);

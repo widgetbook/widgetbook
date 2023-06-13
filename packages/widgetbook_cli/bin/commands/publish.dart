@@ -26,29 +26,21 @@ import 'package:file/local.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
-import 'package:widgetbook_git/widgetbook_git.dart';
 
-import './command.dart';
 import '../api/widgetbook_http_client.dart';
 import '../ci_parser/ci_parser.dart';
 import '../git-provider/github/github.dart';
+import '../git/branch_reference.dart';
+import '../git/git_dir.dart';
 import '../git/git_wrapper.dart';
 import '../helpers/exceptions.dart';
 import '../helpers/widgetbook_zip_encoder.dart';
 import '../models/created_review.dart';
 import '../models/models.dart';
 import '../models/publish_args.dart';
-import '../review/devices/device_parser.dart';
-import '../review/devices/models/device_data.dart';
-import '../review/locales/locales_parser.dart';
-import '../review/locales/models/locale_data.dart';
-import '../review/text_scale_factors/models/text_scale_factor_data.dart';
-import '../review/text_scale_factors/text_scale_factor_parser.dart';
-import '../review/themes/models/theme_data.dart';
-import '../review/themes/theme_parser.dart';
-import '../review/use_cases/models/changed_use_case.dart';
 import '../review/use_cases/use_case_parser.dart';
 import '../std/stdin_wrapper.dart';
+import 'command.dart';
 
 class PublishCommand extends WidgetbookCommand {
   PublishCommand({
@@ -57,20 +49,18 @@ class PublishCommand extends WidgetbookCommand {
     WidgetbookHttpClient? widgetbookHttpClient,
     WidgetbookZipEncoder? widgetbookZipEncoder,
     FileSystem? fileSystem,
-    this.localeParser,
-    this.deviceParser,
-    this.textScaleFactorsParser,
-    this.themeParser,
     CiWrapper? ciWrapper,
     GitWrapper? gitWrapper,
     StdInWrapper? stdInWrapper,
     PlatformWrapper? platformWrapper,
+    UseCaseParser? useCaseParser,
   })  : _widgetbookHttpClient = widgetbookHttpClient ?? WidgetbookHttpClient(),
         _widgetbookZipEncoder = widgetbookZipEncoder ?? WidgetbookZipEncoder(),
         _ciWrapper = ciWrapper ?? CiWrapper(),
         _gitWrapper = gitWrapper ?? GitWrapper(),
         _stdInWrapper = stdInWrapper ?? StdInWrapper(),
         _platformWrapper = platformWrapper ?? PlatformWrapper(),
+        _useCaseParser = useCaseParser,
         _fileSystem = fileSystem ?? const LocalFileSystem() {
     progress = logger.progress('Publishing Widgetbook');
     argParser
@@ -143,14 +133,11 @@ class PublishCommand extends WidgetbookCommand {
   final WidgetbookHttpClient _widgetbookHttpClient;
   final WidgetbookZipEncoder _widgetbookZipEncoder;
   final FileSystem _fileSystem;
-  final ThemeParser? themeParser;
-  final LocaleParser? localeParser;
-  final DeviceParser? deviceParser;
-  final TextScaleFactorParser? textScaleFactorsParser;
   final CiWrapper _ciWrapper;
   final GitWrapper _gitWrapper;
   final StdInWrapper _stdInWrapper;
   final PlatformWrapper _platformWrapper;
+  final UseCaseParser? _useCaseParser;
 
   late final Progress progress;
 
@@ -290,6 +277,7 @@ class PublishCommand extends WidgetbookCommand {
       args: args,
       gitDir: gitDir,
       getZipFile: getZipFile,
+      useCaseParser: _useCaseParser,
     );
 
     return ExitCode.success.code;
@@ -308,10 +296,6 @@ class PublishCommand extends WidgetbookCommand {
   Future<Map<String, dynamic>?> uploadDeploymentInfo({
     required File file,
     required PublishArgs args,
-    required List<ThemeData> themes,
-    required List<LocaleData> locales,
-    required List<DeviceData> devices,
-    required List<TextScaleFactorData> textScaleFactors,
   }) {
     return _widgetbookHttpClient.uploadBuild(
       deploymentFile: file,
@@ -322,10 +306,6 @@ class PublishCommand extends WidgetbookCommand {
         actor: args.actor,
         apiKey: args.apiKey,
         provider: args.vendor,
-        themes: themes,
-        locales: locales,
-        devices: devices,
-        textScaleFactors: textScaleFactors,
       ),
     );
   }
@@ -426,7 +406,8 @@ class PublishCommand extends WidgetbookCommand {
   Future<void> publishBuilds({
     required PublishArgs args,
     required GitDir gitDir,
-    required File? Function(Directory) getZipFile,
+    required File? Function(Directory dir) getZipFile,
+    UseCaseParser? useCaseParser,
   }) async {
     progress.update('Getting branches');
 
@@ -439,24 +420,15 @@ class PublishCommand extends WidgetbookCommand {
     final baseBranch = args.baseBranch;
     final baseSha = args.baseSha;
     final directory = _fileSystem.directory(buildPath);
-    final useCases = baseBranch == null
-        ? <ChangedUseCase>[]
-        : await UseCaseParser(
-            projectPath: args.path,
-            baseBranch: baseBranch,
-          ).parse();
+    final useCases = await _useCaseParser?.parse() ??
+        (baseBranch == null
+            ? []
+            : await UseCaseParser(
+                projectPath: args.path,
+                baseBranch: baseBranch,
+              ).parse());
 
     progress.update('Detected ${useCases.length} changed use-case(s)');
-
-    final themes = await themeParser?.parse() ??
-        await ThemeParser(projectPath: args.path).parse();
-
-    final locales = await localeParser?.parse() ??
-        await LocaleParser(projectPath: args.path).parse();
-    final devices = await deviceParser?.parse() ??
-        await DeviceParser(projectPath: args.path).parse();
-    final textScaleFactors = await textScaleFactorsParser?.parse() ??
-        await TextScaleFactorParser(projectPath: args.path).parse();
 
     try {
       progress.update('Generating zip');
@@ -467,10 +439,6 @@ class PublishCommand extends WidgetbookCommand {
         final uploadInfo = await uploadDeploymentInfo(
           file: file,
           args: args,
-          themes: themes,
-          locales: locales,
-          devices: devices,
-          textScaleFactors: textScaleFactors,
         );
 
         if (uploadInfo == null) {
@@ -480,7 +448,7 @@ class PublishCommand extends WidgetbookCommand {
         }
 
         // If generator is not run or not properly configured
-        if (themes.isEmpty) {
+        if (useCases.isEmpty) {
           logger.err(
             'HINT: Could not find generator files. '
             'Therefore, no review has been created. '

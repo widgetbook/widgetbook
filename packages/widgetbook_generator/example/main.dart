@@ -1,43 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-@WidgetbookTheme(name: 'Dark')
-ThemeData darkTheme() => ThemeData.dark();
+import 'main.directories.g.dart';
 
-@WidgetbookUseCase(name: 'Default', type: CustomPadding)
-Widget customPaddingStory(BuildContext context) {
-  return Container(
-    color: Colors.green,
-    child: CustomPadding(
-      widget: Text('Test'),
-    ),
-  );
+void main() {
+  runApp(const WidgetbookApp());
 }
 
-class CustomPadding extends StatelessWidget {
-  const CustomPadding({
-    Key? key,
-    required this.widget,
-  }) : super(key: key);
-  final Widget widget;
+@widgetbook.App()
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp();
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(16),
-      child: widget,
-    );
-  }
-}
-
-@WidgetbookApp(name: 'Example App')
-class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: darkTheme(),
+    return Widgetbook.material(
+      directories: directories,
+      addons: [],
+      appBuilder: (context, child) {
+        return child;
+      },
     );
   }
 }

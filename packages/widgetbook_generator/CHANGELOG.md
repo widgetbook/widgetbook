@@ -1,3 +1,22 @@
+## Unreleased
+
+ - **BREAKING**: Change generated extension from `.g.dart` to `.directories.g.dart` to avoid conflicting outputs with other generators. ([#737](https://github.com/widgetbook/widgetbook/pull/737))
+ - **BREAKING**: Remove `@App` annotation's `foldersExpanded` and `widgetsExpanded` non-working parameters. ([#735](https://github.com/widgetbook/widgetbook/pull/735))
+
+## 3.0.0-rc.1
+
+ - Check out the [migration guide](https://docs.widgetbook.io/~docs%2Fwidgetbook-3/migration/3.0.0-beta-to-rc) for more details.
+ - **FEAT**: Add Dart 3 and Flutter 3.10 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
+ - **BREAKING**: Drop Flutter 2 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
+ - **BREAKING**: Remove code generation support for everything except `@App` and `@UseCase` that generate a list called `directories`. You should now configure Widgetbook's properties (i.e. `addons`, `appBuilder`, etc.) manually. ([#663](https://github.com/widgetbook/widgetbook/pull/663))
+ - **FIX**: Remove `<dynamic>` from Generic Widgets names. ([#700](https://github.com/widgetbook/widgetbook/pull/700))
+ - **REFACTOR**: Drop `freezed` dependency. ([#666](https://github.com/widgetbook/widgetbook/pull/666))
+
+## 3.0.0-beta.11
+
+ - **REFACTOR**: :recycle: removed package analysis_options files.
+ - **REFACTOR**: :recycle: warnings.
+
 ## 3.0.0-beta.10
 
  - **FIX**: :bug: expects data that does not exist. ([6396e411](https://github.com/widgetbook/widgetbook/commit/6396e41129c586fdbcde5ce6dabb0f1a8fbfbe9e))

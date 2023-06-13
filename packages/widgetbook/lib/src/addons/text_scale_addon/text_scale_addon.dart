@@ -1,56 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/addons/addon.dart';
-import 'package:widgetbook/src/addons/text_scale_addon/text_scale_setting.dart';
-import 'package:widgetbook/src/routing/router.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
 
-class TextScaleAddon extends WidgetbookAddOn<TextScaleSetting> {
+import '../../fields/fields.dart';
+import '../common/common.dart';
+
+/// A [WidgetbookAddon] for changing the active [MediaQueryData.textScaleFactor]
+/// via [MediaQuery].
+class TextScaleAddon extends WidgetbookAddon<double> {
   TextScaleAddon({
-    required super.setting,
-  }) : super(
-          name: 'text-scales',
+    required this.scales,
+    double? initialScale,
+  })  : assert(
+          scales.isNotEmpty,
+          'scales cannot be empty',
+        ),
+        assert(
+          initialScale == null || scales.contains(initialScale),
+          'initialScale must be in scales',
+        ),
+        super(
+          name: 'Text scale',
+          initialSetting: initialScale ?? scales.first,
         );
 
-  @override
-  Widget build(BuildContext context) {
-    final textScales = value.textScales;
-    final activeTextScale = value.activeTextScale;
+  final List<double> scales;
 
-    return Setting(
-      name: 'Text scale',
-      child: DropdownSetting<double>(
-        options: textScales,
-        initialSelection: activeTextScale,
-        optionValueBuilder: (scale) => scale.toStringAsFixed(2),
-        onSelected: (newTextScale) {
-          onChanged(
-            context,
-            value.copyWith(activeTextScale: newTextScale),
-          );
-        },
+  @override
+  List<Field> get fields {
+    return [
+      ListField<double>(
+        group: slugName,
+        name: 'factor',
+        values: scales,
+        initialValue: initialSetting,
+        labelBuilder: (scale) => scale.toStringAsFixed(2),
       ),
+    ];
+  }
+
+  @override
+  double settingFromQueryGroup(Map<String, String> group) {
+    return double.parse(
+      group['factor'] ?? initialSetting.toStringAsFixed(2),
     );
   }
 
   @override
-  TextScaleSetting settingFromQueryParameters({
-    required Map<String, String> queryParameters,
-    required TextScaleSetting setting,
-  }) {
-    final activeTextScale = parseQueryParameters(
-          name: 'text-scale',
-          queryParameters: queryParameters,
-          mappedData: {
-            for (var e in setting.textScales) e.toStringAsFixed(2): e
-          },
-        ) ??
-        setting.activeTextScale;
-
-    return setting.copyWith(activeTextScale: activeTextScale);
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    double setting,
+  ) {
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(
+        textScaleFactor: setting,
+      ),
+      child: child,
+    );
   }
-}
-
-extension TextScaleExtension on BuildContext {
-  /// Creates adjustable parameters for the WidgetbookUseCase
-  double? get textScale => getAddonValue<TextScaleSetting>()?.activeTextScale;
 }

@@ -10,7 +10,7 @@ void main() {
   group(
     '$CupertinoThemeAddon',
     () {
-      const bluetheme = CupertinoThemeData(
+      const blueTheme = CupertinoThemeData(
         primaryColor: colorBlue,
       );
 
@@ -20,7 +20,7 @@ void main() {
 
       const blueWidgetbookTheme = WidgetbookTheme<CupertinoThemeData>(
         name: 'Blue',
-        data: bluetheme,
+        data: blueTheme,
       );
 
       const yellowWidgetbookTheme = WidgetbookTheme(
@@ -28,57 +28,20 @@ void main() {
         data: yellowTheme,
       );
 
-      final setting = CupertinoThemeSetting(
-        activeTheme: blueWidgetbookTheme,
-        themes: const [
+      final addon = CupertinoThemeAddon(
+        themes: [
           blueWidgetbookTheme,
           yellowWidgetbookTheme,
         ],
       );
 
-      final addon = CupertinoThemeAddon(
-        setting: setting,
-      );
-
       testWidgets(
-        'can access text scale factor via the context',
+        'can activate theme',
         (WidgetTester tester) async {
-          await testAddon(
+          await testAddon<WidgetbookTheme<CupertinoThemeData>>(
             tester: tester,
             addon: addon,
-            expect: (context) => expect(
-              context.cupertinoTheme,
-              equals(blueWidgetbookTheme.data),
-            ),
-          );
-        },
-      );
-
-      testWidgets(
-        'can activate a text scale factor',
-        (WidgetTester tester) async {
-          await testAddon(
-            tester: tester,
-            addon: addon,
-            act: (context) async => addon.onChanged(
-              context,
-              setting.copyWith(activeTheme: yellowWidgetbookTheme),
-            ),
-            expect: (context) => expect(
-              context.cupertinoTheme,
-              equals(yellowWidgetbookTheme.data),
-            ),
-          );
-        },
-      );
-
-      testWidgets(
-        'can activate text scale factor via Widget',
-        (WidgetTester tester) async {
-          await testAddon(
-            tester: tester,
-            addon: addon,
-            act: (context) async {
+            act: () async {
               final dropdownFinder = find.byType(
                 DropdownMenu<WidgetbookTheme<CupertinoThemeData>>,
               );
@@ -91,8 +54,8 @@ void main() {
               await tester.tap(textFinder.last);
               await tester.pumpAndSettle();
             },
-            expect: (context) => expect(
-              context.cupertinoTheme,
+            expect: (setting) => expect(
+              setting.data,
               equals(yellowWidgetbookTheme.data),
             ),
           );

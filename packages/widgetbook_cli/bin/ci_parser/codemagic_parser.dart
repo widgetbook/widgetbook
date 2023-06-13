@@ -1,4 +1,4 @@
-import './ci_parser.dart';
+import 'ci_parser.dart';
 
 class CodemagicParser extends CiParser {
   CodemagicParser({

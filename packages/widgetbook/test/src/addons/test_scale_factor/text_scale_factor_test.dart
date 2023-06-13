@@ -8,57 +8,17 @@ void main() {
   group(
     '$TextScaleAddon',
     () {
-      const textScales = [
-        1.0,
-        2.0,
-        3.0,
-      ];
-      final setting = TextScaleSetting.firstAsSelected(
-        textScales: textScales,
-      );
       final addon = TextScaleAddon(
-        setting: setting,
+        scales: [1.0, 2.0, 3.0],
       );
 
       testWidgets(
-        'can access text scale factor via the context',
+        'can activate text scale factor',
         (WidgetTester tester) async {
-          await testAddon(
+          await testAddon<double>(
             tester: tester,
             addon: addon,
-            expect: (context) => expect(
-              context.textScale,
-              equals(1),
-            ),
-          );
-        },
-      );
-
-      testWidgets(
-        'can activate a text scale factor',
-        (WidgetTester tester) async {
-          await testAddon(
-            tester: tester,
-            addon: addon,
-            act: (context) async => addon.onChanged(
-              context,
-              setting.copyWith(activeTextScale: 2),
-            ),
-            expect: (context) => expect(
-              context.textScale,
-              equals(2),
-            ),
-          );
-        },
-      );
-
-      testWidgets(
-        'can activate text scale factor via Widget',
-        (WidgetTester tester) async {
-          await testAddon(
-            tester: tester,
-            addon: addon,
-            act: (context) async {
+            act: () async {
               final dropdownFinder = find.byType(DropdownMenu<double>);
               await tester.tap(dropdownFinder);
               await tester.pumpAndSettle();
@@ -69,8 +29,8 @@ void main() {
               await tester.tap(textFinder.last);
               await tester.pumpAndSettle();
             },
-            expect: (context) => expect(
-              context.textScale,
+            expect: (setting) => expect(
+              setting,
               equals(2),
             ),
           );

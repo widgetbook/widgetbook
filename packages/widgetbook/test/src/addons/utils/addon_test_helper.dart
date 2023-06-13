@@ -1,61 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
-import 'package:widgetbook/src/addons/addon.dart';
+import 'package:widgetbook/src/addons/addons.dart';
+import 'package:widgetbook/src/fields/fields.dart';
+import 'package:widgetbook/src/state/state.dart';
 
-import 'extensions/widget_tester_extension.dart';
-
-Future<void> testAddon({
+Future<void> testAddon<T>({
   required WidgetTester tester,
-  required WidgetbookAddOn addon,
-  required void Function(BuildContext context) expect,
-  Future<void> Function(BuildContext context)? act,
+  required WidgetbookAddon<T> addon,
+  required void Function(T setting) expect,
+  Future<void> Function()? act,
 }) async {
-  const key = ValueKey('RandomKey');
-
-  final router = GoRouter(
-    routes: [
-      GoRoute(
-        path: '/',
-        name: '/',
-        pageBuilder: (context, state) {
-          return NoTransitionPage<void>(
-            child: Scaffold(
-              // Simulates the approximate width of the panel.
-              // It's also required to make some tests work
-              // (not totally clear why).
-              body: SizedBox(
-                width: 400,
-                child: Builder(
-                  builder: (context) {
-                    return addon.buildProvider(
-                      context,
-                      state.queryParams,
-                      Builder(
-                        key: key,
-                        builder: addon.build,
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-          );
-        },
-      )
-    ],
+  final state = WidgetbookState(
+    queryParams: {},
+    addons: [addon],
+    appBuilder: materialAppBuilder,
+    directories: [],
   );
 
   await tester.pumpWidget(
-    MaterialApp.router(
-      routeInformationParser: router.routeInformationParser,
-      routeInformationProvider: router.routeInformationProvider,
-      routerDelegate: router.routerDelegate,
+    MaterialApp(
+      home: WidgetbookScope(
+        state: state,
+        child: Scaffold(
+          body: Builder(
+            builder: addon.buildSetting,
+          ),
+        ),
+      ),
     ),
   );
-  final context = tester.findContextByKey(key);
-  await act?.call(context);
+
+  await act?.call();
   await tester.pumpAndSettle();
-  final refreshedContext = tester.findContextByKey(key);
-  expect(refreshedContext);
+
+  final groupMap = FieldCodec.decodeQueryGroup(
+    state.queryParams[addon.slugName],
+  );
+
+  final setting = addon.settingFromQueryGroup(groupMap);
+
+  expect(setting);
 }

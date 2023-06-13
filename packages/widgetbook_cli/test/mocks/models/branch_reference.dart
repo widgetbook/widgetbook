@@ -1,4 +1,4 @@
-import 'package:widgetbook_git/widgetbook_git.dart';
+import '../../../bin/git/branch_reference.dart';
 
 const branch = 'branch-ref';
 final sha = 'a' * 40;

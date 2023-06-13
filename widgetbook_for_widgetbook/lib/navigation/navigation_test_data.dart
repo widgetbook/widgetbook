@@ -1,4 +1,6 @@
-import 'package:widgetbook_core/widgetbook_core.dart';
+// ignore_for_file: invalid_use_of_internal_member
+
+import 'package:widgetbook/src/navigation/navigation.dart';
 
 const testNode1 = NavigationTreeNodeData(
   path: 'component',

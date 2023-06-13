@@ -9,7 +9,7 @@ void main() {
   group(
     '$MaterialThemeAddon',
     () {
-      final bluetheme = ThemeData(
+      final blueTheme = ThemeData(
         primaryColor: colorBlue,
       );
 
@@ -19,7 +19,7 @@ void main() {
 
       final blueWidgetbookTheme = WidgetbookTheme(
         name: 'Blue',
-        data: bluetheme,
+        data: blueTheme,
       );
 
       final yellowWidgetbookTheme = WidgetbookTheme(
@@ -27,54 +27,17 @@ void main() {
         data: yellowTheme,
       );
 
-      final setting = MaterialThemeSetting(
-        activeTheme: blueWidgetbookTheme,
+      final addon = MaterialThemeAddon(
         themes: [blueWidgetbookTheme, yellowWidgetbookTheme],
       );
 
-      final addon = MaterialThemeAddon(
-        setting: setting,
-      );
-
       testWidgets(
-        'can access text scale factor via the context',
+        'can activate theme',
         (WidgetTester tester) async {
-          await testAddon(
+          await testAddon<WidgetbookTheme<ThemeData>>(
             tester: tester,
             addon: addon,
-            expect: (context) => expect(
-              context.materialTheme,
-              equals(blueWidgetbookTheme.data),
-            ),
-          );
-        },
-      );
-
-      testWidgets(
-        'can activate a text scale factor',
-        (WidgetTester tester) async {
-          await testAddon(
-            tester: tester,
-            addon: addon,
-            act: (context) async => addon.onChanged(
-              context,
-              setting.copyWith(activeTheme: yellowWidgetbookTheme),
-            ),
-            expect: (context) => expect(
-              context.materialTheme,
-              equals(yellowWidgetbookTheme.data),
-            ),
-          );
-        },
-      );
-
-      testWidgets(
-        'can activate text scale factor via Widget',
-        (WidgetTester tester) async {
-          await testAddon(
-            tester: tester,
-            addon: addon,
-            act: (context) async {
+            act: () async {
               final dropdownFinder = find.byType(
                 DropdownMenu<WidgetbookTheme<ThemeData>>,
               );
@@ -87,8 +50,8 @@ void main() {
               await tester.tap(textFinder.last);
               await tester.pumpAndSettle();
             },
-            expect: (context) => expect(
-              context.materialTheme,
+            expect: (setting) => expect(
+              setting.data,
               equals(yellowWidgetbookTheme.data),
             ),
           );

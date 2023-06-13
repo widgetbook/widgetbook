@@ -1,8 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:widgetbook/src/knobs/knobs.dart';
-import 'package:widgetbook_core/widgetbook_core.dart' as core;
+import 'dart:ui';
 
+import 'package:meta/meta.dart';
+
+import '../fields/fields.dart';
+import '../state/state.dart';
+import 'knob.dart';
+
+@internal
 class ColorKnob extends Knob<Color> {
   ColorKnob({
     required super.label,
@@ -11,12 +15,29 @@ class ColorKnob extends Knob<Color> {
   });
 
   @override
-  Widget build(BuildContext context) => core.ColorKnob(
+  List<Field> get fields {
+    return [
+      ColorField(
+        group: 'knobs',
         name: label,
-        description: description,
-        value: value,
-        onChanged: (color) {
-          context.read<KnobsNotifier>().update(label, color);
+        initialValue: value,
+        onChanged: (context, value) {
+          if (value == null) return;
+          WidgetbookState.of(context).updateKnobValue(label, value);
         },
-      );
+      ),
+    ];
+  }
+
+  @override
+  Color valueFromQueryGroup(Map<String, String> group) {
+    return group.containsKey(label)
+        ? Color(
+            int.parse(
+              group[label]!,
+              radix: 16,
+            ),
+          )
+        : value;
+  }
 }

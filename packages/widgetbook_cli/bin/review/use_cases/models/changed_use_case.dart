@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../helpers/modification.dart';
+import '../../../git/modification.dart';
 
 part 'changed_use_case.freezed.dart';
 part 'changed_use_case.g.dart';

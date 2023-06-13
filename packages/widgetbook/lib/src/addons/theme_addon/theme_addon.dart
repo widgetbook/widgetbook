@@ -1,47 +1,69 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/routing/router.dart';
-import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
 
-abstract class ThemeAddon<T> extends WidgetbookAddOn<ThemeSetting<T>> {
+import '../../fields/fields.dart';
+import '../common/common.dart';
+import 'widgetbook_theme.dart';
+
+typedef ThemeBuilder<T> = Widget Function(
+  BuildContext context,
+  T theme,
+  Widget child,
+);
+
+/// A [WidgetbookAddon] for changing the active custom theme. A [themeBuilder]
+/// must be provided that returns an [InheritedWidget] or similar [Widget]s.
+class ThemeAddon<T> extends WidgetbookAddon<WidgetbookTheme<T>> {
   ThemeAddon({
-    required super.setting,
-  }) : super(
-          name: 'themes',
+    required this.themes,
+    WidgetbookTheme<T>? initialTheme,
+    required this.themeBuilder,
+  })  : assert(
+          themes.isNotEmpty,
+          'themes cannot be empty',
+        ),
+        assert(
+          initialTheme == null || themes.contains(initialTheme),
+          'initialTheme must be in themes',
+        ),
+        super(
+          name: 'Theme',
+          initialSetting: initialTheme ?? themes.first,
         );
 
-  @override
-  Widget build(BuildContext context) {
-    final themes = value.themes;
-    final activeTheme = value.activeTheme;
+  final List<WidgetbookTheme<T>> themes;
+  final ThemeBuilder<T> themeBuilder;
 
-    return Setting(
-      name: 'Theme',
-      child: DropdownSetting<WidgetbookTheme<T>>(
-        options: themes,
-        initialSelection: activeTheme,
-        optionValueBuilder: (theme) => theme.name,
-        onSelected: (newActiveTheme) {
-          onChanged(
-            context,
-            value.copyWith(activeTheme: newActiveTheme),
-          );
-        },
+  @override
+  List<Field> get fields {
+    return [
+      ListField<WidgetbookTheme<T>>(
+        group: slugName,
+        name: 'name',
+        values: themes,
+        initialValue: initialSetting,
+        labelBuilder: (theme) => theme.name,
       ),
+    ];
+  }
+
+  @override
+  WidgetbookTheme<T> settingFromQueryGroup(Map<String, String> group) {
+    return themes.firstWhere(
+      (theme) => theme.name == group['name'],
+      orElse: () => initialSetting,
     );
   }
 
   @override
-  ThemeSetting<T> settingFromQueryParameters({
-    required Map<String, String> queryParameters,
-    required ThemeSetting<T> setting,
-  }) {
-    final WidgetbookTheme<T>? activeTheme = parseQueryParameters(
-      name: 'theme',
-      queryParameters: queryParameters,
-      mappedData: {for (var e in setting.themes) e.name: e},
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    WidgetbookTheme<T> setting,
+  ) {
+    return themeBuilder(
+      context,
+      setting.data,
+      child,
     );
-
-    return setting.copyWith(activeTheme: activeTheme);
   }
 }

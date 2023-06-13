@@ -1,0 +1,63 @@
+name: Deploy to Widgetbook Cloud
+
+on:
+  workflow_call:
+    inputs:
+      mode:
+        required: true
+        type: string
+    secrets:
+      WIDGETBOOK_CLOUD_API_KEY:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: widgetbook_for_widgetbook
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install Melos
+        run: flutter pub global activate melos
+
+      - name: Get packages
+        run: melos bootstrap
+
+      - name: Run build runner
+        run: melos generate
+
+      - name: Build Website
+        run: flutter build web -t lib/widgetbook.dart
+
+      - name: Install Widgetbook CLI
+        run: dart pub global activate --source path ../packages/widgetbook_cli
+
+      - name: Upload Build
+        if: "${{ inputs.mode == 'build' }}"
+        run: |
+          widgetbook publish \
+            --api-key ${{ secrets.WIDGETBOOK_CLOUD_API_KEY }} \
+            --repository $GITHUB_REPOSITORY \
+            --actor $GITHUB_ACTOR
+
+      - name: Upload Review
+        if: "${{ inputs.mode == 'review' }}"
+        run: |
+          widgetbook publish \
+            --api-key ${{ secrets.WIDGETBOOK_CLOUD_API_KEY }} \
+            --repository $GITHUB_REPOSITORY \
+            --actor $GITHUB_ACTOR \
+            --branch $GITHUB_HEAD_REF \
+            --base-branch $GITHUB_BASE_REF \
+            --pr ${{ github.event.number }} \
+            --github-token ${{ secrets.GITHUB_TOKEN }}

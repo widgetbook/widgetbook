@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as anno;
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@anno.WidgetbookUseCase(name: 'Example', type: ImagePage)
+@UseCase(name: 'Example', type: ImagePage)
 Widget testUseCase(BuildContext context) {
   return const ImagePage(
     title: 'Image example',
@@ -10,7 +10,10 @@ Widget testUseCase(BuildContext context) {
 }
 
 class ImagePage extends StatefulWidget {
-  const ImagePage({super.key, required this.title});
+  const ImagePage({
+    super.key,
+    required this.title,
+  });
 
   final String title;
 

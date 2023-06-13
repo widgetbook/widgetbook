@@ -1,152 +1,121 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:widgetbook/src/addons/addon.dart';
-import 'package:widgetbook/src/addons/addon_provider.dart';
-import 'package:widgetbook/src/builder/builder.dart';
-import 'package:widgetbook/src/knobs/knobs.dart';
-import 'package:widgetbook/src/navigation/navigation.dart';
-import 'package:widgetbook/src/routing/router.dart';
-import 'package:widgetbook/src/repositories/selected_use_case_repository.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
-import 'package:widgetbook_models/widgetbook_models.dart';
+
+import 'addons/addons.dart';
+import 'integrations/integrations.dart';
+import 'navigation/navigation.dart';
+import 'routing/app_router.dart';
+import 'state/state.dart';
+import 'themes.dart';
 
 /// Describes the configuration for your [Widget] library.
 ///
 /// [Widgetbook] is the central element in organizing your widgets into
-/// Folders and UseCases.
-/// In addition, [Widgetbook] allows you to specify
-/// - the [Theme]s used by your application,
-/// - the [Device]s on which you'd like to preview the catalogued widgets
-/// - the [Locale]s used by your application
+/// folders and use cases.
 ///
-/// [Widgetbook] defines the following constructors for different themes
-/// - [Widgetbook]<[CustomTheme]> if you use a [CustomTheme] for your app
-/// - [Widgetbook.cupertino] if you use [CupertinoThemeData] for your app
-/// - [Widgetbook.material] if you use [ThemeData] for your app
-///
-/// Note: if you use for instance both [CupertinoThemeData] and [ThemeData] in
-/// your app, use the [Widgetbook]<[CustomTheme]> constructor with [CustomTheme]
-/// set to [dynamic] or [Object] and see [AppBuilderFunction] for how to
-/// render custom themes.
-class Widgetbook<CustomTheme> extends StatefulWidget {
+/// [Widgetbook] defines the following constructors for different app types
+/// - [Widgetbook] if you use a custom widget (e.g. [WidgetsApp]) for your app.
+/// - [Widgetbook.cupertino] if you use [CupertinoApp] for your app.
+/// - [Widgetbook.material] if you use [MaterialApp] for your app.
+class Widgetbook extends StatefulWidget {
   const Widgetbook({
-    required this.appBuilder,
-    required this.addons,
     super.key,
-    this.directories = const <MultiChildNavigationNodeData>[],
+    required this.directories,
+    required this.appBuilder,
+    this.addons,
+    this.integrations,
   });
 
-  final List<WidgetbookAddOn> addons;
-
-  /// Children which host Packages, Folders, Categories, Components
-  /// and Use cases.
-  /// This can be used to organize the structure of the Widgetbook on a large
-  /// scale.
+  /// The directory structure of your [Widget] library.
+  ///
+  /// The available organizers are: [WidgetbookCategory], [WidgetbookFolder],
+  /// [WidgetbookComponent] and [WidgetbookUseCase].
+  ///
+  /// Both [WidgetbookCategory] and [WidgetbookFolder] can contain sub folders
+  /// and [WidgetbookComponent] elements. However, [WidgetbookComponent] can
+  /// only contain [WidgetbookUseCase]s.
   final List<MultiChildNavigationNodeData> directories;
 
-  final AppBuilderFunction appBuilder;
+  /// A wrapper builder method for all [WidgetbookUseCase]s.
+  final AppBuilder appBuilder;
 
-  /// A [Widgetbook] which uses cupertino theming via [CupertinoThemeData].
-  static Widgetbook<CupertinoThemeData> cupertino({
-    required List<MultiChildNavigationNodeData> directories,
-    required List<WidgetbookAddOn> addons,
-    AppBuilderFunction? appBuilder,
+  /// The list of add-ons for your [Widget] library
+  final List<WidgetbookAddon>? addons;
+
+  /// The list of integrations for your [Widget] library. Primarily used to
+  /// integrate with Widgetbook Cloud via [WidgetbookCloudIntegration], but
+  /// can also be used to integrate with third-party packages.
+  final List<WidgetbookIntegration>? integrations;
+
+  /// A [Widgetbook] with [CupertinoApp] as an [appBuilder].
+  static Widgetbook cupertino({
     Key? key,
+    required List<MultiChildNavigationNodeData> directories,
+    AppBuilder appBuilder = cupertinoAppBuilder,
+    List<WidgetbookAddon>? addons,
+    List<WidgetbookIntegration>? integrations,
   }) {
-    return Widgetbook<CupertinoThemeData>(
+    return Widgetbook(
       key: key,
       directories: directories,
+      appBuilder: appBuilder,
       addons: addons,
-      appBuilder: appBuilder ?? cupertinoAppBuilder,
+      integrations: integrations,
     );
   }
 
-  /// A [Widgetbook] which uses material theming via [ThemeData].
-  static Widgetbook<ThemeData> material({
-    required List<MultiChildNavigationNodeData> directories,
-    required List<WidgetbookAddOn> addons,
-    AppBuilderFunction? appBuilder,
+  /// A [Widgetbook] with [MaterialApp] as an [appBuilder].
+  static Widgetbook material({
     Key? key,
+    required List<MultiChildNavigationNodeData> directories,
+    AppBuilder appBuilder = materialAppBuilder,
+    List<WidgetbookAddon>? addons,
+    List<WidgetbookIntegration>? integrations,
   }) {
-    return Widgetbook<ThemeData>(
+    return Widgetbook(
       key: key,
       directories: directories,
+      appBuilder: appBuilder,
       addons: addons,
-      appBuilder: appBuilder ?? materialAppBuilder,
+      integrations: integrations,
     );
   }
 
   @override
-  State<Widgetbook<CustomTheme>> createState() =>
-      _WidgetbookState<CustomTheme>();
+  State<Widgetbook> createState() => _WidgetbookState();
 }
 
-class _WidgetbookState<CustomTheme> extends State<Widgetbook<CustomTheme>> {
-  final SelectedUseCaseRepository selectedStoryRepository =
-      SelectedUseCaseRepository();
-
-  late BuilderProvider builderProvider;
-  late UseCasesProvider useCasesProvider;
-  late KnobsNotifier knobsNotifier;
-  late GoRouter goRouter;
-  final NavigationBloc navigationBloc = NavigationBloc();
+class _WidgetbookState extends State<Widgetbook> {
+  late final AppRouter router;
 
   @override
   void initState() {
-    builderProvider = BuilderProvider(appBuilder: widget.appBuilder);
-
-    useCasesProvider = UseCasesProvider(
-      selectedStoryRepository: selectedStoryRepository,
-    )..loadFromDirectories(widget.directories);
-
-    knobsNotifier = KnobsNotifier(selectedStoryRepository);
-    navigationBloc.add(
-      LoadNavigationTree(
-        directories: widget.directories,
-      ),
-    );
-
-    goRouter = createRouter(
-      useCasesProvider: useCasesProvider,
-    );
-
     super.initState();
-  }
 
-  @override
-  void didUpdateWidget(covariant Widgetbook<CustomTheme> oldWidget) {
-    useCasesProvider.loadFromDirectories(widget.directories);
-    navigationBloc.add(LoadNavigationTree(directories: widget.directories));
-    builderProvider.hotReload(appBuilder: widget.appBuilder);
-    super.didUpdateWidget(oldWidget);
+    final initialState = WidgetbookState(
+      appBuilder: widget.appBuilder,
+      addons: widget.addons,
+      integrations: widget.integrations,
+      directories: widget.directories,
+    );
+
+    router = AppRouter(
+      initialState: initialState,
+    );
+
+    widget.integrations?.forEach(
+      (integration) => integration.onInit(initialState),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(value: knobsNotifier),
-        ChangeNotifierProvider.value(value: useCasesProvider),
-        ChangeNotifierProvider.value(value: builderProvider),
-        ChangeNotifierProvider(
-          create: (_) => AddOnProvider(widget.addons),
-        ),
-      ],
-      child: BlocProvider.value(
-        value: navigationBloc,
-        child: MaterialApp.router(
-          routeInformationProvider: goRouter.routeInformationProvider,
-          routeInformationParser: goRouter.routeInformationParser,
-          routerDelegate: goRouter.routerDelegate,
-          themeMode: ThemeMode.dark,
-          debugShowCheckedModeBanner: false,
-          darkTheme: Themes.dark,
-          theme: Themes.light,
-        ),
-      ),
+    return MaterialApp.router(
+      routerConfig: router,
+      themeMode: ThemeMode.dark,
+      debugShowCheckedModeBanner: false,
+      darkTheme: Themes.dark,
+      theme: Themes.light,
     );
   }
 }

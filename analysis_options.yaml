@@ -1,13 +1,40 @@
 include: package:very_good_analysis/analysis_options.yaml
+
 analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+
   exclude:
     - "bricks"
     - "**/*.g.dart"
     - "**/*.freezed.dart"
-    - "examples/screen_util_example/lib/main.widgetbook.dart" # The only generated .widgetbook.dart file
     - "**/example/*.dart"
     - "**/example/**/*.dart"
 
 linter:
   rules:
     public_member_api_docs: false
+
+    # Constructors
+    sort_unnamed_constructors_first: true
+    sort_constructors_first: true
+    prefer_const_constructors: true
+    use_key_in_widget_constructors: true
+
+    # Imports
+    prefer_relative_imports: true
+    directives_ordering: true
+    combinators_ordering: true
+    depend_on_referenced_packages: true
+
+    # Dependencies
+    sort_pub_dependencies: true
+
+    # Style
+    prefer_single_quotes: true
+    require_trailing_commas: true
+    noop_primitive_operations: true
+  
+    # Types
+    unrelated_type_equality_checks: true

@@ -17,75 +17,67 @@ class HotReload extends StatelessWidget {
       data: themeDataBlue,
       name: 'Blue',
     );
+
     final widgetbookTheme2 = WidgetbookTheme(
       data: themeDataYellow,
       name: 'Yellow',
     );
+
     final devices = [
-      Apple.iPhone11,
-      Apple.iPhone12,
-      const Device.special(
+      Devices.ios.iPhoneSE,
+      Devices.ios.iPhone12,
+      DeviceInfo.genericPhone(
+        platform: TargetPlatform.iOS,
+        id: 'Test',
         name: 'Test',
-        resolution: Resolution(
-          nativeSize: DeviceSize(width: 400, height: 400),
-          scaleFactor: 1,
-        ),
+        screenSize: const Size(400, 800),
+        pixelRatio: 1,
       ),
     ];
-    final deviceFrameBuilder = DefaultDeviceFrame(
-      setting: DeviceSetting.firstAsSelected(devices: devices),
-    );
-
-    final activeFrameBuilder = WidgetbookFrame(
-      setting: DeviceSetting.firstAsSelected(devices: devices),
-    );
 
     return Widgetbook(
-        addons: [
-          FrameAddon(
-              setting: FrameSetting.firstAsSelected(frames: [
-            deviceFrameBuilder,
-            NoFrame(),
-            activeFrameBuilder,
-          ])),
-          CustomThemeAddon<AppThemeData>(
-            setting: CustomThemeSetting.firstAsSelected(
-              themes: [widgetbookTheme, widgetbookTheme2],
+      addons: [
+        DeviceFrameAddon(
+          devices: devices,
+        ),
+        ThemeAddon<AppThemeData>(
+          themes: [widgetbookTheme, widgetbookTheme2],
+          themeBuilder: (_, theme, child) {
+            return AppTheme(
+              data: theme,
+              child: child,
+            );
+          },
+        ),
+      ],
+      directories: [
+        WidgetbookCategory(
+          name: 'Default',
+          children: [
+            WidgetbookComponent(
+              name: 'Awesome Widget',
+              useCases: [
+                WidgetbookUseCase(
+                  name: 'Default',
+                  builder: (context) => const AwesomeWidget(),
+                )
+              ],
             ),
-          ),
-        ],
-        directories: [
-          WidgetbookCategory(
-            name: 'Default',
-            children: [
-              WidgetbookComponent(
-                name: 'Awesome Widget',
-                useCases: [
-                  WidgetbookUseCase(
-                    name: 'Default',
-                    builder: (context) => const AwesomeWidget(),
-                  )
-                ],
-              ),
-              WidgetbookComponent(
-                name: 'App Launch Screen',
-                useCases: [
-                  WidgetbookUseCase(
-                    name: 'Default',
-                    builder: (context) => const MyHomePage(),
-                  )
-                ],
-              ),
-            ],
-          )
-        ],
-        appBuilder: (context, child) {
-          final frameBuilder = context.frameBuilder;
-          final theme = context.theme<AppThemeData>();
-          return AppTheme(
-            data: theme!,
-            child: frameBuilder!(context, child),
-          );
-        });
+            WidgetbookComponent(
+              name: 'App Launch Screen',
+              useCases: [
+                WidgetbookUseCase(
+                  name: 'Default',
+                  builder: (context) => const MyHomePage(),
+                )
+              ],
+            ),
+          ],
+        )
+      ],
+      appBuilder: (context, child) => Container(
+        child: child,
+      ),
+    );
   }
 }

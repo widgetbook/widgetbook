@@ -2,8 +2,7 @@
 
 [![Discord](https://img.shields.io/discord/879618555560218625?color=blue&style=flat-square)](https://discord.com/invite/zT4AMStAJA)
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis) 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?style=flat-square)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/widgetbook/widgetbook/ci?label=test&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/widgetbook/widgetbook/widgetbook.yaml?branch=main)
 
 # Open Source Package & Widgetbook Cloud
 
@@ -24,7 +23,6 @@ The following packages exist:
 | [widgetbook](https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook) | [![Pub Version](https://img.shields.io/pub/v/widgetbook?style=flat-square)](https://pub.dev/packages/widgetbook) | 
 | [widgetbook_annotation](https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_annotation) | [![Pub Version](https://img.shields.io/pub/v/widgetbook_annotation?style=flat-square)](https://pub.dev/packages/widgetbook_annotation)  | 
 | [widgetbook_generator](https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_generator) | [![Pub Version](https://img.shields.io/pub/v/widgetbook_generator?style=flat-square)](https://pub.dev/packages/widgetbook_generator) | 
-[widgetbook_models](https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_models) | [![Pub Version](https://img.shields.io/pub/v/widgetbook_models?style=flat-square)](https://pub.dev/packages/widgetbook_models) | 
 
 # Examples
 

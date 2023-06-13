@@ -1,3 +1,20 @@
+## Unreleased
+
+ - **BREAKING**: Remove `@App` annotation's `foldersExpanded` and `widgetsExpanded` non-working parameters. ([#735](https://github.com/widgetbook/widgetbook/pull/735))
+
+## 3.0.0-rc.1
+
+ - Check out the [migration guide](https://docs.widgetbook.io/~docs%2Fwidgetbook-3/migration/3.0.0-beta-to-rc) for more details.
+ - **FEAT**: Add Dart 3 and Flutter 3.10 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
+ - **BREAKING**: Drop Flutter 2 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
+ - **BREAKING**: Remove `Widgetbook` prefix from all annotation names. ([#649](https://github.com/widgetbook/widgetbook/pull/649))
+ - **BREAKING**: Remove code generation support for everything except `@App` and `@UseCase` that generate a list called `directories`. You should now configure Widgetbook's properties (i.e. `addons`, `appBuilder`, etc.) manually. ([#663](https://github.com/widgetbook/widgetbook/pull/663))
+
+## 3.0.0-beta.7
+
+ - **REFACTOR**: :recycle: removed package analysis_options files.
+ - **REFACTOR**: :recycle: warnings.
+
 ## 3.0.0-beta.6
 
  - **FIX**: :bug: remove obsolete `name` property. ([0e681371](https://github.com/widgetbook/widgetbook/commit/0e68137119af6a73e8f182ff833421f196589283))

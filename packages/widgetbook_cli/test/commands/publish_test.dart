@@ -5,19 +5,19 @@ import 'package:file/memory.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
-import 'package:widgetbook_git/widgetbook_git.dart';
 
 import '../../bin/api/widgetbook_http_client.dart';
 import '../../bin/ci_parser/ci_parser.dart';
 import '../../bin/commands/commands.dart';
+import '../../bin/git/branch_reference.dart';
+import '../../bin/git/git_dir.dart';
 import '../../bin/git/git_wrapper.dart';
+import '../../bin/git/modification.dart';
 import '../../bin/helpers/helpers.dart';
 import '../../bin/models/models.dart';
 import '../../bin/models/publish_args.dart';
-import '../../bin/review/devices/device_parser.dart';
-import '../../bin/review/locales/locales_parser.dart';
-import '../../bin/review/text_scale_factors/text_scale_factor_parser.dart';
-import '../../bin/review/themes/theme_parser.dart';
+import '../../bin/review/use_cases/models/changed_use_case.dart';
+import '../../bin/review/use_cases/use_case_parser.dart';
 import '../../bin/std/stdin_wrapper.dart';
 import '../helpers/test_data.dart';
 import '../mocks/mocks.dart';
@@ -50,11 +50,8 @@ void main() {
     late WidgetbookHttpClient widgetbookHttpClient;
     late WidgetbookZipEncoder widgetbookZipEncoder;
     late LocalFileSystem localFileSystem;
-    late ThemeParser themeParser;
-    late LocaleParser localeParser;
-    late DeviceParser deviceParser;
-    late TextScaleFactorParser textScaleFactorsParser;
     late Progress progress;
+    late UseCaseParser useCaseParser;
     final tempDir = const LocalFileSystem().currentDirectory;
 
     setUp(() async {
@@ -67,12 +64,9 @@ void main() {
       widgetbookHttpClient = MockWidgetbookHttpClient();
       widgetbookZipEncoder = MockWidgetbookZipEncoder();
       localFileSystem = MockLocalFileSystem();
-      themeParser = MockThemeParser();
       progress = MockProgress();
+      useCaseParser = MockUseCaseParser();
 
-      localeParser = MockLocaleParser();
-      deviceParser = MockDeviceParser();
-      textScaleFactorsParser = MockTextScaleFactorParser();
       when(() => logger.progress(any<String>())).thenReturn(progress);
       publishCommand = PublishCommand(
         logger: logger,
@@ -617,11 +611,36 @@ void main() {
       final publishCommand = PublishCommand(
         logger: logger,
         stdInWrapper: stdInWrapper,
+        gitWrapper: gitWrapper,
         ciParserRunner: CiParserRunner(argResults: argResults, gitDir: gitDir),
       )..testArgResults = argResults;
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
-      when(() => gitDir.getActorName())
-          .thenAnswer((_) => Future.value('John Doe'));
+
+      when(() => gitWrapper.isGitDir(any())).thenAnswer(
+        (_) => Future.value(true),
+      );
+
+      when(
+        () => gitWrapper.fromExisting(
+          any(),
+          allowSubdirectory: true,
+        ),
+      ).thenAnswer(
+        (_) => Future.value(gitDir),
+      );
+
+      when(() => gitDir.getActorName()).thenAnswer(
+        (_) => Future.value('John Doe'),
+      );
+
+      when(() => gitDir.getRepositoryName()).thenAnswer(
+        (_) => Future.value('widgetbook'),
+      );
+
+      when(() => gitDir.isWorkingTreeClean()).thenAnswer(
+        (_) => Future.value(false),
+      );
+
       when(() => stdInWrapper.hasTerminal).thenReturn(true);
       when(
         () => logger.chooseOne(
@@ -631,8 +650,6 @@ void main() {
         ),
       ).thenReturn('no');
 
-      when(() => gitDir.getRepositoryName())
-          .thenAnswer((_) => Future.value('widgetbook'));
       expect(
         publishCommand.run,
         throwsA(
@@ -701,10 +718,6 @@ void main() {
           () => publishCommand.uploadDeploymentInfo(
             file: file,
             args: TestData.args,
-            themes: [],
-            locales: [],
-            devices: [],
-            textScaleFactors: [],
           ),
           throwsA(const TypeMatcher<WidgetbookDeployException>()),
         );
@@ -782,10 +795,6 @@ void main() {
         final results = await publishCommand.uploadDeploymentInfo(
           file: file,
           args: TestData.args,
-          themes: [],
-          locales: [],
-          devices: [],
-          textScaleFactors: [],
         );
 
         expect(
@@ -814,25 +823,26 @@ void main() {
         fileSystem: localFileSystem,
         widgetbookHttpClient: widgetbookHttpClient,
         logger: logger,
-        themeParser: themeParser,
-        localeParser: localeParser,
-        deviceParser: deviceParser,
-        textScaleFactorsParser: textScaleFactorsParser,
-        ciParserRunner: CiParserRunner(argResults: argResults, gitDir: gitDir),
+        useCaseParser: useCaseParser,
+        ciParserRunner: CiParserRunner(
+          argResults: argResults,
+          gitDir: gitDir,
+        ),
       )..testArgResults = argResults;
+
+      when(() => useCaseParser.parse()).thenAnswer(
+        (_) => Future.value([
+          ChangedUseCase(
+            name: 'use_case',
+            componentName: 'UseCase',
+            componentDefinitionPath: 'path/to/use_case.dart',
+            modification: Modification.changed,
+            designLink: null,
+          )
+        ]),
+      );
+
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
-
-      when(() => themeParser.parse())
-          .thenAnswer((_) => Future.value(TestData.themes));
-
-      when(() => localeParser.parse())
-          .thenAnswer((_) => Future.value(TestData.locales));
-
-      when(() => deviceParser.parse())
-          .thenAnswer((_) => Future.value(TestData.devices));
-
-      when(() => textScaleFactorsParser.parse())
-          .thenAnswer((_) => Future.value(TestData.testScaleFactors));
 
       when(() => gitDir.getActorName())
           .thenAnswer((_) => Future.value('John Doe'));
@@ -876,32 +886,30 @@ void main() {
         fileSystem: localFileSystem,
         widgetbookHttpClient: widgetbookHttpClient,
         logger: logger,
-        themeParser: themeParser,
-        localeParser: localeParser,
-        deviceParser: deviceParser,
-        textScaleFactorsParser: textScaleFactorsParser,
+        useCaseParser: useCaseParser,
         ciParserRunner: CiParserRunner(
           argResults: argResults,
           gitDir: gitDir,
         ),
       )..testArgResults = argResults;
+
+      when(() => useCaseParser.parse()).thenAnswer(
+        (_) => Future.value([
+          ChangedUseCase(
+            name: 'use_case',
+            componentName: 'UseCase',
+            componentDefinitionPath: 'path/to/use_case.dart',
+            modification: Modification.changed,
+            designLink: null,
+          )
+        ]),
+      );
+
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
 
       when(() => argResults['base-branch'] as String).thenReturn('main');
 
       when(() => argResults['base-commit'] as String).thenReturn('base-commit');
-
-      when(() => themeParser.parse())
-          .thenAnswer((_) => Future.value(TestData.themes));
-
-      when(() => localeParser.parse())
-          .thenAnswer((_) => Future.value(TestData.locales));
-
-      when(() => deviceParser.parse())
-          .thenAnswer((_) => Future.value(TestData.devices));
-
-      when(() => textScaleFactorsParser.parse())
-          .thenAnswer((_) => Future.value(TestData.testScaleFactors));
 
       when(() => gitDir.getActorName())
           .thenAnswer((_) => Future.value('John Doe'));
@@ -966,17 +974,6 @@ void main() {
       final result = await publishCommand.run();
 
       expect(result, equals(ExitCode.success.code));
-
-      verify(
-        () => logger.warn('You have un-commited changes'),
-      ).called(1);
-      verify(
-        () => logger.warn(
-            'Uploading a new build to Widgetbook Cloud requires a commit SHA. '
-            'Due to un-committed changes, we are using the commit SHA '
-            'of your previous commit which can lead to the build being '
-            'rejected due to an already existing build.'),
-      ).called(1);
     });
   });
 }

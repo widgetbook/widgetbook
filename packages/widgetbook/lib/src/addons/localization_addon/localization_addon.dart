@@ -1,50 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/routing/router.dart';
-import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_core/widgetbook_core.dart';
 
-class LocalizationAddon extends WidgetbookAddOn<LocalizationSetting> {
+import '../../fields/fields.dart';
+import '../common/common.dart';
+
+/// A [WidgetbookAddon] for changing the active [Locale] via [Localizations].
+class LocalizationAddon extends WidgetbookAddon<Locale> {
   LocalizationAddon({
-    required super.setting,
-  }) : super(
-          name: 'localization',
+    required this.locales,
+    required this.localizationsDelegates,
+    Locale? initialLocale,
+  })  : assert(
+          locales.isNotEmpty,
+          'locales cannot be empty',
+        ),
+        assert(
+          initialLocale == null || locales.contains(initialLocale),
+          'initialLocale must be in locales',
+        ),
+        super(
+          name: 'Locale',
+          initialSetting: initialLocale ?? locales.first,
         );
 
-  @override
-  Widget build(BuildContext context) {
-    final locales = value.locales;
-    final activeLocale = value.activeLocale;
+  final List<Locale> locales;
+  final List<LocalizationsDelegate> localizationsDelegates;
 
-    return Setting(
-      name: 'Locale',
-      child: DropdownSetting<Locale>(
-        options: locales,
-        initialSelection: activeLocale,
-        optionValueBuilder: (locale) => locale.toString(),
-        onSelected: (newLocale) {
-          onChanged(context, value.copyWith(activeLocale: newLocale));
-        },
+  @override
+  List<Field> get fields {
+    return [
+      ListField<Locale>(
+        group: slugName,
+        name: 'name',
+        values: locales,
+        initialValue: initialSetting,
+        labelBuilder: (locale) => locale.toLanguageTag(),
       ),
+    ];
+  }
+
+  @override
+  Locale settingFromQueryGroup(Map<String, String> group) {
+    return locales.firstWhere(
+      (locale) => locale.toLanguageTag() == group['name'],
+      orElse: () => initialSetting,
     );
   }
 
   @override
-  LocalizationSetting settingFromQueryParameters({
-    required Map<String, String> queryParameters,
-    required LocalizationSetting setting,
-  }) {
-    final activeLocale = parseQueryParameters(
-          name: 'locale',
-          queryParameters: queryParameters,
-          mappedData: {for (var e in setting.locales) e.toString(): e},
-        ) ??
-        setting.activeLocale;
-
-    return setting.copyWith(activeLocale: activeLocale);
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    Locale setting,
+  ) {
+    return Localizations(
+      locale: setting,
+      delegates: localizationsDelegates,
+      child: child,
+    );
   }
-}
-
-extension LocalizationExtension on BuildContext {
-  /// Creates adjustable parameters for the WidgetbookUseCase
-  LocalizationSetting? get localization => getAddonValue<LocalizationSetting>();
 }
