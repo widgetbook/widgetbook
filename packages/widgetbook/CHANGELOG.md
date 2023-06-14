@@ -15,6 +15,7 @@
  - **FIX**: Add `key` to use cases to prevent out-of-sync builds. ([#720](https://github.com/widgetbook/widgetbook/pull/720))
  - **Fix**: Prevent `onNodeSelected` from being called if the node is already selected. ([#725](https://github.com/widgetbook/widgetbook/pull/725))
  - **Fix**: Use `ListView` for `SettingsPanel`. ([#732](https://github.com/widgetbook/widgetbook/pull/732))
+ - **Fix**: Sync `SettingsPanel` data with `WidgetbookState`. ([#750](https://github.com/widgetbook/widgetbook/pull/750))
 
 ## 3.0.0-rc.1
 

@@ -4,15 +4,15 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 @UseCase(name: 'Default', type: SettingsPanel)
 Widget settingsPanel(BuildContext context) {
-  return const SettingsPanel(
+  return SettingsPanel(
     settings: [
       SettingsPanelData(
-        name: 'Properties',
-        settings: [],
+        name: 'Addons',
+        builder: (_) => [],
       ),
       SettingsPanelData(
         name: 'Knobs',
-        settings: [],
+        builder: (_) => [],
       ),
     ],
   );

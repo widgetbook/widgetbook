@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class SettingsPanelData {
   const SettingsPanelData({
     required this.name,
-    required this.settings,
+    required this.builder,
   });
 
   final String name;
-  final List<Widget> settings;
+  final List<Widget> Function(BuildContext context) builder;
 }
 
 class SettingsPanel extends StatelessWidget {
@@ -49,21 +49,22 @@ class SettingsPanel extends StatelessWidget {
         child: ListView.builder(
           itemCount: settings.length,
           itemBuilder: (context, index) {
-            final item = settings[index];
+            final setting = settings[index];
+            final children = setting.builder(context);
 
             return ExpansionTile(
               collapsedShape: const RoundedRectangleBorder(),
               shape: const RoundedRectangleBorder(),
               initiallyExpanded: true,
-              title: Text(item.name),
-              children: item.settings.isEmpty
-                  ? [
+              title: Text(setting.name),
+              children: children.isNotEmpty
+                  ? children
+                  : [
                       Padding(
                         padding: const EdgeInsets.all(8),
-                        child: Text('No ${item.name} available'),
+                        child: Text('No ${setting.name} available'),
                       )
-                    ]
-                  : item.settings,
+                    ],
             );
           },
         ),

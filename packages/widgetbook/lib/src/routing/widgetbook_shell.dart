@@ -41,15 +41,18 @@ class WidgetbookShell extends StatelessWidget {
             settings: [
               if (state.addons != null) ...{
                 SettingsPanelData(
-                  name: 'Properties',
-                  settings: state.addons!
+                  name: 'Addons',
+                  builder: (context) => WidgetbookState.of(context)
+                      .addons!
                       .map((addon) => addon.buildFields(context))
                       .toList(),
                 ),
               },
               SettingsPanelData(
                 name: 'Knobs',
-                settings: state.knobs.values
+                builder: (context) => WidgetbookState.of(context)
+                    .knobs
+                    .values
                     .map((knob) => knob.buildFields(context))
                     .toList(),
               ),
