@@ -2,14 +2,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug sandbox",
+            "name": "sandbox",
             "cwd": "sandbox",
             "request": "launch",
             "program": "lib/widgetbook.dart",
             "type": "dart",
         },
         {
-            "name": "Debug CLI",
+            "name": "cli",
             "cwd": "packages/widgetbook_cli",
             "request": "launch",
             "program": "bin/cli_debug.dart",
@@ -23,14 +23,21 @@
             ]
         },
         {
-            "name": "Debug knobs_example",
+            "name": "custom_theme_example",
+            "cwd": "examples/custom_theme_example",
+            "request": "launch",
+            "program": "lib/main.widgetbook.dart",
+            "type": "dart"
+        },
+        {
+            "name": "knobs_example",
             "cwd": "examples/knobs_example",
             "request": "launch",
             "program": "lib/widgetbook.dart",
             "type": "dart"
         },
         {
-            "name": "Debug screen_util_example",
+            "name": "screen_util_example",
             "cwd": "examples/screen_util_example",
             "request": "launch",
             "program": "lib/widgetbook.dart",
