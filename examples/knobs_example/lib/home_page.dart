@@ -1,34 +1,14 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({
-    Key? key,
+class HomePage extends StatefulWidget {
+  const HomePage({
+    super.key,
     required this.title,
     this.incrementBy = 1,
     this.countLabel,
     this.iconData,
     this.showToolTip = true,
-  }) : super(key: key);
+  });
 
   final String title;
   final int incrementBy;
@@ -37,17 +17,11 @@ class MyHomePage extends StatefulWidget {
   final bool showToolTip;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
   int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter += widget.incrementBy;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +45,15 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {
+          setState(() {
+            _counter += widget.incrementBy;
+          });
+        },
         tooltip: widget.showToolTip ? 'Increment' : null,
-        child: Icon(widget.iconData ?? Icons.add),
+        child: Icon(
+          widget.iconData ?? Icons.add,
+        ),
       ),
     );
   }
