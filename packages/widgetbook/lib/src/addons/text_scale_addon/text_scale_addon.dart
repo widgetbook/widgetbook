@@ -38,7 +38,7 @@ class TextScaleAddon extends WidgetbookAddon<double> {
   }
 
   @override
-  double settingFromQueryGroup(Map<String, String> group) {
+  double valueFromQueryGroup(Map<String, String> group) {
     return double.parse(
       group['factor'] ?? initialSetting.toStringAsFixed(2),
     );

@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 
-import '../fields/field.dart';
+import '../fields/fields.dart';
 import '../navigation/navigation.dart';
 import '../settings/settings.dart';
 import '../state/state.dart';
 
 /// Allows [WidgetbookUseCase]s to have dynamically adjustable parameters.
-abstract class Knob<T> {
+abstract class Knob<T> extends FieldsComposable<T> {
   Knob({
     required this.label,
     required this.value,
@@ -27,12 +27,8 @@ abstract class Knob<T> {
 
   bool get isNullable => null is T;
 
-  List<Field> get fields;
-
-  /// Converts a query group to a value of type [T].
-  T valueFromQueryGroup(Map<String, String> group);
-
-  Widget build(BuildContext context) {
+  @override
+  Widget buildFields(BuildContext context) {
     return KnobProperty<T>(
       name: label,
       description: description,

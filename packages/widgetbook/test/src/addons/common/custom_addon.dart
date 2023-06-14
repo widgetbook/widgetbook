@@ -12,5 +12,5 @@ class CustomAddon extends WidgetbookAddon<String> {
   List<Field> get fields => [];
 
   @override
-  String settingFromQueryGroup(Map<String, String> group) => initialSetting;
+  String valueFromQueryGroup(Map<String, String> group) => initialSetting;
 }

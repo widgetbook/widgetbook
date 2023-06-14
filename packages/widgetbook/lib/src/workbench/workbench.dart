@@ -28,7 +28,7 @@ class Workbench extends StatelessWidget {
               state.queryParams[addon.slugName],
             );
 
-            final newSetting = addon.settingFromQueryGroup(groupMap);
+            final newSetting = addon.valueFromQueryGroup(groupMap);
 
             return addon.buildUseCase(
               context,

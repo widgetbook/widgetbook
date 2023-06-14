@@ -23,7 +23,7 @@ Future<void> testAddon<T>({
         state: state,
         child: Scaffold(
           body: Builder(
-            builder: addon.buildSetting,
+            builder: addon.buildFields,
           ),
         ),
       ),
@@ -37,7 +37,7 @@ Future<void> testAddon<T>({
     state.queryParams[addon.slugName],
   );
 
-  final setting = addon.settingFromQueryGroup(groupMap);
+  final setting = addon.valueFromQueryGroup(groupMap);
 
   expect(setting);
 }

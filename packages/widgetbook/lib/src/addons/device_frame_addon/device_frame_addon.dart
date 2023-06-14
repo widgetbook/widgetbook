@@ -60,7 +60,7 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
   }
 
   @override
-  DeviceFrameSetting settingFromQueryGroup(Map<String, String> group) {
+  DeviceFrameSetting valueFromQueryGroup(Map<String, String> group) {
     return DeviceFrameSetting(
       device: !group.containsKey('name')
           ? initialSetting.device

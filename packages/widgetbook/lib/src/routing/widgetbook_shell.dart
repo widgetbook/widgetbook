@@ -43,14 +43,14 @@ class WidgetbookShell extends StatelessWidget {
                 SettingsPanelData(
                   name: 'Properties',
                   settings: state.addons!
-                      .map((addon) => addon.buildSetting(context))
+                      .map((addon) => addon.buildFields(context))
                       .toList(),
                 ),
               },
               SettingsPanelData(
                 name: 'Knobs',
                 settings: state.knobs.values
-                    .map((knob) => knob.build(context))
+                    .map((knob) => knob.buildFields(context))
                     .toList(),
               ),
             ],
