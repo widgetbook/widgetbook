@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-import 'widgetbook.directories.g.dart';
+import 'responsive_image.dart';
+import 'screen_container.dart';
 
 void main() {
   runApp(const WidgetbookApp());
 }
 
-@widgetbook.App()
 class WidgetbookApp extends StatelessWidget {
   const WidgetbookApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
-      directories: directories,
       addons: [
         TextScaleAddon(
           scales: [1.0, 2.0],
@@ -26,6 +24,33 @@ class WidgetbookApp extends StatelessWidget {
             Devices.ios.iPhoneSE,
             Devices.ios.iPhone12,
             Devices.ios.iPhone13,
+          ],
+        ),
+      ],
+      directories: [
+        WidgetbookComponent(
+          name: '$ScreenContainer',
+          useCases: [
+            WidgetbookUseCase(
+              name: 'Default',
+              builder: (context) {
+                return const ScreenContainer();
+              },
+            )
+          ],
+        ),
+        WidgetbookComponent(
+          name: '$ResponsiveImage',
+          useCases: [
+            WidgetbookUseCase(
+              name: 'Default',
+              builder: (context) {
+                return const ResponsiveImage(
+                  url:
+                      'https://images.nintendolife.com/bb503ef1f79ff/ash-and-pikachu.original.jpg',
+                );
+              },
+            )
           ],
         ),
       ],
