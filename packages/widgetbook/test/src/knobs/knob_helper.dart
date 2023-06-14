@@ -30,7 +30,7 @@ extension KnobHelper on WidgetTester {
                   ),
                   ...state.knobs.values.map(
                     (knob) => Material(
-                      child: knob.build(context),
+                      child: knob.buildFields(context),
                     ),
                   ),
                 ],

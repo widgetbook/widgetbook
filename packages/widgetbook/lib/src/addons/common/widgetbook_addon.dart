@@ -20,7 +20,7 @@ import '../addons.dart';
 /// * [LocalizationAddon], changes the active [Locale].
 /// * [DeviceFrameAddon], an [WidgetbookAddon] to change the active frame that
 ///   allows to view the [WidgetbookUseCase] on different screens.
-abstract class WidgetbookAddon<T> {
+abstract class WidgetbookAddon<T> extends FieldsComposable<T> {
   WidgetbookAddon({
     required this.name,
     required this.initialSetting,
@@ -31,14 +31,8 @@ abstract class WidgetbookAddon<T> {
 
   String get slugName => name.trim().toLowerCase().replaceAll(RegExp(' '), '-');
 
-  List<Field> get fields;
-
-  /// Converts a query group to a setting of type [T].
-  T settingFromQueryGroup(Map<String, String> group);
-
-  /// Converts the [fields] into a [Widget] by calling their [Field.build] and
-  /// grouping them inside a [Column].
-  Widget buildSetting(BuildContext context) {
+  @override
+  Widget buildFields(BuildContext context) {
     return Setting(
       name: name,
       child: Column(
@@ -49,7 +43,7 @@ abstract class WidgetbookAddon<T> {
   }
 
   /// Wraps use cases with a custom widget depending on the addon [setting]
-  /// that is obtained from [settingFromQueryGroup].
+  /// that is obtained from [valueFromQueryGroup].
   Widget buildUseCase(
     BuildContext context,
     Widget child,

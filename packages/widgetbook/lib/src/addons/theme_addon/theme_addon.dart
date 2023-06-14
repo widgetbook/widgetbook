@@ -47,7 +47,7 @@ class ThemeAddon<T> extends WidgetbookAddon<WidgetbookTheme<T>> {
   }
 
   @override
-  WidgetbookTheme<T> settingFromQueryGroup(Map<String, String> group) {
+  WidgetbookTheme<T> valueFromQueryGroup(Map<String, String> group) {
     return themes.firstWhere(
       (theme) => theme.name == group['name'],
       orElse: () => initialSetting,
