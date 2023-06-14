@@ -13,10 +13,6 @@ class Workbench extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
 
-    if (state.useCase == null) {
-      return const SizedBox.shrink();
-    }
-
     return SafeBoundaries(
       child: state.appBuilder(
         context,
@@ -39,7 +35,10 @@ class Workbench extends StatelessWidget {
           child: Scaffold(
             body: UseCaseBuilder(
               key: ValueKey(state.uri),
-              useCase: state.useCase!,
+              builder: (context) {
+                return WidgetbookState.of(context).useCase?.builder(context) ??
+                    const SizedBox.shrink();
+              },
             ),
           ),
         ),
