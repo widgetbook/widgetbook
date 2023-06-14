@@ -16,7 +16,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: widgetbook_for_widgetbook
+        working-directory: sandbox
 
     steps:
       - name: Checkout
