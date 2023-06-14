@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resizable_widget/resizable_widget.dart';
 
 import '../navigation/navigation.dart';
 import '../settings/settings.dart';
@@ -18,8 +19,10 @@ class WidgetbookShell extends StatelessWidget {
 
     return ColoredBox(
       color: Theme.of(context).colorScheme.surface,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: ResizableWidget(
+        separatorSize: 2,
+        percentages: [0.2, 0.6, 0.2],
+        separatorColor: Colors.white24,
         children: [
           NavigationPanel(
             initialPath: state.path,
@@ -28,34 +31,29 @@ class WidgetbookShell extends StatelessWidget {
               WidgetbookState.of(context).updatePath(path);
             },
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 2,
-              ),
-              child: child,
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 2,
             ),
+            child: child,
           ),
-          SizedBox(
-            width: 400,
-            child: SettingsPanel(
-              settings: [
-                if (state.addons != null) ...{
-                  SettingsPanelData(
-                    name: 'Properties',
-                    settings: state.addons!
-                        .map((addon) => addon.buildSetting(context))
-                        .toList(),
-                  ),
-                },
+          SettingsPanel(
+            settings: [
+              if (state.addons != null) ...{
                 SettingsPanelData(
-                  name: 'Knobs',
-                  settings: state.knobs.values
-                      .map((knob) => knob.build(context))
+                  name: 'Properties',
+                  settings: state.addons!
+                      .map((addon) => addon.buildSetting(context))
                       .toList(),
                 ),
-              ],
-            ),
+              },
+              SettingsPanelData(
+                name: 'Knobs',
+                settings: state.knobs.values
+                    .map((knob) => knob.build(context))
+                    .toList(),
+              ),
+            ],
           ),
         ],
       ),

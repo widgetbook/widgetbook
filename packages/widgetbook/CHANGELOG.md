@@ -1,5 +1,6 @@
 ## Unreleased
 
+ - **FEAT**: Make side panels resizable. ([#738](https://github.com/widgetbook/widgetbook/pull/738))
  - **FEAT**: Add `listOrNull` knob. ([#741](https://github.com/widgetbook/widgetbook/pull/741))
  - **FEAT**: Add `initialOption` to `list` knob. ([#733](https://github.com/widgetbook/widgetbook/pull/733))
  - **REFACTOR**: Move `widgetbook_core` package to `widgetbook` package. ([#742](https://github.com/widgetbook/widgetbook/pull/742))
