@@ -9,32 +9,29 @@ analyzer:
     - "bricks"
     - "**/*.g.dart"
     - "**/*.freezed.dart"
-    - "**/example/*.dart"
-    - "**/example/**/*.dart"
 
 linter:
   rules:
-    public_member_api_docs: false
-
     # Constructors
-    sort_unnamed_constructors_first: true
-    sort_constructors_first: true
-    prefer_const_constructors: true
-    use_key_in_widget_constructors: true
+    - sort_unnamed_constructors_first
+    - sort_constructors_first
+    - prefer_const_constructors
+    - use_key_in_widget_constructors
 
     # Imports
-    prefer_relative_imports: true
-    directives_ordering: true
-    combinators_ordering: true
-    depend_on_referenced_packages: true
+    - prefer_relative_imports
+    - directives_ordering
+    - combinators_ordering
+    - depend_on_referenced_packages
+    - avoid_web_libraries_in_flutter
 
     # Dependencies
-    sort_pub_dependencies: true
+    - sort_pub_dependencies
 
     # Style
-    prefer_single_quotes: true
-    require_trailing_commas: true
-    noop_primitive_operations: true
-  
+    - prefer_single_quotes
+    - require_trailing_commas
+    - noop_primitive_operations
+
     # Types
-    unrelated_type_equality_checks: true
+    - unrelated_type_equality_checks
