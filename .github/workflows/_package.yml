@@ -64,14 +64,20 @@ jobs:
       - name: Run Tests
         run: flutter test --coverage
 
+      - name: Install pana
+        run: dart pub global activate pana
+
+      - name: Check Package Score
+        run: pana . --no-warning --exit-code-threshold 0
+
   publish:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     environment: pub.dev
-  
+
     permissions:
       id-token: write
-  
+
     defaults:
       run:
         working-directory: ${{ inputs.working_directory }}
