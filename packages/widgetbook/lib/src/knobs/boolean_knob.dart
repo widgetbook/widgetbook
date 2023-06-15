@@ -29,7 +29,7 @@ class BooleanKnob extends Knob<bool> {
 
   @override
   bool valueFromQueryGroup(Map<String, String> group) {
-    return group.containsKey(label) ? group[label] == 'true' : value;
+    return valueOf(label, group)!;
   }
 }
 
@@ -58,6 +58,6 @@ class BooleanOrNullKnob extends Knob<bool?> {
 
   @override
   bool? valueFromQueryGroup(Map<String, String> group) {
-    return group.containsKey(label) ? group[label] == 'true' : value;
+    return valueOf(label, group);
   }
 }
