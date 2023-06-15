@@ -6,7 +6,6 @@ analyzer:
     strict-inference: true
 
   exclude:
-    - "bricks"
     - "**/*.g.dart"
     - "**/*.freezed.dart"
 
