@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../navigation/navigation.dart';
 import '../state/state.dart';
 
 class UseCaseBuilder extends StatefulWidget {
   const UseCaseBuilder({
     super.key,
-    required this.useCase,
+    required this.builder,
   });
 
-  final WidgetbookUseCase useCase;
+  final Widget Function(BuildContext context) builder;
 
   @override
   State<UseCaseBuilder> createState() => _UseCaseBuilderState();
@@ -29,6 +28,6 @@ class _UseCaseBuilderState extends State<UseCaseBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.useCase.builder(context);
+    return widget.builder(context);
   }
 }
