@@ -1,5 +1,5 @@
 name: screen_util_example
-description: An example on how to use flutter_screenutil with Widgetbook.
+description: An example project that demonstrates how to use Widgetbook with the flutter_screenutil package.
 publish_to: none
 version: 1.0.0+1
 

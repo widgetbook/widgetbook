@@ -1,13 +1,18 @@
 # screen_util_example
 
-An example project that displays how to use `Widgetbook` with the [flutter_screenutil package](https://pub.dev/packages/flutter_screenutil).
+An example project that demonstrates how to use Widgetbook with the [`flutter_screenutil` package](https://pub.dev/packages/flutter_screenutil).
 
-## How to work with this project
+## Getting started
 
-Have a look at the `main.dart` file. 
-The `main.dart` file has code for a placeholder App and code that configures a simple Widgetbook using the [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator).
+1. Install [melos](https://melos.invertase.dev/getting-started)
+1. Bootstrap the project
 
-The stops that has been done:
-- Setup the [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) with the `devices` property set for the `@WidgetbookApp` annotation to enable the `DeviceAddon`.
-- Create a custom `appBuilder` function to inject the `ScreenUtilInit` `Widget` into the Flutter `Widget` tree.
-- Use the `ScreenUtil` class within your `Widget` to access its properties. 
+    ```bash
+    melos bootstrap
+    ```
+
+1. Run the project
+
+    ```bash
+    flutter run lib/widgetbook.dart
+    ```
