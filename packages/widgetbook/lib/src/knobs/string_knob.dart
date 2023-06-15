@@ -33,7 +33,7 @@ class StringKnob extends Knob<String> {
 
   @override
   String valueFromQueryGroup(Map<String, String> group) {
-    return group.containsKey(label) ? group[label]! : value;
+    return valueOf(label, group)!;
   }
 }
 
@@ -66,6 +66,6 @@ class StringOrNullKnob extends Knob<String?> {
 
   @override
   String? valueFromQueryGroup(Map<String, String> group) {
-    return group.containsKey(label) ? group[label]! : value;
+    return valueOf(label, group);
   }
 }

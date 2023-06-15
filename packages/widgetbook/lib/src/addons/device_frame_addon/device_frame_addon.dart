@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 
@@ -62,17 +61,9 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
   @override
   DeviceFrameSetting valueFromQueryGroup(Map<String, String> group) {
     return DeviceFrameSetting(
-      device: !group.containsKey('name')
-          ? initialSetting.device
-          : devices.firstWhereOrNull(
-              (device) => device?.name == group['name'],
-            ),
-      orientation: Orientation.values.byName(
-        group['orientation']?.toLowerCase() ?? Orientation.portrait.name,
-      ),
-      hasFrame: !group.containsKey('frame')
-          ? initialSetting.hasFrame
-          : group['frame'] == 'Device Frame',
+      device: valueOf<DeviceInfo?>('name', group),
+      orientation: valueOf('orientation', group)!,
+      hasFrame: valueOf('frame', group)!,
     );
   }
 

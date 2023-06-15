@@ -53,10 +53,16 @@ abstract class Field<T> {
   /// 2. [Field]'s widget from the side panel.
   final void Function(BuildContext context, T? value)? onChanged;
 
+  /// Extracts the value from [groupMap],
+  /// fallback to [initialValue] if not found.
+  T? valueFrom(Map<String, String> groupMap) {
+    return codec.toValue(groupMap[name]) ?? initialValue;
+  }
+
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
     final groupMap = FieldCodec.decodeQueryGroup(state.queryParams[group]);
-    final value = codec.toValue(groupMap[name]) ?? initialValue;
+    final value = valueFrom(groupMap);
 
     return toWidget(context, value);
   }

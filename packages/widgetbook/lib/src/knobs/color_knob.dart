@@ -31,13 +31,6 @@ class ColorKnob extends Knob<Color> {
 
   @override
   Color valueFromQueryGroup(Map<String, String> group) {
-    return group.containsKey(label)
-        ? Color(
-            int.parse(
-              group[label]!,
-              radix: 16,
-            ),
-          )
-        : value;
+    return valueOf(label, group)!;
   }
 }

@@ -29,7 +29,7 @@ class DoubleInputKnob extends Knob<double> {
 
   @override
   double valueFromQueryGroup(Map<String, String> group) {
-    return group.containsKey(label) ? double.parse(group[label]!) : value;
+    return valueOf(label, group)!;
   }
 }
 
@@ -58,6 +58,6 @@ class DoubleOrNullInputKnob extends Knob<double?> {
 
   @override
   double? valueFromQueryGroup(Map<String, String> group) {
-    return group.containsKey(label) ? double.parse(group[label]!) : value;
+    return valueOf(label, group);
   }
 }

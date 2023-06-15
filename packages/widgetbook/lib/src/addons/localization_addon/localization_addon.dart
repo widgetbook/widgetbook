@@ -40,10 +40,7 @@ class LocalizationAddon extends WidgetbookAddon<Locale> {
 
   @override
   Locale valueFromQueryGroup(Map<String, String> group) {
-    return locales.firstWhere(
-      (locale) => locale.toLanguageTag() == group['name'],
-      orElse: () => initialSetting,
-    );
+    return valueOf('name', group)!;
   }
 
   @override
