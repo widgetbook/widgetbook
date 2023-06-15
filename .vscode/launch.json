@@ -26,7 +26,7 @@
             "name": "custom_theme_example",
             "cwd": "examples/custom_theme_example",
             "request": "launch",
-            "program": "lib/main.widgetbook.dart",
+            "program": "lib/widgetbook.dart",
             "type": "dart"
         },
         {

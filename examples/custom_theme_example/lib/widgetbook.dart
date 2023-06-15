@@ -5,11 +5,11 @@ import 'app_theme.dart';
 import 'awesome_widget.dart';
 
 void main() {
-  runApp(const HotReload());
+  runApp(const WidgetbookApp());
 }
 
-class HotReload extends StatelessWidget {
-  const HotReload({super.key});
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
 
   @override
   Widget build(BuildContext context) {

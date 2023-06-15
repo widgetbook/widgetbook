@@ -4,11 +4,11 @@ import 'package:widgetbook/widgetbook.dart';
 import 'home_page.dart';
 
 void main() {
-  runApp(const KnobsExample());
+  runApp(const WidgetbookApp());
 }
 
-class KnobsExample extends StatelessWidget {
-  const KnobsExample({Key? key}) : super(key: key);
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
 
   @override
   Widget build(BuildContext context) {
