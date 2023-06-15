@@ -28,13 +28,26 @@ class DoubleSliderField extends Field<double> {
 
   @override
   Widget toWidget(BuildContext context, double? value) {
-    return Slider(
-      value: value ?? initialValue ?? 0,
-      min: min,
-      max: max,
-      label: (value ?? initialValue ?? 0).toStringAsFixed(2),
-      divisions: divisions,
-      onChanged: (value) => updateField(context, value),
+    return Row(
+      children: [
+        Expanded(
+          flex: 7,
+          child: Slider(
+            value: value ?? 0,
+            min: min,
+            max: max,
+            label: (value ?? 0).toStringAsFixed(2),
+            divisions: divisions,
+            onChanged: (value) => updateField(context, value),
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: Text(
+            value?.toString() ?? '',
+          ),
+        )
+      ],
     );
   }
 
