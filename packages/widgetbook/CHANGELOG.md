@@ -8,6 +8,7 @@
  - **REFACTOR**: Export `WidgetbookState`. ([#724](https://github.com/widgetbook/widgetbook/pull/724))
  - **REFACTOR**: Export fields to be used for custom addons/knobs. ([#728](https://github.com/widgetbook/widgetbook/pull/728))
  - **REFACTOR**: Make `KnobsBuilder.onKnobAdded` public. ([#727](https://github.com/widgetbook/widgetbook/pull/727))
+ - **REFACTOR**: Add value label to `double.slider` knob. ([#757](https://github.com/widgetbook/widgetbook/pull/757))
  - **FIX**: Use addons/knobs initial values. ([#746](https://github.com/widgetbook/widgetbook/pull/746))
  - **FIX**: Use related type checks when comparing device's frame state to its query parameter. ([#715](https://github.com/widgetbook/widgetbook/pull/715))
  - **FIX**: Add missing type parameter to `LabelBuilder`, which affected the `list` knob. ([#718](https://github.com/widgetbook/widgetbook/pull/718))

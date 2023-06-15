@@ -32,7 +32,7 @@ void main() {
         ),
       );
 
-      expect(find.text('5.0'), findsOneWidget);
+      expect(find.text('5.0'), findsNWidgets(2));
       await tester.pumpAndSettle();
       await tester.drag(
         find.byType(Slider),
@@ -40,7 +40,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('7.0'), findsOneWidget);
+      expect(find.text('7.0'), findsNWidgets(2));
     },
   );
 }
