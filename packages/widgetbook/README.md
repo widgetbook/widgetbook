@@ -4,7 +4,8 @@
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis) 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/widgetbook/widgetbook/widgetbook.yaml?branch=main)
 
-Widgetbook is a Storybook for Flutter which helps developers cataloguing their widgets, testing them quickly on multiple devices and themes, and sharing them easily with designers and clients. Inspired by Storybook.js.
+A Flutter package that helps developers catalog their widgets, test them quickly on multiple devices and themes and share them easily with designers and clients. 
+Inspired by Storybook.js.
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/widgetbook/widgetbook/main/docs/assets/Screenshot.jpg" height="400" alt="Widgetbook Screenshot" />
@@ -16,18 +17,16 @@ Widgetbook is a Storybook for Flutter which helps developers cataloguing their w
 - 🦄 **Open source**.
 - 🍭 **Feature rich**. Test your Widgets on different devices, themes, locales, text scales, etc.
 - ⚙️ **Customize for your needs**. Easily add additional settings to your liking. 
-- 🔧 **Maintained** by a fast growing Flutter startup from Germany.
+- 🔧 **Maintained** by a fast-growing Flutter startup from Germany.
 - 👩🏼‍💻 **Support** via our [Discord](https://discord.com/invite/zT4AMStAJA) community.
 
-Widgetbook can do much more
+Widgetbook can do much more!
 
 - 📙 **Catalogue existing Widgets**. Never develop Widgets twice. 
 - 📦 **Develop in isolation**. Don't think about business logic. 
 - 🎛 **Knobs**. Define how your team interacts with your Widgets by defining customizable knobs. 
 - ⚡️ **Hot reload**. Quickly find and fix bugs.
-- ✨ **Beautiful documentation**. Readable, easy to understand and ever-improving. [Read the docs! ➡️](https://docs.widgetbook.io)
-
-[Try our Widgetbook Demo 🚀](https://demo.widgetbook.io)
+- ✨ **Beautiful documentation**. Readable, easy to understand, and ever-improving. [Read the docs! ➡️](https://docs.widgetbook.io)
 
 # Widgetbook Cloud
 

@@ -1,0 +1,185 @@
+# Custom Theme in widgetbook (WIP)
+
+In this guide, we'll walk you through how to create a custom theme in Widgetbook, a popular framework used for organizing and testing Flutter widgets. The example code snippet provided outlines the key steps. Below, we'll break these down and explain each one.
+
+## Imports
+
+```dart
+import 'package:custom_theme_example/main.dart';
+import 'package:custom_theme_example/themes/app_theme.dart';
+import 'package:custom_theme_example/widgets/awesome_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+```
+
+The code starts with a series of imports. We're importing the necessary packages from Flutter, Widgetbook, and our own application. This includes our main file, theme file, and widget file.
+
+## Main Function
+
+```dart
+void main() {
+  runApp(const HotReload());
+}
+```
+
+The `main` function is the entry point of our Flutter application. Here, we're running our `HotReload` widget.
+
+## HotReload Widget
+
+```dart
+class HotReload extends StatelessWidget {
+  const HotReload({super.key});
+  @override
+  Widget build(BuildContext context) {
+  ...
+  }
+}
+```
+
+`HotReload` is a StatelessWidget, a widget that describes part of the user interface which can depend on configuration information but does not hold mutable state over time. It overrides the `build` method which is called when Flutter is inflating the widget.
+
+## Defining Themes
+
+```dart
+final widgetbookTheme = WidgetbookTheme(
+  data: themeDataBlue,
+  name: 'Blue',
+);
+final widgetbookTheme2 = WidgetbookTheme(
+  data: themeDataYellow,
+  name: 'Yellow',
+);
+```
+
+We're creating two themes for our Widgetbook, blue and yellow. These themes have been defined elsewhere in our application (in `themeDataBlue` and `themeDataYellow`, respectively).
+A `WidgetbookTheme` is a class provided by Widgetbook for defining custom themes. It accepts `data`, which is the actual theme data, and a `name` string.
+
+## Defining Devices
+
+```dart
+final devices = [
+  Apple.iPhone11,
+  Apple.iPhone12,
+  const Device.special(
+    name: 'Test',
+    resolution: Resolution(
+      nativeSize: DeviceSize(width: 400, height: 400),
+      scaleFactor: 1,
+    ),
+  ),
+];
+```
+
+Here we're defining the devices on which our widgets will be displayed within the Widgetbook. We have two Apple devices (iPhone11 and iPhone12) and a custom device with a defined size and scale factor.
+
+## Defining Frames
+
+```dart
+final deviceFrameBuilder = DefaultDeviceFrame(
+  setting: DeviceSetting.firstAsSelected(devices: devices),
+);
+final activeFrameBuilder = WidgetbookFrame(
+  setting: DeviceSetting.firstAsSelected(devices: devices),
+);
+```
+
+We're defining how our widgets will be framed. `DefaultDeviceFrame` is a pre-defined frame that comes with Widgetbook, while `WidgetbookFrame` is a custom frame that we define ourselves. Both are set to display the first device in our devices list as the default.
+
+## Widgetbook
+
+```dart
+return Widgetbook(
+...
+);
+```
+
+Finally, we create our `Widgetbook`. It's here that we bring everything together. The Widgetbook takes a series of addons, directories, and an `appBuilder`.
+
+## Addons
+
+```dart
+addons: [
+  FrameAddon(
+      setting: FrameSetting.firstAsSelected(frames: [
+    deviceFrameBuilder,
+    NoFrame(),
+    activeFrameBuilder,
+  ])),
+  CustomThemeAddon<AppThemeData>(
+    setting: CustomThemeSetting.firstAsSelected(
+      themes: [widgetbookTheme, widgetbookTheme2],
+    ),
+  ),
+],
+```
+
+Addons are extra features that you can add to your Widgetbook to enhance functionality. In this example, we're adding two addons:
+
+1. **FrameAddon**: This addon allows us to switch between different frames for our widget. Here we're setting the default frame to the first frame in our list, which includes our `deviceFrameBuilder`, a frameless display (`NoFrame`), and our `activeFrameBuilder`.
+
+2. **CustomThemeAddon**: This addon allows us to switch between different themes. We're setting the default theme to the first theme in our list, which includes `widgetbookTheme` and `widgetbookTheme2`.
+
+## Directories
+
+```dart
+directories: [
+  WidgetbookCategory(
+    name: 'Default',
+    children: [
+      WidgetbookComponent(
+        name: 'Awesome Widget',
+        useCases: [
+          WidgetbookUseCase(
+            name: 'Default',
+            builder: (context) => const AwesomeWidget(),
+          )
+        ],
+      ),
+      WidgetbookComponent(
+        name: 'App Launch Screen',
+        useCases: [
+          WidgetbookUseCase(
+            name: 'Default',
+            builder: (context) => const MyHomePage(),
+          )
+        ],
+      ),
+    ],
+  )
+],
+```
+
+Directories contain categories, components, and use cases of widgets to display on the Widgetbook. Here, we have a category named 'Default', which contains two components: 'Awesome Widget' and 'App Launch Screen'. Each component has a default use case, and the builder for each use case defines which widget to display.
+
+## App Builder
+
+```dart
+appBuilder: (context, child) {
+  final frameBuilder = context.frameBuilder;
+  final theme = context.theme<AppThemeData>();
+  return AppTheme(
+    data: theme!,
+    child: frameBuilder!(context, child),
+  );
+}
+```
+
+The `appBuilder` argument takes a function that defines how the app should be built. Here, we're using the `frameBuilder` and `theme` from the current context to build the app with the selected frame and theme.
+
+## Conclusion
+
+That's a comprehensive breakdown of the provided code. This guide should give you a solid understanding of how to create a custom theme in Widgetbook, along with using addons, defining devices, creating frames, and setting up directories to properly display and test your widgets.
+
+TODO (and to confirm):
+
+1. Theme Structure: When creating a custom theme, you'll typically define ThemeData objects that represent the styling for the various UI elements in your app. These objects should include the color schemes, typography, button styles, and other design aspects you want to customize.
+
+2. Global and Local Themes: Widgetbook supports both global and local themes. A global theme is applied to your entire app, while local themes can be used to override the global theme for specific widgets or widget trees. This allows you to apply a consistent style to your entire app, while still customizing specific parts if needed.
+
+3. Theme Switching: In Widgetbook, you can easily switch between different themes during development to preview how your app will look with different styling options. This is done using the CustomThemeAddon and CustomThemeSetting classes, as demonstrated in the provided code snippet.
+
+4. Platform-Specific Themes: Widgetbook allows you to define platform-specific themes. This is useful when you want to provide a distinct look for iOS and Android devices, or when you want to adhere to platform-specific design guidelines.
+
+5. Dark Mode and Light Mode: Widgetbook also supports creating separate themes for dark mode and light mode. You can create separate ThemeData objects for each mode, and then use Widgetbook to test your app's appearance in both modes.
+
+6. Integration with Widgetbook: Custom themes can be applied to your widgets within Widgetbook, allowing you to test the appearance and behavior of your widgets with different themes. This can be useful during development to ensure that your widgets are compatible with multiple themes and that they adapt well to different styling options.

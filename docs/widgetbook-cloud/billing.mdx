@@ -1,74 +1,67 @@
-# Billing
+# Billing (TO BE REWRITTEN ONCE WE ARE READY)
 
-Within Widgetbook Cloud, a billing account is required to create projects.
-Projects will are disabled if no subscription is available or if a subscription is canceled or postponed.
+To create a project within Widgetbook Cloud, a billing account is necessary. Billing accounts should be created by project owners or team leads, as only they have the ability to create projects. Projects will be disabled if no subscription is available or if a subscription is canceled or postponed.
 
-## Create a billing account
+## Create a Billing Account
 
-To create a billing account, make sure to select _Billing_ from the navigation rail on the left.
-If your account is not associated with a billing account, the user interface will indicate this. 
-Otherwise, the user interface will show you the current billing account. 
+1. Select _Billing_ from the navigation rail on the left.
+2. If your account is not associated with a billing account, the user interface will indicate this. If it is, the interface will display the current billing account.
+3. Follow the user interface's instructions to create the billing account.
 
-Make sure to follow the instructions for creating the billing account provided by the user interface.
+## Subscribing to a Plan
 
-## Subscribing to a plan
+1. After creating a billing account, the user interface will present an option to subscribe to a Widgetbook Cloud plan.
+2. Choose a plan to enable project creation, activation, and collaboration with other team members.
+3. Follow the user interface instructions and proceed to Stripe for payment.
+4. Upon successful payment, the subscribed plan will be displayed in the Widgetbook Cloud user interface within seconds.
 
-After a billing account is created, the user interface will show an option to subscribe to a Widgetbook Cloud plan. 
-Plans allow customers to create and activate projects as well as invite collaborators to their projects. 
+## Managing a Plan's Subscription
 
-Make sure to follow the instructions of the user interface. 
-After a plan is selected, the Widgetbook Cloud application will forward you to Stripe for payment.
-Once the payment via Stripe is completed the subscribed plan will show in the user interface of Widgetbook Cloud. 
-This happens within seconds.
-
-## Managing a plan's subscription
-
-Once a subscription to a plan is active, the user interface shows the active plan.
-In addition, the Widgetbook Cloud application provides a button to view and manage the details of the plan.
-If the button is pressed, the application forwards to the Stripe customer portal which allows to view recent payments and manage the subscription.
+1. The active plan will be shown in the user interface.
+2. Click the button to view and manage the plan's details.
+3. The application will redirect to the Stripe customer portal, where you can view recent payments and manage the subscription.
 
 ## Invoicing
 
-Currently all Widgetbook Cloud subscription plans are user based. 
-With each plan, a billing account is invoiced for the number of _unique_ users.
-A _unique_ user is determined based on the user's email address.
-Therefore, a user _John_ with email address _john@examplebook.io_ is invoiced once even if John is a member of multiple projects (given that all the projects use the same billing account).
+All Widgetbook Cloud subscription plans are user-based. Each plan's billing account is invoiced for the number of _unique_ users, determined by their email addresses. A user is invoiced only once, even if they are a member of multiple projects under the same billing account.
 
-**Example 1** 
+### Examples
 
-Let's assume the following project structure with it's members:
+**Example 1**
 
-- Project A
-    - John (john@examplebook.io)
-    - Mia (mia@examplebook.io)
-
-The billing account will be invoiced for 2 unique users across a single project. 
-
-**Example 2** 
-
-Let's assume the following project structure with it's members:
+Project Structure and Members:
 
 - Project A
-    - John (john@examplebook.io)
-    - Mia (mia@examplebook.io)
+  - John (john@examplebook.io)
+  - Mia (mia@examplebook.io)
+
+The billing account will be invoiced for 2 unique users across a single project.
+
+**Example 2**
+
+Project Structure and Members:
+
+- Project A
+  - John (john@examplebook.io)
+  - Mia (mia@examplebook.io)
 - Project B
-    - John (john@examplebook.io)
-    - Mia (mia@examplebook.io)
+  - John (john@examplebook.io)
+  - Mia (mia@examplebook.io)
 
-The billing account will be invoiced for 2 unique users across 2 projects. 
+The billing account will be invoiced for 2 unique users across 2 projects.
 
-**Example 3** 
+**Example 3**
 
-Let's assume the following project structure with it's members:
+Project Structure and Members:
 
 - Project A
-    - John (john@examplebook.io)
-    - Mia (mia@examplebook.io)
+  - John (john@examplebook.io)
+  - Mia (mia@examplebook.io)
 - Project B
-    - John (john@examplebook.io)
-    - Mia (mia@examplebook.io)
+  - John (john@examplebook.io)
+  - Mia (mia@examplebook.io)
 - Project C
-    - John (john@examplebook.io)
-    - Ava (ava@examplebook.io)
+  - John (john@examplebook.io)
+  - Ava (ava@examplebook.io)
 
-The billing account will be invoiced for 3 unique users across 3 projects. 
+The billing account will be invoiced for 3 unique users across 3 projects.

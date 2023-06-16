@@ -1,30 +1,25 @@
 # Projects
 
-A project within Widgetbook Cloud contains all the information about the currently available Widgetbook versions, reviews and use-cases.
-Therefore, for each Widgetbook defined in your code base, Widgetbook Cloud should define a corresponding project.
-In addition, projects enable product owners to define who has access to a specific Widgetbook. 
+A project within Widgetbook Cloud encompasses all information related to the available Widgetbook versions, reviews, and use-cases. For each Widgetbook defined in your codebase, there should be a corresponding project in Widgetbook Cloud. Projects enable product owners to manage access to specific Widgetbooks.
 
-## Create a project
+## Create a Project
 
-To create a new project, a [billing account](/widgetbook-cloud/billing/#create-a-billing-account) is required and the user creating the project has to be the owner of the billing account.
-If you are the owner of a billing account, make sure to follow the steps required by the user interface. 
+To create a new project, you need to create a company.
+Then, follow the steps provided by the user interface to create a project.
 
 ## Roles
 
-Projects within Widgetbook Cloud define the following types of roles:
+Widgetbook Cloud projects have the following roles:
 
-| Role | Description |
-| ---- | ---- |
-| Member | Can view the project, view the projects builds, participate in reviews. |
-| Owner | Has all the rights of a member and can fetch API keys, delete the project and upgrade, downgrade, add and delete other users. |
- 
-## Member management
+| Role   | Description                                                                                      |
+| ------ | ------------------------------------------------------------------------------------------------ |
+| Member | Can view the project, view the project's builds, and participate in reviews.                     |
+| Owner  | Inherits all Member privileges, and can fetch API keys, delete projects, and manage user access. |
 
-An owner of a project is allowed to add and delete users from the project. 
-To modify the list of users allowed to access the project, use the _View details_ button to see a list of members and owners.
-Follow the user interface to make adjustments to both of these lists.
+## Member Management
 
-An owner might add a user via email address which has not yet been registered in Widgetbook Cloud.
-As a result, the user is added to the _Open invites_ list and will be added as a member once the user registers for Widgetbook Cloud.
+Project owners can add and remove users from the project. To modify user access, click the _Settings ⚙️_ button to see the list of members and owners. Follow the user interface instructions to adjust these lists.
 
-Please be aware that adding users might increase charges made to your Stripe billing method. For more information on how users are billed see [Invoicing](/widgetbook-cloud/billing/#Invoicing).
+Owners can add users via email addresses, even if they have not yet registered with Widgetbook Cloud. These users will appear in the _Open invites_ list and will become members once they register for Widgetbook Cloud.
+
+Please note that adding users may affect your Stripe billing charges.

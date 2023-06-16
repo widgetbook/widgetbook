@@ -1,0 +1,192 @@
+# Setup
+
+The Widgetbook package offers a Flutter Widget called `Widgetbook`, which
+enables you to inject custom widgets from your app. Before we start, let's look
+at the folder structure in Flutter projects.
+
+```dart
+your_flutter_project/
+├─ android/
+├─ ios/
+├─ lib/
+│ ├─ main.dart
+│ ├─ src/
+│ │ ├─ widgets/
+│ │ ├─ models/
+│ │ └─ services/
+│ └─ ...
+├─ assets/
+│ ├─ images/
+│ ├─ fonts/
+│ └─ ...
+├─ test/
+├─ pubspec.yaml
+└─ ...
+```
+
+To initialize Widgetbook in your Flutter project, follow the steps below:
+
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+  <TabItem value="generator">
+
+`widgetbook_generator` utilizes the power of the
+[build_runner](https://pub.dev/packages/build_runner) package to generate the
+necessary code.
+
+## Generating the widgetbook
+
+Execute the generator by running the following command:
+
+```bash
+flutter pub run build_runner build
+```
+
+If you're actively developing and making many changes, use the watch command
+instead:
+
+```bash
+flutter pub run build_runner watch
+```
+
+This command will make `build_runner` listen for changes in the file system and
+automatically update Widgetbook accordingly.
+
+## Launching the Generated App
+
+Here's how you can utilize this:
+
+1. Annotate a file with `@App` imported from `widgetbook_annotation`, for
+   instance, in your `widgetbook.dart` file. The `@App` annotation generates a
+   file containing a single variable called `directories`.
+
+```dart
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+@widgetbook.App()
+```
+
+2. The generator will create a `widgetbook.g.dart` file in the same directory as
+   the annotated file. This file will contain a directories variable.
+
+```bash
+├─ ios
+├─ lib
+├ ├─ main.dart
+├ ├─ widgetbook.dart
+├ ├─ widgetbook.g.dart
+├─ pubspec.yaml
+```
+
+3. Import the `widgetbook.g.dart` file into your `widgetbook.dart` file or any
+   other file where you set up your Widgetbook.
+
+```dart
+import 'widgetbook.g.dart';
+```
+
+4. Set up your Widgetbook as usual. For the `directories` property, use the
+   generated directories variable from the `widgetbook.g.dart` file. For
+   instance, you can define and launch your Widgetbook app as follows:
+
+```dart
+// widgetbook.dart
+
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+// Import the generated directories variable
+import 'widgetbook.g.dart';
+
+void main() {
+  runApp(const WidgetbookApp());
+}
+
+@widgetbook.App()
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook.material(
+      // Use the generated directories variable
+      directories: directories,
+      addons: [],
+      appBuilder: (context, child) {
+        return child;
+      },
+    );
+  }
+}
+```
+
+You can then run your app as usual with the `flutter run` command. If you change
+your Widgetbook entry you can run:
+
+```bash
+flutter run -t lib/widgetbook.dart -d macos
+```
+
+This hybrid approach provides a convenient balance between automatic generation
+and manual setup. While the generator creates the directories variable, you
+still have complete control over the rest of your Widgetbook's configuration.
+This approach simplifies setting up and managing your Widgetbook, making it a
+more efficient and enjoyable experience.
+
+  </TabItem>
+  <TabItem value="manual">
+    1. Create a new file `widgetbook.dart` in your `lib` folder.
+
+<Info>
+  You may rename `widgetbook.dart` to your preferred name that fits your
+  project.
+</Info>
+
+```dart
+your_flutter_project/
+│─ ...
+├─ lib/
+│ ├─ main.dart
+│ ├─ widgetbook.dart
+│ ├─ src/
+├─ pubspec.yaml
+└─ ...
+```
+
+    2. Add the following code snippet to your `widgetbook.dart` file:
+
+    ```dart title="widgetbook.dart"
+    // Widgetbook file: widgetbook.dart
+    import 'package:flutter/material.dart';
+    import 'package:widgetbook/widgetbook.dart';
+
+    void main() {
+      runApp(const HotReload());
+    }
+
+    class HotReload extends StatelessWidget {
+      const HotReload({Key? key}) : super(key: key);
+
+      @override
+      Widget build(BuildContext context) {
+        return Widgetbook.material(
+          addons: [],
+          directories: [],
+        );
+      }
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Next
+
+Now you can start cataloging your widgets and take advantage of the streamlined
+widget management and collaboration features offered by Widgetbook.

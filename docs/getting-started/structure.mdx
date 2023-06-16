@@ -1,0 +1,140 @@
+# Structure
+
+Widgetbook is flexible and powerful enough to fit into your project's structure.
+
+The structure of your components can be divided into two parts:
+
+1. The folder structure in your project, where you place files
+2. The navigation that will be created in Widgetbook
+
+Let's take a look at a typical Flutter example. In this case, you may add a
+`components` or `widgets` folder to your projects where you can manage your UI
+catalog's structure.
+
+```bash
+your_flutter_project/
+├─ android/
+├─ ios/
+├─ lib/
+│ ├─ main.dart
+│ ├─ src/
+│ │ ├─ components/
+│ │ ├────── containers.dart
+│ │ ├────── buttons.dart
+│ │ ├─ models/
+│ │ └─ services/
+│ └─ ...
+├─ assets/
+│ ├─ images/
+│ ├─ fonts/
+│ └─ ...
+├─ test/
+├─ pubspec.yaml
+└─ ...
+```
+
+You may adjust based on your team and the project's preferences.
+
+However, placing files in different folders doesn't necessarily reflect the
+navigation in Widgetbook.
+
+## Navigation structure
+
+The navigation structure in Widgetbook depends on which approach you select.
+
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+<TabItem value="generator">
+The generator creates the navigation tree based on the component's file location specified for the `type` parameter of the `@UseCase` annotation. 
+Therefore, the navigation structure of the Widgetbook resembles the structure of your application or package.
+
+<Warning>
+  As of now, it's not possible to configure a different navigation structure
+  using the generator. The Widgetbook team aims to provide a solution in the
+  future.
+</Warning>
+
+</TabItem>
+
+<TabItem value="manual">
+As your project expands, it may not be as efficient or accessible to add `WidgetbookComponent` directly to the `directories` project on `Widgetbook` constructors. It's important to consider scalability and ease of access when making these decisions.
+
+The alternatives are:
+
+1. WidgetbookCategory
+2. WidgetbookFolder
+
+Both `WidgetbookCategory` and `WidgetbookFolder` can contain sub-folders and
+`WidgetbookComponent` elements. However, `WidgetbookComponent` can only contain
+`WidgetbookUseCases`.
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+
+import 'components/container.dart';
+
+void main() {
+  runApp(const HotReload());
+}
+
+class HotReload extends StatelessWidget {
+  const HotReload({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook.material(
+      addons: [],
+      directories: [
+        WidgetbookCategory(
+          name: 'Containers',
+          children: [
+            WidgetbookComponent(
+              name: 'With colors',
+              useCases: [
+                WidgetbookUseCase(
+                  name: 'green',
+                  builder: (context) => greenContainerUseCase(context),
+                ),
+              ],
+            ),
+          ],
+        ),
+        WidgetbookFolder(
+          name: 'Texts',
+          children: [
+            WidgetbookComponent(
+              name: 'Size',
+              useCases: [
+                WidgetbookUseCase(
+                  name: 'Default',
+                  builder: (context) => const Text(
+                    'The default text ...',
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+```
+
+    Running this example will look like the screenshot below.
+
+<Image
+  zoom
+  src="/assets/screenshots/manual_structure.png"
+  alt="Structure"
+  caption="Structure"
+/>
+
+  </TabItem>
+</Tabs>

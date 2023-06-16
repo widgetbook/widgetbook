@@ -1,0 +1,69 @@
+# Contributing to Widgetbook
+
+We appreciate your interest in contributing to Widgetbook. Whether it's through fixing bugs, enhancing documentation, or suggesting new features, your efforts are greatly valued.
+
+The following are some guidelines for contributing to Widgetbook and its packages. Remember, these are primarily guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
+
+## Proposing a Change
+
+If you plan to modify the public API or make non-trivial changes to the implementation, we recommend [filing an issue](https://github.com/widgetbook/widgetbook/issues) first. This helps us align your proposal before you put significant effort into it.
+
+You can submit a pull request for bug fixes immediately, but we still recommend filing an issue detailing what you're fixing. This is useful if we don't accept that specific fix but want to track the issue.
+
+## Contribution Workflow
+
+The following steps will guide you through the contribution process:
+
+### Preparation
+
+1. **Fork the Repository:** Start by forking the Widgetbook repository and creating your own branch from the `main` branch.
+
+2. **Install Melos:** Install `melos` which helps to manage our mono-repo by running `dart pub global activate melos`
+
+3. **Install Dependencies:** Ensure your environment is ready by installing all necessary dependencies using `melos bs`.
+
+### Making Changes
+
+3. **Add Tests:** Include relevant tests if you're fixing a bug or adding new code. We strive for high test coverage to ensure code quality.
+
+4. **Make Your Changes:** Implement your changes, ensuring you maintain code quality and follow existing coding conventions.
+
+5. **Format Your Code:** Use `dartfmt -w .` to maintain consistent code formatting.
+
+6. **Analyze Your Code:** Use `dartanalyzer --fatal-infos --fatal-warnings .` to ensure your code meets the Dart language's analysis lints.
+
+### Before Submission
+
+7. **Squash Your Commits:** Squash your commits and provide a meaningful commit message describing your changes.
+
+8. **Update Documentation:** If you've changed the public API or introduced significant new features, update or add to the documentation.
+
+9. **Pass the Test Suite:** Run the test suite and ensure all tests pass before submitting your changes.
+
+### Submitting Your Changes
+
+10. **Sign the CLA:** Before submitting your pull request, please sign the [Contributor License Agreement](https://docs.google.com/forms/d/e/1FAIpQLScuRfjUzENsLsmQgqZlGLxMKbFi7zuXoPARyXytoyQrq7ntUw/viewform). This protects both you and Widgetbook, and is a common practice in open-source contributions.
+
+11. **Create the Pull Request:** Create your pull request. Ensure you comprehensively describe the changes you've made and why they're necessary. If your changes are related to any existing issues, reference them.
+
+12. **Verify Status Checks:** Ensure all status checks pass aofter submitting your pull request. If any checks fail, go back and review your changes.
+
+## Code Reviews
+
+Once your pull request is submitted, our team will review your submission. We might suggest changes or improvements. Please be patient during this process. We are committed to maintaining and improving code quality, which takes time.
+
+## Adding an Example
+
+If you're contributing a code example, please add it to the `examples` folder in the repository. This makes it easier for others to locate your contribution and understand its purpose.
+
+Creating an example must be accompanied by the necessary Continuous Integration (CI) checks. These checks help ensure that the example code remains functional and practical as the repository evolves. Therefore, remember to configure and include appropriate CI checks for your example.
+
+## Community
+
+If you have questions, need assistance with a feature, or wish to discuss ideas, please join our [Discord](https://discord.gg/zT4AMStAJA) community. We are here to help!
+
+## Licensing
+
+By contributing to Widgetbook, you agree that your contributions will be licensed under Widgetbook's [MIT license](https://github.com/widgetbook/widgetbook/blob/main/LICENSE).
+
+Open and proactive communication with the Widgetbook team is the best way to ensure your contributions are accepted. We look forward to collaborating with you!
