@@ -10,7 +10,7 @@ import 'app_router_delegate.dart';
 class AppRouter extends RouterConfig<AppRouteConfig> {
   AppRouter({
     String initialRoute = '/',
-    required WidgetbookState initialState,
+    required WidgetbookState state,
   }) : super(
           routeInformationParser: AppRouteParser(),
           routeInformationProvider: PlatformRouteInformationProvider(
@@ -20,7 +20,7 @@ class AppRouter extends RouterConfig<AppRouteConfig> {
           ),
           routerDelegate: AppRouterDelegate(
             initialRoute: initialRoute,
-            initialState: initialState,
+            state: state,
           ),
         );
 }

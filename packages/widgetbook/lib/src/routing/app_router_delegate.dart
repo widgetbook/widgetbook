@@ -11,14 +11,14 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRouteConfig> {
   AppRouterDelegate({
     this.initialRoute = '/',
-    required this.initialState,
+    required this.state,
   })  : _navigatorKey = GlobalKey<NavigatorState>(),
         _configuration = AppRouteConfig(
           location: initialRoute,
         );
 
   final String initialRoute;
-  final WidgetbookState initialState;
+  final WidgetbookState state;
   final GlobalKey<NavigatorState> _navigatorKey;
   AppRouteConfig _configuration;
 
@@ -31,6 +31,7 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
   @override
   Future<void> setNewRoutePath(AppRouteConfig configuration) async {
     _configuration = configuration;
+    state.updateFromRouteConfig(configuration);
     notifyListeners();
   }
 
@@ -41,14 +42,11 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
       onPopPage: (route, result) => route.didPop(result),
       pages: [
         MaterialPage(
-          child: WidgetbookScope(
-            state: initialState.copyFromRouteConfig(_configuration),
-            child: _configuration.previewMode
-                ? const Workbench()
-                : const WidgetbookShell(
-                    child: Workbench(),
-                  ),
-          ),
+          child: _configuration.previewMode
+              ? const Workbench()
+              : const WidgetbookShell(
+                  child: Workbench(),
+                ),
         ),
       ],
     );

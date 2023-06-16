@@ -28,9 +28,10 @@ class WidgetbookState extends ChangeNotifier {
         );
 
   String path;
+  bool previewMode;
+  Map<String, String> queryParams;
+
   final Map<String, Knob> knobs;
-  final bool previewMode;
-  final Map<String, String> queryParams;
   final WidgetbookCatalog catalog;
   final AppBuilder appBuilder;
   final List<WidgetbookAddon>? addons;
@@ -124,23 +125,19 @@ class WidgetbookState extends ChangeNotifier {
     return knob.valueFromQueryGroup(knobsQueryGroup);
   }
 
-  /// Creates a copy of the current state using [AppRouteConfig] to update
+  /// Update the current state using [AppRouteConfig] to update
   /// the [path], [previewMode] and [queryParams] fields. Since these fields
   /// can be manipulated from the router's query parameters, as opposed to the
   /// rest of fields that stay unchanged during runtime.
   @internal
-  WidgetbookState copyFromRouteConfig(AppRouteConfig configuration) {
-    return WidgetbookState(
-      path: configuration.path,
-      previewMode: configuration.previewMode,
-      queryParams: {
-        // Copy from UnmodifiableMap
-        ...configuration.queryParameters
-      },
-      appBuilder: appBuilder,
-      addons: addons,
-      integrations: integrations,
-      directories: directories,
-    );
+  void updateFromRouteConfig(AppRouteConfig routeConfig) {
+    path = routeConfig.path;
+    previewMode = routeConfig.previewMode;
+    queryParams = {
+      // Copy from UnmodifiableMap
+      ...routeConfig.queryParameters
+    };
+
+    notifyListeners();
   }
 }

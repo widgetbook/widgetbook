@@ -86,13 +86,14 @@ class Widgetbook extends StatefulWidget {
 }
 
 class _WidgetbookState extends State<Widgetbook> {
+  late final WidgetbookState state;
   late final AppRouter router;
 
   @override
   void initState() {
     super.initState();
 
-    final initialState = WidgetbookState(
+    state = WidgetbookState(
       appBuilder: widget.appBuilder,
       addons: widget.addons,
       integrations: widget.integrations,
@@ -100,22 +101,25 @@ class _WidgetbookState extends State<Widgetbook> {
     );
 
     router = AppRouter(
-      initialState: initialState,
+      state: state,
     );
 
     widget.integrations?.forEach(
-      (integration) => integration.onInit(initialState),
+      (integration) => integration.onInit(state),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: router,
-      themeMode: ThemeMode.dark,
-      debugShowCheckedModeBanner: false,
-      darkTheme: Themes.dark,
-      theme: Themes.light,
+    return WidgetbookScope(
+      state: state,
+      child: MaterialApp.router(
+        routerConfig: router,
+        themeMode: ThemeMode.dark,
+        debugShowCheckedModeBanner: false,
+        darkTheme: Themes.dark,
+        theme: Themes.light,
+      ),
     );
   }
 }
