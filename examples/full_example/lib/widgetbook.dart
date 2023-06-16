@@ -11,11 +11,11 @@ import 'components/custom_card.dart';
 import 'components/custom_text_field.dart';
 
 void main() {
-  runApp(const HotReload());
+  runApp(const WidgetbookApp());
 }
 
-class HotReload extends StatelessWidget {
-  const HotReload({Key? key}) : super(key: key);
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
 
   @override
   Widget build(BuildContext context) {
