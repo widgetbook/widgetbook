@@ -1,5 +1,6 @@
 ## Unreleased
 
+ - **FEAT**: Support hot reloading. ([#759](https://github.com/widgetbook/widgetbook/pull/759))
  - **FEAT**: Make side panels resizable. ([#738](https://github.com/widgetbook/widgetbook/pull/738))
  - **FEAT**: Add `listOrNull` knob. ([#741](https://github.com/widgetbook/widgetbook/pull/741))
  - **FEAT**: Add `initialOption` to `list` knob. ([#733](https://github.com/widgetbook/widgetbook/pull/733))
