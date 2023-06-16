@@ -76,8 +76,11 @@ void main() {
     required AppRouter router,
   }) async {
     await tester.pumpWidget(
-      MaterialApp.router(
-        routerConfig: router,
+      WidgetbookScope(
+        state: initialState,
+        child: MaterialApp.router(
+          routerConfig: router,
+        ),
       ),
     );
   }
@@ -92,7 +95,7 @@ void main() {
             'default route',
             (tester) async {
               final router = AppRouter(
-                initialState: initialState,
+                state: initialState,
               );
 
               await pumpRouter(
@@ -122,7 +125,7 @@ void main() {
             (tester) async {
               final router = AppRouter(
                 initialRoute: '/?path=component-2%2Fuse-case-2.1',
-                initialState: initialState,
+                state: initialState,
               );
 
               await pumpRouter(
@@ -153,7 +156,7 @@ void main() {
             (tester) async {
               final router = AppRouter(
                 initialRoute: '/?theme=Dark',
-                initialState: initialState,
+                state: initialState,
               );
 
               await pumpRouter(
@@ -177,7 +180,7 @@ void main() {
             (tester) async {
               final router = AppRouter(
                 initialRoute: '/?preview',
-                initialState: initialState,
+                state: initialState,
               );
 
               await pumpRouter(
