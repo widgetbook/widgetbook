@@ -4,22 +4,21 @@ repository: https://github.com/widgetbook/widgetbook
 packages:
   - packages/**
   - examples/**
-  - widgetbook_for_widgetbook/**
+  - sandbox/
 
 command:
   version:
-    linkToCommits: true
     branch: main
-  bootstrap:
-    usePubspecOverrides: true
 
 scripts:
   test-coverage:
     run: melos exec --dir-exists=test --flutter -- "flutter test --coverage && genhtml ./coverage/lcov.info --output-directory ./coverage/out"
     description: Run flutter test with coverage and generates coverage report
-  generate:flutter:
-    run: melos exec -c 1 --depends-on="build_runner" --flutter -- "flutter pub run build_runner build --delete-conflicting-outputs"
-    description: Build all generated files for Flutter packages in this project.
+
+  generate:
+    run: melos exec $MELOS_FILTERS -c 1 --depends-on="build_runner" -- "dart pub run build_runner build --delete-conflicting-outputs"
+    description: Build all generated files.
+
   pana:
     run: melos exec -c 10 -- "../../tool/verify_pub_score.sh"
     select-package:

@@ -1,6 +1,6 @@
 import 'package:mason_logger/mason_logger.dart';
 
-import './command.dart';
+import 'command.dart';
 
 class LogoutCommand extends WidgetbookCommand {
   LogoutCommand({

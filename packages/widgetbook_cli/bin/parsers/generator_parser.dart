@@ -33,7 +33,7 @@ abstract class GeneratorParser<T> {
 
   Iterable<ItemType> getItemsFromFiles<ItemType>(
     Iterable<File> files, {
-    required ItemType Function(Map<String, dynamic>) fromJson,
+    required ItemType Function(Map<String, dynamic> json) fromJson,
   }) sync* {
     for (final file in files) {
       final items = json.decode(

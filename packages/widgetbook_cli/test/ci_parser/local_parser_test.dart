@@ -1,9 +1,9 @@
 import 'package:args/args.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
-import 'package:widgetbook_git/widgetbook_git.dart';
 
 import '../../bin/ci_parser/ci_parser.dart';
+import '../../bin/git/git_dir.dart';
 import '../mocks/command_mocks.dart';
 
 const repositoryName = 'widgetbook';

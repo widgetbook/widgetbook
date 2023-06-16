@@ -1,8 +1,6 @@
 name: knobs_example
-description: A new Flutter project.
-
-publish_to: 'none' 
-
+description: An example project that demonstrates how to knobs.
+publish_to: none
 version: 1.0.0+1
 
 environment:
@@ -11,16 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^1.0.2
-  widgetbook: 
-    path: ../../packages/widgetbook
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
-  flutter_lints: ^1.0.0
+  widgetbook: ^3.0.0-rc.1
 
 flutter:
   uses-material-design: true

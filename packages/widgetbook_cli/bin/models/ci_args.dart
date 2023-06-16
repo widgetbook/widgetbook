@@ -5,8 +5,8 @@ part 'ci_args.freezed.dart';
 @freezed
 class CiArgs with _$CiArgs {
   const factory CiArgs({
+    required String vendor,
     String? actor,
     String? repository,
-    required String vendor,
   }) = _CiArgs;
 }

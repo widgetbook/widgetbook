@@ -2,8 +2,7 @@
 
 [![Discord](https://img.shields.io/discord/879618555560218625?color=blue&style=flat-square&logo=discord)](https://discord.com/invite/zT4AMStAJA)
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis) 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/widgetbook/widgetbook/ci.yaml?branch=main&style=flat-square&)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/widgetbook/widgetbook/ci.yaml?label=test&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/widgetbook/widgetbook/widgetbook.yaml?branch=main)
 
 A Flutter package that helps developers catalog their widgets, test them quickly on multiple devices and themes and share them easily with designers and clients. 
 Inspired by Storybook.js.

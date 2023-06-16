@@ -2,8 +2,29 @@ import 'package:test/test.dart';
 
 import '../../bin/helpers/helpers.dart';
 
+class TestWidgetbookException extends WidgetbookException {
+  TestWidgetbookException(super.message);
+}
+
 void main() {
   group('Exceptions', () {
+    group('$WidgetbookException', () {
+      late TestWidgetbookException sut;
+      const message = 'Name is required';
+
+      setUp(() {
+        sut = TestWidgetbookException(message);
+      });
+
+      test('accepts message', () {
+        expect(sut.message, equals(message));
+      });
+
+      test('ensure overrides toString() returns the message', () {
+        expect(sut.toString(), equals(message));
+      });
+    });
+
     group('$WidgetbookDeployException', () {
       test('has the correct message', () {
         const message = 'An error occurred while deploying your Widgetbook to '

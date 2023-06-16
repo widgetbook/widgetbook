@@ -1,0 +1,16 @@
+name: screen_util_example
+description: An example project that demonstrates how to use Widgetbook with the flutter_screenutil package.
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.19.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_screenutil: ^5.7.0
+  widgetbook: ^3.0.0-rc.1
+
+flutter:
+  uses-material-design: true

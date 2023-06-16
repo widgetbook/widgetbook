@@ -1,3 +1,122 @@
+## Unreleased
+
+ - **FEAT**: Support hot reloading. ([#759](https://github.com/widgetbook/widgetbook/pull/759))
+ - **FEAT**: Make side panels resizable. ([#738](https://github.com/widgetbook/widgetbook/pull/738))
+ - **FEAT**: Add `listOrNull` knob. ([#741](https://github.com/widgetbook/widgetbook/pull/741))
+ - **FEAT**: Add `initialOption` to `list` knob. ([#733](https://github.com/widgetbook/widgetbook/pull/733))
+ - **BREAKING**: Create `FieldsComposable` to unify addons/knobs APIs. ([#749](https://github.com/widgetbook/widgetbook/pull/749))
+ - **REFACTOR**: Add `SafeArea` to device addon. ([#760](https://github.com/widgetbook/widgetbook/pull/760))
+ - **REFACTOR**: Move `widgetbook_core` package to `widgetbook` package. ([#742](https://github.com/widgetbook/widgetbook/pull/742))
+ - **REFACTOR**: Export `WidgetbookState`. ([#724](https://github.com/widgetbook/widgetbook/pull/724))
+ - **REFACTOR**: Export fields to be used for custom addons/knobs. ([#728](https://github.com/widgetbook/widgetbook/pull/728))
+ - **REFACTOR**: Make `KnobsBuilder.onKnobAdded` public. ([#727](https://github.com/widgetbook/widgetbook/pull/727))
+ - **REFACTOR**: Add value label to `double.slider` knob. ([#757](https://github.com/widgetbook/widgetbook/pull/757))
+ - **FIX**: Use addons/knobs initial values. ([#746](https://github.com/widgetbook/widgetbook/pull/746))
+ - **FIX**: Use related type checks when comparing device's frame state to its query parameter. ([#715](https://github.com/widgetbook/widgetbook/pull/715))
+ - **FIX**: Add missing type parameter to `LabelBuilder`, which affected the `list` knob. ([#718](https://github.com/widgetbook/widgetbook/pull/718))
+ - **FIX**: Use `labelBuilder`-based string comparison in `list` knob. ([#729](https://github.com/widgetbook/widgetbook/pull/729))
+ - **FIX**: Add `key` to use cases to prevent out-of-sync builds. ([#720](https://github.com/widgetbook/widgetbook/pull/720))
+ - **Fix**: Prevent `onNodeSelected` from being called if the node is already selected. ([#725](https://github.com/widgetbook/widgetbook/pull/725))
+ - **Fix**: Use `ListView` for `SettingsPanel`. ([#732](https://github.com/widgetbook/widgetbook/pull/732))
+ - **Fix**: Use fresh `context` while retrieving state to avoid out-of-sync UI. ([#751](https://github.com/widgetbook/widgetbook/pull/751))
+
+## 3.0.0-rc.1
+
+ - Check out the [migration guide](https://docs.widgetbook.io/~docs%2Fwidgetbook-3/migration/3.0.0-beta-to-rc) for more details.
+ - **FEAT**: Add Dart 3 and Flutter 3.10 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
+ - **FEAT**: Add `buildUseCase` methods to Addons, that act as micro-`appBuilder`s. ([#646](https://github.com/widgetbook/widgetbook/pull/646))
+ - **FEAT**: Add `preview` query param instead of `disable-navigation`, `disable-properties` and `panels` query params. ([#687](https://github.com/widgetbook/widgetbook/pull/687))
+ - **FEAT**: Create `WidgetbookState`. ([#674](https://github.com/widgetbook/widgetbook/pull/674))
+ - **FEAT**: Add `integrations` and `WidgetbookCloudIntegration`. ([#689](https://github.com/widgetbook/widgetbook/pull/689))
+ - **BREAKING**: Drop Flutter 2 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
+ - **BREAKING**: Use type-based knob names. ([#695](https://github.com/widgetbook/widgetbook/pull/695))
+ - **BREAKING**: Cleanup Addons constructors by removing the `setting` parameter. ([#652](https://github.com/widgetbook/widgetbook/pull/652))
+ - **BREAKING**: Remove `FrameAddon` in favor of the new `DeviceFrameAddon`. ([#632](https://github.com/widgetbook/widgetbook/pull/632), [#686](https://github.com/widgetbook/widgetbook/pull/686))
+ - **BREAKING**: Rename `WidgetbookAddOn` to `WidgetbookAddon`. ([#711](https://github.com/widgetbook/widgetbook/pull/711))
+ - **BREAKING**: Remove `configureMaterialAddons` and `configureCupertinoAddons` functions. ([#677](https://github.com/widgetbook/widgetbook/pull/677))
+ - **REFACTOR**: Drop `provider` dependency. ([#682](https://github.com/widgetbook/widgetbook/pull/682))
+ - **REFACTOR**: Drop `go_router` dependency. ([#625](https://github.com/widgetbook/widgetbook/pull/625))
+ - **REFACTOR**: Drop `flutter_bloc` dependency. ([#705](https://github.com/widgetbook/widgetbook/pull/705))
+ - **REFACTOR**: Drop `freezed` dependency. ([#703](https://github.com/widgetbook/widgetbook/pull/703))
+ - **REFACTOR**: Made `Widgetbook`'s `addons` parameter optional. ([#690](https://github.com/widgetbook/widgetbook/pull/690))
+ - **FIX**: Remove `StyledScaffold` that made focus not work properly. ([#650](https://github.com/widgetbook/widgetbook/pull/650))
+ 
+## 3.0.0-beta.14
+
+ - **REFACTOR**: :recycle: addon multi property preview.
+ - **REFACTOR**: :recycle: removed package analysis_options files.
+ - **REFACTOR**: :recycle: warnings.
+ - **REFACTOR**: :recycle: `AddOn` API.
+ - **REFACTOR**: :recycle: improve API interface of addons.
+ - **REFACTOR**: :recycle: warnings.
+ - **REFACTOR**: :recycle: settings.
+ - **REFACTOR**: navigation logic.
+ - **REFACTOR**: 🛠️ uses new `NavigationTree`.
+ - **REFACTOR**: :recycle: adjust content.
+ - **REFACTOR**: :recycle: adjust generator to `AddOn` implemementation.
+ - **REFACTOR**: :zap: refactored addons.
+ - **REFACTOR**: `DeviceAddon`.
+ - **REFACTOR**: adjusted code to match linter.
+ - **FIX**: :test_tube: fixed broken test.
+ - **FIX**: :bug: requires `directories` to be not empty.
+ - **FIX**: :bug: properties resetting when changing locale.
+ - **FIX**: :bug: properties not changing on navigate.
+ - **FIX**: inserted scaffold messenger.
+ - **FIX**: expanding of elements within the navigation is not working.
+ - **FIX**: :bug: addons property cannot be empty.
+ - **FIX**: navigation tree collapsing and expanding does not work.
+ - **FIX**: orientation defaults to landscape.
+ - **FIX**: :bug: provider not found.
+ - **FIX**: knob values do not update when usecase changes.
+ - **FIX**: :bug: remove `go_router` diagnostics.
+ - **FIX**: :bug: improve Canvas.
+ - **FIX**: :bug: navigation resets when use case changes.
+ - **FIX**: :bug: addons show incorrect item.
+ - **FIX**: custom painter Widgets are incorrectly rendered.
+ - **FIX**: :bug: hot reload of directories.
+ - **FIX**: :bug: selected items not shown for addon.
+ - **FIX**: dialog shows up in Widgetbook instead of the simulated device.
+ - **FIX**: add packages/widgetbook prefix.
+ - **FIX**: change ttf files with fonts.google ones.
+ - **FIX**: :bug: ignores country codes.
+ - **FIX**: added MediaQuery for WidgetbookDeviceFrame.
+ - **FIX**: preview app shows debug banner.
+ - **FIX**: preview app shows debug banner in other theme than material.
+ - **FIX**: useCaseBuilder is called with old context.
+ - **FEAT**: :sparkles: addon multi property preview.
+ - **FEAT**: :sparkles: addon routing.
+ - **FEAT**: :sparkles: text scale addon.
+ - **FEAT**: :sparkles: device addon.
+ - **FEAT**: :sparkles: cupertino theme addon.
+ - **FEAT**: :sparkles: remove obsolete classes.
+ - **FEAT**: :sparkles: theme addon.
+ - **FEAT**: :sparkles: Theme needs to be accessible via the app builder function.
+ - **FEAT**: :zap: added text knob multiline.
+ - **FEAT**: :zap: added text knob multiline.
+ - **FEAT**: :zap: added color knob.
+ - **FEAT**: add `panels` query param ([#612](https://github.com/widgetbook/widgetbook/issues/612)).
+ - **FEAT**: added feature to toggle the orientation of a device.
+ - **FEAT**: added textScaleFactors for font accessibility.
+ - **FEAT**: :sparkles: addons and localization addon.
+ - **DOCS**: added how to use widgetbook with a package.
+
+## 3.0.0-beta.13
+
+ - **FIX**(widgetbook): :bug: remove `go_router` diagnostics. ([a5395ee7](https://github.com/widgetbook/widgetbook/commit/a5395ee71461debfe22eaeef0b830c619ca01678))
+
+## 3.0.0-beta.12
+
+ - Update a dependency to the latest release.
+
+## 3.0.0-beta.11
+
+ - **FIX**: :bug: requires `directories` to be not empty. ([8e9b7aa1](https://github.com/widgetbook/widgetbook/commit/8e9b7aa168052f604e634b778c1fc500a9d0c6cb))
+
+## 3.0.0-beta.10
+
+ - **REFACTOR**: :recycle: `AddOn` API. ([31734f9e](https://github.com/widgetbook/widgetbook/commit/31734f9ed6b5de14979308c9bf1825dab2ecc99e))
+ - **FIX**: :bug: addons property cannot be empty. ([67e1734f](https://github.com/widgetbook/widgetbook/commit/67e1734f556df61fbbbd8231464bbb66b86c38d2))
+
 ## 3.0.0-beta.9
 
  - **REFACTOR**: :zap: refactored addons. ([16c007ee](https://github.com/widgetbook/widgetbook/commit/16c007eeb0a8fc6fa601332751a93a87d5e2b77d))

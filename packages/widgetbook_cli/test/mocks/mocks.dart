@@ -1,1 +1,1 @@
-export './command_mocks.dart';
+export 'command_mocks.dart';

@@ -1,56 +1,15 @@
 builders:
-  theme_builder:
+  use_case_builder:
     import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["themeBuilder"]
-    build_extensions: { ".dart": [".theme.widgetbook.json"] }
-    auto_apply: dependents
-    runs_before: [":widgetbook_builder"]
-    build_to: cache
-  locales_builder:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["localesBuilder"]
-    build_extensions: { ".dart": [".locales.widgetbook.json"] }
-    auto_apply: dependents
-    runs_before: [":widgetbook_builder"]
-    build_to: cache
-  localization_delegates_builder:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["localizationDelegatesBuilder"]
-    build_extensions: { ".dart": [".delegates.widgetbook.json"] }
-    auto_apply: dependents
-    runs_before: [":widgetbook_builder"]
-    build_to: cache
-  story_builder:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["storyBuilder"]
+    builder_factories: ["useCaseBuilder"]
     build_extensions: { ".dart": [".usecase.widgetbook.json"] }
     auto_apply: dependents
-    runs_before: [":widgetbook_builder"]
+    runs_before: [":app_builder"]
     build_to: cache
-  devices_builder:
+
+  app_builder:
     import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["devicesBuilder"]
-    build_extensions: { ".dart": [".devices.widgetbook.json"] }
-    auto_apply: dependents
-    runs_before: [":widgetbook_builder"]
-    build_to: cache
-  text_scale_factor_builder:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["textScaleFactorsBuilder"]
-    build_extensions: { ".dart": [".textscalefactors.widgetbook.json"] }
-    auto_apply: dependents
-    runs_before: [":widgetbook_builder"]
-    build_to: cache
-  app_resolver_builder:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["appResolverBuilder"]
-    build_extensions: { ".dart": [".appbuilder.widgetbook.json"] }
-    auto_apply: dependents
-    runs_before: [":widgetbook_builder"]
-    build_to: cache
-  widgetbook_builder:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["widgetbookBuilder"]
-    build_extensions: { ".dart": [".widgetbook.dart"] }
+    builder_factories: ["appBuilder"]
+    build_extensions: { ".dart": [".directories.g.dart"] }
     auto_apply: dependents
     build_to: source

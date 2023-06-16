@@ -1,3 +1,4 @@
-export './models/models.dart';
-export './providers/providers.dart';
-export './widgets/widgets.dart';
+export 'directories/directories.dart';
+export 'icons/icons.dart';
+export 'models/models.dart';
+export 'widgets/widgets.dart';

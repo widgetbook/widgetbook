@@ -1,23 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/src/addons/addons.dart';
+import 'package:widgetbook/src/fields/fields.dart';
+import 'package:widgetbook/src/state/state.dart';
 
-import 'extensions/widget_tester_extension.dart';
-
-/// A method that does not wrap the child
-Widget buildChild(Widget child) {
-  return child;
-}
-
-Future<void> testAddon({
+Future<void> testAddon<T>({
   required WidgetTester tester,
-  required Widget child,
-  required void Function() expect,
-  Widget Function(Widget child) build = buildChild,
-  Future<void> Function(BuildContext context)? act,
+  required WidgetbookAddon<T> addon,
+  required void Function(T setting) expect,
+  Future<void> Function()? act,
 }) async {
-  await tester.pumpWidget(build(child));
-  final context = tester.findContextByWidget(child);
-  await act?.call(context);
+  final state = WidgetbookState(
+    queryParams: {},
+    addons: [addon],
+    appBuilder: materialAppBuilder,
+    directories: [],
+  );
+
+  await tester.pumpWidget(
+    MaterialApp(
+      home: WidgetbookScope(
+        state: state,
+        child: Scaffold(
+          body: Builder(
+            builder: addon.buildFields,
+          ),
+        ),
+      ),
+    ),
+  );
+
+  await act?.call();
   await tester.pumpAndSettle();
-  expect();
+
+  final groupMap = FieldCodec.decodeQueryGroup(
+    state.queryParams[addon.slugName],
+  );
+
+  final setting = addon.valueFromQueryGroup(groupMap);
+
+  expect(setting);
 }
