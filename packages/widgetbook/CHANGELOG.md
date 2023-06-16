@@ -1,4 +1,4 @@
-## Unreleased
+## 3.0.0-rc.2
 
  - **FEAT**: Support hot reloading. ([#759](https://github.com/widgetbook/widgetbook/pull/759))
  - **FEAT**: Make side panels resizable. ([#738](https://github.com/widgetbook/widgetbook/pull/738))

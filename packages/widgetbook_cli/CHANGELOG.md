@@ -1,3 +1,7 @@
+## 3.0.0-rc.2
+
+ - **FIX**: Include generated files. ([#761](https://github.com/widgetbook/widgetbook/pull/761))
+
 ## 3.0.0-rc.1
 
  - **FEAT**: Add Dart 3 and Flutter 3.10 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
