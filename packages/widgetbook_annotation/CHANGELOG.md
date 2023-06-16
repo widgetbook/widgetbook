@@ -1,4 +1,4 @@
-## Unreleased
+## 3.0.0-rc.2
 
  - **BREAKING**: Remove `@App` annotation's `foldersExpanded` and `widgetsExpanded` non-working parameters. ([#735](https://github.com/widgetbook/widgetbook/pull/735))
 
