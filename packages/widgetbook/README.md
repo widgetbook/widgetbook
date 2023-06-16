@@ -8,7 +8,7 @@ A Flutter package that helps developers catalog their widgets, test them quickly
 Inspired by Storybook.js.
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/widgetbook/widgetbook/main/docs/assets/Screenshot.jpg" height="400" alt="Widgetbook Screenshot" />
+<img src="https://github.com/widgetbook/widgetbook/blob/main/docs/assets/screenshots/widgetbook.png?raw=true" alt="Widgetbook Screenshot" />
 </p>
 
 # Features
