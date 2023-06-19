@@ -1,3 +1,4 @@
+export 'expander_icon.dart';
 export 'navigation_panel.dart';
 export 'navigation_tree.dart';
 export 'navigation_tree_item.dart';

@@ -4,14 +4,16 @@ import 'package:widgetbook/src/navigation/navigation.dart';
 void main() {
   group('$WidgetbookComponent', () {
     test('Supports value equality', () {
-      const component1 = WidgetbookComponent(
+      final component1 = WidgetbookComponent(
         name: 'Component',
         useCases: [],
       );
-      const component2 = WidgetbookComponent(
+
+      final component2 = WidgetbookComponent(
         name: 'Component',
         useCases: [],
       );
+
       expect(component1, equals(component2));
     });
   });

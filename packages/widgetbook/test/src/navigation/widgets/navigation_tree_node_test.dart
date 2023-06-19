@@ -3,25 +3,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 
-import '../../../../helper/callback_mock.dart';
-import '../../../../helper/widget_test_helper.dart';
+import '../../../helper/callback_mock.dart';
+import '../../../helper/widget_test_helper.dart';
 
 void main() {
-  const nodeWithOneLevelOfChildren = NavigationTreeNodeData(
-    path: 'component/',
+  final nodeWithOneLevelOfChildren = WidgetbookComponent(
     name: 'Component',
-    type: NavigationNodeType.component,
     isInitiallyExpanded: false,
-    children: [
-      NavigationTreeNodeData(
-        path: 'component/use_case_1_id',
+    useCases: [
+      WidgetbookUseCase(
         name: 'Use Case 1',
-        type: NavigationNodeType.useCase,
+        builder: (_) => const SizedBox.shrink(),
       ),
-      NavigationTreeNodeData(
-        path: 'component/use_case_2_id',
+      WidgetbookUseCase(
         name: 'Use Case 2',
-        type: NavigationNodeType.useCase,
+        builder: (_) => const SizedBox.shrink(),
       ),
     ],
   );
@@ -31,14 +27,14 @@ void main() {
       'Can render correct number of first level child node widgets',
       (tester) async {
         await tester.pumpWidgetWithMaterialApp(
-          const NavigationTreeNode(
+          NavigationTreeNode(
             data: nodeWithOneLevelOfChildren,
           ),
         );
 
         expect(
           find.byType(NavigationTreeNode),
-          findsNWidgets(nodeWithOneLevelOfChildren.children.length + 1),
+          findsNWidgets(nodeWithOneLevelOfChildren.children!.length + 1),
         );
       },
     );
@@ -46,14 +42,14 @@ void main() {
     testWidgets(
       'Calls onNodeSelected with selected node id',
       (tester) async {
-        const useCaseNode = NavigationTreeNodeData(
-          path: 'use_case_id',
+        final useCaseNode = WidgetbookUseCase(
           name: 'Use Case',
-          type: NavigationNodeType.useCase,
+          builder: (_) => const SizedBox.shrink(),
         );
 
         final valueChangedCallbackMock =
-            ValueChangedCallbackMock<NavigationTreeNodeData>();
+            ValueChangedCallbackMock<NavigationEntity>();
+
         await tester.pumpWidgetWithMaterialApp(
           NavigationTreeNode(
             data: useCaseNode,
@@ -70,7 +66,7 @@ void main() {
       'Can expand children ListView',
       (tester) async {
         await tester.pumpWidgetWithMaterialApp(
-          const NavigationTreeNode(
+          NavigationTreeNode(
             data: nodeWithOneLevelOfChildren,
           ),
         );

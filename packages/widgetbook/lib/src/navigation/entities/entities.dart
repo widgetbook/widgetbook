@@ -1,3 +1,4 @@
+export 'navigation_entity.dart';
 export 'widgetbook_category.dart';
 export 'widgetbook_component.dart';
 export 'widgetbook_folder.dart';

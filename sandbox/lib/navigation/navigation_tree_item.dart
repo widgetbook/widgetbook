@@ -7,21 +7,15 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 @UseCase(name: 'Default', type: NavigationTreeItem)
 Widget navigationTreeItemWithout(BuildContext context) {
-  final nodeType = context.knobs.list<NavigationNodeType>(
-    label: 'Node Type',
-    options: NavigationNodeType.values,
-  );
-
   return Column(
     children: [
       NavigationTreeItem(
-        data: NavigationTreeNodeData(
-          path: 'name',
+        data: WidgetbookCategory(
           name: context.knobs.string(
             label: 'Name',
             initialValue: 'Category',
           ),
-          type: nodeType,
+          children: [],
         ),
         level: context.knobs.double
             .slider(
@@ -35,19 +29,9 @@ Widget navigationTreeItemWithout(BuildContext context) {
         onTap: () {},
         isExpanded: context.knobs.boolean(
           label: 'Is Expanded',
-          description: 'Only '
-              '(${NavigationNodeType.expandableTypes.map(
-                    (e) => e.name,
-                  ).join(', ')}) '
-              'type(s) can be expanded',
         ),
         isSelected: context.knobs.boolean(
           label: 'Is Selected',
-          description: 'Only '
-              '(${NavigationNodeType.selectableTypes.map(
-                    (e) => e.name,
-                  ).join(', ')}) '
-              'type(s) can be selected',
         ),
       ),
     ],

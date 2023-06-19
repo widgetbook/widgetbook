@@ -1,29 +1,27 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 
-import '../../../../helper/callback_mock.dart';
-import '../../../../helper/widget_test_helper.dart';
+import '../../../helper/callback_mock.dart';
+import '../../../helper/widget_test_helper.dart';
 
 void main() {
   group(
     '$NavigationTree',
     () {
-      const directories = [
-        MultiChildNavigationNodeData(
+      final directories = [
+        WidgetbookComponent(
           name: 'Component',
-          type: NavigationNodeType.component,
-          children: [
-            MultiChildNavigationNodeData(
+          useCases: [
+            WidgetbookUseCase(
               name: 'Use Case 1',
-              type: NavigationNodeType.useCase,
-              children: [],
+              builder: (_) => const SizedBox.shrink(),
             ),
           ],
         ),
-        MultiChildNavigationNodeData(
+        WidgetbookCategory(
           name: 'Category',
-          type: NavigationNodeType.category,
           children: [],
         ),
       ];
@@ -32,15 +30,14 @@ void main() {
         'selectedNode gets updated when a node is tapped',
         (tester) async {
           await tester.pumpWidgetWithMaterialApp(
-            const NavigationTree(
+            NavigationTree(
               directories: directories,
             ),
           );
 
-          const node = NavigationTreeNodeData(
-            path: 'component/use-case-1',
+          final node = WidgetbookUseCase(
             name: 'Use Case 1',
-            type: NavigationNodeType.useCase,
+            builder: (_) => const SizedBox.shrink(),
           );
 
           await tester.tap(
@@ -61,7 +58,7 @@ void main() {
       testWidgets(
         'Calls onNodeSelected when a node is tapped',
         (tester) async {
-          final callbackMock = OnNodeSelectedCallbackMock<String, dynamic>();
+          final callbackMock = ValueChangedCallbackMock<NavigationEntity>();
 
           await tester.pumpWidgetWithMaterialApp(
             NavigationTree(
@@ -70,10 +67,9 @@ void main() {
             ),
           );
 
-          const node = NavigationTreeNodeData(
-            path: 'component/use-case-1',
+          final node = WidgetbookUseCase(
             name: 'Use Case 1',
-            type: NavigationNodeType.useCase,
+            builder: (_) => const SizedBox.shrink(),
           );
 
           await tester.tap(
@@ -84,7 +80,7 @@ void main() {
           );
 
           verify(
-            () => callbackMock(node.path, node.data),
+            () => callbackMock(node),
           ).called(1);
         },
       );

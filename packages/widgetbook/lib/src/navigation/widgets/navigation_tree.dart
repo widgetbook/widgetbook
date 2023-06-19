@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../navigation.dart';
-
-typedef NodeSelectedCallback = void Function(
-  String path,
-  dynamic data,
-);
+import '../entities/entities.dart';
+import 'navigation_tree_node.dart';
 
 class NavigationTree extends StatefulWidget {
   const NavigationTree({
@@ -16,9 +12,9 @@ class NavigationTree extends StatefulWidget {
     this.searchQuery = '',
   });
 
-  final NodeSelectedCallback? onNodeSelected;
+  final ValueChanged<NavigationEntity>? onNodeSelected;
   final String? initialPath;
-  final List<MultiChildNavigationNodeData> directories;
+  final List<NavigationEntity> directories;
   final String searchQuery;
 
   @override
@@ -26,24 +22,19 @@ class NavigationTree extends StatefulWidget {
 }
 
 class NavigationTreeState extends State<NavigationTree> {
-  late final List<NavigationTreeNodeData> nodes;
-  late List<NavigationTreeNodeData> filteredNodes;
-  NavigationTreeNodeData? selectedNode;
+  late List<NavigationEntity> filteredNodes;
+  NavigationEntity? selectedNode;
 
   @override
   void initState() {
     super.initState();
 
-    nodes = _generateNodes(
-      children: widget.directories,
-    );
-
     filteredNodes = widget.searchQuery.isNotEmpty
         ? _filterNodes(
-            nodes: nodes,
+            nodes: widget.directories,
             searchQuery: widget.searchQuery,
           )
-        : nodes;
+        : widget.directories;
 
     selectedNode = widget.initialPath != null
         ? _filterNodesByPath(widget.initialPath!)
@@ -56,10 +47,10 @@ class NavigationTreeState extends State<NavigationTree> {
     if (widget.searchQuery != oldWidget.searchQuery) {
       filteredNodes = widget.searchQuery.isNotEmpty
           ? _filterNodes(
-              nodes: nodes,
+              nodes: widget.directories,
               searchQuery: widget.searchQuery,
             )
-          : nodes;
+          : widget.directories;
     }
   }
 
@@ -74,63 +65,38 @@ class NavigationTreeState extends State<NavigationTree> {
         onNodeSelected: (node) {
           if (node.path == selectedNode?.path) return;
           setState(() => selectedNode = node);
-          widget.onNodeSelected?.call(node.path, node.data);
+          widget.onNodeSelected?.call(node);
         },
       ),
     );
   }
 
-  List<NavigationTreeNodeData> _generateNodes({
-    required List<NavigationNodeDataInterface> children,
-    List<String> currentPathSegments = const [],
-  }) {
-    final nodes = <NavigationTreeNodeData>[];
-    for (final child in children) {
-      final pathSegments = [...currentPathSegments, child.name];
-      nodes.add(
-        NavigationTreeNodeData(
-          path: pathSegments.join('/').replaceAll(' ', '-').toLowerCase(),
-          name: child.name,
-          type: child.type,
-          data: child.data,
-          isInitiallyExpanded: child.isInitiallyExpanded,
-          children: child.children.isNotEmpty
-              ? _generateNodes(
-                  children: child.children,
-                  currentPathSegments: pathSegments,
-                )
-              : [],
-        ),
-      );
-    }
-    return nodes;
-  }
-
-  List<NavigationTreeNodeData> _filterNodes({
+  List<NavigationEntity> _filterNodes({
     required String searchQuery,
-    required List<NavigationTreeNodeData> nodes,
+    required List<NavigationEntity> nodes,
   }) {
-    final filteredNodes = <NavigationTreeNodeData>[];
+    final filteredNodes = <NavigationEntity>[];
     for (final node in nodes) {
       final matchedNode = _filterNodeByQuery(node, searchQuery);
-      if (matchedNode != null && matchedNode.isExpandable) {
+      if (matchedNode != null && node.children != null) {
         filteredNodes.add(matchedNode);
       }
     }
     return filteredNodes;
   }
 
-  NavigationTreeNodeData? _filterNodeByQuery(
-    NavigationTreeNodeData node,
+  NavigationEntity? _filterNodeByQuery(
+    NavigationEntity node,
     String searchQuery,
   ) {
     final regex = RegExp(searchQuery, caseSensitive: false);
-    if (node.name.contains(regex) && node.children.isNotEmpty) {
+    if (node.name.contains(regex) && node.isExpandable) {
       return node;
     }
-    final matchingChildren = <NavigationTreeNodeData>[];
-    for (final child in node.children) {
-      if (child.isExpandable) {
+
+    final matchingChildren = <NavigationEntity>[];
+    for (final child in node.children ?? <NavigationEntity>[]) {
+      if (node.isExpandable) {
         final matchingChildNode = _filterNodeByQuery(child, searchQuery);
         if (matchingChildNode != null) {
           matchingChildren.add(matchingChildNode);
@@ -149,29 +115,33 @@ class NavigationTreeState extends State<NavigationTree> {
     return null;
   }
 
-  NavigationTreeNodeData? _filterNodesByPath(String path) {
-    for (final child in nodes) {
+  NavigationEntity? _filterNodesByPath(String path) {
+    for (final child in widget.directories) {
       final matchedChild = _filterNodeByPath(child, path);
       if (matchedChild != null) {
         return matchedChild;
       }
     }
+
     return null;
   }
 
-  NavigationTreeNodeData? _filterNodeByPath(
-    NavigationTreeNodeData node,
+  NavigationEntity? _filterNodeByPath(
+    NavigationEntity node,
     String targetPath,
   ) {
     if (node.path == targetPath) {
       return node;
     }
-    for (final child in node.children) {
+
+    for (final child in node.children ?? <NavigationEntity>[]) {
       final matchedChild = _filterNodeByPath(child, targetPath);
+
       if (matchedChild != null) {
         return matchedChild;
       }
     }
+
     return null;
   }
 }

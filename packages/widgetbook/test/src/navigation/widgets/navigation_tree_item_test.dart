@@ -4,17 +4,16 @@ import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook/src/themes.dart';
 
-import '../../../../helper/callback_mock.dart';
-import '../../../../helper/widget_test_helper.dart';
+import '../../../helper/callback_mock.dart';
+import '../../../helper/widget_test_helper.dart';
 
 void main() {
   group(
     '$NavigationTreeItem',
     () {
-      const testNode = NavigationTreeNodeData(
-        path: 'test-node',
-        name: 'Test Node',
-        type: NavigationNodeType.category,
+      final testNode = WidgetbookCategory(
+        name: 'category',
+        children: [],
       );
 
       testWidgets(
@@ -37,7 +36,9 @@ void main() {
         'more menu icon is initially not rendered',
         (tester) async {
           await tester.pumpWidgetWithMaterialApp(
-            const NavigationTreeItem(data: testNode),
+            NavigationTreeItem(
+              data: testNode,
+            ),
           );
 
           final menuIconFinder = find.byWidgetPredicate(
@@ -54,7 +55,7 @@ void main() {
         (tester) async {
           const level = 2;
           await tester.pumpWidgetWithMaterialApp(
-            const NavigationTreeItem(
+            NavigationTreeItem(
               data: testNode,
               level: level,
             ),
@@ -74,14 +75,15 @@ void main() {
       testWidgets(
         '$ExpanderIcon is rendered for expandable nodes',
         (tester) async {
-          const testNode = NavigationTreeNodeData(
-            path: 'category',
-            name: 'Category',
-            type: NavigationNodeType.category,
+          final testNode = WidgetbookCategory(
+            name: 'category',
+            children: [],
           );
 
           await tester.pumpWidgetWithMaterialApp(
-            const NavigationTreeItem(data: testNode),
+            NavigationTreeItem(
+              data: testNode,
+            ),
           );
 
           expect(testNode.isExpandable, isTrue);
@@ -93,14 +95,15 @@ void main() {
       testWidgets(
         '$ExpanderIcon is not rendered for non expandable nodes',
         (tester) async {
-          const testNode = NavigationTreeNodeData(
-            path: 'use-case',
-            name: 'Use Case',
-            type: NavigationNodeType.useCase,
+          final testNode = WidgetbookUseCase(
+            name: 'use-case',
+            builder: (_) => const SizedBox.shrink(),
           );
 
           await tester.pumpWidgetWithMaterialApp(
-            const NavigationTreeItem(data: testNode),
+            NavigationTreeItem(
+              data: testNode,
+            ),
           );
 
           expect(testNode.isExpandable, isFalse);
@@ -110,54 +113,17 @@ void main() {
       );
 
       testWidgets(
-        'renders $ComponentIcon for component navigation node type',
+        '$ExpanderIcon is not rendered for selectable nodes',
         (tester) async {
-          const testNode = NavigationTreeNodeData(
-            path: 'component',
-            name: 'Component',
-            type: NavigationNodeType.component,
-          );
-
-          await tester.pumpWidgetWithMaterialApp(
-            const NavigationTreeItem(data: testNode),
-          );
-
-          final finder = find.byType(ComponentIcon);
-          expect(finder, findsOneWidget);
-        },
-      );
-
-      testWidgets(
-        'renders $UseCaseIcon for use case navigation node type',
-        (tester) async {
-          const testNode = NavigationTreeNodeData(
-            path: 'use-case',
-            name: 'Use Case',
-            type: NavigationNodeType.useCase,
-          );
-
-          await tester.pumpWidgetWithMaterialApp(
-            const NavigationTreeItem(data: testNode),
-          );
-
-          final finder = find.byType(UseCaseIcon);
-          expect(finder, findsOneWidget);
-        },
-      );
-
-      testWidgets(
-        'renders $UseCaseIcon for use case navigation node type',
-        (tester) async {
-          const testNode = NavigationTreeNodeData(
-            path: 'use-case',
-            name: 'Use Case',
-            type: NavigationNodeType.useCase,
+          final testNode = WidgetbookUseCase(
+            name: 'use-case',
+            builder: (_) => const SizedBox.shrink(),
           );
 
           expect(testNode.isSelectable, isTrue);
 
           await tester.pumpWidgetWithMaterialApp(
-            const NavigationTreeItem(
+            NavigationTreeItem(
               data: testNode,
               isSelected: true,
             ),

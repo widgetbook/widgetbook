@@ -6,7 +6,7 @@ import 'navigation_test_data.dart';
 
 @UseCase(name: 'Default', type: NavigationPanel)
 Widget navigationPanelDefaultUseCase(BuildContext context) {
-  return const NavigationPanel(
+  return NavigationPanel(
     directories: directories,
   );
 }

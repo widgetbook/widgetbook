@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/models.dart';
+import '../entities/entities.dart';
 import 'navigation_tree.dart';
 import 'search_field.dart';
 
@@ -13,8 +13,8 @@ class NavigationPanel extends StatefulWidget {
   });
 
   final String? initialPath;
-  final NodeSelectedCallback? onNodeSelected;
-  final List<MultiChildNavigationNodeData> directories;
+  final ValueChanged<NavigationEntity>? onNodeSelected;
+  final List<NavigationEntity> directories;
 
   @override
   State<NavigationPanel> createState() => _NavigationPanelState();
@@ -25,36 +25,31 @@ class _NavigationPanelState extends State<NavigationPanel> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minWidth: 50, maxWidth: 300),
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: SearchField(
-                searchValue: searchQuery,
-                onSearchChanged: (value) {
-                  setState(() => searchQuery = value);
-                },
-                onSearchCancelled: () {
-                  setState(() => searchQuery = '');
-                },
-              ),
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: SearchField(
+              searchValue: searchQuery,
+              onSearchChanged: (value) {
+                setState(() => searchQuery = value);
+              },
+              onSearchCancelled: () {
+                setState(() => searchQuery = '');
+              },
             ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: NavigationTree(
-                initialPath: widget.initialPath,
-                onNodeSelected: widget.onNodeSelected,
-                directories: widget.directories,
-                searchQuery: searchQuery,
-              ),
+          ),
+          Expanded(
+            child: NavigationTree(
+              initialPath: widget.initialPath,
+              onNodeSelected: widget.onNodeSelected,
+              directories: widget.directories,
+              searchQuery: searchQuery,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
