@@ -101,7 +101,7 @@ extension RangeKnobBuilder on KnobsBuilder {
 
 This `range` method can now be used inside the widget to apply the custom knob:
 
-````dart
+```dart
 <Tabs
   groupId="approach"
   values={[
@@ -111,8 +111,6 @@ This `range` method can now be used inside the widget to apply the custom knob:
 >
 <TabItem value="generator">
 
-```dart title="Example: Knobs with generator"
-import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -125,7 +123,7 @@ Widget rangeSlider(BuildContext context) {
     onChanged: (_) {},
   );
 }
-````
+```
 
 </TabItem>
 <TabItem value="manual">
