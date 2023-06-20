@@ -98,3 +98,76 @@ extension RangeKnobBuilder on KnobsBuilder {
       )!;
 }
 ```
+
+This `range` method can now be used inside the widget to apply the custom knob:
+
+```dart
+<Tabs
+  groupId="approach"
+  values={[
+    { label: 'Generator', value: 'generator' },
+    { label: 'Manual', value: 'manual' },
+  ]}
+>
+<TabItem value="generator">
+
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+@widgetbook.UseCase(name: 'CustomRangeSlider', type: RangeSlider)
+Widget rangeSlider(BuildContext context) {
+  return RangeSlider(
+    values: context.knobs.range(label: 'Range'),
+    max: 10,
+    min: 0,
+    onChanged: (_) {},
+  );
+}
+```
+
+</TabItem>
+<TabItem value="manual">
+
+```dart title="Example: Knobs"
+WidgetbookFolder(
+    name: 'knobs',
+    children: [
+    WidgetbookComponent(
+        name: 'RangeSlider',
+        useCases: [
+        WidgetbookUseCase(
+            name: 'CustomRangeSlider',
+            builder: (context) => rangeSlider(context),
+         ),
+        ],
+    ),
+    ],
+),
+```
+
+</TabItem>
+</Tabs>
+
+And that's it! We have successfully created and used a custom knob in Widgetbook. This
+knob can now be used to adjust the `RangeValues` in the `RangeSlider` widget directly from
+the Widgetbook UI.
+
+<Image src="/assets/knobs/rangeslider-knob.png" zoom />
+
+<Info>
+  See [source
+  code](https://github.com/widgetbook/widgetbook/tree/main/examples/full_example/lib/customs/custom_knob.dart)
+</Info>
+
+## Limitations
+
+It's important to note that you cannot create a custom `Field`, hence the use of two
+`DoubleInputFields` for the `RangeSlider`. This limitation is due to the `FieldType` enum,
+which should also be handled on the Cloud for Widgetbook Cloud users.
+
+However, users can submit a request to create fields, and they will be managed and added
+by the Widgetbook team.
+
+## Field Types in Widgetbook
+
+For more detailed information, visit the [Field Types page](/field-types).
