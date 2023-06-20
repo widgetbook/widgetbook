@@ -4,7 +4,6 @@ A list of examples that help you getting to know Widgetbook more.
 
 | Name                                              | Description                                                                    |
 | :------------------------------------------------ | :----------------------------------------------------------------------------- |
-| [`custom_theme_example`](./custom_theme_example/) | Custom Theme usage (i.e. no `Theme` or `CupertinoTheme`)                       |
 | [`full_example`](./full_example/)                 | Covers all features of Widgetbook                                              |
 | [`knobs_example`](./knobs_example/)               | Knobs help make Widgetbook much more useful                                    |
 | [`screen_util_example`](./screen_util_example/)   | Usage with [`flutter_screenutil`](https://pub.dev/packages/flutter_screenutil) |

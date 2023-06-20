@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class CustomTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String hintText;
-
   const CustomTextField({
     Key? key,
     required this.controller,
     this.hintText = '',
   }) : super(key: key);
+
+  final TextEditingController controller;
+  final String hintText;
 
   @override
   Widget build(BuildContext context) {

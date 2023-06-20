@@ -9,6 +9,9 @@ import 'package:widgetbook/widgetbook.dart';
 import 'components/container.dart';
 import 'components/custom_card.dart';
 import 'components/custom_text_field.dart';
+import 'customs/custom_addon.dart';
+import 'customs/custom_addon_advanced.dart';
+import 'customs/custom_knob.dart';
 
 void main() {
   runApp(const WidgetbookApp());
@@ -20,7 +23,19 @@ class WidgetbookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
-      addons: [],
+      addons: [
+        CustomAddon(
+          customValue: 'Widgetbook',
+          initialCustomValue: 'Hello',
+        ),
+        AdvancedCustomAddon(
+          initialValue: AdvancedCustomAddonValue(
+            stringValue: 'WidgetbookCustomAddon',
+            doubleValue: 10.99,
+            boolValue: true,
+          ),
+        ),
+      ],
       directories: [
         WidgetbookFolder(
           name: 'Widgets',
@@ -70,6 +85,20 @@ class WidgetbookApp extends StatelessWidget {
                     controller: TextEditingController(),
                     hintText: 'Enter your text here',
                   ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        WidgetbookFolder(
+          name: 'knobs',
+          children: [
+            WidgetbookComponent(
+              name: 'RangeSlider',
+              useCases: [
+                WidgetbookUseCase(
+                  name: 'Default',
+                  builder: (context) => rangeSlider(context),
                 ),
               ],
             ),

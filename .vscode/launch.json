@@ -24,9 +24,9 @@
         },
         {
             "name": "custom_theme_example",
-            "cwd": "examples/custom_theme_example",
+            "cwd": "examples/full_examples",
             "request": "launch",
-            "program": "lib/widgetbook.dart",
+            "program": "lib/widgetbook.theme.dart",
             "type": "dart"
         },
         {

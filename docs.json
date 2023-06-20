@@ -60,10 +60,13 @@
                     "7. Addons", "/getting-started/addons"
                 ],
                 [
-                    "8. Configure", "/getting-started/configure"
+                    "8. Theme", "/getting-started/themes"
                 ],
                 [
-                    "9. Complete Example", "/getting-started/complete-example"
+                    "9. Configure", "/getting-started/configure"
+                ],
+                [
+                    "10. Complete Example", "/getting-started/complete-example"
                 ]
             ]
         ],
@@ -75,6 +78,9 @@
                 ],
                 [
                     "2. Example", "/knobs/example"
+                ],
+                [
+                    "3. Custom Knob", "/knobs/custom-knob"
                 ]
             ]
         ],
@@ -95,6 +101,9 @@
                 ],
                 [
                     "5. Text Scale Addon", "/addons/text-scale-addon"
+                ],
+                [
+                    "6. Custom Addon", "/addons/custom-addon"
                 ]
             ]
         ],
@@ -106,6 +115,14 @@
                 ],
                 [
                     "3.0.0 beta to rc", "/migration/3.0.0-beta-to-rc"
+                ]
+            ]
+        ],
+        [
+            "Cookbook",
+            [
+                [
+                    "Custom Theme", "/cookbook/custom-theme"
                 ]
             ]
         ],

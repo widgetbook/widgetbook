@@ -1,8 +1,10 @@
+/// A custom theme example for Widgetbook manual approach
+///
+/// [Ref link]: https://docs.widgetbook.io/cookbook/custom-theme
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-import 'app_theme.dart';
-import 'awesome_widget.dart';
+import 'customs/custom_theme.dart';
 
 void main() {
   runApp(const WidgetbookApp());

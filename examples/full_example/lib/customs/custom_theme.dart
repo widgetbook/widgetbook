@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 class AppThemeData {
   AppThemeData({
@@ -30,3 +31,26 @@ class AppTheme extends InheritedWidget {
     return data != oldWidget.data;
   }
 }
+
+class AwesomeWidget extends StatelessWidget {
+  const AwesomeWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: AppTheme.of(context).color,
+      child: Center(
+        child: Text(
+          '$AwesomeWidget',
+          style: TextStyle(
+            color: AppTheme.of(context).color.computeLuminance() > 0.5
+                ? Colors.black
+                : Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Now check widgetbook.theme.dart
