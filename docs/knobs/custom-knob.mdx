@@ -9,3 +9,92 @@ requirements not addressed by the pre-existing knobs.
 This document will look at how to create a custom knob in Widgetbook, using a
 `RangeSlider` as an example. This widget allows you to select a range from a series of
 values.
+
+## Creating a Custom Knob
+
+To create a custom knob, you must extend the `Knob` class from the `widgetbook` package.
+This class has a `label` and `value` property, both required. The `label` uniquely
+identifies the Knob, and the `value` holds the current value of the Knob.
+
+For our `RangeSlider`, we create a `RangeKnob` class that extends `Knob<RangeValues>`.
+`RangeValues` is a class in Flutter that holds two double values - start and end,
+representing the range.
+
+```dart
+class RangeKnob extends Knob<RangeValues> {
+  RangeKnob({
+    required super.label,
+    required super.value,
+  });
+  //...
+}
+```
+
+### Overriding Properties
+
+The Knob class has several properties that can be overridden:
+
+- `fields`: This property should return a list of `Field` objects that represent the
+  different parts of the knob. For our `RangeKnob`, we return two `DoubleInputField`
+  objects representing the `start` and `end` values of the range.
+
+```dart
+@override
+List<Field> get fields => [
+  DoubleInputField(
+    group: 'knobs',
+    name: 'min-$label',
+    initialValue: value.start,
+    onChanged: (context, value) {
+      //...
+    },
+  ),
+  DoubleInputField(
+    group: 'knobs',
+    name: 'max-$label',
+    initialValue: value.end,
+    onChanged: (context, value) {
+      //...
+    },
+  ),
+];
+
+```
+
+Each `DoubleInputField` also has an `onChanged` callback that's triggered when the field's
+value is changed. Inside this callback, we update the knob value using
+`WidgetbookState.of(context).updateKnobValue()` method.
+
+- `valueFromQueryGroup`: This property is used to parse the value of the knob from a query
+  string.
+
+```dart
+@override
+  RangeValues valueFromQueryGroup(Map<String, String> group) {
+    return RangeValues(
+      double.parse(group['min-$label'] ?? '${value.start}'),
+      double.parse(group['max-$label'] ?? '${value.end}'),
+    );
+  }
+```
+
+## Using the Custom Knob
+
+Now our custom knob, `RangeKnob`, is ready to be used. To use this knob, we create an
+extension on `KnobsBuilder`. This extension includes a `range` method that adds our
+`RangeKnob` to the `KnobsBuilder`.
+
+```dart
+extension RangeKnobBuilder on KnobsBuilder {
+  RangeValues range({
+    required String label,
+    RangeValues initialValue = const RangeValues(0, 10),
+  }) =>
+      onKnobAdded(
+        RangeKnob(
+          label: label,
+          value: initialValue,
+        ),
+      )!;
+}
+```
