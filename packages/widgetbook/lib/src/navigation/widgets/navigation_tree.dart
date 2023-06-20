@@ -27,7 +27,7 @@ class NavigationTree extends StatefulWidget {
 
 class NavigationTreeState extends State<NavigationTree> {
   late final List<NavigationTreeNodeData> nodes;
-  late final List<NavigationTreeNodeData> filteredNodes;
+  late List<NavigationTreeNodeData> filteredNodes;
   NavigationTreeNodeData? selectedNode;
 
   @override
@@ -38,7 +38,7 @@ class NavigationTreeState extends State<NavigationTree> {
       children: widget.directories,
     );
 
-    filteredNodes = widget.searchQuery.isEmpty
+    filteredNodes = widget.searchQuery.isNotEmpty
         ? _filterNodes(
             nodes: nodes,
             searchQuery: widget.searchQuery,
@@ -48,6 +48,19 @@ class NavigationTreeState extends State<NavigationTree> {
     selectedNode = widget.initialPath != null
         ? _filterNodesByPath(widget.initialPath!)
         : null;
+  }
+
+  @override
+  void didUpdateWidget(NavigationTree oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.searchQuery != oldWidget.searchQuery) {
+      filteredNodes = widget.searchQuery.isNotEmpty
+          ? _filterNodes(
+              nodes: nodes,
+              searchQuery: widget.searchQuery,
+            )
+          : nodes;
+    }
   }
 
   @override
