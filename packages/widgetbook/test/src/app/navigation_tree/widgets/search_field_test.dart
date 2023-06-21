@@ -10,7 +10,7 @@ void main() {
   group('$SearchField', () {
     testWidgets(
       'Clear search button is initially not rendered',
-      (WidgetTester tester) async {
+      (tester) async {
         await tester.pumpWidgetWithMaterialApp(
           const SearchField(),
         );
@@ -25,7 +25,7 @@ void main() {
 
     testWidgets(
       'Clear search button is shown after entering text in the text field',
-      (WidgetTester tester) async {
+      (tester) async {
         await tester.pumpWidgetWithMaterialApp(
           const SearchField(searchValue: 'Search Value'),
         );
@@ -43,7 +43,7 @@ void main() {
     testWidgets(
       'Clicking on clear search button '
       'clears search value and removes the clear icon',
-      (WidgetTester tester) async {
+      (tester) async {
         await tester.pumpWidgetWithMaterialApp(
           const SearchField(
             searchValue: 'Search Value',
@@ -68,7 +68,7 @@ void main() {
 
     testWidgets(
       'onSearchPressed is executed',
-      (WidgetTester tester) async {
+      (tester) async {
         final voidCallbackMock = VoidCallbackMock();
         await tester.pumpWidgetWithMaterialApp(
           SearchField(

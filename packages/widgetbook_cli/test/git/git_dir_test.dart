@@ -471,7 +471,7 @@ line 2:y''',
   });
 }
 
-Future _testGetCommits() async {
+Future<void> _testGetCommits() async {
   const commitText = [
     '',
     ' \t leading white space is okay, too',
@@ -544,7 +544,7 @@ Future _testGetCommits() async {
   });
 }
 
-Future _doDescriptorGitRemove(
+Future<ProcessResult> _doDescriptorGitRemove(
   GitDir gd,
   List<String> filePaths,
   String commitMsg,
@@ -568,7 +568,7 @@ Future _doDescriptorGitRemove(
   return gd.runCommand(args);
 }
 
-Future _doDescriptorGitCommit(
+Future<ProcessResult> _doDescriptorGitCommit(
   GitDir gd,
   Map<String, String> contents,
   String commitMsg,
@@ -592,7 +592,7 @@ Future _doDescriptorGitCommit(
   return gd.runCommand(args);
 }
 
-Future _doDescriptorDepopulate(
+Future<void> _doDescriptorDepopulate(
   String dirPath,
   List<String> filePaths,
 ) async {
@@ -603,7 +603,7 @@ Future _doDescriptorDepopulate(
   }
 }
 
-Future _doDescriptorPopulate(
+Future<void> _doDescriptorPopulate(
   String dirPath,
   Map<String, String> contents,
 ) async {
@@ -618,7 +618,7 @@ Future _doDescriptorPopulate(
   }
 }
 
-Future _testPopulateBranch() async {
+Future<void> _testPopulateBranch() async {
   const initialMasterBranchContent = {'master.md': 'test file'};
 
   const testContent1 = {
@@ -720,7 +720,7 @@ Future<Tuple<Commit?, int>> _testPopulateBranchCore(
   }
 }
 
-Future _testPopulateBranchWithContent(
+Future<void> _testPopulateBranchWithContent(
   GitDir gitDir,
   String branchName,
   Map<String, String> contents,
@@ -769,7 +769,7 @@ Future _testPopulateBranchWithContent(
   expect(newCommitCount, originalCommitCount + 1);
 }
 
-Future _testPopulateBranchWithDupeContent(
+Future<void> _testPopulateBranchWithDupeContent(
   GitDir gitDir,
   String branchName,
   Map<String, String> contents,

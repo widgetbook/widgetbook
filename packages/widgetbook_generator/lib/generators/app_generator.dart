@@ -50,7 +50,7 @@ class AppGenerator extends GeneratorForAnnotation<App> {
       final dynamic content = jsonDecode(await buildStep.readAsString(id));
       final decodedJson = content as List;
       final jsons = decodedJson.cast<Map<String, dynamic>>();
-      final something = jsons.map<T>((Map<String, dynamic> json) {
+      final something = jsons.map<T>((json) {
         return fromMap(json);
       }).toList();
 

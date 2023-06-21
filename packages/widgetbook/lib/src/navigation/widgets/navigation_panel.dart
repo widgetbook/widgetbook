@@ -36,7 +36,7 @@ class _NavigationPanelState extends State<NavigationPanel> {
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: SearchField(
                 searchValue: searchQuery,
-                onSearchChanged: (String value) {
+                onSearchChanged: (value) {
                   setState(() => searchQuery = value);
                 },
                 onSearchCancelled: () {

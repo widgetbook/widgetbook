@@ -8,7 +8,7 @@ import 'knob_helper.dart';
 void main() {
   testWidgets(
     'Bool knob added',
-    (WidgetTester tester) async {
+    (tester) async {
       await tester.pumpWithKnob(
         (context) => Text(
           context.knobs.boolean(

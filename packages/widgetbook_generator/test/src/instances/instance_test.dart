@@ -33,11 +33,10 @@ class NamedCosntructorInstance extends Instance {
 
 class PropertyInstance extends Instance {
   PropertyInstance({
-    required bool trailingComma,
+    required super.trailingComma,
   }) : super(
           name: 'PropertyInstance',
           properties: [Property.string(key: 'p2', value: 'value')],
-          trailingComma: trailingComma,
         );
 }
 

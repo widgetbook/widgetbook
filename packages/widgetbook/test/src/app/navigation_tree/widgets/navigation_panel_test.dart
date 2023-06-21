@@ -28,7 +28,7 @@ void main() {
 
     testWidgets(
       'filters nodes when typing into search field',
-      (WidgetTester tester) async {
+      (tester) async {
         await tester.pumpWidgetWithMaterialApp(
           const NavigationPanel(
             directories: directories,
@@ -51,7 +51,7 @@ void main() {
 
     testWidgets(
       'resets filtered nodes when search field is cleared',
-      (WidgetTester tester) async {
+      (tester) async {
         await tester.pumpWidgetWithMaterialApp(
           const NavigationPanel(
             directories: directories,
