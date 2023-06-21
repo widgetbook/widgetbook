@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class CustomCard extends StatelessWidget {
-  final Widget child;
-  final Color backgroundColor;
-  final double borderRadius;
-
   const CustomCard({
-    Key? key,
+    super.key,
     required this.child,
     this.backgroundColor = Colors.white,
     this.borderRadius = 8.0,
-  }) : super(key: key);
+  });
+
+  final Widget child;
+  final Color backgroundColor;
+  final double borderRadius;
 
   @override
   Widget build(BuildContext context) {

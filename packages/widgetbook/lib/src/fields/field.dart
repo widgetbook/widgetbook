@@ -21,6 +21,7 @@ import 'field_type.dart';
 /// | [group] | `foo` |
 /// | [name]  | `bar` |
 /// | value   | `qux` |
+@optionalTypeArgs
 abstract class Field<T> {
   const Field({
     required this.group,

@@ -21,7 +21,7 @@ void main() {
 
       testWidgets(
         'can activate device',
-        (WidgetTester tester) async {
+        (tester) async {
           final device = devices.last;
 
           await testAddon<DeviceFrameSetting>(
@@ -52,7 +52,7 @@ void main() {
 
       testWidgets(
         'can activate device $Orientation',
-        (WidgetTester tester) async {
+        (tester) async {
           await testAddon<DeviceFrameSetting>(
             tester: tester,
             addon: addon,
@@ -81,7 +81,7 @@ void main() {
 
       testWidgets(
         'can activate frame',
-        (WidgetTester tester) async {
+        (tester) async {
           await testAddon<DeviceFrameSetting>(
             tester: tester,
             addon: addon,

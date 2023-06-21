@@ -18,7 +18,7 @@ for (var level = 1; level <= 6; level++)
   group('$StringKnob', () {
     testWidgets(
       'is multiline',
-      (WidgetTester tester) async {
+      (tester) async {
         await tester.pumpWithKnob(
           (context) => Text(
             key: textFinderKey,
@@ -41,7 +41,7 @@ for (var level = 1; level <= 6; level++)
 
     testWidgets(
       'is not multiline',
-      (WidgetTester tester) async {
+      (tester) async {
         await tester.pumpWithKnob(
           (context) => Text(
             context.knobs.string(

@@ -6,6 +6,7 @@ import '../settings/settings.dart';
 import '../state/state.dart';
 
 /// Allows [WidgetbookUseCase]s to have dynamically adjustable parameters.
+@optionalTypeArgs
 abstract class Knob<T> extends FieldsComposable<T> {
   Knob({
     required this.label,

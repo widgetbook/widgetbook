@@ -7,8 +7,7 @@ class BranchReference extends CommitReference {
   factory BranchReference(String sha, String reference) =>
       BranchReference._internal(sha, reference);
 
-  BranchReference._internal(String sha, String reference)
-      : super(sha, reference);
+  BranchReference._internal(super.sha, super.reference);
 
   /// The name of the associated branch.
   ///

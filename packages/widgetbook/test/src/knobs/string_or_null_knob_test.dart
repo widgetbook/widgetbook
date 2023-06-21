@@ -7,7 +7,7 @@ import 'knob_helper.dart';
 void main() {
   testWidgets(
     'Equality operator works correctly',
-    (WidgetTester tester) async {
+    (tester) async {
       final first = StringOrNullKnob(
         label: 'first',
         value: null,
@@ -31,7 +31,7 @@ void main() {
 
   testWidgets(
     'Nullable String knob functions',
-    (WidgetTester tester) async {
+    (tester) async {
       final text = 'widgetbook';
       final key = ValueKey(text);
 
@@ -67,7 +67,7 @@ void main() {
 
   testWidgets(
     'Nullable String remembers previous value',
-    (WidgetTester tester) async {
+    (tester) async {
       final text = 'widgetbook';
       final key = ValueKey(text);
 

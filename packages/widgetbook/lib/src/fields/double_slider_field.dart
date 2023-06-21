@@ -42,7 +42,6 @@ class DoubleSliderField extends Field<double> {
           ),
         ),
         Expanded(
-          flex: 1,
           child: Text(
             value?.toString() ?? '',
           ),

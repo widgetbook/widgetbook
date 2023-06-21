@@ -8,8 +8,8 @@ Matcher expectAssertionErrorWithMessage({
   return throwsA(
     allOf(
       isA<AssertionError>(),
-      predicate(
-        (AssertionError e) => e.message == message,
+      predicate<AssertionError>(
+        (e) => e.message == message,
       ),
     ),
   );

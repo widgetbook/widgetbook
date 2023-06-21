@@ -23,7 +23,7 @@ void main() {
   group('$LocalizationAddon', () {
     testWidgets(
       'can activate locale',
-      (WidgetTester tester) async {
+      (tester) async {
         await testAddon<Locale>(
           tester: tester,
           addon: addon,

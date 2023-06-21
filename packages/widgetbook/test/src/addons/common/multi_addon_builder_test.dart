@@ -12,7 +12,7 @@ void main() {
     () {
       testWidgets(
         'returns child widget when addons are empty',
-        (WidgetTester tester) async {
+        (tester) async {
           await tester.pumpWidgetWithMaterialApp(
             MultiAddonBuilder(
               addons: [],
@@ -32,7 +32,7 @@ void main() {
 
       testWidgets(
         'returns [Nested] widget when addons are available',
-        (WidgetTester tester) async {
+        (tester) async {
           await tester.pumpWidgetWithMaterialApp(
             MultiAddonBuilder(
               addons: [

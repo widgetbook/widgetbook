@@ -33,7 +33,7 @@ void main() {
 
       testWidgets(
         'can activate theme',
-        (WidgetTester tester) async {
+        (tester) async {
           await testAddon<WidgetbookTheme<ThemeData>>(
             tester: tester,
             addon: addon,

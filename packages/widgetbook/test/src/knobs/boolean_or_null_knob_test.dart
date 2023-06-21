@@ -7,7 +7,7 @@ import 'knob_helper.dart';
 void main() {
   testWidgets(
     'Equality operator works correctly',
-    (WidgetTester tester) async {
+    (tester) async {
       final first = BooleanOrNullKnob(label: 'first', value: null);
       final second = BooleanOrNullKnob(label: 'second', value: null);
       expect(first, equals(BooleanOrNullKnob(label: 'first', value: null)));
@@ -17,7 +17,7 @@ void main() {
 
   testWidgets(
     'Nullable Bool knob functions',
-    (WidgetTester tester) async {
+    (tester) async {
       await tester.pumpWithKnob(
         (context) {
           final value = context.knobs.booleanOrNull(
@@ -59,7 +59,7 @@ void main() {
 
   testWidgets(
     'Nullable Bool knob remembers previous value before null',
-    (WidgetTester tester) async {
+    (tester) async {
       await tester.pumpWithKnob(
         (context) {
           final value = context.knobs.booleanOrNull(
