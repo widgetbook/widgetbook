@@ -1,3 +1,7 @@
+## Unreleased
+
+ - **FIX**: Update filtered nodes in navigation panel on search. ([#769](https://github.com/widgetbook/widgetbook/pull/769))
+
 ## 3.0.0-rc.2
 
  - **FEAT**: Support hot reloading. ([#759](https://github.com/widgetbook/widgetbook/pull/759))
