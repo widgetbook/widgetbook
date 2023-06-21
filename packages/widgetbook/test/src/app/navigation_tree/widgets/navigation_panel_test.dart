@@ -40,6 +40,8 @@ void main() {
           query,
         );
 
+        await tester.pumpAndSettle();
+
         final navNodes = find.byType(NavigationTreeNode);
 
         expect(
