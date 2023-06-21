@@ -8,7 +8,7 @@ void main() {
   group('$ColorKnob', () {
     testWidgets(
       'can return initial value',
-      (WidgetTester tester) async {
+      (tester) async {
         await tester.pumpWithKnob(
           (context) => Icon(
             key: const Key('coloredIcon'),

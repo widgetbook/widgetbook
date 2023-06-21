@@ -7,7 +7,7 @@ import 'knob_helper.dart';
 void main() {
   testWidgets(
     'Equality operator works correctly',
-    (WidgetTester tester) async {
+    (tester) async {
       final first = BooleanKnob(label: 'first', value: true);
       final second = BooleanKnob(label: 'second', value: true);
       expect(first, equals(BooleanKnob(label: 'first', value: true)));
@@ -17,7 +17,7 @@ void main() {
 
   testWidgets(
     'Bool knob functions',
-    (WidgetTester tester) async {
+    (tester) async {
       await tester.pumpWithKnob(
         (context) => Text(
           context.knobs.boolean(

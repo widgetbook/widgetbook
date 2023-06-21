@@ -23,7 +23,7 @@ class LocalizationAddon extends WidgetbookAddon<Locale> {
         );
 
   final List<Locale> locales;
-  final List<LocalizationsDelegate> localizationsDelegates;
+  final List<LocalizationsDelegate<dynamic>> localizationsDelegates;
 
   @override
   List<Field> get fields {

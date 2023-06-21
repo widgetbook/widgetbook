@@ -37,7 +37,7 @@ void main() {
 
       testWidgets(
         'can activate theme',
-        (WidgetTester tester) async {
+        (tester) async {
           await testAddon<WidgetbookTheme<CupertinoThemeData>>(
             tester: tester,
             addon: addon,

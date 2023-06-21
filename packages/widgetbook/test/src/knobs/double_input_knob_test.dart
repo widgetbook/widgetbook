@@ -7,7 +7,7 @@ import 'knob_helper.dart';
 void main() {
   testWidgets(
     'Equality operator works correctly',
-    (WidgetTester tester) async {
+    (tester) async {
       final first = DoubleInputKnob(label: 'first', value: 2);
       final second = DoubleInputKnob(label: 'second', value: 3);
 
@@ -18,7 +18,7 @@ void main() {
 
   testWidgets(
     'Number knob initial value works',
-    (WidgetTester tester) async {
+    (tester) async {
       await tester.pumpWithKnob(
         (context) => Text(
           context.knobs.double
@@ -36,7 +36,7 @@ void main() {
 
   testWidgets(
     'Number knob description displays',
-    (WidgetTester tester) async {
+    (tester) async {
       await tester.pumpWithKnob(
         (context) => Text(
           context.knobs.double
@@ -55,7 +55,7 @@ void main() {
 
   testWidgets(
     'Number knob functions',
-    (WidgetTester tester) async {
+    (tester) async {
       await tester.pumpWithKnob(
         (context) => Text(
           context.knobs.double

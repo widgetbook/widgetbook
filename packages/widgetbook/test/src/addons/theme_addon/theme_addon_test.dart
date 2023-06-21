@@ -56,7 +56,7 @@ void main() {
 
       testWidgets(
         'can activate theme via Widget',
-        (WidgetTester tester) async {
+        (tester) async {
           await testAddon<WidgetbookTheme<AppThemeData>>(
             tester: tester,
             addon: addon,

@@ -503,7 +503,7 @@ class GitDir {
   /// If no content is added to the directory, an error is thrown.
   Future<Commit?> updateBranch(
     String branchName,
-    Future Function(Directory td) populater,
+    Future<void> Function(Directory td) populater,
     String commitMessage,
   ) async {
     // TODO: ponder restricting branch names

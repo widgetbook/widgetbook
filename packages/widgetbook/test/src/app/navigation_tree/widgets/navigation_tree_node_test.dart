@@ -29,7 +29,7 @@ void main() {
   group('$NavigationTreeNode', () {
     testWidgets(
       'Can render correct number of first level child node widgets',
-      (WidgetTester tester) async {
+      (tester) async {
         await tester.pumpWidgetWithMaterialApp(
           const NavigationTreeNode(
             data: nodeWithOneLevelOfChildren,
@@ -45,7 +45,7 @@ void main() {
 
     testWidgets(
       'Calls onNodeSelected with selected node id',
-      (WidgetTester tester) async {
+      (tester) async {
         const useCaseNode = NavigationTreeNodeData(
           path: 'use_case_id',
           name: 'Use Case',
@@ -68,7 +68,7 @@ void main() {
 
     testWidgets(
       'Can expand children ListView',
-      (WidgetTester tester) async {
+      (tester) async {
         await tester.pumpWidgetWithMaterialApp(
           const NavigationTreeNode(
             data: nodeWithOneLevelOfChildren,

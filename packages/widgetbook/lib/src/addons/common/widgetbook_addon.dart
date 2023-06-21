@@ -20,6 +20,7 @@ import '../addons.dart';
 /// * [LocalizationAddon], changes the active [Locale].
 /// * [DeviceFrameAddon], an [WidgetbookAddon] to change the active frame that
 ///   allows to view the [WidgetbookUseCase] on different screens.
+@optionalTypeArgs
 abstract class WidgetbookAddon<T> extends FieldsComposable<T> {
   WidgetbookAddon({
     required this.name,

@@ -2,20 +2,16 @@ import 'widgetbook_data.dart';
 
 class WidgetbookUseCaseData extends WidgetbookData {
   WidgetbookUseCaseData({
-    required String name,
-    required String importStatement,
-    required List<String> dependencies,
+    required super.name,
+    required super.importStatement,
+    required super.dependencies,
     required this.useCaseName,
     required this.componentName,
     required this.componentImportStatement,
     required this.componentDefinitionPath,
     required this.useCaseDefinitionPath,
     required this.designLink,
-  }) : super(
-          name: name,
-          importStatement: importStatement,
-          dependencies: dependencies,
-        );
+  });
 
   factory WidgetbookUseCaseData.fromJson(Map<String, dynamic> json) {
     return WidgetbookUseCaseData(
