@@ -41,6 +41,7 @@ class _KnobPropertyState<T> extends State<KnobProperty<T>> {
     final trailingWidget = widget.trailing;
     return Setting(
       name: widget.name,
+      description: widget.description,
       trailing: trailingWidget != null || widget.isNullable
           ? Row(
               mainAxisSize: MainAxisSize.min,
@@ -63,25 +64,7 @@ class _KnobPropertyState<T> extends State<KnobProperty<T>> {
               ],
             )
           : null,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 24,
-          vertical: 8,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (widget.description != null) ...{
-              Text(widget.description!),
-              const SizedBox(
-                height: 4,
-              ),
-            },
-            widget.child
-          ],
-        ),
-      ),
+      child: widget.child,
     );
   }
 }
