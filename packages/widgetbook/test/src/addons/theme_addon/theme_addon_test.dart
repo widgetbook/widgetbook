@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/widgetbook.dart';
 
+import '../../../helper/matchers.dart';
 import '../utils/addon_test_helper.dart';
 import 'helper.dart';
 
@@ -52,6 +53,19 @@ void main() {
           yellowCustomWidgetbookTheme,
         ],
         themeBuilder: (_, __, ___) => const Placeholder(),
+      );
+
+      test(
+        'throws assertion if themes are empty',
+        () {
+          expect(
+            () => ThemeAddon(
+              themes: [],
+              themeBuilder: (_, __, ___) => const Placeholder(),
+            ),
+            throwsAssertion('themes cannot be empty'),
+          );
+        },
       );
 
       testWidgets(

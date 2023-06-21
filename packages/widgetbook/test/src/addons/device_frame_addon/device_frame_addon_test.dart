@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/widgetbook.dart';
 
+import '../../../helper/matchers.dart';
 import '../utils/addon_test_helper.dart';
 
 void main() {
@@ -17,6 +18,18 @@ void main() {
       final addon = DeviceFrameAddon(
         devices: devices,
         initialDevice: devices.first,
+      );
+
+      test(
+        'throws assertion if devices are empty',
+        () {
+          expect(
+            () => DeviceFrameAddon(
+              devices: [],
+            ),
+            throwsAssertion('devices cannot be empty'),
+          );
+        },
       );
 
       testWidgets(
