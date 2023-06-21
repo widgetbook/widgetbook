@@ -42,6 +42,7 @@ abstract class Knob<T> extends FieldsComposable<T> {
         );
       },
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: fields.map((field) => field.build(context)).toList(),
       ),
     );
