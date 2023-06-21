@@ -2,60 +2,92 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/settings/setting.dart';
 
-import '../../helper/widget_test_helper.dart';
+import '../../helper/helper.dart';
 
 void main() {
   group(
     '$Setting',
     () {
-      const content = 'Frame';
-      const textWidget = Text(
-        'Text',
-        key: ValueKey('Text'),
-      );
+      const title = 'Frame';
+
       testWidgets(
-        'content is shown',
+        'given a setting name, '
+        'then it is displayed',
         (tester) async {
           await tester.pumpWidgetWithMaterialApp(
             const Setting(
-              name: content,
-              child: textWidget,
+              name: title,
+              child: SizedBox.shrink(),
             ),
           );
 
-          final contentFinder = find.byWidgetPredicate(
-            (widget) => widget is Text && widget.data == content,
+          expect(
+            find.text(title),
+            findsOneWidget,
           );
-          final widgetFinder = find.byKey(textWidget.key!);
-
-          expect(contentFinder, findsOneWidget);
-          expect(widgetFinder, findsOneWidget);
         },
       );
 
       testWidgets(
-        'content and trailing is shown',
+        'given a setting description, '
+        'then it is displayed',
         (tester) async {
-          const key = ValueKey('Placeholder');
+          const description = 'lorem ipusm';
+
           await tester.pumpWidgetWithMaterialApp(
             const Setting(
-              name: content,
-              trailing: Placeholder(
-                key: key,
-              ),
-              child: textWidget,
+              name: title,
+              description: description,
+              child: SizedBox.shrink(),
             ),
           );
 
-          final contentFinder = find.byWidgetPredicate(
-            (widget) => widget is Text && widget.data == content,
+          expect(
+            find.text(description),
+            findsOneWidget,
           );
-          final widgetFinder = find.byKey(textWidget.key!);
-          final trailingFinder = find.byKey(key);
+        },
+      );
 
-          expect(contentFinder, findsOneWidget);
-          expect(trailingFinder, findsOneWidget);
-          expect(widgetFinder, findsOneWidget);
+      testWidgets(
+        'given a trailing widget, '
+        'then it is displayed along with the name',
+        (tester) async {
+          await tester.pumpWidgetWithMaterialApp(
+            const Setting(
+              name: title,
+              trailing: Placeholder(),
+              child: SizedBox.shrink(),
+            ),
+          );
+
+          expect(
+            find.text(title),
+            findsOneWidget,
+          );
+
+          expect(
+            find.byType(Placeholder),
+            findsOneWidget,
+          );
+        },
+      );
+
+      testWidgets(
+        'given a child widget, '
+        'then it is displayed',
+        (tester) async {
+          await tester.pumpWidgetWithMaterialApp(
+            const Setting(
+              name: title,
+              child: Placeholder(),
+            ),
+          );
+
+          expect(
+            find.byType(Placeholder),
+            findsOneWidget,
+          );
         },
       );
     },

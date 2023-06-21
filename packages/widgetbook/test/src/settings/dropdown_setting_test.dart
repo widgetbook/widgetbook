@@ -2,35 +2,36 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/settings/settings.dart';
 
-import '../../helper/callback_mock.dart';
-import '../../helper/widget_test_helper.dart';
+import '../../helper/helper.dart';
 
 void main() {
   group(
     '$DropdownSetting',
     () {
       testWidgets(
-        'callback is invoked',
+        'given a callback, '
+        'when an option is selected, '
+        'then the callback is invoked',
         (tester) async {
-          final valueChangedCallbackMock = ValueChangedCallbackMock<String>();
+          const options = ['A', 'B'];
+          final callback = ValueChangedCallbackMock<String>();
+
           await tester.pumpWidgetWithMaterialApp(
-            DropdownSetting<String>(
-              options: const ['A', 'B'],
-              onSelected: valueChangedCallbackMock.call,
+            DropdownSetting(
+              options: options,
+              onSelected: callback.call,
             ),
           );
 
-          final dropdown = find.byType(DropdownSetting<String>);
+          await tester.findAndTap(
+            find.byType(DropdownSetting<String>),
+          );
 
-          await tester.tap(dropdown);
-          await tester.pumpAndSettle();
+          await tester.findAndTap(
+            find.text(options.last).last,
+          );
 
-          final dropdownItem = find.text('B').last;
-
-          await tester.tap(dropdownItem);
-          await tester.pumpAndSettle();
-
-          verify(() => valueChangedCallbackMock.call('B')).called(1);
+          verify(() => callback.call(options.last)).called(1);
         },
       );
     },

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 
-import '../../../helper/widget_test_helper.dart';
+import '../../../helper/tester_extension.dart';
 
 void main() {
   group(

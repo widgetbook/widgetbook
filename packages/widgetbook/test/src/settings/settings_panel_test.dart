@@ -2,68 +2,81 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/settings/settings.dart';
 
-import '../../helper/widget_test_helper.dart';
+import '../../helper/helper.dart';
 
 void main() {
   group(
     '$SettingsPanel',
     () {
-      const content = 'Frames';
+      const title = 'Panel Title';
+
       testWidgets(
-        'shows Tab and hint text',
+        'given settings data has a name, '
+        'then the name is displayed',
         (tester) async {
           await tester.pumpWidgetWithMaterialApp(
             SettingsPanel(
               settings: [
                 SettingsPanelData(
-                  name: content,
+                  name: title,
                   builder: (_) => [],
                 ),
               ],
             ),
           );
 
-          final contentFinder = find.byWidgetPredicate(
-            (widget) => widget is Text && widget.data == content,
+          expect(
+            find.text(title),
+            findsOneWidget,
           );
-          final hintTextFinder = find.byWidgetPredicate(
-            (widget) => widget is Text && widget.data == 'No Frames available',
-          );
-
-          expect(hintTextFinder, findsOneWidget);
-          expect(contentFinder, findsOneWidget);
         },
       );
 
       testWidgets(
-        'shows Tab and hint text',
+        'given settings data is empty, '
+        'then a hint about being empty is displayed',
         (tester) async {
-          const widget = Text(
-            'Text',
-            key: ValueKey('Text'),
-          );
           await tester.pumpWidgetWithMaterialApp(
             SettingsPanel(
               settings: [
                 SettingsPanelData(
-                  name: content,
-                  builder: (_) => [
-                    widget,
+                  name: title,
+                  builder: (_) => [],
+                ),
+              ],
+            ),
+          );
+
+          expect(
+            find.text('No $title available'),
+            findsOneWidget,
+          );
+        },
+      );
+
+      testWidgets(
+        'given settings data is not empty, '
+        'then their widgets will be displayed',
+        (tester) async {
+          await tester.pumpWidgetWithMaterialApp(
+            SettingsPanel(
+              settings: [
+                SettingsPanelData(
+                  name: title,
+                  builder: (_) => const [
+                    Placeholder(),
+                    Placeholder(),
+                    Placeholder(),
                   ],
                 ),
               ],
             ),
           );
 
-          final contentFinder = find.byWidgetPredicate(
-            (widget) => widget is Text && widget.data == content,
+          expect(
+            find.byType(Placeholder),
+            findsNWidgets(3),
           );
-          final widgetFinder = find.byKey(
-            widget.key!,
-          );
-
-          expect(widgetFinder, findsOneWidget);
-          expect(contentFinder, findsOneWidget);
         },
       );
     },

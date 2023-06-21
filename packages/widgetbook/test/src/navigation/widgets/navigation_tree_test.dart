@@ -2,8 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 
-import '../../../helper/callback_mock.dart';
-import '../../../helper/widget_test_helper.dart';
+import '../../../helper/mocks.dart';
+import '../../../helper/tester_extension.dart';
 
 void main() {
   group(

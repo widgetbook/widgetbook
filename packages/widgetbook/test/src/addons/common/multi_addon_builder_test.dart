@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nested/nested.dart';
 import 'package:widgetbook/src/addons/common/common.dart';
 
-import '../../../helper/widget_test_helper.dart';
+import '../../../helper/tester_extension.dart';
 import 'custom_addon.dart';
 
 void main() {
