@@ -81,9 +81,11 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
       orientation: setting.orientation,
       device: setting.device!,
       isFrameVisible: setting.hasFrame,
-      screen: SafeArea(
-        child: child,
-      ),
+      screen: setting.hasFrame
+          ? child
+          : SafeArea(
+              child: child,
+            ),
     );
   }
 }
