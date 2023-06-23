@@ -16,7 +16,6 @@ class DoubleInputKnob extends Knob<double> {
   List<Field> get fields {
     return [
       DoubleInputField(
-        group: 'knobs',
         name: label,
         initialValue: value,
         onChanged: (context, value) {
@@ -45,7 +44,6 @@ class DoubleOrNullInputKnob extends Knob<double?> {
   List<Field> get fields {
     return [
       DoubleInputField(
-        group: 'knobs',
         name: label,
         initialValue: value,
         onChanged: (context, value) {

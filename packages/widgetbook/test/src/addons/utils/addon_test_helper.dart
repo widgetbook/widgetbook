@@ -34,7 +34,7 @@ Future<void> testAddon<T>({
   await tester.pumpAndSettle();
 
   final groupMap = FieldCodec.decodeQueryGroup(
-    state.queryParams[addon.slugName],
+    state.queryParams[addon.groupName],
   );
 
   final setting = addon.valueFromQueryGroup(groupMap);

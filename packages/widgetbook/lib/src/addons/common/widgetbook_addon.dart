@@ -30,7 +30,8 @@ abstract class WidgetbookAddon<T> extends FieldsComposable<T> {
   final String name;
   final T initialSetting;
 
-  String get slugName => name.trim().toLowerCase().replaceAll(RegExp(' '), '-');
+  @override
+  String get groupName => slugify(name);
 
   @override
   Widget buildFields(BuildContext context) {
@@ -38,7 +39,9 @@ abstract class WidgetbookAddon<T> extends FieldsComposable<T> {
       name: name,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: fields.map((field) => field.build(context)).toList(),
+        children: fields //
+            .map((field) => field.build(context, groupName))
+            .toList(),
       ),
     );
   }
@@ -57,7 +60,7 @@ abstract class WidgetbookAddon<T> extends FieldsComposable<T> {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'group': slugName,
+      'group': groupName,
       'fields': fields.map((field) => field.toFullJson()).toList(),
     };
   }

@@ -29,6 +29,9 @@ abstract class Knob<T> extends FieldsComposable<T> {
   bool get isNullable => null is T;
 
   @override
+  String get groupName => 'knobs';
+
+  @override
   Widget buildFields(BuildContext context) {
     return KnobProperty<T>(
       name: label,
@@ -43,7 +46,9 @@ abstract class Knob<T> extends FieldsComposable<T> {
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: fields.map((field) => field.build(context)).toList(),
+        children: fields //
+            .map((field) => field.build(context, groupName))
+            .toList(),
       ),
     );
   }
@@ -63,7 +68,7 @@ abstract class Knob<T> extends FieldsComposable<T> {
   Map<String, dynamic> toJson() {
     return {
       'name': label,
-      'group': 'knobs',
+      'group': groupName,
       'nullable': isNullable,
       'fields': fields.map((field) => field.toFullJson()).toList(),
     };

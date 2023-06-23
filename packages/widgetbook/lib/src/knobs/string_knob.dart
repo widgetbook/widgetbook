@@ -19,7 +19,6 @@ class StringKnob extends Knob<String> {
   List<Field> get fields {
     return [
       StringField(
-        group: 'knobs',
         name: label,
         initialValue: value,
         maxLines: maxLines,
@@ -52,7 +51,6 @@ class StringOrNullKnob extends Knob<String?> {
   List<Field> get fields {
     return [
       StringField(
-        group: 'knobs',
         name: label,
         initialValue: value,
         maxLines: maxLines,

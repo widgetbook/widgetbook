@@ -21,7 +21,7 @@ class Workbench extends StatelessWidget {
           builder: (context, addon, child) {
             final state = WidgetbookState.of(context);
             final groupMap = FieldCodec.decodeQueryGroup(
-              state.queryParams[addon.slugName],
+              state.queryParams[addon.groupName],
             );
 
             final newSetting = addon.valueFromQueryGroup(groupMap);
