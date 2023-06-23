@@ -1,5 +1,6 @@
 ## Unreleased
 
+ - **REFACTOR**: Add `SafeArea` for frameless devices only. ([#775](https://github.com/widgetbook/widgetbook/pull/775))
  - **FIX**: Update filtered nodes in navigation panel on search. ([#769](https://github.com/widgetbook/widgetbook/pull/769))
 
 ## 3.0.0-rc.2
