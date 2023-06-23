@@ -52,4 +52,13 @@ abstract class WidgetbookAddon<T> extends FieldsComposable<T> {
   ) {
     return child;
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'group': slugName,
+      'fields': fields.map((field) => field.toFullJson()).toList(),
+    };
+  }
 }

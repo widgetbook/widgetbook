@@ -24,4 +24,6 @@ abstract class FieldsComposable<T> {
 
     return field.valueFrom(group);
   }
+
+  Map<String, dynamic> toJson();
 }

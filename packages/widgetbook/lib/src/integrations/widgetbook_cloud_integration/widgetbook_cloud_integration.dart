@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 import '../../state/state.dart';
 import '../widgetbook_integration.dart';
 import 'no_messaging.dart' if (dart.library.html) 'web_messaging.dart';
@@ -9,17 +7,21 @@ import 'no_messaging.dart' if (dart.library.html) 'web_messaging.dart';
 class WidgetbookCloudIntegration extends WidgetbookIntegration {
   @override
   void onInit(WidgetbookState state) {
-    if (!kIsWeb || state.addons == null) return;
+    if (state.addons == null) return;
 
-    final addonsJsonEntries = state.addons!.map(
-      (addon) => MapEntry(
-        addon.slugName,
-        addon.fields.map((field) => field.toFullJson()).toList(),
-      ),
-    );
+    final addonsJson = state.addons! //
+        .map((addon) => addon.toJson())
+        .toList();
 
-    sendMessage(
-      Map.fromEntries(addonsJsonEntries),
-    );
+    sendMessage({'addons': addonsJson});
+  }
+
+  @override
+  void onKnobsRegistered(WidgetbookState state) {
+    final knobsJson = state.knobs.values //
+        .map((knob) => knob.toJson())
+        .toList();
+
+    sendMessage({'knobs': knobsJson});
   }
 }

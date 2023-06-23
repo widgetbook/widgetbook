@@ -125,6 +125,15 @@ class WidgetbookState extends ChangeNotifier {
     return knob.valueFromQueryGroup(knobsQueryGroup);
   }
 
+  @internal
+  void notifyKnobsReady() {
+    notifyListeners();
+
+    integrations?.forEach(
+      (integration) => integration.onKnobsRegistered(this),
+    );
+  }
+
   /// Update the current state using [AppRouteConfig] to update
   /// the [path], [previewMode] and [queryParams] fields. Since these fields
   /// can be manipulated from the router's query parameters, as opposed to the
