@@ -28,7 +28,6 @@ class TextScaleAddon extends WidgetbookAddon<double> {
   List<Field> get fields {
     return [
       ListField<double>(
-        group: slugName,
         name: 'factor',
         values: scales,
         initialValue: initialSetting,

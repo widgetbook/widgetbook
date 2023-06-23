@@ -18,7 +18,6 @@ class ColorKnob extends Knob<Color> {
   List<Field> get fields {
     return [
       ColorField(
-        group: 'knobs',
         name: label,
         initialValue: value,
         onChanged: (context, value) {

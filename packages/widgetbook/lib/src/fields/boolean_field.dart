@@ -7,7 +7,6 @@ import 'field_type.dart';
 /// [Field] that builds [Switch] for [bool] values.
 class BooleanField extends Field<bool> {
   BooleanField({
-    required super.group,
     required super.name,
     super.initialValue = true,
     super.onChanged,
@@ -20,10 +19,10 @@ class BooleanField extends Field<bool> {
         );
 
   @override
-  Widget toWidget(BuildContext context, bool? value) {
+  Widget toWidget(BuildContext context, String group, bool? value) {
     return Switch(
       value: value ?? initialValue ?? true,
-      onChanged: (value) => updateField(context, value),
+      onChanged: (value) => updateField(context, group, value),
     );
   }
 }

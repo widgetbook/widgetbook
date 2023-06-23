@@ -33,14 +33,12 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
   List<Field> get fields {
     return [
       ListField<DeviceInfo?>(
-        group: slugName,
         name: 'name',
         values: devices,
         initialValue: initialSetting.device,
         labelBuilder: (device) => device?.name ?? 'None',
       ),
       ListField<Orientation>(
-        group: slugName,
         name: 'orientation',
         values: Orientation.values,
         initialValue: initialSetting.orientation,
@@ -49,7 +47,6 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
             orientation.name.substring(1),
       ),
       ListField<bool>(
-        group: slugName,
         name: 'frame',
         values: [false, true],
         initialValue: initialSetting.hasFrame,

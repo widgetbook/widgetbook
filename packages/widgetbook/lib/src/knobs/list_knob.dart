@@ -25,7 +25,6 @@ class ListKnob<T> extends Knob<T> {
   List<Field> get fields {
     return [
       ListField<T>(
-        group: 'knobs',
         name: label,
         values: options,
         initialValue: value,
@@ -61,7 +60,6 @@ class ListOrNullKnob<T> extends Knob<T?> {
   List<Field> get fields {
     return [
       ListField<T?>(
-        group: 'knobs',
         name: label,
         values: options,
         initialValue: value,

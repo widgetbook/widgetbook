@@ -29,7 +29,6 @@ class LocalizationAddon extends WidgetbookAddon<Locale> {
   List<Field> get fields {
     return [
       ListField<Locale>(
-        group: slugName,
         name: 'name',
         values: locales,
         initialValue: initialSetting,

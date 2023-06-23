@@ -7,7 +7,6 @@ import 'field_type.dart';
 /// [Field] that builds [Slider] for [double] values.
 class DoubleSliderField extends Field<double> {
   DoubleSliderField({
-    required super.group,
     required super.name,
     super.initialValue = 0,
     required this.min,
@@ -27,7 +26,7 @@ class DoubleSliderField extends Field<double> {
   final int? divisions;
 
   @override
-  Widget toWidget(BuildContext context, double? value) {
+  Widget toWidget(BuildContext context, String group, double? value) {
     return Row(
       children: [
         Expanded(
@@ -38,7 +37,7 @@ class DoubleSliderField extends Field<double> {
             max: max,
             label: (value ?? 0).toStringAsFixed(2),
             divisions: divisions,
-            onChanged: (value) => updateField(context, value),
+            onChanged: (value) => updateField(context, group, value),
           ),
         ),
         Expanded(
