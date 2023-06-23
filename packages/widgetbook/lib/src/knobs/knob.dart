@@ -58,4 +58,14 @@ abstract class Knob<T> extends FieldsComposable<T> {
 
   @override
   int get hashCode => label.hashCode;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'name': label,
+      'group': 'knobs',
+      'nullable': isNullable,
+      'fields': fields.map((field) => field.toFullJson()).toList(),
+    };
+  }
 }
