@@ -15,7 +15,7 @@ typedef AppBuilder = Widget Function(BuildContext context, Widget child);
 
 class WidgetbookState extends ChangeNotifier {
   WidgetbookState({
-    this.path = '',
+    this.path,
     this.previewMode = false,
     this.queryParams = const {},
     required this.appBuilder,
@@ -27,7 +27,7 @@ class WidgetbookState extends ChangeNotifier {
           directories,
         );
 
-  String path;
+  String? path;
   bool previewMode;
   Map<String, String> queryParams;
 
@@ -38,16 +38,20 @@ class WidgetbookState extends ChangeNotifier {
   final List<WidgetbookIntegration>? integrations;
   final List<MultiChildNavigationNodeData> directories;
 
-  WidgetbookUseCase? get useCase => catalog.get(path);
+  WidgetbookUseCase? get useCase => path == null ? null : catalog.get(path!);
 
   /// A [Uri] representation of the current state.
-  Uri get uri => Uri(
-        path: '/',
-        queryParameters: {
-          'path': path,
-          ...queryParams,
-        },
-      );
+  Uri get uri {
+    final queryParameters = {
+      if (path != null) 'path': path,
+      ...queryParams,
+    };
+
+    return Uri(
+      path: '/',
+      queryParameters: queryParameters.isEmpty ? null : queryParameters,
+    );
+  }
 
   /// Gets the current state using [context].
   static WidgetbookState of(BuildContext context) {
