@@ -1,3 +1,7 @@
+## Unreleased
+
+ - **FIX**: Remove unused imports. ([#786](https://github.com/widgetbook/widgetbook/pull/786))
+
 ## 3.0.0
 
 Check out the [migration guide](https://docs.widgetbook.io/migration/2.4.0-to-3.0.0) for more information.
