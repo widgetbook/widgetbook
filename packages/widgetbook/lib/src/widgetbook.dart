@@ -101,6 +101,7 @@ class _WidgetbookState extends State<Widgetbook> {
     );
 
     router = AppRouter(
+      initialRoute: Uri.base.fragment,
       state: state,
     );
 

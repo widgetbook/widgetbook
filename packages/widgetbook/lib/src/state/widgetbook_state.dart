@@ -94,7 +94,7 @@ class WidgetbookState extends ChangeNotifier {
   /// Resets the [knobs] during the update.
   @internal
   void updatePath(String newPath) {
-    path = newPath;
+    path = catalog.hasPath(newPath) ? newPath : null;
     knobs.clear(); // Reset Knobs
     queryParams.remove('knobs');
     notifyListeners();
@@ -144,12 +144,18 @@ class WidgetbookState extends ChangeNotifier {
   /// rest of fields that stay unchanged during runtime.
   @internal
   void updateFromRouteConfig(AppRouteConfig routeConfig) {
-    path = routeConfig.path;
-    previewMode = routeConfig.previewMode;
-    queryParams = {
-      // Copy from UnmodifiableMap
-      ...routeConfig.queryParameters
-    };
+    if (routeConfig.path != null && catalog.hasPath(routeConfig.path!)) {
+      path = routeConfig.path;
+      previewMode = routeConfig.previewMode;
+      queryParams = {
+        // Copy from UnmodifiableMap
+        ...routeConfig.queryParameters
+      };
+    } else {
+      path = null;
+      previewMode = false;
+      queryParams = {};
+    }
 
     notifyListeners();
   }
