@@ -102,7 +102,7 @@
             "Migration",
             [
                 [
-                    "2.4.0 to 3.0.0 beta", "/migration/2.4.0-to-3.0.0"
+                    "2.4.0 to 3.0.0", "/migration/2.4.0-to-3.0.0"
                 ],
                 [
                     "3.0.0 beta to rc", "/migration/3.0.0-beta-to-rc"
