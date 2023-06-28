@@ -17,8 +17,6 @@ class WidgetbookCatalog {
 
   final Map<String, WidgetbookUseCase> _useCases;
 
-  bool hasPath(String path) => _useCases.containsKey(path);
-
   WidgetbookUseCase? get(String path) => _useCases[path];
 
   static Map<String, WidgetbookUseCase> _getUseCases(

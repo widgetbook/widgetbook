@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'addons/addons.dart';
 import 'integrations/integrations.dart';
 import 'navigation/navigation.dart';
-import 'routing/app_router.dart';
+import 'routing/routing.dart';
 import 'state/state.dart';
 import 'themes.dart';
 
@@ -89,6 +89,17 @@ class _WidgetbookState extends State<Widgetbook> {
   late final WidgetbookState state;
   late final AppRouter router;
 
+  String get _initialRoute {
+    var baseRoute = Uri.base.fragment;
+    final String? basePath = AppRouteConfig(location: baseRoute).path;
+
+    if (basePath != null && state.catalog.get(basePath) != null) {
+      return baseRoute;
+    }
+
+    return '/';
+  }
+
   @override
   void initState() {
     super.initState();
@@ -100,10 +111,14 @@ class _WidgetbookState extends State<Widgetbook> {
       directories: widget.directories,
     );
 
+    final String initialRoute = _initialRoute;
+
     router = AppRouter(
-      initialRoute: Uri.base.fragment,
+      initialRoute: initialRoute,
       state: state,
     );
+
+    state.updateFromRouteConfig(AppRouteConfig(location: initialRoute));
 
     widget.integrations?.forEach(
       (integration) => integration.onInit(state),
