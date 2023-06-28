@@ -32,12 +32,21 @@ class Workbench extends StatelessWidget {
               newSetting,
             );
           },
-          child: UseCaseBuilder(
-            key: ValueKey(state.uri),
-            builder: (context) {
-              return WidgetbookState.of(context).useCase?.builder(context) ??
-                  const SizedBox.shrink();
-            },
+          child: Stack(
+            // The Stack is used to loosen the constraints of
+            // the UseCaseBuilder. Without the Stack, UseCaseBuilder
+            // would expand to the whole size of the Workbench.
+            children: [
+              UseCaseBuilder(
+                key: ValueKey(state.uri),
+                builder: (context) {
+                  return WidgetbookState.of(context)
+                          .useCase
+                          ?.builder(context) ??
+                      const SizedBox.shrink();
+                },
+              )
+            ],
           ),
         ),
       ),
