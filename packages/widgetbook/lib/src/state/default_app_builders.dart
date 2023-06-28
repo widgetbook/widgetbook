@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 Widget materialAppBuilder(BuildContext context, Widget child) {
   return MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: child,
+    home: Material(
+      child: child,
+    ),
   );
 }
 
