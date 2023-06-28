@@ -1,6 +1,7 @@
 ## Unreleased
 
  - **FIX**: Replace the `Scaffold` around use-cases with a `ColoredBox` below the `Theme` widget. ([#789](https://github.com/widgetbook/widgetbook/pull/789))
+ - **FIX**: Add `Material` widget through default `appBuilder` of `Widgetbook.material`. ([#792](https://github.com/widgetbook/widgetbook/pull/792))
 
 ## 3.0.0
 
