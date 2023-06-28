@@ -12,7 +12,10 @@ class CupertinoThemeAddon extends ThemeAddon<CupertinoThemeData> {
           themeBuilder: (context, theme, child) {
             return CupertinoTheme(
               data: theme,
-              child: child,
+              child: ColoredBox(
+                color: theme.scaffoldBackgroundColor,
+                child: child,
+              ),
             );
           },
         );
