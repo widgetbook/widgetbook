@@ -1,3 +1,7 @@
+## Unreleased
+
+ - **FIX**: Replace the `Scaffold` around use-cases with a `ColoredBox` below the `Theme` widget. ([#789](https://github.com/widgetbook/widgetbook/pull/789))
+
 ## 3.0.0
 
 Check out the [migration guide](https://docs.widgetbook.io/migration/2.4.0-to-3.0.0) for more information.
