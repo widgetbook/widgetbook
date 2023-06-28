@@ -60,12 +60,11 @@ A `WidgetbookTheme` is a class provided by Widgetbook for defining custom themes
 final devices = [
   Apple.iPhone11,
   Apple.iPhone12,
-  const Device.special(
-    name: 'Test',
-    resolution: Resolution(
-      nativeSize: DeviceSize(width: 400, height: 400),
-      scaleFactor: 1,
-    ),
+  DeviceInfo.genericPhone(
+    id: 'test-device',
+    name: 'Test Device',
+    platform: TargetPlatform.android,
+    screenSize: const Size(400, 400),
   ),
 ];
 ```
