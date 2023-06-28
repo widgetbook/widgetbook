@@ -32,14 +32,12 @@ class Workbench extends StatelessWidget {
               newSetting,
             );
           },
-          child: Scaffold(
-            body: UseCaseBuilder(
-              key: ValueKey(state.uri),
-              builder: (context) {
-                return WidgetbookState.of(context).useCase?.builder(context) ??
-                    const SizedBox.shrink();
-              },
-            ),
+          child: UseCaseBuilder(
+            key: ValueKey(state.uri),
+            builder: (context) {
+              return WidgetbookState.of(context).useCase?.builder(context) ??
+                  const SizedBox.shrink();
+            },
           ),
         ),
       ),
