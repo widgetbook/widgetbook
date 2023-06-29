@@ -40,17 +40,14 @@ class AdvancedCustomAddon extends WidgetbookAddon<AdvancedCustomAddonValue> {
   List<Field> get fields {
     return [
       StringField(
-        group: slugName,
         name: 'stringField',
         initialValue: initialValue.stringValue,
       ),
       DoubleInputField(
-        group: slugName,
         name: 'doubleInputField',
         initialValue: initialValue.doubleValue,
       ),
       BooleanField(
-        group: slugName,
         name: 'booleanField',
         initialValue: initialValue.boolValue,
       ),

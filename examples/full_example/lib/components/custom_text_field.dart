@@ -12,9 +12,6 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
 
-  final TextEditingController controller;
-  final String hintText;
-
   @override
   Widget build(BuildContext context) {
     return TextField(

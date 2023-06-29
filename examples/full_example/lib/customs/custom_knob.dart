@@ -24,7 +24,6 @@ class RangeKnob extends Knob<RangeValues> {
   @override
   List<Field> get fields => [
         DoubleInputField(
-          group: 'knobs',
           name: 'min-$label',
           initialValue: value.start,
           onChanged: (context, value) {
@@ -40,7 +39,6 @@ class RangeKnob extends Knob<RangeValues> {
           },
         ),
         DoubleInputField(
-          group: 'knobs',
           name: 'max-$label',
           initialValue: value.end,
           onChanged: (context, value) {

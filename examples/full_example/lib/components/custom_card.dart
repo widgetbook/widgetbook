@@ -13,10 +13,6 @@ class CustomCard extends StatelessWidget {
   final Color backgroundColor;
   final double borderRadius;
 
-  final Widget child;
-  final Color backgroundColor;
-  final double borderRadius;
-
   @override
   Widget build(BuildContext context) {
     return Card(

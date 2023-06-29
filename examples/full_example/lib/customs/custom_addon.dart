@@ -31,7 +31,6 @@ class CustomAddon extends WidgetbookAddon<String> {
   List<Field> get fields {
     return [
       StringField(
-        group: slugName,
         name: 'yourCustomName',
         maxLines: maxLines,
         initialValue: initialSetting,

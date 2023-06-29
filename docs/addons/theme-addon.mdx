@@ -173,12 +173,12 @@ final yellowTheme = AppThemeData(
 );
 ```
 
-The `CustomThemeAddon` requires two properties. The `themes` property defines which themes
+The `ThemeAddon` requires two properties. The `themes` property defines which themes
 are available while the `initialTheme` property defines which theme is active and
 selected.
 
-```dart title="Example: CustomThemeAddon"
-final themeAddon = CustomThemeAddon<AppThemeData>(
+```dart title="Example: ThemeAddon"
+final themeAddon = ThemeAddon<AppThemeData>(
   themes: [
     WidgetbookTheme(
       name: 'Blue',
