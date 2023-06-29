@@ -9,7 +9,7 @@ class AppRouteConfig {
   final String location;
   final Map<String, String> queryParameters;
 
-  String get path => queryParameters['path'] ?? '';
+  String? get path => queryParameters['path'];
 
   bool get previewMode => queryParameters.containsKey('preview');
 }

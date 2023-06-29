@@ -1,10 +1,10 @@
-name: knobs_example
-description: An example project that demonstrates how to knobs.
+name: custom_theme_example
+description: An example project that demonstrates how to work with custom themes.
 publish_to: none
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.18.0 <3.0.0"
+  sdk: ">=2.18.2 <3.0.0"
 
 dependencies:
   flutter:

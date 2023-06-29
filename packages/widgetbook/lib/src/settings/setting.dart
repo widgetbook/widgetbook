@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-import 'setting_header.dart';
-
 class Setting extends StatelessWidget {
   const Setting({
     super.key,
     required this.name,
-    required this.child,
+    this.description,
     this.trailing,
+    required this.child,
   });
 
   final String name;
-  final Widget child;
+  final String? description;
   final Widget? trailing;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +22,32 @@ class Setting extends StatelessWidget {
         vertical: 12,
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(
-            height: 12,
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                ),
+              ),
+              if (trailing != null) ...{
+                const SizedBox(width: 8),
+                trailing!,
+              },
+            ],
           ),
-          SettingHeader(
-            content: name,
-            trailing: trailing,
-          ),
-          const SizedBox(
-            height: 12,
-          ),
+          const SizedBox(height: 12),
+          if (description != null) ...{
+            Text(description!),
+            const SizedBox(height: 12),
+          },
           child,
         ],
       ),

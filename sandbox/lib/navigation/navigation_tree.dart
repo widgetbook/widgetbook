@@ -8,6 +8,5 @@ import 'navigation_test_data.dart';
 Widget navigationTreeDefaultUseCase(BuildContext context) {
   return const NavigationTree(
     directories: directories,
-    searchQuery: '',
   );
 }

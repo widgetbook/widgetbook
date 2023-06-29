@@ -60,7 +60,7 @@ abstract class GeneratorParser<T> {
           .directory(generatedFolderPath)
           .listSync(recursive: true)
           .whereType<File>()
-          .where((File file) => file.path.endsWith(fileExtension));
+          .where((file) => file.path.endsWith(fileExtension));
     }
   }
 

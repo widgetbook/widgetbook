@@ -6,7 +6,14 @@ import 'field_codec.dart';
 /// Interface for defining APIs for features that
 /// use [fields] as a building block.
 abstract class FieldsComposable<T> {
+  // The name of the query group param.
+  String get groupName;
+
   List<Field> get fields;
+
+  String slugify(String name) {
+    return name.trim().toLowerCase().replaceAll(RegExp(' '), '-');
+  }
 
   /// Converts a query group to a value of type [T].
   T valueFromQueryGroup(Map<String, String> group);
@@ -24,4 +31,6 @@ abstract class FieldsComposable<T> {
 
     return field.valueFrom(group);
   }
+
+  Map<String, dynamic> toJson();
 }

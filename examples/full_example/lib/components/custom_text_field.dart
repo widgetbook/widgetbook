@@ -4,10 +4,13 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
-    Key? key,
+    super.key,
     required this.controller,
     this.hintText = '',
-  }) : super(key: key);
+  });
+
+  final TextEditingController controller;
+  final String hintText;
 
   final TextEditingController controller;
   final String hintText;

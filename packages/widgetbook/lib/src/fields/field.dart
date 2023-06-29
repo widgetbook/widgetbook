@@ -16,14 +16,14 @@ import 'field_type.dart';
 /// with the query parameters. A [Field] is encoded into a query parameter using
 /// a JSON-like format (e.g. `/?foo={bar:qux}`), it has the following parts:
 ///
-/// | Part    | Value |
-/// | :-----  | :---- |
-/// | [group] | `foo` |
-/// | [name]  | `bar` |
-/// | value   | `qux` |
+/// | Part   | Value |
+/// | :----  | :---- |
+/// | group  | `foo` |
+/// | [name] | `bar` |
+/// | value  | `qux` |
+@optionalTypeArgs
 abstract class Field<T> {
   const Field({
-    required this.group,
     required this.name,
     required this.type,
     required this.initialValue,
@@ -31,11 +31,7 @@ abstract class Field<T> {
     this.onChanged,
   });
 
-  /// A set of [Field]s can be grouped under the same query parameter
-  /// by using [group] for all of them.
-  final String group;
-
-  /// Name of this inside the [group] query parameter.
+  /// Name of this inside the query group.
   final String name;
 
   /// Type of this, helps providing some metadata about this,
@@ -59,19 +55,19 @@ abstract class Field<T> {
     return codec.toValue(groupMap[name]) ?? initialValue;
   }
 
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, String group) {
     final state = WidgetbookState.of(context);
     final groupMap = FieldCodec.decodeQueryGroup(state.queryParams[group]);
     final value = valueFrom(groupMap);
 
-    return toWidget(context, value);
+    return toWidget(context, group, value);
   }
 
   /// Builds the current field into a [Widget] to be used for input in the
   /// side panel.
-  Widget toWidget(BuildContext context, T? value);
+  Widget toWidget(BuildContext context, String group, T? value);
 
-  void updateField(BuildContext context, T value) {
+  void updateField(BuildContext context, String group, T value) {
     final state = WidgetbookState.of(context);
     final groupMap = FieldCodec.decodeQueryGroup(state.queryParams[group]);
 

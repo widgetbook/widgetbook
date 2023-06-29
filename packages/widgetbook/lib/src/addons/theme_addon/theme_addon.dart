@@ -37,7 +37,6 @@ class ThemeAddon<T> extends WidgetbookAddon<WidgetbookTheme<T>> {
   List<Field> get fields {
     return [
       ListField<WidgetbookTheme<T>>(
-        group: slugName,
         name: 'name',
         values: themes,
         initialValue: initialSetting,

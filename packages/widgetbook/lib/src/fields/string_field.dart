@@ -7,7 +7,6 @@ import 'field_type.dart';
 /// [Field] that builds [TextFormField] for [String] values.
 class StringField extends Field<String> {
   StringField({
-    required super.group,
     required super.name,
     super.initialValue = '',
     this.maxLines,
@@ -23,11 +22,11 @@ class StringField extends Field<String> {
   final int? maxLines;
 
   @override
-  Widget toWidget(BuildContext context, String? value) {
+  Widget toWidget(BuildContext context, String group, String? value) {
     return TextFormField(
       maxLines: maxLines,
       initialValue: value ?? initialValue,
-      onChanged: (value) => updateField(context, value),
+      onChanged: (value) => updateField(context, group, value),
     );
   }
 

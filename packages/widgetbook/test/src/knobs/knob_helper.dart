@@ -12,7 +12,6 @@ extension KnobHelper on WidgetTester {
       WidgetbookScope(
         state: WidgetbookState(
           path: '/',
-          previewMode: false,
           queryParams: {},
           addons: [],
           directories: [],

@@ -11,7 +11,6 @@ typedef LabelBuilder<T> = String Function(T value);
 /// [Field] that builds [DropdownSetting] for [List]<[T]> values.
 class ListField<T> extends Field<T> {
   ListField({
-    required super.group,
     required super.name,
     required this.values,
     required super.initialValue,
@@ -42,12 +41,12 @@ class ListField<T> extends Field<T> {
   final LabelBuilder<T>? labelBuilder;
 
   @override
-  Widget toWidget(BuildContext context, T? value) {
+  Widget toWidget(BuildContext context, String group, T? value) {
     return DropdownSetting<T>(
       options: values,
       initialSelection: value,
       optionValueBuilder: labelBuilder,
-      onSelected: (value) => updateField(context, value),
+      onSelected: (value) => updateField(context, group, value),
     );
   }
 

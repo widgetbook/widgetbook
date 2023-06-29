@@ -16,7 +16,6 @@ class BooleanKnob extends Knob<bool> {
   List<Field> get fields {
     return [
       BooleanField(
-        group: 'knobs',
         name: label,
         initialValue: value,
         onChanged: (context, value) {
@@ -45,7 +44,6 @@ class BooleanOrNullKnob extends Knob<bool?> {
   List<Field> get fields {
     return [
       BooleanField(
-        group: 'knobs',
         name: label,
         initialValue: value,
         onChanged: (context, value) {

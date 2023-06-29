@@ -19,7 +19,7 @@ void main() {
 
       testWidgets(
         'onTap is executed',
-        (WidgetTester tester) async {
+        (tester) async {
           final voidCallbackMock = VoidCallbackMock();
           await tester.pumpWidgetWithMaterialApp(
             NavigationTreeItem(
@@ -35,7 +35,7 @@ void main() {
 
       testWidgets(
         'more menu icon is initially not rendered',
-        (WidgetTester tester) async {
+        (tester) async {
           await tester.pumpWidgetWithMaterialApp(
             const NavigationTreeItem(data: testNode),
           );
@@ -51,7 +51,7 @@ void main() {
 
       testWidgets(
         "adds indentation SizedBox's from level value",
-        (WidgetTester tester) async {
+        (tester) async {
           const level = 2;
           await tester.pumpWidgetWithMaterialApp(
             const NavigationTreeItem(
@@ -61,7 +61,7 @@ void main() {
           );
 
           final finder = find.byWidgetPredicate(
-            (Widget widget) =>
+            (widget) =>
                 widget is SizedBox &&
                 widget.width == NavigationTreeItem.indentation &&
                 widget.height == null,
@@ -73,7 +73,7 @@ void main() {
 
       testWidgets(
         '$ExpanderIcon is rendered for expandable nodes',
-        (WidgetTester tester) async {
+        (tester) async {
           const testNode = NavigationTreeNodeData(
             path: 'category',
             name: 'Category',
@@ -92,7 +92,7 @@ void main() {
 
       testWidgets(
         '$ExpanderIcon is not rendered for non expandable nodes',
-        (WidgetTester tester) async {
+        (tester) async {
           const testNode = NavigationTreeNodeData(
             path: 'use-case',
             name: 'Use Case',
@@ -111,7 +111,7 @@ void main() {
 
       testWidgets(
         'renders $ComponentIcon for component navigation node type',
-        (WidgetTester tester) async {
+        (tester) async {
           const testNode = NavigationTreeNodeData(
             path: 'component',
             name: 'Component',
@@ -129,7 +129,7 @@ void main() {
 
       testWidgets(
         'renders $UseCaseIcon for use case navigation node type',
-        (WidgetTester tester) async {
+        (tester) async {
           const testNode = NavigationTreeNodeData(
             path: 'use-case',
             name: 'Use Case',
@@ -147,7 +147,7 @@ void main() {
 
       testWidgets(
         'renders $UseCaseIcon for use case navigation node type',
-        (WidgetTester tester) async {
+        (tester) async {
           const testNode = NavigationTreeNodeData(
             path: 'use-case',
             name: 'Use Case',
@@ -164,7 +164,7 @@ void main() {
           );
 
           final coloredBoxWidgetFinder = find.byWidgetPredicate(
-            (Widget widget) => widget is Container && widget.child is InkWell,
+            (widget) => widget is Container && widget.child is InkWell,
           );
 
           final containerWidget =

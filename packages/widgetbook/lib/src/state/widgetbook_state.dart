@@ -15,7 +15,7 @@ typedef AppBuilder = Widget Function(BuildContext context, Widget child);
 
 class WidgetbookState extends ChangeNotifier {
   WidgetbookState({
-    this.path = '',
+    this.path,
     this.previewMode = false,
     this.queryParams = const {},
     required this.appBuilder,
@@ -27,7 +27,7 @@ class WidgetbookState extends ChangeNotifier {
           directories,
         );
 
-  String path;
+  String? path;
   bool previewMode;
   Map<String, String> queryParams;
 
@@ -38,16 +38,20 @@ class WidgetbookState extends ChangeNotifier {
   final List<WidgetbookIntegration>? integrations;
   final List<MultiChildNavigationNodeData> directories;
 
-  WidgetbookUseCase? get useCase => catalog.get(path);
+  WidgetbookUseCase? get useCase => path == null ? null : catalog.get(path!);
 
   /// A [Uri] representation of the current state.
-  Uri get uri => Uri(
-        path: '/',
-        queryParameters: {
-          'path': path,
-          ...queryParams,
-        },
-      );
+  Uri get uri {
+    final queryParameters = {
+      ...queryParams,
+      if (path != null) 'path': path,
+    };
+
+    return Uri(
+      path: '/',
+      queryParameters: queryParameters.isEmpty ? null : queryParameters,
+    );
+  }
 
   /// Gets the current state using [context].
   static WidgetbookState of(BuildContext context) {
@@ -125,6 +129,15 @@ class WidgetbookState extends ChangeNotifier {
     return knob.valueFromQueryGroup(knobsQueryGroup);
   }
 
+  @internal
+  void notifyKnobsReady() {
+    notifyListeners();
+
+    integrations?.forEach(
+      (integration) => integration.onKnobsRegistered(this),
+    );
+  }
+
   /// Update the current state using [AppRouteConfig] to update
   /// the [path], [previewMode] and [queryParams] fields. Since these fields
   /// can be manipulated from the router's query parameters, as opposed to the
@@ -136,7 +149,7 @@ class WidgetbookState extends ChangeNotifier {
     queryParams = {
       // Copy from UnmodifiableMap
       ...routeConfig.queryParameters
-    };
+    }..remove('path');
 
     notifyListeners();
   }

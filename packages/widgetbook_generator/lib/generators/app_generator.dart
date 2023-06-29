@@ -50,7 +50,7 @@ class AppGenerator extends GeneratorForAnnotation<App> {
       final dynamic content = jsonDecode(await buildStep.readAsString(id));
       final decodedJson = content as List;
       final jsons = decodedJson.cast<Map<String, dynamic>>();
-      final something = jsons.map<T>((Map<String, dynamic> json) {
+      final something = jsons.map<T>((json) {
         return fromMap(json);
       }).toList();
 
@@ -80,18 +80,11 @@ class AppGenerator extends GeneratorForAnnotation<App> {
   String generateImports(
     List<WidgetbookData> datas,
   ) {
-    final set = <String>{};
+    final set = <String>{
+      'package:widgetbook/widgetbook.dart',
+    };
 
-    for (final data in datas) {
-      set
-        ..add(data.importStatement)
-        ..addAll(data.dependencies);
-    }
-
-    set
-      ..add('package:flutter/material.dart')
-      ..add('package:widgetbook/widgetbook.dart')
-      ..remove('package:widgetbook_annotation/widgetbook_annotation.dart');
+    set.addAll(datas.map((data) => data.importStatement));
 
     final imports = set.map(_generateImportStatement).toList()
       ..sort((a, b) => a.compareTo(b));

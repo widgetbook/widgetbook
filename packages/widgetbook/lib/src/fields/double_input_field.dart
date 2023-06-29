@@ -7,7 +7,6 @@ import 'field_type.dart';
 /// [Field] that builds [TextFormField] for [double] values.
 class DoubleInputField extends Field<double> {
   DoubleInputField({
-    required super.group,
     required super.name,
     super.initialValue = 0,
     super.onChanged,
@@ -20,12 +19,13 @@ class DoubleInputField extends Field<double> {
         );
 
   @override
-  Widget toWidget(BuildContext context, double? value) {
+  Widget toWidget(BuildContext context, String group, double? value) {
     return TextFormField(
       initialValue: codec.toParam(value ?? initialValue ?? 0),
       keyboardType: TextInputType.number,
       onChanged: (value) => updateField(
         context,
+        group,
         codec.toValue(value) ?? initialValue ?? 0,
       ),
     );

@@ -20,6 +20,7 @@ import '../addons.dart';
 /// * [LocalizationAddon], changes the active [Locale].
 /// * [DeviceFrameAddon], an [WidgetbookAddon] to change the active frame that
 ///   allows to view the [WidgetbookUseCase] on different screens.
+@optionalTypeArgs
 abstract class WidgetbookAddon<T> extends FieldsComposable<T> {
   WidgetbookAddon({
     required this.name,
@@ -29,7 +30,8 @@ abstract class WidgetbookAddon<T> extends FieldsComposable<T> {
   final String name;
   final T initialSetting;
 
-  String get slugName => name.trim().toLowerCase().replaceAll(RegExp(' '), '-');
+  @override
+  String get groupName => slugify(name);
 
   @override
   Widget buildFields(BuildContext context) {
@@ -37,7 +39,9 @@ abstract class WidgetbookAddon<T> extends FieldsComposable<T> {
       name: name,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: fields.map((field) => field.build(context)).toList(),
+        children: fields //
+            .map((field) => field.build(context, groupName))
+            .toList(),
       ),
     );
   }
@@ -50,5 +54,14 @@ abstract class WidgetbookAddon<T> extends FieldsComposable<T> {
     T setting,
   ) {
     return child;
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'group': groupName,
+      'fields': fields.map((field) => field.toFullJson()).toList(),
+    };
   }
 }

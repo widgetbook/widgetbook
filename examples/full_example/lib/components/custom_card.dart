@@ -3,11 +3,15 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class CustomCard extends StatelessWidget {
   const CustomCard({
-    Key? key,
+    super.key,
     required this.child,
     this.backgroundColor = Colors.white,
     this.borderRadius = 8.0,
-  }) : super(key: key);
+  });
+
+  final Widget child;
+  final Color backgroundColor;
+  final double borderRadius;
 
   final Widget child;
   final Color backgroundColor;

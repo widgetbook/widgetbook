@@ -30,7 +30,7 @@ void main() {
 
       testWidgets(
         'selectedNode gets updated when a node is tapped',
-        (WidgetTester tester) async {
+        (tester) async {
           await tester.pumpWidgetWithMaterialApp(
             const NavigationTree(
               directories: directories,
@@ -60,7 +60,7 @@ void main() {
 
       testWidgets(
         'Calls onNodeSelected when a node is tapped',
-        (WidgetTester tester) async {
+        (tester) async {
           final callbackMock = OnNodeSelectedCallbackMock<String, dynamic>();
 
           await tester.pumpWidgetWithMaterialApp(

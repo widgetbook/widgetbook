@@ -6,6 +6,7 @@ import '../settings/settings.dart';
 import '../state/state.dart';
 
 /// Allows [WidgetbookUseCase]s to have dynamically adjustable parameters.
+@optionalTypeArgs
 abstract class Knob<T> extends FieldsComposable<T> {
   Knob({
     required this.label,
@@ -28,6 +29,9 @@ abstract class Knob<T> extends FieldsComposable<T> {
   bool get isNullable => null is T;
 
   @override
+  String get groupName => 'knobs';
+
+  @override
   Widget buildFields(BuildContext context) {
     return KnobProperty<T>(
       name: label,
@@ -41,7 +45,10 @@ abstract class Knob<T> extends FieldsComposable<T> {
         );
       },
       child: Column(
-        children: fields.map((field) => field.build(context)).toList(),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: fields //
+            .map((field) => field.build(context, groupName))
+            .toList(),
       ),
     );
   }
@@ -56,4 +63,14 @@ abstract class Knob<T> extends FieldsComposable<T> {
 
   @override
   int get hashCode => label.hashCode;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'name': label,
+      'group': groupName,
+      'nullable': isNullable,
+      'fields': fields.map((field) => field.toFullJson()).toList(),
+    };
+  }
 }

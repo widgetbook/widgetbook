@@ -23,7 +23,6 @@ class DoubleSliderKnob extends Knob<double> {
   List<Field> get fields {
     return [
       DoubleSliderField(
-        group: 'knobs',
         name: label,
         initialValue: value,
         min: min,
@@ -62,7 +61,6 @@ class DoubleOrNullSliderKnob extends Knob<double?> {
   List<Field> get fields {
     return [
       DoubleSliderField(
-        group: 'knobs',
         name: label,
         initialValue: value,
         min: min,

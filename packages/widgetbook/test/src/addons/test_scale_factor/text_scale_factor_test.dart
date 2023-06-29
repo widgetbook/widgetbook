@@ -14,7 +14,7 @@ void main() {
 
       testWidgets(
         'can activate text scale factor',
-        (WidgetTester tester) async {
+        (tester) async {
           await testAddon<double>(
             tester: tester,
             addon: addon,

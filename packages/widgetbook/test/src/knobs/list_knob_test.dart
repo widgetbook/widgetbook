@@ -7,7 +7,7 @@ import 'knob_helper.dart';
 void main() {
   testWidgets(
     'Equality operator works correctly',
-    (WidgetTester tester) async {
+    (tester) async {
       final first = ListKnob<int>(
         label: 'first',
         value: 10,
@@ -40,7 +40,7 @@ void main() {
 
   testWidgets(
     'Options knob functions',
-    (WidgetTester tester) async {
+    (tester) async {
       await tester.pumpWithKnob(
         (context) => Text(
           context.knobs.list<String>(
@@ -71,7 +71,7 @@ void main() {
 
   testWidgets(
     'Options knob works with non-string types',
-    (WidgetTester tester) async {
+    (tester) async {
       await tester.pumpWithKnob(
         (context) => Icon(
           context.knobs.list<IconData>(
@@ -99,7 +99,7 @@ void main() {
 
   testWidgets(
     'Options knob works with labelBuilder',
-    (WidgetTester tester) async {
+    (tester) async {
       await tester.pumpWithKnob(
         (context) => Icon(
           context.knobs.list<IconData>(
@@ -128,7 +128,7 @@ void main() {
 
   testWidgets(
     'Options knob respect initial selected option',
-    (WidgetTester tester) async {
+    (tester) async {
       await tester.pumpWithKnob(
         (context) => Icon(
           context.knobs.list<IconData>(
