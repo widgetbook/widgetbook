@@ -80,18 +80,11 @@ class AppGenerator extends GeneratorForAnnotation<App> {
   String generateImports(
     List<WidgetbookData> datas,
   ) {
-    final set = <String>{};
+    final set = <String>{
+      'package:widgetbook/widgetbook.dart',
+    };
 
-    for (final data in datas) {
-      set
-        ..add(data.importStatement)
-        ..addAll(data.dependencies);
-    }
-
-    set
-      ..add('package:flutter/material.dart')
-      ..add('package:widgetbook/widgetbook.dart')
-      ..remove('package:widgetbook_annotation/widgetbook_annotation.dart');
+    set.addAll(datas.map((data) => data.importStatement));
 
     final imports = set.map(_generateImportStatement).toList()
       ..sort((a, b) => a.compareTo(b));

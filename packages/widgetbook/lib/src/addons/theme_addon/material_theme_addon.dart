@@ -11,7 +11,10 @@ class MaterialThemeAddon extends ThemeAddon<ThemeData> {
           themeBuilder: (context, theme, child) {
             return Theme(
               data: theme,
-              child: child,
+              child: ColoredBox(
+                color: theme.scaffoldBackgroundColor,
+                child: child,
+              ),
             );
           },
         );

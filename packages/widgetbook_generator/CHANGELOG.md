@@ -1,3 +1,11 @@
+## Unreleased
+
+ - **FIX**: Remove unused imports. ([#786](https://github.com/widgetbook/widgetbook/pull/786))
+
+## 3.0.0
+
+Check out the [migration guide](https://docs.widgetbook.io/migration/2.4.0-to-3.0.0) for more information.
+
 ## 3.0.0-rc.2
 
  - **BREAKING**: Change generated extension from `.g.dart` to `.directories.g.dart` to avoid conflicting outputs with other generators. ([#737](https://github.com/widgetbook/widgetbook/pull/737))

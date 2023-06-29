@@ -69,16 +69,13 @@ DeviceFrameAddon(
 
 ## Custom devices
 
-You can define your own custom device by using the `Device` class:
+You can define your own [custom device](https://pub.dev/packages/device_frame#creating-a-custom-generic-device) by using the `DeviceInfo` class:
 
 ```dart
-Device(
-  name: 'Custom Device',
-  resolution: Resolution.dimensions(
-    width: 500,
-    height: 500,
-    scaleFactor: 2,
-  ),
-  type: DeviceType.tablet,
-),
+DeviceInfo.genericPhone(
+  id: 'android-device',
+  name: 'Android Device',
+  platform: TargetPlatform.android,
+  screenSize: const Size(412, 732),
+)
 ```
