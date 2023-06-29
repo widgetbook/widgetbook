@@ -43,8 +43,8 @@ class WidgetbookState extends ChangeNotifier {
   /// A [Uri] representation of the current state.
   Uri get uri {
     final queryParameters = {
-      if (path != null) 'path': path,
       ...queryParams,
+      if (path != null) 'path': path,
     };
 
     return Uri(
@@ -149,7 +149,7 @@ class WidgetbookState extends ChangeNotifier {
     queryParams = {
       // Copy from UnmodifiableMap
       ...routeConfig.queryParameters
-    };
+    }..remove('path');
 
     notifyListeners();
   }

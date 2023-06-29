@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'addons/addons.dart';
 import 'integrations/integrations.dart';
 import 'navigation/navigation.dart';
-import 'routing/app_router.dart';
+import 'routing/routing.dart';
 import 'state/state.dart';
 import 'themes.dart';
 
@@ -101,6 +101,7 @@ class _WidgetbookState extends State<Widgetbook> {
     );
 
     router = AppRouter(
+      initialRoute: Uri.base.fragment,
       state: state,
     );
 
