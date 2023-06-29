@@ -89,30 +89,11 @@ class _WidgetbookState extends State<Widgetbook> {
   late final WidgetbookState state;
   late final AppRouter router;
 
-  AppRouteConfig _initialRoute() {
-    var baseRoute = Uri.base.fragment;
-    final AppRouteConfig baseConfig = AppRouteConfig(location: baseRoute);
-
-    if (baseConfig.path != null) {
-      return baseConfig;
-    }
-
-    return AppRouteConfig(location: '/');
-  }
-
   @override
   void initState() {
     super.initState();
 
-    final AppRouteConfig initialRoute = _initialRoute();
-
     state = WidgetbookState(
-      path: initialRoute.path,
-      previewMode: initialRoute.previewMode,
-      queryParams: {
-        // Copy from UnmodifiableMap
-        ...initialRoute.queryParameters
-      }..remove('path'),
       appBuilder: widget.appBuilder,
       addons: widget.addons,
       integrations: widget.integrations,
@@ -120,7 +101,7 @@ class _WidgetbookState extends State<Widgetbook> {
     );
 
     router = AppRouter(
-      initialRoute: initialRoute.location,
+      initialRoute: Uri.base.fragment,
       state: state,
     );
 
