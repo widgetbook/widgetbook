@@ -22,10 +22,8 @@ class WidgetbookState extends ChangeNotifier {
     this.addons,
     this.integrations,
     required this.directories,
-  })  : this.knobs = {},
-        this.catalog = WidgetbookCatalog.fromDirectories(
-          directories,
-        );
+    required this.catalog,
+  })  : this.knobs = {};
 
   String? path;
   bool previewMode;
@@ -144,7 +142,7 @@ class WidgetbookState extends ChangeNotifier {
   /// rest of fields that stay unchanged during runtime.
   @internal
   void updateFromRouteConfig(AppRouteConfig routeConfig) {
-    path = routeConfig.path ?? routeConfig.queryParameters['path'];
+    path = routeConfig.path;
     previewMode = routeConfig.previewMode;
     queryParams = {
       // Copy from UnmodifiableMap

@@ -89,36 +89,44 @@ class _WidgetbookState extends State<Widgetbook> {
   late final WidgetbookState state;
   late final AppRouter router;
 
-  String get _initialRoute {
+  AppRouteConfig _initialRoute(WidgetbookCatalog catalog) {
     var baseRoute = Uri.base.fragment;
-    final String? basePath = AppRouteConfig(location: baseRoute).path;
+    final AppRouteConfig baseConfig = AppRouteConfig(location: baseRoute);
 
-    if (basePath != null && state.catalog.get(basePath) != null) {
-      return baseRoute;
+    if (baseConfig.path != null && catalog.get(baseConfig.path!) != null) {
+      return baseConfig;
     }
 
-    return '/';
+    return AppRouteConfig(location: '/');
   }
 
   @override
   void initState() {
     super.initState();
 
+    final WidgetbookCatalog catalog =
+      WidgetbookCatalog.fromDirectories(widget.directories);
+
+    final AppRouteConfig initialRoute = _initialRoute(catalog);
+
     state = WidgetbookState(
+      path: initialRoute.path,
+      previewMode: initialRoute.previewMode,
+      queryParams: {
+        // Copy from UnmodifiableMap
+        ...initialRoute.queryParameters
+      }..remove('path'),
       appBuilder: widget.appBuilder,
       addons: widget.addons,
       integrations: widget.integrations,
       directories: widget.directories,
+      catalog: catalog,
     );
-
-    final String initialRoute = _initialRoute;
 
     router = AppRouter(
-      initialRoute: initialRoute,
+      initialRoute: initialRoute.location,
       state: state,
     );
-
-    state.updateFromRouteConfig(AppRouteConfig(location: initialRoute));
 
     widget.integrations?.forEach(
       (integration) => integration.onInit(state),

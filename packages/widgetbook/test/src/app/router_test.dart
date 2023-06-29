@@ -68,6 +68,7 @@ void main() {
   final initialState = WidgetbookState(
     addons: addons,
     directories: directories,
+    catalog: WidgetbookCatalog.fromDirectories(directories),
     appBuilder: materialAppBuilder,
   );
 

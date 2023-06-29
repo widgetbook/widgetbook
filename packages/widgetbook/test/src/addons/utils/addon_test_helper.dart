@@ -15,6 +15,7 @@ Future<void> testAddon<T>({
     addons: [addon],
     appBuilder: materialAppBuilder,
     directories: [],
+    catalog: WidgetbookCatalog.fromDirectories([]),
   );
 
   await tester.pumpWidget(
