@@ -20,11 +20,15 @@ import 'themes.dart';
 class Widgetbook extends StatefulWidget {
   const Widgetbook({
     super.key,
+    this.initialRoute = '/',
     required this.directories,
     required this.appBuilder,
     this.addons,
     this.integrations,
   });
+
+  /// The initial route for that will be used on first startup.
+  final String initialRoute;
 
   /// The directory structure of your [Widget] library.
   ///
@@ -50,6 +54,7 @@ class Widgetbook extends StatefulWidget {
   /// A [Widgetbook] with [CupertinoApp] as an [appBuilder].
   static Widgetbook cupertino({
     Key? key,
+    String initialRoute = '/',
     required List<MultiChildNavigationNodeData> directories,
     AppBuilder appBuilder = cupertinoAppBuilder,
     List<WidgetbookAddon>? addons,
@@ -57,6 +62,7 @@ class Widgetbook extends StatefulWidget {
   }) {
     return Widgetbook(
       key: key,
+      initialRoute: initialRoute,
       directories: directories,
       appBuilder: appBuilder,
       addons: addons,
@@ -67,6 +73,7 @@ class Widgetbook extends StatefulWidget {
   /// A [Widgetbook] with [MaterialApp] as an [appBuilder].
   static Widgetbook material({
     Key? key,
+    String initialRoute = '/',
     required List<MultiChildNavigationNodeData> directories,
     AppBuilder appBuilder = materialAppBuilder,
     List<WidgetbookAddon>? addons,
@@ -74,6 +81,7 @@ class Widgetbook extends StatefulWidget {
   }) {
     return Widgetbook(
       key: key,
+      initialRoute: initialRoute,
       directories: directories,
       appBuilder: appBuilder,
       addons: addons,
@@ -101,7 +109,9 @@ class _WidgetbookState extends State<Widgetbook> {
     );
 
     router = AppRouter(
-      initialRoute: Uri.base.fragment,
+      initialRoute: Uri.base.fragment.isNotEmpty
+          ? Uri.base.fragment
+          : widget.initialRoute,
       state: state,
     );
 
