@@ -10,7 +10,6 @@ import 'components/container.dart';
 import 'components/custom_card.dart';
 import 'components/custom_text_field.dart';
 import 'customs/custom_addon.dart';
-import 'customs/custom_addon_advanced.dart';
 import 'customs/custom_knob.dart';
 
 void main() {
@@ -24,16 +23,9 @@ class WidgetbookApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook.material(
       addons: [
-        CustomAddon(
-          customValue: 'Widgetbook',
-          initialCustomValue: 'Hello',
-        ),
-        AdvancedCustomAddon(
-          initialValue: AdvancedCustomAddonValue(
-            stringValue: 'WidgetbookCustomAddon',
-            doubleValue: 10.99,
-            boolValue: true,
-          ),
+        AlignmentAddon(
+          alignment: Alignment.topCenter,
+          initialAlignment: Alignment.center,
         ),
       ],
       directories: [

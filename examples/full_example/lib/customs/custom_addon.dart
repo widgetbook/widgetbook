@@ -4,42 +4,53 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-class CustomAddon extends WidgetbookAddon<String> {
-  CustomAddon({
-    required this.customValue,
-    String? initialCustomValue,
-    int? this.maxLines,
+class AlignmentAddon extends WidgetbookAddon<Alignment> {
+  AlignmentAddon({
+    required this.alignment,
+    Alignment? initialAlignment,
   }) : super(
-          name: 'Your Custom Addon Name',
-          initialSetting: initialCustomValue ?? customValue,
+          name: 'Alignment Addon',
+          initialSetting: initialAlignment ?? alignment,
         );
 
-  final String customValue;
-  final int? maxLines;
+  final Alignment alignment;
 
   @override
   Widget buildUseCase(
     BuildContext context,
     Widget child,
-    String setting,
+    Alignment setting,
   ) {
     // customize how the use case is built using your custom Addon
-    return Container();
+    return Align(
+      alignment: setting,
+      child: child,
+    );
   }
 
   @override
-  List<Field> get fields {
+  List<Field<Alignment>> get fields {
     return [
-      StringField(
-        name: 'yourCustomName',
-        maxLines: maxLines,
+      ListField<Alignment>(
+        name: 'alignment',
+        values: [
+          Alignment.topLeft,
+          Alignment.topCenter,
+          Alignment.topRight,
+          Alignment.centerLeft,
+          Alignment.center,
+          Alignment.centerRight,
+          Alignment.bottomLeft,
+          Alignment.bottomCenter,
+          Alignment.bottomRight,
+        ],
         initialValue: initialSetting,
       )
     ];
   }
 
   @override
-  String valueFromQueryGroup(Map<String, String> group) {
-    return valueOf<String>('yourCustomName', group)!;
+  Alignment valueFromQueryGroup(Map<String, String> group) {
+    return valueOf<Alignment>('alignment', group)!;
   }
 }
