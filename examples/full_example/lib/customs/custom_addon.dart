@@ -41,7 +41,6 @@ class CustomAddon extends WidgetbookAddon<String> {
 
   @override
   String valueFromQueryGroup(Map<String, String> group) {
-    final value = valueOf<String>('yourCustomName', group);
-    return value ?? initialSetting;
+    return valueOf<String>('yourCustomName', group)!;
   }
 }
