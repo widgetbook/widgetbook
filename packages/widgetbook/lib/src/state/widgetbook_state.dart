@@ -22,8 +22,10 @@ class WidgetbookState extends ChangeNotifier {
     this.addons,
     this.integrations,
     required this.directories,
-    required this.catalog,
-  })  : this.knobs = {};
+  })  : this.knobs = {},
+        this.catalog = WidgetbookCatalog.fromDirectories(
+          directories,
+        );
 
   String? path;
   bool previewMode;

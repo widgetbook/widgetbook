@@ -89,11 +89,11 @@ class _WidgetbookState extends State<Widgetbook> {
   late final WidgetbookState state;
   late final AppRouter router;
 
-  AppRouteConfig _initialRoute(WidgetbookCatalog catalog) {
+  AppRouteConfig _initialRoute() {
     var baseRoute = Uri.base.fragment;
     final AppRouteConfig baseConfig = AppRouteConfig(location: baseRoute);
 
-    if (baseConfig.path != null && catalog.get(baseConfig.path!) != null) {
+    if (baseConfig.path != null) {
       return baseConfig;
     }
 
@@ -104,10 +104,7 @@ class _WidgetbookState extends State<Widgetbook> {
   void initState() {
     super.initState();
 
-    final WidgetbookCatalog catalog =
-      WidgetbookCatalog.fromDirectories(widget.directories);
-
-    final AppRouteConfig initialRoute = _initialRoute(catalog);
+    final AppRouteConfig initialRoute = _initialRoute();
 
     state = WidgetbookState(
       path: initialRoute.path,
@@ -120,7 +117,6 @@ class _WidgetbookState extends State<Widgetbook> {
       addons: widget.addons,
       integrations: widget.integrations,
       directories: widget.directories,
-      catalog: catalog,
     );
 
     router = AppRouter(
