@@ -13,60 +13,69 @@ To create a custom Addons, follow these steps:
 - Create a new class that extends the WidgetbookAddon class with a generic parameter
   corresponding to your defined model.
 
-## Simple Custom Addon
+## Writing a custom Alignment Addon
 
-Here's an example demonstrating how to create a simple custom Addon:
+Here's an example demonstrating how to create a simple Alignment Addon:
 
 ```dart
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-class CustomAddon extends WidgetbookAddon<String> {
-  CustomAddon({
-    required this.customValue,
-    String? initialCustomValue,
-    int? this.maxLines,
+class AlignmentAddon extends WidgetbookAddon<Alignment> {
+  AlignmentAddon({
+    required this.alignment,
+    Alignment? initialAlignment,
   }) : super(
-          name: 'Your Custom Addon Name',
-          initialSetting: initialCustomValue ?? customValue,
+          name: 'Alignment Addon',
+          initialSetting: initialAlignment ?? alignment,
         );
 
-  final String customValue;
-  final int? maxLines;
+  final Alignment alignment;
 
   @override
   Widget buildUseCase(
     BuildContext context,
     Widget child,
-    String setting,
+    Alignment setting,
   ) {
     // customize how the use case is built using your custom Addon
-    return Container();
+    return Align(
+      alignment: setting,
+      child: child,
+    );
   }
 
   @override
-  List<Field> get fields {
+  List<Field<Alignment>> get fields {
     return [
-      StringField(
-        group: slugName,
-        name: 'yourCustomName',
-        maxLines: maxLines,
+      ListField<Alignment>(
+        name: 'alignment',
+        values: [
+          Alignment.topLeft,
+          Alignment.topCenter,
+          Alignment.topRight,
+          Alignment.centerLeft,
+          Alignment.center,
+          Alignment.centerRight,
+          Alignment.bottomLeft,
+          Alignment.bottomCenter,
+          Alignment.bottomRight,
+        ],
         initialValue: initialSetting,
       )
     ];
   }
 
   @override
-  String valueFromQueryGroup(Map<String, String> group) {
-    final value = valueOf<String>('yourCustomName', group);
-    return value ?? initialSetting;
+  Alignment valueFromQueryGroup(Map<String, String> group) {
+    return valueOf<Alignment>('alignment', group)!;
   }
 }
 ```
 
-In this example, we create a `CustomAddon` that manages a `String` value. The
-`initialSetting` is the initial state of the `String` value. The fields list contains a
-single `StringField` which represents the `String` value managed by the addon in the
+In this example, we create a `AlignmentAddon` that manages a `Alignment` value. The
+`initialSetting` is the initial state of the `Alignment` value. The fields list contains a
+single `ListField` which represents the `Alignment` value managed by the addon in the
 Widgetbook UI
 
 <Image src="/assets/addons/custom-addon.png" zoom />
@@ -79,209 +88,100 @@ Widgetbook UI
 Let's break down the code to understand better.
 
 ```dart
-class CustomAddon extends WidgetbookAddon<String> {
+class AlignmentAddon extends WidgetbookAddon<Alignment> {
 ```
 
-We create a new class called `CustomAddon`, which extends `WidgetbookAddon`. The `String`
-generic indicates that this addon will handle a `String` value.
+We create a new class called `AlignmentAddon`, which extends `WidgetbookAddon`. The
+`Alignment` generic indicates that this addon will handle a `Alignment` value.
 
 ```dart
-CustomAddon({
-    required this.customValue,
-    String? initialCustomValue,
-    int? this.maxLines,
+class AlignmentAddon extends WidgetbookAddon<Alignment> {
+  AlignmentAddon({
+    required this.alignment,
+    Alignment? initialAlignment,
   }) : super(
-          name: 'Your Custom Addon Name',
-          initialSetting: initialCustomValue ?? customValue,
+          name: 'Alignment Addon',
+          initialSetting: initialAlignment ?? alignment,
         );
 ```
 
-The constructor for `CustomAddon` takes three parameters. `customValue` is a required
-`String` parameter, `initialCustomValue` is an optional `String` that, if provided, will
-be used as the initial value of the addon. If it is not provided, `customValue` will be
-used instead. `maxLines` is an optional `int` that specifies the maximum number of lines
-for the text field in the Widgetbook UI.
+The constructor for `AlignmentAddon` takes two parameters. `alignment` is a required
+`Alignment` parameter, `initialAlignment` is an optional `Alignment?` that, if provided,
+will be used as the initial value of the addon. If it is not provided, `initialAlignment`
+will be used instead.
 
 ```dart
-  final String customValue;
-  final int? maxLines;
+  final Alignment alignment;
 ```
 
-We define two final fields in the class, `customValue` and `maxLines`, to hold the values
-passed in from the constructor.
+We define one final fields in the class, `alignment`, to hold the values passed in from
+the constructor. You may add more fields if necessitates.
 
 ```dart
   @override
   Widget buildUseCase(
     BuildContext context,
     Widget child,
-    String setting,
+    Alignment setting,
   ) {
-    // Customize how the use case is built using your custom Addon
-    return Container();
+    return Align(
+      alignment: setting,
+      child: child,
+    );
   }
 ```
 
 The `buildUseCase` method is where we specify how the addon will affect the widget tree.
 It's an abstract method from the `WidgetbookAddon` class that we need to implement. It
 takes three parameters: a `BuildContext`, a Widget that is the child of this addon, and a
-`String` that is the current setting of the addon. For now, we just return an empty
-`Container` without using the setting or the child. In a real use case, we'd use the
-setting to modify the child widget.
+`Alignment` that is the current setting of the addon. For now, we wrap the child widget
+with an `Align` widget that uses the setting parameter (which is the current `Alignment`
+setting for this addon) as its alignment value.
 
 ```dart
-  @override
-  List<Field> get fields {
+    @override
+  List<Field<Alignment>> get fields {
     return [
-      StringField(
-        group: slugName,
-        name: 'yourCustomName',
-        maxLines: maxLines,
+      ListField<Alignment>(
+        name: 'alignment',
+        values: [
+          Alignment.topLeft,
+          Alignment.topCenter,
+          Alignment.topRight,
+          Alignment.centerLeft,
+          Alignment.center,
+          Alignment.centerRight,
+          Alignment.bottomLeft,
+          Alignment.bottomCenter,
+          Alignment.bottomRight,
+        ],
         initialValue: initialSetting,
       )
     ];
   }
+
 ```
 
 The fields getter is where we specify the fields that will represent the addon in the
 Widgetbook UI. Each field corresponds to an input field in the UI. In this case, we have a
-single `StringField` with an initial value of `initialSetting`. The `slugName` is a
-built-in property of `WidgetbookAddon` that returns a URL-friendly version of the addon's
-name.
+single `ListField` with an initial value of `initialSetting` and values of possible
+alignments for `Align` widget.
 
 ```dart
   @override
-  String valueFromQueryGroup(Map<String, String> group) {
-    final value = valueOf<String>('yourCustomName', group);
-    return value ?? initialSetting;
+  Alignment valueFromQueryGroup(Map<String, String> group) {
+    return valueOf<Alignment>('alignment', group) ?? initialSetting;
   }
-}
 ```
 
-The `valueFromQueryGroup` method is used to parse the query parameters from the URL and
-generate a new setting for the addon. It uses the helper method `valueOf` to extract the
-`String` value corresponding to the field name `'yourCustomName'`. If the value is not
-found (i.e., it's null), it falls back to the `initialSetting`.
+Lastly, the `valueFromQueryGroup` method is overridden. This method is responsible for
+generating a new `Alignment` setting for the addon from the URL's query parameters. It
+uses the helper method `valueOf` to extract the `Alignment` value associated with the
+'alignment' key from the group map. If the value is not found (i.e., it's null), it falls
+back to the `initialSetting`.
 
-## Advanced Custom Addon
-
-Let's break down the advanced custom addon in a more concise manner:
-
-1. Defining the Value Model
-
-```dart
-class AdvancedCustomAddonValue {
-  AdvancedCustomAddonValue({
-    required this.stringValue,
-    required this.doubleValue,
-    required this.boolValue,
-  });
-
-  final String stringValue;
-  final double doubleValue;
-  final bool boolValue;
-}
-```
-
-Here, we define a model `AdvancedCustomAddonValue` to store different types of settings: a
-`String`, a `double`, and a `bool`.
-
-2. Creating the Addon Class
-
-```dart
-class AdvancedCustomAddon extends WidgetbookAddon<AdvancedCustomAddonValue> {
-  AdvancedCustomAddon({
-    required this.initialValue,
-  }) : super(
-        name: 'Custom Addon',
-        initialSetting: initialValue,
-      );
-
-  final AdvancedCustomAddonValue initialValue;
-```
-
-Next, we create the addon class `AdvancedCustomAddon`, extending `WidgetbookAddon` with
-`AdvancedCustomAddonValue` as the generic parameter. It holds an instance of
-`AdvancedCustomAddonValue` as the initial setting.
-
-3. Implementing the Build Method
-
-```dart
-@override
-Widget buildUseCase(
-  BuildContext context,
-  Widget child,
-  AdvancedCustomAddonValue setting,
-) {
-  return Container();
-}
-```
-
-The `buildUseCase` method is where you define how your addon modifies the widget tree.
-Currently, it's set to return a simple `Container` widget.
-
-4. Defining Fields
-
-```dart
-@override
-List<Field> get fields {
-  return [
-    StringField(
-      group: slugName,
-      name: 'stringField',
-      initialValue: initialValue.stringValue,
-    ),
-    DoubleInputField(
-      group: slugName,
-      name: 'doubleInputField',
-      initialValue: initialValue.doubleValue,
-    ),
-    BooleanField(
-      group: slugName,
-      name: 'booleanField',
-      initialValue: initialValue.boolValue,
-    ),
-  ];
-}
-```
-
-We define the fields in the UI for each setting. We use different field types
-(`StringField`, `DoubleInputField`, and `BooleanField`) corresponding to the setting
-types.
-
-5. Parsing Values from URL
-
-```dart
-@override
-AdvancedCustomAddonValue valueFromQueryGroup(Map<String, String> group) {
-  final stringValue = valueOf<String>('stringField', group);
-  final doubleValue = valueOf<double>('doubleInputField', group);
-  final boolValue = valueOf<bool>('booleanField', group);
-
-  return AdvancedCustomAddonValue(
-    stringValue: stringValue ?? initialValue.stringValue,
-    doubleValue: doubleValue ?? initialValue.doubleValue,
-    boolValue: boolValue ?? initialSetting.boolValue,
-  );
-}
-}
-```
-
-The `valueFromQueryGroup` method retrieves the current settings values from the URL. These
-values are used to create a new instance of `AdvancedCustomAddonValue`, which is returned
-as the current setting.
-
-<Image src="/assets/addons/custom-addon-3.png" zoom />
-
-<Info>
-  See [source
-  code](https://github.com/widgetbook/widgetbook/tree/main/examples/full_example/lib/customs/advanced-custom-addon.dart)
-</Info>
-
-Through the examples provided, you can see how to use the Addon system effectively,
-including creating simple and advanced custom Addons. Utilizing various `Field` types
-enables the customization of Addons, allowing for comprehensive modification of the widget
-tree.
+Congratulation! you have managed to created your first custom Addon that wraps `Align`
+widget. So now, nothing cannot stop you to write what your project need.
 
 ## Field Types in Widgetbook
 
