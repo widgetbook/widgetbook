@@ -51,6 +51,6 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
 
   @override
   Alignment valueFromQueryGroup(Map<String, String> group) {
-    return valueOf<Alignment>('alignment', group) ?? initialSetting;
+    return valueOf<Alignment>('alignment', group)!;
   }
 }
