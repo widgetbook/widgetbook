@@ -10,7 +10,7 @@ Widget rangeSlider(BuildContext context) {
   return RangeSlider(
     values: context.knobs.range(label: 'Range'),
     max: 10,
-    min: 0,
+    min: 1,
     onChanged: (_) {},
   );
 }
