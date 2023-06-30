@@ -23,14 +23,11 @@ import 'package:widgetbook/widgetbook.dart';
 
 class AlignmentAddon extends WidgetbookAddon<Alignment> {
   AlignmentAddon({
-    required this.alignment,
-    Alignment? initialAlignment,
+    Alignment initialAlignment = Alignment.center,
   }) : super(
-          name: 'Alignment Addon',
-          initialSetting: initialAlignment ?? alignment,
+          name: 'Alignment',
+          initialSetting: initialAlignment,
         );
-
-  final Alignment alignment;
 
   @override
   Widget buildUseCase(
@@ -97,18 +94,15 @@ We create a new class called `AlignmentAddon`, which extends `WidgetbookAddon`. 
 ```dart
 class AlignmentAddon extends WidgetbookAddon<Alignment> {
   AlignmentAddon({
-    required this.alignment,
-    Alignment? initialAlignment,
+    Alignment initialAlignment = Alignment.center,
   }) : super(
-          name: 'Alignment Addon',
-          initialSetting: initialAlignment ?? alignment,
+          name: 'Alignment',
+          initialSetting: initialAlignment,
         );
 ```
 
-The constructor for `AlignmentAddon` takes two parameters. `alignment` is a required
-`Alignment` parameter, `initialAlignment` is an optional `Alignment?` that, if provided,
-will be used as the initial value of the addon. If it is not provided, `initialAlignment`
-will be used instead.
+The constructor for `AlignmentAddon` takes a parameter. `initialAlignment` is `Alignment`
+with default value, if provided, will be used as the initial value of the addon.
 
 ```dart
   final Alignment alignment;
