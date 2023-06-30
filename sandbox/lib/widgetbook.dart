@@ -52,6 +52,7 @@ class WidgetbookApp extends StatelessWidget {
             Devices.ios.iPhone13,
           ],
         ),
+        AlignmentAddon(),
       ],
     );
   }
