@@ -54,27 +54,19 @@
                     "5. Structure", "/getting-started/structure"
                 ],
                 [
-                    "6. Knobs", "/getting-started/knobs"
+                    "6. Addons", "/getting-started/addons"
                 ],
                 [
-                    "7. Addons", "/getting-started/addons"
+                    "7. Knobs", "/getting-started/knobs"
                 ],
                 [
-                    "8. Configure", "/getting-started/configure"
+                    "8. Themes", "/getting-started/themes"
                 ],
                 [
-                    "9. Complete Example", "/getting-started/complete-example"
-                ]
-            ]
-        ],
-        [
-            "Knobs",
-            [
-                [
-                    "1. Overview", "/knobs/overview"
+                    "9. Configure", "/getting-started/configure"
                 ],
                 [
-                    "2. Example", "/knobs/example"
+                    "10. Complete Example", "/getting-started/complete-example"
                 ]
             ]
         ],
@@ -95,6 +87,23 @@
                 ],
                 [
                     "5. Text Scale Addon", "/addons/text-scale-addon"
+                ],
+                [
+                    "6. Custom Addon", "/addons/custom-addon"
+                ]
+            ]
+        ],
+        [
+            "Knobs",
+            [
+                [
+                    "1. Overview", "/knobs/overview"
+                ],
+                [
+                    "2. Example", "/knobs/example"
+                ],
+                [
+                    "3. Custom Knob", "/knobs/custom-knob"
                 ]
             ]
         ],
@@ -106,6 +115,14 @@
                 ],
                 [
                     "3.0.0 beta to rc", "/migration/3.0.0-beta-to-rc"
+                ]
+            ]
+        ],
+        [
+            "Cookbook",
+            [
+                [
+                    "Custom Theme", "/cookbook/custom-theme"
                 ]
             ]
         ],

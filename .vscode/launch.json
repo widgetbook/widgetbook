@@ -23,10 +23,24 @@
             ]
         },
         {
-            "name": "custom_theme_example",
-            "cwd": "examples/custom_theme_example",
+            "name": "full_example (default)",
+            "cwd": "examples/full_example",
             "request": "launch",
             "program": "lib/widgetbook.dart",
+            "type": "dart"
+        },
+        {
+            "name": "full_example (generator)",
+            "cwd": "examples/full_example",
+            "request": "launch",
+            "program": "lib/widgetbook.generator.dart",
+            "type": "dart"
+        },
+        {
+            "name": "full_example (theme)",
+            "cwd": "examples/full_example",
+            "request": "launch",
+            "program": "lib/widgetbook.theme.dart",
             "type": "dart"
         },
         {

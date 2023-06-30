@@ -1,65 +1,178 @@
 # Custom Addon
 
-Widgetbook offers developers the flexibility to design their own Addons, making
-it fully adaptable to your requirements.
-
-<Warning>
-  We are currently improving the API, and as a result, the documentation might
-  be brief.
-</Warning>
+Custom addons in Widgetbook offer the flexibility to tailor your development environment
+according to the unique needs of your project. We will explore two examples, simple and
+advanced, demonstrating the process of creating custom addons.
 
 ## Setup
 
 To create a custom Addons, follow these steps:
 
-- Define a model for your custom Addon. This model will hold the data and
-  behavior of your Addon.
-- Create a new class that extends the WidgetbookAddon class with a generic
-  parameter corresponding to your defined model.
+- Define a model for your custom Addon. This model will hold the data and behavior of your
+  Addon.
+- Create a new class that extends the WidgetbookAddon class with a generic parameter
+  corresponding to your defined model.
 
-Here's an example demonstrating how to create a custom Addon:
+## Writing a custom Alignment Addon
+
+Here's an example demonstrating how to create a simple Alignment Addon:
 
 ```dart
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-
-class CustomAddon extends WidgetbookAddon<String> {
-  CustomAddon({
-    required this.customValue,
-    String? initialCustomValue,
+class AlignmentAddon extends WidgetbookAddon<Alignment> {
+  AlignmentAddon({
+    Alignment initialAlignment = Alignment.center,
   }) : super(
-          name: 'Your Custom Addon Name',
-          initialSetting: initialCustomValue ?? customValue,
+          name: 'Alignment',
+          initialSetting: initialAlignment,
         );
-
-  final String customValue;
 
   @override
   Widget buildUseCase(
     BuildContext context,
     Widget child,
-    String setting,
+    Alignment setting,
   ) {
     // customize how the use case is built using your custom Addon
-    return Container();
-  }
-
-  @override
-  List<Field> get fields {
-    return StringField<String>(
-      group: slugName,
-      name: 'yourCustomName',
-      values: customValue,
-      initialValue: initialSetting,
-      labelBuilder: (customValue) => customValue.toString(),
+    return Align(
+      alignment: setting,
+      child: child,
     );
   }
 
   @override
-  String settingFromQueryGroup(Map<String, String> group) {
-    final value = group['yourCustomName'];
-    return value ?? initialSetting;
+  List<Field<Alignment>> get fields {
+    return [
+      ListField<Alignment>(
+        name: 'alignment',
+        initialValue: initialSetting,
+        values: [
+          Alignment.topLeft,
+          Alignment.topCenter,
+          Alignment.topRight,
+          Alignment.centerLeft,
+          Alignment.center,
+          Alignment.centerRight,
+          Alignment.bottomLeft,
+          Alignment.bottomCenter,
+          Alignment.bottomRight,
+        ],
+      )
+    ];
+  }
+
+  @override
+  Alignment valueFromQueryGroup(Map<String, String> group) {
+    return valueOf<Alignment>('alignment', group)!;
   }
 }
 ```
+
+In this example, we create a `AlignmentAddon` that manages a `Alignment` value. The
+`initialSetting` is the initial state of the `Alignment` value. The fields list contains a
+single `ListField` which represents the `Alignment` value managed by the addon in the
+Widgetbook UI
+
+<Image src="/assets/addons/custom-addon.png" zoom />
+
+<Info>
+  See [source
+  code](https://github.com/widgetbook/widgetbook/tree/main/examples/full_example/lib/customs/custom-addon.dart)
+</Info>
+
+Let's break down the code to understand better.
+
+```dart
+class AlignmentAddon extends WidgetbookAddon<Alignment> {
+```
+
+We create a new class called `AlignmentAddon`, which extends `WidgetbookAddon`. The
+`Alignment` generic indicates that this addon will handle a `Alignment` value.
+
+```dart
+class AlignmentAddon extends WidgetbookAddon<Alignment> {
+  AlignmentAddon({
+    Alignment initialAlignment = Alignment.center,
+  }) : super(
+          name: 'Alignment',
+          initialSetting: initialAlignment,
+        );
+```
+
+The constructor for `AlignmentAddon` takes a parameter. `initialAlignment` is `Alignment`
+with default value, if provided, will be used as the initial value of the addon.
+
+We define one final fields in the class, `alignment`, to hold the values passed in from
+the constructor. You may add more fields if necessitates.
+
+```dart
+  @override
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    Alignment setting,
+  ) {
+    return Align(
+      alignment: setting,
+      child: child,
+    );
+  }
+```
+
+The `buildUseCase` method is where we specify how the addon will affect the widget tree.
+It's an abstract method from the `WidgetbookAddon` class that we need to implement. It
+takes three parameters: a `BuildContext`, a Widget that is the child of this addon, and a
+`Alignment` that is the current setting of the addon. For now, we wrap the child widget
+with an `Align` widget that uses the setting parameter (which is the current `Alignment`
+setting for this addon) as its alignment value.
+
+```dart
+    @override
+  List<Field<Alignment>> get fields {
+    return [
+      ListField<Alignment>(
+        name: 'alignment',
+        initialValue: initialSetting,
+        values: [
+          Alignment.topLeft,
+          Alignment.topCenter,
+          Alignment.topRight,
+          Alignment.centerLeft,
+          Alignment.center,
+          Alignment.centerRight,
+          Alignment.bottomLeft,
+          Alignment.bottomCenter,
+          Alignment.bottomRight,
+        ],
+      )
+    ];
+  }
+
+```
+
+The fields getter is where we specify the fields that will represent the addon in the
+Widgetbook UI. Each field corresponds to an input field in the UI. In this case, we have a
+single `ListField` with an initial value of `initialSetting` and values of possible
+alignments for `Align` widget.
+
+```dart
+  @override
+  Alignment valueFromQueryGroup(Map<String, String> group) {
+    return valueOf<Alignment>('alignment', group) ?? initialSetting;
+  }
+```
+
+Lastly, the `valueFromQueryGroup` method is overridden. This method is responsible for
+generating a new `Alignment` setting for the addon from the URL's query parameters. It
+uses the helper method `valueOf` to extract the `Alignment` value associated with the
+'alignment' key from the group map. If the value is not found (i.e., it's null), it falls
+back to the `initialSetting`.
+
+Congratulation! you have managed to created your first custom Addon that wraps `Align`
+widget. So now, nothing cannot stop you to write what your project need.
+
+## Field Types in Widgetbook
+
+For more detailed information, visit the [Field Types page](/field-types).

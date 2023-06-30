@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import 'customs/custom_addon.dart';
 import 'widgetbook.generator.directories.g.dart';
 
 void main() {
@@ -21,7 +22,9 @@ class WidgetbookApp extends StatelessWidget {
     return Widgetbook.material(
       // Use the generated directories variable
       directories: directories,
-      addons: [],
+      addons: [
+        AlignmentAddon(),
+      ],
       appBuilder: (context, child) {
         return child;
       },

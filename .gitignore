@@ -149,3 +149,6 @@ app.*.symbols
 !**/ios/**/default.mode2v3
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
+
+# Do not ignore generate files in full_example
+!**/full_example/**/*.g.dart
