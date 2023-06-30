@@ -1,5 +1,6 @@
 ## Unreleased
 
+ - **FEAT**: Add Alignment Addon. ([#798](https://github.com/widgetbook/widgetbook/pull/798))
  - **FEAT**: Add `initialRoute`. ([#794](https://github.com/widgetbook/widgetbook/pull/794))
  - **FEAT**: Preserve current state on web after doing hot restart or refresh from the browser. ([#782](https://github.com/widgetbook/widgetbook/pull/782))
  - **FIX**: Replace the `Scaffold` around use-cases with a `ColoredBox` below the `Theme` widget. ([#789](https://github.com/widgetbook/widgetbook/pull/789))
