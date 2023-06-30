@@ -21,6 +21,13 @@ class WidgetbookApp extends StatelessWidget {
         WidgetbookCloudIntegration(),
       ],
       addons: [
+        DeviceFrameAddon(
+          devices: [
+            Devices.ios.iPhoneSE,
+            Devices.ios.iPhone12,
+            Devices.ios.iPhone13,
+          ],
+        ),
         MaterialThemeAddon(
           themes: [
             WidgetbookTheme(
@@ -33,6 +40,7 @@ class WidgetbookApp extends StatelessWidget {
             ),
           ],
         ),
+        AlignmentAddon(),
         TextScaleAddon(
           scales: [1.0, 2.0],
         ),
@@ -45,14 +53,6 @@ class WidgetbookApp extends StatelessWidget {
             DefaultMaterialLocalizations.delegate,
           ],
         ),
-        DeviceFrameAddon(
-          devices: [
-            Devices.ios.iPhoneSE,
-            Devices.ios.iPhone12,
-            Devices.ios.iPhone13,
-          ],
-        ),
-        AlignmentAddon(),
       ],
     );
   }
