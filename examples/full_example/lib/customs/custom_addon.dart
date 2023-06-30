@@ -33,6 +33,7 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
     return [
       ListField<Alignment>(
         name: 'alignment',
+        initialValue: initialSetting,
         values: [
           Alignment.topLeft,
           Alignment.topCenter,
@@ -44,7 +45,6 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
           Alignment.bottomCenter,
           Alignment.bottomRight,
         ],
-        initialValue: initialSetting,
       )
     ];
   }
