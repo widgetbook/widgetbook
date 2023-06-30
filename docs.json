@@ -54,10 +54,10 @@
                     "5. Structure", "/getting-started/structure"
                 ],
                 [
-                    "6. Knobs", "/getting-started/knobs"
+                    "6. Addons", "/getting-started/addons"
                 ],
                 [
-                    "7. Addons", "/getting-started/addons"
+                    "7. Knobs", "/getting-started/knobs"
                 ],
                 [
                     "8. Themes", "/getting-started/themes"
@@ -67,20 +67,6 @@
                 ],
                 [
                     "10. Complete Example", "/getting-started/complete-example"
-                ]
-            ]
-        ],
-        [
-            "Knobs",
-            [
-                [
-                    "1. Overview", "/knobs/overview"
-                ],
-                [
-                    "2. Example", "/knobs/example"
-                ],
-                [
-                    "3. Custom Knob", "/knobs/custom-knob"
                 ]
             ]
         ],
@@ -104,6 +90,20 @@
                 ],
                 [
                     "6. Custom Addon", "/addons/custom-addon"
+                ]
+            ]
+        ],
+        [
+            "Knobs",
+            [
+                [
+                    "1. Overview", "/knobs/overview"
+                ],
+                [
+                    "2. Example", "/knobs/example"
+                ],
+                [
+                    "3. Custom Knob", "/knobs/custom-knob"
                 ]
             ]
         ],
