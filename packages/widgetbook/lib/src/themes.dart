@@ -74,6 +74,10 @@ class Themes {
           fontFamily: 'Poppins',
         ),
     useMaterial3: true,
+  ).copyWith(
+    sliderTheme: SliderThemeData(
+      overlayShape: SliderComponentShape.noThumb,
+    ),
   );
 
   static ThemeData dark = ThemeData.from(
@@ -86,5 +90,8 @@ class Themes {
     useMaterial3: true,
   ).copyWith(
     hoverColor: const Color(0xFFE3E2E6).withOpacity(0.08),
+    sliderTheme: SliderThemeData(
+      overlayShape: SliderComponentShape.noThumb,
+    ),
   );
 }
