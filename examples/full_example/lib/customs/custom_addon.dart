@@ -9,7 +9,7 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
     required this.alignment,
     Alignment? initialAlignment,
   }) : super(
-          name: 'Alignment Addon',
+          name: 'Alignment',
           initialSetting: initialAlignment ?? alignment,
         );
 
