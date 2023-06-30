@@ -3,7 +3,7 @@
 /// You can use @App and @UseCase annotation to generate directories
 /// [Ref link]: https://docs.widgetbook.io/getting-started/complete-example
 import 'package:flutter/material.dart';
-import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook/widgetbook.dart' hide AlignmentAddon;
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import 'customs/custom_addon.dart';

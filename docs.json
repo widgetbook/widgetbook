@@ -89,6 +89,9 @@
                     "5. Text Scale Addon", "/addons/text-scale-addon"
                 ],
                 [
+                    "5. Alignment Addon", "/addons/alignment-addon"
+                ],
+                [
                     "6. Custom Addon", "/addons/custom-addon"
                 ]
             ]
