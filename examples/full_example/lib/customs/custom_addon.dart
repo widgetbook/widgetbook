@@ -6,14 +6,11 @@ import 'package:widgetbook/widgetbook.dart';
 
 class AlignmentAddon extends WidgetbookAddon<Alignment> {
   AlignmentAddon({
-    required this.alignment,
-    Alignment? initialAlignment,
+    Alignment initialAlignment = Alignment.center,
   }) : super(
           name: 'Alignment',
-          initialSetting: initialAlignment ?? alignment,
+          initialSetting: initialAlignment,
         );
-
-  final Alignment alignment;
 
   @override
   Widget buildUseCase(
