@@ -47,6 +47,7 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
     return [
       ListField<Alignment>(
         name: 'alignment',
+        initialValue: initialSetting,
         values: [
           Alignment.topLeft,
           Alignment.topCenter,
@@ -58,7 +59,6 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
           Alignment.bottomCenter,
           Alignment.bottomRight,
         ],
-        initialValue: initialSetting,
       )
     ];
   }
@@ -104,10 +104,6 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
 The constructor for `AlignmentAddon` takes a parameter. `initialAlignment` is `Alignment`
 with default value, if provided, will be used as the initial value of the addon.
 
-```dart
-  final Alignment alignment;
-```
-
 We define one final fields in the class, `alignment`, to hold the values passed in from
 the constructor. You may add more fields if necessitates.
 
@@ -138,6 +134,7 @@ setting for this addon) as its alignment value.
     return [
       ListField<Alignment>(
         name: 'alignment',
+        initialValue: initialSetting,
         values: [
           Alignment.topLeft,
           Alignment.topCenter,
@@ -149,7 +146,6 @@ setting for this addon) as its alignment value.
           Alignment.bottomCenter,
           Alignment.bottomRight,
         ],
-        initialValue: initialSetting,
       )
     ];
   }
