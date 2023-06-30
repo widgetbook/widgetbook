@@ -28,9 +28,10 @@ class DoubleSliderField extends Field<double> {
   @override
   Widget toWidget(BuildContext context, String group, double? value) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
-          flex: 7,
+          flex: 8,
           child: Slider(
             value: value ?? 0,
             min: min,
@@ -42,7 +43,9 @@ class DoubleSliderField extends Field<double> {
         ),
         Expanded(
           child: Text(
-            value?.toString() ?? '',
+            value?.toStringAsFixed(2) ?? '',
+            textAlign: TextAlign.end,
+            maxLines: 1,
           ),
         )
       ],
