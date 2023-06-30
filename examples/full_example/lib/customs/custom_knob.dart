@@ -58,8 +58,8 @@ class RangeKnob extends Knob<RangeValues> {
   @override
   RangeValues valueFromQueryGroup(Map<String, String> group) {
     return RangeValues(
-      valueOf('min-$label', group) ?? value.start,
-      valueOf('max-$label', group) ?? value.end,
+      valueOf('min-$label', group)!,
+      valueOf('max-$label', group)!,
     );
   }
 }
