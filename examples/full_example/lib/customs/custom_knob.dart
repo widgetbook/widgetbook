@@ -67,7 +67,7 @@ class RangeKnob extends Knob<RangeValues> {
 extension RangeKnobBuilder on KnobsBuilder {
   RangeValues range({
     required String label,
-    RangeValues initialValue = const RangeValues(0, 10),
+    RangeValues initialValue = const RangeValues(1, 10),
   }) =>
       onKnobAdded(
         RangeKnob(
