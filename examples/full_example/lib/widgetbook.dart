@@ -23,10 +23,7 @@ class WidgetbookApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook.material(
       addons: [
-        AlignmentAddon(
-          alignment: Alignment.topCenter,
-          initialAlignment: Alignment.center,
-        ),
+        AlignmentAddon(),
       ],
       directories: [
         WidgetbookFolder(

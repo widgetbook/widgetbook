@@ -10,7 +10,7 @@ Widget rangeSlider(BuildContext context) {
   return RangeSlider(
     values: context.knobs.range(label: 'Range'),
     max: 10,
-    min: 0,
+    min: 1,
     onChanged: (_) {},
   );
 }
@@ -67,7 +67,7 @@ class RangeKnob extends Knob<RangeValues> {
 extension RangeKnobBuilder on KnobsBuilder {
   RangeValues range({
     required String label,
-    RangeValues initialValue = const RangeValues(0, 10),
+    RangeValues initialValue = const RangeValues(1, 10),
   }) =>
       onKnobAdded(
         RangeKnob(
