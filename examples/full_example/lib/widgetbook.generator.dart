@@ -23,10 +23,7 @@ class WidgetbookApp extends StatelessWidget {
       // Use the generated directories variable
       directories: directories,
       addons: [
-        AlignmentAddon(
-          alignment: Alignment.topCenter,
-          initialAlignment: Alignment.center,
-        ),
+        AlignmentAddon(),
       ],
       appBuilder: (context, child) {
         return child;
