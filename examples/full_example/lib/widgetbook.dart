@@ -4,7 +4,7 @@
 /// to create directories
 /// [Ref link]: https://docs.widgetbook.io/getting-started/complete-example
 import 'package:flutter/material.dart';
-import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook/widgetbook.dart' hide AlignmentAddon;
 
 import 'components/container.dart';
 import 'components/custom_card.dart';
