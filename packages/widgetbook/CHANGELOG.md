@@ -1,3 +1,7 @@
+## Unreleased
+
+ - **FIX**: Ensure widget is mounted on change. ([#814](https://github.com/widgetbook/widgetbook/pull/814))
+
 ## 3.1.0
 
  - **FEAT**: Add Alignment Addon. ([#798](https://github.com/widgetbook/widgetbook/pull/798))
