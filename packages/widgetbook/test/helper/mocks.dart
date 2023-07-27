@@ -1,4 +1,5 @@
 import 'package:mocktail/mocktail.dart';
+import 'package:widgetbook/src/state/state.dart';
 
 class VoidCallbackMock extends Mock implements Object {
   void call();
@@ -11,3 +12,5 @@ class ValueChangedCallbackMock<T> extends Mock implements Object {
 class OnNodeSelectedCallbackMock<P, D> extends Mock implements Object {
   void call(P path, D data);
 }
+
+class MockWidgetbookState extends Mock implements WidgetbookState {}
