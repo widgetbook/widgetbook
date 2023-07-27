@@ -1,6 +1,7 @@
 ## Unreleased
 
  - **FIX**: Ensure widget is mounted on change. ([#814](https://github.com/widgetbook/widgetbook/pull/814))
+ - **FIX**: Allow commas in `string` knobs. ([#817](https://github.com/widgetbook/widgetbook/pull/817))
 
 ## 3.1.0
 
