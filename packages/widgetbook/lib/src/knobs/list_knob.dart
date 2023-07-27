@@ -74,6 +74,6 @@ class ListOrNullKnob<T> extends Knob<T?> {
 
   @override
   T? valueFromQueryGroup(Map<String, String> group) {
-    return valueOf(label, group);
+    return valueOf<T?>(label, group);
   }
 }
