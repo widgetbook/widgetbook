@@ -17,6 +17,22 @@ extension TesterExtension on WidgetTester {
     );
   }
 
+  /// Same as [pumpWidgetWithMaterialApp] but with a [BuildContext].
+  Future<void> pumpWidgetWithBuilder(WidgetBuilder builder) async {
+    return pumpWidget(
+      MaterialApp(
+        theme: Themes.light,
+        darkTheme: Themes.dark,
+        themeMode: ThemeMode.dark,
+        home: Scaffold(
+          body: Builder(
+            builder: builder,
+          ),
+        ),
+      ),
+    );
+  }
+
   /// Executes [tap] on the [finder] then [pumpAndSettle].
   Future<Finder> findAndTap(Finder finder) async {
     await tap(finder);

@@ -12,7 +12,7 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
           initialSetting: initialAlignment,
         );
 
-  static final _alignments = {
+  static final alignments = {
     Alignment.topLeft: 'Top Left',
     Alignment.topCenter: 'Top Center',
     Alignment.topRight: 'Top Right',
@@ -30,8 +30,8 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
       ListField<Alignment>(
         name: 'alignment',
         initialValue: initialSetting,
-        values: _alignments.keys.toList(),
-        labelBuilder: (value) => _alignments[value]!,
+        values: alignments.keys.toList(),
+        labelBuilder: (value) => alignments[value]!,
       )
     ];
   }
