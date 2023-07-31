@@ -1,5 +1,6 @@
 ## Unreleased
 
+ - **FIX**: Resolve "asset:" imports. ([#819](https://github.com/widgetbook/widgetbook/pull/819))
  - **FIX**: Remove unused imports. ([#786](https://github.com/widgetbook/widgetbook/pull/786))
 
 ## 3.0.0

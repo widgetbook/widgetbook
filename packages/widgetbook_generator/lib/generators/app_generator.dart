@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:glob/glob.dart';
+import 'package:path/path.dart' as path;
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
@@ -31,8 +32,13 @@ class AppGenerator extends GeneratorForAnnotation<App> {
       WidgetbookUseCaseData.fromJson,
     );
 
+    // The directory containing the `widgetbook.dart` file
+    // without the leading `/`
+    final inputPath = element.librarySource!.fullName;
+    final inputDir = path.dirname(inputPath).substring(1);
+
     final buffer = StringBuffer()
-      ..writeln(generateImports(useCases))
+      ..writeln(generateImports(useCases, inputDir))
       ..writeln(generateDirectories(useCases));
 
     return buffer.toString();
@@ -79,6 +85,7 @@ class AppGenerator extends GeneratorForAnnotation<App> {
   /// but this implementation is simple in comparison to a complex approach
   String generateImports(
     List<WidgetbookData> datas,
+    String inputDir,
   ) {
     final set = <String>{
       'package:widgetbook/widgetbook.dart',
@@ -86,14 +93,26 @@ class AppGenerator extends GeneratorForAnnotation<App> {
 
     set.addAll(datas.map((data) => data.importStatement));
 
-    final imports = set.map(_generateImportStatement).toList()
+    final imports = set.map((importPath) {
+      final uri = Uri.parse(importPath);
+
+      // If the file is outside the `lib` directory, then the uri will be an
+      // "asset:" uri. In this case, we need to convert it to a relative path,
+      // relative to the directory that contains the `widgetbook.dart` file.
+      if (uri.scheme == 'asset') {
+        final relativePath = path.relative(
+          uri.path,
+          from: inputDir,
+        );
+
+        return "import '$relativePath';";
+      }
+
+      return "import '$importPath';";
+    }).toList()
       ..sort((a, b) => a.compareTo(b));
 
     return imports.join('\n');
-  }
-
-  String _generateImportStatement(String import) {
-    return "import '$import';";
   }
 
   List<Instance> _generateDirectoriesInstances(
