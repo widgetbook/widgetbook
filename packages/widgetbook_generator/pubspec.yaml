@@ -16,6 +16,7 @@ dependencies:
   glob: ^2.0.2
   json_annotation: ^4.8.0
   meta: ^1.7.0
+  path: ^1.8.0
   source_gen: ^1.1.0
   widgetbook_annotation: ^3.0.0
 
