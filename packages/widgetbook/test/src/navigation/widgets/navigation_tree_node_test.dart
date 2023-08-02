@@ -3,8 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 
-import '../../../helper/mocks.dart';
-import '../../../helper/tester_extension.dart';
+import '../../../helper/helper.dart';
 
 void main() {
   const nodeWithOneLevelOfChildren = NavigationTreeNodeData(
@@ -52,8 +51,7 @@ void main() {
           type: NavigationNodeType.useCase,
         );
 
-        final valueChangedCallbackMock =
-            ValueChangedCallbackMock<NavigationTreeNodeData>();
+        final valueChangedCallbackMock = VoidFn1Mock<NavigationTreeNodeData>();
         await tester.pumpWidgetWithMaterialApp(
           NavigationTreeNode(
             data: useCaseNode,

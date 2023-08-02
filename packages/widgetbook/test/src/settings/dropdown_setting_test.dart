@@ -14,7 +14,7 @@ void main() {
         'then the callback is invoked',
         (tester) async {
           const options = ['A', 'B'];
-          final callback = ValueChangedCallbackMock<String>();
+          final callback = VoidFn1Mock<String>();
 
           await tester.pumpWidgetWithMaterialApp(
             DropdownSetting(

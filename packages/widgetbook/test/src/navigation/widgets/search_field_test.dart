@@ -3,8 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 
-import '../../../helper/mocks.dart';
-import '../../../helper/tester_extension.dart';
+import '../../../helper/helper.dart';
 
 void main() {
   group('$SearchField', () {
@@ -69,7 +68,7 @@ void main() {
     testWidgets(
       'onSearchPressed is executed',
       (tester) async {
-        final voidCallbackMock = VoidCallbackMock();
+        final voidCallbackMock = VoidFnMock();
         await tester.pumpWidgetWithMaterialApp(
           SearchField(
             onSearchPressed: voidCallbackMock.call,

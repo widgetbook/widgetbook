@@ -2,8 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 
-import '../../../helper/mocks.dart';
-import '../../../helper/tester_extension.dart';
+import '../../../helper/helper.dart';
 
 void main() {
   group(
@@ -61,7 +60,7 @@ void main() {
       testWidgets(
         'Calls onNodeSelected when a node is tapped',
         (tester) async {
-          final callbackMock = OnNodeSelectedCallbackMock<String, dynamic>();
+          final callbackMock = VoidFn2Mock<String, dynamic>();
 
           await tester.pumpWidgetWithMaterialApp(
             NavigationTree(

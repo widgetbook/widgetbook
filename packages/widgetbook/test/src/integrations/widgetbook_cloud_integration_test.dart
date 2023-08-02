@@ -5,12 +5,9 @@ import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
 
-class OnNotifyCloudMock extends Mock implements Object {
-  void call(String title, List<Map<String, dynamic>> data);
-}
-
 class MockCloudIntegration extends WidgetbookCloudIntegration {
-  final OnNotifyCloudMock onNotifyMock = OnNotifyCloudMock();
+  final VoidFn2Mock<String, List<Map<String, dynamic>>> onNotifyMock =
+      VoidFn2Mock();
 
   @override
   void notifyCloud(
