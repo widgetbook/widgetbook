@@ -15,6 +15,11 @@ class WidgetbookUseCase extends LeafNavigationNodeData {
           data: builder,
         );
 
+  @Deprecated(
+    'Use [AlignmentAddon] instead to '
+    'control your use-cases alignment. '
+    'For more info: https://docs.widgetbook.io/addons/alignment-addon',
+  )
   factory WidgetbookUseCase.center({
     required String name,
     required Widget child,
