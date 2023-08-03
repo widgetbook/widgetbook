@@ -24,8 +24,8 @@ For this to work, a GitHub app integration is required.
 
 To use Widgetbook Cloud _Review_ your setup has to meet the following requirements:
 
-- Use [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) in version `v3.0.0-beta` (no special configuration required).
-- Use [widgetbook package](https://pub.dev/packages/widgetbook) in version `v3.0.0-beta` (no special configuration required).
+- Use [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) in version `{{ versions.generator }}` (no special configuration required).
+- Use [widgetbook package](https://pub.dev/packages/widgetbook) in version `{{ versions.widgetbook }}` (no special configuration required).
 - Use the `widgetbook` CLI from the [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli).
 - Setup a GitHub app
 
@@ -63,7 +63,7 @@ Use the [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli) to upl
     # Build the Widgetbook
     flutter build web -t lib/ui_catalogs.widgetbook.dart
     # Install the CLI
-    dart pub global activate widgetbook_cli 3.0.0-beta.22
+    dart pub global activate widgetbook_cli
     # Run the CLI
     widgetbook publish --api-key API-KEY
     ```
@@ -86,7 +86,7 @@ Use the [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli) to upl
     # Build the Widgetbook
     flutter build web -t lib/ui_catalogs.widgetbook.dart
     # Install the CLI
-    dart pub global activate widgetbook_cli 3.0.0-beta.22
+    dart pub global activate widgetbook_cli
     # Run the CLI
     widgetbook publish --api-key API-KEY --base-branch BASE-BRANCH
     ```
