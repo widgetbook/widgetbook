@@ -51,11 +51,11 @@ This will add a line like this to your package's pubspec.yaml (and run an implic
 
 ```yaml
 dependencies:
-  widgetbook_annotation: ^3.0.0
-  widgetbook: ^3.1.0
+  widgetbook_annotation: ^{{ versions.annotation }}
+  widgetbook: ^{{ versions.widgetbook }}
 
 dev_dependencies:
-  widgetbook_generator: ^3.0.0
+  widgetbook_generator: ^{{ versions.generator }}
   build_runner:
 ```
 
@@ -79,7 +79,7 @@ This will add a line like this to your package's `pubspec.yaml` (and run an impl
 
 ```yaml
 dependencies:
-  widgetbook: ^3.1.0
+  widgetbook: ^{{ versions.widgetbook }}
 ```
 
 Alternatively, your editor might support `flutter pub get`.
