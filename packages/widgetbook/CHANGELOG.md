@@ -1,5 +1,6 @@
 ## Unreleased
 
+ - **REFACTOR**: Deprecate `WidgetbookUseCase.center` in favor of [AlignmentAddon]. ([#826](https://github.com/widgetbook/widgetbook/pull/826))
  - **FIX**: Ensure widget is mounted on change. ([#814](https://github.com/widgetbook/widgetbook/pull/814))
  - **FIX**: Allow commas in `string` knobs. ([#817](https://github.com/widgetbook/widgetbook/pull/817))
  - **FIX**: Correct `listOrNull` knob type cast. ([#818](https://github.com/widgetbook/widgetbook/pull/818))
