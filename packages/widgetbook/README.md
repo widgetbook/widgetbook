@@ -11,7 +11,7 @@ Inspired by Storybook.js.
 <img src="https://github.com/widgetbook/widgetbook/blob/main/docs/assets/screenshots/widgetbook.png?raw=true" alt="Widgetbook Screenshot" />
 </p>
 
-# Features
+## Features
 
 - 💙 **Made for Flutter**. Easy to use. 
 - 🦄 **Open source**.
@@ -26,9 +26,8 @@ Widgetbook can do much more!
 - 📦 **Develop in isolation**. Don't think about business logic. 
 - 🎛 **Knobs**. Define how your team interacts with your Widgets by defining customizable knobs. 
 - ⚡️ **Hot reload**. Quickly find and fix bugs.
-- ✨ **Beautiful documentation**. Readable, easy to understand, and ever-improving. [Read the docs! ➡️](https://docs.widgetbook.io)
 
-# Widgetbook Cloud
+## Widgetbook Cloud
 
 To simplify the review process of professional teams, we provide our collaboration platform Widgetbook Cloud
 - 🌍 **Share your Widgets** with designers, product owners, clients, etc.
@@ -37,10 +36,6 @@ To simplify the review process of professional teams, we provide our collaborati
 
 [Get access now! ➡️](https://widgetbook.io)
 
-# We are hiring
+## Documentation
 
-- 👩🏼‍💻/👨🏾‍💻/🏳️‍🌈 Senior Software developer
-- 👩🏾‍🎨/🧑‍🎨/🏳️‍🌈 Senior UX designer
-- 👩🏽‍💻/🧑🏿‍💻/🏳️‍🌈 Senior Backend developer 
-
-[Apply now! ➡️](https://widgetbook.notion.site/Jobs-194be4bb4cf64de384630f89ebb641a9)
+See [docs.widgetbook.io](https://docs.widgetbook.io) for docs & samples.
