@@ -1,177 +1,99 @@
 {
-    "name": "Widgetbook",
-    "twitter": "widgetbook_io",
-    "logo": "/assets/logos/logo-light.png",
-    "logoDark": "/assets/logos/logo-dark.png",
-    "theme": "0060A7",
-    "googleAnalytics": "G-74GW877FF8",
-    "docsearch": {
-        "appId": "325TRD6FM7",
-        "apiKey": "c17e610333f601d9831da60a8c8f6bbe",
-        "indexName": "widgetbook"
+  "name": "Widgetbook",
+  "twitter": "widgetbook_io",
+  "logo": "/assets/logos/logo-light.png",
+  "logoDark": "/assets/logos/logo-dark.png",
+  "theme": "0060A7",
+  "googleAnalytics": "G-74GW877FF8",
+  "docsearch": {
+    "appId": "325TRD6FM7",
+    "apiKey": "c17e610333f601d9831da60a8c8f6bbe",
+    "indexName": "widgetbook"
+  },
+  "anchors": [
+    {
+      "title": "Homepage",
+      "icon": "house",
+      "link": "https://widgetbook.io"
     },
-    "anchors": [
-        { "title": "Homepage", "icon": "house", "link": "https://widgetbook.io" },
-        { "title": "Discord", "icon": "discord", "link": "https://discord.com/invite/zT4AMStAJA" }
+    {
+      "title": "Discord",
+      "icon": "discord",
+      "link": "https://discord.com/invite/zT4AMStAJA"
+    }
+  ],
+  "variables": {
+    "versions": {
+      "latest": "2.4.1",
+      "next": "3.0.0-beta.22"
+    }
+  },
+  "sidebar": [
+    [
+      "Overview",
+      [
+        ["Overview", "/index"],
+        ["Terminology", "/terminology"],
+        ["Why Widgetbook", "/why-widgetbook"]
+      ]
     ],
-    "variables": {
-        "versions": {
-            "latest": "2.4.1",
-            "next": "3.0.0-beta.22"
-        }
-    },
-    "sidebar": [
-        [
-            "Overview", 
-            [
-                [
-                    "Overview", "/index"
-                ],
-                [
-                    "Terminology", "/terminology"
-                ],
-                [
-                    "Why Widgetbook", "/why-widgetbook"
-                ]
-            ]
-        ],
-        [
-            "Getting Started", 
-            [
-                [
-                    "1. Install", "/getting-started/install"
-                ],
-                [
-                    "2. Setup", "/getting-started/setup"
-                ],
-                [
-                    "3. Run", "/getting-started/run"
-                ],
-                [
-                    "4. Components", "/getting-started/components"
-                ],
-                [
-                    "5. Structure", "/getting-started/structure"
-                ],
-                [
-                    "6. Addons", "/getting-started/addons"
-                ],
-                [
-                    "7. Knobs", "/getting-started/knobs"
-                ],
-                [
-                    "8. Themes", "/getting-started/themes"
-                ],
-                [
-                    "9. Configure", "/getting-started/configure"
-                ],
-                [
-                    "10. Complete Example", "/getting-started/complete-example"
-                ]
-            ]
-        ],
-        [
-            "Addons",
-            [
-                [
-                    "1. Introduction", "/addons/overview"
-                ],
-                [
-                    "2. Theme Addon", "/addons/theme-addon"
-                ],
-                [
-                    "3. Device Frame Addon", "/addons/device-frame-addon"
-                ],
-                [
-                    "4. Localization Addon", "/addons/localization-addon"
-                ],
-                [
-                    "5. Text Scale Addon", "/addons/text-scale-addon"
-                ],
-                [
-                    "5. Alignment Addon", "/addons/alignment-addon"
-                ],
-                [
-                    "6. Custom Addon", "/addons/custom-addon"
-                ]
-            ]
-        ],
-        [
-            "Knobs",
-            [
-                [
-                    "1. Overview", "/knobs/overview"
-                ],
-                [
-                    "2. Example", "/knobs/example"
-                ],
-                [
-                    "3. Custom Knob", "/knobs/custom-knob"
-                ]
-            ]
-        ],
-        [
-            "Migration",
-            [
-                [
-                    "2.4.0 to 3.0.0", "/migration/2.4.0-to-3.0.0"
-                ],
-                [
-                    "3.0.0 beta to rc", "/migration/3.0.0-beta-to-rc"
-                ]
-            ]
-        ],
-        [
-            "Cookbook",
-            [
-                [
-                    "Custom Theme", "/cookbook/custom-theme"
-                ]
-            ]
-        ],
-        [
-            "Widgetbook Cloud",
-            [
-                [
-                    "1. Overview", "/widgetbook-cloud/overview"
-                ],
-                [
-                    "2. Quick Start", "/widgetbook-cloud/quick-start"
-                ],
-                [
-                    "3. Sign Up", "/widgetbook-cloud/signup"
-                ],
-                [
-                    "4. Projects", "/widgetbook-cloud/projects"
-                ],
-                [
-                    "5. Hosting", "/widgetbook-cloud/hosting"
-                ],
-                [
-                    "6. Review (beta)", "/widgetbook-cloud/review"
-                ],
-                [
-                    "7. Github Integration", "/widgetbook-cloud/integrating-github"
-                ],
-                [
-                    "8. Accessing Resources", "/widgetbook-cloud/accessing-resources"
-                ]
-                
-            ]
-        ],
-        [
-            "CLI",
-            [
-                [
-                    "Overview", "/widgetbook-cli/overview"
-                ]
-            ]
-        ],
-        [
-            "Contribution",
-            [
-                ["Getting Started", "/contribution/get-started"]
-            ]
-        ]
-    ]
+    [
+      "Getting Started",
+      [
+        ["1. Install", "/getting-started/install"],
+        ["2. Setup", "/getting-started/setup"],
+        ["3. Run", "/getting-started/run"],
+        ["4. Components", "/getting-started/components"],
+        ["5. Structure", "/getting-started/structure"],
+        ["6. Addons", "/getting-started/addons"],
+        ["7. Knobs", "/getting-started/knobs"],
+        ["8. Themes", "/getting-started/themes"],
+        ["9. Configure", "/getting-started/configure"],
+        ["10. Complete Example", "/getting-started/complete-example"]
+      ]
+    ],
+    [
+      "Addons",
+      [
+        ["1. Introduction", "/addons/overview"],
+        ["2. Theme Addon", "/addons/theme-addon"],
+        ["3. Device Frame Addon", "/addons/device-frame-addon"],
+        ["4. Localization Addon", "/addons/localization-addon"],
+        ["5. Text Scale Addon", "/addons/text-scale-addon"],
+        ["5. Alignment Addon", "/addons/alignment-addon"],
+        ["6. Custom Addon", "/addons/custom-addon"]
+      ]
+    ],
+    [
+      "Knobs",
+      [
+        ["1. Overview", "/knobs/overview"],
+        ["2. Example", "/knobs/example"],
+        ["3. Custom Knob", "/knobs/custom-knob"]
+      ]
+    ],
+    [
+      "Migration",
+      [
+        ["2.4.0 to 3.0.0", "/migration/2.4.0-to-3.0.0"],
+        ["3.0.0 beta to rc", "/migration/3.0.0-beta-to-rc"]
+      ]
+    ],
+    ["Cookbook", [["Custom Theme", "/cookbook/custom-theme"]]],
+    [
+      "Widgetbook Cloud",
+      [
+        ["1. Overview", "/widgetbook-cloud/overview"],
+        ["2. Quick Start", "/widgetbook-cloud/quick-start"],
+        ["3. Sign Up", "/widgetbook-cloud/signup"],
+        ["4. Projects", "/widgetbook-cloud/projects"],
+        ["5. Hosting", "/widgetbook-cloud/hosting"],
+        ["6. Review (beta)", "/widgetbook-cloud/review"],
+        ["7. Github Integration", "/widgetbook-cloud/integrating-github"],
+        ["8. Accessing Resources", "/widgetbook-cloud/accessing-resources"]
+      ]
+    ],
+    ["CLI", [["Overview", "/widgetbook-cli/overview"]]],
+    ["Contribution", [["Getting Started", "/contribution/get-started"]]]
+  ]
 }
