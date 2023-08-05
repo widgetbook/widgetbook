@@ -42,6 +42,20 @@ extension TesterExtension on WidgetTester {
     return finder;
   }
 
+  /// Executes [drag] on the [finder] with [offset] then [pumpAndSettle].
+  Future<Finder> findAndDrag(Finder finder, Offset offset) async {
+    await drag(finder, offset);
+    await pumpAndSettle();
+    return finder;
+  }
+
+  /// Executes [enterText] on the [finder] with [text] then [pumpAndSettle].
+  Future<Finder> findAndEnter(Finder finder, String text) async {
+    await enterText(finder, text);
+    await pumpAndSettle();
+    return finder;
+  }
+
   /// Pumps a [Field]'s widget using [value] as a query parameter to the field,
   /// then returns the widget of type [TWidget].
   Future<TWidget> pumpField<TValue, TWidget extends Widget>(
@@ -74,6 +88,40 @@ extension TesterExtension on WidgetTester {
 
     return widget<TWidget>(
       find.byType(TWidget),
+    );
+  }
+
+  Future<void> pumpKnob(WidgetBuilder builder) async {
+    return pumpWidget(
+      WidgetbookScope(
+        state: WidgetbookState(
+          path: '/',
+          queryParams: {},
+          addons: [],
+          directories: [],
+          appBuilder: materialAppBuilder,
+        ),
+        child: MaterialApp(
+          home: Builder(
+            builder: (context) {
+              final state = WidgetbookState.of(context);
+
+              return Column(
+                children: [
+                  Expanded(
+                    child: builder(context),
+                  ),
+                  ...state.knobs.values.map(
+                    (knob) => Material(
+                      child: knob.buildFields(context),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 }
