@@ -38,5 +38,5 @@ class Fn3Mock<R, P1, P2, P3> extends Mock implements Object {
 
 class VoidFn3Mock<P1, P2, P3> extends Mock
     implements Fn3Mock<void, P1, P2, P3> {}
-    
+
 // ---------------------------------------------

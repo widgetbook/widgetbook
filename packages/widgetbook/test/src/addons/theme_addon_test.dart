@@ -4,6 +4,32 @@ import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
 
+class AppThemeData {
+  const AppThemeData(this.color);
+
+  final Color color;
+}
+
+class AppTheme extends InheritedWidget {
+  const AppTheme({
+    super.key,
+    required this.data,
+    required super.child,
+  });
+
+  final AppThemeData data;
+
+  static AppThemeData of(BuildContext context) {
+    final widget = context.dependOnInheritedWidgetOfExactType<AppTheme>();
+    return widget!.data;
+  }
+
+  @override
+  bool updateShouldNotify(covariant AppTheme oldWidget) {
+    return data != oldWidget.data;
+  }
+}
+
 void main() {
   group(
     '$ThemeAddon',
@@ -62,30 +88,4 @@ void main() {
       );
     },
   );
-}
-
-class AppThemeData {
-  const AppThemeData(this.color);
-
-  final Color color;
-}
-
-class AppTheme extends InheritedWidget {
-  const AppTheme({
-    super.key,
-    required this.data,
-    required super.child,
-  });
-
-  final AppThemeData data;
-
-  static AppThemeData of(BuildContext context) {
-    final widget = context.dependOnInheritedWidgetOfExactType<AppTheme>();
-    return widget!.data;
-  }
-
-  @override
-  bool updateShouldNotify(covariant AppTheme oldWidget) {
-    return data != oldWidget.data;
-  }
 }
