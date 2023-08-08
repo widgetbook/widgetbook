@@ -21,18 +21,35 @@ extension TesterExtension on WidgetTester {
 
   /// Same as [pumpWidgetWithMaterialApp] but with a [BuildContext].
   Future<void> pumpWidgetWithBuilder(WidgetBuilder builder) async {
-    return pumpWidget(
-      MaterialApp(
-        theme: Themes.light,
-        darkTheme: Themes.dark,
-        themeMode: ThemeMode.dark,
-        home: Scaffold(
-          body: Builder(
-            builder: builder,
-          ),
+    return pumpWidgetWithMaterialApp(
+      Scaffold(
+        body: Builder(
+          builder: builder,
         ),
       ),
     );
+  }
+
+  Future<WidgetbookState> pumpWidgetWithQueryParams({
+    required Map<String, String> queryParams,
+    required WidgetBuilder builder,
+  }) async {
+    final state = WidgetbookState(
+      appBuilder: materialAppBuilder,
+      directories: [],
+      queryParams: queryParams,
+    );
+
+    await pumpWidgetWithMaterialApp(
+      WidgetbookScope(
+        state: state,
+        child: Builder(
+          builder: builder,
+        ),
+      ),
+    );
+
+    return state;
   }
 
   /// Executes [tap] on the [finder] then [pumpAndSettle].
@@ -62,28 +79,13 @@ extension TesterExtension on WidgetTester {
     Field<TValue> field,
     TValue? value,
   ) async {
-    const groupName = 'group_name';
+    const group = 'group_name';
 
-    await pumpWidgetWithMaterialApp(
-      WidgetbookScope(
-        state: WidgetbookState(
-          directories: [],
-          appBuilder: (context, child) => child,
-          queryParams: (value == null)
-              ? {}
-              : {
-                  groupName: '{${field.name}:${field.codec.toParam(value)}}',
-                },
-        ),
-        child: Builder(
-          builder: (context) {
-            return field.build(
-              context,
-              groupName,
-            );
-          },
-        ),
-      ),
+    await pumpWidgetWithQueryParams(
+      queryParams: value != null
+          ? {group: '{${field.name}:${field.codec.toParam(value)}}'}
+          : {},
+      builder: (context) => field.build(context, group),
     );
 
     return widget<TWidget>(
@@ -92,36 +94,24 @@ extension TesterExtension on WidgetTester {
   }
 
   Future<void> pumpKnob(WidgetBuilder builder) async {
-    return pumpWidget(
-      WidgetbookScope(
-        state: WidgetbookState(
-          path: '/',
-          queryParams: {},
-          addons: [],
-          directories: [],
-          appBuilder: materialAppBuilder,
-        ),
-        child: MaterialApp(
-          home: Builder(
-            builder: (context) {
-              final state = WidgetbookState.of(context);
+    await pumpWidgetWithQueryParams(
+      queryParams: {},
+      builder: (context) {
+        final state = WidgetbookState.of(context);
 
-              return Column(
-                children: [
-                  Expanded(
-                    child: builder(context),
-                  ),
-                  ...state.knobs.values.map(
-                    (knob) => Material(
-                      child: knob.buildFields(context),
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
-      ),
+        return Column(
+          children: [
+            Expanded(
+              child: builder(context),
+            ),
+            ...state.knobs.values.map(
+              (knob) => Material(
+                child: knob.buildFields(context),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

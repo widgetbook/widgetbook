@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:widgetbook/src/state/state.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
@@ -97,19 +96,10 @@ void main() {
         (tester) async {
           const group = 'mock_group';
           const expected = false;
-          final state = MockWidgetbookState();
 
-          when(() => state.queryParams).thenReturn({
-            group: '{${field.name}:$expected}',
-          });
-
-          await tester.pumpWidgetWithMaterialApp(
-            WidgetbookScope(
-              state: state,
-              child: Builder(
-                builder: (context) => field.build(context, group),
-              ),
-            ),
+          await tester.pumpWidgetWithQueryParams(
+            queryParams: {group: '{${field.name}:$expected}'},
+            builder: (context) => field.build(context, group),
           );
 
           verify(
@@ -123,17 +113,10 @@ void main() {
         'then it updates the query params with the new value',
         (tester) async {
           const group = 'mock_group';
-          final state = WidgetbookState(
-            directories: [],
-            appBuilder: (_, child) => child,
-            queryParams: {group: '{${field.name}:false}'},
-          );
 
-          await tester.pumpWidgetWithMaterialApp(
-            WidgetbookScope(
-              state: state,
-              child: Container(),
-            ),
+          final state = await tester.pumpWidgetWithQueryParams(
+            queryParams: {group: '{${field.name}:false}'},
+            builder: (context) => Container(),
           );
 
           final context = tester.element(find.byType(Container));
