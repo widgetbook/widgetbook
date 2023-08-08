@@ -54,21 +54,20 @@ void main() {
         'given a config with preview mode, '
         'then shell is hidden',
         (tester) async {
-          final state = MockWidgetbookState();
-          when(() => state.uri).thenReturn(Uri());
-          when(() => state.appBuilder).thenReturn(materialAppBuilder);
+          final state = WidgetbookState(
+            appBuilder: materialAppBuilder,
+            directories: [],
+          );
 
           final delegate = AppRouterDelegate(
             initialRoute: '/?preview',
             state: state,
           );
 
-          await tester.pumpWidget(
-            WidgetbookScope(
-              state: state,
-              child: MaterialApp.router(
-                routerDelegate: delegate,
-              ),
+          await tester.pumpWidgetWithState(
+            state: state,
+            builder: (_) => MaterialApp.router(
+              routerDelegate: delegate,
             ),
           );
 

@@ -5,53 +5,6 @@ import 'package:widgetbook/src/themes.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 extension TesterExtension on WidgetTester {
-  /// Wraps [widget] with a [MaterialApp] predefined with [Themes]
-  Future<void> pumpWidgetWithMaterialApp(Widget widget) async {
-    return pumpWidget(
-      MaterialApp(
-        theme: Themes.light,
-        darkTheme: Themes.dark,
-        themeMode: ThemeMode.dark,
-        home: Scaffold(
-          body: widget,
-        ),
-      ),
-    );
-  }
-
-  /// Same as [pumpWidgetWithMaterialApp] but with a [BuildContext].
-  Future<void> pumpWidgetWithBuilder(WidgetBuilder builder) async {
-    return pumpWidgetWithMaterialApp(
-      Scaffold(
-        body: Builder(
-          builder: builder,
-        ),
-      ),
-    );
-  }
-
-  Future<WidgetbookState> pumpWidgetWithQueryParams({
-    required Map<String, String> queryParams,
-    required WidgetBuilder builder,
-  }) async {
-    final state = WidgetbookState(
-      appBuilder: materialAppBuilder,
-      directories: [],
-      queryParams: queryParams,
-    );
-
-    await pumpWidgetWithMaterialApp(
-      WidgetbookScope(
-        state: state,
-        child: Builder(
-          builder: builder,
-        ),
-      ),
-    );
-
-    return state;
-  }
-
   /// Executes [tap] on the [finder] then [pumpAndSettle].
   Future<Finder> findAndTap(Finder finder) async {
     await tap(finder);
@@ -71,6 +24,61 @@ extension TesterExtension on WidgetTester {
     await enterText(finder, text);
     await pumpAndSettle();
     return finder;
+  }
+
+  /// Wraps [widget] with a [MaterialApp] predefined with [Themes]
+  Future<void> pumpWidgetWithMaterialApp(Widget widget) async {
+    return pumpWidget(
+      MaterialApp(
+        theme: Themes.light,
+        darkTheme: Themes.dark,
+        themeMode: ThemeMode.dark,
+        home: Scaffold(
+          body: widget,
+        ),
+      ),
+    );
+  }
+
+  /// Same as [pumpWidgetWithMaterialApp] but with a [BuildContext].
+  Future<void> pumpWidgetWithBuilder(WidgetBuilder builder) async {
+    return pumpWidgetWithMaterialApp(
+      Builder(
+        builder: builder,
+      ),
+    );
+  }
+
+  Future<WidgetbookState> pumpWidgetWithState({
+    required WidgetbookState state,
+    required WidgetBuilder builder,
+  }) async {
+    await pumpWidgetWithMaterialApp(
+      WidgetbookScope(
+        state: state,
+        child: Builder(
+          builder: builder,
+        ),
+      ),
+    );
+
+    return state;
+  }
+
+  Future<WidgetbookState> pumpWidgetWithQueryParams({
+    required Map<String, String> queryParams,
+    required WidgetBuilder builder,
+  }) async {
+    final state = WidgetbookState(
+      appBuilder: materialAppBuilder,
+      directories: [],
+      queryParams: queryParams,
+    );
+
+    return pumpWidgetWithState(
+      state: state,
+      builder: builder,
+    );
   }
 
   /// Pumps a [Field]'s widget using [value] as a query parameter to the field,
@@ -101,13 +109,9 @@ extension TesterExtension on WidgetTester {
 
         return Column(
           children: [
-            Expanded(
-              child: builder(context),
-            ),
+            builder(context),
             ...state.knobs.values.map(
-              (knob) => Material(
-                child: knob.buildFields(context),
-              ),
+              (knob) => knob.buildFields(context),
             ),
           ],
         );
