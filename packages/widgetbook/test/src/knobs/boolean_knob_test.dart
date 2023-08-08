@@ -2,39 +2,91 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
 
-import 'knob_helper.dart';
+import '../../helper/helper.dart';
 
 void main() {
-  testWidgets(
-    'Equality operator works correctly',
-    (tester) async {
-      final first = BooleanKnob(label: 'first', value: true);
-      final second = BooleanKnob(label: 'second', value: true);
-      expect(first, equals(BooleanKnob(label: 'first', value: true)));
-      expect(first, isNot(equals(second)));
+  group(
+    '$BooleanKnob',
+    () {
+      testWidgets(
+        'when field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs
+                  .boolean(
+                    label: 'Knob',
+                  )
+                  .toString(),
+            ),
+          );
+
+          expect(find.text('false'), findsOneWidget);
+
+          await tester.findAndTap(find.byType(Switch));
+
+          expect(find.text('true'), findsOneWidget);
+        },
+      );
     },
   );
 
-  testWidgets(
-    'Bool knob functions',
-    (tester) async {
-      await tester.pumpWithKnob(
-        (context) => Text(
-          context.knobs.boolean(
-            label: 'label',
-          )
-              ? 'Hi'
-              : 'Bye',
-        ),
+  group(
+    '$BooleanOrNullKnob',
+    () {
+      testWidgets(
+        'when field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs
+                  .booleanOrNull(
+                    label: 'Knob',
+                  )
+                  .toString(),
+            ),
+          );
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.text('false'), findsOneWidget);
+
+          await tester.findAndTap(find.byType(Switch));
+          expect(find.text('true'), findsOneWidget);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.text('null'), findsOneWidget);
+        },
       );
 
-      expect(find.text('Bye'), findsOneWidget);
+      testWidgets(
+        'when nullability is changed twice, '
+        'then the value should remain the same as before',
+        (tester) async {
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs
+                  .booleanOrNull(
+                    label: 'Knob',
+                  )
+                  .toString(),
+            ),
+          );
 
-      await tester.pumpAndSettle();
-      await tester.tap(find.byType(Switch));
-      await tester.pumpAndSettle();
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.text('false'), findsOneWidget);
 
-      expect(find.text('Hi'), findsOneWidget);
+          await tester.findAndTap(find.byType(Switch));
+          expect(find.text('true'), findsOneWidget);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.text('null'), findsOneWidget);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.text('true'), findsOneWidget);
+        },
+      );
     },
   );
 }

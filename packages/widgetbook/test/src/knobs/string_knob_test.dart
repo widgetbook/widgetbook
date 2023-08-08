@@ -2,82 +2,111 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
 
-import 'knob_helper.dart';
+import '../../helper/helper.dart';
 
 void main() {
-  testWidgets(
-    'Equality operator works correctly',
-    (tester) async {
-      final first = StringKnob(
-        label: 'first',
-        value: 'hello',
-      );
-      final second = StringKnob(
-        label: 'second',
-        value: 'goodbye',
+  group(
+    '$StringKnob',
+    () {
+      testWidgets(
+        'given an initial value, '
+        'then the value should be displayed',
+        (tester) async {
+          const value = 'Widgetbook';
+
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs.string(
+                label: 'Knob',
+                initialValue: value,
+              ),
+            ),
+          );
+
+          expect(find.textWidget(value), findsOneWidget);
+        },
       );
 
-      expect(
-        first,
-        equals(
-          StringKnob(
-            label: 'first',
-            value: 'hello',
-          ),
-        ),
+      testWidgets(
+        'when field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs.string(
+                label: 'Knob',
+              ),
+            ),
+          );
+
+          const text = 'Flutter';
+          await tester.findAndEnter(find.byType(TextField), text);
+
+          expect(find.textWidget(text), findsOneWidget);
+        },
       );
-      expect(first, isNot(equals(second)));
     },
   );
 
-  testWidgets(
-    'Text knob initial value works',
-    (tester) async {
-      await tester.pumpWithKnob(
-        (context) => Text(
-          context.knobs.string(
-            label: 'label',
-            initialValue: 'Hi dude',
-          ),
-        ),
+  group(
+    '$StringOrNullKnob',
+    () {
+      testWidgets(
+        'when field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs
+                  .stringOrNull(
+                    label: 'Knob',
+                  )
+                  .toString(),
+            ),
+          );
+
+          final text = 'Widgetbook';
+          await tester.findAndEnter(
+            find.byType(TextField),
+            text,
+          );
+
+          expect(find.textWidget(text), findsOneWidget);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.textWidget('null'), findsOneWidget);
+        },
       );
 
-      expect(find.text('Hi dude'), findsWidgets);
-    },
-  );
+      testWidgets(
+        'when nullability is changed twice, '
+        'then the value should remain the same as before',
+        (tester) async {
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs
+                  .stringOrNull(
+                    label: 'Knob',
+                  )
+                  .toString(),
+            ),
+          );
 
-  testWidgets(
-    'Text knob description displays',
-    (tester) async {
-      await tester.pumpWithKnob(
-        (context) => Text(
-          context.knobs.string(
-            label: 'label',
-            initialValue: 'Hi dude',
-            description: 'test description',
-          ),
-        ),
+          const text = 'Flutter';
+          await tester.findAndEnter(
+            find.byType(TextField),
+            text,
+          );
+
+          expect(find.textWidget(text), findsOneWidget);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.textWidget('null'), findsOneWidget);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.textWidget(text), findsOneWidget);
+        },
       );
-
-      expect(find.text('test description'), findsOneWidget);
-    },
-  );
-
-  testWidgets(
-    'Text knob functions',
-    (tester) async {
-      await tester.pumpWithKnob(
-        (context) => Text(
-          context.knobs.string(
-            label: 'label',
-          ),
-        ),
-      );
-
-      await tester.enterText(find.byType(TextField), 'Bye');
-      await tester.pumpAndSettle();
-
-      expect(find.text('Bye'), findsWidgets);
     },
   );
 }

@@ -149,7 +149,9 @@ class WidgetbookState extends ChangeNotifier {
     queryParams = {
       // Copy from UnmodifiableMap
       ...routeConfig.queryParameters
-    }..remove('path');
+    }
+      ..remove('path')
+      ..remove('preview');
 
     notifyListeners();
   }

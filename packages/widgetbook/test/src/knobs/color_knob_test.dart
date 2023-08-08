@@ -2,33 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
 
-import 'knob_helper.dart';
+import '../../helper/helper.dart';
 
 void main() {
-  group('$ColorKnob', () {
-    testWidgets(
-      'can return initial value',
-      (tester) async {
-        await tester.pumpWithKnob(
-          (context) => Icon(
-            key: const Key('coloredIcon'),
-            Icons.thumb_up_sharp,
-            color: context.knobs.color(
-              label: 'Color',
-              initialValue: Colors.blue,
+  group(
+    '$ColorKnob',
+    () {
+      testWidgets(
+        'when field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          const blue = Color(0xFF0000FF);
+          const red = Color(0xFFFF0000);
+
+          await tester.pumpKnob(
+            (context) => ColoredBox(
+              color: context.knobs.color(
+                label: 'Knob',
+                initialValue: blue,
+              ),
             ),
-          ),
-        );
+          );
 
-        final iconFinder = find.byKey(
-          const Key('coloredIcon'),
-        );
+          await tester.findAndEnter(
+            find.byType(TextField),
+            'FFFF0000',
+          );
 
-        expect(iconFinder, findsWidgets);
+          final box = tester.widget<ColoredBox>(find.byType(ColoredBox));
 
-        final icon = iconFinder.evaluate().first.widget as Icon;
-        expect(icon.color, Colors.blue);
-      },
-    );
-  });
+          expect(box.color, equals(red));
+        },
+      );
+    },
+  );
 }

@@ -2,45 +2,58 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
 
-import 'knob_helper.dart';
+import '../../helper/helper.dart';
 
 void main() {
-  testWidgets(
-    'Equality operator works correctly',
-    (tester) async {
-      final first = DoubleSliderKnob(label: 'first', value: 3);
-      final second = DoubleSliderKnob(label: 'second', value: 3);
-      expect(first, equals(DoubleSliderKnob(label: 'first', value: 3)));
-      expect(first, isNot(equals(second)));
-    },
-  );
+  group(
+    '$DoubleSliderKnob',
+    () {
+      testWidgets(
+        'given an initial value, '
+        'then the value should be displayed',
+        (tester) async {
+          const value = 5.0;
 
-  testWidgets(
-    'Slider knob functions',
-    (tester) async {
-      await tester.pumpWithKnob(
-        (context) => Text(
-          context.knobs.double
-              .slider(
-                label: 'label',
-                initialValue: 5,
-                max: 7,
-                min: 3,
-                divisions: 1,
-              )
-              .toString(),
-        ),
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs.double
+                  .slider(
+                    label: 'Knob',
+                    initialValue: value,
+                  )
+                  .toString(),
+            ),
+          );
+
+          expect(find.textWidget('$value'), findsOneWidget);
+        },
       );
 
-      expect(find.text('5.00'), findsOneWidget);
-      await tester.pumpAndSettle();
-      await tester.drag(
-        find.byType(Slider),
-        const Offset(500, 0),
-      );
-      await tester.pumpAndSettle();
+      testWidgets(
+        'when field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          const max = 10.0;
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs.double
+                  .slider(
+                    label: 'Knob',
+                    divisions: 1,
+                    max: max,
+                  )
+                  .toString(),
+            ),
+          );
 
-      expect(find.text('7.00'), findsOneWidget);
+          await tester.findAndDrag(
+            find.byType(Slider),
+            const Offset(100, 0),
+          );
+
+          expect(find.textWidget('$max'), findsOneWidget);
+        },
+      );
     },
   );
 }

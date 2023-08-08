@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../../state/state.dart';
 import '../widgetbook_integration.dart';
 import 'no_messaging.dart' if (dart.library.html) 'web_messaging.dart';
@@ -5,6 +7,14 @@ import 'no_messaging.dart' if (dart.library.html) 'web_messaging.dart';
 /// Integration for Widgetbook Cloud, that is used to sync addons and knobs
 /// information with the host.
 class WidgetbookCloudIntegration extends WidgetbookIntegration {
+  @visibleForTesting
+  void notifyCloud(
+    String title,
+    List<Map<String, dynamic>> data,
+  ) {
+    sendMessage({title: data});
+  }
+
   @override
   void onInit(WidgetbookState state) {
     if (state.addons == null) return;
@@ -13,7 +23,7 @@ class WidgetbookCloudIntegration extends WidgetbookIntegration {
         .map((addon) => addon.toJson())
         .toList();
 
-    sendMessage({'addons': addonsJson});
+    notifyCloud('addons', addonsJson);
   }
 
   @override
@@ -22,6 +32,6 @@ class WidgetbookCloudIntegration extends WidgetbookIntegration {
         .map((knob) => knob.toJson())
         .toList();
 
-    sendMessage({'knobs': knobsJson});
+    notifyCloud('knobs', knobsJson);
   }
 }
