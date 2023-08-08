@@ -1,10 +1,23 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nested/nested.dart';
-import 'package:widgetbook/src/addons/common/common.dart';
+import 'package:widgetbook/widgetbook.dart';
 
-import '../../../helper/tester_extension.dart';
-import 'custom_addon.dart';
+import '../../helper/helper.dart';
+
+class MockAddon extends WidgetbookAddon<void> {
+  MockAddon()
+      : super(
+          name: 'Mock Addon',
+          initialSetting: null,
+        );
+
+  @override
+  List<Field> get fields => [];
+
+  @override
+  void valueFromQueryGroup(Map<String, String> group) {}
+}
 
 void main() {
   group(
@@ -35,11 +48,7 @@ void main() {
         (tester) async {
           await tester.pumpWidgetWithMaterialApp(
             MultiAddonBuilder(
-              addons: [
-                CustomAddon(
-                  initialSetting: 'test',
-                ),
-              ],
+              addons: [MockAddon()],
               builder: (_, __, ___) => const Text('stub'),
               child: const Text('single child'),
             ),
