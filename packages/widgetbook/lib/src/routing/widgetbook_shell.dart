@@ -18,11 +18,11 @@ class WidgetbookShell extends StatelessWidget {
     final state = WidgetbookState.of(context);
 
     return ColoredBox(
-      color: Theme.of(context).colorScheme.surface,
+      color: Theme.of(context).colorScheme.background,
       child: ResizableWidget(
         separatorSize: 2,
         percentages: [0.2, 0.6, 0.2],
-        separatorColor: Colors.white24,
+        separatorColor: Theme.of(context).colorScheme.outlineVariant,
         children: [
           NavigationPanel(
             initialPath: state.path,

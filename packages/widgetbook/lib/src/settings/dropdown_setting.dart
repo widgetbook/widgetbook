@@ -21,30 +21,10 @@ class DropdownSetting<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     return DropdownMenu<T>(
-      initialSelection: initialSelection,
-      inputDecorationTheme: InputDecorationTheme(
-        contentPadding: const EdgeInsets.only(left: 24),
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.transparent,
-          ),
-        ),
-        filled: true,
-        fillColor: Colors.transparent,
-        hoverColor: colorScheme.onBackground.withOpacity(0.08),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.transparent),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: colorScheme.onBackground.withOpacity(0.12),
-          ),
-        ),
-      ),
       trailingIcon: const Icon(Icons.keyboard_arrow_down_rounded),
       selectedTrailingIcon: const Icon(Icons.keyboard_arrow_up_rounded),
+      initialSelection: initialSelection,
       onSelected: (value) => onSelected(value as T),
       dropdownMenuEntries: options
           .map(

@@ -19,7 +19,7 @@ class Workbench extends StatelessWidget {
         ColoredBox(
           // Background color for the area behind device frame if
           // the [DeviceFrameAddon] is used.
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: Theme.of(context).colorScheme.surface,
           child: MultiAddonBuilder(
             addons: state.addons,
             builder: (context, addon, child) {

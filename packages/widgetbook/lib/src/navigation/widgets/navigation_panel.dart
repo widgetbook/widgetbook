@@ -25,36 +25,34 @@ class _NavigationPanelState extends State<NavigationPanel> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minWidth: 50, maxWidth: 300),
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: SearchField(
-                searchValue: searchQuery,
-                onSearchChanged: (value) {
-                  setState(() => searchQuery = value);
-                },
-                onSearchCancelled: () {
-                  setState(() => searchQuery = '');
-                },
-              ),
+    return Material(
+      color: Theme.of(context).colorScheme.surface,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: SearchField(
+              searchValue: searchQuery,
+              onSearchChanged: (value) {
+                setState(() => searchQuery = value);
+              },
+              onSearchCancelled: () {
+                setState(() => searchQuery = '');
+              },
             ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: NavigationTree(
-                initialPath: widget.initialPath,
-                onNodeSelected: widget.onNodeSelected,
-                directories: widget.directories,
-                searchQuery: searchQuery,
-              ),
+          ),
+          const SizedBox(height: 16),
+          Expanded(
+            child: NavigationTree(
+              initialPath: widget.initialPath,
+              onNodeSelected: widget.onNodeSelected,
+              directories: widget.directories,
+              searchQuery: searchQuery,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

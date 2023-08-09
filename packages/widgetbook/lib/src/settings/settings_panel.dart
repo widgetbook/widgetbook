@@ -20,54 +20,27 @@ class SettingsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    return Material(
+      color: Theme.of(context).colorScheme.surface,
+      child: ListView.builder(
+        itemCount: settings.length,
+        itemBuilder: (context, index) {
+          final setting = settings[index];
+          final children = setting.builder(context);
 
-    return Card(
-      child: Theme(
-        data: Theme.of(context).copyWith(
-          inputDecorationTheme: InputDecorationTheme(
-            filled: true,
-            fillColor: colorScheme.surfaceVariant,
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: colorScheme.primary,
-              ),
-            ),
-            isDense: true,
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.transparent,
-              ),
-            ),
-            border: const OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.transparent,
-              ),
-            ),
-          ),
-        ),
-        child: ListView.builder(
-          itemCount: settings.length,
-          itemBuilder: (context, index) {
-            final setting = settings[index];
-            final children = setting.builder(context);
-
-            return ExpansionTile(
-              collapsedShape: const RoundedRectangleBorder(),
-              shape: const RoundedRectangleBorder(),
-              initiallyExpanded: true,
-              title: Text(setting.name),
-              children: children.isNotEmpty
-                  ? children
-                  : [
-                      Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Text('No ${setting.name} available'),
-                      )
-                    ],
-            );
-          },
-        ),
+          return ExpansionTile(
+            initiallyExpanded: true,
+            title: Text(setting.name),
+            children: children.isNotEmpty
+                ? children
+                : [
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text('No ${setting.name} available'),
+                    )
+                  ],
+          );
+        },
       ),
     );
   }
