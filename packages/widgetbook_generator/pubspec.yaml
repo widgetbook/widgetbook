@@ -19,6 +19,7 @@ dependencies:
   path: ^1.8.0
   source_gen: ^1.1.0
   widgetbook_annotation: ^3.0.0
+  yaml: ^3.1.2
 
 dev_dependencies:
   test: ^1.24.1
