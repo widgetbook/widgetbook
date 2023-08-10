@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../navigation.dart';
 
-typedef NodeSelectedCallback = void Function(
-  String path,
-  TreeNode node,
-);
-
 class NavigationTree extends StatefulWidget {
   const NavigationTree({
     super.key,
@@ -16,7 +11,7 @@ class NavigationTree extends StatefulWidget {
     this.searchQuery = '',
   });
 
-  final NodeSelectedCallback? onNodeSelected;
+  final ValueChanged<TreeNode>? onNodeSelected;
   final String? initialPath;
   final TreeNode root;
   final String searchQuery;
@@ -64,7 +59,7 @@ class NavigationTreeState extends State<NavigationTree> {
       onNodeSelected: (node) {
         if (node.path == selectedNode?.path) return;
         setState(() => selectedNode = node);
-        widget.onNodeSelected?.call(node.path, node);
+        widget.onNodeSelected?.call(node);
       },
     );
   }

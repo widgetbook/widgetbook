@@ -13,7 +13,7 @@ class NavigationPanel extends StatefulWidget {
   });
 
   final String? initialPath;
-  final NodeSelectedCallback? onNodeSelected;
+  final ValueChanged<TreeNode>? onNodeSelected;
   final TreeNode root;
 
   @override
