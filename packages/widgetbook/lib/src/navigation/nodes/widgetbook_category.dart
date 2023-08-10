@@ -4,10 +4,8 @@ class WidgetbookCategory extends TreeNode {
   WidgetbookCategory({
     required super.name,
     required super.children,
-    this.isInitiallyExpanded = true,
+    super.isInitiallyExpanded,
   });
-
-  final bool isInitiallyExpanded;
 
   @override
   WidgetbookCategory copyWith({

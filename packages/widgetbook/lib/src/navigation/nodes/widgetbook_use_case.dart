@@ -8,7 +8,10 @@ class WidgetbookUseCase extends TreeNode {
   WidgetbookUseCase({
     required super.name,
     required this.builder,
-  }) : super(children: null);
+  }) : super(
+          children: null,
+          isInitiallyExpanded: false,
+        );
 
   @Deprecated(
     'Use [AlignmentAddon] instead to '

@@ -2,6 +2,7 @@ abstract class TreeNode {
   TreeNode({
     required this.name,
     required this.children,
+    this.isInitiallyExpanded = true,
   }) {
     children?.forEach(
       (child) => child.parent = this,
@@ -9,6 +10,7 @@ abstract class TreeNode {
   }
 
   final String name;
+  final bool isInitiallyExpanded;
   final List<TreeNode>? children;
   TreeNode? parent;
 

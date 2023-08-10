@@ -5,13 +5,12 @@ class WidgetbookComponent extends TreeNode {
   WidgetbookComponent({
     required super.name,
     required this.useCases,
-    this.isInitiallyExpanded = true,
+    super.isInitiallyExpanded,
   }) : super(
           children: useCases,
         );
 
   final List<WidgetbookUseCase> useCases;
-  final bool isInitiallyExpanded;
 
   @override
   WidgetbookComponent copyWith({
