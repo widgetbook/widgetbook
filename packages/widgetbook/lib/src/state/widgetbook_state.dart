@@ -36,7 +36,6 @@ class WidgetbookState extends ChangeNotifier {
   final List<WidgetbookIntegration>? integrations;
   final WidgetbookRoot root;
 
-  @Deprecated('Use `root.children` instead')
   List<TreeNode> get directories => root.children!;
 
   WidgetbookUseCase? get useCase => path == null ? null : catalog.get(path!);
