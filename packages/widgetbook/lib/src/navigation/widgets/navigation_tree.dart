@@ -82,70 +82,20 @@ class NavigationTreeState extends State<NavigationTree> {
     required String searchQuery,
     required List<TreeNode> nodes,
   }) {
-    final filteredNodes = <TreeNode>[];
-    for (final node in nodes) {
-      final matchedNode = _filterNodeByQuery(node, searchQuery);
-      if (matchedNode != null && !matchedNode.isLeaf) {
-        filteredNodes.add(matchedNode);
-      }
-    }
-    return filteredNodes;
-  }
-
-  TreeNode? _filterNodeByQuery(
-    TreeNode node,
-    String searchQuery,
-  ) {
-    if (node.isLeaf) return null;
-
-    final regex = RegExp(searchQuery, caseSensitive: false);
-    if (node.name.contains(regex) && !node.isLeaf) {
-      return node;
-    }
-
-    final matchingChildren = <TreeNode>[];
-
-    for (final child in node.children!) {
-      if (!child.isLeaf) {
-        final matchingChildNode = _filterNodeByQuery(child, searchQuery);
-        if (matchingChildNode != null) {
-          matchingChildren.add(matchingChildNode);
-        }
-      } else {
-        if (child.name.contains(regex)) {
-          matchingChildren.add(child);
-        }
-      }
-    }
-
-    if (matchingChildren.isNotEmpty) {
-      return node.copyWith(
-        children: matchingChildren,
-      );
-    }
-
-    return null;
+    return nodes
+        .map(
+          (node) => node.filter((child) {
+            final regex = RegExp(searchQuery, caseSensitive: false);
+            return child.name.contains(regex);
+          }),
+        )
+        .whereType<TreeNode>()
+        .toList();
   }
 
   TreeNode? _filterNodesByPath(String path) {
     for (final child in nodes) {
-      final matchedChild = _filterNodeByPath(child, path);
-      if (matchedChild != null) {
-        return matchedChild;
-      }
-    }
-    return null;
-  }
-
-  TreeNode? _filterNodeByPath(
-    TreeNode node,
-    String targetPath,
-  ) {
-    if (node.path == targetPath) {
-      return node;
-    }
-    for (final child in node.children!) {
-      final matchedChild = _filterNodeByPath(child, targetPath);
+      final matchedChild = child.find((child) => child.path == path);
       if (matchedChild != null) {
         return matchedChild;
       }

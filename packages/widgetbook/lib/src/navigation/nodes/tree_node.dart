@@ -18,13 +18,13 @@ abstract class TreeNode {
 
   bool get isLeaf => children == null || children!.isEmpty;
 
-  String get path => pathSegments.join('/').replaceAll(' ', '-').toLowerCase();
+  String get path => nodesPath.join('/').replaceAll(' ', '-').toLowerCase();
 
-  List<TreeNode> get pathSegments {
+  List<TreeNode> get nodesPath {
     if (isRoot) {
       return [this];
     } else {
-      return [...parent!.pathSegments, this];
+      return [...parent!.nodesPath, this];
     }
   }
 
@@ -50,6 +50,19 @@ abstract class TreeNode {
           : copyWith(
               children: filteredChildren,
             );
+    }
+  }
+
+  TreeNode? find(bool Function(TreeNode node) predicate) {
+    if (predicate(this)) {
+      return this;
+    } else {
+      return children //
+          ?.map((child) => child.find(predicate))
+          .firstWhere(
+            (child) => child != null,
+            orElse: () => null,
+          );
     }
   }
 

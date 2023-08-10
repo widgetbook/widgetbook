@@ -15,11 +15,11 @@ class WidgetbookComponent extends TreeNode {
   @override
   WidgetbookComponent copyWith({
     String? name,
-    covariant List<WidgetbookUseCase>? children,
+    List<TreeNode>? children,
   }) {
     return WidgetbookComponent(
       name: name ?? this.name,
-      useCases: children ?? this.useCases,
+      useCases: children?.cast<WidgetbookUseCase>() ?? this.useCases,
       isInitiallyExpanded: isInitiallyExpanded,
     );
   }
