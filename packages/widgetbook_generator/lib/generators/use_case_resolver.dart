@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
+import 'package:path/path.dart' as path;
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:yaml/yaml.dart';
@@ -84,22 +85,34 @@ class UseCaseResolver extends GeneratorForAnnotation<UseCase> {
     Element element,
     BuildStep buildStep,
   ) async {
-    final path = element.librarySource!.fullName;
-    final packageName = element.librarySource!.uri.pathSegments[0];
+    final elementPath = element.librarySource!.fullName;
+    final elementPackage = element.librarySource!.uri.pathSegments[0];
+    final inputPackage = buildStep.inputId.package;
+
+    // If the element is in the same package as the `pubspec.lock` file,
+    // then we cannot use the `pubspec.lock` file to resolve the path.
+    // In this case, we can simply replace the package name with the
+    // current directory name.
+    if (elementPackage == inputPackage) {
+      final currentDir = Directory.current.path;
+      final dirName = path.basename(currentDir);
+
+      return elementPath.replaceFirst(
+        RegExp(elementPackage),
+        dirName,
+      );
+    }
+
     final resource = await buildStep.fetchResource(packagesMapResource);
-
-    // In case the package is the same as the `pubsec.lock` file's.
-    if (!resource.containsKey(packageName)) return path;
-
-    final packageData = resource[packageName] as YamlMap;
+    final packageData = resource[elementPackage] as YamlMap;
     final isLocalPackage = packageData['source'] == 'path';
 
-    if (!isLocalPackage) return path;
+    if (!isLocalPackage) return elementPath;
 
     final packagePath = packageData['description']['path'] as String;
 
-    return path.replaceFirst(
-      RegExp(packageName),
+    return elementPath.replaceFirst(
+      RegExp(elementPackage),
       packagePath,
     );
   }
