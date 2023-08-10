@@ -4,7 +4,7 @@ import '../navigation.dart';
 
 typedef NodeSelectedCallback = void Function(
   String path,
-  dynamic data,
+  TreeNode node,
 );
 
 class NavigationTree extends StatefulWidget {
@@ -26,17 +26,15 @@ class NavigationTree extends StatefulWidget {
 }
 
 class NavigationTreeState extends State<NavigationTree> {
-  late final List<NavigationTreeNodeData> nodes;
-  late List<NavigationTreeNodeData> filteredNodes;
-  NavigationTreeNodeData? selectedNode;
+  late final List<TreeNode> nodes;
+  late List<TreeNode> filteredNodes;
+  TreeNode? selectedNode;
 
   @override
   void initState() {
     super.initState();
 
-    nodes = _generateNodes(
-      children: widget.directories,
-    );
+    nodes = widget.directories;
 
     filteredNodes = widget.searchQuery.isNotEmpty
         ? _filterNodes(
@@ -74,62 +72,41 @@ class NavigationTreeState extends State<NavigationTree> {
         onNodeSelected: (node) {
           if (node.path == selectedNode?.path) return;
           setState(() => selectedNode = node);
-          widget.onNodeSelected?.call(node.path, node.data);
+          widget.onNodeSelected?.call(node.path, node);
         },
       ),
     );
   }
 
-  List<NavigationTreeNodeData> _generateNodes({
-    required List<TreeNode> children,
-    List<String> currentPathSegments = const [],
-  }) {
-    final nodes = <NavigationTreeNodeData>[];
-    for (final child in children) {
-      final pathSegments = [...currentPathSegments, child.name];
-      nodes.add(
-        NavigationTreeNodeData(
-          path: pathSegments.join('/').replaceAll(' ', '-').toLowerCase(),
-          name: child.name,
-          data: child,
-          isInitiallyExpanded: child.isInitiallyExpanded,
-          children: child.children != null && child.children!.isNotEmpty
-              ? _generateNodes(
-                  children: child.children!,
-                  currentPathSegments: pathSegments,
-                )
-              : [],
-        ),
-      );
-    }
-    return nodes;
-  }
-
-  List<NavigationTreeNodeData> _filterNodes({
+  List<TreeNode> _filterNodes({
     required String searchQuery,
-    required List<NavigationTreeNodeData> nodes,
+    required List<TreeNode> nodes,
   }) {
-    final filteredNodes = <NavigationTreeNodeData>[];
+    final filteredNodes = <TreeNode>[];
     for (final node in nodes) {
       final matchedNode = _filterNodeByQuery(node, searchQuery);
-      if (matchedNode != null && matchedNode.isExpandable) {
+      if (matchedNode != null && !matchedNode.isLeaf) {
         filteredNodes.add(matchedNode);
       }
     }
     return filteredNodes;
   }
 
-  NavigationTreeNodeData? _filterNodeByQuery(
-    NavigationTreeNodeData node,
+  TreeNode? _filterNodeByQuery(
+    TreeNode node,
     String searchQuery,
   ) {
+    if (node.isLeaf) return null;
+
     final regex = RegExp(searchQuery, caseSensitive: false);
-    if (node.name.contains(regex) && node.children.isNotEmpty) {
+    if (node.name.contains(regex) && !node.isLeaf) {
       return node;
     }
-    final matchingChildren = <NavigationTreeNodeData>[];
-    for (final child in node.children) {
-      if (child.isExpandable) {
+
+    final matchingChildren = <TreeNode>[];
+
+    for (final child in node.children!) {
+      if (!child.isLeaf) {
         final matchingChildNode = _filterNodeByQuery(child, searchQuery);
         if (matchingChildNode != null) {
           matchingChildren.add(matchingChildNode);
@@ -140,15 +117,17 @@ class NavigationTreeState extends State<NavigationTree> {
         }
       }
     }
+
     if (matchingChildren.isNotEmpty) {
       return node.copyWith(
         children: matchingChildren,
       );
     }
+
     return null;
   }
 
-  NavigationTreeNodeData? _filterNodesByPath(String path) {
+  TreeNode? _filterNodesByPath(String path) {
     for (final child in nodes) {
       final matchedChild = _filterNodeByPath(child, path);
       if (matchedChild != null) {
@@ -158,14 +137,14 @@ class NavigationTreeState extends State<NavigationTree> {
     return null;
   }
 
-  NavigationTreeNodeData? _filterNodeByPath(
-    NavigationTreeNodeData node,
+  TreeNode? _filterNodeByPath(
+    TreeNode node,
     String targetPath,
   ) {
     if (node.path == targetPath) {
       return node;
     }
-    for (final child in node.children) {
+    for (final child in node.children!) {
       final matchedChild = _filterNodeByPath(child, targetPath);
       if (matchedChild != null) {
         return matchedChild;

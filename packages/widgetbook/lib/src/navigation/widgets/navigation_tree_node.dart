@@ -12,9 +12,9 @@ class NavigationTreeNode extends StatefulWidget {
   });
 
   final int level;
-  final NavigationTreeNodeData data;
-  final NavigationTreeNodeData? selectedNode;
-  final ValueChanged<NavigationTreeNodeData>? onNodeSelected;
+  final TreeNode data;
+  final TreeNode? selectedNode;
+  final ValueChanged<TreeNode>? onNodeSelected;
 
   @override
   State<NavigationTreeNode> createState() => _NavigationTreeNodeState();
@@ -42,7 +42,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
             setState(() {
               isExpanded = !isExpanded;
             });
-            if (widget.data.isSelectable) {
+            if (widget.data.isLeaf) {
               widget.onNodeSelected?.call(widget.data);
             }
           },
@@ -57,17 +57,19 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
               curve: Curves.easeInOut,
               alignment: Alignment.bottomCenter,
               heightFactor: isExpanded ? 1 : 0,
-              child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: widget.data.children.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) => NavigationTreeNode(
-                  data: widget.data.children[index],
-                  level: widget.level + 1,
-                  selectedNode: widget.selectedNode,
-                  onNodeSelected: widget.onNodeSelected,
-                ),
-              ),
+              child: widget.data.children == null
+                  ? const SizedBox()
+                  : ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: widget.data.children!.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => NavigationTreeNode(
+                        data: widget.data.children![index],
+                        level: widget.level + 1,
+                        selectedNode: widget.selectedNode,
+                        onNodeSelected: widget.onNodeSelected,
+                      ),
+                    ),
             ),
           ),
         ),

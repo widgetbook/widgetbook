@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../icons/icons.dart';
-import '../models/navigation_tree_node_data.dart';
+import '../icons/resolve_icon.dart';
+import '../nodes/nodes.dart';
 
 class NavigationTreeItem extends StatelessWidget {
   const NavigationTreeItem({
@@ -17,14 +18,14 @@ class NavigationTreeItem extends StatelessWidget {
   static const double iconSize = 34;
 
   final int level;
-  final NavigationTreeNodeData data;
+  final TreeNode data;
   final VoidCallback? onTap;
   final bool isExpanded;
   final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
-    final _isSelected = data.isSelectable && isSelected;
+    final _isSelected = data.isLeaf && isSelected;
 
     return Material(
       elevation: _isSelected ? 3 : 0,
@@ -54,7 +55,7 @@ class NavigationTreeItem extends StatelessWidget {
                 ),
                 SizedBox(
                   width: indentation,
-                  child: data.isExpandable
+                  child: !data.isLeaf
                       ? ExpanderIcon(
                           isExpanded: isExpanded,
                           size: indentation,
@@ -63,7 +64,7 @@ class NavigationTreeItem extends StatelessWidget {
                 ),
                 SizedBox(
                   width: indentation,
-                  child: data.icon,
+                  child: resolveIcon(data),
                 ),
                 const SizedBox(width: 8),
                 Expanded(

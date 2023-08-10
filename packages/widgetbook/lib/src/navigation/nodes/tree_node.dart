@@ -14,15 +14,17 @@ abstract class TreeNode {
   final List<TreeNode>? children;
   TreeNode? parent;
 
-  bool get isOrphan => parent == null;
+  bool get isRoot => parent == null;
 
   bool get isLeaf => children == null || children!.isEmpty;
 
-  List<TreeNode> get path {
-    if (isOrphan) {
+  String get path => pathSegments.join('/').replaceAll(' ', '-').toLowerCase();
+
+  List<TreeNode> get pathSegments {
+    if (isRoot) {
       return [this];
     } else {
-      return [...parent!.path, this];
+      return [...parent!.pathSegments, this];
     }
   }
 
