@@ -91,8 +91,7 @@ class NavigationTreeState extends State<NavigationTree> {
         NavigationTreeNodeData(
           path: pathSegments.join('/').replaceAll(' ', '-').toLowerCase(),
           name: child.name,
-          type: NavigationNodeType.package, // TODO
-          data: Object(), // TODO
+          data: child,
           isInitiallyExpanded: child.isInitiallyExpanded,
           children: child.children != null && child.children!.isNotEmpty
               ? _generateNodes(
