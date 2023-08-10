@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/models.dart';
+import '../nodes/nodes.dart';
 import 'navigation_tree.dart';
 import 'search_field.dart';
 
@@ -14,7 +14,7 @@ class NavigationPanel extends StatefulWidget {
 
   final String? initialPath;
   final NodeSelectedCallback? onNodeSelected;
-  final List<MultiChildNavigationNodeData> directories;
+  final List<TreeNode> directories;
 
   @override
   State<NavigationPanel> createState() => _NavigationPanelState();

@@ -38,7 +38,7 @@ class Widgetbook extends StatefulWidget {
   /// Both [WidgetbookCategory] and [WidgetbookFolder] can contain sub folders
   /// and [WidgetbookComponent] elements. However, [WidgetbookComponent] can
   /// only contain [WidgetbookUseCase]s.
-  final List<MultiChildNavigationNodeData> directories;
+  final List<TreeNode> directories;
 
   /// A wrapper builder method for all [WidgetbookUseCase]s.
   final AppBuilder appBuilder;
@@ -55,7 +55,7 @@ class Widgetbook extends StatefulWidget {
   static Widgetbook cupertino({
     Key? key,
     String initialRoute = '/',
-    required List<MultiChildNavigationNodeData> directories,
+    required List<TreeNode> directories,
     AppBuilder appBuilder = cupertinoAppBuilder,
     List<WidgetbookAddon>? addons,
     List<WidgetbookIntegration>? integrations,
@@ -74,7 +74,7 @@ class Widgetbook extends StatefulWidget {
   static Widgetbook material({
     Key? key,
     String initialRoute = '/',
-    required List<MultiChildNavigationNodeData> directories,
+    required List<TreeNode> directories,
     AppBuilder appBuilder = materialAppBuilder,
     List<WidgetbookAddon>? addons,
     List<WidgetbookIntegration>? integrations,

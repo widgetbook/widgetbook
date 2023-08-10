@@ -18,7 +18,7 @@ class NavigationTree extends StatefulWidget {
 
   final NodeSelectedCallback? onNodeSelected;
   final String? initialPath;
-  final List<MultiChildNavigationNodeData> directories;
+  final List<TreeNode> directories;
   final String searchQuery;
 
   @override
@@ -81,7 +81,7 @@ class NavigationTreeState extends State<NavigationTree> {
   }
 
   List<NavigationTreeNodeData> _generateNodes({
-    required List<NavigationNodeDataInterface> children,
+    required List<TreeNode> children,
     List<String> currentPathSegments = const [],
   }) {
     final nodes = <NavigationTreeNodeData>[];
@@ -91,12 +91,12 @@ class NavigationTreeState extends State<NavigationTree> {
         NavigationTreeNodeData(
           path: pathSegments.join('/').replaceAll(' ', '-').toLowerCase(),
           name: child.name,
-          type: child.type,
-          data: child.data,
+          type: NavigationNodeType.package, // TODO
+          data: Object(), // TODO
           isInitiallyExpanded: child.isInitiallyExpanded,
-          children: child.children.isNotEmpty
+          children: child.children != null && child.children!.isNotEmpty
               ? _generateNodes(
-                  children: child.children,
+                  children: child.children!,
                   currentPathSegments: pathSegments,
                 )
               : [],

@@ -1,3 +1,4 @@
+export 'tree_node.dart';
 export 'widgetbook_category.dart';
 export 'widgetbook_component.dart';
 export 'widgetbook_folder.dart';

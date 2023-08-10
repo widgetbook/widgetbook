@@ -36,7 +36,7 @@ class WidgetbookState extends ChangeNotifier {
   final AppBuilder appBuilder;
   final List<WidgetbookAddon>? addons;
   final List<WidgetbookIntegration>? integrations;
-  final List<MultiChildNavigationNodeData> directories;
+  final List<TreeNode> directories;
 
   WidgetbookUseCase? get useCase => path == null ? null : catalog.get(path!);
 
