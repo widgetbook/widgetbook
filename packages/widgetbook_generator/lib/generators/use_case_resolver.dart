@@ -110,10 +110,14 @@ class UseCaseResolver extends GeneratorForAnnotation<UseCase> {
     if (!isLocalPackage) return elementPath;
 
     final packagePath = packageData['description']['path'] as String;
+    final normalizedPackagePath = packagePath.replaceAll(
+      RegExp(r'(\.)?\.\/'), // Match "./" and "../"
+      '',
+    );
 
     return elementPath.replaceFirst(
       RegExp(elementPackage),
-      packagePath,
+      normalizedPackagePath,
     );
   }
 }
