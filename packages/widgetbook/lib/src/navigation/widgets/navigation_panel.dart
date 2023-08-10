@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../nodes/nodes.dart';
-import 'navigation_tree.dart';
+import 'navigation_tree_node.dart';
 import 'search_field.dart';
 
 class NavigationPanel extends StatefulWidget {
@@ -21,40 +21,64 @@ class NavigationPanel extends StatefulWidget {
 }
 
 class _NavigationPanelState extends State<NavigationPanel> {
+  late TreeNode filteredRoot;
+  TreeNode? selectedNode;
   String searchQuery = '';
+
+  bool filterNode(TreeNode node) {
+    final regex = RegExp(
+      searchQuery,
+      caseSensitive: false,
+    );
+
+    return node.name.contains(regex);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    filteredRoot = widget.root;
+    selectedNode = widget.initialPath != null
+        ? widget.root.find((child) => child.path == widget.initialPath)
+        : null;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minWidth: 50, maxWidth: 300),
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: SearchField(
-                searchValue: searchQuery,
-                onSearchChanged: (value) {
-                  setState(() => searchQuery = value);
-                },
-                onSearchCancelled: () {
-                  setState(() => searchQuery = '');
-                },
-              ),
+    return Card(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: SearchField(
+              searchValue: searchQuery,
+              onSearchChanged: (value) {
+                setState(() {
+                  searchQuery = value;
+                  filteredRoot = widget.root.filter(filterNode) ?? widget.root;
+                });
+              },
+              onSearchCancelled: () {
+                setState(() {
+                  searchQuery = '';
+                  filteredRoot = widget.root;
+                });
+              },
             ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: NavigationTree(
-                initialPath: widget.initialPath,
-                onNodeSelected: widget.onNodeSelected,
-                root: widget.root,
-                searchQuery: searchQuery,
-              ),
+          ),
+          Expanded(
+            child: NavigationTreeNode(
+              data: filteredRoot,
+              selectedNode: selectedNode,
+              onNodeSelected: (node) {
+                if (node.path == selectedNode?.path) return;
+                setState(() => selectedNode = node);
+                widget.onNodeSelected?.call(node);
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
