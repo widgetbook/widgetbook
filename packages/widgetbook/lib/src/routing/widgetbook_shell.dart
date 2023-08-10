@@ -26,7 +26,7 @@ class WidgetbookShell extends StatelessWidget {
         children: [
           NavigationPanel(
             initialPath: state.path,
-            directories: state.directories,
+            root: state.root,
             onNodeSelected: (path, _) {
               WidgetbookState.of(context).updatePath(path);
             },

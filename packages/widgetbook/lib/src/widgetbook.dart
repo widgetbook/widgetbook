@@ -105,7 +105,9 @@ class _WidgetbookState extends State<Widgetbook> {
       appBuilder: widget.appBuilder,
       addons: widget.addons,
       integrations: widget.integrations,
-      directories: widget.directories,
+      root: WidgetbookRoot(
+        children: widget.directories,
+      ),
     );
 
     router = AppRouter(

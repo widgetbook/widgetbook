@@ -9,12 +9,12 @@ class NavigationPanel extends StatefulWidget {
     super.key,
     this.initialPath,
     this.onNodeSelected,
-    required this.directories,
+    required this.root,
   });
 
   final String? initialPath;
   final NodeSelectedCallback? onNodeSelected;
-  final List<TreeNode> directories;
+  final TreeNode root;
 
   @override
   State<NavigationPanel> createState() => _NavigationPanelState();
@@ -49,7 +49,7 @@ class _NavigationPanelState extends State<NavigationPanel> {
               child: NavigationTree(
                 initialPath: widget.initialPath,
                 onNodeSelected: widget.onNodeSelected,
-                directories: widget.directories,
+                root: widget.root,
                 searchQuery: searchQuery,
               ),
             ),
