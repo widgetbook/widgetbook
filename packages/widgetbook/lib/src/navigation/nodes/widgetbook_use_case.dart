@@ -36,4 +36,12 @@ class WidgetbookUseCase extends TreeNode {
   }
 
   final WidgetBuilder builder;
+
+  @override
+  WidgetbookUseCase copyWith({
+    String? name,
+    List<TreeNode>? children,
+  }) {
+    return this;
+  }
 }

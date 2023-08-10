@@ -8,4 +8,16 @@ class WidgetbookFolder extends TreeNode {
   });
 
   final bool isInitiallyExpanded;
+
+  @override
+  WidgetbookFolder copyWith({
+    String? name,
+    List<TreeNode>? children,
+  }) {
+    return WidgetbookFolder(
+      name: name ?? this.name,
+      children: children ?? this.children,
+      isInitiallyExpanded: isInitiallyExpanded,
+    );
+  }
 }

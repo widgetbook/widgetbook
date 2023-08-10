@@ -8,4 +8,16 @@ class WidgetbookPackage extends TreeNode {
   });
 
   final bool isInitiallyExpanded;
+
+  @override
+  WidgetbookPackage copyWith({
+    String? name,
+    List<TreeNode>? children,
+  }) {
+    return WidgetbookPackage(
+      name: name ?? this.name,
+      children: children ?? this.children,
+      isInitiallyExpanded: isInitiallyExpanded,
+    );
+  }
 }

@@ -1,4 +1,4 @@
-class TreeNode {
+abstract class TreeNode {
   TreeNode({
     required this.name,
     required this.children,
@@ -32,17 +32,25 @@ class TreeNode {
     }
   }
 
-  TreeNode? where(bool Function(TreeNode node) predicate) {
+  TreeNode? filter(bool Function(TreeNode node) predicate) {
     if (predicate(this)) {
       return this;
     } else {
-      return TreeNode(
-        name: name,
-        children: children
-            ?.map((node) => node.where(predicate))
-            .whereType<TreeNode>()
-            .toList(),
-      );
+      final filteredChildren = children
+          ?.map((child) => child.filter(predicate))
+          .whereType<TreeNode>()
+          .toList();
+
+      return filteredChildren == null || filteredChildren.isEmpty
+          ? null
+          : copyWith(
+              children: filteredChildren,
+            );
     }
   }
+
+  TreeNode copyWith({
+    String? name,
+    List<TreeNode>? children,
+  });
 }

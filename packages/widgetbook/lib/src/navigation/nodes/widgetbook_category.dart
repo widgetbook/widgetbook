@@ -8,4 +8,16 @@ class WidgetbookCategory extends TreeNode {
   });
 
   final bool isInitiallyExpanded;
+
+  @override
+  WidgetbookCategory copyWith({
+    String? name,
+    List<TreeNode>? children,
+  }) {
+    return WidgetbookCategory(
+      name: name ?? this.name,
+      children: children ?? this.children,
+      isInitiallyExpanded: isInitiallyExpanded,
+    );
+  }
 }

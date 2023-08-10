@@ -12,4 +12,16 @@ class WidgetbookComponent extends TreeNode {
 
   final List<WidgetbookUseCase> useCases;
   final bool isInitiallyExpanded;
+
+  @override
+  WidgetbookComponent copyWith({
+    String? name,
+    covariant List<WidgetbookUseCase>? children,
+  }) {
+    return WidgetbookComponent(
+      name: name ?? this.name,
+      useCases: children ?? this.useCases,
+      isInitiallyExpanded: isInitiallyExpanded,
+    );
+  }
 }
