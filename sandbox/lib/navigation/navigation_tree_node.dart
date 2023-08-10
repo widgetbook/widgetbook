@@ -6,7 +6,7 @@ import 'navigation_test_data.dart';
 
 @UseCase(name: 'Default', type: NavigationTreeNode)
 Widget navigationTreeNodeDefaultUseCase(BuildContext context) {
-  return const NavigationTreeNode(
-    data: testNode5,
+  return NavigationTreeNode(
+    data: directories.first,
   );
 }
