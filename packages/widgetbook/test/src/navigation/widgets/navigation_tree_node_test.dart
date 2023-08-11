@@ -59,7 +59,7 @@ void main() {
           ),
         );
 
-        await tester.tap(find.byType(NavigationTreeItem).first);
+        await tester.tap(find.byType(NavigationTreeTile).first);
         verify(() => valueChangedCallbackMock.call(useCaseNode)).called(1);
       },
     );
@@ -78,7 +78,7 @@ void main() {
           findsNothing,
         );
 
-        await tester.tap(find.byType(NavigationTreeItem).first);
+        await tester.tap(find.byType(NavigationTreeTile).first);
         await tester.pumpAndSettle();
 
         expect(

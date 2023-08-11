@@ -67,17 +67,24 @@ class _NavigationPanelState extends State<NavigationPanel> {
               },
             ),
           ),
-          Expanded(
-            child: NavigationTreeNode(
-              data: filteredRoot,
-              selectedNode: selectedNode,
-              onNodeSelected: (node) {
-                if (node.path == selectedNode?.path) return;
-                setState(() => selectedNode = node);
-                widget.onNodeSelected?.call(node);
-              },
+          if (filteredRoot.children != null)
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                ),
+                itemCount: filteredRoot.children!.length,
+                itemBuilder: (context, index) => NavigationTreeNode(
+                  node: filteredRoot.children![index],
+                  selectedNode: selectedNode,
+                  onNodeSelected: (node) {
+                    if (!node.isLeaf || node.path == selectedNode?.path) return;
+                    setState(() => selectedNode = node);
+                    widget.onNodeSelected?.call(node);
+                  },
+                ),
+              ),
             ),
-          ),
         ],
       ),
     );

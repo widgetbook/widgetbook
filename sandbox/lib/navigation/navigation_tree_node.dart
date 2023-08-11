@@ -7,6 +7,6 @@ import 'root_data.dart';
 @UseCase(name: 'Default', type: NavigationTreeNode)
 Widget navigationTreeNodeDefaultUseCase(BuildContext context) {
   return NavigationTreeNode(
-    data: root.children!.first,
+    node: root.children!.first,
   );
 }

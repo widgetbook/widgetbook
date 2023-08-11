@@ -8,7 +8,7 @@ import '../../../helper/helper.dart';
 
 void main() {
   group(
-    '$NavigationTreeItem',
+    '$NavigationTreeTile',
     () {
       const testNode = NavigationTreeNodeData(
         path: 'test-node',
@@ -21,7 +21,7 @@ void main() {
         (tester) async {
           final voidCallbackMock = VoidFnMock();
           await tester.pumpWidgetWithMaterialApp(
-            NavigationTreeItem(
+            NavigationTreeTile(
               data: testNode,
               onTap: voidCallbackMock.call,
             ),
@@ -36,7 +36,7 @@ void main() {
         'more menu icon is initially not rendered',
         (tester) async {
           await tester.pumpWidgetWithMaterialApp(
-            const NavigationTreeItem(data: testNode),
+            const NavigationTreeTile(data: testNode),
           );
 
           final menuIconFinder = find.byWidgetPredicate(
@@ -53,7 +53,7 @@ void main() {
         (tester) async {
           const level = 2;
           await tester.pumpWidgetWithMaterialApp(
-            const NavigationTreeItem(
+            const NavigationTreeTile(
               data: testNode,
               level: level,
             ),
@@ -62,7 +62,7 @@ void main() {
           final finder = find.byWidgetPredicate(
             (widget) =>
                 widget is SizedBox &&
-                widget.width == NavigationTreeItem.indentation &&
+                widget.width == NavigationTreeTile.indentation &&
                 widget.height == null,
             description: "SizedBox's with the indentation width",
           );
@@ -80,7 +80,7 @@ void main() {
           );
 
           await tester.pumpWidgetWithMaterialApp(
-            const NavigationTreeItem(data: testNode),
+            const NavigationTreeTile(data: testNode),
           );
 
           expect(testNode.isExpandable, isTrue);
@@ -99,7 +99,7 @@ void main() {
           );
 
           await tester.pumpWidgetWithMaterialApp(
-            const NavigationTreeItem(data: testNode),
+            const NavigationTreeTile(data: testNode),
           );
 
           expect(testNode.isExpandable, isFalse);
@@ -118,7 +118,7 @@ void main() {
           );
 
           await tester.pumpWidgetWithMaterialApp(
-            const NavigationTreeItem(data: testNode),
+            const NavigationTreeTile(data: testNode),
           );
 
           final finder = find.byType(ComponentIcon);
@@ -136,7 +136,7 @@ void main() {
           );
 
           await tester.pumpWidgetWithMaterialApp(
-            const NavigationTreeItem(data: testNode),
+            const NavigationTreeTile(data: testNode),
           );
 
           final finder = find.byType(UseCaseIcon);
@@ -156,7 +156,7 @@ void main() {
           expect(testNode.isSelectable, isTrue);
 
           await tester.pumpWidgetWithMaterialApp(
-            const NavigationTreeItem(
+            const NavigationTreeTile(
               data: testNode,
               isSelected: true,
             ),

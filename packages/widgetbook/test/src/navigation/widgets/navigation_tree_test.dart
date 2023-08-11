@@ -45,7 +45,7 @@ void main() {
           await tester.tap(
             find.byWidgetPredicate(
               (widget) =>
-                  widget is NavigationTreeItem && widget.data.name == node.name,
+                  widget is NavigationTreeTile && widget.data.name == node.name,
             ),
           );
 
@@ -78,7 +78,7 @@ void main() {
           await tester.tap(
             find.byWidgetPredicate(
               (widget) =>
-                  widget is NavigationTreeItem && widget.data.name == node.name,
+                  widget is NavigationTreeTile && widget.data.name == node.name,
             ),
           );
 
