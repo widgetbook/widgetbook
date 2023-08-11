@@ -18,7 +18,12 @@ abstract class TreeNode {
 
   bool get isLeaf => children == null || children!.isEmpty;
 
-  String get path => nodesPath.join('/').replaceAll(' ', '-').toLowerCase();
+  String get path => nodesPath
+      .map((pathNode) => pathNode.name)
+      .join('/')
+      .replaceAll(' ', '-')
+      .toLowerCase()
+      .replaceFirst('/', ''); // Remove leading slash from root
 
   List<TreeNode> get nodesPath {
     if (isRoot) {
