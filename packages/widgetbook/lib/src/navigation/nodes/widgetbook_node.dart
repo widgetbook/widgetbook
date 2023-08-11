@@ -1,3 +1,14 @@
+import 'nodes.dart';
+
+/// A base class for all nodes in the navigation tree.
+/// The nodes have the following hierarchy:
+///
+/// 1. [WidgetbookRoot]
+/// 2. [WidgetbookPackage]
+/// 3. [WidgetbookCategory]
+/// 4. [WidgetbookFolder]
+/// 5. [WidgetbookComponent]
+/// 6. [WidgetbookUseCase]
 abstract class WidgetbookNode {
   WidgetbookNode({
     required this.name,
@@ -18,13 +29,16 @@ abstract class WidgetbookNode {
 
   bool get isLeaf => children == null || children!.isEmpty;
 
+  /// Gets the path from root to this node without leading slash
+  /// Example: root/child/grandchild
   String get path => nodesPath
       .map((pathNode) => pathNode.name)
       .join('/')
       .replaceAll(' ', '-')
       .toLowerCase()
-      .replaceFirst('/', ''); // Remove leading slash from root
+      .replaceFirst('/', '');
 
+  /// Gets the nodes path from root to this node.
   List<WidgetbookNode> get nodesPath {
     if (isRoot) {
       return [this];
@@ -33,6 +47,7 @@ abstract class WidgetbookNode {
     }
   }
 
+  /// Gets all leaf nodes of this node.
   List<WidgetbookNode> get leaves {
     if (isLeaf) {
       return [this];
@@ -41,6 +56,11 @@ abstract class WidgetbookNode {
     }
   }
 
+  /// Filters the sub-tree of this node for any node that matches [predicate].
+  /// If a node matches the predicate, it will be included, along with all its
+  /// descendants, in the result.
+  ///
+  /// Returns null if no node matches the predicate.
   WidgetbookNode? filter(bool Function(WidgetbookNode node) predicate) {
     if (predicate(this)) {
       return this;
@@ -58,6 +78,7 @@ abstract class WidgetbookNode {
     }
   }
 
+  /// Searches for a node that matches [predicate] in the sub-tree of this node.
   WidgetbookNode? find(bool Function(WidgetbookNode node) predicate) {
     if (predicate(this)) {
       return this;
@@ -71,6 +92,8 @@ abstract class WidgetbookNode {
     }
   }
 
+  /// Creates a copy of this node with the given properties.
+  /// Used in [filter] to create a copy of the sub-tree.
   WidgetbookNode copyWith({
     String? name,
     List<WidgetbookNode>? children,

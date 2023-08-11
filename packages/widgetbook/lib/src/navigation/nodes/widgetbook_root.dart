@@ -1,5 +1,6 @@
 import 'widgetbook_node.dart';
 
+/// The root of all [WidgetbookNode]s.
 class WidgetbookRoot extends WidgetbookNode {
   WidgetbookRoot({
     required super.children,
