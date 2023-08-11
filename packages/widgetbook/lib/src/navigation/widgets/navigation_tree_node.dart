@@ -13,9 +13,9 @@ class NavigationTreeNode extends StatefulWidget {
   });
 
   final int level;
-  final TreeNode node;
-  final TreeNode? selectedNode;
-  final ValueChanged<TreeNode>? onNodeSelected;
+  final WidgetbookNode node;
+  final WidgetbookNode? selectedNode;
+  final ValueChanged<WidgetbookNode>? onNodeSelected;
 
   @override
   State<NavigationTreeNode> createState() => _NavigationTreeNodeState();

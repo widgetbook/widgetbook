@@ -1,5 +1,5 @@
-abstract class TreeNode {
-  TreeNode({
+abstract class WidgetbookNode {
+  WidgetbookNode({
     required this.name,
     required this.children,
     this.isInitiallyExpanded = true,
@@ -11,8 +11,8 @@ abstract class TreeNode {
 
   final String name;
   final bool isInitiallyExpanded;
-  final List<TreeNode>? children;
-  TreeNode? parent;
+  final List<WidgetbookNode>? children;
+  WidgetbookNode? parent;
 
   bool get isRoot => parent == null;
 
@@ -25,7 +25,7 @@ abstract class TreeNode {
       .toLowerCase()
       .replaceFirst('/', ''); // Remove leading slash from root
 
-  List<TreeNode> get nodesPath {
+  List<WidgetbookNode> get nodesPath {
     if (isRoot) {
       return [this];
     } else {
@@ -33,7 +33,7 @@ abstract class TreeNode {
     }
   }
 
-  List<TreeNode> get leaves {
+  List<WidgetbookNode> get leaves {
     if (isLeaf) {
       return [this];
     } else {
@@ -41,13 +41,13 @@ abstract class TreeNode {
     }
   }
 
-  TreeNode? filter(bool Function(TreeNode node) predicate) {
+  WidgetbookNode? filter(bool Function(WidgetbookNode node) predicate) {
     if (predicate(this)) {
       return this;
     } else {
       final filteredChildren = children
           ?.map((child) => child.filter(predicate))
-          .whereType<TreeNode>()
+          .whereType<WidgetbookNode>()
           .toList();
 
       return filteredChildren == null || filteredChildren.isEmpty
@@ -58,7 +58,7 @@ abstract class TreeNode {
     }
   }
 
-  TreeNode? find(bool Function(TreeNode node) predicate) {
+  WidgetbookNode? find(bool Function(WidgetbookNode node) predicate) {
     if (predicate(this)) {
       return this;
     } else {
@@ -71,8 +71,8 @@ abstract class TreeNode {
     }
   }
 
-  TreeNode copyWith({
+  WidgetbookNode copyWith({
     String? name,
-    List<TreeNode>? children,
+    List<WidgetbookNode>? children,
   });
 }

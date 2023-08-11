@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'tree_node.dart';
+import 'widgetbook_node.dart';
 
 /// UseCases represent a specific configuration of a widget and can be used
 /// to check edge cases of a Widget.
-class WidgetbookUseCase extends TreeNode {
+class WidgetbookUseCase extends WidgetbookNode {
   WidgetbookUseCase({
     required super.name,
     required this.builder,
@@ -43,7 +43,7 @@ class WidgetbookUseCase extends TreeNode {
   @override
   WidgetbookUseCase copyWith({
     String? name,
-    List<TreeNode>? children,
+    List<WidgetbookNode>? children,
   }) {
     return this;
   }

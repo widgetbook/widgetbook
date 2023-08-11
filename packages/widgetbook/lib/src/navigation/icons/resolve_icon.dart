@@ -4,7 +4,7 @@ import '../nodes/nodes.dart';
 import 'component_icon.dart';
 import 'use_case_icon.dart';
 
-Widget resolveIcon(TreeNode node) {
+Widget resolveIcon(WidgetbookNode node) {
   switch (node.runtimeType) {
     case WidgetbookPackage:
       return const Icon(Icons.inventory, size: 16);

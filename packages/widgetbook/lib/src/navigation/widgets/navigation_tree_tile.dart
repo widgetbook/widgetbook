@@ -17,7 +17,7 @@ class NavigationTreeTile extends StatelessWidget {
   static const indentation = 24.0;
 
   final int level;
-  final TreeNode node;
+  final WidgetbookNode node;
   final VoidCallback? onTap;
   final bool isExpanded;
   final bool isSelected;

@@ -13,19 +13,19 @@ class NavigationPanel extends StatefulWidget {
   });
 
   final String? initialPath;
-  final ValueChanged<TreeNode>? onNodeSelected;
-  final TreeNode root;
+  final ValueChanged<WidgetbookNode>? onNodeSelected;
+  final WidgetbookNode root;
 
   @override
   State<NavigationPanel> createState() => _NavigationPanelState();
 }
 
 class _NavigationPanelState extends State<NavigationPanel> {
-  late TreeNode filteredRoot;
-  TreeNode? selectedNode;
+  late WidgetbookNode filteredRoot;
+  WidgetbookNode? selectedNode;
   String searchQuery = '';
 
-  bool filterNode(TreeNode node) {
+  bool filterNode(WidgetbookNode node) {
     final regex = RegExp(
       searchQuery,
       caseSensitive: false,

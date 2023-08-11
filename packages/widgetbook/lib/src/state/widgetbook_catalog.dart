@@ -8,7 +8,7 @@ class WidgetbookCatalog {
     Map<String, WidgetbookUseCase> useCases,
   ) : _useCases = useCases;
 
-  factory WidgetbookCatalog.fromRoot(TreeNode root) {
+  factory WidgetbookCatalog.fromRoot(WidgetbookNode root) {
     final entries = root.leaves
         .whereType<WidgetbookUseCase>()
         .map((node) => MapEntry(node.path, node));

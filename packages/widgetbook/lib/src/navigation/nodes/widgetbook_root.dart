@@ -1,6 +1,6 @@
-import 'tree_node.dart';
+import 'widgetbook_node.dart';
 
-class WidgetbookRoot extends TreeNode {
+class WidgetbookRoot extends WidgetbookNode {
   WidgetbookRoot({
     required super.children,
   }) : super(
@@ -11,7 +11,7 @@ class WidgetbookRoot extends TreeNode {
   @override
   WidgetbookRoot copyWith({
     String? name,
-    List<TreeNode>? children,
+    List<WidgetbookNode>? children,
   }) {
     return WidgetbookRoot(
       children: children ?? this.children,

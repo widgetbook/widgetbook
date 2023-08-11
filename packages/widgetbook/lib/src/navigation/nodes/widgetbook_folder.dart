@@ -1,6 +1,6 @@
-import 'tree_node.dart';
+import 'widgetbook_node.dart';
 
-class WidgetbookFolder extends TreeNode {
+class WidgetbookFolder extends WidgetbookNode {
   WidgetbookFolder({
     required super.name,
     required super.children,
@@ -10,7 +10,7 @@ class WidgetbookFolder extends TreeNode {
   @override
   WidgetbookFolder copyWith({
     String? name,
-    List<TreeNode>? children,
+    List<WidgetbookNode>? children,
   }) {
     return WidgetbookFolder(
       name: name ?? this.name,

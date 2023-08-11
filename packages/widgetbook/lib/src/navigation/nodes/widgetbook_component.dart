@@ -1,7 +1,7 @@
-import 'tree_node.dart';
+import 'widgetbook_node.dart';
 import 'widgetbook_use_case.dart';
 
-class WidgetbookComponent extends TreeNode {
+class WidgetbookComponent extends WidgetbookNode {
   WidgetbookComponent({
     required super.name,
     required this.useCases,
@@ -15,7 +15,7 @@ class WidgetbookComponent extends TreeNode {
   @override
   WidgetbookComponent copyWith({
     String? name,
-    List<TreeNode>? children,
+    List<WidgetbookNode>? children,
   }) {
     return WidgetbookComponent(
       name: name ?? this.name,
