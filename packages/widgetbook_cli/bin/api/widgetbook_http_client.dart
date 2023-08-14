@@ -23,9 +23,9 @@ class WidgetbookHttpClient {
   String _getUrl() {
     switch (Flavor().strategy) {
       case DeploymentStrategy.production:
-        return 'https://api.widgetbook.io/v1/';
+        return 'http://localhost:3000/v1/';
       case DeploymentStrategy.staging:
-        return 'https://staging.api.widgetbook.io/v1/';
+        return 'http://localhost:3000/v1/';
       case DeploymentStrategy.debug:
         return 'http://localhost:3000/v1/';
     }
