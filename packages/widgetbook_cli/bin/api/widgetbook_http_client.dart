@@ -7,7 +7,6 @@ import 'package:path/path.dart';
 
 import '../flavor/flavor.dart';
 import '../helpers/helpers.dart';
-import '../models/create_review_response.dart';
 import '../models/models.dart';
 import '../review/use_cases/models/changed_use_case.dart';
 import '../review/use_cases/requests/create_use_cases_request.dart';
@@ -35,7 +34,7 @@ class WidgetbookHttpClient {
   /// underlying [Dio] client
   final Dio client;
 
-  Future<CreateReviewResponse?> uploadReview({
+  Future<ReviewUploadResponse?> uploadReview({
     required String apiKey,
     required List<ChangedUseCase> useCases,
     required String buildId,
@@ -60,7 +59,7 @@ class WidgetbookHttpClient {
             headSha: headSha,
           ).toJson(),
         );
-        return CreateReviewResponse.fromJson(
+        return ReviewUploadResponse.fromJson(
           jsonDecode(
             jsonEncode(
               createReviewResponse.data as Map<String, dynamic>,
@@ -85,7 +84,7 @@ class WidgetbookHttpClient {
   }
 
   /// Uploads the deployment .zip file to the Widgetbook Cloud backend
-  Future<Map<String, dynamic>?> uploadBuild({
+  Future<BuildUploadResponse?> uploadBuild({
     required File deploymentFile,
     required CreateBuildRequest data,
   }) async {
@@ -108,7 +107,13 @@ class WidgetbookHttpClient {
           },
         ),
       );
-      return response.data;
+      return BuildUploadResponse.fromJson(
+        jsonDecode(
+          jsonEncode(
+            response.data as Map<String, dynamic>,
+          ),
+        ) as Map<String, dynamic>,
+      );
     } on DioException catch (e) {
       final response = e.response;
       if (response != null) {
@@ -119,7 +124,6 @@ class WidgetbookHttpClient {
     } catch (e) {
       throw WidgetbookDeployException();
     }
-
     return null;
   }
 

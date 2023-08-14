@@ -35,7 +35,6 @@ import '../git/git_dir.dart';
 import '../git/git_wrapper.dart';
 import '../helpers/exceptions.dart';
 import '../helpers/widgetbook_zip_encoder.dart';
-import '../models/created_review.dart';
 import '../models/models.dart';
 import '../models/publish_args.dart';
 import '../review/use_cases/use_case_parser.dart';
@@ -293,7 +292,7 @@ class PublishCommand extends WidgetbookCommand {
       _widgetbookZipEncoder.encode(directory);
 
   @visibleForTesting
-  Future<Map<String, dynamic>?> uploadDeploymentInfo({
+  Future<BuildUploadResponse?> uploadDeploymentInfo({
     required File file,
     required PublishArgs args,
   }) {
@@ -311,12 +310,12 @@ class PublishCommand extends WidgetbookCommand {
   }
 
   @visibleForTesting
-  Future<CreatedReview?> uploadReview({
+  Future<ReviewUploadResponse?> uploadReview({
     required File file,
     required PublishArgs args,
     required ReviewData reviewData,
   }) async {
-    final response = await _widgetbookHttpClient.uploadReview(
+    return await _widgetbookHttpClient.uploadReview(
       apiKey: args.apiKey,
       useCases: reviewData.useCases,
       buildId: reviewData.buildId,
@@ -326,7 +325,6 @@ class PublishCommand extends WidgetbookCommand {
       headBranch: args.branch,
       headSha: args.commit,
     );
-    return response?.review;
   }
 
   // TODO sha is pretty much not used an is just being overriden with the most
@@ -436,54 +434,67 @@ class PublishCommand extends WidgetbookCommand {
 
       if (file != null) {
         progress.update('Uploading build');
-        final uploadInfo = await uploadDeploymentInfo(
+        final buildUploadResponse = await uploadDeploymentInfo(
           file: file,
           args: args,
         );
 
-        if (uploadInfo == null) {
+        if (buildUploadResponse == null) {
           throw WidgetbookApiException();
-        } else {
-          progress.complete('Uploaded build');
         }
 
-        // If generator is not run or not properly configured
-        if (useCases.isEmpty) {
-          logger.err(
-            'HINT: Could not find generator files. '
-            'Therefore, no review has been created. '
-            'Make sure to use widgetbook_generator and '
-            'run build_runner before this CLI. '
-            'See https://docs.widgetbook.io/widgetbook-cloud/review for more '
-            'information.',
-          );
-          throw ReviewNotFoundException();
+        for (final task in buildUploadResponse.tasks) {
+          if (task.status == UploadTaskStatus.success) {
+            logger.success('\n✅ ${task.message}');
+          } else if (task.status == UploadTaskStatus.warning) {
+            logger.info('\n⚠️ ${task.message}');
+          } else {
+            logger.err('\n❌ ${task.message}');
+          }
         }
+
+        if (baseBranch == null) {
+          logger.info(
+            '💡Tip: you can upload a review by specifying a `base-branch` parameter.'
+            '\nSee https://docs.widgetbook.io/widgetbook-cloud/review '
+            'for more information',
+          );
+        }
+
+        progress.complete('Build upload completed');
 
         String? reviewId;
         if (baseBranch != null && baseSha != null) {
+          // If generator is not run or not properly configured
+          if (useCases.isEmpty) {
+            logger.err(
+              'Could not find generator files. '
+              'Therefore, no review has been created. '
+              'Make sure to use widgetbook_generator and '
+              'run build_runner before this CLI. '
+              'See https://docs.widgetbook.io/widgetbook-cloud/review for more '
+              'information.',
+            );
+            throw ReviewNotFoundException();
+          }
+
           progress.update('Uploading review');
           try {
-            final review = await uploadReview(
+            final reviewUploadResponse = await uploadReview(
               file: file,
               args: args,
               reviewData: ReviewData(
                 useCases: useCases,
-                buildId: uploadInfo['build'] as String,
-                projectId: uploadInfo['project'] as String,
+                buildId: buildUploadResponse.build,
+                projectId: buildUploadResponse.project,
                 baseSha: baseSha,
               ),
             );
-            reviewId = review?.id;
+            reviewId = reviewUploadResponse?.review.id;
             progress.complete('Uploaded review');
           } catch (_) {
             throw WidgetbookApiException();
           }
-        } else {
-          logger.warn(
-            'HINT: No pull-request information available. Therefore, '
-            'no review will be created. See docs for more information.',
-          );
         }
 
         if (args.prNumber != null) {
@@ -491,7 +502,7 @@ class PublishCommand extends WidgetbookCommand {
             await GithubProvider(
               apiKey: args.gitHubToken!,
             ).addBuildComment(
-              buildInfo: uploadInfo,
+              buildInfo: buildUploadResponse,
               number: args.prNumber!,
               reviewId: reviewId,
             );
