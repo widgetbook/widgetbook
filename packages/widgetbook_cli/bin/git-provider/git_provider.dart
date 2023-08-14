@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../flavor/flavor.dart';
+import '../models/build_upload_response.dart';
 
 abstract class GitProvider {
   GitProvider({
@@ -45,8 +46,7 @@ abstract class GitProvider {
   }
 
   Future<void> addBuildComment({
-    // TODO refactor to a proper type
-    required Map<String, dynamic> buildInfo,
+    required BuildUploadResponse buildInfo,
     required String number,
     required String? reviewId,
   });

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:path/path.dart' as path;
 
+import '../../models/build_upload_response.dart';
 import '../git_provider.dart';
 import 'comment.dart';
 
@@ -12,13 +13,13 @@ class GithubProvider extends GitProvider {
 
   @override
   Future<void> addBuildComment({
-    required Map<String, dynamic> buildInfo,
+    required BuildUploadResponse buildInfo,
     required String number,
     required String? reviewId,
   }) async {
     final repository = Platform.environment['GITHUB_REPOSITORY'];
-    final projectId = buildInfo['project'] as String;
-    final buildId = buildInfo['build'] as String;
+    final projectId = buildInfo.project;
+    final buildId = buildInfo.build;
 
     await client.post<dynamic>(
       path.join(

@@ -106,7 +106,7 @@ class RepositoryNotFoundException implements WidgetbookException {
 class WidgetbookApiException implements WidgetbookException {
   WidgetbookApiException({String? message})
       : _message = message ??=
-            'An Error occured while uploading the build to Widgetbook Cloud.';
+            'An Error occurred while uploading the build to Widgetbook Cloud.';
 
   final String? _message;
 
