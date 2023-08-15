@@ -12,11 +12,15 @@ class ListInstance<T extends BaseInstance> extends BaseInstance {
   /// [instances] specifies the instances injected into the list.
   const ListInstance({
     required this.instances,
+    this.type,
     this.trailingComma = true,
   });
 
   /// Specifies the instances injected into the list.
   final List<T> instances;
+
+  /// Specifies actual type of the generate list.
+  final String? type;
 
   /// Specifies if a trailing comma should be inserted into the code.
   /// This leads to better code formatting.
@@ -24,24 +28,24 @@ class ListInstance<T extends BaseInstance> extends BaseInstance {
 
   @override
   String toCode() {
-    final codeOfValues = instances
-        .map(
-          (instance) => instance.toCode(),
-        )
-        .toList();
+    final buffer = StringBuffer();
 
-    final stringBuffer = StringBuffer()
-      ..write('[')
-      ..write(
-        codeOfValues.join(', '),
-      );
-
-    if (trailingComma && instances.isNotEmpty) {
-      stringBuffer.write(',');
+    if (type != null) {
+      buffer.write('<$type>');
     }
 
-    stringBuffer.write(']');
-    return stringBuffer.toString();
+    buffer.write('[');
+    buffer.write(
+      instances.map((instance) => instance.toCode()).join(', '),
+    );
+
+    if (trailingComma && instances.isNotEmpty) {
+      buffer.write(',');
+    }
+
+    buffer.write(']');
+
+    return buffer.toString();
   }
 
   @override
