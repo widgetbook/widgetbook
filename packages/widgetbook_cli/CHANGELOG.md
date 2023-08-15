@@ -1,3 +1,7 @@
+## 3.0.0-rc.3
+
+- **REFACTOR**: :recycle: improved error handling. [#831](https://github.com/widgetbook/widgetbook/pull/831)
+
 ## 3.0.0-rc.2
 
  - **FIX**: Include generated files. ([#761](https://github.com/widgetbook/widgetbook/pull/761))
