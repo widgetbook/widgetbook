@@ -71,8 +71,10 @@ extension TesterExtension on WidgetTester {
   }) async {
     final state = WidgetbookState(
       appBuilder: materialAppBuilder,
-      directories: [],
       queryParams: queryParams,
+      root: WidgetbookRoot(
+        children: [],
+      ),
     );
 
     return pumpWidgetWithState(

@@ -47,6 +47,15 @@ abstract class WidgetbookNode {
     }
   }
 
+  /// Gets the depth of the node within the tree.
+  int get depth {
+    if (isRoot) {
+      return 0;
+    } else {
+      return parent!.depth + 1;
+    }
+  }
+
   /// Gets all leaf nodes of this node.
   List<WidgetbookNode> get leaves {
     if (isLeaf) {
@@ -56,12 +65,26 @@ abstract class WidgetbookNode {
     }
   }
 
+  // Gets the number of nodes in the sub-tree of this node.
+  int get count {
+    if (isLeaf) {
+      return 1;
+    } else {
+      return children!.fold<int>(
+        1,
+        (acc, child) => acc + child.count,
+      );
+    }
+  }
+
   /// Filters the sub-tree of this node for any node that matches [predicate].
   /// If a node matches the predicate, it will be included, along with all its
   /// descendants, in the result.
   ///
   /// Returns null if no node matches the predicate.
-  WidgetbookNode? filter(bool Function(WidgetbookNode node) predicate) {
+  WidgetbookNode? filter(
+    bool Function(WidgetbookNode node) predicate,
+  ) {
     if (predicate(this)) {
       return this;
     } else {
@@ -79,7 +102,9 @@ abstract class WidgetbookNode {
   }
 
   /// Searches for a node that matches [predicate] in the sub-tree of this node.
-  WidgetbookNode? find(bool Function(WidgetbookNode node) predicate) {
+  WidgetbookNode? find(
+    bool Function(WidgetbookNode node) predicate,
+  ) {
     if (predicate(this)) {
       return this;
     } else {

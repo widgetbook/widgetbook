@@ -15,15 +15,6 @@ Widget navigationTreeItemWithout(BuildContext context) {
           ),
           children: [],
         ),
-        level: context.knobs.double
-            .slider(
-              label: 'Level',
-              initialValue: 0,
-              min: 0,
-              max: 20,
-              divisions: 20,
-            )
-            .toInt(),
         onTap: () {},
         isExpanded: context.knobs.boolean(
           label: 'Is Expanded',

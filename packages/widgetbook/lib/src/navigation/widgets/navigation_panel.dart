@@ -52,14 +52,14 @@ class _NavigationPanelState extends State<NavigationPanel> {
           Padding(
             padding: const EdgeInsets.all(16),
             child: SearchField(
-              searchValue: searchQuery,
-              onSearchChanged: (value) {
+              value: searchQuery,
+              onChanged: (value) {
                 setState(() {
                   searchQuery = value;
                   filteredRoot = widget.root.filter(filterNode) ?? widget.root;
                 });
               },
-              onSearchCancelled: () {
+              onCleared: () {
                 setState(() {
                   searchQuery = '';
                   filteredRoot = widget.root;

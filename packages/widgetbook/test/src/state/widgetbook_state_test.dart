@@ -16,9 +16,11 @@ void main() {
         () {
           final paramKey = 'foo';
           final state = WidgetbookState(
-            appBuilder: materialAppBuilder,
-            directories: [],
             queryParams: {paramKey: 'bar'},
+            appBuilder: materialAppBuilder,
+            root: WidgetbookRoot(
+              children: [],
+            ),
           );
 
           final newValue = 'qux';
@@ -34,9 +36,11 @@ void main() {
         'then the knobs are cleared and removed from query params',
         () {
           final state = WidgetbookState(
-            appBuilder: materialAppBuilder,
-            directories: [],
             queryParams: {'knobs': '{any_knob:any_value}'},
+            appBuilder: materialAppBuilder,
+            root: WidgetbookRoot(
+              children: [],
+            ),
           );
 
           state.updatePath('component/use-case');
@@ -57,9 +61,11 @@ void main() {
           );
 
           final state = WidgetbookState(
-            appBuilder: materialAppBuilder,
-            directories: [],
             queryParams: {'knobs': '{${knob.label}:${knob.value}}'},
+            appBuilder: materialAppBuilder,
+            root: WidgetbookRoot(
+              children: [],
+            ),
           );
 
           final result = state.registerKnob(knob);
@@ -79,9 +85,11 @@ void main() {
           );
 
           final state = WidgetbookState(
-            appBuilder: materialAppBuilder,
-            directories: [],
             queryParams: {'knobs': '{${knob.label}:${knob.value}}'},
+            appBuilder: materialAppBuilder,
+            root: WidgetbookRoot(
+              children: [],
+            ),
           );
 
           state
@@ -105,11 +113,11 @@ void main() {
           );
 
           final state = WidgetbookState(
+            queryParams: {'knobs': '{${knob.label}:${knob.value}}'},
             appBuilder: materialAppBuilder,
-            directories: [],
-            queryParams: {
-              'knobs': '{${knob.label}:${knob.value}}',
-            },
+            root: WidgetbookRoot(
+              children: [],
+            ),
           );
 
           const newValue = 'Book of Widgets';
@@ -129,9 +137,11 @@ void main() {
         'then the state is updated',
         () {
           final state = WidgetbookState(
-            appBuilder: materialAppBuilder,
-            directories: [],
             queryParams: {},
+            appBuilder: materialAppBuilder,
+            root: WidgetbookRoot(
+              children: [],
+            ),
           );
 
           const path = 'component/use-case';

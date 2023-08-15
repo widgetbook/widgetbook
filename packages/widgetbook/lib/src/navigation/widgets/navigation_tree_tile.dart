@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../icons/icons.dart';
@@ -8,7 +10,6 @@ class NavigationTreeTile extends StatelessWidget {
   const NavigationTreeTile({
     super.key,
     required this.node,
-    this.level = 0,
     this.onTap,
     this.isExpanded = false,
     this.isSelected = false,
@@ -16,7 +17,6 @@ class NavigationTreeTile extends StatelessWidget {
 
   static const indentation = 24.0;
 
-  final int level;
   final WidgetbookNode node;
   final VoidCallback? onTap;
   final bool isExpanded;
@@ -40,7 +40,7 @@ class NavigationTreeTile extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(
-              width: level * indentation,
+              width: max(node.depth - 1, 0) * indentation,
             ),
             SizedBox(
               width: indentation,

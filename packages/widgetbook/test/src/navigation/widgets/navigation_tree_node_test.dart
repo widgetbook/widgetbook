@@ -4,88 +4,52 @@ import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 
 import '../../../helper/helper.dart';
+import '../tree_root.dart';
 
 void main() {
-  const nodeWithOneLevelOfChildren = NavigationTreeNodeData(
-    path: 'component/',
-    name: 'Component',
-    type: NavigationNodeType.component,
-    isInitiallyExpanded: false,
-    children: [
-      NavigationTreeNodeData(
-        path: 'component/use_case_1_id',
-        name: 'Use Case 1',
-        type: NavigationNodeType.useCase,
-      ),
-      NavigationTreeNodeData(
-        path: 'component/use_case_2_id',
-        name: 'Use Case 2',
-        type: NavigationNodeType.useCase,
-      ),
-    ],
+  group(
+    '$NavigationTreeNode',
+    () {
+      testWidgets(
+        'given a root node, '
+        'then the correct number of list views are created',
+        (tester) async {
+          await tester.pumpWidgetWithMaterialApp(
+            NavigationTreeNode(
+              node: treeRoot,
+            ),
+          );
+
+          expect(
+            find.byType(ListView),
+            findsNWidgets(treeRoot.count - treeRoot.leaves.length),
+          );
+        },
+      );
+
+      testWidgets(
+        'when a node is tapped, '
+        'then the onNodeSelected callback is called',
+        (tester) async {
+          final node = WidgetbookUseCase(
+            name: 'UseCase Node',
+            builder: (context) => Container(),
+          );
+
+          final onValueChanged = VoidFn1Mock<WidgetbookNode>();
+
+          await tester.pumpWidgetWithMaterialApp(
+            NavigationTreeNode(
+              node: node,
+              onNodeSelected: onValueChanged.call,
+            ),
+          );
+
+          await tester.tap(find.byType(NavigationTreeTile).first);
+
+          verify(() => onValueChanged.call(node)).called(1);
+        },
+      );
+    },
   );
-
-  group('$NavigationTreeNode', () {
-    testWidgets(
-      'Can render correct number of first level child node widgets',
-      (tester) async {
-        await tester.pumpWidgetWithMaterialApp(
-          const NavigationTreeNode(
-            data: nodeWithOneLevelOfChildren,
-          ),
-        );
-
-        expect(
-          find.byType(NavigationTreeNode),
-          findsNWidgets(nodeWithOneLevelOfChildren.children.length + 1),
-        );
-      },
-    );
-
-    testWidgets(
-      'Calls onNodeSelected with selected node id',
-      (tester) async {
-        const useCaseNode = NavigationTreeNodeData(
-          path: 'use_case_id',
-          name: 'Use Case',
-          type: NavigationNodeType.useCase,
-        );
-
-        final valueChangedCallbackMock = VoidFn1Mock<NavigationTreeNodeData>();
-        await tester.pumpWidgetWithMaterialApp(
-          NavigationTreeNode(
-            data: useCaseNode,
-            onNodeSelected: valueChangedCallbackMock.call,
-          ),
-        );
-
-        await tester.tap(find.byType(NavigationTreeTile).first);
-        verify(() => valueChangedCallbackMock.call(useCaseNode)).called(1);
-      },
-    );
-
-    testWidgets(
-      'Can expand children ListView',
-      (tester) async {
-        await tester.pumpWidgetWithMaterialApp(
-          const NavigationTreeNode(
-            data: nodeWithOneLevelOfChildren,
-          ),
-        );
-
-        expect(
-          find.byType(ListView).hitTestable(),
-          findsNothing,
-        );
-
-        await tester.tap(find.byType(NavigationTreeTile).first);
-        await tester.pumpAndSettle();
-
-        expect(
-          find.byType(ListView).hitTestable(),
-          findsOneWidget,
-        );
-      },
-    );
-  });
 }

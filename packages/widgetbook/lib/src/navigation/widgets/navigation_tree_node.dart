@@ -7,12 +7,10 @@ class NavigationTreeNode extends StatefulWidget {
   const NavigationTreeNode({
     super.key,
     required this.node,
-    this.level = 0,
     this.selectedNode,
     this.onNodeSelected,
   });
 
-  final int level;
   final WidgetbookNode node;
   final WidgetbookNode? selectedNode;
   final ValueChanged<WidgetbookNode>? onNodeSelected;
@@ -33,14 +31,15 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
 
   @override
   Widget build(BuildContext context) {
-    const animationDuration = Duration(milliseconds: 200);
+    const animationDuration = Duration(
+      milliseconds: 200,
+    );
 
     return Column(
       children: [
         NavigationTreeTile(
           node: widget.node,
           isExpanded: isExpanded,
-          level: widget.level,
           isSelected: widget.node.path == widget.selectedNode?.path,
           onTap: () {
             setState(() => isExpanded = !isExpanded);
@@ -64,7 +63,6 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
                   shrinkWrap: true,
                   itemBuilder: (context, index) => NavigationTreeNode(
                     node: widget.node.children![index],
-                    level: widget.level + 1,
                     selectedNode: widget.selectedNode,
                     onNodeSelected: widget.onNodeSelected,
                   ),
