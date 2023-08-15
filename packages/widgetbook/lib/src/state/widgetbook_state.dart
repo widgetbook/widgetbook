@@ -21,11 +21,9 @@ class WidgetbookState extends ChangeNotifier {
     required this.appBuilder,
     this.addons,
     this.integrations,
-    required this.directories,
+    required this.root,
   })  : this.knobs = {},
-        this.catalog = WidgetbookCatalog.fromDirectories(
-          directories,
-        );
+        this.catalog = WidgetbookCatalog.fromRoot(root);
 
   String? path;
   bool previewMode;
@@ -36,7 +34,9 @@ class WidgetbookState extends ChangeNotifier {
   final AppBuilder appBuilder;
   final List<WidgetbookAddon>? addons;
   final List<WidgetbookIntegration>? integrations;
-  final List<MultiChildNavigationNodeData> directories;
+  final WidgetbookRoot root;
+
+  List<WidgetbookNode> get directories => root.children!;
 
   WidgetbookUseCase? get useCase => path == null ? null : catalog.get(path!);
 

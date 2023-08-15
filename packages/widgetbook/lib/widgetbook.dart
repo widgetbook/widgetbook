@@ -18,6 +18,6 @@ export 'src/knobs/knobs.dart'
         ListOrNullKnob,
         StringKnob,
         StringOrNullKnob;
-export 'src/navigation/directories/directories.dart';
+export 'src/navigation/nodes/nodes.dart';
 export 'src/state/state.dart' hide WidgetbookCatalog, WidgetbookScope;
 export 'src/widgetbook.dart';

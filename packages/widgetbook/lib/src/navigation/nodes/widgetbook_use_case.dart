@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../models/models.dart';
-
-typedef UseCaseBuilder = Widget Function(BuildContext context);
+import 'widgetbook_node.dart';
 
 /// UseCases represent a specific configuration of a widget and can be used
 /// to check edge cases of a Widget.
-class WidgetbookUseCase extends LeafNavigationNodeData {
-  const WidgetbookUseCase({
+class WidgetbookUseCase extends WidgetbookNode {
+  WidgetbookUseCase({
     required super.name,
     required this.builder,
   }) : super(
-          type: NavigationNodeType.useCase,
-          data: builder,
+          children: null,
+          isInitiallyExpanded: false,
         );
 
   @Deprecated(
@@ -40,27 +38,13 @@ class WidgetbookUseCase extends LeafNavigationNodeData {
     );
   }
 
-  final UseCaseBuilder builder;
+  final WidgetBuilder builder;
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is WidgetbookUseCase &&
-        other.name == name &&
-        other.builder == builder &&
-        other.isInitiallyExpanded == other.isInitiallyExpanded;
-  }
-
-  @override
-  int get hashCode => builder.hashCode;
-
-  @override
-  String toString() {
-    return 'WidgetbookUseCase('
-        'name: $name, '
-        'builder: $builder, '
-        'isInitiallyExpanded: $isInitiallyExpanded'
-        ')';
+  WidgetbookUseCase copyWith({
+    String? name,
+    List<WidgetbookNode>? children,
+  }) {
+    return this;
   }
 }
