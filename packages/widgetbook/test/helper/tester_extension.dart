@@ -30,9 +30,7 @@ extension TesterExtension on WidgetTester {
   Future<void> pumpWidgetWithMaterialApp(Widget widget) async {
     return pumpWidget(
       MaterialApp(
-        theme: Themes.light,
-        darkTheme: Themes.dark,
-        themeMode: ThemeMode.dark,
+        theme: Themes.dark,
         home: Scaffold(
           body: widget,
         ),

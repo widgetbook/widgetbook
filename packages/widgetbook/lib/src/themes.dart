@@ -2,38 +2,6 @@ import 'package:flutter/material.dart';
 
 /// Contains the style definition of Widgetbook.
 class Themes {
-  static const _lightColorScheme = ColorScheme(
-    brightness: Brightness.light,
-    primary: Color(0xFF0060A7),
-    onPrimary: Color(0xFFFFFFFF),
-    primaryContainer: Color(0xFFD2E4FF),
-    onPrimaryContainer: Color(0xFF001C37),
-    secondary: Color(0xFF535F70),
-    onSecondary: Color(0xFFFFFFFF),
-    secondaryContainer: Color(0xFFD7E3F8),
-    onSecondaryContainer: Color(0xFF101C2B),
-    tertiary: Color(0xFF6C5677),
-    onTertiary: Color(0xFFFFFFFF),
-    tertiaryContainer: Color(0xFFF4D9FF),
-    onTertiaryContainer: Color(0xFF261431),
-    error: Color(0xFFBA1A1A),
-    errorContainer: Color(0xFFFFDAD6),
-    onError: Color(0xFFFFFFFF),
-    onErrorContainer: Color(0xFF410002),
-    background: Color(0xFFFDFCFF),
-    onBackground: Color(0xFF1A1C1E),
-    surface: Color(0xFFFDFCFF),
-    onSurface: Color(0xFF1A1C1E),
-    surfaceVariant: Color(0xFFDFE2EB),
-    onSurfaceVariant: Color(0xFF43474E),
-    outline: Color(0xFF73777F),
-    onInverseSurface: Color(0xFFF1F0F4),
-    inverseSurface: Color(0xFF2F3033),
-    inversePrimary: Color(0xFFA1C9FF),
-    shadow: Color(0xFF000000),
-    surfaceTint: Color(0xFF0060A7),
-  );
-
   static const _darkColorScheme = ColorScheme(
     brightness: Brightness.dark,
     primary: Color(0xFFA1C9FF),
@@ -66,32 +34,59 @@ class Themes {
     surfaceTint: Color(0xFFA1C9FF),
   );
 
-  static ThemeData light = ThemeData.from(
-    colorScheme: _lightColorScheme,
-    textTheme: ThemeData.from(
-      colorScheme: _lightColorScheme,
-    ).textTheme.apply(
-          fontFamily: 'Poppins',
-        ),
+  static ThemeData dark = ThemeData(
     useMaterial3: true,
-  ).copyWith(
-    sliderTheme: SliderThemeData(
-      overlayShape: SliderComponentShape.noThumb,
-    ),
-  );
-
-  static ThemeData dark = ThemeData.from(
+    brightness: Brightness.dark,
+    fontFamily: 'Poppins',
     colorScheme: _darkColorScheme,
-    textTheme: ThemeData.from(
-      colorScheme: _darkColorScheme,
-    ).textTheme.apply(
-          fontFamily: 'Poppins',
-        ),
-    useMaterial3: true,
-  ).copyWith(
     hoverColor: const Color(0xFFE3E2E6).withOpacity(0.08),
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      isDense: true,
+      fillColor: _darkColorScheme.surfaceVariant,
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: _darkColorScheme.primary,
+        ),
+      ),
+      enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.transparent,
+        ),
+      ),
+      border: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.transparent,
+        ),
+      ),
+    ),
+    dropdownMenuTheme: DropdownMenuThemeData(
+      inputDecorationTheme: InputDecorationTheme(
+        contentPadding: const EdgeInsets.only(left: 24),
+        border: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.transparent,
+          ),
+        ),
+        filled: true,
+        fillColor: Colors.transparent,
+        hoverColor: _darkColorScheme.onBackground.withOpacity(0.08),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.transparent),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: _darkColorScheme.onBackground.withOpacity(0.12),
+          ),
+        ),
+      ),
+    ),
+    expansionTileTheme: const ExpansionTileThemeData(
+      collapsedShape: RoundedRectangleBorder(),
+      shape: RoundedRectangleBorder(),
     ),
   );
 }
