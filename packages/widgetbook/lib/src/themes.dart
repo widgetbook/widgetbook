@@ -34,6 +34,21 @@ class Themes {
     surfaceTint: Color(0xFFA1C9FF),
   );
 
+  static final _inputDecorationTheme = InputDecorationTheme(
+    filled: true,
+    isDense: true,
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: _darkColorScheme.primary,
+      ),
+    ),
+    enabledBorder: const OutlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.transparent,
+      ),
+    ),
+  );
+
   static ThemeData dark = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
@@ -43,46 +58,9 @@ class Themes {
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
     ),
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      isDense: true,
-      fillColor: _darkColorScheme.surfaceVariant,
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: _darkColorScheme.primary,
-        ),
-      ),
-      enabledBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.transparent,
-        ),
-      ),
-      border: const OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.transparent,
-        ),
-      ),
-    ),
+    inputDecorationTheme: _inputDecorationTheme,
     dropdownMenuTheme: DropdownMenuThemeData(
-      inputDecorationTheme: InputDecorationTheme(
-        contentPadding: const EdgeInsets.only(left: 24),
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.transparent,
-          ),
-        ),
-        filled: true,
-        fillColor: Colors.transparent,
-        hoverColor: _darkColorScheme.onBackground.withOpacity(0.08),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.transparent),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: _darkColorScheme.onBackground.withOpacity(0.12),
-          ),
-        ),
-      ),
+      inputDecorationTheme: _inputDecorationTheme,
     ),
     expansionTileTheme: const ExpansionTileThemeData(
       collapsedShape: RoundedRectangleBorder(),
