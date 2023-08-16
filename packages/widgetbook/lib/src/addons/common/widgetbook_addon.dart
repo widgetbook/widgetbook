@@ -39,8 +39,15 @@ abstract class WidgetbookAddon<T> extends FieldsComposable<T> {
       name: name,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: fields //
-            .map((field) => field.build(context, groupName))
+        children: fields
+            .map(
+              (field) => Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 4.0,
+                ),
+                child: field.build(context, groupName),
+              ),
+            )
             .toList(),
       ),
     );
