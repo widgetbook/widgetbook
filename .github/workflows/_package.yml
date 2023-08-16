@@ -10,6 +10,10 @@ on:
         required: false
         type: string
         default: ""
+      run_pana:
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   doctor:
@@ -65,9 +69,11 @@ jobs:
         run: flutter test --coverage
 
       - name: Install pana
+        if: inputs.run_pana
         run: dart pub global activate pana
 
       - name: Check Package Score
+        if: inputs.run_pana
         run: pana . --no-warning --exit-code-threshold 0
 
   publish:
