@@ -19,5 +19,5 @@ export 'src/knobs/knobs.dart'
         StringKnob,
         StringOrNullKnob;
 export 'src/navigation/nodes/nodes.dart';
-export 'src/state/state.dart' hide WidgetbookCatalog, WidgetbookScope;
+export 'src/state/state.dart' hide WidgetbookScope;
 export 'src/widgetbook.dart';

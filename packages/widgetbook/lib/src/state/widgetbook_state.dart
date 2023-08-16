@@ -9,7 +9,6 @@ import '../knobs/knob.dart';
 import '../navigation/navigation.dart';
 import '../routing/routing.dart';
 import 'default_app_builders.dart';
-import 'widgetbook_catalog.dart';
 import 'widgetbook_scope.dart';
 
 typedef AppBuilder = Widget Function(BuildContext context, Widget child);
@@ -23,15 +22,13 @@ class WidgetbookState extends ChangeNotifier {
     this.addons,
     this.integrations,
     required this.root,
-  })  : this.knobs = {},
-        this.catalog = WidgetbookCatalog.fromRoot(root);
+  }) : this.knobs = {};
 
   String? path;
   bool previewMode;
   Map<String, String> queryParams;
 
   final Map<String, Knob> knobs;
-  final WidgetbookCatalog catalog;
   final AppBuilder appBuilder;
   final List<WidgetbookAddon>? addons;
   final List<WidgetbookIntegration>? integrations;
@@ -39,7 +36,7 @@ class WidgetbookState extends ChangeNotifier {
 
   List<WidgetbookNode> get directories => root.children!;
 
-  WidgetbookUseCase? get useCase => path == null ? null : catalog.get(path!);
+  WidgetbookUseCase? get useCase => path == null ? null : root.table[path!];
 
   /// A [Uri] representation of the current state.
   Uri get uri {
