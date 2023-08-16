@@ -1,6 +1,7 @@
 ## Unreleased
 
  - **REFACTOR**: Support `analyzer` v6.x. ([#841](https://github.com/widgetbook/widgetbook/pull/841))
+ - **FIX**: Add type to `directories` list. ([#836](https://github.com/widgetbook/widgetbook/pull/836))
  - **FIX**: Resolve local packages paths. ([#829](https://github.com/widgetbook/widgetbook/pull/829))
  - **FIX**: Resolve "asset:" imports. ([#819](https://github.com/widgetbook/widgetbook/pull/819))
  - **FIX**: Remove unused imports. ([#786](https://github.com/widgetbook/widgetbook/pull/786))

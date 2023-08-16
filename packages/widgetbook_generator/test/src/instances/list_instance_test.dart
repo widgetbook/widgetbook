@@ -45,6 +45,30 @@ void main() {
           );
         },
       );
+
+      test(
+        'with type',
+        () {
+          const instance = ListInstance<StringInstance>(
+            type: 'String',
+            instances: [
+              StringInstance.value(
+                'value1',
+              ),
+              StringInstance.value(
+                'value2',
+              ),
+            ],
+          );
+
+          expect(
+            instance.toCode(),
+            equals(
+              "<String>['value1', 'value2',]",
+            ),
+          );
+        },
+      );
     },
   );
 }

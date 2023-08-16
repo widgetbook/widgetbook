@@ -74,6 +74,7 @@ class AppGenerator extends GeneratorForAnnotation<App> {
 
     final instance = ListInstance(
       instances: directories,
+      type: 'WidgetbookNode',
     ).toCode();
 
     return 'final directories = $instance;';
