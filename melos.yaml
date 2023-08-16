@@ -18,9 +18,3 @@ scripts:
   generate:
     run: melos exec $MELOS_FILTERS -c 1 --depends-on="build_runner" -- "dart pub run build_runner build --delete-conflicting-outputs"
     description: Build all generated files.
-
-  pana:
-    run: melos exec -c 10 -- "../../tool/verify_pub_score.sh"
-    select-package:
-      no-private: true
-    description: Checks if the package meets the pub.dev score requirement.

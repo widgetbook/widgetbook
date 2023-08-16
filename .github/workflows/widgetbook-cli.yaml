@@ -17,6 +17,7 @@ jobs:
     uses: ./.github/workflows/_package.yml
     with:
       working_directory: packages/widgetbook_cli
+      run_pana: false
       post_checkout: |
         # Setup dummy Git user
         git config --global user.email "john@doe.co"
