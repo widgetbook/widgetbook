@@ -1,4 +1,5 @@
 import '../../bin/git/branch_reference.dart';
+import '../../bin/models/build_upload_response.dart';
 import '../../bin/models/models.dart';
 import '../../bin/models/publish_args.dart';
 
@@ -40,10 +41,12 @@ class TestData {
     'HEAD',
   );
 
-  static Map<String, dynamic> uploadBuildInfo = <String, dynamic>{
-    'project': 'projectId',
-    'build': 'buildId'
-  };
+  static BuildUploadResponse uploadBuildInfo = BuildUploadResponse(
+    project: 'projectId',
+    build: 'buildId',
+    status: BuildUploadStatus.success,
+    tasks: [],
+  );
 
   static final ReviewData reviewData = ReviewData(
     useCases: [],
