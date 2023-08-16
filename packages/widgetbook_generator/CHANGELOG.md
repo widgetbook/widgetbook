@@ -1,5 +1,6 @@
 ## Unreleased
 
+ - **REFACTOR**: Enforce `widgetbook` package minimum version (v3.1.0). ([#842](https://github.com/widgetbook/widgetbook/pull/842))
  - **REFACTOR**: Support `analyzer` v6.x. ([#841](https://github.com/widgetbook/widgetbook/pull/841))
  - **FIX**: Add type to `directories` list. ([#836](https://github.com/widgetbook/widgetbook/pull/836))
  - **FIX**: Resolve local packages paths. ([#829](https://github.com/widgetbook/widgetbook/pull/829))
