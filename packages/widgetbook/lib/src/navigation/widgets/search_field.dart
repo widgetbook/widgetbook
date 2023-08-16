@@ -29,28 +29,25 @@ class _SearchFieldState extends State<SearchField> {
 
   @override
   Widget build(BuildContext context) {
+    final border = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(50),
+      borderSide: const BorderSide(
+        color: Colors.transparent,
+        width: 0,
+      ),
+    );
+
     return TextFormField(
       controller: controller,
       focusNode: focusNode,
       onChanged: widget.onChanged,
       decoration: InputDecoration(
         hintText: 'Search',
-        border: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.transparent, width: 0),
-          borderRadius: BorderRadius.circular(50),
+        enabledBorder: border,
+        focusedBorder: border,
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 5,
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.transparent, width: 0),
-          borderRadius: BorderRadius.circular(50),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.transparent, width: 0),
-          borderRadius: BorderRadius.circular(50),
-        ),
-        filled: true,
-        focusColor: Colors.white,
-        iconColor: Colors.white,
-        contentPadding: const EdgeInsets.symmetric(vertical: 5),
         prefixIcon: const Padding(
           padding: EdgeInsets.all(12),
           child: Icon(Icons.search),

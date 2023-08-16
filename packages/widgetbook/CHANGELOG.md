@@ -1,5 +1,6 @@
 ## Unreleased
 
+ - **REFACTOR**: Update `DropdownMenu` theme. ([#844](https://github.com/widgetbook/widgetbook/pull/844))
  - **REFACTOR**: Make `appBuilder` optional. ([#843](https://github.com/widgetbook/widgetbook/pull/843))
  - **REFACTOR**: Replace `MultiChildNavigationData` with `WidgetbookNode`. ([#833](https://github.com/widgetbook/widgetbook/pull/833))
  - **REFACTOR**: Deprecate `WidgetbookUseCase.center` in favor of [AlignmentAddon]. ([#826](https://github.com/widgetbook/widgetbook/pull/826))
