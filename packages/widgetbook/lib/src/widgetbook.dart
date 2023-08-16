@@ -22,7 +22,7 @@ class Widgetbook extends StatefulWidget {
     super.key,
     this.initialRoute = '/',
     required this.directories,
-    required this.appBuilder,
+    this.appBuilder = widgetsAppBuilder,
     this.addons,
     this.integrations,
   });

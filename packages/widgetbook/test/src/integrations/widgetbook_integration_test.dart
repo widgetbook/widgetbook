@@ -41,7 +41,6 @@ void main() {
           final integration = MockIntegration();
           final state = WidgetbookState(
             integrations: [integration],
-            appBuilder: (_, child) => child,
             root: WidgetbookRoot(
               children: [],
             ),
@@ -63,7 +62,6 @@ void main() {
           final integration = MockIntegration();
           final state = WidgetbookState(
             integrations: [integration],
-            appBuilder: (_, child) => child,
             root: WidgetbookRoot(
               children: [],
             ),

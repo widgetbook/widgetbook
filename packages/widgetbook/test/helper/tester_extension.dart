@@ -68,7 +68,6 @@ extension TesterExtension on WidgetTester {
     required WidgetBuilder builder,
   }) async {
     final state = WidgetbookState(
-      appBuilder: materialAppBuilder,
       queryParams: queryParams,
       root: WidgetbookRoot(
         children: [],
