@@ -52,13 +52,6 @@ class WidgetbookApp extends StatelessWidget {
           ],
         )
       ],
-      appBuilder: (context, child) {
-        // Wrap all uses cases with a custom app widget, since
-        // we are not using [MaterialApp] from [Widgetbook.material]
-        return Container(
-          child: child,
-        );
-      },
     );
   }
 }
