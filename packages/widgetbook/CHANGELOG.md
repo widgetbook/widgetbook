@@ -1,5 +1,6 @@
 ## Unreleased
 
+ - **REFACTOR**: Make `appBuilder` optional. ([#843](https://github.com/widgetbook/widgetbook/pull/843))
  - **REFACTOR**: Replace `MultiChildNavigationData` with `WidgetbookNode`. ([#833](https://github.com/widgetbook/widgetbook/pull/833))
  - **REFACTOR**: Deprecate `WidgetbookUseCase.center` in favor of [AlignmentAddon]. ([#826](https://github.com/widgetbook/widgetbook/pull/826))
  - **FIX**: Ensure widget is mounted on change. ([#814](https://github.com/widgetbook/widgetbook/pull/814))

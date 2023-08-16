@@ -8,6 +8,7 @@ import '../integrations/widgetbook_integration.dart';
 import '../knobs/knob.dart';
 import '../navigation/navigation.dart';
 import '../routing/routing.dart';
+import 'default_app_builders.dart';
 import 'widgetbook_catalog.dart';
 import 'widgetbook_scope.dart';
 
@@ -18,7 +19,7 @@ class WidgetbookState extends ChangeNotifier {
     this.path,
     this.previewMode = false,
     this.queryParams = const {},
-    required this.appBuilder,
+    this.appBuilder = widgetsAppBuilder,
     this.addons,
     this.integrations,
     required this.root,

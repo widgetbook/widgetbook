@@ -25,9 +25,6 @@ class WidgetbookApp extends StatelessWidget {
       addons: [
         AlignmentAddon(),
       ],
-      appBuilder: (context, child) {
-        return child;
-      },
     );
   }
 }

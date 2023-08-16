@@ -17,7 +17,6 @@ void main() {
           final paramKey = 'foo';
           final state = WidgetbookState(
             queryParams: {paramKey: 'bar'},
-            appBuilder: materialAppBuilder,
             root: WidgetbookRoot(
               children: [],
             ),
@@ -37,7 +36,6 @@ void main() {
         () {
           final state = WidgetbookState(
             queryParams: {'knobs': '{any_knob:any_value}'},
-            appBuilder: materialAppBuilder,
             root: WidgetbookRoot(
               children: [],
             ),
@@ -62,7 +60,6 @@ void main() {
 
           final state = WidgetbookState(
             queryParams: {'knobs': '{${knob.label}:${knob.value}}'},
-            appBuilder: materialAppBuilder,
             root: WidgetbookRoot(
               children: [],
             ),
@@ -86,7 +83,6 @@ void main() {
 
           final state = WidgetbookState(
             queryParams: {'knobs': '{${knob.label}:${knob.value}}'},
-            appBuilder: materialAppBuilder,
             root: WidgetbookRoot(
               children: [],
             ),
@@ -114,7 +110,6 @@ void main() {
 
           final state = WidgetbookState(
             queryParams: {'knobs': '{${knob.label}:${knob.value}}'},
-            appBuilder: materialAppBuilder,
             root: WidgetbookRoot(
               children: [],
             ),
@@ -138,7 +133,6 @@ void main() {
         () {
           final state = WidgetbookState(
             queryParams: {},
-            appBuilder: materialAppBuilder,
             root: WidgetbookRoot(
               children: [],
             ),
