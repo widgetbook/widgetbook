@@ -96,6 +96,7 @@
 				["8. Accessing Resources", "/widgetbook-cloud/accessing-resources"]
 			]
 		],
-		["CLI", [["Overview", "/widgetbook-cli/overview"]]]
+		["CLI", [["Overview", "/widgetbook-cli/overview"]]],
+		["Contribution", [["Getting Started", "/contribution/get-started"]]]
 	]
 }
