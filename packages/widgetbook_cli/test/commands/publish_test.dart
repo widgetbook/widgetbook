@@ -773,7 +773,7 @@ void main() {
     );
 
     test(
-      'uploadDeployment method returns a $Map when '
+      'uploadDeployment method returns a $BuildUploadResponse when '
       '[$WidgetbookHttpClient.uploadDeployment] runs successfully',
       () async {
         final fileSystem = MemoryFileSystem.test();
@@ -799,7 +799,7 @@ void main() {
 
         expect(
           results,
-          isA<Map<String, dynamic>>(),
+          isA<BuildUploadResponse>(),
         );
       },
     );

@@ -84,7 +84,7 @@ void main() {
     group('$WidgetbookApiException', () {
       test('has the correct message', () {
         const message =
-            'An Error occured while uploading the build to Widgetbook Cloud.';
+            'An Error occurred while uploading the build to Widgetbook Cloud.';
         expect(
           WidgetbookApiException().message,
           equals(message),
