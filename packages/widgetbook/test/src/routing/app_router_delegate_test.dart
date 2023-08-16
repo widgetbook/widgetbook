@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/routing/routing.dart';
-import 'package:widgetbook/src/state/state.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
 
@@ -56,7 +56,9 @@ void main() {
         (tester) async {
           final state = WidgetbookState(
             appBuilder: materialAppBuilder,
-            directories: [],
+            root: WidgetbookRoot(
+              children: [],
+            ),
           );
 
           final delegate = AppRouterDelegate(

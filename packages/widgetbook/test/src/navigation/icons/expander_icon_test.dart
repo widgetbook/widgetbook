@@ -15,9 +15,11 @@ void main() {
             const ExpanderIcon(),
           );
 
-          final rotationWidget = tester
-              .firstWidget(find.byType(AnimatedRotation)) as AnimatedRotation;
-          expect(rotationWidget.turns, 0);
+          final rotation = tester.firstWidget<AnimatedRotation>(
+            find.byType(AnimatedRotation),
+          );
+
+          expect(rotation.turns, 0);
         },
       );
 
@@ -25,12 +27,16 @@ void main() {
         'rotation turns is 0.25 when expanded',
         (tester) async {
           await tester.pumpWidgetWithMaterialApp(
-            const ExpanderIcon(isExpanded: true),
+            const ExpanderIcon(
+              isExpanded: true,
+            ),
           );
 
-          final rotationWidget = tester
-              .firstWidget(find.byType(AnimatedRotation)) as AnimatedRotation;
-          expect(rotationWidget.turns, 0.25);
+          final rotation = tester.firstWidget<AnimatedRotation>(
+            find.byType(AnimatedRotation),
+          );
+
+          expect(rotation.turns, 0.25);
         },
       );
     },

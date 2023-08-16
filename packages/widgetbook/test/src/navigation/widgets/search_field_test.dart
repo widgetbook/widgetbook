@@ -6,81 +6,107 @@ import 'package:widgetbook/src/navigation/navigation.dart';
 import '../../../helper/helper.dart';
 
 void main() {
-  group('$SearchField', () {
-    testWidgets(
-      'Clear search button is initially not rendered',
-      (tester) async {
-        await tester.pumpWidgetWithMaterialApp(
-          const SearchField(),
-        );
+  group(
+    '$SearchField',
+    () {
+      testWidgets(
+        'given no initial value, '
+        'then clear button is not visible',
+        (tester) async {
+          await tester.pumpWidgetWithMaterialApp(
+            const SearchField(),
+          );
 
-        final finder = find.byWidgetPredicate(
-          (widget) => widget is Icon && widget.icon == Icons.close,
-        );
+          expect(
+            find.byIcon(Icons.close),
+            findsNothing,
+          );
+        },
+      );
 
-        expect(finder, findsNothing);
-      },
-    );
+      testWidgets(
+        'given an initial value, '
+        'then clear button is not visible',
+        (tester) async {
+          await tester.pumpWidgetWithMaterialApp(
+            const SearchField(
+              value: 'Widgetbook',
+            ),
+          );
 
-    testWidgets(
-      'Clear search button is shown after entering text in the text field',
-      (tester) async {
-        await tester.pumpWidgetWithMaterialApp(
-          const SearchField(searchValue: 'Search Value'),
-        );
+          expect(
+            find.byIcon(Icons.close),
+            findsOneWidget,
+          );
+        },
+      );
 
-        await tester.pumpAndSettle();
+      testWidgets(
+        'when clear button is tapped, '
+        'then text is cleared',
+        (tester) async {
+          await tester.pumpWidgetWithMaterialApp(
+            const SearchField(
+              value: 'Search Value',
+            ),
+          );
 
-        final clearButtonFinder = find.byWidgetPredicate(
-          (widget) => widget is Icon && widget.icon == Icons.close,
-        );
+          await tester.findAndTap(
+            find.byIcon(Icons.close),
+          );
 
-        expect(clearButtonFinder, findsOneWidget);
-      },
-    );
+          final textField = tester.widget<TextFormField>(
+            find.byType(TextFormField),
+          );
 
-    testWidgets(
-      'Clicking on clear search button '
-      'clears search value and removes the clear icon',
-      (tester) async {
-        await tester.pumpWidgetWithMaterialApp(
-          const SearchField(
-            searchValue: 'Search Value',
-          ),
-        );
+          expect(
+            textField.controller?.text,
+            isEmpty,
+          );
+        },
+      );
 
-        final textFieldFinder = find.byType(TextFormField);
-        await tester.pumpAndSettle();
+      testWidgets(
+        'when clear button is tapped, '
+        'then onCleared is called',
+        (tester) async {
+          final onCleared = VoidFnMock();
 
-        final clearButtonFinder = find.byWidgetPredicate(
-          (widget) => widget is Icon && widget.icon == Icons.close,
-        );
-        expect(clearButtonFinder, findsOneWidget);
+          await tester.pumpWidgetWithMaterialApp(
+            SearchField(
+              value: 'Search Value',
+              onCleared: onCleared.call,
+            ),
+          );
 
-        await tester.tap(clearButtonFinder);
-        await tester.pumpAndSettle();
+          await tester.findAndTap(find.byIcon(Icons.close));
 
-        final textFieldWidget = tester.widget(textFieldFinder) as TextFormField;
-        expect(textFieldWidget.controller?.text, isEmpty);
-      },
-    );
+          verify(
+            () => onCleared.call(),
+          ).called(1);
+        },
+      );
 
-    testWidgets(
-      'onSearchPressed is executed',
-      (tester) async {
-        final voidCallbackMock = VoidFnMock();
-        await tester.pumpWidgetWithMaterialApp(
-          SearchField(
-            onSearchPressed: voidCallbackMock.call,
-          ),
-        );
-        final searchButtonFinder = find.byWidgetPredicate(
-          (widget) => widget is Icon && widget.icon == Icons.search,
-        );
+      testWidgets(
+        'when text is changed, '
+        'then onChanged is called',
+        (tester) async {
+          final onChanged = VoidFn1Mock<String>();
 
-        await tester.tap(searchButtonFinder);
-        verify(voidCallbackMock.call).called(1);
-      },
-    );
-  });
+          await tester.pumpWidgetWithMaterialApp(
+            SearchField(
+              onChanged: onChanged.call,
+            ),
+          );
+
+          final text = 'Widgetbook';
+          await tester.enterText(find.byType(TextFormField), text);
+
+          verify(
+            () => onChanged.call(text),
+          ).called(1);
+        },
+      );
+    },
+  );
 }

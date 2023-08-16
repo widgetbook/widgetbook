@@ -3,81 +3,56 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 
 import '../../../helper/tester_extension.dart';
+import '../tree_root.dart';
 
 void main() {
   group('$NavigationPanel', () {
-    const query = 'component';
-    const directories = [
-      MultiChildNavigationNodeData(
-        name: 'Component',
-        type: NavigationNodeType.component,
-        children: [
-          MultiChildNavigationNodeData(
-            name: 'Use Case 1',
-            type: NavigationNodeType.useCase,
-            children: [],
-          ),
-        ],
-      ),
-      MultiChildNavigationNodeData(
-        name: 'Category',
-        type: NavigationNodeType.category,
-        children: [],
-      ),
-    ];
+    const query = '1';
 
     testWidgets(
-      'filters nodes when typing into search field',
+      'when search for query, '
+      'then only matching nodes are shown',
       (tester) async {
         await tester.pumpWidgetWithMaterialApp(
-          const NavigationPanel(
-            directories: directories,
+          NavigationPanel(
+            root: treeRoot,
           ),
         );
 
-        await tester.enterText(
+        await tester.findAndEnter(
           find.byType(TextFormField),
           query,
         );
 
-        await tester.pumpAndSettle();
-
-        final navNodes = find.byType(NavigationTreeNode);
-
         expect(
-          navNodes,
-          findsNWidgets(2),
+          find.byType(NavigationTreeTile),
+          findsNWidgets(3),
         );
       },
     );
 
     testWidgets(
-      'resets filtered nodes when search field is cleared',
+      'when search is cleared, '
+      'then the full tree is shown',
       (tester) async {
         await tester.pumpWidgetWithMaterialApp(
-          const NavigationPanel(
-            directories: directories,
+          NavigationPanel(
+            root: treeRoot,
           ),
         );
 
-        await tester.enterText(
+        await tester.findAndEnter(
           find.byType(TextFormField),
           query,
         );
 
-        await tester.pumpAndSettle();
-
-        final clearButton = find.byWidgetPredicate(
-          (widget) => widget is Icon && widget.icon == Icons.close,
+        await tester.findAndTap(
+          find.byIcon(Icons.close),
         );
 
-        await tester.tap(clearButton);
-
-        final navNodes = find.byType(NavigationTreeNode);
-
         expect(
-          navNodes,
-          findsNWidgets(2),
+          find.byType(NavigationTreeTile),
+          findsNWidgets(treeRoot.count - 1), // exclude root node
         );
       },
     );

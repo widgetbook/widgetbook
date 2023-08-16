@@ -41,8 +41,10 @@ void main() {
           final integration = MockIntegration();
           final state = WidgetbookState(
             integrations: [integration],
-            directories: [],
             appBuilder: (_, child) => child,
+            root: WidgetbookRoot(
+              children: [],
+            ),
           );
 
           state.notifyListeners();
@@ -61,8 +63,10 @@ void main() {
           final integration = MockIntegration();
           final state = WidgetbookState(
             integrations: [integration],
-            directories: [],
             appBuilder: (_, child) => child,
+            root: WidgetbookRoot(
+              children: [],
+            ),
           );
 
           state.notifyKnobsReady();
