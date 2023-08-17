@@ -66,8 +66,8 @@ class DoubleOrNullKnobsBuilder {
     int? divisions,
   }) {
     initialValue ??= max ?? min ?? 10;
-    return onKnobAdded<double?>(
-      DoubleOrNullSliderKnob(
+    return onKnobAdded(
+      DoubleSliderKnob.nullable(
         label: label,
         value: initialValue,
         description: description,
@@ -86,8 +86,8 @@ class DoubleOrNullKnobsBuilder {
     String? description,
     double? initialValue,
   }) {
-    return onKnobAdded<double?>(
-      DoubleOrNullInputKnob(
+    return onKnobAdded(
+      DoubleInputKnob.nullable(
         label: label,
         value: initialValue,
         description: description,

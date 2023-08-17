@@ -5,7 +5,7 @@ import '../state/state.dart';
 import 'knob.dart';
 
 @internal
-class DoubleSliderKnob extends Knob<double> {
+class DoubleSliderKnob extends Knob<double?> {
   DoubleSliderKnob({
     required super.label,
     required super.value,
@@ -15,43 +15,14 @@ class DoubleSliderKnob extends Knob<double> {
     this.divisions,
   });
 
-  final double max;
-  final double min;
-  final int? divisions;
-
-  @override
-  List<Field> get fields {
-    return [
-      DoubleSliderField(
-        name: label,
-        initialValue: value,
-        min: min,
-        max: max,
-        divisions: divisions,
-        onChanged: (context, value) {
-          if (value == null) return;
-          WidgetbookState.of(context).updateKnobValue(label, value);
-        },
-      ),
-    ];
-  }
-
-  @override
-  double valueFromQueryGroup(Map<String, String> group) {
-    return valueOf(label, group)!;
-  }
-}
-
-@internal
-class DoubleOrNullSliderKnob extends Knob<double?> {
-  DoubleOrNullSliderKnob({
+  DoubleSliderKnob.nullable({
     required super.label,
-    required double super.value,
+    required super.value,
     super.description,
     this.max = 1,
     this.min = 0,
     this.divisions,
-  });
+  }) : super(isNullable: true);
 
   final double max;
   final double min;
