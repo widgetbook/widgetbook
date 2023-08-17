@@ -49,7 +49,6 @@ void main() {
             ),
           );
 
-          await tester.findAndTap(find.byType(Checkbox));
           expect(find.text('false'), findsOneWidget);
 
           await tester.findAndTap(find.byType(Switch));
@@ -74,7 +73,6 @@ void main() {
             ),
           );
 
-          await tester.findAndTap(find.byType(Checkbox));
           expect(find.text('false'), findsOneWidget);
 
           await tester.findAndTap(find.byType(Switch));

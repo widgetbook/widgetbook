@@ -12,8 +12,14 @@ abstract class Knob<T> extends FieldsComposable<T> {
     required this.label,
     required this.value,
     this.description,
+    @Deprecated(
+      'This parameter is not used anymore. '
+      'It defaults to [value == null] instead of [false]',
+    )
     this.isNull = false,
-  });
+  }) {
+    this.isNull = value == null;
+  }
 
   /// This is the current value the knob is set to
   T value;
