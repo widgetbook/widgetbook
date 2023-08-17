@@ -15,7 +15,7 @@ class AppRouter extends RouterConfig<AppRouteConfig> {
           routeInformationParser: AppRouteParser(),
           routeInformationProvider: PlatformRouteInformationProvider(
             initialRouteInformation: RouteInformation(
-              location: initialRoute,
+              uri: Uri.parse(initialRoute),
             ),
           ),
           routerDelegate: AppRouterDelegate(

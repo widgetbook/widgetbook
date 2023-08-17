@@ -77,7 +77,7 @@ class WidgetbookState extends ChangeNotifier {
   /// Syncs this with the router's location using [SystemNavigator].
   void _syncRouteInformation() {
     SystemNavigator.routeInformationUpdated(
-      location: uri.toString(),
+      uri: uri,
     );
   }
 
@@ -146,7 +146,7 @@ class WidgetbookState extends ChangeNotifier {
     previewMode = routeConfig.previewMode;
     queryParams = {
       // Copy from UnmodifiableMap
-      ...routeConfig.queryParameters
+      ...routeConfig.uri.queryParameters,
     }
       ..remove('path')
       ..remove('preview');

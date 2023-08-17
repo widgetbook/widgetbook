@@ -14,7 +14,7 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
     required this.state,
   })  : _navigatorKey = GlobalKey<NavigatorState>(),
         _configuration = AppRouteConfig(
-          location: initialRoute,
+          uri: Uri.parse(initialRoute),
         );
 
   final String initialRoute;

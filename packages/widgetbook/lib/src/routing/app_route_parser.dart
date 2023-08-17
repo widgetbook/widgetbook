@@ -10,7 +10,7 @@ class AppRouteParser extends RouteInformationParser<AppRouteConfig> {
     RouteInformation routeInformation,
   ) async {
     return AppRouteConfig(
-      location: routeInformation.location ?? '/',
+      uri: routeInformation.uri,
     );
   }
 
@@ -19,7 +19,7 @@ class AppRouteParser extends RouteInformationParser<AppRouteConfig> {
     AppRouteConfig configuration,
   ) {
     return RouteInformation(
-      location: configuration.location,
+      uri: configuration.uri,
     );
   }
 }

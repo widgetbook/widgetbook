@@ -10,11 +10,11 @@ void main() {
         'then query parameters are parsed',
         () {
           final config = AppRouteConfig(
-            location: '/?foo=bar&baz=qux',
+            uri: Uri.parse('/?foo=bar&baz=qux'),
           );
 
           expect(
-            config.queryParameters,
+            config.uri.queryParameters,
             {
               'foo': 'bar',
               'baz': 'qux',
@@ -28,7 +28,7 @@ void main() {
         'then path is extracted',
         () {
           final config = AppRouteConfig(
-            location: '/?path=component-x&baz=qux',
+            uri: Uri.parse('/?path=component-x&baz=qux'),
           );
 
           expect(config.path, 'component-x');
@@ -40,7 +40,7 @@ void main() {
         'then preview mode is extracted',
         () {
           final config = AppRouteConfig(
-            location: '/?path=component-x&preview',
+            uri: Uri.parse('/?path=component-x&preview'),
           );
 
           expect(config.previewMode, true);

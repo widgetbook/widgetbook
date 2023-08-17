@@ -14,7 +14,7 @@ void main() {
         'given an initial route, '
         'then the current configuration has the exact location',
         () {
-          const initialLocation = '/path=use-case';
+          const initialLocation = '/?path=use-case';
 
           final delegate = AppRouterDelegate(
             initialRoute: initialLocation,
@@ -22,7 +22,7 @@ void main() {
           );
 
           expect(
-            delegate.currentConfiguration!.location,
+            delegate.currentConfiguration!.uri.toString(),
             initialLocation,
           );
         },
@@ -35,7 +35,7 @@ void main() {
         () {
           final state = MockWidgetbookState();
           final config = AppRouteConfig(
-            location: '/path=use-case',
+            uri: Uri.parse('/?path=use-case'),
           );
 
           final delegate = AppRouterDelegate(
