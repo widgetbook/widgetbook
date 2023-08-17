@@ -36,7 +36,7 @@ class WidgetbookApp extends StatelessWidget {
               builder: (context) {
                 return const ScreenContainer();
               },
-            )
+            ),
           ],
         ),
         WidgetbookComponent(
@@ -50,7 +50,7 @@ class WidgetbookApp extends StatelessWidget {
                       'https://images.nintendolife.com/bb503ef1f79ff/ash-and-pikachu.original.jpg',
                 );
               },
-            )
+            ),
           ],
         ),
       ],

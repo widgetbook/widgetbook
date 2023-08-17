@@ -92,8 +92,6 @@ class JsonLibraryBuilder extends Builder {
 
   @override
   Map<String, List<String>> get buildExtensions => {
-        '.dart': [
-          generatedExtension,
-        ]
+        '.dart': [generatedExtension],
       };
 }

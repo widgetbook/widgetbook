@@ -32,7 +32,7 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
         initialValue: initialSetting,
         values: alignments.keys.toList(),
         labelBuilder: (value) => alignments[value]!,
-      )
+      ),
     ];
   }
 

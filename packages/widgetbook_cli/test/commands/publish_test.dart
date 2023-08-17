@@ -838,7 +838,7 @@ void main() {
             componentDefinitionPath: 'path/to/use_case.dart',
             modification: Modification.changed,
             designLink: null,
-          )
+          ),
         ]),
       );
 
@@ -901,7 +901,7 @@ void main() {
             componentDefinitionPath: 'path/to/use_case.dart',
             modification: Modification.changed,
             designLink: null,
-          )
+          ),
         ]),
       );
 
