@@ -47,7 +47,7 @@ class DoubleSliderField extends Field<double> {
             textAlign: TextAlign.end,
             maxLines: 1,
           ),
-        )
+        ),
       ],
     );
   }

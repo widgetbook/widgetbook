@@ -49,7 +49,7 @@ class Workbench extends StatelessWidget {
                             ?.builder(context) ??
                         const SizedBox.shrink();
                   },
-                )
+                ),
               ],
             ),
           ),

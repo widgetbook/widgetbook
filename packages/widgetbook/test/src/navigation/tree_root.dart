@@ -14,7 +14,7 @@ final treeRoot = WidgetbookRoot(
               builder: (_) => Container(),
             ),
           ],
-        )
+        ),
       ],
     ),
     WidgetbookFolder(
@@ -28,8 +28,8 @@ final treeRoot = WidgetbookRoot(
               builder: (_) => Container(),
             ),
           ],
-        )
+        ),
       ],
-    )
+    ),
   ],
 );

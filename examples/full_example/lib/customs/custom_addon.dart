@@ -42,7 +42,7 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
           Alignment.bottomCenter,
           Alignment.bottomRight,
         ],
-      )
+      ),
     ];
   }
 

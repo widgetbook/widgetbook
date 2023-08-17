@@ -53,10 +53,10 @@ final root = WidgetbookRoot(
                   ],
                 ),
               ],
-            )
+            ),
           ],
         ),
       ],
-    )
+    ),
   ],
 );

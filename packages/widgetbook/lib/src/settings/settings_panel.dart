@@ -36,7 +36,7 @@ class SettingsPanel extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8),
                       child: Text('No ${setting.name} available'),
-                    )
+                    ),
                   ],
           );
         },
