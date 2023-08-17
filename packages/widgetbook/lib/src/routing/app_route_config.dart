@@ -3,13 +3,12 @@ import 'package:meta/meta.dart';
 @internal
 class AppRouteConfig {
   AppRouteConfig({
-    required this.location,
-  }) : queryParameters = Uri.parse(location).queryParameters;
+    required this.uri,
+  });
 
-  final String location;
-  final Map<String, String> queryParameters;
+  final Uri uri;
 
-  String? get path => queryParameters['path'];
+  String? get path => uri.queryParameters['path'];
 
-  bool get previewMode => queryParameters.containsKey('preview');
+  bool get previewMode => uri.queryParameters.containsKey('preview');
 }

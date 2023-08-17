@@ -15,6 +15,8 @@ class AppRouter extends RouterConfig<AppRouteConfig> {
           routeInformationParser: AppRouteParser(),
           routeInformationProvider: PlatformRouteInformationProvider(
             initialRouteInformation: RouteInformation(
+              // Not backwards compatible with Flutter < 3.13.0
+              // ignore: deprecated_member_use
               location: initialRoute,
             ),
           ),

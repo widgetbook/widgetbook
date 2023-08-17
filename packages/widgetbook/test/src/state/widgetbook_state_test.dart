@@ -140,7 +140,7 @@ void main() {
 
           const path = 'component/use-case';
           final routeConfig = AppRouteConfig(
-            location: '/?path=$path&foo=bar&preview',
+            uri: Uri.parse('/?path=$path&foo=bar&preview'),
           );
 
           state.updateFromRouteConfig(routeConfig);

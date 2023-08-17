@@ -77,6 +77,8 @@ class WidgetbookState extends ChangeNotifier {
   /// Syncs this with the router's location using [SystemNavigator].
   void _syncRouteInformation() {
     SystemNavigator.routeInformationUpdated(
+      // Not backwards compatible with Flutter < 3.13.0
+      // ignore: deprecated_member_use
       location: uri.toString(),
     );
   }
@@ -146,7 +148,7 @@ class WidgetbookState extends ChangeNotifier {
     previewMode = routeConfig.previewMode;
     queryParams = {
       // Copy from UnmodifiableMap
-      ...routeConfig.queryParameters
+      ...routeConfig.uri.queryParameters,
     }
       ..remove('path')
       ..remove('preview');
