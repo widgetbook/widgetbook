@@ -53,11 +53,9 @@ class _KnobPropertyState<T> extends State<KnobProperty<T>> {
                   ),
                 if (widget.isNullable)
                   Checkbox(
-                    value: isNull,
+                    value: !isNull,
                     onChanged: (value) {
-                      setState(() {
-                        isNull = value!;
-                      });
+                      setState(() => isNull = !value!);
                       widget.changedNullable?.call(value!);
                     },
                   ),

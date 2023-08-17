@@ -65,16 +65,16 @@ void main() {
             ),
           );
 
+          expect(find.textWidget('null'), findsOneWidget);
+
           final text = 'Widgetbook';
           await tester.findAndEnter(
             find.byType(TextField),
             text,
           );
 
-          expect(find.textWidget(text), findsOneWidget);
-
           await tester.findAndTap(find.byType(Checkbox));
-          expect(find.textWidget('null'), findsOneWidget);
+          expect(find.textWidget(text), findsOneWidget);
         },
       );
 
@@ -92,19 +92,19 @@ void main() {
             ),
           );
 
+          expect(find.textWidget('null'), findsOneWidget);
+
           const text = 'Flutter';
           await tester.findAndEnter(
             find.byType(TextField),
             text,
           );
 
+          await tester.findAndTap(find.byType(Checkbox));
           expect(find.textWidget(text), findsOneWidget);
 
           await tester.findAndTap(find.byType(Checkbox));
           expect(find.textWidget('null'), findsOneWidget);
-
-          await tester.findAndTap(find.byType(Checkbox));
-          expect(find.textWidget(text), findsOneWidget);
         },
       );
     },
