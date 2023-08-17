@@ -77,7 +77,9 @@ class WidgetbookState extends ChangeNotifier {
   /// Syncs this with the router's location using [SystemNavigator].
   void _syncRouteInformation() {
     SystemNavigator.routeInformationUpdated(
-      uri: uri,
+      // Not backwards compatible with Flutter < 3.13.0
+      // ignore: deprecated_member_use
+      location: uri.toString(),
     );
   }
 
