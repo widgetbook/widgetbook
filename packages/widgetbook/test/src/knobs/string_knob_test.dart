@@ -49,7 +49,7 @@ void main() {
   );
 
   group(
-    '$StringOrNullKnob',
+    '$StringKnob.nullable',
     () {
       testWidgets(
         'when field is updated, '

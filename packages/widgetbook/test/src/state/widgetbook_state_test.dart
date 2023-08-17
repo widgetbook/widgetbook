@@ -76,7 +76,7 @@ void main() {
         'when the knob is update to be null, '
         'then the knob value is null when retrieved',
         () {
-          final knob = StringKnob(
+          final knob = StringKnob.nullable(
             label: 'Knob',
             value: 'Widgetbook',
           );

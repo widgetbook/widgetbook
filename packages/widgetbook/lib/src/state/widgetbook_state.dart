@@ -114,7 +114,7 @@ class WidgetbookState extends ChangeNotifier {
   }
 
   @internal
-  T? registerKnob<T>(Knob<T> knob) {
+  T? registerKnob<T>(Knob<T?> knob) {
     final cachedKnob = knobs.putIfAbsent(
       knob.label,
       () => knob,
@@ -122,7 +122,7 @@ class WidgetbookState extends ChangeNotifier {
 
     // Return `null` even if the knob has value, but it was marked as null
     // using [updateKnobNullability].
-    if (cachedKnob.isNull) return null;
+    if (cachedKnob.isNullable && cachedKnob.isNull) return null;
 
     final knobsQueryGroup = FieldCodec.decodeQueryGroup(queryParams['knobs']);
 

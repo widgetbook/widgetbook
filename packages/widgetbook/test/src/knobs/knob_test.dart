@@ -1,14 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/settings/knob_property.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
 
-class MockKnob extends Knob<bool> {
+class MockKnob extends Knob<bool?> {
   MockKnob({
     required super.label,
     super.value = true,
     super.description,
+    super.isNullable = false,
   });
 
   @override
@@ -21,23 +23,23 @@ class MockKnob extends Knob<bool> {
 }
 
 void main() {
-  final knob = MockKnob(
-    label: 'Mock Knob',
-    description: 'Knob Description',
-  );
-
   group(
     '$Knob',
     () {
       testWidgets(
         'then it should build a [KnobProperty]',
         (tester) async {
+          final knob = MockKnob(
+            label: 'Mock Knob',
+            description: 'Knob Description',
+          );
+
           await tester.pumpKnob(
             (context) => knob.buildFields(context),
           );
 
           expect(
-            find.byType(KnobProperty<bool>),
+            find.byType(KnobProperty<bool?>),
             findsOneWidget,
           );
         },
@@ -54,6 +56,56 @@ void main() {
           expect(
             firstKnob,
             isNot(equals(secondKnob)),
+          );
+        },
+      );
+
+      testWidgets(
+        'given a nullable knob with a null value, '
+        'then it should build a [KnobProperty] with a uncheck checkbox',
+        (tester) async {
+          final knob = MockKnob(
+            label: 'Mock Knob',
+            isNullable: true,
+            value: null,
+          );
+
+          await tester.pumpKnob(
+            (context) => knob.buildFields(context),
+          );
+
+          final checkbox = tester.widget<Checkbox>(
+            find.byType(Checkbox),
+          );
+
+          expect(
+            checkbox.value,
+            false,
+          );
+        },
+      );
+
+      testWidgets(
+        'given a nullable knob with a value, '
+        'then it should build a [KnobProperty] with a checked checkbox',
+        (tester) async {
+          final knob = MockKnob(
+            label: 'Mock Knob',
+            isNullable: true,
+            value: false,
+          );
+
+          await tester.pumpKnob(
+            (context) => knob.buildFields(context),
+          );
+
+          final checkbox = tester.widget<Checkbox>(
+            find.byType(Checkbox),
+          );
+
+          expect(
+            checkbox.value,
+            true,
           );
         },
       );

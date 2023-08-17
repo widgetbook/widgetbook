@@ -10,8 +10,9 @@ import '../state/state.dart';
 abstract class Knob<T> extends FieldsComposable<T> {
   Knob({
     required this.label,
-    required this.value,
     this.description,
+    required this.value,
+    this.isNullable = false,
     @Deprecated(
       'This parameter is not used anymore. '
       'It defaults to [value == null] instead of [false]',
@@ -21,28 +22,28 @@ abstract class Knob<T> extends FieldsComposable<T> {
     this.isNull = value == null;
   }
 
-  /// This is the current value the knob is set to
-  T value;
-
-  /// This is a description the user can put on the knob
-  final String? description;
-
-  /// This is the label that's put above a knob
+  /// The label that's put above a knob.
   final String label;
 
-  bool isNull;
+  /// The Description of what the user can put on the knob.
+  final String? description;
 
-  bool get isNullable => null is T;
+  /// The current value the knob is set to.
+  T value;
+
+  final bool isNullable;
+
+  bool isNull;
 
   @override
   String get groupName => 'knobs';
 
   @override
   Widget buildFields(BuildContext context) {
-    return KnobProperty<T>(
+    return KnobProperty<T?>(
       name: label,
       description: description,
-      value: value,
+      value: isNull ? null : value,
       isNullable: isNullable,
       changedNullable: (isEnabled) {
         WidgetbookState.of(context).updateKnobNullability(

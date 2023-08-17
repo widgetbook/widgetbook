@@ -8,7 +8,7 @@ import '../list_knob.dart';
 import '../string_knob.dart';
 import 'double_knobs_builder.dart';
 
-typedef KnobAdded = T? Function<T>(Knob<T> knob);
+typedef KnobAdded = T? Function<T>(Knob<T?> knob);
 
 class KnobsBuilder {
   KnobsBuilder(
@@ -42,8 +42,8 @@ class KnobsBuilder {
     String? description,
     bool? initialValue = false,
   }) {
-    return onKnobAdded<bool?>(
-      BooleanOrNullKnob(
+    return onKnobAdded(
+      BooleanKnob.nullable(
         label: label,
         description: description,
         value: initialValue,
@@ -91,8 +91,8 @@ class KnobsBuilder {
     String? initialValue,
     int? maxLines = 1,
   }) {
-    return onKnobAdded<String?>(
-      StringOrNullKnob(
+    return onKnobAdded(
+      StringKnob.nullable(
         label: label,
         value: initialValue,
         description: description,
@@ -132,8 +132,8 @@ class KnobsBuilder {
     LabelBuilder<T?>? labelBuilder,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
-    return onKnobAdded<T?>(
-      ListOrNullKnob<T>(
+    return onKnobAdded(
+      ListKnob<T?>.nullable(
         label: label,
         value: initialOption ?? options.first,
         description: description,

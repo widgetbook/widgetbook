@@ -33,7 +33,7 @@ void main() {
   );
 
   group(
-    '$BooleanOrNullKnob',
+    '$BooleanKnob.nullable',
     () {
       testWidgets(
         'when field is updated, '

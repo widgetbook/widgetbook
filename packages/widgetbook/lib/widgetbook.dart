@@ -8,16 +8,11 @@ export 'src/integrations/integrations.dart';
 export 'src/knobs/knobs.dart'
     hide
         BooleanKnob,
-        BooleanOrNullKnob,
         ColorKnob,
         DoubleInputKnob,
-        DoubleOrNullInputKnob,
-        DoubleOrNullSliderKnob,
         DoubleSliderKnob,
         ListKnob,
-        ListOrNullKnob,
-        StringKnob,
-        StringOrNullKnob;
+        StringKnob;
 export 'src/navigation/nodes/nodes.dart';
 export 'src/state/state.dart' hide WidgetbookScope;
 export 'src/widgetbook.dart';
