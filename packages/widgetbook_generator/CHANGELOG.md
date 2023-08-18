@@ -1,4 +1,4 @@
-## Unreleased
+## 3.1.0
 
  - **REFACTOR**: Enforce `widgetbook` package minimum version (v3.2.0). ([#842](https://github.com/widgetbook/widgetbook/pull/842))
  - **REFACTOR**: Support `analyzer` v6.x. ([#841](https://github.com/widgetbook/widgetbook/pull/841))
