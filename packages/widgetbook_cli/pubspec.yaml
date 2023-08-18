@@ -5,6 +5,7 @@ homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campa
 repository: https://github.com/widgetbook/widgetbook
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
 documentation: https://docs.widgetbook.io
+topics: [widgetbook, storybook, ui, tool, cli]
 
 screenshots:
   - description: 'Widgetbook Logo'
