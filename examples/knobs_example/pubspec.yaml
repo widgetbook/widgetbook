@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+dev_dependencies: 
   widgetbook: ^3.1.0
 
 flutter:

@@ -34,16 +34,16 @@ There are two approaches to configuring Widgetbook:
 >
   <TabItem value="generator">
 
-To get started with the `widgetbook` you'll need the following production dependency:
+To get started with the `widgetbook_annotation` you'll need the following production dependency:
 
 ```bash
-flutter pub add widgetbook_annotation widgetbook
+flutter pub add widgetbook_annotation
 ```
 
-and the following dev dependencies:
+Then, add `widgetbook` and `widgetbook_generator` to dev dependencies. Notice that you need to also add `build_runner`.
 
 ```bash
-flutter pub add widgetbook_generator  build_runner --dev
+flutter pub add widgetbook_generator widgetbook build_runner --dev
 ```
 
 This will add a line like this to your package's pubspec.yaml (and run an implicit
@@ -52,9 +52,9 @@ This will add a line like this to your package's pubspec.yaml (and run an implic
 ```yaml
 dependencies:
   widgetbook_annotation: ^{{ versions.annotation }}
-  widgetbook: ^{{ versions.widgetbook }}
 
 dev_dependencies:
+  widgetbook: ^{{ versions.widgetbook }}
   widgetbook_generator: ^{{ versions.generator }}
   build_runner:
 ```
@@ -68,17 +68,17 @@ focus on what you do best - creating excellent code.
   </TabItem>
   <TabItem value="manual">
 
-To get started with the `widgetbook` you'll need the following production dependency:
+To get started with the `widgetbook` you'll need the following developer dependency:
 
 ```bash
-flutter pub add widgetbook
+flutter pub add widgetbook --dev
 ```
 
 This will add a line like this to your package's `pubspec.yaml` (and run an implicit
 `flutter pub get`):
 
 ```yaml
-dependencies:
+dev_dependencies:
   widgetbook: ^{{ versions.widgetbook }}
 ```
 
