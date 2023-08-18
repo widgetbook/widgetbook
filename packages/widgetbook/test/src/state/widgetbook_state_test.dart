@@ -31,6 +31,46 @@ void main() {
 
       test(
         'given a state, '
+        'when [updateQueryParam] is called with a reserved key, '
+        'then an $ArgumentError exception is thrown',
+        () {
+          final state = WidgetbookState(
+            queryParams: {},
+            root: WidgetbookRoot(
+              children: [],
+            ),
+          );
+
+          final reservedKey = AppRouteConfig.reservedKeys.first;
+
+          expect(
+            () => state.updateQueryParam(reservedKey, '*'),
+            throwsArgumentError,
+          );
+        },
+      );
+
+      test(
+        'given a state, '
+        'then the Uri has path as the first query parameter',
+        () {
+          final state = WidgetbookState(
+            path: 'component/use-case',
+            queryParams: {'foo': 'bar'},
+            root: WidgetbookRoot(
+              children: [],
+            ),
+          );
+
+          expect(
+            state.uri.toString(),
+            '/?path=component%2Fuse-case&foo=bar',
+          );
+        },
+      );
+
+      test(
+        'given a state, '
         'when the path is updated, '
         'then the knobs are cleared and removed from query params',
         () {

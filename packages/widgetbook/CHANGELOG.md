@@ -6,6 +6,7 @@
  - **REFACTOR**: Make `appBuilder` optional. ([#843](https://github.com/widgetbook/widgetbook/pull/843))
  - **REFACTOR**: Replace `MultiChildNavigationData` with `WidgetbookNode`. ([#833](https://github.com/widgetbook/widgetbook/pull/833))
  - **REFACTOR**: Deprecate `WidgetbookUseCase.center` in favor of [AlignmentAddon]. ([#826](https://github.com/widgetbook/widgetbook/pull/826))
+ - **FIX**: Make `path` the first query parameter. ([#855](https://github.com/widgetbook/widgetbook/pull/855))
  - **FIX**: Correct initial Checkbox value for null knobs. ([#851](https://github.com/widgetbook/widgetbook/pull/851))
  - **FIX**: Ensure widget is mounted on change. ([#814](https://github.com/widgetbook/widgetbook/pull/814))
  - **FIX**: Allow commas in `string` knobs. ([#817](https://github.com/widgetbook/widgetbook/pull/817))

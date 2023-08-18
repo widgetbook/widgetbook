@@ -6,15 +6,15 @@ void main() {
     '$AppRouteConfig',
     () {
       test(
-        'given a location, '
-        'then query parameters are parsed',
+        'given a uri, '
+        'then query parameters are parsed without reserved keys',
         () {
           final config = AppRouteConfig(
-            uri: Uri.parse('/?foo=bar&baz=qux'),
+            uri: Uri.parse('/?path=component-x&foo=bar&baz=qux'),
           );
 
           expect(
-            config.uri.queryParameters,
+            config.queryParams,
             {
               'foo': 'bar',
               'baz': 'qux',
@@ -24,7 +24,7 @@ void main() {
       );
 
       test(
-        'given a location, '
+        'given a uri, '
         'then path is extracted',
         () {
           final config = AppRouteConfig(
@@ -36,7 +36,7 @@ void main() {
       );
 
       test(
-        'given a location, '
+        'given a uri, '
         'then preview mode is extracted',
         () {
           final config = AppRouteConfig(
