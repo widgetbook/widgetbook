@@ -8,7 +8,7 @@ documentation: https://docs.widgetbook.io
 
 screenshots:
   - description: 'Widgetbook Logo'
-    path: assets/logo.png
+    path: assets/logo.webp
 
 environment:
   sdk: ">=2.17.0 <4.0.0"
