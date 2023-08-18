@@ -1,4 +1,4 @@
-## Unreleased
+## 3.2.0
 
  - **BREAKING**: `DeviceFrameAddon.devices` is no longer nullable, in favor of the new `NoneDevice`. ([#854](https://github.com/widgetbook/widgetbook/pull/854))
  - **REFACTOR**: Support Flutter 3.13.0. ([#847](https://github.com/widgetbook/widgetbook/pull/847))

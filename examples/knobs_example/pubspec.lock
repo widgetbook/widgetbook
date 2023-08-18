@@ -105,7 +105,7 @@ packages:
       path: "../../packages/widgetbook"
       relative: true
     source: path
-    version: "3.1.0"
+    version: "3.2.0"
 sdks:
   dart: ">=3.1.0-185.0.dev <4.0.0"
   flutter: ">=1.17.0"
