@@ -1,5 +1,6 @@
 ## Unreleased
 
+ - **BREAKING**: `DeviceFrameAddon.devices` is no longer nullable, in favor of the new `NoneDevice`. ([#854](https://github.com/widgetbook/widgetbook/pull/854))
  - **REFACTOR**: Support Flutter 3.13.0. ([#847](https://github.com/widgetbook/widgetbook/pull/847))
  - **REFACTOR**: Update `DropdownMenu` theme. ([#844](https://github.com/widgetbook/widgetbook/pull/844))
  - **REFACTOR**: Make `appBuilder` optional. ([#843](https://github.com/widgetbook/widgetbook/pull/843))

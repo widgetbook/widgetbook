@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import '../../fields/fields.dart';
 import '../common/common.dart';
 import 'device_frame_setting.dart';
+import 'none_device.dart';
 
 /// A [WidgetbookAddon] for changing the active device/frame. It's based on
 /// the [`device_frame`](https://pub.dev/packages/device_frame) package.
 class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
   DeviceFrameAddon({
-    required List<DeviceInfo?> devices,
+    required List<DeviceInfo> devices,
     DeviceInfo? initialDevice,
   })  : assert(
           devices.isNotEmpty,
@@ -19,24 +20,24 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
           initialDevice == null || devices.contains(initialDevice),
           'initialDevice must be in devices',
         ),
-        this.devices = [null, ...devices], // [null] represents a "none" device
+        this.devices = [NoneDevice.instance, ...devices],
         super(
           name: 'Device',
           initialSetting: DeviceFrameSetting(
-            device: initialDevice,
+            device: initialDevice ?? NoneDevice.instance,
           ),
         );
 
-  final List<DeviceInfo?> devices;
+  final List<DeviceInfo> devices;
 
   @override
   List<Field> get fields {
     return [
-      ListField<DeviceInfo?>(
+      ListField<DeviceInfo>(
         name: 'name',
         values: devices,
         initialValue: initialSetting.device,
-        labelBuilder: (device) => device?.name ?? 'None',
+        labelBuilder: (device) => device.name,
       ),
       ListField<Orientation>(
         name: 'orientation',
@@ -58,7 +59,7 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
   @override
   DeviceFrameSetting valueFromQueryGroup(Map<String, String> group) {
     return DeviceFrameSetting(
-      device: valueOf<DeviceInfo?>('name', group),
+      device: valueOf('name', group)!,
       orientation: valueOf('orientation', group)!,
       hasFrame: valueOf('frame', group)!,
     );
@@ -70,7 +71,7 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
     Widget child,
     DeviceFrameSetting setting,
   ) {
-    if (setting.device == null) {
+    if (setting.device is NoneDevice) {
       return child;
     }
 
@@ -78,7 +79,7 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
       padding: const EdgeInsets.all(32),
       child: DeviceFrame(
         orientation: setting.orientation,
-        device: setting.device!,
+        device: setting.device,
         isFrameVisible: setting.hasFrame,
         screen: setting.hasFrame
             ? child

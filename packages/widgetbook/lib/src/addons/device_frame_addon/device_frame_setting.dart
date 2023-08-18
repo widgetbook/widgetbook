@@ -8,7 +8,7 @@ class DeviceFrameSetting {
     this.hasFrame = true,
   });
 
-  final DeviceInfo? device;
+  final DeviceInfo device;
   final Orientation orientation;
   final bool hasFrame;
 }

@@ -37,12 +37,12 @@ void main() {
 
       test(
         'given a device frame setting, '
-        'when device is null, '
+        'when device is $NoneDevice, '
         'then [buildUseCase] returns child as-is',
         () {
           const child = Text('child');
           final setting = DeviceFrameSetting(
-            device: null,
+            device: NoneDevice.instance,
           );
 
           final result = addon.buildUseCase(
