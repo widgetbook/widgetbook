@@ -41,8 +41,8 @@ class WidgetbookState extends ChangeNotifier {
   /// A [Uri] representation of the current state.
   Uri get uri {
     final queryParameters = {
-      ...queryParams,
       if (path != null) 'path': path,
+      ...queryParams,
     };
 
     return Uri(
@@ -86,6 +86,12 @@ class WidgetbookState extends ChangeNotifier {
   /// Update the [name] query parameter with the given [value].
   @internal
   void updateQueryParam(String name, String value) {
+    if (AppRouteConfig.reservedKeys.contains(name)) {
+      throw ArgumentError(
+        'The query parameter $name is reserved and cannot be updated.',
+      );
+    }
+
     queryParams[name] = value;
     notifyListeners();
   }
@@ -146,12 +152,7 @@ class WidgetbookState extends ChangeNotifier {
   void updateFromRouteConfig(AppRouteConfig routeConfig) {
     path = routeConfig.path;
     previewMode = routeConfig.previewMode;
-    queryParams = {
-      // Copy from UnmodifiableMap
-      ...routeConfig.uri.queryParameters,
-    }
-      ..remove('path')
-      ..remove('preview');
+    queryParams = routeConfig.queryParams;
 
     notifyListeners();
   }
