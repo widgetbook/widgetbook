@@ -9,7 +9,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:yaml/yaml.dart';
 
 import '../extensions/element_extensions.dart';
-import '../models/widgetbook_use_case_data.dart';
+import '../models/use_case_metadata.dart';
 
 class UseCaseResolver extends GeneratorForAnnotation<UseCase> {
   final packagesMapResource = Resource<YamlMap>(
@@ -54,7 +54,7 @@ class UseCaseResolver extends GeneratorForAnnotation<UseCase> {
           '',
         );
 
-    final data = WidgetbookUseCaseData(
+    final metadata = UseCaseMetadata(
       name: element.name!,
       useCaseName: useCaseName,
       componentName: componentName,
@@ -68,7 +68,7 @@ class UseCaseResolver extends GeneratorForAnnotation<UseCase> {
 
     const encoder = JsonEncoder.withIndent('  ');
 
-    return encoder.convert(data.toJson());
+    return encoder.convert(metadata.toJson());
   }
 
   /// This method resolves the path of a local package by retrieving

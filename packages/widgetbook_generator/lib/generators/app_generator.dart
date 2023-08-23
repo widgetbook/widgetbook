@@ -11,8 +11,7 @@ import '../instances/instance.dart';
 import '../instances/list_instance.dart';
 import '../instances/widgetbook_folder_instance.dart';
 import '../instances/widgetbook_widget_instance.dart';
-import '../models/widgetbook_data.dart';
-import '../models/widgetbook_use_case_data.dart';
+import '../models/use_case_metadata.dart';
 import 'tree_service.dart';
 
 /// Generates the code for Widgetbook
@@ -26,10 +25,10 @@ class AppGenerator extends GeneratorForAnnotation<App> {
     ConstantReader annotation,
     BuildStep buildStep,
   ) async {
-    final useCases = await loadDataFromJson<WidgetbookUseCaseData>(
+    final useCases = await loadDataFromJson<UseCaseMetadata>(
       buildStep,
       '**.usecase.widgetbook.json',
-      WidgetbookUseCaseData.fromJson,
+      UseCaseMetadata.fromJson,
     );
 
     // The directory containing the `widgetbook.dart` file
@@ -68,7 +67,7 @@ class AppGenerator extends GeneratorForAnnotation<App> {
 
   /// Generates the directories of Widgetbook
   String generateDirectories(
-    List<WidgetbookUseCaseData> useCases,
+    List<UseCaseMetadata> useCases,
   ) {
     final directories = _generateDirectoriesInstances(useCases);
 
@@ -85,7 +84,7 @@ class AppGenerator extends GeneratorForAnnotation<App> {
   /// the code returned likely contains unneccesary imports
   /// but this implementation is simple in comparison to a complex approach
   String generateImports(
-    List<WidgetbookData> datas,
+    List<UseCaseMetadata> datas,
     String inputDir,
   ) {
     final set = <String>{
@@ -117,7 +116,7 @@ class AppGenerator extends GeneratorForAnnotation<App> {
   }
 
   List<Instance> _generateDirectoriesInstances(
-    List<WidgetbookUseCaseData> useCases,
+    List<UseCaseMetadata> useCases,
   ) {
     final service = TreeService();
 

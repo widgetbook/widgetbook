@@ -1,13 +1,17 @@
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 import 'generators/app_generator.dart';
 import 'generators/json_builder.dart';
 import 'generators/use_case_resolver.dart';
+import 'models/use_case_metadata.dart';
 
-/// Builder for the WidgetbookUseCase annotation.
-/// Creates a .usecase.widgetbook.json file for each .dart file containing a
-/// WidgetbookStory annotation
+/// Builder for the [UseCase] annotation.
+/// Creates a `.usecase.widgetbook.json` file for each `.dart` file containing
+/// the [UseCase] annotation. The file contains a list of [UseCaseMetadata]
+/// json objects representing the annotated elements. These files are used
+/// later on by other builders to generate more code.
 Builder useCaseBuilder(BuilderOptions options) {
   return JsonLibraryBuilder(
     UseCaseResolver(),
@@ -22,7 +26,7 @@ Builder useCaseBuilder(BuilderOptions options) {
   );
 }
 
-/// Builder for the WidgetbookApp annotation.
+/// Builder for the [App] annotation.
 /// Creates exactly one .g.dart file next to the file containing
 /// the [App] annotation.
 Builder appBuilder(BuilderOptions options) {

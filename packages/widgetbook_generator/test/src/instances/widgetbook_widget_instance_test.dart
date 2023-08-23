@@ -3,7 +3,7 @@ import 'package:widgetbook_generator/instances/list_instance.dart';
 import 'package:widgetbook_generator/instances/property.dart';
 import 'package:widgetbook_generator/instances/widgetbook_use_case_instance.dart';
 import 'package:widgetbook_generator/instances/widgetbook_widget_instance.dart';
-import 'package:widgetbook_generator/models/widgetbook_use_case_data.dart';
+import 'package:widgetbook_generator/models/use_case_metadata.dart';
 
 import 'instance_helper.dart';
 
@@ -16,7 +16,7 @@ void main() {
       final instance = WidgetbookComponentInstance(
         name: widgetName,
         stories: [
-          WidgetbookUseCaseData(
+          UseCaseMetadata(
             designLink: null,
             name: 'story1',
             importStatement: '',
@@ -27,7 +27,7 @@ void main() {
             useCaseDefinitionPath: 'a',
             componentDefinitionPath: 'a',
           ),
-          WidgetbookUseCaseData(
+          UseCaseMetadata(
             designLink: null,
             name: 'story2',
             importStatement: '',

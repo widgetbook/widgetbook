@@ -1,10 +1,11 @@
-import 'widgetbook_data.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-class WidgetbookUseCaseData extends WidgetbookData {
-  WidgetbookUseCaseData({
-    required super.name,
-    required super.importStatement,
-    required super.dependencies,
+/// Contains metadata about elements annotated with [UseCase].
+class UseCaseMetadata {
+  UseCaseMetadata({
+    required this.name,
+    required this.importStatement,
+    required this.dependencies,
     required this.useCaseName,
     required this.componentName,
     required this.componentImportStatement,
@@ -13,8 +14,8 @@ class WidgetbookUseCaseData extends WidgetbookData {
     required this.designLink,
   });
 
-  factory WidgetbookUseCaseData.fromJson(Map<String, dynamic> json) {
-    return WidgetbookUseCaseData(
+  factory UseCaseMetadata.fromJson(Map<String, dynamic> json) {
+    return UseCaseMetadata(
       name: json['name'] as String,
       importStatement: json['importStatement'] as String,
       dependencies: (json['dependencies'] as List<dynamic>)
@@ -28,6 +29,16 @@ class WidgetbookUseCaseData extends WidgetbookData {
       designLink: json['designLink'] as String?,
     );
   }
+
+  /// The name of the annotated element
+  final String name;
+
+  /// The import statement necessary to reference this type or function in the
+  /// final output file
+  final String importStatement;
+
+  /// The import statements defined by the file in which the annotation is used.
+  final List<String> dependencies;
 
   /// Name of the use-case, e.g. 'Default'
   final String useCaseName;
@@ -48,7 +59,6 @@ class WidgetbookUseCaseData extends WidgetbookData {
   /// The link to a design file or design component
   final String? designLink;
 
-  @override
   Map<String, dynamic> toJson() {
     return {
       'name': name,

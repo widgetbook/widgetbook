@@ -2,14 +2,14 @@ import 'dart:collection';
 
 import 'package:meta/meta.dart';
 
-import '../models/widgetbook_use_case_data.dart';
+import '../models/use_case_metadata.dart';
 
 class Widget {
   Widget(this.name);
 
   final String name;
 
-  List<WidgetbookUseCaseData> stories = <WidgetbookUseCaseData>[];
+  List<UseCaseMetadata> stories = <UseCaseMetadata>[];
 }
 
 @immutable
@@ -57,7 +57,7 @@ class TreeService {
 
   void addStoryToFolder(
     Folder? folder,
-    WidgetbookUseCaseData useCase,
+    UseCaseMetadata useCase,
   ) {
     final widgetName = useCase.componentName;
     final folderOrRoot = folder ?? rootFolder;
