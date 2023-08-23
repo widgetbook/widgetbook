@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:analyzer/dart/element/element.dart';
@@ -8,7 +9,6 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:yaml/yaml.dart';
 
 import '../extensions/element_extensions.dart';
-import '../extensions/json_list_formatter.dart';
 import '../models/widgetbook_use_case_data.dart';
 
 class UseCaseResolver extends GeneratorForAnnotation<UseCase> {
@@ -66,7 +66,9 @@ class UseCaseResolver extends GeneratorForAnnotation<UseCase> {
       designLink: designLink,
     );
 
-    return [data].toJson();
+    const encoder = JsonEncoder.withIndent('  ');
+
+    return encoder.convert(data.toJson());
   }
 
   /// This method resolves the path of a local package by retrieving
