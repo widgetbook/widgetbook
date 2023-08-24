@@ -11,7 +11,7 @@ import 'package:yaml/yaml.dart';
 import '../extensions/element_extensions.dart';
 import '../models/use_case_metadata.dart';
 
-class UseCaseResolver extends GeneratorForAnnotation<UseCase> {
+class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
   final packagesMapResource = Resource<YamlMap>(
     () async {
       final lockFile = await File('pubspec.lock').readAsString();

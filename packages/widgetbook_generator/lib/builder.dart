@@ -4,7 +4,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 import 'generators/app_generator.dart';
 import 'generators/json_builder.dart';
-import 'generators/use_case_resolver.dart';
+import 'generators/use_case_generator.dart';
 import 'models/use_case_metadata.dart';
 
 /// Builder for the [UseCase] annotation.
@@ -14,7 +14,7 @@ import 'models/use_case_metadata.dart';
 /// later on by other builders to generate more code.
 Builder useCaseBuilder(BuilderOptions options) {
   return JsonLibraryBuilder(
-    UseCaseResolver(),
+    UseCaseGenerator(),
     generatedExtension: '.usecase.widgetbook.json',
     formatOutput: (input) {
       // [GeneratorForAnnotation] joins the JSON objects by two newlines,
