@@ -13,7 +13,7 @@ import 'models/use_case_metadata.dart';
 /// json objects representing the annotated elements. These files are used
 /// later on by other builders to generate more code.
 Builder useCaseBuilder(BuilderOptions options) {
-  return JsonLibraryBuilder(
+  return JsonBuilder(
     UseCaseGenerator(),
     generatedExtension: '.usecase.widgetbook.json',
     formatOutput: (input) {
