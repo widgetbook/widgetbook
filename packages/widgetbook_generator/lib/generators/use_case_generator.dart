@@ -8,7 +8,6 @@ import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:yaml/yaml.dart';
 
-import '../extensions/element_extensions.dart';
 import '../models/element_metadata.dart';
 import '../models/use_case_metadata.dart';
 
@@ -47,6 +46,9 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
         // if no type parameter is specified.
         .replaceAll('<dynamic>', '');
 
+    final useCaseUri = resolveElementUri(element);
+    final componentUri = resolveElementUri(type.element!);
+
     final useCasePath = await resolveElementPath(element, buildStep);
     final componentPath = await resolveElementPath(type.element!, buildStep);
 
@@ -54,11 +56,11 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
       functionName: element.name!,
       designLink: designLink,
       name: name,
-      importUri: element.importStatement,
+      importUri: useCaseUri,
       filePath: useCasePath,
       component: ElementMetadata(
         name: componentName,
-        importUri: type.element!.importStatement,
+        importUri: componentUri,
         filePath: componentPath,
       ),
     );
@@ -68,9 +70,15 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     return encoder.convert(metadata.toJson());
   }
 
-  /// This method resolves the path of a local package by retrieving
-  /// the path from the `pubspec.lock` file because its name might not
-  /// match its path.
+  /// Resolves the URI of an [element] by retrieving the URI from
+  /// the [element]'s source.
+  String resolveElementUri(Element element) {
+    final source = element.librarySource ?? element.source!;
+    return source.uri.toString();
+  }
+
+  /// Resolves the path of a local package by retrieving the path from
+  /// the `pubspec.lock` file in case its name might not match its path.
   ///
   /// Example:
   /// A package with the name "shared_package" could be located in
