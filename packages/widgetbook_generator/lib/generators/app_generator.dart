@@ -84,35 +84,18 @@ class AppGenerator extends GeneratorForAnnotation<App> {
   /// the code returned likely contains unneccesary imports
   /// but this implementation is simple in comparison to a complex approach
   String generateImports(
-    List<UseCaseMetadata> datas,
+    List<UseCaseMetadata> useCases,
     String inputDir,
   ) {
     final set = <String>{
       'package:widgetbook/widgetbook.dart',
+      ...useCases.map((useCase) => useCase.importUriRelative(inputDir)),
     };
 
-    set.addAll(datas.map((data) => data.importStatement));
-
-    final imports = set.map((importPath) {
-      final uri = Uri.parse(importPath);
-
-      // If the file is outside the `lib` directory, then the uri will be an
-      // "asset:" uri. In this case, we need to convert it to a relative path,
-      // relative to the directory that contains the `widgetbook.dart` file.
-      if (uri.scheme == 'asset') {
-        final relativePath = path.relative(
-          uri.path,
-          from: inputDir,
-        );
-
-        return "import '$relativePath';";
-      }
-
-      return "import '$importPath';";
-    }).toList()
+    final statements = set.map((uri) => "import '$uri';").toList()
       ..sort((a, b) => a.compareTo(b));
 
-    return imports.join('\n');
+    return statements.join('\n');
   }
 
   List<Instance> _generateDirectoriesInstances(
@@ -121,8 +104,10 @@ class AppGenerator extends GeneratorForAnnotation<App> {
     final service = TreeService();
 
     for (final useCase in useCases) {
-      final folder =
-          service.addFolderByImport(useCase.componentImportStatement);
+      final folder = service.addFolderByImport(
+        useCase.component.importUri,
+      );
+
       service.addStoryToFolder(folder, useCase);
     }
 

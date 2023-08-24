@@ -3,6 +3,7 @@ import 'package:widgetbook_generator/instances/list_instance.dart';
 import 'package:widgetbook_generator/instances/property.dart';
 import 'package:widgetbook_generator/instances/widgetbook_use_case_instance.dart';
 import 'package:widgetbook_generator/instances/widgetbook_widget_instance.dart';
+import 'package:widgetbook_generator/models/element_metadata.dart';
 import 'package:widgetbook_generator/models/use_case_metadata.dart';
 
 import 'instance_helper.dart';
@@ -18,23 +19,27 @@ void main() {
         stories: [
           UseCaseMetadata(
             designLink: null,
-            name: 'story1',
-            importStatement: '',
-            componentImportStatement: '',
-            useCaseName: 'Story1',
-            componentName: widgetName,
-            useCaseDefinitionPath: 'a',
-            componentDefinitionPath: 'a',
+            functionName: 'story1',
+            name: 'Story1',
+            importUri: '',
+            filePath: 'a',
+            component: ElementMetadata(
+              name: widgetName,
+              importUri: '',
+              filePath: 'a',
+            ),
           ),
           UseCaseMetadata(
             designLink: null,
-            name: 'story2',
-            importStatement: '',
-            componentImportStatement: '',
-            useCaseName: 'Story2',
-            componentName: widgetName,
-            useCaseDefinitionPath: 'a',
-            componentDefinitionPath: 'a',
+            functionName: 'story2',
+            name: 'Story2',
+            importUri: '',
+            filePath: 'a',
+            component: ElementMetadata(
+              name: widgetName,
+              importUri: '',
+              filePath: 'a',
+            ),
           ),
         ],
       );

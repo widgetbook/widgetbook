@@ -59,7 +59,7 @@ class TreeService {
     Folder? folder,
     UseCaseMetadata useCase,
   ) {
-    final widgetName = useCase.componentName;
+    final widgetName = useCase.component.name;
     final folderOrRoot = folder ?? rootFolder;
 
     final widgets = folderOrRoot.widgets;

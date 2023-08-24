@@ -9,6 +9,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:yaml/yaml.dart';
 
 import '../extensions/element_extensions.dart';
+import '../models/element_metadata.dart';
 import '../models/use_case_metadata.dart';
 
 class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
@@ -50,14 +51,16 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     final componentPath = await resolveElementPath(type.element!, buildStep);
 
     final metadata = UseCaseMetadata(
-      name: element.name!,
-      useCaseName: name,
-      importStatement: element.importStatement,
-      useCaseDefinitionPath: useCasePath,
-      componentName: componentName,
-      componentImportStatement: type.element!.importStatement,
-      componentDefinitionPath: componentPath,
+      functionName: element.name!,
       designLink: designLink,
+      name: name,
+      importUri: element.importStatement,
+      filePath: useCasePath,
+      component: ElementMetadata(
+        name: componentName,
+        importUri: type.element!.importStatement,
+        filePath: componentPath,
+      ),
     );
 
     const encoder = JsonEncoder.withIndent('  ');
