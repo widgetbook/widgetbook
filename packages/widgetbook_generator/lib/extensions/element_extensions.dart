@@ -8,11 +8,4 @@ extension ElementExtensions on Element {
 
     return source.uri.toString();
   }
-
-  /// Extracts the import statements of a file
-  List<String> get dependencies {
-    return library!.importedLibraries
-        .map((lib) => lib.location.toString())
-        .toList();
-  }
 }

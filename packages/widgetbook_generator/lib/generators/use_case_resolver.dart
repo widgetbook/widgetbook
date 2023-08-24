@@ -34,35 +34,29 @@ class UseCaseResolver extends GeneratorForAnnotation<UseCase> {
       );
     }
 
-    final useCaseName = annotation.read('name').stringValue;
-    final typeElement = annotation.read('type').typeValue.element!;
-    final designLinkReader = annotation.read('designLink');
-    String? designLink;
-    if (!designLinkReader.isNull) {
-      designLink = designLinkReader.stringValue;
-    }
+    final name = annotation.read('name').stringValue;
+    final type = annotation.read('type').typeValue;
+    final designLink = !annotation.read('designLink').isNull
+        ? annotation.read('designLink').stringValue
+        : null;
 
-    final typeValue = annotation.read('type').typeValue;
-    final componentName = typeValue
-        .getDisplayString(
-          withNullability: false,
-        )
+    final componentName = type
+        .getDisplayString(withNullability: false)
         // Generic widgets shouldn't have a "<dynamic>" suffix
         // if no type parameter is specified.
-        .replaceAll(
-          '<dynamic>',
-          '',
-        );
+        .replaceAll('<dynamic>', '');
+
+    final useCasePath = await resolveElementPath(element, buildStep);
+    final componentPath = await resolveElementPath(type.element!, buildStep);
 
     final metadata = UseCaseMetadata(
       name: element.name!,
-      useCaseName: useCaseName,
-      componentName: componentName,
+      useCaseName: name,
       importStatement: element.importStatement,
-      componentImportStatement: typeElement.importStatement,
-      dependencies: typeElement.dependencies,
-      componentDefinitionPath: await resolveElementPath(typeElement, buildStep),
-      useCaseDefinitionPath: await resolveElementPath(element, buildStep),
+      useCaseDefinitionPath: useCasePath,
+      componentName: componentName,
+      componentImportStatement: type.element!.importStatement,
+      componentDefinitionPath: componentPath,
       designLink: designLink,
     );
 
