@@ -17,7 +17,6 @@ class UseCaseData with _$UseCaseData {
     required String importStatement,
     // Import statement of the component
     required String componentImportStatement,
-    required List<String> dependencies,
     // The path to the file containing the component
     required String componentDefinitionPath,
     // The path to the file containing the use-case definition
