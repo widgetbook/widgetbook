@@ -39,6 +39,10 @@ class UseCaseMetadata extends ElementMetadata {
   }
 
   Map<String, dynamic> toJson() {
+    // Currently the JSON representation does NOT match the class structure
+    // because the keys are read by `widgetbook_cli` and sent to the server.
+    // Changing the keys would be a breaking change if user does not update
+    // the CLI to the latest version.
     return {
       'name': functionName,
       'designLink': designLink,
