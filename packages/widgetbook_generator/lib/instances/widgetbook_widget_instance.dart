@@ -1,4 +1,4 @@
-import '../models/widgetbook_use_case_data.dart';
+import '../models/use_case_metadata.dart';
 import 'instance.dart';
 import 'list_instance.dart';
 import 'property.dart';
@@ -9,7 +9,7 @@ class WidgetbookComponentInstance extends Instance {
   /// Creates a new instance of [WidgetbookComponentInstance]
   WidgetbookComponentInstance({
     required String name,
-    required List<WidgetbookUseCaseData> stories,
+    required List<UseCaseMetadata> stories,
     bool isExpanded = false,
   }) : super(
           name: 'WidgetbookComponent',
@@ -21,8 +21,8 @@ class WidgetbookComponentInstance extends Instance {
                 instances: stories
                     .map(
                       (useCase) => WidgetbookUseCaseInstance(
-                        useCaseName: useCase.useCaseName,
-                        functionName: useCase.name,
+                        useCaseName: useCase.name,
+                        functionName: useCase.functionName,
                       ),
                     )
                     .toList(),

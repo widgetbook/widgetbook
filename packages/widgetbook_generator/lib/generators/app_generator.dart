@@ -11,8 +11,7 @@ import '../instances/instance.dart';
 import '../instances/list_instance.dart';
 import '../instances/widgetbook_folder_instance.dart';
 import '../instances/widgetbook_widget_instance.dart';
-import '../models/widgetbook_data.dart';
-import '../models/widgetbook_use_case_data.dart';
+import '../models/use_case_metadata.dart';
 import 'tree_service.dart';
 
 /// Generates the code for Widgetbook
@@ -26,10 +25,10 @@ class AppGenerator extends GeneratorForAnnotation<App> {
     ConstantReader annotation,
     BuildStep buildStep,
   ) async {
-    final useCases = await loadDataFromJson<WidgetbookUseCaseData>(
+    final useCases = await loadDataFromJson<UseCaseMetadata>(
       buildStep,
       '**.usecase.widgetbook.json',
-      WidgetbookUseCaseData.fromJson,
+      UseCaseMetadata.fromJson,
     );
 
     // The directory containing the `widgetbook.dart` file
@@ -68,7 +67,7 @@ class AppGenerator extends GeneratorForAnnotation<App> {
 
   /// Generates the directories of Widgetbook
   String generateDirectories(
-    List<WidgetbookUseCaseData> useCases,
+    List<UseCaseMetadata> useCases,
   ) {
     final directories = _generateDirectoriesInstances(useCases);
 
@@ -85,45 +84,30 @@ class AppGenerator extends GeneratorForAnnotation<App> {
   /// the code returned likely contains unneccesary imports
   /// but this implementation is simple in comparison to a complex approach
   String generateImports(
-    List<WidgetbookData> datas,
+    List<UseCaseMetadata> useCases,
     String inputDir,
   ) {
     final set = <String>{
       'package:widgetbook/widgetbook.dart',
+      ...useCases.map((useCase) => useCase.importUriRelative(inputDir)),
     };
 
-    set.addAll(datas.map((data) => data.importStatement));
-
-    final imports = set.map((importPath) {
-      final uri = Uri.parse(importPath);
-
-      // If the file is outside the `lib` directory, then the uri will be an
-      // "asset:" uri. In this case, we need to convert it to a relative path,
-      // relative to the directory that contains the `widgetbook.dart` file.
-      if (uri.scheme == 'asset') {
-        final relativePath = path.relative(
-          uri.path,
-          from: inputDir,
-        );
-
-        return "import '$relativePath';";
-      }
-
-      return "import '$importPath';";
-    }).toList()
+    final statements = set.map((uri) => "import '$uri';").toList()
       ..sort((a, b) => a.compareTo(b));
 
-    return imports.join('\n');
+    return statements.join('\n');
   }
 
   List<Instance> _generateDirectoriesInstances(
-    List<WidgetbookUseCaseData> useCases,
+    List<UseCaseMetadata> useCases,
   ) {
     final service = TreeService();
 
     for (final useCase in useCases) {
-      final folder =
-          service.addFolderByImport(useCase.componentImportStatement);
+      final folder = service.addFolderByImport(
+        useCase.component.importUri,
+      );
+
       service.addStoryToFolder(folder, useCase);
     }
 

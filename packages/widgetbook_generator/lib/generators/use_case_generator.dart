@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:analyzer/dart/element/element.dart';
@@ -7,11 +8,10 @@ import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:yaml/yaml.dart';
 
-import '../extensions/element_extensions.dart';
-import '../extensions/json_list_formatter.dart';
-import '../models/widgetbook_use_case_data.dart';
+import '../models/element_metadata.dart';
+import '../models/use_case_metadata.dart';
 
-class UseCaseResolver extends GeneratorForAnnotation<UseCase> {
+class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
   final packagesMapResource = Resource<YamlMap>(
     () async {
       final lockFile = await File('pubspec.lock').readAsString();
@@ -34,44 +34,51 @@ class UseCaseResolver extends GeneratorForAnnotation<UseCase> {
       );
     }
 
-    final useCaseName = annotation.read('name').stringValue;
-    final typeElement = annotation.read('type').typeValue.element!;
-    final designLinkReader = annotation.read('designLink');
-    String? designLink;
-    if (!designLinkReader.isNull) {
-      designLink = designLinkReader.stringValue;
-    }
+    final name = annotation.read('name').stringValue;
+    final type = annotation.read('type').typeValue;
+    final designLink = !annotation.read('designLink').isNull
+        ? annotation.read('designLink').stringValue
+        : null;
 
-    final typeValue = annotation.read('type').typeValue;
-    final componentName = typeValue
-        .getDisplayString(
-          withNullability: false,
-        )
+    final componentName = type
+        .getDisplayString(withNullability: false)
         // Generic widgets shouldn't have a "<dynamic>" suffix
         // if no type parameter is specified.
-        .replaceAll(
-          '<dynamic>',
-          '',
-        );
+        .replaceAll('<dynamic>', '');
 
-    final data = WidgetbookUseCaseData(
-      name: element.name!,
-      useCaseName: useCaseName,
-      componentName: componentName,
-      importStatement: element.importStatement,
-      componentImportStatement: typeElement.importStatement,
-      dependencies: typeElement.dependencies,
-      componentDefinitionPath: await resolveElementPath(typeElement, buildStep),
-      useCaseDefinitionPath: await resolveElementPath(element, buildStep),
+    final useCaseUri = resolveElementUri(element);
+    final componentUri = resolveElementUri(type.element!);
+
+    final useCasePath = await resolveElementPath(element, buildStep);
+    final componentPath = await resolveElementPath(type.element!, buildStep);
+
+    final metadata = UseCaseMetadata(
+      functionName: element.name!,
       designLink: designLink,
+      name: name,
+      importUri: useCaseUri,
+      filePath: useCasePath,
+      component: ElementMetadata(
+        name: componentName,
+        importUri: componentUri,
+        filePath: componentPath,
+      ),
     );
 
-    return [data].toJson();
+    const encoder = JsonEncoder.withIndent('  ');
+
+    return encoder.convert(metadata.toJson());
   }
 
-  /// This method resolves the path of a local package by retrieving
-  /// the path from the `pubspec.lock` file because its name might not
-  /// match its path.
+  /// Resolves the URI of an [element] by retrieving the URI from
+  /// the [element]'s source.
+  String resolveElementUri(Element element) {
+    final source = element.librarySource ?? element.source!;
+    return source.uri.toString();
+  }
+
+  /// Resolves the path of a local package by retrieving the path from
+  /// the `pubspec.lock` file in case its name might not match its path.
   ///
   /// Example:
   /// A package with the name "shared_package" could be located in
