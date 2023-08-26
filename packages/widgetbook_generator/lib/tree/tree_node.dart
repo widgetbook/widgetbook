@@ -2,10 +2,7 @@ import 'dart:collection';
 
 import 'package:meta/meta.dart';
 
-import '../instances/instance.dart';
-import '../instances/widgetbook_component_instance.dart';
-import '../instances/widgetbook_folder_instance.dart';
-import '../models/use_case_metadata.dart';
+import '../code/widgetbook_instance.dart';
 
 typedef KeyResolver<T> = String Function(T data);
 
@@ -18,10 +15,6 @@ class TreeNode<T> {
 
   final T data;
   Map<String, TreeNode> children;
-
-  List<Instance> get instances => children.values //
-      .map((child) => child.toInstance())
-      .toList();
 
   /// Uses [toString] on [data]
   static String defaultKeyResolver(dynamic data) {
@@ -41,22 +34,9 @@ class TreeNode<T> {
     ) as TreeNode<TData>;
   }
 
-  Instance toInstance() {
-    final isComponentNode = children.isNotEmpty &&
-        children.values.every(
-          (child) => child is TreeNode<UseCaseMetadata>,
-        );
-
-    return isComponentNode
-        ? WidgetbookComponentInstance(
-            name: data as String,
-            useCases: children.values
-                .map((child) => child.data)
-                .whereType<UseCaseMetadata>()
-                .toList(),
-          )
-        : WidgetbookFolderInstance(
-            node: this as TreeNode<String>,
-          );
+  List<WidgetbookInstance> getInstances(String baseDir) {
+    return children.values
+        .map((child) => WidgetbookInstance.fromNode(child, baseDir))
+        .toList();
   }
 }

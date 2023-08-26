@@ -2,13 +2,15 @@ import 'dart:convert';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
+import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 import 'package:glob/glob.dart';
 import 'package:path/path.dart' as path;
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-import '../instances/list_instance.dart';
+import '../code/refer.dart';
+import '../code/widgetbook_instance.dart';
 import '../models/use_case_metadata.dart';
 import '../tree/tree.dart';
 
@@ -30,24 +32,16 @@ class AppGenerator extends GeneratorForAnnotation<App> {
     final inputPath = element.librarySource!.fullName;
     final inputDir = path.dirname(inputPath).substring(1);
 
-    final importUris = {
-      'package:widgetbook/widgetbook.dart',
-      ...useCases.map(
-        (useCase) => useCase.importUriRelative(inputDir),
-      ),
-    };
-
     final root = Tree.build(useCases);
-    final dirInstance = ListInstance(
-      type: 'WidgetbookNode',
-      instances: root.instances,
+    final library = buildLibrary(
+      root.getInstances(inputDir),
     );
 
-    return '''
-      ${importUris.map((uri) => "import '$uri';").join('\n')}
+    final emitter = DartEmitter(
+      allocator: Allocator(),
+    );
 
-      final directories = ${dirInstance.toCode()};
-    ''';
+    return library.accept(emitter).toString();
   }
 
   Future<List<UseCaseMetadata>> readUseCases(
@@ -64,5 +58,23 @@ class AppGenerator extends GeneratorForAnnotation<App> {
     return assets.flattened //
         .map(UseCaseMetadata.fromJson)
         .toList();
+  }
+
+  Library buildLibrary(
+    List<WidgetbookInstance> instances,
+  ) {
+    final variable = declareFinal('directories');
+    final nodesValue = literalList(
+      instances,
+      referWidgetbook('WidgetbookNode'),
+    );
+
+    return Library(
+      (b) {
+        b.body.add(
+          variable.assign(nodesValue).statement,
+        );
+      },
+    );
   }
 }
