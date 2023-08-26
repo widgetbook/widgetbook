@@ -2,9 +2,8 @@ import 'instance.dart';
 import 'lambda_instance.dart';
 import 'property.dart';
 
-/// An instance for WidgetbookUseCase
+/// An instance for [WidgetbookUseCase]
 class WidgetbookUseCaseInstance extends Instance {
-  /// Creates a new instance of [WidgetbookUseCaseInstance]
   WidgetbookUseCaseInstance({
     required String useCaseName,
     required String functionName,
@@ -19,9 +18,7 @@ class WidgetbookUseCaseInstance extends Instance {
               key: 'builder',
               instance: LambdaInstance(
                 name: functionName,
-                parameters: const [
-                  'context',
-                ],
+                parameters: const ['context'],
               ),
             ),
           ],

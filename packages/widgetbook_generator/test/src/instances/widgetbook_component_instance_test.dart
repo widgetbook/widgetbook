@@ -1,8 +1,8 @@
 import 'package:test/test.dart';
 import 'package:widgetbook_generator/instances/list_instance.dart';
 import 'package:widgetbook_generator/instances/property.dart';
+import 'package:widgetbook_generator/instances/widgetbook_component_instance.dart';
 import 'package:widgetbook_generator/instances/widgetbook_use_case_instance.dart';
-import 'package:widgetbook_generator/instances/widgetbook_widget_instance.dart';
 import 'package:widgetbook_generator/models/element_metadata.dart';
 import 'package:widgetbook_generator/models/use_case_metadata.dart';
 
@@ -16,7 +16,7 @@ void main() {
 
       final instance = WidgetbookComponentInstance(
         name: widgetName,
-        stories: [
+        useCases: [
           UseCaseMetadata(
             designLink: null,
             functionName: 'story1',
