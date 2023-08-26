@@ -10,6 +10,7 @@ import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 import '../code/refer.dart';
+import '../code/resolver_allocator.dart';
 import '../code/widgetbook_instance.dart';
 import '../models/use_case_metadata.dart';
 import '../tree/tree.dart';
@@ -25,21 +26,19 @@ class AppGenerator extends GeneratorForAnnotation<App> {
     ConstantReader annotation,
     BuildStep buildStep,
   ) async {
-    final useCases = await readUseCases(buildStep);
-
     // The directory containing the `widgetbook.dart` file
     // without the leading `/`
     final inputPath = element.librarySource!.fullName;
     final inputDir = path.dirname(inputPath).substring(1);
 
-    final root = Tree.build(useCases);
-    final library = buildLibrary(
-      root.getInstances(inputDir),
+    final emitter = DartEmitter(
+      allocator: ResolverAllocator(inputDir),
+      orderDirectives: true,
     );
 
-    final emitter = DartEmitter(
-      allocator: Allocator(),
-    );
+    final useCases = await readUseCases(buildStep);
+    final root = Tree.build(useCases);
+    final library = buildLibrary(root.instances);
 
     return library.accept(emitter).toString();
   }

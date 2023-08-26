@@ -11,21 +11,16 @@ class WidgetbookInstance extends InvokeExpression {
   WidgetbookInstance({
     required String type,
     required Map<String, Expression> args,
-    required String baseDir,
   }) : super.newOf(
           referWidgetbook(type),
           [],
           args,
         );
 
-  factory WidgetbookInstance.fromNode(
-    TreeNode node,
-    String baseDir,
-  ) {
+  factory WidgetbookInstance.fromNode(TreeNode node) {
     if (node.data is UseCaseMetadata) {
       return WidgetbookUseCaseInstance(
         useCase: node.data as UseCaseMetadata,
-        baseDir: baseDir,
       );
     }
 
@@ -38,11 +33,9 @@ class WidgetbookInstance extends InvokeExpression {
     return isComponentNode
         ? WidgetbookComponentInstance(
             node: node as TreeNode<String>,
-            baseDir: baseDir,
           )
         : WidgetbookFolderInstance(
             node: node as TreeNode<String>,
-            baseDir: baseDir,
           );
   }
 }

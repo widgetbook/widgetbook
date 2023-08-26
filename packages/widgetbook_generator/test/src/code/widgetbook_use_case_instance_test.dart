@@ -9,7 +9,6 @@ void main() {
     test('single use case', () {
       final actual = WidgetbookUseCaseInstance(
         useCase: MockUseCaseMetadata(),
-        baseDir: '/',
       );
 
       expectExpression(

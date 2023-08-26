@@ -16,6 +16,12 @@ class TreeNode<T> {
   final T data;
   Map<String, TreeNode> children;
 
+  List<WidgetbookInstance> get instances {
+    return children.values //
+        .map(WidgetbookInstance.fromNode)
+        .toList();
+  }
+
   /// Uses [toString] on [data]
   static String defaultKeyResolver(dynamic data) {
     return data.toString();
@@ -32,11 +38,5 @@ class TreeNode<T> {
       key,
       () => TreeNode<TData>(data),
     ) as TreeNode<TData>;
-  }
-
-  List<WidgetbookInstance> getInstances(String baseDir) {
-    return children.values
-        .map((child) => WidgetbookInstance.fromNode(child, baseDir))
-        .toList();
   }
 }

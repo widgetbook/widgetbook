@@ -11,7 +11,6 @@ void main() {
     test('empty children', () {
       final actual = WidgetbookFolderInstance(
         node: TreeNode<String>('folder'),
-        baseDir: '/',
       );
 
       expectExpression(
@@ -26,18 +25,16 @@ void main() {
     });
 
     test('with children', () {
-      final useCase = MockUseCaseMetadata();
-      final root = TreeNode<String>('root', {
-        'Folder1': TreeNode<String>('Folder1'),
-        'Folder2': TreeNode<String>('Folder2'),
-        'Component': TreeNode<String>('Component', {
-          'Default': TreeNode<UseCaseMetadata>(useCase),
-        }),
-      });
-
       final actual = WidgetbookFolderInstance(
-        node: root,
-        baseDir: '/',
+        node: TreeNode<String>('root', {
+          'Folder1': TreeNode<String>('Folder1'),
+          'Folder2': TreeNode<String>('Folder2'),
+          'Component': TreeNode<String>('Component', {
+            'Default': TreeNode<UseCaseMetadata>(
+              MockUseCaseMetadata(),
+            ),
+          }),
+        }),
       );
 
       expectExpression(
