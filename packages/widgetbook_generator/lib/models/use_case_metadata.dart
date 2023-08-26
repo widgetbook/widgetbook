@@ -4,7 +4,7 @@ import 'element_metadata.dart';
 
 /// Contains metadata about elements annotated with [UseCase].
 class UseCaseMetadata extends ElementMetadata {
-  UseCaseMetadata({
+  const UseCaseMetadata({
     required this.functionName,
     required this.designLink,
     required super.name,

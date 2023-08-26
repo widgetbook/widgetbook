@@ -1,25 +1,7 @@
 import 'package:test/test.dart';
-import 'package:widgetbook_generator/models/element_metadata.dart';
-import 'package:widgetbook_generator/models/use_case_metadata.dart';
 import 'package:widgetbook_generator/tree/tree.dart';
 
-UseCaseMetadata createUseCase({
-  required String uri,
-  required String name,
-}) {
-  return UseCaseMetadata(
-    designLink: null,
-    importUri: '',
-    filePath: '',
-    functionName: '',
-    name: 'Default',
-    component: ElementMetadata(
-      name: name,
-      importUri: uri,
-      filePath: '',
-    ),
-  );
-}
+import '../../helpers/mock_use_case_metadata.dart';
 
 void main() {
   group('$Tree', () {
@@ -40,19 +22,16 @@ void main() {
     });
 
     test('[build] creates the correct tree', () {
-      final components = {
-        'Alpha': 'package:foo/widgets/alpha/alpha.dart',
-        'Beta': 'package:foo/widgets/beta/beta.dart',
-      };
-
-      final useCases = components.entries
-          .map(
-            (entry) => createUseCase(
-              name: entry.key,
-              uri: entry.value,
-            ),
-          )
-          .toList();
+      final useCases = [
+        MockUseCaseMetadata(
+          componentName: 'Alpha',
+          componentImportUri: 'package:foo/widgets/alpha/alpha.dart',
+        ),
+        MockUseCaseMetadata(
+          componentName: 'Beta',
+          componentImportUri: 'package:foo/widgets/beta/beta.dart',
+        ),
+      ];
 
       final root = Tree.build(useCases);
 
