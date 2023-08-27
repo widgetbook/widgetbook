@@ -7,13 +7,12 @@ import 'widgetbook_instance.dart';
 class WidgetbookFolderInstance extends WidgetbookInstance {
   WidgetbookFolderInstance({
     required TreeNode<String> node,
-    required super.baseDir,
   }) : super(
           type: 'WidgetbookFolder',
           args: {
             'name': literalString(node.data),
             'children': literalList(
-              node.getInstances(baseDir),
+              node.instances,
             ),
           },
         );

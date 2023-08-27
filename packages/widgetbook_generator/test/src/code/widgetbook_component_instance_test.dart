@@ -11,7 +11,6 @@ void main() {
     test('empty use cases', () {
       final actual = WidgetbookComponentInstance(
         node: TreeNode<String>('Component'),
-        baseDir: '/',
       );
 
       expectExpression(
@@ -26,13 +25,12 @@ void main() {
     });
 
     test('with use cases', () {
-      final useCase = MockUseCaseMetadata();
       final actual = WidgetbookComponentInstance(
-        node: TreeNode<String>(
-          'Component',
-          {'Default': TreeNode<UseCaseMetadata>(useCase)},
-        ),
-        baseDir: '/',
+        node: TreeNode<String>('Component', {
+          'Default': TreeNode<UseCaseMetadata>(
+            MockUseCaseMetadata(),
+          ),
+        }),
       );
 
       expectExpression(

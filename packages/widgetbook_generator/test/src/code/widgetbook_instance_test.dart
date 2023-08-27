@@ -12,8 +12,9 @@ void main() {
   group('$WidgetbookInstance', () {
     test('fromNode (UseCase)', () {
       final actual = WidgetbookInstance.fromNode(
-        TreeNode<UseCaseMetadata>(MockUseCaseMetadata()),
-        '/',
+        TreeNode<UseCaseMetadata>(
+          MockUseCaseMetadata(),
+        ),
       );
 
       expect(
@@ -24,11 +25,11 @@ void main() {
 
     test('fromNode (Component)', () {
       final actual = WidgetbookInstance.fromNode(
-        TreeNode<String>(
-          'Component',
-          {'Default': TreeNode<UseCaseMetadata>(MockUseCaseMetadata())},
-        ),
-        '/',
+        TreeNode<String>('Component', {
+          'Default': TreeNode<UseCaseMetadata>(
+            MockUseCaseMetadata(),
+          ),
+        }),
       );
 
       expect(
@@ -39,11 +40,9 @@ void main() {
 
     test('fromNode (Folder)', () {
       final actual = WidgetbookInstance.fromNode(
-        TreeNode<String>(
-          'Folder',
-          {'Component': TreeNode<String>('Component')},
-        ),
-        '/',
+        TreeNode<String>('Folder', {
+          'Component': TreeNode<String>('Component'),
+        }),
       );
 
       expect(
@@ -55,7 +54,6 @@ void main() {
     test('fromNode (Empty Folder)', () {
       final actual = WidgetbookInstance.fromNode(
         TreeNode<String>('Folder'),
-        '/',
       );
 
       expect(
