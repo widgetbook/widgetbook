@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
 import '../code/widgetbook_instance.dart';
@@ -14,11 +15,12 @@ class TreeNode<T> {
   ]) : children = HashMap.from(children);
 
   final T data;
-  Map<String, TreeNode> children;
+  final Map<String, TreeNode> children;
 
   List<WidgetbookInstance> get instances {
-    return children.values //
-        .map(WidgetbookInstance.fromNode)
+    return children.entries
+        .sortedBy((entry) => entry.key)
+        .map((entry) => WidgetbookInstance.fromNode(entry.value))
         .toList();
   }
 
