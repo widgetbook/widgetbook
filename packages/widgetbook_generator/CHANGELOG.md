@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FIX**: Sort generated nodes. ([#871](https://github.com/widgetbook/widgetbook/pull/871))
+- **FIX**: Apply imports prefixing. ([#872](https://github.com/widgetbook/widgetbook/pull/872))
 
 ## 3.1.0
 

@@ -1,7 +1,8 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:path/path.dart' as path;
 
-/// Converts 'asset:' import URIs to relative paths, relative to [baseDir].
+/// Converts 'asset:' import URIs to relative paths, relative to [baseDir],
+/// then delegates all imports to [Allocator.simplePrefixing].
 ///
 /// The 'asset:' URIs happen when a file is located outside the
 /// `lib` directory, for example in the `test` directory.
@@ -9,7 +10,7 @@ class ResolverAllocator implements Allocator {
   ResolverAllocator(this.baseDir);
 
   final String baseDir;
-  final _allocator = Allocator();
+  final _allocator = Allocator.simplePrefixing();
 
   @override
   String allocate(Reference reference) {
@@ -20,6 +21,7 @@ class ResolverAllocator implements Allocator {
   Iterable<Directive> get imports => _allocator.imports.map(
         (directive) => Directive.import(
           convertToRelative(directive.url, baseDir),
+          as: directive.as,
         ),
       );
 
