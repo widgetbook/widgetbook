@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Sort generated nodes. ([#871](https://github.com/widgetbook/widgetbook/pull/871))
+
 ## 3.1.0
 
  - **REFACTOR**: Enforce `widgetbook` package minimum version (v3.2.0). ([#842](https://github.com/widgetbook/widgetbook/pull/842))

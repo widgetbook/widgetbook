@@ -43,14 +43,6 @@ void main() {
           WidgetbookFolder(
             name: 'root',
             children: [
-              WidgetbookFolder(
-                name: 'Folder1',
-                children: [],
-              ),
-              WidgetbookFolder(
-                name: 'Folder2',
-                children: [],
-              ),
               WidgetbookComponent(
                 name: 'Component',
                 useCases: [
@@ -59,6 +51,14 @@ void main() {
                     builder: defaultUseCase,
                   )
                 ],
+              ),
+              WidgetbookFolder(
+                name: 'Folder1',
+                children: [],
+              ),
+              WidgetbookFolder(
+                name: 'Folder2',
+                children: [],
               ),
             ],
           )
