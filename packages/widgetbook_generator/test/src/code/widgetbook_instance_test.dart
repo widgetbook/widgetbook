@@ -1,10 +1,5 @@
 import 'package:test/test.dart';
-import 'package:widgetbook_generator/code/widgetbook_component_instance.dart';
-import 'package:widgetbook_generator/code/widgetbook_folder_instance.dart';
-import 'package:widgetbook_generator/code/widgetbook_instance.dart';
-import 'package:widgetbook_generator/code/widgetbook_use_case_instance.dart';
-import 'package:widgetbook_generator/models/use_case_metadata.dart';
-import 'package:widgetbook_generator/tree/tree_node.dart';
+import 'package:widgetbook_generator/widgetbook_generator.dart';
 
 import '../../helpers/mock_use_case_metadata.dart';
 

@@ -2,10 +2,10 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-import 'generators/app_generator.dart';
-import 'generators/json_builder.dart';
-import 'generators/use_case_generator.dart';
-import 'models/use_case_metadata.dart';
+import 'src/generators/app_generator.dart';
+import 'src/generators/json_builder.dart';
+import 'src/generators/use_case_generator.dart';
+import 'widgetbook_generator.dart';
 
 /// Builder for the [UseCase] annotation.
 /// Creates a `.usecase.widgetbook.json` file for each `.dart` file containing
