@@ -379,6 +379,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  resizable_widget:
+    dependency: transitive
+    description:
+      name: resizable_widget
+      sha256: db2919754b93f386b9b3fb15e9f48f6c9d6d41f00a24397629133c99df86606a
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   shelf:
     dependency: transitive
     description:
@@ -507,31 +515,27 @@ packages:
   widgetbook:
     dependency: "direct main"
     description:
-      path: "../../packages/widgetbook"
-      relative: true
-    source: path
-    version: "3.0.0-rc.1"
+      name: widgetbook
+      sha256: e2b6bbec0b7805037cb58937200461d0c19fcfdd50dc21fc3ceb558f2489a710
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.0"
   widgetbook_annotation:
     dependency: "direct main"
     description:
-      path: "../../packages/widgetbook_annotation"
-      relative: true
-    source: path
-    version: "3.0.0-rc.1"
-  widgetbook_core:
-    dependency: "direct overridden"
-    description:
-      path: "../../packages/widgetbook_core"
-      relative: true
-    source: path
-    version: "3.0.0-rc.1"
+      name: widgetbook_annotation
+      sha256: f6376e539ed2aab245ff876790e2fd8fa3b63faedc67b5bd61bfd1eb23bb998e
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   widgetbook_generator:
     dependency: "direct dev"
     description:
-      path: "../../packages/widgetbook_generator"
-      relative: true
-    source: path
-    version: "3.0.0-rc.1"
+      name: widgetbook_generator
+      sha256: bb6cec0c1b897ca8b4767ba0214c637470ebe8c8a0a543f8a76de9e2fdbd5869
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
   yaml:
     dependency: transitive
     description:

@@ -13,6 +13,7 @@ environment:
 dependencies:
   collection: ^1.15.0
   device_frame: ^1.1.0
+  flutter_platform_widgets: ^3.3.5
   flutter:
     sdk: flutter
   meta: ^1.8.0
