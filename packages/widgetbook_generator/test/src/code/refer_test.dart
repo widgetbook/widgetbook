@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:widgetbook_generator/code/refer.dart';
+import 'package:widgetbook_generator/widgetbook_generator.dart';
 
 void main() {
   test('referWidgetbook', () {

@@ -1,6 +1,6 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:test/test.dart';
-import 'package:widgetbook_generator/code/resolver_allocator.dart';
+import 'package:widgetbook_generator/widgetbook_generator.dart';
 
 void main() {
   group('$ResolverAllocator', () {

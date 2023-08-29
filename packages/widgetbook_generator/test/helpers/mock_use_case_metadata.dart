@@ -1,5 +1,4 @@
-import 'package:widgetbook_generator/models/element_metadata.dart';
-import 'package:widgetbook_generator/models/use_case_metadata.dart';
+import 'package:widgetbook_generator/widgetbook_generator.dart';
 
 /// A simple [UseCaseMetadata] that has default value for all fields.
 class MockUseCaseMetadata extends UseCaseMetadata {

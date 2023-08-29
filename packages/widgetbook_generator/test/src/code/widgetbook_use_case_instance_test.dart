@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:widgetbook_generator/code/widgetbook_use_case_instance.dart';
+import 'package:widgetbook_generator/widgetbook_generator.dart';
 
 import '../../helpers/code.dart';
 import '../../helpers/mock_use_case_metadata.dart';
