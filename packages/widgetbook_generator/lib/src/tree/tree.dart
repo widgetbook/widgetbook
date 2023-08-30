@@ -1,6 +1,7 @@
 import 'package:path/path.dart' as path;
 
 import '../models/use_case_metadata.dart';
+import 'duplicate_use_cases_error.dart';
 import 'tree_node.dart';
 
 class Tree {
@@ -40,6 +41,10 @@ class Tree {
 
       final componentName = useCase.component.name;
       final componentNode = currentNode.add(componentName);
+
+      if (componentNode.children.containsKey(useCase.name)) {
+        throw DuplicateUseCasesError(componentNode, useCase);
+      }
 
       componentNode.add<UseCaseMetadata>(
         useCase,
