@@ -1,0 +1,266 @@
+# Efficiently Using Widgetbook in a Monorepo Setting
+
+In the diverse Flutter ecosystem, it's commonplace for projects to segregate
+their UI components into distinct packages. Although these UI component packages
+are pivotal, they seldom form a standalone desktop application. A common hurdle
+for developers arises when wanting to leverage Widgetbook for these packages.
+
+This document shows a streamlined approach to seamlessly integrate Widgetbook
+within a monorepo structure. The doc considers a tool-agnostic approach where
+you can take any part of it and integrate it into your monorepo structure and
+use any tool that you are comfortable with.
+
+## A Primer on Monorepo Structure
+
+To commence, we present an elementary monorepo framework for a Flutter project
+which can serve as a foundation.
+
+### 1. Unpacking the Monorepo Blueprint
+
+Here's an ideal monorepo configuration tailored for Widgetbook:
+
+- **apps**: Houses independent applications.
+- **packages**: Stores shared Dart/Flutter modules.
+- **widgetbook_playground**: Incorporates the Widgetbook configurations and
+  previews.
+- **docs**: Maintains documentation pertinent across diverse projects.
+
+```bash
+/monorepo_example
+  /docs
+  /apps
+    /main_app
+      /lib
+    /admin_app
+      /lib
+  /packages
+    /shared_ui
+      /lib
+    /shared_models
+      /lib
+  /widgetbook_playground
+    /lib
+```
+
+An alternative structure situates the `widgetbook_playground` within the `apps`
+directory. This organization depends on the developer's preference.
+
+However, isolating `widgetbook_playground` from apps implies its unique purpose
+— a platform designed exclusively to refine UI development.
+
+```bash
+/monorepo_example
+  /docs
+  /apps
+    /main_app
+      /lib
+    /admin_app
+      /lib
+  /widgetbook_playground
+    /lib
+  /packages
+    /shared_ui
+      /lib
+    /shared_models
+      /lib
+```
+
+### 2. Orchestrating Dependencies
+
+Every package or application's `pubspec.yaml` should specify dependencies, which
+allows referencing between packages.
+
+For instance, within `main_app`, `widgetbook_playground`, or `admin_app`, the
+`shared_ui` can be referenced as:
+
+```yaml
+dependencies:
+  shared_ui:
+    path: ../../packages/shared_ui
+```
+
+For clarity, the complete `pubspec.yaml` of the `widgetbook` directory is
+illustrated below:
+
+```yaml
+name: widgetbook_playground
+description: A playground to streamline shared_ui with Widgetbook
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  shared_ui:
+    path: ../packages/shared_ui
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+flutter:
+  uses-material-design: true
+```
+
+This configuration facilitates the sharing of `shared_ui` across multiple
+projects, optimizing it further with Widgetbook during the development phase.
+
+### 3. Creating a Widget
+
+For a hands-on experience, let's formulate a custom button within `shared_ui`:
+
+```dart
+import 'package:flutter/material.dart';
+
+class CustomButton extends StatelessWidget {
+  const CustomButton({
+    super.key,
+    required this.text,
+    required this.onPressed,
+    this.color = Colors.blue,
+    this.textColor = Colors.white,
+    this.borderRadius = 8.0,
+  });
+
+  final String text;
+  final VoidCallback onPressed;
+  final Color color;
+  final Color textColor;
+  final double borderRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: textColor,
+        backgroundColor: color,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(borderRadius),
+        ),
+      ),
+      onPressed: onPressed,
+      child: Text(text),
+    );
+  }
+}
+```
+
+### 4. Configuring Widgetbook
+
+Within the `widgetbook_playground` directory, update the `pubspec.yaml` to
+include the requisite `dependency` and `dev_dependencies`, ensuring you
+incorporate `shared_ui`:
+
+```bash
+dependencies:
+  flutter:
+    sdk: flutter
+  widgetbook_annotation: ^{{ versions.annotation }}
+  widgetbook: ^{{ versions.widgetbook }}
+  shared_ui:
+    path: ../../packages/shared_ui
+
+dev_dependencies:
+  widgetbook_generator: ^{{ versions.generator }}
+  build_runner:
+```
+
+### 5. Showcasing Widget Previews
+
+Go into `widgetbook_playground/lib` to commence drafting use cases and embarking
+on other widgetbook-focused assignments.
+
+For our earlier defined `CustomButton` within the `shared_ui` library, we can
+craft two distinct use cases:
+
+```dart
+
+// lib/custom_button.dart <- File name
+
+import 'package:flutter/material.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+import 'package:shared_ui/shared_ui.dart';
+
+@widgetbook.UseCase(
+  name: 'with green color',
+  type: CustomButton,
+)
+Widget greenContainerUseCase(BuildContext context) {
+  return Center(
+    child: CustomButton(
+      text: 'Text',
+      onPressed: () {},
+      color: Colors.green,
+    ),
+  );
+}
+
+@widgetbook.UseCase(
+  name: 'with red color',
+  type: CustomButton,
+)
+Widget redContainerUseCase(BuildContext context) {
+  return Center(
+    child: CustomButton(
+      text: 'Text',
+      onPressed: () {},
+      color: Colors.red,
+    ),
+  );
+}
+```
+
+To render your widgets, create an app within the `main.dart` file:
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+import 'main.directories.g.dart';
+
+void main() {
+  runApp(const WidgetbookApp());
+}
+
+@widgetbook.App()
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook.material(
+      // Use the generated directories variable
+      directories: directories,
+      addons: [],
+    );
+  }
+}
+```
+
+### 6. Launching Widgetbook
+
+Navigate to the `widgetbook_playground` directory and run:
+
+```bash
+flutter pub run build_runner watch
+```
+
+This command initiates the generator in real-time. Subsequently, execute:
+
+```bash
+flutter run
+```
+
+<Info>
+	See [source
+	code](https://github.com/widgetbook/widgetbook/tree/main/examples/monorepo_example/)
+</Info>
+
+This will showcase the `CustomButton` widget in the Widgetbook environment.
+
+<Video autoPlay muted src="/assets/monorepo-example.mp4" type="video/mp4" />
+
+Awesome, this was just the beginning, now you can start building upon this
+approach.

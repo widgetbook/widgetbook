@@ -1,0 +1,1 @@
+# Monorepo example for Widgetbook
