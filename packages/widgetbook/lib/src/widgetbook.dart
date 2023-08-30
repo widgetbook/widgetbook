@@ -127,6 +127,7 @@ class _WidgetbookState extends State<Widgetbook> {
     return WidgetbookScope(
       state: state,
       child: MaterialApp.router(
+        title: 'Widgetbook',
         theme: Themes.dark,
         routerConfig: router,
         debugShowCheckedModeBanner: false,
