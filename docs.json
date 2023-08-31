@@ -64,8 +64,9 @@
         ["3. Device Frame Addon", "/addons/device-frame-addon"],
         ["4. Localization Addon", "/addons/localization-addon"],
         ["5. Text Scale Addon", "/addons/text-scale-addon"],
-        ["5. Alignment Addon", "/addons/alignment-addon"],
-        ["6. Custom Addon", "/addons/custom-addon"]
+        ["6. Alignment Addon", "/addons/alignment-addon"],
+        ["7. Custom Addon", "/addons/use-case-builder-addon"],
+        ["8. Custom Addon", "/addons/custom-addon"]
       ]
     ],
     [
