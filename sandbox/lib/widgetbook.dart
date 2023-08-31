@@ -49,6 +49,18 @@ class WidgetbookApp extends StatelessWidget {
             DefaultMaterialLocalizations.delegate,
           ],
         ),
+        UseCaseBuilderAddon(
+          name: 'Bounds',
+          isEnabled: false,
+          builder: (context, child) => Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.white,
+              ),
+            ),
+            child: child,
+          ),
+        ),
       ],
     );
   }

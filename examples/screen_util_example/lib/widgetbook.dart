@@ -26,6 +26,20 @@ class WidgetbookApp extends StatelessWidget {
             Devices.ios.iPhone13,
           ],
         ),
+        UseCaseBuilderAddon(
+          name: 'ScreenUtil',
+          builder: (context, child) {
+            return ScreenUtilInit(
+              designSize: const Size(375, 812),
+              minTextAdapt: true,
+              splitScreenMode: true,
+              // This is needed to use the workbench [MediaQuery]
+              useInheritedMediaQuery: true,
+              builder: (context, child) => child!,
+              child: child,
+            );
+          },
+        ),
       ],
       directories: [
         WidgetbookComponent(
@@ -46,36 +60,14 @@ class WidgetbookApp extends StatelessWidget {
               name: 'Default',
               builder: (context) {
                 return const ResponsiveImage(
-                  url:
-                      'https://images.nintendolife.com/bb503ef1f79ff/ash-and-pikachu.original.jpg',
+                  url: 'https://images.nintendolife.com/bb503ef1f79ff/'
+                      'ash-and-pikachu.original.jpg',
                 );
               },
             ),
           ],
         ),
       ],
-
-      /// Customize your appBuilder function so the [ScreenUtilInit] widget is
-      /// injected into the [Widget] tree.
-      ///
-      /// For more context on how to create the app builder see
-      /// [materialAppBuilder] or have a look at the documentation.
-      appBuilder: (context, child) {
-        return ScreenUtilInit(
-          designSize: const Size(375, 812),
-          minTextAdapt: true,
-          splitScreenMode: true,
-          // This is needed to use the workbench [MediaQuery]
-          useInheritedMediaQuery: true,
-          builder: (context, child) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              home: child,
-            );
-          },
-          child: child,
-        );
-      },
     );
   }
 }
