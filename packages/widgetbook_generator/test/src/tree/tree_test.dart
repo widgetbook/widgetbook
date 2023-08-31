@@ -55,5 +55,25 @@ void main() {
         equals(['Beta']),
       );
     });
+
+    test('[build] throws exception if duplicates exist', () {
+      expect(
+        () => Tree.build([
+          MockUseCaseMetadata(),
+          MockUseCaseMetadata(),
+        ]),
+        throwsA(isA<DuplicateUseCasesError>()),
+      );
+    });
+
+    test('[build] returns normally for unique use-cases', () {
+      expect(
+        () => Tree.build([
+          MockUseCaseMetadata(name: 'UseCase 1'),
+          MockUseCaseMetadata(name: 'UseCase 2'),
+        ]),
+        returnsNormally,
+      );
+    });
   });
 }
