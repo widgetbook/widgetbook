@@ -10,7 +10,6 @@ class KnobProperty<T> extends StatefulWidget {
     required this.value,
     required this.child,
     this.isNullable = false,
-    this.trailing,
     this.changedNullable,
   });
 
@@ -20,7 +19,6 @@ class KnobProperty<T> extends StatefulWidget {
   final bool isNullable;
 
   final Widget child;
-  final Widget? trailing;
   final void Function(bool isNull)? changedNullable;
 
   @override
@@ -38,28 +36,16 @@ class _KnobPropertyState<T> extends State<KnobProperty<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final trailingWidget = widget.trailing;
     return Setting(
       name: widget.name,
       description: widget.description,
-      trailing: trailingWidget != null || widget.isNullable
-          ? Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (trailingWidget != null) trailingWidget,
-                if (trailingWidget != null && widget.isNullable)
-                  const SizedBox(
-                    width: 8,
-                  ),
-                if (widget.isNullable)
-                  Checkbox(
-                    value: !isNull,
-                    onChanged: (value) {
-                      setState(() => isNull = !value!);
-                      widget.changedNullable?.call(value!);
-                    },
-                  ),
-              ],
+      trailing: widget.isNullable
+          ? Checkbox(
+              value: !isNull,
+              onChanged: (value) {
+                setState(() => isNull = !value!);
+                widget.changedNullable?.call(value!);
+              },
             )
           : null,
       child: widget.child,
