@@ -1,5 +1,5 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/settings/settings.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
@@ -48,7 +48,7 @@ void main() {
         'given a state that has no field value, '
         'then [toWidget] builds the initial value',
         (tester) async {
-          final widget = await tester.pumpField<int, DropdownSetting<int>>(
+          final widget = await tester.pumpField<int, DropdownMenu<int>>(
             field,
             null,
           );
@@ -61,7 +61,7 @@ void main() {
         'given a state that has a field value, '
         'then [toWidget] builds that value',
         (tester) async {
-          final widget = await tester.pumpField<int, DropdownSetting<int>>(
+          final widget = await tester.pumpField<int, DropdownMenu<int>>(
             field,
             2,
           );
