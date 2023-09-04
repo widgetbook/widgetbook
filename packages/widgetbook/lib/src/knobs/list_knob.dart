@@ -32,7 +32,7 @@ class ListKnob<T> extends Knob<T?> {
         name: label,
         values: options,
         initialValue: value,
-        labelBuilder: labelBuilder,
+        labelBuilder: labelBuilder ?? ListField.defaultLabelBuilder,
         onChanged: (context, value) {
           if (value == null) return;
           WidgetbookState.of(context).updateKnobValue<T>(label, value);
