@@ -25,10 +25,6 @@ class ListKnob<T> extends Knob<T?> {
   final List<T> options;
   final LabelBuilder<T>? labelBuilder;
 
-  // Force non-nullable behavior
-  @override
-  bool get isNullable => false;
-
   @override
   List<Field> get fields {
     return [
