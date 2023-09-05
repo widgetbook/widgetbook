@@ -32,7 +32,7 @@ class RangeKnob extends Knob<RangeValues> {
             final state = WidgetbookState.of(context);
             final endValue = (state.knobs[label]!.value as RangeValues).end;
 
-            state.updateKnobValue<RangeValues>(
+            state.knobs.updateValue<RangeValues>(
               label,
               RangeValues(value, endValue),
             );
@@ -47,7 +47,7 @@ class RangeKnob extends Knob<RangeValues> {
             final state = WidgetbookState.of(context);
             final startValue = (state.knobs[label]!.value as RangeValues).start;
 
-            state.updateKnobValue<RangeValues>(
+            state.knobs.updateValue<RangeValues>(
               label,
               RangeValues(startValue, value),
             );

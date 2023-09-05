@@ -46,10 +46,10 @@ abstract class Knob<T> extends FieldsComposable<T> {
       value: isNull ? null : value,
       isNullable: isNullable,
       changedNullable: (isEnabled) {
-        WidgetbookState.of(context).updateKnobNullability(
-          label,
-          !isEnabled,
-        );
+        WidgetbookState.of(context).knobs.updateNullability(
+              label,
+              !isEnabled,
+            );
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

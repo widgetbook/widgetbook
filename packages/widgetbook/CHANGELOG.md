@@ -1,6 +1,8 @@
 ## Unreleased
 
 - **FEAT**: Add Use-case Builder Addon. ([#880](https://github.com/widgetbook/widgetbook/pull/880))
+- **REFACTOR**: Change `WidgetbookState.knobs` type from `Map<String, Knob>` to `KnobsRegistry`. ([#885](https://github.com/widgetbook/widgetbook/pull/885))
+- **REFACTOR**: Deprecate `WidgetbookState.updateKnobValue` in favor of `WidgetbookState.knobs.updateValue`. ([#885](https://github.com/widgetbook/widgetbook/pull/885))
 
 ## 3.2.0
 

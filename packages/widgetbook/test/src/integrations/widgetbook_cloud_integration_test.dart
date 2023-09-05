@@ -66,6 +66,7 @@ void main() {
         'then knobs data is sent',
         () {
           final state = MockWidgetbookState();
+          final registry = MockKnobsRegistry();
           final knobs = {
             'key': StringKnob(
               label: 'description',
@@ -73,7 +74,8 @@ void main() {
             ),
           };
 
-          when(() => state.knobs).thenReturn(knobs);
+          when(() => registry.values).thenReturn(knobs.values);
+          when(() => state.knobs).thenReturn(registry);
 
           final integration = MockCloudIntegration();
           integration.onKnobsRegistered(state);
