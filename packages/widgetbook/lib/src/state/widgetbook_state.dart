@@ -3,9 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
 import '../addons/addons.dart';
-import '../fields/fields.dart';
 import '../integrations/widgetbook_integration.dart';
-import '../knobs/knob.dart';
+import '../knobs/knobs.dart';
 import '../navigation/navigation.dart';
 import '../routing/routing.dart';
 import 'default_app_builders.dart';
@@ -22,13 +21,25 @@ class WidgetbookState extends ChangeNotifier {
     this.addons,
     this.integrations,
     required this.root,
-  }) : this.knobs = {};
+  }) {
+    this.knobs = KnobsRegistry(
+      onLock: () {
+        integrations?.forEach(
+          (integration) => integration.onKnobsRegistered(this),
+        );
+      },
+    );
+
+    knobs.addListener(
+      notifyListeners,
+    );
+  }
 
   String? path;
   bool previewMode;
   Map<String, String> queryParams;
 
-  final Map<String, Knob> knobs;
+  late final KnobsRegistry knobs;
   final AppBuilder appBuilder;
   final List<WidgetbookAddon>? addons;
   final List<WidgetbookIntegration>? integrations;
@@ -101,47 +112,18 @@ class WidgetbookState extends ChangeNotifier {
   @internal
   void updatePath(String newPath) {
     path = newPath;
-    knobs.clear(); // Reset Knobs
+
+    // Reset Knobs
+    knobs.clear();
     queryParams.remove('knobs');
+
     notifyListeners();
   }
 
   /// Updates [Knob.value] using the [label] to find the [Knob].
+  @Deprecated('Use [knobs.updateValue] instead.')
   void updateKnobValue<T>(String label, T value) {
-    knobs[label]!.value = value;
-    notifyListeners();
-  }
-
-  /// Updates [Knob.isNull] using the [label] to find the [Knob].
-  @internal
-  void updateKnobNullability(String label, bool isNull) {
-    knobs[label]!.isNull = isNull;
-    notifyListeners();
-  }
-
-  @internal
-  T? registerKnob<T>(Knob<T?> knob) {
-    final cachedKnob = knobs.putIfAbsent(
-      knob.label,
-      () => knob,
-    );
-
-    // Return `null` even if the knob has value, but it was marked as null
-    // using [updateKnobNullability].
-    if (cachedKnob.isNullable && cachedKnob.isNull) return null;
-
-    final knobsQueryGroup = FieldCodec.decodeQueryGroup(queryParams['knobs']);
-
-    return knob.valueFromQueryGroup(knobsQueryGroup);
-  }
-
-  @internal
-  void notifyKnobsReady() {
-    notifyListeners();
-
-    integrations?.forEach(
-      (integration) => integration.onKnobsRegistered(this),
-    );
+    knobs.updateValue<T>(label, value);
   }
 
   /// Update the current state using [AppRouteConfig] to update

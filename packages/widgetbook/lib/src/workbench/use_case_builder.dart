@@ -23,7 +23,7 @@ class _UseCaseBuilderState extends State<UseCaseBuilder> {
     // to rebuild the use case with all registered knobs
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        WidgetbookState.of(context).notifyKnobsReady();
+        WidgetbookState.of(context).knobs.lock();
       }
     });
   }

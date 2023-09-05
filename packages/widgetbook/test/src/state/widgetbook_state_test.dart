@@ -105,7 +105,10 @@ void main() {
             ),
           );
 
-          final result = state.registerKnob(knob);
+          final result = state.knobs.register(
+            knob,
+            state.queryParams,
+          );
 
           expect(result, knob.value);
         },
@@ -128,11 +131,14 @@ void main() {
             ),
           );
 
-          state
-            ..registerKnob(knob)
-            ..updateKnobNullability(knob.label, true);
+          state.knobs
+            ..register(knob, state.queryParams)
+            ..updateNullability(knob.label, true);
 
-          final result = state.registerKnob(knob);
+          final result = state.knobs.register(
+            knob,
+            state.queryParams,
+          );
 
           expect(result, isNull);
         },
@@ -156,9 +162,9 @@ void main() {
           );
 
           const newValue = 'Book of Widgets';
-          state
-            ..registerKnob(knob)
-            ..updateKnobValue(knob.label, newValue);
+          state.knobs
+            ..register(knob, state.queryParams)
+            ..updateValue(knob.label, newValue);
 
           final result = state.knobs[knob.label]!.value;
 
