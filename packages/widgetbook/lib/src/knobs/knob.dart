@@ -40,12 +40,12 @@ abstract class Knob<T> extends FieldsComposable<T> {
 
   @override
   Widget buildFields(BuildContext context) {
-    return KnobProperty<T?>(
+    return NullableSetting(
       name: label,
       description: description,
-      value: isNull ? null : value,
+      isNull: isNull,
       isNullable: isNullable,
-      changedNullable: (isEnabled) {
+      onChangedNullable: (isEnabled) {
         WidgetbookState.of(context).knobs.updateNullability(
               label,
               !isEnabled,
