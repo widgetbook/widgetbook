@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
 import '../addons/addons.dart';
+import '../fields/fields.dart';
 import '../integrations/widgetbook_integration.dart';
 import '../knobs/knobs.dart';
 import '../navigation/navigation.dart';
@@ -105,6 +106,27 @@ class WidgetbookState extends ChangeNotifier {
 
     queryParams[name] = value;
     notifyListeners();
+  }
+
+  /// Update the field withing the query [group] with the given [value].
+  void updateQueryField({
+    required String group,
+    required String field,
+    required String value,
+  }) {
+    final groupMap = FieldCodec.decodeQueryGroup(queryParams[group]);
+
+    final newGroupMap = Map<String, String>.from(groupMap)
+      ..update(
+        field,
+        (_) => value,
+        ifAbsent: () => value,
+      );
+
+    updateQueryParam(
+      group,
+      FieldCodec.encodeQueryGroup(newGroupMap),
+    );
   }
 
   /// Update the [path], causing a new [useCase] to bet returned.
