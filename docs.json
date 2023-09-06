@@ -65,8 +65,9 @@
         ["4. Localization Addon", "/addons/localization-addon"],
         ["5. Text Scale Addon", "/addons/text-scale-addon"],
         ["6. Alignment Addon", "/addons/alignment-addon"],
-        ["7. Use-case Builder Addon", "/addons/use-case-builder-addon"],
-        ["8. Custom Addon", "/addons/custom-addon"]
+        ["7. Time Dilation Addon", "/addons/time-dilation-addon"],
+        ["8. Use-case Builder Addon", "/addons/use-case-builder-addon"],
+        ["9. Custom Addon", "/addons/custom-addon"]
       ]
     ],
     [
