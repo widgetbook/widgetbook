@@ -31,7 +31,34 @@ void main() {
 
       test(
         'given a state, '
-        'when [updateQueryParam] is called with a reserved key, '
+        'when [updateQueryField] is called, '
+        'then only the field within the group is updated',
+        () {
+          final state = WidgetbookState(
+            queryParams: {
+              'knobs': '{foo:bar,qux:baz}',
+            },
+            root: WidgetbookRoot(
+              children: [],
+            ),
+          );
+
+          state.updateQueryField(
+            group: 'knobs',
+            field: 'qux',
+            value: 'widgetbook',
+          );
+
+          expect(
+            state.queryParams['knobs'],
+            '{foo:bar,qux:widgetbook}',
+          );
+        },
+      );
+
+      test(
+        'given a state, '
+        'when [updateQueryField] is called with a reserved key, '
         'then an $ArgumentError exception is thrown',
         () {
           final state = WidgetbookState(
