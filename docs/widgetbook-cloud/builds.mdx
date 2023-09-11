@@ -1,8 +1,8 @@
 # Builds
 
-When you create a new commit in git, a new version of your code is created. 
+When you create a new commit in Git, a new version of your code is created. 
 With Widgetbook builds developers make the new version of their local Widgetbook accessible for the whole team. 
-If set up with CI/CD, you can have a build for each commit, for each pull-request or for each branch.
+If set up with CI/CD, you can have a build for each commit, for each pull-request and for each branch.
 
 ## Build process
 
@@ -16,13 +16,13 @@ To create a Flutter web build, follow these steps:
 
 A Flutter web build of Widgetbook is published by using the [Widgetbook CLI](/widgetbook-cli/overview). 
 An API key is required to publish a build.
-See [How to Create an API Key](/widgetbook-cloud/setup/How-to-Create-an-API-Key) for more information.
+See [How to Create an API Key](/widgetbook-cloud/setup#How-to-Create-an-API-Key) for more information.
 
 To publish a build, follow these steps:
 1. Activate the CLI by running `pub global activate widgetbook_cli`
 1. Run `widgetbook publish --api-key API-KEY`
 
-Feel free to customize the `publish` command by reading into the [CLI arguments](widgetbook-cli/overview#arguments).
+Feel free to customize the `publish` command by reading into the [CLI arguments](/widgetbook-cli/overview#arguments).
 
 <Info>
     Publishing builds with the CI/CD is recommended as the setup is less error prone and more autonomous. 
