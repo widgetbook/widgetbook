@@ -1,10 +1,100 @@
 # Setup
 
+## Requirements
+
+You need a Widgetbook Cloud account. 
+If you don't have one, [check out the steps to get signed up](/widgetbook-cloud/signup).
+
+## Steps
+
+1. [Create a company](#how-to-create-a-company)
+2. [Create a project](#how-to-create-a-project)
+3. [Create an API key](#how-to-create-an-api-key)
+4. [Connect our GitHub app](#how-to-connect-our-github-app)
+5. [Add workflows for CI/CD](#how-to-add-workflows-for-cicd)
+6. [Check if it works](#check-if-it-works)
+
+## How to create a company
+
+1. Select the _Company_ tab in the navigation rail of the app. 
+2. Click the _Add company_ button.
+3. Fill out the form. 
+4. Done.
+
+## How to create a project
+
+1. Select the _Projects_ tab in the navigation rail of the app. 
+2. Click the _Create project_ button.
+3. Fill out the form. 
+4. Done.
+
 ## How to Create an API Key
 
 1. Log in to Widgetbook Cloud with your account.
 2. API keys are tied to projects, so you need a project to obtain an API key.
 3. Only users with the `Owner` role can fetch a project's API key to protect sensitive information.
 4. If you are not a project owner but need the API key, ask your project owner to promote you from member to owner. For more information on member management, see [Member Management](/widgetbook-cloud/projects#member-management).
-5. To create a new project, [create a billing account](/widgetbook-cloud/billing) first.
+5. To create a new project, [create a company](#how-to-create-a-company) first.
 6. On the project's detail page, a card with a button to fetch the API key is displayed. Click the button to copy the API key to your clipboard.
+
+## How to connect our GitHub app
+
+See our documentation regarding integrating [GitHub](/widgetbook-cloud/integrating-github).
+
+## How to add workflows for CI/CD
+
+For Widgetbook Cloud to work properly we recommend to create workflows for two different events:
+1. When a new commit is published to the `main` branch or branches you pick
+2. When a new pull request is opened and whenever the Git history changes for the pull-request
+
+### 1. New commit workflow
+
+A general workflow for uploading a new version of your Widgetbook to Widgetbook Cloud looks like this:
+
+```
+# Install dependencies
+flutter pub get
+# Run the build runner (Optional)
+flutter pub run build_runner build --delete-conflicting-outputs
+# Build the Widgetbook
+flutter build web -t lib/ui_catalogs.widgetbook.dart
+# Install the CLI
+dart pub global activate widgetbook_cli
+# Execute the CLI
+widgetbook publish --api-key API-KEY
+```
+
+Due to specifics of each CI/CD vendor, we prepared the following examples for you:
+- [GitHub Actions](https://github.com/widgetbook/groceries-demo/tree/staging/.github/workflows)
+- [Codemagic](https://github.com/widgetbook/groceries-demo/blob/staging/codemagic.yaml)
+
+Not finding your vendor? [Let us know via Discord](https://discord.gg/zT4AMStAJA). We are happy to assist you. 
+
+### 2. Pull request workflow
+
+```
+# Install dependencies
+flutter pub get
+# Run the build runner (Optional)
+flutter pub run build_runner build --delete-conflicting-outputs
+# Build the Widgetbook
+flutter build web -t lib/ui_catalogs.widgetbook.dart
+# Install the CLI
+dart pub global activate widgetbook_cli
+# Execute the CLI
+widgetbook publish --api-key API-KEY
+```
+
+## Check if it works
+
+1. Create a new commit on your base branch containing a Widgetbook with at least one use case
+2. Push the commit to your remote repository
+3. Check if the workflow for new commits is triggered and succeeds
+4. Check if you see a new Widgetbook Cloud build for the branch you pushed to
+5. Make adjustments to one or multiple use cases
+6. Create a new feature branch
+7. Commit your changes
+8. Push the commit and the new feature branch to your remote repository
+9. Check if the workflow for new pull-requests is triggered and succeeds
+10. Check if you see a new Widgetbook Cloud build for the new feature branch you pushed to
+11. Check if you see a new open Widgetbook Cloud review
