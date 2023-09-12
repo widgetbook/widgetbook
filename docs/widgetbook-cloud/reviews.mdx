@@ -49,8 +49,27 @@ In addition to uploading a feature branch, information about what has changed is
 To add this information, you can use the `--base-branch` argument of the CLI: `widgetbook publish --api-key KEY --base-branch BASE-BRANCH`.
 
 <Info>
-    Most CI/CD providers expose the `BASE-BRANCH` via environment variables for pull requests. Check our [CI/CD Setup guide](/widgetbook-cloud/setup) for more insights.
+    Most CI/CD providers expose the `BASE-BRANCH` via environment variables for pull-requests. Check our [CI/CD Setup guide](/widgetbook-cloud/setup) for more insights.
 </Info>
+
+### Example
+
+```bash
+# Install dependencies
+flutter pub get
+# !!! 
+# !!! Run the build runner
+# !!! This is mandatory even if you have commited the generated files since 
+# !!! the generator creates files that are consumed by the Widgetbook CLI
+# !!!
+flutter pub run build_runner build --delete-conflicting-outputs
+# Build the Widgetbook
+flutter build web -t lib/ui_catalogs.widgetbook.dart
+# Install the CLI
+dart pub global activate widgetbook_cli
+# Run the CLI
+widgetbook publish --api-key API-KEY --base-branch main
+```
 
 ## Review Information
 To populate a review, information regarding the changes in use cases is mandatory. When the `--base-branch` argument is used, the CLI fetches details about the altered use cases.

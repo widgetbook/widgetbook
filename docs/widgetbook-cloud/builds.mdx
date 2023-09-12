@@ -28,3 +28,18 @@ Feel free to customize the `publish` command by reading into the [CLI arguments]
     Publishing builds with the CI/CD is recommended as the setup is less error prone and more autonomous. 
     See [CI/CD Setup](/widgetbook-cloud/setup) for more information.
 </Info>
+
+### Example
+
+```bash
+# Install dependencies
+flutter pub get
+# Optional: Run the build runner
+flutter pub run build_runner build --delete-conflicting-outputs
+# Build the Widgetbook
+flutter build web -t lib/ui_catalogs.widgetbook.dart
+# Install the CLI
+dart pub global activate widgetbook_cli
+# Run the CLI
+widgetbook publish --api-key API-KEY
+```

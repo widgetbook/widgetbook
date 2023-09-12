@@ -28,7 +28,7 @@ If you don't have one, [check out the steps to get signed up](/widgetbook-cloud/
 3. Fill out the form. 
 4. Done.
 
-## How to Create an API Key
+## How to create an API Key
 
 1. Log in to Widgetbook Cloud with your account.
 2. API keys are tied to projects, so you need a project to obtain an API key.
@@ -44,25 +44,8 @@ See our documentation regarding integrating [GitHub](/widgetbook-cloud/integrati
 ## How to add workflows for CI/CD
 
 For Widgetbook Cloud to work properly we recommend to create workflows for two different events:
-1. When a new commit is published to the `main` branch or branches you pick
+1. When a new commit is published to the base branch (`main`, `staging` or whatever branch you like)
 2. When a new pull request is opened and whenever the Git history changes for the pull-request
-
-### 1. New commit workflow
-
-A general workflow for uploading a new version of your Widgetbook to Widgetbook Cloud looks like this:
-
-```
-# Install dependencies
-flutter pub get
-# Run the build runner (Optional)
-flutter pub run build_runner build --delete-conflicting-outputs
-# Build the Widgetbook
-flutter build web -t lib/ui_catalogs.widgetbook.dart
-# Install the CLI
-dart pub global activate widgetbook_cli
-# Execute the CLI
-widgetbook publish --api-key API-KEY
-```
 
 Due to specifics of each CI/CD vendor, we prepared the following examples for you:
 - [GitHub Actions](https://github.com/widgetbook/groceries-demo/tree/staging/.github/workflows)
@@ -70,9 +53,11 @@ Due to specifics of each CI/CD vendor, we prepared the following examples for yo
 
 Not finding your vendor? [Let us know via Discord](https://discord.gg/zT4AMStAJA). We are happy to assist you. 
 
-### 2. Pull request workflow
+### 1. New commit workflow
 
-```
+A general workflow for uploading a new version of your Widgetbook to Widgetbook Cloud looks like this:
+
+```bash
 # Install dependencies
 flutter pub get
 # Run the build runner (Optional)
@@ -83,6 +68,30 @@ flutter build web -t lib/ui_catalogs.widgetbook.dart
 dart pub global activate widgetbook_cli
 # Execute the CLI
 widgetbook publish --api-key API-KEY
+```
+
+### 2. Pull request workflow
+
+Whenever a pull-request is created or updated, Widgetbook Cloud requires information on what changed. 
+Therefore, the CLI requires the `--base-branch` agrument to compare the current feature branch against the base branch. 
+For this to fully work, the CLI also requires the `build_runner` outputs. 
+Therefore, make sure that `build_runner` runs before the CLI even if you have committed all generated files. 
+
+```bash
+# Install dependencies
+flutter pub get
+# !!! 
+# !!! Run the build runner
+# !!! This is mandatory even if you have commited the generated files since 
+# !!! the generator creates files that are consumed by the Widgetbook CLI
+# !!!
+flutter pub run build_runner build --delete-conflicting-outputs
+# Build the Widgetbook
+flutter build web -t lib/ui_catalogs.widgetbook.dart
+# Install the CLI
+dart pub global activate widgetbook_cli
+# Run the CLI
+widgetbook publish --api-key API-KEY --base-branch main
 ```
 
 ## Check if it works
