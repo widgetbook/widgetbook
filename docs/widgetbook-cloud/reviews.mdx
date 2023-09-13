@@ -42,6 +42,26 @@ To harness the Widgetbook Cloud _Review_ feature, ensure your setup aligns with 
 - Employ the CLI from [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli).
 - Set up our GitHub app.
 
+## How to add a Figma design link
+
+To add a Figma design link, you need to provide the `designLink` property to a use case:
+1. Got to Figma
+1. Go to the component that resembles your Widget
+1. Right-mouse click on the component
+1. Select `Copy/Paste as` > `Copy Link`
+1. Set the `designLink` property of the `@UseCase` annotation by pasting the copied link
+1. Let the re-run `build_runner` 
+1. Commit the changes to Git
+
+```dart
+// Example from https://github.com/widgetbook/groceries-demo/blob/chore/design-link-for-appbar/lib/core/app_bar.dart
+@UseCase(
+  designLink: 'https://www.figma.com/file/EXuEpwiyksLAejYX1qr1v4/Fluttercon-Berlin-2023-Demo?type=design&node-id=277-3056&mode=design&t=nVL8hLmc1jlcilZL-4',
+  name: 'Default',
+  type: AppBar
+)
+```
+
 ## Publishing a Review
 
 The review feature works best if a build for the base branch and a build for the feature branch is available. 
