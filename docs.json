@@ -93,10 +93,11 @@
         ["2. Quick Start", "/widgetbook-cloud/quick-start"],
         ["3. Sign Up", "/widgetbook-cloud/signup"],
         ["4. Projects", "/widgetbook-cloud/projects"],
-        ["5. Hosting", "/widgetbook-cloud/hosting"],
-        ["6. Review (beta)", "/widgetbook-cloud/review"],
-        ["7. Github Integration", "/widgetbook-cloud/integrating-github"],
-        ["8. Accessing Resources", "/widgetbook-cloud/accessing-resources"]
+        ["5. Setup", "/widgetbook-cloud/setup"],
+        ["6. Hosting", "/widgetbook-cloud/hosting"],
+        ["7. Reviews", "/widgetbook-cloud/reviews"],
+        ["8. Github Integration", "/widgetbook-cloud/integrating-github"],
+        ["9. Accessing Resources", "/widgetbook-cloud/accessing-resources"]
       ]
     ],
     ["CLI", [["Overview", "/widgetbook-cli/overview"]]],
