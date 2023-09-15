@@ -36,8 +36,7 @@
       [
         ["Overview", "/index"],
         ["Terminology", "/terminology"],
-        ["Why Widgetbook", "/why-widgetbook"],
-        ["Telemetry", "/telemetry"]
+        ["Why Widgetbook", "/why-widgetbook"]
       ]
     ],
     [
@@ -54,7 +53,8 @@
         ["9. Configure", "/getting-started/configure"],
         ["10. Complete Example", "/getting-started/complete-example"],
         ["11. Mocking", "/getting-started/mocking"],
-        ["FAQs", "/faq"]
+        ["FAQs", "/faq"],
+        ["Telemetry", "/telemetry"]
       ]
     ],
     [
