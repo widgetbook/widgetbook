@@ -30,6 +30,7 @@ class UsageReport {
   final String trackingId;
   final String project;
   final DateTime timestamp = DateTime.now();
+  final String version = '3.x.x';
   late final Set<String> packages;
 
   /// The key is the the length of a component's use cases, the value is the
@@ -48,7 +49,11 @@ class UsageReport {
       );
 
   /// Unique ID to identify the report
-  String get id => '$project-$componentsCount-$useCasesCount';
+  String get id => '$project'
+      '-C$componentsCount'
+      '-U$useCasesCount'
+      '-P${packages.length}'
+      '-V$version';
 
   Map<String, dynamic> toMixPanelEvent({
     required bool isDebug,
@@ -61,7 +66,7 @@ class UsageReport {
         'time': timestamp.millisecondsSinceEpoch ~/ 1000,
         'distinct_id': trackingId,
         '\$insert_id': id,
-        'version': '3.x.x',
+        'version': version,
         'project': project,
         'packages': packages.toList(),
         'components': componentsCount,
