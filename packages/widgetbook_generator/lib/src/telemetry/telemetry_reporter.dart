@@ -20,8 +20,7 @@ class TelemetryReporter extends Builder {
     ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
     ┃                                                            ┃
     ┃   Widgetbook Generator now collects and reports anonymous  ┃
-    ┃   usage information that help us improve our package,      ┃
-    ┃   and keeps us informed about the usage of Widgetbook.     ┃
+    ┃   usage information that helps us improve our package.     ┃
     ┃                                                            ┃
     ┃   For more info visit:                                     ┃
     ┃   https://docs.widgetbook.io/telemetry                     ┃
