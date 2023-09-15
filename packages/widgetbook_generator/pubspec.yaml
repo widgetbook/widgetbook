@@ -19,6 +19,7 @@ dependencies:
   build: ^2.1.0
   code_builder: ^4.1.0
   collection: ^1.15.0
+  crypto: ^3.0.3
   glob: ^2.0.2
   meta: ^1.7.0
   path: ^1.8.0

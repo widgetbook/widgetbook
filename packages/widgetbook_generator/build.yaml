@@ -4,7 +4,7 @@ builders:
     builder_factories: ["useCaseBuilder"]
     build_extensions: { ".dart": [".usecase.widgetbook.json"] }
     auto_apply: dependents
-    runs_before: [":app_builder"]
+    runs_before: [":app_builder", ":telemetry"]
     build_to: cache
 
   app_builder:
@@ -13,3 +13,14 @@ builders:
     build_extensions: { ".dart": [".directories.g.dart"] }
     auto_apply: dependents
     build_to: source
+
+  telemetry:
+    import: "package:widgetbook_generator/builder.dart"
+    builder_factories: ["reportTelemetry"]
+    build_extensions: { ".directories.g.dart": [".track"] }
+    required_inputs: [".directories.g.dart"]
+    auto_apply: root_package
+    build_to: cache
+    defaults:
+      options:
+        debug: false
