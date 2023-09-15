@@ -1,0 +1,33 @@
+# Telemetry
+
+Widgetbook Generator collects and reports **anonymous** usage information.
+This information is essential to figure out how we should improve our package.
+
+## How to opt-out
+
+To opt-out from telemetry:
+
+1. Create a `build.yaml` file at the root of your project (next to your `pubspec.yaml`).
+1. Add the following content to the file:
+
+    ```yaml
+    targets:
+      $default:
+        builders:
+          widgetbook_generator:telemetry:
+            enabled: false
+    ```
+
+## What we send
+
+A new telemetry report is sent whenever there are any modifications to `*.directories.g.dart` files.
+after you run the `build_runner build` command.
+
+We send the following information:
+
+1. The package name.
+1. Unique **hashed** anonymous tracking ID based on your git config email.
+1. Information about Widgetbook Components like:
+    - The number of components.
+    - The number of components with various counts of use-cases.
+    - The packages' names where the components were defined.

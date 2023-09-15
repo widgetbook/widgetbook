@@ -36,7 +36,8 @@
       [
         ["Overview", "/index"],
         ["Terminology", "/terminology"],
-        ["Why Widgetbook", "/why-widgetbook"]
+        ["Why Widgetbook", "/why-widgetbook"],
+        ["Telemetry", "/telemetry"]
       ]
     ],
     [
