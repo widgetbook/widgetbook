@@ -53,35 +53,27 @@ class TelemetryReporter extends Builder {
   }
 
   Future<void> sendUsageReport(UsageReport report) async {
-    final uri = Uri.parse('https://api-eu.mixpanel.com/track');
     final projectToken = 'e9326ce582275574ff5e5691295cd420';
+    final event = report.toMixPanelEvent(
+      isDebug: isDebug,
+      token: projectToken,
+    );
 
+    if (isDebug) {
+      const encoder = JsonEncoder.withIndent('  ');
+      final prettyBody = encoder.convert(event);
+
+      log.info('\nSending Usage Report:\n$prettyBody');
+    }
+
+    final uri = Uri.parse('https://api-eu.mixpanel.com/track');
     final client = HttpClient();
     final request = await client.postUrl(uri);
+    final body = jsonEncode([event]);
 
     // Headers must be set before writing the body
     request.headers.set(HttpHeaders.acceptHeader, 'text/plain');
     request.headers.set(HttpHeaders.contentTypeHeader, 'application/json');
-
-    final event = isDebug ? 'Generator Used (Debug)' : 'Generator Used';
-    final body = jsonEncode([
-      {
-        'event': event,
-        'properties': {
-          'token': projectToken,
-          'time': report.timestamp.millisecondsSinceEpoch ~/ 1000,
-          'distinct_id': report.trackingId,
-          '\$insert_id': report.id,
-          'version': '3.x.x',
-          ...report.toJson(),
-        },
-      }
-    ]);
-
-    if (isDebug) {
-      log.info('\nSending Usage Report:\n$body');
-    }
-
     request.write(body);
 
     // Cleanup to avoid memory leaks and build process hangs

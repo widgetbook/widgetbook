@@ -48,17 +48,26 @@ class UsageReport {
       );
 
   /// Unique ID to identify the report
-  String get id {
-    return '$project-$componentsCount-$useCasesCount';
-  }
+  String get id => '$project-$componentsCount-$useCasesCount';
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMixPanelEvent({
+    required bool isDebug,
+    required String token,
+  }) {
     return {
-      'project': project,
-      'packages': packages.toList(),
-      'components': componentsCount,
-      'use_cases': useCasesCount,
-      'heat_map': heatMap.map((key, value) => MapEntry('$key', value)),
+      'event': 'Generator Used${isDebug ? ' (Debug)' : ''}',
+      'properties': {
+        'token': token,
+        'time': timestamp.millisecondsSinceEpoch ~/ 1000,
+        'distinct_id': trackingId,
+        '\$insert_id': id,
+        'version': '3.x.x',
+        'project': project,
+        'packages': packages.toList(),
+        'components': componentsCount,
+        'use_cases': useCasesCount,
+        'heat_map': heatMap.map((key, value) => MapEntry('$key', value)),
+      },
     };
   }
 }
