@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FEAT**: Add [telemetry](https://docs.widgetbook.io/telemetry). ([#893](https://github.com/widgetbook/widgetbook/pull/893))
+- **FEAT**: Add [telemetry](https://docs.widgetbook.io/telemetry) which collects and reports anonymous usage information that helps us improve our package. ([#893](https://github.com/widgetbook/widgetbook/pull/893))
 - **FIX**: Sort generated nodes. ([#871](https://github.com/widgetbook/widgetbook/pull/871))
 - **FIX**: Apply imports prefixing. ([#872](https://github.com/widgetbook/widgetbook/pull/872))
 - **FIX**: Throw error when use-cases names conflict. ([#877](https://github.com/widgetbook/widgetbook/pull/877))
