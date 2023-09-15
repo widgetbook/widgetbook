@@ -54,5 +54,5 @@ final ciKeys = {
   'VERCEL',
   'APPCENTER_BUILD_ID',
   'CI_XCODE_PROJECT',
-  'XCS'
+  'XCS',
 };
