@@ -63,7 +63,7 @@ class TelemetryReporter extends Builder {
     request.headers.set(HttpHeaders.acceptHeader, 'text/plain');
     request.headers.set(HttpHeaders.contentTypeHeader, 'application/json');
 
-    final event = isDebug ? 'UsageV3-Debug' : 'UsageV3';
+    final event = isDebug ? 'Generator Used (Debug)' : 'Generator Used';
     final body = jsonEncode([
       {
         'event': event,
@@ -72,6 +72,7 @@ class TelemetryReporter extends Builder {
           'time': report.timestamp.millisecondsSinceEpoch ~/ 1000,
           'distinct_id': report.trackingId,
           '\$insert_id': report.id,
+          'version': '3.x.x',
           ...report.toJson(),
         },
       }
