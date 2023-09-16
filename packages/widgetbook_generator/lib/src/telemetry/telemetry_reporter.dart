@@ -53,7 +53,7 @@ class TelemetryReporter extends Builder {
 
   Future<void> sendUsageReport(UsageReport report) async {
     final projectToken = 'e9326ce582275574ff5e5691295cd420';
-    final event = report.toMixPanelEvent(
+    final event = report.toMixpanelEvent(
       isDebug: isDebug,
       token: projectToken,
     );

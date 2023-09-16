@@ -31,6 +31,9 @@ class UsageReport {
   final String project;
   final DateTime timestamp = DateTime.now();
   final String version = '3.x.x';
+
+  /// Unique set of components' packages.
+  /// This helps identify different projects
   late final Set<String> packages;
 
   /// The key is the the length of a component's use cases, the value is the
@@ -55,7 +58,7 @@ class UsageReport {
       '-P${packages.length}'
       '-V$version';
 
-  Map<String, dynamic> toMixPanelEvent({
+  Map<String, dynamic> toMixpanelEvent({
     required bool isDebug,
     required String token,
   }) {
