@@ -43,7 +43,7 @@ class AppGenerator extends GeneratorForAnnotation<App> {
     return library.accept(emitter).toString();
   }
 
-  Future<List<UseCaseMetadata>> readUseCases(
+  static Future<List<UseCaseMetadata>> readUseCases(
     BuildStep buildStep,
   ) async {
     final glob = Glob('**.usecase.widgetbook.json');
