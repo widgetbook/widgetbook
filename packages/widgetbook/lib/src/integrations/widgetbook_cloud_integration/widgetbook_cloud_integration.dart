@@ -17,9 +17,9 @@ class WidgetbookCloudIntegration extends WidgetbookIntegration {
 
   @override
   void onInit(WidgetbookState state) {
-    if (state.addons == null) return;
+    if (state.effectiveAddons == null) return;
 
-    final addonsJson = state.addons! //
+    final addonsJson = state.effectiveAddons! //
         .map((addon) => addon.toJson())
         .toList();
 

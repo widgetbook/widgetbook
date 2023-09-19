@@ -45,7 +45,7 @@ void main() {
         () {
           final state = MockWidgetbookState();
           final addons = [AlignmentAddon()];
-          when(() => state.addons).thenReturn(addons);
+          when(() => state.effectiveAddons).thenReturn(addons);
 
           final integration = MockCloudIntegration();
           integration.onInit(state);

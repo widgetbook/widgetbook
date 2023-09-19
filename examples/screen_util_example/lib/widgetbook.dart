@@ -26,7 +26,7 @@ class WidgetbookApp extends StatelessWidget {
             Devices.ios.iPhone13,
           ],
         ),
-        UseCaseBuilderAddon(
+        BuilderAddon(
           name: 'ScreenUtil',
           builder: (context, child) {
             return ScreenUtilInit(

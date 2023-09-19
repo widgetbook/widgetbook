@@ -1,13 +1,13 @@
-# Use-case Builder Addon
+# Builder Addon
 
-The Use-case Builder Addon is utility to wrap all use-cases with a certain widget.
+The Builder Addon is utility to wrap all use-cases with a certain widget.
 
 ## Setup
 
 Here's how to configure it:
 
 ```dart
-UseCaseBuilderAddon(
+BuilderAddon(
     name: 'Red',
     builder: (context, child) => ColoredBox(
         color: Colors.red,
@@ -22,7 +22,7 @@ This can be used to quickly setup a custom addon with much less boilerplate.
 For example, here's an addon for [`flutter_screenutil`](https://pub.dev/packages/flutter_screenutil) package:
 
 ```dart
-UseCaseBuilderAddon(
+BuilderAddon(
     name: 'ScreenUtil',
     builder: (context, child) {
         return ScreenUtilInit(
