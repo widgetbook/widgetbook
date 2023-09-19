@@ -1,10 +1,11 @@
-## Unreleased
+## 3.3.0
 
 - **FEAT**: Add Builder Addon. ([#895](https://github.com/widgetbook/widgetbook/pull/895))
 - **FEAT**: Add Experimental Time Dilation Addon. ([#887](https://github.com/widgetbook/widgetbook/pull/887))
 - **FEAT**: Add `WidgetbookState.updateQueryField`. ([#888](https://github.com/widgetbook/widgetbook/pull/888))
 - **REFACTOR**: Change `WidgetbookState.knobs` type from `Map<String, Knob>` to `KnobsRegistry`. ([#885](https://github.com/widgetbook/widgetbook/pull/885))
 - **REFACTOR**: Deprecate `WidgetbookState.updateKnobValue` in favor of `WidgetbookState.knobs.updateValue`. ([#885](https://github.com/widgetbook/widgetbook/pull/885))
+- **FIX**: Remove false overriding for `listOrNull` knob. ([#881](https://github.com/widgetbook/widgetbook/pull/881))
 
 ## 3.2.0
 
