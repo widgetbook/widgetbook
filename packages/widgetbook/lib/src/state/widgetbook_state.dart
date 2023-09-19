@@ -50,6 +50,12 @@ class WidgetbookState extends ChangeNotifier {
 
   WidgetbookUseCase? get useCase => path == null ? null : root.table[path!];
 
+  /// Same as [addons] but without the ones that have no fields.
+  @internal
+  List<WidgetbookAddon>? get effectiveAddons {
+    return addons?.where((addon) => addon.fields.isNotEmpty).toList();
+  }
+
   /// A [Uri] representation of the current state.
   Uri get uri {
     final queryParameters = {

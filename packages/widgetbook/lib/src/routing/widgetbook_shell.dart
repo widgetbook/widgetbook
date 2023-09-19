@@ -43,7 +43,7 @@ class WidgetbookShell extends StatelessWidget {
                 SettingsPanelData(
                   name: 'Addons',
                   builder: (context) => WidgetbookState.of(context)
-                      .addons!
+                      .effectiveAddons!
                       .map((addon) => addon.buildFields(context))
                       .toList(),
                 ),

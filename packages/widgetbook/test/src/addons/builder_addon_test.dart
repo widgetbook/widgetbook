@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-import '../../helper/mocks.dart';
 import '../../helper/tester_extension.dart';
 
 void main() {
   group(
-    '$UseCaseBuilderAddon',
+    '$BuilderAddon',
     () {
       final color = Colors.red;
-      final addon = UseCaseBuilderAddon(
+      final addon = BuilderAddon(
         name: 'Red',
         builder: (context, child) => ColoredBox(
           color: color,
@@ -18,20 +17,8 @@ void main() {
         ),
       );
 
-      test(
-        'given a query group, '
-        'then [valueFromQueryGroup] can parse the value',
-        () {
-          final result = addon.valueFromQueryGroup({
-            'enable': 'true',
-          });
-
-          expect(result, equals(true));
-        },
-      );
-
       testWidgets(
-        'given a [true] setting, '
+        'given a any setting, '
         'then [buildUseCase] wraps child with [ColoredBox] widget',
         (tester) async {
           await tester.pumpWidgetWithBuilder(
@@ -49,24 +36,6 @@ void main() {
           expect(
             coloredBox.color,
             equals(color),
-          );
-        },
-      );
-
-      test(
-        'given a [false] setting, '
-        'then [buildUseCase] returns child as-is',
-        () {
-          const child = Text('child');
-          final useCase = addon.buildUseCase(
-            MockBuildContext(),
-            child,
-            false,
-          );
-
-          expect(
-            useCase,
-            equals(child),
           );
         },
       );

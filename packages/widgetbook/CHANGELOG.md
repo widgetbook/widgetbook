@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FEAT**: Add Use-case Builder Addon. ([#880](https://github.com/widgetbook/widgetbook/pull/880))
+- **FEAT**: Add Builder Addon. ([#895](https://github.com/widgetbook/widgetbook/pull/895))
 - **FEAT**: Add Experimental Time Dilation Addon. ([#887](https://github.com/widgetbook/widgetbook/pull/887))
 - **FEAT**: Add `WidgetbookState.updateQueryField`. ([#888](https://github.com/widgetbook/widgetbook/pull/888))
 - **REFACTOR**: Change `WidgetbookState.knobs` type from `Map<String, Knob>` to `KnobsRegistry`. ([#885](https://github.com/widgetbook/widgetbook/pull/885))
