@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 
 import 'knob.dart';
 
-class KnobsRegistry extends ChangeNotifier with MapBase<String, Knob> {
+class KnobsRegistry extends ChangeNotifier with MapMixin<String, Knob> {
   KnobsRegistry({
     required this.onLock,
   });
