@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: use `MapMixin` instead of `MapBase` for `KnobsRegistry`. ([#903](https://github.com/widgetbook/widgetbook/pull/903))
+
 ## 3.3.0
 
 - **FEAT**: Add Builder Addon. ([#895](https://github.com/widgetbook/widgetbook/pull/895))
