@@ -23,8 +23,8 @@
 
 import 'package:file/file.dart';
 import 'package:file/local.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mason_logger/mason_logger.dart';
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 import '../api/widgetbook_http_client.dart';

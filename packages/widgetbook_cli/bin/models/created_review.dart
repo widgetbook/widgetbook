@@ -1,14 +1,20 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+class CreatedReview {
+  const CreatedReview({
+    required this.id,
+  });
 
-part 'created_review.freezed.dart';
-part 'created_review.g.dart';
+  final String id;
 
-@freezed
-class CreatedReview with _$CreatedReview {
-  factory CreatedReview({
-    required String id,
-  }) = _CreatedReview;
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+    };
+  }
 
-  factory CreatedReview.fromJson(Map<String, dynamic> json) =>
-      _$CreatedReviewFromJson(json);
+  // ignore: sort_constructors_first
+  factory CreatedReview.fromJson(Map<String, dynamic> map) {
+    return CreatedReview(
+      id: map['id'] as String,
+    );
+  }
 }
