@@ -18,7 +18,6 @@ class TestData {
     apiKey: 'apiKey',
     branch: 'branch',
     commit: 'commit',
-    gitProvider: 'gitProvider',
     gitHubToken: 'gitHubToken',
     prNumber: 'prNumber',
     baseBranch: 'baseBranch',

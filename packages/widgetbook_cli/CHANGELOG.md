@@ -1,3 +1,7 @@
+## Unreleased
+
+- **BREAKING**: Remove `--git-provider` option from `publish` command. ([#913](https://github.com/widgetbook/widgetbook/pull/913))
+
 ## 3.0.0-rc.3
 
 - **REFACTOR**: :recycle: improved error handling. [#831](https://github.com/widgetbook/widgetbook/pull/831)

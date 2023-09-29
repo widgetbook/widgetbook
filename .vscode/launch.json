@@ -18,7 +18,6 @@
                 "--api-key", "abc",
                 "--repository", "test-repo",
                 "--actor", "jenshor",
-                "--git-provider", "CLI",
                 "--base-branch", "main"
             ]
         },

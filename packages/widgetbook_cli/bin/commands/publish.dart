@@ -91,18 +91,6 @@ class PublishCommand extends WidgetbookCommand {
         help: 'The username of the actor which triggered the build.',
       )
       ..addOption(
-        'git-provider',
-        help: 'The name of the Git provider.',
-        defaultsTo: 'Local',
-        allowed: [
-          'GitHub',
-          'GitLab',
-          'BitBucket',
-          'Azure',
-          'Local',
-        ],
-      )
-      ..addOption(
         'base-branch',
         help:
             'The base branch of the pull-request. For example, main or master.',
@@ -223,7 +211,6 @@ class PublishCommand extends WidgetbookCommand {
     final commit =
         results['commit'] as String? ?? gitProviderSha() ?? currentBranch.sha;
 
-    final gitProvider = results['git-provider'] as String;
     final gitHubToken = results['github-token'] as String?;
     final prNumber = results['pr'] as String?;
 
@@ -249,7 +236,6 @@ class PublishCommand extends WidgetbookCommand {
       apiKey: apiKey,
       branch: branch,
       commit: commit,
-      gitProvider: gitProvider,
       path: path,
       vendor: ciArgs.vendor,
       actor: actor,
