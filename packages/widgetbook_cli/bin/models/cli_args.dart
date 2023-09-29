@@ -1,17 +1,21 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+class CliArgs {
+  const CliArgs({
+    required this.apiKey,
+    required this.branch,
+    required this.commit,
+    required this.gitProvider,
+    required this.path,
+    this.gitHubToken,
+    this.prNumber,
+    this.baseBranch,
+  });
 
-part 'cli_args.freezed.dart';
-
-@freezed
-class CliArgs with _$CliArgs {
-  factory CliArgs({
-    required String apiKey,
-    required String branch,
-    required String commit,
-    required String gitProvider,
-    required String path,
-    String? gitHubToken,
-    String? prNumber,
-    String? baseBranch,
-  }) = _CliArgs;
+  final String apiKey;
+  final String branch;
+  final String commit;
+  final String gitProvider;
+  final String path;
+  final String? gitHubToken;
+  final String? prNumber;
+  final String? baseBranch;
 }

@@ -1,14 +1,20 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+class Comment {
+  const Comment({
+    required this.body,
+  });
 
-part 'comment.freezed.dart';
-part 'comment.g.dart';
+  final String body;
 
-@freezed
-class Comment with _$Comment {
-  factory Comment({
-    required String body,
-  }) = _Comment;
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'body': body,
+    };
+  }
 
-  factory Comment.fromJson(Map<String, dynamic> json) =>
-      _$CommentFromJson(json);
+  // ignore: sort_constructors_first
+  factory Comment.fromJson(Map<String, dynamic> map) {
+    return Comment(
+      body: map['body'] as String,
+    );
+  }
 }

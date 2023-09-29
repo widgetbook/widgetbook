@@ -8,8 +8,8 @@ import 'package:path/path.dart';
 import '../flavor/flavor.dart';
 import '../helpers/helpers.dart';
 import '../models/models.dart';
-import '../review/use_cases/models/changed_use_case.dart';
-import '../review/use_cases/requests/create_use_cases_request.dart';
+import '../review/use_cases/changed_use_case.dart';
+import '../review/use_cases/create_use_cases_request.dart';
 
 /// A client to connect to the Widgetbook Cloud backend
 class WidgetbookHttpClient {

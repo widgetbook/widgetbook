@@ -3,7 +3,7 @@ import '../../bin/models/models.dart';
 import '../../bin/models/publish_args.dart';
 
 class TestData {
-  static final ciArgsData = CliArgs(
+  static const ciArgsData = CliArgs(
     apiKey: 'apiKey',
     branch: 'branch',
     commit: 'commit',
@@ -40,14 +40,14 @@ class TestData {
     'HEAD',
   );
 
-  static BuildUploadResponse uploadBuildInfo = BuildUploadResponse(
+  static const uploadBuildInfo = BuildUploadResponse(
     project: 'projectId',
     build: 'buildId',
     status: BuildUploadStatus.success,
     tasks: [],
   );
 
-  static final ReviewData reviewData = ReviewData(
+  static const reviewData = ReviewData(
     useCases: [],
     buildId: 'buildId',
     projectId: 'projectId',

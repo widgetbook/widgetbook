@@ -1,18 +1,31 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
 import 'created_review.dart';
 import 'upload_task.dart';
 
-part 'review_upload_response.freezed.dart';
-part 'review_upload_response.g.dart';
+class ReviewUploadResponse {
+  const ReviewUploadResponse({
+    required this.review,
+    required this.tasks,
+  });
 
-@freezed
-class ReviewUploadResponse with _$ReviewUploadResponse {
-  factory ReviewUploadResponse({
-    required CreatedReview review,
-    required List<UploadTask> tasks,
-  }) = _ReviewUploadResponse;
+  final CreatedReview review;
+  final List<UploadTask> tasks;
 
-  factory ReviewUploadResponse.fromJson(Map<String, dynamic> json) =>
-      _$ReviewUploadResponseFromJson(json);
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'review': review.toJson(),
+      'tasks': tasks.map((x) => x.toJson()).toList(),
+    };
+  }
+
+  // ignore: sort_constructors_first
+  factory ReviewUploadResponse.fromJson(Map<String, dynamic> map) {
+    return ReviewUploadResponse(
+      review: CreatedReview.fromJson(map['review'] as Map<String, dynamic>),
+      tasks: List<UploadTask>.from(
+        (map['tasks'] as List<dynamic>).map<UploadTask>(
+          (x) => UploadTask.fromJson(x as Map<String, dynamic>),
+        ),
+      ),
+    );
+  }
 }

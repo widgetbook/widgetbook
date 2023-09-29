@@ -6,8 +6,8 @@ import 'package:file/local.dart';
 import '../../git/file_diff.dart';
 import '../../git/git_dir.dart';
 import '../../parsers/generator_parser.dart';
-import 'models/changed_use_case.dart';
-import 'models/use_case_data.dart';
+import 'changed_use_case.dart';
+import 'use_case_data.dart';
 
 class UseCaseParser extends GeneratorParser<ChangedUseCase> {
   UseCaseParser({

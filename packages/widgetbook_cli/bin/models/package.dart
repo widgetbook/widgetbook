@@ -1,23 +1,35 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import '../helpers/package_helper.dart';
 
-import '../helpers/helpers.dart';
+class Package {
+  const Package({
+    required this.name,
+    required this.path,
+    required this.type,
+  });
 
-part 'package.freezed.dart';
-part 'package.g.dart';
+  /// The project name
+  final String name;
 
-@freezed
-class Package with _$Package {
-  factory Package({
-    /// The project name
-    required String name,
+  /// Path of the project
+  final String path;
 
-    /// Path of the project
-    required String path,
+  /// Type of the project (Dart Package or a Flutter Project)
+  final PackageType type;
 
-    /// Type of the project (Dart Package or a Flutter Project)
-    required PackageType type,
-  }) = _Package;
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'name': name,
+      'path': path,
+      'type': type.name,
+    };
+  }
 
-  factory Package.fromJson(Map<String, dynamic> json) =>
-      _$PackageFromJson(json);
+  // ignore: sort_constructors_first
+  factory Package.fromJson(Map<String, dynamic> map) {
+    return Package(
+      name: map['name'] as String,
+      path: map['path'] as String,
+      type: PackageType.values.byName(map['type'] as String),
+    );
+  }
 }

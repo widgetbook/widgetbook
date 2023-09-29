@@ -1,12 +1,11 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+class CiArgs {
+  const CiArgs({
+    required this.vendor,
+    this.actor,
+    this.repository,
+  });
 
-part 'ci_args.freezed.dart';
-
-@freezed
-class CiArgs with _$CiArgs {
-  const factory CiArgs({
-    required String vendor,
-    String? actor,
-    String? repository,
-  }) = _CiArgs;
+  final String vendor;
+  final String? actor;
+  final String? repository;
 }

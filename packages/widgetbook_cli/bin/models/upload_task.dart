@@ -1,21 +1,30 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'upload_task.freezed.dart';
-part 'upload_task.g.dart';
-
 enum UploadTaskStatus {
   success,
   failure,
   warning,
 }
 
-@freezed
-class UploadTask with _$UploadTask {
-  factory UploadTask({
-    required UploadTaskStatus status,
-    required String message,
-  }) = _UploadTask;
+class UploadTask {
+  const UploadTask({
+    required this.status,
+    required this.message,
+  });
 
-  factory UploadTask.fromJson(Map<String, dynamic> json) =>
-      _$UploadTaskFromJson(json);
+  final UploadTaskStatus status;
+  final String message;
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'status': status.name,
+      'message': message,
+    };
+  }
+
+  // ignore: sort_constructors_first
+  factory UploadTask.fromJson(Map<String, dynamic> map) {
+    return UploadTask(
+      status: UploadTaskStatus.values.byName(map['status'] as String),
+      message: map['message'] as String,
+    );
+  }
 }

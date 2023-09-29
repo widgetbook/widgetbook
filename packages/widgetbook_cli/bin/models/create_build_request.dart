@@ -1,19 +1,40 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+class CreateBuildRequest {
+  const CreateBuildRequest({
+    required this.apiKey,
+    required this.branchName,
+    required this.repositoryName,
+    required this.commitSha,
+    required this.actor,
+    required this.provider,
+  });
 
-part 'create_build_request.freezed.dart';
-part 'create_build_request.g.dart';
+  final String apiKey;
+  final String branchName;
+  final String repositoryName;
+  final String commitSha;
+  final String actor;
+  final String provider;
 
-@freezed
-class CreateBuildRequest with _$CreateBuildRequest {
-  factory CreateBuildRequest({
-    required String apiKey,
-    required String branchName,
-    required String repositoryName,
-    required String commitSha,
-    required String actor,
-    required String provider,
-  }) = _CreateBuildRequest;
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'apiKey': apiKey,
+      'branchName': branchName,
+      'repositoryName': repositoryName,
+      'commitSha': commitSha,
+      'actor': actor,
+      'provider': provider,
+    };
+  }
 
-  factory CreateBuildRequest.fromJson(Map<String, dynamic> json) =>
-      _$CreateBuildRequestFromJson(json);
+  // ignore: sort_constructors_first
+  factory CreateBuildRequest.fromJson(Map<String, dynamic> map) {
+    return CreateBuildRequest(
+      apiKey: map['apiKey'] as String,
+      branchName: map['branchName'] as String,
+      repositoryName: map['repositoryName'] as String,
+      commitSha: map['commitSha'] as String,
+      actor: map['actor'] as String,
+      provider: map['provider'] as String,
+    );
+  }
 }

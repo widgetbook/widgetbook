@@ -16,7 +16,7 @@ import '../../bin/git/modification.dart';
 import '../../bin/helpers/helpers.dart';
 import '../../bin/models/models.dart';
 import '../../bin/models/publish_args.dart';
-import '../../bin/review/use_cases/models/changed_use_case.dart';
+import '../../bin/review/use_cases/changed_use_case.dart';
 import '../../bin/review/use_cases/use_case_parser.dart';
 import '../../bin/std/stdin_wrapper.dart';
 import '../helpers/test_data.dart';
@@ -504,7 +504,7 @@ void main() {
             expect(
               await command.getArguments(gitDir: gitDir),
               equals(
-                PublishArgs(
+                const PublishArgs(
                   path: path,
                   apiKey: apiKey,
                   branch: branch,
@@ -831,7 +831,7 @@ void main() {
       )..testArgResults = argResults;
 
       when(() => useCaseParser.parse()).thenAnswer(
-        (_) => Future.value([
+        (_) => Future.value(const [
           ChangedUseCase(
             name: 'use_case',
             componentName: 'UseCase',
@@ -894,7 +894,7 @@ void main() {
       )..testArgResults = argResults;
 
       when(() => useCaseParser.parse()).thenAnswer(
-        (_) => Future.value([
+        (_) => Future.value(const [
           ChangedUseCase(
             name: 'use_case',
             componentName: 'UseCase',
