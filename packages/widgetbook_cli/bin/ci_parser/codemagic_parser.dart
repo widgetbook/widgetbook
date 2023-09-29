@@ -1,14 +1,14 @@
+import 'package:platform/platform.dart';
+
 import 'ci_parser.dart';
 
 class CodemagicParser extends CiParser {
   CodemagicParser({
     required super.argResults,
-    PlatformWrapper? platformWrapper,
-  }) : _platformWrapper = platformWrapper ?? PlatformWrapper();
+    this.platform = const LocalPlatform(),
+  });
 
-  final PlatformWrapper _platformWrapper;
-
-  PlatformWrapper get platformWrapper => _platformWrapper;
+  final Platform platform;
 
   @override
   String get vendor => 'Codemagic';
@@ -22,8 +22,6 @@ class CodemagicParser extends CiParser {
 
   @override
   Future<String?> getRepository() async {
-    return _platformWrapper.environmentVariable(
-      variable: 'CM_REPO_SLUG',
-    );
+    return platform.environment['CM_REPO_SLUG'];
   }
 }

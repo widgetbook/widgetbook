@@ -26,6 +26,7 @@ import 'package:file/local.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
+import 'package:platform/platform.dart';
 
 import '../api/widgetbook_http_client.dart';
 import '../ci_parser/ci_parser.dart';
@@ -45,20 +46,19 @@ class PublishCommand extends WidgetbookCommand {
   PublishCommand({
     super.logger,
     this.ciParserRunner,
+    this.platform = const LocalPlatform(),
     WidgetbookHttpClient? widgetbookHttpClient,
     WidgetbookZipEncoder? widgetbookZipEncoder,
     FileSystem? fileSystem,
     CiWrapper? ciWrapper,
     GitWrapper? gitWrapper,
     StdInWrapper? stdInWrapper,
-    PlatformWrapper? platformWrapper,
     UseCaseParser? useCaseParser,
   })  : _widgetbookHttpClient = widgetbookHttpClient ?? WidgetbookHttpClient(),
         _widgetbookZipEncoder = widgetbookZipEncoder ?? WidgetbookZipEncoder(),
         _ciWrapper = ciWrapper ?? CiWrapper(),
         _gitWrapper = gitWrapper ?? GitWrapper(),
         _stdInWrapper = stdInWrapper ?? StdInWrapper(),
-        _platformWrapper = platformWrapper ?? PlatformWrapper(),
         _useCaseParser = useCaseParser,
         _fileSystem = fileSystem ?? const LocalFileSystem() {
     progress = logger.progress('Publishing Widgetbook');
@@ -129,13 +129,13 @@ class PublishCommand extends WidgetbookCommand {
   final String name = 'publish';
 
   CiParserRunner? ciParserRunner;
+  final Platform platform;
   final WidgetbookHttpClient _widgetbookHttpClient;
   final WidgetbookZipEncoder _widgetbookZipEncoder;
   final FileSystem _fileSystem;
   final CiWrapper _ciWrapper;
   final GitWrapper _gitWrapper;
   final StdInWrapper _stdInWrapper;
-  final PlatformWrapper _platformWrapper;
   final UseCaseParser? _useCaseParser;
 
   late final Progress progress;
@@ -201,15 +201,13 @@ class PublishCommand extends WidgetbookCommand {
   @visibleForTesting
   String? gitProviderSha() {
     if (_ciWrapper.isGithub()) {
-      return _platformWrapper.environmentVariable(
-        variable: 'GITHUB_SHA',
-      );
+      return platform.environment['GITHUB_SHA'];
     }
+
     if (_ciWrapper.isCodemagic()) {
-      return _platformWrapper.environmentVariable(
-        variable: 'CM_COMMIT',
-      );
+      return platform.environment['CM_COMMIT'];
     }
+
     return null;
   }
 

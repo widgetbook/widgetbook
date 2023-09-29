@@ -1,5 +1,6 @@
 import 'package:args/args.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:platform/platform.dart';
 import 'package:test/test.dart';
 
 import '../../bin/ci_parser/ci_parser.dart';
@@ -14,15 +15,15 @@ const actorEnvVariable = 'GITHUB_ACTOR';
 void main() {
   late GitHubParser sut;
   late ArgResults argResults;
-  late PlatformWrapper platformWrapper;
+  late Platform platform;
 
   setUp(() async {
     argResults = MockArgResults();
-    platformWrapper = MockPlatformWrapper();
+    platform = MockPlatform();
 
     sut = GitHubParser(
       argResults: argResults,
-      platformWrapper: platformWrapper,
+      platform: platform,
     );
   });
 
@@ -35,9 +36,9 @@ void main() {
     );
 
     test(
-      'expect instance of $PlatformWrapper',
+      'expect instance of $Platform',
       () async {
-        expect(sut.platformWrapper, equals(platformWrapper));
+        expect(sut.platform, equals(platform));
       },
     );
 
@@ -52,10 +53,11 @@ void main() {
       'can get a repository',
       () async {
         when(
-          () => platformWrapper.environmentVariable(
-            variable: repositoryEnvVariable,
-          ),
-        ).thenReturn(repositoryName);
+          () => platform.environment,
+        ).thenReturn({
+          repositoryEnvVariable: repositoryName,
+        });
+
         final repository = await sut.getRepository();
         expect(repository, equals(repositoryName));
       },
@@ -64,10 +66,11 @@ void main() {
       'can get an actor',
       () async {
         when(
-          () => platformWrapper.environmentVariable(
-            variable: actorEnvVariable,
-          ),
-        ).thenReturn(actorName);
+          () => platform.environment,
+        ).thenReturn({
+          actorEnvVariable: actorName,
+        });
+
         final actor = await sut.getActor();
         expect(actor, equals(actorName));
       },
