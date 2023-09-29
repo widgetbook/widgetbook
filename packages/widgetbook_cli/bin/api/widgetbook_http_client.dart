@@ -1,15 +1,11 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:dio/dio.dart';
-import 'package:http_parser/http_parser.dart';
-import 'package:path/path.dart';
 
 import '../flavor/flavor.dart';
 import '../helpers/helpers.dart';
-import '../models/models.dart';
-import '../review/use_cases/changed_use_case.dart';
-import '../review/use_cases/create_use_cases_request.dart';
+import 'models/build_request.dart';
+import 'models/build_response.dart';
+import 'models/review_request.dart';
+import 'models/review_response.dart';
 
 /// A client to connect to the Widgetbook Cloud backend
 class WidgetbookHttpClient {
@@ -18,6 +14,8 @@ class WidgetbookHttpClient {
     Dio? client,
   }) : client = client ?? Dio() {
     this.client.options.baseUrl = _getUrl();
+    this.client.options.contentType = Headers.jsonContentType;
+    this.client.options.responseType = ResponseType.json;
   }
 
   String _getUrl() {
@@ -34,103 +32,53 @@ class WidgetbookHttpClient {
   /// underlying [Dio] client
   final Dio client;
 
-  Future<ReviewUploadResponse?> uploadReview({
-    required String apiKey,
-    required List<ChangedUseCase> useCases,
-    required String buildId,
-    required String projectId,
-    required String baseBranch,
-    required String headBranch,
-    required String baseSha,
-    required String headSha,
-  }) async {
-    if (useCases.isNotEmpty) {
-      try {
-        final createReviewResponse = await client.post<dynamic>(
-          '/reviews',
-          data: CreateUseCasesRequest(
-            apiKey: apiKey,
-            useCases: useCases,
-            buildId: buildId,
-            projectId: projectId,
-            baseBranch: baseBranch,
-            headBranch: headBranch,
-            baseSha: baseSha,
-            headSha: headSha,
-          ).toJson(),
-        );
-        return ReviewUploadResponse.fromJson(
-          jsonDecode(
-            jsonEncode(
-              createReviewResponse.data as Map<String, dynamic>,
-            ),
-          ) as Map<String, dynamic>,
-        );
-      } on DioException catch (e) {
-        final response = e.response;
-        if (response != null) {
-          final errorResponse = _decodeResponse(response.data);
-
-          throw WidgetbookPublishReviewException(
-            message: errorResponse.toString(),
-          );
-        }
-        throw WidgetbookPublishReviewException();
-      } catch (e) {
-        throw WidgetbookPublishReviewException();
-      }
+  Future<ReviewResponse> uploadReview(
+    ReviewRequest request,
+  ) async {
+    if (request.useCases.isEmpty) {
+      throw WidgetbookApiException(
+        message: 'No use cases to upload',
+      );
     }
-    return null;
+
+    try {
+      final response = await client.post<Map<String, dynamic>>(
+        '/reviews',
+        data: request.toJson(),
+      );
+
+      return ReviewResponse.fromJson(response.data!);
+    } catch (e) {
+      final message = e is DioException //
+          ? e.response?.toString()
+          : e.toString();
+
+      throw WidgetbookApiException(
+        message: message,
+      );
+    }
   }
 
   /// Uploads the deployment .zip file to the Widgetbook Cloud backend
-  Future<BuildUploadResponse?> uploadBuild({
-    required File deploymentFile,
-    required CreateBuildRequest data,
-  }) async {
+  Future<BuildResponse> uploadBuild(
+    BuildRequest request,
+  ) async {
     try {
+      final formData = await request.toFormData();
       final response = await client.post<Map<String, dynamic>>(
         '/builds/deploy',
-        data: FormData.fromMap(
-          <String, dynamic>{
-            'file': await MultipartFile.fromFile(
-              deploymentFile.path,
-              filename: basename(deploymentFile.path),
-              contentType: MediaType.parse('application/zip'),
-            ),
-            'branch': data.branchName,
-            'repository': data.repositoryName,
-            'actor': data.actor,
-            'commit': data.commitSha,
-            'version-control-provider': data.provider,
-            'api-key': data.apiKey,
-          },
-        ),
+        data: formData,
       );
-      return BuildUploadResponse.fromJson(
-        jsonDecode(
-          jsonEncode(
-            response.data as Map<String, dynamic>,
-          ),
-        ) as Map<String, dynamic>,
-      );
-    } on DioException catch (e) {
-      final response = e.response;
-      if (response != null) {
-        final errorResponse = _decodeResponse(response.data);
 
-        throw WidgetbookDeployException(message: errorResponse.toString());
-      }
+      return BuildResponse.fromJson(response.data!);
     } catch (e) {
-      throw WidgetbookDeployException();
-    }
-    return null;
-  }
+      final message = e is DioException //
+          ? e.response?.toString()
+          : e.toString();
 
-  Map<String, dynamic> _decodeResponse(dynamic data) {
-    if (data is String) {
-      return json.decode(data) as Map<String, dynamic>;
+      throw WidgetbookApiException(
+        message: message,
+      );
     }
-    return data as Map<String, dynamic>;
   }
 }

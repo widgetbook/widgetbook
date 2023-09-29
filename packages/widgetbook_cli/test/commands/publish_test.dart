@@ -9,7 +9,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:platform/platform.dart';
 import 'package:test/test.dart';
 
-import '../../bin/api/widgetbook_http_client.dart';
+import '../../bin/api/api.dart';
 import '../../bin/ci_parser/ci_parser.dart';
 import '../../bin/commands/commands.dart';
 import '../../bin/git/branch_reference.dart';
@@ -18,7 +18,6 @@ import '../../bin/git/git_wrapper.dart';
 import '../../bin/git/modification.dart';
 import '../../bin/helpers/helpers.dart';
 import '../../bin/models/models.dart';
-import '../../bin/models/publish_args.dart';
 import '../../bin/review/use_cases/changed_use_case.dart';
 import '../../bin/review/use_cases/use_case_parser.dart';
 import '../helpers/test_data.dart';
@@ -27,9 +26,9 @@ import '../mocks/models/models.dart';
 
 class FakeFile extends Fake implements File {}
 
-class FakeCreateBuildRequest extends Fake implements CreateBuildRequest {}
+class FakeBuildRequest extends Fake implements BuildRequest {}
 
-class FakeReviewData extends Fake implements ReviewData {}
+class FakeReviewRequest extends Fake implements ReviewRequest {}
 
 class FakeDirectory extends Fake implements Directory {}
 
@@ -47,7 +46,7 @@ void main() {
     late Platform platform;
     late ArgResults argResults;
     late PublishCommand publishCommand;
-    late WidgetbookHttpClient widgetbookHttpClient;
+    late WidgetbookHttpClient client;
     late WidgetbookZipEncoder widgetbookZipEncoder;
     late LocalFileSystem localFileSystem;
     late Progress progress;
@@ -61,7 +60,7 @@ void main() {
       gitDir = MockGitDir();
       argResults = MockArgResults();
       ciWrapper = MockCiWrapper();
-      widgetbookHttpClient = MockWidgetbookHttpClient();
+      client = MockWidgetbookHttpClient();
       widgetbookZipEncoder = MockWidgetbookZipEncoder();
       localFileSystem = MockLocalFileSystem();
       progress = MockProgress();
@@ -71,14 +70,14 @@ void main() {
       when(() => logger.progress(any<String>())).thenReturn(progress);
       publishCommand = PublishCommand(
         logger: logger,
-        widgetbookHttpClient: widgetbookHttpClient,
+        client: client,
       )..testArgResults = argResults;
 
       when(() => argResults['api-key'] as String).thenReturn(apiKey);
 
       registerFallbackValue(FakeFile());
-      registerFallbackValue(FakeCreateBuildRequest());
-      registerFallbackValue(FakeReviewData());
+      registerFallbackValue(FakeBuildRequest());
+      registerFallbackValue(FakeReviewRequest());
       registerFallbackValue(FakeDirectory());
     });
 
@@ -691,7 +690,7 @@ void main() {
 
         final command = PublishCommand(
           logger: logger,
-          widgetbookHttpClient: widgetbookHttpClient,
+          client: client,
         )..testArgResults = argResults;
 
         expect(
@@ -701,115 +700,6 @@ void main() {
             getZipFile: (fileSystem) => null,
           ),
           throwsA(const TypeMatcher<UnableToCreateZipFileException>()),
-        );
-      },
-    );
-
-    test(
-      'throws $WidgetbookDeployException when '
-      '[$WidgetbookHttpClient.uploadDeployment] encounters an $Exception',
-      () {
-        final fileSystem = MemoryFileSystem.test();
-        final file = fileSystem.file('web.zip')..createSync();
-
-        when(() => gitDir.branches()).thenAnswer((_) => Future.value([]));
-
-        when(
-          () => widgetbookHttpClient.uploadBuild(
-            deploymentFile: any(
-              named: 'deploymentFile',
-            ),
-            data: any(
-              named: 'data',
-            ),
-          ),
-        ).thenThrow(WidgetbookDeployException(message: 'Dio Error'));
-        expect(
-          () => publishCommand.uploadDeploymentInfo(
-            file: file,
-            args: TestData.args,
-          ),
-          throwsA(const TypeMatcher<WidgetbookDeployException>()),
-        );
-      },
-    );
-
-    test(
-      'throws $WidgetbookPublishReviewException when '
-      '[$WidgetbookHttpClient.uploadReview] encounters an $Exception',
-      () {
-        final fileSystem = MemoryFileSystem.test();
-        final file = fileSystem.file('web.zip')..createSync();
-
-        when(() => gitDir.branches()).thenAnswer((_) => Future.value([]));
-
-        when(
-          () => widgetbookHttpClient.uploadReview(
-            apiKey: any(
-              named: 'apiKey',
-            ),
-            useCases: any(
-              named: 'useCases',
-            ),
-            buildId: any(
-              named: 'buildId',
-            ),
-            projectId: any(
-              named: 'projectId',
-            ),
-            baseBranch: any(
-              named: 'baseBranch',
-            ),
-            headBranch: any(
-              named: 'headBranch',
-            ),
-            baseSha: any(
-              named: 'baseSha',
-            ),
-            headSha: any(
-              named: 'headSha',
-            ),
-          ),
-        ).thenThrow(WidgetbookPublishReviewException(message: 'Dio Error'));
-        expect(
-          () => publishCommand.uploadReview(
-            file: file,
-            args: TestData.args,
-            reviewData: TestData.reviewData,
-          ),
-          throwsA(const TypeMatcher<WidgetbookPublishReviewException>()),
-        );
-      },
-    );
-
-    test(
-      'uploadDeployment method returns a $BuildUploadResponse when '
-      '[$WidgetbookHttpClient.uploadDeployment] runs successfully',
-      () async {
-        final fileSystem = MemoryFileSystem.test();
-        final file = fileSystem.file('web.zip')..createSync();
-
-        when(() => gitDir.branches()).thenAnswer((_) => Future.value([]));
-
-        when(
-          () => widgetbookHttpClient.uploadBuild(
-            deploymentFile: any(
-              named: 'deploymentFile',
-            ),
-            data: any(
-              named: 'data',
-            ),
-          ),
-        ).thenAnswer((_) => Future.value(TestData.uploadBuildInfo));
-
-        final results = await publishCommand.uploadDeploymentInfo(
-          file: file,
-          args: TestData.args,
-        );
-
-        expect(
-          results,
-          isA<BuildUploadResponse>(),
         );
       },
     );
@@ -825,13 +715,14 @@ void main() {
         expect(file.existsSync(), isFalse);
       },
     );
+
     test('exits with code 0 when publishing a build succeeds', () async {
       final fileSystem = MemoryFileSystem.test();
       final file = fileSystem.file('web.zip')..createSync();
 
       final publishCommand = PublishCommand(
         fileSystem: localFileSystem,
-        widgetbookHttpClient: widgetbookHttpClient,
+        client: client,
         logger: logger,
         useCaseParser: useCaseParser,
         ciParserRunner: CiParserRunner(
@@ -871,15 +762,10 @@ void main() {
           .thenAnswer((_) => Future.value('widgetbook'));
 
       when(
-        () => widgetbookHttpClient.uploadBuild(
-          deploymentFile: any(
-            named: 'deploymentFile',
-          ),
-          data: any(
-            named: 'data',
-          ),
-        ),
-      ).thenAnswer((_) => Future.value(TestData.uploadBuildInfo));
+        () => client.uploadBuild(any<BuildRequest>()),
+      ).thenAnswer(
+        (_) async => TestData.buildResponse,
+      );
 
       when(() => gitDir.branches()).thenAnswer((_) => Future.value([]));
 
@@ -894,7 +780,7 @@ void main() {
 
       final publishCommand = PublishCommand(
         fileSystem: localFileSystem,
-        widgetbookHttpClient: widgetbookHttpClient,
+        client: client,
         logger: logger,
         useCaseParser: useCaseParser,
         ciParserRunner: CiParserRunner(
@@ -938,46 +824,18 @@ void main() {
           .thenAnswer((_) => Future.value('widgetbook'));
 
       when(
-        () => widgetbookHttpClient.uploadBuild(
-          deploymentFile: any(
-            named: 'deploymentFile',
-          ),
-          data: any(
-            named: 'data',
-          ),
-        ),
-      ).thenAnswer((_) => Future.value(TestData.uploadBuildInfo));
+        () => client.uploadBuild(any<BuildRequest>()),
+      ).thenAnswer(
+        (_) async => TestData.buildResponse,
+      );
 
       when(() => gitDir.branches()).thenAnswer((_) => Future.value([]));
 
       when(
-        () => widgetbookHttpClient.uploadReview(
-          apiKey: any(
-            named: 'apiKey',
-          ),
-          useCases: any(
-            named: 'useCases',
-          ),
-          buildId: any(
-            named: 'buildId',
-          ),
-          projectId: any(
-            named: 'projectId',
-          ),
-          baseBranch: any(
-            named: 'baseBranch',
-          ),
-          headBranch: any(
-            named: 'headBranch',
-          ),
-          baseSha: any(
-            named: 'baseSha',
-          ),
-          headSha: any(
-            named: 'headSha',
-          ),
-        ),
-      ).thenAnswer((_) => Future.value());
+        () => client.uploadReview(any<ReviewRequest>()),
+      ).thenAnswer(
+        (_) async => TestData.reviewResponse,
+      );
 
       when(() => widgetbookZipEncoder.encode(any())).thenReturn(file);
 

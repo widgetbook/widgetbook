@@ -6,8 +6,8 @@ enum BuildUploadStatus {
   failure,
 }
 
-class BuildUploadResponse {
-  const BuildUploadResponse({
+class BuildResponse {
+  const BuildResponse({
     required this.project,
     required this.build,
     required this.status,
@@ -19,18 +19,9 @@ class BuildUploadResponse {
   final BuildUploadStatus status;
   final List<UploadTask> tasks;
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'project': project,
-      'build': build,
-      'status': status.name,
-      'tasks': tasks.map((x) => x.toJson()).toList(),
-    };
-  }
-
   // ignore: sort_constructors_first
-  factory BuildUploadResponse.fromJson(Map<String, dynamic> map) {
-    return BuildUploadResponse(
+  factory BuildResponse.fromJson(Map<String, dynamic> map) {
+    return BuildResponse(
       project: map['project'] as String,
       build: map['build'] as String,
       status: BuildUploadStatus.values.byName(map['status'] as String),

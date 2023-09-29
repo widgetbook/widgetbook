@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 
 import '../flavor/flavor.dart';
-import '../models/build_upload_response.dart';
 
 abstract class GitProvider {
   GitProvider({
@@ -46,8 +45,9 @@ abstract class GitProvider {
   }
 
   Future<void> addBuildComment({
-    required BuildUploadResponse buildInfo,
     required String number,
+    required String projectId,
+    required String buildId,
     required String? reviewId,
   });
 }

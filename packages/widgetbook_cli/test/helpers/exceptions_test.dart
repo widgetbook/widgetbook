@@ -25,22 +25,6 @@ void main() {
       });
     });
 
-    group('$WidgetbookDeployException', () {
-      test('has the correct message', () {
-        const message = 'An error occurred while deploying your Widgetbook to '
-            'Widgetbook Cloud. Please try again.';
-        expect(WidgetbookDeployException().message, equals(message));
-      });
-    });
-
-    group('$WidgetbookPublishReviewException', () {
-      test('has the correct message', () {
-        const message = 'An error occurred while deploying your Widgetbook '
-            'review to Widgetbook Cloud. Please try again.';
-        expect(WidgetbookPublishReviewException().message, equals(message));
-      });
-    });
-
     group('$DirectoryNotFoundException', () {
       test('has the correct message', () {
         const message = 'Directory ./ does not exist.';

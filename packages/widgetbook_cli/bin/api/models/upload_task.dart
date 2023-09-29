@@ -13,13 +13,6 @@ class UploadTask {
   final UploadTaskStatus status;
   final String message;
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'status': status.name,
-      'message': message,
-    };
-  }
-
   // ignore: sort_constructors_first
   factory UploadTask.fromJson(Map<String, dynamic> map) {
     return UploadTask(
