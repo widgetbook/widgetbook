@@ -1,6 +1,5 @@
 import 'package:args/args.dart';
 
-import '../helpers/helpers.dart';
 import '../models/models.dart';
 
 abstract class CiParser {
@@ -15,12 +14,18 @@ abstract class CiParser {
   final ArgResults argResults;
 
   Future<CiArgs> getCiArgs() async {
+    final actor = argResults['actor'] == null
+        ? await getActor()
+        : argResults['actor'] as String;
+
+    final repository = argResults['repository'] == null
+        ? await getRepository()
+        : argResults['repository'] as String;
+
     return CiArgs(
       vendor: vendor,
-      actor: argResults.hasActor ? argResults.actor : await getActor(),
-      repository: argResults.hasRepository
-          ? argResults.repository
-          : await getRepository(),
+      actor: actor,
+      repository: repository,
     );
   }
 }
