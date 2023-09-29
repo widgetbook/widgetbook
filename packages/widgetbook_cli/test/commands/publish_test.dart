@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:args/args.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
@@ -19,7 +21,6 @@ import '../../bin/models/models.dart';
 import '../../bin/models/publish_args.dart';
 import '../../bin/review/use_cases/changed_use_case.dart';
 import '../../bin/review/use_cases/use_case_parser.dart';
-import '../../bin/std/stdin_wrapper.dart';
 import '../helpers/test_data.dart';
 import '../mocks/mocks.dart';
 import '../mocks/models/models.dart';
@@ -44,7 +45,6 @@ void main() {
     late GitWrapper gitWrapper;
     late GitDir gitDir;
     late CiWrapper ciWrapper;
-    late StdInWrapper stdInWrapper;
     late Platform platform;
     late ArgResults argResults;
     late PublishCommand publishCommand;
@@ -53,6 +53,7 @@ void main() {
     late LocalFileSystem localFileSystem;
     late Progress progress;
     late UseCaseParser useCaseParser;
+    late Stdin stdin;
     final tempDir = const LocalFileSystem().currentDirectory;
 
     setUp(() async {
@@ -61,12 +62,12 @@ void main() {
       gitDir = MockGitDir();
       argResults = MockArgResults();
       ciWrapper = MockCiWrapper();
-      stdInWrapper = MockStdInWrapper();
       widgetbookHttpClient = MockWidgetbookHttpClient();
       widgetbookZipEncoder = MockWidgetbookZipEncoder();
       localFileSystem = MockLocalFileSystem();
       progress = MockProgress();
       useCaseParser = MockUseCaseParser();
+      stdin = MockStdin();
 
       when(() => logger.progress(any<String>())).thenReturn(progress);
       publishCommand = PublishCommand(
@@ -317,7 +318,6 @@ void main() {
         setUp(() {
           command = PublishCommand(
             logger: logger,
-            stdInWrapper: stdInWrapper,
           )..testArgResults = argResults;
           gitDir = MockGitDir();
         });
@@ -342,11 +342,16 @@ void main() {
             when(
               gitDir.isWorkingTreeClean,
             ).thenAnswer((_) => Future.value(false));
-            when(() => stdInWrapper.hasTerminal).thenReturn(false);
+            when(() => stdin.hasTerminal).thenReturn(false);
 
-            expect(
-              command.checkIfWorkingTreeIsClean(gitDir),
-              completes,
+            IOOverrides.runZoned(
+              stdin: () => stdin,
+              () {
+                expect(
+                  command.checkIfWorkingTreeIsClean(gitDir),
+                  completes,
+                );
+              },
             );
           },
         );
@@ -357,7 +362,8 @@ void main() {
             when(
               gitDir.isWorkingTreeClean,
             ).thenAnswer((_) => Future.value(false));
-            when(() => stdInWrapper.hasTerminal).thenReturn(true);
+            when(() => stdin.hasTerminal).thenReturn(true);
+
             when(
               () => logger.chooseOne(
                 'Would you like to proceed anyways?',
@@ -366,9 +372,14 @@ void main() {
               ),
             ).thenReturn('no');
 
-            expect(
-              command.checkIfWorkingTreeIsClean(gitDir),
-              throwsA(const TypeMatcher<ExitedByUser>()),
+            IOOverrides.runZoned(
+              stdin: () => stdin,
+              () {
+                expect(
+                  command.checkIfWorkingTreeIsClean(gitDir),
+                  throwsA(const TypeMatcher<ExitedByUser>()),
+                );
+              },
             );
           },
         );
@@ -450,7 +461,6 @@ void main() {
         command = PublishCommand(
           logger: logger,
           ciParserRunner: ciParserRunner,
-          stdInWrapper: stdInWrapper,
         )..testArgResults = argResults;
       });
 
@@ -613,7 +623,6 @@ void main() {
         'proceed with un-commited changes', () async {
       final publishCommand = PublishCommand(
         logger: logger,
-        stdInWrapper: stdInWrapper,
         gitWrapper: gitWrapper,
         ciParserRunner: CiParserRunner(argResults: argResults, gitDir: gitDir),
       )..testArgResults = argResults;
@@ -644,7 +653,8 @@ void main() {
         (_) => Future.value(false),
       );
 
-      when(() => stdInWrapper.hasTerminal).thenReturn(true);
+      when(() => stdin.hasTerminal).thenReturn(true);
+
       when(
         () => logger.chooseOne(
           'Would you like to proceed anyways?',
@@ -653,10 +663,13 @@ void main() {
         ),
       ).thenReturn('no');
 
-      expect(
-        publishCommand.run,
-        throwsA(
-          const TypeMatcher<ExitedByUser>(),
+      IOOverrides.runZoned(
+        stdin: () => stdin,
+        () => expect(
+          publishCommand.run,
+          throwsA(
+            const TypeMatcher<ExitedByUser>(),
+          ),
         ),
       );
     });
