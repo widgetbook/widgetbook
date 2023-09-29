@@ -26,8 +26,6 @@ dependencies:
   meta: ^1.8.0
   path: ^1.8.2
   pub_updater: ^0.3.0 
-  pubspec: ^2.3.0
-  test: ^1.12.1
   version: ^3.0.2
 
 dev_dependencies:
