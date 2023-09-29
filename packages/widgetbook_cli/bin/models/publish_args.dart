@@ -3,7 +3,6 @@ class PublishArgs {
     required this.apiKey,
     required this.branch,
     required this.commit,
-    required this.gitProvider,
     required this.path,
     required this.vendor,
     required this.actor,
@@ -17,7 +16,6 @@ class PublishArgs {
   final String apiKey;
   final String branch;
   final String commit;
-  final String gitProvider;
   final String path;
   final String vendor;
   final String actor;
@@ -37,7 +35,6 @@ class PublishArgs {
     return other.apiKey == apiKey &&
         other.branch == branch &&
         other.commit == commit &&
-        other.gitProvider == gitProvider &&
         other.path == path &&
         other.vendor == vendor &&
         other.actor == actor &&
@@ -53,7 +50,6 @@ class PublishArgs {
     return apiKey.hashCode ^
         branch.hashCode ^
         commit.hashCode ^
-        gitProvider.hashCode ^
         path.hashCode ^
         vendor.hashCode ^
         actor.hashCode ^

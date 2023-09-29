@@ -35,7 +35,6 @@ class FakeDirectory extends Fake implements Directory {}
 
 void main() {
   const apiKey = 'Api-Key';
-  const gitProvider = 'Local';
   const path = 'path';
   const branch = 'branch';
   const commit = 'commit';
@@ -76,7 +75,6 @@ void main() {
       )..testArgResults = argResults;
 
       when(() => argResults['api-key'] as String).thenReturn(apiKey);
-      when(() => argResults['git-provider'] as String).thenReturn(gitProvider);
 
       registerFallbackValue(FakeFile());
       registerFallbackValue(FakeCreateBuildRequest());
@@ -496,8 +494,6 @@ void main() {
             when(() => argResults['path'] as String).thenReturn(path);
             when(() => argResults['api-key'] as String).thenReturn(apiKey);
             when(() => argResults['commit'] as String).thenReturn(commit);
-            when(() => argResults['git-provider'] as String)
-                .thenReturn(gitProvider);
 
             // Setup mocks for getArgumentsFromCi
             when(() => ciParserRunner.getParser()).thenReturn(ciParser);
@@ -522,7 +518,6 @@ void main() {
                   apiKey: apiKey,
                   branch: branch,
                   commit: commit,
-                  gitProvider: gitProvider,
                   vendor: vendor,
                   actor: actor,
                   repository: repository,
@@ -547,7 +542,6 @@ void main() {
                   apiKey: apiKey,
                   branch: branchReference.reference,
                   commit: commit,
-                  gitProvider: gitProvider,
                   vendor: vendor,
                   actor: actor,
                   repository: repository,
