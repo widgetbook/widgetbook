@@ -25,6 +25,7 @@ dependencies:
   mason_logger: ^0.2.5
   meta: ^1.8.0
   path: ^1.8.2
+  platform: ^3.0.0
   pub_updater: ^0.3.0 
   version: ^3.0.2
 

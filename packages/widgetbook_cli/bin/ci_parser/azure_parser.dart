@@ -1,27 +1,25 @@
+import 'package:platform/platform.dart';
+
 import 'ci_parser.dart';
 
 class AzureParser extends CiParser {
   AzureParser({
     required super.argResults,
-    PlatformWrapper? platformWrapper,
-  }) : _platformWrapper = platformWrapper ?? PlatformWrapper();
+    this.platform = const LocalPlatform(),
+  });
 
-  final PlatformWrapper _platformWrapper;
-
-  PlatformWrapper get platformWrapper => _platformWrapper;
+  final Platform platform;
 
   @override
   String get vendor => 'Azure';
 
   @override
   Future<String?> getActor() async {
-    return _platformWrapper.environmentVariable(variable: 'Agent.Name');
+    return platform.environment['Agent.Name'];
   }
 
   @override
   Future<String?> getRepository() async {
-    return _platformWrapper.environmentVariable(
-      variable: 'Build.Repository.Name',
-    );
+    return platform.environment['Build.Repository.Name'];
   }
 }

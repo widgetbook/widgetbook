@@ -4,6 +4,7 @@ import 'package:args/args.dart';
 import 'package:file/local.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:platform/platform.dart';
 import 'package:pub_updater/pub_updater.dart';
 
 import '../../bin/api/widgetbook_http_client.dart';
@@ -42,6 +43,6 @@ class MockCiWrapper extends Mock implements CiWrapper {}
 
 class MockStdInWrapper extends Mock implements StdInWrapper {}
 
-class MockPlatformWrapper extends Mock implements PlatformWrapper {}
+class MockPlatform extends Mock implements Platform {}
 
 class MockUseCaseParser extends Mock implements UseCaseParser {}

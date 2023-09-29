@@ -1,4 +1,5 @@
 import 'package:args/args.dart';
+import 'package:platform/platform.dart';
 
 import '../git/git_dir.dart';
 import 'ci_parser.dart';
@@ -7,18 +8,14 @@ class CiParserRunner {
   CiParserRunner({
     required this.argResults,
     required this.gitDir,
+    this.platform = const LocalPlatform(),
     CiWrapper? ciWrapper,
-    PlatformWrapper? platformWrapper,
-  })  : _ciWrapper = ciWrapper ?? CiWrapper(),
-        _platformWrapper = platformWrapper ?? PlatformWrapper();
+  }) : _ciWrapper = ciWrapper ?? CiWrapper();
 
   final ArgResults argResults;
   final GitDir gitDir;
-
+  final Platform platform;
   final CiWrapper _ciWrapper;
-  final PlatformWrapper _platformWrapper;
-
-  PlatformWrapper get platformWrapper => _platformWrapper;
 
   CiParser? getParser() {
     if (!_ciWrapper.isCI()) {
@@ -31,31 +28,31 @@ class CiParserRunner {
     if (_ciWrapper.isGitLab()) {
       return GitLabParser(
         argResults: argResults,
-        platformWrapper: _platformWrapper,
+        platform: platform,
       );
     }
     if (_ciWrapper.isGithub()) {
       return GitHubParser(
         argResults: argResults,
-        platformWrapper: _platformWrapper,
+        platform: platform,
       );
     }
     if (_ciWrapper.isAzure()) {
       return AzureParser(
         argResults: argResults,
-        platformWrapper: _platformWrapper,
+        platform: platform,
       );
     }
     if (_ciWrapper.isBitBucket()) {
       return BitbucketParser(
         argResults: argResults,
-        platformWrapper: _platformWrapper,
+        platform: platform,
       );
     }
     if (_ciWrapper.isCodemagic()) {
       return CodemagicParser(
         argResults: argResults,
-        platformWrapper: _platformWrapper,
+        platform: platform,
       );
     }
 

@@ -1,14 +1,14 @@
+import 'package:platform/platform.dart';
+
 import 'ci_parser.dart';
 
 class BitbucketParser extends CiParser {
   BitbucketParser({
     required super.argResults,
-    PlatformWrapper? platformWrapper,
-  }) : _platformWrapper = platformWrapper ?? PlatformWrapper();
+    this.platform = const LocalPlatform(),
+  });
 
-  final PlatformWrapper _platformWrapper;
-
-  PlatformWrapper get platformWrapper => _platformWrapper;
+  final Platform platform;
 
   @override
   String get vendor => 'Bitbucket';
@@ -17,15 +17,11 @@ class BitbucketParser extends CiParser {
   /// for scheduled builds, the uuid of the pipelines user.
   @override
   Future<String?> getActor() async {
-    return _platformWrapper.environmentVariable(
-      variable: 'BITBUCKET_STEP_TRIGGERER_UUID',
-    );
+    return platform.environment['BITBUCKET_STEP_TRIGGERER_UUID'];
   }
 
   @override
   Future<String?> getRepository() async {
-    return _platformWrapper.environmentVariable(
-      variable: 'BITBUCKET_REPO_FULL_NAME',
-    );
+    return platform.environment['BITBUCKET_REPO_FULL_NAME'];
   }
 }

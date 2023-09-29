@@ -1,5 +1,6 @@
 import 'package:args/args.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:platform/platform.dart';
 import 'package:test/test.dart';
 
 import '../../bin/ci_parser/ci_parser.dart';
@@ -15,19 +16,19 @@ void main() {
   late ArgResults argResults;
   late GitDir gitDir;
   late CiWrapper ciWrapper;
-  late PlatformWrapper platformWrapper;
+  late Platform platform;
 
   setUp(() async {
     argResults = MockArgResults();
     gitDir = MockGitDir();
     ciWrapper = MockCiWrapper();
-    platformWrapper = MockPlatformWrapper();
+    platform = MockPlatform();
 
     sut = CiParserRunner(
       argResults: argResults,
       gitDir: gitDir,
       ciWrapper: ciWrapper,
-      platformWrapper: platformWrapper,
+      platform: platform,
     );
   });
 
@@ -76,18 +77,12 @@ void main() {
       () async {
         when(() => ciWrapper.isCI()).thenReturn(true);
         when(() => ciWrapper.isGitLab()).thenReturn(true);
-
         when(
-          () => platformWrapper.environmentVariable(
-            variable: 'CI_PROJECT_NAME',
-          ),
-        ).thenReturn(repositoryName);
-
-        when(
-          () => platformWrapper.environmentVariable(
-            variable: 'GITLAB_USER_NAME',
-          ),
-        ).thenReturn(actorName);
+          () => platform.environment,
+        ).thenReturn({
+          'CI_PROJECT_NAME': repositoryName,
+          'GITLAB_USER_NAME': actorName,
+        });
 
         final ciArgs = await sut.getParser()?.getCiArgs();
 
@@ -104,18 +99,12 @@ void main() {
         when(() => ciWrapper.isBitBucket()).thenReturn(false);
         when(() => ciWrapper.isGitLab()).thenReturn(false);
         when(() => ciWrapper.isAzure()).thenReturn(false);
-
         when(
-          () => platformWrapper.environmentVariable(
-            variable: 'GITHUB_REPOSITORY',
-          ),
-        ).thenReturn(repositoryName);
-
-        when(
-          () => platformWrapper.environmentVariable(
-            variable: 'GITHUB_ACTOR',
-          ),
-        ).thenReturn(actorName);
+          () => platform.environment,
+        ).thenReturn({
+          'GITHUB_REPOSITORY': repositoryName,
+          'GITHUB_ACTOR': actorName,
+        });
 
         final ciArgs = await sut.getParser()?.getCiArgs();
 
@@ -130,22 +119,15 @@ void main() {
       () async {
         when(() => ciWrapper.isCI()).thenReturn(true);
         when(() => ciWrapper.isAzure()).thenReturn(true);
-
         when(() => ciWrapper.isBitBucket()).thenReturn(false);
         when(() => ciWrapper.isGitLab()).thenReturn(false);
         when(() => ciWrapper.isGithub()).thenReturn(false);
-
         when(
-          () => platformWrapper.environmentVariable(
-            variable: 'Build.Repository.Name',
-          ),
-        ).thenReturn(repositoryName);
-
-        when(
-          () => platformWrapper.environmentVariable(
-            variable: 'Agent.Name',
-          ),
-        ).thenReturn(actorName);
+          () => platform.environment,
+        ).thenReturn({
+          'Build.Repository.Name': repositoryName,
+          'Agent.Name': actorName,
+        });
 
         final ciArgs = await sut.getParser()?.getCiArgs();
 
@@ -160,22 +142,15 @@ void main() {
       () async {
         when(() => ciWrapper.isCI()).thenReturn(true);
         when(() => ciWrapper.isBitBucket()).thenReturn(true);
-
         when(() => ciWrapper.isAzure()).thenReturn(false);
         when(() => ciWrapper.isGitLab()).thenReturn(false);
         when(() => ciWrapper.isGithub()).thenReturn(false);
-
         when(
-          () => platformWrapper.environmentVariable(
-            variable: 'BITBUCKET_REPO_FULL_NAME',
-          ),
-        ).thenReturn(repositoryName);
-
-        when(
-          () => platformWrapper.environmentVariable(
-            variable: 'BITBUCKET_STEP_TRIGGERER_UUID',
-          ),
-        ).thenReturn(actorName);
+          () => platform.environment,
+        ).thenReturn({
+          'BITBUCKET_REPO_FULL_NAME': repositoryName,
+          'BITBUCKET_STEP_TRIGGERER_UUID': actorName,
+        });
 
         final ciArgs = await sut.getParser()?.getCiArgs();
 

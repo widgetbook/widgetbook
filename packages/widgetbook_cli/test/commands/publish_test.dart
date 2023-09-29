@@ -4,6 +4,7 @@ import 'package:file/local.dart';
 import 'package:file/memory.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:platform/platform.dart';
 import 'package:test/test.dart';
 
 import '../../bin/api/widgetbook_http_client.dart';
@@ -44,7 +45,7 @@ void main() {
     late GitDir gitDir;
     late CiWrapper ciWrapper;
     late StdInWrapper stdInWrapper;
-    late PlatformWrapper platformWrapper;
+    late Platform platform;
     late ArgResults argResults;
     late PublishCommand publishCommand;
     late WidgetbookHttpClient widgetbookHttpClient;
@@ -381,11 +382,11 @@ void main() {
       setUp(() {
         gitDir = MockGitDir();
         ciWrapper = MockCiWrapper();
-        platformWrapper = MockPlatformWrapper();
+        platform = MockPlatform();
         command = PublishCommand(
           logger: logger,
           ciWrapper: ciWrapper,
-          platformWrapper: platformWrapper,
+          platform: platform,
         )..testArgResults = argResults;
       });
 
@@ -404,13 +405,14 @@ void main() {
       test(
         'returns SHA of second commit when running on GitHub',
         () async {
-          when(
-            () => platformWrapper.environmentVariable(
-              variable: 'GITHUB_SHA',
-            ),
-          ).thenReturn(commitSha);
           when(() => ciWrapper.isGithub()).thenReturn(true);
           when(() => ciWrapper.isCodemagic()).thenReturn(false);
+          when(
+            () => platform.environment,
+          ).thenReturn({
+            'GITHUB_SHA': commitSha,
+          });
+
           expect(
             command.gitProviderSha(),
             commitSha,
@@ -421,13 +423,14 @@ void main() {
       test(
         'returns null when not running on Codemagic',
         () async {
-          when(
-            () => platformWrapper.environmentVariable(
-              variable: 'CM_COMMIT',
-            ),
-          ).thenReturn(commitSha);
           when(() => ciWrapper.isGithub()).thenReturn(false);
           when(() => ciWrapper.isCodemagic()).thenReturn(true);
+          when(
+            () => platform.environment,
+          ).thenReturn({
+            'CM_COMMIT': commitSha,
+          });
+
           expect(
             command.gitProviderSha(),
             commitSha,

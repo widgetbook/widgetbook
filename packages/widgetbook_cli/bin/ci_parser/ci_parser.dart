@@ -7,4 +7,3 @@ export 'github_parser.dart';
 export 'gitlab_parser.dart';
 export 'local_parser.dart';
 export 'parser.dart';
-export 'platform_wrapper.dart';
