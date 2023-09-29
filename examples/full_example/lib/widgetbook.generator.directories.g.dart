@@ -8,74 +8,75 @@
 // AppGenerator
 // **************************************************************************
 
-import 'package:full_example/components/container.dart';
-import 'package:full_example/components/custom_card.dart';
-import 'package:full_example/components/custom_text_field.dart';
-import 'package:full_example/customs/custom_knob.dart';
-import 'package:widgetbook/widgetbook.dart';
+// ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:full_example/components/container.dart' as _i5;
+import 'package:full_example/components/custom_card.dart' as _i2;
+import 'package:full_example/components/custom_text_field.dart' as _i3;
+import 'package:full_example/customs/custom_knob.dart' as _i4;
+import 'package:widgetbook/widgetbook.dart' as _i1;
 
-final directories = [
-  WidgetbookFolder(
-    name: 'widgets',
-    children: [
-      WidgetbookComponent(
-        name: 'Container',
-        useCases: [
-          WidgetbookUseCase(
-            name: 'with green color',
-            builder: (context) => greenContainerUseCase(context),
-          ),
-          WidgetbookUseCase(
-            name: 'with different title',
-            builder: (context) => myWidget(context),
-          ),
-        ],
-      ),
-    ],
-  ),
-  WidgetbookFolder(
+final directories = <_i1.WidgetbookNode>[
+  _i1.WidgetbookFolder(
     name: 'components',
     children: [
-      WidgetbookComponent(
-        name: 'CustomTextField',
+      _i1.WidgetbookComponent(
+        name: 'CustomCard',
         useCases: [
-          WidgetbookUseCase(
+          _i1.WidgetbookUseCase(
             name: 'Default Style',
-            builder: (context) => defaultCustomTextField(context),
+            builder: _i2.defaultCustomCard,
           ),
-          WidgetbookUseCase(
-            name: 'With Hint Text',
-            builder: (context) => hintTextCustomTextField(context),
+          _i1.WidgetbookUseCase(
+            name: 'With Custom Background Color',
+            builder: _i2.customBackgroundCustomCard,
           ),
         ],
       ),
-      WidgetbookComponent(
-        name: 'CustomCard',
+      _i1.WidgetbookComponent(
+        name: 'CustomTextField',
         useCases: [
-          WidgetbookUseCase(
+          _i1.WidgetbookUseCase(
             name: 'Default Style',
-            builder: (context) => defaultCustomCard(context),
+            builder: _i3.defaultCustomTextField,
           ),
-          WidgetbookUseCase(
-            name: 'With Custom Background Color',
-            builder: (context) => customBackgroundCustomCard(context),
+          _i1.WidgetbookUseCase(
+            name: 'With Hint Text',
+            builder: _i3.hintTextCustomTextField,
           ),
         ],
       ),
     ],
   ),
-  WidgetbookFolder(
+  _i1.WidgetbookFolder(
     name: 'material',
     children: [
-      WidgetbookComponent(
+      _i1.WidgetbookComponent(
         name: 'RangeSlider',
         useCases: [
-          WidgetbookUseCase(
+          _i1.WidgetbookUseCase(
             name: 'CustomRangeSlider',
-            builder: (context) => rangeSlider(context),
+            builder: _i4.rangeSlider,
+          )
+        ],
+      )
+    ],
+  ),
+  _i1.WidgetbookFolder(
+    name: 'widgets',
+    children: [
+      _i1.WidgetbookComponent(
+        name: 'Container',
+        useCases: [
+          _i1.WidgetbookUseCase(
+            name: 'with different title',
+            builder: _i5.myWidget,
+          ),
+          _i1.WidgetbookUseCase(
+            name: 'with green color',
+            builder: _i5.greenContainerUseCase,
           ),
         ],
-      ),
+      )
     ],
   ),
 ];
