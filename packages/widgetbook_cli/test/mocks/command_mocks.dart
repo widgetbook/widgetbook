@@ -13,7 +13,6 @@ import '../../bin/git/git_dir.dart';
 import '../../bin/git/git_wrapper.dart';
 import '../../bin/helpers/widgetbook_zip_encoder.dart';
 import '../../bin/review/use_cases/use_case_parser.dart';
-import '../../bin/std/stdin_wrapper.dart';
 
 class MockLogger extends Mock implements Logger {}
 
@@ -41,8 +40,8 @@ class MockLocalFileSystem extends Mock implements LocalFileSystem {}
 
 class MockCiWrapper extends Mock implements CiWrapper {}
 
-class MockStdInWrapper extends Mock implements StdInWrapper {}
-
 class MockPlatform extends Mock implements Platform {}
 
 class MockUseCaseParser extends Mock implements UseCaseParser {}
+
+class MockStdin extends Mock implements Stdin {}

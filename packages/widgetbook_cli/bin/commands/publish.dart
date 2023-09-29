@@ -21,6 +21,8 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import 'dart:io';
+
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:mason_logger/mason_logger.dart';
@@ -39,7 +41,6 @@ import '../helpers/widgetbook_zip_encoder.dart';
 import '../models/models.dart';
 import '../models/publish_args.dart';
 import '../review/use_cases/use_case_parser.dart';
-import '../std/stdin_wrapper.dart';
 import 'command.dart';
 
 class PublishCommand extends WidgetbookCommand {
@@ -52,13 +53,11 @@ class PublishCommand extends WidgetbookCommand {
     FileSystem? fileSystem,
     CiWrapper? ciWrapper,
     GitWrapper? gitWrapper,
-    StdInWrapper? stdInWrapper,
     UseCaseParser? useCaseParser,
   })  : _widgetbookHttpClient = widgetbookHttpClient ?? WidgetbookHttpClient(),
         _widgetbookZipEncoder = widgetbookZipEncoder ?? WidgetbookZipEncoder(),
         _ciWrapper = ciWrapper ?? CiWrapper(),
         _gitWrapper = gitWrapper ?? GitWrapper(),
-        _stdInWrapper = stdInWrapper ?? StdInWrapper(),
         _useCaseParser = useCaseParser,
         _fileSystem = fileSystem ?? const LocalFileSystem() {
     progress = logger.progress('Publishing Widgetbook');
@@ -135,7 +134,6 @@ class PublishCommand extends WidgetbookCommand {
   final FileSystem _fileSystem;
   final CiWrapper _ciWrapper;
   final GitWrapper _gitWrapper;
-  final StdInWrapper _stdInWrapper;
   final UseCaseParser? _useCaseParser;
 
   late final Progress progress;
@@ -168,8 +166,10 @@ class PublishCommand extends WidgetbookCommand {
             'SHA. Due to un-committed changes, we are using the commit SHA '
             'of your previous commit which can lead to the build being '
             'rejected due to an already existing build.');
+
       var proceedWithUnCommitedChanges = 'yes';
-      if (_stdInWrapper.hasTerminal) {
+
+      if (stdin.hasTerminal) {
         proceedWithUnCommitedChanges = logger.chooseOne(
           'Would you like to proceed anyways?',
           choices: ['no', 'yes'],
