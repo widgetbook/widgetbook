@@ -23,6 +23,9 @@ jobs:
       - name: Get packages 
         run: melos bootstrap
 
+      - name: Get packages 
+        run: melos generate
+
       - name: Generate diff
         run: git --no-pager diff
 
