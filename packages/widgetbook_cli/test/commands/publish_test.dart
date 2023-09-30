@@ -613,7 +613,7 @@ void main() {
 
     test(
         'throws a $ExitedByUser when user decides not to '
-        'proceed with un-commited changes', () async {
+        'proceed with un-committed changes', () async {
       final publishCommand = PublishCommand(
         logger: logger,
         gitWrapper: gitWrapper,
@@ -668,18 +668,6 @@ void main() {
     });
 
     test(
-      'throws $DirectoryNotFoundException when web folder is not found',
-      () {
-        final fileSystem = MemoryFileSystem.test();
-
-        expect(
-          () => publishCommand.getZipFile(fileSystem.directory('/web')),
-          throwsA(const TypeMatcher<DirectoryNotFoundException>()),
-        );
-      },
-    );
-
-    test(
       'throws $UnableToCreateZipFileException when zip file could '
       'not be create for upload',
       () {
@@ -694,25 +682,9 @@ void main() {
         )..testArgResults = argResults;
 
         expect(
-          () => command.publishBuilds(
-            args: TestData.args,
-            gitDir: gitDir,
-            getZipFile: (fileSystem) => null,
-          ),
+          () => command.publish(TestData.args),
           throwsA(const TypeMatcher<UnableToCreateZipFileException>()),
         );
-      },
-    );
-
-    test(
-      'delete zip',
-      () {
-        final fileSystem = MemoryFileSystem.test();
-        final file = fileSystem.file('web.zip')..createSync();
-
-        expect(file.existsSync(), isTrue);
-        publishCommand.deleteZip(file);
-        expect(file.existsSync(), isFalse);
       },
     );
 

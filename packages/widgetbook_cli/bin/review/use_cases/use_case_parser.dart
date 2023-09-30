@@ -77,55 +77,50 @@ class UseCaseParser extends GeneratorParser<ChangedUseCase> {
 
   @override
   Future<List<ChangedUseCase>> parse() async {
-    // TODO we should be able to remove this
-    if (fileSystem.isDirectorySync(generatedFolderPath)) {
-      // TODO we should do this first
-      if (!await GitDir.isGitDir(projectPath)) {
-        return [];
-      }
-
-      final files =
-          getFilesFromGeneratedFolder(fileExtension: '.usecase.widgetbook.json')
-              .toList();
-
-      // TODO use getItemsFromFiles instead!
-      final useCases = _getUseCasesFromFiles(files).toList();
-
-      final gitDir = await GitDir.fromExisting(
-        projectPath,
-        allowSubdirectory: true,
-      );
-
-      final fileDiffs = await gitDir.diff(
-        base: baseBranch,
-      );
-
-      final changedUseCases = <ChangedUseCase>[];
-
-      // TODO this is inefficient
-      for (final useCase in useCases) {
-        for (final diff in fileDiffs) {
-          if (_hasChanged(usecase: useCase, diff: diff)) {
-            changedUseCases.add(
-              ChangedUseCase(
-                name: useCase.useCaseName,
-                componentName: useCase.componentName,
-                componentDefinitionPath: useCase.componentDefinitionPath,
-                // TODO works for now, but on a file level we can't really say
-                // if a single use-case was added or not
-                // for this, we require AT LEAST line-diff functionality
-                modification: diff.modification,
-                designLink: useCase.designLink,
-              ),
-            );
-            break;
-          }
-        }
-      }
-
-      return changedUseCases;
+    // TODO we should do this first
+    if (!await GitDir.isGitDir(projectPath)) {
+      return [];
     }
 
-    return [];
+    final files = getFilesFromGeneratedFolder(
+      fileExtension: '.usecase.widgetbook.json',
+    ).toList();
+
+    // TODO use getItemsFromFiles instead!
+    final useCases = _getUseCasesFromFiles(files).toList();
+
+    final gitDir = await GitDir.fromExisting(
+      projectPath,
+      allowSubdirectory: true,
+    );
+
+    final fileDiffs = await gitDir.diff(
+      base: baseBranch,
+    );
+
+    final changedUseCases = <ChangedUseCase>[];
+
+    // TODO this is inefficient
+    for (final useCase in useCases) {
+      for (final diff in fileDiffs) {
+        if (_hasChanged(usecase: useCase, diff: diff)) {
+          changedUseCases.add(
+            ChangedUseCase(
+              name: useCase.useCaseName,
+              componentName: useCase.componentName,
+              componentDefinitionPath: useCase.componentDefinitionPath,
+              // TODO works for now, but on a file level we can't really say
+              // if a single use-case was added or not
+              // for this, we require AT LEAST line-diff functionality
+              modification: diff.modification,
+              designLink: useCase.designLink,
+            ),
+          );
+          break;
+        }
+      }
+    }
+
+    return changedUseCases;
   }
 }
