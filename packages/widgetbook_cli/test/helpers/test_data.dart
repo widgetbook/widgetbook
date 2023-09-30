@@ -1,6 +1,6 @@
+import '../../bin/api/api.dart';
 import '../../bin/git/branch_reference.dart';
 import '../../bin/models/models.dart';
-import '../../bin/models/publish_args.dart';
 
 class TestData {
   static const ciArgsData = CliArgs(
@@ -39,17 +39,17 @@ class TestData {
     'HEAD',
   );
 
-  static const uploadBuildInfo = BuildUploadResponse(
+  static const buildResponse = BuildResponse(
     project: 'projectId',
     build: 'buildId',
     status: BuildUploadStatus.success,
     tasks: [],
   );
 
-  static const reviewData = ReviewData(
-    useCases: [],
-    buildId: 'buildId',
-    projectId: 'projectId',
-    baseSha: 'baseSha',
+  static const reviewResponse = ReviewResponse(
+    tasks: [],
+    review: Review(
+      id: 'reviewId',
+    ),
   );
 }

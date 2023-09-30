@@ -12,30 +12,6 @@ abstract class WidgetbookException implements Exception {
   String toString() => message;
 }
 
-class WidgetbookDeployException implements WidgetbookException {
-  WidgetbookDeployException({String? message})
-      : _message =
-            message ??= 'An error occurred while deploying your Widgetbook to '
-                'Widgetbook Cloud. Please try again.';
-
-  final String? _message;
-
-  @override
-  String get message => _message!;
-}
-
-class WidgetbookPublishReviewException implements WidgetbookException {
-  WidgetbookPublishReviewException({String? message})
-      : _message =
-            message ??= 'An error occurred while deploying your Widgetbook '
-                'review to Widgetbook Cloud. Please try again.';
-
-  final String? _message;
-
-  @override
-  String get message => _message!;
-}
-
 class CiVendorNotSupported extends WidgetbookException {
   CiVendorNotSupported({
     String? message,

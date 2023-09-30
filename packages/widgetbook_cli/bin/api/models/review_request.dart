@@ -1,7 +1,7 @@
-import 'changed_use_case.dart';
+import '../../review/use_cases/changed_use_case.dart';
 
-class CreateUseCasesRequest {
-  const CreateUseCasesRequest({
+class ReviewRequest {
+  const ReviewRequest({
     required this.apiKey,
     required this.useCases,
     required this.buildId,
@@ -32,23 +32,5 @@ class CreateUseCasesRequest {
       'baseSha': baseSha,
       'headSha': headSha,
     };
-  }
-
-  // ignore: sort_constructors_first
-  factory CreateUseCasesRequest.fromJson(Map<String, dynamic> map) {
-    return CreateUseCasesRequest(
-      apiKey: map['apiKey'] as String,
-      useCases: List<ChangedUseCase>.from(
-        (map['useCases'] as List<dynamic>).map<ChangedUseCase>(
-          (x) => ChangedUseCase.fromJson(x as Map<String, dynamic>),
-        ),
-      ),
-      buildId: map['buildId'] as String,
-      projectId: map['projectId'] as String,
-      baseBranch: map['baseBranch'] as String,
-      headBranch: map['headBranch'] as String,
-      baseSha: map['baseSha'] as String,
-      headSha: map['headSha'] as String,
-    );
   }
 }

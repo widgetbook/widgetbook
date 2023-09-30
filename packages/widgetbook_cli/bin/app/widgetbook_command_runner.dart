@@ -91,12 +91,6 @@ class WidgetbookCommandRunner extends CommandRunner<int> {
     } on FileNotFoundException catch (error) {
       _logger.err(error.message);
       return ExitCode.usage.code;
-    } on WidgetbookPublishReviewException catch (error) {
-      _logger.err(error.message);
-      return ExitCode.software.code;
-    } on WidgetbookDeployException catch (error) {
-      _logger.err(error.message);
-      return ExitCode.software.code;
     } on ReviewNotFoundException catch (error) {
       _logger.warn(error.message);
       return ExitCode.success.code;

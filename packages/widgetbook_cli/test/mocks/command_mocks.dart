@@ -7,7 +7,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:platform/platform.dart';
 import 'package:pub_updater/pub_updater.dart';
 
-import '../../bin/api/widgetbook_http_client.dart';
+import '../../bin/api/api.dart';
 import '../../bin/ci_parser/ci_parser.dart';
 import '../../bin/git/git_dir.dart';
 import '../../bin/git/git_wrapper.dart';
