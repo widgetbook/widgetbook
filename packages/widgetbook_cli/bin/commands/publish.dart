@@ -148,23 +148,23 @@ class PublishCommand extends WidgetbookCommand {
     final isWorkingTreeClean = await gitDir.isWorkingTreeClean();
     if (!isWorkingTreeClean) {
       logger
-        ..warn('You have un-commited changes')
+        ..warn('You have un-committed changes')
         ..warn('Uploading a new build to Widgetbook Cloud requires a commit '
             'SHA. Due to un-committed changes, we are using the commit SHA '
             'of your previous commit which can lead to the build being '
             'rejected due to an already existing build.');
 
-      var proceedWithUnCommitedChanges = 'yes';
+      var proceedWithUnCommittedChanges = 'yes';
 
       if (stdin.hasTerminal) {
-        proceedWithUnCommitedChanges = logger.chooseOne(
+        proceedWithUnCommittedChanges = logger.chooseOne(
           'Would you like to proceed anyways?',
           choices: ['no', 'yes'],
           defaultValue: 'no',
         );
       }
 
-      if (proceedWithUnCommitedChanges == 'no') {
+      if (proceedWithUnCommittedChanges == 'no') {
         progress.cancel();
         throw ExitedByUser();
       }
@@ -255,24 +255,10 @@ class PublishCommand extends WidgetbookCommand {
     await checkIfWorkingTreeIsClean(gitDir);
     final args = await getArguments(gitDir: gitDir);
 
-    await publishBuilds(
-      args: args,
-      gitDir: gitDir,
-      getZipFile: getZipFile,
-      useCaseParser: _useCaseParser,
-    );
+    await publish(args);
 
     return ExitCode.success.code;
   }
-
-  @visibleForTesting
-  void deleteZip(File zip) {
-    zip.delete();
-  }
-
-  @visibleForTesting
-  File? getZipFile(Directory directory) =>
-      _widgetbookZipEncoder.encode(directory);
 
   // TODO sha is pretty much not used an is just being overriden with the most
   // recent sha of the branch
@@ -348,44 +334,71 @@ class PublishCommand extends WidgetbookCommand {
   }
 
   @visibleForTesting
-  Future<void> publishBuilds({
-    required PublishArgs args,
-    required GitDir gitDir,
-    required File? Function(Directory dir) getZipFile,
-    UseCaseParser? useCaseParser,
-  }) async {
-    progress.update('Getting branches');
-
-    final buildPath = p.join(
-      args.path,
-      'build',
-      'web',
-    );
-
-    final baseBranch = args.baseBranch;
-    final baseSha = args.baseSha;
-    final directory = _fileSystem.directory(buildPath);
-    final useCases = await _useCaseParser?.parse() ??
-        (baseBranch == null
-            ? []
-            : await UseCaseParser(
-                projectPath: args.path,
-                baseBranch: baseBranch,
-              ).parse());
-
-    progress.update('Detected ${useCases.length} changed use-case(s)');
-
+  Future<void> publish(PublishArgs args) async {
     try {
-      progress.update('Generating zip');
-      final file = getZipFile(directory);
+      final buildResponse = await publishBuild(
+        args: args,
+      );
 
-      if (file == null) {
-        logger.err('Could not create .zip file for upload.');
-        throw UnableToCreateZipFileException();
+      final hasReview = args.baseBranch != null && args.baseSha != null;
+
+      if (!hasReview) {
+        logger.info(
+          '💡Tip: You can upload a review by specifying a `base-branch` option.\n'
+          'For more information: https://docs.widgetbook.io/widgetbook-cloud/reviews',
+        );
       }
 
+      final reviewResponse = hasReview
+          ? await publishReview(
+              args: args,
+              buildResponse: buildResponse,
+            )
+          : null;
+
+      if (args.prNumber != null && args.gitHubToken != null) {
+        await GithubProvider(
+          apiKey: args.gitHubToken!,
+        ).addBuildComment(
+          number: args.prNumber!,
+          projectId: buildResponse.project,
+          buildId: buildResponse.build,
+          reviewId: reviewResponse?.review.id,
+        );
+      }
+    } catch (e) {
+      progress.fail();
+      rethrow;
+    }
+  }
+
+  Future<BuildResponse> publishBuild({
+    required PublishArgs args,
+  }) async {
+    final buildDirPath = p.join(args.path, 'build', 'web');
+    final buildDir = _fileSystem.directory(buildDirPath);
+
+    if (!buildDir.existsSync()) {
+      logger.err(
+        'build/web directory does not exist.\n'
+        'Run the following command before publishing:\n\n\t'
+        'flutter build web --target path/to/widgetbook.dart\n\n',
+      );
+
+      throw UnableToCreateZipFileException();
+    }
+
+    progress.update('Generating zip');
+    final zipFile = _widgetbookZipEncoder.encode(buildDir);
+
+    if (zipFile == null) {
+      logger.err('Could not create .zip file.');
+      throw UnableToCreateZipFileException();
+    }
+
+    try {
       progress.update('Uploading build');
-      final buildUploadResponse = await _client.uploadBuild(
+      final response = await _client.uploadBuild(
         BuildRequest(
           apiKey: args.apiKey,
           branchName: args.branch,
@@ -393,11 +406,11 @@ class PublishCommand extends WidgetbookCommand {
           commitSha: args.commit,
           actor: args.actor,
           provider: args.vendor,
-          file: file,
+          file: zipFile,
         ),
       );
 
-      for (final task in buildUploadResponse.tasks) {
+      for (final task in response.tasks) {
         if (task.status == UploadTaskStatus.success) {
           logger.success('\n✅ ${task.message}');
         } else if (task.status == UploadTaskStatus.warning) {
@@ -407,66 +420,66 @@ class PublishCommand extends WidgetbookCommand {
         }
       }
 
-      if (baseBranch == null) {
-        logger.info(
-          '💡Tip: you can upload a review by specifying a `base-branch` parameter.'
-          '\nSee https://docs.widgetbook.io/widgetbook-cloud/review '
-          'for more information',
-        );
-      }
-
       progress.complete('Build upload completed');
 
-      String? reviewId;
-      if (baseBranch != null && baseSha != null) {
-        // If generator is not run or not properly configured
-        if (useCases.isEmpty) {
-          logger.err(
-            'Could not find generator files. '
-            'Therefore, no review has been created. '
-            'Make sure to use widgetbook_generator and '
-            'run build_runner before this CLI. '
-            'See https://docs.widgetbook.io/widgetbook-cloud/review for more '
-            'information.',
-          );
-          throw ReviewNotFoundException();
-        }
+      return response;
+    } catch (_) {
+      rethrow;
+    } finally {
+      zipFile.delete();
+    }
+  }
 
-        progress.update('Uploading review');
-        final reviewUploadResponse = await _client.uploadReview(
-          ReviewRequest(
-            apiKey: args.apiKey,
-            useCases: useCases,
-            buildId: buildUploadResponse.build,
-            projectId: buildUploadResponse.project,
-            baseBranch: args.baseBranch!,
-            headBranch: args.branch,
-            baseSha: baseSha,
-            headSha: args.commit,
-          ),
+  Future<ReviewResponse?> publishReview({
+    required PublishArgs args,
+    required BuildResponse buildResponse,
+  }) async {
+    final genDirPath = p.join(args.path, '.dart_tool', 'build', 'generated');
+    final genDir = _fileSystem.directory(genDirPath);
+
+    if (!genDir.existsSync()) {
+      logger.err(
+        'Could not find generator files. Therefore, no review has been created.\n'
+        'Make sure to use widgetbook_generator and run build_runner before this CLI.\n'
+        'For more information: https://docs.widgetbook.io/widgetbook-cloud/reviews',
+      );
+
+      throw ReviewNotFoundException();
+    }
+
+    final baseBranch = args.baseBranch!;
+    final parser = _useCaseParser ??
+        UseCaseParser(
+          projectPath: args.path,
+          baseBranch: baseBranch,
         );
 
-        reviewId = reviewUploadResponse.review.id;
-        progress.complete('Uploaded review');
-      }
+    final useCases = await parser.parse();
 
-      if (args.prNumber != null) {
-        if (args.gitHubToken != null) {
-          await GithubProvider(
-            apiKey: args.gitHubToken!,
-          ).addBuildComment(
-            number: args.prNumber!,
-            projectId: buildUploadResponse.project,
-            buildId: buildUploadResponse.build,
-            reviewId: reviewId,
-          );
-        }
-      }
-
-      deleteZip(file);
-    } catch (e) {
-      progress.fail();
-      rethrow;
+    if (useCases.isEmpty) {
+      logger.err('Could not find any changed use-cases files.');
+      throw ReviewNotFoundException();
     }
+
+    progress.update(
+      'Uploading review [${useCases.length} modified use-case(s)]',
+    );
+
+    final response = await _client.uploadReview(
+      ReviewRequest(
+        apiKey: args.apiKey,
+        useCases: useCases,
+        buildId: buildResponse.build,
+        projectId: buildResponse.project,
+        baseBranch: args.baseBranch!,
+        headBranch: args.branch,
+        baseSha: args.baseSha!,
+        headSha: args.commit,
+      ),
+    );
+
+    progress.complete('Review upload completed');
+
+    return response;
   }
 }
