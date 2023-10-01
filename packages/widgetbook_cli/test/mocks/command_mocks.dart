@@ -11,7 +11,6 @@ import '../../bin/api/api.dart';
 import '../../bin/ci_parser/ci_parser.dart';
 import '../../bin/git/git_dir.dart';
 import '../../bin/git/git_wrapper.dart';
-import '../../bin/helpers/widgetbook_zip_encoder.dart';
 import '../../bin/review/use_cases/use_case_parser.dart';
 
 class MockLogger extends Mock implements Logger {}
@@ -29,8 +28,6 @@ class MockArgResults extends Mock implements ArgResults {}
 class MockCiParserRunner extends Mock implements CiParserRunner {}
 
 class MockCiParser extends Mock implements CiParser {}
-
-class MockWidgetbookZipEncoder extends Mock implements WidgetbookZipEncoder {}
 
 class MockGitDir extends Mock implements GitDir {}
 

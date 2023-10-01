@@ -47,7 +47,6 @@ void main() {
     late ArgResults argResults;
     late PublishCommand publishCommand;
     late WidgetbookHttpClient client;
-    late WidgetbookZipEncoder widgetbookZipEncoder;
     late LocalFileSystem localFileSystem;
     late Progress progress;
     late UseCaseParser useCaseParser;
@@ -61,7 +60,6 @@ void main() {
       argResults = MockArgResults();
       ciWrapper = MockCiWrapper();
       client = MockWidgetbookHttpClient();
-      widgetbookZipEncoder = MockWidgetbookZipEncoder();
       localFileSystem = MockLocalFileSystem();
       progress = MockProgress();
       useCaseParser = MockUseCaseParser();
@@ -690,7 +688,6 @@ void main() {
 
     test('exits with code 0 when publishing a build succeeds', () async {
       final fileSystem = MemoryFileSystem.test();
-      final file = fileSystem.file('web.zip')..createSync();
 
       final publishCommand = PublishCommand(
         fileSystem: localFileSystem,
@@ -720,8 +717,20 @@ void main() {
       when(() => gitDir.getActorName())
           .thenAnswer((_) => Future.value('John Doe'));
 
-      when(() => localFileSystem.directory(any<String>()))
-          .thenAnswer((_) => fileSystem.directory('/'));
+      when(() => localFileSystem.directory(any<String>())).thenAnswer(
+        ($) => fileSystem.directory($.positionalArguments[0])
+          ..createSync(
+            recursive: true,
+          ),
+      );
+
+      when(() => localFileSystem.file(any<String>())).thenAnswer(
+        ($) => fileSystem.file($.positionalArguments[0])
+          ..createSync(
+            recursive: true,
+          ),
+      );
+
       when(
         () => logger.chooseOne(
           'Would you like to proceed anyways?',
@@ -741,14 +750,12 @@ void main() {
 
       when(() => gitDir.branches()).thenAnswer((_) => Future.value([]));
 
-      when(() => widgetbookZipEncoder.encode(any())).thenReturn(file);
       final result = await publishCommand.run();
       expect(result, equals(ExitCode.success.code));
     });
 
     test('exits with code 0 when publishing a review succeeds', () async {
       final fileSystem = MemoryFileSystem.test();
-      final file = fileSystem.file('web.zip')..createSync();
 
       final publishCommand = PublishCommand(
         fileSystem: localFileSystem,
@@ -782,8 +789,20 @@ void main() {
       when(() => gitDir.getActorName())
           .thenAnswer((_) => Future.value('John Doe'));
 
-      when(() => localFileSystem.directory(any<String>()))
-          .thenAnswer((_) => fileSystem.directory('/'));
+      when(() => localFileSystem.directory(any<String>())).thenAnswer(
+        ($) => fileSystem.directory($.positionalArguments[0])
+          ..createSync(
+            recursive: true,
+          ),
+      );
+
+      when(() => localFileSystem.file(any<String>())).thenAnswer(
+        ($) => fileSystem.file($.positionalArguments[0])
+          ..createSync(
+            recursive: true,
+          ),
+      );
+
       when(
         () => logger.chooseOne(
           'Would you like to proceed anyways?',
@@ -808,8 +827,6 @@ void main() {
       ).thenAnswer(
         (_) async => TestData.reviewResponse,
       );
-
-      when(() => widgetbookZipEncoder.encode(any())).thenReturn(file);
 
       final result = await publishCommand.run();
 

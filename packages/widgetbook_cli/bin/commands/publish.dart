@@ -37,7 +37,7 @@ import '../git/branch_reference.dart';
 import '../git/git_dir.dart';
 import '../git/git_wrapper.dart';
 import '../helpers/exceptions.dart';
-import '../helpers/widgetbook_zip_encoder.dart';
+import '../helpers/zip_encoder.dart';
 import '../models/models.dart';
 import '../review/use_cases/use_case_parser.dart';
 import 'command.dart';
@@ -47,18 +47,15 @@ class PublishCommand extends WidgetbookCommand {
     super.logger,
     this.ciParserRunner,
     this.platform = const LocalPlatform(),
+    this.fileSystem = const LocalFileSystem(),
     WidgetbookHttpClient? client,
-    WidgetbookZipEncoder? widgetbookZipEncoder,
-    FileSystem? fileSystem,
     CiWrapper? ciWrapper,
     GitWrapper? gitWrapper,
     UseCaseParser? useCaseParser,
   })  : _client = client ?? WidgetbookHttpClient(),
-        _widgetbookZipEncoder = widgetbookZipEncoder ?? WidgetbookZipEncoder(),
         _ciWrapper = ciWrapper ?? CiWrapper(),
         _gitWrapper = gitWrapper ?? GitWrapper(),
-        _useCaseParser = useCaseParser,
-        _fileSystem = fileSystem ?? const LocalFileSystem() {
+        _useCaseParser = useCaseParser {
     progress = logger.progress('Publishing Widgetbook');
     argParser
       ..addOption(
@@ -116,9 +113,8 @@ class PublishCommand extends WidgetbookCommand {
 
   CiParserRunner? ciParserRunner;
   final Platform platform;
+  final FileSystem fileSystem;
   final WidgetbookHttpClient _client;
-  final WidgetbookZipEncoder _widgetbookZipEncoder;
-  final FileSystem _fileSystem;
   final CiWrapper _ciWrapper;
   final GitWrapper _gitWrapper;
   final UseCaseParser? _useCaseParser;
@@ -376,7 +372,7 @@ class PublishCommand extends WidgetbookCommand {
     required PublishArgs args,
   }) async {
     final buildDirPath = p.join(args.path, 'build', 'web');
-    final buildDir = _fileSystem.directory(buildDirPath);
+    final buildDir = fileSystem.directory(buildDirPath);
 
     if (!buildDir.existsSync()) {
       logger.err(
@@ -389,45 +385,40 @@ class PublishCommand extends WidgetbookCommand {
     }
 
     progress.update('Generating zip');
-    final zipFile = _widgetbookZipEncoder.encode(buildDir);
+    final encoder = ZipEncoder(fileSystem: fileSystem);
+    final zipFile = await encoder.zip(buildDir);
 
     if (zipFile == null) {
       logger.err('Could not create .zip file.');
       throw UnableToCreateZipFileException();
     }
 
-    try {
-      progress.update('Uploading build');
-      final response = await _client.uploadBuild(
-        BuildRequest(
-          apiKey: args.apiKey,
-          branchName: args.branch,
-          repositoryName: args.repository,
-          commitSha: args.commit,
-          actor: args.actor,
-          provider: args.vendor,
-          file: zipFile,
-        ),
-      );
+    progress.update('Uploading build');
+    final response = await _client.uploadBuild(
+      BuildRequest(
+        apiKey: args.apiKey,
+        branchName: args.branch,
+        repositoryName: args.repository,
+        commitSha: args.commit,
+        actor: args.actor,
+        provider: args.vendor,
+        file: zipFile,
+      ),
+    );
 
-      for (final task in response.tasks) {
-        if (task.status == UploadTaskStatus.success) {
-          logger.success('\n✅ ${task.message}');
-        } else if (task.status == UploadTaskStatus.warning) {
-          logger.info('\n⚠️ ${task.message}');
-        } else {
-          logger.err('\n❌ ${task.message}');
-        }
+    for (final task in response.tasks) {
+      if (task.status == UploadTaskStatus.success) {
+        logger.success('\n✅ ${task.message}');
+      } else if (task.status == UploadTaskStatus.warning) {
+        logger.info('\n⚠️ ${task.message}');
+      } else {
+        logger.err('\n❌ ${task.message}');
       }
-
-      progress.complete('Build upload completed');
-
-      return response;
-    } catch (_) {
-      rethrow;
-    } finally {
-      zipFile.delete();
     }
+
+    progress.complete('Build upload completed');
+
+    return response;
   }
 
   Future<ReviewResponse?> publishReview({
@@ -435,7 +426,7 @@ class PublishCommand extends WidgetbookCommand {
     required BuildResponse buildResponse,
   }) async {
     final genDirPath = p.join(args.path, '.dart_tool', 'build', 'generated');
-    final genDir = _fileSystem.directory(genDirPath);
+    final genDir = fileSystem.directory(genDirPath);
 
     if (!genDir.existsSync()) {
       logger.err(
