@@ -4,7 +4,7 @@ import 'package:pub_updater/pub_updater.dart';
 import 'package:test/test.dart';
 
 import '../../bin/app/widgetbook_command_runner.dart';
-import '../../bin/helpers/version.dart';
+import '../../bin/helpers/metadata.dart';
 import '../mocks/mocks.dart';
 
 void main() {
@@ -21,9 +21,6 @@ void main() {
 
       when(() => logger.progress(any())).thenReturn(MockProgress());
       when(
-        () => pubUpdater.getLatestVersion(any()),
-      ).thenAnswer((_) async => packageVersion);
-      when(
         () => pubUpdater.update(packageName: packageName),
       ).thenAnswer((_) => Future.value(FakeProcessResult()));
 
@@ -35,8 +32,12 @@ void main() {
 
     test('handles pub latest version query errors', () async {
       when(
-        () => pubUpdater.getLatestVersion(any()),
+        () => pubUpdater.isUpToDate(
+          packageName: any(named: 'packageName'),
+          currentVersion: any(named: 'currentVersion'),
+        ),
       ).thenThrow(Exception('oops'));
+
       final result = await widgetbookCommandRunner.run(['upgrade']);
       expect(result, equals(ExitCode.software.code));
       verify(() => logger.progress('Checking for updates')).called(1);
@@ -48,11 +49,22 @@ void main() {
 
     test('handles pub update errors', () async {
       when(
-        () => pubUpdater.getLatestVersion(any()),
-      ).thenAnswer((_) async => latestVersion);
+        () => pubUpdater.isUpToDate(
+          packageName: any(named: 'packageName'),
+          currentVersion: any(named: 'currentVersion'),
+        ),
+      ).thenAnswer((_) async => false);
+
       when(
-        () => pubUpdater.update(packageName: any(named: 'packageName')),
+        () => pubUpdater.getLatestVersion(packageName),
+      ).thenAnswer((_) async => latestVersion);
+
+      when(
+        () => pubUpdater.update(
+          packageName: any(named: 'packageName'),
+        ),
       ).thenThrow(Exception('oops'));
+
       final result = await widgetbookCommandRunner.run(['upgrade']);
       expect(result, equals(ExitCode.software.code));
       verify(() => logger.progress('Checking for updates')).called(1);
@@ -64,17 +76,33 @@ void main() {
 
     test('updates when newer version exists', () async {
       when(
+        () => pubUpdater.isUpToDate(
+          packageName: any(named: 'packageName'),
+          currentVersion: any(named: 'currentVersion'),
+        ),
+      ).thenAnswer((_) async => false);
+
+      when(
         () => pubUpdater.getLatestVersion(any()),
       ).thenAnswer((_) async => latestVersion);
+
       when(() => logger.progress(any())).thenReturn(MockProgress());
+
       final result = await widgetbookCommandRunner.run(['upgrade']);
       expect(result, equals(ExitCode.success.code));
       verify(() => logger.progress('Checking for updates')).called(1);
-      verify(() => logger.progress('Upgrading to $latestVersion')).called(1);
+      verify(() => logger.progress('Upgrading to latest version')).called(1);
       verify(() => pubUpdater.update(packageName: packageName)).called(1);
     });
 
     test('does not update when already on latest version', () async {
+      when(
+        () => pubUpdater.isUpToDate(
+          packageName: any(named: 'packageName'),
+          currentVersion: any(named: 'currentVersion'),
+        ),
+      ).thenAnswer((_) async => true);
+
       when(
         () => pubUpdater.getLatestVersion(any()),
       ).thenAnswer((_) async => packageVersion);

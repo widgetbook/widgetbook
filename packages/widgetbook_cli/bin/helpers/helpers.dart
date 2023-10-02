@@ -1,3 +1,3 @@
 export 'exceptions.dart';
-export 'version.dart';
+export 'metadata.dart';
 export 'zip_encoder.dart';

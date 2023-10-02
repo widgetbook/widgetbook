@@ -31,15 +31,16 @@ final changelogLink = lightCyan.wrap(
   styleUnderlined.wrap(
     link(
       uri: Uri.parse(
-        'https://pub.dev/packages/widgetbook_cli/changelog',
+        'https://pub.dev/packages/widgetbook_cli/versions/$latestVersion/changelog',
       ),
     ),
   ),
 );
-final updateMessage = '''
-${lightYellow.wrap('Update available!')} ${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}
-${lightYellow.wrap('Changelog:')} $changelogLink
-Run ${cyan.wrap('widgetbook update')} to update''';
+
+final updateMessage =
+    '\n${lightYellow.wrap('Update available!')} ${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}\n'
+    '${lightYellow.wrap('Changelog:')} $changelogLink\n'
+    'Run ${cyan.wrap('$executableName update')} to update';
 
 void main() {
   group('$WidgetbookCommandRunner', () {
@@ -74,10 +75,18 @@ void main() {
     group('run', () {
       test('prompts for update when newer version exists', () async {
         when(
+          () => pubUpdater.isUpToDate(
+            packageName: packageName,
+            currentVersion: packageVersion,
+          ),
+        ).thenAnswer((_) async => false);
+        when(
           () => pubUpdater.getLatestVersion(any()),
         ).thenAnswer((_) async => latestVersion);
+
         final result = await commandRunner.run(['--version']);
         expect(result, equals(ExitCode.success.code));
+
         verify(() => logger.info(updateMessage)).called(1);
       });
 

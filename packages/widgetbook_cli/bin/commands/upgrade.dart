@@ -24,8 +24,7 @@
 import 'package:mason_logger/mason_logger.dart';
 import 'package:pub_updater/pub_updater.dart';
 
-import '../app/widgetbook_command_runner.dart';
-import '../helpers/version.dart';
+import '../helpers/metadata.dart';
 import 'command.dart';
 
 class UpgradeCommand extends WidgetbookCommand {
@@ -45,32 +44,39 @@ class UpgradeCommand extends WidgetbookCommand {
   @override
   Future<int> run() async {
     final updateCheckProgress = logger.progress('Checking for updates');
-    late final String latestVersion;
+
     try {
-      latestVersion = await _pubUpdater.getLatestVersion(packageName);
+      final isUpToDate = await _pubUpdater.isUpToDate(
+        packageName: packageName,
+        currentVersion: packageVersion,
+      );
+
+      if (isUpToDate) {
+        logger.info('Widgetbook CLI is already at the latest version.');
+        return ExitCode.success.code;
+      }
+
+      updateCheckProgress.complete('Checked for updates');
     } catch (error) {
       updateCheckProgress.fail();
       logger.err('$error');
       return ExitCode.software.code;
     }
-    updateCheckProgress.complete('Checked for updates');
 
-    final isUpToDate = packageVersion == latestVersion;
-    if (isUpToDate) {
-      logger.info('Widgetbook CLI is already at the latest version.');
-      return ExitCode.success.code;
-    }
+    final updateProgress = logger.progress('Upgrading to latest version');
 
-    final updateProgress = logger.progress('Upgrading to $latestVersion');
     try {
-      await _pubUpdater.update(packageName: packageName);
-    } catch (error) {
+      final latestVersion = await _pubUpdater.getLatestVersion(packageName);
+      await _pubUpdater.update(
+        packageName: packageName,
+      );
+
+      updateProgress.complete('Upgraded to $latestVersion');
+      return ExitCode.success.code;
+    } catch (err) {
       updateProgress.fail();
-      logger.err('$error');
+      logger.err(err.toString());
       return ExitCode.software.code;
     }
-    updateProgress.complete('Upgraded to $latestVersion');
-
-    return ExitCode.success.code;
   }
 }

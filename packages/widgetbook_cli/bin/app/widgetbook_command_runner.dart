@@ -31,10 +31,6 @@ import 'package:pub_updater/pub_updater.dart';
 import '../commands/commands.dart';
 import '../helpers/helpers.dart';
 
-/// The package name.
-const packageName = 'widgetbook_cli';
-const executableName = 'widgetbook';
-
 class WidgetbookCommandRunner extends CommandRunner<int> {
   WidgetbookCommandRunner({
     Logger? logger,
@@ -47,7 +43,13 @@ class WidgetbookCommandRunner extends CommandRunner<int> {
       negatable: false,
       help: 'Print the current version.',
     );
-    addCommand(UpgradeCommand(logger: _logger, pubUpdater: _pubUpdater));
+
+    addCommand(
+      UpgradeCommand(
+        logger: _logger,
+        pubUpdater: _pubUpdater,
+      ),
+    );
 
     addCommand(
       PublishCommand(
@@ -57,7 +59,6 @@ class WidgetbookCommandRunner extends CommandRunner<int> {
   }
 
   final Logger _logger;
-
   final PubUpdater _pubUpdater;
 
   @override
@@ -115,33 +116,42 @@ class WidgetbookCommandRunner extends CommandRunner<int> {
     } else {
       exitCode = await super.runCommand(topLevelResults);
     }
-    if (topLevelResults.command?.name != 'update') await _checkForUpdates();
+
+    if (topLevelResults.command?.name != 'update') {
+      await _checkForUpdates();
+    }
+
     return exitCode;
   }
 
   Future<void> _checkForUpdates() async {
     try {
-      final latestVersion = await _pubUpdater.getLatestVersion(packageName);
-      final isUpToDate = packageVersion == latestVersion;
-      if (!isUpToDate) {
-        final changelogLink = lightCyan.wrap(
-          styleUnderlined.wrap(
-            link(
-              uri: Uri.parse(
-                'https://pub.dev/packages/widgetbook_cli/changelog',
-              ),
+      final isUpToDate = await _pubUpdater.isUpToDate(
+        packageName: packageName,
+        currentVersion: packageVersion,
+      );
+
+      if (isUpToDate) return;
+
+      final latestVersion = await _pubUpdater.getLatestVersion(
+        packageName,
+      );
+
+      final changelogLink = lightCyan.wrap(
+        styleUnderlined.wrap(
+          link(
+            uri: Uri.parse(
+              'https://pub.dev/packages/widgetbook_cli/versions/$latestVersion/changelog',
             ),
           ),
-        );
-        _logger
-          ..info('')
-          ..info(
-            '''
-${lightYellow.wrap('Update available!')} ${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}
-${lightYellow.wrap('Changelog:')} $changelogLink
-Run ${cyan.wrap('$executableName update')} to update''',
-          );
-      }
+        ),
+      );
+
+      _logger.info(
+        '\n${lightYellow.wrap('Update available!')} ${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}\n'
+        '${lightYellow.wrap('Changelog:')} $changelogLink\n'
+        'Run ${cyan.wrap('$executableName update')} to update',
+      );
     } catch (_) {}
   }
 }
