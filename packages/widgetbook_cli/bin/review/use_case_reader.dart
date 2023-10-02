@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:file/file.dart';
 import 'package:path/path.dart';
 
-import '../git/file_diff.dart';
+import '../git/diff_header.dart';
 import 'changed_use_case.dart';
 import 'use_case_metadata.dart';
 
@@ -39,7 +39,7 @@ class UseCaseReader {
 
   List<ChangedUseCase> compare({
     required List<UseCaseMetadata> useCases,
-    required List<FileDiff> diffs,
+    required List<DiffHeader> diffs,
   }) {
     final changedUseCases = <ChangedUseCase>[];
 
@@ -73,16 +73,16 @@ class UseCaseReader {
 
   bool _hasChanged({
     required UseCaseMetadata useCase,
-    required FileDiff diff,
+    required DiffHeader diff,
   }) {
-    if (diff.refPath == null || diff.basePath == null) {
+    if (diff.ref == null || diff.base == null) {
       return false;
     }
 
-    return _comparePaths(useCase.componentDefinitionPath, diff.refPath!) ||
-        _comparePaths(useCase.useCaseDefinitionPath, diff.refPath!) ||
-        _comparePaths(useCase.componentDefinitionPath, diff.basePath!) ||
-        _comparePaths(useCase.useCaseDefinitionPath, diff.basePath!);
+    return _comparePaths(useCase.componentDefinitionPath, diff.ref!) ||
+        _comparePaths(useCase.useCaseDefinitionPath, diff.ref!) ||
+        _comparePaths(useCase.componentDefinitionPath, diff.base!) ||
+        _comparePaths(useCase.useCaseDefinitionPath, diff.base!);
   }
 
   /// Returns true if [a] and [b] are equal or

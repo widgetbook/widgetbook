@@ -449,13 +449,11 @@ class PublishCommand extends WidgetbookCommand {
     }
 
     final useCases = await useCaseReader.read(args.path);
-    final diffs = await gitDir.diff(
-      base: args.baseBranch!,
-    );
+    final diffs = await gitDir.diff(args.baseBranch!);
 
     final changeUseCases = await useCaseReader.compare(
       useCases: useCases,
-      diffs: diffs.toList(),
+      diffs: diffs,
     );
 
     if (changeUseCases.isEmpty) {

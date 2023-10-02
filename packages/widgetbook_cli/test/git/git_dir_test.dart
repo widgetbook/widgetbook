@@ -7,10 +7,9 @@ import 'package:test_descriptor/test_descriptor.dart' as d;
 
 import '../../bin/git/bot.dart';
 import '../../bin/git/commit.dart';
-import '../../bin/git/file_diff.dart';
+import '../../bin/git/diff_header.dart';
 import '../../bin/git/git_dir.dart';
 import '../../bin/git/git_error.dart';
-import '../../bin/git/hunk.dart';
 
 void main() {
   group('diff', () {
@@ -19,29 +18,6 @@ void main() {
       () async {
         final gitDir = await _createTempGitDir();
         final diffs = await gitDir.diff();
-        expect(diffs, isEmpty);
-      },
-    );
-
-    test(
-      'HEAD...HEAD returns []',
-      () async {
-        const initialMasterBranchContent = {
-          'master.md': 'test file',
-        };
-
-        final gitDir = await _createTempGitDir();
-
-        await _doDescriptorGitCommit(
-          gitDir,
-          initialMasterBranchContent,
-          'master files',
-        );
-
-        final diffs = await gitDir.diff(
-          base: 'HEAD',
-          ref: 'HEAD',
-        );
         expect(diffs, isEmpty);
       },
     );
@@ -72,29 +48,15 @@ void main() {
         final commits = await gitDir.commits();
 
         final diffs = await gitDir.diff(
-          base: commits.keys.last,
-          ref: commits.keys.first,
+          commits.keys.last,
         );
 
         expect(
           diffs,
           equals(
             [
-              FileDiff(
-                refPath: '/test.txt',
-                hunks: [
-                  const Hunk(
-                    baseRange: HunkRange(
-                      startLine: 0,
-                      numberOfLines: 0,
-                    ),
-                    refRange: HunkRange(
-                      startLine: 1,
-                      numberOfLines: 1,
-                    ),
-                    content: '@@ -0,0 +1 @@\n+test\n',
-                  ),
-                ],
+              DiffHeader(
+                ref: '/test.txt',
               ),
             ],
           ),
@@ -119,38 +81,22 @@ void main() {
 
         await _doDescriptorGitRemove(
           gitDir,
-          [
-            'test.txt',
-          ],
+          ['test.txt'],
           'test',
         );
 
         final commits = await gitDir.commits();
 
         final diffs = await gitDir.diff(
-          base: commits.keys.last,
-          ref: commits.keys.first,
+          commits.keys.last,
         );
 
         expect(
           diffs,
           equals(
             [
-              FileDiff(
-                basePath: '/test.txt',
-                hunks: [
-                  const Hunk(
-                    baseRange: HunkRange(
-                      startLine: 1,
-                      numberOfLines: 1,
-                    ),
-                    refRange: HunkRange(
-                      startLine: 0,
-                      numberOfLines: 0,
-                    ),
-                    content: '@@ -1 +0,0 @@\n-test\n',
-                  ),
-                ],
+              DiffHeader(
+                base: '/test.txt',
               ),
             ],
           ),
@@ -186,96 +132,16 @@ void main() {
         final commits = await gitDir.commits();
 
         final diffs = await gitDir.diff(
-          base: commits.keys.last,
-          ref: commits.keys.first,
+          commits.keys.last,
         );
 
         expect(
           diffs,
           equals(
             [
-              FileDiff(
-                refPath: '/test.md',
-                basePath: '/test.md',
-                hunks: [
-                  const Hunk(
-                    baseRange: HunkRange(
-                      startLine: 1,
-                      numberOfLines: 1,
-                    ),
-                    refRange: HunkRange(
-                      startLine: 1,
-                      numberOfLines: 1,
-                    ),
-                    content: '@@ -1 +1 @@\n-line 1\n+line 2\n',
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
-    );
-
-    test(
-      'on multiline change returns [@@ -1,2 +1,2 @@]',
-      () async {
-        const initialMasterBranchContent = {
-          'test.md': '''line 1:a
-line 2:b''',
-        };
-
-        final gitDir = await _createTempGitDir();
-
-        await _doDescriptorGitCommit(
-          gitDir,
-          initialMasterBranchContent,
-          'not important',
-        );
-
-        const updatedMasterBranchContent = {
-          'test.md': '''line 1:z
-line 2:y''',
-        };
-
-        await _doDescriptorGitCommit(
-          gitDir,
-          updatedMasterBranchContent,
-          'not important',
-        );
-
-        final commits = await gitDir.commits();
-
-        final diffs = await gitDir.diff(
-          base: commits.keys.last,
-          ref: commits.keys.first,
-        );
-
-        expect(
-          diffs,
-          equals(
-            [
-              FileDiff(
-                refPath: '/test.md',
-                basePath: '/test.md',
-                hunks: [
-                  const Hunk(
-                    baseRange: HunkRange(
-                      startLine: 1,
-                      numberOfLines: 2,
-                    ),
-                    refRange: HunkRange(
-                      startLine: 1,
-                      numberOfLines: 2,
-                    ),
-                    content: '''@@ -1,2 +1,2 @@
--line 1:a
--line 2:b
-+line 1:z
-+line 2:y
-''',
-                  ),
-                ],
+              DiffHeader(
+                ref: '/test.md',
+                base: '/test.md',
               ),
             ],
           ),

@@ -9,9 +9,7 @@ import 'branch_reference.dart';
 import 'commit.dart';
 import 'commit_reference.dart';
 import 'diff_header.dart';
-import 'file_diff.dart';
 import 'git_error.dart';
-import 'hunk.dart';
 import 'top_level.dart';
 import 'tree_entry.dart';
 import 'util.dart';
@@ -289,157 +287,17 @@ class GitDir {
     return map;
   }
 
-  Future<Iterable<FileDiff>> diff({
-    String? base,
-    String? ref,
-    List<String> paths = const <String>[],
-  }) async {
-    final args = ['diff'];
+  Future<List<DiffHeader>> diff([String? base]) async {
+    final args = ['diff', if (base != null) base];
+    final result = await runCommand(args);
+    final output = result.stdout as String;
 
-    if (base != null && ref != null) {
-      args.add('$base...$ref');
-    } else if (base != null) {
-      args.add(base);
-    } else if (ref != null) {
-      args.add('...$ref');
-    }
+    final diffs = output
+        .split('diff --git ')
+        .where((x) => x.isNotEmpty) // First element is always empty
+        .toList();
 
-    args
-      ..add('--')
-      ..addAll(paths);
-
-    final pr = await runCommand(args);
-    // TODO no error handling here
-
-    final diff = pr.stdout as String;
-
-    DiffHeader parseHeader(String fileDiff) {
-      // Header might look like this:
-      // diff --git a/builtin-http-fetch.c b/http-fetch.c
-      // similarity index 95%
-      // rename from builtin-http-fetch.c
-      // rename to http-fetch.c
-      // index f3e63d7..e8f44ba 100644
-      // --- a/builtin-http-fetch.c
-      // +++ b/http-fetch.c
-      final baseFile = RegExp(r'(?<=--- a).*').stringMatch(fileDiff);
-      final refFile = RegExp(r'(?<=\+\+\+ b).*').stringMatch(fileDiff);
-
-      return DiffHeader(
-        baseFile: baseFile,
-        refFile: refFile,
-      );
-    }
-
-    HunkRange parseHunkRange(
-      RegExpMatch match,
-    ) {
-      final startLineGroup = match.group(1);
-      final numberOfLinesGroup = match.group(2);
-      // Skip the sign, since otherwise the line number will be parsed to a
-      // negative number for the base start line
-      final startLineString = startLineGroup!.substring(1);
-
-      late String numberOfLinesString;
-      if (numberOfLinesGroup != null) {
-        numberOfLinesString = numberOfLinesGroup.substring(1);
-      } else {
-        // This group will not exists if the number of lines are omitted
-        // which happens when the number of lines is 1
-        numberOfLinesString = 1.toString();
-      }
-
-      return HunkRange(
-        startLine: int.parse(startLineString),
-        numberOfLines: int.parse(numberOfLinesString),
-      );
-    }
-
-    Hunk parseHunk({
-      required RegExpMatch baseHunkMatch,
-      required RegExpMatch refHunkMatch,
-      required int? nextHunkStart,
-    }) {
-      final baseHunk = parseHunkRange(baseHunkMatch);
-      final refHunk = parseHunkRange(refHunkMatch);
-      final content = baseHunkMatch.input
-          .substring(
-            baseHunkMatch.start,
-            nextHunkStart,
-          )
-          .replaceAll(
-            '\\ No newline at end of file\n',
-            '',
-          );
-      return Hunk(
-        baseRange: baseHunk,
-        refRange: refHunk,
-        content: content,
-      );
-    }
-
-    Iterable<Hunk> parseHunks(String fileDiff) sync* {
-      // Hunk might look like this:
-      // @@ -54,6 +54,10 @@ class HotReload extends StatelessWidget {
-      //                        name: 'FAB',
-      //                        builder: (context) => fabUseCase(context),
-      //                      ),
-      // +                    WidgetbookUseCase(
-      // +                      name: 'FAB (text)',
-      // +                      builder: (context) => fabTextUseCase(context),
-      // +                    ),
-      //                    ],
-      //                  ),
-      //                ],
-
-      // TODO based on SO https://stackoverflow.com/questions/2529441/how-to-read-the-output-from-git-diff
-      // There might be a case where the hunk does not contain any numbers for
-      // ref or base or both
-
-      final baseMatches = RegExp(
-        r'@@ (-\d*)(,\d*)?',
-      ).allMatches(fileDiff).toList();
-      final refMatches = RegExp(
-        r'(\+\d*)(,\d*)? @@',
-      ).allMatches(fileDiff).toList();
-
-      for (var counter = 0; counter < baseMatches.length; counter++) {
-        final isLast = counter + 1 == baseMatches.length;
-        yield parseHunk(
-          baseHunkMatch: baseMatches[counter],
-          refHunkMatch: refMatches[counter],
-          nextHunkStart: isLast ? null : baseMatches[counter].start,
-        );
-      }
-    }
-
-    FileDiff getFileDiff(String fileDiff) {
-      final header = parseHeader(fileDiff);
-      final hunks = parseHunks(fileDiff).toList();
-      return FileDiff(
-        basePath: header.baseFile,
-        refPath: header.refFile,
-        hunks: hunks,
-      );
-    }
-
-    Iterable<FileDiff> getFiles(
-      String totalDiff,
-    ) {
-      final diffs = totalDiff
-          .split('diff --git ')
-          // TODO somehow first element is always empty. Unclear
-          .where((element) => element.isNotEmpty)
-          .toList();
-      final fileDiffs = <FileDiff>[];
-      for (final diff in diffs) {
-        fileDiffs.add(getFileDiff(diff));
-      }
-      return fileDiffs;
-    }
-
-    final files = getFiles(diff);
-    return files;
+    return diffs.map(DiffHeader.parse).toList();
   }
 
   Future<ProcessResult> runCommand(
