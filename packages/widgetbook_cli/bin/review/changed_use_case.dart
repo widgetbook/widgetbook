@@ -1,4 +1,4 @@
-import '../../git/modification.dart';
+import '../git/modification.dart';
 
 class ChangedUseCase {
   const ChangedUseCase({

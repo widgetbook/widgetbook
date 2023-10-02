@@ -39,7 +39,7 @@ import '../git/git_wrapper.dart';
 import '../helpers/exceptions.dart';
 import '../helpers/zip_encoder.dart';
 import '../models/models.dart';
-import '../review/use_cases/use_case_parser.dart';
+import '../review/use_case_reader.dart';
 import 'command.dart';
 
 class PublishCommand extends WidgetbookCommand {
@@ -48,14 +48,17 @@ class PublishCommand extends WidgetbookCommand {
     this.ciParserRunner,
     this.platform = const LocalPlatform(),
     this.fileSystem = const LocalFileSystem(),
+    UseCaseReader? useCaseReader,
     WidgetbookHttpClient? client,
     CiWrapper? ciWrapper,
     GitWrapper? gitWrapper,
-    UseCaseParser? useCaseParser,
-  })  : _client = client ?? WidgetbookHttpClient(),
+  })  : useCaseReader = useCaseReader ??
+            UseCaseReader(
+              fileSystem: fileSystem,
+            ),
+        _client = client ?? WidgetbookHttpClient(),
         _ciWrapper = ciWrapper ?? CiWrapper(),
-        _gitWrapper = gitWrapper ?? GitWrapper(),
-        _useCaseParser = useCaseParser {
+        _gitWrapper = gitWrapper ?? GitWrapper() {
     progress = logger.progress('Publishing Widgetbook');
     argParser
       ..addOption(
@@ -114,11 +117,10 @@ class PublishCommand extends WidgetbookCommand {
   CiParserRunner? ciParserRunner;
   final Platform platform;
   final FileSystem fileSystem;
+  final UseCaseReader useCaseReader;
   final WidgetbookHttpClient _client;
   final CiWrapper _ciWrapper;
   final GitWrapper _gitWrapper;
-  final UseCaseParser? _useCaseParser;
-
   late final Progress progress;
 
   @visibleForTesting
@@ -251,7 +253,10 @@ class PublishCommand extends WidgetbookCommand {
     await checkIfWorkingTreeIsClean(gitDir);
     final args = await getArguments(gitDir: gitDir);
 
-    await publish(args);
+    await publish(
+      args: args,
+      gitDir: gitDir,
+    );
 
     return ExitCode.success.code;
   }
@@ -330,7 +335,10 @@ class PublishCommand extends WidgetbookCommand {
   }
 
   @visibleForTesting
-  Future<void> publish(PublishArgs args) async {
+  Future<void> publish({
+    required PublishArgs args,
+    required GitDir gitDir,
+  }) async {
     try {
       final buildResponse = await publishBuild(
         args: args,
@@ -349,6 +357,7 @@ class PublishCommand extends WidgetbookCommand {
           ? await publishReview(
               args: args,
               buildResponse: buildResponse,
+              gitDir: gitDir,
             )
           : null;
 
@@ -424,6 +433,7 @@ class PublishCommand extends WidgetbookCommand {
   Future<ReviewResponse?> publishReview({
     required PublishArgs args,
     required BuildResponse buildResponse,
+    required GitDir gitDir,
   }) async {
     final genDirPath = p.join(args.path, '.dart_tool', 'build', 'generated');
     final genDir = fileSystem.directory(genDirPath);
@@ -438,28 +448,29 @@ class PublishCommand extends WidgetbookCommand {
       throw ReviewNotFoundException();
     }
 
-    final baseBranch = args.baseBranch!;
-    final parser = _useCaseParser ??
-        UseCaseParser(
-          projectPath: args.path,
-          baseBranch: baseBranch,
-        );
+    final useCases = await useCaseReader.read(args.path);
+    final diffs = await gitDir.diff(
+      base: args.baseBranch!,
+    );
 
-    final useCases = await parser.parse();
+    final changeUseCases = await useCaseReader.compare(
+      useCases: useCases,
+      diffs: diffs.toList(),
+    );
 
-    if (useCases.isEmpty) {
+    if (changeUseCases.isEmpty) {
       logger.err('Could not find any changed use-cases files.');
       throw ReviewNotFoundException();
     }
 
     progress.update(
-      'Uploading review [${useCases.length} modified use-case(s)]',
+      'Uploading review [${changeUseCases.length} modified use-case(s)]',
     );
 
     final response = await _client.uploadReview(
       ReviewRequest(
         apiKey: args.apiKey,
-        useCases: useCases,
+        useCases: changeUseCases,
         buildId: buildResponse.build,
         projectId: buildResponse.project,
         baseBranch: args.baseBranch!,

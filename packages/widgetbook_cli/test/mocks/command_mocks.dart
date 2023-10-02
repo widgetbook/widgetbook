@@ -11,7 +11,7 @@ import '../../bin/api/api.dart';
 import '../../bin/ci_parser/ci_parser.dart';
 import '../../bin/git/git_dir.dart';
 import '../../bin/git/git_wrapper.dart';
-import '../../bin/review/use_cases/use_case_parser.dart';
+import '../../bin/review/use_case_reader.dart';
 
 class MockLogger extends Mock implements Logger {}
 
@@ -39,6 +39,6 @@ class MockCiWrapper extends Mock implements CiWrapper {}
 
 class MockPlatform extends Mock implements Platform {}
 
-class MockUseCaseParser extends Mock implements UseCaseParser {}
+class MockUseCaseReader extends Mock implements UseCaseReader {}
 
 class MockStdin extends Mock implements Stdin {}
