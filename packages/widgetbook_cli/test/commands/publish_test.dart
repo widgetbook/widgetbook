@@ -18,8 +18,8 @@ import '../../bin/git/git_wrapper.dart';
 import '../../bin/git/modification.dart';
 import '../../bin/helpers/helpers.dart';
 import '../../bin/models/models.dart';
-import '../../bin/review/use_cases/changed_use_case.dart';
-import '../../bin/review/use_cases/use_case_parser.dart';
+import '../../bin/review/changed_use_case.dart';
+import '../../bin/review/use_case_reader.dart';
 import '../helpers/test_data.dart';
 import '../mocks/mocks.dart';
 import '../mocks/models/models.dart';
@@ -48,8 +48,8 @@ void main() {
     late PublishCommand publishCommand;
     late WidgetbookHttpClient client;
     late LocalFileSystem localFileSystem;
+    late UseCaseReader useCaseReader;
     late Progress progress;
-    late UseCaseParser useCaseParser;
     late Stdin stdin;
     final tempDir = const LocalFileSystem().currentDirectory;
 
@@ -61,8 +61,8 @@ void main() {
       ciWrapper = MockCiWrapper();
       client = MockWidgetbookHttpClient();
       localFileSystem = MockLocalFileSystem();
+      useCaseReader = MockUseCaseReader();
       progress = MockProgress();
-      useCaseParser = MockUseCaseParser();
       stdin = MockStdin();
 
       when(() => logger.progress(any<String>())).thenReturn(progress);
@@ -680,7 +680,10 @@ void main() {
         )..testArgResults = argResults;
 
         expect(
-          () => command.publish(TestData.args),
+          () => command.publish(
+            args: TestData.args,
+            gitDir: gitDir,
+          ),
           throwsA(const TypeMatcher<UnableToCreateZipFileException>()),
         );
       },
@@ -691,26 +694,33 @@ void main() {
 
       final publishCommand = PublishCommand(
         fileSystem: localFileSystem,
+        useCaseReader: useCaseReader,
         client: client,
         logger: logger,
-        useCaseParser: useCaseParser,
         ciParserRunner: CiParserRunner(
           argResults: argResults,
           gitDir: gitDir,
         ),
       )..testArgResults = argResults;
 
-      when(() => useCaseParser.parse()).thenAnswer(
-        (_) => Future.value(const [
-          ChangedUseCase(
-            name: 'use_case',
-            componentName: 'UseCase',
-            componentDefinitionPath: 'path/to/use_case.dart',
-            modification: Modification.changed,
-            designLink: null,
-          ),
-        ]),
+      when(() => useCaseReader.read(any())).thenAnswer(
+        (_) async => [],
       );
+
+      when(
+        () => useCaseReader.compare(
+          useCases: any(named: 'useCases'),
+          diffs: any(named: 'diffs'),
+        ),
+      ).thenReturn(const [
+        ChangedUseCase(
+          name: 'use_case',
+          componentName: 'UseCase',
+          componentDefinitionPath: 'path/to/use_case.dart',
+          modification: Modification.changed,
+          designLink: null,
+        ),
+      ]);
 
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
 
@@ -761,24 +771,31 @@ void main() {
         fileSystem: localFileSystem,
         client: client,
         logger: logger,
-        useCaseParser: useCaseParser,
+        useCaseReader: useCaseReader,
         ciParserRunner: CiParserRunner(
           argResults: argResults,
           gitDir: gitDir,
         ),
       )..testArgResults = argResults;
 
-      when(() => useCaseParser.parse()).thenAnswer(
-        (_) => Future.value(const [
-          ChangedUseCase(
-            name: 'use_case',
-            componentName: 'UseCase',
-            componentDefinitionPath: 'path/to/use_case.dart',
-            modification: Modification.changed,
-            designLink: null,
-          ),
-        ]),
+      when(() => useCaseReader.read(any())).thenAnswer(
+        (_) async => [],
       );
+
+      when(
+        () => useCaseReader.compare(
+          useCases: any(named: 'useCases'),
+          diffs: any(named: 'diffs'),
+        ),
+      ).thenReturn(const [
+        ChangedUseCase(
+          name: 'use_case',
+          componentName: 'UseCase',
+          componentDefinitionPath: 'path/to/use_case.dart',
+          modification: Modification.changed,
+          designLink: null,
+        ),
+      ]);
 
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
 

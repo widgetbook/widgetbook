@@ -1,5 +1,5 @@
-class UseCaseData {
-  const UseCaseData({
+class UseCaseMetadata {
+  const UseCaseMetadata({
     required this.name,
     required this.useCaseName,
     required this.componentName,
@@ -12,38 +12,32 @@ class UseCaseData {
 
   // Name of the builder function defining the use-case
   final String name;
+
   // Name of the use-case, e.g. 'Default'
   final String useCaseName;
+
   // Name of the use-case, e.g. 'ElevatedButton'
   // This will be extracted from the type
   final String componentName;
+
   // Import statement of the use-case definition
   final String importStatement;
+
   // Import statement of the component
   final String componentImportStatement;
+
   // The path to the file containing the component
   final String componentDefinitionPath;
+
   // The path to the file containing the use-case definition
   final String useCaseDefinitionPath;
+
   // A link to a component or variant
   final String? designLink;
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'name': name,
-      'useCaseName': useCaseName,
-      'componentName': componentName,
-      'importStatement': importStatement,
-      'componentImportStatement': componentImportStatement,
-      'componentDefinitionPath': componentDefinitionPath,
-      'useCaseDefinitionPath': useCaseDefinitionPath,
-      'designLink': designLink,
-    };
-  }
-
   // ignore: sort_constructors_first
-  factory UseCaseData.fromJson(Map<String, dynamic> map) {
-    return UseCaseData(
+  factory UseCaseMetadata.fromJson(Map<String, dynamic> map) {
+    return UseCaseMetadata(
       name: map['name'] as String,
       useCaseName: map['useCaseName'] as String,
       componentName: map['componentName'] as String,

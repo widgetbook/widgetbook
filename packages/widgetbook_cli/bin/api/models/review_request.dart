@@ -1,4 +1,4 @@
-import '../../review/use_cases/changed_use_case.dart';
+import '../../review/changed_use_case.dart';
 
 class ReviewRequest {
   const ReviewRequest({
