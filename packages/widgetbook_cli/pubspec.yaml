@@ -26,7 +26,7 @@ dependencies:
   meta: ^1.8.0
   path: ^1.8.2
   platform: ^3.0.0
-  pub_updater: ^0.3.0 
+  pub_updater: ^0.4.0 
   version: ^3.0.2
 
 dev_dependencies:
