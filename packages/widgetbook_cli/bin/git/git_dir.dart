@@ -12,7 +12,6 @@ import 'diff_header.dart';
 import 'file_diff.dart';
 import 'git_error.dart';
 import 'hunk.dart';
-import 'tag.dart';
 import 'top_level.dart';
 import 'tree_entry.dart';
 import 'util.dart';
@@ -112,16 +111,6 @@ class GitDir {
         .toList();
 
     return branches;
-  }
-
-  // TODO: Test this! No tags. Many tags. Etc.
-  Stream<Tag> tags() async* {
-    final refs = await showRef(tags: true);
-
-    for (var ref in refs) {
-      final pr = await runCommand(['cat-file', '-p', ref.sha]);
-      yield Tag.parseCatFile(pr.stdout as String);
-    }
   }
 
   Future<List<CommitReference>> showRef({
