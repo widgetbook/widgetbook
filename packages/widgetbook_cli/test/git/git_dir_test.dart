@@ -5,7 +5,6 @@ import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
 
-import '../../bin/git/bot.dart';
 import '../../bin/git/commit.dart';
 import '../../bin/git/diff_header.dart';
 import '../../bin/git/git_dir.dart';
@@ -224,7 +223,7 @@ Future<void> _testGetCommits() async {
 
   final commitMessages = commitText.map(msgFromText).toList();
 
-  final indexMap = <int, Tuple<String, Commit>>{};
+  final indexMap = <int, MapEntry<String, Commit>>{};
 
   commits.forEach((commitSha, commit) {
     // index into the text for the message of this commit
@@ -243,17 +242,17 @@ Future<void> _testGetCommits() async {
     );
 
     expect(indexMap, isNot(contains(commitMessageIndex)));
-    indexMap[commitMessageIndex] = Tuple(commitSha, commit);
+    indexMap[commitMessageIndex] = MapEntry(commitSha, commit);
   });
 
   indexMap.forEach((index, shaCommitTuple) {
     if (index > 0) {
       expect(
-        shaCommitTuple.item2.parents,
-        unorderedEquals([indexMap[index - 1]!.item1]),
+        shaCommitTuple.value.parents,
+        unorderedEquals([indexMap[index - 1]!.key]),
       );
     } else {
-      expect(shaCommitTuple.item2.parents, hasLength(0));
+      expect(shaCommitTuple.value.parents, hasLength(0));
     }
   });
 }

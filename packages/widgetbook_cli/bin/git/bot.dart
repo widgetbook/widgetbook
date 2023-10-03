@@ -11,80 +11,20 @@ final _shaRegEx = RegExp(r'^' + shaRegexPattern + r'$');
 bool isValidSha(String value) => _shaRegEx.hasMatch(value);
 
 void requireArgumentValidSha1(String value, String argName) {
-  metaRequireArgumentNotNullOrEmpty(argName);
-  requireArgumentNotNullOrEmpty(value, argName);
+  if (argName.isEmpty) {
+    throw Exception(
+      "That's just sad. Give me a good argName",
+    );
+  }
+
+  if (value.isEmpty) {
+    throw ArgumentError.value(value, argName, 'cannot be an empty string');
+  }
 
   if (!isValidSha(value)) {
     final message = 'Not a valid SHA1 value: $value';
     throw ArgumentError.value(value, argName, message);
   }
-}
-
-void requireArgument(bool truth, String argName, [String? message]) {
-  metaRequireArgumentNotNullOrEmpty(argName);
-  if (!truth) {
-    if (message == null || message.isEmpty) {
-      message = 'value was invalid';
-    }
-    throw ArgumentError(message);
-  }
-}
-
-void requireArgumentNotNullOrEmpty(String? argument, String argName) {
-  metaRequireArgumentNotNullOrEmpty(argName);
-  if (argument == null) {
-    throw ArgumentError.notNull(argument);
-  } else if (argument.isEmpty) {
-    throw ArgumentError.value(argument, argName, 'cannot be an empty string');
-  }
-}
-
-void requireArgumentContainsPattern(
-  Pattern pattern,
-  String argValue,
-  String argName,
-) {
-  ArgumentError.checkNotNull(argValue, argName);
-  if (!argValue.contains(pattern)) {
-    throw ArgumentError.value(
-      argValue,
-      argName,
-      'The value "$argValue" does not contain the pattern "$pattern"',
-    );
-  }
-}
-
-void metaRequireArgumentNotNullOrEmpty(String argName) {
-  if (argName.isEmpty) {
-    throw const _InvalidOperationError(
-      "That's just sad. Give me a good argName",
-    );
-  }
-}
-
-class _InvalidOperationError implements Exception {
-  const _InvalidOperationError([this.message = '']);
-
-  final String message;
-}
-
-class Tuple<T1, T2> {
-  const Tuple(this.item1, this.item2);
-
-  final T1 item1;
-  final T2 item2;
-
-  @override
-  bool operator ==(Object other) =>
-      other is Tuple && item1 == other.item1 && item2 == other.item2;
-
-  @override
-  String toString() => '{item1: $item1, item2: $item2}';
-
-  @override
-  int get hashCode => item1.hashCode ^ 37 * item2.hashCode;
-
-  dynamic toJson() => {'item1': item1, 'item2': item2};
 }
 
 class StringLineReader {
