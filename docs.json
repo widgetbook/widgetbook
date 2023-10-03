@@ -32,6 +32,12 @@
   },
   "sidebar": [
     [
+			"Hacktoberfest",
+			[
+				["Read more", "https://github.com/widgetbook/widgetbook/issues/918"]
+			]
+		],
+    [
       "Overview",
       [
         ["Overview", "/index"],
