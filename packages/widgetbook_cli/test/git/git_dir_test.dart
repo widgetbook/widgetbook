@@ -7,7 +7,6 @@ import 'package:process/process.dart';
 import 'package:test/test.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
 
-import '../../bin/git/commit.dart';
 import '../../bin/git/diff_header.dart';
 import '../../bin/git/git_dir.dart';
 import '../mocks/command_mocks.dart';
@@ -97,8 +96,6 @@ void main() {
     );
   });
 
-  test('getCommits', _testGetCommits);
-
   group('BranchReference', () {
     test('isHead', () async {
       const initialMasterBranchContent = {
@@ -130,79 +127,6 @@ void main() {
       expect(detached.reference, 'HEAD');
       expect(detached.sha, branch.sha);
     });
-  });
-}
-
-Future<void> _testGetCommits() async {
-  const commitText = [
-    '',
-    ' \t leading white space is okay, too',
-    'first',
-    'second',
-    'third',
-    'forth',
-  ];
-
-  String msgFromText(String txt) {
-    if (txt.isNotEmpty && txt.trim() == txt) {
-      return 'Commit for $txt\n\nnice\n\nhuh?';
-    } else {
-      return txt;
-    }
-  }
-
-  final gitDir = await _createTempGitDir();
-
-  final branches = await gitDir.branches();
-  expect(branches, isEmpty);
-
-  for (var commitStr in commitText) {
-    final fileMap = <String, String>{};
-    fileMap['$commitStr.txt'] = '$commitStr content';
-
-    await _doDescriptorGitCommit(gitDir, fileMap, msgFromText(commitStr));
-  }
-
-  final count = await gitDir.commitCount();
-  expect(count, commitText.length);
-
-  final commits = await gitDir.commits();
-
-  expect(commits, hasLength(commitText.length));
-
-  final commitMessages = commitText.map(msgFromText).toList();
-
-  final indexMap = <int, MapEntry<String, Commit>>{};
-
-  commits.forEach((commitSha, commit) {
-    // index into the text for the message of this commit
-    late int commitMessageIndex;
-    for (var i = 0; i < commitMessages.length; i++) {
-      if (commitMessages[i] == commit.message) {
-        commitMessageIndex = i;
-        break;
-      }
-    }
-
-    expect(
-      commitMessageIndex,
-      isNotNull,
-      reason: 'a matching message should be found',
-    );
-
-    expect(indexMap, isNot(contains(commitMessageIndex)));
-    indexMap[commitMessageIndex] = MapEntry(commitSha, commit);
-  });
-
-  indexMap.forEach((index, shaCommitTuple) {
-    if (index > 0) {
-      expect(
-        shaCommitTuple.value.parents,
-        unorderedEquals([indexMap[index - 1]!.key]),
-      );
-    } else {
-      expect(shaCommitTuple.value.parents, hasLength(0));
-    }
   });
 }
 

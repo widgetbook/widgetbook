@@ -6,7 +6,6 @@ import 'package:path/path.dart' as p;
 import 'package:process/process.dart';
 
 import 'branch_reference.dart';
-import 'commit.dart';
 import 'commit_reference.dart';
 import 'diff_header.dart';
 import 'top_level.dart';
@@ -35,11 +34,6 @@ class GitDir {
     final results = await runCommand(['rev-parse', '--show-toplevel']);
     final output = results.stdout.toString().split('/').last;
     return output.trim();
-  }
-
-  Future<Map<String, Commit>> commits([String branchName = 'HEAD']) async {
-    final pr = await runCommand(['rev-list', '--format=raw', branchName]);
-    return Commit.parseRawRevList(pr.stdout as String);
   }
 
   Future<BranchReference?> branchReference(String branchName) async {
