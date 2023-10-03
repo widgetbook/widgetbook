@@ -31,79 +31,86 @@
     }
   },
   "sidebar": [
-    [
-      "Overview",
-      [
-        ["Overview", "/index"],
-        ["Terminology", "/terminology"],
-        ["Why Widgetbook", "/why-widgetbook"]
-      ]
-    ],
-    [
-      "Getting Started",
-      [
-        ["1. Install", "/getting-started/install"],
-        ["2. Setup", "/getting-started/setup"],
-        ["3. Run", "/getting-started/run"],
-        ["4. Components", "/getting-started/components"],
-        ["5. Structure", "/getting-started/structure"],
-        ["6. Addons", "/getting-started/addons"],
-        ["7. Knobs", "/getting-started/knobs"],
-        ["8. Themes", "/getting-started/themes"],
-        ["9. Configure", "/getting-started/configure"],
-        ["10. Complete Example", "/getting-started/complete-example"],
-        ["11. Mocking", "/getting-started/mocking"],
-        ["FAQs", "/faq"],
-        ["Telemetry", "/telemetry"]
-      ]
-    ],
-    [
-      "Addons",
-      [
-        ["1. Introduction", "/addons/overview"],
-        ["2. Theme Addon", "/addons/theme-addon"],
-        ["3. Device Frame Addon", "/addons/device-frame-addon"],
-        ["4. Localization Addon", "/addons/localization-addon"],
-        ["5. Text Scale Addon", "/addons/text-scale-addon"],
-        ["6. Alignment Addon", "/addons/alignment-addon"],
-        ["7. Time Dilation Addon", "/addons/time-dilation-addon"],
-        ["8. Builder Addon", "/addons/builder-addon"],
-        ["9. Custom Addon", "/addons/custom-addon"]
-      ]
-    ],
-    [
-      "Knobs",
-      [
-        ["1. Overview", "/knobs/overview"],
-        ["2. Example", "/knobs/example"],
-        ["3. Custom Knob", "/knobs/custom-knob"]
-      ]
-    ],
-    [
-      "Migration",
-      [
-        ["2.4.0 to 3.0.0", "/migration/2.4.0-to-3.0.0"],
-        ["3.0.0 beta to rc", "/migration/3.0.0-beta-to-rc"]
-      ]
-    ],
-    ["Cookbook", [["Custom Theme", "/cookbook/custom-theme"]]],
-    [
-      "Widgetbook Cloud",
-      [
-        ["1. Overview", "/widgetbook-cloud/overview"],
-        ["2. Quick Start", "/widgetbook-cloud/quick-start"],
-        ["3. Sign Up", "/widgetbook-cloud/signup"],
-        ["4. Projects", "/widgetbook-cloud/projects"],
-        ["5. Setup", "/widgetbook-cloud/setup"],
-        ["6. Hosting", "/widgetbook-cloud/hosting"],
-        ["7. Reviews", "/widgetbook-cloud/reviews"],
-        ["8. Github Integration", "/widgetbook-cloud/integrating-github"],
-        ["9. Accessing Resources", "/widgetbook-cloud/accessing-resources"]
-      ]
-    ],
-    ["CLI", [["Overview", "/widgetbook-cli/overview"]]],
-    ["Contribution", 
-      [
+		[
+			"Hacktoberfest 2023",
+			[
+				["Read more", "https://github.com/widgetbook/widgetbook/issues/918"]
+			]
+		],
+		[
+			"Overview",
+			[
+				["Overview", "/index"],
+				["Terminology", "/terminology"],
+				["Why Widgetbook", "/why-widgetbook"]
+			]
+		],
+		[
+			"Getting Started",
+			[
+				["1. Install", "/getting-started/install"],
+				["2. Setup", "/getting-started/setup"],
+				["3. Run", "/getting-started/run"],
+				["4. Components", "/getting-started/components"],
+				["5. Structure", "/getting-started/structure"],
+				["6. Addons", "/getting-started/addons"],
+				["7. Knobs", "/getting-started/knobs"],
+				["8. Themes", "/getting-started/themes"],
+				["9. Configure", "/getting-started/configure"],
+				["10. Complete Example", "/getting-started/complete-example"],
+				["11. Mocking", "/getting-started/mocking"],
+				["FAQs", "/faq"],
+				["Telemetry", "/telemetry"]
+			]
+		],
+		[
+			"Addons",
+			[
+				["1. Introduction", "/addons/overview"],
+				["2. Theme Addon", "/addons/theme-addon"],
+				["3. Device Frame Addon", "/addons/device-frame-addon"],
+				["4. Localization Addon", "/addons/localization-addon"],
+				["5. Text Scale Addon", "/addons/text-scale-addon"],
+				["6. Alignment Addon", "/addons/alignment-addon"],
+				["7. Time Dilation Addon", "/addons/time-dilation-addon"],
+				["8. Builder Addon", "/addons/builder-addon"],
+				["9. Custom Addon", "/addons/custom-addon"]
+			]
+		],
+		[
+			"Knobs",
+			[
+				["1. Overview", "/knobs/overview"],
+				["2. Example", "/knobs/example"],
+				["3. Custom Knob", "/knobs/custom-knob"]
+			]
+		],
+		[
+			"Migration",
+			[
+				["2.4.0 to 3.0.0", "/migration/2.4.0-to-3.0.0"],
+				["3.0.0 beta to rc", "/migration/3.0.0-beta-to-rc"]
+			]
+		],
+		["Cookbook", [["Custom Theme", "/cookbook/custom-theme"]]],
+		[
+			"Widgetbook Cloud",
+			[
+				["1. Overview", "/widgetbook-cloud/overview"],
+				["2. Quick Start", "/widgetbook-cloud/quick-start"],
+				["3. Sign Up", "/widgetbook-cloud/signup"],
+				["4. Projects", "/widgetbook-cloud/projects"],
+				["5. Setup", "/widgetbook-cloud/setup"],
+				["6. Hosting", "/widgetbook-cloud/hosting"],
+				["7. Reviews", "/widgetbook-cloud/reviews"],
+				["8. Github Integration", "/widgetbook-cloud/integrating-github"],
+				["9. Accessing Resources", "/widgetbook-cloud/accessing-resources"]
+			]
+		],
+		["CLI", [["Overview", "/widgetbook-cli/overview"]]],
+		[
+			"Contribution",
+			[
 				["1. Ways to Contribute", "/contribution/ways-to-contribute"],
 				["2. Getting Started", "/contribution/get-started"],
 				["3. Contribution Workflow", "/contribution/workflow"],
@@ -113,6 +120,6 @@
 				["7. Sync Your Fork", "/contribution/sync-your-fork"],
 				["8. Quick Guide", "/contribution/quick-guide"]
 			]
-    ]
-  ]
+		]
+	]
 }
