@@ -148,38 +148,6 @@ class GitDir {
         .toBranchReference();
   }
 
-  /// Returns the `SHA1` for the new commit.
-  ///
-  /// See [git-commit-tree](http://git-scm.com/docs/git-commit-tree)
-  Future<String> commitTree(
-    String treeSha,
-    String commitMessage, {
-    List<String>? parentCommitShas,
-  }) async {
-    requireArgumentValidSha1(treeSha, 'treeSha');
-
-    requireArgumentNotNullOrEmpty(commitMessage, 'commitMessage');
-    requireArgument(
-      commitMessage.trim() == commitMessage,
-      'commitMessage',
-      'Value cannot start or end with whitespace.',
-    );
-
-    parentCommitShas ??= [];
-
-    final args = ['commit-tree', treeSha, '-m', commitMessage];
-
-    for (final parentSha in parentCommitShas) {
-      requireArgumentValidSha1(parentSha, 'parentCommitShas');
-      args.addAll(['-p', parentSha]);
-    }
-
-    final pr = await runCommand(args);
-    final sha = (pr.stdout as String).trim();
-    assert(isValidSha(sha));
-    return sha;
-  }
-
   Future<List<DiffHeader>> diff([String? base]) async {
     final args = ['diff', if (base != null) base];
     final result = await runCommand(args);
