@@ -1,12 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:path/path.dart' as p;
 import 'package:process/process.dart';
 
-import 'branch_reference.dart';
-import 'commit_reference.dart';
 import 'diff_header.dart';
+import 'reference.dart';
 import 'top_level.dart';
 
 class GitDir {
@@ -30,22 +30,22 @@ class GitDir {
     return output.trim();
   }
 
-  Future<List<BranchReference>> allBranches() async {
-    final pr = await runCommand(
+  Future<List<Reference>> allBranches() async {
+    final result = await runCommand(
       ['show-ref'],
       throwOnError: false,
     );
 
-    if (pr.exitCode == 1) {
-      // no heads present, return empty collection
-      return [];
-    }
+    if (result.exitCode == 1) return [];
 
-    // otherwise, it should have worked fine...
-    assert(pr.exitCode == 0);
+    final output = result.stdout as String;
 
-    return CommitReference.fromShowRefOutput(pr.stdout as String)
-        .map((e) => e.toBranchReference())
+    const splitter = LineSplitter();
+    final lines = splitter.convert(output.trim());
+
+    return lines //
+        .map(Reference.parse)
+        .where((ref) => ref.isBranch)
         .toList();
   }
 
@@ -53,18 +53,20 @@ class GitDir {
     await runCommand(['fetch'], throwOnError: false);
   }
 
-  Future<BranchReference> currentBranch() async {
-    var pr = await runCommand(
+  Future<Reference> currentBranch() async {
+    final revParseResult = await runCommand(
       const ['rev-parse', '--verify', '--symbolic-full-name', 'HEAD'],
     );
 
-    pr = await runCommand(
-      ['show-ref', '--verify', (pr.stdout as String).trim()],
+    final branchName = (revParseResult.stdout as String).trim();
+
+    final showRefResult = await runCommand(
+      ['show-ref', '--verify', branchName],
     );
 
-    return CommitReference.fromShowRefOutput(pr.stdout as String)
-        .single
-        .toBranchReference();
+    final refLine = (showRefResult.stdout as String).trim();
+
+    return Reference.parse(refLine);
   }
 
   Future<List<DiffHeader>> diff([String? base]) async {

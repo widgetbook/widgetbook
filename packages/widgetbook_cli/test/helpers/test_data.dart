@@ -1,5 +1,4 @@
 import '../../bin/api/api.dart';
-import '../../bin/git/branch_reference.dart';
 import '../../bin/models/models.dart';
 
 class TestData {
@@ -24,19 +23,14 @@ class TestData {
     baseSha: 'a' * 40,
     path: 'path',
     vendor: 'Local',
-    repository: 'respository',
+    repository: 'repository',
     actor: 'John Doe',
   );
 
   static const ciArgs = CiArgs(
     vendor: 'Local',
-    repository: 'respository',
+    repository: 'repository',
     actor: 'John Doe',
-  );
-
-  static final branches = BranchReference(
-    'sha',
-    'HEAD',
   );
 
   static const buildResponse = BuildResponse(

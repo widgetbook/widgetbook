@@ -12,10 +12,10 @@ import 'package:test/test.dart';
 import '../../bin/api/api.dart';
 import '../../bin/ci_parser/ci_parser.dart';
 import '../../bin/commands/commands.dart';
-import '../../bin/git/branch_reference.dart';
 import '../../bin/git/git_dir.dart';
 import '../../bin/git/git_wrapper.dart';
 import '../../bin/git/modification.dart';
+import '../../bin/git/reference.dart';
 import '../../bin/helpers/helpers.dart';
 import '../../bin/models/models.dart';
 import '../../bin/review/changed_use_case.dart';
@@ -86,19 +86,19 @@ void main() {
     group(
       'getBaseBranch',
       () {
-        final branchRefA = BranchReference(
+        final branchRefA = Reference(
           '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf',
           'refs/heads/a',
         );
-        final branchRefB = BranchReference(
+        final branchRefB = Reference(
           'f1c882189d0b341e435a58992c6b78a6a3f5ebfc',
           'refs/heads/b',
         );
-        final branchRefC = BranchReference(
+        final branchRefC = Reference(
           '20dbdee64ee73e4be43b9c949492e05437d0e5dc',
           'refs/remotes/origin/c',
         );
-        final branchRefD = BranchReference(
+        final branchRefD = Reference(
           'd4b6472e1566eb2c9897e4fc4d8c4858628bca01',
           'refs/remotes/origin/d',
         );
@@ -537,7 +537,7 @@ void main() {
                 PublishArgs(
                   path: path,
                   apiKey: apiKey,
-                  branch: branchReference.reference,
+                  branch: branchReference.refName,
                   commit: commit,
                   vendor: vendor,
                   actor: actor,

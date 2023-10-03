@@ -33,9 +33,9 @@ import 'package:platform/platform.dart';
 import '../api/api.dart';
 import '../ci_parser/ci_parser.dart';
 import '../git-provider/github/github.dart';
-import '../git/branch_reference.dart';
 import '../git/git_dir.dart';
 import '../git/git_wrapper.dart';
+import '../git/reference.dart';
 import '../helpers/exceptions.dart';
 import '../helpers/zip_encoder.dart';
 import '../models/models.dart';
@@ -203,7 +203,7 @@ class PublishCommand extends WidgetbookCommand {
     final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
     final currentBranch = await gitDir.currentBranch();
-    final branch = results['branch'] as String? ?? currentBranch.branchName;
+    final branch = results['branch'] as String? ?? currentBranch.name;
 
     final commit =
         results['commit'] as String? ?? gitProviderSha() ?? currentBranch.sha;
@@ -237,7 +237,7 @@ class PublishCommand extends WidgetbookCommand {
       vendor: ciArgs.vendor,
       actor: actor,
       repository: repository,
-      baseBranch: baseBranch?.reference,
+      baseBranch: baseBranch?.refName,
       baseSha: baseBranch?.sha,
       prNumber: prNumber,
       gitHubToken: gitHubToken,
@@ -266,7 +266,7 @@ class PublishCommand extends WidgetbookCommand {
   // If this will be included do we need to check if the sha exists on the
   // branch?
   @visibleForTesting
-  Future<BranchReference?> getBaseBranch({
+  Future<Reference?> getBaseBranch({
     required GitDir gitDir,
     required String? branch,
     required String? sha,
@@ -281,10 +281,10 @@ class PublishCommand extends WidgetbookCommand {
     progress.update('reading existing branches');
     final branches = await gitDir.allBranches();
     final branchesMap = {
-      for (var k in branches) k.reference: k,
+      for (var k in branches) k.refName: k,
     };
 
-    final branchRef = BranchReference(
+    final branchRef = Reference(
       // This is not used, we are just using BranchReference to check if this is
       // a heads or remote branch (if at all)
       'a' * 40,
@@ -297,15 +297,15 @@ class PublishCommand extends WidgetbookCommand {
     const remotesPrefixRegex = '(?<=$remotesPrefix)';
     const endOfLine = r'$';
 
-    if (branchRef.isHeads || branchRef.isRemote) {
-      if (branchesMap.containsKey(branchRef.reference)) {
-        return branchesMap[branchRef.reference];
+    if (branchRef.isHead || branchRef.isRemote) {
+      if (branchesMap.containsKey(branchRef.refName)) {
+        return branchesMap[branchRef.refName];
       }
 
       // Azure provides the ref as 'refs/heads/<branch-name>'
       // This branch won't be found as of default.
       // But a branch 'refs/remotes/origin/<branch-name>' will exist
-      final headsRefAsRemoteRef = '$remotesPrefix${branchRef.branchName}';
+      final headsRefAsRemoteRef = '$remotesPrefix${branchRef.name}';
       if (branchesMap.containsKey(headsRefAsRemoteRef)) {
         return branchesMap[headsRefAsRemoteRef];
       }
@@ -313,19 +313,19 @@ class PublishCommand extends WidgetbookCommand {
       return null;
     } else {
       final headsRegex = RegExp(
-        '$headsPrefixRegex${branchRef.reference}$endOfLine',
+        '$headsPrefixRegex${branchRef.refName}$endOfLine',
       );
       final remotesRegex = RegExp(
-        '$remotesPrefixRegex${branchRef.reference}$endOfLine',
+        '$remotesPrefixRegex${branchRef.refName}$endOfLine',
       );
       for (final branch in branches) {
-        if (headsRegex.hasMatch(branch.reference)) {
+        if (headsRegex.hasMatch(branch.refName)) {
           return branch;
         }
       }
 
       for (final branch in branches) {
-        if (remotesRegex.hasMatch(branch.reference)) {
+        if (remotesRegex.hasMatch(branch.refName)) {
           return branch;
         }
       }

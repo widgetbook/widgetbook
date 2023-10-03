@@ -1,14 +1,11 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:mocktail/mocktail.dart';
-import 'package:path/path.dart' as p;
 import 'package:process/process.dart';
 import 'package:test/test.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
 
 import '../../bin/git/diff_header.dart';
 import '../../bin/git/git_dir.dart';
+import '../../bin/git/reference.dart';
 import '../mocks/command_mocks.dart';
 
 void main() {
@@ -30,27 +27,26 @@ void main() {
     );
   });
 
-  group('diff', () {
-    test(
-      'returns []',
-      () async {
-        when(processRun).thenAnswer(
-          ($) async => MockProcessResult.success(''),
-        );
+  test(
+    'diff returns []',
+    () async {
+      when(processRun).thenAnswer(
+        ($) async => MockProcessResult.success(''),
+      );
 
-        expectLater(
-          gitDir.diff(),
-          completion(isEmpty),
-        );
-      },
-    );
+      expectLater(
+        gitDir.diff(),
+        completion(isEmpty),
+      );
+    },
+  );
 
-    test(
-      'can parse add, change, delete',
-      () async {
-        when(processRun).thenAnswer(
-          ($) async => MockProcessResult.success(
-            '''
+  test(
+    'diff can parse add, change, delete',
+    () async {
+      when(processRun).thenAnswer(
+        ($) async => MockProcessResult.success(
+          '''
             diff --git a/file_add.txt b/file_add.txt
             new file mode 100644
             index 0000000..78169f5
@@ -74,99 +70,85 @@ void main() {
             @@ -1 +0,0 @@
             -Storybook
             ''',
-          ),
-        );
+        ),
+      );
 
-        expectLater(
-          gitDir.diff(),
-          completion([
-            DiffHeader(
-              ref: '/file_add.txt',
-            ),
-            DiffHeader(
-              ref: '/file_change.txt',
-              base: '/file_change.txt',
-            ),
-            DiffHeader(
-              base: '/file_delete.txt',
-            ),
-          ]),
-        );
-      },
+      expectLater(
+        gitDir.diff(),
+        completion([
+          DiffHeader(
+            ref: '/file_add.txt',
+          ),
+          DiffHeader(
+            ref: '/file_change.txt',
+            base: '/file_change.txt',
+          ),
+          DiffHeader(
+            base: '/file_delete.txt',
+          ),
+        ]),
+      );
+    },
+  );
+
+  test('currentBranch returns main', () {
+    when(
+      () => processManager.run(
+        any(that: contains('rev-parse')),
+        workingDirectory: any(named: 'workingDirectory'),
+        runInShell: any(named: 'runInShell'),
+      ),
+    ).thenAnswer(
+      ($) async => MockProcessResult.success('refs/heads/main'),
+    );
+
+    when(
+      () => processManager.run(
+        any(that: contains('show-ref')),
+        workingDirectory: any(named: 'workingDirectory'),
+        runInShell: any(named: 'runInShell'),
+      ),
+    ).thenAnswer(
+      ($) async => MockProcessResult.success(
+        '832e76a9899f560a90ffd62ae2ce83bbeff58f54 refs/heads/main',
+      ),
+    );
+
+    expectLater(
+      gitDir.currentBranch(),
+      completion(
+        Reference(
+          '832e76a9899f560a90ffd62ae2ce83bbeff58f54',
+          'refs/heads/main',
+        ),
+      ),
     );
   });
 
-  group('BranchReference', () {
-    test('isHead', () async {
-      const initialMasterBranchContent = {
-        'master.md': 'test file',
-        'lib/foo.txt': 'lib foo text',
-        'lib/bar.txt': 'lib bar text',
-      };
+  test('allBranches returns refs', () async {
+    when(processRun).thenAnswer(
+      ($) async => MockProcessResult.success(
+        '''
+        832e76a9899f560a90ffd62ae2ce83bbeff58f54 HEAD
+        832e76a9899f560a90ffd62ae2ce83bbeff58f54 refs/heads/main
+        832e76a9899f560a90ffd62ae2ce83bbeff58f54 refs/remotes/origin/main
+        3521017556c5de4159da4615a39fa4d5d2c279b5 refs/tags/v0.99.9c
+        ''',
+      ),
+    );
 
-      final gitDir = await _createTempGitDir();
-
-      await _doDescriptorGitCommit(
-        gitDir,
-        initialMasterBranchContent,
-        'master files',
-      );
-
-      final branch = await gitDir.currentBranch();
-      expect(branch.isHead, isFalse);
-      expect(branch.branchName, 'master');
-      expect(branch.reference, 'refs/heads/master');
-
-      await gitDir.runCommand(
-        ['checkout', '--detach'],
-      );
-
-      final detached = await gitDir.currentBranch();
-      expect(detached.isHead, isTrue);
-      expect(detached.branchName, 'HEAD');
-      expect(detached.reference, 'HEAD');
-      expect(detached.sha, branch.sha);
-    });
+    expectLater(
+      gitDir.allBranches(),
+      completion([
+        Reference(
+          '832e76a9899f560a90ffd62ae2ce83bbeff58f54',
+          'refs/heads/main',
+        ),
+        Reference(
+          '832e76a9899f560a90ffd62ae2ce83bbeff58f54',
+          'refs/remotes/origin/main',
+        ),
+      ]),
+    );
   });
 }
-
-Future<ProcessResult> _doDescriptorGitCommit(
-  GitDir gd,
-  Map<String, String> contents,
-  String commitMsg,
-) async {
-  await _doDescriptorPopulate(gd.path, contents);
-
-  // now add this new file
-  await gd.runCommand(['add', '--all']);
-
-  // now commit these silly files
-  final args = [
-    'commit',
-    '--cleanup=verbatim',
-    '--no-edit',
-    '--allow-empty-message',
-  ];
-  if (commitMsg.isNotEmpty) {
-    args.addAll(['-m', commitMsg]);
-  }
-
-  return gd.runCommand(args);
-}
-
-Future<void> _doDescriptorPopulate(
-  String dirPath,
-  Map<String, String> contents,
-) async {
-  for (var name in contents.keys) {
-    final value = contents[name]!;
-
-    final fullPath = p.join(dirPath, name);
-
-    final file = File(fullPath);
-    await file.create(recursive: true);
-    await file.writeAsString(value);
-  }
-}
-
-Future<GitDir> _createTempGitDir() => GitDir.fromExisting(d.sandbox);
