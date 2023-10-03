@@ -1,8 +1,7 @@
 import 'package:test/test.dart';
 
+import '../../bin/git/bot.dart';
 import '../../bin/git/commit_reference.dart';
-import '../../bin/git/top_level.dart';
-import '../../bin/git/util.dart';
 
 void main() {
   test('valid sha', () {

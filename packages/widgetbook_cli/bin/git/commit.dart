@@ -1,7 +1,6 @@
 import 'dart:collection';
 
 import 'bot.dart';
-import 'util.dart';
 
 class Commit {
   Commit._(

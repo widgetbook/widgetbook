@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'bot.dart';
 import 'branch_reference.dart';
-import 'util.dart';
 
 /// Represents the output from `git show-ref`
 class CommitReference {

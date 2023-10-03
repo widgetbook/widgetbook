@@ -11,7 +11,6 @@ import 'commit_reference.dart';
 import 'diff_header.dart';
 import 'git_error.dart';
 import 'top_level.dart';
-import 'util.dart';
 
 class GitDir {
   GitDir._raw(this._path, [this._gitWorkTree])
