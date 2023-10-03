@@ -107,7 +107,7 @@ void main() {
           () {
             when(
               () => gitDir.fetch(),
-            ).thenAnswer((_) => Future.value());
+            ).thenAnswer((_) async => true);
           },
         );
 
@@ -671,7 +671,7 @@ void main() {
       () {
         when(() => gitDir.allBranches()).thenAnswer((_) => Future.value([]));
         when(() => gitDir.fetch()).thenAnswer(
-          (_) => Future.value(),
+          (_) async => true,
         );
 
         final command = PublishCommand(

@@ -6,8 +6,8 @@ import 'package:path/path.dart' as p;
 import 'package:process/process.dart';
 
 import 'diff_header.dart';
+import 'git_process_manager.dart';
 import 'reference.dart';
-import 'top_level.dart';
 
 class GitDir {
   GitDir.raw(
@@ -18,104 +18,97 @@ class GitDir {
   final String path;
   final ProcessManager processManager;
 
+  /// Runs a git command in the current working directory
+  /// using the local [processManager].
+  Future<String> runLocal(List<String> args) {
+    return processManager.runGit(
+      args,
+      workingDirectory: path,
+    );
+  }
+
   Future<String> getActorName() async {
-    final results = await runCommand(['config', 'user.name']);
-    final output = results.stdout as String;
-    return output.trim();
+    return runLocal(['config', 'user.name']);
   }
 
   Future<String> getRepositoryName() async {
-    final results = await runCommand(['rev-parse', '--show-toplevel']);
-    final output = results.stdout.toString().split('/').last;
-    return output.trim();
+    final topLevel = await runLocal(['rev-parse', '--show-toplevel']);
+    return topLevel.split('/').last;
   }
 
   Future<List<Reference>> allBranches() async {
-    final result = await runCommand(
-      ['show-ref'],
-      throwOnError: false,
-    );
+    try {
+      const splitter = LineSplitter();
+      final output = await runLocal(['show-ref']);
+      final lines = splitter.convert(output.trim());
 
-    if (result.exitCode == 1) return [];
-
-    final output = result.stdout as String;
-
-    const splitter = LineSplitter();
-    final lines = splitter.convert(output.trim());
-
-    return lines //
-        .map(Reference.parse)
-        .where((ref) => ref.isBranch)
-        .toList();
+      return lines //
+          .map(Reference.parse)
+          .where((ref) => ref.isBranch)
+          .toList();
+    } catch (e) {
+      return [];
+    }
   }
 
-  Future<void> fetch() async {
-    await runCommand(['fetch'], throwOnError: false);
+  /// Returns [true] if the fetch was successful, [false] otherwise.
+  Future<bool> fetch() async {
+    try {
+      await runLocal(['fetch']);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<Reference> currentBranch() async {
-    final revParseResult = await runCommand(
-      const ['rev-parse', '--verify', '--symbolic-full-name', 'HEAD'],
+    final refFullName = await runLocal(
+      ['rev-parse', '--verify', '--symbolic-full-name', 'HEAD'],
     );
 
-    final branchName = (revParseResult.stdout as String).trim();
-
-    final showRefResult = await runCommand(
-      ['show-ref', '--verify', branchName],
+    final refLine = await runLocal(
+      ['show-ref', '--verify', refFullName],
     );
-
-    final refLine = (showRefResult.stdout as String).trim();
 
     return Reference.parse(refLine);
   }
 
   Future<List<DiffHeader>> diff([String? base]) async {
     final args = ['diff', if (base != null) base];
-    final result = await runCommand(args);
-    final output = result.stdout as String;
+    final output = await runLocal(args);
 
     final diffs = output
-        .trim()
         .split('diff --git ')
-        .where((x) => x.isNotEmpty) // First element is always empty
-        .toList();
+        .where((x) => x.isNotEmpty); // First element is always empty
 
     return diffs.map(DiffHeader.parse).toList();
   }
 
-  Future<ProcessResult> runCommand(
-    List<String> args, {
-    bool throwOnError = true,
-  }) {
-    return runGit(
-      args,
-      throwOnError: throwOnError,
-      workingDirectory: path,
-      processManager: processManager,
-    );
+  Future<bool> isWorkingTreeClean() async {
+    final status = await runLocal(['status', '--porcelain']);
+    return status.isEmpty;
   }
-
-  Future<bool> isWorkingTreeClean() => runCommand(['status', '--porcelain'])
-      .then((pr) => (pr.stdout as String).isEmpty);
 
   static Future<bool> isGitDir(
     String path, [
     ProcessManager processManager = const LocalProcessManager(),
   ]) async {
-    final dir = Directory(path);
+    try {
+      final dir = Directory(path);
 
-    if (!dir.existsSync()) return false;
+      if (!dir.existsSync()) return false;
 
-    // using rev-parse because it will fail in many scenarios
-    // including if the directory provided is a bare repository
-    final result = await runGit(
-      ['rev-parse'],
-      throwOnError: false,
-      workingDirectory: dir.path,
-      processManager: processManager,
-    );
+      // using rev-parse because it will fail in many scenarios
+      // including if the directory provided is a bare repository
+      await processManager.runGit(
+        ['rev-parse'],
+        workingDirectory: dir.path,
+      );
 
-    return result.exitCode == 0;
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   /// If [allowSubdirectory] is true, a [GitDir] may be returned if [gitDirRoot]
@@ -127,23 +120,20 @@ class GitDir {
   }) async {
     final path = p.absolute(gitDirRoot);
 
-    final pr = await runGit(
+    final gitDir = await processManager.runGit(
       ['rev-parse', '--git-dir'],
       workingDirectory: path,
-      processManager: processManager,
     );
 
-    var returnedPath = (pr.stdout as String).trim();
-
-    if (returnedPath == '.git') {
+    if (gitDir == '.git') {
       return GitDir.raw(path, processManager);
     }
 
-    if (allowSubdirectory && p.basename(returnedPath) == '.git') {
-      returnedPath = p.dirname(returnedPath);
+    if (allowSubdirectory && p.basename(gitDir) == '.git') {
+      final parentDir = p.dirname(gitDir);
 
-      if (p.isWithin(returnedPath, path)) {
-        return GitDir.raw(returnedPath, processManager);
+      if (p.isWithin(parentDir, path)) {
+        return GitDir.raw(parentDir, processManager);
       }
     }
 
