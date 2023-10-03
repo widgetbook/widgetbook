@@ -5,6 +5,7 @@ import 'package:file/local.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:platform/platform.dart';
+import 'package:process/process.dart';
 import 'package:pub_updater/pub_updater.dart';
 
 import '../../bin/api/api.dart';
@@ -42,3 +43,25 @@ class MockPlatform extends Mock implements Platform {}
 class MockUseCaseReader extends Mock implements UseCaseReader {}
 
 class MockStdin extends Mock implements Stdin {}
+
+class MockProcessManager extends Mock implements ProcessManager {}
+
+class MockProcessResult {
+  static ProcessResult success(String result) {
+    return ProcessResult(
+      0,
+      0,
+      result,
+      '',
+    );
+  }
+
+  static ProcessResult error(String err) {
+    return ProcessResult(
+      0,
+      21,
+      '',
+      err,
+    );
+  }
+}

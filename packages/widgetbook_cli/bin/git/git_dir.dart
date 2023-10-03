@@ -12,7 +12,7 @@ import 'diff_header.dart';
 import 'top_level.dart';
 
 class GitDir {
-  GitDir._raw(
+  GitDir.raw(
     this.path,
     this.processManager,
   ) : assert(p.isAbsolute(path));
@@ -141,6 +141,7 @@ class GitDir {
     final output = result.stdout as String;
 
     final diffs = output
+        .trim()
         .split('diff --git ')
         .where((x) => x.isNotEmpty) // First element is always empty
         .toList();
@@ -151,7 +152,6 @@ class GitDir {
   Future<ProcessResult> runCommand(
     List<String> args, {
     bool throwOnError = true,
-    ProcessManager processManager = const LocalProcessManager(),
   }) {
     return runGit(
       args,
@@ -202,14 +202,14 @@ class GitDir {
     var returnedPath = (pr.stdout as String).trim();
 
     if (returnedPath == '.git') {
-      return GitDir._raw(path, processManager);
+      return GitDir.raw(path, processManager);
     }
 
     if (allowSubdirectory && p.basename(returnedPath) == '.git') {
       returnedPath = p.dirname(returnedPath);
 
       if (p.isWithin(returnedPath, path)) {
-        return GitDir._raw(returnedPath, processManager);
+        return GitDir.raw(returnedPath, processManager);
       }
     }
 

@@ -1,148 +1,97 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:mocktail/mocktail.dart';
 import 'package:path/path.dart' as p;
+import 'package:process/process.dart';
 import 'package:test/test.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
 
 import '../../bin/git/commit.dart';
 import '../../bin/git/diff_header.dart';
 import '../../bin/git/git_dir.dart';
+import '../mocks/command_mocks.dart';
 
 void main() {
+  late ProcessManager processManager;
+  late dynamic Function() processRun;
+  late GitDir gitDir;
+
+  setUp(() {
+    processManager = MockProcessManager();
+    processRun = () => processManager.run(
+          any(),
+          workingDirectory: any(named: 'workingDirectory'),
+          runInShell: any(named: 'runInShell'),
+        );
+
+    gitDir = GitDir.raw(
+      d.sandbox,
+      processManager,
+    );
+  });
+
   group('diff', () {
     test(
       'returns []',
       () async {
-        final gitDir = await _createTempGitDir();
-        final diffs = await gitDir.diff();
-        expect(diffs, isEmpty);
-      },
-    );
-
-    test(
-      'on new file returns [@@ -0,0 +1 @@]',
-      () async {
-        const initialMasterBranchContent = {
-          'master.md': 'test file',
-        };
-
-        final gitDir = await _createTempGitDir();
-
-        await _doDescriptorGitCommit(
-          gitDir,
-          initialMasterBranchContent,
-          'master files',
+        when(processRun).thenAnswer(
+          ($) async => MockProcessResult.success(''),
         );
 
-        await _doDescriptorGitCommit(
-          gitDir,
-          {
-            'test.txt': 'test',
-          },
-          'test',
-        );
-
-        final commits = await gitDir.commits();
-
-        final diffs = await gitDir.diff(
-          commits.keys.last,
-        );
-
-        expect(
-          diffs,
-          equals(
-            [
-              DiffHeader(
-                ref: '/test.txt',
-              ),
-            ],
-          ),
+        expectLater(
+          gitDir.diff(),
+          completion(isEmpty),
         );
       },
     );
 
     test(
-      'on deleted file returns [@@ -1 +0,0 @@]',
+      'can parse add, change, delete',
       () async {
-        const initialMasterBranchContent = {
-          'test.txt': 'test',
-        };
-
-        final gitDir = await _createTempGitDir();
-
-        await _doDescriptorGitCommit(
-          gitDir,
-          initialMasterBranchContent,
-          'master files',
-        );
-
-        await _doDescriptorGitRemove(
-          gitDir,
-          ['test.txt'],
-          'test',
-        );
-
-        final commits = await gitDir.commits();
-
-        final diffs = await gitDir.diff(
-          commits.keys.last,
-        );
-
-        expect(
-          diffs,
-          equals(
-            [
-              DiffHeader(
-                base: '/test.txt',
-              ),
-            ],
+        when(processRun).thenAnswer(
+          ($) async => MockProcessResult.success(
+            '''
+            diff --git a/file_add.txt b/file_add.txt
+            new file mode 100644
+            index 0000000..78169f5
+            --- /dev/null
+            +++ b/file_add.txt
+            @@ -0,0 +1 @@
+            +Widgetbook
+            \ No newline at end of file
+            diff --git a/file_change.txt b/file_change.txt
+            index 515e7cc..6c17f58 100644
+            --- a/file_change.txt
+            +++ b/file_change.txt
+            @@ -1 +1 @@
+            -Storybook
+            +Widgetbook
+            diff --git a/file_delete.txt b/file_delete.txt
+            deleted file mode 100644
+            index 515e7cc..0000000
+            --- a/file_delete.txt
+            +++ /dev/null
+            @@ -1 +0,0 @@
+            -Storybook
+            ''',
           ),
         );
-      },
-    );
 
-    test(
-      'on line change returns [@@ -1 +1 @@]',
-      () async {
-        const initialMasterBranchContent = {
-          'test.md': 'line 1',
-        };
-
-        final gitDir = await _createTempGitDir();
-
-        await _doDescriptorGitCommit(
-          gitDir,
-          initialMasterBranchContent,
-          'not important',
-        );
-
-        const updatedMasterBranchContent = {
-          'test.md': 'line 2',
-        };
-
-        await _doDescriptorGitCommit(
-          gitDir,
-          updatedMasterBranchContent,
-          'not important',
-        );
-
-        final commits = await gitDir.commits();
-
-        final diffs = await gitDir.diff(
-          commits.keys.last,
-        );
-
-        expect(
-          diffs,
-          equals(
-            [
-              DiffHeader(
-                ref: '/test.md',
-                base: '/test.md',
-              ),
-            ],
-          ),
+        expectLater(
+          gitDir.diff(),
+          completion([
+            DiffHeader(
+              ref: '/file_add.txt',
+            ),
+            DiffHeader(
+              ref: '/file_change.txt',
+              base: '/file_change.txt',
+            ),
+            DiffHeader(
+              base: '/file_delete.txt',
+            ),
+          ]),
         );
       },
     );
@@ -158,7 +107,7 @@ void main() {
         'lib/bar.txt': 'lib bar text',
       };
 
-      final gitDir = await _createTempGitDir(branchName: 'master');
+      final gitDir = await _createTempGitDir();
 
       await _doDescriptorGitCommit(
         gitDir,
@@ -257,30 +206,6 @@ Future<void> _testGetCommits() async {
   });
 }
 
-Future<ProcessResult> _doDescriptorGitRemove(
-  GitDir gd,
-  List<String> filePaths,
-  String commitMsg,
-) async {
-  await _doDescriptorDepopulate(gd.path, filePaths);
-
-  // now add the deleted file
-  await gd.runCommand(['add', '--all']);
-
-  // now commit these silly files
-  final args = [
-    'commit',
-    '--cleanup=verbatim',
-    '--no-edit',
-    '--allow-empty-message',
-  ];
-  if (commitMsg.isNotEmpty) {
-    args.addAll(['-m', commitMsg]);
-  }
-
-  return gd.runCommand(args);
-}
-
 Future<ProcessResult> _doDescriptorGitCommit(
   GitDir gd,
   Map<String, String> contents,
@@ -305,17 +230,6 @@ Future<ProcessResult> _doDescriptorGitCommit(
   return gd.runCommand(args);
 }
 
-Future<void> _doDescriptorDepopulate(
-  String dirPath,
-  List<String> filePaths,
-) async {
-  for (final filePath in filePaths) {
-    final fullPath = p.join(dirPath, filePath);
-    final file = File(fullPath);
-    await file.delete(recursive: true);
-  }
-}
-
 Future<void> _doDescriptorPopulate(
   String dirPath,
   Map<String, String> contents,
@@ -331,5 +245,4 @@ Future<void> _doDescriptorPopulate(
   }
 }
 
-Future<GitDir> _createTempGitDir({String? branchName}) =>
-    GitDir.fromExisting(d.sandbox);
+Future<GitDir> _createTempGitDir() => GitDir.fromExisting(d.sandbox);
