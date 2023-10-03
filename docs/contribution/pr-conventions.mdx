@@ -1,0 +1,60 @@
+# PR Title Conventions
+
+Well-structured commit messages provide a clear project history and make it
+easier for maintainers and contributors to understand the changes. We use the
+[conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) format to
+ensure consistency across all commits. Here's how you can structure your commit
+messages:
+
+## Commit Message Structure
+
+A commit message using the conventional commit format looks like this:
+
+```bash
+<type>(<scope>): <subject>
+```
+
+Where:
+
+- `<type>` classifies the kind of change being made.
+- `<scope>` (optional) describes where the change was made.
+- `<subject>` is a brief description of the change.
+
+## Types
+
+Here are the types you can use to classify your changes:
+
+| Type       | Description                                                         |
+| ---------- | ------------------------------------------------------------------- |
+| `feat`     | A new feature.                                                      |
+| `fix`      | A bug fix.                                                          |
+| `refactor` | A code change that neither fixes a bug nor adds a feature.          |
+| `docs`     | Documentation-only changes.                                         |
+| `test`     | Adding or updating tests.                                           |
+| `chore`    | Routine tasks like updating dependencies or other non-code changes. |
+| `ci`       | Changes related to Continuous Integration.                          |
+
+## Scopes
+
+Scopes help in pinpointing where exactly in the codebase the change happened:
+
+| Scope        | Description                                            |
+| ------------ | ------------------------------------------------------ |
+| _No scope_   | General changes to the core `widgetbook` package.      |
+| `cli`        | Changes specific to the `widgetbook_cli` package.      |
+| `annotation` | Modifications in the `widgetbook_annotation` package.  |
+| `generator`  | Updates concerning the `widgetbook_generator` package. |
+| `release`    | Commits related to version releases.                   |
+
+## Example
+
+Following the convention, a commit that adds a new command to the CLI package
+would be:
+
+```bash
+  _Example:_ `feat(cli): add new CLI command`
+```
+
+By adhering to these conventions, you make the project's history more readable
+and accessible, making it easier for maintainers and contributors to navigate
+through changes.

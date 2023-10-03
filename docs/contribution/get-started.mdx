@@ -1,69 +1,77 @@
-# Contributing to Widgetbook
+# Getting Started
 
-We appreciate your interest in contributing to Widgetbook. Whether it's through fixing bugs, enhancing documentation, or suggesting new features, your efforts are greatly valued.
+Setting up your environment correctly is crucial. This ensures that you can
+develop features or fix bugs in an environment that mimics the actual
+development conditions, reducing inconsistencies and issues down the line.
+Here's a step-by-step guide to get you started:
 
-The following are some guidelines for contributing to Widgetbook and its packages. Remember, these are primarily guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
+1. **Fork the Repository:** Before you make any changes, you'll need your copy
+   of the Widgetbook repository. You can freely experiment without affecting the
+   original project by forking the repository. To do this:
 
-## Proposing a Change
+   - Visit the
+     [Widgetbook repository](https://github.com/widgetbook/widgetbook).
+   - Click on the "**Fork**" button at the top right.
+   - Once forked, you'll have your copy under your GitHub account.
 
-If you plan to modify the public API or make non-trivial changes to the implementation, we recommend [filing an issue](https://github.com/widgetbook/widgetbook/issues) first. This helps us align your proposal before you put significant effort into it.
+   _Tip:_ Regularly sync your fork with the main repository to stay updated with
+   the latest changes. This helps in avoiding merge conflicts later on. Check
+   out [Synchronize Your Fork](/contribute/sync-your-fork).
 
-You can submit a pull request for bug fixes immediately, but we still recommend filing an issue detailing what you're fixing. This is useful if we don't accept that specific fix but want to track the issue.
+2. **Clone Your Fork:** With your fork ready, clone it to your local machine to
+   start development. Replace `<YOUR_USERNAME>` with your actual GitHub
+   username:
 
-## Contribution Workflow
+   ```bash
+   git clone https://github.com/<YOUR_USERNAME>/widgetbook.git
+   ```
 
-The following steps will guide you through the contribution process:
+   This command creates a local copy of your forked Widgetbook repository. You
+   can navigate, make changes, and test them on this local copy.
 
-### Preparation
+3. **Install Melos:** `Melos` is a tool that streamlines working with
+   mono-repositories (repositories containing multiple projects/packages).
+   Widgetbook leverages `Melos` to efficiently manage its various packages:
 
-1. **Fork the Repository:** Start by forking the Widgetbook repository and creating your own branch from the `main` branch.
+   ```bash
+   dart pub global activate melos
+   ```
 
-2. **Install Melos:** Install `melos` which helps to manage our mono-repo by running `dart pub global activate melos`
+   By activating Melos, you're setting yourself up to easily manage
+   dependencies, run scripts, and more across all the packages in Widgetbook.
 
-3. **Install Dependencies:** Ensure your environment is ready by installing all necessary dependencies using `melos bs`.
+4. **Bootstrap the Repository:** Setting up the repository involves multiple
+   steps, including installing dependencies, bootstrapping, and generating
+   necessary files:
 
-### Making Changes
+   - Navigate to the cloned repository:
 
-3. **Add Tests:** Include relevant tests if you're fixing a bug or adding new code. We strive for high test coverage to ensure code quality.
+     ```bash
+     cd widgetbook
+     ```
 
-4. **Make Your Changes:** Implement your changes, ensuring you maintain code quality and follow existing coding conventions.
+   - Fetch and install dependencies for the project:
 
-5. **Format Your Code:** Use `dartfmt -w .` to maintain consistent code formatting.
+     ```bash
+     flutter pub get
+     ```
 
-6. **Analyze Your Code:** Use `dartanalyzer --fatal-infos --fatal-warnings .` to ensure your code meets the Dart language's analysis lints.
+   - Using Melos, bootstrap the project. This step links inter-dependent
+     packages in the repo, ensuring they work together seamlessly:
 
-### Before Submission
+     ```bash
+     melos bootstrap
+     ```
 
-7. **Squash Your Commits:** Squash your commits and provide a meaningful commit message describing your changes.
+   - Generate any necessary build files:
 
-8. **Update Documentation:** If you've changed the public API or introduced significant new features, update or add to the documentation.
+     ```bash
+     melos generate
+     ```
 
-9. **Pass the Test Suite:** Run the test suite and ensure all tests pass before submitting your changes.
+   _Note:_ If at any point you encounter issues, refer to Widgetbook's official
+   documentation or seek help from the community on platforms like Discord or
+   GitHub Discussions.
 
-### Submitting Your Changes
-
-10. **Sign the CLA:** Before submitting your pull request, please sign the [Contributor License Agreement](https://docs.google.com/forms/d/e/1FAIpQLScuRfjUzENsLsmQgqZlGLxMKbFi7zuXoPARyXytoyQrq7ntUw/viewform). This protects both you and Widgetbook, and is a common practice in open-source contributions.
-
-11. **Create the Pull Request:** Create your pull request. Ensure you comprehensively describe the changes you've made and why they're necessary. If your changes are related to any existing issues, reference them.
-
-12. **Verify Status Checks:** Ensure all status checks pass aofter submitting your pull request. If any checks fail, go back and review your changes.
-
-## Code Reviews
-
-Once your pull request is submitted, our team will review your submission. We might suggest changes or improvements. Please be patient during this process. We are committed to maintaining and improving code quality, which takes time.
-
-## Adding an Example
-
-If you're contributing a code example, please add it to the `examples` folder in the repository. This makes it easier for others to locate your contribution and understand its purpose.
-
-Creating an example must be accompanied by the necessary Continuous Integration (CI) checks. These checks help ensure that the example code remains functional and practical as the repository evolves. Therefore, remember to configure and include appropriate CI checks for your example.
-
-## Community
-
-If you have questions, need assistance with a feature, or wish to discuss ideas, please join our [Discord](https://discord.gg/zT4AMStAJA) community. We are here to help!
-
-## Licensing
-
-By contributing to Widgetbook, you agree that your contributions will be licensed under Widgetbook's [MIT license](https://github.com/widgetbook/widgetbook/blob/main/LICENSE).
-
-Open and proactive communication with the Widgetbook team is the best way to ensure your contributions are accepted. We look forward to collaborating with you!
+5. **Contribution Workflow**: Now that you are ready, let's dive into how to
+   send a good PR. Check out [Contribution Workflow](/contribute/workflow).

@@ -102,6 +102,17 @@
       ]
     ],
     ["CLI", [["Overview", "/widgetbook-cli/overview"]]],
-    ["Contribution", [["Getting Started", "/contribution/get-started"]]]
+    ["Contribution", 
+      [
+				["1. Ways to Contribute", "/contribution/ways-to-contribute"],
+				["2. Getting Started", "/contribution/get-started"],
+				["3. Contribution Workflow", "/contribution/workflow"],
+				["4. Adding Example", "/contribution/adding-example"],
+				["5. PR Title Conventions", "/contribution/pr-conventions"],
+				["6. Code Review", "/contribution/code-reviews"],
+				["7. Sync Your Fork", "/contribution/sync-your-fork"],
+				["8. Quick Guide", "/contribution/quick-guide"]
+			]
+    ]
   ]
 }
