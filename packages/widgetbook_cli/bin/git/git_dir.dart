@@ -361,33 +361,6 @@ class GitDir {
     }
   }
 
-  /// [allowContent] if `true`, doesn't check to see if the directory is empty
-  ///
-  /// [initialBranch] if provided, specifies the initial branch name.
-  /// If not provided, the default for git CLI is used.
-  ///
-  /// Will fail if the source is a git directory
-  /// (either at the root or a sub directory).
-  static Future<GitDir> init(
-    String path, {
-    bool allowContent = false,
-    String? initialBranch,
-  }) async {
-    final source = Directory(path);
-    assert(source.existsSync());
-
-    if (allowContent == true) {
-      return _init(source, branchName: initialBranch);
-    }
-
-    // else, verify it's empty
-    final isEmpty = await source.list().isEmpty;
-    if (!isEmpty) {
-      throw ArgumentError('source Directory is not empty - $source');
-    }
-    return _init(source, branchName: initialBranch);
-  }
-
   /// If [allowSubdirectory] is true, a [GitDir] may be returned if [gitDirRoot]
   /// is a subdirectory within a Git repository.
   static Future<GitDir> fromExisting(
@@ -417,24 +390,6 @@ class GitDir {
 
     throw ArgumentError('The provided value "$gitDirRoot" is not '
         'the root of a git directory');
-  }
-
-  static Future<GitDir> _init(Directory source, {String? branchName}) async {
-    final isGitDir = await _isGitDir(source);
-    if (isGitDir) {
-      throw ArgumentError('Cannot init a directory that is already a '
-          'git directory');
-    }
-
-    await runGit([
-      'init',
-      source.path,
-      if (branchName != null) '--initial-branch=$branchName',
-    ]);
-
-    // does a bit more work than strictly necessary
-    // but at least it ensures consistency
-    return fromExisting(source.path);
   }
 
   static Future<bool> _isGitDir(Directory dir) async {

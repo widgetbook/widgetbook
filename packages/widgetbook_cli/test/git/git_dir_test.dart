@@ -154,65 +154,6 @@ void main() {
 
   test('getCommits', _testGetCommits);
 
-  group('init', () {
-    test('allowContent:false with content fails', () async {
-      File(p.join(d.sandbox, 'testfile.txt')).writeAsStringSync('test content');
-
-      expect(GitDir.init(d.sandbox), throwsArgumentError);
-    });
-
-    group('existing git dir', () {
-      setUp(() async {
-        await _createTempGitDir();
-      });
-
-      test('isWorkingTreeClean', () async {
-        final gitDir = await GitDir.fromExisting(d.sandbox);
-        final isClean = await gitDir.isWorkingTreeClean();
-        expect(isClean, isTrue);
-      });
-
-      group('GitDir.fromExisting', () {
-        setUp(() async {
-          await d.dir('sub').create();
-        });
-
-        test('fails for sub directories', () async {
-          expect(
-            () => GitDir.fromExisting(p.join(d.sandbox, 'sub')),
-            throwsArgumentError,
-          );
-        });
-
-        test('succeeds for sub directories with `allowSubdirectory`', () async {
-          final gitDir = await GitDir.fromExisting(
-            p.join(d.sandbox, 'sub'),
-            allowSubdirectory: true,
-          );
-
-          expect(
-            gitDir.path,
-            d.sandbox,
-            reason: 'The created `GitDir` will point to the root.',
-          );
-        });
-      });
-
-      test('isGitDir is true', () async {
-        final isGitDir = await GitDir.isGitDir(d.sandbox);
-        expect(isGitDir, isTrue);
-      });
-
-      test('with allowContent:false fails', () {
-        expect(GitDir.init(d.sandbox), throwsArgumentError);
-      });
-
-      test('with allowContent:true fails', () {
-        expect(GitDir.init(d.sandbox, allowContent: true), throwsArgumentError);
-      });
-    });
-  });
-
   test('writeObjects', () async {
     final gitDir = await _createTempGitDir();
 
@@ -616,4 +557,4 @@ Future<void> _testPopulateBranchWithDupeContent(
 }
 
 Future<GitDir> _createTempGitDir({String? branchName}) =>
-    GitDir.init(d.sandbox, initialBranch: branchName);
+    GitDir.fromExisting(d.sandbox);
