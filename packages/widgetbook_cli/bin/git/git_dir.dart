@@ -9,7 +9,6 @@ import 'branch_reference.dart';
 import 'commit.dart';
 import 'commit_reference.dart';
 import 'diff_header.dart';
-import 'git_error.dart';
 import 'top_level.dart';
 
 class GitDir {
@@ -40,14 +39,6 @@ class GitDir {
     final results = await runCommand(['rev-parse', '--show-toplevel']);
     final output = results.stdout.toString().split('/').last;
     return output.trim();
-  }
-
-  /// [revision] should probably be a sha1 to a commit.
-  /// But GIT lets you do other things.
-  /// See http://git-scm.com/docs/gitrevisions.html
-  Future<Commit> commitFromRevision(String revision) async {
-    final pr = await runCommand(['cat-file', '-p', revision]);
-    return Commit.parse(pr.stdout as String);
   }
 
   Future<Map<String, Commit>> commits([String branchName = 'HEAD']) async {
@@ -197,98 +188,6 @@ class GitDir {
   Future<bool> isWorkingTreeClean() => runCommand(['status', '--porcelain'])
       .then((pr) => (pr.stdout as String).isEmpty);
 
-  // TODO: TEST: someone puts a git dir when populated
-  // TODO: TEST: someone puts in no content at all
-
-  /// Updates the named branch with the content add by calling [populater].
-  ///
-  /// [populater] is called with a temporary [Directory] instance that should
-  /// be populated with the desired content.
-  ///
-  /// If the content provided matches the content in the specificed
-  /// [branchName], then no [Commit] is created and `null` is returned.
-  ///
-  /// If no content is added to the directory, an error is thrown.
-  Future<Commit?> updateBranch(
-    String branchName,
-    Future<void> Function(Directory td) populater,
-    String commitMessage,
-  ) async {
-    // TODO: ponder restricting branch names
-    // see http://stackoverflow.com/questions/12093748/how-do-i-check-for-valid-git-branch-names/12093994#12093994
-
-    requireArgumentNotNullOrEmpty(branchName, 'branchName');
-    requireArgumentNotNullOrEmpty(commitMessage, 'commitMessage');
-
-    final tempContentRoot = await _createTempDir();
-
-    try {
-      await populater(tempContentRoot);
-      final commit = await updateBranchWithDirectoryContents(
-        branchName,
-        tempContentRoot.path,
-        commitMessage,
-      );
-      return commit;
-    } finally {
-      await tempContentRoot.delete(recursive: true);
-    }
-  }
-
-  Future<Commit?> updateBranchWithDirectoryContents(
-    String branchName,
-    String sourceDirectoryPath,
-    String commitMessage,
-  ) async {
-    final tempGitRoot = await _createTempDir();
-
-    final tempGitDir = GitDir._raw(tempGitRoot.path, sourceDirectoryPath);
-
-    // time for crazy clone tricks
-    final args = ['clone', '--shared', '--bare', path, '.'];
-
-    await runGit(args, processWorkingDir: tempGitDir.path);
-
-    await tempGitDir
-        .runCommand(['symbolic-ref', 'HEAD', 'refs/heads/$branchName']);
-
-    try {
-      // make sure there is something in the working three
-      var pr = await tempGitDir.runCommand(['ls-files', '--others']);
-
-      if ((pr.stdout as String).isEmpty) {
-        throw GitError('No files were added');
-      }
-      // add new files to index
-
-      // --verbose is not strictly needed, but nice for debugging
-      pr = await tempGitDir.runCommand(['add', '--all', '--verbose']);
-
-      // now to see if we have any changes here
-      pr = await tempGitDir.runCommand(['status', '--porcelain']);
-
-      if ((pr.stdout as String).isEmpty) {
-        // no change in files! we should return a null result
-        return null;
-      }
-
-      // Time to commit.
-      await tempGitDir.runCommand(['commit', '--verbose', '-m', commitMessage]);
-
-      // --verbose is not strictly needed, but nice for debugging
-      await tempGitDir
-          .runCommand(['push', '--verbose', '--progress', path, branchName]);
-
-      // pr.stderr will have all of the info
-
-      // so we have this wonderful new commit, right?
-      // need to crack out the commit and return the value
-      return commitFromRevision('refs/heads/$branchName');
-    } finally {
-      await tempGitRoot.delete(recursive: true);
-    }
-  }
-
   String get _processWorkingDir => _path;
 
   static Future<bool> isGitDir(String path) async {
@@ -346,6 +245,3 @@ class GitDir {
     return pr.exitCode == 0;
   }
 }
-
-Future<Directory> _createTempDir() =>
-    Directory.systemTemp.createTemp('git.GitDir.');
