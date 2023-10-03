@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:path/path.dart' as p;
+import 'package:process/process.dart';
 
 import 'branch_reference.dart';
 import 'commit.dart';
@@ -11,11 +12,13 @@ import 'diff_header.dart';
 import 'top_level.dart';
 
 class GitDir {
-  GitDir._raw(this._path) : assert(p.isAbsolute(_path));
+  GitDir._raw(
+    this.path,
+    this.processManager,
+  ) : assert(p.isAbsolute(path));
 
-  final String _path;
-
-  String get path => _path;
+  final String path;
+  final ProcessManager processManager;
 
   Future<int> commitCount([String branchName = 'HEAD']) async {
     final pr = await runCommand(['rev-list', '--count', branchName]);
@@ -146,31 +149,39 @@ class GitDir {
   }
 
   Future<ProcessResult> runCommand(
-    Iterable<String> args, {
+    List<String> args, {
     bool throwOnError = true,
+    ProcessManager processManager = const LocalProcessManager(),
   }) {
-    final list = args.toList();
-
     return runGit(
-      list,
+      args,
       throwOnError: throwOnError,
-      processWorkingDir: _processWorkingDir,
+      workingDirectory: path,
+      processManager: processManager,
     );
   }
 
   Future<bool> isWorkingTreeClean() => runCommand(['status', '--porcelain'])
       .then((pr) => (pr.stdout as String).isEmpty);
 
-  String get _processWorkingDir => _path;
-
-  static Future<bool> isGitDir(String path) async {
+  static Future<bool> isGitDir(
+    String path, [
+    ProcessManager processManager = const LocalProcessManager(),
+  ]) async {
     final dir = Directory(path);
 
-    if (dir.existsSync()) {
-      return _isGitDir(dir);
-    } else {
-      return false;
-    }
+    if (!dir.existsSync()) return false;
+
+    // using rev-parse because it will fail in many scenarios
+    // including if the directory provided is a bare repository
+    final result = await runGit(
+      ['rev-parse'],
+      throwOnError: false,
+      workingDirectory: dir.path,
+      processManager: processManager,
+    );
+
+    return result.exitCode == 0;
   }
 
   /// If [allowSubdirectory] is true, a [GitDir] may be returned if [gitDirRoot]
@@ -178,43 +189,31 @@ class GitDir {
   static Future<GitDir> fromExisting(
     String gitDirRoot, {
     bool allowSubdirectory = false,
+    ProcessManager processManager = const LocalProcessManager(),
   }) async {
     final path = p.absolute(gitDirRoot);
 
     final pr = await runGit(
       ['rev-parse', '--git-dir'],
-      processWorkingDir: path,
+      workingDirectory: path,
+      processManager: processManager,
     );
 
     var returnedPath = (pr.stdout as String).trim();
 
     if (returnedPath == '.git') {
-      return GitDir._raw(path);
+      return GitDir._raw(path, processManager);
     }
 
     if (allowSubdirectory && p.basename(returnedPath) == '.git') {
       returnedPath = p.dirname(returnedPath);
 
       if (p.isWithin(returnedPath, path)) {
-        return GitDir._raw(returnedPath);
+        return GitDir._raw(returnedPath, processManager);
       }
     }
 
     throw ArgumentError('The provided value "$gitDirRoot" is not '
         'the root of a git directory');
-  }
-
-  static Future<bool> _isGitDir(Directory dir) async {
-    assert(dir.existsSync());
-
-    // using rev-parse because it will fail in many scenarios
-    // including if the directory provided is a bare repository
-    final pr = await runGit(
-      ['rev-parse'],
-      throwOnError: false,
-      processWorkingDir: dir.path,
-    );
-
-    return pr.exitCode == 0;
   }
 }

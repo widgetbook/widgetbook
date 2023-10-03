@@ -1,44 +1,31 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:process/process.dart';
+
 Future<ProcessResult> runGit(
   List<String> args, {
+  String? workingDirectory,
+  required ProcessManager processManager,
   bool throwOnError = true,
-  String? processWorkingDir,
 }) async {
-  final pr = await Process.run(
-    'git',
-    args,
-    workingDirectory: processWorkingDir,
+  final result = await processManager.run(
+    ['git', ...args],
+    workingDirectory: workingDirectory,
     runInShell: true,
   );
 
-  if (throwOnError) {
-    _throwIfProcessFailed(pr, 'git', args);
-  }
-  return pr;
-}
+  if (result.exitCode == 0 || !throwOnError) return result;
 
-void _throwIfProcessFailed(
-  ProcessResult pr,
-  String process,
-  List<String> args,
-) {
-  if (pr.exitCode != 0) {
-    final values = {
-      'Standard out': pr.stdout.toString().trim(),
-      'Standard error': pr.stderr.toString().trim(),
-    }..removeWhere((k, v) => v.isEmpty);
+  final message = {
+    'stdout': result.stdout.toString().trim(),
+    'stderr': result.stderr.toString().trim(),
+  }..removeWhere((k, v) => v.isEmpty);
 
-    String message;
-    if (values.isEmpty) {
-      message = 'Unknown error';
-    } else if (values.length == 1) {
-      message = values.values.single;
-    } else {
-      message = values.entries.map((e) => '${e.key}\n${e.value}').join('\n');
-    }
-
-    throw ProcessException(process, args, message, pr.exitCode);
-  }
+  throw ProcessException(
+    'git',
+    args,
+    message.toString(),
+    result.exitCode,
+  );
 }
