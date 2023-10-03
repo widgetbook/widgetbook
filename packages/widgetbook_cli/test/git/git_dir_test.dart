@@ -154,40 +154,6 @@ void main() {
 
   test('getCommits', _testGetCommits);
 
-  test('writeObjects', () async {
-    final gitDir = await _createTempGitDir();
-
-    final branches = await gitDir.branches();
-    expect(branches, isEmpty, reason: 'Should start with zero commits');
-
-    final initialContentMap = {
-      'file1.txt': 'content1',
-      'file2.txt': 'content2',
-    };
-
-    await _doDescriptorPopulate(d.sandbox, initialContentMap);
-
-    final paths = initialContentMap.keys
-        .map((fileName) => p.join(d.sandbox, fileName))
-        .toList();
-
-    final hashes = await gitDir.writeObjects(paths);
-    expect(hashes, hasLength(initialContentMap.length));
-    expect(hashes.keys, unorderedEquals(paths));
-
-    expect(paths[0], endsWith('file1.txt'));
-    expect(
-      hashes,
-      containsPair(paths[0], 'dd954e7a4e1a62ff90c5a0709dce5928716535c1'),
-    );
-
-    expect(paths[1], endsWith('file2.txt'));
-    expect(
-      hashes,
-      containsPair(paths[1], 'db00fd65b218578127ea51f3dffac701f12f486a'),
-    );
-  });
-
   group('BranchReference', () {
     test('isHead', () async {
       const initialMasterBranchContent = {

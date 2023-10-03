@@ -19,7 +19,6 @@ class GitDir {
 
   static const _workTreeArg = '--work-tree=';
   static const _gitDirArg = '--git-dir=';
-  static final RegExp _shaRegExp = RegExp(r'^[a-f0-9]{40}$');
 
   final String _path;
   final String? _gitWorkTree;
@@ -179,33 +178,6 @@ class GitDir {
     final sha = (pr.stdout as String).trim();
     assert(isValidSha(sha));
     return sha;
-  }
-
-  // TODO: should be renamed writeBlob?
-  /// Given a list of [paths], write those files to the object store
-  /// and return a [Map] where the key is the input path and the value is
-  /// the SHA of the newly written object.
-  Future<Map<String, String>> writeObjects(List<String> paths) async {
-    final args = [
-      'hash-object',
-      '-t',
-      'blob',
-      '-w',
-      '--no-filters',
-      '--',
-      ...paths,
-    ];
-
-    final pr = await runCommand(args);
-    final val = (pr.stdout as String).trim();
-    final shas = val.split(RegExp(r'\s+'));
-    assert(shas.length == paths.length);
-    assert(shas.every(_shaRegExp.hasMatch));
-    final map = <String, String>{};
-    for (var i = 0; i < shas.length; i++) {
-      map[paths[i]] = shas[i];
-    }
-    return map;
   }
 
   Future<List<DiffHeader>> diff([String? base]) async {
