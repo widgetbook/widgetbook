@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:path/path.dart' as p;
 
-import 'bot.dart';
 import 'branch_reference.dart';
 import 'commit.dart';
 import 'commit_reference.dart';
@@ -12,15 +11,9 @@ import 'diff_header.dart';
 import 'top_level.dart';
 
 class GitDir {
-  GitDir._raw(this._path, [this._gitWorkTree])
-      : assert(p.isAbsolute(_path)),
-        assert(_gitWorkTree == null || p.isAbsolute(_gitWorkTree));
-
-  static const _workTreeArg = '--work-tree=';
-  static const _gitDirArg = '--git-dir=';
+  GitDir._raw(this._path) : assert(p.isAbsolute(_path));
 
   final String _path;
-  final String? _gitWorkTree;
 
   String get path => _path;
 
@@ -156,27 +149,7 @@ class GitDir {
     Iterable<String> args, {
     bool throwOnError = true,
   }) {
-    ArgumentError.checkNotNull(args, 'args');
-
     final list = args.toList();
-
-    for (final arg in list) {
-      requireArgumentNotNullOrEmpty(arg, 'args');
-      requireArgument(
-        !arg.contains(_workTreeArg),
-        'args',
-        'Cannot contain $_workTreeArg',
-      );
-      requireArgument(
-        !arg.contains(_gitDirArg),
-        'args',
-        'Cannot contain $_gitDirArg',
-      );
-    }
-
-    if (_gitWorkTree != null) {
-      list.insert(0, '$_workTreeArg$_gitWorkTree');
-    }
 
     return runGit(
       list,
