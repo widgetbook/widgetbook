@@ -11,7 +11,6 @@ import 'commit_reference.dart';
 import 'diff_header.dart';
 import 'git_error.dart';
 import 'top_level.dart';
-import 'tree_entry.dart';
 import 'util.dart';
 
 class GitDir {
@@ -149,83 +148,6 @@ class GitDir {
     return CommitReference.fromShowRefOutput(pr.stdout as String)
         .single
         .toBranchReference();
-  }
-
-  Future<List<TreeEntry>> lsTree(
-    String treeish, {
-    bool subTreesOnly = false,
-    String? path,
-  }) async {
-    final args = ['ls-tree'];
-
-    if (subTreesOnly == true) {
-      args.add('-d');
-    }
-
-    args.add(treeish);
-
-    if (path != null) {
-      args.add(path);
-    }
-
-    final pr = await runCommand(args);
-    return TreeEntry.fromLsTreeOutput(pr.stdout as String);
-  }
-
-  /// Returns the SHA for the new commit if one is created.
-  ///
-  /// `null` if the branch is not updated.
-  Future<String?> createOrUpdateBranch(
-    String branchName,
-    String treeSha,
-    String commitMessage,
-  ) async {
-    requireArgumentNotNullOrEmpty(branchName, 'branchName');
-    requireArgumentValidSha1(treeSha, 'treeSha');
-
-    final targetBranchRef = await branchReference(branchName);
-
-    String? newCommitSha;
-
-    if (targetBranchRef == null) {
-      newCommitSha = await commitTree(treeSha, commitMessage);
-    } else {
-      newCommitSha =
-          await _updateBranch(targetBranchRef.sha, treeSha, commitMessage);
-    }
-
-    if (newCommitSha == null) {
-      return null;
-    }
-
-    assert(isValidSha(newCommitSha));
-
-    final branchRef = 'refs/heads/$branchName';
-
-    // TODO: if update-ref fails should we leave the new commit dangling?
-    // or at least log so the user can go clean up?
-    await runCommand(['update-ref', branchRef, newCommitSha]);
-    return newCommitSha;
-  }
-
-  /// Returns the SHA for the new commit if one is created.
-  ///
-  /// `null` if the branch is not updated.
-  Future<String?> _updateBranch(
-    String targetBranchSha,
-    String treeSha,
-    String commitMessage,
-  ) async {
-    final commitObj = await commitFromRevision(targetBranchSha);
-    if (commitObj.treeSha == treeSha) {
-      return null;
-    }
-
-    return commitTree(
-      treeSha,
-      commitMessage,
-      parentCommitShas: [targetBranchSha],
-    );
   }
 
   /// Returns the `SHA1` for the new commit.
