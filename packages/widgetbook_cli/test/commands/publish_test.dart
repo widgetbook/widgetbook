@@ -758,8 +758,6 @@ void main() {
         (_) async => TestData.buildResponse,
       );
 
-      when(() => gitDir.branches()).thenAnswer((_) => Future.value([]));
-
       final result = await publishCommand.run();
       expect(result, equals(ExitCode.success.code));
     });
@@ -836,8 +834,6 @@ void main() {
       ).thenAnswer(
         (_) async => TestData.buildResponse,
       );
-
-      when(() => gitDir.branches()).thenAnswer((_) => Future.value([]));
 
       when(
         () => client.uploadReview(any<ReviewRequest>()),

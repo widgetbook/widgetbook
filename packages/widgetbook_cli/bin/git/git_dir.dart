@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:path/path.dart' as p;
@@ -19,11 +18,6 @@ class GitDir {
   final String path;
   final ProcessManager processManager;
 
-  Future<int> commitCount([String branchName = 'HEAD']) async {
-    final pr = await runCommand(['rev-list', '--count', branchName]);
-    return int.parse(pr.stdout as String);
-  }
-
   Future<String> getActorName() async {
     final results = await runCommand(['config', 'user.name']);
     final output = results.stdout as String;
@@ -36,74 +30,12 @@ class GitDir {
     return output.trim();
   }
 
-  Future<BranchReference?> branchReference(String branchName) async {
-    final list = await branches();
-    final matches = list.where((b) => b.branchName == branchName).toList();
-
-    assert(matches.length <= 1);
-    if (matches.isEmpty) {
-      return null;
-    } else {
-      return matches.single;
-    }
-  }
-
-  Future<List<BranchReference>> branches() async {
-    final refs = await showRef(heads: true);
-    return refs.map((cr) => cr.toBranchReference()).toList();
-  }
-
   Future<List<BranchReference>> allBranches() async {
-    final refs = await showRef();
-    return refs.map((cr) => cr.toBranchReference()).toList();
-  }
+    final pr = await runCommand(
+      ['show-ref'],
+      throwOnError: false,
+    );
 
-  Future<void> fetch() async {
-    await runCommand(['fetch'], throwOnError: false);
-  }
-
-  Future<List<String>> branch({
-    bool all = false,
-  }) async {
-    final args = ['branch'];
-
-    if (all) {
-      args.add('-a');
-    }
-
-    final pr = await runCommand(args, throwOnError: false);
-    if (pr.exitCode == 1) {
-      // no heads present, return empty collection
-      return [];
-    }
-
-    final branches = const LineSplitter()
-        .convert(
-          pr.stdout as String,
-        )
-        .map(
-          (e) => e.substring(2).split(' ->').first,
-        )
-        .toList();
-
-    return branches;
-  }
-
-  Future<List<CommitReference>> showRef({
-    bool heads = false,
-    bool tags = false,
-  }) async {
-    final args = ['show-ref'];
-
-    if (heads) {
-      args.add('--heads');
-    }
-
-    if (tags) {
-      args.add('--tags');
-    }
-
-    final pr = await runCommand(args, throwOnError: false);
     if (pr.exitCode == 1) {
       // no heads present, return empty collection
       return [];
@@ -112,7 +44,13 @@ class GitDir {
     // otherwise, it should have worked fine...
     assert(pr.exitCode == 0);
 
-    return CommitReference.fromShowRefOutput(pr.stdout as String);
+    return CommitReference.fromShowRefOutput(pr.stdout as String)
+        .map((e) => e.toBranchReference())
+        .toList();
+  }
+
+  Future<void> fetch() async {
+    await runCommand(['fetch'], throwOnError: false);
   }
 
   Future<BranchReference> currentBranch() async {
