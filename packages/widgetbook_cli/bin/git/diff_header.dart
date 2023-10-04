@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'modification.dart';
 
 class DiffHeader {
@@ -48,4 +47,9 @@ class DiffHeader {
 
   @override
   int get hashCode => base.hashCode ^ ref.hashCode;
+
+  @override
+  String toString() {
+    return 'DiffHeader(base: $base, ref: $ref)';
+  }
 }
