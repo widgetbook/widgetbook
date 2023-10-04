@@ -2,17 +2,6 @@ import '../../bin/api/api.dart';
 import '../../bin/models/models.dart';
 
 class TestData {
-  static const ciArgsData = CliArgs(
-    apiKey: 'apiKey',
-    branch: 'branch',
-    commit: 'commit',
-    gitProvider: 'gitProvider',
-    gitHubToken: 'gitHubToken',
-    prNumber: 'prNumber',
-    baseBranch: 'baseBranch',
-    path: 'path',
-  );
-
   static final args = PublishArgs(
     apiKey: 'apiKey',
     branch: 'branch',
