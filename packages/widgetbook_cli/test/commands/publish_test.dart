@@ -13,7 +13,7 @@ import '../../bin/api/api.dart';
 import '../../bin/ci_parser/ci_parser.dart';
 import '../../bin/commands/commands.dart';
 import '../../bin/git/git_dir.dart';
-import '../../bin/git/git_wrapper.dart';
+import '../../bin/git/git_manager.dart';
 import '../../bin/git/modification.dart';
 import '../../bin/git/reference.dart';
 import '../../bin/helpers/helpers.dart';
@@ -40,7 +40,7 @@ void main() {
 
   group('$PublishCommand', () {
     late Logger logger;
-    late GitWrapper gitWrapper;
+    late GitManager gitManager;
     late GitDir gitDir;
     late CiWrapper ciWrapper;
     late Platform platform;
@@ -55,7 +55,7 @@ void main() {
 
     setUp(() async {
       logger = MockLogger();
-      gitWrapper = MockGitWrapper();
+      gitManager = MockGitWrapper();
       gitDir = MockGitDir();
       argResults = MockArgResults();
       ciWrapper = MockCiWrapper();
@@ -262,49 +262,6 @@ void main() {
         });
       },
     );
-
-    group(
-      '.checkIfPathIsGitDirectory',
-      () {
-        late PublishCommand command;
-        setUp(() {
-          when(() => argResults['path'] as String).thenReturn('/');
-          command = PublishCommand(
-            logger: logger,
-            gitWrapper: gitWrapper,
-          )..testArgResults = argResults;
-        });
-
-        test(
-          'completes when isGitDir returns true',
-          () async {
-            when(() => gitWrapper.isGitDir('/')).thenAnswer(
-              (_) => Future.value(true),
-            );
-
-            expect(
-              command.checkIfPathIsGitDirectory('/'),
-              completes,
-            );
-          },
-        );
-
-        test(
-          'throws $GitDirectoryNotFound when isGitDir returns false',
-          () async {
-            when(() => gitWrapper.isGitDir('/')).thenAnswer(
-              (_) => Future.value(false),
-            );
-
-            expect(
-              command.checkIfPathIsGitDirectory('/'),
-              throwsA(const TypeMatcher<GitDirectoryNotFound>()),
-            );
-          },
-        );
-      },
-    );
-
     group(
       '.checkIfWorkingTreeIsClean',
       () {
@@ -614,23 +571,14 @@ void main() {
         'proceed with un-committed changes', () async {
       final publishCommand = PublishCommand(
         logger: logger,
-        gitWrapper: gitWrapper,
+        gitManager: gitManager,
         ciParserRunner: CiParserRunner(argResults: argResults, gitDir: gitDir),
       )..testArgResults = argResults;
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
 
-      when(() => gitWrapper.isGitDir(any())).thenAnswer(
-        (_) => Future.value(true),
-      );
-
       when(
-        () => gitWrapper.fromExisting(
-          any(),
-          allowSubdirectory: true,
-        ),
-      ).thenAnswer(
-        (_) => Future.value(gitDir),
-      );
+        () => gitManager.load(any()),
+      ).thenReturn(gitDir);
 
       when(() => gitDir.getActorName()).thenAnswer(
         (_) => Future.value('John Doe'),

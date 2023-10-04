@@ -11,12 +11,12 @@ import 'package:pub_updater/pub_updater.dart';
 import '../../bin/api/api.dart';
 import '../../bin/ci_parser/ci_parser.dart';
 import '../../bin/git/git_dir.dart';
-import '../../bin/git/git_wrapper.dart';
+import '../../bin/git/git_manager.dart';
 import '../../bin/review/use_case_reader.dart';
 
 class MockLogger extends Mock implements Logger {}
 
-class MockGitWrapper extends Mock implements GitWrapper {}
+class MockGitWrapper extends Mock implements GitManager {}
 
 class MockPubUpdater extends Mock implements PubUpdater {}
 

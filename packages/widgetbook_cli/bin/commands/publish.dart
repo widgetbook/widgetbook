@@ -34,7 +34,7 @@ import '../api/api.dart';
 import '../ci_parser/ci_parser.dart';
 import '../git-provider/github/github.dart';
 import '../git/git_dir.dart';
-import '../git/git_wrapper.dart';
+import '../git/git_manager.dart';
 import '../git/reference.dart';
 import '../helpers/exceptions.dart';
 import '../helpers/zip_encoder.dart';
@@ -48,17 +48,16 @@ class PublishCommand extends WidgetbookCommand {
     this.ciParserRunner,
     this.platform = const LocalPlatform(),
     this.fileSystem = const LocalFileSystem(),
+    this.gitManager = const GitManager(),
     UseCaseReader? useCaseReader,
     WidgetbookHttpClient? client,
     CiWrapper? ciWrapper,
-    GitWrapper? gitWrapper,
   })  : useCaseReader = useCaseReader ??
             UseCaseReader(
               fileSystem: fileSystem,
             ),
         _client = client ?? WidgetbookHttpClient(),
-        _ciWrapper = ciWrapper ?? CiWrapper(),
-        _gitWrapper = gitWrapper ?? GitWrapper() {
+        _ciWrapper = ciWrapper ?? CiWrapper() {
     progress = logger.progress('Publishing Widgetbook');
     argParser
       ..addOption(
@@ -117,27 +116,11 @@ class PublishCommand extends WidgetbookCommand {
   CiParserRunner? ciParserRunner;
   final Platform platform;
   final FileSystem fileSystem;
+  final GitManager gitManager;
   final UseCaseReader useCaseReader;
   final WidgetbookHttpClient _client;
   final CiWrapper _ciWrapper;
-  final GitWrapper _gitWrapper;
   late final Progress progress;
-
-  @visibleForTesting
-  Future<void> checkIfPathIsGitDirectory(String path) async {
-    final isGitDir = await _gitWrapper.isGitDir(path);
-    if (!isGitDir) {
-      throw GitDirectoryNotFound();
-    }
-  }
-
-  @visibleForTesting
-  Future<GitDir> getGitDir(String path) {
-    return _gitWrapper.fromExisting(
-      path,
-      allowSubdirectory: true,
-    );
-  }
 
   @visibleForTesting
   Future<void> checkIfWorkingTreeIsClean(
@@ -248,8 +231,7 @@ class PublishCommand extends WidgetbookCommand {
   Future<int> run() async {
     final path = results['path'] as String;
 
-    await checkIfPathIsGitDirectory(path);
-    final gitDir = await getGitDir(path);
+    final gitDir = gitManager.load(path);
     await checkIfWorkingTreeIsClean(gitDir);
     final args = await getArguments(gitDir: gitDir);
 

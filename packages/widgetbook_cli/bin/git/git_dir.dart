@@ -1,21 +1,47 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:path/path.dart' as p;
+import 'package:path/path.dart' as path;
 import 'package:process/process.dart';
 
+import '../helpers/helpers.dart';
 import 'diff_header.dart';
 import 'git_process_manager.dart';
 import 'reference.dart';
 
 class GitDir {
   GitDir.raw(
-    this.path,
+    this.rootDir,
     this.processManager,
-  ) : assert(p.isAbsolute(path));
+  ) : assert(path.isAbsolute(rootDir));
 
-  final String path;
+  /// Loads the [GitDir] that contains the given [dir].
+  factory GitDir.load(
+    String dir, {
+    ProcessManager processManager = const LocalProcessManager(),
+  }) {
+    try {
+      final absoluteDir = path.absolute(dir);
+      final dotGitDir = processManager.runGitSync(
+        ['rev-parse', '--git-dir'],
+        workingDirectory: absoluteDir,
+      );
+
+      final rootDir = path.dirname(dotGitDir);
+
+      if (!path.isWithin(rootDir, absoluteDir)) {
+        throw GitDirectoryNotFound();
+      }
+
+      return GitDir.raw(rootDir, processManager);
+    } catch (_) {
+      throw GitDirectoryNotFound(
+        message: 'The path "$dir" is not a valid git directory.',
+      );
+    }
+  }
+
+  final String rootDir;
   final ProcessManager processManager;
 
   /// Runs a git command in the current working directory
@@ -23,7 +49,7 @@ class GitDir {
   Future<String> runLocal(List<String> args) {
     return processManager.runGit(
       args,
-      workingDirectory: path,
+      workingDirectory: rootDir,
     );
   }
 
@@ -87,57 +113,5 @@ class GitDir {
   Future<bool> isWorkingTreeClean() async {
     final status = await runLocal(['status', '--porcelain']);
     return status.isEmpty;
-  }
-
-  static Future<bool> isGitDir(
-    String path, [
-    ProcessManager processManager = const LocalProcessManager(),
-  ]) async {
-    try {
-      final dir = Directory(path);
-
-      if (!dir.existsSync()) return false;
-
-      // using rev-parse because it will fail in many scenarios
-      // including if the directory provided is a bare repository
-      await processManager.runGit(
-        ['rev-parse'],
-        workingDirectory: dir.path,
-      );
-
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  /// If [allowSubdirectory] is true, a [GitDir] may be returned if [gitDirRoot]
-  /// is a subdirectory within a Git repository.
-  static Future<GitDir> fromExisting(
-    String gitDirRoot, {
-    bool allowSubdirectory = false,
-    ProcessManager processManager = const LocalProcessManager(),
-  }) async {
-    final path = p.absolute(gitDirRoot);
-
-    final gitDir = await processManager.runGit(
-      ['rev-parse', '--git-dir'],
-      workingDirectory: path,
-    );
-
-    if (gitDir == '.git') {
-      return GitDir.raw(path, processManager);
-    }
-
-    if (allowSubdirectory && p.basename(gitDir) == '.git') {
-      final parentDir = p.dirname(gitDir);
-
-      if (p.isWithin(parentDir, path)) {
-        return GitDir.raw(parentDir, processManager);
-      }
-    }
-
-    throw ArgumentError('The provided value "$gitDirRoot" is not '
-        'the root of a git directory');
   }
 }
