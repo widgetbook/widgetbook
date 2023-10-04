@@ -12,10 +12,10 @@ import 'package:test/test.dart';
 import '../../bin/api/api.dart';
 import '../../bin/ci_parser/ci_parser.dart';
 import '../../bin/commands/commands.dart';
-import '../../bin/git/branch_reference.dart';
-import '../../bin/git/git_dir.dart';
-import '../../bin/git/git_wrapper.dart';
-import '../../bin/git/modification.dart';
+import '../../bin/git/diff_header.dart';
+import '../../bin/git/git_manager.dart';
+import '../../bin/git/reference.dart';
+import '../../bin/git/repository.dart';
 import '../../bin/helpers/helpers.dart';
 import '../../bin/models/models.dart';
 import '../../bin/review/changed_use_case.dart';
@@ -40,8 +40,8 @@ void main() {
 
   group('$PublishCommand', () {
     late Logger logger;
-    late GitWrapper gitWrapper;
-    late GitDir gitDir;
+    late GitManager gitManager;
+    late Repository repository;
     late CiWrapper ciWrapper;
     late Platform platform;
     late ArgResults argResults;
@@ -55,8 +55,8 @@ void main() {
 
     setUp(() async {
       logger = MockLogger();
-      gitWrapper = MockGitWrapper();
-      gitDir = MockGitDir();
+      gitManager = MockGitWrapper();
+      repository = MockRepository();
       argResults = MockArgResults();
       ciWrapper = MockCiWrapper();
       client = MockWidgetbookHttpClient();
@@ -86,19 +86,19 @@ void main() {
     group(
       'getBaseBranch',
       () {
-        final branchRefA = BranchReference(
+        final branchRefA = Reference(
           '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf',
           'refs/heads/a',
         );
-        final branchRefB = BranchReference(
+        final branchRefB = Reference(
           'f1c882189d0b341e435a58992c6b78a6a3f5ebfc',
           'refs/heads/b',
         );
-        final branchRefC = BranchReference(
+        final branchRefC = Reference(
           '20dbdee64ee73e4be43b9c949492e05437d0e5dc',
           'refs/remotes/origin/c',
         );
-        final branchRefD = BranchReference(
+        final branchRefD = Reference(
           'd4b6472e1566eb2c9897e4fc4d8c4858628bca01',
           'refs/remotes/origin/d',
         );
@@ -106,25 +106,21 @@ void main() {
         setUp(
           () {
             when(
-              () => gitDir.fetch(),
-            ).thenAnswer((_) => Future.value());
+              () => repository.fetch(),
+            ).thenAnswer((_) async => true);
           },
         );
 
         group('without branches', () {
           setUp(() {
-            when(() => gitDir.allBranches()).thenAnswer(
-              (_) => Future.value(
-                [],
-              ),
-            );
+            when(() => repository.branches).thenAnswer((_) async => []);
           });
 
           test(
             "returns null when invoked with 'a'",
             () async {
               final branch = await publishCommand.getBaseBranch(
-                gitDir: gitDir,
+                repository: repository,
                 branch: 'a',
                 sha: null,
               );
@@ -136,7 +132,7 @@ void main() {
             "returns null when invoked with 'refs/heads/a'",
             () async {
               final branch = await publishCommand.getBaseBranch(
-                gitDir: gitDir,
+                repository: repository,
                 branch: 'refs/heads/a',
                 sha: null,
               );
@@ -148,7 +144,7 @@ void main() {
             "returns null when invoked with 'c'",
             () async {
               final branch = await publishCommand.getBaseBranch(
-                gitDir: gitDir,
+                repository: repository,
                 branch: 'c',
                 sha: null,
               );
@@ -160,7 +156,7 @@ void main() {
             "returns null when invoked with 'refs/remotes/c'",
             () async {
               final branch = await publishCommand.getBaseBranch(
-                gitDir: gitDir,
+                repository: repository,
                 branch: 'refs/remotes/c',
                 sha: null,
               );
@@ -173,13 +169,11 @@ void main() {
           'with only remote branches',
           () {
             setUp(() {
-              when(() => gitDir.allBranches()).thenAnswer(
-                (_) => Future.value(
-                  [
-                    branchRefC,
-                    branchRefD,
-                  ],
-                ),
+              when(() => repository.branches).thenAnswer(
+                (_) async => [
+                  branchRefC,
+                  branchRefD,
+                ],
               );
             });
 
@@ -188,7 +182,7 @@ void main() {
               "with 'refs/heads/c'",
               () async {
                 final branch = await publishCommand.getBaseBranch(
-                  gitDir: gitDir,
+                  repository: repository,
                   branch: 'refs/heads/c',
                   sha: null,
                 );
@@ -200,15 +194,13 @@ void main() {
 
         group('with existing branches', () {
           setUp(() {
-            when(() => gitDir.allBranches()).thenAnswer(
-              (_) => Future.value(
-                [
-                  branchRefA,
-                  branchRefB,
-                  branchRefC,
-                  branchRefD,
-                ],
-              ),
+            when(() => repository.branches).thenAnswer(
+              (_) async => [
+                branchRefA,
+                branchRefB,
+                branchRefC,
+                branchRefD,
+              ],
             );
           });
 
@@ -216,7 +208,7 @@ void main() {
             "returns 'refs/heads/a' with SHA when invoked with 'a'",
             () async {
               final branch = await publishCommand.getBaseBranch(
-                gitDir: gitDir,
+                repository: repository,
                 branch: 'a',
                 sha: null,
               );
@@ -228,7 +220,7 @@ void main() {
             "returns 'refs/heads/a' with SHA when invoked with 'refs/heads/a'",
             () async {
               final branch = await publishCommand.getBaseBranch(
-                gitDir: gitDir,
+                repository: repository,
                 branch: 'refs/heads/a',
                 sha: null,
               );
@@ -240,7 +232,7 @@ void main() {
             "returns 'refs/remotes/c' with SHA when invoked with 'c'",
             () async {
               final branch = await publishCommand.getBaseBranch(
-                gitDir: gitDir,
+                repository: repository,
                 branch: 'c',
                 sha: null,
               );
@@ -252,7 +244,7 @@ void main() {
             "returns 'refs/remotes/c' with SHA when invoked with 'refs/remotes/c'",
             () async {
               final branch = await publishCommand.getBaseBranch(
-                gitDir: gitDir,
+                repository: repository,
                 branch: 'refs/remotes/c',
                 sha: null,
               );
@@ -262,89 +254,28 @@ void main() {
         });
       },
     );
-
     group(
-      '.checkIfPathIsGitDirectory',
+      '.promptUncommittedChanges',
       () {
         late PublishCommand command;
-        setUp(() {
-          when(() => argResults['path'] as String).thenReturn('/');
-          command = PublishCommand(
-            logger: logger,
-            gitWrapper: gitWrapper,
-          )..testArgResults = argResults;
-        });
 
-        test(
-          'completes when isGitDir returns true',
-          () async {
-            when(() => gitWrapper.isGitDir('/')).thenAnswer(
-              (_) => Future.value(true),
-            );
-
-            expect(
-              command.checkIfPathIsGitDirectory('/'),
-              completes,
-            );
-          },
-        );
-
-        test(
-          'throws $GitDirectoryNotFound when isGitDir returns false',
-          () async {
-            when(() => gitWrapper.isGitDir('/')).thenAnswer(
-              (_) => Future.value(false),
-            );
-
-            expect(
-              command.checkIfPathIsGitDirectory('/'),
-              throwsA(const TypeMatcher<GitDirectoryNotFound>()),
-            );
-          },
-        );
-      },
-    );
-
-    group(
-      '.checkIfWorkingTreeIsClean',
-      () {
-        late PublishCommand command;
-        late GitDir gitDir;
         setUp(() {
           command = PublishCommand(
             logger: logger,
           )..testArgResults = argResults;
-          gitDir = MockGitDir();
         });
 
         test(
-          'completes when working dir is clean',
+          'returns true when environment has no terminal',
           () async {
-            when(
-              gitDir.isWorkingTreeClean,
-            ).thenAnswer((_) => Future.value(true));
-
-            expect(
-              command.checkIfWorkingTreeIsClean(gitDir),
-              completes,
-            );
-          },
-        );
-
-        test(
-          'completes when environment has no terminal',
-          () async {
-            when(
-              gitDir.isWorkingTreeClean,
-            ).thenAnswer((_) => Future.value(false));
             when(() => stdin.hasTerminal).thenReturn(false);
 
             IOOverrides.runZoned(
               stdin: () => stdin,
               () {
                 expect(
-                  command.checkIfWorkingTreeIsClean(gitDir),
-                  completes,
+                  command.promptUncommittedChanges(),
+                  true,
                 );
               },
             );
@@ -352,18 +283,38 @@ void main() {
         );
 
         test(
-          'throws $ExitedByUser when environment has no terminal',
+          'returns true when user chooses "yes"',
           () async {
-            when(
-              gitDir.isWorkingTreeClean,
-            ).thenAnswer((_) => Future.value(false));
             when(() => stdin.hasTerminal).thenReturn(true);
-
             when(
-              () => logger.chooseOne(
-                'Would you like to proceed anyways?',
-                choices: ['no', 'yes'],
-                defaultValue: 'no',
+              () => logger.chooseOne<String>(
+                any(),
+                choices: any(named: 'choices'),
+                defaultValue: any(named: 'defaultValue'),
+              ),
+            ).thenReturn('yes');
+
+            IOOverrides.runZoned(
+              stdin: () => stdin,
+              () {
+                expect(
+                  command.promptUncommittedChanges(),
+                  true,
+                );
+              },
+            );
+          },
+        );
+
+        test(
+          'returns false when user chooses "no"',
+          () async {
+            when(() => stdin.hasTerminal).thenReturn(true);
+            when(
+              () => logger.chooseOne<String>(
+                any(),
+                choices: any(named: 'choices'),
+                defaultValue: any(named: 'defaultValue'),
               ),
             ).thenReturn('no');
 
@@ -371,8 +322,8 @@ void main() {
               stdin: () => stdin,
               () {
                 expect(
-                  command.checkIfWorkingTreeIsClean(gitDir),
-                  throwsA(const TypeMatcher<ExitedByUser>()),
+                  command.promptUncommittedChanges(),
+                  false,
                 );
               },
             );
@@ -386,7 +337,7 @@ void main() {
       const commitSha = '0be60db261a03a8f52682c08059f64aee7f95266';
 
       setUp(() {
-        gitDir = MockGitDir();
+        repository = MockRepository();
         ciWrapper = MockCiWrapper();
         platform = MockPlatform();
         command = PublishCommand(
@@ -450,7 +401,7 @@ void main() {
       late CiParserRunner ciParserRunner;
       late CiParser ciParser;
       setUp(() {
-        gitDir = MockGitDir();
+        repository = MockRepository();
         ciParser = MockCiParser();
         ciParserRunner = MockCiParserRunner();
         command = PublishCommand(
@@ -468,7 +419,7 @@ void main() {
             (_) => Future.value(expectedArgs),
           );
           expect(
-            await command.getArgumentsFromCi(gitDir),
+            await command.getArgumentsFromCi(repository),
             equals(expectedArgs),
           );
         });
@@ -476,18 +427,15 @@ void main() {
         test('throws $CiVendorNotSupported', () {
           when(() => ciParserRunner.getParser()).thenReturn(null);
           expect(
-            command.getArgumentsFromCi(gitDir),
+            command.getArgumentsFromCi(repository),
             throwsA(const TypeMatcher<CiVendorNotSupported>()),
           );
         });
       });
 
       group('(main method)', () {
-        late GitDir gitDir;
         setUp(
           () {
-            gitDir = MockGitDir();
-
             when(() => argResults['path'] as String).thenReturn(path);
             when(() => argResults['api-key'] as String).thenReturn(apiKey);
             when(() => argResults['commit'] as String).thenReturn(commit);
@@ -503,12 +451,13 @@ void main() {
         test(
           'returns $PublishArgs when branch from $ArgResults has value',
           () async {
-            when(gitDir.currentBranch).thenAnswer(
-              (_) => Future.value(branchReference),
-            );
             when(() => argResults['branch'] as String).thenReturn(branch);
+            when(() => repository.currentBranch).thenAnswer(
+              (_) async => branchReference,
+            );
+
             expect(
-              await command.getArguments(gitDir: gitDir),
+              await command.getArguments(repository: repository),
               equals(
                 const PublishArgs(
                   path: path,
@@ -517,7 +466,7 @@ void main() {
                   commit: commit,
                   vendor: vendor,
                   actor: actor,
-                  repository: repository,
+                  repository: repoName,
                 ),
               ),
             );
@@ -527,21 +476,22 @@ void main() {
         test(
           'returns $PublishArgs when branch from $ArgResults is null',
           () async {
-            when(gitDir.currentBranch).thenAnswer(
-              (_) => Future.value(branchReference),
-            );
             when(() => argResults['branch'] as String?).thenReturn(null);
+            when(() => repository.currentBranch).thenAnswer(
+              (_) async => branchReference,
+            );
+
             expect(
-              await command.getArguments(gitDir: gitDir),
+              await command.getArguments(repository: repository),
               equals(
                 PublishArgs(
                   path: path,
                   apiKey: apiKey,
-                  branch: branchReference.reference,
+                  branch: branchReference.fullName,
                   commit: commit,
                   vendor: vendor,
                   actor: actor,
-                  repository: repository,
+                  repository: repoName,
                 ),
               ),
             );
@@ -551,15 +501,16 @@ void main() {
         test(
           'throws $ActorNotFoundException when actor is null',
           () async {
-            const expectedArguments = CiArgs(vendor: vendor);
-            when(gitDir.currentBranch).thenAnswer(
-              (_) => Future.value(branchReference),
-            );
             when(() => ciParser.getCiArgs()).thenAnswer(
-              (_) => Future.value(expectedArguments),
+              (_) async => const CiArgs(vendor: vendor),
             );
+
+            when(() => repository.currentBranch).thenAnswer(
+              (_) async => branchReference,
+            );
+
             expect(
-              () => command.getArguments(gitDir: gitDir),
+              () => command.getArguments(repository: repository),
               throwsA(const TypeMatcher<ActorNotFoundException>()),
             );
           },
@@ -568,15 +519,19 @@ void main() {
         test(
           'throws $RepositoryNotFoundException when actor is null',
           () async {
-            const expectedArguments = CiArgs(vendor: vendor, actor: actor);
-            when(gitDir.currentBranch).thenAnswer(
-              (_) => Future.value(branchReference),
-            );
             when(() => ciParser.getCiArgs()).thenAnswer(
-              (_) => Future.value(expectedArguments),
+              (_) async => const CiArgs(
+                vendor: vendor,
+                actor: actor,
+              ),
             );
+
+            when(() => repository.currentBranch).thenAnswer(
+              (_) async => branchReference,
+            );
+
             expect(
-              () => command.getArguments(gitDir: gitDir),
+              () => command.getArguments(repository: repository),
               throwsA(const TypeMatcher<RepositoryNotFoundException>()),
             );
           },
@@ -591,7 +546,7 @@ void main() {
         logger: logger,
         ciParserRunner: CiParserRunner(
           argResults: argResults,
-          gitDir: gitDir,
+          repository: repository,
           ciWrapper: ciWrapper,
         ),
       )..testArgResults = argResults;
@@ -614,43 +569,22 @@ void main() {
         'proceed with un-committed changes', () async {
       final publishCommand = PublishCommand(
         logger: logger,
-        gitWrapper: gitWrapper,
-        ciParserRunner: CiParserRunner(argResults: argResults, gitDir: gitDir),
+        gitManager: gitManager,
+        ciParserRunner:
+            CiParserRunner(argResults: argResults, repository: repository),
       )..testArgResults = argResults;
+
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
-
-      when(() => gitWrapper.isGitDir(any())).thenAnswer(
-        (_) => Future.value(true),
-      );
-
-      when(
-        () => gitWrapper.fromExisting(
-          any(),
-          allowSubdirectory: true,
-        ),
-      ).thenAnswer(
-        (_) => Future.value(gitDir),
-      );
-
-      when(() => gitDir.getActorName()).thenAnswer(
-        (_) => Future.value('John Doe'),
-      );
-
-      when(() => gitDir.getRepositoryName()).thenAnswer(
-        (_) => Future.value('widgetbook'),
-      );
-
-      when(() => gitDir.isWorkingTreeClean()).thenAnswer(
-        (_) => Future.value(false),
-      );
-
+      when(() => gitManager.load(any())).thenReturn(repository);
+      when(() => repository.user).thenAnswer((_) async => 'John Doe');
+      when(() => repository.name).thenAnswer((_) async => 'widgetbook');
+      when(() => repository.isClean).thenAnswer((_) async => false);
       when(() => stdin.hasTerminal).thenReturn(true);
-
       when(
-        () => logger.chooseOne(
-          'Would you like to proceed anyways?',
-          choices: ['no', 'yes'],
-          defaultValue: 'no',
+        () => logger.chooseOne<String>(
+          any(),
+          choices: any(named: 'choices'),
+          defaultValue: any(named: 'defaultValue'),
         ),
       ).thenReturn('no');
 
@@ -669,9 +603,9 @@ void main() {
       'throws $UnableToCreateZipFileException when zip file could '
       'not be create for upload',
       () {
-        when(() => gitDir.allBranches()).thenAnswer((_) => Future.value([]));
-        when(() => gitDir.fetch()).thenAnswer(
-          (_) => Future.value(),
+        when(() => repository.branches).thenAnswer((_) async => []);
+        when(() => repository.fetch()).thenAnswer(
+          (_) async => true,
         );
 
         final command = PublishCommand(
@@ -682,7 +616,7 @@ void main() {
         expect(
           () => command.publish(
             args: TestData.args,
-            gitDir: gitDir,
+            repository: repository,
           ),
           throwsA(const TypeMatcher<UnableToCreateZipFileException>()),
         );
@@ -699,7 +633,7 @@ void main() {
         logger: logger,
         ciParserRunner: CiParserRunner(
           argResults: argResults,
-          gitDir: gitDir,
+          repository: repository,
         ),
       )..testArgResults = argResults;
 
@@ -723,9 +657,7 @@ void main() {
       ]);
 
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
-
-      when(() => gitDir.getActorName())
-          .thenAnswer((_) => Future.value('John Doe'));
+      when(() => repository.user).thenAnswer((_) async => 'John Doe');
 
       when(() => localFileSystem.directory(any<String>())).thenAnswer(
         ($) => fileSystem.directory($.positionalArguments[0])
@@ -741,24 +673,20 @@ void main() {
           ),
       );
 
+      when(() => repository.name).thenAnswer((_) async => 'widgetbook');
       when(
-        () => logger.chooseOne(
-          'Would you like to proceed anyways?',
-          choices: ['no', 'yes'],
-          defaultValue: 'no',
+        () => logger.chooseOne<String>(
+          any(),
+          choices: any(named: 'choices'),
+          defaultValue: any(named: 'defaultValue'),
         ),
       ).thenReturn('yes');
-
-      when(() => gitDir.getRepositoryName())
-          .thenAnswer((_) => Future.value('widgetbook'));
 
       when(
         () => client.uploadBuild(any<BuildRequest>()),
       ).thenAnswer(
         (_) async => TestData.buildResponse,
       );
-
-      when(() => gitDir.branches()).thenAnswer((_) => Future.value([]));
 
       final result = await publishCommand.run();
       expect(result, equals(ExitCode.success.code));
@@ -774,7 +702,7 @@ void main() {
         useCaseReader: useCaseReader,
         ciParserRunner: CiParserRunner(
           argResults: argResults,
-          gitDir: gitDir,
+          repository: repository,
         ),
       )..testArgResults = argResults;
 
@@ -798,13 +726,10 @@ void main() {
       ]);
 
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
-
       when(() => argResults['base-branch'] as String).thenReturn('main');
-
       when(() => argResults['base-commit'] as String).thenReturn('base-commit');
-
-      when(() => gitDir.getActorName())
-          .thenAnswer((_) => Future.value('John Doe'));
+      when(() => repository.user).thenAnswer((_) async => 'John Doe');
+      when(() => repository.name).thenAnswer((_) async => 'widgetbook');
 
       when(() => localFileSystem.directory(any<String>())).thenAnswer(
         ($) => fileSystem.directory($.positionalArguments[0])
@@ -821,23 +746,18 @@ void main() {
       );
 
       when(
-        () => logger.chooseOne(
-          'Would you like to proceed anyways?',
-          choices: ['no', 'yes'],
-          defaultValue: 'no',
+        () => logger.chooseOne<String>(
+          any(),
+          choices: any(named: 'choices'),
+          defaultValue: any(named: 'defaultValue'),
         ),
       ).thenReturn('yes');
-
-      when(() => gitDir.getRepositoryName())
-          .thenAnswer((_) => Future.value('widgetbook'));
 
       when(
         () => client.uploadBuild(any<BuildRequest>()),
       ).thenAnswer(
         (_) async => TestData.buildResponse,
       );
-
-      when(() => gitDir.branches()).thenAnswer((_) => Future.value([]));
 
       when(
         () => client.uploadReview(any<ReviewRequest>()),
