@@ -19,7 +19,6 @@ class DurationField extends Field<Duration> {
     return TextFormField(
       initialValue:
           codec.toParam(currentValue ?? initialValue ?? Duration.zero),
-      decoration: InputDecoration(labelText: label),
       keyboardType: TextInputType.number,
       onChanged: (value) => updateField(
         context,

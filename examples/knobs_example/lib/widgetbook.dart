@@ -63,6 +63,10 @@ class WidgetbookApp extends StatelessWidget {
                     description: 'This is the tooltip that is displayed '
                         'when hovering over the increment button',
                   ),
+                  duration: context.knobs.duration(
+                    label: 'Increment duration',
+                    initialValue: const Duration(seconds: 5),
+                  ),
                 );
               },
             ),
