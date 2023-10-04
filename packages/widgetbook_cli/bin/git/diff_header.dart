@@ -1,4 +1,8 @@
-import 'modification.dart';
+enum Modification {
+  removed,
+  changed,
+  added,
+}
 
 class DiffHeader {
   DiffHeader({
