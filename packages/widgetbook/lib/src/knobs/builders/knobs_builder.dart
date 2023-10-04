@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../fields/fields.dart';
 import '../boolean_knob.dart';
 import '../color_knob.dart';
+import '../duration_knob.dart';
 import '../knob.dart';
 import '../list_knob.dart';
 import '../string_knob.dart';
@@ -141,5 +142,19 @@ class KnobsBuilder {
         labelBuilder: labelBuilder,
       ),
     );
+  }
+
+  Duration duration({
+    required String label,
+    required Duration initialValue,
+    String? description,
+  }) {
+    return onKnobAdded(
+      DurationKnob(
+        label: label,
+        value: initialValue,
+        description: description,
+      ),
+    )!;
   }
 }
