@@ -28,10 +28,10 @@ import 'package:file/local.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
-import 'package:platform/platform.dart';
 
 import '../api/api.dart';
-import '../ci_parser/ci_parser.dart';
+import '../context/context.dart';
+import '../context/context_manager.dart';
 import '../git-provider/github/github.dart';
 import '../git/git_manager.dart';
 import '../git/reference.dart';
@@ -45,19 +45,16 @@ import 'command.dart';
 class PublishCommand extends WidgetbookCommand {
   PublishCommand({
     super.logger,
-    this.ciParserRunner,
-    this.platform = const LocalPlatform(),
     this.fileSystem = const LocalFileSystem(),
     this.gitManager = const GitManager(),
+    this.contextManager = const ContextManager(),
     UseCaseReader? useCaseReader,
     WidgetbookHttpClient? client,
-    CiWrapper? ciWrapper,
   })  : useCaseReader = useCaseReader ??
             UseCaseReader(
               fileSystem: fileSystem,
             ),
-        _client = client ?? WidgetbookHttpClient(),
-        _ciWrapper = ciWrapper ?? CiWrapper() {
+        _client = client ?? WidgetbookHttpClient() {
     progress = logger.progress('Publishing Widgetbook');
     argParser
       ..addOption(
@@ -113,13 +110,11 @@ class PublishCommand extends WidgetbookCommand {
   @override
   final String name = 'publish';
 
-  CiParserRunner? ciParserRunner;
-  final Platform platform;
   final FileSystem fileSystem;
   final GitManager gitManager;
   final UseCaseReader useCaseReader;
+  final ContextManager contextManager;
   final WidgetbookHttpClient _client;
-  final CiWrapper _ciWrapper;
   late final Progress progress;
 
   @visibleForTesting
@@ -143,50 +138,20 @@ class PublishCommand extends WidgetbookCommand {
   }
 
   @visibleForTesting
-  Future<CiArgs> getArgumentsFromCi(Repository repository) async {
-    // Due to the fact that the CiParserRunner requires a repository to be
-    // initialized, we have this implementation to make the code testable
-    ciParserRunner ??= CiParserRunner(
-      argResults: results,
-      repository: repository,
-    );
-
-    final args = await ciParserRunner!.getParser()?.getCiArgs();
-
-    if (args == null) {
-      throw CiVendorNotSupported();
-    }
-
-    return args;
-  }
-
-  @visibleForTesting
-  String? gitProviderSha() {
-    if (_ciWrapper.isGithub()) {
-      return platform.environment['GITHUB_SHA'];
-    }
-
-    if (_ciWrapper.isCodemagic()) {
-      return platform.environment['CM_COMMIT'];
-    }
-
-    return null;
-  }
-
-  @visibleForTesting
   Future<PublishArgs> getArguments({
+    required Context context,
     required Repository repository,
   }) async {
     final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
-    final currentBranch = await repository.currentBranch;
-    final branch = results['branch'] as String? ?? currentBranch.name;
-
-    final commit =
-        results['commit'] as String? ?? gitProviderSha() ?? currentBranch.sha;
-
     final gitHubToken = results['github-token'] as String?;
     final prNumber = results['pr'] as String?;
+
+    final currentBranch = await repository.currentBranch;
+    final branch = results['branch'] as String? ?? currentBranch.name;
+    final commit = results['commit'] as String? ??
+        context.providerSha ??
+        currentBranch.sha;
 
     final baseBranch = await getBaseBranch(
       repository: repository,
@@ -194,14 +159,12 @@ class PublishCommand extends WidgetbookCommand {
       sha: results['base-commit'] as String?,
     );
 
-    final ciArgs = await getArgumentsFromCi(repository);
-    final actor = ciArgs.actor;
-
+    final actor = results['actor'] as String? ?? context.userName;
     if (actor == null) {
       throw ActorNotFoundException();
     }
 
-    final repoName = ciArgs.repository;
+    final repoName = results['repository'] as String? ?? context.repoName;
     if (repoName == null) {
       throw RepositoryNotFoundException();
     }
@@ -211,7 +174,7 @@ class PublishCommand extends WidgetbookCommand {
       branch: branch,
       commit: commit,
       path: path,
-      vendor: ciArgs.vendor,
+      vendor: context.name,
       actor: actor,
       repository: repoName,
       baseBranch: baseBranch?.fullName,
@@ -233,7 +196,15 @@ class PublishCommand extends WidgetbookCommand {
       throw ExitedByUser();
     }
 
-    final args = await getArguments(repository: repository);
+    final context = await contextManager.load(repository);
+    if (context == null) {
+      throw CiVendorNotSupported();
+    }
+
+    final args = await getArguments(
+      context: context,
+      repository: repository,
+    );
 
     await publish(
       args: args,
