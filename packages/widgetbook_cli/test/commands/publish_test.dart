@@ -6,23 +6,20 @@ import 'package:file/local.dart';
 import 'package:file/memory.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:platform/platform.dart';
 import 'package:test/test.dart';
 
 import '../../bin/api/api.dart';
-import '../../bin/ci_parser/ci_parser.dart';
 import '../../bin/commands/commands.dart';
+import '../../bin/context/context.dart';
 import '../../bin/git/diff_header.dart';
 import '../../bin/git/git_manager.dart';
 import '../../bin/git/reference.dart';
 import '../../bin/git/repository.dart';
 import '../../bin/helpers/helpers.dart';
-import '../../bin/models/models.dart';
 import '../../bin/review/changed_use_case.dart';
 import '../../bin/review/use_case_reader.dart';
 import '../helpers/test_data.dart';
 import '../mocks/mocks.dart';
-import '../mocks/models/models.dart';
 
 class FakeFile extends Fake implements File {}
 
@@ -34,16 +31,11 @@ class FakeDirectory extends Fake implements Directory {}
 
 void main() {
   const apiKey = 'Api-Key';
-  const path = 'path';
-  const branch = 'branch';
-  const commit = 'commit';
 
   group('$PublishCommand', () {
     late Logger logger;
     late GitManager gitManager;
     late Repository repository;
-    late CiWrapper ciWrapper;
-    late Platform platform;
     late ArgResults argResults;
     late PublishCommand publishCommand;
     late WidgetbookHttpClient client;
@@ -51,6 +43,7 @@ void main() {
     late UseCaseReader useCaseReader;
     late Progress progress;
     late Stdin stdin;
+
     final tempDir = const LocalFileSystem().currentDirectory;
 
     setUp(() async {
@@ -58,7 +51,6 @@ void main() {
       gitManager = MockGitWrapper();
       repository = MockRepository();
       argResults = MockArgResults();
-      ciWrapper = MockCiWrapper();
       client = MockWidgetbookHttpClient();
       localFileSystem = MockLocalFileSystem();
       useCaseReader = MockUseCaseReader();
@@ -332,236 +324,241 @@ void main() {
       },
     );
 
-    group('gitProviderSha', () {
-      late PublishCommand command;
-      const commitSha = '0be60db261a03a8f52682c08059f64aee7f95266';
-
-      setUp(() {
-        repository = MockRepository();
-        ciWrapper = MockCiWrapper();
-        platform = MockPlatform();
-        command = PublishCommand(
-          logger: logger,
-          ciWrapper: ciWrapper,
-          platform: platform,
-        )..testArgResults = argResults;
-      });
-
-      test(
-        'returns null when not running on CI',
-        () async {
-          when(() => ciWrapper.isGithub()).thenReturn(false);
-          when(() => ciWrapper.isCodemagic()).thenReturn(false);
-          expect(
-            command.gitProviderSha(),
-            isNull,
-          );
-        },
-      );
-
-      test(
-        'returns SHA of second commit when running on GitHub',
-        () async {
-          when(() => ciWrapper.isGithub()).thenReturn(true);
-          when(() => ciWrapper.isCodemagic()).thenReturn(false);
-          when(
-            () => platform.environment,
-          ).thenReturn({
-            'GITHUB_SHA': commitSha,
-          });
-
-          expect(
-            command.gitProviderSha(),
-            commitSha,
-          );
-        },
-      );
-
-      test(
-        'returns null when not running on Codemagic',
-        () async {
-          when(() => ciWrapper.isGithub()).thenReturn(false);
-          when(() => ciWrapper.isCodemagic()).thenReturn(true);
-          when(
-            () => platform.environment,
-          ).thenReturn({
-            'CM_COMMIT': commitSha,
-          });
-
-          expect(
-            command.gitProviderSha(),
-            commitSha,
-          );
-        },
-      );
-    });
-
     group('getArguments', () {
       late PublishCommand command;
-      late CiParserRunner ciParserRunner;
-      late CiParser ciParser;
+      late Context context;
+
       setUp(() {
+        command = PublishCommand()..testArgResults = argResults;
         repository = MockRepository();
-        ciParser = MockCiParser();
-        ciParserRunner = MockCiParserRunner();
-        command = PublishCommand(
-          logger: logger,
-          ciParserRunner: ciParserRunner,
-        )..testArgResults = argResults;
-      });
+        context = MockContext();
 
-      const expectedArgs = ciArgs;
+        // Default ArgResults
+        when(() => argResults['path']).thenReturn('default path');
+        when(() => argResults['api-key']).thenReturn('default key');
+        when(() => argResults['github-token']).thenReturn('default token');
+        when(() => argResults['pr']).thenReturn('default pr');
 
-      group('FromCi (submethod)', () {
-        test('returns $CiArgs', () async {
-          when(() => ciParserRunner.getParser()).thenReturn(ciParser);
-          when(() => ciParser.getCiArgs()).thenAnswer(
-            (_) => Future.value(expectedArgs),
-          );
-          expect(
-            await command.getArgumentsFromCi(repository),
-            equals(expectedArgs),
-          );
-        });
+        // Default Context
+        when(() => context.name).thenReturn('default');
+        when(() => context.userName).thenReturn('default user');
+        when(() => context.repoName).thenReturn('default repo');
+        when(() => context.providerSha).thenReturn('default sha');
 
-        test('throws $CiVendorNotSupported', () {
-          when(() => ciParserRunner.getParser()).thenReturn(null);
-          expect(
-            command.getArgumentsFromCi(repository),
-            throwsA(const TypeMatcher<CiVendorNotSupported>()),
-          );
-        });
-      });
-
-      group('(main method)', () {
-        setUp(
-          () {
-            when(() => argResults['path'] as String).thenReturn(path);
-            when(() => argResults['api-key'] as String).thenReturn(apiKey);
-            when(() => argResults['commit'] as String).thenReturn(commit);
-
-            // Setup mocks for getArgumentsFromCi
-            when(() => ciParserRunner.getParser()).thenReturn(ciParser);
-            when(() => ciParser.getCiArgs()).thenAnswer(
-              (_) => Future.value(expectedArgs),
-            );
-          },
-        );
-
-        test(
-          'returns $PublishArgs when branch from $ArgResults has value',
-          () async {
-            when(() => argResults['branch'] as String).thenReturn(branch);
-            when(() => repository.currentBranch).thenAnswer(
-              (_) async => branchReference,
-            );
-
-            expect(
-              await command.getArguments(repository: repository),
-              equals(
-                const PublishArgs(
-                  path: path,
-                  apiKey: apiKey,
-                  branch: branch,
-                  commit: commit,
-                  vendor: vendor,
-                  actor: actor,
-                  repository: repoName,
-                ),
-              ),
-            );
-          },
-        );
-
-        test(
-          'returns $PublishArgs when branch from $ArgResults is null',
-          () async {
-            when(() => argResults['branch'] as String?).thenReturn(null);
-            when(() => repository.currentBranch).thenAnswer(
-              (_) async => branchReference,
-            );
-
-            expect(
-              await command.getArguments(repository: repository),
-              equals(
-                PublishArgs(
-                  path: path,
-                  apiKey: apiKey,
-                  branch: branchReference.fullName,
-                  commit: commit,
-                  vendor: vendor,
-                  actor: actor,
-                  repository: repoName,
-                ),
-              ),
-            );
-          },
-        );
-
-        test(
-          'throws $ActorNotFoundException when actor is null',
-          () async {
-            when(() => ciParser.getCiArgs()).thenAnswer(
-              (_) async => const CiArgs(vendor: vendor),
-            );
-
-            when(() => repository.currentBranch).thenAnswer(
-              (_) async => branchReference,
-            );
-
-            expect(
-              () => command.getArguments(repository: repository),
-              throwsA(const TypeMatcher<ActorNotFoundException>()),
-            );
-          },
-        );
-
-        test(
-          'throws $RepositoryNotFoundException when actor is null',
-          () async {
-            when(() => ciParser.getCiArgs()).thenAnswer(
-              (_) async => const CiArgs(
-                vendor: vendor,
-                actor: actor,
-              ),
-            );
-
-            when(() => repository.currentBranch).thenAnswer(
-              (_) async => branchReference,
-            );
-
-            expect(
-              () => command.getArguments(repository: repository),
-              throwsA(const TypeMatcher<RepositoryNotFoundException>()),
-            );
-          },
+        // Default Repository
+        when(() => repository.currentBranch).thenAnswer(
+          (_) async => Reference(
+            'default sha',
+            'refs/default/branch',
+          ),
         );
       });
-    });
 
-    test(
-        'throws a $CiVendorNotSupported when CI/CD pipeline '
-        'provider is currently not supported', () async {
-      final publishCommand = PublishCommand(
-        logger: logger,
-        ciParserRunner: CiParserRunner(
-          argResults: argResults,
+      test('path', () async {
+        const path = 'root/path/to/project';
+        when(() => argResults['path']).thenReturn(path);
+
+        final args = await command.getArguments(
+          context: context,
           repository: repository,
-          ciWrapper: ciWrapper,
-        ),
-      )..testArgResults = argResults;
-      when(() => argResults['path'] as String).thenReturn(tempDir.path);
-      when(() => ciWrapper.isCI()).thenReturn(true);
-      when(() => ciWrapper.isGithub()).thenReturn(false);
-      when(() => ciWrapper.isBitBucket()).thenReturn(false);
-      when(() => ciWrapper.isGitLab()).thenReturn(false);
-      when(() => ciWrapper.isAzure()).thenReturn(false);
-      when(() => ciWrapper.isCodemagic()).thenReturn(false);
+        );
 
-      expect(
-        publishCommand.run,
-        throwsA(const TypeMatcher<CiVendorNotSupported>()),
-      );
+        expect(args.path, equals(path));
+      });
+
+      test('apiKey', () async {
+        const apiKey = 'SeCrEtKeY';
+        when(() => argResults['api-key']).thenReturn(apiKey);
+
+        final args = await command.getArguments(
+          context: context,
+          repository: repository,
+        );
+
+        expect(args.apiKey, equals(apiKey));
+      });
+
+      test('gitHubToken', () async {
+        const token = 'SeCrEtKeY';
+        when(() => argResults['github-token']).thenReturn(token);
+
+        final args = await command.getArguments(
+          context: context,
+          repository: repository,
+        );
+
+        expect(args.gitHubToken, equals(token));
+      });
+
+      test('prNumber', () async {
+        const prNumber = '21';
+        when(() => argResults['pr']).thenReturn(prNumber);
+
+        final args = await command.getArguments(
+          context: context,
+          repository: repository,
+        );
+
+        expect(args.prNumber, equals(prNumber));
+      });
+
+      group('actor', () {
+        test('from $ArgResults', () async {
+          const userName = 'John Doe';
+          when(() => argResults['actor']).thenReturn(userName);
+
+          final args = await command.getArguments(
+            context: context,
+            repository: repository,
+          );
+
+          expect(args.actor, equals(userName));
+        });
+
+        test('from $Context', () async {
+          const userName = 'John Doe';
+          when(() => argResults['actor']).thenReturn(null);
+          when(() => context.userName).thenReturn(userName);
+
+          final args = await command.getArguments(
+            context: context,
+            repository: repository,
+          );
+
+          expect(args.actor, equals(userName));
+        });
+
+        test('throws $ActorNotFoundException', () async {
+          when(() => argResults['actor']).thenReturn(null);
+          when(() => context.userName).thenReturn(null);
+
+          expectLater(
+            () => command.getArguments(
+              context: context,
+              repository: repository,
+            ),
+            throwsA(const TypeMatcher<ActorNotFoundException>()),
+          );
+        });
+      });
+
+      group('repository', () {
+        test('from $ArgResults', () async {
+          const repoName = 'widgetbook';
+          when(() => argResults['repository']).thenReturn(repoName);
+
+          final args = await command.getArguments(
+            context: context,
+            repository: repository,
+          );
+
+          expect(args.repository, equals(repoName));
+        });
+
+        test('from $Context', () async {
+          const repoName = 'widgetbook';
+          when(() => argResults['repository']).thenReturn(null);
+          when(() => context.repoName).thenReturn(repoName);
+
+          final args = await command.getArguments(
+            context: context,
+            repository: repository,
+          );
+
+          expect(args.repository, equals(repoName));
+        });
+
+        test('throws $RepositoryNotFoundException', () async {
+          when(() => argResults['repository']).thenReturn(null);
+          when(() => context.repoName).thenReturn(null);
+
+          expectLater(
+            () => command.getArguments(
+              context: context,
+              repository: repository,
+            ),
+            throwsA(const TypeMatcher<RepositoryNotFoundException>()),
+          );
+        });
+
+        group('branch', () {
+          test('from $ArgResults', () async {
+            const branch = 'main';
+            when(() => argResults['branch']).thenReturn(branch);
+
+            final args = await command.getArguments(
+              context: context,
+              repository: repository,
+            );
+
+            expect(args.branch, equals(branch));
+          });
+
+          test('from $Repository', () async {
+            const branch = 'main';
+            when(() => argResults['branch']).thenReturn(null);
+            when(() => repository.currentBranch).thenAnswer(
+              (_) async => Reference(
+                '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf',
+                'refs/heads/$branch',
+              ),
+            );
+
+            final args = await command.getArguments(
+              context: context,
+              repository: repository,
+            );
+
+            expect(args.branch, equals(branch));
+          });
+        });
+
+        group('commit', () {
+          test('from $ArgResults', () async {
+            const commit = '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf';
+            when(() => argResults['commit']).thenReturn(commit);
+
+            final args = await command.getArguments(
+              context: context,
+              repository: repository,
+            );
+
+            expect(args.commit, equals(commit));
+          });
+
+          test('from $Context', () async {
+            const commit = '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf';
+            when(() => argResults['commit']).thenReturn(null);
+            when(() => context.providerSha).thenReturn(commit);
+
+            final args = await command.getArguments(
+              context: context,
+              repository: repository,
+            );
+
+            expect(args.commit, equals(commit));
+          });
+
+          test('from $Repository', () async {
+            const commit = '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf';
+            when(() => argResults['commit']).thenReturn(null);
+            when(() => context.providerSha).thenReturn(null);
+            when(() => repository.currentBranch).thenAnswer(
+              (_) async => Reference(
+                commit,
+                'refs/heads/main',
+              ),
+            );
+
+            final args = await command.getArguments(
+              context: context,
+              repository: repository,
+            );
+
+            expect(args.commit, equals(commit));
+          });
+        });
+      });
     });
 
     test(
@@ -570,8 +567,6 @@ void main() {
       final publishCommand = PublishCommand(
         logger: logger,
         gitManager: gitManager,
-        ciParserRunner:
-            CiParserRunner(argResults: argResults, repository: repository),
       )..testArgResults = argResults;
 
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
@@ -631,10 +626,6 @@ void main() {
         useCaseReader: useCaseReader,
         client: client,
         logger: logger,
-        ciParserRunner: CiParserRunner(
-          argResults: argResults,
-          repository: repository,
-        ),
       )..testArgResults = argResults;
 
       when(() => useCaseReader.read(any())).thenAnswer(
@@ -700,10 +691,6 @@ void main() {
         client: client,
         logger: logger,
         useCaseReader: useCaseReader,
-        ciParserRunner: CiParserRunner(
-          argResults: argResults,
-          repository: repository,
-        ),
       )..testArgResults = argResults;
 
       when(() => useCaseReader.read(any())).thenAnswer(
