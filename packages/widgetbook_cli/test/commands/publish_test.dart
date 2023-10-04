@@ -490,7 +490,7 @@ void main() {
                 PublishArgs(
                   path: path,
                   apiKey: apiKey,
-                  branch: branchReference.refName,
+                  branch: branchReference.fullName,
                   commit: commit,
                   vendor: vendor,
                   actor: actor,

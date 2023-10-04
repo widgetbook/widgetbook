@@ -210,7 +210,7 @@ class PublishCommand extends WidgetbookCommand {
       vendor: ciArgs.vendor,
       actor: actor,
       repository: repository,
-      baseBranch: baseBranch?.refName,
+      baseBranch: baseBranch?.fullName,
       baseSha: baseBranch?.sha,
       prNumber: prNumber,
       gitHubToken: gitHubToken,
@@ -259,7 +259,7 @@ class PublishCommand extends WidgetbookCommand {
     progress.update('reading existing branches');
     final branches = await gitDir.branches;
     final branchesMap = {
-      for (var k in branches) k.refName: k,
+      for (var k in branches) k.fullName: k,
     };
 
     final branchRef = Reference(
@@ -276,8 +276,8 @@ class PublishCommand extends WidgetbookCommand {
     const endOfLine = r'$';
 
     if (branchRef.isHead || branchRef.isRemote) {
-      if (branchesMap.containsKey(branchRef.refName)) {
-        return branchesMap[branchRef.refName];
+      if (branchesMap.containsKey(branchRef.fullName)) {
+        return branchesMap[branchRef.fullName];
       }
 
       // Azure provides the ref as 'refs/heads/<branch-name>'
@@ -291,19 +291,19 @@ class PublishCommand extends WidgetbookCommand {
       return null;
     } else {
       final headsRegex = RegExp(
-        '$headsPrefixRegex${branchRef.refName}$endOfLine',
+        '$headsPrefixRegex${branchRef.fullName}$endOfLine',
       );
       final remotesRegex = RegExp(
-        '$remotesPrefixRegex${branchRef.refName}$endOfLine',
+        '$remotesPrefixRegex${branchRef.fullName}$endOfLine',
       );
       for (final branch in branches) {
-        if (headsRegex.hasMatch(branch.refName)) {
+        if (headsRegex.hasMatch(branch.fullName)) {
           return branch;
         }
       }
 
       for (final branch in branches) {
-        if (remotesRegex.hasMatch(branch.refName)) {
+        if (remotesRegex.hasMatch(branch.fullName)) {
           return branch;
         }
       }

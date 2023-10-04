@@ -10,7 +10,7 @@ void main() {
       final ref = Reference.parse('$sha $refName');
 
       expect(ref.sha, equals(sha));
-      expect(ref.refName, equals(refName));
+      expect(ref.fullName, equals(refName));
     });
 
     test('tag ref', () {

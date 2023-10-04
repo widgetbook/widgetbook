@@ -1,9 +1,8 @@
 class Reference {
-  Reference(this.sha, this.refName);
+  Reference(this.sha, this.fullName);
 
   /// Parses a [line] output from `git show-ref` output.
   /// The [line] can look as any one like these:
-  ///
   ///
   /// - `832e76a9899f560a90ffd62ae2ce83bbeff58f54 HEAD`
   /// - `832e76a9899f560a90ffd62ae2ce83bbeff58f54 refs/heads/main`
@@ -16,17 +15,17 @@ class Reference {
   }
 
   final String sha;
-  final String refName;
+  final String fullName;
 
-  bool get isHEAD => refName == 'HEAD';
-  bool get isTag => refName.startsWith('refs/tags/');
-  bool get isHead => refName.startsWith('refs/heads/');
-  bool get isRemote => refName.startsWith('refs/remotes/');
+  bool get isHEAD => fullName == 'HEAD';
+  bool get isTag => fullName.startsWith('refs/tags/');
+  bool get isHead => fullName.startsWith('refs/heads/');
+  bool get isRemote => fullName.startsWith('refs/remotes/');
   bool get isBranch => isHead || isRemote;
 
-  /// The [refName] without the `refs/*/` prefix.
+  /// The [fullName] without the `refs/*/` prefix.
   String get name {
-    return refName.replaceFirst(
+    return fullName.replaceFirst(
       RegExp(r'^refs/.+?/'),
       '',
     );
@@ -36,12 +35,12 @@ class Reference {
   bool operator ==(covariant Reference other) {
     if (identical(this, other)) return true;
 
-    return other.sha == sha && other.refName == refName;
+    return other.sha == sha && other.fullName == fullName;
   }
 
   @override
-  int get hashCode => sha.hashCode ^ refName.hashCode;
+  int get hashCode => sha.hashCode ^ fullName.hashCode;
 
   @override
-  String toString() => '$sha $refName';
+  String toString() => '$sha $fullName';
 }
