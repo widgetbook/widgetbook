@@ -113,11 +113,7 @@ void main() {
 
         group('without branches', () {
           setUp(() {
-            when(() => gitDir.allBranches()).thenAnswer(
-              (_) => Future.value(
-                [],
-              ),
-            );
+            when(() => gitDir.branches).thenAnswer((_) async => []);
           });
 
           test(
@@ -173,13 +169,11 @@ void main() {
           'with only remote branches',
           () {
             setUp(() {
-              when(() => gitDir.allBranches()).thenAnswer(
-                (_) => Future.value(
-                  [
-                    branchRefC,
-                    branchRefD,
-                  ],
-                ),
+              when(() => gitDir.branches).thenAnswer(
+                (_) async => [
+                  branchRefC,
+                  branchRefD,
+                ],
               );
             });
 
@@ -200,15 +194,13 @@ void main() {
 
         group('with existing branches', () {
           setUp(() {
-            when(() => gitDir.allBranches()).thenAnswer(
-              (_) => Future.value(
-                [
-                  branchRefA,
-                  branchRefB,
-                  branchRefC,
-                  branchRefD,
-                ],
-              ),
+            when(() => gitDir.branches).thenAnswer(
+              (_) async => [
+                branchRefA,
+                branchRefB,
+                branchRefC,
+                branchRefD,
+              ],
             );
           });
 
@@ -263,45 +255,27 @@ void main() {
       },
     );
     group(
-      '.checkIfWorkingTreeIsClean',
+      '.promptUncommittedChanges',
       () {
         late PublishCommand command;
-        late GitDir gitDir;
+
         setUp(() {
           command = PublishCommand(
             logger: logger,
           )..testArgResults = argResults;
-          gitDir = MockGitDir();
         });
 
         test(
-          'completes when working dir is clean',
+          'returns true when environment has no terminal',
           () async {
-            when(
-              gitDir.isWorkingTreeClean,
-            ).thenAnswer((_) => Future.value(true));
-
-            expect(
-              command.checkIfWorkingTreeIsClean(gitDir),
-              completes,
-            );
-          },
-        );
-
-        test(
-          'completes when environment has no terminal',
-          () async {
-            when(
-              gitDir.isWorkingTreeClean,
-            ).thenAnswer((_) => Future.value(false));
             when(() => stdin.hasTerminal).thenReturn(false);
 
             IOOverrides.runZoned(
               stdin: () => stdin,
               () {
                 expect(
-                  command.checkIfWorkingTreeIsClean(gitDir),
-                  completes,
+                  command.promptUncommittedChanges(),
+                  true,
                 );
               },
             );
@@ -309,18 +283,38 @@ void main() {
         );
 
         test(
-          'throws $ExitedByUser when environment has no terminal',
+          'returns true when user chooses "yes"',
           () async {
-            when(
-              gitDir.isWorkingTreeClean,
-            ).thenAnswer((_) => Future.value(false));
             when(() => stdin.hasTerminal).thenReturn(true);
-
             when(
-              () => logger.chooseOne(
-                'Would you like to proceed anyways?',
-                choices: ['no', 'yes'],
-                defaultValue: 'no',
+              () => logger.chooseOne<String>(
+                any(),
+                choices: any(named: 'choices'),
+                defaultValue: any(named: 'defaultValue'),
+              ),
+            ).thenReturn('yes');
+
+            IOOverrides.runZoned(
+              stdin: () => stdin,
+              () {
+                expect(
+                  command.promptUncommittedChanges(),
+                  false,
+                );
+              },
+            );
+          },
+        );
+
+        test(
+          'returns false when user chooses "no"',
+          () async {
+            when(() => stdin.hasTerminal).thenReturn(true);
+            when(
+              () => logger.chooseOne<String>(
+                any(),
+                choices: any(named: 'choices'),
+                defaultValue: any(named: 'defaultValue'),
               ),
             ).thenReturn('no');
 
@@ -328,8 +322,8 @@ void main() {
               stdin: () => stdin,
               () {
                 expect(
-                  command.checkIfWorkingTreeIsClean(gitDir),
-                  throwsA(const TypeMatcher<ExitedByUser>()),
+                  command.promptUncommittedChanges(),
+                  false,
                 );
               },
             );
@@ -460,10 +454,11 @@ void main() {
         test(
           'returns $PublishArgs when branch from $ArgResults has value',
           () async {
-            when(gitDir.currentBranch).thenAnswer(
-              (_) => Future.value(branchReference),
-            );
             when(() => argResults['branch'] as String).thenReturn(branch);
+            when(() => gitDir.currentBranch).thenAnswer(
+              (_) async => branchReference,
+            );
+
             expect(
               await command.getArguments(gitDir: gitDir),
               equals(
@@ -484,10 +479,11 @@ void main() {
         test(
           'returns $PublishArgs when branch from $ArgResults is null',
           () async {
-            when(gitDir.currentBranch).thenAnswer(
-              (_) => Future.value(branchReference),
-            );
             when(() => argResults['branch'] as String?).thenReturn(null);
+            when(() => gitDir.currentBranch).thenAnswer(
+              (_) async => branchReference,
+            );
+
             expect(
               await command.getArguments(gitDir: gitDir),
               equals(
@@ -508,13 +504,14 @@ void main() {
         test(
           'throws $ActorNotFoundException when actor is null',
           () async {
-            const expectedArguments = CiArgs(vendor: vendor);
-            when(gitDir.currentBranch).thenAnswer(
-              (_) => Future.value(branchReference),
-            );
             when(() => ciParser.getCiArgs()).thenAnswer(
-              (_) => Future.value(expectedArguments),
+              (_) async => const CiArgs(vendor: vendor),
             );
+
+            when(() => gitDir.currentBranch).thenAnswer(
+              (_) async => branchReference,
+            );
+
             expect(
               () => command.getArguments(gitDir: gitDir),
               throwsA(const TypeMatcher<ActorNotFoundException>()),
@@ -525,13 +522,17 @@ void main() {
         test(
           'throws $RepositoryNotFoundException when actor is null',
           () async {
-            const expectedArguments = CiArgs(vendor: vendor, actor: actor);
-            when(gitDir.currentBranch).thenAnswer(
-              (_) => Future.value(branchReference),
-            );
             when(() => ciParser.getCiArgs()).thenAnswer(
-              (_) => Future.value(expectedArguments),
+              (_) async => const CiArgs(
+                vendor: vendor,
+                actor: actor,
+              ),
             );
+
+            when(() => gitDir.currentBranch).thenAnswer(
+              (_) async => branchReference,
+            );
+
             expect(
               () => command.getArguments(gitDir: gitDir),
               throwsA(const TypeMatcher<RepositoryNotFoundException>()),
@@ -574,31 +575,18 @@ void main() {
         gitManager: gitManager,
         ciParserRunner: CiParserRunner(argResults: argResults, gitDir: gitDir),
       )..testArgResults = argResults;
+
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
-
-      when(
-        () => gitManager.load(any()),
-      ).thenReturn(gitDir);
-
-      when(() => gitDir.getActorName()).thenAnswer(
-        (_) => Future.value('John Doe'),
-      );
-
-      when(() => gitDir.getRepositoryName()).thenAnswer(
-        (_) => Future.value('widgetbook'),
-      );
-
-      when(() => gitDir.isWorkingTreeClean()).thenAnswer(
-        (_) => Future.value(false),
-      );
-
+      when(() => gitManager.load(any())).thenReturn(gitDir);
+      when(() => gitDir.user).thenAnswer((_) async => 'John Doe');
+      when(() => gitDir.name).thenAnswer((_) async => 'widgetbook');
+      when(() => gitDir.isClean).thenAnswer((_) async => false);
       when(() => stdin.hasTerminal).thenReturn(true);
-
       when(
-        () => logger.chooseOne(
-          'Would you like to proceed anyways?',
-          choices: ['no', 'yes'],
-          defaultValue: 'no',
+        () => logger.chooseOne<String>(
+          any(),
+          choices: any(named: 'choices'),
+          defaultValue: any(named: 'defaultValue'),
         ),
       ).thenReturn('no');
 
@@ -617,7 +605,7 @@ void main() {
       'throws $UnableToCreateZipFileException when zip file could '
       'not be create for upload',
       () {
-        when(() => gitDir.allBranches()).thenAnswer((_) => Future.value([]));
+        when(() => gitDir.branches).thenAnswer((_) async => []);
         when(() => gitDir.fetch()).thenAnswer(
           (_) async => true,
         );
@@ -671,9 +659,7 @@ void main() {
       ]);
 
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
-
-      when(() => gitDir.getActorName())
-          .thenAnswer((_) => Future.value('John Doe'));
+      when(() => gitDir.user).thenAnswer((_) async => 'John Doe');
 
       when(() => localFileSystem.directory(any<String>())).thenAnswer(
         ($) => fileSystem.directory($.positionalArguments[0])
@@ -689,16 +675,14 @@ void main() {
           ),
       );
 
+      when(() => gitDir.name).thenAnswer((_) async => 'widgetbook');
       when(
-        () => logger.chooseOne(
-          'Would you like to proceed anyways?',
-          choices: ['no', 'yes'],
-          defaultValue: 'no',
+        () => logger.chooseOne<String>(
+          any(),
+          choices: any(named: 'choices'),
+          defaultValue: any(named: 'defaultValue'),
         ),
       ).thenReturn('yes');
-
-      when(() => gitDir.getRepositoryName())
-          .thenAnswer((_) => Future.value('widgetbook'));
 
       when(
         () => client.uploadBuild(any<BuildRequest>()),
@@ -744,13 +728,10 @@ void main() {
       ]);
 
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
-
       when(() => argResults['base-branch'] as String).thenReturn('main');
-
       when(() => argResults['base-commit'] as String).thenReturn('base-commit');
-
-      when(() => gitDir.getActorName())
-          .thenAnswer((_) => Future.value('John Doe'));
+      when(() => gitDir.user).thenAnswer((_) async => 'John Doe');
+      when(() => gitDir.name).thenAnswer((_) async => 'widgetbook');
 
       when(() => localFileSystem.directory(any<String>())).thenAnswer(
         ($) => fileSystem.directory($.positionalArguments[0])
@@ -767,15 +748,12 @@ void main() {
       );
 
       when(
-        () => logger.chooseOne(
-          'Would you like to proceed anyways?',
-          choices: ['no', 'yes'],
-          defaultValue: 'no',
+        () => logger.chooseOne<String>(
+          any(),
+          choices: any(named: 'choices'),
+          defaultValue: any(named: 'defaultValue'),
         ),
       ).thenReturn('yes');
-
-      when(() => gitDir.getRepositoryName())
-          .thenAnswer((_) => Future.value('widgetbook'));
 
       when(
         () => client.uploadBuild(any<BuildRequest>()),

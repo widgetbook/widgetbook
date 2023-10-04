@@ -11,12 +11,12 @@ class LocalParser extends CiParser {
 
   @override
   Future<String?> getActor() {
-    return gitDir.getActorName();
+    return gitDir.user;
   }
 
   @override
   Future<String?> getRepository() {
-    return gitDir.getRepositoryName();
+    return gitDir.name;
   }
 
   @override

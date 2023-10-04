@@ -45,8 +45,7 @@ void main() {
     test(
       'can get a repository',
       () async {
-        when(() => gitDir.getRepositoryName())
-            .thenAnswer((_) => Future.value(repositoryName));
+        when(() => gitDir.name).thenAnswer((_) async => repositoryName);
 
         final repository = await sut.getRepository();
         expect(repository, equals(repositoryName));
@@ -55,8 +54,7 @@ void main() {
     test(
       'can get an actor',
       () async {
-        when(() => gitDir.getActorName())
-            .thenAnswer((_) => Future.value(actorName));
+        when(() => gitDir.user).thenAnswer((_) async => actorName);
         final actor = await sut.getActor();
         expect(actor, equals(actorName));
       },

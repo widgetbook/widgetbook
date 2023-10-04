@@ -123,33 +123,23 @@ class PublishCommand extends WidgetbookCommand {
   late final Progress progress;
 
   @visibleForTesting
-  Future<void> checkIfWorkingTreeIsClean(
-    GitDir gitDir,
-  ) async {
-    final isWorkingTreeClean = await gitDir.isWorkingTreeClean();
-    if (!isWorkingTreeClean) {
-      logger
-        ..warn('You have un-committed changes')
-        ..warn('Uploading a new build to Widgetbook Cloud requires a commit '
-            'SHA. Due to un-committed changes, we are using the commit SHA '
-            'of your previous commit which can lead to the build being '
-            'rejected due to an already existing build.');
+  bool promptUncommittedChanges() {
+    logger
+      ..warn('You have un-committed changes')
+      ..warn('Uploading a new build to Widgetbook Cloud requires a commit '
+          'SHA. Due to un-committed changes, we are using the commit SHA '
+          'of your previous commit which can lead to the build being '
+          'rejected due to an already existing build.');
 
-      var proceedWithUnCommittedChanges = 'yes';
+    final result = stdin.hasTerminal
+        ? logger.chooseOne(
+            'Would you like to proceed anyways?',
+            choices: ['no', 'yes'],
+            defaultValue: 'no',
+          )
+        : 'yes';
 
-      if (stdin.hasTerminal) {
-        proceedWithUnCommittedChanges = logger.chooseOne(
-          'Would you like to proceed anyways?',
-          choices: ['no', 'yes'],
-          defaultValue: 'no',
-        );
-      }
-
-      if (proceedWithUnCommittedChanges == 'no') {
-        progress.cancel();
-        throw ExitedByUser();
-      }
-    }
+    return result == 'yes';
   }
 
   @visibleForTesting
@@ -185,7 +175,7 @@ class PublishCommand extends WidgetbookCommand {
   }) async {
     final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
-    final currentBranch = await gitDir.currentBranch();
+    final currentBranch = await gitDir.currentBranch;
     final branch = results['branch'] as String? ?? currentBranch.name;
 
     final commit =
@@ -230,9 +220,15 @@ class PublishCommand extends WidgetbookCommand {
   @override
   Future<int> run() async {
     final path = results['path'] as String;
-
     final gitDir = gitManager.load(path);
-    await checkIfWorkingTreeIsClean(gitDir);
+    final isClean = await gitDir.isClean;
+    final shouldContinue = isClean ? true : promptUncommittedChanges();
+
+    if (!shouldContinue) {
+      progress.cancel();
+      throw ExitedByUser();
+    }
+
     final args = await getArguments(gitDir: gitDir);
 
     await publish(
@@ -261,7 +257,7 @@ class PublishCommand extends WidgetbookCommand {
     await gitDir.fetch();
 
     progress.update('reading existing branches');
-    final branches = await gitDir.allBranches();
+    final branches = await gitDir.branches;
     final branchesMap = {
       for (var k in branches) k.refName: k,
     };

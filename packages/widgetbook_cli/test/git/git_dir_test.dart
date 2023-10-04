@@ -115,7 +115,7 @@ void main() {
     );
 
     expectLater(
-      gitDir.currentBranch(),
+      gitDir.currentBranch,
       completion(
         Reference(
           '832e76a9899f560a90ffd62ae2ce83bbeff58f54',
@@ -138,7 +138,7 @@ void main() {
     );
 
     expectLater(
-      gitDir.allBranches(),
+      gitDir.branches,
       completion([
         Reference(
           '832e76a9899f560a90ffd62ae2ce83bbeff58f54',

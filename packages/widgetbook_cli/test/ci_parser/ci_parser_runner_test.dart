@@ -51,12 +51,8 @@ void main() {
       'returns $CiArgs from $LocalParser',
       () async {
         when(() => ciWrapper.isCI()).thenReturn(false);
-
-        when(() => gitDir.getActorName())
-            .thenAnswer((_) => Future.value(actorName));
-
-        when(() => gitDir.getRepositoryName())
-            .thenAnswer((_) => Future.value(repositoryName));
+        when(() => gitDir.user).thenAnswer((_) async => actorName);
+        when(() => gitDir.name).thenAnswer((_) async => repositoryName);
 
         final sut = CiParserRunner(
           argResults: argResults,
