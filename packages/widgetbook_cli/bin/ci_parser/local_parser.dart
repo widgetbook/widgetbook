@@ -1,22 +1,22 @@
-import '../git/git_dir.dart';
+import '../git/repository.dart';
 import 'ci_parser.dart';
 
 class LocalParser extends CiParser {
   LocalParser({
     required super.argResults,
-    required this.gitDir,
+    required this.repository,
   });
 
-  final GitDir gitDir;
+  final Repository repository;
 
   @override
   Future<String?> getActor() {
-    return gitDir.user;
+    return repository.user;
   }
 
   @override
   Future<String?> getRepository() {
-    return gitDir.name;
+    return repository.name;
   }
 
   @override

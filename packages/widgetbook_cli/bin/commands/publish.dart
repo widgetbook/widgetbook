@@ -33,7 +33,7 @@ import 'package:platform/platform.dart';
 import '../api/api.dart';
 import '../ci_parser/ci_parser.dart';
 import '../git-provider/github/github.dart';
-import '../git/git_dir.dart';
+import '../git/repository.dart';
 import '../git/git_manager.dart';
 import '../git/reference.dart';
 import '../helpers/exceptions.dart';
@@ -143,10 +143,14 @@ class PublishCommand extends WidgetbookCommand {
   }
 
   @visibleForTesting
-  Future<CiArgs> getArgumentsFromCi(GitDir gitDir) async {
-    // Due to the fact that the CiParserRunner requires a gitDir to be
+  Future<CiArgs> getArgumentsFromCi(Repository repository) async {
+    // Due to the fact that the CiParserRunner requires a repository to be
     // initialized, we have this implementation to make the code testable
-    ciParserRunner ??= CiParserRunner(argResults: results, gitDir: gitDir);
+    ciParserRunner ??= CiParserRunner(
+      argResults: results,
+      repository: repository,
+    );
+
     final args = await ciParserRunner!.getParser()?.getCiArgs();
 
     if (args == null) {
@@ -171,11 +175,11 @@ class PublishCommand extends WidgetbookCommand {
 
   @visibleForTesting
   Future<PublishArgs> getArguments({
-    required GitDir gitDir,
+    required Repository repository,
   }) async {
     final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
-    final currentBranch = await gitDir.currentBranch;
+    final currentBranch = await repository.currentBranch;
     final branch = results['branch'] as String? ?? currentBranch.name;
 
     final commit =
@@ -185,20 +189,20 @@ class PublishCommand extends WidgetbookCommand {
     final prNumber = results['pr'] as String?;
 
     final baseBranch = await getBaseBranch(
-      gitDir: gitDir,
+      repository: repository,
       branch: results['base-branch'] as String?,
       sha: results['base-commit'] as String?,
     );
 
-    final ciArgs = await getArgumentsFromCi(gitDir);
+    final ciArgs = await getArgumentsFromCi(repository);
     final actor = ciArgs.actor;
 
     if (actor == null) {
       throw ActorNotFoundException();
     }
 
-    final repository = ciArgs.repository;
-    if (repository == null) {
+    final repoName = ciArgs.repository;
+    if (repoName == null) {
       throw RepositoryNotFoundException();
     }
 
@@ -209,7 +213,7 @@ class PublishCommand extends WidgetbookCommand {
       path: path,
       vendor: ciArgs.vendor,
       actor: actor,
-      repository: repository,
+      repository: repoName,
       baseBranch: baseBranch?.fullName,
       baseSha: baseBranch?.sha,
       prNumber: prNumber,
@@ -220,8 +224,8 @@ class PublishCommand extends WidgetbookCommand {
   @override
   Future<int> run() async {
     final path = results['path'] as String;
-    final gitDir = gitManager.load(path);
-    final isClean = await gitDir.isClean;
+    final repository = gitManager.load(path);
+    final isClean = await repository.isClean;
     final shouldContinue = isClean ? true : promptUncommittedChanges();
 
     if (!shouldContinue) {
@@ -229,11 +233,11 @@ class PublishCommand extends WidgetbookCommand {
       throw ExitedByUser();
     }
 
-    final args = await getArguments(gitDir: gitDir);
+    final args = await getArguments(repository: repository);
 
     await publish(
       args: args,
-      gitDir: gitDir,
+      repository: repository,
     );
 
     return ExitCode.success.code;
@@ -245,7 +249,7 @@ class PublishCommand extends WidgetbookCommand {
   // branch?
   @visibleForTesting
   Future<Reference?> getBaseBranch({
-    required GitDir gitDir,
+    required Repository repository,
     required String? branch,
     required String? sha,
   }) async {
@@ -254,10 +258,10 @@ class PublishCommand extends WidgetbookCommand {
     }
 
     progress.update('fetching remote branches');
-    await gitDir.fetch();
+    await repository.fetch();
 
     progress.update('reading existing branches');
-    final branches = await gitDir.branches;
+    final branches = await repository.branches;
     final branchesMap = {
       for (var k in branches) k.fullName: k,
     };
@@ -315,7 +319,7 @@ class PublishCommand extends WidgetbookCommand {
   @visibleForTesting
   Future<void> publish({
     required PublishArgs args,
-    required GitDir gitDir,
+    required Repository repository,
   }) async {
     try {
       final buildResponse = await publishBuild(
@@ -335,7 +339,7 @@ class PublishCommand extends WidgetbookCommand {
           ? await publishReview(
               args: args,
               buildResponse: buildResponse,
-              gitDir: gitDir,
+              repository: repository,
             )
           : null;
 
@@ -411,7 +415,7 @@ class PublishCommand extends WidgetbookCommand {
   Future<ReviewResponse?> publishReview({
     required PublishArgs args,
     required BuildResponse buildResponse,
-    required GitDir gitDir,
+    required Repository repository,
   }) async {
     final genDirPath = p.join(args.path, '.dart_tool', 'build', 'generated');
     final genDir = fileSystem.directory(genDirPath);
@@ -427,7 +431,7 @@ class PublishCommand extends WidgetbookCommand {
     }
 
     final useCases = await useCaseReader.read(args.path);
-    final diffs = await gitDir.diff(args.baseBranch!);
+    final diffs = await repository.diff(args.baseBranch!);
 
     final changeUseCases = await useCaseReader.compare(
       useCases: useCases,

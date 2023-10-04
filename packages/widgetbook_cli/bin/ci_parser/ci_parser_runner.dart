@@ -1,19 +1,19 @@
 import 'package:args/args.dart';
 import 'package:platform/platform.dart';
 
-import '../git/git_dir.dart';
+import '../git/repository.dart';
 import 'ci_parser.dart';
 
 class CiParserRunner {
   CiParserRunner({
     required this.argResults,
-    required this.gitDir,
+    required this.repository,
     this.platform = const LocalPlatform(),
     CiWrapper? ciWrapper,
   }) : _ciWrapper = ciWrapper ?? CiWrapper();
 
   final ArgResults argResults;
-  final GitDir gitDir;
+  final Repository repository;
   final Platform platform;
   final CiWrapper _ciWrapper;
 
@@ -21,7 +21,7 @@ class CiParserRunner {
     if (!_ciWrapper.isCI()) {
       return LocalParser(
         argResults: argResults,
-        gitDir: gitDir,
+        repository: repository,
       );
     }
 

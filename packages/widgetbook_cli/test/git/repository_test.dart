@@ -4,14 +4,14 @@ import 'package:test/test.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
 
 import '../../bin/git/diff_header.dart';
-import '../../bin/git/git_dir.dart';
 import '../../bin/git/reference.dart';
+import '../../bin/git/repository.dart';
 import '../mocks/command_mocks.dart';
 
 void main() {
   late ProcessManager processManager;
   late dynamic Function() processRun;
-  late GitDir gitDir;
+  late Repository repository;
 
   setUp(() {
     processManager = MockProcessManager();
@@ -21,7 +21,7 @@ void main() {
           runInShell: any(named: 'runInShell'),
         );
 
-    gitDir = GitDir.raw(
+    repository = Repository.raw(
       d.sandbox,
       processManager,
     );
@@ -35,7 +35,7 @@ void main() {
       );
 
       expectLater(
-        gitDir.diff(),
+        repository.diff(),
         completion(isEmpty),
       );
     },
@@ -74,7 +74,7 @@ void main() {
       );
 
       expectLater(
-        gitDir.diff(),
+        repository.diff(),
         completion([
           DiffHeader(
             ref: '/file_add.txt',
@@ -115,7 +115,7 @@ void main() {
     );
 
     expectLater(
-      gitDir.currentBranch,
+      repository.currentBranch,
       completion(
         Reference(
           '832e76a9899f560a90ffd62ae2ce83bbeff58f54',
@@ -138,7 +138,7 @@ void main() {
     );
 
     expectLater(
-      gitDir.branches,
+      repository.branches,
       completion([
         Reference(
           '832e76a9899f560a90ffd62ae2ce83bbeff58f54',

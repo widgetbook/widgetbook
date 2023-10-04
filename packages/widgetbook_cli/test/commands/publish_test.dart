@@ -12,10 +12,10 @@ import 'package:test/test.dart';
 import '../../bin/api/api.dart';
 import '../../bin/ci_parser/ci_parser.dart';
 import '../../bin/commands/commands.dart';
-import '../../bin/git/git_dir.dart';
 import '../../bin/git/git_manager.dart';
 import '../../bin/git/modification.dart';
 import '../../bin/git/reference.dart';
+import '../../bin/git/repository.dart';
 import '../../bin/helpers/helpers.dart';
 import '../../bin/models/models.dart';
 import '../../bin/review/changed_use_case.dart';
@@ -41,7 +41,7 @@ void main() {
   group('$PublishCommand', () {
     late Logger logger;
     late GitManager gitManager;
-    late GitDir gitDir;
+    late Repository repository;
     late CiWrapper ciWrapper;
     late Platform platform;
     late ArgResults argResults;
@@ -56,7 +56,7 @@ void main() {
     setUp(() async {
       logger = MockLogger();
       gitManager = MockGitWrapper();
-      gitDir = MockGitDir();
+      repository = MockRepository();
       argResults = MockArgResults();
       ciWrapper = MockCiWrapper();
       client = MockWidgetbookHttpClient();
@@ -106,21 +106,21 @@ void main() {
         setUp(
           () {
             when(
-              () => gitDir.fetch(),
+              () => repository.fetch(),
             ).thenAnswer((_) async => true);
           },
         );
 
         group('without branches', () {
           setUp(() {
-            when(() => gitDir.branches).thenAnswer((_) async => []);
+            when(() => repository.branches).thenAnswer((_) async => []);
           });
 
           test(
             "returns null when invoked with 'a'",
             () async {
               final branch = await publishCommand.getBaseBranch(
-                gitDir: gitDir,
+                repository: repository,
                 branch: 'a',
                 sha: null,
               );
@@ -132,7 +132,7 @@ void main() {
             "returns null when invoked with 'refs/heads/a'",
             () async {
               final branch = await publishCommand.getBaseBranch(
-                gitDir: gitDir,
+                repository: repository,
                 branch: 'refs/heads/a',
                 sha: null,
               );
@@ -144,7 +144,7 @@ void main() {
             "returns null when invoked with 'c'",
             () async {
               final branch = await publishCommand.getBaseBranch(
-                gitDir: gitDir,
+                repository: repository,
                 branch: 'c',
                 sha: null,
               );
@@ -156,7 +156,7 @@ void main() {
             "returns null when invoked with 'refs/remotes/c'",
             () async {
               final branch = await publishCommand.getBaseBranch(
-                gitDir: gitDir,
+                repository: repository,
                 branch: 'refs/remotes/c',
                 sha: null,
               );
@@ -169,7 +169,7 @@ void main() {
           'with only remote branches',
           () {
             setUp(() {
-              when(() => gitDir.branches).thenAnswer(
+              when(() => repository.branches).thenAnswer(
                 (_) async => [
                   branchRefC,
                   branchRefD,
@@ -182,7 +182,7 @@ void main() {
               "with 'refs/heads/c'",
               () async {
                 final branch = await publishCommand.getBaseBranch(
-                  gitDir: gitDir,
+                  repository: repository,
                   branch: 'refs/heads/c',
                   sha: null,
                 );
@@ -194,7 +194,7 @@ void main() {
 
         group('with existing branches', () {
           setUp(() {
-            when(() => gitDir.branches).thenAnswer(
+            when(() => repository.branches).thenAnswer(
               (_) async => [
                 branchRefA,
                 branchRefB,
@@ -208,7 +208,7 @@ void main() {
             "returns 'refs/heads/a' with SHA when invoked with 'a'",
             () async {
               final branch = await publishCommand.getBaseBranch(
-                gitDir: gitDir,
+                repository: repository,
                 branch: 'a',
                 sha: null,
               );
@@ -220,7 +220,7 @@ void main() {
             "returns 'refs/heads/a' with SHA when invoked with 'refs/heads/a'",
             () async {
               final branch = await publishCommand.getBaseBranch(
-                gitDir: gitDir,
+                repository: repository,
                 branch: 'refs/heads/a',
                 sha: null,
               );
@@ -232,7 +232,7 @@ void main() {
             "returns 'refs/remotes/c' with SHA when invoked with 'c'",
             () async {
               final branch = await publishCommand.getBaseBranch(
-                gitDir: gitDir,
+                repository: repository,
                 branch: 'c',
                 sha: null,
               );
@@ -244,7 +244,7 @@ void main() {
             "returns 'refs/remotes/c' with SHA when invoked with 'refs/remotes/c'",
             () async {
               final branch = await publishCommand.getBaseBranch(
-                gitDir: gitDir,
+                repository: repository,
                 branch: 'refs/remotes/c',
                 sha: null,
               );
@@ -299,7 +299,7 @@ void main() {
               () {
                 expect(
                   command.promptUncommittedChanges(),
-                  false,
+                  true,
                 );
               },
             );
@@ -337,7 +337,7 @@ void main() {
       const commitSha = '0be60db261a03a8f52682c08059f64aee7f95266';
 
       setUp(() {
-        gitDir = MockGitDir();
+        repository = MockRepository();
         ciWrapper = MockCiWrapper();
         platform = MockPlatform();
         command = PublishCommand(
@@ -401,7 +401,7 @@ void main() {
       late CiParserRunner ciParserRunner;
       late CiParser ciParser;
       setUp(() {
-        gitDir = MockGitDir();
+        repository = MockRepository();
         ciParser = MockCiParser();
         ciParserRunner = MockCiParserRunner();
         command = PublishCommand(
@@ -419,7 +419,7 @@ void main() {
             (_) => Future.value(expectedArgs),
           );
           expect(
-            await command.getArgumentsFromCi(gitDir),
+            await command.getArgumentsFromCi(repository),
             equals(expectedArgs),
           );
         });
@@ -427,18 +427,15 @@ void main() {
         test('throws $CiVendorNotSupported', () {
           when(() => ciParserRunner.getParser()).thenReturn(null);
           expect(
-            command.getArgumentsFromCi(gitDir),
+            command.getArgumentsFromCi(repository),
             throwsA(const TypeMatcher<CiVendorNotSupported>()),
           );
         });
       });
 
       group('(main method)', () {
-        late GitDir gitDir;
         setUp(
           () {
-            gitDir = MockGitDir();
-
             when(() => argResults['path'] as String).thenReturn(path);
             when(() => argResults['api-key'] as String).thenReturn(apiKey);
             when(() => argResults['commit'] as String).thenReturn(commit);
@@ -455,12 +452,12 @@ void main() {
           'returns $PublishArgs when branch from $ArgResults has value',
           () async {
             when(() => argResults['branch'] as String).thenReturn(branch);
-            when(() => gitDir.currentBranch).thenAnswer(
+            when(() => repository.currentBranch).thenAnswer(
               (_) async => branchReference,
             );
 
             expect(
-              await command.getArguments(gitDir: gitDir),
+              await command.getArguments(repository: repository),
               equals(
                 const PublishArgs(
                   path: path,
@@ -469,7 +466,7 @@ void main() {
                   commit: commit,
                   vendor: vendor,
                   actor: actor,
-                  repository: repository,
+                  repository: repoName,
                 ),
               ),
             );
@@ -480,12 +477,12 @@ void main() {
           'returns $PublishArgs when branch from $ArgResults is null',
           () async {
             when(() => argResults['branch'] as String?).thenReturn(null);
-            when(() => gitDir.currentBranch).thenAnswer(
+            when(() => repository.currentBranch).thenAnswer(
               (_) async => branchReference,
             );
 
             expect(
-              await command.getArguments(gitDir: gitDir),
+              await command.getArguments(repository: repository),
               equals(
                 PublishArgs(
                   path: path,
@@ -494,7 +491,7 @@ void main() {
                   commit: commit,
                   vendor: vendor,
                   actor: actor,
-                  repository: repository,
+                  repository: repoName,
                 ),
               ),
             );
@@ -508,12 +505,12 @@ void main() {
               (_) async => const CiArgs(vendor: vendor),
             );
 
-            when(() => gitDir.currentBranch).thenAnswer(
+            when(() => repository.currentBranch).thenAnswer(
               (_) async => branchReference,
             );
 
             expect(
-              () => command.getArguments(gitDir: gitDir),
+              () => command.getArguments(repository: repository),
               throwsA(const TypeMatcher<ActorNotFoundException>()),
             );
           },
@@ -529,12 +526,12 @@ void main() {
               ),
             );
 
-            when(() => gitDir.currentBranch).thenAnswer(
+            when(() => repository.currentBranch).thenAnswer(
               (_) async => branchReference,
             );
 
             expect(
-              () => command.getArguments(gitDir: gitDir),
+              () => command.getArguments(repository: repository),
               throwsA(const TypeMatcher<RepositoryNotFoundException>()),
             );
           },
@@ -549,7 +546,7 @@ void main() {
         logger: logger,
         ciParserRunner: CiParserRunner(
           argResults: argResults,
-          gitDir: gitDir,
+          repository: repository,
           ciWrapper: ciWrapper,
         ),
       )..testArgResults = argResults;
@@ -573,14 +570,15 @@ void main() {
       final publishCommand = PublishCommand(
         logger: logger,
         gitManager: gitManager,
-        ciParserRunner: CiParserRunner(argResults: argResults, gitDir: gitDir),
+        ciParserRunner:
+            CiParserRunner(argResults: argResults, repository: repository),
       )..testArgResults = argResults;
 
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
-      when(() => gitManager.load(any())).thenReturn(gitDir);
-      when(() => gitDir.user).thenAnswer((_) async => 'John Doe');
-      when(() => gitDir.name).thenAnswer((_) async => 'widgetbook');
-      when(() => gitDir.isClean).thenAnswer((_) async => false);
+      when(() => gitManager.load(any())).thenReturn(repository);
+      when(() => repository.user).thenAnswer((_) async => 'John Doe');
+      when(() => repository.name).thenAnswer((_) async => 'widgetbook');
+      when(() => repository.isClean).thenAnswer((_) async => false);
       when(() => stdin.hasTerminal).thenReturn(true);
       when(
         () => logger.chooseOne<String>(
@@ -605,8 +603,8 @@ void main() {
       'throws $UnableToCreateZipFileException when zip file could '
       'not be create for upload',
       () {
-        when(() => gitDir.branches).thenAnswer((_) async => []);
-        when(() => gitDir.fetch()).thenAnswer(
+        when(() => repository.branches).thenAnswer((_) async => []);
+        when(() => repository.fetch()).thenAnswer(
           (_) async => true,
         );
 
@@ -618,7 +616,7 @@ void main() {
         expect(
           () => command.publish(
             args: TestData.args,
-            gitDir: gitDir,
+            repository: repository,
           ),
           throwsA(const TypeMatcher<UnableToCreateZipFileException>()),
         );
@@ -635,7 +633,7 @@ void main() {
         logger: logger,
         ciParserRunner: CiParserRunner(
           argResults: argResults,
-          gitDir: gitDir,
+          repository: repository,
         ),
       )..testArgResults = argResults;
 
@@ -659,7 +657,7 @@ void main() {
       ]);
 
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
-      when(() => gitDir.user).thenAnswer((_) async => 'John Doe');
+      when(() => repository.user).thenAnswer((_) async => 'John Doe');
 
       when(() => localFileSystem.directory(any<String>())).thenAnswer(
         ($) => fileSystem.directory($.positionalArguments[0])
@@ -675,7 +673,7 @@ void main() {
           ),
       );
 
-      when(() => gitDir.name).thenAnswer((_) async => 'widgetbook');
+      when(() => repository.name).thenAnswer((_) async => 'widgetbook');
       when(
         () => logger.chooseOne<String>(
           any(),
@@ -704,7 +702,7 @@ void main() {
         useCaseReader: useCaseReader,
         ciParserRunner: CiParserRunner(
           argResults: argResults,
-          gitDir: gitDir,
+          repository: repository,
         ),
       )..testArgResults = argResults;
 
@@ -730,8 +728,8 @@ void main() {
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
       when(() => argResults['base-branch'] as String).thenReturn('main');
       when(() => argResults['base-commit'] as String).thenReturn('base-commit');
-      when(() => gitDir.user).thenAnswer((_) async => 'John Doe');
-      when(() => gitDir.name).thenAnswer((_) async => 'widgetbook');
+      when(() => repository.user).thenAnswer((_) async => 'John Doe');
+      when(() => repository.name).thenAnswer((_) async => 'widgetbook');
 
       when(() => localFileSystem.directory(any<String>())).thenAnswer(
         ($) => fileSystem.directory($.positionalArguments[0])

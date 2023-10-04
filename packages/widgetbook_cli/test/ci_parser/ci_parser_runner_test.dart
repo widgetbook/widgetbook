@@ -4,7 +4,7 @@ import 'package:platform/platform.dart';
 import 'package:test/test.dart';
 
 import '../../bin/ci_parser/ci_parser.dart';
-import '../../bin/git/git_dir.dart';
+import '../../bin/git/repository.dart';
 import '../../bin/models/models.dart';
 import '../mocks/command_mocks.dart';
 
@@ -14,19 +14,19 @@ const actorName = 'John Doe';
 void main() {
   late CiParserRunner sut;
   late ArgResults argResults;
-  late GitDir gitDir;
+  late Repository repository;
   late CiWrapper ciWrapper;
   late Platform platform;
 
   setUp(() async {
     argResults = MockArgResults();
-    gitDir = MockGitDir();
+    repository = MockRepository();
     ciWrapper = MockCiWrapper();
     platform = MockPlatform();
 
     sut = CiParserRunner(
       argResults: argResults,
-      gitDir: gitDir,
+      repository: repository,
       ciWrapper: ciWrapper,
       platform: platform,
     );
@@ -41,9 +41,9 @@ void main() {
     );
 
     test(
-      'expect instance of $MockGitDir',
+      'expect instance of $MockRepository',
       () async {
-        expect(sut.gitDir, equals(gitDir));
+        expect(sut.repository, equals(repository));
       },
     );
 
@@ -51,12 +51,12 @@ void main() {
       'returns $CiArgs from $LocalParser',
       () async {
         when(() => ciWrapper.isCI()).thenReturn(false);
-        when(() => gitDir.user).thenAnswer((_) async => actorName);
-        when(() => gitDir.name).thenAnswer((_) async => repositoryName);
+        when(() => repository.user).thenAnswer((_) async => actorName);
+        when(() => repository.name).thenAnswer((_) async => repositoryName);
 
         final sut = CiParserRunner(
           argResults: argResults,
-          gitDir: gitDir,
+          repository: repository,
           ciWrapper: ciWrapper,
         );
 

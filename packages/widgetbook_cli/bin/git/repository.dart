@@ -9,14 +9,14 @@ import 'diff_header.dart';
 import 'git_process_manager.dart';
 import 'reference.dart';
 
-class GitDir {
-  GitDir.raw(
+class Repository {
+  Repository.raw(
     this.rootDir,
     this.processManager,
   ) : assert(path.isAbsolute(rootDir));
 
-  /// Loads the [GitDir] that contains the given [dir].
-  factory GitDir.load(
+  /// Loads the [Repository] that contains the given [dir].
+  factory Repository.load(
     String dir, {
     ProcessManager processManager = const LocalProcessManager(),
   }) {
@@ -33,7 +33,7 @@ class GitDir {
         throw GitDirectoryNotFound();
       }
 
-      return GitDir.raw(rootDir, processManager);
+      return Repository.raw(rootDir, processManager);
     } catch (_) {
       throw GitDirectoryNotFound(
         message: 'The path "$dir" is not a valid git directory.',

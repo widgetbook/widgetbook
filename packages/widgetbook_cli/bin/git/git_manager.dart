@@ -1,10 +1,10 @@
-import 'git_dir.dart';
+import 'repository.dart';
 
-/// Manages the creation of [GitDir]s, to easily mock the result.
+/// Manages the creation of [Repository]s, to easily mock the result.
 class GitManager {
   const GitManager();
 
-  GitDir load(String dir) {
-    return GitDir.load(dir);
+  Repository load(String dir) {
+    return Repository.load(dir);
   }
 }

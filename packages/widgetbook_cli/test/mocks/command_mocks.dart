@@ -10,7 +10,7 @@ import 'package:pub_updater/pub_updater.dart';
 
 import '../../bin/api/api.dart';
 import '../../bin/ci_parser/ci_parser.dart';
-import '../../bin/git/git_dir.dart';
+import '../../bin/git/repository.dart';
 import '../../bin/git/git_manager.dart';
 import '../../bin/review/use_case_reader.dart';
 
@@ -30,7 +30,7 @@ class MockCiParserRunner extends Mock implements CiParserRunner {}
 
 class MockCiParser extends Mock implements CiParser {}
 
-class MockGitDir extends Mock implements GitDir {}
+class MockRepository extends Mock implements Repository {}
 
 class MockWidgetbookHttpClient extends Mock implements WidgetbookHttpClient {}
 
