@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: add designLink to WidgetbookUseCase. ([#926](https://github.com/widgetbook/widgetbook/pull/926))
+
 ## 3.2.0
 
 - **FEAT**: Add [telemetry](https://docs.widgetbook.io/telemetry) which collects and reports anonymous usage information that helps us improve our package. ([#893](https://github.com/widgetbook/widgetbook/pull/893))

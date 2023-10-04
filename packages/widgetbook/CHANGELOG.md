@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FIX**: use `MapMixin` instead of `MapBase` for `KnobsRegistry`. ([#903](https://github.com/widgetbook/widgetbook/pull/903))
+- **FEAT**: add designLink to WidgetbookUseCase. ([#926](https://github.com/widgetbook/widgetbook/pull/926))
 
 ## 3.3.0
 

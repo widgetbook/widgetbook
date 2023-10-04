@@ -22,11 +22,9 @@ class WidgetbookUseCase extends WidgetbookNode {
   factory WidgetbookUseCase.center({
     required String name,
     required Widget child,
-    String? designLink,
   }) {
     return WidgetbookUseCase(
       name: name,
-      designLink: designLink,
       builder: (_) => Center(child: child),
     );
   }
