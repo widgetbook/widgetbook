@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FEAT**: add designLink to WidgetbookUseCase. ([#926](https://github.com/widgetbook/widgetbook/pull/926))
+- **FEAT**: Add `designLink` to `WidgetbookUseCase`. ([#926](https://github.com/widgetbook/widgetbook/pull/926))
 
 ## 3.2.0
 
