@@ -17,17 +17,30 @@ class DoubleKnobsBuilder {
     double? min,
     int? divisions,
   }) {
-    initialValue ??= max ?? min ?? 10;
-    return onKnobAdded(
-      DoubleSliderKnob(
-        label: label,
-        value: initialValue,
-        description: description,
-        min: min ?? initialValue - 10,
-        max: max ?? initialValue + 10,
-        divisions: divisions,
-      ),
-    )!;
+    if (initialValue == null) {
+      return onKnobAdded(
+        DoubleSliderKnob(
+          label: label,
+          value: initialValue,
+          description: description,
+          min: min!,
+          max: max!,
+          divisions: divisions,
+        ),
+      )!;
+    } else {
+      initialValue = max ?? min ?? 10;
+      return onKnobAdded(
+        DoubleSliderKnob(
+          label: label,
+          value: initialValue,
+          description: description,
+          min: min ?? initialValue - 10,
+          max: max ?? initialValue + 10,
+          divisions: divisions,
+        ),
+      )!;
+    }
   }
 
   /// Creates a textfield which users can type double values into. You can use
