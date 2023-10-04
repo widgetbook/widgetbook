@@ -1,4 +1,4 @@
-name: Deploy to Widgetbook Cloud
+name: Publish to Widgetbook Cloud
 
 on:
   workflow_call:
@@ -9,10 +9,6 @@ on:
 
 jobs:
   deploy:
-    # Don't run on PRs made by external contributors,
-    # since secrets are not available in this case.
-    if: github.event.pull_request.head.repo.full_name == github.repository
-
     runs-on: ubuntu-latest
 
     defaults:
