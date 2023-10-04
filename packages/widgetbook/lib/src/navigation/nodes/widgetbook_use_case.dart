@@ -8,6 +8,7 @@ class WidgetbookUseCase extends WidgetbookNode {
   WidgetbookUseCase({
     required super.name,
     required this.builder,
+    this.designLink,
   }) : super(
           children: null,
           isInitiallyExpanded: false,
@@ -31,14 +32,17 @@ class WidgetbookUseCase extends WidgetbookNode {
   factory WidgetbookUseCase.child({
     required String name,
     required Widget child,
+    String? designLink,
   }) {
     return WidgetbookUseCase(
       name: name,
+      designLink: designLink,
       builder: (_) => child,
     );
   }
 
   final WidgetBuilder builder;
+  final String? designLink;
 
   @override
   WidgetbookUseCase copyWith({

@@ -28,14 +28,14 @@ import 'package:file/local.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
-import 'package:platform/platform.dart';
 
 import '../api/api.dart';
-import '../ci_parser/ci_parser.dart';
+import '../context/context.dart';
+import '../context/context_manager.dart';
 import '../git-provider/github/github.dart';
-import '../git/branch_reference.dart';
-import '../git/git_dir.dart';
-import '../git/git_wrapper.dart';
+import '../git/git_manager.dart';
+import '../git/reference.dart';
+import '../git/repository.dart';
 import '../helpers/exceptions.dart';
 import '../helpers/zip_encoder.dart';
 import '../models/models.dart';
@@ -45,20 +45,16 @@ import 'command.dart';
 class PublishCommand extends WidgetbookCommand {
   PublishCommand({
     super.logger,
-    this.ciParserRunner,
-    this.platform = const LocalPlatform(),
     this.fileSystem = const LocalFileSystem(),
+    this.gitManager = const GitManager(),
+    this.contextManager = const ContextManager(),
     UseCaseReader? useCaseReader,
     WidgetbookHttpClient? client,
-    CiWrapper? ciWrapper,
-    GitWrapper? gitWrapper,
   })  : useCaseReader = useCaseReader ??
             UseCaseReader(
               fileSystem: fileSystem,
             ),
-        _client = client ?? WidgetbookHttpClient(),
-        _ciWrapper = ciWrapper ?? CiWrapper(),
-        _gitWrapper = gitWrapper ?? GitWrapper() {
+        _client = client ?? WidgetbookHttpClient() {
     progress = logger.progress('Publishing Widgetbook');
     argParser
       ..addOption(
@@ -114,118 +110,62 @@ class PublishCommand extends WidgetbookCommand {
   @override
   final String name = 'publish';
 
-  CiParserRunner? ciParserRunner;
-  final Platform platform;
   final FileSystem fileSystem;
+  final GitManager gitManager;
   final UseCaseReader useCaseReader;
+  final ContextManager contextManager;
   final WidgetbookHttpClient _client;
-  final CiWrapper _ciWrapper;
-  final GitWrapper _gitWrapper;
   late final Progress progress;
 
   @visibleForTesting
-  Future<void> checkIfPathIsGitDirectory(String path) async {
-    final isGitDir = await _gitWrapper.isGitDir(path);
-    if (!isGitDir) {
-      throw GitDirectoryNotFound();
-    }
-  }
+  bool promptUncommittedChanges() {
+    logger
+      ..warn('You have un-committed changes')
+      ..warn('Uploading a new build to Widgetbook Cloud requires a commit '
+          'SHA. Due to un-committed changes, we are using the commit SHA '
+          'of your previous commit which can lead to the build being '
+          'rejected due to an already existing build.');
 
-  @visibleForTesting
-  Future<GitDir> getGitDir(String path) {
-    return _gitWrapper.fromExisting(
-      path,
-      allowSubdirectory: true,
-    );
-  }
+    final result = stdin.hasTerminal
+        ? logger.chooseOne(
+            'Would you like to proceed anyways?',
+            choices: ['no', 'yes'],
+            defaultValue: 'no',
+          )
+        : 'yes';
 
-  @visibleForTesting
-  Future<void> checkIfWorkingTreeIsClean(
-    GitDir gitDir,
-  ) async {
-    final isWorkingTreeClean = await gitDir.isWorkingTreeClean();
-    if (!isWorkingTreeClean) {
-      logger
-        ..warn('You have un-committed changes')
-        ..warn('Uploading a new build to Widgetbook Cloud requires a commit '
-            'SHA. Due to un-committed changes, we are using the commit SHA '
-            'of your previous commit which can lead to the build being '
-            'rejected due to an already existing build.');
-
-      var proceedWithUnCommittedChanges = 'yes';
-
-      if (stdin.hasTerminal) {
-        proceedWithUnCommittedChanges = logger.chooseOne(
-          'Would you like to proceed anyways?',
-          choices: ['no', 'yes'],
-          defaultValue: 'no',
-        );
-      }
-
-      if (proceedWithUnCommittedChanges == 'no') {
-        progress.cancel();
-        throw ExitedByUser();
-      }
-    }
-  }
-
-  @visibleForTesting
-  Future<CiArgs> getArgumentsFromCi(GitDir gitDir) async {
-    // Due to the fact that the CiParserRunner requires a gitDir to be
-    // initialized, we have this implementation to make the code testable
-    ciParserRunner ??= CiParserRunner(argResults: results, gitDir: gitDir);
-    final args = await ciParserRunner!.getParser()?.getCiArgs();
-
-    if (args == null) {
-      throw CiVendorNotSupported();
-    }
-
-    return args;
-  }
-
-  @visibleForTesting
-  String? gitProviderSha() {
-    if (_ciWrapper.isGithub()) {
-      return platform.environment['GITHUB_SHA'];
-    }
-
-    if (_ciWrapper.isCodemagic()) {
-      return platform.environment['CM_COMMIT'];
-    }
-
-    return null;
+    return result == 'yes';
   }
 
   @visibleForTesting
   Future<PublishArgs> getArguments({
-    required GitDir gitDir,
+    required Context context,
+    required Repository repository,
   }) async {
     final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
-    final currentBranch = await gitDir.currentBranch();
-    final branch = results['branch'] as String? ?? currentBranch.branchName;
-
-    final commit =
-        results['commit'] as String? ?? gitProviderSha() ?? currentBranch.sha;
-
     final gitHubToken = results['github-token'] as String?;
     final prNumber = results['pr'] as String?;
 
+    final currentBranch = await repository.currentBranch;
+    final branch = results['branch'] as String? ?? currentBranch.name;
+    final commit = results['commit'] as String? ??
+        context.providerSha ??
+        currentBranch.sha;
+
     final baseBranch = await getBaseBranch(
-      gitDir: gitDir,
+      repository: repository,
       branch: results['base-branch'] as String?,
       sha: results['base-commit'] as String?,
     );
 
-    final ciArgs = await getArgumentsFromCi(gitDir);
-    final actor = ciArgs.actor;
-
+    final actor = results['actor'] as String? ?? context.userName;
     if (actor == null) {
       throw ActorNotFoundException();
     }
 
-    final repository = ciArgs.repository;
-    if (repository == null) {
+    final repoName = results['repository'] as String? ?? context.repoName;
+    if (repoName == null) {
       throw RepositoryNotFoundException();
     }
 
@@ -234,10 +174,10 @@ class PublishCommand extends WidgetbookCommand {
       branch: branch,
       commit: commit,
       path: path,
-      vendor: ciArgs.vendor,
+      vendor: context.name,
       actor: actor,
-      repository: repository,
-      baseBranch: baseBranch?.reference,
+      repository: repoName,
+      baseBranch: baseBranch?.fullName,
       baseSha: baseBranch?.sha,
       prNumber: prNumber,
       gitHubToken: gitHubToken,
@@ -247,15 +187,28 @@ class PublishCommand extends WidgetbookCommand {
   @override
   Future<int> run() async {
     final path = results['path'] as String;
+    final repository = gitManager.load(path);
+    final isClean = await repository.isClean;
+    final shouldContinue = isClean ? true : promptUncommittedChanges();
 
-    await checkIfPathIsGitDirectory(path);
-    final gitDir = await getGitDir(path);
-    await checkIfWorkingTreeIsClean(gitDir);
-    final args = await getArguments(gitDir: gitDir);
+    if (!shouldContinue) {
+      progress.cancel();
+      throw ExitedByUser();
+    }
+
+    final context = await contextManager.load(repository);
+    if (context == null) {
+      throw CiVendorNotSupported();
+    }
+
+    final args = await getArguments(
+      context: context,
+      repository: repository,
+    );
 
     await publish(
       args: args,
-      gitDir: gitDir,
+      repository: repository,
     );
 
     return ExitCode.success.code;
@@ -266,8 +219,8 @@ class PublishCommand extends WidgetbookCommand {
   // If this will be included do we need to check if the sha exists on the
   // branch?
   @visibleForTesting
-  Future<BranchReference?> getBaseBranch({
-    required GitDir gitDir,
+  Future<Reference?> getBaseBranch({
+    required Repository repository,
     required String? branch,
     required String? sha,
   }) async {
@@ -276,15 +229,15 @@ class PublishCommand extends WidgetbookCommand {
     }
 
     progress.update('fetching remote branches');
-    await gitDir.fetch();
+    await repository.fetch();
 
     progress.update('reading existing branches');
-    final branches = await gitDir.allBranches();
+    final branches = await repository.branches;
     final branchesMap = {
-      for (var k in branches) k.reference: k,
+      for (var k in branches) k.fullName: k,
     };
 
-    final branchRef = BranchReference(
+    final branchRef = Reference(
       // This is not used, we are just using BranchReference to check if this is
       // a heads or remote branch (if at all)
       'a' * 40,
@@ -297,15 +250,15 @@ class PublishCommand extends WidgetbookCommand {
     const remotesPrefixRegex = '(?<=$remotesPrefix)';
     const endOfLine = r'$';
 
-    if (branchRef.isHeads || branchRef.isRemote) {
-      if (branchesMap.containsKey(branchRef.reference)) {
-        return branchesMap[branchRef.reference];
+    if (branchRef.isHead || branchRef.isRemote) {
+      if (branchesMap.containsKey(branchRef.fullName)) {
+        return branchesMap[branchRef.fullName];
       }
 
       // Azure provides the ref as 'refs/heads/<branch-name>'
       // This branch won't be found as of default.
       // But a branch 'refs/remotes/origin/<branch-name>' will exist
-      final headsRefAsRemoteRef = '$remotesPrefix${branchRef.branchName}';
+      final headsRefAsRemoteRef = '$remotesPrefix${branchRef.name}';
       if (branchesMap.containsKey(headsRefAsRemoteRef)) {
         return branchesMap[headsRefAsRemoteRef];
       }
@@ -313,19 +266,19 @@ class PublishCommand extends WidgetbookCommand {
       return null;
     } else {
       final headsRegex = RegExp(
-        '$headsPrefixRegex${branchRef.reference}$endOfLine',
+        '$headsPrefixRegex${branchRef.fullName}$endOfLine',
       );
       final remotesRegex = RegExp(
-        '$remotesPrefixRegex${branchRef.reference}$endOfLine',
+        '$remotesPrefixRegex${branchRef.fullName}$endOfLine',
       );
       for (final branch in branches) {
-        if (headsRegex.hasMatch(branch.reference)) {
+        if (headsRegex.hasMatch(branch.fullName)) {
           return branch;
         }
       }
 
       for (final branch in branches) {
-        if (remotesRegex.hasMatch(branch.reference)) {
+        if (remotesRegex.hasMatch(branch.fullName)) {
           return branch;
         }
       }
@@ -337,7 +290,7 @@ class PublishCommand extends WidgetbookCommand {
   @visibleForTesting
   Future<void> publish({
     required PublishArgs args,
-    required GitDir gitDir,
+    required Repository repository,
   }) async {
     try {
       final buildResponse = await publishBuild(
@@ -357,7 +310,7 @@ class PublishCommand extends WidgetbookCommand {
           ? await publishReview(
               args: args,
               buildResponse: buildResponse,
-              gitDir: gitDir,
+              repository: repository,
             )
           : null;
 
@@ -433,7 +386,7 @@ class PublishCommand extends WidgetbookCommand {
   Future<ReviewResponse?> publishReview({
     required PublishArgs args,
     required BuildResponse buildResponse,
-    required GitDir gitDir,
+    required Repository repository,
   }) async {
     final genDirPath = p.join(args.path, '.dart_tool', 'build', 'generated');
     final genDir = fileSystem.directory(genDirPath);
@@ -449,13 +402,11 @@ class PublishCommand extends WidgetbookCommand {
     }
 
     final useCases = await useCaseReader.read(args.path);
-    final diffs = await gitDir.diff(
-      base: args.baseBranch!,
-    );
+    final diffs = await repository.diff(args.baseBranch!);
 
     final changeUseCases = await useCaseReader.compare(
       useCases: useCases,
-      diffs: diffs.toList(),
+      diffs: diffs,
     );
 
     if (changeUseCases.isEmpty) {

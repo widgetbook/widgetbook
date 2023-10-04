@@ -7,7 +7,7 @@ on:
 
 jobs:
   _:
-    uses: ./.github/workflows/_deploy.yml
+    uses: ./.github/workflows/_upload.yml
     secrets: inherit
     with:
       mode: build
