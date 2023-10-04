@@ -4,12 +4,14 @@ import 'dart:io';
 import 'package:process/process.dart';
 
 extension GitProcessManager on ProcessManager {
+  static const executable = 'git';
+
   Future<String> runGit(
     List<String> args, {
     String? workingDirectory,
   }) async {
     final result = await run(
-      ['git', ...args],
+      [executable, ...args],
       workingDirectory: workingDirectory,
       runInShell: true,
     );
@@ -17,7 +19,7 @@ extension GitProcessManager on ProcessManager {
     if (result.exitCode == 0) return result.stdout.toString().trim();
 
     throw ProcessException(
-      'git',
+      executable,
       args,
       result.stderr.toString().trim(),
       result.exitCode,
@@ -29,7 +31,7 @@ extension GitProcessManager on ProcessManager {
     String? workingDirectory,
   }) {
     final result = runSync(
-      ['git', ...args],
+      [executable, ...args],
       workingDirectory: workingDirectory,
       runInShell: true,
     );
@@ -37,7 +39,7 @@ extension GitProcessManager on ProcessManager {
     if (result.exitCode == 0) return result.stdout.toString().trim();
 
     throw ProcessException(
-      'git',
+      executable,
       args,
       result.stderr.toString().trim(),
       result.exitCode,
