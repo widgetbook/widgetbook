@@ -1,5 +1,6 @@
 import '../../bin/api/api.dart';
 import '../../bin/context/context.dart';
+import '../../bin/git/reference.dart';
 import '../../bin/models/models.dart';
 
 class TestData {
@@ -9,8 +10,7 @@ class TestData {
     commit: 'commit',
     gitHubToken: 'gitHubToken',
     prNumber: 'prNumber',
-    baseBranch: 'baseBranch',
-    baseSha: 'a' * 40,
+    baseBranch: Reference('a' * 40, 'baseBranch'),
     path: 'path',
     vendor: 'Local',
     repository: 'repository',

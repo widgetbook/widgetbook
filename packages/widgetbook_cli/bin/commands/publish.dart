@@ -34,7 +34,6 @@ import '../context/context.dart';
 import '../context/context_manager.dart';
 import '../git-provider/github/github.dart';
 import '../git/git_manager.dart';
-import '../git/reference.dart';
 import '../git/repository.dart';
 import '../helpers/exceptions.dart';
 import '../helpers/zip_encoder.dart';
@@ -149,10 +148,17 @@ class PublishCommand extends WidgetbookCommand {
         context.providerSha ??
         currentBranch.sha;
 
-    final baseBranch = await getBaseBranch(
-      repository: repository,
-      branch: results['base-branch'] as String?,
-    );
+    // Fetch is needed because on most CI vendors, a shallow clone is used.
+    // For example, on GitHub Actions, the base-branch will be $GITHUB_BASE_REF,
+    // which resolves to "<branch-name>", but "refs/heads/<branch-name>" will
+    // not be found with git show-ref. After running git fetch, the ref
+    // "refs/remotes/origin/<branch-name>" will be found.
+    await repository.fetch();
+    final baseBranch = results['base-branch'] == null
+        ? null
+        : await repository.findRef(
+            results['base-branch'] as String,
+          );
 
     final actor = results['actor'] as String? ?? context.userName;
     if (actor == null) {
@@ -172,8 +178,7 @@ class PublishCommand extends WidgetbookCommand {
       vendor: context.name,
       actor: actor,
       repository: repoName,
-      baseBranch: baseBranch?.fullName,
-      baseSha: baseBranch?.sha,
+      baseBranch: baseBranch,
       prNumber: prNumber,
       gitHubToken: gitHubToken,
     );
@@ -209,78 +214,6 @@ class PublishCommand extends WidgetbookCommand {
     return ExitCode.success.code;
   }
 
-  // TODO sha is pretty much not used an is just being overriden with the most
-  // recent sha of the branch
-  // If this will be included do we need to check if the sha exists on the
-  // branch?
-  @visibleForTesting
-  Future<Reference?> getBaseBranch({
-    required Repository repository,
-    required String? branch,
-  }) async {
-    if (branch == null) {
-      return null;
-    }
-
-    progress.update('fetching remote branches');
-    await repository.fetch();
-
-    progress.update('reading existing branches');
-    final branches = await repository.branches;
-    final branchesMap = {
-      for (var k in branches) k.fullName: k,
-    };
-
-    final branchRef = Reference(
-      // This is not used, we are just using BranchReference to check if this is
-      // a heads or remote branch (if at all)
-      'a' * 40,
-      branch,
-    );
-
-    const headsPrefix = 'refs/heads/';
-    const headsPrefixRegex = '(?<=$headsPrefix)';
-    const remotesPrefix = 'refs/remotes/origin/';
-    const remotesPrefixRegex = '(?<=$remotesPrefix)';
-    const endOfLine = r'$';
-
-    if (branchRef.isHead || branchRef.isRemote) {
-      if (branchesMap.containsKey(branchRef.fullName)) {
-        return branchesMap[branchRef.fullName];
-      }
-
-      // Azure provides the ref as 'refs/heads/<branch-name>'
-      // This branch won't be found as of default.
-      // But a branch 'refs/remotes/origin/<branch-name>' will exist
-      final headsRefAsRemoteRef = '$remotesPrefix${branchRef.name}';
-      if (branchesMap.containsKey(headsRefAsRemoteRef)) {
-        return branchesMap[headsRefAsRemoteRef];
-      }
-
-      return null;
-    } else {
-      final headsRegex = RegExp(
-        '$headsPrefixRegex${branchRef.fullName}$endOfLine',
-      );
-      final remotesRegex = RegExp(
-        '$remotesPrefixRegex${branchRef.fullName}$endOfLine',
-      );
-      for (final branch in branches) {
-        if (headsRegex.hasMatch(branch.fullName)) {
-          return branch;
-        }
-      }
-
-      for (final branch in branches) {
-        if (remotesRegex.hasMatch(branch.fullName)) {
-          return branch;
-        }
-      }
-    }
-
-    return null;
-  }
-
   @visibleForTesting
   Future<void> publish({
     required PublishArgs args,
@@ -291,7 +224,7 @@ class PublishCommand extends WidgetbookCommand {
         args: args,
       );
 
-      final hasReview = args.baseBranch != null && args.baseSha != null;
+      final hasReview = args.baseBranch != null;
 
       if (!hasReview) {
         logger.info(
@@ -396,7 +329,7 @@ class PublishCommand extends WidgetbookCommand {
     }
 
     final useCases = await useCaseReader.read(args.path);
-    final diffs = await repository.diff(args.baseBranch!);
+    final diffs = await repository.diff(args.baseBranch!.fullName);
 
     final changeUseCases = await useCaseReader.compare(
       useCases: useCases,
@@ -418,9 +351,9 @@ class PublishCommand extends WidgetbookCommand {
         useCases: changeUseCases,
         buildId: buildResponse.build,
         projectId: buildResponse.project,
-        baseBranch: args.baseBranch!,
+        baseBranch: args.baseBranch!.fullName,
         headBranch: args.branch,
-        baseSha: args.baseSha!,
+        baseSha: args.baseBranch!.sha,
         headSha: args.commit,
       ),
     );

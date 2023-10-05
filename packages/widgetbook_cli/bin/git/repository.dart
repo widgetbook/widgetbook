@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:path/path.dart' as path;
 import 'package:process/process.dart';
@@ -58,31 +57,17 @@ class Repository {
     return status.isEmpty;
   }
 
-  Future<List<Reference>> get branches async {
-    try {
-      const splitter = LineSplitter();
-      final output = await runLocal(['show-ref']);
-      final lines = splitter.convert(output);
-
-      return lines //
-          .map(Reference.parse)
-          .where((ref) => ref.isBranch)
-          .toList();
-    } catch (e) {
-      return [];
-    }
-  }
-
   Future<Reference> get currentBranch async {
-    final refFullName = await runLocal(
-      ['rev-parse', '--verify', '--symbolic-full-name', 'HEAD'],
-    );
+    final branchRef = await runLocal([
+      'rev-parse',
+      '--verify',
+      '--symbolic-full-name',
+      'HEAD',
+    ]);
 
-    final refLine = await runLocal(
-      ['show-ref', '--verify', refFullName],
-    );
+    final ref = await findRef(branchRef);
 
-    return Reference.parse(refLine);
+    return ref!;
   }
 
   /// Runs a git command in the current working directory
@@ -113,5 +98,19 @@ class Repository {
         .where((x) => x.isNotEmpty); // First element is always empty
 
     return diffs.map(DiffHeader.parse).toList();
+  }
+
+  /// Returns a [Reference] for the given [ref] name.
+  /// If the [ref] does not exist, [null] is returned.
+  Future<Reference?> findRef(String ref) async {
+    try {
+      final output = await runLocal(
+        ['show-ref', '--verify', ref],
+      );
+
+      return Reference.parse(output);
+    } catch (_) {
+      return null;
+    }
   }
 }

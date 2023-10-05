@@ -91,64 +91,62 @@ void main() {
     },
   );
 
-  test('currentBranch returns main', () {
+  test('currentBranch', () {
+    const sha = '832e76a9899f560a90ffd62ae2ce83bbeff58f54';
+    const fullName = 'refs/heads/main';
+
     when(
       () => processManager.run(
-        any(that: contains('rev-parse')),
+        any(that: containsAll(['rev-parse', 'HEAD'])),
         workingDirectory: any(named: 'workingDirectory'),
         runInShell: any(named: 'runInShell'),
       ),
     ).thenAnswer(
-      ($) async => MockProcessResult.success('refs/heads/main'),
+      ($) async => MockProcessResult.success(fullName),
     );
 
     when(
       () => processManager.run(
-        any(that: contains('show-ref')),
+        any(that: containsAll(['show-ref', fullName])),
         workingDirectory: any(named: 'workingDirectory'),
         runInShell: any(named: 'runInShell'),
       ),
     ).thenAnswer(
       ($) async => MockProcessResult.success(
-        '832e76a9899f560a90ffd62ae2ce83bbeff58f54 refs/heads/main',
+        '$sha $fullName',
       ),
     );
 
     expectLater(
       repository.currentBranch,
       completion(
-        Reference(
-          '832e76a9899f560a90ffd62ae2ce83bbeff58f54',
-          'refs/heads/main',
-        ),
+        Reference(sha, fullName),
       ),
     );
   });
 
-  test('allBranches returns refs', () async {
-    when(processRun).thenAnswer(
+  test('findRef', () {
+    const sha = '832e76a9899f560a90ffd62ae2ce83bbeff58f54';
+    const branch = 'main';
+    const fullName = 'refs/heads/$branch';
+
+    when(
+      () => processManager.run(
+        any(that: containsAll(['show-ref', branch])),
+        workingDirectory: any(named: 'workingDirectory'),
+        runInShell: any(named: 'runInShell'),
+      ),
+    ).thenAnswer(
       ($) async => MockProcessResult.success(
-        '''
-        832e76a9899f560a90ffd62ae2ce83bbeff58f54 HEAD
-        832e76a9899f560a90ffd62ae2ce83bbeff58f54 refs/heads/main
-        832e76a9899f560a90ffd62ae2ce83bbeff58f54 refs/remotes/origin/main
-        3521017556c5de4159da4615a39fa4d5d2c279b5 refs/tags/v0.99.9c
-        ''',
+        '$sha $fullName',
       ),
     );
 
     expectLater(
-      repository.branches,
-      completion([
-        Reference(
-          '832e76a9899f560a90ffd62ae2ce83bbeff58f54',
-          'refs/heads/main',
-        ),
-        Reference(
-          '832e76a9899f560a90ffd62ae2ce83bbeff58f54',
-          'refs/remotes/origin/main',
-        ),
-      ]),
+      repository.findRef(branch),
+      completion(
+        Reference(sha, fullName),
+      ),
     );
   });
 }
