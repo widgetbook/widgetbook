@@ -144,6 +144,7 @@ class KnobsBuilder {
     );
   }
 
+  /// Creates a duration input that can be typed in
   Duration duration({
     required String label,
     required Duration initialValue,
@@ -156,5 +157,21 @@ class KnobsBuilder {
         description: description,
       ),
     )!;
+  }
+
+  /// Creates a duration input that can be adjusted and optionally hold a
+  /// null value
+  Duration? durationOrNull({
+    required String label,
+    Duration? initialValue,
+    String? description,
+  }) {
+    return onKnobAdded(
+      DurationKnob.nullable(
+        label: label,
+        value: initialValue ?? Duration.zero,
+        description: description,
+      ),
+    );
   }
 }

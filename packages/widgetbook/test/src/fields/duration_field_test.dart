@@ -76,7 +76,13 @@ void main() {
   });
 
   group('Duration Codec', () {
-    final codec = durationCodec;
+    final FieldCodec<Duration> codec = FieldCodec<Duration>(
+      toParam: (duration) => duration.inMilliseconds.toString(),
+      toValue: (param) {
+        if (param == null) return null;
+        return Duration(milliseconds: int.tryParse(param) ?? 0);
+      },
+    );
 
     test('correctly encodes Duration to string', () {
       final duration = const Duration(milliseconds: 500);

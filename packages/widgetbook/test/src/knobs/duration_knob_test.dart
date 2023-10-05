@@ -65,4 +65,54 @@ void main() {
       );
     },
   );
+
+  group('${DurationKnob.nullable}', () {
+    test('DurationKnob.nullable constructor sets correct values', () {
+      final knob = DurationKnob.nullable(
+        label: 'Test Duration',
+        value: const Duration(seconds: 5),
+        description: 'A test duration knob',
+      );
+
+      expect(knob.label, 'Test Duration');
+      expect(knob.value, const Duration(seconds: 5));
+      expect(knob.description, 'A test duration knob');
+    });
+
+    test('DurationKnob.nullable constructor handles null value', () {
+      final knob = DurationKnob.nullable(
+        label: 'Test Duration',
+        value: null,
+        description: 'A test duration knob with null value',
+      );
+
+      expect(knob.label, 'Test Duration');
+      expect(knob.value, null);
+      expect(knob.description, 'A test duration knob with null value');
+    });
+  });
+
+  group('$KnobsBuilder', () {
+    Duration? mockOnKnobAdded<Duration>(Knob<Duration?> knob) => knob.value;
+    final builder = KnobsBuilder(mockOnKnobAdded);
+
+    test('durationOrNull sets correct values', () {
+      final duration = builder.durationOrNull(
+        label: 'Test Duration',
+        initialValue: const Duration(seconds: 10),
+        description: 'A test duration',
+      );
+
+      expect(duration, const Duration(seconds: 10));
+    });
+
+    test('durationOrNull handles null initialValue', () {
+      final duration = builder.durationOrNull(
+        label: 'Test Duration',
+        description: 'A test duration with null value',
+      );
+
+      expect(duration, Duration.zero);
+    });
+  });
 }
