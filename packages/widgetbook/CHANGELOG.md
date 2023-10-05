@@ -3,6 +3,8 @@
 - **FIX**: use `MapMixin` instead of `MapBase` for `KnobsRegistry`. ([#903](https://github.com/widgetbook/widgetbook/pull/903))
 - **FEAT**: Add `designLink` to `WidgetbookUseCase`. ([#926](https://github.com/widgetbook/widgetbook/pull/926))
 - **FEAT**: Add light theme support. ([#919](https://github.com/widgetbook/widgetbook/pull/919))
+- **FIX**: Navigation Panel Loses Focus on Refresh ([#796](https://github.com/widgetbook/widgetbook/issues/796))
+
 
 ## 3.3.0
 
