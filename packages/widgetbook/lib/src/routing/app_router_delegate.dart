@@ -22,9 +22,6 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
   final GlobalKey<NavigatorState> _navigatorKey;
   AppRouteConfig _configuration;
 
-  ///key to rebuild WidgetbookShell once route state info is updated
-  GlobalKey key = GlobalKey();
-
   @override
   AppRouteConfig? get currentConfiguration => _configuration;
 
@@ -35,9 +32,6 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
   Future<void> setNewRoutePath(AppRouteConfig configuration) async {
     _configuration = configuration;
     state.updateFromRouteConfig(configuration);
-
-    ///once the route is updated, notify the WidgetbookShell to re-render the UI
-    key = GlobalKey();
     notifyListeners();
   }
 
@@ -51,7 +45,7 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
           child: _configuration.previewMode
               ? const Workbench()
               : WidgetbookShell(
-                  key: key,
+                  key: ValueKey(_configuration),
                   child: const Workbench(),
                 ),
         ),
