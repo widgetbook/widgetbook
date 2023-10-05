@@ -91,10 +91,6 @@ class PublishCommand extends WidgetbookCommand {
             'The base branch of the pull-request. For example, main or master.',
       )
       ..addOption(
-        'base-commit',
-        help: 'The SHA hash of the commit of the base branch.',
-      )
-      ..addOption(
         'github-token',
         help: 'GitHub API token.',
       )
@@ -156,7 +152,6 @@ class PublishCommand extends WidgetbookCommand {
     final baseBranch = await getBaseBranch(
       repository: repository,
       branch: results['base-branch'] as String?,
-      sha: results['base-commit'] as String?,
     );
 
     final actor = results['actor'] as String? ?? context.userName;
@@ -222,7 +217,6 @@ class PublishCommand extends WidgetbookCommand {
   Future<Reference?> getBaseBranch({
     required Repository repository,
     required String? branch,
-    required String? sha,
   }) async {
     if (branch == null) {
       return null;
