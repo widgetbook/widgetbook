@@ -5,7 +5,6 @@
 - **FEAT**: Add light theme support. ([#919](https://github.com/widgetbook/widgetbook/pull/919))
 - **FIX**: Navigation Panel Loses Focus on Refresh ([#796](https://github.com/widgetbook/widgetbook/issues/796))
 
-
 ## 3.3.0
 
 - **FEAT**: Add Builder Addon. ([#895](https://github.com/widgetbook/widgetbook/pull/895))
