@@ -26,6 +26,8 @@ void main() {
       'given a grid setting, '
       'then [buildUseCase] wraps child with grid',
       (tester) async {
+        final testKey = UniqueKey();
+
         await tester.pumpWidgetWithBuilder(
           (context) => addon.buildUseCase(
             context,
@@ -34,11 +36,12 @@ void main() {
               horizontalDistance: 15,
               verticalDistance: 20,
             ),
+            key: testKey,
           ),
         );
 
         final stack = tester.widget<Stack>(
-          find.byType(Stack),
+          find.byKey(testKey),
         );
 
         expect(stack.children.length, equals(2));
@@ -51,26 +54,41 @@ void main() {
       'given a grid setting, '
       'then [GridPainter] paints the grid correctly',
       (tester) async {
+        final testKey = UniqueKey();
+
         await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: LayoutBuilder(
-                builder: (context, constraints) {
-                  return CustomPaint(
-                    size: Size(constraints.maxWidth, constraints.maxHeight),
-                    painter: GridPainter(
+          Builder(
+            builder: (context) {
+              return MaterialApp(
+                home: Scaffold(
+                  body: addon.buildUseCase(
+                    context,
+                    const Text('child'),
+                    GridSetting(
                       horizontalDistance: 15,
                       verticalDistance: 20,
                     ),
-                  );
-                },
-              ),
-            ),
+                    key: testKey,
+                  ),
+                ),
+              );
+            },
           ),
         );
 
-        // This is a bit tricky to test directly, but you can check if the painter is being used.
-        expect(find.byType(CustomPaint), findsOneWidget);
+        // Find the CustomPaint widget that is a descendant of the Stack with the specific key.
+        final paintWidget = find.descendant(
+          of: find.byKey(testKey),
+          matching: find.byType(CustomPaint),
+        );
+
+        final customPaint = tester.widget<CustomPaint>(paintWidget);
+
+        expect(paintWidget, findsOneWidget);
+        expect(
+          customPaint,
+          isGridPainterWith(horizontalDistance: 15, verticalDistance: 20),
+        );
       },
     );
   });

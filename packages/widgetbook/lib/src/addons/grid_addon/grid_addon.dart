@@ -42,9 +42,11 @@ class GridAddon extends WidgetbookAddon<GridSetting> {
   Widget buildUseCase(
     BuildContext context,
     Widget child,
-    GridSetting setting,
-  ) {
+    GridSetting setting, {
+    Key? key,
+  }) {
     return Stack(
+      key: key,
       alignment: Alignment.center,
       children: [
         LayoutBuilder(
@@ -99,8 +101,5 @@ class GridPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant GridPainter oldDelegate) {
-    return oldDelegate.horizontalDistance != horizontalDistance ||
-        oldDelegate.verticalDistance != verticalDistance;
-  }
+  bool shouldRepaint(covariant GridPainter oldDelegate) => true;
 }
