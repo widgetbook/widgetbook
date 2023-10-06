@@ -102,6 +102,7 @@ class MyHomePage extends StatefulWidget {
     this.iconData,
     this.showToolTip = true,
     this.duration = Duration.zero,
+    this.dateTime,
   }) : super(key: key);
 
   final String title;
@@ -110,6 +111,7 @@ class MyHomePage extends StatefulWidget {
   final IconData? iconData;
   final bool showToolTip;
   final Duration duration;
+  final DateTime? dateTime;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -146,6 +148,11 @@ class _MyHomePageState extends State<MyHomePage> {
               '${widget.duration}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            if (widget.dateTime != null)
+              Text(
+                widget.dateTime.toIso8601String()!,
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
           ],
         ),
       ),
@@ -163,6 +170,8 @@ class KnobsExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final initialDate = DateTime.now();
+
     return Widgetbook.material(
       addons: [
         DeviceFrameAddon(
@@ -228,6 +237,13 @@ class KnobsExample extends StatelessWidget {
                     duration: context.knobs.duration(
                       label: 'Increment duration',
                       initialValue: const Duration(seconds: 5),
+                    ),
+                    dateTime: context.knobs.dateTimeOrNull(
+                        // placing DateTime.now() here will cause the date time and
+                        // the text field to be out of sync
+                        initialValue: initialDate,
+                        label: 'Select Date Time',
+                        readOnly: false,
                     ),
                   ),
                 ),

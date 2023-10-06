@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
             ),
             if (widget.dateTime != null)
               Text(
-                widget.dateTime!,
+                widget.dateTime.toIso8601String()!,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
           ],
