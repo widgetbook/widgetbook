@@ -112,7 +112,7 @@ void main() {
         description: 'A test duration with null value',
       );
 
-      expect(duration, Duration.zero);
+      expect(duration, null);
     });
   });
 }

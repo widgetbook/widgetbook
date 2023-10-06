@@ -169,7 +169,7 @@ class KnobsBuilder {
     return onKnobAdded(
       DurationKnob.nullable(
         label: label,
-        value: initialValue ?? Duration.zero,
+        value: initialValue,
         description: description,
       ),
     );
