@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../fields/fields.dart';
 import '../boolean_knob.dart';
 import '../color_knob.dart';
+import '../date_time_knob.dart';
 import '../knob.dart';
 import '../list_knob.dart';
 import '../string_knob.dart';
@@ -11,9 +12,8 @@ import 'double_knobs_builder.dart';
 typedef KnobAdded = T? Function<T>(Knob<T?> knob);
 
 class KnobsBuilder {
-  KnobsBuilder(
-    this.onKnobAdded,
-  )   : this.double = DoubleKnobsBuilder(onKnobAdded),
+  KnobsBuilder(this.onKnobAdded,)
+      : this.double = DoubleKnobsBuilder(onKnobAdded),
         this.doubleOrNull = DoubleOrNullKnobsBuilder(onKnobAdded);
 
   final KnobAdded onKnobAdded;
@@ -139,6 +139,41 @@ class KnobsBuilder {
         description: description,
         options: options,
         labelBuilder: labelBuilder,
+      ),
+    );
+  }
+
+  /// Creates a text field that can be used to select a date and time
+  DateTime dateTime({
+    required String label,
+    required DateTime initialValue,
+    String? description,
+    bool readOnly = true,
+  }) {
+    return onKnobAdded(
+      DateTimeKnob(
+        label: label,
+        value: initialValue,
+        description: description,
+        readOnly: readOnly,
+      ),
+    )!;
+  }
+
+  /// Creates a text field that can be used to select a date and time and can
+  /// be initially empty
+  DateTime? dateTimeOrNull({
+    required String label,
+    DateTime? initialValue,
+    String? description,
+    bool readOnly = true,
+  }) {
+    return onKnobAdded(
+      DateTimeKnob(
+        label: label,
+        value: initialValue,
+        description: description,
+        readOnly: readOnly,
       ),
     );
   }

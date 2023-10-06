@@ -12,6 +12,8 @@ class WidgetbookApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final initialDate = DateTime.now();
+
     return Widgetbook.material(
       directories: [
         WidgetbookComponent(
@@ -62,6 +64,13 @@ class WidgetbookApp extends StatelessWidget {
                     label: 'Show Increment Tool Tip',
                     description: 'This is the tooltip that is displayed '
                         'when hovering over the increment button',
+                  ),
+                  dateTime: context.knobs.dateTimeOrNull(
+                    // placing DateTime.now() here will cause the date time and
+                    // the text field to be out of sync
+                    initialValue: initialDate,
+                    label: 'Select Date Time',
+                    readOnly: false,
                   ),
                 );
               },

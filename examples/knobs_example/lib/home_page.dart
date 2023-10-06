@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -8,6 +9,7 @@ class HomePage extends StatefulWidget {
     this.countLabel,
     this.iconData,
     this.showToolTip = true,
+    this.dateTime,
   });
 
   final String title;
@@ -15,6 +17,7 @@ class HomePage extends StatefulWidget {
   final String? countLabel;
   final IconData? iconData;
   final bool showToolTip;
+  final DateTime? dateTime;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -41,6 +44,11 @@ class _HomePageState extends State<HomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            if (widget.dateTime != null)
+              Text(
+                DateTimeField.asString(widget.dateTime!),
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
           ],
         ),
       ),

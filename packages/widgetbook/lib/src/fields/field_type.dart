@@ -5,4 +5,5 @@ enum FieldType {
   doubleInput,
   list,
   string,
+  dateTime,
 }
