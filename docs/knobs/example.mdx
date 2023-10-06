@@ -101,6 +101,7 @@ class MyHomePage extends StatefulWidget {
     this.countLabel,
     this.iconData,
     this.showToolTip = true,
+    this.duration = Duration.zero,
   }) : super(key: key);
 
   final String title;
@@ -108,6 +109,7 @@ class MyHomePage extends StatefulWidget {
   final String? countLabel;
   final IconData? iconData;
   final bool showToolTip;
+  final Duration duration;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -138,6 +140,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Text(
+              '${widget.duration}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
