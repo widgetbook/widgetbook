@@ -24,6 +24,7 @@ class WidgetbookApp extends StatelessWidget {
     return Widgetbook.material(
       addons: [
         AlignmentAddon(),
+        GridAddon(),
       ],
       directories: [
         WidgetbookFolder(

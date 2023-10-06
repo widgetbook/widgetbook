@@ -11,8 +11,8 @@ class GridAddon extends WidgetbookAddon<GridSetting> {
   }) : super(
           name: 'Grid',
           initialSetting: GridSetting(
-            horizontalDistance: initialHorizontalDistance ?? 10,
-            verticalDistance: initialVerticalDistance ?? 10,
+            horizontalDistance: initialHorizontalDistance ?? 0,
+            verticalDistance: initialVerticalDistance ?? 0,
           ),
         );
 
@@ -79,23 +79,28 @@ class GridPainter extends CustomPainter {
       ..color = Colors.grey.withOpacity(0.5)
       ..strokeWidth = 0.5;
 
-    for (var i = 0; i < size.width; i += horizontalDistance) {
-      canvas.drawLine(
-        Offset(i.toDouble(), 0),
-        Offset(i.toDouble(), size.height),
-        paint,
-      );
-    }
+    if (horizontalDistance > 0)
+      for (var i = 0; i < size.width; i += horizontalDistance) {
+        canvas.drawLine(
+          Offset(i.toDouble(), 0),
+          Offset(i.toDouble(), size.height),
+          paint,
+        );
+      }
 
-    for (var i = 0; i < size.height; i += verticalDistance) {
-      canvas.drawLine(
-        Offset(0, i.toDouble()),
-        Offset(size.width, i.toDouble()),
-        paint,
-      );
-    }
+    if (verticalDistance > 0)
+      for (var i = 0; i < size.height; i += verticalDistance) {
+        canvas.drawLine(
+          Offset(0, i.toDouble()),
+          Offset(size.width, i.toDouble()),
+          paint,
+        );
+      }
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
+  bool shouldRepaint(covariant GridPainter oldDelegate) {
+    return oldDelegate.horizontalDistance != horizontalDistance ||
+        oldDelegate.verticalDistance != verticalDistance;
+  }
 }
