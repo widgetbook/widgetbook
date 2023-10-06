@@ -65,6 +65,10 @@ class WidgetbookApp extends StatelessWidget {
                     description: 'This is the tooltip that is displayed '
                         'when hovering over the increment button',
                   ),
+                  duration: context.knobs.duration(
+                    label: 'Increment duration',
+                    initialValue: const Duration(seconds: 5),
+                  ),
                   dateTime: context.knobs.dateTimeOrNull(
                     // placing DateTime.now() here will cause the date time and
                     // the text field to be out of sync

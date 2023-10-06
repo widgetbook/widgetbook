@@ -114,7 +114,6 @@ void main() {
               final branch = await publishCommand.getBaseBranch(
                 repository: repository,
                 branch: 'a',
-                sha: null,
               );
               expect(branch, isNull);
             },
@@ -126,7 +125,6 @@ void main() {
               final branch = await publishCommand.getBaseBranch(
                 repository: repository,
                 branch: 'refs/heads/a',
-                sha: null,
               );
               expect(branch, isNull);
             },
@@ -138,7 +136,6 @@ void main() {
               final branch = await publishCommand.getBaseBranch(
                 repository: repository,
                 branch: 'c',
-                sha: null,
               );
               expect(branch, isNull);
             },
@@ -150,7 +147,6 @@ void main() {
               final branch = await publishCommand.getBaseBranch(
                 repository: repository,
                 branch: 'refs/remotes/c',
-                sha: null,
               );
               expect(branch, isNull);
             },
@@ -176,7 +172,6 @@ void main() {
                 final branch = await publishCommand.getBaseBranch(
                   repository: repository,
                   branch: 'refs/heads/c',
-                  sha: null,
                 );
                 expect(branch, equals(branchRefC));
               },
@@ -202,7 +197,6 @@ void main() {
               final branch = await publishCommand.getBaseBranch(
                 repository: repository,
                 branch: 'a',
-                sha: null,
               );
               expect(branch, equals(branchRefA));
             },
@@ -214,7 +208,6 @@ void main() {
               final branch = await publishCommand.getBaseBranch(
                 repository: repository,
                 branch: 'refs/heads/a',
-                sha: null,
               );
               expect(branch, equals(branchRefA));
             },
@@ -226,7 +219,6 @@ void main() {
               final branch = await publishCommand.getBaseBranch(
                 repository: repository,
                 branch: 'c',
-                sha: null,
               );
               expect(branch, equals(branchRefC));
             },
@@ -238,7 +230,6 @@ void main() {
               final branch = await publishCommand.getBaseBranch(
                 repository: repository,
                 branch: 'refs/remotes/c',
-                sha: null,
               );
               expect(branch, equals(branchRefC));
             },
@@ -714,7 +705,6 @@ void main() {
 
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
       when(() => argResults['base-branch'] as String).thenReturn('main');
-      when(() => argResults['base-commit'] as String).thenReturn('base-commit');
       when(() => repository.user).thenAnswer((_) async => 'John Doe');
       when(() => repository.name).thenAnswer((_) async => 'widgetbook');
 

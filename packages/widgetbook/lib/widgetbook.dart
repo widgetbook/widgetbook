@@ -12,6 +12,7 @@ export 'src/knobs/knobs.dart'
         DateTimeKnob,
         DoubleInputKnob,
         DoubleSliderKnob,
+        DurationKnob,
         ListKnob,
         StringKnob;
 export 'src/navigation/nodes/nodes.dart';
