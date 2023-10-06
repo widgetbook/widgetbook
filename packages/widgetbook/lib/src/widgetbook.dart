@@ -128,7 +128,8 @@ class _WidgetbookState extends State<Widgetbook> {
       state: state,
       child: MaterialApp.router(
         title: 'Widgetbook',
-        theme: Themes.dark,
+        theme: Themes.light,
+        darkTheme: Themes.dark,
         routerConfig: router,
         debugShowCheckedModeBanner: false,
       ),

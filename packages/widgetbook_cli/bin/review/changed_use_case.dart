@@ -1,4 +1,4 @@
-import '../git/modification.dart';
+import '../git/diff_header.dart';
 
 class ChangedUseCase {
   const ChangedUseCase({

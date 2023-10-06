@@ -1,9 +1,9 @@
-import '../../../bin/git/branch_reference.dart';
+import '../../../bin/git/reference.dart';
 
 const branch = 'branch-ref';
 final sha = 'a' * 40;
 
-final branchReference = BranchReference(
+final branchReference = Reference(
   sha,
   branch,
 );

@@ -1,19 +1,8 @@
 import '../../bin/api/api.dart';
-import '../../bin/git/branch_reference.dart';
+import '../../bin/context/context.dart';
 import '../../bin/models/models.dart';
 
 class TestData {
-  static const ciArgsData = CliArgs(
-    apiKey: 'apiKey',
-    branch: 'branch',
-    commit: 'commit',
-    gitProvider: 'gitProvider',
-    gitHubToken: 'gitHubToken',
-    prNumber: 'prNumber',
-    baseBranch: 'baseBranch',
-    path: 'path',
-  );
-
   static final args = PublishArgs(
     apiKey: 'apiKey',
     branch: 'branch',
@@ -24,19 +13,14 @@ class TestData {
     baseSha: 'a' * 40,
     path: 'path',
     vendor: 'Local',
-    repository: 'respository',
+    repository: 'repository',
     actor: 'John Doe',
   );
 
-  static const ciArgs = CiArgs(
-    vendor: 'Local',
-    repository: 'respository',
-    actor: 'John Doe',
-  );
-
-  static final branches = BranchReference(
-    'sha',
-    'HEAD',
+  static const ciArgs = Context(
+    name: 'Local',
+    repoName: 'repository',
+    userName: 'John Doe',
   );
 
   static const buildResponse = BuildResponse(
