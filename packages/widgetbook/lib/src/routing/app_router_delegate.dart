@@ -44,8 +44,9 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
         MaterialPage(
           child: _configuration.previewMode
               ? const Workbench()
-              : const WidgetbookShell(
-                  child: Workbench(),
+              : WidgetbookShell(
+                  key: ValueKey(_configuration),
+                  child: const Workbench(),
                 ),
         ),
       ],
