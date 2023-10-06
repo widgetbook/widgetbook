@@ -12,20 +12,20 @@ void main() {
         'given an initial value, '
         'then the value should be displayed',
         (tester) async {
-          const initialValue = 5;
+          const value = 5;
 
           await tester.pumpKnob(
             (context) => Text(
               context.knobs.intbuilder
                   .input(
                     label: 'IntKnob',
-                    initialValue: initialValue,
+                    initialValue: value,
                   )
                   .toString(),
             ),
           );
 
-          expect(find.text('$initialValue'), findsOneWidget);
+          expect(find.textWidget('$value'), findsOneWidget);
         },
       );
 
@@ -53,7 +53,7 @@ void main() {
           );
 
           expect(
-            find.text('${updatedValue}'),
+            find.textWidget('${updatedValue}'),
             findsOneWidget,
           );
         },
