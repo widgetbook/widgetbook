@@ -6,7 +6,7 @@ import 'package:test_descriptor/test_descriptor.dart' as d;
 import '../../bin/git/diff_header.dart';
 import '../../bin/git/reference.dart';
 import '../../bin/git/repository.dart';
-import '../mocks/command_mocks.dart';
+import '../utils/mocks.dart';
 
 void main() {
   late ProcessManager processManager;
