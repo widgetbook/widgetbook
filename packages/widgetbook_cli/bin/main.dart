@@ -1,10 +1,20 @@
 import 'dart:io';
 
-import 'widgetbook_command_runner.dart';
+import 'core/cli_runner.dart';
+import 'core/context_manager.dart';
 
 void main(List<String> arguments) async {
+  const contextManager = ContextManager();
+  final context = await contextManager.load(Directory.current.path);
+
+  if (context == null) {
+    exit(1);
+  }
+
   await flushThenExit(
-    await WidgetbookCommandRunner().run(arguments),
+    await CliRunner(
+      context: context,
+    ).run(arguments),
   );
 }
 
@@ -15,6 +25,8 @@ void main(List<String> arguments) async {
 /// exited already. This is useful to prevent Future chains from proceeding
 /// after you've decided to exit.
 Future<void> flushThenExit(int status) {
-  return Future.wait<void>([stdout.close(), stderr.close()])
-      .then<void>((_) => exit(status));
+  return Future.wait<void>([
+    stdout.close(),
+    stderr.close(),
+  ]).then<void>((_) => exit(status));
 }

@@ -3,9 +3,10 @@ import 'package:mocktail/mocktail.dart';
 import 'package:pub_updater/pub_updater.dart';
 import 'package:test/test.dart';
 
-import '../../bin/app/widgetbook_command_runner.dart';
+import '../../bin/core/cli_runner.dart';
+import '../../bin/core/context.dart';
 import '../../bin/helpers/metadata.dart';
-import '../mocks/mocks.dart';
+import '../utils/mocks.dart';
 
 void main() {
   const latestVersion = '0.0.0';
@@ -13,9 +14,11 @@ void main() {
   group('widgetbook upgrade', () {
     late Logger logger;
     late PubUpdater pubUpdater;
-    late WidgetbookCommandRunner widgetbookCommandRunner;
+    late CliRunner cliRunner;
+    late Context globalContext;
 
     setUp(() {
+      globalContext = MockContext();
       logger = MockLogger();
       pubUpdater = MockPubUpdater();
 
@@ -24,7 +27,8 @@ void main() {
         () => pubUpdater.update(packageName: packageName),
       ).thenAnswer((_) => Future.value(FakeProcessResult()));
 
-      widgetbookCommandRunner = WidgetbookCommandRunner(
+      cliRunner = CliRunner(
+        context: globalContext,
         logger: logger,
         pubUpdater: pubUpdater,
       );
@@ -38,7 +42,7 @@ void main() {
         ),
       ).thenThrow(Exception('oops'));
 
-      final result = await widgetbookCommandRunner.run(['upgrade']);
+      final result = await cliRunner.run(['upgrade']);
       expect(result, equals(ExitCode.software.code));
       verify(() => logger.progress('Checking for updates')).called(1);
       verify(() => logger.err('Exception: oops'));
@@ -65,7 +69,7 @@ void main() {
         ),
       ).thenThrow(Exception('oops'));
 
-      final result = await widgetbookCommandRunner.run(['upgrade']);
+      final result = await cliRunner.run(['upgrade']);
       expect(result, equals(ExitCode.software.code));
       verify(() => logger.progress('Checking for updates')).called(1);
       verify(() => logger.err('Exception: oops'));
@@ -88,7 +92,7 @@ void main() {
 
       when(() => logger.progress(any())).thenReturn(MockProgress());
 
-      final result = await widgetbookCommandRunner.run(['upgrade']);
+      final result = await cliRunner.run(['upgrade']);
       expect(result, equals(ExitCode.success.code));
       verify(() => logger.progress('Checking for updates')).called(1);
       verify(() => logger.progress('Upgrading to latest version')).called(1);
@@ -107,7 +111,7 @@ void main() {
         () => pubUpdater.getLatestVersion(any()),
       ).thenAnswer((_) async => packageVersion);
       when(() => logger.progress(any())).thenReturn(MockProgress());
-      final result = await widgetbookCommandRunner.run(['upgrade']);
+      final result = await cliRunner.run(['upgrade']);
       expect(result, equals(ExitCode.success.code));
       verify(
         () => logger.info('Widgetbook CLI is already at the latest version.'),

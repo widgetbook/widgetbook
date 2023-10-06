@@ -1,9 +1,9 @@
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../../bin/context/context.dart';
-import '../../bin/context/context_manager.dart';
-import '../mocks/command_mocks.dart';
+import '../../bin/core/context.dart';
+import '../../bin/core/context_manager.dart';
+import '../utils/mocks.dart';
 
 void main() {
   const userName = 'John Doe';

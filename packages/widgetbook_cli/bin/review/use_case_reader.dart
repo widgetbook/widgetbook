@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:file/file.dart';
+import 'package:file/local.dart';
 import 'package:path/path.dart';
 
 import '../git/diff_header.dart';
@@ -9,7 +10,7 @@ import 'use_case_metadata.dart';
 
 class UseCaseReader {
   const UseCaseReader({
-    required this.fileSystem,
+    this.fileSystem = const LocalFileSystem(),
   });
 
   final FileSystem fileSystem;

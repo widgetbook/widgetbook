@@ -35,4 +35,20 @@ class Context {
         project.hashCode ^
         providerSha.hashCode;
   }
+
+  Context copyWith({
+    String? name,
+    String? workingDir,
+    String? user,
+    String? project,
+    String? providerSha,
+  }) {
+    return Context(
+      name: name ?? this.name,
+      workingDir: workingDir ?? this.workingDir,
+      user: user ?? this.user,
+      project: project ?? this.project,
+      providerSha: providerSha ?? this.providerSha,
+    );
+  }
 }
