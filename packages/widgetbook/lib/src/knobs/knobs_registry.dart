@@ -14,6 +14,9 @@ class KnobsRegistry extends ChangeNotifier with MapMixin<String, Knob> {
   final VoidCallback onLock;
 
   @internal
+  final Set<String> checkIns = {};
+
+  @internal
   void lock() {
     notifyListeners();
     onLock();
@@ -24,6 +27,8 @@ class KnobsRegistry extends ChangeNotifier with MapMixin<String, Knob> {
     Knob<T?> knob,
     Map<String, String> queryGroup,
   ) {
+    checkIns.add(knob.label);
+
     final cachedKnob = _registry.putIfAbsent(
       knob.label,
       () => knob,

@@ -42,7 +42,7 @@ class Workbench extends StatelessWidget {
               // would expand to the whole size of the Workbench.
               children: [
                 UseCaseBuilder(
-                  key: ValueKey(state.uri),
+                  key: ValueKey(state.path),
                   builder: (context) {
                     return WidgetbookState.of(context)
                             .useCase
