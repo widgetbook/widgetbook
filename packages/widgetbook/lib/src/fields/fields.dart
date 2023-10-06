@@ -7,5 +7,6 @@ export 'field.dart';
 export 'field_codec.dart';
 export 'field_type.dart';
 export 'fields_composable.dart';
+export 'int_field.dart';
 export 'list_field.dart';
 export 'string_field.dart';

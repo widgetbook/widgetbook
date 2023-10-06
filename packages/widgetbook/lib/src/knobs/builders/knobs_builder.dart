@@ -8,6 +8,7 @@ import '../knob.dart';
 import '../list_knob.dart';
 import '../string_knob.dart';
 import 'double_knobs_builder.dart';
+import 'int_knobs_builder.dart';
 
 typedef KnobAdded = T? Function<T>(Knob<T?> knob);
 
@@ -15,11 +16,15 @@ class KnobsBuilder {
   KnobsBuilder(
     this.onKnobAdded,
   )   : this.double = DoubleKnobsBuilder(onKnobAdded),
-        this.doubleOrNull = DoubleOrNullKnobsBuilder(onKnobAdded);
+        this.doubleOrNull = DoubleOrNullKnobsBuilder(onKnobAdded),
+        this.intbuilder = IntKnobsBuilder(onKnobAdded),
+        this.intOrNull = IntOrNullKnobsBuilder(onKnobAdded);
 
   final KnobAdded onKnobAdded;
   final DoubleKnobsBuilder double;
   final DoubleOrNullKnobsBuilder doubleOrNull;
+  final IntKnobsBuilder intbuilder;
+  final IntOrNullKnobsBuilder intOrNull;
 
   /// Creates a checkbox that can be toggled on and off
   bool boolean({
