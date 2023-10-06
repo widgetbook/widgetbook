@@ -18,7 +18,7 @@ import '../../bin/review/use_case_reader.dart';
 
 class MockLogger extends Mock implements Logger {}
 
-class MockGitWrapper extends Mock implements GitManager {}
+class MockGitManager extends Mock implements GitManager {}
 
 class MockPubUpdater extends Mock implements PubUpdater {}
 

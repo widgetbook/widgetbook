@@ -1,31 +1,38 @@
+import '../git/repository.dart';
+
 class Context {
-  const Context({
+  Context({
     required this.name,
-    required this.userName,
-    required this.repoName,
+    required this.workingDir,
+    required this.user,
+    required this.project,
     this.providerSha,
-  });
+  }) : repository = Repository.load(workingDir);
 
   final String name;
-  final String? userName;
-  final String? repoName;
+  final String workingDir;
+  final String? user;
+  final String? project;
   final String? providerSha;
+  final Repository repository;
 
   @override
   bool operator ==(covariant Context other) {
     if (identical(this, other)) return true;
 
-    return other.name == name &&
-        other.userName == userName &&
-        other.repoName == repoName &&
+    return other.workingDir == workingDir &&
+        other.name == name &&
+        other.user == user &&
+        other.project == project &&
         other.providerSha == providerSha;
   }
 
   @override
   int get hashCode {
-    return name.hashCode ^
-        userName.hashCode ^
-        repoName.hashCode ^
+    return workingDir.hashCode ^
+        name.hashCode ^
+        user.hashCode ^
+        project.hashCode ^
         providerSha.hashCode;
   }
 }

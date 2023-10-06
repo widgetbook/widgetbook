@@ -33,7 +33,6 @@ import '../api/api.dart';
 import '../context/context.dart';
 import '../context/context_manager.dart';
 import '../git-provider/github/github.dart';
-import '../git/git_manager.dart';
 import '../git/reference.dart';
 import '../git/repository.dart';
 import '../helpers/exceptions.dart';
@@ -46,7 +45,6 @@ class PublishCommand extends WidgetbookCommand {
   PublishCommand({
     super.logger,
     this.fileSystem = const LocalFileSystem(),
-    this.gitManager = const GitManager(),
     this.contextManager = const ContextManager(),
     UseCaseReader? useCaseReader,
     WidgetbookHttpClient? client,
@@ -107,7 +105,6 @@ class PublishCommand extends WidgetbookCommand {
   final String name = 'publish';
 
   final FileSystem fileSystem;
-  final GitManager gitManager;
   final UseCaseReader useCaseReader;
   final ContextManager contextManager;
   final WidgetbookHttpClient _client;
@@ -134,32 +131,29 @@ class PublishCommand extends WidgetbookCommand {
   }
 
   @visibleForTesting
-  Future<PublishArgs> getArguments({
-    required Context context,
-    required Repository repository,
-  }) async {
+  Future<PublishArgs> getArguments(Context context) async {
     final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
     final gitHubToken = results['github-token'] as String?;
     final prNumber = results['pr'] as String?;
 
-    final currentBranch = await repository.currentBranch;
+    final currentBranch = await context.repository.currentBranch;
     final branch = results['branch'] as String? ?? currentBranch.name;
     final commit = results['commit'] as String? ??
         context.providerSha ??
         currentBranch.sha;
 
     final baseBranch = await getBaseBranch(
-      repository: repository,
+      repository: context.repository,
       branch: results['base-branch'] as String?,
     );
 
-    final actor = results['actor'] as String? ?? context.userName;
+    final actor = results['actor'] as String? ?? context.user;
     if (actor == null) {
       throw ActorNotFoundException();
     }
 
-    final repoName = results['repository'] as String? ?? context.repoName;
+    final repoName = results['repository'] as String? ?? context.project;
     if (repoName == null) {
       throw RepositoryNotFoundException();
     }
@@ -181,9 +175,14 @@ class PublishCommand extends WidgetbookCommand {
 
   @override
   Future<int> run() async {
-    final path = results['path'] as String;
-    final repository = gitManager.load(path);
-    final isClean = await repository.isClean;
+    final workingDir = results['path'] as String;
+
+    final context = await contextManager.load(workingDir);
+    if (context == null) {
+      throw CiVendorNotSupported();
+    }
+
+    final isClean = await context.repository.isClean;
     final shouldContinue = isClean ? true : promptUncommittedChanges();
 
     if (!shouldContinue) {
@@ -191,19 +190,11 @@ class PublishCommand extends WidgetbookCommand {
       throw ExitedByUser();
     }
 
-    final context = await contextManager.load(repository);
-    if (context == null) {
-      throw CiVendorNotSupported();
-    }
-
-    final args = await getArguments(
-      context: context,
-      repository: repository,
-    );
+    final args = await getArguments(context);
 
     await publish(
       args: args,
-      repository: repository,
+      context: context,
     );
 
     return ExitCode.success.code;
@@ -284,7 +275,7 @@ class PublishCommand extends WidgetbookCommand {
   @visibleForTesting
   Future<void> publish({
     required PublishArgs args,
-    required Repository repository,
+    required Context context,
   }) async {
     try {
       final buildResponse = await publishBuild(
@@ -304,7 +295,7 @@ class PublishCommand extends WidgetbookCommand {
           ? await publishReview(
               args: args,
               buildResponse: buildResponse,
-              repository: repository,
+              context: context,
             )
           : null;
 
@@ -380,7 +371,7 @@ class PublishCommand extends WidgetbookCommand {
   Future<ReviewResponse?> publishReview({
     required PublishArgs args,
     required BuildResponse buildResponse,
-    required Repository repository,
+    required Context context,
   }) async {
     final genDirPath = p.join(args.path, '.dart_tool', 'build', 'generated');
     final genDir = fileSystem.directory(genDirPath);
@@ -396,7 +387,7 @@ class PublishCommand extends WidgetbookCommand {
     }
 
     final useCases = await useCaseReader.read(args.path);
-    final diffs = await repository.diff(args.baseBranch!);
+    final diffs = await context.repository.diff(args.baseBranch!);
 
     final changeUseCases = await useCaseReader.compare(
       useCases: useCases,
