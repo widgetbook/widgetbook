@@ -1,21 +1,20 @@
 import '../git/repository.dart';
 
 class Context {
-  const Context({
+  Context({
     required this.name,
     required this.workingDir,
     required this.user,
     required this.project,
     this.providerSha,
-  });
+  }) : repository = Repository.load(workingDir);
 
   final String name;
   final String workingDir;
   final String? user;
   final String? project;
   final String? providerSha;
-
-  Repository get repository => Repository.load(workingDir);
+  final Repository repository;
 
   @override
   bool operator ==(covariant Context other) {

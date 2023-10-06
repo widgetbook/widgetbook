@@ -33,7 +33,7 @@ void main() {
       expectLater(
         contextManager.load(workingDir),
         completion(
-          const Context(
+          Context(
             name: 'Local',
             workingDir: workingDir,
             user: userName,
@@ -53,7 +53,7 @@ void main() {
       expectLater(
         contextManager.load(workingDir),
         completion(
-          const Context(
+          Context(
             name: 'Azure',
             workingDir: workingDir,
             user: userName,
@@ -73,7 +73,7 @@ void main() {
       expectLater(
         contextManager.load(workingDir),
         completion(
-          const Context(
+          Context(
             name: 'Bitbucket',
             workingDir: workingDir,
             user: userName,
@@ -93,7 +93,7 @@ void main() {
       expectLater(
         contextManager.load(workingDir),
         completion(
-          const Context(
+          Context(
             name: 'Codemagic',
             workingDir: workingDir,
             user: 'Codemagic',
@@ -115,7 +115,7 @@ void main() {
       expectLater(
         contextManager.load(workingDir),
         completion(
-          const Context(
+          Context(
             name: 'GitHub',
             workingDir: workingDir,
             user: userName,
@@ -136,7 +136,7 @@ void main() {
       expectLater(
         contextManager.load(workingDir),
         completion(
-          const Context(
+          Context(
             name: 'GitLab',
             workingDir: workingDir,
             user: userName,
