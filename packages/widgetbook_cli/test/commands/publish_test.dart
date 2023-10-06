@@ -11,8 +11,8 @@ import 'package:test/test.dart';
 import '../../bin/api/api.dart';
 import '../../bin/commands/commands.dart';
 import '../../bin/context/context.dart';
+import '../../bin/context/context_manager.dart';
 import '../../bin/git/diff_header.dart';
-import '../../bin/git/git_manager.dart';
 import '../../bin/git/reference.dart';
 import '../../bin/git/repository.dart';
 import '../../bin/helpers/helpers.dart';
@@ -34,7 +34,6 @@ void main() {
 
   group('$PublishCommand', () {
     late Logger logger;
-    late GitManager gitManager;
     late Repository repository;
     late ArgResults argResults;
     late PublishCommand publishCommand;
@@ -43,12 +42,13 @@ void main() {
     late UseCaseReader useCaseReader;
     late Progress progress;
     late Stdin stdin;
+    late ContextManager contextManager;
+    late Context context;
 
     final tempDir = const LocalFileSystem().currentDirectory;
 
     setUp(() async {
       logger = MockLogger();
-      gitManager = MockGitWrapper();
       repository = MockRepository();
       argResults = MockArgResults();
       client = MockWidgetbookHttpClient();
@@ -56,6 +56,8 @@ void main() {
       useCaseReader = MockUseCaseReader();
       progress = MockProgress();
       stdin = MockStdin();
+      contextManager = MockContextManager();
+      context = MockContext();
 
       when(() => logger.progress(any<String>())).thenReturn(progress);
       publishCommand = PublishCommand(
@@ -64,6 +66,8 @@ void main() {
       )..testArgResults = argResults;
 
       when(() => argResults['api-key'] as String).thenReturn(apiKey);
+      when(() => contextManager.load(any())).thenAnswer((_) async => context);
+      when(() => context.repository).thenReturn(repository);
 
       registerFallbackValue(FakeFile());
       registerFallbackValue(FakeBuildRequest());
@@ -317,12 +321,9 @@ void main() {
 
     group('getArguments', () {
       late PublishCommand command;
-      late Context context;
 
       setUp(() {
         command = PublishCommand()..testArgResults = argResults;
-        repository = MockRepository();
-        context = MockContext();
 
         // Default ArgResults
         when(() => argResults['path']).thenReturn('default path');
@@ -332,9 +333,10 @@ void main() {
 
         // Default Context
         when(() => context.name).thenReturn('default');
-        when(() => context.userName).thenReturn('default user');
-        when(() => context.repoName).thenReturn('default repo');
+        when(() => context.user).thenReturn('default user');
+        when(() => context.project).thenReturn('default repo');
         when(() => context.providerSha).thenReturn('default sha');
+        when(() => context.workingDir).thenReturn('default path');
 
         // Default Repository
         when(() => repository.currentBranch).thenAnswer(
@@ -349,10 +351,7 @@ void main() {
         const path = 'root/path/to/project';
         when(() => argResults['path']).thenReturn(path);
 
-        final args = await command.getArguments(
-          context: context,
-          repository: repository,
-        );
+        final args = await command.getArguments(context);
 
         expect(args.path, equals(path));
       });
@@ -361,10 +360,7 @@ void main() {
         const apiKey = 'SeCrEtKeY';
         when(() => argResults['api-key']).thenReturn(apiKey);
 
-        final args = await command.getArguments(
-          context: context,
-          repository: repository,
-        );
+        final args = await command.getArguments(context);
 
         expect(args.apiKey, equals(apiKey));
       });
@@ -373,10 +369,7 @@ void main() {
         const token = 'SeCrEtKeY';
         when(() => argResults['github-token']).thenReturn(token);
 
-        final args = await command.getArguments(
-          context: context,
-          repository: repository,
-        );
+        final args = await command.getArguments(context);
 
         expect(args.gitHubToken, equals(token));
       });
@@ -385,10 +378,7 @@ void main() {
         const prNumber = '21';
         when(() => argResults['pr']).thenReturn(prNumber);
 
-        final args = await command.getArguments(
-          context: context,
-          repository: repository,
-        );
+        final args = await command.getArguments(context);
 
         expect(args.prNumber, equals(prNumber));
       });
@@ -398,10 +388,7 @@ void main() {
           const userName = 'John Doe';
           when(() => argResults['actor']).thenReturn(userName);
 
-          final args = await command.getArguments(
-            context: context,
-            repository: repository,
-          );
+          final args = await command.getArguments(context);
 
           expect(args.actor, equals(userName));
         });
@@ -409,25 +396,19 @@ void main() {
         test('from $Context', () async {
           const userName = 'John Doe';
           when(() => argResults['actor']).thenReturn(null);
-          when(() => context.userName).thenReturn(userName);
+          when(() => context.user).thenReturn(userName);
 
-          final args = await command.getArguments(
-            context: context,
-            repository: repository,
-          );
+          final args = await command.getArguments(context);
 
           expect(args.actor, equals(userName));
         });
 
         test('throws $ActorNotFoundException', () async {
           when(() => argResults['actor']).thenReturn(null);
-          when(() => context.userName).thenReturn(null);
+          when(() => context.user).thenReturn(null);
 
           expectLater(
-            () => command.getArguments(
-              context: context,
-              repository: repository,
-            ),
+            () => command.getArguments(context),
             throwsA(const TypeMatcher<ActorNotFoundException>()),
           );
         });
@@ -438,10 +419,7 @@ void main() {
           const repoName = 'widgetbook';
           when(() => argResults['repository']).thenReturn(repoName);
 
-          final args = await command.getArguments(
-            context: context,
-            repository: repository,
-          );
+          final args = await command.getArguments(context);
 
           expect(args.repository, equals(repoName));
         });
@@ -449,25 +427,19 @@ void main() {
         test('from $Context', () async {
           const repoName = 'widgetbook';
           when(() => argResults['repository']).thenReturn(null);
-          when(() => context.repoName).thenReturn(repoName);
+          when(() => context.project).thenReturn(repoName);
 
-          final args = await command.getArguments(
-            context: context,
-            repository: repository,
-          );
+          final args = await command.getArguments(context);
 
           expect(args.repository, equals(repoName));
         });
 
         test('throws $RepositoryNotFoundException', () async {
           when(() => argResults['repository']).thenReturn(null);
-          when(() => context.repoName).thenReturn(null);
+          when(() => context.project).thenReturn(null);
 
           expectLater(
-            () => command.getArguments(
-              context: context,
-              repository: repository,
-            ),
+            () => command.getArguments(context),
             throwsA(const TypeMatcher<RepositoryNotFoundException>()),
           );
         });
@@ -477,10 +449,8 @@ void main() {
             const branch = 'main';
             when(() => argResults['branch']).thenReturn(branch);
 
-            final args = await command.getArguments(
-              context: context,
-              repository: repository,
-            );
+            final args = await command.getArguments(context);
+            ;
 
             expect(args.branch, equals(branch));
           });
@@ -495,10 +465,8 @@ void main() {
               ),
             );
 
-            final args = await command.getArguments(
-              context: context,
-              repository: repository,
-            );
+            final args = await command.getArguments(context);
+            ;
 
             expect(args.branch, equals(branch));
           });
@@ -509,10 +477,8 @@ void main() {
             const commit = '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf';
             when(() => argResults['commit']).thenReturn(commit);
 
-            final args = await command.getArguments(
-              context: context,
-              repository: repository,
-            );
+            final args = await command.getArguments(context);
+            ;
 
             expect(args.commit, equals(commit));
           });
@@ -522,10 +488,8 @@ void main() {
             when(() => argResults['commit']).thenReturn(null);
             when(() => context.providerSha).thenReturn(commit);
 
-            final args = await command.getArguments(
-              context: context,
-              repository: repository,
-            );
+            final args = await command.getArguments(context);
+            ;
 
             expect(args.commit, equals(commit));
           });
@@ -541,10 +505,8 @@ void main() {
               ),
             );
 
-            final args = await command.getArguments(
-              context: context,
-              repository: repository,
-            );
+            final args = await command.getArguments(context);
+            ;
 
             expect(args.commit, equals(commit));
           });
@@ -557,13 +519,12 @@ void main() {
         'proceed with un-committed changes', () async {
       final publishCommand = PublishCommand(
         logger: logger,
-        gitManager: gitManager,
+        contextManager: contextManager,
       )..testArgResults = argResults;
 
       when(() => argResults['path'] as String).thenReturn(tempDir.path);
-      when(() => gitManager.load(any())).thenReturn(repository);
-      when(() => repository.user).thenAnswer((_) async => 'John Doe');
-      when(() => repository.name).thenAnswer((_) async => 'widgetbook');
+      when(() => contextManager.load(any())).thenAnswer((_) async => context);
+      when(() => context.repository).thenReturn(repository);
       when(() => repository.isClean).thenAnswer((_) async => false);
       when(() => stdin.hasTerminal).thenReturn(true);
       when(
@@ -602,7 +563,7 @@ void main() {
         expect(
           () => command.publish(
             args: TestData.args,
-            repository: repository,
+            context: context,
           ),
           throwsA(const TypeMatcher<UnableToCreateZipFileException>()),
         );
