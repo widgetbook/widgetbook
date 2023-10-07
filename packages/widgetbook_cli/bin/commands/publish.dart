@@ -138,10 +138,9 @@ class PublishCommand extends CliCommand<PublishArgs> {
   @override
   FutureOr<int> runWith(Context context, PublishArgs args) async {
     try {
-      final isClean = await context.repository.isClean;
-      final shouldContinue = isClean ? true : promptUncommittedChanges();
+      final isValid = await validateRepository(context.repository);
 
-      if (!shouldContinue) {
+      if (!isValid) {
         progress.cancel();
         throw ExitedByUser();
       }
@@ -180,26 +179,6 @@ class PublishCommand extends CliCommand<PublishArgs> {
       progress.fail();
       rethrow;
     }
-  }
-
-  @visibleForTesting
-  bool promptUncommittedChanges() {
-    logger
-      ..warn('You have un-committed changes')
-      ..warn('Uploading a new build to Widgetbook Cloud requires a commit '
-          'SHA. Due to un-committed changes, we are using the commit SHA '
-          'of your previous commit which can lead to the build being '
-          'rejected due to an already existing build.');
-
-    final result = stdin.hasTerminal
-        ? logger.chooseOne(
-            'Would you like to proceed anyways?',
-            choices: ['no', 'yes'],
-            defaultValue: 'no',
-          )
-        : 'yes';
-
-    return result == 'yes';
   }
 
   // TODO sha is pretty much not used an is just being overriden with the most
@@ -272,6 +251,25 @@ class PublishCommand extends CliCommand<PublishArgs> {
     }
 
     return null;
+  }
+
+  /// Validates that the [repository] has no un-committed changes.
+  /// Returns [true] if [repository] is clean or there is no terminal,
+  /// otherwise the user is prompted to choose.
+  Future<bool> validateRepository(Repository repository) async {
+    final isClean = await repository.isClean;
+
+    if (!isClean) {
+      logger.warn('You have un-committed changes\n'
+          'Uploading a new build to Widgetbook Cloud requires a commit '
+          'SHA. Due to un-committed changes, we are using the commit SHA '
+          'of your previous commit which can lead to the build being '
+          'rejected due to an already existing build.');
+    }
+
+    return !isClean && stdin.hasTerminal
+        ? logger.confirm('Would you like to proceed anyways?')
+        : true; // clean or no terminal
   }
 
   Future<BuildResponse> publishBuild(PublishArgs args) async {

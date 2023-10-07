@@ -256,11 +256,13 @@ void main() {
       },
     );
     group(
-      '.promptUncommittedChanges',
+      'validateRepository',
       () {
         late PublishCommand command;
+        late Repository repository;
 
         setUp(() {
+          repository = MockRepository();
           command = PublishCommand(
             context: globalContext,
             logger: logger,
@@ -268,41 +270,58 @@ void main() {
         });
 
         test(
-          'returns true when environment has no terminal',
+          'returns true if the repository is clean',
           () async {
-            when(() => stdin.hasTerminal).thenReturn(false);
+            when(() => repository.isClean).thenAnswer((_) async => true);
+            when(() => stdin.hasTerminal).thenReturn(true);
 
             IOOverrides.runZoned(
               stdin: () => stdin,
-              () {
-                expect(
-                  command.promptUncommittedChanges(),
-                  true,
-                );
+              () async {
+                final result = await command.validateRepository(repository);
+
+                verifyNever(() => logger.warn(any()));
+                verifyNever(() => logger.confirm(any()));
+                expect(result, true);
               },
             );
           },
         );
 
         test(
-          'returns true when user chooses "yes"',
+          'returns true when there is no terminal, '
+          'even if repository is not clean',
           () async {
-            when(() => stdin.hasTerminal).thenReturn(true);
-            when(
-              () => logger.chooseOne<String>(
-                any(),
-                choices: any(named: 'choices'),
-                defaultValue: any(named: 'defaultValue'),
-              ),
-            ).thenReturn('yes');
+            when(() => repository.isClean).thenAnswer((_) async => false);
+            when(() => stdin.hasTerminal).thenReturn(false);
 
             IOOverrides.runZoned(
               stdin: () => stdin,
-              () {
-                expect(
-                  command.promptUncommittedChanges(),
-                  true,
-                );
+              () async {
+                final result = await command.validateRepository(repository);
+
+                verify(() => logger.warn(any())).called(1);
+                expect(result, true);
+              },
+            );
+          },
+        );
+
+        test(
+          'returns true when user chooses "yes", '
+          'even if repository is not clean',
+          () async {
+            when(() => repository.isClean).thenAnswer((_) async => false);
+            when(() => stdin.hasTerminal).thenReturn(true);
+            when(() => logger.confirm(any())).thenReturn(true);
+
+            IOOverrides.runZoned(
+              stdin: () => stdin,
+              () async {
+                final result = await command.validateRepository(repository);
+
+                verify(() => logger.warn(any())).called(1);
+                expect(result, true);
               },
             );
           },
@@ -311,22 +330,17 @@ void main() {
         test(
           'returns false when user chooses "no"',
           () async {
+            when(() => repository.isClean).thenAnswer((_) async => false);
             when(() => stdin.hasTerminal).thenReturn(true);
-            when(
-              () => logger.chooseOne<String>(
-                any(),
-                choices: any(named: 'choices'),
-                defaultValue: any(named: 'defaultValue'),
-              ),
-            ).thenReturn('no');
+            when(() => logger.confirm(any())).thenReturn(false);
 
             IOOverrides.runZoned(
               stdin: () => stdin,
-              () {
-                expect(
-                  command.promptUncommittedChanges(),
-                  false,
-                );
+              () async {
+                final result = await command.validateRepository(repository);
+
+                verify(() => logger.warn(any())).called(1);
+                expect(result, false);
               },
             );
           },
@@ -545,13 +559,7 @@ void main() {
         when(() => localContext.repository).thenReturn(repository);
         when(() => repository.isClean).thenAnswer((_) async => false);
         when(() => stdin.hasTerminal).thenReturn(true);
-        when(
-          () => logger.chooseOne<String>(
-            any(),
-            choices: any(named: 'choices'),
-            defaultValue: any(named: 'defaultValue'),
-          ),
-        ).thenReturn('no');
+        when(() => logger.confirm(any())).thenReturn(false);
 
         IOOverrides.runZoned(
           stdin: () => stdin,
