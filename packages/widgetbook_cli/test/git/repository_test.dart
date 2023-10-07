@@ -1,7 +1,8 @@
+import 'dart:io';
+
 import 'package:mocktail/mocktail.dart';
 import 'package:process/process.dart';
 import 'package:test/test.dart';
-import 'package:test_descriptor/test_descriptor.dart' as d;
 
 import '../../bin/git/diff_header.dart';
 import '../../bin/git/reference.dart';
@@ -22,7 +23,7 @@ void main() {
         );
 
     repository = Repository.raw(
-      d.sandbox,
+      Directory.current.path,
       processManager,
     );
   });
