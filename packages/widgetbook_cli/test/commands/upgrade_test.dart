@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 
 import '../../bin/core/cli_runner.dart';
 import '../../bin/core/context.dart';
-import '../../bin/helpers/metadata.dart';
+import '../../bin/metadata.dart';
 import '../utils/mocks.dart';
 
 void main() {
@@ -96,7 +96,11 @@ void main() {
       expect(result, equals(ExitCode.success.code));
       verify(() => logger.progress('Checking for updates')).called(1);
       verify(() => logger.progress('Upgrading to latest version')).called(1);
-      verify(() => pubUpdater.update(packageName: packageName)).called(1);
+      verify(
+        () => pubUpdater.update(
+          packageName: packageName,
+        ),
+      ).called(1);
     });
 
     test('does not update when already on latest version', () async {
