@@ -23,7 +23,7 @@ jobs:
       - name: Get packages 
         run: melos bootstrap
 
-      - name: Get packages 
+      - name: Generate Files  
         run: melos generate
 
       - name: Generate diff
