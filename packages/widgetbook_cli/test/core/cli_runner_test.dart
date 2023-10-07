@@ -6,7 +6,7 @@ import 'package:pub_updater/pub_updater.dart';
 import 'package:test/test.dart';
 
 import '../../bin/core/cli_runner.dart';
-import '../../bin/helpers/helpers.dart';
+import '../../bin/metadata.dart';
 import '../utils/mocks.dart';
 import '../utils/utils.dart';
 
@@ -37,10 +37,10 @@ final changelogLink = lightCyan.wrap(
   ),
 );
 
-final updateMessage =
-    '\n${lightYellow.wrap('Update available!')} ${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}\n'
+final updateMessage = '\n${lightYellow.wrap('Update available!')} '
+    '${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}\n'
     '${lightYellow.wrap('Changelog:')} $changelogLink\n'
-    'Run ${cyan.wrap('$executableName update')} to update';
+    'Run ${cyan.wrap('${cliName} update')} to update';
 
 void main() {
   group('$CliRunner', () {

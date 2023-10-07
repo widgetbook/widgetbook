@@ -6,7 +6,7 @@ import 'package:pub_updater/pub_updater.dart';
 
 import '../core/cli_command.dart';
 import '../core/context.dart';
-import '../helpers/metadata.dart';
+import '../metadata.dart';
 
 class UpgradeCommand extends CliVoidCommand {
   UpgradeCommand({
@@ -45,7 +45,10 @@ class UpgradeCommand extends CliVoidCommand {
     final updateProgress = logger.progress('Upgrading to latest version');
 
     try {
-      final latestVersion = await pubUpdater.getLatestVersion(packageName);
+      final latestVersion = await pubUpdater.getLatestVersion(
+        packageName,
+      );
+
       await pubUpdater.update(
         packageName: packageName,
       );

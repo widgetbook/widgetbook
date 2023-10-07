@@ -8,6 +8,7 @@ import 'package:pub_updater/pub_updater.dart';
 import '../commands/publish.dart';
 import '../commands/upgrade.dart';
 import '../helpers/helpers.dart';
+import '../metadata.dart';
 import 'context.dart';
 
 class CliRunner extends CommandRunner<int> {
@@ -17,7 +18,7 @@ class CliRunner extends CommandRunner<int> {
     PubUpdater? pubUpdater,
   })  : _logger = logger ?? Logger(),
         _pubUpdater = pubUpdater ?? PubUpdater(),
-        super(executableName, packageDescription) {
+        super(cliName, cliDescription) {
     argParser.addFlag(
       'version',
       negatable: false,
@@ -131,9 +132,10 @@ class CliRunner extends CommandRunner<int> {
       );
 
       _logger.info(
-        '\n${lightYellow.wrap('Update available!')} ${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}\n'
+        '\n${lightYellow.wrap('Update available!')} '
+        '${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}\n'
         '${lightYellow.wrap('Changelog:')} $changelogLink\n'
-        'Run ${cyan.wrap('$executableName update')} to update',
+        'Run ${cyan.wrap('${cliName} update')} to update',
       );
     } catch (_) {}
   }
