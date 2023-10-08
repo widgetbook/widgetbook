@@ -8,6 +8,7 @@ import 'comment.dart';
 class GithubProvider extends GitProvider {
   GithubProvider({
     required super.apiKey,
+    required super.environment,
   }) : super(
           url: 'https://api.github.com',
         );

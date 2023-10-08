@@ -3,6 +3,7 @@ import 'package:platform/platform.dart';
 import '../git/git_manager.dart';
 import 'ci_manager.dart';
 import 'context.dart';
+import 'environment.dart';
 
 class ContextManager {
   const ContextManager({
@@ -15,13 +16,17 @@ class ContextManager {
   final CiManager ciManager;
   final GitManager gitManager;
 
-  Future<Context?> load(String workingDir) async {
+  Future<Context?> load(
+    String workingDir,
+    Environment environment,
+  ) async {
     if (!ciManager.isCI) {
       final repository = gitManager.load(workingDir);
 
       return Context(
         name: 'Local',
         workingDir: workingDir,
+        environment: environment,
         user: await repository.user,
         project: await repository.name,
       );
@@ -31,6 +36,7 @@ class ContextManager {
       return Context(
         name: 'Azure',
         workingDir: workingDir,
+        environment: environment,
         user: platform.environment['Agent.Name'],
         project: platform.environment['Build.Repository.Name'],
       );
@@ -40,6 +46,7 @@ class ContextManager {
       return Context(
         name: 'Bitbucket',
         workingDir: workingDir,
+        environment: environment,
         user: platform.environment['BITBUCKET_STEP_TRIGGERER_UUID'],
         project: platform.environment['BITBUCKET_REPO_FULL_NAME'],
       );
@@ -49,6 +56,7 @@ class ContextManager {
       return Context(
         name: 'Codemagic',
         workingDir: workingDir,
+        environment: environment,
         user: 'Codemagic',
         project: platform.environment['CM_REPO_SLUG'],
         providerSha: platform.environment['CM_COMMIT'],
@@ -59,6 +67,7 @@ class ContextManager {
       return Context(
         name: 'GitHub',
         workingDir: workingDir,
+        environment: environment,
         user: platform.environment['GITHUB_ACTOR'],
         project: platform.environment['GITHUB_REPOSITORY'],
         providerSha: platform.environment['GITHUB_SHA'],
@@ -69,6 +78,7 @@ class ContextManager {
       return Context(
         name: 'GitLab',
         workingDir: workingDir,
+        environment: environment,
         user: platform.environment['GITLAB_USER_NAME'],
         project: platform.environment['CI_PROJECT_NAME'],
       );

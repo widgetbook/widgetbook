@@ -27,6 +27,8 @@ void main() {
         () => pubUpdater.update(packageName: packageName),
       ).thenAnswer((_) => Future.value(FakeProcessResult()));
 
+      when(() => globalContext.environment).thenReturn(FakeEnvironment());
+
       cliRunner = CliRunner(
         context: globalContext,
         logger: logger,

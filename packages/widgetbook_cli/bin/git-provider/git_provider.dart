@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 
-import '../flavor/flavor.dart';
+import '../core/environment.dart';
 
 abstract class GitProvider {
   GitProvider({
     required this.apiKey,
     required this.url,
+    required this.environment,
     Dio? client,
   }) : client = client ?? Dio() {
     this.client.options.headers.putIfAbsent(
@@ -17,18 +18,19 @@ abstract class GitProvider {
   final String apiKey;
   final Dio client;
   final String url;
+  final Environment environment;
 
   String commentBody({
     required String projectId,
     required String buildId,
     required String? reviewId,
   }) {
-    final prefix = Flavor().isProduction ? 'https://' : 'https://dev.';
     final buffer = StringBuffer()
       ..writeln('### 📦 Build')
       ..writeln()
       ..writeln(
-        '- 🔗 [Widgetbook Cloud - Build](${prefix}app.widgetbook.io/#/projects/$projectId/builds/$buildId)',
+        '- 🔗 [Widgetbook Cloud - Build]'
+        '(${environment.appUrl}#/projects/$projectId/builds/$buildId)',
       );
 
     if (reviewId != null) {
@@ -37,7 +39,8 @@ abstract class GitProvider {
         ..writeln('### 📑 Review')
         ..writeln()
         ..writeln(
-          '- 🔗 [Widgetbook Cloud - Review](${prefix}app.widgetbook.io/#/projects/$projectId/reviews/$reviewId/builds/$buildId/use-cases)',
+          '- 🔗 [Widgetbook Cloud - Review]'
+          '(${environment.appUrl}/#/projects/$projectId/reviews/$reviewId/builds/$buildId/use-cases)',
         );
     }
 

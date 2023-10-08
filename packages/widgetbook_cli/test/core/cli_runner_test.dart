@@ -6,6 +6,7 @@ import 'package:pub_updater/pub_updater.dart';
 import 'package:test/test.dart';
 
 import '../../bin/core/cli_runner.dart';
+import '../../bin/core/context.dart';
 import '../../bin/metadata.dart';
 import '../utils/mocks.dart';
 import '../utils/utils.dart';
@@ -48,21 +49,25 @@ void main() {
     late Progress progress;
     late PubUpdater pubUpdater;
     late CliRunner cliRunner;
+    late Context globalContext;
 
     setUp(() {
       printLogs = [];
       progress = MockProgress();
       logger = MockLogger();
-      when(() => logger.progress(any<String>())).thenReturn(progress);
-
       pubUpdater = MockPubUpdater();
+      globalContext = MockContext();
+
+      when(() => logger.progress(any<String>())).thenReturn(progress);
 
       when(
         () => pubUpdater.getLatestVersion(any()),
       ).thenAnswer((_) async => packageVersion);
 
+      when(() => globalContext.environment).thenReturn(FakeEnvironment());
+
       cliRunner = CliRunner(
-        context: MockContext(),
+        context: globalContext,
         logger: logger,
         pubUpdater: pubUpdater,
       );

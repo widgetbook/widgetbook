@@ -1,7 +1,6 @@
-import 'flavor/flavor.dart';
+import 'core/environment.dart';
 import 'main.dart' as cli;
 
 void main(List<String> args) {
-  Flavor().strategy = DeploymentStrategy.staging;
-  cli.main(args);
+  cli.main(args, StagingEnv());
 }

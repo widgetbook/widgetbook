@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../flavor/flavor.dart';
+import '../core/environment.dart';
 import '../helpers/helpers.dart';
 import 'models/build_request.dart';
 import 'models/build_response.dart';
@@ -12,22 +12,14 @@ class WidgetbookHttpClient {
   /// Creates a new instance of [WidgetbookHttpClient].
   WidgetbookHttpClient({
     Dio? client,
-  }) : client = client ?? Dio() {
-    this.client.options.baseUrl = _getUrl();
-    this.client.options.contentType = Headers.jsonContentType;
-    this.client.options.responseType = ResponseType.json;
-  }
-
-  String _getUrl() {
-    switch (Flavor().strategy) {
-      case DeploymentStrategy.production:
-        return 'https://api.widgetbook.io/v1/';
-      case DeploymentStrategy.staging:
-        return 'https://staging.api.widgetbook.io/v1/';
-      case DeploymentStrategy.debug:
-        return 'http://localhost:3000/v1/';
-    }
-  }
+    required Environment environment,
+  }) : client = client ??
+            Dio(
+              BaseOptions(
+                baseUrl: environment.apiUrl,
+                contentType: Headers.jsonContentType,
+              ),
+            );
 
   /// underlying [Dio] client
   final Dio client;

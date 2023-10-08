@@ -13,10 +13,22 @@ import '../../bin/commands/publish_args.dart';
 import '../../bin/core/ci_manager.dart';
 import '../../bin/core/context.dart';
 import '../../bin/core/context_manager.dart';
+import '../../bin/core/environment.dart';
 import '../../bin/git/git_manager.dart';
 import '../../bin/git/repository.dart';
 import '../../bin/helpers/zip_encoder.dart';
 import '../../bin/review/use_case_reader.dart';
+
+class FakeEnvironment extends Fake implements Environment {
+  @override
+  final String name = 'test';
+
+  @override
+  final String apiUrl = '';
+
+  @override
+  final String appUrl = '';
+}
 
 class MockLogger extends Mock implements Logger {}
 

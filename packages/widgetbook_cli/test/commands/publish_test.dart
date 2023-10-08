@@ -59,6 +59,12 @@ void main() {
     late ZipEncoder zipEncoder;
 
     setUp(() async {
+      registerFallbackValue(FakeFile());
+      registerFallbackValue(FakeBuildRequest());
+      registerFallbackValue(FakeReviewRequest());
+      registerFallbackValue(FakeDirectory());
+      registerFallbackValue(FakeEnvironment());
+
       logger = MockLogger();
       repository = MockRepository();
       client = MockWidgetbookHttpClient();
@@ -74,6 +80,13 @@ void main() {
       zipEncoder = MockZipEncoder();
 
       when(() => logger.progress(any<String>())).thenReturn(progress);
+
+      when(() => localContext.repository).thenReturn(repository);
+      when(() => globalContext.environment).thenReturn(FakeEnvironment());
+      when(() => localContext.environment).thenReturn(FakeEnvironment());
+      when(() => contextManager.load(any(), any())).thenAnswer(
+        (_) async => localContext,
+      );
       publishCommand = PublishCommand(
         context: globalContext,
         logger: logger,
@@ -81,16 +94,6 @@ void main() {
         fileSystem: fileSystem,
         zipEncoder: zipEncoder,
       );
-
-      when(() => contextManager.load(any())).thenAnswer(
-        (_) async => localContext,
-      );
-      when(() => localContext.repository).thenReturn(repository);
-
-      registerFallbackValue(FakeFile());
-      registerFallbackValue(FakeBuildRequest());
-      registerFallbackValue(FakeReviewRequest());
-      registerFallbackValue(FakeDirectory());
     });
 
     group(
