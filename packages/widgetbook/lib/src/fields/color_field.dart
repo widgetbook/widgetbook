@@ -98,7 +98,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
   void initState() {
     super.initState();
     initialColorSpace = widget.colorSpace;
-    colorValue = getValuesByColorSpace(widget.paramValue);
+    colorValue = getValueByColorSpace(widget.paramValue);
   }
 
   @override
@@ -123,7 +123,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                 labelText: 'R',
                 onChanged: (value) {
                   widget.onChanged(
-                    updateValueByColorSpace<List<String>>(
+                    calculateValueByColorSpace<List<String>>(
                       value: [
                         '${colorValue[0]}',
                         value,
@@ -133,7 +133,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                     ),
                   );
                   setState(() {
-                    colorValue = getValuesByColorSpace(widget.paramValue);
+                    colorValue = getValueByColorSpace(widget.paramValue);
                   });
                 },
               ),
@@ -151,7 +151,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                 labelText: 'G',
                 onChanged: (value) {
                   widget.onChanged(
-                    updateValueByColorSpace<List<String>>(
+                    calculateValueByColorSpace<List<String>>(
                       value: [
                         '${colorValue[0]}',
                         '${colorValue[1]}',
@@ -161,7 +161,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                     ),
                   );
                   setState(() {
-                    colorValue = getValuesByColorSpace(widget.paramValue);
+                    colorValue = getValueByColorSpace(widget.paramValue);
                   });
                 },
               ),
@@ -179,7 +179,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                 labelText: 'B',
                 onChanged: (value) {
                   widget.onChanged(
-                    updateValueByColorSpace<List<String>>(
+                    calculateValueByColorSpace<List<String>>(
                       value: [
                         '${colorValue[0]}',
                         '${colorValue[1]}',
@@ -189,7 +189,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                     ),
                   );
                   setState(() {
-                    colorValue = getValuesByColorSpace(widget.paramValue);
+                    colorValue = getValueByColorSpace(widget.paramValue);
                   });
                 },
               ),
@@ -207,7 +207,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                 labelText: 'A',
                 onChanged: (value) {
                   widget.onChanged(
-                    updateValueByColorSpace<List<String>>(
+                    calculateValueByColorSpace<List<String>>(
                       value: [
                         value,
                         '${colorValue[1]}',
@@ -217,7 +217,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                     ),
                   );
                   setState(() {
-                    colorValue = getValuesByColorSpace(widget.paramValue);
+                    colorValue = getValueByColorSpace(widget.paramValue);
                   });
                 },
               ),
@@ -229,16 +229,16 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                   FilteringTextInputFormatter.allow(
-                    RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'), 
+                    RegExp(r'^(?:[1-9]\d?|[12]\d{2}|3[0-5]\d)$'), 
                     replacementString: colorValue[0] as String,
                   )
                 ],
                 labelText: 'H',
                 onChanged: (value) {
-                  final initialValue = updateValueByColorSpace(
-                    value: getValuesByColorSpace(widget.paramValue)
+                  final initialValue = calculateValueByColorSpace(
+                    value: getValueByColorSpace(widget.paramValue)
                   );
-                  final updateValue = updateValueByColorSpace<List<String>>(
+                  final updateValue = calculateValueByColorSpace<List<String>>(
                     value: [
                       value,
                       '${colorValue[1]}',
@@ -271,10 +271,10 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                 labelText: 'S',
                 suffixText: '%',
                 onChanged: (value) {
-                  final initialValue = updateValueByColorSpace(
-                    value: getValuesByColorSpace(widget.paramValue)
+                  final initialValue = calculateValueByColorSpace(
+                    value: getValueByColorSpace(widget.paramValue)
                   );
-                  final updateValue = updateValueByColorSpace<List<String>>(
+                  final updateValue = calculateValueByColorSpace<List<String>>(
                     value: [
                       '${colorValue[0]}',
                       value,
@@ -307,10 +307,10 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                 labelText: 'L',
                 suffixText: '%',
                 onChanged: (value) {
-                  final initialValue = updateValueByColorSpace(
-                    value: getValuesByColorSpace(widget.paramValue)
+                  final initialValue = calculateValueByColorSpace(
+                    value: getValueByColorSpace(widget.paramValue)
                   );
-                  final updateValue = updateValueByColorSpace<List<String>>(
+                  final updateValue = calculateValueByColorSpace<List<String>>(
                     value: [
                       '${colorValue[0]}',
                       '${colorValue[1]}',
@@ -341,7 +341,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                   ),
                 ],
                 onChanged: (value) {
-                  widget.onChanged(updateValueByColorSpace<String>(value: value));
+                  widget.onChanged(calculateValueByColorSpace<String>(value: value));
                 },
               ),
             ],
@@ -361,7 +361,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                 onChanged: (value) {
                   setState(() {
                     initialColorSpace = value ?? initialColorSpace;
-                    colorValue = getValuesByColorSpace(widget.paramValue);
+                    colorValue = getValueByColorSpace(widget.paramValue);
                   });
                 },
                 items: ColorSpace.values.map(
@@ -378,7 +378,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
     );
   }
 
-  String updateValueByColorSpace<T>({
+  String calculateValueByColorSpace<T>({
     T? value,
   }){
     switch(initialColorSpace){
@@ -391,7 +391,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
     }
   }
 
-  dynamic getValuesByColorSpace(String hex){
+  dynamic getValueByColorSpace(String hex){
     switch(initialColorSpace){
       case ColorSpace.hex:
         return hex;
@@ -403,12 +403,15 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
   }
 
   List<String> hexToRgba(String hex){
+    // Add the alpha value if it's not there
     if(hex.length == 1){
       hex = ''.padLeft(8, hex);
     }
+    // Add the alpha value if it's not there
     if(hex.length == 6){
       hex = 'ff' + hex;
     }
+    // Get the int value of the hex string
     int intColor = int.tryParse('0x$hex') ?? 0;
     int alpha = (intColor >> 24) & 0xFF;
     int red = (intColor >> 16) & 0xFF;
@@ -427,12 +430,15 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
   } 
 
   List<String> hexToHsl(String hex){
+    // Start from rgba values because it's easier to convert to hsl
     List<int> rgbaValues = hexToRgba(hex).map((e) => int.tryParse(e) ?? 0).toList();
 
+    // get all the values and divide them by 255 to get a value between 0 and 1
     double r = rgbaValues[1] / 255;
     double g = rgbaValues[2] / 255;
     double b = rgbaValues[3] / 255;
 
+    // get the max and min value of the rgb values
     double max = [r, g, b].reduce((value, element) => value > element ? value : element);
     double min = [r, g, b].reduce((value, element) => value < element ? value : element);
 
@@ -442,18 +448,21 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
     if(max == min){
       h = s = 0;
     }else{
-      double d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      // get the difference between the max and min value
+      double difference = max - min;
+      // calculate the saturation
+      s = l > 0.5 ? difference / (2 - max - min) : difference / (max + min);
+      // calculate the hue
       if(max == r){
-        h = (g - b) / d + (g < b ? 6 : 0);
+        h = (g - b) / difference + (g < b ? 6 : 0);
       }else if(max == g){
-        h = (b - r) / d + 2;
+        h = (b - r) / difference + 2;
       }else if(max == b){
-        h = (r - g) / d + 4;
+        h = (r - g) / difference + 4;
       }
       h /= 6;
     }
-
+    
     return ['${(h * 360).toInt()}', '${(s * 100).toInt()}', '${(l * 100).toInt()}'];
   }
 
