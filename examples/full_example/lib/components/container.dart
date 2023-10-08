@@ -28,3 +28,17 @@ Widget myWidget(BuildContext context) {
     ],
   );
 }
+
+@widgetbook.UseCase(
+  name: 'with custom color',
+  type: Container,
+)
+Widget colorKnobUseCase(BuildContext context, Color color) {
+  return Column(
+    children: [
+      Container(
+        color: color,
+      ),
+    ],
+  );
+}
