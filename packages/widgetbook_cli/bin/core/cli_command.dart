@@ -10,14 +10,17 @@ import 'context.dart';
 /// A [Context]-aware [Command] for [CliRunner].
 abstract class CliCommand<TArgs> extends Command<int> {
   CliCommand({
-    required this.context,
+    required Context context,
     required this.name,
     required this.description,
     Logger? logger,
-  }) : logger = logger ?? Logger();
+  })  : _globalContext = context,
+        logger = logger ?? Logger();
 
   final Logger logger;
-  final Context context;
+
+  /// The global [Context]
+  final Context _globalContext;
 
   @override
   final String name;
@@ -32,7 +35,7 @@ abstract class CliCommand<TArgs> extends Command<int> {
     ArgResults results,
   ) {
     // Global context is used by default.
-    return context;
+    return _globalContext;
   }
 
   /// Parses the [results] into [TArgs] using [context].
@@ -45,8 +48,8 @@ abstract class CliCommand<TArgs> extends Command<int> {
   @override
   FutureOr<int>? run() async {
     final results = argResults!;
-    final localContext = await overrideContext(context, results);
-    final args = await parseResults(context, results);
+    final localContext = await overrideContext(_globalContext, results);
+    final args = await parseResults(_globalContext, results);
 
     return runWith(localContext, args);
   }

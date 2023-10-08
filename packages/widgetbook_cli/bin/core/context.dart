@@ -1,9 +1,11 @@
 import '../git/repository.dart';
+import 'environment.dart';
 
 class Context {
   Context({
     required this.name,
     required this.workingDir,
+    required this.environment,
     required this.user,
     required this.project,
     this.providerSha,
@@ -11,6 +13,7 @@ class Context {
 
   final String name;
   final String workingDir;
+  final Environment environment;
   final String? user;
   final String? project;
   final String? providerSha;
@@ -20,8 +23,9 @@ class Context {
   bool operator ==(covariant Context other) {
     if (identical(this, other)) return true;
 
-    return other.workingDir == workingDir &&
-        other.name == name &&
+    return other.name == name &&
+        other.workingDir == workingDir &&
+        other.environment == environment &&
         other.user == user &&
         other.project == project &&
         other.providerSha == providerSha;
@@ -29,8 +33,9 @@ class Context {
 
   @override
   int get hashCode {
-    return workingDir.hashCode ^
-        name.hashCode ^
+    return name.hashCode ^
+        workingDir.hashCode ^
+        environment.hashCode ^
         user.hashCode ^
         project.hashCode ^
         providerSha.hashCode;
@@ -39,6 +44,7 @@ class Context {
   Context copyWith({
     String? name,
     String? workingDir,
+    Environment? env,
     String? user,
     String? project,
     String? providerSha,
@@ -46,6 +52,7 @@ class Context {
     return Context(
       name: name ?? this.name,
       workingDir: workingDir ?? this.workingDir,
+      environment: env ?? this.environment,
       user: user ?? this.user,
       project: project ?? this.project,
       providerSha: providerSha ?? this.providerSha,

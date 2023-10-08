@@ -27,7 +27,10 @@ class PublishCommand extends CliCommand<PublishArgs> {
     this.zipEncoder = const ZipEncoder(),
     this.useCaseReader = const UseCaseReader(),
     WidgetbookHttpClient? client,
-  })  : _client = client ?? WidgetbookHttpClient(),
+  })  : _client = client ??
+            WidgetbookHttpClient(
+              environment: context.environment,
+            ),
         super(
           name: 'publish',
           description: 'Publish a new build',
@@ -166,6 +169,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
       if (args.prNumber != null && args.gitHubToken != null) {
         await GithubProvider(
           apiKey: args.gitHubToken!,
+          environment: context.environment,
         ).addBuildComment(
           number: args.prNumber!,
           projectId: buildResponse.project,

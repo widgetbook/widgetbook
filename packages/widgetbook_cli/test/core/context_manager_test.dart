@@ -21,6 +21,7 @@ void main() {
 
   group('$ContextManager', () {
     const workingDir = './';
+    final environment = FakeEnvironment();
 
     test('Local', () async {
       final repository = MockRepository();
@@ -31,11 +32,12 @@ void main() {
       when(() => repository.name).thenAnswer((_) async => repoName);
 
       expectLater(
-        contextManager.load(workingDir),
+        contextManager.load(workingDir, environment),
         completion(
           Context(
             name: 'Local',
             workingDir: workingDir,
+            environment: environment,
             user: userName,
             project: repoName,
           ),
@@ -51,11 +53,12 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(workingDir),
+        contextManager.load(workingDir, environment),
         completion(
           Context(
             name: 'Azure',
             workingDir: workingDir,
+            environment: environment,
             user: userName,
             project: repoName,
           ),
@@ -71,11 +74,12 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(workingDir),
+        contextManager.load(workingDir, environment),
         completion(
           Context(
             name: 'Bitbucket',
             workingDir: workingDir,
+            environment: environment,
             user: userName,
             project: repoName,
           ),
@@ -91,11 +95,12 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(workingDir),
+        contextManager.load(workingDir, environment),
         completion(
           Context(
             name: 'Codemagic',
             workingDir: workingDir,
+            environment: environment,
             user: 'Codemagic',
             project: repoName,
             providerSha: userName,
@@ -113,11 +118,12 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(workingDir),
+        contextManager.load(workingDir, environment),
         completion(
           Context(
             name: 'GitHub',
             workingDir: workingDir,
+            environment: environment,
             user: userName,
             project: repoName,
             providerSha: sha,
@@ -134,11 +140,12 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(workingDir),
+        contextManager.load(workingDir, environment),
         completion(
           Context(
             name: 'GitLab',
             workingDir: workingDir,
+            environment: environment,
             user: userName,
             project: repoName,
           ),

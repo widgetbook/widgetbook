@@ -2,10 +2,14 @@ import 'dart:io';
 
 import 'core/cli_runner.dart';
 import 'core/context_manager.dart';
+import 'core/environment.dart';
 
-void main(List<String> arguments) async {
+void main(List<String> arguments, Environment environment) async {
   const contextManager = ContextManager();
-  final context = await contextManager.load(Directory.current.path);
+  final context = await contextManager.load(
+    Directory.current.path,
+    environment,
+  );
 
   if (context == null) {
     exit(1);
