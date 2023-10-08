@@ -23,6 +23,7 @@ class WidgetbookApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook.material(
       addons: [
+        DeviceFrameAddon(devices: Devices.ios.all),
         AlignmentAddon(),
         GridAddon(),
       ],

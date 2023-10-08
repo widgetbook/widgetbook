@@ -61,6 +61,7 @@ Widgetbook comes equipped with a variety of ready-to-use Addons:
   accessibility testing.
 - [Alignment Addon](/addons/alignment-addon): Enables centering the use-case within 
   the workbench.
+- [Grid Addon](/addons/grid-addon): Enables displaying a pixel grid.
 
 ## Example using Generator approach
 
@@ -89,7 +90,6 @@ class WidgetbookApp extends StatelessWidget {
     return Widgetbook.material(
       directories: directories,
       addons: [
-        GridAddon(),
         MaterialThemeAddon(
           themes: [
             WidgetbookTheme(
@@ -120,6 +120,7 @@ class WidgetbookApp extends StatelessWidget {
             Devices.ios.iPhone13,
           ],
         ),
+        GridAddon(),
       ],
       appBuilder: (context, child) {
         return ScreenUtilInit(
@@ -142,7 +143,7 @@ class WidgetbookApp extends StatelessWidget {
 ```
 
 The above example demonstrates how you can use different Addons such as
-`MaterialThemeAddon`, `TextScaleAddon`, `LocalizationAddon`, and `DeviceFrameAddon` in
+`MaterialThemeAddon`, `TextScaleAddon`, `LocalizationAddon`, `DeviceFrameAddon` and `GridAddon` in
 Widgetbook. It also shows how to customize the `appBuilder` function to inject the
 ScreenUtilInit widget into the Widget tree. Our Addon system in Widgetbook is designed to
 enhance flexibility, interoperability, and overall user experience. By understanding and
