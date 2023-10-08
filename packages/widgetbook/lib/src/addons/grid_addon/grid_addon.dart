@@ -17,7 +17,9 @@ class GridAddon extends WidgetbookAddon<GridSetting> {
 
   @override
   GridSetting valueFromQueryGroup(Map<String, String> group) {
-    return GridSetting(size: initialSetting.size);
+    return GridSetting(
+      size: int.tryParse(group['size'] ?? '') ?? initialSetting.size,
+    );
   }
 
   @override
