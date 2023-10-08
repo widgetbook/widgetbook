@@ -2,40 +2,22 @@ import 'package:flutter/material.dart';
 
 import '../../fields/fields.dart';
 import '../common/common.dart';
+import 'grid_painter.dart';
 import 'grid_setting.dart';
 
 class GridAddon extends WidgetbookAddon<GridSetting> {
-  GridAddon({
-    int? initialHorizontalDistance,
-    int? initialVerticalDistance,
-  }) : super(
+  GridAddon([int? size])
+      : super(
           name: 'Grid',
-          initialSetting: GridSetting(
-            horizontalDistance: initialHorizontalDistance ?? 0,
-            verticalDistance: initialVerticalDistance ?? 0,
-          ),
+          initialSetting: GridSetting(size: size ?? 5),
         );
 
   @override
-  List<Field> get fields {
-    return [
-      IntField(
-        name: 'horizontalDistance',
-        initialValue: initialSetting.horizontalDistance,
-      ),
-      IntField(
-        name: 'verticalDistance',
-        initialValue: initialSetting.verticalDistance,
-      ),
-    ];
-  }
+  List<Field> get fields => [];
 
   @override
   GridSetting valueFromQueryGroup(Map<String, String> group) {
-    return GridSetting(
-      horizontalDistance: valueOf('horizontalDistance', group)!,
-      verticalDistance: valueOf('verticalDistance', group)!,
-    );
+    return GridSetting(size: initialSetting.size);
   }
 
   @override
@@ -54,8 +36,8 @@ class GridAddon extends WidgetbookAddon<GridSetting> {
             return CustomPaint(
               size: Size(constraints.maxWidth, constraints.maxHeight),
               painter: GridPainter(
-                horizontalDistance: setting.horizontalDistance,
-                verticalDistance: setting.verticalDistance,
+                horizontalDistance: setting.size,
+                verticalDistance: setting.size,
               ),
             );
           },
@@ -64,42 +46,4 @@ class GridAddon extends WidgetbookAddon<GridSetting> {
       ],
     );
   }
-}
-
-class GridPainter extends CustomPainter {
-  GridPainter({
-    required this.horizontalDistance,
-    required this.verticalDistance,
-  });
-
-  final int horizontalDistance;
-  final int verticalDistance;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.grey.withOpacity(0.5)
-      ..strokeWidth = 0.5;
-
-    if (horizontalDistance > 0)
-      for (var i = 0; i < size.width; i += horizontalDistance) {
-        canvas.drawLine(
-          Offset(i.toDouble(), 0),
-          Offset(i.toDouble(), size.height),
-          paint,
-        );
-      }
-
-    if (verticalDistance > 0)
-      for (var i = 0; i < size.height; i += verticalDistance) {
-        canvas.drawLine(
-          Offset(0, i.toDouble()),
-          Offset(size.width, i.toDouble()),
-          paint,
-        );
-      }
-  }
-
-  @override
-  bool shouldRepaint(covariant GridPainter oldDelegate) => true;
 }

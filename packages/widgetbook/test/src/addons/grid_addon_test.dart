@@ -12,13 +12,9 @@ void main() {
       'given a query group, '
       'then [valueFromQueryGroup] can parse the value',
       () {
-        final result = addon.valueFromQueryGroup({
-          'horizontalDistance': '15',
-          'verticalDistance': '20',
-        });
+        final result = addon.valueFromQueryGroup({'size': '15'});
 
-        expect(result.horizontalDistance, equals(15));
-        expect(result.verticalDistance, equals(20));
+        expect(result.size, equals(15));
       },
     );
 
@@ -32,10 +28,7 @@ void main() {
           (context) => addon.buildUseCase(
             context,
             const Text('child'),
-            GridSetting(
-              horizontalDistance: 15,
-              verticalDistance: 20,
-            ),
+            GridSetting(size: 15),
             key: testKey,
           ),
         );
@@ -64,10 +57,7 @@ void main() {
                   body: addon.buildUseCase(
                     context,
                     const Text('child'),
-                    GridSetting(
-                      horizontalDistance: 15,
-                      verticalDistance: 20,
-                    ),
+                    GridSetting(size: 20),
                     key: testKey,
                   ),
                 ),
@@ -87,7 +77,7 @@ void main() {
         expect(paintWidget, findsOneWidget);
         expect(
           customPaint,
-          isGridPainterWith(horizontalDistance: 15, verticalDistance: 20),
+          isGridPainterWith(horizontalDistance: 20, verticalDistance: 20),
         );
       },
     );

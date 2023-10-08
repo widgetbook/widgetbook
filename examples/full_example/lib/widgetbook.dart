@@ -25,7 +25,7 @@ class WidgetbookApp extends StatelessWidget {
       addons: [
         DeviceFrameAddon(devices: Devices.ios.all),
         AlignmentAddon(),
-        GridAddon(),
+        GridAddon(100),
       ],
       directories: [
         WidgetbookFolder(

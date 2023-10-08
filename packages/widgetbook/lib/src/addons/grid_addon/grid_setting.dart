@@ -1,9 +1,5 @@
 class GridSetting {
-  GridSetting({
-    this.horizontalDistance = 10,
-    this.verticalDistance = 10,
-  });
+  GridSetting({this.size = 5});
 
-  final int horizontalDistance;
-  final int verticalDistance;
+  final int size;
 }
