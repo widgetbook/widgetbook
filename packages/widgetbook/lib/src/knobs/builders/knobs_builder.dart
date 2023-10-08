@@ -56,12 +56,15 @@ class KnobsBuilder {
   Color color({
     required String label,
     required Color initialValue,
+    ColorSpace initialColorSpace = ColorSpace.hex,
     String? description,
   }) {
     return onKnobAdded(
       ColorKnob(
         label: label,
         value: initialValue,
+        initialColorSpace: initialColorSpace,
+        description: description,
       ),
     )!;
   }
