@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'core/cli_runner.dart';
-import 'core/context_manager.dart';
-import 'core/environment.dart';
+import 'package:widgetbook_cli/widgetbook_cli.dart';
 
 void main(List<String> arguments, Environment environment) async {
   const contextManager = ContextManager();
