@@ -118,7 +118,7 @@ void main() {
     expectLater(
       repository.currentBranch,
       completion(
-        Reference(
+        const Reference(
           '832e76a9899f560a90ffd62ae2ce83bbeff58f54',
           'refs/heads/main',
         ),
@@ -126,7 +126,7 @@ void main() {
     );
   });
 
-  test('allBranches returns refs', () async {
+  test('branches returns refs', () async {
     when(processRun).thenAnswer(
       ($) async => MockProcessResult.success(
         '''
@@ -140,7 +140,7 @@ void main() {
 
     expectLater(
       repository.branches,
-      completion([
+      completion(const [
         Reference(
           '832e76a9899f560a90ffd62ae2ce83bbeff58f54',
           'refs/heads/main',
@@ -151,5 +151,70 @@ void main() {
         ),
       ]),
     );
+  });
+
+  group('findBranch', () {
+    test('local branch', () {
+      when(processRun).thenAnswer(
+        ($) async => MockProcessResult.success(
+          '''
+          832e76a9899f560a90ffd62ae2ce83bbeff58f54 HEAD
+          832e76a9899f560a90ffd62ae2ce83bbeff58f54 refs/heads/main
+          3521017556c5de4159da4615a39fa4d5d2c279b5 refs/heads/feat/foo
+          ''',
+        ),
+      );
+
+      expectLater(
+        repository.findBranch('main'),
+        completion(
+          const Reference(
+            '832e76a9899f560a90ffd62ae2ce83bbeff58f54',
+            'refs/heads/main',
+          ),
+        ),
+      );
+    });
+
+    test('remote branch', () {
+      when(processRun).thenAnswer(
+        ($) async => MockProcessResult.success(
+          '''
+          832e76a9899f560a90ffd62ae2ce83bbeff58f54 HEAD
+          832e76a9899f560a90ffd62ae2ce83bbeff58f54 refs/remotes/origin/main
+          3521017556c5de4159da4615a39fa4d5d2c279b5 refs/heads/feat/foo
+          ''',
+        ),
+      );
+
+      expectLater(
+        repository.findBranch(
+          'main',
+          remote: true,
+        ),
+        completion(
+          const Reference(
+            '832e76a9899f560a90ffd62ae2ce83bbeff58f54',
+            'refs/remotes/origin/main',
+          ),
+        ),
+      );
+    });
+
+    test('fetch is called if remote is true', () {
+      when(processRun).thenAnswer(
+        ($) async => MockProcessResult.success(''),
+      );
+
+      repository.findBranch('main', remote: true);
+
+      verify(
+        () => processManager.run(
+          ['git', 'fetch'],
+          workingDirectory: any(named: 'workingDirectory'),
+          runInShell: any(named: 'runInShell'),
+        ),
+      ).called(1);
+    });
   });
 }

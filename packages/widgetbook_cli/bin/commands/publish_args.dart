@@ -1,3 +1,5 @@
+import '../git/reference.dart';
+
 class PublishArgs {
   const PublishArgs({
     required this.apiKey,
@@ -10,7 +12,6 @@ class PublishArgs {
     this.gitHubToken,
     this.prNumber,
     this.baseBranch,
-    this.baseSha,
   });
 
   final String apiKey;
@@ -22,11 +23,7 @@ class PublishArgs {
   final String repository;
   final String? gitHubToken;
   final String? prNumber;
-
-  // TODO instead of having this as two separate values we should use
-  // BranchReference instead. However; this is currently not well implemented
-  final String? baseBranch;
-  final String? baseSha;
+  final Reference? baseBranch;
 
   @override
   bool operator ==(covariant PublishArgs other) {
@@ -41,8 +38,7 @@ class PublishArgs {
         other.repository == repository &&
         other.gitHubToken == gitHubToken &&
         other.prNumber == prNumber &&
-        other.baseBranch == baseBranch &&
-        other.baseSha == baseSha;
+        other.baseBranch == baseBranch;
   }
 
   @override
@@ -56,7 +52,6 @@ class PublishArgs {
         repository.hashCode ^
         gitHubToken.hashCode ^
         prNumber.hashCode ^
-        baseBranch.hashCode ^
-        baseSha.hashCode;
+        baseBranch.hashCode;
   }
 }
