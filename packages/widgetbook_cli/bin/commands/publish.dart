@@ -11,10 +11,10 @@ import 'package:path/path.dart' as p;
 import '../api/api.dart';
 import '../core/cli_command.dart';
 import '../core/context.dart';
-import '../git-provider/github/github.dart';
 import '../git/reference.dart';
 import '../git/repository.dart';
 import '../helpers/exceptions.dart';
+import '../helpers/github_client.dart';
 import '../helpers/zip_encoder.dart';
 import '../review/use_case_reader.dart';
 import 'publish_args.dart';
@@ -167,14 +167,19 @@ class PublishCommand extends CliCommand<PublishArgs> {
           : null;
 
       if (args.prNumber != null && args.gitHubToken != null) {
-        await GithubProvider(
+        final githubClient = GitHubClient(
           apiKey: args.gitHubToken!,
-          environment: context.environment,
-        ).addBuildComment(
-          number: args.prNumber!,
-          projectId: buildResponse.project,
-          buildId: buildResponse.build,
-          reviewId: reviewResponse?.review.id,
+        );
+
+        await githubClient.postComment(
+          repository: context.project!,
+          prNumber: args.prNumber!,
+          body: composeComment(
+            baseUrl: context.environment.appUrl,
+            projectId: buildResponse.project,
+            buildId: buildResponse.build,
+            reviewId: reviewResponse?.review.id,
+          ),
         );
       }
 
@@ -378,5 +383,41 @@ class PublishCommand extends CliCommand<PublishArgs> {
     progress.complete('Review upload completed');
 
     return response;
+  }
+
+  String composeComment({
+    required String baseUrl,
+    required String projectId,
+    required String buildId,
+    required String? reviewId,
+  }) {
+    final buildUrl = p.join(
+      baseUrl,
+      'projects/$projectId',
+      'builds/$buildId',
+    );
+
+    final reviewUrl = p.join(
+      baseUrl,
+      'projects/$projectId',
+      'reviews/$reviewId',
+      'builds/$buildId',
+      'use-cases',
+    );
+
+    final buffer = StringBuffer(
+      '### 📦 Build\n\n'
+      '- 🔗 [Widgetbook Cloud - Build]($buildUrl)',
+    );
+
+    if (reviewId != null) {
+      buffer.writeln(
+        '\n\n'
+        '### 📑 Review\n\n'
+        '- 🔗 [Widgetbook Cloud - Review]($reviewUrl)',
+      );
+    }
+
+    return buffer.toString();
   }
 }
