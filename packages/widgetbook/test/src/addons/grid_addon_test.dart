@@ -14,7 +14,7 @@ void main() {
 
     test(
       'given a query group, '
-      'then [valueFromQueryGroup] can parse the value',
+      'then [valueFromQueryGroup] returns current dimension',
       () {
         final result = addon.valueFromQueryGroup({});
 
@@ -24,7 +24,7 @@ void main() {
 
     testWidgets(
       'given a grid dimension, '
-      'then [buildUseCase] wraps child with grid',
+      'then [buildUseCase] wraps child with stack',
       (tester) async {
         await tester.pumpWidgetWithBuilder(
           (context) => addon.buildUseCase(
@@ -34,27 +34,16 @@ void main() {
           ),
         );
 
-        final stackWithBoth = find.byWidgetPredicate(
+        final stack = find.byWidgetPredicate(
           (widget) {
-            if (widget is Stack) {
-              bool hasLayoutBuilder = false;
-              bool hasText = false;
-
-              for (final child in widget.children) {
-                if (child is LayoutBuilder) {
-                  hasLayoutBuilder = true;
-                } else if (child is Text) {
-                  hasText = true;
-                }
-              }
-
-              return hasLayoutBuilder && hasText;
-            }
-            return false;
+            return widget is Stack &&
+                widget.children.length == 2 &&
+                widget.children[0] is LayoutBuilder &&
+                widget.children[1] is Text;
           },
         );
 
-        expect(stackWithBoth, findsOneWidget);
+        expect(stack, findsOneWidget);
       },
     );
 
@@ -62,11 +51,15 @@ void main() {
       'given a grid setting, '
       'then [GridPainter] paints the grid correctly',
       (tester) async {
+        const dimension = 20;
         await tester.pumpWidgetWithBuilder(
-          (context) => addon.buildUseCase(context, const Text('child'), 20),
+          (context) => addon.buildUseCase(
+            context,
+            const Text('child'),
+            dimension,
+          ),
         );
 
-        // Find the CustomPaint widget that is a descendant of the Stack.
         final paintWidget = find.descendant(
           of: find.byType(Stack),
           matching: find.byType(CustomPaint),
@@ -77,7 +70,12 @@ void main() {
         expect(paintWidget, findsOneWidget);
         expect(
           customPaint,
-          isGridPainterWith(dimension: 20),
+          predicate<CustomPaint>(
+            (widget) {
+              final painter = widget.painter as GridPainter;
+              return painter.dimension == dimension;
+            },
+          ),
         );
       },
     );

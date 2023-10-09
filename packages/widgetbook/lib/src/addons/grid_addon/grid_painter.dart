@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class GridPainter extends CustomPainter {
   GridPainter(
     this.dimension,
-  ) : assert(dimension >= 0);
+  ) : assert(dimension > 0);
 
   final int dimension;
 

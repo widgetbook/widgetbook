@@ -7,9 +7,11 @@ use-case being previewed withing the Workbench.
 
 Here's how to configure it:
 
-<Warning>`GridAddon` must be defined before the [`AlignmentAddon`](/addons/alignment-addon)</Warning>
-
-<Warning>When used with `DeviceFrameAddon`, `GridAddon` must be defined after the [`DeviceFrameAddon`](/addons/device-frame-addon)</Warning>
+<Warning>
+  In case `GridAddon` is used with other addons, then it must be defined before
+  the [`AlignmentAddon`](/addons/alignment-addon) and after the
+  [`DeviceFrameAddon`](/addons/device-frame-addon)
+</Warning>
 
 ```dart
 GridAddon(10),

@@ -5,7 +5,7 @@ import '../common/common.dart';
 import 'grid_painter.dart';
 
 class GridAddon extends WidgetbookAddon<int> {
-  GridAddon([this.dimension = 5])
+  GridAddon([this.dimension = 50])
       : assert(dimension > 0),
         super(
           name: 'Grid',
@@ -18,9 +18,7 @@ class GridAddon extends WidgetbookAddon<int> {
   List<Field> get fields => [];
 
   @override
-  int valueFromQueryGroup(Map<String, String> group) {
-    return int.tryParse(group['size'] ?? '') ?? dimension;
-  }
+  int valueFromQueryGroup(Map<String, String> group) => dimension;
 
   @override
   Widget buildUseCase(
@@ -34,11 +32,11 @@ class GridAddon extends WidgetbookAddon<int> {
         LayoutBuilder(
           builder: (context, constraints) {
             return CustomPaint(
+              painter: GridPainter(dimension),
               size: Size(
                 constraints.maxWidth,
                 constraints.maxHeight,
               ),
-              painter: GridPainter(dimension),
             );
           },
         ),
