@@ -45,7 +45,6 @@ void main() {
   group('$PublishCommand', () {
     late Logger logger;
     late Repository repository;
-    late PublishCommand publishCommand;
     late WidgetbookHttpClient client;
     late FileSystem fileSystem;
     late UseCaseReader useCaseReader;
@@ -87,177 +86,8 @@ void main() {
       when(() => contextManager.load(any(), any())).thenAnswer(
         (_) async => localContext,
       );
-      publishCommand = PublishCommand(
-        context: globalContext,
-        logger: logger,
-        client: client,
-        fileSystem: fileSystem,
-        zipEncoder: zipEncoder,
-      );
     });
 
-    group(
-      'getBaseBranch',
-      () {
-        final branchRefA = Reference(
-          '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf',
-          'refs/heads/a',
-        );
-        final branchRefB = Reference(
-          'f1c882189d0b341e435a58992c6b78a6a3f5ebfc',
-          'refs/heads/b',
-        );
-        final branchRefC = Reference(
-          '20dbdee64ee73e4be43b9c949492e05437d0e5dc',
-          'refs/remotes/origin/c',
-        );
-        final branchRefD = Reference(
-          'd4b6472e1566eb2c9897e4fc4d8c4858628bca01',
-          'refs/remotes/origin/d',
-        );
-
-        setUp(
-          () {
-            when(
-              () => repository.fetch(),
-            ).thenAnswer((_) async => true);
-          },
-        );
-
-        group('without branches', () {
-          setUp(() {
-            when(() => repository.branches).thenAnswer((_) async => []);
-          });
-
-          test(
-            "returns null when invoked with 'a'",
-            () async {
-              final branch = await publishCommand.getBaseBranch(
-                repository: repository,
-                branch: 'a',
-              );
-              expect(branch, isNull);
-            },
-          );
-
-          test(
-            "returns null when invoked with 'refs/heads/a'",
-            () async {
-              final branch = await publishCommand.getBaseBranch(
-                repository: repository,
-                branch: 'refs/heads/a',
-              );
-              expect(branch, isNull);
-            },
-          );
-
-          test(
-            "returns null when invoked with 'c'",
-            () async {
-              final branch = await publishCommand.getBaseBranch(
-                repository: repository,
-                branch: 'c',
-              );
-              expect(branch, isNull);
-            },
-          );
-
-          test(
-            "returns null when invoked with 'refs/remotes/c'",
-            () async {
-              final branch = await publishCommand.getBaseBranch(
-                repository: repository,
-                branch: 'refs/remotes/c',
-              );
-              expect(branch, isNull);
-            },
-          );
-        });
-
-        group(
-          'with only remote branches',
-          () {
-            setUp(() {
-              when(() => repository.branches).thenAnswer(
-                (_) async => [
-                  branchRefC,
-                  branchRefD,
-                ],
-              );
-            });
-
-            test(
-              "returns 'refs/origin/c' with SHA when invoked "
-              "with 'refs/heads/c'",
-              () async {
-                final branch = await publishCommand.getBaseBranch(
-                  repository: repository,
-                  branch: 'refs/heads/c',
-                );
-                expect(branch, equals(branchRefC));
-              },
-            );
-          },
-        );
-
-        group('with existing branches', () {
-          setUp(() {
-            when(() => repository.branches).thenAnswer(
-              (_) async => [
-                branchRefA,
-                branchRefB,
-                branchRefC,
-                branchRefD,
-              ],
-            );
-          });
-
-          test(
-            "returns 'refs/heads/a' with SHA when invoked with 'a'",
-            () async {
-              final branch = await publishCommand.getBaseBranch(
-                repository: repository,
-                branch: 'a',
-              );
-              expect(branch, equals(branchRefA));
-            },
-          );
-
-          test(
-            "returns 'refs/heads/a' with SHA when invoked with 'refs/heads/a'",
-            () async {
-              final branch = await publishCommand.getBaseBranch(
-                repository: repository,
-                branch: 'refs/heads/a',
-              );
-              expect(branch, equals(branchRefA));
-            },
-          );
-
-          test(
-            "returns 'refs/remotes/c' with SHA when invoked with 'c'",
-            () async {
-              final branch = await publishCommand.getBaseBranch(
-                repository: repository,
-                branch: 'c',
-              );
-              expect(branch, equals(branchRefC));
-            },
-          );
-
-          test(
-            "returns 'refs/remotes/c' with SHA when invoked with 'refs/remotes/c'",
-            () async {
-              final branch = await publishCommand.getBaseBranch(
-                repository: repository,
-                branch: 'refs/remotes/c',
-              );
-              expect(branch, equals(branchRefC));
-            },
-          );
-        });
-      },
-    );
     group(
       'validateRepository',
       () {
@@ -376,7 +206,7 @@ void main() {
 
         // Default Repository
         when(() => repository.currentBranch).thenAnswer(
-          (_) async => Reference(
+          (_) async => const Reference(
             'default sha',
             'refs/default/branch',
           ),
@@ -495,7 +325,7 @@ void main() {
             const branch = 'main';
             when(() => results['branch']).thenReturn(null);
             when(() => repository.currentBranch).thenAnswer(
-              (_) async => Reference(
+              (_) async => const Reference(
                 '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf',
                 'refs/heads/$branch',
               ),
@@ -535,7 +365,7 @@ void main() {
             when(() => results['commit']).thenReturn(null);
             when(() => localContext.providerSha).thenReturn(null);
             when(() => repository.currentBranch).thenAnswer(
-              (_) async => Reference(
+              (_) async => const Reference(
                 commit,
                 'refs/heads/main',
               ),
@@ -681,7 +511,10 @@ void main() {
         vendor: 'Test',
         actor: 'tester',
         repository: 'widgetbook',
-        baseBranch: 'main',
+        baseBranch: Reference(
+          '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf',
+          'main',
+        ),
       );
 
       final command = PublishCommand(

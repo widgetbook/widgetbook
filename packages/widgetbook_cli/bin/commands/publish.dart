@@ -5,13 +5,11 @@ import 'package:args/args.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:mason_logger/mason_logger.dart';
-import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 import '../api/api.dart';
 import '../core/cli_command.dart';
 import '../core/context.dart';
-import '../git/reference.dart';
 import '../git/repository.dart';
 import '../helpers/exceptions.dart';
 import '../helpers/github_client.dart';
@@ -97,21 +95,26 @@ class PublishCommand extends CliCommand<PublishArgs> {
 
   @override
   Future<PublishArgs> parseResults(Context context, ArgResults results) async {
+    final repository = context.repository;
     final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
     final gitHubToken = results['github-token'] as String?;
     final prNumber = results['pr'] as String?;
 
-    final currentBranch = await context.repository.currentBranch;
+    final currentBranch = await repository.currentBranch;
     final branch = results['branch'] as String? ?? currentBranch.name;
     final commit = results['commit'] as String? ??
         context.providerSha ??
         currentBranch.sha;
 
-    final baseBranch = await getBaseBranch(
-      repository: context.repository,
-      branch: results['base-branch'] as String?,
-    );
+    progress.update('finding base branch');
+    final baseBranchName = results['base-branch'] as String?;
+    final baseBranch = baseBranchName == null
+        ? null
+        : await repository.findBranch(
+            baseBranchName,
+            remote: true,
+          );
 
     final actor = results['actor'] as String? ?? context.user;
     if (actor == null) {
@@ -131,8 +134,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
       vendor: context.name,
       actor: actor,
       repository: repoName,
-      baseBranch: baseBranch?.fullName,
-      baseSha: baseBranch?.sha,
+      baseBranch: baseBranch,
       prNumber: prNumber,
       gitHubToken: gitHubToken,
     );
@@ -149,7 +151,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
       }
 
       final buildResponse = await publishBuild(args);
-      final hasReview = args.baseBranch != null && args.baseSha != null;
+      final hasReview = args.baseBranch != null;
 
       if (!hasReview) {
         logger.info(
@@ -188,78 +190,6 @@ class PublishCommand extends CliCommand<PublishArgs> {
       progress.fail();
       rethrow;
     }
-  }
-
-  // TODO sha is pretty much not used an is just being overriden with the most
-  // recent sha of the branch
-  // If this will be included do we need to check if the sha exists on the
-  // branch?
-  @visibleForTesting
-  Future<Reference?> getBaseBranch({
-    required Repository repository,
-    required String? branch,
-  }) async {
-    if (branch == null) {
-      return null;
-    }
-
-    progress.update('fetching remote branches');
-    await repository.fetch();
-
-    progress.update('reading existing branches');
-    final branches = await repository.branches;
-    final branchesMap = {
-      for (var k in branches) k.fullName: k,
-    };
-
-    final branchRef = Reference(
-      // This is not used, we are just using BranchReference to check if this is
-      // a heads or remote branch (if at all)
-      'a' * 40,
-      branch,
-    );
-
-    const headsPrefix = 'refs/heads/';
-    const headsPrefixRegex = '(?<=$headsPrefix)';
-    const remotesPrefix = 'refs/remotes/origin/';
-    const remotesPrefixRegex = '(?<=$remotesPrefix)';
-    const endOfLine = r'$';
-
-    if (branchRef.isHead || branchRef.isRemote) {
-      if (branchesMap.containsKey(branchRef.fullName)) {
-        return branchesMap[branchRef.fullName];
-      }
-
-      // Azure provides the ref as 'refs/heads/<branch-name>'
-      // This branch won't be found as of default.
-      // But a branch 'refs/remotes/origin/<branch-name>' will exist
-      final headsRefAsRemoteRef = '$remotesPrefix${branchRef.name}';
-      if (branchesMap.containsKey(headsRefAsRemoteRef)) {
-        return branchesMap[headsRefAsRemoteRef];
-      }
-
-      return null;
-    } else {
-      final headsRegex = RegExp(
-        '$headsPrefixRegex${branchRef.fullName}$endOfLine',
-      );
-      final remotesRegex = RegExp(
-        '$remotesPrefixRegex${branchRef.fullName}$endOfLine',
-      );
-      for (final branch in branches) {
-        if (headsRegex.hasMatch(branch.fullName)) {
-          return branch;
-        }
-      }
-
-      for (final branch in branches) {
-        if (remotesRegex.hasMatch(branch.fullName)) {
-          return branch;
-        }
-      }
-    }
-
-    return null;
   }
 
   /// Validates that the [repository] has no un-committed changes.
@@ -351,7 +281,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
     }
 
     final useCases = await useCaseReader.read(args.path);
-    final diffs = await context.repository.diff(args.baseBranch!);
+    final diffs = await context.repository.diff(args.baseBranch!.fullName);
 
     final changeUseCases = await useCaseReader.compare(
       useCases: useCases,
@@ -373,9 +303,9 @@ class PublishCommand extends CliCommand<PublishArgs> {
         useCases: changeUseCases,
         buildId: buildResponse.build,
         projectId: buildResponse.project,
-        baseBranch: args.baseBranch!,
+        baseBranch: args.baseBranch!.fullName,
         headBranch: args.branch,
-        baseSha: args.baseSha!,
+        baseSha: args.baseBranch!.sha,
         headSha: args.commit,
       ),
     );

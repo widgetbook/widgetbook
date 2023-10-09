@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:path/path.dart' as path;
 import 'package:process/process.dart';
 
@@ -94,16 +95,6 @@ class Repository {
     );
   }
 
-  /// Returns [true] if the fetch was successful, [false] otherwise.
-  Future<bool> fetch() async {
-    try {
-      await runLocal(['fetch']);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
   Future<List<DiffHeader>> diff([String? base]) async {
     final args = ['diff', if (base != null) base];
     final output = await runLocal(args);
@@ -113,5 +104,32 @@ class Repository {
         .where((x) => x.isNotEmpty); // First element is always empty
 
     return diffs.map(DiffHeader.parse).toList();
+  }
+
+  /// Finds a branch by its [name], returns `null` if not found.
+  /// If [remote] is true, the remote branches will be retrieved first.
+  ///
+  /// Some CI Providers (e.g. GitHub Actions) do not have all branches by
+  /// default because they do shallow checkout. For example, if you have a
+  /// branch called `feature/branch` and you open a PR based on `main`,
+  /// the CI will only have `feature/branch` but not `main`.
+  /// In this case, you can set [remote] to true to fetch all branches,
+  /// then searching for `main` will work because a branch named `origin/main`
+  /// will be found.
+  Future<Reference?> findBranch(
+    String name, {
+    bool remote = false,
+  }) async {
+    if (remote) await runLocal(['fetch']);
+
+    final branches = await this.branches;
+
+    return branches.firstWhereOrNull(
+      (branch) {
+        return branch.fullName == name ||
+            branch.name == name ||
+            branch.name == 'origin/$name';
+      },
+    );
   }
 }

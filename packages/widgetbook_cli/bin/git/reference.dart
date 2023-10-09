@@ -1,5 +1,5 @@
 class Reference {
-  Reference(this.sha, this.fullName);
+  const Reference(this.sha, this.fullName);
 
   /// Parses a [line] output from `git show-ref` output.
   /// The [line] can look as any one like these:
