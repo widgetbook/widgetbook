@@ -1,28 +1,7 @@
-// The MIT License (MIT)
-// Copyright (c) 2022 Widgetbook GmbH
-// Copyright (c) 2022 Felix Angelov
-
-// Permission is hereby granted, free of charge, to any person
-// obtaining a copy of this software and associated documentation
-// files (the "Software"), to deal in the Software without restriction,
-// including without limitation the rights to use, copy, modify, merge,
-// publish, distribute, sublicense, and/or sell copies of the Software,
-// and to permit persons to whom the Software is furnished to do so,
-// subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+import 'dart:async';
 import 'dart:io';
 
+import 'package:args/args.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:mason_logger/mason_logger.dart';
@@ -30,31 +9,32 @@ import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 import '../api/api.dart';
-import '../context/context.dart';
-import '../context/context_manager.dart';
-import '../git-provider/github/github.dart';
-import '../git/git_manager.dart';
+import '../core/cli_command.dart';
+import '../core/context.dart';
 import '../git/reference.dart';
 import '../git/repository.dart';
 import '../helpers/exceptions.dart';
+import '../helpers/github_client.dart';
 import '../helpers/zip_encoder.dart';
-import '../models/models.dart';
 import '../review/use_case_reader.dart';
-import 'command.dart';
+import 'publish_args.dart';
 
-class PublishCommand extends WidgetbookCommand {
+class PublishCommand extends CliCommand<PublishArgs> {
   PublishCommand({
+    required super.context,
     super.logger,
     this.fileSystem = const LocalFileSystem(),
-    this.gitManager = const GitManager(),
-    this.contextManager = const ContextManager(),
-    UseCaseReader? useCaseReader,
+    this.zipEncoder = const ZipEncoder(),
+    this.useCaseReader = const UseCaseReader(),
     WidgetbookHttpClient? client,
-  })  : useCaseReader = useCaseReader ??
-            UseCaseReader(
-              fileSystem: fileSystem,
+  })  : _client = client ??
+            WidgetbookHttpClient(
+              environment: context.environment,
             ),
-        _client = client ?? WidgetbookHttpClient() {
+        super(
+          name: 'publish',
+          description: 'Publish a new build',
+        ) {
     progress = logger.progress('Publishing Widgetbook');
     argParser
       ..addOption(
@@ -100,66 +80,45 @@ class PublishCommand extends WidgetbookCommand {
       );
   }
 
-  @override
-  final String description = 'Publish a new build';
-
-  @override
-  final String name = 'publish';
-
   final FileSystem fileSystem;
-  final GitManager gitManager;
+  final ZipEncoder zipEncoder;
   final UseCaseReader useCaseReader;
-  final ContextManager contextManager;
   final WidgetbookHttpClient _client;
   late final Progress progress;
 
-  @visibleForTesting
-  bool promptUncommittedChanges() {
-    logger
-      ..warn('You have un-committed changes')
-      ..warn('Uploading a new build to Widgetbook Cloud requires a commit '
-          'SHA. Due to un-committed changes, we are using the commit SHA '
-          'of your previous commit which can lead to the build being '
-          'rejected due to an already existing build.');
+  @override
+  FutureOr<Context> overrideContext(Context context, ArgResults results) {
+    final workingDir = results['path'] as String;
 
-    final result = stdin.hasTerminal
-        ? logger.chooseOne(
-            'Would you like to proceed anyways?',
-            choices: ['no', 'yes'],
-            defaultValue: 'no',
-          )
-        : 'yes';
-
-    return result == 'yes';
+    return context.copyWith(
+      workingDir: workingDir,
+    );
   }
 
-  @visibleForTesting
-  Future<PublishArgs> getArguments({
-    required Context context,
-    required Repository repository,
-  }) async {
+  @override
+  Future<PublishArgs> parseResults(Context context, ArgResults results) async {
     final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
     final gitHubToken = results['github-token'] as String?;
     final prNumber = results['pr'] as String?;
 
-    final currentBranch = await repository.currentBranch;
+    final currentBranch = await context.repository.currentBranch;
     final branch = results['branch'] as String? ?? currentBranch.name;
     final commit = results['commit'] as String? ??
         context.providerSha ??
         currentBranch.sha;
 
     final baseBranch = await getBaseBranch(
-      repository: repository,
+      repository: context.repository,
       branch: results['base-branch'] as String?,
     );
 
-    final actor = results['actor'] as String? ?? context.userName;
+    final actor = results['actor'] as String? ?? context.user;
     if (actor == null) {
       throw ActorNotFoundException();
     }
 
-    final repoName = results['repository'] as String? ?? context.repoName;
+    final repoName = results['repository'] as String? ?? context.project;
     if (repoName == null) {
       throw RepositoryNotFoundException();
     }
@@ -180,33 +139,55 @@ class PublishCommand extends WidgetbookCommand {
   }
 
   @override
-  Future<int> run() async {
-    final path = results['path'] as String;
-    final repository = gitManager.load(path);
-    final isClean = await repository.isClean;
-    final shouldContinue = isClean ? true : promptUncommittedChanges();
+  FutureOr<int> runWith(Context context, PublishArgs args) async {
+    try {
+      final isValid = await validateRepository(context.repository);
 
-    if (!shouldContinue) {
-      progress.cancel();
-      throw ExitedByUser();
+      if (!isValid) {
+        progress.cancel();
+        throw ExitedByUser();
+      }
+
+      final buildResponse = await publishBuild(args);
+      final hasReview = args.baseBranch != null && args.baseSha != null;
+
+      if (!hasReview) {
+        logger.info(
+          '💡Tip: You can upload a review by specifying a `base-branch` option.\n'
+          'For more information: https://docs.widgetbook.io/widgetbook-cloud/reviews',
+        );
+      }
+
+      final reviewResponse = hasReview
+          ? await publishReview(
+              args: args,
+              buildResponse: buildResponse,
+              context: context,
+            )
+          : null;
+
+      if (args.prNumber != null && args.gitHubToken != null) {
+        final githubClient = GitHubClient(
+          apiKey: args.gitHubToken!,
+        );
+
+        await githubClient.postComment(
+          repository: context.project!,
+          prNumber: args.prNumber!,
+          body: composeComment(
+            baseUrl: context.environment.appUrl,
+            projectId: buildResponse.project,
+            buildId: buildResponse.build,
+            reviewId: reviewResponse?.review.id,
+          ),
+        );
+      }
+
+      return ExitCode.success.code;
+    } catch (e) {
+      progress.fail();
+      rethrow;
     }
-
-    final context = await contextManager.load(repository);
-    if (context == null) {
-      throw CiVendorNotSupported();
-    }
-
-    final args = await getArguments(
-      context: context,
-      repository: repository,
-    );
-
-    await publish(
-      args: args,
-      repository: repository,
-    );
-
-    return ExitCode.success.code;
   }
 
   // TODO sha is pretty much not used an is just being overriden with the most
@@ -281,52 +262,26 @@ class PublishCommand extends WidgetbookCommand {
     return null;
   }
 
-  @visibleForTesting
-  Future<void> publish({
-    required PublishArgs args,
-    required Repository repository,
-  }) async {
-    try {
-      final buildResponse = await publishBuild(
-        args: args,
-      );
+  /// Validates that the [repository] has no un-committed changes.
+  /// Returns [true] if [repository] is clean or there is no terminal,
+  /// otherwise the user is prompted to choose.
+  Future<bool> validateRepository(Repository repository) async {
+    final isClean = await repository.isClean;
 
-      final hasReview = args.baseBranch != null && args.baseSha != null;
-
-      if (!hasReview) {
-        logger.info(
-          '💡Tip: You can upload a review by specifying a `base-branch` option.\n'
-          'For more information: https://docs.widgetbook.io/widgetbook-cloud/reviews',
-        );
-      }
-
-      final reviewResponse = hasReview
-          ? await publishReview(
-              args: args,
-              buildResponse: buildResponse,
-              repository: repository,
-            )
-          : null;
-
-      if (args.prNumber != null && args.gitHubToken != null) {
-        await GithubProvider(
-          apiKey: args.gitHubToken!,
-        ).addBuildComment(
-          number: args.prNumber!,
-          projectId: buildResponse.project,
-          buildId: buildResponse.build,
-          reviewId: reviewResponse?.review.id,
-        );
-      }
-    } catch (e) {
-      progress.fail();
-      rethrow;
+    if (!isClean) {
+      logger.warn('You have un-committed changes\n'
+          'Uploading a new build to Widgetbook Cloud requires a commit '
+          'SHA. Due to un-committed changes, we are using the commit SHA '
+          'of your previous commit which can lead to the build being '
+          'rejected due to an already existing build.');
     }
+
+    return !isClean && stdin.hasTerminal
+        ? logger.confirm('Would you like to proceed anyways?')
+        : true; // clean or no terminal
   }
 
-  Future<BuildResponse> publishBuild({
-    required PublishArgs args,
-  }) async {
+  Future<BuildResponse> publishBuild(PublishArgs args) async {
     final buildDirPath = p.join(args.path, 'build', 'web');
     final buildDir = fileSystem.directory(buildDirPath);
 
@@ -341,7 +296,7 @@ class PublishCommand extends WidgetbookCommand {
     }
 
     progress.update('Generating zip');
-    final encoder = ZipEncoder(fileSystem: fileSystem);
+    final encoder = zipEncoder;
     final zipFile = await encoder.zip(buildDir);
 
     if (zipFile == null) {
@@ -378,9 +333,9 @@ class PublishCommand extends WidgetbookCommand {
   }
 
   Future<ReviewResponse?> publishReview({
+    required Context context,
     required PublishArgs args,
     required BuildResponse buildResponse,
-    required Repository repository,
   }) async {
     final genDirPath = p.join(args.path, '.dart_tool', 'build', 'generated');
     final genDir = fileSystem.directory(genDirPath);
@@ -396,7 +351,7 @@ class PublishCommand extends WidgetbookCommand {
     }
 
     final useCases = await useCaseReader.read(args.path);
-    final diffs = await repository.diff(args.baseBranch!);
+    final diffs = await context.repository.diff(args.baseBranch!);
 
     final changeUseCases = await useCaseReader.compare(
       useCases: useCases,
@@ -428,5 +383,41 @@ class PublishCommand extends WidgetbookCommand {
     progress.complete('Review upload completed');
 
     return response;
+  }
+
+  String composeComment({
+    required String baseUrl,
+    required String projectId,
+    required String buildId,
+    required String? reviewId,
+  }) {
+    final buildUrl = p.join(
+      baseUrl,
+      'projects/$projectId',
+      'builds/$buildId',
+    );
+
+    final reviewUrl = p.join(
+      baseUrl,
+      'projects/$projectId',
+      'reviews/$reviewId',
+      'builds/$buildId',
+      'use-cases',
+    );
+
+    final buffer = StringBuffer(
+      '### 📦 Build\n\n'
+      '- 🔗 [Widgetbook Cloud - Build]($buildUrl)',
+    );
+
+    if (reviewId != null) {
+      buffer.writeln(
+        '\n\n'
+        '### 📑 Review\n\n'
+        '- 🔗 [Widgetbook Cloud - Review]($reviewUrl)',
+      );
+    }
+
+    return buffer.toString();
   }
 }

@@ -28,10 +28,10 @@ jobs:
         run: flutter pub global activate melos
 
       - name: Get packages
-        run: melos bootstrap
+        run: melos bootstrap --scope=sandbox --include-dependencies
 
       - name: Run build runner
-        run: melos generate
+        run: dart run build_runner build -d
 
       - name: Build Website
         run: flutter build web -t lib/widgetbook.dart

@@ -1,78 +1,99 @@
-import 'dart:io';
+import 'dart:io' hide Directory, File;
 
 import 'package:args/args.dart';
 import 'package:file/file.dart';
-import 'package:file/local.dart';
-import 'package:file/memory.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
 import '../../bin/api/api.dart';
-import '../../bin/commands/commands.dart';
-import '../../bin/context/context.dart';
+import '../../bin/commands/publish.dart';
+import '../../bin/commands/publish_args.dart';
+import '../../bin/core/context.dart';
+import '../../bin/core/context_manager.dart';
 import '../../bin/git/diff_header.dart';
-import '../../bin/git/git_manager.dart';
 import '../../bin/git/reference.dart';
 import '../../bin/git/repository.dart';
 import '../../bin/helpers/helpers.dart';
 import '../../bin/review/changed_use_case.dart';
 import '../../bin/review/use_case_reader.dart';
-import '../helpers/test_data.dart';
-import '../mocks/mocks.dart';
+import '../utils/mocks.dart';
 
 class FakeFile extends Fake implements File {}
+
+class FakeDirectory extends Fake implements Directory {}
 
 class FakeBuildRequest extends Fake implements BuildRequest {}
 
 class FakeReviewRequest extends Fake implements ReviewRequest {}
 
-class FakeDirectory extends Fake implements Directory {}
-
 void main() {
-  const apiKey = 'Api-Key';
+  const buildResponse = BuildResponse(
+    project: 'projectId',
+    build: 'buildId',
+    status: BuildUploadStatus.success,
+    tasks: [],
+  );
+
+  const reviewResponse = ReviewResponse(
+    tasks: [],
+    review: Review(
+      id: 'reviewId',
+    ),
+  );
 
   group('$PublishCommand', () {
     late Logger logger;
-    late GitManager gitManager;
     late Repository repository;
-    late ArgResults argResults;
     late PublishCommand publishCommand;
     late WidgetbookHttpClient client;
-    late LocalFileSystem localFileSystem;
+    late FileSystem fileSystem;
     late UseCaseReader useCaseReader;
     late Progress progress;
     late Stdin stdin;
-
-    final tempDir = const LocalFileSystem().currentDirectory;
+    late ContextManager contextManager;
+    late Context localContext;
+    late Context globalContext;
+    late Directory directory;
+    late File file;
+    late ZipEncoder zipEncoder;
 
     setUp(() async {
-      logger = MockLogger();
-      gitManager = MockGitWrapper();
-      repository = MockRepository();
-      argResults = MockArgResults();
-      client = MockWidgetbookHttpClient();
-      localFileSystem = MockLocalFileSystem();
-      useCaseReader = MockUseCaseReader();
-      progress = MockProgress();
-      stdin = MockStdin();
-
-      when(() => logger.progress(any<String>())).thenReturn(progress);
-      publishCommand = PublishCommand(
-        logger: logger,
-        client: client,
-      )..testArgResults = argResults;
-
-      when(() => argResults['api-key'] as String).thenReturn(apiKey);
-
       registerFallbackValue(FakeFile());
       registerFallbackValue(FakeBuildRequest());
       registerFallbackValue(FakeReviewRequest());
       registerFallbackValue(FakeDirectory());
-    });
+      registerFallbackValue(FakeEnvironment());
 
-    test('can be instantiated without any parameters', () {
-      expect(PublishCommand.new, returnsNormally);
+      logger = MockLogger();
+      repository = MockRepository();
+      client = MockWidgetbookHttpClient();
+      fileSystem = MockFileSystem();
+      useCaseReader = MockUseCaseReader();
+      progress = MockProgress();
+      stdin = MockStdin();
+      contextManager = MockContextManager();
+      localContext = MockContext();
+      globalContext = MockContext();
+      directory = MockDirectory();
+      file = MockFile();
+      zipEncoder = MockZipEncoder();
+
+      when(() => logger.progress(any<String>())).thenReturn(progress);
+
+      when(() => localContext.repository).thenReturn(repository);
+      when(() => globalContext.environment).thenReturn(FakeEnvironment());
+      when(() => localContext.environment).thenReturn(FakeEnvironment());
+      when(() => contextManager.load(any(), any())).thenAnswer(
+        (_) async => localContext,
+      );
+      publishCommand = PublishCommand(
+        context: globalContext,
+        logger: logger,
+        client: client,
+        fileSystem: fileSystem,
+        zipEncoder: zipEncoder,
+      );
     });
 
     group(
@@ -238,52 +259,72 @@ void main() {
       },
     );
     group(
-      '.promptUncommittedChanges',
+      'validateRepository',
       () {
         late PublishCommand command;
+        late Repository repository;
 
         setUp(() {
+          repository = MockRepository();
           command = PublishCommand(
+            context: globalContext,
             logger: logger,
-          )..testArgResults = argResults;
+          );
         });
 
         test(
-          'returns true when environment has no terminal',
+          'returns true if the repository is clean',
           () async {
-            when(() => stdin.hasTerminal).thenReturn(false);
+            when(() => repository.isClean).thenAnswer((_) async => true);
+            when(() => stdin.hasTerminal).thenReturn(true);
 
             IOOverrides.runZoned(
               stdin: () => stdin,
-              () {
-                expect(
-                  command.promptUncommittedChanges(),
-                  true,
-                );
+              () async {
+                final result = await command.validateRepository(repository);
+
+                verifyNever(() => logger.warn(any()));
+                verifyNever(() => logger.confirm(any()));
+                expect(result, true);
               },
             );
           },
         );
 
         test(
-          'returns true when user chooses "yes"',
+          'returns true when there is no terminal, '
+          'even if repository is not clean',
           () async {
-            when(() => stdin.hasTerminal).thenReturn(true);
-            when(
-              () => logger.chooseOne<String>(
-                any(),
-                choices: any(named: 'choices'),
-                defaultValue: any(named: 'defaultValue'),
-              ),
-            ).thenReturn('yes');
+            when(() => repository.isClean).thenAnswer((_) async => false);
+            when(() => stdin.hasTerminal).thenReturn(false);
 
             IOOverrides.runZoned(
               stdin: () => stdin,
-              () {
-                expect(
-                  command.promptUncommittedChanges(),
-                  true,
-                );
+              () async {
+                final result = await command.validateRepository(repository);
+
+                verify(() => logger.warn(any())).called(1);
+                expect(result, true);
+              },
+            );
+          },
+        );
+
+        test(
+          'returns true when user chooses "yes", '
+          'even if repository is not clean',
+          () async {
+            when(() => repository.isClean).thenAnswer((_) async => false);
+            when(() => stdin.hasTerminal).thenReturn(true);
+            when(() => logger.confirm(any())).thenReturn(true);
+
+            IOOverrides.runZoned(
+              stdin: () => stdin,
+              () async {
+                final result = await command.validateRepository(repository);
+
+                verify(() => logger.warn(any())).called(1);
+                expect(result, true);
               },
             );
           },
@@ -292,22 +333,17 @@ void main() {
         test(
           'returns false when user chooses "no"',
           () async {
+            when(() => repository.isClean).thenAnswer((_) async => false);
             when(() => stdin.hasTerminal).thenReturn(true);
-            when(
-              () => logger.chooseOne<String>(
-                any(),
-                choices: any(named: 'choices'),
-                defaultValue: any(named: 'defaultValue'),
-              ),
-            ).thenReturn('no');
+            when(() => logger.confirm(any())).thenReturn(false);
 
             IOOverrides.runZoned(
               stdin: () => stdin,
-              () {
-                expect(
-                  command.promptUncommittedChanges(),
-                  false,
-                );
+              () async {
+                final result = await command.validateRepository(repository);
+
+                verify(() => logger.warn(any())).called(1);
+                expect(result, false);
               },
             );
           },
@@ -315,26 +351,28 @@ void main() {
       },
     );
 
-    group('getArguments', () {
+    group('parseResults', () {
+      late ArgResults results;
       late PublishCommand command;
-      late Context context;
 
       setUp(() {
-        command = PublishCommand()..testArgResults = argResults;
-        repository = MockRepository();
-        context = MockContext();
+        results = MockArgResults();
+        command = PublishCommand(
+          context: globalContext,
+        );
 
         // Default ArgResults
-        when(() => argResults['path']).thenReturn('default path');
-        when(() => argResults['api-key']).thenReturn('default key');
-        when(() => argResults['github-token']).thenReturn('default token');
-        when(() => argResults['pr']).thenReturn('default pr');
+        when(() => results['path']).thenReturn('default path');
+        when(() => results['api-key']).thenReturn('default key');
+        when(() => results['github-token']).thenReturn('default token');
+        when(() => results['pr']).thenReturn('default pr');
 
         // Default Context
-        when(() => context.name).thenReturn('default');
-        when(() => context.userName).thenReturn('default user');
-        when(() => context.repoName).thenReturn('default repo');
-        when(() => context.providerSha).thenReturn('default sha');
+        when(() => localContext.name).thenReturn('default');
+        when(() => localContext.user).thenReturn('default user');
+        when(() => localContext.project).thenReturn('default repo');
+        when(() => localContext.providerSha).thenReturn('default sha');
+        when(() => localContext.workingDir).thenReturn('default path');
 
         // Default Repository
         when(() => repository.currentBranch).thenAnswer(
@@ -347,48 +385,36 @@ void main() {
 
       test('path', () async {
         const path = 'root/path/to/project';
-        when(() => argResults['path']).thenReturn(path);
+        when(() => results['path']).thenReturn(path);
 
-        final args = await command.getArguments(
-          context: context,
-          repository: repository,
-        );
+        final args = await command.parseResults(localContext, results);
 
         expect(args.path, equals(path));
       });
 
       test('apiKey', () async {
         const apiKey = 'SeCrEtKeY';
-        when(() => argResults['api-key']).thenReturn(apiKey);
+        when(() => results['api-key']).thenReturn(apiKey);
 
-        final args = await command.getArguments(
-          context: context,
-          repository: repository,
-        );
+        final args = await command.parseResults(localContext, results);
 
         expect(args.apiKey, equals(apiKey));
       });
 
       test('gitHubToken', () async {
         const token = 'SeCrEtKeY';
-        when(() => argResults['github-token']).thenReturn(token);
+        when(() => results['github-token']).thenReturn(token);
 
-        final args = await command.getArguments(
-          context: context,
-          repository: repository,
-        );
+        final args = await command.parseResults(localContext, results);
 
         expect(args.gitHubToken, equals(token));
       });
 
       test('prNumber', () async {
         const prNumber = '21';
-        when(() => argResults['pr']).thenReturn(prNumber);
+        when(() => results['pr']).thenReturn(prNumber);
 
-        final args = await command.getArguments(
-          context: context,
-          repository: repository,
-        );
+        final args = await command.parseResults(localContext, results);
 
         expect(args.prNumber, equals(prNumber));
       });
@@ -396,38 +422,29 @@ void main() {
       group('actor', () {
         test('from $ArgResults', () async {
           const userName = 'John Doe';
-          when(() => argResults['actor']).thenReturn(userName);
+          when(() => results['actor']).thenReturn(userName);
 
-          final args = await command.getArguments(
-            context: context,
-            repository: repository,
-          );
+          final args = await command.parseResults(localContext, results);
 
           expect(args.actor, equals(userName));
         });
 
         test('from $Context', () async {
           const userName = 'John Doe';
-          when(() => argResults['actor']).thenReturn(null);
-          when(() => context.userName).thenReturn(userName);
+          when(() => results['actor']).thenReturn(null);
+          when(() => localContext.user).thenReturn(userName);
 
-          final args = await command.getArguments(
-            context: context,
-            repository: repository,
-          );
+          final args = await command.parseResults(localContext, results);
 
           expect(args.actor, equals(userName));
         });
 
         test('throws $ActorNotFoundException', () async {
-          when(() => argResults['actor']).thenReturn(null);
-          when(() => context.userName).thenReturn(null);
+          when(() => results['actor']).thenReturn(null);
+          when(() => localContext.user).thenReturn(null);
 
           expectLater(
-            () => command.getArguments(
-              context: context,
-              repository: repository,
-            ),
+            () => command.parseResults(localContext, results),
             throwsA(const TypeMatcher<ActorNotFoundException>()),
           );
         });
@@ -436,38 +453,29 @@ void main() {
       group('repository', () {
         test('from $ArgResults', () async {
           const repoName = 'widgetbook';
-          when(() => argResults['repository']).thenReturn(repoName);
+          when(() => results['repository']).thenReturn(repoName);
 
-          final args = await command.getArguments(
-            context: context,
-            repository: repository,
-          );
+          final args = await command.parseResults(localContext, results);
 
           expect(args.repository, equals(repoName));
         });
 
         test('from $Context', () async {
           const repoName = 'widgetbook';
-          when(() => argResults['repository']).thenReturn(null);
-          when(() => context.repoName).thenReturn(repoName);
+          when(() => results['repository']).thenReturn(null);
+          when(() => localContext.project).thenReturn(repoName);
 
-          final args = await command.getArguments(
-            context: context,
-            repository: repository,
-          );
+          final args = await command.parseResults(localContext, results);
 
           expect(args.repository, equals(repoName));
         });
 
         test('throws $RepositoryNotFoundException', () async {
-          when(() => argResults['repository']).thenReturn(null);
-          when(() => context.repoName).thenReturn(null);
+          when(() => results['repository']).thenReturn(null);
+          when(() => localContext.project).thenReturn(null);
 
           expectLater(
-            () => command.getArguments(
-              context: context,
-              repository: repository,
-            ),
+            () => command.parseResults(localContext, results),
             throwsA(const TypeMatcher<RepositoryNotFoundException>()),
           );
         });
@@ -475,19 +483,17 @@ void main() {
         group('branch', () {
           test('from $ArgResults', () async {
             const branch = 'main';
-            when(() => argResults['branch']).thenReturn(branch);
+            when(() => results['branch']).thenReturn(branch);
 
-            final args = await command.getArguments(
-              context: context,
-              repository: repository,
-            );
+            final args = await command.parseResults(localContext, results);
+            ;
 
             expect(args.branch, equals(branch));
           });
 
           test('from $Repository', () async {
             const branch = 'main';
-            when(() => argResults['branch']).thenReturn(null);
+            when(() => results['branch']).thenReturn(null);
             when(() => repository.currentBranch).thenAnswer(
               (_) async => Reference(
                 '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf',
@@ -495,10 +501,8 @@ void main() {
               ),
             );
 
-            final args = await command.getArguments(
-              context: context,
-              repository: repository,
-            );
+            final args = await command.parseResults(localContext, results);
+            ;
 
             expect(args.branch, equals(branch));
           });
@@ -507,33 +511,29 @@ void main() {
         group('commit', () {
           test('from $ArgResults', () async {
             const commit = '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf';
-            when(() => argResults['commit']).thenReturn(commit);
+            when(() => results['commit']).thenReturn(commit);
 
-            final args = await command.getArguments(
-              context: context,
-              repository: repository,
-            );
+            final args = await command.parseResults(localContext, results);
+            ;
 
             expect(args.commit, equals(commit));
           });
 
           test('from $Context', () async {
             const commit = '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf';
-            when(() => argResults['commit']).thenReturn(null);
-            when(() => context.providerSha).thenReturn(commit);
+            when(() => results['commit']).thenReturn(null);
+            when(() => localContext.providerSha).thenReturn(commit);
 
-            final args = await command.getArguments(
-              context: context,
-              repository: repository,
-            );
+            final args = await command.parseResults(localContext, results);
+            ;
 
             expect(args.commit, equals(commit));
           });
 
           test('from $Repository', () async {
             const commit = '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf';
-            when(() => argResults['commit']).thenReturn(null);
-            when(() => context.providerSha).thenReturn(null);
+            when(() => results['commit']).thenReturn(null);
+            when(() => localContext.providerSha).thenReturn(null);
             when(() => repository.currentBranch).thenAnswer(
               (_) async => Reference(
                 commit,
@@ -541,10 +541,8 @@ void main() {
               ),
             );
 
-            final args = await command.getArguments(
-              context: context,
-              repository: repository,
-            );
+            final args = await command.parseResults(localContext, results);
+            ;
 
             expect(args.commit, equals(commit));
           });
@@ -553,137 +551,165 @@ void main() {
     });
 
     test(
-        'throws a $ExitedByUser when user decides not to '
-        'proceed with un-committed changes', () async {
-      final publishCommand = PublishCommand(
-        logger: logger,
-        gitManager: gitManager,
-      )..testArgResults = argResults;
+      'throws a $ExitedByUser when user decides not to '
+      'proceed with un-committed changes',
+      () async {
+        final publishCommand = PublishCommand(
+          context: globalContext,
+          logger: logger,
+        );
 
-      when(() => argResults['path'] as String).thenReturn(tempDir.path);
-      when(() => gitManager.load(any())).thenReturn(repository);
-      when(() => repository.user).thenAnswer((_) async => 'John Doe');
-      when(() => repository.name).thenAnswer((_) async => 'widgetbook');
-      when(() => repository.isClean).thenAnswer((_) async => false);
-      when(() => stdin.hasTerminal).thenReturn(true);
-      when(
-        () => logger.chooseOne<String>(
-          any(),
-          choices: any(named: 'choices'),
-          defaultValue: any(named: 'defaultValue'),
-        ),
-      ).thenReturn('no');
+        when(() => localContext.repository).thenReturn(repository);
+        when(() => repository.isClean).thenAnswer((_) async => false);
+        when(() => stdin.hasTerminal).thenReturn(true);
+        when(() => logger.confirm(any())).thenReturn(false);
 
-      IOOverrides.runZoned(
-        stdin: () => stdin,
-        () => expect(
-          publishCommand.run,
-          throwsA(
-            const TypeMatcher<ExitedByUser>(),
+        IOOverrides.runZoned(
+          stdin: () => stdin,
+          () => expect(
+            publishCommand.runWith(
+              localContext,
+              MockPublishArgs(),
+            ),
+            throwsA(
+              const TypeMatcher<ExitedByUser>(),
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
+
+    test(
+      'throws $UnableToCreateZipFileException when build dir does not exist',
+      () {
+        final args = MockPublishArgs();
+        final command = PublishCommand(
+          context: globalContext,
+          fileSystem: fileSystem,
+          logger: logger,
+        );
+
+        when(() => args.path).thenReturn('path/to/build');
+        when(() => directory.existsSync()).thenReturn(false);
+        when(
+          () => fileSystem.directory(any<String>()),
+        ).thenReturn(directory);
+
+        expectLater(
+          () => command.publishBuild(args),
+          throwsA(const TypeMatcher<UnableToCreateZipFileException>()),
+        );
+      },
+    );
 
     test(
       'throws $UnableToCreateZipFileException when zip file could '
       'not be create for upload',
       () {
-        when(() => repository.branches).thenAnswer((_) async => []);
-        when(() => repository.fetch()).thenAnswer(
-          (_) async => true,
+        final args = MockPublishArgs();
+        final command = PublishCommand(
+          context: globalContext,
+          fileSystem: fileSystem,
+          logger: logger,
+          zipEncoder: zipEncoder,
         );
 
-        final command = PublishCommand(
-          logger: logger,
-          client: client,
-        )..testArgResults = argResults;
+        when(() => args.path).thenReturn('path/to/build');
+        when(() => directory.existsSync()).thenReturn(true);
+        when(
+          () => fileSystem.directory(any<String>()),
+        ).thenReturn(directory);
 
-        expect(
-          () => command.publish(
-            args: TestData.args,
-            repository: repository,
-          ),
+        when(() => zipEncoder.zip(any())).thenAnswer((_) async => null);
+
+        expectLater(
+          () => command.publishBuild(args),
           throwsA(const TypeMatcher<UnableToCreateZipFileException>()),
         );
       },
     );
 
     test('exits with code 0 when publishing a build succeeds', () async {
-      final fileSystem = MemoryFileSystem.test();
+      final context = MockContext();
+      const args = PublishArgs(
+        apiKey: 'apiKey',
+        branch: 'feat',
+        commit: 'sha',
+        path: 'path/to/build/',
+        vendor: 'Test',
+        actor: 'tester',
+        repository: 'widgetbook',
+      );
 
-      final publishCommand = PublishCommand(
-        fileSystem: localFileSystem,
-        useCaseReader: useCaseReader,
-        client: client,
+      final command = PublishCommand(
+        context: globalContext,
+        fileSystem: fileSystem,
         logger: logger,
-      )..testArgResults = argResults;
-
-      when(() => useCaseReader.read(any())).thenAnswer(
-        (_) async => [],
+        client: client,
+        zipEncoder: zipEncoder,
       );
 
+      when(() => context.repository).thenAnswer((_) => repository);
+      when(() => repository.isClean).thenAnswer((_) async => true);
+
+      when(() => directory.existsSync()).thenReturn(true);
       when(
-        () => useCaseReader.compare(
-          useCases: any(named: 'useCases'),
-          diffs: any(named: 'diffs'),
-        ),
-      ).thenReturn(const [
-        ChangedUseCase(
-          name: 'use_case',
-          componentName: 'UseCase',
-          componentDefinitionPath: 'path/to/use_case.dart',
-          modification: Modification.changed,
-          designLink: null,
-        ),
-      ]);
+        () => fileSystem.directory(any<String>()),
+      ).thenReturn(directory);
 
-      when(() => argResults['path'] as String).thenReturn(tempDir.path);
-      when(() => repository.user).thenAnswer((_) async => 'John Doe');
-
-      when(() => localFileSystem.directory(any<String>())).thenAnswer(
-        ($) => fileSystem.directory($.positionalArguments[0])
-          ..createSync(
-            recursive: true,
-          ),
-      );
-
-      when(() => localFileSystem.file(any<String>())).thenAnswer(
-        ($) => fileSystem.file($.positionalArguments[0])
-          ..createSync(
-            recursive: true,
-          ),
-      );
-
-      when(() => repository.name).thenAnswer((_) async => 'widgetbook');
-      when(
-        () => logger.chooseOne<String>(
-          any(),
-          choices: any(named: 'choices'),
-          defaultValue: any(named: 'defaultValue'),
-        ),
-      ).thenReturn('yes');
+      when(() => zipEncoder.zip(any())).thenAnswer((_) async => file);
 
       when(
         () => client.uploadBuild(any<BuildRequest>()),
       ).thenAnswer(
-        (_) async => TestData.buildResponse,
+        (_) async => buildResponse,
       );
 
-      final result = await publishCommand.run();
-      expect(result, equals(ExitCode.success.code));
+      expect(
+        await command.runWith(context, args),
+        equals(ExitCode.success.code),
+      );
     });
 
     test('exits with code 0 when publishing a review succeeds', () async {
-      final fileSystem = MemoryFileSystem.test();
+      final context = MockContext();
+      const args = PublishArgs(
+        apiKey: 'apiKey',
+        branch: 'feat',
+        commit: 'sha',
+        path: 'path/to/build/',
+        vendor: 'Test',
+        actor: 'tester',
+        repository: 'widgetbook',
+        baseBranch: 'main',
+      );
 
-      final publishCommand = PublishCommand(
-        fileSystem: localFileSystem,
-        client: client,
+      final command = PublishCommand(
+        context: globalContext,
+        fileSystem: fileSystem,
         logger: logger,
+        client: client,
         useCaseReader: useCaseReader,
-      )..testArgResults = argResults;
+        zipEncoder: zipEncoder,
+      );
 
+      when(() => context.repository).thenAnswer((_) => repository);
+      when(() => repository.isClean).thenAnswer((_) async => true);
+
+      when(() => directory.existsSync()).thenReturn(true);
+      when(
+        () => fileSystem.directory(any<String>()),
+      ).thenReturn(directory);
+
+      when(() => zipEncoder.zip(any())).thenAnswer((_) async => file);
+
+      when(
+        () => client.uploadBuild(any<BuildRequest>()),
+      ).thenAnswer(
+        (_) async => buildResponse,
+      );
+
+      when(() => repository.diff(any())).thenAnswer((_) async => []);
       when(() => useCaseReader.read(any())).thenAnswer(
         (_) async => [],
       );
@@ -702,49 +728,17 @@ void main() {
           designLink: null,
         ),
       ]);
-
-      when(() => argResults['path'] as String).thenReturn(tempDir.path);
-      when(() => argResults['base-branch'] as String).thenReturn('main');
-      when(() => repository.user).thenAnswer((_) async => 'John Doe');
-      when(() => repository.name).thenAnswer((_) async => 'widgetbook');
-
-      when(() => localFileSystem.directory(any<String>())).thenAnswer(
-        ($) => fileSystem.directory($.positionalArguments[0])
-          ..createSync(
-            recursive: true,
-          ),
-      );
-
-      when(() => localFileSystem.file(any<String>())).thenAnswer(
-        ($) => fileSystem.file($.positionalArguments[0])
-          ..createSync(
-            recursive: true,
-          ),
-      );
-
-      when(
-        () => logger.chooseOne<String>(
-          any(),
-          choices: any(named: 'choices'),
-          defaultValue: any(named: 'defaultValue'),
-        ),
-      ).thenReturn('yes');
-
-      when(
-        () => client.uploadBuild(any<BuildRequest>()),
-      ).thenAnswer(
-        (_) async => TestData.buildResponse,
-      );
 
       when(
         () => client.uploadReview(any<ReviewRequest>()),
       ).thenAnswer(
-        (_) async => TestData.reviewResponse,
+        (_) async => reviewResponse,
       );
 
-      final result = await publishCommand.run();
-
-      expect(result, equals(ExitCode.success.code));
+      expect(
+        await command.runWith(context, args),
+        equals(ExitCode.success.code),
+      );
     });
   });
 }

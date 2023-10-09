@@ -39,25 +39,14 @@ jobs:
       - name: Install Melos
         run: flutter pub global activate melos
 
-      - name: Build Melos Workspace
+      - name: Bootstrap Workspace
         working-directory: ${{ github.workspace }}
-        run: |
-          flutter pub get
-          melos --version # Needed to build melos executable
+        run: flutter pub get
 
-      - name: Create `MELOS_FILTERS`
+      - name: Bootstrap Package
         run: |
           PACKAGE_NAME=$(head -1 pubspec.yaml | cut -c7-)
-          FILTERS="--scope=$PACKAGE_NAME --include-dependencies"
-
-          # This variable is used to apply filters to melos scripts
-          echo "MELOS_FILTERS=$FILTERS" >> $GITHUB_ENV
-
-      - name: Install Dependencies
-        run: melos bootstrap $MELOS_FILTERS
-
-      - name: Generate Files
-        run: melos generate
+          melos bootstrap --scope=$PACKAGE_NAME --include-dependencies
 
       - name: Check Formatting
         run: dart format --set-exit-if-changed .
@@ -109,25 +98,14 @@ jobs:
       - name: Install Melos
         run: flutter pub global activate melos
 
-      - name: Build Melos Workspace
+      - name: Bootstrap Workspace
         working-directory: ${{ github.workspace }}
-        run: |
-          flutter pub get
-          melos --version # Needed to build melos executable
+        run: flutter pub get
 
-      - name: Create `MELOS_FILTERS`
+      - name: Bootstrap Package
         run: |
           PACKAGE_NAME=$(head -1 pubspec.yaml | cut -c7-)
-          FILTERS="--scope=$PACKAGE_NAME --include-dependencies"
-
-          # This variable is used to apply filters to melos scripts
-          echo "MELOS_FILTERS=$FILTERS" >> $GITHUB_ENV
-
-      - name: Install Dependencies
-        run: melos bootstrap $MELOS_FILTERS
-
-      - name: Generate Files
-        run: melos generate
+          melos bootstrap --scope=$PACKAGE_NAME --include-dependencies
 
       - name: Publish
         run: dart pub publish --force

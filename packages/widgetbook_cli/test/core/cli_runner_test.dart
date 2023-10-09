@@ -5,9 +5,10 @@ import 'package:mocktail/mocktail.dart';
 import 'package:pub_updater/pub_updater.dart';
 import 'package:test/test.dart';
 
-import '../../bin/app/widgetbook_command_runner.dart';
-import '../../bin/helpers/helpers.dart';
-import '../mocks/mocks.dart';
+import '../../bin/core/cli_runner.dart';
+import '../../bin/core/context.dart';
+import '../../bin/metadata.dart';
+import '../utils/mocks.dart';
 import '../utils/utils.dart';
 
 const expectedUsage = [
@@ -37,39 +38,39 @@ final changelogLink = lightCyan.wrap(
   ),
 );
 
-final updateMessage =
-    '\n${lightYellow.wrap('Update available!')} ${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}\n'
+final updateMessage = '\n${lightYellow.wrap('Update available!')} '
+    '${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}\n'
     '${lightYellow.wrap('Changelog:')} $changelogLink\n'
-    'Run ${cyan.wrap('$executableName update')} to update';
+    'Run ${cyan.wrap('${cliName} update')} to update';
 
 void main() {
-  group('$WidgetbookCommandRunner', () {
+  group('$CliRunner', () {
     late Logger logger;
     late Progress progress;
-
     late PubUpdater pubUpdater;
-    late WidgetbookCommandRunner commandRunner;
+    late CliRunner cliRunner;
+    late Context globalContext;
 
     setUp(() {
       printLogs = [];
       progress = MockProgress();
       logger = MockLogger();
-      when(() => logger.progress(any<String>())).thenReturn(progress);
-
       pubUpdater = MockPubUpdater();
+      globalContext = MockContext();
+
+      when(() => logger.progress(any<String>())).thenReturn(progress);
 
       when(
         () => pubUpdater.getLatestVersion(any()),
       ).thenAnswer((_) async => packageVersion);
 
-      commandRunner = WidgetbookCommandRunner(
+      when(() => globalContext.environment).thenReturn(FakeEnvironment());
+
+      cliRunner = CliRunner(
+        context: globalContext,
         logger: logger,
         pubUpdater: pubUpdater,
       );
-    });
-
-    test('can be instantiated without an explicit logger instance', () {
-      expect(WidgetbookCommandRunner.new, returnsNormally);
     });
 
     group('run', () {
@@ -84,7 +85,7 @@ void main() {
           () => pubUpdater.getLatestVersion(any()),
         ).thenAnswer((_) async => latestVersion);
 
-        final result = await commandRunner.run(['--version']);
+        final result = await cliRunner.run(['--version']);
         expect(result, equals(ExitCode.success.code));
 
         verify(() => logger.info(updateMessage)).called(1);
@@ -95,7 +96,7 @@ void main() {
           () => pubUpdater.getLatestVersion(any()),
         ).thenThrow(Exception('oops'));
 
-        final result = await commandRunner.run(['--version']);
+        final result = await cliRunner.run(['--version']);
         expect(result, equals(ExitCode.success.code));
         verifyNever(() => logger.info(updateMessage));
       });
@@ -109,14 +110,14 @@ void main() {
             throw exception;
           }
         });
-        final result = await commandRunner.run(['--version']);
+        final result = await cliRunner.run(['--version']);
         expect(result, equals(ExitCode.usage.code));
         verify(() => logger.err(exception.message)).called(1);
-        verify(() => logger.info(commandRunner.usage)).called(1);
+        verify(() => logger.info(cliRunner.usage)).called(1);
       });
 
       test('handles UsageException', () async {
-        final exception = UsageException('oops!', commandRunner.usage);
+        final exception = UsageException('oops!', cliRunner.usage);
         var isFirstInvocation = true;
         when(() => logger.info(any())).thenAnswer((_) {
           if (isFirstInvocation) {
@@ -124,16 +125,16 @@ void main() {
             throw exception;
           }
         });
-        final result = await commandRunner.run(['--version']);
+        final result = await cliRunner.run(['--version']);
         expect(result, equals(ExitCode.usage.code));
         verify(() => logger.err(exception.message)).called(1);
-        verify(() => logger.info(commandRunner.usage)).called(1);
+        verify(() => logger.info(cliRunner.usage)).called(1);
       });
 
       test(
         'handles no command',
         overridePrint(() async {
-          final result = await commandRunner.run([]);
+          final result = await cliRunner.run([]);
           expect(printLogs, equals(expectedUsage));
           expect(result, equals(ExitCode.success.code));
         }),
@@ -143,13 +144,13 @@ void main() {
         test(
           'outputs usage',
           overridePrint(() async {
-            final result = await commandRunner.run(['--help']);
+            final result = await cliRunner.run(['--help']);
             expect(printLogs, equals(expectedUsage));
             expect(result, equals(ExitCode.success.code));
 
             printLogs.clear();
 
-            final resultAbbr = await commandRunner.run(['-h']);
+            final resultAbbr = await cliRunner.run(['-h']);
             expect(printLogs, equals(expectedUsage));
             expect(resultAbbr, equals(ExitCode.success.code));
           }),
@@ -158,7 +159,7 @@ void main() {
 
       group('--version', () {
         test('outputs current version', () async {
-          final result = await commandRunner.run(['--version']);
+          final result = await cliRunner.run(['--version']);
           expect(result, equals(ExitCode.success.code));
           verify(() => logger.info(packageVersion)).called(1);
         });

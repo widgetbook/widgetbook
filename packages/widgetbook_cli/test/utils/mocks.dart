@@ -1,7 +1,7 @@
-import 'dart:io';
+import 'dart:io' hide Directory, File;
 
 import 'package:args/args.dart';
-import 'package:file/local.dart';
+import 'package:file/file.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:platform/platform.dart';
@@ -9,22 +9,34 @@ import 'package:process/process.dart';
 import 'package:pub_updater/pub_updater.dart';
 
 import '../../bin/api/api.dart';
-import '../../bin/context/ci_manager.dart';
-import '../../bin/context/context.dart';
-import '../../bin/context/context_manager.dart';
+import '../../bin/commands/publish_args.dart';
+import '../../bin/core/ci_manager.dart';
+import '../../bin/core/context.dart';
+import '../../bin/core/context_manager.dart';
+import '../../bin/core/environment.dart';
 import '../../bin/git/git_manager.dart';
 import '../../bin/git/repository.dart';
+import '../../bin/helpers/zip_encoder.dart';
 import '../../bin/review/use_case_reader.dart';
+
+class FakeEnvironment extends Fake implements Environment {
+  @override
+  final String name = 'test';
+
+  @override
+  final String apiUrl = '';
+
+  @override
+  final String appUrl = '';
+}
 
 class MockLogger extends Mock implements Logger {}
 
-class MockGitWrapper extends Mock implements GitManager {}
+class MockGitManager extends Mock implements GitManager {}
 
 class MockPubUpdater extends Mock implements PubUpdater {}
 
 class MockProgress extends Mock implements Progress {}
-
-class MockArgResults extends Mock implements ArgResults {}
 
 class MockContextManager extends Mock implements ContextManager {}
 
@@ -34,7 +46,17 @@ class MockContext extends Mock implements Context {}
 
 class MockWidgetbookHttpClient extends Mock implements WidgetbookHttpClient {}
 
-class MockLocalFileSystem extends Mock implements LocalFileSystem {}
+class MockFileSystem extends Mock implements FileSystem {}
+
+class MockPublishArgs extends Mock implements PublishArgs {}
+
+class MockFile extends Mock implements File {}
+
+class MockDirectory extends Mock implements Directory {}
+
+class MockZipEncoder extends Mock implements ZipEncoder {}
+
+class MockArgResults extends Mock implements ArgResults {}
 
 class MockCiManager extends Mock implements CiManager {
   void mock({

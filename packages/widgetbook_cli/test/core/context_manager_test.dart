@@ -1,36 +1,45 @@
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../../bin/context/context.dart';
-import '../../bin/context/context_manager.dart';
-import '../mocks/command_mocks.dart';
+import '../../bin/core/context.dart';
+import '../../bin/core/context_manager.dart';
+import '../utils/mocks.dart';
 
 void main() {
   const userName = 'John Doe';
   const repoName = 'widgetbook';
   const sha = '832e76a9899f560a90ffd62ae2ce83bbeff58f54';
 
-  final repository = MockRepository();
   final ciManager = MockCiManager();
   final platform = MockPlatform();
+  final gitManager = MockGitManager();
   final contextManager = ContextManager(
     ciManager: ciManager,
     platform: platform,
+    gitManager: gitManager,
   );
 
   group('$ContextManager', () {
+    const workingDir = './';
+    final environment = FakeEnvironment();
+
     test('Local', () async {
+      final repository = MockRepository();
+
       ciManager.mock(isCI: false);
+      when(() => gitManager.load(any())).thenReturn(repository);
       when(() => repository.user).thenAnswer((_) async => userName);
       when(() => repository.name).thenAnswer((_) async => repoName);
 
       expectLater(
-        contextManager.load(repository),
+        contextManager.load(workingDir, environment),
         completion(
           Context(
             name: 'Local',
-            userName: await repository.user,
-            repoName: await repository.name,
+            workingDir: workingDir,
+            environment: environment,
+            user: userName,
+            project: repoName,
           ),
         ),
       );
@@ -44,12 +53,14 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(repository),
+        contextManager.load(workingDir, environment),
         completion(
-          const Context(
+          Context(
             name: 'Azure',
-            userName: userName,
-            repoName: repoName,
+            workingDir: workingDir,
+            environment: environment,
+            user: userName,
+            project: repoName,
           ),
         ),
       );
@@ -63,12 +74,14 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(repository),
+        contextManager.load(workingDir, environment),
         completion(
-          const Context(
+          Context(
             name: 'Bitbucket',
-            userName: userName,
-            repoName: repoName,
+            workingDir: workingDir,
+            environment: environment,
+            user: userName,
+            project: repoName,
           ),
         ),
       );
@@ -82,12 +95,14 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(repository),
+        contextManager.load(workingDir, environment),
         completion(
-          const Context(
+          Context(
             name: 'Codemagic',
-            userName: 'Codemagic',
-            repoName: repoName,
+            workingDir: workingDir,
+            environment: environment,
+            user: 'Codemagic',
+            project: repoName,
             providerSha: userName,
           ),
         ),
@@ -103,12 +118,14 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(repository),
+        contextManager.load(workingDir, environment),
         completion(
-          const Context(
+          Context(
             name: 'GitHub',
-            userName: userName,
-            repoName: repoName,
+            workingDir: workingDir,
+            environment: environment,
+            user: userName,
+            project: repoName,
             providerSha: sha,
           ),
         ),
@@ -123,12 +140,14 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(repository),
+        contextManager.load(workingDir, environment),
         completion(
-          const Context(
+          Context(
             name: 'GitLab',
-            userName: userName,
-            repoName: repoName,
+            workingDir: workingDir,
+            environment: environment,
+            user: userName,
+            project: repoName,
           ),
         ),
       );

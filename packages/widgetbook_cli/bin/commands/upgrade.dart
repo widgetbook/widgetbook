@@ -1,52 +1,31 @@
-// The MIT License (MIT)
-// Copyright (c) 2022 Widgetbook GmbH
-// Copyright (c) 2022 Felix Angelov
+import 'dart:async';
 
-// Permission is hereby granted, free of charge, to any person
-// obtaining a copy of this software and associated documentation
-// files (the "Software"), to deal in the Software without restriction,
-// including without limitation the rights to use, copy, modify, merge,
-// publish, distribute, sublicense, and/or sell copies of the Software,
-// and to permit persons to whom the Software is furnished to do so,
-// subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+import 'package:args/src/arg_results.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:pub_updater/pub_updater.dart';
 
-import '../helpers/metadata.dart';
-import 'command.dart';
+import '../core/cli_command.dart';
+import '../core/context.dart';
+import '../metadata.dart';
 
-class UpgradeCommand extends WidgetbookCommand {
+class UpgradeCommand extends CliVoidCommand {
   UpgradeCommand({
-    required PubUpdater pubUpdater,
+    required super.context,
+    required this.pubUpdater,
     super.logger,
-  }) : _pubUpdater = pubUpdater;
+  }) : super(
+          name: 'upgrade',
+          description: 'Upgrade Widgetbook CLI',
+        );
 
-  final PubUpdater _pubUpdater;
-
-  @override
-  final String description = 'Upgrade Widgetbook CLI';
-
-  @override
-  final String name = 'upgrade';
+  final PubUpdater pubUpdater;
 
   @override
-  Future<int> run() async {
+  FutureOr<int> runWith(Context context, ArgResults args) async {
     final updateCheckProgress = logger.progress('Checking for updates');
 
     try {
-      final isUpToDate = await _pubUpdater.isUpToDate(
+      final isUpToDate = await pubUpdater.isUpToDate(
         packageName: packageName,
         currentVersion: packageVersion,
       );
@@ -66,8 +45,11 @@ class UpgradeCommand extends WidgetbookCommand {
     final updateProgress = logger.progress('Upgrading to latest version');
 
     try {
-      final latestVersion = await _pubUpdater.getLatestVersion(packageName);
-      await _pubUpdater.update(
+      final latestVersion = await pubUpdater.getLatestVersion(
+        packageName,
+      );
+
+      await pubUpdater.update(
         packageName: packageName,
       );
 

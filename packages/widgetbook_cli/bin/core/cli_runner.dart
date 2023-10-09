@@ -1,26 +1,3 @@
-// The MIT License (MIT)
-// Copyright (c) 2022 Widgetbook GmbH
-// Copyright (c) 2022 Felix Angelov
-
-// Permission is hereby granted, free of charge, to any person
-// obtaining a copy of this software and associated documentation
-// files (the "Software"), to deal in the Software without restriction,
-// including without limitation the rights to use, copy, modify, merge,
-// publish, distribute, sublicense, and/or sell copies of the Software,
-// and to permit persons to whom the Software is furnished to do so,
-// subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 import 'dart:io';
 
 import 'package:args/args.dart';
@@ -28,16 +5,20 @@ import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:pub_updater/pub_updater.dart';
 
-import '../commands/commands.dart';
+import '../commands/publish.dart';
+import '../commands/upgrade.dart';
 import '../helpers/helpers.dart';
+import '../metadata.dart';
+import 'context.dart';
 
-class WidgetbookCommandRunner extends CommandRunner<int> {
-  WidgetbookCommandRunner({
+class CliRunner extends CommandRunner<int> {
+  CliRunner({
+    required this.context,
     Logger? logger,
     PubUpdater? pubUpdater,
   })  : _logger = logger ?? Logger(),
         _pubUpdater = pubUpdater ?? PubUpdater(),
-        super(executableName, 'Widgetbook CLI') {
+        super(cliName, cliDescription) {
     argParser.addFlag(
       'version',
       negatable: false,
@@ -46,6 +27,7 @@ class WidgetbookCommandRunner extends CommandRunner<int> {
 
     addCommand(
       UpgradeCommand(
+        context: context,
         logger: _logger,
         pubUpdater: _pubUpdater,
       ),
@@ -53,11 +35,13 @@ class WidgetbookCommandRunner extends CommandRunner<int> {
 
     addCommand(
       PublishCommand(
+        context: context,
         logger: _logger,
       ),
     );
   }
 
+  final Context context;
   final Logger _logger;
   final PubUpdater _pubUpdater;
 
@@ -148,9 +132,10 @@ class WidgetbookCommandRunner extends CommandRunner<int> {
       );
 
       _logger.info(
-        '\n${lightYellow.wrap('Update available!')} ${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}\n'
+        '\n${lightYellow.wrap('Update available!')} '
+        '${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}\n'
         '${lightYellow.wrap('Changelog:')} $changelogLink\n'
-        'Run ${cyan.wrap('$executableName update')} to update',
+        'Run ${cyan.wrap('${cliName} update')} to update',
       );
     } catch (_) {}
   }
