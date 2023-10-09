@@ -181,14 +181,16 @@ class KnobsBuilder {
     required String label,
     required DateTime initialValue,
     String? description,
-    bool readOnly = true,
+    required DateTime startDateTime,
+    required DateTime endDateTime,
   }) {
     return onKnobAdded(
       DateTimeKnob(
         label: label,
         value: initialValue,
         description: description,
-        readOnly: readOnly,
+        startDateTime: startDateTime,
+        endDateTime: endDateTime,
       ),
     )!;
   }
@@ -199,14 +201,16 @@ class KnobsBuilder {
     required String label,
     DateTime? initialValue,
     String? description,
-    bool readOnly = true,
+    required DateTime startDateTime,
+    required DateTime endDateTime,
   }) {
     return onKnobAdded(
-      DateTimeKnob(
+      DateTimeKnob.nullable(
         label: label,
         value: initialValue,
         description: description,
-        readOnly: readOnly,
+        startDateTime: startDateTime,
+        endDateTime: endDateTime,
       ),
     );
   }

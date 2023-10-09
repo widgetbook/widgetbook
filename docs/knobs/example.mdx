@@ -148,11 +148,10 @@ class _MyHomePageState extends State<MyHomePage> {
               '${widget.duration}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            if (widget.dateTime != null)
-              Text(
-                widget.dateTime.toIso8601String()!,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
+            Text(
+              widget.dateTime?.toSimpleFormat() ?? '-',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
           ],
         ),
       ),
@@ -243,7 +242,8 @@ class KnobsExample extends StatelessWidget {
                         // the text field to be out of sync
                         initialValue: initialDate,
                         label: 'Select Date Time',
-                        readOnly: false,
+                        startDateTime: DateTime(initialDate.year - 1),
+                        endDateTime: DateTime(initialDate.year + 1),
                     ),
                   ),
                 ),

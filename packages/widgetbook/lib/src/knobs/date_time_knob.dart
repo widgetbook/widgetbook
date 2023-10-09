@@ -10,17 +10,23 @@ class DateTimeKnob extends Knob<DateTime?> {
     required super.label,
     required super.value,
     super.description,
-    required this.readOnly,
+    required this.startDateTime,
+    required this.endDateTime,
   });
 
   DateTimeKnob.nullable({
     required super.label,
     required super.value,
     super.description,
-    required this.readOnly,
+    required this.startDateTime,
+    required this.endDateTime,
   }) : super(isNullable: true);
 
-  final bool readOnly;
+  /// The starting [DateTime] value used for the date and time pickers.
+  final DateTime startDateTime;
+
+  /// The ending [DateTime] value used for the date and time pickers.
+  final DateTime endDateTime;
 
   @override
   List<Field> get fields {
@@ -28,11 +34,12 @@ class DateTimeKnob extends Knob<DateTime?> {
       DateTimeField(
         name: label,
         initialValue: value,
+        startDateTime: startDateTime,
+        endDateTime: endDateTime,
         onChanged: (context, value) {
           if (value == null) return;
           WidgetbookState.of(context).knobs.updateValue(label, value);
         },
-        readOnly: readOnly,
       ),
     ];
   }

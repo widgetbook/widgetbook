@@ -14,20 +14,21 @@ void main() {
         'then the value should be displayed',
         (tester) async {
           final dateTime = DateTime(2021, 1, 1, 0, 0, 5);
-
           await tester.pumpKnob(
             (context) => Text(
-              DateTimeField.asString(
-                context.knobs.dateTime(
-                  label: 'DateTimeKnob',
-                  initialValue: dateTime,
-                ),
-              ),
+              context.knobs
+                  .dateTime(
+                    label: 'DateTimeKnob',
+                    initialValue: dateTime,
+                    startDateTime: DateTime(dateTime.year - 1),
+                    endDateTime: DateTime(dateTime.year + 1),
+                  )
+                  .toSimpleFormat(),
             ),
           );
 
           expect(
-            find.textWidget(DateTimeField.asString(dateTime)),
+            find.textWidget(dateTime.toSimpleFormat()),
             findsOneWidget,
           );
         },
@@ -42,23 +43,24 @@ void main() {
 
           await tester.pumpKnob(
             (context) => Text(
-              DateTimeField.asString(
-                context.knobs.dateTime(
-                  label: 'DateTimeKnob',
-                  initialValue: now,
-                  readOnly: false,
-                ),
-              ),
+              context.knobs
+                  .dateTime(
+                    label: 'DateTimeKnob',
+                    initialValue: now,
+                    startDateTime: DateTime(now.year - 1),
+                    endDateTime: nextYear,
+                  )
+                  .toSimpleFormat(),
             ),
           );
 
           await tester.findAndEnter(
             find.byType(TextField),
-            DateTimeField.asString(nextYear),
+            nextYear.toSimpleFormat(),
           );
 
           expect(
-            find.textWidget(DateTimeField.asString(nextYear)),
+            find.textWidget(nextYear.toSimpleFormat()),
             findsOneWidget,
           );
         },
@@ -76,8 +78,10 @@ void main() {
                   .dateTime(
                     label: 'DateTimeKnob',
                     initialValue: now,
+                    startDateTime: DateTime(now.year - 1),
+                    endDateTime: DateTime(now.year + 1),
                   )
-                  .toIso8601String(),
+                  .toSimpleFormat(),
             ),
           );
 
@@ -99,17 +103,14 @@ void main() {
 
           await tester.findAndEnter(
             find.byType(TextField),
-            dateTime.toIso8601String(),
+            dateTime.toSimpleFormat(),
           );
 
           expect(
-            find.textWidget(dateTime.toIso8601String()),
+            find.textWidget(dateTime.toSimpleFormat()),
             findsOneWidget,
           );
         },
-        variant: const TargetPlatformVariant(<TargetPlatform>{
-          TargetPlatform.windows,
-        }),
       );
     },
   );
@@ -125,6 +126,8 @@ void main() {
             (context) {
               context.knobs.dateTimeOrNull(
                 label: 'DateTimeKnob',
+                startDateTime: DateTime(DateTime.now().year - 1),
+                endDateTime: DateTime(DateTime.now().year + 1),
               );
               return const Text('');
             },
