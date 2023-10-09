@@ -3,44 +3,42 @@ import 'package:flutter/material.dart';
 import '../../fields/fields.dart';
 import '../common/common.dart';
 import 'grid_painter.dart';
-import 'grid_setting.dart';
 
-class GridAddon extends WidgetbookAddon<GridSetting> {
-  GridAddon([int? size])
-      : super(
+class GridAddon extends WidgetbookAddon<int> {
+  GridAddon([this.dimension = 5])
+      : assert(dimension > 0),
+        super(
           name: 'Grid',
-          initialSetting: GridSetting(size: size ?? 5),
+          initialSetting: dimension,
         );
+
+  final int dimension;
 
   @override
   List<Field> get fields => [];
 
   @override
-  GridSetting valueFromQueryGroup(Map<String, String> group) {
-    return GridSetting(
-      size: int.tryParse(group['size'] ?? '') ?? initialSetting.size,
-    );
+  int valueFromQueryGroup(Map<String, String> group) {
+    return int.tryParse(group['size'] ?? '') ?? dimension;
   }
 
   @override
   Widget buildUseCase(
     BuildContext context,
     Widget child,
-    GridSetting setting, {
+    int dimension, {
     Key? key,
   }) {
     return Stack(
-      key: key,
-      alignment: Alignment.center,
       children: [
         LayoutBuilder(
           builder: (context, constraints) {
             return CustomPaint(
-              size: Size(constraints.maxWidth, constraints.maxHeight),
-              painter: GridPainter(
-                horizontalDistance: setting.size,
-                verticalDistance: setting.size,
+              size: Size(
+                constraints.maxWidth,
+                constraints.maxHeight,
               ),
+              painter: GridPainter(dimension),
             );
           },
         ),

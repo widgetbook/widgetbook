@@ -12,15 +12,13 @@ Matcher throwsAssertion(String message) {
 }
 
 Matcher isGridPainterWith({
-  required int horizontalDistance,
-  required int verticalDistance,
+  required int dimension,
 }) {
   return predicate<CustomPaint>(
     (widget) {
       final painter = widget.painter as GridPainter;
-      return painter.horizontalDistance == horizontalDistance &&
-          painter.verticalDistance == verticalDistance;
+      return painter.dimension == dimension;
     },
-    'CustomPaint with GridPainter having horizontalDistance: $horizontalDistance and verticalDistance: $verticalDistance',
+    'CustomPaint with GridPainter having dimension: $dimension',
   );
 }
