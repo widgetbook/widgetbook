@@ -6,7 +6,7 @@ import 'field.dart';
 class NumInputField<T extends num> extends Field<T> {
   NumInputField({
     required super.name,
-    T? super.initialValue,
+    super.initialValue,
     super.onChanged,
     required super.codec,
     required super.type,
