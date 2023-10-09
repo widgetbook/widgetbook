@@ -93,12 +93,16 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
 
   late ColorSpace initialColorSpace;
   late dynamic colorValue;
+  final ColorsConverter converter = ColorsConverter();
 
   @override
   void initState() {
     super.initState();
     initialColorSpace = widget.colorSpace;
-    colorValue = getValueByColorSpace(widget.paramValue);
+    colorValue = converter.getValueByColorSpace(
+      colorSpace: initialColorSpace,
+      value: widget.paramValue,
+    );
   }
 
   @override
@@ -106,248 +110,60 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          children: [
-            if(initialColorSpace == ColorSpace.rgba)...[
-              ColorTextField(
-                key: const Key('colorFieldRgbaRed'),
-                value: colorValue[1] as String, 
-                maxLength: 3, 
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  FilteringTextInputFormatter.allow(
-                    RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'), 
-                    replacementString: colorValue[1] as String,
-                  )
-                ],
-                labelText: 'R',
-                onChanged: (value) {
-                  widget.onChanged(
-                    calculateValueByColorSpace<List<String>>(
-                      value: [
-                        '${colorValue[0]}',
-                        value,
-                        '${colorValue[2]}',
-                        '${colorValue[3]}',
-                      ],
-                    ),
-                  );
-                  setState(() {
-                    colorValue = getValueByColorSpace(widget.paramValue);
-                  });
-                },
-              ),
-              ColorTextField(
-                key: const Key('colorFieldRgbaGreen'),
-                value: colorValue[2] as String, 
-                maxLength: 3, 
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  FilteringTextInputFormatter.allow(
-                    RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'), 
-                    replacementString: colorValue[2] as String,
-                  )
-                ],
-                labelText: 'G',
-                onChanged: (value) {
-                  widget.onChanged(
-                    calculateValueByColorSpace<List<String>>(
-                      value: [
-                        '${colorValue[0]}',
-                        '${colorValue[1]}',
-                        value,
-                        '${colorValue[3]}',
-                      ],
-                    ),
-                  );
-                  setState(() {
-                    colorValue = getValueByColorSpace(widget.paramValue);
-                  });
-                },
-              ),
-              ColorTextField(
-                key: const Key('colorFieldRgbaBlue'),
-                value: colorValue[3] as String, 
-                maxLength: 3, 
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  FilteringTextInputFormatter.allow(
-                    RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'), 
-                    replacementString: colorValue[3] as String,
-                  )
-                ],
-                labelText: 'B',
-                onChanged: (value) {
-                  widget.onChanged(
-                    calculateValueByColorSpace<List<String>>(
-                      value: [
-                        '${colorValue[0]}',
-                        '${colorValue[1]}',
-                        '${colorValue[2]}',
-                        value,
-                      ],
-                    ),
-                  );
-                  setState(() {
-                    colorValue = getValueByColorSpace(widget.paramValue);
-                  });
-                },
-              ),
-              ColorTextField(
-                key: const Key('colorFieldRgbaAlpha'),
-                value: colorValue[0] as String, 
-                maxLength: 3, 
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  FilteringTextInputFormatter.allow(
-                    RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'), 
-                    replacementString: colorValue[0] as String,
-                  )
-                ],
-                labelText: 'A',
-                onChanged: (value) {
-                  widget.onChanged(
-                    calculateValueByColorSpace<List<String>>(
-                      value: [
-                        value,
-                        '${colorValue[1]}',
-                        '${colorValue[2]}',
-                        '${colorValue[3]}',
-                      ],
-                    ),
-                  );
-                  setState(() {
-                    colorValue = getValueByColorSpace(widget.paramValue);
-                  });
-                },
-              ),
-            ]else if(initialColorSpace == ColorSpace.hsl)...[
-              ColorTextField(
-                key: const Key('colorFieldHslHue'),
-                value: colorValue[0] as String, 
-                maxLength: 3, 
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  FilteringTextInputFormatter.allow(
-                    RegExp(r'^(?:[1-9]\d?|[12]\d{2}|3[0-5]\d)$'), 
-                    replacementString: colorValue[0] as String,
-                  )
-                ],
-                labelText: 'H',
-                onChanged: (value) {
-                  final initialValue = calculateValueByColorSpace(
-                    value: getValueByColorSpace(widget.paramValue)
-                  );
-                  final updateValue = calculateValueByColorSpace<List<String>>(
-                    value: [
-                      value,
-                      '${colorValue[1]}',
-                      '${colorValue[2]}',
-                    ],
-                  );
-                  if(initialValue != updateValue){
-                    widget.onChanged(updateValue);
-                  }
-                  setState(() {
-                    colorValue = [
-                      value,
-                      '${colorValue[1]}',
-                      '${colorValue[2]}',
-                    ];
-                  });
-                },
-              ),
-              ColorTextField(
-                key: const Key('colorFieldHslSaturation'),
-                value: colorValue[1] as String, 
-                maxLength: 3, 
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  FilteringTextInputFormatter.allow(
-                    RegExp(r'^(0|[1-9][0-9]?|100)$'), 
-                    replacementString: colorValue[1] as String,
-                  )
-                ],
-                labelText: 'S',
-                suffixText: '%',
-                onChanged: (value) {
-                  final initialValue = calculateValueByColorSpace(
-                    value: getValueByColorSpace(widget.paramValue)
-                  );
-                  final updateValue = calculateValueByColorSpace<List<String>>(
-                    value: [
-                      '${colorValue[0]}',
-                      value,
-                      '${colorValue[2]}',
-                    ],
-                  );
-                  if(initialValue != updateValue){
-                    widget.onChanged(updateValue);
-                  }
-                  setState(() {
-                    colorValue = [
-                      '${colorValue[0]}',
-                      value,
-                      '${colorValue[2]}',
-                    ];
-                  });
-                },
-              ),
-              ColorTextField(
-                key: const Key('colorFieldHslLightness'),
-                value: colorValue[2] as String, 
-                maxLength: 3, 
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  FilteringTextInputFormatter.allow(
-                    RegExp(r'^(0|[1-9][0-9]?|100)$'), 
-                    replacementString: colorValue[2] as String,
-                  )
-                ],
-                labelText: 'L',
-                suffixText: '%',
-                onChanged: (value) {
-                  final initialValue = calculateValueByColorSpace(
-                    value: getValueByColorSpace(widget.paramValue)
-                  );
-                  final updateValue = calculateValueByColorSpace<List<String>>(
-                    value: [
-                      '${colorValue[0]}',
-                      '${colorValue[1]}',
-                      value,
-                    ],
-                  );
-                  if(initialValue != updateValue){
-                    widget.onChanged(updateValue);
-                  }
-                  setState(() {
-                    colorValue = [
-                      '${colorValue[0]}',
-                      '${colorValue[1]}',
-                      value,
-                    ];
-                  });
-                },
-              ),
-            ]else...[
+        if(initialColorSpace == ColorSpace.rgba)...[
+          _RgbaColorTextFields(
+            colorValue: colorValue as List<String>,
+            onChanged: (value) {
+              widget.onChanged(value);
+              setState(() {
+                colorValue = converter.getValueByColorSpace(
+                  colorSpace: initialColorSpace,
+                  value: widget.paramValue,
+                );
+              });
+            },
+            converter: converter,
+          )
+        ]else if(initialColorSpace == ColorSpace.hsl)...[
+          _HslColorTextFields(
+            colorValue: colorValue as List<String>,
+            paramValue: widget.paramValue,
+            onChanged: (hexValue, value) {
+              if(hexValue != null){
+                widget.onChanged(hexValue);
+              }
+              setState(() {
+                colorValue = [...value];
+              });
+            },
+            converter: converter,
+          )
+        ]else...[
+          Row(
+            children: [
               ColorTextField(
                 key: const Key('colorFieldHex'),
-                value: colorValue as String,
+                value: '$colorValue',
                 maxLength: 8,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
                     RegExp(r'^[0-9a-fA-F]{0,8}$'), 
-                    replacementString: colorValue as String,
+                    replacementString: '$colorValue',
                   ),
                 ],
                 onChanged: (value) {
-                  widget.onChanged(calculateValueByColorSpace<String>(value: value));
+                  widget.onChanged(
+                    converter.convertColorValueToHex<String>(
+                      colorSpace: initialColorSpace, 
+                      colorValues: value,
+                    ),
+                  );
                 },
               ),
             ],
-          ],
-        ),
-        const SizedBox(height: 8,),
+          ),
+        ],
+        const SizedBox(height: 16,),
         Row(
           children: [
             Icon(
@@ -361,7 +177,10 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                 onChanged: (value) {
                   setState(() {
                     initialColorSpace = value ?? initialColorSpace;
-                    colorValue = getValueByColorSpace(widget.paramValue);
+                    colorValue = converter.getValueByColorSpace(
+                      colorSpace: initialColorSpace,
+                      value: widget.paramValue,
+                    );
                   });
                 },
                 items: ColorSpace.values.map(
@@ -378,27 +197,410 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
     );
   }
 
-  String calculateValueByColorSpace<T>({
-    T? value,
+}
+
+class _RgbaColorTextFields extends StatelessWidget{
+
+  const _RgbaColorTextFields({
+    required this.colorValue,
+    required this.onChanged,
+    required this.converter,
+  });
+
+  final List<String> colorValue;
+  final ValueChanged<String> onChanged;
+  final ColorsConverter converter;
+
+  @override
+  Widget build(BuildContext context){
+    return Row(
+      key: key,
+      children: [
+        ColorTextField(
+          key: const Key('colorFieldRgbaRed'),
+          value: '${colorValue[1]}', 
+          maxLength: 3, 
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+            FilteringTextInputFormatter.allow(
+              RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'), 
+              replacementString: '${colorValue[1]}',
+            )
+          ],
+          labelText: 'R',
+          onChanged: (value) => onChanged(
+            converter.convertColorValueToHex<List<String>>(
+              colorSpace: ColorSpace.rgba,
+              colorValues: [
+                '${colorValue[0]}',
+                value,
+                '${colorValue[2]}',
+                '${colorValue[3]}',
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(width: 8,),
+        ColorTextField(
+          key: const Key('colorFieldRgbaGreen'),
+          value: '${colorValue[2]}', 
+          maxLength: 3, 
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+            FilteringTextInputFormatter.allow(
+              RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'), 
+              replacementString: '${colorValue[2]}',
+            )
+          ],
+          labelText: 'G',
+          onChanged: (value) => onChanged(
+            converter.convertColorValueToHex<List<String>>(
+              colorSpace: ColorSpace.rgba,
+              colorValues: [
+                '${colorValue[0]}',
+                '${colorValue[1]}',
+                value,
+                '${colorValue[3]}',
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(width: 8,),
+        ColorTextField(
+          key: const Key('colorFieldRgbaBlue'),
+          value: '${colorValue[3]}', 
+          maxLength: 3, 
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+            FilteringTextInputFormatter.allow(
+              RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'), 
+              replacementString: '${colorValue[3]}',
+            )
+          ],
+          labelText: 'B',
+          onChanged: (value) => onChanged(
+            converter.convertColorValueToHex<List<String>>(
+              colorSpace: ColorSpace.rgba,
+              colorValues: [
+                '${colorValue[0]}',
+                '${colorValue[1]}',
+                '${colorValue[2]}',
+                value,
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(width: 8,),
+        ColorTextField(
+          key: const Key('colorFieldRgbaAlpha'),
+          value: '${colorValue[0]}', 
+          maxLength: 3, 
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+            FilteringTextInputFormatter.allow(
+              RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'), 
+              replacementString: '${colorValue[0]}',
+            )
+          ],
+          labelText: 'A',
+          onChanged: (value) => onChanged(
+            converter.convertColorValueToHex<List<String>>(
+              colorSpace: ColorSpace.rgba,
+              colorValues: [
+                value,
+                '${colorValue[1]}',
+                '${colorValue[2]}',
+                '${colorValue[3]}',
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+}
+
+class _HslColorTextFields extends StatelessWidget{
+
+  const _HslColorTextFields({
+    required this.colorValue,
+    required this.onChanged,
+    required this.paramValue,
+    required this.converter,
+  });
+
+  final List<String> colorValue;
+  final void Function(String? hexValue, List<String> newValues) onChanged;
+  final String paramValue;
+  final ColorsConverter converter;
+
+  @override
+  Widget build(BuildContext context){
+    return Row(
+      key: key,
+      children: [
+        ColorTextField(
+          key: const Key('colorFieldHslHue'),
+          value: '${colorValue[0]}', 
+          maxLength: 3, 
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+            FilteringTextInputFormatter.allow(
+              RegExp(r'^(?:[1-9]\d?|[12]\d{2}|3[0-5]\d)$'), 
+              replacementString: '${colorValue[0]}',
+            )
+          ],
+          labelText: 'H',
+          onChanged: (value) {
+            final initialValue = converter.convertColorValueToHex<List<String>>(
+              colorSpace: ColorSpace.hsl,
+              colorValues: converter.getValueByColorSpace(
+                colorSpace: ColorSpace.hsl, 
+                value: paramValue,
+              ) as List<String>,
+            );
+            final updateValue = converter.convertColorValueToHex<List<String>>(
+              colorSpace: ColorSpace.hsl,
+              colorValues: [
+                value,
+                '${colorValue[1]}',
+                '${colorValue[2]}',
+              ],
+            );
+            if(initialValue != updateValue){
+              onChanged(
+                updateValue,
+                [
+                  value,
+                  '${colorValue[1]}',
+                  '${colorValue[2]}',
+                ]
+              );
+            }
+            onChanged(
+              null,
+              [
+                value,
+                '${colorValue[1]}',
+                '${colorValue[2]}',
+              ]
+            );
+          },
+        ),
+        const SizedBox(width: 8,),
+        ColorTextField(
+          key: const Key('colorFieldHslSaturation'),
+          value: '${colorValue[1]}', 
+          maxLength: 3, 
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+            FilteringTextInputFormatter.allow(
+              RegExp(r'^(0|[1-9][0-9]?|100)$'), 
+              replacementString: '${colorValue[1]}',
+            )
+          ],
+          labelText: 'S',
+          suffixText: '%',
+          onChanged: (value) {
+            final initialValue = converter.convertColorValueToHex<List<String>>(
+              colorSpace: ColorSpace.hsl,
+              colorValues: converter.getValueByColorSpace(
+                colorSpace: ColorSpace.hsl, 
+                value: paramValue,
+              ) as List<String>,
+            );
+            final updateValue = converter.convertColorValueToHex<List<String>>(
+              colorSpace: ColorSpace.hsl,
+              colorValues: [
+                '${colorValue[0]}',
+                value,
+                '${colorValue[2]}',
+              ],
+            );
+            if(initialValue != updateValue){
+              onChanged(
+                updateValue,
+                [
+                  '${colorValue[0]}',
+                  value,
+                  '${colorValue[2]}',
+                ]
+              );
+            }
+            onChanged(
+              null,
+              [
+                '${colorValue[0]}',
+                value,
+                '${colorValue[2]}',
+              ]
+            );
+          },
+        ),
+        const SizedBox(width: 8,),
+        ColorTextField(
+          key: const Key('colorFieldHslLightness'),
+          value: '${colorValue[2]}', 
+          maxLength: 3, 
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+            FilteringTextInputFormatter.allow(
+              RegExp(r'^(0|[1-9][0-9]?|100)$'), 
+              replacementString: '${colorValue[2]}',
+            )
+          ],
+          labelText: 'L',
+          suffixText: '%',
+          onChanged: (value) {
+            final initialValue = converter.convertColorValueToHex<List<String>>(
+              colorSpace: ColorSpace.hsl,
+              colorValues: converter.getValueByColorSpace(
+                colorSpace: ColorSpace.hsl, 
+                value: paramValue,
+              ) as List<String>,
+            );
+            final updateValue = converter.convertColorValueToHex<List<String>>(
+              colorSpace: ColorSpace.hsl,
+              colorValues: [
+                '${colorValue[0]}',
+                '${colorValue[1]}',
+                value,
+              ],
+            );
+            if(initialValue != updateValue){
+              onChanged(
+                updateValue,
+                [
+                  '${colorValue[0]}',
+                  '${colorValue[1]}',
+                  value,
+                ]
+              );
+            }
+            onChanged(
+              null,
+              [
+                '${colorValue[0]}',
+                '${colorValue[1]}',
+                value,
+              ]
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+}
+
+class ColorTextField extends StatelessWidget {
+  const ColorTextField({
+    required this.value,
+    required this.maxLength,
+    required this.onChanged,
+    this.inputFormatters,
+    this.prefixIcon,
+    this.suffixText,
+    this.labelText,
+    super.key,
+  });
+
+  final String value;
+  final int maxLength;
+  final ValueChanged<String> onChanged;
+  final List<TextInputFormatter>? inputFormatters;
+  final Widget? prefixIcon;
+  final String? suffixText;
+  final String? labelText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: TextFormField(
+        initialValue: value,
+        inputFormatters: inputFormatters,
+        maxLength: maxLength,
+        decoration: InputDecoration(
+          labelText: labelText,
+          counterText: '',
+          prefixIcon: prefixIcon,
+          suffixText: suffixText,
+        ),
+        onChanged: onChanged,
+      ),
+    );
+  }
+}
+
+class ColorsConverter {
+
+  String convertColorValueToHex<T>({
+    required ColorSpace colorSpace,
+    required T colorValues,
   }){
-    switch(initialColorSpace){
+    switch(colorSpace){
       case ColorSpace.hex:
-        return value as String;
+        return colorValues as String;
       case ColorSpace.rgba:
-        return rgbaToHex(value as List<String>);
+        return rgbaToHex(colorValues as List<String>);
       default:
-        return hslToHex(value as List<String>);
+        return hslToHex(colorValues as List<String>);
     }
   }
 
-  dynamic getValueByColorSpace(String hex){
-    switch(initialColorSpace){
+  String rgbaToHex(List<String> rgba){
+    int alpha = int.tryParse(rgba[0]) ?? 0;
+    int red = int.tryParse(rgba[1]) ?? 0;
+    int green = int.tryParse(rgba[2]) ?? 0;
+    int blue = int.tryParse(rgba[3]) ?? 0;
+    return '${alpha.toRadixString(16).padLeft(2, '0')}${red.toRadixString(16).padLeft(2, '0')}${green.toRadixString(16).padLeft(2, '0')}${blue.toRadixString(16).padLeft(2, '0')}';
+  }
+
+  String hslToHex(List<String> hsl){
+    double h = double.tryParse(hsl[0]) ?? 0;
+    double s = double.tryParse(hsl[1]) ?? 0;
+    double l = double.tryParse(hsl[2]) ?? 0;
+
+    h /= 360;
+    s /= 100;
+    l /= 100;
+
+    double r = 0;
+    double g = 0;
+    double b = 0;
+    if(s == 0){
+      r = g = b = l;
+    }else{
+      double q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      double p = 2 * l - q;
+      r = hueToRgb(p, q, h + 1 / 3);
+      g = hueToRgb(p, q, h);
+      b = hueToRgb(p, q, h - 1 / 3);
+    }
+    return rgbaToHex(['255', '${(r * 255).toInt()}', '${(g * 255).toInt()}', '${(b * 255).toInt()}']);
+  }
+
+  double hueToRgb(double p, double q, double t){
+    if(t < 0) t += 1;
+    if(t > 1) t -= 1;
+    if(t < 1 / 6) return p + (q - p) * 6 * t;
+    if(t < 1 / 2) return q;
+    if(t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+    return p;
+  }
+
+  dynamic getValueByColorSpace({
+    required ColorSpace colorSpace, 
+    required String value,
+  }){
+    switch(colorSpace){
       case ColorSpace.hex:
-        return hex;
+        return value;
       case ColorSpace.rgba:
-        return hexToRgba(hex);
+        return hexToRgba(value);
       default:
-        return hexToHsl(hex);
+        return hexToHsl(value);
     }
   }
 
@@ -420,14 +622,6 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
     
     return ['$alpha', '$red', '$green', '$blue'];
   }
-
-  String rgbaToHex(List<String> rgba){
-    int alpha = int.tryParse(rgba[0]) ?? 0;
-    int red = int.tryParse(rgba[1]) ?? 0;
-    int green = int.tryParse(rgba[2]) ?? 0;
-    int blue = int.tryParse(rgba[3]) ?? 0;
-    return '${alpha.toRadixString(16).padLeft(2, '0')}${red.toRadixString(16).padLeft(2, '0')}${green.toRadixString(16).padLeft(2, '0')}${blue.toRadixString(16).padLeft(2, '0')}';
-  } 
 
   List<String> hexToHsl(String hex){
     // Start from rgba values because it's easier to convert to hsl
@@ -466,78 +660,4 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
     return ['${(h * 360).toInt()}', '${(s * 100).toInt()}', '${(l * 100).toInt()}'];
   }
 
-  // Create a function that got a list of String that represent the HSL values and return a hex value
-  String hslToHex(List<String> hsl){
-    double h = double.tryParse(hsl[0]) ?? 0;
-    double s = double.tryParse(hsl[1]) ?? 0;
-    double l = double.tryParse(hsl[2]) ?? 0;
-
-    h /= 360;
-    s /= 100;
-    l /= 100;
-
-    double r = 0;
-    double g = 0;
-    double b = 0;
-    if(s == 0){
-      r = g = b = l;
-    }else{
-      double q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-      double p = 2 * l - q;
-      r = hueToRgb(p, q, h + 1 / 3);
-      g = hueToRgb(p, q, h);
-      b = hueToRgb(p, q, h - 1 / 3);
-    }
-    return rgbaToHex(['255', '${(r * 255).toInt()}', '${(g * 255).toInt()}', '${(b * 255).toInt()}']);
-  }
-
-  double hueToRgb(double p, double q, double t){
-    if(t < 0) t += 1;
-    if(t > 1) t -= 1;
-    if(t < 1 / 6) return p + (q - p) * 6 * t;
-    if(t < 1 / 2) return q;
-    if(t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-    return p;
-  }
-
-}
-
-
-class ColorTextField extends StatelessWidget {
-  const ColorTextField({
-    required this.value,
-    required this.maxLength,
-    required this.onChanged,
-    this.inputFormatters,
-    this.prefixIcon,
-    this.suffixText,
-    this.labelText,
-    super.key
-  });
-
-  final String value;
-  final int maxLength;
-  final ValueChanged<String> onChanged;
-  final List<TextInputFormatter>? inputFormatters;
-  final Widget? prefixIcon;
-  final String? suffixText;
-  final String? labelText;
-
-  @override
-  Widget build(BuildContext context) {
-    return Flexible(
-      child: TextFormField(
-        initialValue: value,
-        inputFormatters: inputFormatters,
-        maxLength: maxLength,
-        decoration: InputDecoration(
-          labelText: labelText,
-          counterText: '',
-          prefixIcon: prefixIcon,
-          suffixText: suffixText,
-        ),
-        onChanged: onChanged,
-      ),
-    );
-  }
 }

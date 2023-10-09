@@ -37,6 +37,8 @@ Widget colorKnobUseCase(BuildContext context, Color color) {
   return Column(
     children: [
       Container(
+        width: 100,
+        height: 100,
         color: color,
       ),
     ],
