@@ -3,8 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 void main() {
-  group('$IntField', () {
-    final field = IntField(
+  group('$IntInputField', () {
+    final field = IntInputField(
       name: 'int_field',
       initialValue: 5,
     );

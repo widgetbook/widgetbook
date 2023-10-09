@@ -6,7 +6,7 @@ import '../../helper/helper.dart';
 
 void main() {
   group(
-    '$IntKnob',
+    '$IntSliderKnob',
     () {
       testWidgets(
         'given an initial value, '
@@ -17,7 +17,7 @@ void main() {
           await tester.pumpKnob(
             (context) => Text(
               context.knobs.intbuilder
-                  .input(
+                  .slider(
                     label: 'IntKnob',
                     initialValue: value,
                   )
@@ -25,7 +25,7 @@ void main() {
             ),
           );
 
-          expect(find.textWidget('$value'), findsOneWidget);
+          expect(find.textWidget('$value'), findsWidgets);
         },
       );
 
@@ -33,37 +33,33 @@ void main() {
         'when field is updated, '
         'then the value should be updated',
         (tester) async {
-          const initialValue = 5;
-          const updatedValue = 10;
-
+          const max = 10;
           await tester.pumpKnob(
             (context) => Text(
               context.knobs.intbuilder
-                  .input(
+                  .slider(
                     label: 'IntKnob',
-                    initialValue: initialValue,
+                    divisions: 1,
+                    max: max,
                   )
                   .toString(),
             ),
           );
 
-          await tester.findAndEnter(
-            find.byType(TextField),
-            updatedValue.toString(),
+          await tester.findAndDrag(
+            find.byType(Slider),
+            const Offset(100, 0),
           );
 
-          expect(
-            find.textWidget('${updatedValue}'),
-            findsOneWidget,
-          );
+          expect(find.textWidget('$max'), findsWidgets);
         },
       );
     },
   );
 
-  group('${IntKnob.nullable}', () {
-    test('IntKnob.nullable constructor sets correct values', () {
-      final knob = IntKnob.nullable(
+  group('${IntSliderKnob.nullable}', () {
+    test('IntSliderKnob.nullable constructor sets correct values', () {
+      final knob = IntSliderKnob.nullable(
         label: 'Test Int',
         value: 5,
         description: 'A test int knob',
@@ -74,8 +70,8 @@ void main() {
       expect(knob.description, 'A test int knob');
     });
 
-    test('IntKnob.nullable constructor handles null value', () {
-      final knob = IntKnob.nullable(
+    test('IntSliderKnob.nullable constructor handles null value', () {
+      final knob = IntSliderKnob.nullable(
         label: 'Test Int',
         value: null,
         description: 'A test int knob with null value',
@@ -84,30 +80,6 @@ void main() {
       expect(knob.label, 'Test Int');
       expect(knob.value, null);
       expect(knob.description, 'A test int knob with null value');
-    });
-  });
-
-  group('$KnobsBuilder', () {
-    int? mockOnKnobAdded<int>(Knob<int?> knob) => knob.value;
-    final builder = KnobsBuilder(mockOnKnobAdded);
-
-    test('intOrNull sets correct values', () {
-      final intValue = builder.intOrNull.input(
-        label: 'Test Int',
-        initialValue: 10,
-        description: 'A test int',
-      );
-
-      expect(intValue, 10);
-    });
-
-    test('intOrNull handles null initialValue', () {
-      final intValue = builder.intOrNull.input(
-        label: 'Test Int',
-        description: 'A test int with null value',
-      );
-
-      expect(intValue, null);
     });
   });
 }

@@ -3,31 +3,19 @@ import 'package:flutter/material.dart';
 import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
+import 'num_input_field.dart';
 
 /// [Field] that builds [TextFormField] for [double] values.
-class DoubleInputField extends Field<double> {
+class DoubleInputField extends NumInputField<double> {
   DoubleInputField({
     required super.name,
     super.initialValue = 0,
     super.onChanged,
   }) : super(
-          type: FieldType.doubleSlider,
+          type: FieldType.doubleInput,
           codec: FieldCodec(
             toParam: (value) => value.toString(),
             toValue: (param) => double.tryParse(param ?? ''),
           ),
         );
-
-  @override
-  Widget toWidget(BuildContext context, String group, double? value) {
-    return TextFormField(
-      initialValue: codec.toParam(value ?? initialValue ?? 0),
-      keyboardType: TextInputType.number,
-      onChanged: (value) => updateField(
-        context,
-        group,
-        codec.toValue(value) ?? initialValue ?? 0,
-      ),
-    );
-  }
 }

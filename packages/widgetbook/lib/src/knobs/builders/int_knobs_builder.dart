@@ -1,4 +1,5 @@
-import '../int_knob.dart';
+import '../int_input_knob.dart';
+import '../int_slider_knob.dart';
 import 'knobs_builder.dart';
 
 class IntKnobsBuilder {
@@ -13,10 +14,32 @@ class IntKnobsBuilder {
     int initialValue = 0,
   }) {
     return onKnobAdded(
-      IntKnob(
+      IntInputKnob(
         label: label,
         value: initialValue,
         description: description,
+      ),
+    )!;
+  }
+
+  /// Creates a slider that can be slid to specific int values.
+  int slider({
+    required String label,
+    String? description,
+    int? initialValue,
+    int? max,
+    int? min,
+    int? divisions,
+  }) {
+    initialValue ??= max ?? min ?? 10;
+    return onKnobAdded(
+      IntSliderKnob(
+        label: label,
+        value: initialValue,
+        description: description,
+        min: min ?? initialValue - 10,
+        max: max ?? initialValue + 10,
+        divisions: divisions,
       ),
     )!;
   }
@@ -37,10 +60,33 @@ class IntOrNullKnobsBuilder {
     int? initialValue,
   }) {
     return onKnobAdded(
-      IntKnob.nullable(
+      IntInputKnob.nullable(
         label: label,
         value: initialValue,
         description: description,
+      ),
+    );
+  }
+
+  /// Creates a slider that can be slid to specific double values.
+  /// Can optionally hold a null value
+  int? slider({
+    required String label,
+    String? description,
+    int? initialValue,
+    int? max,
+    int? min,
+    int? divisions,
+  }) {
+    initialValue ??= max ?? min ?? 10;
+    return onKnobAdded(
+      IntSliderKnob.nullable(
+        label: label,
+        value: initialValue,
+        description: description,
+        min: min ?? initialValue - 10,
+        max: max ?? initialValue + 10,
+        divisions: divisions,
       ),
     );
   }

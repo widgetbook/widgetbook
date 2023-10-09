@@ -54,4 +54,54 @@ void main() {
       );
     },
   );
+
+  group('${DoubleInputKnob.nullable}', () {
+    test('DoubleInputKnob.nullable constructor sets correct values', () {
+      final knob = DoubleInputKnob.nullable(
+        label: 'Test double',
+        value: 5.0,
+        description: 'A test double knob',
+      );
+
+      expect(knob.label, 'Test double');
+      expect(knob.value, 5.0);
+      expect(knob.description, 'A test double knob');
+    });
+
+    test('DoubleInputKnob.nullable constructor handles null value', () {
+      final knob = DoubleInputKnob.nullable(
+        label: 'Test double',
+        value: null,
+        description: 'A test double knob with null value',
+      );
+
+      expect(knob.label, 'Test double');
+      expect(knob.value, null);
+      expect(knob.description, 'A test double knob with null value');
+    });
+  });
+
+  group('$KnobsBuilder', () {
+    double? mockOnKnobAdded<double>(Knob<double?> knob) => knob.value;
+    final builder = KnobsBuilder(mockOnKnobAdded);
+
+    test('doubleOrNull sets correct values', () {
+      final doubleValue = builder.doubleOrNull.input(
+        label: 'Test double',
+        initialValue: 10.0,
+        description: 'A test double',
+      );
+
+      expect(doubleValue, 10.0);
+    });
+
+    test('doubleOrNull handles null initialValue', () {
+      final doubleValue = builder.doubleOrNull.input(
+        label: 'Test double',
+        description: 'A test double with null value',
+      );
+
+      expect(doubleValue, null);
+    });
+  });
 }

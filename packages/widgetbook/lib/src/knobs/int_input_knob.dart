@@ -5,14 +5,14 @@ import '../state/widgetbook_state.dart';
 import 'knob.dart';
 
 @internal
-class IntKnob extends Knob<int?> {
-  IntKnob({
+class IntInputKnob extends Knob<int?> {
+  IntInputKnob({
     required super.label,
     required super.value,
     super.description,
   });
 
-  IntKnob.nullable({
+  IntInputKnob.nullable({
     required super.label,
     required super.value,
     super.description,
@@ -21,7 +21,7 @@ class IntKnob extends Knob<int?> {
   @override
   List<Field> get fields {
     return [
-      IntField(
+      IntInputField(
         name: label,
         initialValue: value,
         onChanged: (context, value) {
