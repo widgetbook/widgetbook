@@ -9,10 +9,6 @@ void main(List<String> arguments, Environment environment) async {
     environment,
   );
 
-  if (context == null) {
-    exit(1);
-  }
-
   await flushThenExit(
     await CliRunner(
       context: context,
