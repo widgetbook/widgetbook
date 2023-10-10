@@ -26,6 +26,7 @@ class WidgetbookApp extends StatelessWidget {
         ZoomAddon(),
         DeviceFrameAddon(devices: Devices.ios.all),
         AlignmentAddon(),
+        GridAddon(100),
       ],
       directories: [
         WidgetbookFolder(
