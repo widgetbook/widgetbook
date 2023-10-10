@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:path/path.dart' as path;
 
 class GitHubClient {
   GitHubClient({
@@ -10,7 +9,7 @@ class GitHubClient {
   }) : client = client ??
             Dio(
               BaseOptions(
-                baseUrl: 'https://api.github.com',
+                baseUrl: 'https://api.github.com/',
                 contentType: Headers.jsonContentType,
                 headers: {HttpHeaders.authorizationHeader: 'token $apiKey'},
               ),
@@ -24,7 +23,7 @@ class GitHubClient {
     required String body,
   }) async {
     await client.post<dynamic>(
-      path.join('repos', repository, 'issues', prNumber, 'comments'),
+      '/repos/$repository/issues/$prNumber/comments',
       data: {'body': body},
     );
   }
