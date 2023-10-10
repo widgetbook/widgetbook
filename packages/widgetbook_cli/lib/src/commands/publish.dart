@@ -279,7 +279,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
     final useCases = await useCaseReader.read(args.path);
     final diffs = await context.repository.diff(args.baseBranch!.fullName);
 
-    final changeUseCases = await useCaseReader.compare(
+    final changeUseCases = useCaseReader.compare(
       useCases: useCases,
       diffs: diffs,
     );
