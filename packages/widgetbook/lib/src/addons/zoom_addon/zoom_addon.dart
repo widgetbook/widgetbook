@@ -5,7 +5,8 @@ import '../common/common.dart';
 
 class ZoomAddon extends WidgetbookAddon<double> {
   ZoomAddon({double initialZoom = 1.0})
-      : super(
+      : assert(initialZoom > 0.5 && initialZoom <= 3.0),
+        super(
           name: 'Zoom',
           initialSetting: initialZoom,
         );

@@ -52,7 +52,10 @@ void main() {
           await tester.pumpWidget(
             MaterialApp(
               home: addon.buildUseCase(
-                  tester.element(find.byType(Text)), child, 1.5),
+                tester.element(find.byType(Text)),
+                child,
+                1.5,
+              ),
             ),
           );
 
