@@ -5,7 +5,6 @@ import 'package:collection/collection.dart';
 import 'package:path/path.dart' as path;
 import 'package:process/process.dart';
 
-import '../utils/utils.dart';
 import 'diff_header.dart';
 import 'git_process_manager.dart';
 import 'reference.dart';
@@ -16,28 +15,27 @@ class Repository {
     this.processManager,
   ) : assert(path.isAbsolute(rootDir));
 
+  final String rootDir;
+  final ProcessManager processManager;
+
   /// Loads the [Repository] that contains the given [dir].
-  factory Repository.load(
+  /// Returns `null` if the [dir] is not in a git repository.
+  static Future<Repository?> load(
     String dir, {
     ProcessManager processManager = const LocalProcessManager(),
-  }) {
+  }) async {
     try {
       final absoluteDir = path.absolute(dir);
-      final rootDir = processManager.runGitSync(
+      final rootDir = await processManager.runGit(
         ['rev-parse', '--show-toplevel'],
         workingDirectory: absoluteDir,
       );
 
       return Repository.raw(rootDir, processManager);
     } catch (_) {
-      throw GitDirectoryNotFound(
-        message: 'The path "$dir" is not a valid git directory.',
-      );
+      return null;
     }
   }
-
-  final String rootDir;
-  final ProcessManager processManager;
 
   String get name {
     return rootDir.split('/').last;

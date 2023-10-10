@@ -23,8 +23,6 @@ class FakeEnvironment extends Fake implements Environment {
 
 class MockLogger extends Mock implements Logger {}
 
-class MockGitManager extends Mock implements GitManager {}
-
 class MockPubUpdater extends Mock implements PubUpdater {}
 
 class MockProgress extends Mock implements Progress {}
