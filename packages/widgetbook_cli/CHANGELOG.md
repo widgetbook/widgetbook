@@ -1,4 +1,4 @@
-## Unreleased
+## 3.0.0-rc.4
 
 - **BREAKING**: Remove `--git-provider` option from `publish` command. ([#913](https://github.com/widgetbook/widgetbook/pull/913))
 - **BREAKING**: Remove `--base-commit` option from `publish` command. ([#936](https://github.com/widgetbook/widgetbook/pull/936))
