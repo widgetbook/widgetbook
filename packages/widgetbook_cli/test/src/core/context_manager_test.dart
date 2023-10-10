@@ -11,31 +11,26 @@ void main() {
 
   final ciManager = MockCiManager();
   final platform = MockPlatform();
-  final gitManager = MockGitManager();
   final contextManager = ContextManager(
     ciManager: ciManager,
     platform: platform,
-    gitManager: gitManager,
   );
 
   group('$ContextManager', () {
-    const workingDir = './';
+    final repository = MockRepository();
     final environment = FakeEnvironment();
 
     test('Local', () async {
-      final repository = MockRepository();
-
       ciManager.mock();
-      when(() => gitManager.load(any())).thenReturn(repository);
       when(() => repository.name).thenReturn(repoName);
       when(() => repository.user).thenAnswer((_) async => userName);
 
       expectLater(
-        contextManager.load(workingDir, environment),
+        contextManager.load(repository, environment),
         completion(
           Context(
             name: 'Local',
-            workingDir: workingDir,
+            repository: repository,
             environment: environment,
             user: userName,
             project: repoName,
@@ -52,11 +47,11 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(workingDir, environment),
+        contextManager.load(repository, environment),
         completion(
           Context(
             name: 'Azure',
-            workingDir: workingDir,
+            repository: repository,
             environment: environment,
             user: userName,
             project: repoName,
@@ -73,11 +68,11 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(workingDir, environment),
+        contextManager.load(repository, environment),
         completion(
           Context(
             name: 'Bitbucket',
-            workingDir: workingDir,
+            repository: repository,
             environment: environment,
             user: userName,
             project: repoName,
@@ -94,11 +89,11 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(workingDir, environment),
+        contextManager.load(repository, environment),
         completion(
           Context(
             name: 'Codemagic',
-            workingDir: workingDir,
+            repository: repository,
             environment: environment,
             user: 'Codemagic',
             project: repoName,
@@ -117,11 +112,11 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(workingDir, environment),
+        contextManager.load(repository, environment),
         completion(
           Context(
             name: 'GitHub',
-            workingDir: workingDir,
+            repository: repository,
             environment: environment,
             user: userName,
             project: repoName,
@@ -139,11 +134,11 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(workingDir, environment),
+        contextManager.load(repository, environment),
         completion(
           Context(
             name: 'GitLab',
-            workingDir: workingDir,
+            repository: repository,
             environment: environment,
             user: userName,
             project: repoName,

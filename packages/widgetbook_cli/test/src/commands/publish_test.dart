@@ -192,7 +192,7 @@ void main() {
         when(() => localContext.user).thenReturn('default user');
         when(() => localContext.project).thenReturn('default repo');
         when(() => localContext.providerSha).thenReturn('default sha');
-        when(() => localContext.workingDir).thenReturn('default path');
+        when(() => localContext.repository).thenReturn(repository);
 
         // Default Repository
         when(() => repository.currentBranch).thenAnswer(
