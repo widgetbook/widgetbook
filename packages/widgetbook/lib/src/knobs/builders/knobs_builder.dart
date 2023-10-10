@@ -12,20 +12,21 @@ import 'double_knobs_builder.dart';
 import 'int_knobs_builder.dart';
 
 typedef KnobAdded = T? Function<T>(Knob<T?> knob);
+typedef $int = int;
 
 class KnobsBuilder {
   KnobsBuilder(
     this.onKnobAdded,
   )   : this.double = DoubleKnobsBuilder(onKnobAdded),
         this.doubleOrNull = DoubleOrNullKnobsBuilder(onKnobAdded),
-        this.integer = IntKnobsBuilder(onKnobAdded),
-        this.integerOrNull = IntOrNullKnobsBuilder(onKnobAdded);
+        this.int = IntKnobsBuilder(onKnobAdded),
+        this.intOrNull = IntOrNullKnobsBuilder(onKnobAdded);
 
   final KnobAdded onKnobAdded;
   final DoubleKnobsBuilder double;
   final DoubleOrNullKnobsBuilder doubleOrNull;
-  final IntKnobsBuilder integer;
-  final IntOrNullKnobsBuilder integerOrNull;
+  final IntKnobsBuilder int;
+  final IntOrNullKnobsBuilder intOrNull;
 
   /// Creates a checkbox that can be toggled on and off
   bool boolean({
@@ -78,7 +79,7 @@ class KnobsBuilder {
     required String label,
     String? description,
     String initialValue = '',
-    int? maxLines = 1,
+    $int? maxLines = 1,
   }) {
     return onKnobAdded(
       StringKnob(
@@ -96,7 +97,7 @@ class KnobsBuilder {
     required String label,
     String? description,
     String? initialValue,
-    int? maxLines = 1,
+    $int? maxLines = 1,
   }) {
     return onKnobAdded(
       StringKnob.nullable(

@@ -16,7 +16,7 @@ void main() {
 
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.integer
+              context.knobs.int
                   .slider(
                     label: 'IntKnob',
                     initialValue: value,
@@ -36,7 +36,7 @@ void main() {
           const max = 10;
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.integer
+              context.knobs.int
                   .slider(
                     label: 'IntKnob',
                     divisions: 1,
