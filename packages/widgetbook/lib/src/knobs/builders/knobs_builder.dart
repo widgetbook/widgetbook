@@ -18,14 +18,14 @@ class KnobsBuilder {
     this.onKnobAdded,
   )   : this.double = DoubleKnobsBuilder(onKnobAdded),
         this.doubleOrNull = DoubleOrNullKnobsBuilder(onKnobAdded),
-        this.intbuilder = IntKnobsBuilder(onKnobAdded),
-        this.intOrNull = IntOrNullKnobsBuilder(onKnobAdded);
+        this.integer = IntKnobsBuilder(onKnobAdded),
+        this.integerOrNull = IntOrNullKnobsBuilder(onKnobAdded);
 
   final KnobAdded onKnobAdded;
   final DoubleKnobsBuilder double;
   final DoubleOrNullKnobsBuilder doubleOrNull;
-  final IntKnobsBuilder intbuilder;
-  final IntOrNullKnobsBuilder intOrNull;
+  final IntKnobsBuilder integer;
+  final IntOrNullKnobsBuilder integerOrNull;
 
   /// Creates a checkbox that can be toggled on and off
   bool boolean({

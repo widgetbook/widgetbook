@@ -16,7 +16,7 @@ void main() {
 
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.intbuilder
+              context.knobs.integer
                   .input(
                     label: 'IntKnob',
                     initialValue: value,
@@ -38,7 +38,7 @@ void main() {
 
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.intbuilder
+              context.knobs.integer
                   .input(
                     label: 'IntKnob',
                     initialValue: initialValue,
@@ -92,7 +92,7 @@ void main() {
     final builder = KnobsBuilder(mockOnKnobAdded);
 
     test('intOrNull sets correct values', () {
-      final intValue = builder.intOrNull.input(
+      final intValue = builder.integerOrNull.input(
         label: 'Test Int',
         initialValue: 10,
         description: 'A test int',
@@ -102,7 +102,7 @@ void main() {
     });
 
     test('intOrNull handles null initialValue', () {
-      final intValue = builder.intOrNull.input(
+      final intValue = builder.integerOrNull.input(
         label: 'Test Int',
         description: 'A test int with null value',
       );

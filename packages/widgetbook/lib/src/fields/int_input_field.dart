@@ -1,7 +1,7 @@
-import 'field_codec.dart';
 import 'field_type.dart';
 import 'num_input_field.dart';
 
+/// [Field] that builds [TextFormField] for [int] values.
 class IntInputField extends NumInputField<int> {
   IntInputField({
     required super.name,
@@ -9,9 +9,5 @@ class IntInputField extends NumInputField<int> {
     super.onChanged,
   }) : super(
           type: FieldType.intInput,
-          codec: FieldCodec<int>(
-            toParam: (value) => value.toString(),
-            toValue: (param) => int.tryParse(param ?? ''),
-          ),
         );
 }

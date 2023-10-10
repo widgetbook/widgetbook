@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'field.dart';
-import 'field_codec.dart';
 import 'field_type.dart';
 import 'num_input_field.dart';
 
@@ -13,9 +12,5 @@ class DoubleInputField extends NumInputField<double> {
     super.onChanged,
   }) : super(
           type: FieldType.doubleInput,
-          codec: FieldCodec(
-            toParam: (value) => value.toString(),
-            toValue: (param) => double.tryParse(param ?? ''),
-          ),
         );
 }

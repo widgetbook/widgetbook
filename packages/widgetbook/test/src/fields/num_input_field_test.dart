@@ -14,10 +14,6 @@ void main() {
         name: 'double_input_field',
         initialValue: 5.0,
         type: FieldType.doubleInput,
-        codec: FieldCodec(
-          toParam: (value) => value.toString(),
-          toValue: (param) => double.tryParse(param ?? ''),
-        ),
       );
 
       test(
@@ -73,11 +69,7 @@ void main() {
       name: 'int_field',
       initialValue: 5,
       type: FieldType.intInput,
-      codec: FieldCodec<int>(
-        toParam: (value) => value.toString(),
-        toValue: (param) => int.tryParse(param ?? ''),
-      ),
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+      formatters: [FilteringTextInputFormatter.digitsOnly],
     );
 
     test(
