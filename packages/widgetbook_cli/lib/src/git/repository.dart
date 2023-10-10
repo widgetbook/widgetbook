@@ -23,16 +23,10 @@ class Repository {
   }) {
     try {
       final absoluteDir = path.absolute(dir);
-      final dotGitDir = processManager.runGitSync(
-        ['rev-parse', '--git-dir'],
+      final rootDir = processManager.runGitSync(
+        ['rev-parse', '--show-toplevel'],
         workingDirectory: absoluteDir,
       );
-
-      final rootDir = path.dirname(dotGitDir);
-
-      if (!path.isWithin(rootDir, absoluteDir)) {
-        throw GitDirectoryNotFound();
-      }
 
       return Repository.raw(rootDir, processManager);
     } catch (_) {
@@ -45,13 +39,12 @@ class Repository {
   final String rootDir;
   final ProcessManager processManager;
 
-  Future<String> get user async {
-    return runLocal(['config', 'user.name']);
+  String get name {
+    return rootDir.split('/').last;
   }
 
-  Future<String> get name async {
-    final topLevel = await runLocal(['rev-parse', '--show-toplevel']);
-    return topLevel.split('/').last;
+  Future<String> get user async {
+    return runLocal(['config', 'user.name']);
   }
 
   Future<bool> get isClean async {

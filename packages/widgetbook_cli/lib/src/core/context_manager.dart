@@ -28,7 +28,7 @@ class ContextManager {
         workingDir: workingDir,
         environment: environment,
         user: await repository.user,
-        project: await repository.name,
+        project: repository.name,
       );
     }
 
