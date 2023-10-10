@@ -37,6 +37,7 @@ class WidgetbookApp extends StatelessWidget {
             ),
           ],
         ),
+        GridAddon(),
         AlignmentAddon(),
         TextScaleAddon(
           scales: [1.0, 2.0],
