@@ -6,21 +6,20 @@ import '../../helper/helper.dart';
 
 void main() {
   group(
-    '$DoubleSliderKnob',
+    '$IntSliderKnob',
     () {
       testWidgets(
         'given an initial value, '
         'then the value should be displayed',
         (tester) async {
-          const value = 5.0;
+          const value = 5;
 
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.double
+              context.knobs.int
                   .slider(
-                    label: 'Knob',
+                    label: 'IntKnob',
                     initialValue: value,
-                    divisions: 10,
                   )
                   .toString(),
             ),
@@ -34,12 +33,12 @@ void main() {
         'when field is updated, '
         'then the value should be updated',
         (tester) async {
-          const max = 10.0;
+          const max = 10;
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.double
+              context.knobs.int
                   .slider(
-                    label: 'Knob',
+                    label: 'IntKnob',
                     divisions: 1,
                     max: max,
                   )
@@ -58,29 +57,29 @@ void main() {
     },
   );
 
-  group('${DoubleSliderKnob.nullable}', () {
-    test('DoubleSliderKnob.nullable constructor sets correct values', () {
-      final knob = DoubleSliderKnob.nullable(
+  group('${IntSliderKnob.nullable}', () {
+    test('IntSliderKnob.nullable constructor sets correct values', () {
+      final knob = IntSliderKnob.nullable(
         label: 'Test Int',
-        value: 5.0,
-        description: 'A test double knob',
+        value: 5,
+        description: 'A test int knob',
       );
 
       expect(knob.label, 'Test Int');
-      expect(knob.value, 5.0);
-      expect(knob.description, 'A test double knob');
+      expect(knob.value, 5);
+      expect(knob.description, 'A test int knob');
     });
 
-    test('DoubleSliderKnob.nullable constructor handles null value', () {
-      final knob = DoubleSliderKnob.nullable(
-        label: 'Test double',
+    test('IntSliderKnob.nullable constructor handles null value', () {
+      final knob = IntSliderKnob.nullable(
+        label: 'Test Int',
         value: null,
-        description: 'A test double knob with null value',
+        description: 'A test int knob with null value',
       );
 
-      expect(knob.label, 'Test double');
+      expect(knob.label, 'Test Int');
       expect(knob.value, null);
-      expect(knob.description, 'A test double knob with null value');
+      expect(knob.description, 'A test int knob with null value');
     });
   });
 }
