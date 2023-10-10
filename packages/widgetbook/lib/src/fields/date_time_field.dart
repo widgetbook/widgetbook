@@ -15,28 +15,13 @@ extension DateTimeExtension on DateTime {
   }
 }
 
-extension DateStringExtension on String {
-  /// Converts the string gotten from our [DateTimeExtension.toSimpleFormat]
-  /// to a [DateTime] object manually since [DateTime.parse] doesn't work
-  DateTime fromSimpleFormat() {
-    final parts = split(RegExp(r'[- :]+'));
-    return DateTime(
-      int.parse(parts[0]),
-      int.parse(parts[1]),
-      int.parse(parts[2]),
-      int.parse(parts[3]),
-      int.parse(parts[4]),
-    );
-  }
-}
-
 class DateTimeField extends Field<DateTime> {
   DateTimeField({
     required super.name,
     required super.initialValue,
     super.onChanged,
-    required this.startDateTime,
-    required this.endDateTime,
+    required this.start,
+    required this.end,
   }) : super(
           type: FieldType.dateTime,
           codec: FieldCodec<DateTime>(
@@ -49,25 +34,21 @@ class DateTimeField extends Field<DateTime> {
             toValue: (param) {
               return param == null
                   ? null
-                  : Uri.decodeComponent(param).fromSimpleFormat();
+                  : DateTime.tryParse(Uri.decodeComponent(param));
             },
           ),
         );
 
   /// The starting [DateTime] value used for the date and time pickers.
-  final DateTime startDateTime;
+  final DateTime start;
 
   /// The ending [DateTime] value used for the date and time pickers.
-  final DateTime endDateTime;
+  final DateTime end;
 
   @override
   Widget toWidget(BuildContext context, String group, DateTime? value) {
-    final controller = TextEditingController(
-      text: (value ?? initialValue)?.toSimpleFormat(),
-    );
-
     return TextFormField(
-      controller: controller,
+      initialValue: (value ?? initialValue)?.toSimpleFormat(),
       keyboardType: TextInputType.datetime,
       decoration: InputDecoration(
         suffixIcon: IconButton(
@@ -77,14 +58,14 @@ class DateTimeField extends Field<DateTime> {
               context,
               value ?? initialValue,
             );
-            if (dateTime != null) {
-              updateField(
-                context,
-                group,
-                dateTime,
-              );
-              controller.text = dateTime.toSimpleFormat();
-            }
+
+            if (dateTime == null) return;
+
+            updateField(
+              context,
+              group,
+              dateTime,
+            );
           },
         ),
       ),
@@ -106,8 +87,8 @@ class DateTimeField extends Field<DateTime> {
     final date = await showDatePicker(
       context: context,
       initialDate: initialDate,
-      firstDate: startDateTime,
-      lastDate: endDateTime,
+      firstDate: start,
+      lastDate: end,
     );
     if (date == null) return null;
 
@@ -129,8 +110,8 @@ class DateTimeField extends Field<DateTime> {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'start': codec.toParam(startDateTime),
-      'end': codec.toParam(endDateTime),
+      'start': codec.toParam(start),
+      'end': codec.toParam(end),
     };
   }
 }

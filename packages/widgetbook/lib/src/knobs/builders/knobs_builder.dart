@@ -189,8 +189,8 @@ class KnobsBuilder {
         label: label,
         value: initialValue,
         description: description,
-        startDateTime: startDateTime,
-        endDateTime: endDateTime,
+        start: startDateTime,
+        end: endDateTime,
       ),
     )!;
   }
@@ -209,8 +209,8 @@ class KnobsBuilder {
         label: label,
         value: initialValue,
         description: description,
-        startDateTime: startDateTime,
-        endDateTime: endDateTime,
+        start: startDateTime,
+        end: endDateTime,
       ),
     );
   }
