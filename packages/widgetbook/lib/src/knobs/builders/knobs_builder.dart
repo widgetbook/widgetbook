@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../fields/fields.dart';
 import '../boolean_knob.dart';
 import '../color_knob.dart';
+import '../date_time_knob.dart';
 import '../duration_knob.dart';
 import '../knob.dart';
 import '../list_knob.dart';
@@ -171,6 +172,45 @@ class KnobsBuilder {
         label: label,
         value: initialValue,
         description: description,
+      ),
+    );
+  }
+
+  /// Creates a text field that can be used to select a date and time
+  DateTime dateTime({
+    required String label,
+    required DateTime initialValue,
+    String? description,
+    required DateTime start,
+    required DateTime end,
+  }) {
+    return onKnobAdded(
+      DateTimeKnob(
+        label: label,
+        value: initialValue,
+        description: description,
+        start: start,
+        end: end,
+      ),
+    )!;
+  }
+
+  /// Creates a text field that can be used to select a date and time and can
+  /// be initially empty
+  DateTime? dateTimeOrNull({
+    required String label,
+    DateTime? initialValue,
+    String? description,
+    required DateTime start,
+    required DateTime end,
+  }) {
+    return onKnobAdded(
+      DateTimeKnob.nullable(
+        label: label,
+        value: initialValue,
+        description: description,
+        start: start,
+        end: end,
       ),
     );
   }

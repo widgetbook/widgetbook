@@ -9,6 +9,7 @@ export 'src/knobs/knobs.dart'
     hide
         BooleanKnob,
         ColorKnob,
+        DateTimeKnob,
         DoubleInputKnob,
         DoubleSliderKnob,
         DurationKnob,

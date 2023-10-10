@@ -12,6 +12,8 @@ class WidgetbookApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final initialDate = DateTime.now();
+
     return Widgetbook.material(
       directories: [
         WidgetbookComponent(
@@ -66,6 +68,14 @@ class WidgetbookApp extends StatelessWidget {
                   duration: context.knobs.duration(
                     label: 'Increment duration',
                     initialValue: const Duration(seconds: 5),
+                  ),
+                  dateTime: context.knobs.dateTimeOrNull(
+                    // placing DateTime.now() here will cause the date time and
+                    // the text field to be out of sync
+                    initialValue: initialDate,
+                    label: 'Select Date Time',
+                    start: DateTime(initialDate.year - 1),
+                    end: DateTime(initialDate.year + 1),
                   ),
                 );
               },
