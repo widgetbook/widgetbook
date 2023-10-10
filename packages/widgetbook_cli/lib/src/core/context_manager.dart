@@ -16,22 +16,10 @@ class ContextManager {
   final CiManager ciManager;
   final GitManager gitManager;
 
-  Future<Context?> load(
+  Future<Context> load(
     String workingDir,
     Environment environment,
   ) async {
-    if (!ciManager.isCI) {
-      final repository = gitManager.load(workingDir);
-
-      return Context(
-        name: 'Local',
-        workingDir: workingDir,
-        environment: environment,
-        user: await repository.user,
-        project: await repository.name,
-      );
-    }
-
     if (ciManager.isAzure) {
       return Context(
         name: 'Azure',
@@ -84,6 +72,15 @@ class ContextManager {
       );
     }
 
-    return null;
+    final repository = gitManager.load(workingDir);
+
+    // For unknown CI providers and local environments
+    return Context(
+      name: ciManager.vendor?.name ?? 'Local',
+      workingDir: workingDir,
+      environment: environment,
+      user: await repository.user,
+      project: repository.name,
+    );
   }
 }

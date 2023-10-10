@@ -25,10 +25,10 @@ void main() {
     test('Local', () async {
       final repository = MockRepository();
 
-      ciManager.mock(isCI: false);
+      ciManager.mock();
       when(() => gitManager.load(any())).thenReturn(repository);
+      when(() => repository.name).thenReturn(repoName);
       when(() => repository.user).thenAnswer((_) async => userName);
-      when(() => repository.name).thenAnswer((_) async => repoName);
 
       expectLater(
         contextManager.load(workingDir, environment),
