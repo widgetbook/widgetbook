@@ -74,8 +74,8 @@ class WidgetbookApp extends StatelessWidget {
                     // the text field to be out of sync
                     initialValue: initialDate,
                     label: 'Select Date Time',
-                    startDateTime: DateTime(initialDate.year - 1),
-                    endDateTime: DateTime(initialDate.year + 1),
+                    start: DateTime(initialDate.year - 1),
+                    end: DateTime(initialDate.year + 1),
                   ),
                 );
               },

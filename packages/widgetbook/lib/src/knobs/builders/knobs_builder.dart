@@ -181,16 +181,16 @@ class KnobsBuilder {
     required String label,
     required DateTime initialValue,
     String? description,
-    required DateTime startDateTime,
-    required DateTime endDateTime,
+    required DateTime start,
+    required DateTime end,
   }) {
     return onKnobAdded(
       DateTimeKnob(
         label: label,
         value: initialValue,
         description: description,
-        start: startDateTime,
-        end: endDateTime,
+        start: start,
+        end: end,
       ),
     )!;
   }
@@ -201,16 +201,16 @@ class KnobsBuilder {
     required String label,
     DateTime? initialValue,
     String? description,
-    required DateTime startDateTime,
-    required DateTime endDateTime,
+    required DateTime start,
+    required DateTime end,
   }) {
     return onKnobAdded(
       DateTimeKnob.nullable(
         label: label,
         value: initialValue,
         description: description,
-        start: startDateTime,
-        end: endDateTime,
+        start: start,
+        end: end,
       ),
     );
   }

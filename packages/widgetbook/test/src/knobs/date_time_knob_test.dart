@@ -20,8 +20,8 @@ void main() {
                   .dateTime(
                     label: 'DateTimeKnob',
                     initialValue: dateTime,
-                    startDateTime: DateTime(dateTime.year - 1),
-                    endDateTime: DateTime(dateTime.year + 1),
+                    start: DateTime(dateTime.year - 1),
+                    end: DateTime(dateTime.year + 1),
                   )
                   .toSimpleFormat(),
             ),
@@ -47,8 +47,8 @@ void main() {
                   .dateTime(
                     label: 'DateTimeKnob',
                     initialValue: now,
-                    startDateTime: DateTime(now.year - 1),
-                    endDateTime: nextYear,
+                    start: DateTime(now.year - 1),
+                    end: nextYear,
                   )
                   .toSimpleFormat(),
             ),
@@ -78,8 +78,8 @@ void main() {
                   .dateTime(
                     label: 'DateTimeKnob',
                     initialValue: now,
-                    startDateTime: DateTime(now.year - 1),
-                    endDateTime: DateTime(now.year + 1),
+                    start: DateTime(now.year - 1),
+                    end: DateTime(now.year + 1),
                   )
                   .toSimpleFormat(),
             ),
@@ -126,8 +126,8 @@ void main() {
             (context) {
               context.knobs.dateTimeOrNull(
                 label: 'DateTimeKnob',
-                startDateTime: DateTime(DateTime.now().year - 1),
-                endDateTime: DateTime(DateTime.now().year + 1),
+                start: DateTime(DateTime.now().year - 1),
+                end: DateTime(DateTime.now().year + 1),
               );
               return const Text('');
             },
