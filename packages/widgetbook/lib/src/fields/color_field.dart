@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -111,7 +113,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
       mainAxisSize: MainAxisSize.min,
       children: [
         if(initialColorSpace == ColorSpace.rgba)...[
-          _RgbaColorTextFields(
+          RgbaColorTextFields(
             colorValue: colorValue as List<String>,
             onChanged: (value) {
               widget.onChanged(value);
@@ -125,7 +127,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
             converter: converter,
           )
         ]else if(initialColorSpace == ColorSpace.hsl)...[
-          _HslColorTextFields(
+          HslColorTextFields(
             colorValue: colorValue as List<String>,
             paramValue: widget.paramValue,
             onChanged: (hexValue, value) {
@@ -145,6 +147,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                 key: const Key('colorFieldHex'),
                 value: '$colorValue',
                 maxLength: 8,
+                prefixIcon: const Icon(Icons.numbers),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
                     RegExp(r'^[0-9a-fA-F]{0,8}$'), 
@@ -199,12 +202,13 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
 
 }
 
-class _RgbaColorTextFields extends StatelessWidget{
+class RgbaColorTextFields extends StatelessWidget{
 
-  const _RgbaColorTextFields({
+  const RgbaColorTextFields({
     required this.colorValue,
     required this.onChanged,
     required this.converter,
+    super.key, 
   });
 
   final List<String> colorValue;
@@ -321,13 +325,14 @@ class _RgbaColorTextFields extends StatelessWidget{
 
 }
 
-class _HslColorTextFields extends StatelessWidget{
+class HslColorTextFields extends StatelessWidget{
 
-  const _HslColorTextFields({
+  const HslColorTextFields({
     required this.colorValue,
     required this.onChanged,
     required this.paramValue,
     required this.converter,
+    super.key,
   });
 
   final List<String> colorValue;
@@ -377,15 +382,16 @@ class _HslColorTextFields extends StatelessWidget{
                   '${colorValue[2]}',
                 ]
               );
+            }else{
+              onChanged(
+                null,
+                [
+                  value,
+                  '${colorValue[1]}',
+                  '${colorValue[2]}',
+                ]
+              );
             }
-            onChanged(
-              null,
-              [
-                value,
-                '${colorValue[1]}',
-                '${colorValue[2]}',
-              ]
-            );
           },
         ),
         const SizedBox(width: 8,),
@@ -427,15 +433,16 @@ class _HslColorTextFields extends StatelessWidget{
                   '${colorValue[2]}',
                 ]
               );
+            }else{
+              onChanged(
+                null,
+                [
+                  '${colorValue[0]}',
+                  value,
+                  '${colorValue[2]}',
+                ]
+              );
             }
-            onChanged(
-              null,
-              [
-                '${colorValue[0]}',
-                value,
-                '${colorValue[2]}',
-              ]
-            );
           },
         ),
         const SizedBox(width: 8,),
@@ -477,15 +484,16 @@ class _HslColorTextFields extends StatelessWidget{
                   value,
                 ]
               );
+            }else{
+              onChanged(
+                null,
+                [
+                  '${colorValue[0]}',
+                  '${colorValue[1]}',
+                  value,
+                ]
+              );
             }
-            onChanged(
-              null,
-              [
-                '${colorValue[0]}',
-                '${colorValue[1]}',
-                value,
-              ]
-            );
           },
         ),
       ],
@@ -578,7 +586,12 @@ class ColorsConverter {
       g = hueToRgb(p, q, h);
       b = hueToRgb(p, q, h - 1 / 3);
     }
-    return rgbaToHex(['255', '${(r * 255).toInt()}', '${(g * 255).toInt()}', '${(b * 255).toInt()}']);
+
+    return rgbaToHex(['255', '${convertToRgbValue(r)}', '${convertToRgbValue(g)}', '${convertToRgbValue(b)}']);
+  }
+  
+  int convertToRgbValue(double value){
+    return min((value*256).floor(), 255);
   }
 
   double hueToRgb(double p, double q, double t){

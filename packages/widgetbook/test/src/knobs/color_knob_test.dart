@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/src/fields/color_field.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
 
 import '../../helper/helper.dart';
@@ -9,7 +10,8 @@ void main() {
     '$ColorKnob',
     () {
       testWidgets(
-        'when field is updated, '
+        'given the ColorSpace is hex, '
+        'when the field is updated, '
         'then the value should be updated',
         (tester) async {
           const blue = Color(0xFF0000FF);
@@ -34,6 +36,240 @@ void main() {
           expect(box.color, equals(red));
         },
       );
+
+      testWidgets(
+        'given the ColorSpace is hex, '
+        'when the ColorSpace is rgba and the red field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          const blue = Color(0xFF0000FF);
+          const purple = Color(0xFFFF00FF);
+
+          await tester.pumpKnob(
+            (context) => ColoredBox(
+              color: context.knobs.color(
+                label: 'Knob',
+                initialValue: blue,
+              ),
+            ),
+          );
+
+          await tester.findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
+          await tester.findAndTap(find.text('rgba'));
+          await tester.pumpAndSettle();
+
+          await tester.findAndEnter(
+            find.byType(TextField).first,
+            '255',
+          );
+
+          final box = tester.widget<ColoredBox>(find.byType(ColoredBox));
+
+          expect(box.color, equals(purple));
+        },
+      );
+
+      testWidgets(
+        'given the ColorSpace is hex, '
+        'when the ColorSpace is rgba and the green field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          const blue = Color(0xFF0000FF);
+          const greenBlue = Color(0xFF00FFFF);
+
+          await tester.pumpKnob(
+            (context) => ColoredBox(
+              color: context.knobs.color(
+                label: 'Knob',
+                initialValue: blue,
+              ),
+            ),
+          );
+
+          await tester.findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
+          await tester.findAndTap(find.text('rgba'));
+          await tester.pumpAndSettle();
+          final textFields = find.byType(TextField);
+          expect(textFields, findsNWidgets(4));
+          await tester.findAndEnter(
+            textFields.at(1),
+            '255',
+          );
+
+          final box = tester.widget<ColoredBox>(find.byType(ColoredBox));
+
+          expect(box.color, equals(greenBlue));
+        },
+      );
+
+      testWidgets(
+        'given the ColorSpace is hex, '
+        'when the ColorSpace is rgba and the blue field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          const blue = Color(0xFF0000FF);
+          const darkerBlue = Color(0xFF000088);
+
+          await tester.pumpKnob(
+            (context) => ColoredBox(
+              color: context.knobs.color(
+                label: 'Knob',
+                initialValue: blue,
+              ),
+            ),
+          );
+
+          await tester.findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
+          await tester.findAndTap(find.text('rgba'));
+          await tester.pumpAndSettle();
+          final textFields = find.byType(TextField);
+          expect(textFields, findsNWidgets(4));
+          await tester.findAndEnter(
+            textFields.at(2),
+            '136',
+          );
+
+          final box = tester.widget<ColoredBox>(find.byType(ColoredBox));
+
+          expect(box.color, equals(darkerBlue));
+        },
+      );
+
+      testWidgets(
+        'given the ColorSpace is hex, '
+        'when the ColorSpace is rgba and the alpha field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          const blue = Color(0xFF0000FF);
+          const transparent = Color(0x000000FF);
+
+          await tester.pumpKnob(
+            (context) => ColoredBox(
+              color: context.knobs.color(
+                label: 'Knob',
+                initialValue: blue,
+              ),
+            ),
+          );
+
+          await tester.findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
+          await tester.findAndTap(find.text('rgba'));
+          await tester.pumpAndSettle();
+          final textFields = find.byType(TextField);
+          expect(textFields, findsNWidgets(4));
+          await tester.findAndEnter(
+            textFields.last,
+            '0',
+          );
+
+          final box = tester.widget<ColoredBox>(find.byType(ColoredBox));
+
+          expect(box.color, equals(transparent));
+        },
+      );
+
+      testWidgets(
+        'given the ColorSpace is hex, '
+        'when the ColorSpace is hsl and the hue field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          const blue = Color(0xFF0000FF);
+          const magenta = Color(0xFFFF00FF);
+
+          await tester.pumpKnob(
+            (context) => ColoredBox(
+              color: context.knobs.color(
+                label: 'Knob',
+                initialValue: blue,
+              ),
+            ),
+          );
+
+          await tester.findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
+          await tester.findAndTap(find.text('hsl'));
+          await tester.pumpAndSettle();
+          
+          final textFields = find.byType(TextField);
+          expect(textFields, findsNWidgets(3));
+          await tester.findAndEnter(
+            textFields.at(0),
+            '300',
+          );
+
+          final box = tester.widget<ColoredBox>(find.byType(ColoredBox));
+
+          expect(box.color, equals(magenta));
+        },
+      );
+
+      testWidgets(
+        'given the ColorSpace is hex, '
+        'when the ColorSpace is hsl and the saturation field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          const blue = Color(0xFF0000FF);
+          const desaturatedBlue = Color(0xFF4040C0);
+
+          await tester.pumpKnob(
+            (context) => ColoredBox(
+              color: context.knobs.color(
+                label: 'Knob',
+                initialValue: blue,
+              ),
+            ),
+          );
+
+          await tester.findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
+          await tester.findAndTap(find.text('hsl'));
+          await tester.pumpAndSettle();
+          
+          final textFields = find.byType(TextFormField);
+          expect(textFields, findsNWidgets(3));
+          await tester.findAndEnter(
+            textFields.at(1),
+            '50',
+          );
+
+          final box = tester.widget<ColoredBox>(find.byType(ColoredBox));
+
+          expect(box.color, equals(desaturatedBlue));
+        },
+      );
+
+      testWidgets(
+        'given the ColorSpace is hex, '
+        'when the ColorSpace is hsl and the lightness field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          const blue = Color(0xFF0000FF);
+          const lightBlue = Color(0xFF8080ff);
+
+          await tester.pumpKnob(
+            (context) => ColoredBox(
+              color: context.knobs.color(
+                label: 'Knob',
+                initialValue: blue,
+              ),
+            ),
+          );
+
+          await tester.findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
+          await tester.findAndTap(find.text('hsl'));
+          await tester.pumpAndSettle();
+          
+          final textFields = find.byType(TextField);
+          expect(textFields, findsNWidgets(3));
+          await tester.findAndEnter(
+            textFields.at(2),
+            '75',
+          );
+
+          final box = tester.widget<ColoredBox>(find.byType(ColoredBox));
+
+          expect(box.color, equals(lightBlue));
+        },
+      );
+
     },
   );
 }
