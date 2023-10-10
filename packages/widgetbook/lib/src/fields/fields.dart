@@ -9,4 +9,3 @@ export 'field_type.dart';
 export 'fields_composable.dart';
 export 'list_field.dart';
 export 'string_field.dart';
-export 'zoom_control_field.dart';

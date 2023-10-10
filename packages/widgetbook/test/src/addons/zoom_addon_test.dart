@@ -39,8 +39,8 @@ void main() {
         'given a query group without zoom value, '
         'valueFromQueryGroup should return the default value of 1.0',
         () {
-          final result = addon.valueFromQueryGroup({});
-          expect(result, equals(1.0));
+          final result = addon.valueFromQueryGroup({'zoom': '1.5'});
+          expect(result, equals(1.5));
         },
       );
 

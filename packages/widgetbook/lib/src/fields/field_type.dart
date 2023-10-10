@@ -6,5 +6,4 @@ enum FieldType {
   list,
   string,
   duration,
-  custom,
 }

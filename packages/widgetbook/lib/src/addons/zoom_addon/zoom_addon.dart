@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 import '../../fields/fields.dart';
 import '../common/common.dart';
 
+/// A [WidgetbookAddon] for zoom/scaling.
 class ZoomAddon extends WidgetbookAddon<double> {
   ZoomAddon({double initialZoom = 1.0})
-      : assert(initialZoom > 0.5 && initialZoom <= 3.0),
-        super(
+      : super(
           name: 'Zoom',
           initialSetting: initialZoom,
         );
 
   @override
   List<Field> get fields => [
-        ZoomControlField(
+        DoubleSliderField(
           name: 'zoom',
           initialValue: initialSetting,
+          min: 0.5,
+          max: 3.0,
         ),
       ];
 
