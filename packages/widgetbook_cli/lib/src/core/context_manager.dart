@@ -9,33 +9,19 @@ class ContextManager {
   const ContextManager({
     this.platform = const LocalPlatform(),
     this.ciManager = const CiManager(),
-    this.gitManager = const GitManager(),
   });
 
   final Platform platform;
   final CiManager ciManager;
-  final GitManager gitManager;
 
-  Future<Context?> load(
-    String workingDir,
+  Future<Context> load(
+    Repository? repository,
     Environment environment,
   ) async {
-    if (!ciManager.isCI) {
-      final repository = gitManager.load(workingDir);
-
-      return Context(
-        name: 'Local',
-        workingDir: workingDir,
-        environment: environment,
-        user: await repository.user,
-        project: await repository.name,
-      );
-    }
-
     if (ciManager.isAzure) {
       return Context(
         name: 'Azure',
-        workingDir: workingDir,
+        repository: repository,
         environment: environment,
         user: platform.environment['Agent.Name'],
         project: platform.environment['Build.Repository.Name'],
@@ -45,7 +31,7 @@ class ContextManager {
     if (ciManager.isBitbucket) {
       return Context(
         name: 'Bitbucket',
-        workingDir: workingDir,
+        repository: repository,
         environment: environment,
         user: platform.environment['BITBUCKET_STEP_TRIGGERER_UUID'],
         project: platform.environment['BITBUCKET_REPO_FULL_NAME'],
@@ -55,7 +41,7 @@ class ContextManager {
     if (ciManager.isCodemagic) {
       return Context(
         name: 'Codemagic',
-        workingDir: workingDir,
+        repository: repository,
         environment: environment,
         user: 'Codemagic',
         project: platform.environment['CM_REPO_SLUG'],
@@ -66,7 +52,7 @@ class ContextManager {
     if (ciManager.isGitHub) {
       return Context(
         name: 'GitHub',
-        workingDir: workingDir,
+        repository: repository,
         environment: environment,
         user: platform.environment['GITHUB_ACTOR'],
         project: platform.environment['GITHUB_REPOSITORY'],
@@ -77,13 +63,20 @@ class ContextManager {
     if (ciManager.isGitLab) {
       return Context(
         name: 'GitLab',
-        workingDir: workingDir,
+        repository: repository,
         environment: environment,
         user: platform.environment['GITLAB_USER_NAME'],
         project: platform.environment['CI_PROJECT_NAME'],
       );
     }
 
-    return null;
+    // For unknown CI providers and local environments
+    return Context(
+      name: ciManager.vendor?.name ?? 'Local',
+      repository: repository,
+      environment: environment,
+      user: await repository?.user,
+      project: repository?.name,
+    );
   }
 }

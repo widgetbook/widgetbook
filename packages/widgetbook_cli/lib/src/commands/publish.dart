@@ -81,22 +81,13 @@ class PublishCommand extends CliCommand<PublishArgs> {
   late final Progress progress;
 
   @override
-  FutureOr<Context> overrideContext(Context context, ArgResults results) {
-    final workingDir = results['path'] as String;
-
-    return context.copyWith(
-      workingDir: workingDir,
-    );
-  }
-
-  @override
   Future<PublishArgs> parseResults(Context context, ArgResults results) async {
-    final repository = context.repository;
     final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
     final gitHubToken = results['github-token'] as String?;
     final prNumber = results['pr'] as String?;
 
+    final repository = context.repository!;
     final currentBranch = await repository.currentBranch;
     final branch = results['branch'] as String? ?? currentBranch.name;
     final commit = results['commit'] as String? ??
@@ -139,7 +130,13 @@ class PublishCommand extends CliCommand<PublishArgs> {
   @override
   FutureOr<int> runWith(Context context, PublishArgs args) async {
     try {
-      final isValid = await validateRepository(context.repository);
+      if (context.repository == null) {
+        GitDirectoryNotFound(
+          message: 'Not a valid git directory.',
+        );
+      }
+
+      final isValid = await validateRepository(context.repository!);
 
       if (!isValid) {
         progress.cancel();
@@ -277,9 +274,9 @@ class PublishCommand extends CliCommand<PublishArgs> {
     }
 
     final useCases = await useCaseReader.read(args.path);
-    final diffs = await context.repository.diff(args.baseBranch!.fullName);
+    final diffs = await context.repository!.diff(args.baseBranch!.fullName);
 
-    final changeUseCases = await useCaseReader.compare(
+    final changeUseCases = useCaseReader.compare(
       useCases: useCases,
       diffs: diffs,
     );

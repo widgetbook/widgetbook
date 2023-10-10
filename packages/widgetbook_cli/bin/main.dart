@@ -4,14 +4,14 @@ import 'package:widgetbook_cli/widgetbook_cli.dart';
 
 void main(List<String> arguments, Environment environment) async {
   const contextManager = ContextManager();
-  final context = await contextManager.load(
+  final repository = await Repository.load(
     Directory.current.path,
-    environment,
   );
 
-  if (context == null) {
-    exit(1);
-  }
+  final context = await contextManager.load(
+    repository,
+    environment,
+  );
 
   await flushThenExit(
     await CliRunner(

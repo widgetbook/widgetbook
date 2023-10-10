@@ -5,7 +5,6 @@ import 'package:collection/collection.dart';
 import 'package:path/path.dart' as path;
 import 'package:process/process.dart';
 
-import '../utils/utils.dart';
 import 'diff_header.dart';
 import 'git_process_manager.dart';
 import 'reference.dart';
@@ -16,42 +15,34 @@ class Repository {
     this.processManager,
   ) : assert(path.isAbsolute(rootDir));
 
-  /// Loads the [Repository] that contains the given [dir].
-  factory Repository.load(
-    String dir, {
-    ProcessManager processManager = const LocalProcessManager(),
-  }) {
-    try {
-      final absoluteDir = path.absolute(dir);
-      final dotGitDir = processManager.runGitSync(
-        ['rev-parse', '--git-dir'],
-        workingDirectory: absoluteDir,
-      );
-
-      final rootDir = path.dirname(dotGitDir);
-
-      if (!path.isWithin(rootDir, absoluteDir)) {
-        throw GitDirectoryNotFound();
-      }
-
-      return Repository.raw(rootDir, processManager);
-    } catch (_) {
-      throw GitDirectoryNotFound(
-        message: 'The path "$dir" is not a valid git directory.',
-      );
-    }
-  }
-
   final String rootDir;
   final ProcessManager processManager;
 
-  Future<String> get user async {
-    return runLocal(['config', 'user.name']);
+  /// Loads the [Repository] that contains the given [dir].
+  /// Returns `null` if the [dir] is not in a git repository.
+  static Future<Repository?> load(
+    String dir, {
+    ProcessManager processManager = const LocalProcessManager(),
+  }) async {
+    try {
+      final absoluteDir = path.absolute(dir);
+      final rootDir = await processManager.runGit(
+        ['rev-parse', '--show-toplevel'],
+        workingDirectory: absoluteDir,
+      );
+
+      return Repository.raw(rootDir, processManager);
+    } catch (_) {
+      return null;
+    }
   }
 
-  Future<String> get name async {
-    final topLevel = await runLocal(['rev-parse', '--show-toplevel']);
-    return topLevel.split('/').last;
+  String get name {
+    return rootDir.split('/').last;
+  }
+
+  Future<String> get user async {
+    return runLocal(['config', 'user.name']);
   }
 
   Future<bool> get isClean async {

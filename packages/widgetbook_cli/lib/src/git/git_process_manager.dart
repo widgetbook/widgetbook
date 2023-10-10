@@ -25,24 +25,4 @@ extension GitProcessManager on ProcessManager {
       result.exitCode,
     );
   }
-
-  String runGitSync(
-    List<String> args, {
-    String? workingDirectory,
-  }) {
-    final result = runSync(
-      [executable, ...args],
-      workingDirectory: workingDirectory,
-      runInShell: true,
-    );
-
-    if (result.exitCode == 0) return result.stdout.toString().trim();
-
-    throw ProcessException(
-      executable,
-      args,
-      result.stderr.toString().trim(),
-      result.exitCode,
-    );
-  }
 }

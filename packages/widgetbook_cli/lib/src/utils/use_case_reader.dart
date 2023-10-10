@@ -25,7 +25,7 @@ class UseCaseReader {
     final files = await fileSystem
         .directory(generatedDir)
         .list(recursive: true)
-        .takeWhile((entity) => entity.path.endsWith('.usecase.widgetbook.json'))
+        .where((entity) => entity.path.endsWith('.usecase.widgetbook.json'))
         .cast<File>();
 
     return files
@@ -45,12 +45,12 @@ class UseCaseReader {
 
     for (final useCase in useCases) {
       for (final diff in diffs) {
-        final hasChanged = _hasChanged(
+        final isChanged = hasChanged(
           useCase: useCase,
           diff: diff,
         );
 
-        if (hasChanged) {
+        if (isChanged) {
           changedUseCases.add(
             ChangedUseCase(
               name: useCase.useCaseName,
@@ -71,23 +71,23 @@ class UseCaseReader {
     return changedUseCases;
   }
 
-  bool _hasChanged({
+  bool hasChanged({
     required UseCaseMetadata useCase,
     required DiffHeader diff,
   }) {
-    if (diff.ref == null || diff.base == null) {
-      return false;
-    }
-
-    return _comparePaths(useCase.componentDefinitionPath, diff.ref!) ||
-        _comparePaths(useCase.useCaseDefinitionPath, diff.ref!) ||
-        _comparePaths(useCase.componentDefinitionPath, diff.base!) ||
-        _comparePaths(useCase.useCaseDefinitionPath, diff.base!);
+    return comparePaths(useCase.componentDefinitionPath, diff.ref) ||
+        comparePaths(useCase.useCaseDefinitionPath, diff.ref) ||
+        comparePaths(useCase.componentDefinitionPath, diff.base) ||
+        comparePaths(useCase.useCaseDefinitionPath, diff.base);
   }
 
-  /// Returns true if [a] and [b] are equal or
+  /// Returns true if [filePath] and [diffPath] are equal or
   /// if one of them is a sub-path of the other.
-  bool _comparePaths(String a, String b) {
-    return a == b || a.endsWith(b) || b.endsWith(a);
+  bool comparePaths(String filePath, String? diffPath) {
+    if (diffPath == null) return false;
+
+    return filePath == diffPath ||
+        filePath.endsWith(diffPath) ||
+        diffPath.endsWith(filePath);
   }
 }

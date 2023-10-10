@@ -10,17 +10,14 @@ import 'context.dart';
 /// A [Context]-aware [Command] for [CliRunner].
 abstract class CliCommand<TArgs> extends Command<int> {
   CliCommand({
-    required Context context,
+    required this.context,
     required this.name,
     required this.description,
     Logger? logger,
-  })  : _globalContext = context,
-        logger = logger ?? Logger();
+  }) : logger = logger ?? Logger();
 
   final Logger logger;
-
-  /// The global [Context]
-  final Context _globalContext;
+  final Context context;
 
   @override
   final String name;
@@ -28,30 +25,18 @@ abstract class CliCommand<TArgs> extends Command<int> {
   @override
   final String description;
 
-  /// Overrides global [context] with a new local [Context] using [results],
-  /// that is used for [runWith].
-  FutureOr<Context> overrideContext(
-    Context context,
-    ArgResults results,
-  ) {
-    // Global context is used by default.
-    return _globalContext;
-  }
-
   /// Parses the [results] into [TArgs] using [context].
   FutureOr<TArgs> parseResults(Context context, ArgResults results);
 
-  /// Runs the command with the local [context] from [overrideContext]
-  /// and parsed [args] from [parseResults].
+  /// Runs this command with [context] from and parsed [args].
   FutureOr<int> runWith(Context context, TArgs args);
 
   @override
   FutureOr<int>? run() async {
     final results = argResults!;
-    final localContext = await overrideContext(_globalContext, results);
-    final args = await parseResults(_globalContext, results);
+    final args = await parseResults(context, results);
 
-    return runWith(localContext, args);
+    return runWith(context, args);
   }
 }
 

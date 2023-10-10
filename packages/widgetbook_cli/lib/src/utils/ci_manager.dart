@@ -3,7 +3,8 @@ import 'package:ci/ci.dart' as ci;
 class CiManager {
   const CiManager();
 
-  bool get isCI => ci.isCI;
+  ci.Vendor? get vendor => ci.currentVendor;
+
   bool get isAzure => ci.Vendor.IS_AZURE_PIPELINES;
   bool get isBitbucket => ci.Vendor.IS_BITBUCKET;
   bool get isCodemagic => ci.Vendor.IS_CODEMAGIC;

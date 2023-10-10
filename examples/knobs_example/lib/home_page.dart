@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -9,6 +10,7 @@ class HomePage extends StatefulWidget {
     this.iconData,
     this.showToolTip = true,
     this.duration = Duration.zero,
+    this.dateTime,
   });
 
   final String title;
@@ -17,6 +19,7 @@ class HomePage extends StatefulWidget {
   final IconData? iconData;
   final bool showToolTip;
   final Duration duration;
+  final DateTime? dateTime;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -45,6 +48,10 @@ class _HomePageState extends State<HomePage> {
             ),
             Text(
               '${widget.duration}',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Text(
+              widget.dateTime?.toSimpleFormat() ?? '-',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],

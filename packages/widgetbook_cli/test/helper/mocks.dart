@@ -1,6 +1,7 @@
 import 'dart:io' hide Directory, File;
 
 import 'package:args/args.dart';
+import 'package:ci/ci.dart';
 import 'package:file/file.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mocktail/mocktail.dart';
@@ -21,8 +22,6 @@ class FakeEnvironment extends Fake implements Environment {
 }
 
 class MockLogger extends Mock implements Logger {}
-
-class MockGitManager extends Mock implements GitManager {}
 
 class MockPubUpdater extends Mock implements PubUpdater {}
 
@@ -50,14 +49,14 @@ class MockArgResults extends Mock implements ArgResults {}
 
 class MockCiManager extends Mock implements CiManager {
   void mock({
-    bool isCI = true,
+    Vendor? vendor = null,
     bool isAzure = false,
     bool isBitbucket = false,
     bool isCodemagic = false,
     bool isGitHub = false,
     bool isGitLab = false,
   }) {
-    when(() => this.isCI).thenReturn(isCI);
+    when(() => this.vendor).thenReturn(vendor);
     when(() => this.isAzure).thenReturn(isAzure);
     when(() => this.isBitbucket).thenReturn(isBitbucket);
     when(() => this.isCodemagic).thenReturn(isCodemagic);
