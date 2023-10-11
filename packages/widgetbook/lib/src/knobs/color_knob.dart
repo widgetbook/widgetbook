@@ -29,17 +29,6 @@ class ColorKnob extends Knob<Color> {
           WidgetbookState.of(context).knobs.updateValue(label, value);
         },
       ),
-      // ColorSpaceField(
-      //   name: '$label-color-space', 
-      //   initialValue: initialColorSpace,
-      //   onChanged: (context, value) {
-      //     initialColorSpace = value ?? initialColorSpace;
-      //     print(value);
-      //     if(initialColorSpace != value && value != null){
-      //       WidgetbookState.of(context).knobs.updateValue(label, WidgetbookState.of(context).knobs[label]?.value);
-      //     }
-      //   },
-      // ),
     ];
   }
 

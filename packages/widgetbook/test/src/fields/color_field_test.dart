@@ -66,87 +66,83 @@ void main() {
       );
 
       testWidgets(
-        'given a field that has initialColorSpace of [ColorSpace.rgba], '
-        'then [toWidget] builds a [RgbaColorTextFields] widget',
-        (tester) async {
-          final widget = await tester.pumpField<Color, RgbaColorTextFields>(
-            ColorField(
-              name: 'color_field_rgba',
-              initialValue: red,
-              initialColorSpace: ColorSpace.rgba,
-            ),
-            red,
-          );
-          
-          expect(widget.colorValue, equals(['255', '255', '0', '0']));
-        }
-      );
+          'given a field that has initialColorSpace of [ColorSpace.rgba], '
+          'then [toWidget] builds a [RgbaColorTextFields] widget',
+          (tester) async {
+        final widget = await tester.pumpField<Color, RgbaColorTextFields>(
+          ColorField(
+            name: 'color_field_rgba',
+            initialValue: red,
+            initialColorSpace: ColorSpace.rgba,
+          ),
+          red,
+        );
+
+        expect(widget.colorValue, equals(['255', '255', '0', '0']));
+      });
 
       testWidgets(
-        'given a field that has initialColorSpace of [ColorSpace.hsl], '
-        'then [toWidget] builds a [HslColorTextFields] widget',
-        (tester) async {
-          final widget = await tester.pumpField<Color, HslColorTextFields>(
-            ColorField(
-              name: 'color_field_hsl',
-              initialValue: red,
-              initialColorSpace: ColorSpace.hsl,
-            ),
-            red,
-          );
-          
-          expect(widget.colorValue, equals(['0', '100', '50']));
-        }
-      );
+          'given a field that has initialColorSpace of [ColorSpace.hsl], '
+          'then [toWidget] builds a [HslColorTextFields] widget',
+          (tester) async {
+        final widget = await tester.pumpField<Color, HslColorTextFields>(
+          ColorField(
+            name: 'color_field_hsl',
+            initialValue: red,
+            initialColorSpace: ColorSpace.hsl,
+          ),
+          red,
+        );
+
+        expect(widget.colorValue, equals(['0', '100', '50']));
+      });
 
       testWidgets(
-        'given a field that has initialColorSpace of [ColorSpace.hsl], '
-        'when the [ColorSpace] is changed to [ColorSpace.rgba], '
-        'then [toWidget] builds a [RgbaColorTextFields] widget',
-        (tester) async {
-          final widget = await tester.pumpField<Color, HslColorTextFields>(
-            ColorField(
-              name: 'color_field_hsl',
-              initialValue: red,
-              initialColorSpace: ColorSpace.hsl,
-            ),
-            red,
-          );
-          expect(widget.colorValue, equals(['0', '100', '50']));
+          'given a field that has initialColorSpace of [ColorSpace.hsl], '
+          'when the [ColorSpace] is changed to [ColorSpace.rgba], '
+          'then [toWidget] builds a [RgbaColorTextFields] widget',
+          (tester) async {
+        final widget = await tester.pumpField<Color, HslColorTextFields>(
+          ColorField(
+            name: 'color_field_hsl',
+            initialValue: red,
+            initialColorSpace: ColorSpace.hsl,
+          ),
+          red,
+        );
+        expect(widget.colorValue, equals(['0', '100', '50']));
 
-          await tester.findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
-          await tester.findAndTap(find.text('rgba'));
-          await tester.pumpAndSettle();
-          
-          expect(find.byType(RgbaColorTextFields), findsOneWidget);
-          expect(find.text('255'), findsNWidgets(2));
-        }
-      );
+        await tester
+            .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
+        await tester.findAndTap(find.text('rgba'));
+        await tester.pumpAndSettle();
+
+        expect(find.byType(RgbaColorTextFields), findsOneWidget);
+        expect(find.text('255'), findsNWidgets(2));
+      });
 
       testWidgets(
-        'given a field that has initialColorSpace of [ColorSpace.rgba], '
-        'when the [ColorSpace] is changed to [ColorSpace.hex], '
-        'then [toWidget] builds a [ColorTextField] widget',
-        (tester) async {
-          final widget = await tester.pumpField<Color, RgbaColorTextFields>(
-            ColorField(
-              name: 'color_field',
-              initialValue: red,
-              initialColorSpace: ColorSpace.rgba,
-            ),
-            red,
-          );
-          expect(widget.colorValue, equals(['255', '255', '0', '0']));
+          'given a field that has initialColorSpace of [ColorSpace.rgba], '
+          'when the [ColorSpace] is changed to [ColorSpace.hex], '
+          'then [toWidget] builds a [ColorTextField] widget', (tester) async {
+        final widget = await tester.pumpField<Color, RgbaColorTextFields>(
+          ColorField(
+            name: 'color_field',
+            initialValue: red,
+            initialColorSpace: ColorSpace.rgba,
+          ),
+          red,
+        );
+        expect(widget.colorValue, equals(['255', '255', '0', '0']));
 
-          await tester.findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
-          await tester.findAndTap(find.text('hex'));
-          await tester.pumpAndSettle();
-          
-          expect(find.byType(TextFormField), findsOneWidget);
-          expect(find.text('ffff0000'), findsOneWidget);
-        }
-      );
-      
+        await tester
+            .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
+        await tester.findAndTap(find.text('hex'));
+        await tester.pumpAndSettle();
+
+        expect(find.byType(TextFormField), findsOneWidget);
+        expect(find.text('ffff0000'), findsOneWidget);
+      });
     },
   );
 }

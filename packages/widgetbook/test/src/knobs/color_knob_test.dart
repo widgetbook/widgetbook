@@ -54,7 +54,8 @@ void main() {
             ),
           );
 
-          await tester.findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
+          await tester
+              .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
           await tester.findAndTap(find.text('rgba'));
           await tester.pumpAndSettle();
 
@@ -86,7 +87,8 @@ void main() {
             ),
           );
 
-          await tester.findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
+          await tester
+              .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
           await tester.findAndTap(find.text('rgba'));
           await tester.pumpAndSettle();
           final textFields = find.byType(TextField);
@@ -119,7 +121,8 @@ void main() {
             ),
           );
 
-          await tester.findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
+          await tester
+              .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
           await tester.findAndTap(find.text('rgba'));
           await tester.pumpAndSettle();
           final textFields = find.byType(TextField);
@@ -152,7 +155,8 @@ void main() {
             ),
           );
 
-          await tester.findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
+          await tester
+              .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
           await tester.findAndTap(find.text('rgba'));
           await tester.pumpAndSettle();
           final textFields = find.byType(TextField);
@@ -185,10 +189,11 @@ void main() {
             ),
           );
 
-          await tester.findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
+          await tester
+              .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
           await tester.findAndTap(find.text('hsl'));
           await tester.pumpAndSettle();
-          
+
           final textFields = find.byType(TextField);
           expect(textFields, findsNWidgets(3));
           await tester.findAndEnter(
@@ -219,10 +224,11 @@ void main() {
             ),
           );
 
-          await tester.findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
+          await tester
+              .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
           await tester.findAndTap(find.text('hsl'));
           await tester.pumpAndSettle();
-          
+
           final textFields = find.byType(TextFormField);
           expect(textFields, findsNWidgets(3));
           await tester.findAndEnter(
@@ -253,10 +259,11 @@ void main() {
             ),
           );
 
-          await tester.findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
+          await tester
+              .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
           await tester.findAndTap(find.text('hsl'));
           await tester.pumpAndSettle();
-          
+
           final textFields = find.byType(TextField);
           expect(textFields, findsNWidgets(3));
           await tester.findAndEnter(
@@ -293,8 +300,10 @@ void main() {
 
           expect(find.byType(GridView), findsOneWidget);
           expect(find.byType(InkWell), findsAtLeastNWidgets(16));
-          
-          await tester.findAndTap(find.byTooltip(Colors.primaries[0].value.toRadixString(16)).first);
+
+          await tester.findAndTap(find
+              .byTooltip(Colors.primaries[0].value.toRadixString(16))
+              .first,);
           await tester.pumpAndSettle();
 
           final box = tester.widget<ColoredBox>(find.byType(ColoredBox).first);
@@ -302,7 +311,6 @@ void main() {
           expect(box.color, equals(Colors.primaries[0].shade500));
         },
       );
-
     },
   );
 }
