@@ -101,6 +101,7 @@ class MyHomePage extends StatefulWidget {
     this.countLabel,
     this.iconData,
     this.showToolTip = true,
+    this.color = Colors.blue
   }) : super(key: key);
 
   final String title;
@@ -108,6 +109,7 @@ class MyHomePage extends StatefulWidget {
   final String? countLabel;
   final IconData? iconData;
   final bool showToolTip;
+  final Color color;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -140,6 +142,12 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            Text(
+              color.value.toRadixString(16),
+              style: TextStyle(
+                color: color
+              )
+            )
           ],
         ),
       ),
@@ -218,6 +226,10 @@ class KnobsExample extends StatelessWidget {
                       description:
                           'This is the tooltip that is displayed when hovering over the increment button',
                       initialValue: true,
+                    ),
+                    color: context.knobs.color(
+                      label: 'Change text color',
+                      initialValue: initialDate,  
                     ),
                   ),
                 ),
