@@ -8,7 +8,7 @@ ensure a smooth and fruitful collaboration.
 ## Table of Contents
 
 - [Ways to Contribute](https://docs.widgetbook.io/contribution/ways-to-contribute)
-- [Getting Started](https://docs.widgetbook.io/contribution/getting-started)
+- [Getting Started](https://docs.widgetbook.io/contribution/get-started)
 - [Contribution Workflow](https://docs.widgetbook.io/contribution/contribution-workflow)
 - [Adding an Example](https://docs.widgetbook.io/contribution/adding-example)
 - [PR Title Conventions](https://docs.widgetbook.io/contribution//pr-conventions)

@@ -1,5 +1,9 @@
 ## Unreleased
 
+- **BREAKING**: Remove `--github-token` & `--pr` options from `publish` command. You can now use our [GitHub App](https://docs.widgetbook.io/widgetbook-cloud/integrating-github) instead. ([#982](https://github.com/widgetbook/widgetbook/pull/982))
+
+## 3.0.0-rc.4
+
 - **BREAKING**: Remove `--git-provider` option from `publish` command. ([#913](https://github.com/widgetbook/widgetbook/pull/913))
 - **BREAKING**: Remove `--base-commit` option from `publish` command. ([#936](https://github.com/widgetbook/widgetbook/pull/936))
 

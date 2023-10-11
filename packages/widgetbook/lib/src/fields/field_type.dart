@@ -5,4 +5,8 @@ enum FieldType {
   doubleInput,
   list,
   string,
+  duration,
+  dateTime,
+  intInput,
+  intSlider,
 }

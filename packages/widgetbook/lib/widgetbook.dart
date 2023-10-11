@@ -9,8 +9,12 @@ export 'src/knobs/knobs.dart'
     hide
         BooleanKnob,
         ColorKnob,
+        DateTimeKnob,
         DoubleInputKnob,
         DoubleSliderKnob,
+        DurationKnob,
+        IntInputKnob,
+        IntSliderKnob,
         ListKnob,
         StringKnob;
 export 'src/navigation/nodes/nodes.dart';

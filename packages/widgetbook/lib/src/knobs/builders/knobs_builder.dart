@@ -3,22 +3,30 @@ import 'package:flutter/material.dart';
 import '../../fields/fields.dart';
 import '../boolean_knob.dart';
 import '../color_knob.dart';
+import '../date_time_knob.dart';
+import '../duration_knob.dart';
 import '../knob.dart';
 import '../list_knob.dart';
 import '../string_knob.dart';
 import 'double_knobs_builder.dart';
+import 'int_knobs_builder.dart';
 
 typedef KnobAdded = T? Function<T>(Knob<T?> knob);
+typedef $int = int;
 
 class KnobsBuilder {
   KnobsBuilder(
     this.onKnobAdded,
   )   : this.double = DoubleKnobsBuilder(onKnobAdded),
-        this.doubleOrNull = DoubleOrNullKnobsBuilder(onKnobAdded);
+        this.doubleOrNull = DoubleOrNullKnobsBuilder(onKnobAdded),
+        this.int = IntKnobsBuilder(onKnobAdded),
+        this.intOrNull = IntOrNullKnobsBuilder(onKnobAdded);
 
   final KnobAdded onKnobAdded;
   final DoubleKnobsBuilder double;
   final DoubleOrNullKnobsBuilder doubleOrNull;
+  final IntKnobsBuilder int;
+  final IntOrNullKnobsBuilder intOrNull;
 
   /// Creates a checkbox that can be toggled on and off
   bool boolean({
@@ -74,7 +82,7 @@ class KnobsBuilder {
     required String label,
     String? description,
     String initialValue = '',
-    int? maxLines = 1,
+    $int? maxLines = 1,
   }) {
     return onKnobAdded(
       StringKnob(
@@ -92,7 +100,7 @@ class KnobsBuilder {
     required String label,
     String? description,
     String? initialValue,
-    int? maxLines = 1,
+    $int? maxLines = 1,
   }) {
     return onKnobAdded(
       StringKnob.nullable(
@@ -142,6 +150,76 @@ class KnobsBuilder {
         description: description,
         options: options,
         labelBuilder: labelBuilder,
+      ),
+    );
+  }
+
+  /// Creates a duration input that can be typed in
+  Duration duration({
+    required String label,
+    required Duration initialValue,
+    String? description,
+  }) {
+    return onKnobAdded(
+      DurationKnob(
+        label: label,
+        value: initialValue,
+        description: description,
+      ),
+    )!;
+  }
+
+  /// Creates a duration input that can be adjusted and optionally hold a
+  /// null value
+  Duration? durationOrNull({
+    required String label,
+    Duration? initialValue,
+    String? description,
+  }) {
+    return onKnobAdded(
+      DurationKnob.nullable(
+        label: label,
+        value: initialValue,
+        description: description,
+      ),
+    );
+  }
+
+  /// Creates a text field that can be used to select a date and time
+  DateTime dateTime({
+    required String label,
+    required DateTime initialValue,
+    String? description,
+    required DateTime start,
+    required DateTime end,
+  }) {
+    return onKnobAdded(
+      DateTimeKnob(
+        label: label,
+        value: initialValue,
+        description: description,
+        start: start,
+        end: end,
+      ),
+    )!;
+  }
+
+  /// Creates a text field that can be used to select a date and time and can
+  /// be initially empty
+  DateTime? dateTimeOrNull({
+    required String label,
+    DateTime? initialValue,
+    String? description,
+    required DateTime start,
+    required DateTime end,
+  }) {
+    return onKnobAdded(
+      DateTimeKnob.nullable(
+        label: label,
+        value: initialValue,
+        description: description,
+        start: start,
+        end: end,
       ),
     );
   }
