@@ -487,36 +487,11 @@ class HslColorTextFields extends StatelessWidget {
             )
           ],
           labelText: 'H',
-          onChanged: (value) {
-            final initialValue = converter.convertColorValueToHex<List<String>>(
-              colorSpace: ColorSpace.hsl,
-              colorValues: converter.getValueByColorSpace(
-                colorSpace: ColorSpace.hsl,
-                value: paramValue,
-              ) as List<String>,
-            );
-            final updateValue = converter.convertColorValueToHex<List<String>>(
-              colorSpace: ColorSpace.hsl,
-              colorValues: [
-                value,
-                '${colorValue[1]}',
-                '${colorValue[2]}',
-              ],
-            );
-            if (initialValue != updateValue) {
-              onChanged(updateValue, [
-                value,
-                '${colorValue[1]}',
-                '${colorValue[2]}',
-              ]);
-            } else {
-              onChanged(null, [
-                value,
-                '${colorValue[1]}',
-                '${colorValue[2]}',
-              ]);
-            }
-          },
+          onChanged: (value) => checkHueAndSaturation([
+            value,
+            '${colorValue[1]}',
+            '${colorValue[2]}',
+          ]),
         ),
         const SizedBox(
           width: 8,
@@ -535,36 +510,11 @@ class HslColorTextFields extends StatelessWidget {
           ],
           labelText: 'S',
           suffixText: '%',
-          onChanged: (value) {
-            final initialValue = converter.convertColorValueToHex<List<String>>(
-              colorSpace: ColorSpace.hsl,
-              colorValues: converter.getValueByColorSpace(
-                colorSpace: ColorSpace.hsl,
-                value: paramValue,
-              ) as List<String>,
-            );
-            final updateValue = converter.convertColorValueToHex<List<String>>(
-              colorSpace: ColorSpace.hsl,
-              colorValues: [
-                '${colorValue[0]}',
-                value,
-                '${colorValue[2]}',
-              ],
-            );
-            if (initialValue != updateValue) {
-              onChanged(updateValue, [
-                '${colorValue[0]}',
-                value,
-                '${colorValue[2]}',
-              ]);
-            } else {
-              onChanged(null, [
-                '${colorValue[0]}',
-                value,
-                '${colorValue[2]}',
-              ]);
-            }
-          },
+          onChanged: (value) => checkHueAndSaturation([
+            '${colorValue[0]}',
+            value,
+            '${colorValue[2]}',
+          ]),
         ),
         const SizedBox(
           width: 8,
@@ -583,33 +533,50 @@ class HslColorTextFields extends StatelessWidget {
           ],
           labelText: 'L',
           suffixText: '%',
-          onChanged: (value) {
-            final initialValue = converter.convertColorValueToHex<List<String>>(
-              colorSpace: ColorSpace.hsl,
-              colorValues: converter.getValueByColorSpace(
-                colorSpace: ColorSpace.hsl,
-                value: paramValue,
-              ) as List<String>,
-            );
-            final updateValue = converter.convertColorValueToHex<List<String>>(
-              colorSpace: ColorSpace.hsl,
-              colorValues: [
-                '${colorValue[0]}',
-                '${colorValue[1]}',
-                value,
-              ],
-            );
-            if (initialValue != updateValue) {
-              onChanged(updateValue, [
-                '${colorValue[0]}',
-                '${colorValue[1]}',
-                value,
-              ]);
-            }
-          },
+          onChanged: (value) => checkLightness([
+            '${colorValue[0]}',
+            '${colorValue[1]}',
+            value,
+          ]),
         ),
       ],
     );
+  }
+
+  void checkHueAndSaturation(List<String> updatedValues) {
+    final initialValue = converter.convertColorValueToHex<List<String>>(
+      colorSpace: ColorSpace.hsl,
+      colorValues: converter.getValueByColorSpace(
+        colorSpace: ColorSpace.hsl,
+        value: paramValue,
+      ) as List<String>,
+    );
+    final updateValue = converter.convertColorValueToHex<List<String>>(
+      colorSpace: ColorSpace.hsl,
+      colorValues: updatedValues,
+    );
+    if (initialValue != updateValue) {
+      onChanged(updateValue, updatedValues);
+    } else {
+      onChanged(null, updatedValues);
+    }
+  }
+
+  void checkLightness(List<String> updatedValues) {
+    final initialValue = converter.convertColorValueToHex<List<String>>(
+      colorSpace: ColorSpace.hsl,
+      colorValues: converter.getValueByColorSpace(
+        colorSpace: ColorSpace.hsl,
+        value: paramValue,
+      ) as List<String>,
+    );
+    final updateValue = converter.convertColorValueToHex<List<String>>(
+      colorSpace: ColorSpace.hsl,
+      colorValues: updatedValues,
+    );
+    if (initialValue != updateValue) {
+      onChanged(updateValue, updatedValues);
+    }
   }
 }
 
@@ -708,10 +675,13 @@ class ColorsConverter {
     ]);
   }
 
+  // To maximize precision when converting from hsl to rgb,
+  // we need to get the minimum value between the calculated value and 255
   int convertToRgbValue(double value) {
     return min((value * 256).floor(), 255);
   }
 
+  // https://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion
   double hueToRgb(double p, double q, double t) {
     if (t < 0) t += 1;
     if (t > 1) t -= 1;
