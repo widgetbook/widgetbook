@@ -1,8 +1,3 @@
-/// A complete example for Widgetbook manual approach
-///
-/// Use [WidgetbookFolder],[WidgetbookComponent], and [WidgetbookUseCase]
-/// to create directories
-/// [Ref link]: https://docs.widgetbook.io/getting-started/complete-example
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart' hide AlignmentAddon;
 
@@ -13,11 +8,46 @@ import 'customs/custom_addon.dart';
 import 'customs/custom_knob.dart';
 
 void main() {
-  runApp(const WidgetbookApp());
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const WidgetbookApp();
+  }
+}
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const WidgetbookApp();
+  }
+}
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const WidgetbookApp();
+  }
 }
 
 class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
+  const WidgetbookApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
