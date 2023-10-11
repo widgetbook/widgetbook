@@ -214,9 +214,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                   },
                   icon: Icon(
                     Icons.square,
-                    color: widget.value ??
-                        widget.initialValue ??
-                        widget.defaultColor,
+                    color: widget.value,
                   ),
                 );
               },
@@ -260,27 +258,25 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                           ),
                           itemCount: 16,
                           itemBuilder: (context, index) {
-                            return Tooltip(
-                              message: Colors.primaries[index].value
-                                  .toRadixString(16),
-                              child: InkWell(
-                                onTap: () {
-                                  _onTapColorPicker(Colors
-                                      .primaries[index].value
-                                      .toRadixString(16),);
-                                },
-                                child: Container(
-                                  width: 64,
-                                  height: 64,
-                                  color: Colors.primaries[index],
-                                  child: Icon(
-                                    Icons.check,
-                                    color: widget.value?.value ==
-                                            Colors.primaries[index].value
-                                        ? Colors.white
-                                        : Colors.transparent,
-                                    size: 32,
-                                  ),
+                            return InkWell(
+                              key: Key('colorPickerItem$index'),
+                              onTap: () {
+                                _onTapColorPicker(
+                                  Colors.primaries[index].value
+                                      .toRadixString(16),
+                                );
+                              },
+                              child: Container(
+                                width: 64,
+                                height: 64,
+                                color: Colors.primaries[index],
+                                child: Icon(
+                                  Icons.check,
+                                  color: widget.value?.value ==
+                                          Colors.primaries[index].value
+                                      ? Colors.white
+                                      : Colors.transparent,
+                                  size: 32,
                                 ),
                               ),
                             );
@@ -486,7 +482,7 @@ class HslColorTextFields extends StatelessWidget {
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
             FilteringTextInputFormatter.allow(
-              RegExp(r'^(?:[1-9]\d?|[12]\d{2}|3[0-5]\d)$'),
+              RegExp(r'^(?:[0-9]\d?|[12]\d{2}|3[0-5]\d)$'),
               replacementString: '${colorValue[0]}',
             )
           ],
@@ -605,12 +601,6 @@ class HslColorTextFields extends StatelessWidget {
             );
             if (initialValue != updateValue) {
               onChanged(updateValue, [
-                '${colorValue[0]}',
-                '${colorValue[1]}',
-                value,
-              ]);
-            } else {
-              onChanged(null, [
                 '${colorValue[0]}',
                 '${colorValue[1]}',
                 value,
