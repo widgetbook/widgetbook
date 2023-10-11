@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../fields/fields.dart';
 import '../common/common.dart';
 import 'grid_painter.dart';
@@ -11,9 +10,8 @@ class GridAddon extends WidgetbookAddon<int> {
           name: 'Grid',
           initialSetting: dimension,
         );
-
   final int dimension;
-
+  
   @override
   List<Field> get fields => [];
 
