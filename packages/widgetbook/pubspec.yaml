@@ -20,6 +20,7 @@ dependencies:
   device_frame: ^1.1.0
   flutter:
     sdk: flutter
+  inspector: ^2.1.0
   meta: ^1.8.0
   nested: ^1.0.0
   resizable_widget: ^1.0.5

@@ -3,6 +3,7 @@ export 'builder_addon/addon.dart';
 export 'common/common.dart';
 export 'device_frame_addon/addon.dart';
 export 'grid_addon/addon.dart';
+export 'inspect_addon/addon.dart';
 export 'localization_addon/addon.dart';
 export 'text_scale_addon/addon.dart';
 export 'theme_addon/addon.dart';
