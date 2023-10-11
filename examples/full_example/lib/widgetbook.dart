@@ -37,7 +37,7 @@ class WidgetbookApp extends StatelessWidget {
                   builder: (context) => greenContainerUseCase(context),
                 ),
                 WidgetbookUseCase(
-                  name: 'Color Knob Test',
+                  name: 'Color Knob Example',
                   builder: (context) => colorKnobUseCase(
                     context,
                     context.knobs.color(

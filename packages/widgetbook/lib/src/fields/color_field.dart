@@ -50,6 +50,7 @@ class ColorField extends Field<Color> {
   @override
   Widget toWidget(BuildContext context, String group, Color? value) {
     return ColorsFieldWidget(
+      name: name,
       colorSpace: initialColorSpace,
       value: value,
       initialValue: initialValue,
@@ -70,6 +71,7 @@ class ColorField extends Field<Color> {
 class ColorsFieldWidget extends StatefulWidget{
 
   const ColorsFieldWidget({
+    required this.name,
     required this.colorSpace,
     required this.paramValue,
     required this.initialValue,
@@ -80,6 +82,7 @@ class ColorsFieldWidget extends StatefulWidget{
   });
 
   final ColorSpace colorSpace;
+  final String name;
   final Color? value;
   final Color? initialValue;
   final Color defaultColor;
@@ -95,6 +98,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
 
   late ColorSpace initialColorSpace;
   late dynamic colorValue;
+  bool shouldUpdateFromPicker = false;
   final ColorsConverter converter = ColorsConverter();
 
   @override
@@ -107,6 +111,21 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
     );
   }
 
+  void _onTapColorPicker(String color){
+    widget.onChanged(
+      converter.convertColorValueToHex<String>(
+        colorSpace: ColorSpace.hex, 
+        colorValues: color,
+      ),
+    );
+    setState(() {
+      colorValue = converter.getValueByColorSpace(
+        colorSpace: initialColorSpace,
+        value: color,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -114,7 +133,8 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
       children: [
         if(initialColorSpace == ColorSpace.rgba)...[
           RgbaColorTextFields(
-            colorValue: colorValue as List<String>,
+            colorValue: [...colorValue as List<String>],
+            shouldUpdateFromPicker: shouldUpdateFromPicker,
             onChanged: (value) {
               widget.onChanged(value);
               setState(() {
@@ -128,8 +148,9 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
           )
         ]else if(initialColorSpace == ColorSpace.hsl)...[
           HslColorTextFields(
-            colorValue: colorValue as List<String>,
+            colorValue: [...colorValue as List<String>],
             paramValue: widget.paramValue,
+            shouldUpdateFromPicker: shouldUpdateFromPicker,
             onChanged: (hexValue, value) {
               if(hexValue != null){
                 widget.onChanged(hexValue);
@@ -146,6 +167,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
               ColorTextField(
                 key: const Key('colorFieldHex'),
                 value: '$colorValue',
+                shouldUpdateFromPicker: shouldUpdateFromPicker,
                 maxLength: 8,
                 prefixIcon: const Icon(Icons.numbers),
                 inputFormatters: [
@@ -169,9 +191,95 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
         const SizedBox(height: 16,),
         Row(
           children: [
-            Icon(
-              Icons.square, 
-              color: widget.value ?? widget.initialValue ?? widget.defaultColor,
+            MenuAnchor(
+              alignmentOffset: const Offset(-256, 0),
+              onClose: () {
+                setState(() {
+                  shouldUpdateFromPicker = false;
+                });
+              },
+              onOpen: () {
+                _onTapColorPicker(widget.paramValue);
+                setState(() {
+                  shouldUpdateFromPicker = true;
+                });
+              },
+              builder: (context, controller, child) {
+                return IconButton(
+                  key: const Key('colorFieldMenuButton'),
+                  onPressed: () {
+                    if(controller.isOpen){
+                      controller.close();
+                    }else{
+                      controller.open();
+                    }
+                  },
+                  icon: Icon(
+                    Icons.square,
+                    color: widget.value ?? widget.initialValue ?? widget.defaultColor,
+                  ),
+                );
+              },
+              menuChildren: [
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Color Picker',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 16,),
+                      Container(
+                        height: 256,
+                        width: 256,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4,),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        clipBehavior: Clip.hardEdge,
+                        child: GridView.builder(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 4,
+                            mainAxisExtent: 64,
+                          ),
+                          itemCount: 16,
+                          itemBuilder: (context, index){
+                            return Tooltip(
+                              message: Colors.primaries[index].value.toRadixString(16),
+                              child: InkWell(
+                                onTap: () {
+                                  _onTapColorPicker(Colors.primaries[index].value.toRadixString(16));
+                                },
+                                child: Container(
+                                  width: 64,
+                                  height: 64,
+                                  color: Colors.primaries[index],
+                                  child: Icon(
+                                    Icons.check,
+                                    color: widget.value?.value == Colors.primaries[index].value ? Colors.white : Colors.transparent,
+                                    size: 32,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
             const SizedBox(width: 8,),
             Flexible(
@@ -208,12 +316,14 @@ class RgbaColorTextFields extends StatelessWidget{
     required this.colorValue,
     required this.onChanged,
     required this.converter,
+    required this.shouldUpdateFromPicker, 
     super.key, 
   });
 
   final List<String> colorValue;
   final ValueChanged<String> onChanged;
   final ColorsConverter converter;
+  final bool shouldUpdateFromPicker;
 
   @override
   Widget build(BuildContext context){
@@ -222,7 +332,8 @@ class RgbaColorTextFields extends StatelessWidget{
       children: [
         ColorTextField(
           key: const Key('colorFieldRgbaRed'),
-          value: '${colorValue[1]}', 
+          value: colorValue[1],
+          shouldUpdateFromPicker: shouldUpdateFromPicker,
           maxLength: 3, 
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
@@ -248,6 +359,7 @@ class RgbaColorTextFields extends StatelessWidget{
         ColorTextField(
           key: const Key('colorFieldRgbaGreen'),
           value: '${colorValue[2]}', 
+          shouldUpdateFromPicker: shouldUpdateFromPicker,
           maxLength: 3, 
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
@@ -273,6 +385,7 @@ class RgbaColorTextFields extends StatelessWidget{
         ColorTextField(
           key: const Key('colorFieldRgbaBlue'),
           value: '${colorValue[3]}', 
+          shouldUpdateFromPicker: shouldUpdateFromPicker,
           maxLength: 3, 
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
@@ -298,6 +411,7 @@ class RgbaColorTextFields extends StatelessWidget{
         ColorTextField(
           key: const Key('colorFieldRgbaAlpha'),
           value: '${colorValue[0]}', 
+          shouldUpdateFromPicker: shouldUpdateFromPicker,
           maxLength: 3, 
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
@@ -332,11 +446,13 @@ class HslColorTextFields extends StatelessWidget{
     required this.onChanged,
     required this.paramValue,
     required this.converter,
+    required this.shouldUpdateFromPicker,
     super.key,
   });
 
   final List<String> colorValue;
   final void Function(String? hexValue, List<String> newValues) onChanged;
+  final bool shouldUpdateFromPicker;
   final String paramValue;
   final ColorsConverter converter;
 
@@ -348,6 +464,7 @@ class HslColorTextFields extends StatelessWidget{
         ColorTextField(
           key: const Key('colorFieldHslHue'),
           value: '${colorValue[0]}', 
+          shouldUpdateFromPicker: shouldUpdateFromPicker,
           maxLength: 3, 
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
@@ -398,6 +515,7 @@ class HslColorTextFields extends StatelessWidget{
         ColorTextField(
           key: const Key('colorFieldHslSaturation'),
           value: '${colorValue[1]}', 
+          shouldUpdateFromPicker: shouldUpdateFromPicker,
           maxLength: 3, 
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
@@ -449,6 +567,7 @@ class HslColorTextFields extends StatelessWidget{
         ColorTextField(
           key: const Key('colorFieldHslLightness'),
           value: '${colorValue[2]}', 
+          shouldUpdateFromPicker: shouldUpdateFromPicker,
           maxLength: 3, 
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
@@ -507,6 +626,7 @@ class ColorTextField extends StatelessWidget {
     required this.value,
     required this.maxLength,
     required this.onChanged,
+    required this.shouldUpdateFromPicker,
     this.inputFormatters,
     this.prefixIcon,
     this.suffixText,
@@ -518,6 +638,7 @@ class ColorTextField extends StatelessWidget {
   final int maxLength;
   final ValueChanged<String> onChanged;
   final List<TextInputFormatter>? inputFormatters;
+  final bool shouldUpdateFromPicker;
   final Widget? prefixIcon;
   final String? suffixText;
   final String? labelText;
@@ -526,6 +647,7 @@ class ColorTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(
       child: TextFormField(
+        key: shouldUpdateFromPicker ? Key('colorFieldPicker$value') : key,
         initialValue: value,
         inputFormatters: inputFormatters,
         maxLength: maxLength,
