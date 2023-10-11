@@ -40,9 +40,7 @@ void main() {
     late UseCaseReader useCaseReader;
     late Progress progress;
     late Stdin stdin;
-    late ContextManager contextManager;
-    late Context localContext;
-    late Context globalContext;
+    late Context context;
     late Directory directory;
     late File file;
     late ZipEncoder zipEncoder;
@@ -61,21 +59,16 @@ void main() {
       useCaseReader = MockUseCaseReader();
       progress = MockProgress();
       stdin = MockStdin();
-      contextManager = MockContextManager();
-      localContext = MockContext();
-      globalContext = MockContext();
+      context = MockContext();
       directory = MockDirectory();
       file = MockFile();
       zipEncoder = MockZipEncoder();
 
       when(() => logger.progress(any<String>())).thenReturn(progress);
 
-      when(() => localContext.repository).thenReturn(repository);
-      when(() => globalContext.environment).thenReturn(FakeEnvironment());
-      when(() => localContext.environment).thenReturn(FakeEnvironment());
-      when(() => contextManager.load(any(), any())).thenAnswer(
-        (_) async => localContext,
-      );
+      when(() => context.repository).thenReturn(repository);
+      when(() => context.environment).thenReturn(FakeEnvironment());
+      when(() => context.environment).thenReturn(FakeEnvironment());
     });
 
     group(
@@ -87,7 +80,7 @@ void main() {
         setUp(() {
           repository = MockRepository();
           command = PublishCommand(
-            context: globalContext,
+            context: context,
             logger: logger,
           );
         });
@@ -178,21 +171,19 @@ void main() {
       setUp(() {
         results = MockArgResults();
         command = PublishCommand(
-          context: globalContext,
+          context: context,
         );
 
         // Default ArgResults
         when(() => results['path']).thenReturn('default path');
         when(() => results['api-key']).thenReturn('default key');
-        when(() => results['github-token']).thenReturn('default token');
-        when(() => results['pr']).thenReturn('default pr');
 
         // Default Context
-        when(() => localContext.name).thenReturn('default');
-        when(() => localContext.user).thenReturn('default user');
-        when(() => localContext.project).thenReturn('default repo');
-        when(() => localContext.providerSha).thenReturn('default sha');
-        when(() => localContext.repository).thenReturn(repository);
+        when(() => context.name).thenReturn('default');
+        when(() => context.user).thenReturn('default user');
+        when(() => context.project).thenReturn('default repo');
+        when(() => context.providerSha).thenReturn('default sha');
+        when(() => context.repository).thenReturn(repository);
 
         // Default Repository
         when(() => repository.currentBranch).thenAnswer(
@@ -207,7 +198,7 @@ void main() {
         const path = 'root/path/to/project';
         when(() => results['path']).thenReturn(path);
 
-        final args = await command.parseResults(localContext, results);
+        final args = await command.parseResults(context, results);
 
         expect(args.path, equals(path));
       });
@@ -216,27 +207,9 @@ void main() {
         const apiKey = 'SeCrEtKeY';
         when(() => results['api-key']).thenReturn(apiKey);
 
-        final args = await command.parseResults(localContext, results);
+        final args = await command.parseResults(context, results);
 
         expect(args.apiKey, equals(apiKey));
-      });
-
-      test('gitHubToken', () async {
-        const token = 'SeCrEtKeY';
-        when(() => results['github-token']).thenReturn(token);
-
-        final args = await command.parseResults(localContext, results);
-
-        expect(args.gitHubToken, equals(token));
-      });
-
-      test('prNumber', () async {
-        const prNumber = '21';
-        when(() => results['pr']).thenReturn(prNumber);
-
-        final args = await command.parseResults(localContext, results);
-
-        expect(args.prNumber, equals(prNumber));
       });
 
       group('actor', () {
@@ -244,7 +217,7 @@ void main() {
           const userName = 'John Doe';
           when(() => results['actor']).thenReturn(userName);
 
-          final args = await command.parseResults(localContext, results);
+          final args = await command.parseResults(context, results);
 
           expect(args.actor, equals(userName));
         });
@@ -252,19 +225,19 @@ void main() {
         test('from $Context', () async {
           const userName = 'John Doe';
           when(() => results['actor']).thenReturn(null);
-          when(() => localContext.user).thenReturn(userName);
+          when(() => context.user).thenReturn(userName);
 
-          final args = await command.parseResults(localContext, results);
+          final args = await command.parseResults(context, results);
 
           expect(args.actor, equals(userName));
         });
 
         test('throws $ActorNotFoundException', () async {
           when(() => results['actor']).thenReturn(null);
-          when(() => localContext.user).thenReturn(null);
+          when(() => context.user).thenReturn(null);
 
           expectLater(
-            () => command.parseResults(localContext, results),
+            () => command.parseResults(context, results),
             throwsA(const TypeMatcher<ActorNotFoundException>()),
           );
         });
@@ -275,7 +248,7 @@ void main() {
           const repoName = 'widgetbook';
           when(() => results['repository']).thenReturn(repoName);
 
-          final args = await command.parseResults(localContext, results);
+          final args = await command.parseResults(context, results);
 
           expect(args.repository, equals(repoName));
         });
@@ -283,19 +256,19 @@ void main() {
         test('from $Context', () async {
           const repoName = 'widgetbook';
           when(() => results['repository']).thenReturn(null);
-          when(() => localContext.project).thenReturn(repoName);
+          when(() => context.project).thenReturn(repoName);
 
-          final args = await command.parseResults(localContext, results);
+          final args = await command.parseResults(context, results);
 
           expect(args.repository, equals(repoName));
         });
 
         test('throws $RepositoryNotFoundException', () async {
           when(() => results['repository']).thenReturn(null);
-          when(() => localContext.project).thenReturn(null);
+          when(() => context.project).thenReturn(null);
 
           expectLater(
-            () => command.parseResults(localContext, results),
+            () => command.parseResults(context, results),
             throwsA(const TypeMatcher<RepositoryNotFoundException>()),
           );
         });
@@ -305,7 +278,7 @@ void main() {
             const branch = 'main';
             when(() => results['branch']).thenReturn(branch);
 
-            final args = await command.parseResults(localContext, results);
+            final args = await command.parseResults(context, results);
             ;
 
             expect(args.branch, equals(branch));
@@ -321,7 +294,7 @@ void main() {
               ),
             );
 
-            final args = await command.parseResults(localContext, results);
+            final args = await command.parseResults(context, results);
             ;
 
             expect(args.branch, equals(branch));
@@ -333,7 +306,7 @@ void main() {
             const commit = '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf';
             when(() => results['commit']).thenReturn(commit);
 
-            final args = await command.parseResults(localContext, results);
+            final args = await command.parseResults(context, results);
             ;
 
             expect(args.commit, equals(commit));
@@ -342,9 +315,9 @@ void main() {
           test('from $Context', () async {
             const commit = '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf';
             when(() => results['commit']).thenReturn(null);
-            when(() => localContext.providerSha).thenReturn(commit);
+            when(() => context.providerSha).thenReturn(commit);
 
-            final args = await command.parseResults(localContext, results);
+            final args = await command.parseResults(context, results);
             ;
 
             expect(args.commit, equals(commit));
@@ -353,7 +326,7 @@ void main() {
           test('from $Repository', () async {
             const commit = '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf';
             when(() => results['commit']).thenReturn(null);
-            when(() => localContext.providerSha).thenReturn(null);
+            when(() => context.providerSha).thenReturn(null);
             when(() => repository.currentBranch).thenAnswer(
               (_) async => const Reference(
                 commit,
@@ -361,7 +334,7 @@ void main() {
               ),
             );
 
-            final args = await command.parseResults(localContext, results);
+            final args = await command.parseResults(context, results);
             ;
 
             expect(args.commit, equals(commit));
@@ -375,11 +348,11 @@ void main() {
       'proceed with un-committed changes',
       () async {
         final publishCommand = PublishCommand(
-          context: globalContext,
+          context: context,
           logger: logger,
         );
 
-        when(() => localContext.repository).thenReturn(repository);
+        when(() => context.repository).thenReturn(repository);
         when(() => repository.isClean).thenAnswer((_) async => false);
         when(() => stdin.hasTerminal).thenReturn(true);
         when(() => logger.confirm(any())).thenReturn(false);
@@ -388,7 +361,7 @@ void main() {
           stdin: () => stdin,
           () => expect(
             publishCommand.runWith(
-              localContext,
+              context,
               MockPublishArgs(),
             ),
             throwsA(
@@ -404,7 +377,7 @@ void main() {
       () {
         final args = MockPublishArgs();
         final command = PublishCommand(
-          context: globalContext,
+          context: context,
           fileSystem: fileSystem,
           logger: logger,
         );
@@ -428,7 +401,7 @@ void main() {
       () {
         final args = MockPublishArgs();
         final command = PublishCommand(
-          context: globalContext,
+          context: context,
           fileSystem: fileSystem,
           logger: logger,
           zipEncoder: zipEncoder,
@@ -450,7 +423,6 @@ void main() {
     );
 
     test('exits with code 0 when publishing a build succeeds', () async {
-      final context = MockContext();
       const args = PublishArgs(
         apiKey: 'apiKey',
         branch: 'feat',
@@ -462,7 +434,7 @@ void main() {
       );
 
       final command = PublishCommand(
-        context: globalContext,
+        context: context,
         fileSystem: fileSystem,
         logger: logger,
         client: client,
@@ -492,7 +464,6 @@ void main() {
     });
 
     test('exits with code 0 when publishing a review succeeds', () async {
-      final context = MockContext();
       const args = PublishArgs(
         apiKey: 'apiKey',
         branch: 'feat',
@@ -508,7 +479,7 @@ void main() {
       );
 
       final command = PublishCommand(
-        context: globalContext,
+        context: context,
         fileSystem: fileSystem,
         logger: logger,
         client: client,

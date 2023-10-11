@@ -50,10 +50,8 @@ The CLI accepts the following arguments.
 | `--repository`   | ➖        | The name of the repository for which the Widgetbook is uploaded.|
 | `--actor`        | ➖        | The username of the actor which triggered the build.|
 | `--base-branch`  | ➖        | The name of the pull-request's base branch. |
-| `--pr`           | ➖        | The number of the PR on which the CLI is running. |
-| `--github-token` | ➖        | The authentication token to post comments to the PR on which the CLI is running. |
 
-If `base-branch` is omitted, a **Widgetbook Build** is created. 
+If `base-branch` is omitted, a **Widgetbook Build** is created.  
 If `base-branch` is provided, a **Widgetbook Build** and a **Widgetbook Review** is created.
 
 ## Documentation

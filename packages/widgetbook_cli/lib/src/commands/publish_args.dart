@@ -9,8 +9,6 @@ class PublishArgs {
     required this.vendor,
     required this.actor,
     required this.repository,
-    this.gitHubToken,
-    this.prNumber,
     this.baseBranch,
   });
 
@@ -21,8 +19,6 @@ class PublishArgs {
   final String vendor;
   final String actor;
   final String repository;
-  final String? gitHubToken;
-  final String? prNumber;
   final Reference? baseBranch;
 
   @override
@@ -36,8 +32,6 @@ class PublishArgs {
         other.vendor == vendor &&
         other.actor == actor &&
         other.repository == repository &&
-        other.gitHubToken == gitHubToken &&
-        other.prNumber == prNumber &&
         other.baseBranch == baseBranch;
   }
 
@@ -50,8 +44,6 @@ class PublishArgs {
         vendor.hashCode ^
         actor.hashCode ^
         repository.hashCode ^
-        gitHubToken.hashCode ^
-        prNumber.hashCode ^
         baseBranch.hashCode;
   }
 }
