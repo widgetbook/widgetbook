@@ -8,6 +8,7 @@
 - **FEAT**: Add `dateTime` knob. ([#940](https://github.com/widgetbook/widgetbook/pull/940))
 - **FEAT**: Add `int` knob. ([#942](https://github.com/widgetbook/widgetbook/pull/942))
 - **FEAT**: Add Grid Addon. ([#943](https://github.com/widgetbook/widgetbook/pull/943))
+- **FEAT**: Add Zoom Addon. ([#968](https://github.com/widgetbook/widgetbook/pull/968))
 
 ## 3.3.0
 
