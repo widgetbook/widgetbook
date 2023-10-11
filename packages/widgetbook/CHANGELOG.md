@@ -9,6 +9,7 @@
 - **FEAT**: Add `int` knob. ([#942](https://github.com/widgetbook/widgetbook/pull/942))
 - **FEAT**: Add Grid Addon. ([#943](https://github.com/widgetbook/widgetbook/pull/943))
 - **FEAT**: Add Zoom Addon. ([#968](https://github.com/widgetbook/widgetbook/pull/968))
+- **FEAT**: Add Inspect Addon. ([#85](https://github.com/widgetbook/widgetbook/pull/985))
 
 ## 3.3.0
 
