@@ -18,12 +18,13 @@ class ZoomAddon extends WidgetbookAddon<double> {
           initialValue: initialSetting,
           min: 0.5,
           max: 3.0,
+          divisions: 25,
         ),
       ];
 
   @override
   double valueFromQueryGroup(Map<String, String> group) {
-    return valueOf('zoom', group) ?? 1.0;
+    return valueOf('zoom', group)!;
   }
 
   @override

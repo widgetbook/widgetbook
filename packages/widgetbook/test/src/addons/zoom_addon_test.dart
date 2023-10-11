@@ -12,8 +12,8 @@ void main() {
         'given a default constructor, '
         'initialSetting should be 1.0',
         () {
-          final defaultAddon = ZoomAddon();
-          expect(defaultAddon.initialSetting, equals(1.0));
+          final addon = ZoomAddon();
+          expect(addon.initialSetting, equals(1.0));
         },
       );
 
@@ -21,8 +21,12 @@ void main() {
         'given a custom initialZoom, '
         'initialSetting should match the provided value',
         () {
-          final customAddon = ZoomAddon(initialZoom: 1.5);
-          expect(customAddon.initialSetting, equals(1.5));
+          const factor = 1.5;
+          final addon = ZoomAddon(
+            initialZoom: factor,
+          );
+
+          expect(addon.initialSetting, equals(factor));
         },
       );
 
@@ -30,8 +34,9 @@ void main() {
         'given a query group with zoom value, '
         'valueFromQueryGroup should return the correct zoom value',
         () {
-          final result = addon.valueFromQueryGroup({'zoom': '1.5'});
-          expect(result, equals(1.5));
+          const factor = 1.5;
+          final result = addon.valueFromQueryGroup({'zoom': '$factor'});
+          expect(result, equals(factor));
         },
       );
 
@@ -39,8 +44,8 @@ void main() {
         'given a query group without zoom value, '
         'valueFromQueryGroup should return the default value of 1.0',
         () {
-          final result = addon.valueFromQueryGroup({'zoom': '1.5'});
-          expect(result, equals(1.5));
+          final result = addon.valueFromQueryGroup({});
+          expect(result, equals(1.0));
         },
       );
 
@@ -48,13 +53,14 @@ void main() {
         'given a zoom value, '
         'buildUseCase should scale the child accordingly',
         (tester) async {
+          const factor = 1.5;
           final child = const Text('Zoom me!');
           await tester.pumpWidget(
             MaterialApp(
               home: addon.buildUseCase(
                 tester.element(find.byType(Text)),
                 child,
-                1.5,
+                factor,
               ),
             ),
           );
@@ -63,7 +69,10 @@ void main() {
             find.byType(Transform),
           );
 
-          expect(transform.transform.getMaxScaleOnAxis(), equals(1.5));
+          expect(
+            transform.transform.getMaxScaleOnAxis(),
+            equals(factor),
+          );
         },
       );
     },
