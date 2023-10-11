@@ -184,8 +184,6 @@ void main() {
         // Default ArgResults
         when(() => results['path']).thenReturn('default path');
         when(() => results['api-key']).thenReturn('default key');
-        when(() => results['github-token']).thenReturn('default token');
-        when(() => results['pr']).thenReturn('default pr');
 
         // Default Context
         when(() => localContext.name).thenReturn('default');
@@ -219,24 +217,6 @@ void main() {
         final args = await command.parseResults(localContext, results);
 
         expect(args.apiKey, equals(apiKey));
-      });
-
-      test('gitHubToken', () async {
-        const token = 'SeCrEtKeY';
-        when(() => results['github-token']).thenReturn(token);
-
-        final args = await command.parseResults(localContext, results);
-
-        expect(args.gitHubToken, equals(token));
-      });
-
-      test('prNumber', () async {
-        const prNumber = '21';
-        when(() => results['pr']).thenReturn(prNumber);
-
-        final args = await command.parseResults(localContext, results);
-
-        expect(args.prNumber, equals(prNumber));
       });
 
       group('actor', () {

@@ -63,14 +63,6 @@ class PublishCommand extends CliCommand<PublishArgs> {
         'base-branch',
         help:
             'The base branch of the pull-request. For example, main or master.',
-      )
-      ..addOption(
-        'github-token',
-        help: 'GitHub API token.',
-      )
-      ..addOption(
-        'pr',
-        help: 'The number of the PR.',
       );
   }
 
@@ -84,8 +76,6 @@ class PublishCommand extends CliCommand<PublishArgs> {
   Future<PublishArgs> parseResults(Context context, ArgResults results) async {
     final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
-    final gitHubToken = results['github-token'] as String?;
-    final prNumber = results['pr'] as String?;
 
     final repository = context.repository!;
     final currentBranch = await repository.currentBranch;
@@ -122,8 +112,6 @@ class PublishCommand extends CliCommand<PublishArgs> {
       actor: actor,
       repository: repoName,
       baseBranch: baseBranch,
-      prNumber: prNumber,
-      gitHubToken: gitHubToken,
     );
   }
 
@@ -161,22 +149,13 @@ class PublishCommand extends CliCommand<PublishArgs> {
             )
           : null;
 
-      if (args.prNumber != null && args.gitHubToken != null) {
-        final githubClient = GitHubClient(
-          apiKey: args.gitHubToken!,
-        );
-
-        await githubClient.postComment(
-          repository: context.project!,
-          prNumber: args.prNumber!,
-          body: composeComment(
-            baseUrl: context.environment.appUrl,
-            projectId: buildResponse.project,
-            buildId: buildResponse.build,
-            reviewId: reviewResponse?.review.id,
-          ),
-        );
-      }
+      progress.complete();
+      logSuccess(
+        baseUrl: context.environment.appUrl,
+        projectId: buildResponse.project,
+        buildId: buildResponse.build,
+        reviewId: reviewResponse?.review.id,
+      );
 
       return ExitCode.success.code;
     } catch (e) {
@@ -308,39 +287,46 @@ class PublishCommand extends CliCommand<PublishArgs> {
     return response;
   }
 
-  String composeComment({
+  void logSuccess({
     required String baseUrl,
     required String projectId,
     required String buildId,
     required String? reviewId,
   }) {
-    final buildUrl = p.join(
-      baseUrl,
-      'projects/$projectId',
-      'builds/$buildId',
+    final buildUrl = lightCyan.wrap(
+      styleUnderlined.wrap(
+        link(
+          uri: Uri.parse(
+            p.join(
+              baseUrl,
+              'projects/$projectId',
+              'builds/$buildId',
+            ),
+          ),
+        ),
+      ),
     );
 
-    final reviewUrl = p.join(
-      baseUrl,
-      'projects/$projectId',
-      'reviews/$reviewId',
-      'builds/$buildId',
-      'use-cases',
+    final reviewUrl = lightCyan.wrap(
+      styleUnderlined.wrap(
+        link(
+          uri: Uri.parse(
+            p.join(
+              baseUrl,
+              'projects/$projectId',
+              'reviews/$reviewId',
+              'builds/$buildId',
+              'use-cases',
+            ),
+          ),
+        ),
+      ),
     );
 
-    final buffer = StringBuffer(
-      '### 📦 Build\n\n'
-      '- 🔗 [Widgetbook Cloud - Build]($buildUrl)',
+    logger.success(
+      'Successfully published to Widgetbook Cloud 🎉'
+      '\n> Build: $buildUrl'
+      "${reviewId != null ? '\n> Review: $reviewUrl' : ''}",
     );
-
-    if (reviewId != null) {
-      buffer.writeln(
-        '\n\n'
-        '### 📑 Review\n\n'
-        '- 🔗 [Widgetbook Cloud - Review]($reviewUrl)',
-      );
-    }
-
-    return buffer.toString();
   }
 }
