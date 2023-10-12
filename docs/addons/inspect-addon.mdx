@@ -1,17 +1,17 @@
-# Inspect Addon
+# Inspector Addon
 
-The Grid Addon is a Widgetbook utility designed for adding a pixel grid
-use-case being previewed within the Workbench.
+The Inspector Addon is a Widgetbook utility designed to provide inspection 
+capabilities for widgets. It allows developers to inspect various properties of a widget, 
+such as colors, sizes, and padding, directly within the Widgetbook's Workbench.
 
 ## Setup
-
 Here's how to configure it:
 
 <Warning>
-  In case `InspectAddon` is used with other addons, then it must be defined just after
-  the [`DeviceFrameAddon`](/addons/device-frame-addon)
+  If `InspectorAddon` is used alongside other addons, ensure it's defined appropriately in the addons list. 
+  For instance, if used with the [`DeviceFrameAddon`](/addons/device-frame-addon), 
+  ensure the order is correct based on your needs.
 </Warning>
-
 ```dart
 InspectorAddon(enabled: true),
 ```
