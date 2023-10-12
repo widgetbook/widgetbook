@@ -44,7 +44,7 @@ class WidgetbookApp extends StatelessWidget {
                   builder: (context) => colorKnobUseCase(
                     context,
                     context.knobs.color(
-                      label: 'Color', 
+                      label: 'Color',
                       initialValue: Colors.blue,
                       initialColorSpace: ColorSpace.rgba,
                     ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/fields/color_field.dart';
+import 'package:widgetbook/src/fields/color_field/color_field.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
 
 import '../../helper/helper.dart';
@@ -328,69 +328,6 @@ void main() {
         },
       );
 
-      testWidgets(
-        'given the Color Picker is opened, '
-        'when I click on the Color Picker button, '
-        'then the Color Picker should close',
-        (tester) async {
-          const blue = Color(0xFF0000FF);
-
-          await tester.pumpKnob(
-            (context) => ColoredBox(
-              color: context.knobs.color(
-                label: 'Knob',
-                initialValue: blue,
-              ),
-            ),
-          );
-
-          await tester.findAndTap(find.byType(IconButton));
-          await tester.pumpAndSettle();
-
-          expect(find.byType(GridView), findsOneWidget);
-          expect(find.byType(InkWell), findsAtLeastNWidgets(16));
-
-          await tester.findAndTap(find.byType(IconButton));
-          await tester.pumpAndSettle();
-
-          expect(find.byType(GridView), findsNothing);
-        },
-      );
-
-      testWidgets(
-        'given the Color Picker is closed, '
-        'when I click on the Color Picker button, '
-        'and the Color Picker is opened, '
-        'and I click on one of the colors, '
-        'then the value should be updated',
-        (tester) async {
-          const blue = Color(0xFF0000FF);
-
-          await tester.pumpKnob(
-            (context) => ColoredBox(
-              color: context.knobs.color(
-                label: 'Knob',
-                initialValue: blue,
-              ),
-            ),
-          );
-
-          await tester.findAndTap(find.byType(IconButton));
-          await tester.pumpAndSettle();
-
-          expect(find.byType(GridView), findsOneWidget);
-          expect(find.byType(InkWell), findsAtLeastNWidgets(16));
-
-          await tester.findAndTap(
-            find.byKey(const Key('colorPickerItem0')),
-          );
-          await tester.pumpAndSettle();
-
-          final box = tester.widget<ColoredBox>(find.byType(ColoredBox).first);
-
-          expect(box.color, equals(Colors.primaries[0].shade500));
-        },
-      );
     },
   );
 }

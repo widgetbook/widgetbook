@@ -1,5 +1,5 @@
 export 'boolean_field.dart';
-export 'color_field.dart';
+export 'color_field/color_field.dart';
 export 'date_time_field.dart';
 export 'double_input_field.dart';
 export 'double_slider_field.dart';
