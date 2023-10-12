@@ -30,14 +30,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_screenutil:
-    dependency: "direct main"
-    description:
-      name: flutter_screenutil
-      sha256: "63c84d7da6b5f0733f86b01e3d20db2baadbf0fc9b43e5967c2cfb84dfa1e998"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.8.1"
   freezed_annotation:
     dependency: transitive
     description:
@@ -116,4 +108,4 @@ packages:
     version: "3.3.0"
 sdks:
   dart: ">=3.1.0-185.0.dev <4.0.0"
-  flutter: ">=3.10.0"
+  flutter: ">=1.17.0"
