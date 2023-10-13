@@ -30,7 +30,7 @@ class Tree {
     final root = TreeNode<Null>(null);
 
     for (var useCase in useCases) {
-      final parts = getPathParts(useCase.component.importUri);
+      final parts = useCase.pathInWidgetbook.split('/').toList();
 
       TreeNode currentNode = root;
 

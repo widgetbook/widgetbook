@@ -8,6 +8,7 @@ class MockUseCaseMetadata extends UseCaseMetadata {
     super.name = 'Default',
     super.importUri = 'package:widgetbook/src/widgets/component.usecase.dart',
     super.filePath = 'lib/src/widgets/component.usecase.dart',
+    super.pathInWidgetbook = 'widgets',
     String componentName = 'Component',
     String componentImportUri = 'package:widgetbook/src/widgets/component.dart',
     String componentFilePath = 'lib/src/widgets/component.dart',

@@ -10,6 +10,7 @@ import 'package:yaml/yaml.dart';
 
 import '../models/element_metadata.dart';
 import '../models/use_case_metadata.dart';
+import '../tree/tree.dart';
 
 class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
   final packagesMapResource = Resource<YamlMap>(
@@ -40,6 +41,10 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
         ? annotation.read('designLink').stringValue
         : null;
 
+    final path = !annotation.read('path').isNull
+        ? annotation.read('path').stringValue
+        : null;
+
     final componentName = type
         .getDisplayString(withNullability: false)
         // Generic widgets shouldn't have a "<dynamic>" suffix
@@ -52,12 +57,15 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     final useCasePath = await resolveElementPath(element, buildStep);
     final componentPath = await resolveElementPath(type.element!, buildStep);
 
+    final pathInWidgetbook = path ?? Tree.getPathParts(componentUri).join('/');
+
     final metadata = UseCaseMetadata(
       functionName: element.name!,
       designLink: designLink,
       name: name,
       importUri: useCaseUri,
       filePath: useCasePath,
+      pathInWidgetbook: pathInWidgetbook,
       component: ElementMetadata(
         name: componentName,
         importUri: componentUri,

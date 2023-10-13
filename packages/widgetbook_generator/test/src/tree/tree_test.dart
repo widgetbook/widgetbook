@@ -1,4 +1,5 @@
 import 'package:test/test.dart';
+import 'package:widgetbook_generator/src/code/widgetbook_category_instance.dart';
 import 'package:widgetbook_generator/widgetbook_generator.dart';
 
 import '../../helpers/mock_use_case_metadata.dart';
@@ -25,11 +26,11 @@ void main() {
       final useCases = [
         MockUseCaseMetadata(
           componentName: 'Alpha',
-          componentImportUri: 'package:foo/widgets/alpha/alpha.dart',
+          pathInWidgetbook: 'widgets/alpha',
         ),
         MockUseCaseMetadata(
           componentName: 'Beta',
-          componentImportUri: 'package:foo/widgets/beta/beta.dart',
+          pathInWidgetbook: 'widgets/beta',
         ),
       ];
 
@@ -53,6 +54,24 @@ void main() {
       expect(
         root.children['widgets']!.children['beta']!.children.keys,
         equals(['Beta']),
+      );
+    });
+
+    test('[instances] creates Categories for bracket path segments', () {
+      final useCases = [
+        MockUseCaseMetadata(
+          componentName: 'PrimaryButton',
+          pathInWidgetbook: '[Interactions]/buttons',
+        ),
+      ];
+
+      final root = Tree.build(useCases);
+
+      expect(root.children.keys, equals(['[Interactions]']));
+      expect(root.instances.single, isA<WidgetbookCategoryInstance>());
+      expect(
+        root.children['[Interactions]']!.instances.single,
+        isA<WidgetbookFolderInstance>(),
       );
     });
 
