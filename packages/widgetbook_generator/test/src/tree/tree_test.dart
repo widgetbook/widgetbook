@@ -1,3 +1,4 @@
+import 'package:code_builder/code_builder.dart';
 import 'package:test/test.dart';
 import 'package:widgetbook_generator/src/code/widgetbook_category_instance.dart';
 import 'package:widgetbook_generator/widgetbook_generator.dart';
@@ -72,6 +73,14 @@ void main() {
       expect(
         root.children['[Interactions]']!.instances.single,
         isA<WidgetbookFolderInstance>(),
+      );
+      final categoryNameExpression =
+          root.instances.single.namedArguments['name'];
+      expect(categoryNameExpression, isA<LiteralExpression>());
+      expect(
+        (categoryNameExpression as LiteralExpression).literal,
+        // literalString wraps the input in single quotes
+        equals("'Interactions'"),
       );
     });
 

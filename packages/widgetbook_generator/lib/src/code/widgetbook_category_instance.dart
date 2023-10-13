@@ -10,10 +10,19 @@ class WidgetbookCategoryInstance extends WidgetbookInstance {
   }) : super(
           type: 'WidgetbookCategory',
           args: {
-            'name': literalString(node.data),
+            'name': literalString(_parseCategoryName(node.data)),
             'children': literalList(
               node.instances,
             ),
           },
         );
+
+  static String _parseCategoryName(String name) {
+    final nameRegex = RegExp(r'^\[(.*?)\]$');
+    final match = nameRegex.firstMatch(name);
+
+    if (match == null) return name;
+
+    return match.group(1)!;
+  }
 }
