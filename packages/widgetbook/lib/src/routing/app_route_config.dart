@@ -6,11 +6,13 @@ class AppRouteConfig {
     required this.uri,
   });
 
-  static const reservedKeys = ['path', 'preview'];
+  static const reservedKeys = {'path', 'preview', 'search'};
 
   final Uri uri;
 
   String? get path => uri.queryParameters['path'];
+
+  String? get search => uri.queryParameters['search'];
 
   bool get previewMode => uri.queryParameters.containsKey('preview');
 

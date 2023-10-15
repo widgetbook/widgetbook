@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../state/widgetbook_state.dart';
 import '../nodes/nodes.dart';
 import 'navigation_tree_node.dart';
 import 'search_field.dart';
@@ -21,11 +22,9 @@ class NavigationPanel extends StatefulWidget {
 }
 
 class _NavigationPanelState extends State<NavigationPanel> {
-  late WidgetbookNode filteredRoot;
   WidgetbookNode? selectedNode;
-  String searchQuery = '';
 
-  bool filterNode(WidgetbookNode node) {
+  bool filterNode(WidgetbookNode node, String searchQuery) {
     final regex = RegExp(
       searchQuery,
       caseSensitive: false,
@@ -37,15 +36,18 @@ class _NavigationPanelState extends State<NavigationPanel> {
   @override
   void initState() {
     super.initState();
-
-    filteredRoot = widget.root;
     selectedNode = widget.initialPath != null
         ? widget.root.find((child) => child.path == widget.initialPath)
         : null;
   }
 
+  void setFilterValue([String newValue = '']) => WidgetbookState.of(context).updateSearch(newValue);
+
   @override
   Widget build(BuildContext context) {
+    final searchQuery = WidgetbookState.of(context).search ?? '';
+    final filteredRoot =
+        searchQuery.isEmpty ? widget.root : widget.root.filter((node) => filterNode(node, searchQuery)) ?? widget.root;
     return Card(
       child: Column(
         children: [
@@ -53,18 +55,8 @@ class _NavigationPanelState extends State<NavigationPanel> {
             padding: const EdgeInsets.all(16),
             child: SearchField(
               value: searchQuery,
-              onChanged: (value) {
-                setState(() {
-                  searchQuery = value;
-                  filteredRoot = widget.root.filter(filterNode) ?? widget.root;
-                });
-              },
-              onCleared: () {
-                setState(() {
-                  searchQuery = '';
-                  filteredRoot = widget.root;
-                });
-              },
+              onChanged: setFilterValue,
+              onCleared: setFilterValue,
             ),
           ),
           if (filteredRoot.children != null)
