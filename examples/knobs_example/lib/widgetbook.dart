@@ -77,6 +77,11 @@ class WidgetbookApp extends StatelessWidget {
                     start: DateTime(initialDate.year - 1),
                     end: DateTime(initialDate.year + 1),
                   ),
+                  color: context.knobs.color(
+                    label: 'Color',
+                    initialValue: Colors.blue,
+                    initialColorSpace: ColorSpace.rgba,
+                  ),
                 );
               },
             ),

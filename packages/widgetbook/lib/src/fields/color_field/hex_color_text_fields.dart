@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../fields.dart';
-import 'color_converter.dart';
 import 'color_text_field.dart';
 
 class HexColorTextFields extends StatelessWidget{
@@ -10,13 +8,11 @@ class HexColorTextFields extends StatelessWidget{
   const HexColorTextFields({
     required this.colorValue,
     required this.onChanged,
-    required this.converter,
     super.key,
   });
 
   final String colorValue;
-  final ValueChanged<String> onChanged;
-  final ColorsConverter converter;
+  final ValueChanged<Color> onChanged;
   
   @override
   Widget build(BuildContext context){
@@ -35,10 +31,7 @@ class HexColorTextFields extends StatelessWidget{
           ],
           onChanged: (value) {
             onChanged(
-              converter.convertColorValueToHex<String>(
-                colorSpace: ColorSpace.hex,
-                colorValues: value,
-              ),
+              Color(int.tryParse(value, radix: 16) ?? 0xFFFFFFFF),
             );
           },
         ),

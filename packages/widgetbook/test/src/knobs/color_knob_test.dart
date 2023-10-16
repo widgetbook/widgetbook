@@ -264,7 +264,7 @@ void main() {
         'then the value should be updated',
         (tester) async {
           const blue = Color(0xFF0000FF);
-          const desaturatedBlue = Color(0xFF4040C0);
+          const desaturatedBlue = Color(0xFF4040BF);
 
           await tester.pumpKnob(
             (context) => ColoredBox(

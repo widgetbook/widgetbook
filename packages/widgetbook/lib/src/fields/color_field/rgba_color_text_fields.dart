@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'color_converter.dart';
-import 'color_space.dart';
 import 'color_text_field.dart';
 
 class RgbaColorTextFields extends StatelessWidget {
   const RgbaColorTextFields({
     required this.colorValue,
     required this.onChanged,
-    required this.converter,
     super.key,
   });
 
   final List<String> colorValue;
-  final ValueChanged<String> onChanged;
-  final ColorsConverter converter;
+  final ValueChanged<Color> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +31,11 @@ class RgbaColorTextFields extends StatelessWidget {
           ],
           labelText: 'R',
           onChanged: (value) => onChanged(
-            converter.convertColorValueToHex<List<String>>(
-              colorSpace: ColorSpace.rgba,
-              colorValues: [
-                '${colorValue[0]}',
-                value,
-                '${colorValue[2]}',
-                '${colorValue[3]}',
-              ],
+            Color.fromARGB(
+              int.tryParse(colorValue[0]) ?? 255, 
+              int.tryParse(value) ?? 255,
+              int.tryParse(colorValue[2]) ?? 255,
+              int.tryParse(colorValue[3]) ?? 255,
             ),
           ),
         ),
@@ -62,14 +55,11 @@ class RgbaColorTextFields extends StatelessWidget {
           ],
           labelText: 'G',
           onChanged: (value) => onChanged(
-            converter.convertColorValueToHex<List<String>>(
-              colorSpace: ColorSpace.rgba,
-              colorValues: [
-                '${colorValue[0]}',
-                '${colorValue[1]}',
-                value,
-                '${colorValue[3]}',
-              ],
+            Color.fromARGB(
+              int.tryParse(colorValue[0]) ?? 255, 
+              int.tryParse(colorValue[1]) ?? 255,
+              int.tryParse(value) ?? 255,
+              int.tryParse(colorValue[3]) ?? 255,
             ),
           ),
         ),
@@ -89,14 +79,11 @@ class RgbaColorTextFields extends StatelessWidget {
           ],
           labelText: 'B',
           onChanged: (value) => onChanged(
-            converter.convertColorValueToHex<List<String>>(
-              colorSpace: ColorSpace.rgba,
-              colorValues: [
-                '${colorValue[0]}',
-                '${colorValue[1]}',
-                '${colorValue[2]}',
-                value,
-              ],
+            Color.fromARGB(
+              int.tryParse(colorValue[0]) ?? 255, 
+              int.tryParse(colorValue[1]) ?? 255,
+              int.tryParse(colorValue[2]) ?? 255,
+              int.tryParse(value) ?? 255,
             ),
           ),
         ),
@@ -116,14 +103,11 @@ class RgbaColorTextFields extends StatelessWidget {
           ],
           labelText: 'A',
           onChanged: (value) => onChanged(
-            converter.convertColorValueToHex<List<String>>(
-              colorSpace: ColorSpace.rgba,
-              colorValues: [
-                value,
-                '${colorValue[1]}',
-                '${colorValue[2]}',
-                '${colorValue[3]}',
-              ],
+            Color.fromARGB(
+              int.tryParse(value) ?? 255, 
+              int.tryParse(colorValue[1]) ?? 255,
+              int.tryParse(colorValue[2]) ?? 255,
+              int.tryParse(colorValue[3]) ?? 255,
             ),
           ),
         ),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'color_converter.dart';
-import 'color_space.dart';
 import 'color_text_field.dart';
 
 class HslColorTextFields extends StatelessWidget {
@@ -10,14 +8,12 @@ class HslColorTextFields extends StatelessWidget {
     required this.colorValue,
     required this.onChanged,
     required this.paramValue,
-    required this.converter,
     super.key,
   });
 
   final List<String> colorValue;
-  final void Function(String? hexValue, List<String> newValues) onChanged;
+  final void Function(Color? color, List<String> newValues) onChanged;
   final String paramValue;
-  final ColorsConverter converter;
 
   @override
   Widget build(BuildContext context) {
@@ -91,18 +87,14 @@ class HslColorTextFields extends StatelessWidget {
   }
 
   void checkHueAndSaturation(List<String> updatedValues) {
-    final initialValue = converter.convertColorValueToHex<List<String>>(
-      colorSpace: ColorSpace.hsl,
-      colorValues: converter.getValueByColorSpace(
-        colorSpace: ColorSpace.hsl,
-        value: paramValue,
-      ) as List<String>,
-    );
-    final updateValue = converter.convertColorValueToHex<List<String>>(
-      colorSpace: ColorSpace.hsl,
-      colorValues: updatedValues,
-    );
-    if (initialValue != updateValue) {
+    final initialHsl = HSLColor.fromColor(Color(int.parse(paramValue, radix: 16)));
+    final updateValue = HSLColor.fromAHSL(
+      1, 
+      (double.tryParse(updatedValues[0]) ?? initialHsl.hue), 
+      (double.tryParse(updatedValues[1]) ?? (initialHsl.saturation * 100)) / 100, 
+      (double.tryParse(updatedValues[2]) ?? (initialHsl.lightness * 100)) / 100,
+    ).toColor();
+    if (initialHsl.toColor() != updateValue) {
       onChanged(updateValue, updatedValues);
     } else {
       onChanged(null, updatedValues);
@@ -110,18 +102,14 @@ class HslColorTextFields extends StatelessWidget {
   }
 
   void checkLightness(List<String> updatedValues) {
-    final initialValue = converter.convertColorValueToHex<List<String>>(
-      colorSpace: ColorSpace.hsl,
-      colorValues: converter.getValueByColorSpace(
-        colorSpace: ColorSpace.hsl,
-        value: paramValue,
-      ) as List<String>,
-    );
-    final updateValue = converter.convertColorValueToHex<List<String>>(
-      colorSpace: ColorSpace.hsl,
-      colorValues: updatedValues,
-    );
-    if (initialValue != updateValue) {
+    final initialHsl = HSLColor.fromColor(Color(int.parse(paramValue, radix: 16)));
+    final updateValue = HSLColor.fromAHSL(
+      1, 
+      (double.tryParse(updatedValues[0]) ?? initialHsl.hue), 
+      (double.tryParse(updatedValues[1]) ?? (initialHsl.saturation * 100)) / 100, 
+      (double.tryParse(updatedValues[2]) ?? (initialHsl.lightness * 100)) / 100,
+    ).toColor();
+    if (initialHsl.toColor() != updateValue) {
       onChanged(updateValue, updatedValues);
     }
   }
