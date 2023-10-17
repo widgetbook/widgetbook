@@ -20,8 +20,12 @@ class ChangedUseCase extends UseCaseMetadata {
 
   Map<String, dynamic> toJson() {
     return {
+      'name': useCaseName,
+      'componentName': componentName,
+      'componentDefinitionPath': componentDefinitionPath,
+      'componentImportStatement': componentImportStatement,
       'modification': modification.name,
-      ...super.toJson(),
+      'designLink': designLink,
     };
   }
 }
