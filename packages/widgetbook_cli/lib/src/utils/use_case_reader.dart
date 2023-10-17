@@ -22,7 +22,7 @@ class UseCaseReader {
       return [];
     }
 
-    final files = await fileSystem
+    final files = fileSystem
         .directory(generatedDir)
         .list(recursive: true)
         .where((entity) => entity.path.endsWith('.usecase.widgetbook.json'))
