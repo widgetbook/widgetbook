@@ -1,4 +1,4 @@
-## Unreleased
+## 3.0.0-rc.6
 
 - **FIX**: Send correct use-case name in reviews. ([#998](https://github.com/widgetbook/widgetbook/pull/998))
 
