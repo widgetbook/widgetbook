@@ -1,5 +1,6 @@
 import '../git/git.dart';
 
+/// Typed representation of the arguments passed to the publish command.
 class PublishArgs {
   const PublishArgs({
     required this.apiKey,

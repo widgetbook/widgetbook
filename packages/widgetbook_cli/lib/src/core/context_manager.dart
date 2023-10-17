@@ -14,6 +14,9 @@ class ContextManager {
   final Platform platform;
   final CiManager ciManager;
 
+  /// Returns the relevant [Context] for the current environment.
+  /// The [Context] is based on the if the current environment is a CI provider
+  /// or a local one.
   Future<Context> load(
     Repository? repository,
     Environment environment,

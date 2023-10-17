@@ -1,6 +1,8 @@
 import '../git/git.dart';
 import 'environment.dart';
 
+/// The [Context] has all the information about the current environment.
+/// It is used to determine the current user, project and repository.
 class Context {
   Context({
     required this.name,

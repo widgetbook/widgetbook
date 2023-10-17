@@ -4,6 +4,7 @@ enum Modification {
   added,
 }
 
+/// Class representation of the diff header from `git diff` output.
 class DiffHeader {
   DiffHeader({
     this.base,

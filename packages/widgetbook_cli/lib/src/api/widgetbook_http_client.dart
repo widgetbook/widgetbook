@@ -7,9 +7,8 @@ import 'models/build_response.dart';
 import 'models/review_request.dart';
 import 'models/review_response.dart';
 
-/// A client to connect to the Widgetbook Cloud backend
+/// HTTP client to connect to the Widgetbook Cloud backend
 class WidgetbookHttpClient {
-  /// Creates a new instance of [WidgetbookHttpClient].
   WidgetbookHttpClient({
     Dio? client,
     required Environment environment,
@@ -21,9 +20,9 @@ class WidgetbookHttpClient {
               ),
             );
 
-  /// underlying [Dio] client
   final Dio client;
 
+  /// Sends review data to the Widgetbook Cloud backend.
   Future<ReviewResponse> uploadReview(
     ReviewRequest request,
   ) async {
@@ -51,7 +50,7 @@ class WidgetbookHttpClient {
     }
   }
 
-  /// Uploads the deployment .zip file to the Widgetbook Cloud backend
+  /// Uploads the build .zip file to the Widgetbook Cloud backend.
   Future<BuildResponse> uploadBuild(
     BuildRequest request,
   ) async {
