@@ -1,5 +1,4 @@
 import 'package:code_builder/code_builder.dart';
-import 'package:source_gen/source_gen.dart';
 
 import '../models/use_case_metadata.dart';
 import '../tree/tree_node.dart';
@@ -32,19 +31,11 @@ class WidgetbookInstance extends InvokeExpression {
           (child) => child is TreeNode<UseCaseMetadata>,
         );
 
-    if (node is! TreeNode<String>) {
-      throw new InvalidGenerationSourceError(
-        'Invalid state: node is not a ${TreeNode<String>}',
-        todo: 'This is an issue within widgetbook_generator itself. '
-            'Please open an issue at https://github.com/widgetbook/widgetbook/issues/new',
-      );
-    }
-
     if (isComponentNode) {
-      return WidgetbookComponentInstance(node: node);
+      return WidgetbookComponentInstance(node: node as TreeNode<String>);
     }
 
-    final name = node.data;
+    final name = (node as TreeNode<String>).data;
     final categoryRegex = RegExp(r'^\[.*?\]$');
     final isCategory = categoryRegex.hasMatch(name);
 
