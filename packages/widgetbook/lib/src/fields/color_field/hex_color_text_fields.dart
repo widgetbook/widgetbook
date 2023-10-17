@@ -3,8 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'color_text_field.dart';
 
-class HexColorTextFields extends StatelessWidget{
-
+class HexColorTextFields extends StatelessWidget {
   const HexColorTextFields({
     required this.colorValue,
     required this.onChanged,
@@ -13,9 +12,9 @@ class HexColorTextFields extends StatelessWidget{
 
   final String colorValue;
   final ValueChanged<Color> onChanged;
-  
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Row(
       children: [
         ColorTextField(
@@ -38,5 +37,4 @@ class HexColorTextFields extends StatelessWidget{
       ],
     );
   }
-
 }

@@ -27,12 +27,12 @@ class RgbaColorTextFields extends StatelessWidget {
             FilteringTextInputFormatter.allow(
               RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'),
               replacementString: '${colorValue[1]}',
-            )
+            ),
           ],
           labelText: 'R',
           onChanged: (value) => onChanged(
             Color.fromARGB(
-              int.tryParse(colorValue[0]) ?? 255, 
+              int.tryParse(colorValue[0]) ?? 255,
               int.tryParse(value) ?? 255,
               int.tryParse(colorValue[2]) ?? 255,
               int.tryParse(colorValue[3]) ?? 255,
@@ -51,12 +51,12 @@ class RgbaColorTextFields extends StatelessWidget {
             FilteringTextInputFormatter.allow(
               RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'),
               replacementString: '${colorValue[2]}',
-            )
+            ),
           ],
           labelText: 'G',
           onChanged: (value) => onChanged(
             Color.fromARGB(
-              int.tryParse(colorValue[0]) ?? 255, 
+              int.tryParse(colorValue[0]) ?? 255,
               int.tryParse(colorValue[1]) ?? 255,
               int.tryParse(value) ?? 255,
               int.tryParse(colorValue[3]) ?? 255,
@@ -75,12 +75,12 @@ class RgbaColorTextFields extends StatelessWidget {
             FilteringTextInputFormatter.allow(
               RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'),
               replacementString: '${colorValue[3]}',
-            )
+            ),
           ],
           labelText: 'B',
           onChanged: (value) => onChanged(
             Color.fromARGB(
-              int.tryParse(colorValue[0]) ?? 255, 
+              int.tryParse(colorValue[0]) ?? 255,
               int.tryParse(colorValue[1]) ?? 255,
               int.tryParse(colorValue[2]) ?? 255,
               int.tryParse(value) ?? 255,
@@ -99,12 +99,12 @@ class RgbaColorTextFields extends StatelessWidget {
             FilteringTextInputFormatter.allow(
               RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'),
               replacementString: '${colorValue[0]}',
-            )
+            ),
           ],
           labelText: 'A',
           onChanged: (value) => onChanged(
             Color.fromARGB(
-              int.tryParse(value) ?? 255, 
+              int.tryParse(value) ?? 255,
               int.tryParse(colorValue[1]) ?? 255,
               int.tryParse(colorValue[2]) ?? 255,
               int.tryParse(colorValue[3]) ?? 255,

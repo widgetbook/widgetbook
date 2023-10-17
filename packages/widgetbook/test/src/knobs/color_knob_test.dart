@@ -327,7 +327,6 @@ void main() {
           expect(box.color, equals(lightBlue));
         },
       );
-
     },
   );
 }

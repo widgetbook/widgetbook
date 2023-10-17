@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../field.dart';
@@ -114,7 +113,8 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
             onChanged: (value) {
               widget.onChanged(value);
               setState(() {
-                final color = widget.value ?? widget.initialValue ?? widget.defaultColor;
+                final color =
+                    widget.value ?? widget.initialValue ?? widget.defaultColor;
                 colorValue = [
                   '${color.alpha}',
                   '${color.red}',
@@ -123,7 +123,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                 ];
               });
             },
-          )
+          ),
         ] else if (initialColorSpace == ColorSpace.hsl) ...[
           HslColorTextFields(
             colorValue: [...colorValue as List<String>],
@@ -136,7 +136,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                 colorValue = [...value];
               });
             },
-          )
+          ),
         ] else ...[
           HexColorTextFields(
             colorValue: colorValue as String,
@@ -146,7 +146,7 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
                 colorValue = widget.paramValue;
               });
             },
-          )
+          ),
         ],
         const SizedBox(
           height: 16,
@@ -161,7 +161,8 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
               ),
               child: Icon(
                 Icons.square,
-                color: widget.value ?? widget.initialValue ?? widget.defaultColor,
+                color:
+                    widget.value ?? widget.initialValue ?? widget.defaultColor,
               ),
             ),
             const SizedBox(
@@ -203,7 +204,8 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
       case ColorSpace.hex:
         return value;
       case ColorSpace.hsl:
-        final hslColor = HSLColor.fromColor(widget.value ?? widget.initialValue ?? widget.defaultColor);
+        final hslColor = HSLColor.fromColor(
+            widget.value ?? widget.initialValue ?? widget.defaultColor,);
         return [
           '${hslColor.hue.toInt()}',
           '${(hslColor.saturation * 100).toInt()}',
@@ -218,5 +220,4 @@ class _ColorsFieldWidgetState extends State<ColorsFieldWidget> {
         ];
     }
   }
-
 }

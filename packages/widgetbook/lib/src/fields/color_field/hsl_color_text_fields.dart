@@ -29,7 +29,7 @@ class HslColorTextFields extends StatelessWidget {
             FilteringTextInputFormatter.allow(
               RegExp(r'^(?:[0-9]\d?|[12]\d{2}|3[0-5]\d)$'),
               replacementString: '${colorValue[0]}',
-            )
+            ),
           ],
           labelText: 'H',
           onChanged: (value) => checkHueAndSaturation([
@@ -50,7 +50,7 @@ class HslColorTextFields extends StatelessWidget {
             FilteringTextInputFormatter.allow(
               RegExp(r'^(0|[1-9][0-9]?|100)$'),
               replacementString: '${colorValue[1]}',
-            )
+            ),
           ],
           labelText: 'S',
           suffixText: '%',
@@ -72,7 +72,7 @@ class HslColorTextFields extends StatelessWidget {
             FilteringTextInputFormatter.allow(
               RegExp(r'^(0|[1-9][0-9]?|100)$'),
               replacementString: '${colorValue[2]}',
-            )
+            ),
           ],
           labelText: 'L',
           suffixText: '%',
@@ -87,11 +87,13 @@ class HslColorTextFields extends StatelessWidget {
   }
 
   void checkHueAndSaturation(List<String> updatedValues) {
-    final initialHsl = HSLColor.fromColor(Color(int.parse(paramValue, radix: 16)));
+    final initialHsl =
+        HSLColor.fromColor(Color(int.parse(paramValue, radix: 16)));
     final updateValue = HSLColor.fromAHSL(
-      1, 
-      (double.tryParse(updatedValues[0]) ?? initialHsl.hue), 
-      (double.tryParse(updatedValues[1]) ?? (initialHsl.saturation * 100)) / 100, 
+      1,
+      (double.tryParse(updatedValues[0]) ?? initialHsl.hue),
+      (double.tryParse(updatedValues[1]) ?? (initialHsl.saturation * 100)) /
+          100,
       (double.tryParse(updatedValues[2]) ?? (initialHsl.lightness * 100)) / 100,
     ).toColor();
     if (initialHsl.toColor() != updateValue) {
@@ -102,11 +104,13 @@ class HslColorTextFields extends StatelessWidget {
   }
 
   void checkLightness(List<String> updatedValues) {
-    final initialHsl = HSLColor.fromColor(Color(int.parse(paramValue, radix: 16)));
+    final initialHsl =
+        HSLColor.fromColor(Color(int.parse(paramValue, radix: 16)));
     final updateValue = HSLColor.fromAHSL(
-      1, 
-      (double.tryParse(updatedValues[0]) ?? initialHsl.hue), 
-      (double.tryParse(updatedValues[1]) ?? (initialHsl.saturation * 100)) / 100, 
+      1,
+      (double.tryParse(updatedValues[0]) ?? initialHsl.hue),
+      (double.tryParse(updatedValues[1]) ?? (initialHsl.saturation * 100)) /
+          100,
       (double.tryParse(updatedValues[2]) ?? (initialHsl.lightness * 100)) / 100,
     ).toColor();
     if (initialHsl.toColor() != updateValue) {
