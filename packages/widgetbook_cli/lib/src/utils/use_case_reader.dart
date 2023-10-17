@@ -52,15 +52,12 @@ class UseCaseReader {
 
         if (isChanged) {
           changedUseCases.add(
-            ChangedUseCase(
-              name: useCase.useCaseName,
-              componentName: useCase.componentName,
-              componentDefinitionPath: useCase.componentDefinitionPath,
+            ChangedUseCase.fromUseCase(
+              useCase: useCase,
               // TODO works for now, but on a file level we can't really say
               // if a single use-case was added or not
               // for this, we require AT LEAST line-diff functionality
               modification: diff.modification,
-              designLink: useCase.designLink,
             ),
           );
           break;
