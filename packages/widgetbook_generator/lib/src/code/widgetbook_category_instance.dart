@@ -18,11 +18,10 @@ class WidgetbookCategoryInstance extends WidgetbookInstance {
         );
 
   static String _parseCategoryName(String name) {
-    final nameRegex = RegExp(r'^\[(.*?)\]$');
-    final match = nameRegex.firstMatch(name);
+    if (name.startsWith('[') && name.endsWith(']')) {
+      return name.substring(1, name.length - 1);
+    }
 
-    if (match == null) return name;
-
-    return match.group(1)!;
+    return name;
   }
 }

@@ -36,8 +36,7 @@ class WidgetbookInstance extends InvokeExpression {
     }
 
     final name = (node as TreeNode<String>).data;
-    final categoryRegex = RegExp(r'^\[.*?\]$');
-    final isCategory = categoryRegex.hasMatch(name);
+    final isCategory = name.startsWith('[') && name.endsWith(']');
 
     return isCategory
         ? WidgetbookCategoryInstance(node: node)
