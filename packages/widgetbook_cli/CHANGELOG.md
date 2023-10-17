@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Send correct use-case name in reviews. ([#998](https://github.com/widgetbook/widgetbook/pull/998))
+
 ## 3.0.0-rc.5
 
 - **BREAKING**: Remove `--github-token` & `--pr` options from `publish` command. You can now use our [GitHub App](https://docs.widgetbook.io/widgetbook-cloud/integrating-github) instead. ([#982](https://github.com/widgetbook/widgetbook/pull/982))
