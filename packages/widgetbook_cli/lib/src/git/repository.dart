@@ -9,6 +9,7 @@ import 'diff_header.dart';
 import 'git_process_manager.dart';
 import 'reference.dart';
 
+/// Class representation of a git repository.
 class Repository {
   Repository.raw(
     this.rootDir,
@@ -37,19 +38,24 @@ class Repository {
     }
   }
 
+  /// Gets the current name of the repository.
   String get name {
     return rootDir.split('/').last;
   }
 
+  /// Gets the current git user's name.
   Future<String> get user async {
     return runLocal(['config', 'user.name']);
   }
 
+  /// Returns `true` if the working directory is clean
+  /// (i.e. no uncommitted changes).
   Future<bool> get isClean async {
     final status = await runLocal(['status', '--porcelain']);
     return status.isEmpty;
   }
 
+  /// Gets a list of all branches [Reference]s in the repository.
   Future<List<Reference>> get branches async {
     try {
       const splitter = LineSplitter();
@@ -65,6 +71,7 @@ class Repository {
     }
   }
 
+  /// Gets a [Reference] for the current checked out branch.
   Future<Reference> get currentBranch async {
     final refFullName = await runLocal(
       ['rev-parse', '--verify', '--symbolic-full-name', 'HEAD'],
@@ -86,6 +93,7 @@ class Repository {
     );
   }
 
+  /// Returns the [DiffHeader]s from `git diff`.
   Future<List<DiffHeader>> diff([String? base]) async {
     final args = ['diff', if (base != null) base];
     final output = await runLocal(args);

@@ -1,3 +1,4 @@
+/// Class representation of the refs from `git show-ref` output.
 class Reference {
   const Reference(this.sha, this.fullName);
 
