@@ -30,7 +30,7 @@ class Tree {
     final root = TreeNode<Null>(null);
 
     for (var useCase in useCases) {
-      final parts = useCase.pathInWidgetbook.split('/').toList();
+      final parts = useCase.navPath.split('/').toList();
 
       TreeNode currentNode = root;
 

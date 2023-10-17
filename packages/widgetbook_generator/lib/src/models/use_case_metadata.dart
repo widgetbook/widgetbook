@@ -11,7 +11,7 @@ class UseCaseMetadata extends ElementMetadata {
     required super.importUri,
     required super.filePath,
     required this.component,
-    required this.pathInWidgetbook,
+    required this.navPath,
   });
 
   /// The name of the [UseCase]-annotated function.
@@ -24,7 +24,7 @@ class UseCaseMetadata extends ElementMetadata {
   final ElementMetadata component;
 
   /// The path this element is placed under in the rendered widgetbook.
-  final String pathInWidgetbook;
+  final String navPath;
 
   // ignore: sort_constructors_first
   factory UseCaseMetadata.fromJson(Map<String, dynamic> json) {
@@ -34,7 +34,7 @@ class UseCaseMetadata extends ElementMetadata {
       name: json['useCaseName'] as String,
       importUri: json['importStatement'] as String,
       filePath: json['useCaseDefinitionPath'] as String,
-      pathInWidgetbook: json['pathInWidgetbook'] as String,
+      navPath: json['navPath'] as String,
       component: ElementMetadata(
         name: json['componentName'] as String,
         importUri: json['componentImportStatement'] as String,
@@ -57,7 +57,7 @@ class UseCaseMetadata extends ElementMetadata {
       'componentName': component.name,
       'componentImportStatement': component.importUri,
       'componentDefinitionPath': component.filePath,
-      'pathInWidgetbook': pathInWidgetbook,
+      'navPath': navPath,
     };
   }
 }

@@ -27,11 +27,11 @@ void main() {
       final useCases = [
         MockUseCaseMetadata(
           componentName: 'Alpha',
-          pathInWidgetbook: 'widgets/alpha',
+          navPath: 'widgets/alpha',
         ),
         MockUseCaseMetadata(
           componentName: 'Beta',
-          pathInWidgetbook: 'widgets/beta',
+          navPath: 'widgets/beta',
         ),
       ];
 
@@ -62,7 +62,7 @@ void main() {
       final useCases = [
         MockUseCaseMetadata(
           componentName: 'PrimaryButton',
-          pathInWidgetbook: '[Interactions]/buttons',
+          navPath: '[Interactions]/buttons',
         ),
       ];
 

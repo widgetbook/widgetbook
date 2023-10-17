@@ -57,7 +57,7 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     final useCasePath = await resolveElementPath(element, buildStep);
     final componentPath = await resolveElementPath(type.element!, buildStep);
 
-    final pathInWidgetbook = path ?? Tree.getPathParts(componentUri).join('/');
+    final navPath = path ?? Tree.getPathParts(componentUri).join('/');
 
     final metadata = UseCaseMetadata(
       functionName: element.name!,
@@ -65,7 +65,7 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
       name: name,
       importUri: useCaseUri,
       filePath: useCasePath,
-      pathInWidgetbook: pathInWidgetbook,
+      navPath: navPath,
       component: ElementMetadata(
         name: componentName,
         importUri: componentUri,
