@@ -4,6 +4,7 @@ class UseCaseMetadata {
     required this.useCaseName,
     required this.componentName,
     required this.importStatement,
+    required this.navPath,
     required this.componentImportStatement,
     required this.componentDefinitionPath,
     required this.useCaseDefinitionPath,
@@ -22,6 +23,9 @@ class UseCaseMetadata {
 
   // Import statement of the use-case definition
   final String importStatement;
+
+  // Path to the element in Widgetbook
+  final String navPath;
 
   // Import statement of the component
   final String componentImportStatement;
@@ -42,6 +46,7 @@ class UseCaseMetadata {
       useCaseName: map['useCaseName'] as String,
       componentName: map['componentName'] as String,
       importStatement: map['importStatement'] as String,
+      navPath: map['navPath'] as String,
       componentImportStatement: map['componentImportStatement'] as String,
       componentDefinitionPath: map['componentDefinitionPath'] as String,
       useCaseDefinitionPath: map['useCaseDefinitionPath'] as String,
