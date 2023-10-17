@@ -1,23 +1,8 @@
-import 'package:path/path.dart' as path;
-
 import '../models/use_case_metadata.dart';
 import 'duplicate_use_cases_error.dart';
 import 'tree_node.dart';
 
 class Tree {
-  /// Splits the [uri] into its parts, skipping both the `package:` and
-  /// the `src` parts.
-  ///
-  /// For example, `package:widgetbook/src/widgets/foo/bar.dart`
-  /// will be split into `['widgets', 'foo']`.
-  static List<String> getPathParts(String uri) {
-    final directory = path.dirname(uri);
-    final parts = path.split(directory);
-    final hasSrc = parts.length >= 2 && parts[1] == 'src';
-
-    return parts.skip(hasSrc ? 2 : 1).toList();
-  }
-
   /// Builds a tree from the given [useCases].
   ///
   /// The tree is built by splitting the import uri of each use case into its

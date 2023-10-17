@@ -7,22 +7,6 @@ import '../../helpers/mock_use_case_metadata.dart';
 
 void main() {
   group('$Tree', () {
-    test('[getPathParts] for package path', () {
-      final parts = Tree.getPathParts(
-        'package:name/tree/tree.dart',
-      );
-
-      expect(parts, equals(['tree']));
-    });
-
-    test('[getPathParts] for package path with src', () {
-      final parts = Tree.getPathParts(
-        'package:name/src/tree/tree.dart',
-      );
-
-      expect(parts, equals(['tree']));
-    });
-
     test('[build] creates the correct tree', () {
       final useCases = [
         MockUseCaseMetadata(

@@ -22,6 +22,19 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     },
   );
 
+  /// Splits the [uri] into its parts, skipping both the `package:` and
+  /// the `src` parts.
+  ///
+  /// For example, `package:widgetbook/src/widgets/foo/bar.dart`
+  /// will be split into `['widgets', 'foo']`.
+  static String getNavPath(String uri) {
+    final directory = path.dirname(uri);
+    final parts = path.split(directory);
+    final hasSrc = parts.length >= 2 && parts[1] == 'src';
+
+    return parts.skip(hasSrc ? 2 : 1).join('/');
+  }
+
   @override
   Future<String> generateForAnnotatedElement(
     Element element,
@@ -57,7 +70,7 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     final useCasePath = await resolveElementPath(element, buildStep);
     final componentPath = await resolveElementPath(type.element!, buildStep);
 
-    final navPath = path ?? Tree.getPathParts(componentUri).join('/');
+    final navPath = path ?? getNavPath(componentUri);
 
     final metadata = UseCaseMetadata(
       functionName: element.name!,
