@@ -1,27 +1,27 @@
 import '../git/diff_header.dart';
+import 'use_case_metadata.dart';
 
-class ChangedUseCase {
-  const ChangedUseCase({
-    required this.name,
-    required this.componentName,
-    required this.componentDefinitionPath,
+class ChangedUseCase extends UseCaseMetadata {
+  ChangedUseCase.fromUseCase({
+    required UseCaseMetadata useCase,
     required this.modification,
-    required this.designLink,
-  });
+  }) : super(
+          name: useCase.name,
+          useCaseName: useCase.useCaseName,
+          componentName: useCase.componentName,
+          importStatement: useCase.importStatement,
+          componentImportStatement: useCase.componentImportStatement,
+          componentDefinitionPath: useCase.componentDefinitionPath,
+          useCaseDefinitionPath: useCase.useCaseDefinitionPath,
+          designLink: useCase.designLink,
+        );
 
-  final String name;
-  final String componentName;
-  final String componentDefinitionPath;
   final Modification modification;
-  final String? designLink;
 
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'name': name,
-      'componentName': componentName,
-      'componentDefinitionPath': componentDefinitionPath,
+    return {
       'modification': modification.name,
-      'designLink': designLink,
+      ...super.toJson(),
     };
   }
 }

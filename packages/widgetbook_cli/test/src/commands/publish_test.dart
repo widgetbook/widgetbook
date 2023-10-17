@@ -513,13 +513,18 @@ void main() {
           useCases: any(named: 'useCases'),
           diffs: any(named: 'diffs'),
         ),
-      ).thenReturn(const [
-        ChangedUseCase(
-          name: 'use_case',
-          componentName: 'UseCase',
-          componentDefinitionPath: 'path/to/use_case.dart',
+      ).thenReturn([
+        ChangedUseCase.fromUseCase(
           modification: Modification.changed,
-          designLink: null,
+          useCase: const UseCaseMetadata(
+            name: 'Name',
+            useCaseName: 'UseCase',
+            componentName: 'Component',
+            importStatement: 'package:foo/bar.dart',
+            componentImportStatement: 'package:foo/bar.dart',
+            componentDefinitionPath: 'path/to/use_case.dart',
+            useCaseDefinitionPath: 'path/to/use_case.dart',
+          ),
         ),
       ]);
 
