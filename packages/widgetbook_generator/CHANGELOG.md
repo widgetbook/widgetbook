@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FEAT**: Add `designLink` to `WidgetbookUseCase`. ([#926](https://github.com/widgetbook/widgetbook/pull/926))
+- **FEAT**: Support custom `path` for `@UseCase`. ([#988](https://github.com/widgetbook/widgetbook/pull/988))
 
 ## 3.2.0
 

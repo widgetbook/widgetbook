@@ -12,6 +12,7 @@ class UseCase {
     required this.name,
     required this.type,
     this.designLink,
+    this.path,
   });
 
   /// The name of the UseCase.
@@ -23,4 +24,13 @@ class UseCase {
 
   /// A link to the design for the component or use-case.
   final String? designLink;
+
+  /// A custom path for the use-case.
+  ///
+  /// Folders are delimited using slashes, path segments may be made into
+  /// a category by enclosing it in square brackets.
+  ///
+  /// For example: `[Interactions]/buttons`
+  /// will produce: Interactions (category) -> buttons (folder)
+  final String? path;
 }

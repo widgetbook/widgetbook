@@ -55,6 +55,4 @@ jobs:
             --repository $GITHUB_REPOSITORY \
             --actor $GITHUB_ACTOR \
             --branch $GITHUB_HEAD_REF \
-            --base-branch $GITHUB_BASE_REF \
-            --pr ${{ github.event.number }} \
-            --github-token ${{ secrets.GITHUB_TOKEN }}
+            --base-branch $GITHUB_BASE_REF

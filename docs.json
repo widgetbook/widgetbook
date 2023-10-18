@@ -25,7 +25,7 @@
   "variables": {
     "versions": {
       "annotation": "3.0.0",
-      "cli": "3.0.0-rc.2",
+      "cli": "3.0.0-rc.6",
       "generator": "3.2.0",
       "widgetbook": "3.3.0"
     }

@@ -40,6 +40,10 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
         ? annotation.read('designLink').stringValue
         : null;
 
+    final path = !annotation.read('path').isNull
+        ? annotation.read('path').stringValue
+        : null;
+
     final componentName = type
         .getDisplayString(withNullability: false)
         // Generic widgets shouldn't have a "<dynamic>" suffix
@@ -52,12 +56,15 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     final useCasePath = await resolveElementPath(element, buildStep);
     final componentPath = await resolveElementPath(type.element!, buildStep);
 
+    final navPath = path ?? getNavPath(componentUri);
+
     final metadata = UseCaseMetadata(
       functionName: element.name!,
       designLink: designLink,
       name: name,
       importUri: useCaseUri,
       filePath: useCasePath,
+      navPath: navPath,
       component: ElementMetadata(
         name: componentName,
         importUri: componentUri,
@@ -68,6 +75,19 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     const encoder = JsonEncoder.withIndent('  ');
 
     return encoder.convert(metadata.toJson());
+  }
+
+  /// Splits the [uri] into its parts, skipping both the `package:` and
+  /// the `src` parts.
+  ///
+  /// For example, `package:widgetbook/src/widgets/foo/bar.dart`
+  /// will be split into `['widgets', 'foo']`.
+  static String getNavPath(String uri) {
+    final directory = path.dirname(uri);
+    final parts = path.split(directory);
+    final hasSrc = parts.length >= 2 && parts[1] == 'src';
+
+    return parts.skip(hasSrc ? 2 : 1).join('/');
   }
 
   /// Resolves the URI of an [element] by retrieving the URI from

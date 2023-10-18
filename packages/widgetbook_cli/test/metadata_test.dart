@@ -1,8 +1,7 @@
 import 'dart:io';
 
 import 'package:test/test.dart';
-
-import '../bin/metadata.dart';
+import 'package:widgetbook_cli/widgetbook_cli.dart';
 
 void main() {
   final file = File('pubspec.yaml');

@@ -117,7 +117,7 @@ class WidgetbookState extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Update the field withing the query [group] with the given [value].
+  /// Update the field within the query [group] with the given [value].
   void updateQueryField({
     required String group,
     required String field,
