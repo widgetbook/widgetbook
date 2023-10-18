@@ -5,6 +5,11 @@
 - **FEAT**: Add light theme support. ([#919](https://github.com/widgetbook/widgetbook/pull/919))
 - **FIX**: Maintain navigation panel state on reload. ([#932](https://github.com/widgetbook/widgetbook/pull/932))
 - **FEAT**: Add `duration` knob. ([#934](https://github.com/widgetbook/widgetbook/pull/934))
+- **FEAT**: Add `dateTime` knob. ([#940](https://github.com/widgetbook/widgetbook/pull/940))
+- **FEAT**: Add `int` knob. ([#942](https://github.com/widgetbook/widgetbook/pull/942))
+- **FEAT**: Add Grid Addon. ([#943](https://github.com/widgetbook/widgetbook/pull/943))
+- **FEAT**: Add Zoom Addon. ([#968](https://github.com/widgetbook/widgetbook/pull/968))
+- **FEAT**: Add Inspector Addon. ([#985](https://github.com/widgetbook/widgetbook/pull/985))
 
 ## 3.3.0
 

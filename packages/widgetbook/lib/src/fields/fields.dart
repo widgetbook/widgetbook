@@ -1,5 +1,6 @@
 export 'boolean_field.dart';
 export 'color_field.dart';
+export 'date_time_field.dart';
 export 'double_input_field.dart';
 export 'double_slider_field.dart';
 export 'duration_field.dart';
@@ -7,5 +8,7 @@ export 'field.dart';
 export 'field_codec.dart';
 export 'field_type.dart';
 export 'fields_composable.dart';
+export 'int_input_field.dart';
+export 'int_slider_field.dart';
 export 'list_field.dart';
 export 'string_field.dart';

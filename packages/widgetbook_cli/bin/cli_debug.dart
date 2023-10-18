@@ -1,7 +1,7 @@
-import 'flavor/flavor.dart';
+import 'package:widgetbook_cli/widgetbook_cli.dart';
+
 import 'main.dart' as cli;
 
 void main(List<String> args) {
-  Flavor().strategy = DeploymentStrategy.debug;
-  cli.main(args);
+  cli.main(args, DebugEnv());
 }
