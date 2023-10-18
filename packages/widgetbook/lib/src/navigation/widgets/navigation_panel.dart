@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../state/widgetbook_state.dart';
 import '../nodes/nodes.dart';
 import 'navigation_tree_node.dart';
 import 'search_field.dart';
@@ -21,24 +22,16 @@ class NavigationPanel extends StatefulWidget {
 }
 
 class _NavigationPanelState extends State<NavigationPanel> {
-  late WidgetbookNode filteredRoot;
   WidgetbookNode? selectedNode;
-  String searchQuery = '';
 
-  bool filterNode(WidgetbookNode node) {
-    final regex = RegExp(
-      searchQuery,
-      caseSensitive: false,
-    );
-
+  bool filterNode(WidgetbookNode node, String query) {
+    final regex = RegExp(query, caseSensitive: false);
     return node.name.contains(regex);
   }
 
   @override
   void initState() {
     super.initState();
-
-    filteredRoot = widget.root;
     selectedNode = widget.initialPath != null
         ? widget.root.find((child) => child.path == widget.initialPath)
         : null;
@@ -46,25 +39,20 @@ class _NavigationPanelState extends State<NavigationPanel> {
 
   @override
   Widget build(BuildContext context) {
+    final query = WidgetbookState.of(context).query ?? '';
+    final filteredRoot = query.isEmpty
+        ? widget.root
+        : widget.root.filter((node) => filterNode(node, query)) ?? widget.root;
+
     return Card(
       child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
             child: SearchField(
-              value: searchQuery,
-              onChanged: (value) {
-                setState(() {
-                  searchQuery = value;
-                  filteredRoot = widget.root.filter(filterNode) ?? widget.root;
-                });
-              },
-              onCleared: () {
-                setState(() {
-                  searchQuery = '';
-                  filteredRoot = widget.root;
-                });
-              },
+              value: query,
+              onChanged: WidgetbookState.of(context).updateQuery,
+              onCleared: () => WidgetbookState.of(context).updateQuery(''),
             ),
           ),
           if (filteredRoot.children != null)

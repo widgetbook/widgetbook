@@ -13,8 +13,9 @@ void main() {
       'when search for query, '
       'then only matching nodes are shown',
       (tester) async {
-        await tester.pumpWidgetWithMaterialApp(
-          NavigationPanel(
+        await tester.pumpWidgetWithQueryParams(
+          queryParams: {},
+          builder: (_) => NavigationPanel(
             root: treeRoot,
           ),
         );
@@ -35,8 +36,9 @@ void main() {
       'when search is cleared, '
       'then the full tree is shown',
       (tester) async {
-        await tester.pumpWidgetWithMaterialApp(
-          NavigationPanel(
+        await tester.pumpWidgetWithQueryParams(
+          queryParams: {},
+          builder: (_) => NavigationPanel(
             root: treeRoot,
           ),
         );

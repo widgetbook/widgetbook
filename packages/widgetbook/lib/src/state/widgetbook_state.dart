@@ -16,6 +16,7 @@ typedef AppBuilder = Widget Function(BuildContext context, Widget child);
 class WidgetbookState extends ChangeNotifier {
   WidgetbookState({
     this.path,
+    this.query,
     this.previewMode = false,
     this.queryParams = const {},
     this.appBuilder = widgetsAppBuilder,
@@ -37,6 +38,7 @@ class WidgetbookState extends ChangeNotifier {
   }
 
   String? path;
+  String? query;
   bool previewMode;
   Map<String, String> queryParams;
 
@@ -60,6 +62,7 @@ class WidgetbookState extends ChangeNotifier {
   Uri get uri {
     final queryParameters = {
       if (path != null) 'path': path,
+      if (query?.isNotEmpty ?? false) 'q': query,
       ...queryParams,
     };
 
@@ -148,6 +151,13 @@ class WidgetbookState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Updates the `q` query parameter with the given [value].
+  @internal
+  void updateQuery(String value) {
+    query = value;
+    notifyListeners();
+  }
+
   /// Updates [Knob.value] using the [label] to find the [Knob].
   @Deprecated('Use [knobs.updateValue] instead.')
   void updateKnobValue<T>(String label, T value) {
@@ -161,6 +171,7 @@ class WidgetbookState extends ChangeNotifier {
   @internal
   void updateFromRouteConfig(AppRouteConfig routeConfig) {
     path = routeConfig.path;
+    query = routeConfig.query;
     previewMode = routeConfig.previewMode;
     queryParams = routeConfig.queryParams;
 

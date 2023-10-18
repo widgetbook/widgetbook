@@ -212,15 +212,63 @@ void main() {
           );
 
           const path = 'component/use-case';
+          const query = 'something';
           final routeConfig = AppRouteConfig(
-            uri: Uri.parse('/?path=$path&foo=bar&preview'),
+            uri: Uri.parse('/?path=$path&q=$query&foo=bar&preview'),
           );
 
           state.updateFromRouteConfig(routeConfig);
 
           expect(state.path, path);
+          expect(state.query, query);
           expect(state.previewMode, true);
           expect(state.queryParams, equals({'foo': 'bar'}));
+        },
+      );
+
+      test(
+        'given a state, '
+        'when the search is updated, '
+        'path and knobs are preserved in query params and search is updated',
+        () {
+          final knob = StringKnob.nullable(
+            label: 'Knob',
+            value: 'Widgetbook',
+          );
+
+          final path = 'component/use-case';
+
+          final state = WidgetbookState(
+            queryParams: {'knobs': '{${knob.label}:${knob.value}}'},
+            path: path,
+            root: WidgetbookRoot(
+              children: [],
+            ),
+          );
+          state.knobs.register(knob, state.queryParams);
+
+          const query = 'some widget';
+
+          state.updateQuery(query);
+
+          expect(state.path, path);
+          expect(state.query, query);
+          expect(state.knobs[knob.label]?.value, knob.value);
+        },
+      );
+
+      test(
+        'given a state, '
+        'when the search is set to empty string, '
+        'search query param is removed',
+        () {
+          final state = WidgetbookState(
+            root: WidgetbookRoot(
+              children: [],
+            ),
+          )..updateQuery('');
+
+          expect(state.queryParams, <String, String>{});
         },
       );
     },
