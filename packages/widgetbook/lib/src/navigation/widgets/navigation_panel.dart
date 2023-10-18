@@ -24,12 +24,8 @@ class NavigationPanel extends StatefulWidget {
 class _NavigationPanelState extends State<NavigationPanel> {
   WidgetbookNode? selectedNode;
 
-  bool filterNode(WidgetbookNode node, String searchQuery) {
-    final regex = RegExp(
-      searchQuery,
-      caseSensitive: false,
-    );
-
+  bool filterNode(WidgetbookNode node, String query) {
+    final regex = RegExp(query, caseSensitive: false);
     return node.name.contains(regex);
   }
 
