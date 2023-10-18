@@ -41,25 +41,22 @@ class _NavigationPanelState extends State<NavigationPanel> {
         : null;
   }
 
-  void setFilterValue([String newValue = '']) =>
-      WidgetbookState.of(context).updateSearch(newValue);
-
   @override
   Widget build(BuildContext context) {
-    final searchQuery = WidgetbookState.of(context).search ?? '';
-    final filteredRoot = searchQuery.isEmpty
+    final query = WidgetbookState.of(context).query ?? '';
+    final filteredRoot = query.isEmpty
         ? widget.root
-        : widget.root.filter((node) => filterNode(node, searchQuery)) ??
-            widget.root;
+        : widget.root.filter((node) => filterNode(node, query)) ?? widget.root;
+
     return Card(
       child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
             child: SearchField(
-              value: searchQuery,
-              onChanged: setFilterValue,
-              onCleared: setFilterValue,
+              value: query,
+              onChanged: WidgetbookState.of(context).updateQuery,
+              onCleared: () => WidgetbookState.of(context).updateQuery(''),
             ),
           ),
           if (filteredRoot.children != null)

@@ -15,7 +15,7 @@ void main() {
       (tester) async {
         await tester.pumpWidgetWithQueryParams(
           queryParams: {},
-          builder: (context) => NavigationPanel(
+          builder: (_) => NavigationPanel(
             root: treeRoot,
           ),
         );
@@ -38,7 +38,7 @@ void main() {
       (tester) async {
         await tester.pumpWidgetWithQueryParams(
           queryParams: {},
-          builder: (context) => NavigationPanel(
+          builder: (_) => NavigationPanel(
             root: treeRoot,
           ),
         );

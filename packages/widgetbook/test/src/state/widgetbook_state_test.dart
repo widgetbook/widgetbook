@@ -212,15 +212,15 @@ void main() {
           );
 
           const path = 'component/use-case';
-          const search = 'something';
+          const query = 'something';
           final routeConfig = AppRouteConfig(
-            uri: Uri.parse('/?path=$path&search=$search&foo=bar&preview'),
+            uri: Uri.parse('/?path=$path&q=$query&foo=bar&preview'),
           );
 
           state.updateFromRouteConfig(routeConfig);
 
           expect(state.path, path);
-          expect(state.search, search);
+          expect(state.query, query);
           expect(state.previewMode, true);
           expect(state.queryParams, equals({'foo': 'bar'}));
         },
@@ -247,12 +247,12 @@ void main() {
           );
           state.knobs.register(knob, state.queryParams);
 
-          const search = 'some widget';
+          const query = 'some widget';
 
-          state.updateSearch(search);
+          state.updateQuery(query);
 
           expect(state.path, path);
-          expect(state.search, search);
+          expect(state.query, query);
           expect(state.knobs[knob.label]?.value, knob.value);
         },
       );
@@ -266,7 +266,7 @@ void main() {
             root: WidgetbookRoot(
               children: [],
             ),
-          )..updateSearch('');
+          )..updateQuery('');
 
           expect(state.queryParams, <String, String>{});
         },
