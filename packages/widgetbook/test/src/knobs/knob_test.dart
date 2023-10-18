@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/settings/knob_property.dart';
+import 'package:widgetbook/src/settings/nullable_setting.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
@@ -27,7 +27,7 @@ void main() {
     '$Knob',
     () {
       testWidgets(
-        'then it should build a [KnobProperty]',
+        'then it should build a [$NullableSetting]',
         (tester) async {
           final knob = MockKnob(
             label: 'Mock Knob',
@@ -39,7 +39,7 @@ void main() {
           );
 
           expect(
-            find.byType(KnobProperty<bool?>),
+            find.byType(NullableSetting),
             findsOneWidget,
           );
         },
@@ -62,7 +62,7 @@ void main() {
 
       testWidgets(
         'given a nullable knob with a null value, '
-        'then it should build a [KnobProperty] with a uncheck checkbox',
+        'then it should build a [$NullableSetting] with a uncheck checkbox',
         (tester) async {
           final knob = MockKnob(
             label: 'Mock Knob',
@@ -87,7 +87,7 @@ void main() {
 
       testWidgets(
         'given a nullable knob with a value, '
-        'then it should build a [KnobProperty] with a checked checkbox',
+        'then it should build a [$NullableSetting] with a checked checkbox',
         (tester) async {
           final knob = MockKnob(
             label: 'Mock Knob',

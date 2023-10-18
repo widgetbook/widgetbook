@@ -5,6 +5,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'src/generators/app_generator.dart';
 import 'src/generators/json_builder.dart';
 import 'src/generators/use_case_generator.dart';
+import 'src/telemetry/telemetry_reporter.dart';
 import 'widgetbook_generator.dart';
 
 /// Builder for the [UseCase] annotation.
@@ -47,5 +48,13 @@ Builder appBuilder(BuilderOptions options) {
     AppGenerator(),
     generatedExtension: '.directories.g.dart',
     header: headerParts.join('\n'),
+  );
+}
+
+/// Tracks some usage statistics to help us improve Widgetbook.
+/// For more info: https://docs.widgetbook.io/telemetry
+Builder reportTelemetry(BuilderOptions options) {
+  return TelemetryReporter(
+    isDebug: options.config['debug'] as bool? ?? false,
   );
 }

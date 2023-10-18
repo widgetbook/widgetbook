@@ -56,7 +56,7 @@ void main() {
 
       test(
         'given an integration, '
-        'when state notifies knobs ready, '
+        'when state notifies knobs locked, '
         'then integration.onKnobsRegistered is called',
         () {
           final integration = MockIntegration();
@@ -67,7 +67,7 @@ void main() {
             ),
           );
 
-          state.notifyKnobsReady();
+          state.knobs.lock();
 
           verify(
             () => integration.onKnobsRegistered(state),

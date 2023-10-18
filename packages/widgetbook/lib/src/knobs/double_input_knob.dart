@@ -26,7 +26,7 @@ class DoubleInputKnob extends Knob<double?> {
         initialValue: value,
         onChanged: (context, value) {
           if (value == null) return;
-          WidgetbookState.of(context).updateKnobValue(label, value);
+          WidgetbookState.of(context).knobs.updateValue(label, value);
         },
       ),
     ];

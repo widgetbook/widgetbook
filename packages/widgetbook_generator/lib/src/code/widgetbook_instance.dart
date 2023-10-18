@@ -3,6 +3,7 @@ import 'package:code_builder/code_builder.dart';
 import '../models/use_case_metadata.dart';
 import '../tree/tree_node.dart';
 import 'refer.dart';
+import 'widgetbook_category_instance.dart';
 import 'widgetbook_component_instance.dart';
 import 'widgetbook_folder_instance.dart';
 import 'widgetbook_use_case_instance.dart';
@@ -30,12 +31,15 @@ class WidgetbookInstance extends InvokeExpression {
           (child) => child is TreeNode<UseCaseMetadata>,
         );
 
-    return isComponentNode
-        ? WidgetbookComponentInstance(
-            node: node as TreeNode<String>,
-          )
-        : WidgetbookFolderInstance(
-            node: node as TreeNode<String>,
-          );
+    if (isComponentNode) {
+      return WidgetbookComponentInstance(node: node as TreeNode<String>);
+    }
+
+    final name = (node as TreeNode<String>).data;
+    final isCategory = name.startsWith('[') && name.endsWith(']');
+
+    return isCategory
+        ? WidgetbookCategoryInstance(node: node)
+        : WidgetbookFolderInstance(node: node);
   }
 }

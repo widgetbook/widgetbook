@@ -17,4 +17,6 @@ class ElementMetadata {
 
   /// The path to the file that contains the element.
   final String filePath;
+
+  String get package => Uri.parse(importUri).pathSegments.first;
 }

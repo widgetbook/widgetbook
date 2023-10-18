@@ -23,7 +23,11 @@ class WidgetbookApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook.material(
       addons: [
+        DeviceFrameAddon(devices: Devices.ios.all),
+        InspectorAddon(),
+        GridAddon(100),
         AlignmentAddon(),
+        ZoomAddon(),
       ],
       directories: [
         WidgetbookFolder(

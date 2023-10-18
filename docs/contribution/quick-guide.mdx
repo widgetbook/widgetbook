@@ -1,0 +1,62 @@
+# Widgetbook Quick Contribution Guide
+
+## Ways to Contribute
+
+1. Develop new features.
+2. Fix bugs.
+3. Improve test coverage.
+4. Enhance documentation.
+5. Provide examples.
+
+## Getting Started
+
+1. Fork the Widgetbook repository.
+2. Clone your fork:
+   `git clone https://github.com/<YOUR_USERNAME>/widgetbook.git`
+3. Install Melos: `dart pub global activate melos`
+4. Bootstrap the repository:
+
+   ```bash
+   cd widgetbook
+   flutter pub get
+   melos bootstrap
+   melos generate
+   ```
+
+## Contribution Workflow
+
+1. Synchronize your fork with the main repo.
+2. Create a new branch: `git checkout -b your-branch-name`
+3. Implement and test your changes.
+4. Format code: `dart fmt -w .`
+5. Analyze code: `dart analyzer --fatal-infos --fatal-warnings .`
+6. Commit your changes with a meaningful message.
+7. Update or add documentation as needed.
+8. Ensure all tests pass: `flutter test`
+9. Sign the
+   [CLA](https://docs.google.com/forms/d/e/1FAIpQLScuRfjUzENsLsmQgqZlGLxMKbFi7zuXoPARyXytoyQrq7ntUw/viewform).
+10. Submit a PR to the main repository.
+
+## PR Title Conventions
+
+- Follow [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
+- Use types like `feat`, `fix`, and `docs`.
+- Include scopes such as `cli` or `annotation`.
+
+  _Example:_ `feat(cli): add new CLI command`
+
+## Code Reviews & Community
+
+1. Be patient during the PR review phase.
+2. For examples, place in the `examples` directory and add necessary CI checks.
+3. Join the Widgetbook community on [Discord](https://discord.gg/zT4AMStAJA).
+
+## Licensing
+
+- All contributions will be under Widgetbook's
+  [MIT license](https://github.com/widgetbook/widgetbook/blob/main/packages/widgetbook/LICENSE).
+
+---
+
+Remember, while this guide provides a quick overview, always refer to the
+detailed contribution guidelines when in doubt. Happy coding! 🌟

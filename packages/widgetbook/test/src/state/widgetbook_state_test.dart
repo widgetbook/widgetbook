@@ -31,7 +31,34 @@ void main() {
 
       test(
         'given a state, '
-        'when [updateQueryParam] is called with a reserved key, '
+        'when [updateQueryField] is called, '
+        'then only the field within the group is updated',
+        () {
+          final state = WidgetbookState(
+            queryParams: {
+              'knobs': '{foo:bar,qux:baz}',
+            },
+            root: WidgetbookRoot(
+              children: [],
+            ),
+          );
+
+          state.updateQueryField(
+            group: 'knobs',
+            field: 'qux',
+            value: 'widgetbook',
+          );
+
+          expect(
+            state.queryParams['knobs'],
+            '{foo:bar,qux:widgetbook}',
+          );
+        },
+      );
+
+      test(
+        'given a state, '
+        'when [updateQueryField] is called with a reserved key, '
         'then an $ArgumentError exception is thrown',
         () {
           final state = WidgetbookState(
@@ -105,7 +132,10 @@ void main() {
             ),
           );
 
-          final result = state.registerKnob(knob);
+          final result = state.knobs.register(
+            knob,
+            state.queryParams,
+          );
 
           expect(result, knob.value);
         },
@@ -128,11 +158,14 @@ void main() {
             ),
           );
 
-          state
-            ..registerKnob(knob)
-            ..updateKnobNullability(knob.label, true);
+          state.knobs
+            ..register(knob, state.queryParams)
+            ..updateNullability(knob.label, true);
 
-          final result = state.registerKnob(knob);
+          final result = state.knobs.register(
+            knob,
+            state.queryParams,
+          );
 
           expect(result, isNull);
         },
@@ -156,9 +189,9 @@ void main() {
           );
 
           const newValue = 'Book of Widgets';
-          state
-            ..registerKnob(knob)
-            ..updateKnobValue(knob.label, newValue);
+          state.knobs
+            ..register(knob, state.queryParams)
+            ..updateValue(knob.label, newValue);
 
           final result = state.knobs[knob.label]!.value;
 

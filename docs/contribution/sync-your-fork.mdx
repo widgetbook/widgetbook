@@ -1,0 +1,63 @@
+# Synchronize Your Fork
+
+While working on a forked repository, it's crucial to keep it updated with the
+original repository. This ensures that you're always working on the latest
+codebase, which can significantly reduce potential merge conflicts when you're
+ready to submit your contributions.
+
+## Setting Up the Upstream
+
+First, you need to specify a new remote `upstream` repository that will be
+synced with the fork. If you haven't already, add the original repository (in
+this case, Widgetbook) as the `upstream`:
+
+```bash
+git remote add upstream https://github.com/widgetbook/widgetbook.git
+```
+
+You can verify that the upstream repository has been added:
+
+```bash
+git remote -v
+```
+
+You should see both your `origin` (which points to your fork) and the `upstream`
+(which points to the original repository).
+
+## Syncing the Fork
+
+Once you've set up the `upstream`, you can synchronize your forked repository:
+
+1. Ensure you're on your main branch:
+
+   ```bash
+   git checkout main
+   ```
+
+2. Fetch the branches and commits from the upstream:
+
+   ```bash
+   git fetch upstream
+   ```
+
+3. Merge the changes from the `upstream/main` into your local `main` branch:
+
+   ```bash
+   git merge upstream/main
+   ```
+
+4. At this point, your local `main` branch is synchronized with the original
+   repository's `main` branch. To update your fork on GitHub, push your changes:
+
+   ```bash
+   git push origin main
+   ```
+
+_Note:_ Always make sure your fork is synchronized before starting any new work.
+This ensures a smoother experience when creating pull requests later on.
+
+---
+
+By regularly synchronizing your fork, you ensure a more harmonious development
+process and reduce potential hurdles when integrating your contributions with
+the main project.

@@ -34,6 +34,38 @@ class Themes {
     surfaceTint: Color(0xFFA1C9FF),
   );
 
+  static const _lightColorScheme = ColorScheme(
+    brightness: Brightness.light,
+    primary: Color(0xFF0060A7),
+    onPrimary: Color(0xFFFFFFFF),
+    primaryContainer: Color(0xFFD2E4FF),
+    onPrimaryContainer: Color(0xFF001C37),
+    secondary: Color(0xFF4E6078),
+    onSecondary: Color(0xFFFFFFFF),
+    secondaryContainer: Color(0xFFD2E4FF),
+    onSecondaryContainer: Color(0xFF081C32),
+    tertiary: Color(0xFF705382),
+    onTertiary: Color(0xFFFFFFFF),
+    tertiaryContainer: Color(0xFFF4D9FF),
+    onTertiaryContainer: Color(0xFF290F3A),
+    error: Color(0xFFBA1A1A),
+    onError: Color(0xFFFFFFFF),
+    errorContainer: Color(0xFFFFDAD6),
+    onErrorContainer: Color(0xFF410002),
+    background: Color(0xFFFDFCFF),
+    onBackground: Color(0xFF1A1C1E),
+    surface: Color(0xFFFDFCFF),
+    onSurface: Color(0xFF1A1C1E),
+    surfaceVariant: Color(0xFFDFE2EB),
+    onSurfaceVariant: Color(0xFF43474E),
+    outline: Color(0xFF73777F),
+    onInverseSurface: Color(0xFFE3E2E6),
+    inverseSurface: Color(0xFF1A1C1E),
+    inversePrimary: Color(0xFFA1C9FF),
+    shadow: Color(0xFF000000),
+    surfaceTint: Color(0xFF0060A7),
+  );
+
   static final _inputDecorationTheme = InputDecorationTheme(
     filled: true,
     isDense: true,
@@ -55,6 +87,25 @@ class Themes {
     fontFamily: 'Poppins',
     colorScheme: _darkColorScheme,
     hoverColor: const Color(0xFFE3E2E6).withOpacity(0.08),
+    sliderTheme: SliderThemeData(
+      overlayShape: SliderComponentShape.noThumb,
+    ),
+    inputDecorationTheme: _inputDecorationTheme,
+    dropdownMenuTheme: DropdownMenuThemeData(
+      inputDecorationTheme: _inputDecorationTheme,
+    ),
+    expansionTileTheme: const ExpansionTileThemeData(
+      collapsedShape: RoundedRectangleBorder(),
+      shape: RoundedRectangleBorder(),
+    ),
+  );
+
+  static ThemeData light = ThemeData(
+    useMaterial3: true,
+    brightness: Brightness.light,
+    fontFamily: 'Poppins',
+    colorScheme: _lightColorScheme,
+    hoverColor: const Color(0xFF1A1C1E).withOpacity(0.08),
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
     ),

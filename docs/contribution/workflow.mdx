@@ -1,0 +1,117 @@
+# Contribution Workflow
+
+Contributing to a project involves a series of steps to ensure the changes are
+consistent with the existing codebase and the project's overall goals. Here's a
+detailed walkthrough of the process:
+
+## Preparation
+
+### 1. Stay Updated
+
+- Before starting any new work, ensure you have the latest updates from the main
+  project.
+- Synchronize your fork with the main repository. If you're unsure, refer to the
+  section on [Synchronizing Your Fork](/contribution/sync-your-fork).
+
+### 2. Create a Branch
+
+- Always work on a new branch for every new feature or bug fix. This keeps your
+  working directory clean and allows you to work on multiple features
+  simultaneously.
+
+  ```bash
+  git checkout -b feature/my-new-feature
+  ```
+
+  _Tip:_ Use descriptive branch names. It helps in understanding the branch's
+  purpose at a glance.
+
+## Making Changes
+
+### 1. Test Your Code
+
+- Relevant tests should accompany every contribution. This ensures that your
+  changes work as expected and don't introduce bugs.
+
+  _Example:_ If you've added a new widget, create tests to verify its behavior
+  under various conditions.
+
+### 2. Implement Changes
+
+- Write clean, well-commented code and adhere to the project's coding standards.
+- If you're unsure about a particular approach, discuss it in the issue comments
+  or the project's community channels.
+
+### 3. Code Formatting
+
+- Maintain a consistent coding style across the project using Dart's formatting
+  tool.
+
+  ```bash
+  dart format -w .
+  ```
+
+### 4. Analyze Your Code
+
+- Ensure that your code adheres to Dart's best practices and has no potential
+  issues.
+
+  ```bash
+  dart analyze --fatal-infos --fatal-warnings .
+  ```
+
+## Before Submission
+
+### 1. Commit Properly
+
+- Group-related changes into individual commits.
+- Use clear and concise commit messages describing the changes.
+
+  _Example:_ Instead of "fix bugs", use "fix null pointer exception in WidgetRenderer".
+
+### 2. Documentation
+
+- Enhance the documentation if you've introduced new features, made changes to
+  the public API, or feel that a particular aspect of the project needs clearer
+  instructions.
+
+### 3. Testing
+
+- Before submitting your changes, ensure all existing tests pass. Run:
+
+  ```bash
+  flutter test
+  ```
+
+### 4. Sign the CLA
+
+- Before your changes can be merged, you need to sign the
+  [Contributor License Agreement](https://docs.google.com/forms/d/e/1FAIpQLScuRfjUzENsLsmQgqZlGLxMKbFi7zuXoPARyXytoyQrq7ntUw/viewform).
+  This is a standard procedure for open-source contributions to protect both the
+  contributor and the project.
+
+## Submitting Changes
+
+### 1. PR Creation
+
+- Push your branch to your fork and create a pull request (PR) against the main
+  Widgetbook repository.
+
+  _Tip:_ In the PR description, provide a detailed overview of the changes and
+  their motivations, and if they're related to any existing issues, link those.
+
+### 2. PR Conventions
+
+- Adhere to the project's PR title and description conventions. If the project
+  follows a specific format or template, ensure your PR respects that.
+
+### 3. Verify CI Status
+
+- After creating a PR, automated Continuous Integration (CI) checks will run.
+  Ensure they all pass. If any checks fail, review and address the reported
+  issues.
+
+<Info>
+	Check out [Adding Examples](/contribution/adding-example) doc page for more
+	information.
+</Info>

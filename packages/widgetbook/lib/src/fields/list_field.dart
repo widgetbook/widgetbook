@@ -1,52 +1,52 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
-import '../settings/settings.dart';
 import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
 
 typedef LabelBuilder<T> = String Function(T value);
 
-/// [Field] that builds [DropdownSetting] for [List]<[T]> values.
+/// [Field] that builds [DropdownMenu]<[T]> for [List]<[T]> values.
 class ListField<T> extends Field<T> {
   ListField({
     required super.name,
     required this.values,
     required super.initialValue,
-    this.labelBuilder,
+    this.labelBuilder = defaultLabelBuilder,
     super.onChanged,
   }) : super(
           type: FieldType.list,
           codec: FieldCodec(
-            toParam: (value) {
-              return labelBuilder == null
-                  ? value.toString()
-                  : labelBuilder(value);
-            },
-            toValue: (param) => param == null
-                ? null
-                : values.firstWhereOrNull(
-                    (value) {
-                      final label = labelBuilder == null
-                          ? value.toString()
-                          : labelBuilder(value);
-                      return label == param;
-                    },
-                  ),
+            toParam: labelBuilder,
+            toValue: (param) => values.firstWhereOrNull(
+              (value) => labelBuilder(value) == param,
+            ),
           ),
         );
 
   final List<T> values;
-  final LabelBuilder<T>? labelBuilder;
+  final LabelBuilder<T> labelBuilder;
+
+  static String defaultLabelBuilder(dynamic value) {
+    return value.toString();
+  }
 
   @override
   Widget toWidget(BuildContext context, String group, T? value) {
-    return DropdownSetting<T>(
-      options: values,
-      initialSelection: value,
-      optionValueBuilder: labelBuilder,
-      onSelected: (value) => updateField(context, group, value),
+    return DropdownMenu<T>(
+      trailingIcon: const Icon(Icons.keyboard_arrow_down_rounded),
+      selectedTrailingIcon: const Icon(Icons.keyboard_arrow_up_rounded),
+      initialSelection: value ?? values.first,
+      onSelected: (value) => updateField(context, group, value!),
+      dropdownMenuEntries: values
+          .map(
+            (value) => DropdownMenuEntry(
+              value: value,
+              label: labelBuilder(value),
+            ),
+          )
+          .toList(),
     );
   }
 

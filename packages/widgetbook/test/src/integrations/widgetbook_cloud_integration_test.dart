@@ -45,7 +45,7 @@ void main() {
         () {
           final state = MockWidgetbookState();
           final addons = [AlignmentAddon()];
-          when(() => state.addons).thenReturn(addons);
+          when(() => state.effectiveAddons).thenReturn(addons);
 
           final integration = MockCloudIntegration();
           integration.onInit(state);
@@ -66,6 +66,7 @@ void main() {
         'then knobs data is sent',
         () {
           final state = MockWidgetbookState();
+          final registry = MockKnobsRegistry();
           final knobs = {
             'key': StringKnob(
               label: 'description',
@@ -73,7 +74,8 @@ void main() {
             ),
           };
 
-          when(() => state.knobs).thenReturn(knobs);
+          when(() => registry.values).thenReturn(knobs.values);
+          when(() => state.knobs).thenReturn(registry);
 
           final integration = MockCloudIntegration();
           integration.onKnobsRegistered(state);

@@ -1,3 +1,16 @@
+## 3.0.0-rc.6
+
+- **FIX**: Send correct use-case name in reviews. ([#998](https://github.com/widgetbook/widgetbook/pull/998))
+
+## 3.0.0-rc.5
+
+- **BREAKING**: Remove `--github-token` & `--pr` options from `publish` command. You can now use our [GitHub App](https://docs.widgetbook.io/widgetbook-cloud/integrating-github) instead. ([#982](https://github.com/widgetbook/widgetbook/pull/982))
+
+## 3.0.0-rc.4
+
+- **BREAKING**: Remove `--git-provider` option from `publish` command. ([#913](https://github.com/widgetbook/widgetbook/pull/913))
+- **BREAKING**: Remove `--base-commit` option from `publish` command. ([#936](https://github.com/widgetbook/widgetbook/pull/936))
+
 ## 3.0.0-rc.3
 
 - **REFACTOR**: :recycle: improved error handling. [#831](https://github.com/widgetbook/widgetbook/pull/831)

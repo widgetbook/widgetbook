@@ -1,0 +1,18 @@
+# Zoom Addon
+
+The Zoom Addon is a Widgetbook utility designed for adding a zoom
+use-case being previewed within the Workbench.
+
+## Setup
+
+Here's how to configure it:
+
+<Warning>
+  In case `ZoomAddon` is used with other addons, then it must be defined after
+  both [`AlignmentAddon`](/addons/alignment-addon) and
+  [`DeviceFrameAddon`](/addons/device-frame-addon)
+</Warning>
+
+```dart
+ZoomAddon(initialZoom: 1.0),
+```

@@ -68,21 +68,12 @@ abstract class Field<T> {
   Widget toWidget(BuildContext context, String group, T? value);
 
   void updateField(BuildContext context, String group, T value) {
-    final state = WidgetbookState.of(context);
-    final groupMap = FieldCodec.decodeQueryGroup(state.queryParams[group]);
-
-    final newGroupMap = Map<String, String>.from(groupMap)
-      ..update(
-        name,
-        (_) => codec.toParam(value),
-        ifAbsent: () => codec.toParam(value),
-      );
-
     onChanged?.call(context, value);
 
-    state.updateQueryParam(
-      group,
-      FieldCodec.encodeQueryGroup(newGroupMap),
+    WidgetbookState.of(context).updateQueryField(
+      group: group,
+      field: name,
+      value: codec.toParam(value),
     );
   }
 

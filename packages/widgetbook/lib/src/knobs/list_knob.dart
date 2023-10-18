@@ -25,10 +25,6 @@ class ListKnob<T> extends Knob<T?> {
   final List<T> options;
   final LabelBuilder<T>? labelBuilder;
 
-  // Force non-nullable behavior
-  @override
-  bool get isNullable => false;
-
   @override
   List<Field> get fields {
     return [
@@ -36,10 +32,10 @@ class ListKnob<T> extends Knob<T?> {
         name: label,
         values: options,
         initialValue: value,
-        labelBuilder: labelBuilder,
+        labelBuilder: labelBuilder ?? ListField.defaultLabelBuilder,
         onChanged: (context, value) {
           if (value == null) return;
-          WidgetbookState.of(context).updateKnobValue<T>(label, value);
+          WidgetbookState.of(context).knobs.updateValue<T>(label, value);
         },
       ),
     ];

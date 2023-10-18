@@ -1,0 +1,39 @@
+# Builder Addon
+
+The Builder Addon is utility to wrap all use-cases with a certain widget.
+
+## Setup
+
+Here's how to configure it:
+
+```dart
+BuilderAddon(
+    name: 'Red',
+    builder: (context, child) => ColoredBox(
+        color: Colors.red,
+        child: child,
+    ),
+)
+```
+
+## Usage
+
+This can be used to quickly setup a custom addon with much less boilerplate.
+For example, here's an addon for [`flutter_screenutil`](https://pub.dev/packages/flutter_screenutil) package:
+
+```dart
+BuilderAddon(
+    name: 'ScreenUtil',
+    builder: (context, child) {
+        return ScreenUtilInit(
+            designSize: const Size(375, 812),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            // This is needed to use the workbench [MediaQuery]
+            useInheritedMediaQuery: true,
+            builder: (context, child) => child!,
+            child: child,
+        );
+    },
+)
+```

@@ -21,6 +21,7 @@ class WidgetbookApp extends StatelessWidget {
         WidgetbookCloudIntegration(),
       ],
       addons: [
+        TimeDilationAddon(),
         DeviceFrameAddon(
           devices: [
             Devices.ios.iPhoneSE,
@@ -36,6 +37,7 @@ class WidgetbookApp extends StatelessWidget {
             ),
           ],
         ),
+        GridAddon(),
         AlignmentAddon(),
         TextScaleAddon(
           scales: [1.0, 2.0],
@@ -48,6 +50,17 @@ class WidgetbookApp extends StatelessWidget {
             DefaultWidgetsLocalizations.delegate,
             DefaultMaterialLocalizations.delegate,
           ],
+        ),
+        BuilderAddon(
+          name: 'Bounds',
+          builder: (context, child) => Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.white,
+              ),
+            ),
+            child: child,
+          ),
         ),
       ],
     );

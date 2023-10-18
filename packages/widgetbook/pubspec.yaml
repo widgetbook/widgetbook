@@ -1,6 +1,6 @@
 name: widgetbook
 description: A flutter storybook that helps professionals and teams to catalogue their widgets.
-version: 3.2.0
+version: 3.3.0
 homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=widgetbook
 repository: https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
@@ -20,6 +20,7 @@ dependencies:
   device_frame: ^1.1.0
   flutter:
     sdk: flutter
+  inspector: ^2.1.0
   meta: ^1.8.0
   nested: ^1.0.0
   resizable_widget: ^1.0.5

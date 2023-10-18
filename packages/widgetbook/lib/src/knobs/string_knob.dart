@@ -31,7 +31,7 @@ class StringKnob extends Knob<String?> {
         maxLines: maxLines,
         onChanged: (context, value) {
           if (value == null) return;
-          WidgetbookState.of(context).updateKnobValue(label, value);
+          WidgetbookState.of(context).knobs.updateValue(label, value);
         },
       ),
     ];

@@ -25,12 +25,18 @@
   "variables": {
     "versions": {
       "annotation": "3.0.0",
-      "cli": "3.0.0-rc.2",
-      "generator": "3.1.0",
-      "widgetbook": "3.2.0"
+      "cli": "3.0.0-rc.6",
+      "generator": "3.2.0",
+      "widgetbook": "3.3.0"
     }
   },
   "sidebar": [
+    [
+			"Hacktoberfest",
+			[
+				["Read more", "https://github.com/widgetbook/widgetbook/issues/918"]
+			]
+		],
     [
       "Overview",
       [
@@ -53,7 +59,8 @@
         ["9. Configure", "/getting-started/configure"],
         ["10. Complete Example", "/getting-started/complete-example"],
         ["11. Mocking", "/getting-started/mocking"],
-        ["FAQs", "/faq"]
+        ["FAQs", "/faq"],
+        ["Telemetry", "/telemetry"]
       ]
     ],
     [
@@ -64,8 +71,10 @@
         ["3. Device Frame Addon", "/addons/device-frame-addon"],
         ["4. Localization Addon", "/addons/localization-addon"],
         ["5. Text Scale Addon", "/addons/text-scale-addon"],
-        ["5. Alignment Addon", "/addons/alignment-addon"],
-        ["6. Custom Addon", "/addons/custom-addon"]
+        ["6. Alignment Addon", "/addons/alignment-addon"],
+        ["7. Time Dilation Addon", "/addons/time-dilation-addon"],
+        ["8. Builder Addon", "/addons/builder-addon"],
+        ["9. Custom Addon", "/addons/custom-addon"]
       ]
     ],
     [
@@ -97,13 +106,25 @@
         ["2. Quick Start", "/widgetbook-cloud/quick-start"],
         ["3. Sign Up", "/widgetbook-cloud/signup"],
         ["4. Projects", "/widgetbook-cloud/projects"],
-        ["5. Hosting", "/widgetbook-cloud/hosting"],
-        ["6. Review (beta)", "/widgetbook-cloud/review"],
-        ["7. Github Integration", "/widgetbook-cloud/integrating-github"],
-        ["8. Accessing Resources", "/widgetbook-cloud/accessing-resources"]
+        ["5. Setup", "/widgetbook-cloud/setup"],
+        ["6. Hosting", "/widgetbook-cloud/hosting"],
+        ["7. Reviews", "/widgetbook-cloud/reviews"],
+        ["8. Github Integration", "/widgetbook-cloud/integrating-github"],
+        ["9. Accessing Resources", "/widgetbook-cloud/accessing-resources"]
       ]
     ],
     ["CLI", [["Overview", "/widgetbook-cli/overview"]]],
-    ["Contribution", [["Getting Started", "/contribution/get-started"]]]
+    ["Contribution", 
+      [
+				["1. Ways to Contribute", "/contribution/ways-to-contribute"],
+				["2. Getting Started", "/contribution/get-started"],
+				["3. Contribution Workflow", "/contribution/workflow"],
+				["4. Adding Example", "/contribution/adding-example"],
+				["5. PR Title Conventions", "/contribution/pr-conventions"],
+				["6. Code Review", "/contribution/code-reviews"],
+				["7. Sync Your Fork", "/contribution/sync-your-fork"],
+				["8. Quick Guide", "/contribution/quick-guide"]
+			]
+    ]
   ]
 }
