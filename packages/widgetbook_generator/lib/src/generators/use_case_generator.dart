@@ -10,7 +10,6 @@ import 'package:yaml/yaml.dart';
 
 import '../models/element_metadata.dart';
 import '../models/use_case_metadata.dart';
-import '../tree/tree.dart';
 
 class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
   final packagesMapResource = Resource<YamlMap>(
