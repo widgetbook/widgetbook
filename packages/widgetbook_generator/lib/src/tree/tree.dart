@@ -1,3 +1,5 @@
+import 'package:path/path.dart' as path;
+
 import '../models/use_case_metadata.dart';
 import 'duplicate_use_cases_error.dart';
 import 'tree_node.dart';
@@ -15,7 +17,7 @@ class Tree {
     final root = TreeNode<Null>(null);
 
     for (var useCase in useCases) {
-      final parts = useCase.navPath.split('/').toList();
+      final parts = path.split(useCase.navPath);
 
       TreeNode currentNode = root;
 

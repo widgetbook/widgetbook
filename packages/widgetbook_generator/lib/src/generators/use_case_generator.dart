@@ -21,19 +21,6 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     },
   );
 
-  /// Splits the [uri] into its parts, skipping both the `package:` and
-  /// the `src` parts.
-  ///
-  /// For example, `package:widgetbook/src/widgets/foo/bar.dart`
-  /// will be split into `['widgets', 'foo']`.
-  static String getNavPath(String uri) {
-    final directory = path.dirname(uri);
-    final parts = path.split(directory);
-    final hasSrc = parts.length >= 2 && parts[1] == 'src';
-
-    return parts.skip(hasSrc ? 2 : 1).join('/');
-  }
-
   @override
   Future<String> generateForAnnotatedElement(
     Element element,
@@ -88,6 +75,19 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     const encoder = JsonEncoder.withIndent('  ');
 
     return encoder.convert(metadata.toJson());
+  }
+
+  /// Splits the [uri] into its parts, skipping both the `package:` and
+  /// the `src` parts.
+  ///
+  /// For example, `package:widgetbook/src/widgets/foo/bar.dart`
+  /// will be split into `['widgets', 'foo']`.
+  static String getNavPath(String uri) {
+    final directory = path.dirname(uri);
+    final parts = path.split(directory);
+    final hasSrc = parts.length >= 2 && parts[1] == 'src';
+
+    return parts.skip(hasSrc ? 2 : 1).join('/');
   }
 
   /// Resolves the URI of an [element] by retrieving the URI from

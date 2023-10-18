@@ -27,10 +27,10 @@ class UseCase {
 
   /// A custom path for the use-case.
   ///
-  /// Folders are delimited using slashes, path segments may be made into a category by enclosing it in brackets.
+  /// Folders are delimited using slashes, path segments may be made into
+  /// a category by enclosing it in square brackets.
   ///
-  /// Example: widgets/[interactions]/buttons
-  /// will produce:
-  /// widgets (folder) -> interactions (category) -> buttons (folder)
+  /// For example: `[Interactions]/buttons`
+  /// will produce: Interactions (category) -> buttons (folder)
   final String? path;
 }
