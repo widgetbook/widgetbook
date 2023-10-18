@@ -1,5 +1,6 @@
 export 'src/code/refer.dart';
 export 'src/code/resolver_allocator.dart';
+export 'src/code/widgetbook_category_instance.dart';
 export 'src/code/widgetbook_component_instance.dart';
 export 'src/code/widgetbook_folder_instance.dart';
 export 'src/code/widgetbook_instance.dart';

@@ -520,6 +520,7 @@ void main() {
             name: 'Name',
             useCaseName: 'UseCase',
             componentName: 'Component',
+            navPath: 'widgets',
             importStatement: 'package:foo/bar.dart',
             componentImportStatement: 'package:foo/bar.dart',
             componentDefinitionPath: 'path/to/use_case.dart',

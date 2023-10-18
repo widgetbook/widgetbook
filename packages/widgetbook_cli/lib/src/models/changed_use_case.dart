@@ -9,6 +9,7 @@ class ChangedUseCase extends UseCaseMetadata {
           name: useCase.name,
           useCaseName: useCase.useCaseName,
           componentName: useCase.componentName,
+          navPath: useCase.navPath,
           importStatement: useCase.importStatement,
           componentImportStatement: useCase.componentImportStatement,
           componentDefinitionPath: useCase.componentDefinitionPath,
@@ -22,6 +23,7 @@ class ChangedUseCase extends UseCaseMetadata {
     return {
       'name': useCaseName,
       'componentName': componentName,
+      'navPath': navPath,
       'componentDefinitionPath': componentDefinitionPath,
       'componentImportStatement': componentImportStatement,
       'modification': modification.name,
