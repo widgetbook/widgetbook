@@ -32,11 +32,9 @@
   },
   "sidebar": [
     [
-			"Hacktoberfest",
-			[
-				["Read more", "https://github.com/widgetbook/widgetbook/issues/918"]
-			]
-		],
+      "Hacktoberfest",
+      [["Read more", "https://github.com/widgetbook/widgetbook/issues/918"]]
+    ],
     [
       "Overview",
       [
@@ -85,11 +83,12 @@
         ["3. Custom Knob", "/knobs/custom-knob"]
       ]
     ],
-    ["Monorepo", 
     [
-      ["1. Introduction", "/monorepo/introduction"],
-      ["2. Getting started", "/monorepo/getting-started"]
-    ]
+      "Monorepo",
+      [
+        ["1. Introduction", "/monorepo/introduction"],
+        ["2. Getting started", "/monorepo/getting-started"]
+      ]
     ],
     [
       "Migration",
@@ -114,17 +113,18 @@
       ]
     ],
     ["CLI", [["Overview", "/widgetbook-cli/overview"]]],
-    ["Contribution", 
+    [
+      "Contribution",
       [
-				["1. Ways to Contribute", "/contribution/ways-to-contribute"],
-				["2. Getting Started", "/contribution/get-started"],
-				["3. Contribution Workflow", "/contribution/workflow"],
-				["4. Adding Example", "/contribution/adding-example"],
-				["5. PR Title Conventions", "/contribution/pr-conventions"],
-				["6. Code Review", "/contribution/code-reviews"],
-				["7. Sync Your Fork", "/contribution/sync-your-fork"],
-				["8. Quick Guide", "/contribution/quick-guide"]
-			]
+        ["1. Ways to Contribute", "/contribution/ways-to-contribute"],
+        ["2. Getting Started", "/contribution/get-started"],
+        ["3. Contribution Workflow", "/contribution/workflow"],
+        ["4. Adding Example", "/contribution/adding-example"],
+        ["5. PR Title Conventions", "/contribution/pr-conventions"],
+        ["6. Code Review", "/contribution/code-reviews"],
+        ["7. Sync Your Fork", "/contribution/sync-your-fork"],
+        ["8. Quick Guide", "/contribution/quick-guide"]
+      ]
     ]
   ]
 }

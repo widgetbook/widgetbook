@@ -21,56 +21,30 @@ Here's an ideal monorepo configuration tailored for Widgetbook:
 
 - **apps**: Houses independent applications.
 - **packages**: Stores shared Dart/Flutter modules.
-- **widgetbook_playground**: Incorporates the Widgetbook configurations and
-  previews.
-- **docs**: Maintains documentation pertinent across diverse projects.
+- **widgetbook**: Incorporates the Widgetbook configurations and previews.
 
 ```bash
-/monorepo_example
-  /docs
-  /apps
-    /main_app
-      /lib
-    /admin_app
-      /lib
-  /packages
-    /shared_ui
-      /lib
-    /shared_models
-      /lib
-  /widgetbook_playground
-    /lib
+monorepo_example/
+  apps/
+    main_app/
+    admin_app/
+  packages/
+    shared_ui/
+  widgetbook/
 ```
 
-An alternative structure situates the `widgetbook_playground` within the `apps`
+An alternative structure situates the `widgetbook` within the `apps`
 directory. This organization depends on the developer's preference.
 
-However, isolating `widgetbook_playground` from apps implies its unique purpose
+However, isolating `widgetbook` from apps implies its unique purpose
 — a platform designed exclusively to refine UI development.
-
-```bash
-/monorepo_example
-  /docs
-  /apps
-    /main_app
-      /lib
-    /admin_app
-      /lib
-  /widgetbook_playground
-    /lib
-  /packages
-    /shared_ui
-      /lib
-    /shared_models
-      /lib
-```
 
 ### 2. Orchestrating Dependencies
 
 Every package or application's `pubspec.yaml` should specify dependencies, which
 allows referencing between packages.
 
-For instance, within `main_app`, `widgetbook_playground`, or `admin_app`, the
+For instance, within `main_app`, `widgetbook`, or `admin_app`, the
 `shared_ui` can be referenced as:
 
 ```yaml
@@ -83,23 +57,20 @@ For clarity, the complete `pubspec.yaml` of the `widgetbook` directory is
 illustrated below:
 
 ```yaml
-name: widgetbook_playground
+name: widgetbook_workspace # cannot be named just "widgetbook"
 description: A playground to streamline shared_ui with Widgetbook
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.1.0 <4.0.0'
+  sdk: ">=3.1.0 <4.0.0"
+
 dependencies:
   flutter:
     sdk: flutter
   shared_ui:
     path: ../packages/shared_ui
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^2.0.0
 flutter:
   uses-material-design: true
 ```
@@ -149,7 +120,7 @@ class CustomButton extends StatelessWidget {
 
 ### 4. Configuring Widgetbook
 
-Within the `widgetbook_playground` directory, update the `pubspec.yaml` to
+Within the `widgetbook` directory, update the `pubspec.yaml` to
 include the requisite `dependency` and `dev_dependencies`, ensuring you
 incorporate `shared_ui`:
 
@@ -169,7 +140,7 @@ dev_dependencies:
 
 ### 5. Showcasing Widget Previews
 
-Go into `widgetbook_playground/lib` to commence drafting use cases and embarking
+Go into `widgetbook/lib` to commence drafting use cases and embarking
 on other widgetbook-focused assignments.
 
 For our earlier defined `CustomButton` within the `shared_ui` library, we can
@@ -241,7 +212,7 @@ class WidgetbookApp extends StatelessWidget {
 
 ### 6. Launching Widgetbook
 
-Navigate to the `widgetbook_playground` directory and run:
+Navigate to the `widgetbook` directory and run:
 
 ```bash
 flutter pub run build_runner watch
@@ -254,8 +225,8 @@ flutter run
 ```
 
 <Info>
-	See [source
-	code](https://github.com/widgetbook/widgetbook/tree/main/examples/monorepo_example/)
+  See [source
+  code](https://github.com/widgetbook/widgetbook/tree/main/examples/monorepo_example/)
 </Info>
 
 This will showcase the `CustomButton` widget in the Widgetbook environment.
