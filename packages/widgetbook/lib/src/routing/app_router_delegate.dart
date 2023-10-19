@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
 import '../state/state.dart';
@@ -66,34 +67,62 @@ class MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            setState(() {
+    return Shortcuts(
+      shortcuts: <LogicalKeySet, Intent>{
+        LogicalKeySet(LogicalKeyboardKey.keyN): const ToggleLeftPanelIntent(),
+        LogicalKeySet(LogicalKeyboardKey.keyM): const ToggleRightPanelIntent(),
+      },
+      child: Actions(
+        actions: <Type, Action<Intent>>{
+          ToggleLeftPanelIntent: CallbackAction<ToggleLeftPanelIntent>(
+            onInvoke: (intent) => setState(() {
               showLeftPanel = !showLeftPanel;
-            });
-          },
-        ),
-        title: const Text('Widgetbook'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              setState(() {
-                showRightPanel = !showRightPanel;
-              });
-            },
+            }),
           ),
-        ],
-      ),
-      body: WidgetbookShell(
-        key: widget.key,
-        showLeftPanel: showLeftPanel,
-        showRightPanel: showRightPanel,
-        child: const Workbench(),
+          ToggleRightPanelIntent: CallbackAction<ToggleRightPanelIntent>(
+            onInvoke: (intent) => setState(() {
+              showRightPanel = !showRightPanel;
+            }),
+          ),
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                setState(() {
+                  showLeftPanel = !showLeftPanel;
+                });
+              },
+            ),
+            title: const Text('Widgetbook'),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  setState(() {
+                    showRightPanel = !showRightPanel;
+                  });
+                },
+              ),
+            ],
+          ),
+          body: WidgetbookShell(
+            key: widget.key,
+            showLeftPanel: showLeftPanel,
+            showRightPanel: showRightPanel,
+            child: const Workbench(),
+          ),
+        ),
       ),
     );
   }
+}
+
+class ToggleLeftPanelIntent extends Intent {
+  const ToggleLeftPanelIntent();
+}
+
+class ToggleRightPanelIntent extends Intent {
+  const ToggleRightPanelIntent();
 }

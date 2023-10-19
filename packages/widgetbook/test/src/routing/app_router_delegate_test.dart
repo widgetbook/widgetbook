@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/routing/routing.dart';
@@ -170,6 +171,72 @@ void main() {
 
       // Tap the button to toggle showRightPanel
       await tester.tap(find.byIcon(Icons.menu).last);
+      await tester.pumpAndSettle();
+
+      // Check that showRightPanel is now false
+      expect(mainAppState.showRightPanel, isFalse);
+    },
+  );
+
+  testWidgets(
+    'given MainApp, '
+    'when N key is pressed, '
+    'then showLeftPanel is toggled',
+    (tester) async {
+      final state = WidgetbookState(
+        appBuilder: materialAppBuilder,
+        root: WidgetbookRoot(
+          children: [],
+        ),
+      );
+
+      await tester.pumpWidgetWithState(
+        state: state,
+        builder: (_) => const MaterialApp(
+          home: MainApp(),
+        ),
+      );
+
+      // Initial state is true
+      expect(find.byType(WidgetbookShell), findsOneWidget);
+      var mainAppState = tester.state(find.byType(MainApp)) as MainAppState;
+      expect(mainAppState.showLeftPanel, isTrue);
+
+      // Press the N key to toggle showLeftPanel
+      await tester.sendKeyEvent(LogicalKeyboardKey.keyN);
+      await tester.pumpAndSettle();
+
+      // Check that showLeftPanel is now false
+      expect(mainAppState.showLeftPanel, isFalse);
+    },
+  );
+
+  testWidgets(
+    'given MainApp, '
+    'when M key is pressed, '
+    'then showRightPanel is toggled',
+    (tester) async {
+      final state = WidgetbookState(
+        appBuilder: materialAppBuilder,
+        root: WidgetbookRoot(
+          children: [],
+        ),
+      );
+
+      await tester.pumpWidgetWithState(
+        state: state,
+        builder: (_) => const MaterialApp(
+          home: MainApp(),
+        ),
+      );
+
+      // Initial state is true
+      expect(find.byType(WidgetbookShell), findsOneWidget);
+      var mainAppState = tester.state(find.byType(MainApp)) as MainAppState;
+      expect(mainAppState.showRightPanel, isTrue);
+
+      // Press the M key to toggle showRightPanel
+      await tester.sendKeyEvent(LogicalKeyboardKey.keyM);
       await tester.pumpAndSettle();
 
       // Check that showRightPanel is now false
