@@ -42,14 +42,54 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
       onPopPage: (route, result) => route.didPop(result),
       pages: [
         MaterialPage(
-          child: _configuration.previewMode
-              ? const Workbench()
-              : WidgetbookShell(
-                  key: ValueKey(_configuration),
-                  child: const Workbench(),
-                ),
+          child:
+              _configuration.previewMode ? const Workbench() : const MainApp(),
         ),
       ],
+    );
+  }
+}
+
+class MainApp extends StatefulWidget {
+  const MainApp({super.key});
+
+  @override
+  _MainAppState createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  bool showLeftPanel = true;
+  bool showRightPanel = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            setState(() {
+              showLeftPanel = !showLeftPanel;
+            });
+          },
+        ),
+        title: const Text('Widgetbook'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {
+              setState(() {
+                showRightPanel = !showRightPanel;
+              });
+            },
+          ),
+        ],
+      ),
+      body: WidgetbookShell(
+        showLeftPanel: showLeftPanel,
+        showRightPanel: showRightPanel,
+        child: const Workbench(),
+      ),
     );
   }
 }
