@@ -79,6 +79,101 @@ void main() {
           );
         },
       );
+
+      testWidgets(
+        'given a config without preview mode, '
+        'then MainApp is shown',
+        (tester) async {
+          final state = WidgetbookState(
+            appBuilder: materialAppBuilder,
+            root: WidgetbookRoot(
+              children: [],
+            ),
+          );
+
+          final delegate = AppRouterDelegate(
+            state: state,
+          );
+
+          await tester.pumpWidgetWithState(
+            state: state,
+            builder: (_) => MaterialApp.router(
+              routerDelegate: delegate,
+            ),
+          );
+
+          expect(
+            find.byType(MainApp),
+            findsOneWidget,
+          );
+        },
+      );
+    },
+  );
+
+  testWidgets(
+    'given MainApp, '
+    'when left panel button is tapped, '
+    'then showLeftPanel is toggled',
+    (tester) async {
+      final state = WidgetbookState(
+        appBuilder: materialAppBuilder,
+        root: WidgetbookRoot(
+          children: [],
+        ),
+      );
+
+      await tester.pumpWidgetWithState(
+        state: state,
+        builder: (_) => const MaterialApp(
+          home: MainApp(),
+        ),
+      );
+
+      // Initial state is true
+      expect(find.byType(WidgetbookShell), findsOneWidget);
+      var mainAppState = tester.state(find.byType(MainApp)) as MainAppState;
+      expect(mainAppState.showLeftPanel, isTrue);
+
+      // Tap the button to toggle showLeftPanel
+      await tester.tap(find.byIcon(Icons.menu).first);
+      await tester.pumpAndSettle();
+
+      // Check that showLeftPanel is now false
+      expect(mainAppState.showLeftPanel, isFalse);
+    },
+  );
+
+  testWidgets(
+    'given MainApp, '
+    'when right panel button is tapped, '
+    'then showRightPanel is toggled',
+    (tester) async {
+      final state = WidgetbookState(
+        appBuilder: materialAppBuilder,
+        root: WidgetbookRoot(
+          children: [],
+        ),
+      );
+
+      await tester.pumpWidgetWithState(
+        state: state,
+        builder: (_) => const MaterialApp(
+          home: MainApp(),
+        ),
+      );
+
+      // Initial state is true
+      expect(find.byType(WidgetbookShell), findsOneWidget);
+      var mainAppState = tester.state(find.byType(MainApp)) as MainAppState;
+      expect(mainAppState.showRightPanel, isTrue);
+
+      // Tap the button to toggle showRightPanel
+      await tester.tap(find.byIcon(Icons.menu).last);
+      await tester.pumpAndSettle();
+
+      // Check that showRightPanel is now false
+      expect(mainAppState.showRightPanel, isFalse);
     },
   );
 }
