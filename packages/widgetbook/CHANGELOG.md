@@ -11,6 +11,7 @@
 - **FEAT**: Add Zoom Addon. ([#968](https://github.com/widgetbook/widgetbook/pull/968))
 - **FEAT**: Add Inspector Addon. ([#985](https://github.com/widgetbook/widgetbook/pull/985))
 - **FEAT**: Add `q` query param for search. ([#950](https://github.com/widgetbook/widgetbook/pull/950))
+- **FEAT**: Show/hide side panels. ([#1001](https://github.com/widgetbook/widgetbook/pull/1001))
 
 ## 3.3.0
 
