@@ -83,9 +83,8 @@ class WidgetbookShell extends StatelessWidget {
       } else {
         // Find the index of the larger percentage
         final maxIndex = percentages.indexOf(percentages.reduce(max));
-        // Adjust the other percentage to fill the remaining space
-        final otherIndex = maxIndex == 0 ? 1 : 0;
-        percentages[otherIndex] = 1 - percentages[maxIndex];
+        // Adjust the largest percentage to fill the remaining space
+        percentages[maxIndex] = 1 - (sum - percentages[maxIndex]);
       }
     }
 
