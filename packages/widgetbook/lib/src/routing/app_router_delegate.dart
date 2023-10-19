@@ -42,8 +42,11 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
       onPopPage: (route, result) => route.didPop(result),
       pages: [
         MaterialPage(
-          child:
-              _configuration.previewMode ? const Workbench() : const MainApp(),
+          child: _configuration.previewMode
+              ? const Workbench()
+              : MainApp(
+                  key: ValueKey(_configuration),
+                ),
         ),
       ],
     );
@@ -86,6 +89,7 @@ class MainAppState extends State<MainApp> {
         ],
       ),
       body: WidgetbookShell(
+        key: widget.key,
         showLeftPanel: showLeftPanel,
         showRightPanel: showRightPanel,
         child: const Workbench(),
