@@ -1,0 +1,101 @@
+# Monorepo vs. Polyrepo: An Introduction
+
+Let's have a quick overview of the two prominent strategies that developers use
+to manage codebase and repositories, the Monorepo and Polyrepo approaches. Both
+have their advantages and disadvantages. Let's delve deeper into what each of
+these means.
+
+<Info>
+	If you are familiar with the concept, feel free to skip this page to [Getting
+	Started](/monorepo/getting-started) page.
+</Info>
+
+Monorepo A Monorepo (Monolithic Repository) is a software development strategy
+where code for many projects is stored in the same repository.
+
+```bash
+/my_project
+|
+|-- /packages
+|   |
+|   |-- /shared_ui
+|   |   |-- /lib
+|   |
+|   |-- /share_helpers
+|       |-- /lib
+|
+|-- /apps
+    |
+    |-- /main_app
+        |-- /lib
+```
+
+There are a few advantages:
+
+1. **Unified Versioning**: Every commit can potentially represent a version
+   across all projects.
+2. **Code Sharing**: It's easier to reuse code across projects.
+3. **Unified Build & Test**: All projects can be built, tested, and deployed
+   together ensuring compatibility.
+4. **Refactoring**: Changes across multiple projects can be done atomically.
+
+It's also worth mentioning the disadvantages:
+
+1. **Size**: As more and more projects get added, the repo size can become
+   unwieldy.
+2. **Build Times**: Without careful management, build times can increase.
+3. **Access Control**: It might be challenging to control access to different
+   parts of the repo.
+4. **Overhead**: Initial setup and tooling can be more complex.
+
+A Polyrepo (Multiple Repositories) approach means having individual repositories
+for each project. This is the traditional method and is used by many
+organizations of all sizes.
+
+```bash
+/my_shared_ui_repo
+|
+|-- /lib
+```
+
+```bash
+/my_shared_ui_repo
+|
+|-- /lib
+```
+
+```bash
+/my_shared_helpers_repo
+|
+|-- /lib
+```
+
+```bash
+/my_main_app_repo
+|
+|-- /lib
+```
+
+Let's take a look at the some advantages:
+
+1. **Isolation**: Each project is isolated, reducing the risk of one project
+   affecting another.
+2. **Simplicity**: Each repo has its own build, test, and deployment pipeline,
+   making setups straightforward.
+3. **Access Control**: Easier to control who has access to what.
+4. **Focused**: Developers can focus on a specific project without unnecessary
+   distractions.
+
+Like other approaches, there are disadvantages to this setup:
+
+1. **Code Duplication**: There might be redundant code across repositories.
+2. **Dependency Management**: It can be a challenge to manage cross-repo
+   dependencies. Atomic
+3. **Refactoring**: Refactoring across multiple projects can be complex and
+   non-atomic.
+4. **Versioning**: Each repo might have its versioning, making it hard to have a
+   unified view.
+
+The decision between Monorepo and Polyrepo often depends on the organization's
+scale, structure, and specific needs. It's vital to weigh the pros and cons
+based on your development environment, team size, and project requirements.
