@@ -9,17 +9,18 @@ Then, follow the steps provided by the user interface to create a project.
 
 ## Roles
 
-Widgetbook Cloud projects have the following roles:
+Widgetbook Cloud users have the following roles:
 
-| Role   | Description                                                                                      |
-| ------ | ------------------------------------------------------------------------------------------------ |
-| Member | Can view the project, view the project's builds, and participate in reviews.                     |
-| Owner  | Inherits all Member privileges, and can fetch API keys, delete projects, and manage user access. |
+| Role    | Permissions                                                                                                                                            |
+|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Editor  | Can view project branches and reviews, participate in reviews by accepting/rejecting use-cases and writing comments, and leave projects and companies. |
+| Manager | In addition to Editor privileges, a Manager can update/delete projects and manage project API keys.                                                    |
+| Admin   | In addition to Manager privileges, an Admin can manage companies and their members and create projects.                                                |
 
 ## Member Management
 
-Project owners can add and remove users from the project. To modify user access, click the _Settings ⚙️_ button to see the list of members and owners. Follow the user interface instructions to adjust these lists.
+Company admins can invite and remove users from the company. To modify user access, navigate to your company's page and click on _View Members_. Follow the user interface instructions to adjust these lists.
 
-Owners can add users via email addresses, even if they have not yet registered with Widgetbook Cloud. These users will appear in the _Open invites_ list and will become members once they register for Widgetbook Cloud.
+Admins can add users via email addresses, even if they have not yet registered with Widgetbook Cloud. These users will have a _Pending_ status and will become active once they register for Widgetbook Cloud via the invitation email they receive.
 
 Please note that adding users may affect your Stripe billing charges.
