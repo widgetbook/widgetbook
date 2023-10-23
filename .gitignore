@@ -153,3 +153,4 @@ app.*.symbols
 !**/full_example/**/*.g.dart
 examples/cookbook1/ios/GoogleService-Info.plist
 examples/cookbook1/pubspec.lock
+examples/cookbook1/ios/GoogleService-Info.plist
