@@ -151,3 +151,5 @@ app.*.symbols
 
 # Do not ignore generate files in full_example
 !**/full_example/**/*.g.dart
+examples/cookbook1/ios/GoogleService-Info.plist
+examples/cookbook1/pubspec.lock

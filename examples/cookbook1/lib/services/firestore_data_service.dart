@@ -1,17 +1,25 @@
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:cookbook1/model/user_model.dart';
 import 'package:cookbook1/services/abstract/firestore_service.dart';
-
 
 class FirestoreService extends BaseFirestoreService {
   final _firestoreInstance = FirebaseFirestore.instance;
+
   @override
   Future addDataToFirestore(
-      Map<String, dynamic> data, String collectionName, String docName) async {
+    DataModel data,
+    String collectionName,
+    String docName,
+  ) async {
     try {
-      
       await _firestoreInstance
           .collection(collectionName)
+          .withConverter(
+            fromFirestore: (snapshot, _) =>
+                DataModel.fromJson(snapshot.data()!),
+            toFirestore: (model, _) => model.toJson(),
+          )
           .doc(docName)
           .set(data);
     } catch (e) {
@@ -21,35 +29,30 @@ class FirestoreService extends BaseFirestoreService {
 
   @override
   Future updateDataToFirestore(
-      Map<String, dynamic> data, String collectionName, String docName) async{
-    try{
-       final userData = await _firestoreInstance
-          .collection(collectionName)
-          .doc(docName)
-          .update(data)
-          .then((value) => print("userData is updated"))
-          .catchError((error)=>print("error while updating data $error"));
-
-    }
-    catch (e) {
+    DataModel data,
+    String collectionName,
+    String docName,
+  ) async {
+    try {} catch (e) {
       throw Exception(e);
     }
   }
 
   @override
   Future getUserDataToFirestore(
-      Map<String, dynamic> data, String collectionName, String docName) async {
+    DataModel data,
+    String collectionName,
+    String docName,
+  ) async {
     try {
       final userData = await _firestoreInstance
           .collection(collectionName)
           .doc(docName)
           .get();
+
+      return userData.data();
     } catch (e) {
       throw Exception(e);
     }
-   
   }
 }
-
-
-

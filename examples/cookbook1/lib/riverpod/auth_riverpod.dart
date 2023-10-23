@@ -1,59 +1,51 @@
+import 'package:cookbook1/model/user_model.dart';
 import 'package:cookbook1/services/abstract/firestore_service.dart';
 import 'package:cookbook1/services/firebase_auth.dart';
 import 'package:cookbook1/services/firestore_data_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AuthProvider extends ChangeNotifier {
-  bool _isLoading = false;
+class AuthProvider {
   UserCredential? _authUserCredential;
   final Map<String, dynamic> _userData = {};
   FirebaseAuthClass authClass = FirebaseAuthClass();
   BaseFirestoreService fstore = FirestoreService();
 
-  // Getter functions
-  bool get isLoading => _isLoading;
   UserCredential? get authUserCredential => _authUserCredential;
   Map<String, dynamic> get userData => _userData;
 
-  Future<UserCredential?> loginUserWithFirebase(
-      String email, String password) async {
-    setLoader(true);
-
+   loginUserWithFirebase(
+    String email,
+    String password,
+  ) async {
     try {
       _authUserCredential =
           await authClass.loginUserWithFirebase(email, password);
-      setLoader(false);
-      notifyListeners();
+
       return _authUserCredential;
     } catch (e) {
-      setLoader(false);
       return Future.error(e);
     }
   }
 
-  Future<UserCredential?> signUpUserWithFirebase(
+ signUpUserWithFirebase(
     String email,
     String password,
     String name,
   ) async {
     var isSuccess = false;
-    setLoader(true);
 
     _authUserCredential =
         await authClass.signUpUserWithFirebase(email, password, name);
 
-    final data = {
-      'email': email,
-      'password': password,
-      'uid': _authUserCredential!.user!.uid,
-      'createdAt': DateTime.now().microsecondsSinceEpoch.toString(),
-      'name': name
-    };
+    final DataModel dataModel = DataModel(
+      name: name,
+      email: email,
+      uid: _authUserCredential!.user!.uid,
+    );
 
     String userid = _authUserCredential!.user!.uid;
-    isSuccess = await addUserToDatabase(data, 'user', userid);
+    isSuccess = await addUserToDatabase(dataModel, 'user', userid);
     if (isSuccess) {
       return _authUserCredential!;
     } else {
@@ -62,7 +54,10 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<bool> addUserToDatabase(
-      Map<String, dynamic> data, String collectionName, String docName) async {
+    DataModel data,
+    String collectionName,
+    String docName,
+  ) async {
     var value = false;
 
     try {
@@ -77,12 +72,11 @@ class AuthProvider extends ChangeNotifier {
   void logoutUser() {
     authClass.signOut();
   }
-
-  setLoader(bool bool) {
-    _isLoading = true;
-    notifyListeners();
-  }
 }
 
-final authProvider =
-    ChangeNotifierProvider<AuthProvider>((ref) => AuthProvider());
+final authProvider = Provider<AuthProvider>((ref) => AuthProvider());
+
+final firebaseAuthProvider =
+    Provider<FirebaseAuth>((ref) => FirebaseAuth.instance);
+final authStateProvider =
+    StreamProvider((ref) => ref.watch(firebaseAuthProvider).authStateChanges());

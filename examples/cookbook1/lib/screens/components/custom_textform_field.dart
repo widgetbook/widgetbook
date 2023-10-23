@@ -1,3 +1,4 @@
+import 'package:cookbook1/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -21,6 +22,7 @@ class CustomTextFormField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        key: key,
         obscureText: obscureText,
         style: const TextStyle(color: Colors.white),
         textAlignVertical: TextAlignVertical.center,
@@ -35,8 +37,9 @@ class CustomTextFormField extends StatelessWidget {
           hintStyle: TextStyle(color: textFieldColor),
           hoverColor: textFieldColor,
           border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: textFieldColor, width: 3)),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: textFieldColor, width: 3),
+          ),
           enabled: true,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -61,11 +64,12 @@ CustomTextFormField defaultCustomTitle(BuildContext context) {
   return CustomTextFormField(
     controller: testController,
     hintText: 'hello',
-    textFieldColor: Colors.yellow,
+    textFieldColor: AppColor.appYellowColor,
     suffixIcon: Icons.headphones,
     obscureText: true,
   );
 }
+
 @widgetbook.UseCase(
   name: 'blue field color',
   type: CustomTextFormField,
@@ -75,7 +79,7 @@ CustomTextFormField defaultCustomTitle1(BuildContext context) {
   return CustomTextFormField(
     controller: testController,
     hintText: 'hello',
-    textFieldColor: Colors.blue,
+    textFieldColor: AppColor.appblueColor,
     suffixIcon: Icons.headphones,
     obscureText: true,
   );

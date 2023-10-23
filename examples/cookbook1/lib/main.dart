@@ -1,5 +1,7 @@
+import 'package:cookbook1/firebase_options.dart';
 import 'package:cookbook1/screens/home.dart';
 import 'package:cookbook1/screens/login.dart';
+import 'package:cookbook1/utils/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -9,9 +11,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
+   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -21,13 +27,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: FirebaseAuth.instance.currentUser != null
-            ? const Home()
-            : LoginPage());
+      title: 'Flutter Demo',
+      theme: AppTheme().themedata,
+      home: FirebaseAuth.instance.currentUser != null
+          ? const Home()
+          : LoginPage(),
+    );
   }
 }

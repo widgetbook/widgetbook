@@ -1,11 +1,21 @@
+import 'package:cookbook1/model/user_model.dart';
+
 abstract class BaseFirestoreService {
   Future addDataToFirestore(
-      Map<String, dynamic> data, String collectionName, String docName);
+    DataModel data,
+    String collectionName,
+    String docName,
+  );
 
-      Future updateDataToFirestore(
-      Map<String, dynamic> data, String collectionName, String docName);
+  Future updateDataToFirestore(
+    DataModel data,
+    String collectionName,
+    String docName,
+  );
 
-      Future getUserDataToFirestore(
-      Map<String, dynamic> data, String collectionName, String docName);
-
+  Future getUserDataToFirestore(
+    DataModel data,
+    String collectionName,
+    String docName,
+  );
 }

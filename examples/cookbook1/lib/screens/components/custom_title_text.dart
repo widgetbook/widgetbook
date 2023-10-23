@@ -1,3 +1,4 @@
+import 'package:cookbook1/utils/color.dart';
 import 'package:flutter/material.dart';
 
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -27,7 +28,7 @@ class CustomTitleText extends StatelessWidget {
 CustomTitleText defaultCustomTitle(BuildContext context) {
   return const CustomTitleText(
     titleText: 'login page',
-    titleTextColor: Color.fromARGB(255, 255, 255, 255),
+    titleTextColor: AppColor.myWhite,
   );
 }
 
@@ -38,6 +39,6 @@ CustomTitleText defaultCustomTitle(BuildContext context) {
 CustomTitleText blueColor(BuildContext context) {
   return const CustomTitleText(
     titleText: 'login page',
-    titleTextColor: Colors.blue,
+    titleTextColor: AppColor.appblueColor,
   );
 }

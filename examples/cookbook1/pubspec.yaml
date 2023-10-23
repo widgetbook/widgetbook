@@ -41,6 +41,8 @@ dependencies:
   flutter_riverpod: ^2.4.4
   widgetbook_annotation: ^3.0.0
   widgetbook: ^3.3.0
+  mockito: ^5.4.2
+  firebase_core_platform_interface: ^4.0.1
 
 dev_dependencies:
   flutter_test:
