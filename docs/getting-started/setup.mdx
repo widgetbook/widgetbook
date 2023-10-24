@@ -118,10 +118,21 @@ class WidgetbookApp extends StatelessWidget {
       // Use the generated directories variable
       directories: directories,
       addons: [],
+      integrations: [
+        // To make addons & knobs work with Widgetbook Cloud
+        WidgetbookCloudIntegration(),
+      ],
     );
   }
 }
 ```
+
+<Info>
+  In the setup code above, adding the `WidgetbookCloudIntegration` to the
+  `integrations` array is only required to make the addons & knobs work if you're using the
+  [review feature](/widgetbook-cloud/reviews) of [Widgetbook
+  Cloud](/widgetbook-cloud/overview)
+</Info>
 
 You can then run your app as usual with the `flutter run` command. If you change
 your Widgetbook entry you can run:
