@@ -7,8 +7,9 @@ Widgetbook Cloud introduces a _Review_ feature, that empowers Flutter teams to c
 1. [Understanding Reviews](/widgetbook-cloud/reviews#understanding-reviews)
 2. [Review Statuses](/widgetbook-cloud/reviews#review-statuses)
 3. [Requirements](/widgetbook-cloud/reviews#requirements)
-4. [Add a Figma design link](/widgetbook-cloud/reviews#how-to-add-a-figma-design-link)
-5. [Publishing a review](/widgetbook-cloud/reviews#publishing-a-review)
+4. [Set up addons and knobs](/widgetbook-cloud/reviews#how-to-set-up-addons-and-knobs)
+5. [Add a Figma design link](/widgetbook-cloud/reviews#how-to-add-a-figma-design-link)
+6. [Publishing a review](/widgetbook-cloud/reviews#publishing-a-review)
 
 ---
 
@@ -40,6 +41,30 @@ To harness the Widgetbook Cloud _Review_ feature, ensure your setup aligns with 
 - Integrate the [widgetbook package](https://pub.dev/packages/widgetbook) version `{{ versions.widgetbook }}`. No extra setup required.
 - Employ the CLI from [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli).
 - Set up our GitHub app.
+
+## How to set up addons and knobs
+
+In order for the addons and knobs in your Widgetbook builds to work with our review feature, make sure you have the `WidgetbookCloudIntegration` added to the `integrations` array in your `Widgetbook` app:
+
+```dart
+@widgetbook.App()
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook.material(
+      // Use the generated directories variable
+      directories: directories,
+      addons: [],
+      integrations: [
+        // Important to send addons & knobs to Widgetbook Cloud
+        WidgetbookCloudIntegration(),
+      ],
+    );
+  }
+}
+```
 
 ## How to add a Figma design link
 
