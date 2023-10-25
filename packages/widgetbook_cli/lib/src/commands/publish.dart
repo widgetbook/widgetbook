@@ -6,10 +6,14 @@ import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
+import 'package:process/process.dart';
+import 'package:yaml/yaml.dart';
 
+import '../../metadata.dart';
 import '../api/api.dart';
 import '../core/core.dart';
 import '../git/git.dart';
+import '../utils/executable_manager.dart';
 import '../utils/utils.dart';
 import 'publish_args.dart';
 
@@ -17,6 +21,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
   PublishCommand({
     required super.context,
     super.logger,
+    this.processManager = const LocalProcessManager(),
     this.fileSystem = const LocalFileSystem(),
     this.zipEncoder = const ZipEncoder(),
     this.useCaseReader = const UseCaseReader(),
@@ -66,6 +71,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
       );
   }
 
+  final ProcessManager processManager;
   final FileSystem fileSystem;
   final ZipEncoder zipEncoder;
   final UseCaseReader useCaseReader;
@@ -131,21 +137,25 @@ class PublishCommand extends CliCommand<PublishArgs> {
         throw ExitedByUser();
       }
 
-      final buildResponse = await publishBuild(args);
-      final hasReview = args.baseBranch != null;
+      final versions = await getVersions(args);
+      final buildResponse = await publishBuild(
+        args: args,
+        versions: versions,
+      );
 
-      if (!hasReview) {
+      if (!args.hasReview) {
         logger.info(
           '💡Tip: You can upload a review by specifying a `base-branch` option.\n'
           'For more information: https://docs.widgetbook.io/widgetbook-cloud/reviews',
         );
       }
 
-      final reviewResponse = hasReview
+      final reviewResponse = args.hasReview
           ? await publishReview(
               args: args,
               buildResponse: buildResponse,
               context: context,
+              versions: versions,
             )
           : null;
 
@@ -183,7 +193,10 @@ class PublishCommand extends CliCommand<PublishArgs> {
         : true; // clean or no terminal
   }
 
-  Future<BuildResponse> publishBuild(PublishArgs args) async {
+  Future<BuildResponse> publishBuild({
+    required PublishArgs args,
+    required VersionsMetadata? versions,
+  }) async {
     final buildDirPath = p.join(args.path, 'build', 'web');
     final buildDir = fileSystem.directory(buildDirPath);
 
@@ -208,6 +221,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
 
     progress.update('Uploading build');
     final response = await _client.uploadBuild(
+      versions,
       BuildRequest(
         apiKey: args.apiKey,
         branchName: args.branch,
@@ -238,6 +252,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
     required Context context,
     required PublishArgs args,
     required BuildResponse buildResponse,
+    required VersionsMetadata? versions,
   }) async {
     final genDirPath = p.join(args.path, '.dart_tool', 'build', 'generated');
     final genDir = fileSystem.directory(genDirPath);
@@ -270,6 +285,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
     );
 
     final response = await _client.uploadReview(
+      versions,
       ReviewRequest(
         apiKey: args.apiKey,
         useCases: changeUseCases,
@@ -328,5 +344,39 @@ class PublishCommand extends CliCommand<PublishArgs> {
       '\n> Build: $buildUrl'
       "${reviewId != null ? '\n> Review: $reviewUrl' : ''}",
     );
+  }
+
+  /// Gets metadata about the currently used versions of Flutter and
+  /// all Widgetbook packages.
+  Future<VersionsMetadata?> getVersions(PublishArgs args) async {
+    try {
+      final lockPath = p.join(args.path, 'pubspec.lock');
+      final lockContent = await fileSystem.file(lockPath).readAsString();
+      final lockFile = loadYaml(lockContent) as YamlMap;
+      final packages = lockFile['packages'] as YamlMap;
+
+      return VersionsMetadata(
+        cli: packageVersion,
+        flutter: await getFlutterVersion(),
+        widgetbook: getPackageVersion(packages, 'widgetbook'),
+        generator: getPackageVersion(packages, 'widgetbook_generator'),
+        annotation: getPackageVersion(packages, 'widgetbook_annotation'),
+      );
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<String?> getFlutterVersion() async {
+    final result = await processManager.runFlutter(['--version']);
+    final regex = RegExp(r'Flutter (\d+.\d+.\d+)');
+    final match = regex.firstMatch(result);
+
+    return match?.group(1);
+  }
+
+  String? getPackageVersion(YamlMap packages, String name) {
+    final package = packages['widgetbook'] as YamlMap?;
+    return package?['version']?.toString();
   }
 }

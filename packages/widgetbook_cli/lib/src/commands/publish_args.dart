@@ -22,6 +22,8 @@ class PublishArgs {
   final String repository;
   final Reference? baseBranch;
 
+  bool get hasReview => baseBranch != null;
+
   @override
   bool operator ==(covariant PublishArgs other) {
     if (identical(this, other)) return true;
