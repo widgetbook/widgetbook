@@ -27,8 +27,9 @@ dependencies:
   path: ^1.8.2
   platform: ^3.0.0
   process: ^5.0.0
-  pub_updater: ^0.4.0 
+  pub_updater: ^0.4.0
   version: ^3.0.2
+  yaml: ^3.1.2
 
 dev_dependencies:
   mocktail: ^1.0.0

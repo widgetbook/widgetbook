@@ -5,8 +5,8 @@ import 'package:collection/collection.dart';
 import 'package:path/path.dart' as path;
 import 'package:process/process.dart';
 
+import '../utils/executable_manager.dart';
 import 'diff_header.dart';
-import 'git_process_manager.dart';
 import 'reference.dart';
 
 /// Class representation of a git repository.

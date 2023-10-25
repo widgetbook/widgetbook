@@ -17,6 +17,8 @@ class FakeBuildRequest extends Fake implements BuildRequest {}
 
 class FakeReviewRequest extends Fake implements ReviewRequest {}
 
+class FakeVersionsMetadata extends Fake implements VersionsMetadata {}
+
 void main() {
   const buildResponse = BuildResponse(
     project: 'projectId',
@@ -33,6 +35,8 @@ void main() {
   );
 
   group('$PublishCommand', () {
+    final versions = FakeVersionsMetadata();
+
     late Logger logger;
     late Repository repository;
     late WidgetbookHttpClient client;
@@ -46,6 +50,7 @@ void main() {
     late ZipEncoder zipEncoder;
 
     setUp(() async {
+      registerFallbackValue(versions);
       registerFallbackValue(FakeFile());
       registerFallbackValue(FakeBuildRequest());
       registerFallbackValue(FakeReviewRequest());
@@ -389,7 +394,10 @@ void main() {
         ).thenReturn(directory);
 
         expectLater(
-          () => command.publishBuild(args),
+          () => command.publishBuild(
+            args: args,
+            versions: versions,
+          ),
           throwsA(const TypeMatcher<UnableToCreateZipFileException>()),
         );
       },
@@ -416,7 +424,10 @@ void main() {
         when(() => zipEncoder.zip(any())).thenAnswer((_) async => null);
 
         expectLater(
-          () => command.publishBuild(args),
+          () => command.publishBuild(
+            args: args,
+            versions: versions,
+          ),
           throwsA(const TypeMatcher<UnableToCreateZipFileException>()),
         );
       },
@@ -452,7 +463,10 @@ void main() {
       when(() => zipEncoder.zip(any())).thenAnswer((_) async => file);
 
       when(
-        () => client.uploadBuild(any<BuildRequest>()),
+        () => client.uploadBuild(
+          any<VersionsMetadata>(),
+          any<BuildRequest>(),
+        ),
       ).thenAnswer(
         (_) async => buildResponse,
       );
@@ -498,7 +512,10 @@ void main() {
       when(() => zipEncoder.zip(any())).thenAnswer((_) async => file);
 
       when(
-        () => client.uploadBuild(any<BuildRequest>()),
+        () => client.uploadBuild(
+          any<VersionsMetadata>(),
+          any<BuildRequest>(),
+        ),
       ).thenAnswer(
         (_) async => buildResponse,
       );
@@ -530,7 +547,10 @@ void main() {
       ]);
 
       when(
-        () => client.uploadReview(any<ReviewRequest>()),
+        () => client.uploadReview(
+          any<VersionsMetadata>(),
+          any<ReviewRequest>(),
+        ),
       ).thenAnswer(
         (_) async => reviewResponse,
       );
