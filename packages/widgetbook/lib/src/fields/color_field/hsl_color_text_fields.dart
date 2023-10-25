@@ -1,120 +1,132 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'color_text_field.dart';
+import 'number_text_field.dart';
 
-class HslColorTextFields extends StatelessWidget {
-  const HslColorTextFields({
-    required this.colorValue,
+class HslColorPicker extends StatefulWidget {
+  const HslColorPicker({
+    required this.value,
     required this.onChanged,
-    required this.paramValue,
     super.key,
   });
 
-  final List<String> colorValue;
-  final void Function(Color? color, List<String> newValues) onChanged;
-  final String paramValue;
+  final Color value;
+  final ValueChanged<Color> onChanged;
+
+  @override
+  State<HslColorPicker> createState() => _HslColorPickerState();
+}
+
+class _HslColorPickerState extends State<HslColorPicker> {
+  late double hue;
+  late double saturation;
+  late double lightness;
+
+  HSLColor get color => HSLColor.fromAHSL(
+        widget.value.alpha / 255,
+        hue,
+        saturation / 100,
+        lightness / 100,
+      );
+
+  @override
+  void initState() {
+    super.initState();
+
+    final hslColor = HSLColor.fromColor(widget.value);
+    hue = hslColor.hue;
+    saturation = hslColor.saturation * 100;
+    lightness = hslColor.lightness * 100;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      key: key,
       children: [
-        ColorTextField(
-          key: const Key('colorFieldHslHue'),
-          value: '${colorValue[0]}',
+        NumberTextField(
+          value: '${hue.toInt()}',
           maxLength: 3,
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
             FilteringTextInputFormatter.allow(
               RegExp(r'^(?:[0-9]\d?|[12]\d{2}|3[0-5]\d)$'),
-              replacementString: '${colorValue[0]}',
+              replacementString: '${hue.toInt()}',
             ),
           ],
           labelText: 'H',
-          onChanged: (value) => checkHueAndSaturation([
-            value,
-            '${colorValue[1]}',
-            '${colorValue[2]}',
-          ]),
+          onChanged: (value) {
+            onValueChanged(
+              double.tryParse(value) ?? hue,
+              saturation,
+              lightness,
+            );
+          },
         ),
         const SizedBox(
           width: 8,
         ),
-        ColorTextField(
-          key: const Key('colorFieldHslSaturation'),
-          value: '${colorValue[1]}',
+        NumberTextField(
+          value: '${saturation.round()}',
           maxLength: 3,
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
             FilteringTextInputFormatter.allow(
               RegExp(r'^(0|[1-9][0-9]?|100)$'),
-              replacementString: '${colorValue[1]}',
+              replacementString: '${saturation.round()}',
             ),
           ],
           labelText: 'S',
           suffixText: '%',
-          onChanged: (value) => checkHueAndSaturation([
-            '${colorValue[0]}',
-            value,
-            '${colorValue[2]}',
-          ]),
+          onChanged: (value) {
+            onValueChanged(
+              hue,
+              double.tryParse(value) ?? saturation,
+              lightness,
+            );
+          },
         ),
         const SizedBox(
           width: 8,
         ),
-        ColorTextField(
-          key: const Key('colorFieldHslLightness'),
-          value: '${colorValue[2]}',
+        NumberTextField(
+          value: '${lightness.round()}',
           maxLength: 3,
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
             FilteringTextInputFormatter.allow(
               RegExp(r'^(0|[1-9][0-9]?|100)$'),
-              replacementString: '${colorValue[2]}',
+              replacementString: '${lightness.round()}',
             ),
           ],
           labelText: 'L',
           suffixText: '%',
-          onChanged: (value) => checkLightness([
-            '${colorValue[0]}',
-            '${colorValue[1]}',
-            value,
-          ]),
+          onChanged: (value) {
+            onValueChanged(
+              hue,
+              saturation,
+              double.tryParse(value) ?? lightness,
+            );
+          },
         ),
       ],
     );
   }
 
-  void checkHueAndSaturation(List<String> updatedValues) {
-    final initialHsl =
-        HSLColor.fromColor(Color(int.parse(paramValue, radix: 16)));
-    final updateValue = HSLColor.fromAHSL(
-      1,
-      (double.tryParse(updatedValues[0]) ?? initialHsl.hue),
-      (double.tryParse(updatedValues[1]) ?? (initialHsl.saturation * 100)) /
-          100,
-      (double.tryParse(updatedValues[2]) ?? (initialHsl.lightness * 100)) / 100,
-    ).toColor();
-    if (initialHsl.toColor() != updateValue) {
-      onChanged(updateValue, updatedValues);
-    } else {
-      onChanged(null, updatedValues);
-    }
-  }
+  void onValueChanged(
+      double newHue, double newSaturation, double newLightness) {
+    setState(() {
+      hue = newHue;
+      saturation = newSaturation;
+      lightness = newLightness;
+    });
 
-  void checkLightness(List<String> updatedValues) {
-    final initialHsl =
-        HSLColor.fromColor(Color(int.parse(paramValue, radix: 16)));
-    final updateValue = HSLColor.fromAHSL(
-      1,
-      (double.tryParse(updatedValues[0]) ?? initialHsl.hue),
-      (double.tryParse(updatedValues[1]) ?? (initialHsl.saturation * 100)) /
-          100,
-      (double.tryParse(updatedValues[2]) ?? (initialHsl.lightness * 100)) / 100,
-    ).toColor();
-    if (initialHsl.toColor() != updateValue) {
-      onChanged(updateValue, updatedValues);
-    }
+    final newColor = HSLColor.fromAHSL(
+      color.alpha,
+      newHue,
+      newSaturation / 100,
+      newLightness / 100,
+    );
+
+    widget.onChanged.call(newColor.toColor());
   }
 }

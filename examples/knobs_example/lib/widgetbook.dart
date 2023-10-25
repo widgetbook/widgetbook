@@ -80,7 +80,7 @@ class WidgetbookApp extends StatelessWidget {
                   color: context.knobs.color(
                     label: 'Color',
                     initialValue: Colors.blue,
-                    initialColorSpace: ColorSpace.rgba,
+                    initialColorSpace: ColorSpace.rgb,
                   ),
                 );
               },

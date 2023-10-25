@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/src/fields/color_field/color_picker.dart';
 import 'package:widgetbook/src/fields/color_field/hsl_color_text_fields.dart';
-import 'package:widgetbook/src/fields/color_field/rgba_color_text_fields.dart';
+import 'package:widgetbook/src/fields/color_field/number_text_field.dart';
+import 'package:widgetbook/src/fields/color_field/rgb_color_picker.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
@@ -11,7 +13,6 @@ void main() {
     '$ColorField',
     () {
       const blue = Color(0xFF0000FF);
-      const blueHex = 'ff0000ff';
 
       const red = Color(0xFFFF0000);
       const redHex = 'ffff0000';
@@ -45,12 +46,12 @@ void main() {
         'given a state that has no field value, '
         'then [toWidget] builds the initial value',
         (tester) async {
-          final widget = await tester.pumpField<Color, TextFormField>(
+          final widget = await tester.pumpField<Color, ColorPicker>(
             field,
             null,
           );
 
-          expect(widget.initialValue, equals(blueHex));
+          expect(widget.value, equals(blue));
         },
       );
 
@@ -58,36 +59,36 @@ void main() {
         'given a state that has a field value, '
         'then [toWidget] builds that value',
         (tester) async {
-          final widget = await tester.pumpField<Color, TextFormField>(
+          final widget = await tester.pumpField<Color, ColorPicker>(
             field,
             red,
           );
 
-          expect(widget.initialValue, equals(redHex));
+          expect(widget.value, equals(red));
         },
       );
 
       testWidgets(
-          'given a field that has initialColorSpace of [ColorSpace.rgba], '
-          'then [toWidget] builds a [RgbaColorTextFields] widget',
-          (tester) async {
-        final widget = await tester.pumpField<Color, RgbaColorTextFields>(
+          'given a field that has initialColorSpace of [ColorSpace.rgb], '
+          'then [toWidget] builds a [RgbColorPicker] widget', (tester) async {
+        final widget = await tester.pumpField<Color, RgbColorPicker>(
           ColorField(
             name: 'color_field_rgba',
             initialValue: red,
-            initialColorSpace: ColorSpace.rgba,
+            initialColorSpace: ColorSpace.rgb,
           ),
           red,
         );
 
-        expect(widget.colorValue, equals(['255', '255', '0', '0']));
+        expect(widget.value, red);
+
+        expect(find.byType(NumberTextField), findsAtLeastNWidgets(3));
       });
 
       testWidgets(
           'given a field that has initialColorSpace of [ColorSpace.hsl], '
-          'then [toWidget] builds a [HslColorTextFields] widget',
-          (tester) async {
-        final widget = await tester.pumpField<Color, HslColorTextFields>(
+          'then [toWidget] builds a [HslColorPicker] widget', (tester) async {
+        final widget = await tester.pumpField<Color, HslColorPicker>(
           ColorField(
             name: 'color_field_hsl',
             initialValue: red,
@@ -96,15 +97,16 @@ void main() {
           red,
         );
 
-        expect(widget.colorValue, equals(['0', '100', '50']));
+        expect(widget.value, red);
+
+        expect(find.byType(NumberTextField), findsAtLeastNWidgets(3));
       });
 
       testWidgets(
           'given a field that has initialColorSpace of [ColorSpace.hsl], '
-          'when the [ColorSpace] is changed to [ColorSpace.rgba], '
-          'then [toWidget] builds a [RgbaColorTextFields] widget',
-          (tester) async {
-        final widget = await tester.pumpField<Color, HslColorTextFields>(
+          'when the [ColorSpace] is changed to [ColorSpace.rgb], '
+          'then [toWidget] builds a [RgbColorPicker] widget', (tester) async {
+        final widget = await tester.pumpField<Color, HslColorPicker>(
           ColorField(
             name: 'color_field_hsl',
             initialValue: red,
@@ -112,38 +114,38 @@ void main() {
           ),
           red,
         );
-        expect(widget.colorValue, equals(['0', '100', '50']));
+        expect(widget.value, red);
 
         await tester
             .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
-        await tester.findAndTap(find.text('rgba'));
+        await tester.findAndTap(find.text('rgb'));
         await tester.pumpAndSettle();
 
-        expect(find.byType(RgbaColorTextFields), findsOneWidget);
-        expect(find.text('255'), findsNWidgets(2));
+        expect(find.byType(RgbColorPicker), findsOneWidget);
+        expect(find.text('255'), findsNWidgets(1));
       });
 
       testWidgets(
-          'given a field that has initialColorSpace of [ColorSpace.rgba], '
+          'given a field that has initialColorSpace of [ColorSpace.rgb], '
           'when the [ColorSpace] is changed to [ColorSpace.hex], '
-          'then [toWidget] builds a [ColorTextField] widget', (tester) async {
-        final widget = await tester.pumpField<Color, RgbaColorTextFields>(
+          'then [toWidget] builds a [TextFormField] widget', (tester) async {
+        final widget = await tester.pumpField<Color, RgbColorPicker>(
           ColorField(
             name: 'color_field',
             initialValue: red,
-            initialColorSpace: ColorSpace.rgba,
+            initialColorSpace: ColorSpace.rgb,
           ),
           red,
         );
-        expect(widget.colorValue, equals(['255', '255', '0', '0']));
+        expect(widget.value, red);
 
         await tester
             .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
         await tester.findAndTap(find.text('hex'));
         await tester.pumpAndSettle();
 
-        expect(find.byType(TextFormField), findsOneWidget);
-        expect(find.text('ffff0000'), findsOneWidget);
+        expect(find.byType(TextFormField), findsNWidgets(2));
+        expect(find.text('ff0000'), findsOneWidget);
       });
     },
   );

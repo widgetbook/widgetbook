@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ColorTextField extends StatelessWidget {
-  const ColorTextField({
+class NumberTextField extends StatelessWidget {
+  const NumberTextField({
     required this.value,
     required this.maxLength,
     required this.onChanged,

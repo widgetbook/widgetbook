@@ -1,5 +1,5 @@
 enum ColorSpace {
-  rgba,
   hex,
+  rgb,
   hsl,
 }
