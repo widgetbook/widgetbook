@@ -8,6 +8,7 @@ class LocalizationAddon extends WidgetbookAddon<Locale> {
   LocalizationAddon({
     required this.locales,
     required this.localizationsDelegates,
+    this.onChanged,
     Locale? initialLocale,
   })  : assert(
           locales.isNotEmpty,
@@ -24,6 +25,7 @@ class LocalizationAddon extends WidgetbookAddon<Locale> {
 
   final List<Locale> locales;
   final List<LocalizationsDelegate<dynamic>> localizationsDelegates;
+  final void Function(Locale)? onChanged;
 
   @override
   List<Field> get fields {
@@ -33,6 +35,11 @@ class LocalizationAddon extends WidgetbookAddon<Locale> {
         values: locales,
         initialValue: initialSetting,
         labelBuilder: (locale) => locale.toLanguageTag(),
+        onChanged: (context, locale) {
+          if (onChanged != null && locale != null) {
+            onChanged!(locale);
+          }
+        },
       ),
     ];
   }
