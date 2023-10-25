@@ -137,7 +137,15 @@ class PublishCommand extends CliCommand<PublishArgs> {
         throw ExitedByUser();
       }
 
+      progress.update('Getting versions');
+
       final versions = await getVersions(args);
+      logger.info('\nThe following versions are used: ');
+      logger.info('  Flutter    : ${versions?.flutter ?? '-'}');
+      logger.info('  Widgetbook : ${versions?.widgetbook ?? '-'}');
+      logger.info('  Annotation : ${versions?.annotation ?? '-'}');
+      logger.info('  Generator  : ${versions?.generator ?? '-'}');
+
       final buildResponse = await publishBuild(
         args: args,
         versions: versions,
@@ -359,8 +367,8 @@ class PublishCommand extends CliCommand<PublishArgs> {
         cli: packageVersion,
         flutter: await getFlutterVersion(),
         widgetbook: getPackageVersion(packages, 'widgetbook'),
-        generator: getPackageVersion(packages, 'widgetbook_generator'),
         annotation: getPackageVersion(packages, 'widgetbook_annotation'),
+        generator: getPackageVersion(packages, 'widgetbook_generator'),
       );
     } catch (_) {
       return null;
@@ -376,7 +384,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
   }
 
   String? getPackageVersion(YamlMap packages, String name) {
-    final package = packages['widgetbook'] as YamlMap?;
+    final package = packages[name] as YamlMap?;
     return package?['version']?.toString();
   }
 }
