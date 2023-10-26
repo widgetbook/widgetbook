@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'color_space.dart';
-import 'hex_color_picker.dart';
-import 'hsl_color_picker.dart';
 import 'number_text_field.dart';
 import 'opaque_color.dart';
-import 'rgb_color_picker.dart';
+import 'opaque_color_picker.dart';
 
 class ColorPicker extends StatefulWidget {
   const ColorPicker({
@@ -101,31 +99,14 @@ class _ColorPickerState extends State<ColorPicker> {
         const SizedBox(
           height: 8,
         ),
-        if (colorSpace == ColorSpace.rgb) ...[
-          RgbColorPicker(
-            value: opaqueColor,
-            onChanged: (value) {
-              setState(() => this.opaqueColor = value);
-              onChange(opacity, value);
-            },
-          ),
-        ] else if (colorSpace == ColorSpace.hsl) ...[
-          HslColorPicker(
-            value: opaqueColor,
-            onChanged: (value) {
-              setState(() => this.opaqueColor = value);
-              onChange(opacity, value);
-            },
-          ),
-        ] else ...[
-          HexColorPicker(
-            value: opaqueColor,
-            onChanged: (value) {
-              setState(() => this.opaqueColor = value);
-              onChange(opacity, value);
-            },
-          ),
-        ],
+        OpaqueColorPicker.fromColorSpace(
+          colorSpace,
+          value: opaqueColor,
+          onChanged: (value) {
+            setState(() => this.opaqueColor = value);
+            onChange(opacity, value);
+          },
+        ),
       ],
     );
   }

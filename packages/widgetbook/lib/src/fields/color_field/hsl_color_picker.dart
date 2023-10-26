@@ -3,8 +3,9 @@ import 'package:flutter/services.dart';
 
 import 'number_text_field.dart';
 import 'opaque_color.dart';
+import 'opaque_color_picker.dart';
 
-class HslColorPicker extends StatefulWidget {
+class HslColorPicker extends StatefulWidget implements OpaqueColorPicker {
   const HslColorPicker({
     super.key,
     required this.value,

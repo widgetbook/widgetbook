@@ -3,8 +3,9 @@ import 'package:flutter/services.dart';
 
 import 'number_text_field.dart';
 import 'opaque_color.dart';
+import 'opaque_color_picker.dart';
 
-class RgbColorPicker extends StatefulWidget {
+class RgbColorPicker extends StatefulWidget implements OpaqueColorPicker {
   const RgbColorPicker({
     super.key,
     required this.value,
