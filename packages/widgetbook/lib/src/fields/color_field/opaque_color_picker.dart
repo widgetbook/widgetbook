@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../../widgetbook.dart';
+import 'color_space.dart';
 import 'hex_color_picker.dart';
 import 'hsl_color_picker.dart';
 import 'opaque_color.dart';
