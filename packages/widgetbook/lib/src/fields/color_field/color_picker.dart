@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'color_space.dart';
 import 'hex_color_picker.dart';
@@ -10,9 +9,9 @@ import 'rgb_color_picker.dart';
 class ColorPicker extends StatefulWidget {
   const ColorPicker({
     required this.value,
+    super.key,
     required this.colorSpace,
     required this.onChanged,
-    super.key,
   });
 
   final Color value;
@@ -74,20 +73,10 @@ class _ColorPickerState extends State<ColorPicker> {
               width: 8,
             ),
             Expanded(
-              child: NumberTextField(
-                value: '${((value.alpha / 255) * 100).round()}',
-                maxLength: 3,
-                suffixText: '%',
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  FilteringTextInputFormatter.allow(
-                    RegExp(r'^(0|[1-9][0-9]?|100)$'),
-                    replacementString: '${((value.alpha / 255) * 100).round()}',
-                  ),
-                ],
+              child: NumberTextField.percentage(
+                value: ((value.alpha / 255) * 100).round(),
                 onChanged: (value) {
-                  final alpha =
-                      ((int.tryParse(value) ?? 0) / 100 * 255).round();
+                  final alpha = (value / 100 * 255).round();
 
                   final newColor = Color.fromARGB(
                     alpha,

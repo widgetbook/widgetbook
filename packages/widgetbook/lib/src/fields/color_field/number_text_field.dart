@@ -6,26 +6,45 @@ class NumberTextField extends StatelessWidget {
     super.key,
     required this.value,
     required this.maxLength,
-    required this.onChanged,
     this.inputFormatters,
     this.suffixText,
     this.labelText,
+    required this.onChanged,
   });
 
-  final String value;
+  NumberTextField.percentage({
+    super.key,
+    required this.value,
+    this.labelText,
+    required this.onChanged,
+  })  : maxLength = 3,
+        suffixText = '%',
+        inputFormatters = [
+          FilteringTextInputFormatter.digitsOnly,
+          FilteringTextInputFormatter.allow(
+            RegExp(r'^(0|[1-9][0-9]?|100)$'),
+            replacementString: '$value',
+          ),
+        ];
+
+  final int value;
   final int maxLength;
-  final ValueChanged<String> onChanged;
   final List<TextInputFormatter>? inputFormatters;
   final String? suffixText;
   final String? labelText;
+  final ValueChanged<int> onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      initialValue: value,
+      initialValue: '$value',
       inputFormatters: inputFormatters,
       maxLength: maxLength,
-      onChanged: onChanged,
+      onChanged: (value) {
+        final newValue = int.tryParse(value);
+        if (newValue == null) return;
+        onChanged(newValue);
+      },
       decoration: InputDecoration(
         counterText: '',
         labelText: labelText,

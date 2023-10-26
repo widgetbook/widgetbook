@@ -5,9 +5,9 @@ import 'number_text_field.dart';
 
 class HslColorPicker extends StatefulWidget {
   const HslColorPicker({
+    super.key,
     required this.value,
     required this.onChanged,
-    super.key,
   });
 
   final Color value;
@@ -18,13 +18,13 @@ class HslColorPicker extends StatefulWidget {
 }
 
 class _HslColorPickerState extends State<HslColorPicker> {
-  late double hue;
-  late double saturation;
-  late double lightness;
+  late int hue;
+  late int saturation;
+  late int lightness;
 
   HSLColor get color => HSLColor.fromAHSL(
         widget.value.alpha / 255,
-        hue,
+        hue.toDouble(),
         saturation / 100,
         lightness / 100,
       );
@@ -34,15 +34,15 @@ class _HslColorPickerState extends State<HslColorPicker> {
     super.initState();
 
     final hslColor = HSLColor.fromColor(widget.value);
-    hue = hslColor.hue;
-    saturation = hslColor.saturation * 100;
-    lightness = hslColor.lightness * 100;
+    hue = hslColor.hue.toInt();
+    saturation = (hslColor.saturation * 100).toInt();
+    lightness = (hslColor.lightness * 100).toInt();
   }
 
   void onValueChanged(
-    double newHue,
-    double newSaturation,
-    double newLightness,
+    int newHue,
+    int newSaturation,
+    int newLightness,
   ) {
     setState(() {
       hue = newHue;
@@ -52,7 +52,7 @@ class _HslColorPickerState extends State<HslColorPicker> {
 
     final newColor = HSLColor.fromAHSL(
       color.alpha,
-      newHue,
+      newHue.toDouble(),
       newSaturation / 100,
       newLightness / 100,
     );
@@ -66,19 +66,19 @@ class _HslColorPickerState extends State<HslColorPicker> {
       children: [
         Expanded(
           child: NumberTextField(
-            value: '${hue.toInt()}',
+            labelText: 'H',
+            value: hue,
             maxLength: 3,
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
               FilteringTextInputFormatter.allow(
                 RegExp(r'^(?:[0-9]\d?|[12]\d{2}|3[0-5]\d)$'),
-                replacementString: '${hue.toInt()}',
+                replacementString: '$hue',
               ),
             ],
-            labelText: 'H',
             onChanged: (value) {
               onValueChanged(
-                double.tryParse(value) ?? hue,
+                value,
                 saturation,
                 lightness,
               );
@@ -89,24 +89,11 @@ class _HslColorPickerState extends State<HslColorPicker> {
           width: 8,
         ),
         Expanded(
-          child: NumberTextField(
-            value: '${saturation.round()}',
-            maxLength: 3,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-              FilteringTextInputFormatter.allow(
-                RegExp(r'^(0|[1-9][0-9]?|100)$'),
-                replacementString: '${saturation.round()}',
-              ),
-            ],
+          child: NumberTextField.percentage(
             labelText: 'S',
-            suffixText: '%',
+            value: saturation,
             onChanged: (value) {
-              onValueChanged(
-                hue,
-                double.tryParse(value) ?? saturation,
-                lightness,
-              );
+              onValueChanged(hue, value, lightness);
             },
           ),
         ),
@@ -114,24 +101,11 @@ class _HslColorPickerState extends State<HslColorPicker> {
           width: 8,
         ),
         Expanded(
-          child: NumberTextField(
-            value: '${lightness.round()}',
-            maxLength: 3,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-              FilteringTextInputFormatter.allow(
-                RegExp(r'^(0|[1-9][0-9]?|100)$'),
-                replacementString: '${lightness.round()}',
-              ),
-            ],
+          child: NumberTextField.percentage(
             labelText: 'L',
-            suffixText: '%',
+            value: lightness,
             onChanged: (value) {
-              onValueChanged(
-                hue,
-                saturation,
-                double.tryParse(value) ?? lightness,
-              );
+              onValueChanged(hue, saturation, value);
             },
           ),
         ),

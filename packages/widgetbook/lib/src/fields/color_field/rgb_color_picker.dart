@@ -5,9 +5,9 @@ import 'number_text_field.dart';
 
 class RgbColorPicker extends StatefulWidget {
   const RgbColorPicker({
+    super.key,
     required this.value,
     required this.onChanged,
-    super.key,
   });
 
   final Color value;
@@ -53,7 +53,7 @@ class _RgbColorPickerState extends State<RgbColorPicker> {
       children: [
         Expanded(
           child: NumberTextField(
-            value: '$red',
+            value: red,
             maxLength: 3,
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
@@ -64,11 +64,7 @@ class _RgbColorPickerState extends State<RgbColorPicker> {
             ],
             labelText: 'R',
             onChanged: (value) {
-              onValuesChanged(
-                int.tryParse(value) ?? red,
-                green,
-                blue,
-              );
+              onValuesChanged(value, green, blue);
             },
           ),
         ),
@@ -77,7 +73,7 @@ class _RgbColorPickerState extends State<RgbColorPicker> {
         ),
         Expanded(
           child: NumberTextField(
-            value: '$green',
+            value: green,
             maxLength: 3,
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
@@ -88,11 +84,7 @@ class _RgbColorPickerState extends State<RgbColorPicker> {
             ],
             labelText: 'G',
             onChanged: (value) {
-              onValuesChanged(
-                red,
-                int.tryParse(value) ?? green,
-                blue,
-              );
+              onValuesChanged(red, value, blue);
             },
           ),
         ),
@@ -101,7 +93,7 @@ class _RgbColorPickerState extends State<RgbColorPicker> {
         ),
         Expanded(
           child: NumberTextField(
-            value: '$blue',
+            value: blue,
             maxLength: 3,
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
@@ -112,11 +104,7 @@ class _RgbColorPickerState extends State<RgbColorPicker> {
             ],
             labelText: 'B',
             onChanged: (value) {
-              onValuesChanged(
-                red,
-                green,
-                int.tryParse(value) ?? blue,
-              );
+              onValuesChanged(red, green, value);
             },
           ),
         ),

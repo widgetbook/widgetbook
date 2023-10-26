@@ -3,22 +3,22 @@ import 'package:flutter/services.dart';
 
 class HexColorPicker extends StatelessWidget {
   const HexColorPicker({
+    super.key,
     required this.value,
     required this.onChanged,
-    super.key,
   });
 
   final Color value;
   final ValueChanged<Color> onChanged;
 
-  String get hexColor => '${value.red.toRadixString(16).padLeft(2, '0')}'
+  String get hexValue => '${value.red.toRadixString(16).padLeft(2, '0')}'
       '${value.green.toRadixString(16).padLeft(2, '0')}'
       '${value.blue.toRadixString(16).padLeft(2, '0')}';
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      initialValue: hexColor,
+      initialValue: hexValue,
       maxLength: 6,
       decoration: const InputDecoration(
         counterText: '',
@@ -27,7 +27,7 @@ class HexColorPicker extends StatelessWidget {
       inputFormatters: [
         FilteringTextInputFormatter.allow(
           RegExp(r'[0-9a-fA-F]'),
-          replacementString: hexColor,
+          replacementString: hexValue,
         ),
       ],
       onChanged: (value) {
