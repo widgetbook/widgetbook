@@ -11,6 +11,7 @@ class HomePage extends StatefulWidget {
     this.showToolTip = true,
     this.duration = Duration.zero,
     this.dateTime,
+    this.color = Colors.black,
   });
 
   final String title;
@@ -20,6 +21,7 @@ class HomePage extends StatefulWidget {
   final bool showToolTip;
   final Duration duration;
   final DateTime? dateTime;
+  final Color color;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -53,6 +55,12 @@ class _HomePageState extends State<HomePage> {
             Text(
               widget.dateTime?.toSimpleFormat() ?? '-',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Text(
+              widget.color.value.toRadixString(16),
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    color: widget.color,
+                  ),
             ),
           ],
         ),

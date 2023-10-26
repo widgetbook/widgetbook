@@ -12,7 +12,10 @@ class ColorKnob extends Knob<Color> {
     required super.label,
     required super.value,
     super.description,
+    this.initialColorSpace = ColorSpace.hex,
   });
+
+  ColorSpace initialColorSpace;
 
   @override
   List<Field> get fields {
@@ -20,6 +23,7 @@ class ColorKnob extends Knob<Color> {
       ColorField(
         name: label,
         initialValue: value,
+        initialColorSpace: initialColorSpace,
         onChanged: (context, value) {
           if (value == null) return;
           WidgetbookState.of(context).knobs.updateValue(label, value);

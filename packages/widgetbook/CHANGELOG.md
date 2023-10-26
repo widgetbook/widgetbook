@@ -4,6 +4,7 @@
 - **FEAT**: Add `designLink` to `WidgetbookUseCase`. ([#926](https://github.com/widgetbook/widgetbook/pull/926))
 - **FEAT**: Add light theme support. ([#919](https://github.com/widgetbook/widgetbook/pull/919))
 - **FIX**: Maintain navigation panel state on reload. ([#932](https://github.com/widgetbook/widgetbook/pull/932))
+- **FEAT**: Add spaces to `color` knob. ([#986](https://github.com/widgetbook/widgetbook/pull/986))
 - **FEAT**: Add `duration` knob. ([#934](https://github.com/widgetbook/widgetbook/pull/934))
 - **FEAT**: Add `dateTime` knob. ([#940](https://github.com/widgetbook/widgetbook/pull/940))
 - **FEAT**: Add `int` knob. ([#942](https://github.com/widgetbook/widgetbook/pull/942))
