@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'number_text_field.dart';
+import 'opaque_color.dart';
 
 class HslColorPicker extends StatefulWidget {
   const HslColorPicker({
@@ -10,8 +11,8 @@ class HslColorPicker extends StatefulWidget {
     required this.onChanged,
   });
 
-  final Color value;
-  final ValueChanged<Color> onChanged;
+  final OpaqueColor value;
+  final ValueChanged<OpaqueColor> onChanged;
 
   @override
   State<HslColorPicker> createState() => _HslColorPickerState();
@@ -22,18 +23,14 @@ class _HslColorPickerState extends State<HslColorPicker> {
   late int saturation;
   late int lightness;
 
-  HSLColor get color => HSLColor.fromAHSL(
-        widget.value.alpha / 255,
-        hue.toDouble(),
-        saturation / 100,
-        lightness / 100,
-      );
-
   @override
   void initState() {
     super.initState();
 
-    final hslColor = HSLColor.fromColor(widget.value);
+    final hslColor = HSLColor.fromColor(
+      widget.value.toColor(),
+    );
+
     hue = hslColor.hue.toInt();
     saturation = (hslColor.saturation * 100).toInt();
     lightness = (hslColor.lightness * 100).toInt();
@@ -51,13 +48,15 @@ class _HslColorPickerState extends State<HslColorPicker> {
     });
 
     final newColor = HSLColor.fromAHSL(
-      color.alpha,
+      1,
       newHue.toDouble(),
       newSaturation / 100,
       newLightness / 100,
-    );
+    ).toColor();
 
-    widget.onChanged.call(newColor.toColor());
+    widget.onChanged.call(
+      OpaqueColor.fromColor(newColor),
+    );
   }
 
   @override

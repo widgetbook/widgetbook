@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'number_text_field.dart';
+import 'opaque_color.dart';
 
 class RgbColorPicker extends StatefulWidget {
   const RgbColorPicker({
@@ -10,8 +11,8 @@ class RgbColorPicker extends StatefulWidget {
     required this.onChanged,
   });
 
-  final Color value;
-  final ValueChanged<Color> onChanged;
+  final OpaqueColor value;
+  final ValueChanged<OpaqueColor> onChanged;
 
   @override
   State<RgbColorPicker> createState() => _RgbColorPickerState();
@@ -21,13 +22,6 @@ class _RgbColorPickerState extends State<RgbColorPicker> {
   late int red;
   late int green;
   late int blue;
-
-  Color get color => Color.fromARGB(
-        widget.value.alpha,
-        red,
-        green,
-        blue,
-      );
 
   @override
   void initState() {
@@ -44,7 +38,13 @@ class _RgbColorPickerState extends State<RgbColorPicker> {
       blue = newBlue;
     });
 
-    widget.onChanged.call(color);
+    widget.onChanged.call(
+      OpaqueColor.fromChannels(
+        red: newRed,
+        green: newGreen,
+        blue: newBlue,
+      ),
+    );
   }
 
   @override

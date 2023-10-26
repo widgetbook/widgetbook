@@ -4,6 +4,7 @@ import 'color_space.dart';
 import 'hex_color_picker.dart';
 import 'hsl_color_picker.dart';
 import 'number_text_field.dart';
+import 'opaque_color.dart';
 import 'rgb_color_picker.dart';
 
 class ColorPicker extends StatefulWidget {
@@ -23,14 +24,27 @@ class ColorPicker extends StatefulWidget {
 }
 
 class _ColorPickerState extends State<ColorPicker> {
-  late Color value;
+  late int opacity;
   late ColorSpace colorSpace;
+  late OpaqueColor opaqueColor;
 
   @override
   void initState() {
     super.initState();
+    opacity = widget.value.alpha ~/ 2.55;
     colorSpace = widget.colorSpace;
-    value = widget.value;
+    opaqueColor = OpaqueColor.fromColor(widget.value);
+  }
+
+  void onChange(int newOpacity, OpaqueColor newColor) {
+    setState(() {
+      opacity = newOpacity;
+      opaqueColor = newColor;
+    });
+
+    widget.onChanged.call(
+      newColor.toColor().withOpacity(newOpacity / 100),
+    );
   }
 
   @override
@@ -48,45 +62,38 @@ class _ColorPickerState extends State<ColorPicker> {
               ),
               child: Icon(
                 Icons.square,
-                color: value,
+                color: opaqueColor.toColor(),
               ),
             ),
             const SizedBox(
               width: 8,
             ),
-            DropdownMenu<ColorSpace>(
-              width: 100,
-              initialSelection: colorSpace,
-              onSelected: (value) {
-                setState(() => colorSpace = value!);
-              },
-              dropdownMenuEntries: ColorSpace.values
-                  .map(
-                    (value) => DropdownMenuEntry(
-                      value: value,
-                      label: value.name.toUpperCase(),
-                    ),
-                  )
-                  .toList(),
+            Flexible(
+              child: DropdownMenu<ColorSpace>(
+                width: 100,
+                initialSelection: colorSpace,
+                onSelected: (value) {
+                  setState(() => colorSpace = value!);
+                },
+                dropdownMenuEntries: ColorSpace.values
+                    .map(
+                      (value) => DropdownMenuEntry(
+                        value: value,
+                        label: value.name.toUpperCase(),
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
             const SizedBox(
               width: 8,
             ),
             Expanded(
               child: NumberTextField.percentage(
-                value: ((value.alpha / 255) * 100).round(),
+                value: opacity,
                 onChanged: (value) {
-                  final alpha = (value / 100 * 255).round();
-
-                  final newColor = Color.fromARGB(
-                    alpha,
-                    this.value.red,
-                    this.value.green,
-                    this.value.blue,
-                  );
-
-                  setState(() => this.value = newColor);
-                  widget.onChanged.call(newColor);
+                  setState(() => this.opacity = value);
+                  onChange(value, opaqueColor);
                 },
               ),
             ),
@@ -97,26 +104,26 @@ class _ColorPickerState extends State<ColorPicker> {
         ),
         if (colorSpace == ColorSpace.rgb) ...[
           RgbColorPicker(
-            value: value,
+            value: opaqueColor,
             onChanged: (value) {
-              setState(() => this.value = value);
-              widget.onChanged(value);
+              setState(() => this.opaqueColor = value);
+              onChange(opacity, value);
             },
           ),
         ] else if (colorSpace == ColorSpace.hsl) ...[
           HslColorPicker(
-            value: value,
+            value: opaqueColor,
             onChanged: (value) {
-              setState(() => this.value = value);
-              widget.onChanged(value);
+              setState(() => this.opaqueColor = value);
+              onChange(opacity, value);
             },
           ),
         ] else ...[
           HexColorPicker(
-            value: value,
+            value: opaqueColor,
             onChanged: (value) {
-              setState(() => this.value = value);
-              widget.onChanged(value);
+              setState(() => this.opaqueColor = value);
+              onChange(opacity, value);
             },
           ),
         ],

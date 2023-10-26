@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'opaque_color.dart';
+
 class HexColorPicker extends StatelessWidget {
   const HexColorPicker({
     super.key,
@@ -8,8 +10,8 @@ class HexColorPicker extends StatelessWidget {
     required this.onChanged,
   });
 
-  final Color value;
-  final ValueChanged<Color> onChanged;
+  final OpaqueColor value;
+  final ValueChanged<OpaqueColor> onChanged;
 
   String get hexValue => '${value.red.toRadixString(16).padLeft(2, '0')}'
       '${value.green.toRadixString(16).padLeft(2, '0')}'
@@ -31,14 +33,13 @@ class HexColorPicker extends StatelessWidget {
         ),
       ],
       onChanged: (value) {
-        if (value.length != 6) return;
-
-        final newColor = Color(
-          int.tryParse('0x${this.value.alpha.toRadixString(16)}$value') ??
-              0xFFFFFFFF,
+        final source = int.tryParse(
+          value,
+          radix: 16,
         );
 
-        onChanged.call(newColor);
+        if (value.length != 6 || source == null) return;
+        onChanged.call(OpaqueColor(source));
       },
     );
   }
