@@ -25,7 +25,8 @@ class UseCaseMetadata {
   final String importStatement;
 
   // Path to the element in Widgetbook
-  final String navPath;
+  // This might be null if users are using widgetbook_generator <= 3.2.0
+  final String? navPath;
 
   // Import statement of the component
   final String componentImportStatement;
@@ -46,7 +47,7 @@ class UseCaseMetadata {
       useCaseName: map['useCaseName'] as String,
       componentName: map['componentName'] as String,
       importStatement: map['importStatement'] as String,
-      navPath: map['navPath'] as String,
+      navPath: map['navPath'] as String?,
       componentImportStatement: map['componentImportStatement'] as String,
       componentDefinitionPath: map['componentDefinitionPath'] as String,
       useCaseDefinitionPath: map['useCaseDefinitionPath'] as String,
