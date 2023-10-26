@@ -8,12 +8,8 @@ import 'color_space.dart';
 
 export 'color_space.dart';
 
-/// [Field] that builds [ColorsFieldWidget] for [Color] values.
-///
-/// The [ColorField] uses the [ColorFieldCodec] to convert the [Color] value to a
-/// hex string and vice versa.
-///
-/// The [ColorField] uses the [ColorSpace] to determine which format the color is.
+/// [Field] that builds [ColorPicker] for [Color] values using the [ColorSpace]
+/// to determine which format the [Color] is.
 class ColorField extends Field<Color> {
   ColorField({
     required super.name,
@@ -37,7 +33,7 @@ class ColorField extends Field<Color> {
           ),
         );
 
-  ColorSpace initialColorSpace;
+  final ColorSpace initialColorSpace;
 
   static const defaultColor = Colors.white;
 
@@ -45,8 +41,7 @@ class ColorField extends Field<Color> {
   Widget toWidget(BuildContext context, String group, Color? value) {
     return ColorPicker(
       colorSpace: initialColorSpace,
-      value: value,
-      defaultColor: defaultColor,
+      value: value ?? defaultColor,
       onChanged: (value) {
         updateField(
           context,
@@ -55,5 +50,12 @@ class ColorField extends Field<Color> {
         );
       },
     );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'space': initialColorSpace.name,
+    };
   }
 }

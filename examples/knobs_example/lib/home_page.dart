@@ -59,9 +59,9 @@ class _HomePageState extends State<HomePage> {
             Text(
               widget.color.value.toRadixString(16),
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                color: widget.color,
-              ),
-            )
+                    color: widget.color,
+                  ),
+            ),
           ],
         ),
       ),

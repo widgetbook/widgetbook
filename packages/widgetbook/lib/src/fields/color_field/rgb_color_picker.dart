@@ -51,68 +51,74 @@ class _RgbColorPickerState extends State<RgbColorPicker> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        NumberTextField(
-          value: '$red',
-          maxLength: 3,
-          inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
-            FilteringTextInputFormatter.allow(
-              RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'),
-              replacementString: '$red',
-            ),
-          ],
-          labelText: 'R',
-          onChanged: (value) {
-            onValuesChanged(
-              int.tryParse(value) ?? red,
-              green,
-              blue,
-            );
-          },
+        Expanded(
+          child: NumberTextField(
+            value: '$red',
+            maxLength: 3,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              FilteringTextInputFormatter.allow(
+                RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'),
+                replacementString: '$red',
+              ),
+            ],
+            labelText: 'R',
+            onChanged: (value) {
+              onValuesChanged(
+                int.tryParse(value) ?? red,
+                green,
+                blue,
+              );
+            },
+          ),
         ),
         const SizedBox(
           width: 8,
         ),
-        NumberTextField(
-          value: '$green',
-          maxLength: 3,
-          inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
-            FilteringTextInputFormatter.allow(
-              RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'),
-              replacementString: '$green',
-            ),
-          ],
-          labelText: 'G',
-          onChanged: (value) {
-            onValuesChanged(
-              red,
-              int.tryParse(value) ?? green,
-              blue,
-            );
-          },
+        Expanded(
+          child: NumberTextField(
+            value: '$green',
+            maxLength: 3,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              FilteringTextInputFormatter.allow(
+                RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'),
+                replacementString: '$green',
+              ),
+            ],
+            labelText: 'G',
+            onChanged: (value) {
+              onValuesChanged(
+                red,
+                int.tryParse(value) ?? green,
+                blue,
+              );
+            },
+          ),
         ),
         const SizedBox(
           width: 8,
         ),
-        NumberTextField(
-          value: '$blue',
-          maxLength: 3,
-          inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
-            FilteringTextInputFormatter.allow(
-              RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'),
-              replacementString: '$blue',
-            ),
-          ],
-          labelText: 'B',
-          onChanged: (value) {
-            onValuesChanged(
-              red,
-              green,
-              int.tryParse(value) ?? blue,
-            );
-          },
+        Expanded(
+          child: NumberTextField(
+            value: '$blue',
+            maxLength: 3,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              FilteringTextInputFormatter.allow(
+                RegExp(r'^(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$'),
+                replacementString: '$blue',
+              ),
+            ],
+            labelText: 'B',
+            onChanged: (value) {
+              onValuesChanged(
+                red,
+                green,
+                int.tryParse(value) ?? blue,
+              );
+            },
+          ),
         ),
       ],
     );
