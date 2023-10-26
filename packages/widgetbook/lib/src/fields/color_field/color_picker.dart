@@ -51,6 +51,7 @@ class _ColorPickerState extends State<ColorPicker> {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
           children: [
@@ -68,22 +69,20 @@ class _ColorPickerState extends State<ColorPicker> {
             const SizedBox(
               width: 8,
             ),
-            Flexible(
-              child: DropdownMenu<ColorSpace>(
-                width: 100,
-                initialSelection: colorSpace,
-                onSelected: (value) {
-                  setState(() => colorSpace = value!);
-                },
-                dropdownMenuEntries: ColorSpace.values
-                    .map(
-                      (value) => DropdownMenuEntry(
-                        value: value,
-                        label: value.name.toUpperCase(),
-                      ),
-                    )
-                    .toList(),
-              ),
+            DropdownMenu<ColorSpace>(
+              width: 100,
+              initialSelection: colorSpace,
+              onSelected: (value) {
+                setState(() => colorSpace = value!);
+              },
+              dropdownMenuEntries: ColorSpace.values
+                  .map(
+                    (value) => DropdownMenuEntry(
+                      value: value,
+                      label: value.name.toUpperCase(),
+                    ),
+                  )
+                  .toList(),
             ),
             const SizedBox(
               width: 8,
