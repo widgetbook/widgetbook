@@ -14,7 +14,7 @@ void main() {
     '$ColorKnob',
     () {
       testWidgets(
-        'given the ColorSpace is hex, '
+        'given the $ColorSpace is hex, '
         'when the field is updated, '
         'then the value should be updated',
         (tester) async {
@@ -42,8 +42,8 @@ void main() {
       );
 
       testWidgets(
-        'given the ColorSpace is hex, '
-        'when the ColorSpace is rgb and the red field is updated, '
+        'given the $ColorSpace is hex, '
+        'when the $ColorSpace is rgb and the red field is updated, '
         'then the value should be updated',
         (tester) async {
           const blue = Color(0xFF0000FF);
@@ -58,18 +58,14 @@ void main() {
             ),
           );
 
-          await tester
-              .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
-          await tester.findAndTap(find.text('rgb'));
+          await tester.findAndTap(find.byType(DropdownMenu<ColorSpace>));
+          await tester.findAndTap(find.text('RGB').last);
           await tester.pumpAndSettle();
           final fields = find.descendant(
             of: find.byType(RgbColorPicker),
             matching: find.byType(NumberTextField),
           );
-          expect(
-            fields,
-            findsAtLeastNWidgets(3),
-          );
+
           await tester.findAndEnter(
             fields.first,
             '255',
@@ -77,13 +73,14 @@ void main() {
 
           final box = tester.widget<ColoredBox>(find.byType(ColoredBox));
 
+          expect(fields, findsAtLeastNWidgets(3));
           expect(box.color, equals(purple));
         },
       );
 
       testWidgets(
-        'given the ColorSpace is hex, '
-        'when the ColorSpace is rgb and the green field is updated, '
+        'given the $ColorSpace is hex, '
+        'when the $ColorSpace is rgb and the green field is updated, '
         'then the value should be updated',
         (tester) async {
           const blue = Color(0xFF0000FF);
@@ -98,18 +95,15 @@ void main() {
             ),
           );
 
-          await tester
-              .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
-          await tester.findAndTap(find.text('rgb'));
+          await tester.findAndTap(find.byType(DropdownMenu<ColorSpace>));
+          await tester.findAndTap(find.text('RGB').last);
           await tester.pumpAndSettle();
+
           final fields = find.descendant(
             of: find.byType(RgbColorPicker),
             matching: find.byType(NumberTextField),
           );
-          expect(
-            fields,
-            findsAtLeastNWidgets(3),
-          );
+
           await tester.findAndEnter(
             fields.at(1),
             '255',
@@ -117,13 +111,14 @@ void main() {
 
           final box = tester.widget<ColoredBox>(find.byType(ColoredBox));
 
+          expect(fields, findsAtLeastNWidgets(3));
           expect(box.color, equals(greenBlue));
         },
       );
 
       testWidgets(
-        'given the ColorSpace is hex, '
-        'when the ColorSpace is rgb and the blue field is updated, '
+        'given the $ColorSpace is hex, '
+        'when the $ColorSpace is rgb and the blue field is updated, '
         'then the value should be updated',
         (tester) async {
           const blue = Color(0xFF0000FF);
@@ -138,18 +133,14 @@ void main() {
             ),
           );
 
-          await tester
-              .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
-          await tester.findAndTap(find.text('rgb'));
+          await tester.findAndTap(find.byType(DropdownMenu<ColorSpace>));
+          await tester.findAndTap(find.text('RGB').last);
           await tester.pumpAndSettle();
           final fields = find.descendant(
             of: find.byType(RgbColorPicker),
             matching: find.byType(NumberTextField),
           );
-          expect(
-            fields,
-            findsAtLeastNWidgets(3),
-          );
+
           await tester.findAndEnter(
             fields.at(2),
             '136',
@@ -157,13 +148,14 @@ void main() {
 
           final box = tester.widget<ColoredBox>(find.byType(ColoredBox));
 
+          expect(fields, findsAtLeastNWidgets(3));
           expect(box.color, equals(darkerBlue));
         },
       );
 
       testWidgets(
-        'given the ColorSpace is hex, '
-        'when the ColorSpace is rgb and the alpha field is updated, '
+        'given the $ColorSpace is hex, '
+        'when the $ColorSpace is rgb and the alpha field is updated, '
         'then the value should be updated',
         (tester) async {
           const blue = Color(0xFF0000FF);
@@ -178,16 +170,12 @@ void main() {
             ),
           );
 
-          await tester
-              .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
-          await tester.findAndTap(find.text('rgb'));
+          await tester.findAndTap(find.byType(DropdownMenu<ColorSpace>));
+          await tester.findAndTap(find.text('RGB').last);
           await tester.pumpAndSettle();
-          final textFields = find.byType(TextField);
-          expect(textFields, findsNWidgets(4));
-          await tester.findAndEnter(
-            textFields.first,
-            '0',
-          );
+
+          final opacityField = find.text('100');
+          await tester.findAndEnter(opacityField, '0');
 
           final box = tester.widget<ColoredBox>(find.byType(ColoredBox));
 
@@ -212,18 +200,14 @@ void main() {
             ),
           );
 
-          await tester
-              .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
-          await tester.findAndTap(find.text('hsl'));
+          await tester.findAndTap(find.byType(DropdownMenu<ColorSpace>));
+          await tester.findAndTap(find.text('HSL').last);
           await tester.pumpAndSettle();
           final fields = find.descendant(
             of: find.byType(HslColorPicker),
             matching: find.byType(NumberTextField),
           );
-          expect(
-            fields,
-            findsAtLeastNWidgets(3),
-          );
+
           await tester.findAndEnter(
             fields.at(0),
             '300',
@@ -231,13 +215,14 @@ void main() {
 
           final box = tester.widget<ColoredBox>(find.byType(ColoredBox));
 
+          expect(fields, findsAtLeastNWidgets(3));
           expect(box.color, equals(magenta));
         },
       );
 
       testWidgets(
-        'given the ColorSpace is hex, '
-        'when the ColorSpace is hsl '
+        'given the $ColorSpace is hex, '
+        'when the $ColorSpace is hsl '
         'and the color is white'
         'and the hue field is updated, '
         'and the lightness is 100%, '
@@ -255,9 +240,8 @@ void main() {
             ),
           );
 
-          await tester
-              .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
-          await tester.findAndTap(find.text('hsl'));
+          await tester.findAndTap(find.byType(DropdownMenu<ColorSpace>));
+          await tester.findAndTap(find.text('HSL').last);
           await tester.pumpAndSettle();
 
           final fields = find.descendant(
@@ -293,12 +277,12 @@ void main() {
       );
 
       testWidgets(
-        'given the ColorSpace is hex, '
-        'when the ColorSpace is hsl and the saturation field is updated, '
+        'given the $ColorSpace is hex, '
+        'when the $ColorSpace is hsl and the saturation field is updated, '
         'then the value should be updated',
         (tester) async {
           const blue = Color(0xFF0000FF);
-          const desaturatedBlue = Color(0xFF4040BF);
+          const unsaturatedBlue = Color(0xFF4040BF);
 
           await tester.pumpKnob(
             (context) => ColoredBox(
@@ -309,18 +293,13 @@ void main() {
             ),
           );
 
-          await tester
-              .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
-          await tester.findAndTap(find.text('hsl'));
+          await tester.findAndTap(find.byType(DropdownMenu<ColorSpace>));
+          await tester.findAndTap(find.text('HSL').last);
           await tester.pumpAndSettle();
 
           final fields = find.descendant(
             of: find.byType(HslColorPicker),
             matching: find.byType(NumberTextField),
-          );
-          expect(
-            fields,
-            findsAtLeastNWidgets(3),
           );
           await tester.findAndEnter(
             fields.at(1),
@@ -329,13 +308,14 @@ void main() {
 
           final box = tester.widget<ColoredBox>(find.byType(ColoredBox));
 
-          expect(box.color, equals(desaturatedBlue));
+          expect(fields, findsAtLeastNWidgets(3));
+          expect(box.color, equals(unsaturatedBlue));
         },
       );
 
       testWidgets(
-        'given the ColorSpace is hex, '
-        'when the ColorSpace is hsl and the lightness field is updated, '
+        'given the $ColorSpace is hex, '
+        'when the $ColorSpace is hsl and the lightness field is updated, '
         'then the value should be updated',
         (tester) async {
           const blue = Color(0xFF0000FF);
@@ -350,18 +330,13 @@ void main() {
             ),
           );
 
-          await tester
-              .findAndTap(find.byType(DropdownButtonFormField<ColorSpace>));
-          await tester.findAndTap(find.text('hsl'));
+          await tester.findAndTap(find.byType(DropdownMenu<ColorSpace>));
+          await tester.findAndTap(find.text('HSL').last);
           await tester.pumpAndSettle();
 
           final fields = find.descendant(
             of: find.byType(HslColorPicker),
             matching: find.byType(NumberTextField),
-          );
-          expect(
-            fields,
-            findsAtLeastNWidgets(3),
           );
           await tester.findAndEnter(
             fields.at(2),
@@ -370,6 +345,7 @@ void main() {
 
           final box = tester.widget<ColoredBox>(find.byType(ColoredBox));
 
+          expect(fields, findsAtLeastNWidgets(3));
           expect(box.color, equals(lightBlue));
         },
       );
