@@ -125,7 +125,7 @@ class AuthNotifier extends StateNotifier<bool> {
 
 Build simple login and home screens using Riverpod
 
-[Screen Recording 2023-10-30 at 13.02.00.mov](Widgetbook%20with%20Riverpod%200d981f1d64904a3598411839717c46bc/Screen_Recording_2023-10-30_at_13.02.00.mov)
+[riverpod demo create UI video](../assets/cookbook/riverpod_demo1.mov)
 
 ### Login page
 
@@ -413,13 +413,13 @@ Here is list for all component for this recipe
 
 We've incorporated two use cases in this component, each featuring distinct colors for the form elements.
 
-![Untitled](Widgetbook%20with%20Riverpod%200d981f1d64904a3598411839717c46bc/Untitled.png)
+![riverpod_custom_form.png](../assets/cookbook/riverpod_custom_form.png)
 
 `custom_image.dart`
 
 In this component, we're examining two different sizes of images.
 
-![Untitled](Widgetbook%20with%20Riverpod%200d981f1d64904a3598411839717c46bc/Untitled%201.png)
+![riverpod_custom_img](../assets/cookbook/riverpod_custom_img.png)
 
 ```dart
 import 'package:flutter/material.dart';
@@ -470,7 +470,7 @@ CustomImage defaultSmallSize(BuildContext context) {
 
 In this component, we've implemented a distinct color for the text field and a different icons.
 
-![Untitled](Widgetbook%20with%20Riverpod%200d981f1d64904a3598411839717c46bc/Untitled%202.png)
+![riverpod_cutom_textfield](../assets/cookbook/riverpod_cutom_textfield.png)
 
 ```dart
 import 'package:flutter/material.dart';
@@ -619,7 +619,7 @@ Addons in Widgetbook present a versatile and customizable approach to elevate yo
 
 In this recipe we have used predefine `MaterialThemeAddon`,`TextScaleAddon`,`DeviceFrameAddon`Addons.
 
-![Untitled](Widgetbook%20with%20Riverpod%200d981f1d64904a3598411839717c46bc/Untitled%203.png)
+![riverpod_custom_loginform](../assets/cookbook/riverpod_custom_loginform.png)
 
 ```dart
 Widget build(BuildContext context) {
@@ -673,7 +673,7 @@ For information on running Widgetbook on different platforms, refer to the docum
 flutter run -d chrome -t lib/widgetbook.dart
 ```
 
-[Screen Recording 2023-10-30 at 13.45.15.mov](Widgetbook%20with%20Riverpod%200d981f1d64904a3598411839717c46bc/Screen_Recording_2023-10-30_at_13.45.15.mov)
+[riverpod_demo2 video](../assets/cookbook/riverpod_demo2.mov)
 
 Indeed, it seems that you have successfully set up and run Widgetbook. Now, you can examine and test your components along with their respective use cases in Widgetbook. This enables you to visually inspect their appearance and behavior, allowing for quick iteration and testing of various configurations without the need to run the entire application.
 
