@@ -44,7 +44,7 @@ class NavigationTreeTile extends StatelessWidget {
             ),
             SizedBox(
               width: indentation,
-              child: node.isLeaf
+              child: node.isLeaf || node is WidgetbookLeafComponent
                   ? null
                   : ExpanderIcon(
                       isExpanded: isExpanded,

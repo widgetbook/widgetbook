@@ -69,6 +69,26 @@ void main() {
           );
         },
       );
+
+      testWidgets(
+        'when node is $WidgetbookLeafComponent, '
+        'then $ExpanderIcon is not rendered',
+        (tester) async {
+          await tester.pumpWidgetWithMaterialApp(
+            NavigationTreeTile(
+              node: WidgetbookLeafComponent(
+                name: 'Leaf',
+                useCase: node,
+              ),
+            ),
+          );
+
+          expect(
+            find.byType(ExpanderIcon),
+            findsNothing,
+          );
+        },
+      );
     },
   );
 }

@@ -8,7 +8,8 @@ import 'nodes.dart';
 /// 3. [WidgetbookCategory]
 /// 4. [WidgetbookFolder]
 /// 5. [WidgetbookComponent]
-/// 6. [WidgetbookUseCase]
+/// 6. [WidgetbookLeafComponent]
+/// 7. [WidgetbookUseCase]
 abstract class WidgetbookNode {
   WidgetbookNode({
     required this.name,

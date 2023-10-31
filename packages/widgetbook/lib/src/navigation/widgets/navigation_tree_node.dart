@@ -42,11 +42,18 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
           isExpanded: isExpanded,
           isSelected: widget.node.path == widget.selectedNode?.path,
           onTap: () {
+            // Redirect click to the use-case of the leaf component, so that
+            // when it's clicked, the route is updated to the use-case.
+            final targetNode = widget.node is WidgetbookLeafComponent
+                ? (widget.node as WidgetbookLeafComponent).useCase
+                : widget.node;
+
             setState(() => isExpanded = !isExpanded);
-            widget.onNodeSelected?.call(widget.node);
+            widget.onNodeSelected?.call(targetNode);
           },
         ),
-        if (widget.node.children != null)
+        if (widget.node.children != null &&
+            widget.node is! WidgetbookLeafComponent)
           ClipRect(
             child: AnimatedSlide(
               duration: animationDuration,

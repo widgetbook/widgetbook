@@ -73,14 +73,12 @@ final directories = <_i1.WidgetbookNode>[
   _i1.WidgetbookFolder(
     name: 'material',
     children: [
-      _i1.WidgetbookComponent(
+      _i1.WidgetbookLeafComponent(
         name: 'RangeSlider',
-        useCases: [
-          _i1.WidgetbookUseCase(
-            name: 'CustomRangeSlider',
-            builder: _i5.rangeSlider,
-          )
-        ],
+        useCase: _i1.WidgetbookUseCase(
+          name: 'CustomRangeSlider',
+          builder: _i5.rangeSlider,
+        ),
       )
     ],
   ),

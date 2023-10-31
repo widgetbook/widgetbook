@@ -13,6 +13,7 @@ Widget resolveIcon(WidgetbookNode node) {
     case WidgetbookFolder:
       return const Icon(Icons.folder, size: 16);
     case WidgetbookComponent:
+    case WidgetbookLeafComponent:
       return const ComponentIcon();
     case WidgetbookUseCase:
       return const UseCaseIcon();
