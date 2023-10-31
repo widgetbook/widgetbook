@@ -50,6 +50,33 @@ void main() {
           verify(() => onValueChanged.call(node)).called(1);
         },
       );
+
+      testWidgets(
+        'when a $WidgetbookLeafComponent is tapped, '
+        'then the onNodeSelected callback is called with the child use-case',
+        (tester) async {
+          final useCase = WidgetbookUseCase(
+            name: 'UseCase Node',
+            builder: (context) => Container(),
+          );
+
+          final onValueChanged = VoidFn1Mock<WidgetbookNode>();
+
+          await tester.pumpWidgetWithMaterialApp(
+            NavigationTreeNode(
+              node: WidgetbookLeafComponent(
+                name: 'Leaf',
+                useCase: useCase,
+              ),
+              onNodeSelected: onValueChanged.call,
+            ),
+          );
+
+          await tester.tap(find.byType(NavigationTreeTile).first);
+
+          verify(() => onValueChanged.call(useCase)).called(1);
+        },
+      );
     },
   );
 }

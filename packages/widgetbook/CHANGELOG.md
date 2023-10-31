@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FEAT**: Introduce `WidgetbookLeafComponent` navigation node for components with a single use-case. ([#1015](https://github.com/widgetbook/widgetbook/pull/1015))
 - **FIX**: use `MapMixin` instead of `MapBase` for `KnobsRegistry`. ([#903](https://github.com/widgetbook/widgetbook/pull/903))
 - **FEAT**: Add `designLink` to `WidgetbookUseCase`. ([#926](https://github.com/widgetbook/widgetbook/pull/926))
 - **FEAT**: Add light theme support. ([#919](https://github.com/widgetbook/widgetbook/pull/919))

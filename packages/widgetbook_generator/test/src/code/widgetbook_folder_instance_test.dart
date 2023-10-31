@@ -41,14 +41,12 @@ void main() {
           WidgetbookFolder(
             name: 'root',
             children: [
-              WidgetbookComponent(
+              WidgetbookLeafComponent(
                 name: 'Component',
-                useCases: [
-                  WidgetbookUseCase(
-                    name: 'Default',
-                    builder: defaultUseCase,
-                  )
-                ],
+                useCase: WidgetbookUseCase(
+                  name: 'Default',
+                  builder: defaultUseCase,
+                ),
               ),
               WidgetbookFolder(
                 name: 'Folder1',
