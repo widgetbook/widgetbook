@@ -1,10 +1,7 @@
-import 'package:cookbook1/riverpod/auth_riverpod.dart';
+import 'package:cookbook1/notifier/auth_notifier.dart';
 import 'package:cookbook1/screens/components/custom_form.dart';
 import 'package:cookbook1/screens/components/custom_image.dart';
 import 'package:cookbook1/screens/components/custom_title_text.dart';
-import 'package:cookbook1/screens/home.dart';
-import 'package:cookbook1/screens/signup.dart';
-import 'package:cookbook1/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,13 +13,13 @@ class LoginPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authNotifer = ref.read(authProvider);
-
+    final authNotifer = ref.read(authNotierProvider.notifier);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.redAccent,
         title: const CustomTitleText(
           titleText: "LoginPage",
-          titleTextColor: AppColor.myWhite,
+          titleTextColor: Colors.white,
         ),
       ),
       body: Column(
@@ -37,31 +34,18 @@ class LoginPage extends ConsumerWidget {
           ),
           Expanded(
             flex: 2,
-            child: LoginForm(
+            child: 
+            LoginForm(
               key: key,
               buttonTitle: "Login",
               emailController: emailController,
               passController: passController,
-              formAssetColor: AppColor.myWhite,
+              formAssetColor: Colors.white,
               onPressed: () {
-                authNotifer
-                    .loginUserWithFirebase(
-                  emailController.text,
-                  passController.text,
-                )
-                    .then((value) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const Home(),
-                    ),
-                  );
-                });
-              },
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => SignUp()),
+                authNotifer.login(
+                  email: emailController.text,
+                  password: passController.text,
+                  context: context,
                 );
               },
             ),

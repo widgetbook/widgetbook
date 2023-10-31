@@ -19,7 +19,7 @@ void main() {
               passController: TextEditingController(),
               onPressed: () {},
               formAssetColor: const Color.fromARGB(255, 245, 246, 247),
-              onTap: () {}, // Choose any color for testing
+              // Choose any color for testing
             ),
           ),
         ),
@@ -30,14 +30,13 @@ void main() {
     expect(find.byType(LoginForm), findsOneWidget);
     expect(find.byType(CustomTextFormField), findsNWidgets(2));
     expect(find.byType(CustomButton), findsOneWidget);
-    expect(find.text('New user? Sign Up'), findsOneWidget);
+ 
 
     // Simulate tapping the "Login" button
     await tester.tap(find.text('Login'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('New user? Sign Up'));
-    await tester.pumpAndSettle();
+
   });
   testWidgets('LoginForm UI Test - Grey color', (WidgetTester tester) async {
     // Build our app and trigger a frame.
@@ -53,7 +52,6 @@ void main() {
                   passController: TextEditingController(),
                   onPressed: () {},
                   formAssetColor: Color.fromARGB(255, 113, 114, 115),
-                  onTap: () {}, // Choose any color for testing
                 ),
               ],
             ),
@@ -66,13 +64,12 @@ void main() {
     expect(find.byType(LoginForm), findsOneWidget);
     expect(find.byType(CustomTextFormField), findsNWidgets(2));
     expect(find.byType(CustomButton), findsOneWidget);
-    expect(find.text('New user? Sign Up'), findsOneWidget);
+   
 
     // Simulate tapping the "Login" button
     await tester.tap(find.text('Login'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('New user? Sign Up'));
-    await tester.pumpAndSettle();
+  
   });
 }

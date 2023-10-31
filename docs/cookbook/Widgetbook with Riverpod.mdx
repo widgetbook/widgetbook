@@ -1,0 +1,755 @@
+# Widgetbook with Riverpod
+
+**Widgetbook** is a Flutter package that helps developers **visualise and test widgets** in different states. It can be integrated with Riverpod, a state management library for Flutter, to make it even more efficient.
+
+To integrate Widgetbook with Riverpod in the Flutter application, this recipe uses the following steps:
+
+1. **Adding required dependencies**
+2. **Set Up Riverpod** 
+3. **Create UI**
+4. **Configure Widgetbook**
+5. **Generating the Widgetbook**
+6. **Creating Components & Use-cases**
+7. **Add Addons**
+8. **Run Widgetbook**
+9. **Testing**
+10. **Conclusion**
+
+# **1. Add Dependencies:**
+
+Make sure you have the dependencies required in your **`pubspec.yaml`** file:
+
+```yaml
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.4.4
+  widgetbook_annotation: ^3.0.0
+  widgetbook: ^3.3.0
+
+```
+
+Run **`flutter pub get`** in your terminal to fetch the new dependencies.
+
+# **2. Set Up Riverpod :**
+
+```dart
+Future<void> main() async {
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
+}
+```
+
+### **Create Auth Services:**
+
+Create a service class to handle authentication. This class should have methods like **`login`** and **`logout`**.
+
+```dart
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final authServicesProvider = Provider<AuthServices>((ref) {
+  return AuthServices();
+});
+
+class AuthServices {
+  bool isLogin = false;
+
+  Future<bool> login({required String email, required String password}) async {
+    await Future.delayed(const Duration(seconds: 2), () {
+      isLogin = true;
+    });
+
+    return isLogin;
+  }
+
+  Future<bool> logout() async {
+    await Future.delayed(const Duration(seconds: 2));
+    () {
+      isLogin = false;
+    };
+    return true;
+  }
+}
+```
+
+### **Create Auth Notifier:**
+
+Create a StateNotifier class that extends the Riverpod **`StateNotifier`**. This class will manage the authentication state and provide methods like **`login`** and **`logout`**.
+
+```dart
+// auth_notifier.dart
+final authNotifierProvider =
+    StateNotifierProvider<AuthNotifier, bool>((ref) {
+  return AuthNotifier(ref.watch(authServicesProvider));
+});
+
+class AuthNotifier extends StateNotifier<bool> {
+  final AuthServices _authServices;
+
+  AuthNotifier(this._authServices) : super(false);
+
+  Future<void> login({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    try {
+      state = true;
+      await _authServices.login(
+        email: email,
+        password: password,
+      );
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const Home()),
+      );
+    } catch (e) {
+      state = false;
+      rethrow;
+    }
+  }
+
+  Future<void> logout(BuildContext context) async {
+    await _authServices.logout();
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
+  }
+}
+```
+
+# 3**. Create UI**
+
+Build simple login and home screens using Riverpod
+
+[Screen Recording 2023-10-30 at 13.02.00.mov](Widgetbook%20with%20Riverpod%200d981f1d64904a3598411839717c46bc/Screen_Recording_2023-10-30_at_13.02.00.mov)
+
+### Login page
+
+**Create `LoginPage` Widget:**
+
+Define a stateful widget named **`SignUp`** extending **`ConsumerWidget`**.
+
+```dart
+class SignUp extends ConsumerWidget {
+  SignUp({Key? key});
+```
+
+**Text Controllers:**
+
+Create **`TextEditingController`** instances for email and password
+
+```dart
+final TextEditingController emailController = TextEditingController();
+final TextEditingController passController = TextEditingController();
+```
+
+**Build Method:**
+
+Implement the **`build`** method to create the UI using Riverpod.
+
+```dart
+@override
+Widget build(BuildContext context, WidgetRef ref) {
+  final authNotifier = ref.read(authNotierProvider.notifier);
+  return Scaffold(
+    // ... (see below)
+  );
+}
+```
+
+**Login Form:**
+
+Utilize the custom `**LoginForm**` widget for the login form and Implement the login button action using the **`authNotifier`**.
+
+```dart
+Expanded(
+            flex: 2,
+            child: 
+            LoginForm(
+              key: key,
+              buttonTitle: "Login",
+              emailController: emailController,
+              passController: passController,
+              formAssetColor: Colors.white,
+              onPressed: () {
+                authNotifer.login(
+                  email: emailController.text,
+                  password: passController.text,
+                  context: context,
+                );
+              },
+            ),
+          ),
+```
+
+## Home page
+
+**Create `Home` Widget:**
+
+**`Home`** is Stateless widget to make it more concise and focused on the logout functionality
+
+**Add Logout Button with Riverpod Consumer:**
+
+```dart
+actions: [
+          Consumer(
+            builder: (context, ref, child) {
+              final authNotifier = ref.watch(authNotierProvider.notifier);
+              return IconButton(
+                onPressed: () {
+                  authNotifier.logout(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => LoginPage(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.logout, color: Colors.white),
+              );
+            },
+          ),
+        ],
+```
+
+# 4**. Configure Widgetbook:**
+
+Finally after creating UI it’s time to configure widgetbbok and test different use-cases.
+
+There are two approaches to configuring Widgetbook:
+**Manual Approach**: This approach involves using the **[widgetbook package](https://pub.dev/packages/widgetbook)** and manually maintaining and other is **Generator Approach** ensures harmony between your codebase and the Widgetbook's navigation panel structure to know more about widgetbook configure check **[here](https://docs.widgetbook.io/getting-started/setup)**
+
+# 6**. Generating the widgetbook:**
+
+This recipe uses Generator approach, which utilizes the **[build_runner](https://pub.dev/packages/build_runner)** package to generate the necessary code.
+
+To execute the generator, run the following command:
+
+```dart
+flutter pub run build_runner build
+
+```
+
+1. The generator will create a `widgetbook.directories.g.dart` file in the same directory as the annotated file. This file will contain a variable named `directories`.
+
+To set up your Widgetbook, follow the usual steps. For the `directories` property, use the generated `directories` variable from the `widgetbook.directories.g.dart` file.
+
+file structure
+
+The generator will create a **`widgetbook.directories.g.dart`** file in the same directory as the annotated file. This file will contain a variable named **`directories`**.
+
+Organize your project structure as follows:
+
+```dart
+
+├─ ios
+├─ lib
+├ ├─ main.dart
+├ ├─ widgetbook.dart
+├ ├─ widgetbook.directories.g.dart
+├─ pubspec.yaml
+
+```
+
+Create a **`widgetbook.dart`** file to configure Widgetbook:
+
+```dart
+// widgetbook.dart
+
+import 'package:cookbook1/widgetbook.directories.g.dart';
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+// Import the generated directories variable
+
+void main() {
+  runApp(const WidgetbookApp());
+}
+
+@widgetbook.App()
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook.material(
+      // Use the generated directories variable
+      directories: directories,
+      addons: [
+          ],
+         
+        ),
+      ],
+    );
+  }
+}
+```
+
+# 7**. Creating Components & Use-cases**
+
+Widgetbook features a ***component*** and ***use-case*** approach in which a single component has one or multiple use-cases. For learn more about components & use-cases check [here](https://docs.widgetbook.io/getting-started/components)
+
+  ***`CustomButton`** which is simple TextButton component.* 
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+class CustomButton extends StatelessWidget {
+  const CustomButton({
+    required this.buttonTitle,
+    required this.onPressed,
+    required this.buttonbackColor,
+    super.key,
+  });
+  final String buttonTitle;
+  final VoidCallback onPressed;
+  final Color buttonbackColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+        key: key,
+        height: 60,
+        width: 300,
+        decoration: BoxDecoration(
+          color: buttonbackColor,
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: TextButton(
+          onPressed: onPressed,
+          child: Text(
+            buttonTitle,
+            style: const TextStyle(
+              color: Colors.redAccent,
+              fontSize: 20,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+@widgetbook.UseCase(
+  name: 'default',
+  type: CustomButton,
+)
+CustomButton blackColorButton(BuildContext context) {
+  return CustomButton(
+    buttonTitle: 'Login',
+    onPressed: () {},
+    buttonbackColor: Colors.white,
+  );
+}
+
+@widgetbook.UseCase(
+  name: 'blue button',
+  type: CustomButton,
+)
+CustomButton blueColorButton(BuildContext context) {
+  return CustomButton(
+    buttonTitle: 'Login',
+    onPressed: () {},
+    buttonbackColor: Colors.blue,
+  );
+}
+
+```
+
+adding use cases to ***`CustomButton`** component. use cases are the variation in same component just like below same component with different* `buttonTitle` and `buttonbackColor`
+
+To create a use case, you need to use the `@usecase` annotation and specify the `name` and `type`. You can find a detailed explanation on how to create components and use cases [here](https://docs.widgetbook.io/getting-started/components).
+
+`custom_button.dart`
+
+```dart
+@widgetbook.UseCase(
+  name: 'default',
+  type: CustomButton,
+)
+CustomButton blackColorButton(BuildContext context) {
+  return CustomButton(
+    buttonTitle: 'Login',
+    onPressed: () {},
+    buttonbackColor: Colors.white,
+  );
+}
+
+@widgetbook.UseCase(
+  name: 'blue button',
+  type: CustomButton,
+)
+CustomButton blueColorButton(BuildContext context) {
+  return CustomButton(
+    buttonTitle: 'Login',
+    onPressed: () {},
+    buttonbackColor: Colors.blue,
+  );
+}
+```
+
+Here is list for all component for this recipe
+
+```dart
+
+├─ components
+├ ├─ custom_button.dart
+├ ├─ custom_form.dart
+├ ├─ custom_image.dart
+├ ├─ custom_textform_field.dart
+├ ├─ custom_title_text.dart
+
+```
+
+`custom_form.dart`
+
+We've incorporated two use cases in this component, each featuring distinct colors for the form elements.
+
+![Untitled](Widgetbook%20with%20Riverpod%200d981f1d64904a3598411839717c46bc/Untitled.png)
+
+`custom_image.dart`
+
+In this component, we're examining two different sizes of images.
+
+![Untitled](Widgetbook%20with%20Riverpod%200d981f1d64904a3598411839717c46bc/Untitled%201.png)
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+class CustomImage extends StatelessWidget {
+  const CustomImage({
+    required this.height,
+    required this.width,
+    super.key,
+  });
+  final double height;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      "assets/images/cooking.jpg",
+      height: height,
+      width: width,
+      fit: BoxFit.contain,
+    );
+  }
+}
+@widgetbook.UseCase(
+  name: 'Default Style',
+  type: CustomImage,
+)
+CustomImage defaultSize(BuildContext context) {
+  return const CustomImage(
+    height: 300,
+    width: 300,
+  );
+}
+@widgetbook.UseCase(
+  name: 'small size',
+  type: CustomImage,
+)
+CustomImage defaultSmallSize(BuildContext context) {
+  return const CustomImage(
+    height: 100,
+    width: 100,
+  );
+}
+```
+
+`custom_textform_field.dart`
+
+In this component, we've implemented a distinct color for the text field and a different icons.
+
+![Untitled](Widgetbook%20with%20Riverpod%200d981f1d64904a3598411839717c46bc/Untitled%202.png)
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+class CustomTextFormField extends StatelessWidget {
+  const CustomTextFormField({
+    required this.controller,
+    required this.hintText,
+    required this.textFieldColor,
+    required this.suffixIcon,
+    required this.obscureText,
+    super.key,
+  });
+  final TextEditingController controller;
+  final String hintText;
+  final Color textFieldColor;
+  final IconData suffixIcon;
+  final bool obscureText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        obscureText: obscureText,
+        style: const TextStyle(color: Colors.white),
+        textAlignVertical: TextAlignVertical.center,
+        controller: controller,
+        decoration: InputDecoration(
+          fillColor: textFieldColor,
+          hintText: hintText,
+          suffixIcon: Icon(
+            suffixIcon,
+            color: textFieldColor,
+          ),
+          hintStyle: TextStyle(color: textFieldColor),
+          hoverColor: textFieldColor,
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: textFieldColor, width: 3)),
+          enabled: true,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: textFieldColor, width: 2),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: textFieldColor),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+@widgetbook.UseCase(
+  name: 'yellow field color',
+  type: CustomTextFormField,
+)
+CustomTextFormField defaultCustomTitle(BuildContext context) {
+  TextEditingController testController = TextEditingController();
+  return CustomTextFormField(
+    controller: testController,
+    hintText: 'hello',
+    textFieldColor: Colors.yellow,
+    suffixIcon: Icons.headphones,Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
+
+  runApp(const ProviderScope(child: MyApp()));
+}
+    obscureText: true,
+  );
+}
+@widgetbook.UseCase(
+  name: 'blue field color',
+  type: CustomTextFormField,
+)
+CustomTextFormField defaultCustomTitle1(BuildContext context) {
+  TextEditingController testController = TextEditingController();
+  return CustomTextFormField(
+    controller: testController,
+    hintText: 'hello',
+    textFieldColor: Colors.blue,
+    suffixIcon: Icons.headphones,
+    obscureText: true,
+  );
+}
+```
+
+`custom_title_text.dart`
+
+Similarly, in this component, we have two different color variations.
+
+```dart
+import 'package:flutter/material.dart';
+
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+class CustomTitleText extends StatelessWidget {
+  const CustomTitleText({
+    required this.titleText,
+    required this.titleTextColor,
+    super.key,
+  });
+  final String titleText;
+  final Color titleTextColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      titleText,
+      style: TextStyle(color: titleTextColor),
+    );
+  }
+}
+
+@widgetbook.UseCase(
+  name: 'Default Style',
+  type: CustomTitleText,
+)
+CustomTitleText defaultCustomTitle(BuildContext context) {
+  return const CustomTitleText(
+    titleText: 'login page',
+    titleTextColor: Color.fromARGB(255, 255, 255, 255),
+  );
+}
+
+@widgetbook.UseCase(
+  name: 'blue color',
+  type: CustomTitleText,
+)
+CustomTitleText blueColor(BuildContext context) {
+  return const CustomTitleText(
+    titleText: 'login page',
+    titleTextColor: Colors.blue,
+  );
+}
+```
+
+# 8****. Add  Addons****
+
+Addons in Widgetbook present a versatile and customizable approach to elevate your development environment. You have the choice to utilize pre-existing Addons or craft your own to suit your unique requirements. Refer to the documentation [here](https://docs.widgetbook.io/getting-started/knobs) for comprehensive details on adding Addons and exploring all the available features.
+
+In this recipe we have used predefine `MaterialThemeAddon`,`TextScaleAddon`,`DeviceFrameAddon`Addons.
+
+![Untitled](Widgetbook%20with%20Riverpod%200d981f1d64904a3598411839717c46bc/Untitled%203.png)
+
+```dart
+Widget build(BuildContext context) {
+    return Widgetbook.material(
+      // Use the generated directories variable
+      directories: directories,
+      addons: [
+        MaterialThemeAddon(
+          themes: [
+            WidgetbookTheme(
+              name: 'Light',
+              data: ThemeData.light()
+            ),
+            WidgetbookTheme(
+              name: 'Dark',
+              data: ThemeData.dark()
+            ),
+          ],
+        ),
+        TextScaleAddon(
+          scales: [1.0, 2.0, 3.0],
+          initialScale: 1,
+        ),
+        DeviceFrameAddon(
+          devices: [
+            Devices.ios.iPhoneSE,
+            Devices.ios.iPhone13,
+          ],
+          initialDevice: Devices.ios.iPhone13,
+        ),
+      ],
+    );
+  }
+```
+
+# 9**. Run Widgetbook:**
+
+Before running Widgetbook, ensure that you've made any necessary changes to components or added new use cases. If modifications have been made, run the following command to ensure the code is up to date:
+
+```dart
+
+flutter pub run build_runner build
+
+```
+
+Now, you can run Widgetbook to check if everything works. Execute the following command to run Widgetbook on the web:
+
+For information on running Widgetbook on different platforms, refer to the documentation [here](https://docs.widgetbook.io/getting-started/run). This step ensures that your Widgetbook environment is set up correctly and reflects any recent changes made to your Flutter widgets.
+
+```dart
+flutter run -d chrome -t lib/widgetbook.dart
+```
+
+[Screen Recording 2023-10-30 at 13.45.15.mov](Widgetbook%20with%20Riverpod%200d981f1d64904a3598411839717c46bc/Screen_Recording_2023-10-30_at_13.45.15.mov)
+
+Indeed, it seems that you have successfully set up and run Widgetbook. Now, you can examine and test your components along with their respective use cases in Widgetbook. This enables you to visually inspect their appearance and behavior, allowing for quick iteration and testing of various configurations without the need to run the entire application.
+
+# 10****. Testing****
+
+Writing widget tests is an essential part of the Flutter development process. By testing individual widgets, you can catch issues early in the development cycle and ensure that your UI components function as expected. The integration of Widgetbook and Riverpod further enhances the testing and visualization capabilities of your widgets, providing a comprehensive approach to Flutter development.
+
+```dart
+import 'package:cookbook1/notifier/auth_notifier.dart';
+import 'package:cookbook1/screens/components/custom_form.dart';
+import 'package:cookbook1/screens/components/custom_image.dart';
+import 'package:cookbook1/screens/components/custom_title_text.dart';
+import 'package:cookbook1/screens/home.dart';
+import 'package:cookbook1/screens/login.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+
+class MockAuthProvider extends Mock implements AuthNotifer {}
+
+void main() {
+  //  final mockObserver = MockNavigatorObserver();
+  late MockAuthProvider mockAuthProvider;
+  setUp(() {
+    mockAuthProvider = MockAuthProvider();
+  });
+  testWidgets('LoginPage UI Test', (WidgetTester tester) async {
+    // Build our widget and trigger a frame.
+    await tester.pumpWidget(
+      MaterialApp(
+        home: ProviderScope(
+          overrides: [
+            authNotierProvider.overrideWith((ref) => mockAuthProvider),
+          ],
+          child: LoginPage(),
+        ),
+      ),
+    );
+
+    // Verify that the app bar is rendered with the correct title.
+    expect(find.text("LoginPage"), findsOneWidget);
+
+    // Verify that the welcome text is rendered.
+    expect(find.text("Welcome to Cookbook"), findsOneWidget);
+
+    // Verify that the CustomImage widget is rendered.
+    expect(find.byType(CustomImage), findsOneWidget);
+
+    // Verify that the login form is rendered.
+    expect(find.byType(LoginForm), findsOneWidget);
+
+    // Mock user input (enter email and password).
+    await tester.enterText(find.byType(TextField).first, 'test@email.com');
+    await tester.enterText(find.byType(TextField).last, 'testPassword');
+
+    // Tap the login button.
+    await tester.tap(find.text("Login"));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [authNotierProvider.overrideWith((ref) => mockAuthProvider)],
+        child:  const MaterialApp(home: Home()),
+      ),
+    );
+  });
+}
+```
+
+# 11****. Conclusion****
+
+In this recipe, we've successfully integrated Widgetbook with Riverpod to visualize and test Flutter widgets in different states. This combination offers a powerful environment for developing and testing UI components.
+
+**Key takeaways:**
+
+- Widgetbook allows for easy visualization of widgets and their use cases.
+- Riverpod facilitates effective state management in Flutter applications.
+- Testing components and use cases within Widgetbook streamlines the development process.
+
+This recipe serves as a foundation for creating robust and visually appealing Flutter applications. Feel free to explore additional features and customizations offered by Widgetbook to further enhance your development workflow. Happy coding!

@@ -1,6 +1,5 @@
 import 'package:cookbook1/screens/components/custom_button.dart';
 import 'package:cookbook1/screens/components/custom_textform_field.dart';
-import 'package:cookbook1/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -10,9 +9,8 @@ class LoginForm extends StatelessWidget {
     required this.emailController,
     required this.passController,
     required this.onPressed,
-    required this.onTap,
     required this.formAssetColor,
-    required this.buttonTitle
+    required this.buttonTitle,
   });
 
   final TextEditingController emailController;
@@ -20,14 +18,14 @@ class LoginForm extends StatelessWidget {
 
   final Color formAssetColor;
   final VoidCallback onPressed;
-  final VoidCallback? onTap;
+
   final String buttonTitle;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 500,
-      color: AppColor.appRedColor,
+      color: Colors.redAccent,
       child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: SingleChildScrollView(
@@ -58,16 +56,6 @@ class LoginForm extends StatelessWidget {
                 buttonbackColor: formAssetColor,
                 onPressed: onPressed,
               ),
-              GestureDetector(
-                key: const Key('SignUpButtonNewUser'),
-                onTap: onTap,
-                child: Text(
-                  "New user? Sign Up",
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: formAssetColor,
-                      ),
-                ),
-              ),
             ],
           ),
         ),
@@ -85,12 +73,10 @@ LoginForm defaultColor(BuildContext context) {
   final TextEditingController passController = TextEditingController();
 
   return LoginForm(
-    
     emailController: emailController,
     buttonTitle: "Login",
     passController: passController,
     onPressed: () {},
-    onTap: () {},
     formAssetColor: Colors.white,
   );
 }
@@ -108,7 +94,6 @@ LoginForm blackColor(BuildContext context) {
     emailController: emailController,
     passController: passController,
     onPressed: () {},
-    onTap: () {},
-    formAssetColor: AppColor.appGreyColor,
+    formAssetColor: Colors.black
   );
 }

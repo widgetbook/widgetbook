@@ -1,122 +1,58 @@
-import 'package:cookbook1/screens/components/custom_button.dart';
+import 'package:cookbook1/notifier/auth_notifier.dart';
 import 'package:cookbook1/screens/components/custom_form.dart';
-import 'package:cookbook1/screens/components/custom_textform_field.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cookbook1/screens/components/custom_image.dart';
+import 'package:cookbook1/screens/components/custom_title_text.dart';
+import 'package:cookbook1/screens/home.dart';
+import 'package:cookbook1/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:cookbook1/screens/login.dart';
-import 'package:cookbook1/screens/signup.dart';
-import 'package:cookbook1/screens/home.dart';
-import 'package:mockito/mockito.dart'; // Import Mockito for mocking
-import 'package:cookbook1/riverpod/auth_riverpod.dart'; // Import the auth provider
-import 'package:cookbook1/screens/components/custom_image.dart';
-import 'package:cookbook1/screens/components/custom_title_text.dart';
+import 'package:mockito/mockito.dart';
 
-class MockAuthProvider extends Mock implements AuthProvider {}
-
-class MockUserCredential extends Mock implements UserCredential {}
-
-class MockUser extends Mock implements User {}
+class MockAuthProvider extends Mock implements AuthNotifer {}
 
 void main() {
-  group('LoginPage Widget Test', () {
-    late MockAuthProvider mockAuthProvider;
-    late MockUserCredential mockUserCredential;
-    late MockUser mockUser;
-
-    setUp(() {
-      mockAuthProvider = MockAuthProvider();
-      mockUser = MockUser();
-      mockUserCredential = MockUserCredential();
-    });
-
-    testWidgets('Renders UI elements', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        ProviderScope(
+  //  final mockObserver = MockNavigatorObserver();
+  late MockAuthProvider mockAuthProvider;
+  setUp(() {
+    mockAuthProvider = MockAuthProvider();
+  });
+  testWidgets('LoginPage UI Test', (WidgetTester tester) async {
+    // Build our widget and trigger a frame.
+    await tester.pumpWidget(
+      MaterialApp(
+        home: ProviderScope(
           overrides: [
-            authProvider.overrideWithValue(mockAuthProvider),
+            authNotierProvider.overrideWith((ref) => mockAuthProvider),
           ],
-          child: MaterialApp(
-            home: LoginPage(),
-          ),
+          child: LoginPage(),
         ),
-      );
+      ),
+    );
 
-      // Verify the presence of UI elements
-      expect(find.text('LoginPage'), findsOneWidget);
-      expect(find.byType(CustomImage), findsOneWidget);
-      expect(find.byType(CustomTitleText), findsOneWidget);
-      expect(find.byType(LoginForm), findsOneWidget);
-    });
+    // Verify that the app bar is rendered with the correct title.
+    expect(find.text("LoginPage"), findsOneWidget);
 
-    testWidgets('Login Process', (WidgetTester tester) async {
-      when(mockUserCredential.user).thenReturn(mockUser);
-      when(
-        mockAuthProvider.loginUserWithFirebase(
-          'john.doe@example.com',
-          'password123',
-        ),
-      ).thenAnswer((_) => Future.value(mockUserCredential));
+    // Verify that the welcome text is rendered.
+    expect(find.text("Welcome to Cookbook"), findsOneWidget);
 
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            authProvider.overrideWithValue(mockAuthProvider),
-          ],
-          child: MaterialApp(
-            home: LoginPage(),
-          ),
-        ),
-      );
+    // Verify that the CustomImage widget is rendered.
+    expect(find.byType(CustomImage), findsOneWidget);
 
-      await tester.enterText(
-        // ignore: require_trailing_commas
-        find.byKey(const Key('emailTextField1')),
-        'john.doe@example.com',
-      );
-      await tester.enterText(
-        find.byKey(const Key('passwordTextField1')),
-        'password123',
-      );
+    // Verify that the login form is rendered.
+    expect(find.byType(LoginForm), findsOneWidget);
 
-      // expect(find.byKey(Key('LoginButton1')), findsOneWidget);
-      // Tap the Login button
-      await tester.tap(find.byType(CustomButton), warnIfMissed: false);
-      await tester.pump();
+    // Mock user input (enter email and password).
+    await tester.enterText(find.byType(TextField).first, 'test@email.com');
+    await tester.enterText(find.byType(TextField).last, 'testPassword');
 
-      //Verify that the authentication method is called
-      verify(
-        mockAuthProvider.loginUserWithFirebase(
-          'john.doe@example.com',
-          'password123',
-        ),
-      ).called(1);
-
-      // Verify navigation to the Home screen
-      expect(find.byType(LoginPage), findsOneWidget);
-    });
-
-    testWidgets('Navigate to SignUp Screen', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            authProvider.overrideWithValue(mockAuthProvider),
-          ],
-          child: MaterialApp(
-            home: LoginPage(),
-          ),
-        ),
-      );
-
-      // Tap the Sign Up button
-      print(find.byKey(const Key("SignUpButtonNewUser")).first);
-      await tester.tap(find.byKey(const Key("SignUpButtonNewUser")).first,
-          warnIfMissed: false);
-      await tester.pump();
-
-      // Verify navigation to the SignUp screen
-      expect(find.byType(LoginPage), findsOneWidget);
-    });
+    // Tap the login button.
+    await tester.tap(find.text("Login"));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [authNotierProvider.overrideWith((ref) => mockAuthProvider)],
+        child: const MaterialApp(home: Home()),
+      ),
+    );
   });
 }

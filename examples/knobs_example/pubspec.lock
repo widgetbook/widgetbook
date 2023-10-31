@@ -38,14 +38,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
-  inspector:
-    dependency: transitive
-    description:
-      name: inspector
-      sha256: "40ba0ac1c819c85139bfec9d1e283804581a8985c91f19d00e93212cf29226b1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.0"
   json_annotation:
     dependency: transitive
     description:
@@ -110,10 +102,11 @@ packages:
   widgetbook:
     dependency: "direct main"
     description:
-      path: "../../packages/widgetbook"
-      relative: true
-    source: path
+      name: widgetbook
+      sha256: dce7255b085d84ff1c5a941ce581d3bf24edd742902c22b4405279e5c3e22501
+      url: "https://pub.dev"
+    source: hosted
     version: "3.3.0"
 sdks:
   dart: ">=3.1.0-185.0.dev <4.0.0"
-  flutter: ">=1.17.0"
+  flutter: ">=3.0.0"

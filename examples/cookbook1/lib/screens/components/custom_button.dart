@@ -1,4 +1,4 @@
-import 'package:cookbook1/utils/color.dart';
+
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -48,7 +48,7 @@ CustomButton blackColorButton(BuildContext context) {
   return CustomButton(
     buttonTitle: 'Login',
     onPressed: () {},
-    buttonbackColor: AppColor.buttonColor,
+    buttonbackColor: Colors.white,
   );
 }
 
@@ -60,6 +60,6 @@ CustomButton blueColorButton(BuildContext context) {
   return CustomButton(
     buttonTitle: 'Login',
     onPressed: () {},
-    buttonbackColor: AppColor.buttonbackColorBlue,
+    buttonbackColor: Colors.blue,
   );
 }

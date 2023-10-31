@@ -1,7 +1,9 @@
-import 'package:cookbook1/riverpod/auth_riverpod.dart';
+import 'package:cookbook1/notifier/auth_notifier.dart';
 import 'package:cookbook1/screens/components/custom_title_text.dart';
 import 'package:cookbook1/screens/login.dart';
-import 'package:cookbook1/utils/color.dart';
+
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,43 +14,43 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.redAccent,
         title: const CustomTitleText(
           titleText: "Home Page",
-          titleTextColor: AppColor.myWhite,
+          titleTextColor: Colors.white,
         ),
         actions: [
           Consumer(
             builder: (context, ref, child) {
-              final authNotifier = ref.watch(authProvider);
+              final authNotifier = ref.watch(authNotierProvider.notifier);
               return IconButton(
                 onPressed: () {
-                  authNotifier.logoutUser();
+                  authNotifier.logout(context);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => LoginPage(),
+                    MaterialPageRoute(
+                      builder: (_) => LoginPage(),
                     ),
                   );
                 },
                 icon: const Icon(
                   Icons.logout,
-                  color: AppColor.myWhite,
+                  color: Colors.white
                 ),
               );
             },
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Center(
-              child: Text(
-                "Welcome to Cookbook",
-                style: Theme.of(context).textTheme.titleSmall!,
-              ),
+      body: Column(
+        children: [
+          Center(
+            child: Text(
+              "Welcome to Cookbook",
+              style: Theme.of(context).textTheme.titleSmall!,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

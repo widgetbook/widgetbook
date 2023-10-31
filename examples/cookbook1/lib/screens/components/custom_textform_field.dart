@@ -1,4 +1,3 @@
-import 'package:cookbook1/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -64,7 +63,7 @@ CustomTextFormField defaultCustomTitle(BuildContext context) {
   return CustomTextFormField(
     controller: testController,
     hintText: 'hello',
-    textFieldColor: AppColor.appYellowColor,
+    textFieldColor: Colors.yellow,
     suffixIcon: Icons.headphones,
     obscureText: true,
   );
@@ -79,7 +78,7 @@ CustomTextFormField defaultCustomTitle1(BuildContext context) {
   return CustomTextFormField(
     controller: testController,
     hintText: 'hello',
-    textFieldColor: AppColor.appblueColor,
+    textFieldColor: Colors.blue,
     suffixIcon: Icons.headphones,
     obscureText: true,
   );
