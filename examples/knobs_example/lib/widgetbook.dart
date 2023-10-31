@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-import 'home_page.dart';
+import 'knob_entry.dart';
+import 'knobs_table.dart';
 
 void main() {
   runApp(const WidgetbookApp());
@@ -15,76 +16,122 @@ class WidgetbookApp extends StatelessWidget {
     final initialDate = DateTime.now();
 
     return Widgetbook.material(
+      addons: [
+        BuilderAddon(
+          name: 'Addon',
+          builder: (_, child) => Scaffold(
+            body: child,
+          ),
+        ),
+      ],
       directories: [
-        WidgetbookComponent(
-          name: 'HomePage',
-          useCases: [
-            WidgetbookUseCase(
-              name: 'Without Knobs',
-              builder: (context) {
-                return const HomePage(
-                  title: 'Without Knobs',
-                );
-              },
-            ),
-            WidgetbookUseCase(
-              name: 'With Knobs',
-              builder: (context) {
-                return HomePage(
-                  title: context.knobs.string(
-                    label: 'Title',
-                    initialValue: 'With Knobs',
+        WidgetbookLeafComponent(
+          name: 'Knobs',
+          useCase: WidgetbookUseCase(
+            name: '',
+            builder: (context) {
+              return KnobsTable(
+                entries: [
+                  KnobEntry<int>(
+                    name: 'Int (Input)',
+                    regular: context.knobs.int.input(
+                      label: 'int.input',
+                    ),
+                    nullable: context.knobs.intOrNull.input(
+                      label: 'intOrNull.input',
+                    ),
                   ),
-                  incrementBy: context.knobs.doubleOrNull
-                          .slider(
-                            label: 'Increment By',
-                            initialValue: 5,
-                            max: 10,
-                            divisions: 10,
-                          )
-                          ?.toInt() ??
-                      0,
-                  countLabel: context.knobs.stringOrNull(
-                    initialValue: 'Current Count',
-                    label: 'Count Label',
-                    description: 'This is the text that appears '
-                        'above the current count of increments',
+                  KnobEntry<int>(
+                    name: 'Int (Slider)',
+                    regular: context.knobs.int.slider(
+                      label: 'int.slider',
+                    ),
+                    nullable: context.knobs.intOrNull.slider(
+                      label: 'intOrNull.slider',
+                    ),
                   ),
-                  iconData: context.knobs.list(
-                    label: 'Icon',
-                    options: [
-                      Icons.add,
-                      Icons.crop_square_sharp,
-                      Icons.circle,
-                    ],
+                  KnobEntry<double>(
+                    name: 'Double (Input)',
+                    regular: context.knobs.double.input(
+                      label: 'double.input',
+                    ),
+                    nullable: context.knobs.doubleOrNull.input(
+                      label: 'doubleOrNull.input',
+                    ),
                   ),
-                  showToolTip: context.knobs.boolean(
-                    initialValue: true,
-                    label: 'Show Increment Tool Tip',
-                    description: 'This is the tooltip that is displayed '
-                        'when hovering over the increment button',
+                  KnobEntry<double>(
+                    name: 'Double (Slider)',
+                    regular: context.knobs.double.slider(
+                      label: 'double.slider',
+                    ),
+                    nullable: context.knobs.doubleOrNull.slider(
+                      label: 'doubleOrNull.slider',
+                    ),
                   ),
-                  duration: context.knobs.duration(
-                    label: 'Increment duration',
-                    initialValue: const Duration(seconds: 5),
+                  KnobEntry<String>(
+                    name: 'String',
+                    regular: context.knobs.string(
+                      label: 'string',
+                    ),
+                    nullable: context.knobs.stringOrNull(
+                      label: 'stringOrNull',
+                    ),
                   ),
-                  dateTime: context.knobs.dateTimeOrNull(
-                    // placing DateTime.now() here will cause the date time and
-                    // the text field to be out of sync
-                    initialValue: initialDate,
-                    label: 'Select Date Time',
-                    start: DateTime(initialDate.year - 1),
-                    end: DateTime(initialDate.year + 1),
+                  KnobEntry<bool>(
+                    name: 'Boolean',
+                    regular: context.knobs.boolean(
+                      label: 'boolean',
+                    ),
+                    nullable: context.knobs.booleanOrNull(
+                      label: 'booleanOrNull',
+                    ),
                   ),
-                  color: context.knobs.color(
-                    label: 'Color',
-                    initialValue: Colors.blue,
-                    initialColorSpace: ColorSpace.rgb,
+                  KnobEntry<Color>(
+                    name: 'Color',
+                    builder: (color) => Text(
+                      color.value.toRadixString(16),
+                      style: TextStyle(
+                        color: color,
+                      ),
+                    ),
+                    regular: context.knobs.color(
+                      label: 'color',
+                      initialValue: const Color(0xFF000000),
+                    ),
+                    nullable: null, // N/A
                   ),
-                );
-              },
-            ),
-          ],
+                  KnobEntry<Duration>(
+                    name: 'Duration',
+                    regular: context.knobs.duration(
+                      label: 'duration',
+                      initialValue: Duration.zero,
+                    ),
+                    nullable: context.knobs.durationOrNull(
+                      label: 'durationOrNull',
+                    ),
+                  ),
+                  KnobEntry<DateTime>(
+                    name: 'DateTime',
+                    builder: (dateTime) => Text(dateTime.toSimpleFormat()),
+                    regular: context.knobs.dateTime(
+                      label: 'dateTime',
+                      // Placing DateTime.now() here will cause the date time
+                      // and the text field to be out of sync
+                      initialValue: initialDate,
+                      start: DateTime(initialDate.year - 1),
+                      end: DateTime(initialDate.year + 1),
+                    ),
+                    nullable: context.knobs.dateTimeOrNull(
+                      label: 'dateTimeOrNull',
+                      initialValue: initialDate,
+                      start: DateTime(initialDate.year - 1),
+                      end: DateTime(initialDate.year + 1),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ],
     );
