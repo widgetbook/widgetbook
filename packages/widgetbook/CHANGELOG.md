@@ -1,7 +1,8 @@
 ## Unreleased
 
 - **FEAT**: Introduce `WidgetbookLeafComponent` navigation node for components with a single use-case. ([#1015](https://github.com/widgetbook/widgetbook/pull/1015))
-- **FIX**: use `MapMixin` instead of `MapBase` for `KnobsRegistry`. ([#903](https://github.com/widgetbook/widgetbook/pull/903))
+- **FIX**: Add default values for `slider` knobs' parameters. ([#1016](https://github.com/widgetbook/widgetbook/pull/1016))
+- **FIX**: Use `MapMixin` instead of `MapBase` for `KnobsRegistry`. ([#903](https://github.com/widgetbook/widgetbook/pull/903))
 - **FEAT**: Add `designLink` to `WidgetbookUseCase`. ([#926](https://github.com/widgetbook/widgetbook/pull/926))
 - **FEAT**: Add light theme support. ([#919](https://github.com/widgetbook/widgetbook/pull/919))
 - **FIX**: Maintain navigation panel state on reload. ([#932](https://github.com/widgetbook/widgetbook/pull/932))

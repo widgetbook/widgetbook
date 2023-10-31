@@ -26,19 +26,18 @@ class IntKnobsBuilder {
   int slider({
     required String label,
     String? description,
-    int? initialValue,
-    int? max,
-    int? min,
+    int initialValue = 0,
+    int min = 0,
+    int max = 20,
     int? divisions,
   }) {
-    initialValue ??= max ?? min ?? 10;
     return onKnobAdded(
       IntSliderKnob(
         label: label,
         value: initialValue,
         description: description,
-        min: min ?? initialValue - 10,
-        max: max ?? initialValue + 10,
+        min: min,
+        max: max,
         divisions: divisions,
       ),
     )!;
@@ -74,18 +73,17 @@ class IntOrNullKnobsBuilder {
     required String label,
     String? description,
     int? initialValue,
-    int? max,
-    int? min,
+    int min = 0,
+    int max = 20,
     int? divisions,
   }) {
-    initialValue ??= max ?? min ?? 10;
     return onKnobAdded(
       IntSliderKnob.nullable(
         label: label,
         value: initialValue,
         description: description,
-        min: min ?? initialValue - 10,
-        max: max ?? initialValue + 10,
+        min: min,
+        max: max,
         divisions: divisions,
       ),
     );

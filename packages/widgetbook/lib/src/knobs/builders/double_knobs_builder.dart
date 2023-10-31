@@ -12,19 +12,18 @@ class DoubleKnobsBuilder {
   double slider({
     required String label,
     String? description,
-    double? initialValue,
-    double? max,
-    double? min,
+    double initialValue = 0,
+    double min = 0,
+    double max = 20,
     int? divisions,
   }) {
-    initialValue ??= max ?? min ?? 10;
     return onKnobAdded(
       DoubleSliderKnob(
         label: label,
         value: initialValue,
         description: description,
-        min: min ?? initialValue - 10,
-        max: max ?? initialValue + 10,
+        min: min,
+        max: max,
         divisions: divisions,
       ),
     )!;
@@ -61,18 +60,17 @@ class DoubleOrNullKnobsBuilder {
     required String label,
     String? description,
     double? initialValue,
-    double? max,
-    double? min,
+    double min = 0,
+    double max = 20,
     int? divisions,
   }) {
-    initialValue ??= max ?? min ?? 10;
     return onKnobAdded(
       DoubleSliderKnob.nullable(
         label: label,
         value: initialValue,
         description: description,
-        min: min ?? initialValue - 10,
-        max: max ?? initialValue + 10,
+        min: min,
+        max: max,
         divisions: divisions,
       ),
     );
