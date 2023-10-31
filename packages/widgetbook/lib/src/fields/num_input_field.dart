@@ -22,8 +22,10 @@ class NumInputField<T extends num> extends Field<T> {
 
   @override
   Widget toWidget(BuildContext context, String label, T? currentValue) {
+    final defaultValue = (T == int ? 0 : 0.0) as T;
+
     return TextFormField(
-      initialValue: codec.toParam(currentValue ?? initialValue ?? (0 as T)),
+      initialValue: codec.toParam(currentValue ?? initialValue ?? defaultValue),
       keyboardType: TextInputType.number,
       inputFormatters: formatters,
       onChanged: (value) => updateField(

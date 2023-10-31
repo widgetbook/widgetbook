@@ -22,6 +22,8 @@ class NumSliderField<T extends num> extends Field<T> {
 
   @override
   Widget toWidget(BuildContext context, String group, T? value) {
+    final defaultValue = (T == int ? 0 : 0.0) as T;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -31,7 +33,7 @@ class NumSliderField<T extends num> extends Field<T> {
             value: (value ?? initialValue)?.toDouble() ?? 0,
             min: min.toDouble(),
             max: max.toDouble(),
-            label: codec.toParam(value ?? initialValue ?? (0 as T)),
+            label: codec.toParam(value ?? initialValue ?? defaultValue),
             divisions: divisions,
             onChanged: (value) {
               return updateField(
@@ -44,7 +46,7 @@ class NumSliderField<T extends num> extends Field<T> {
         ),
         Expanded(
           child: Text(
-            codec.toParam(value ?? initialValue!),
+            codec.toParam(value ?? initialValue ?? defaultValue),
             textAlign: TextAlign.end,
             maxLines: 1,
           ),
