@@ -38,7 +38,6 @@ class WidgetbookApp extends StatelessWidget {
                   incrementBy: context.knobs.doubleOrNull
                           .slider(
                             label: 'Increment By',
-                            min: 0,
                             initialValue: 5,
                             max: 10,
                             divisions: 10,

@@ -5,14 +5,16 @@ import 'field.dart';
 class NumSliderField<T extends num> extends Field<T> {
   NumSliderField({
     required super.name,
-    required this.min,
-    required this.max,
     this.divisions,
     super.initialValue,
     super.onChanged,
+    required this.min,
+    required this.max,
     required super.codec,
     required super.type,
-  });
+  }) : assert(
+          initialValue == null || (initialValue >= min && initialValue <= max),
+        );
 
   final T min;
   final T max;
