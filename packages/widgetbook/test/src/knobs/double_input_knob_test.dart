@@ -59,30 +59,30 @@ void main() {
     test('DoubleInputKnob.nullable constructor sets correct values', () {
       final knob = DoubleInputKnob.nullable(
         label: 'Test double',
-        value: 5.0,
+        initialValue: 5.0,
         description: 'A test double knob',
       );
 
       expect(knob.label, 'Test double');
-      expect(knob.value, 5.0);
+      expect(knob.initialValue, 5.0);
       expect(knob.description, 'A test double knob');
     });
 
     test('DoubleInputKnob.nullable constructor handles null value', () {
       final knob = DoubleInputKnob.nullable(
         label: 'Test double',
-        value: null,
+        initialValue: null,
         description: 'A test double knob with null value',
       );
 
       expect(knob.label, 'Test double');
-      expect(knob.value, null);
+      expect(knob.initialValue, null);
       expect(knob.description, 'A test double knob with null value');
     });
   });
 
   group('$KnobsBuilder', () {
-    double? mockOnKnobAdded<double>(Knob<double?> knob) => knob.value;
+    double? mockOnKnobAdded<double>(Knob<double?> knob) => knob.initialValue;
     final builder = KnobsBuilder(mockOnKnobAdded);
 
     test('doubleOrNull sets correct values', () {

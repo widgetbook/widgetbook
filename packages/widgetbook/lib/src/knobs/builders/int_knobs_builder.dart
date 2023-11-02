@@ -16,7 +16,7 @@ class IntKnobsBuilder {
     return onKnobAdded(
       IntInputKnob(
         label: label,
-        value: initialValue,
+        initialValue: initialValue,
         description: description,
       ),
     )!;
@@ -34,7 +34,7 @@ class IntKnobsBuilder {
     return onKnobAdded(
       IntSliderKnob(
         label: label,
-        value: initialValue,
+        initialValue: initialValue,
         description: description,
         min: min,
         max: max,
@@ -61,7 +61,7 @@ class IntOrNullKnobsBuilder {
     return onKnobAdded(
       IntInputKnob.nullable(
         label: label,
-        value: initialValue,
+        initialValue: initialValue,
         description: description,
       ),
     );
@@ -80,7 +80,7 @@ class IntOrNullKnobsBuilder {
     return onKnobAdded(
       IntSliderKnob.nullable(
         label: label,
-        value: initialValue,
+        initialValue: initialValue,
         description: description,
         min: min,
         max: max,

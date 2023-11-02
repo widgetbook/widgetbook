@@ -7,13 +7,13 @@ import 'knob.dart';
 class DurationKnob extends Knob<Duration?> {
   DurationKnob({
     required super.label,
-    required super.value,
+    required super.initialValue,
     super.description,
   });
 
   DurationKnob.nullable({
     required super.label,
-    required super.value,
+    required super.initialValue,
     super.description,
   }) : super(isNullable: true);
 
@@ -22,7 +22,7 @@ class DurationKnob extends Knob<Duration?> {
     return [
       DurationField(
         name: label,
-        initialValue: value,
+        initialValue: initialValue,
       ),
     ];
   }

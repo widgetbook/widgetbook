@@ -7,13 +7,13 @@ import 'knob.dart';
 class DoubleInputKnob extends Knob<double?> {
   DoubleInputKnob({
     required super.label,
-    required super.value,
+    required super.initialValue,
     super.description,
   });
 
   DoubleInputKnob.nullable({
     required super.label,
-    required super.value,
+    required super.initialValue,
     super.description,
   }) : super(isNullable: true);
 
@@ -22,7 +22,7 @@ class DoubleInputKnob extends Knob<double?> {
     return [
       DoubleInputField(
         name: label,
-        initialValue: value,
+        initialValue: initialValue,
       ),
     ];
   }
