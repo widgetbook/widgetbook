@@ -7,13 +7,13 @@ import 'knob.dart';
 class BooleanKnob extends Knob<bool?> {
   BooleanKnob({
     required super.label,
-    required super.value,
+    required super.initialValue,
     super.description,
   });
 
   BooleanKnob.nullable({
     required super.label,
-    required super.value,
+    required super.initialValue,
     super.description,
   }) : super(isNullable: true);
 
@@ -22,7 +22,7 @@ class BooleanKnob extends Knob<bool?> {
     return [
       BooleanField(
         name: label,
-        initialValue: value,
+        initialValue: initialValue,
       ),
     ];
   }

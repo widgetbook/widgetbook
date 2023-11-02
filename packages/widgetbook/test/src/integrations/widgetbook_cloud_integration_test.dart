@@ -70,7 +70,7 @@ void main() {
           final knobs = {
             'key': StringKnob(
               label: 'description',
-              value: 'Lorem ipsum',
+              initialValue: 'Lorem ipsum',
             ),
           };
 

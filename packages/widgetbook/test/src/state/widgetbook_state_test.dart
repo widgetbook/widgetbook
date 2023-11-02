@@ -122,11 +122,11 @@ void main() {
         () {
           final knob = StringKnob(
             label: 'Knob',
-            value: 'Widgetbook',
+            initialValue: 'Widgetbook',
           );
 
           final state = WidgetbookState(
-            queryParams: {'knobs': '{${knob.label}:${knob.value}}'},
+            queryParams: {'knobs': '{${knob.label}:${knob.initialValue}}'},
             root: WidgetbookRoot(
               children: [],
             ),
@@ -137,7 +137,7 @@ void main() {
             state.queryParams,
           );
 
-          expect(result, knob.value);
+          expect(result, knob.initialValue);
         },
       );
 
@@ -148,11 +148,11 @@ void main() {
         () {
           final knob = StringKnob.nullable(
             label: 'Knob',
-            value: 'Widgetbook',
+            initialValue: 'Widgetbook',
           );
 
           final state = WidgetbookState(
-            queryParams: {'knobs': '{${knob.label}:${knob.value}}'},
+            queryParams: {'knobs': '{${knob.label}:${knob.initialValue}}'},
             root: WidgetbookRoot(
               children: [],
             ),
@@ -168,34 +168,6 @@ void main() {
           );
 
           expect(result, isNull);
-        },
-      );
-
-      test(
-        'given a knob with a value, '
-        'when the knob value is updated, '
-        'then the new value is returned',
-        () {
-          final knob = StringKnob(
-            label: 'Knob',
-            value: 'Widgetbook',
-          );
-
-          final state = WidgetbookState(
-            queryParams: {'knobs': '{${knob.label}:${knob.value}}'},
-            root: WidgetbookRoot(
-              children: [],
-            ),
-          );
-
-          const newValue = 'Book of Widgets';
-          state.knobs
-            ..register(knob, state.queryParams)
-            ..updateValue(knob.label, newValue);
-
-          final result = state.knobs[knob.label]!.value;
-
-          expect(result, newValue);
         },
       );
 
@@ -233,13 +205,13 @@ void main() {
         () {
           final knob = StringKnob.nullable(
             label: 'Knob',
-            value: 'Widgetbook',
+            initialValue: 'Widgetbook',
           );
 
           final path = 'component/use-case';
 
           final state = WidgetbookState(
-            queryParams: {'knobs': '{${knob.label}:${knob.value}}'},
+            queryParams: {'knobs': '{${knob.label}:${knob.initialValue}}'},
             path: path,
             root: WidgetbookRoot(
               children: [],
@@ -248,12 +220,11 @@ void main() {
           state.knobs.register(knob, state.queryParams);
 
           const query = 'some widget';
-
           state.updateQuery(query);
 
-          expect(state.path, path);
           expect(state.query, query);
-          expect(state.knobs[knob.label]?.value, knob.value);
+          expect(state.path, path);
+          expect(state.knobs, {knob.label: knob});
         },
       );
 

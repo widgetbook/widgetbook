@@ -9,7 +9,7 @@ import 'knob.dart';
 class ColorKnob extends Knob<Color> {
   ColorKnob({
     required super.label,
-    required super.value,
+    required super.initialValue,
     super.description,
     this.initialColorSpace = ColorSpace.hex,
   });
@@ -21,7 +21,7 @@ class ColorKnob extends Knob<Color> {
     return [
       ColorField(
         name: label,
-        initialValue: value,
+        initialValue: initialValue,
         initialColorSpace: initialColorSpace,
       ),
     ];

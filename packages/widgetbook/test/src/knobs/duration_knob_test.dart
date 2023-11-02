@@ -70,30 +70,32 @@ void main() {
     test('DurationKnob.nullable constructor sets correct values', () {
       final knob = DurationKnob.nullable(
         label: 'Test Duration',
-        value: const Duration(seconds: 5),
+        initialValue: const Duration(seconds: 5),
         description: 'A test duration knob',
       );
 
       expect(knob.label, 'Test Duration');
-      expect(knob.value, const Duration(seconds: 5));
+      expect(knob.initialValue, const Duration(seconds: 5));
       expect(knob.description, 'A test duration knob');
     });
 
     test('DurationKnob.nullable constructor handles null value', () {
       final knob = DurationKnob.nullable(
         label: 'Test Duration',
-        value: null,
+        initialValue: null,
         description: 'A test duration knob with null value',
       );
 
       expect(knob.label, 'Test Duration');
-      expect(knob.value, null);
+      expect(knob.initialValue, null);
       expect(knob.description, 'A test duration knob with null value');
     });
   });
 
   group('$KnobsBuilder', () {
-    Duration? mockOnKnobAdded<Duration>(Knob<Duration?> knob) => knob.value;
+    Duration? mockOnKnobAdded<Duration>(Knob<Duration?> knob) =>
+        knob.initialValue;
+
     final builder = KnobsBuilder(mockOnKnobAdded);
 
     test('durationOrNull sets correct values', () {

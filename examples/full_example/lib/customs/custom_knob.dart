@@ -18,18 +18,18 @@ Widget rangeSlider(BuildContext context) {
 class RangeKnob extends Knob<RangeValues> {
   RangeKnob({
     required super.label,
-    required super.value,
+    required super.initialValue,
   });
 
   @override
   List<Field> get fields => [
         DoubleInputField(
           name: 'min-$label',
-          initialValue: value.start,
+          initialValue: initialValue.start,
         ),
         DoubleInputField(
           name: 'max-$label',
-          initialValue: value.end,
+          initialValue: initialValue.end,
         ),
       ];
 
@@ -50,7 +50,7 @@ extension RangeKnobBuilder on KnobsBuilder {
       onKnobAdded(
         RangeKnob(
           label: label,
-          value: initialValue,
+          initialValue: initialValue,
         ),
       )!;
 }

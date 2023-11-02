@@ -37,15 +37,11 @@ class KnobsRegistry extends ChangeNotifier with MapMixin<String, Knob> {
     return knob.valueFromQueryGroup(queryGroup);
   }
 
-  /// Updates [Knob.value] using the [label] to find the [Knob].
-  void updateValue<T>(String label, T value) {
-    _registry.update(
-      label,
-      (knob) => knob..value = value,
-    );
-
-    notifyListeners();
-  }
+  @Deprecated(
+    'Knobs values can no longer be updated, '
+    'they rely on query groups.',
+  )
+  void updateValue<T>(String label, T value) {}
 
   /// Updates [Knob.isNull] using the [label] to find the [Knob].
   @internal
