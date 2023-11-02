@@ -1,3 +1,4 @@
+export 'accessibility_addon/addon.dart';
 export 'alignment_addon/addon.dart';
 export 'builder_addon/addon.dart';
 export 'common/common.dart';
