@@ -14,6 +14,7 @@
 - **FEAT**: Add Zoom Addon. ([#968](https://github.com/widgetbook/widgetbook/pull/968))
 - **FEAT**: Add Inspector Addon. ([#985](https://github.com/widgetbook/widgetbook/pull/985))
 - **FEAT**: Add `q` query param for search. ([#950](https://github.com/widgetbook/widgetbook/pull/950))
+- **FEAT**: Mobile support. ([#1019](https://github.com/widgetbook/widgetbook/pull/1019))
 
 ## 3.3.0
 
