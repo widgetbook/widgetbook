@@ -15,7 +15,7 @@ typedef ThemeBuilder<T> = Widget Function(
 class ThemeAddon<T> extends WidgetbookAddon<WidgetbookTheme<T>> {
   ThemeAddon({
     required this.themes,
-    WidgetbookTheme<T>? initialTheme,
+    this.initialTheme,
     required this.themeBuilder,
   })  : assert(
           themes.isNotEmpty,
@@ -27,9 +27,9 @@ class ThemeAddon<T> extends WidgetbookAddon<WidgetbookTheme<T>> {
         ),
         super(
           name: 'Theme',
-          initialSetting: initialTheme ?? themes.first,
         );
 
+  final WidgetbookTheme<T>? initialTheme;
   final List<WidgetbookTheme<T>> themes;
   final ThemeBuilder<T> themeBuilder;
 
@@ -39,7 +39,7 @@ class ThemeAddon<T> extends WidgetbookAddon<WidgetbookTheme<T>> {
       ListField<WidgetbookTheme<T>>(
         name: 'name',
         values: themes,
-        initialValue: initialSetting,
+        initialValue: initialTheme ?? themes.first,
         labelBuilder: (theme) => theme.name,
       ),
     ];

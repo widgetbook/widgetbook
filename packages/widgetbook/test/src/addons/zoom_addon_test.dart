@@ -13,7 +13,7 @@ void main() {
         'initialSetting should be 1.0',
         () {
           final addon = ZoomAddon();
-          expect(addon.initialSetting, equals(1.0));
+          expect(addon.initialZoom, equals(1.0));
         },
       );
 
@@ -26,7 +26,7 @@ void main() {
             initialZoom: factor,
           );
 
-          expect(addon.initialSetting, equals(factor));
+          expect(addon.initialZoom, equals(factor));
         },
       );
 

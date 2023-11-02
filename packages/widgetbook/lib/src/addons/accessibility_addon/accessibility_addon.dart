@@ -11,7 +11,6 @@ class AccessibilityAddon extends WidgetbookAddon<void> {
   AccessibilityAddon()
       : super(
           name: 'Accessibility',
-          initialSetting: null,
         );
 
   @override
