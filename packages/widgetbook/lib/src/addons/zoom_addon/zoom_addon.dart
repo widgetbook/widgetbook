@@ -28,9 +28,13 @@ class ZoomAddon extends WidgetbookAddon<double> {
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child, double zoom) {
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    double setting,
+  ) {
     return Transform.scale(
-      scale: zoom,
+      scale: setting,
       child: child,
     );
   }

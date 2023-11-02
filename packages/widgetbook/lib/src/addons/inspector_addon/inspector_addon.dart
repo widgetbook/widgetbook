@@ -24,8 +24,12 @@ class InspectorAddon extends WidgetbookAddon<bool> {
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child, bool isEnabled) {
-    return isEnabled
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    bool setting,
+  ) {
+    return setting
         ? Scaffold(
             backgroundColor: const Color(0xFF121515),
             body: Inspector(child: child),
