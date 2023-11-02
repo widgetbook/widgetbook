@@ -13,8 +13,8 @@ void main() {
         'given a small screen, '
         'then MobileWidgetbookShell is used',
         (tester) async {
-          tester.binding.window.physicalSizeTestValue = const Size(400, 800);
-          tester.binding.window.devicePixelRatioTestValue = 1.0;
+          tester.view.physicalSize = const Size(400, 800);
+          tester.view.devicePixelRatio = 1.0;
 
           final state = WidgetbookState(
             appBuilder: materialAppBuilder,
@@ -37,7 +37,7 @@ void main() {
           expect(find.byType(MobileWidgetbookShell), findsOneWidget);
           expect(find.byType(DesktopWidgetbookShell), findsNothing);
 
-          addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+          addTearDown(tester.view.resetPhysicalSize);
         },
       );
 
@@ -45,8 +45,8 @@ void main() {
         'given a large screen, '
         'then DesktopWidgetbookShell is used',
         (tester) async {
-          tester.binding.window.physicalSizeTestValue = const Size(1200, 800);
-          tester.binding.window.devicePixelRatioTestValue = 1.0;
+          tester.view.physicalSize = const Size(1200, 800);
+          tester.view.devicePixelRatio = 1.0;
 
           final state = WidgetbookState(
             appBuilder: materialAppBuilder,
@@ -69,7 +69,7 @@ void main() {
           expect(find.byType(MobileWidgetbookShell), findsNothing);
           expect(find.byType(DesktopWidgetbookShell), findsOneWidget);
 
-          addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+          addTearDown(tester.view.resetPhysicalSize);
         },
       );
 
@@ -78,8 +78,8 @@ void main() {
         'when the navigation icon on bottom bar is tapped, '
         'then the navigation panel on bottom sheet is displayed',
         (tester) async {
-          tester.binding.window.physicalSizeTestValue = const Size(400, 800);
-          tester.binding.window.devicePixelRatioTestValue = 1.0;
+          tester.view.physicalSize = const Size(400, 800);
+          tester.view.devicePixelRatio = 1.0;
 
           final state = WidgetbookState(
             appBuilder: materialAppBuilder,
@@ -112,7 +112,7 @@ void main() {
 
           expect(find.byType(NavigationPanel), findsOneWidget);
 
-          addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+          addTearDown(tester.view.resetPhysicalSize);
         },
       );
 
@@ -121,8 +121,8 @@ void main() {
         'when the addons icon on bottom bar is tapped, '
         'then the settings panel on bottom sheet is displayed',
         (tester) async {
-          tester.binding.window.physicalSizeTestValue = const Size(400, 800);
-          tester.binding.window.devicePixelRatioTestValue = 1.0;
+          tester.view.physicalSize = const Size(400, 800);
+          tester.view.devicePixelRatio = 1.0;
 
           final state = WidgetbookState(
             appBuilder: materialAppBuilder,
@@ -153,9 +153,11 @@ void main() {
           await tester.pumpAndSettle();
 
           expect(
-              find.byType(SettingsPanel, skipOffstage: false), findsOneWidget);
+            find.byType(SettingsPanel, skipOffstage: false),
+            findsOneWidget,
+          );
 
-          addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+          addTearDown(tester.view.resetPhysicalSize);
         },
       );
 
@@ -164,8 +166,8 @@ void main() {
         'when the knob icon on bottom bar is tapped, '
         'then the settings panel on bottom sheet is displayed',
         (tester) async {
-          tester.binding.window.physicalSizeTestValue = const Size(400, 800);
-          tester.binding.window.devicePixelRatioTestValue = 1.0;
+          tester.view.physicalSize = const Size(400, 800);
+          tester.view.devicePixelRatio = 1.0;
 
           final state = WidgetbookState(
             appBuilder: materialAppBuilder,
@@ -196,9 +198,11 @@ void main() {
           await tester.pumpAndSettle();
 
           expect(
-              find.byType(SettingsPanel, skipOffstage: false), findsOneWidget);
+            find.byType(SettingsPanel, skipOffstage: false),
+            findsOneWidget,
+          );
 
-          addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+          addTearDown(tester.view.resetPhysicalSize);
         },
       );
 
@@ -207,8 +211,8 @@ void main() {
         'when a four-finger tap is performed, '
         'then the bottom bar visibility is toggled',
         (tester) async {
-          tester.binding.window.physicalSizeTestValue = const Size(400, 800);
-          tester.binding.window.devicePixelRatioTestValue = 1.0;
+          tester.view.physicalSize = const Size(400, 800);
+          tester.view.devicePixelRatio = 1.0;
 
           final state = WidgetbookState(
             appBuilder: materialAppBuilder,
@@ -265,7 +269,7 @@ void main() {
 
           expect(mobileShellState.isBottomBarVisible, isTrue);
 
-          addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+          addTearDown(tester.view.resetPhysicalSize);
         },
       );
     },
