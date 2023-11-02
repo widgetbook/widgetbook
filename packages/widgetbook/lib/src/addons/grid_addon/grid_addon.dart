@@ -24,15 +24,14 @@ class GridAddon extends WidgetbookAddon<int> {
   Widget buildUseCase(
     BuildContext context,
     Widget child,
-    int dimension, {
-    Key? key,
-  }) {
+    int setting,
+  ) {
     return Stack(
       children: [
         LayoutBuilder(
           builder: (context, constraints) {
             return CustomPaint(
-              painter: GridPainter(dimension),
+              painter: GridPainter(setting),
               size: Size(
                 constraints.maxWidth,
                 constraints.maxHeight,
