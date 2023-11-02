@@ -88,30 +88,41 @@ class MobileWidgetbookShell extends StatefulWidget {
   final Widget child;
 
   @override
-  State<MobileWidgetbookShell> createState() => _MobileWidgetbookShellState();
+  State<MobileWidgetbookShell> createState() => MobileWidgetbookShellState();
 }
 
-class _MobileWidgetbookShellState extends State<MobileWidgetbookShell> {
+class MobileWidgetbookShellState extends State<MobileWidgetbookShell> {
   int _pointerCount = 0;
-  bool _isBottomBarVisible = true;
+  bool isBottomBarVisible = true;
 
-  void _handlePointerDown(PointerDownEvent event) {
+  void handlePointerDown(PointerDownEvent event) {
     setState(() {
       _pointerCount++;
     });
+
+    if (_pointerCount == 4) {
+      setState(() {
+        isBottomBarVisible = !isBottomBarVisible;
+      });
+    }
   }
 
-  void _handlePointerUp(PointerUpEvent event) {
+  void handlePointerUp(PointerUpEvent event) {
+    if (_pointerCount == 0) {
+      return;
+    }
     setState(() {
       _pointerCount--;
     });
 
     if (_pointerCount == 0) {
-      if (_pointerCount == 4) {
-        setState(() {
-          _isBottomBarVisible = !_isBottomBarVisible;
-        });
-      }
+      setState(() {
+        isBottomBarVisible = !isBottomBarVisible;
+      });
+
+      print('_pointerCount: $_pointerCount');
+
+      print('isBottomBarVisible: $isBottomBarVisible');
     }
   }
 
@@ -128,7 +139,7 @@ class _MobileWidgetbookShellState extends State<MobileWidgetbookShell> {
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
     return Scaffold(
-      bottomNavigationBar: _isBottomBarVisible
+      bottomNavigationBar: isBottomBarVisible
           ? BottomNavigationBar(
               items: [
                 const BottomNavigationBarItem(
@@ -198,8 +209,8 @@ class _MobileWidgetbookShellState extends State<MobileWidgetbookShell> {
             )
           : null,
       body: Listener(
-        onPointerDown: _handlePointerDown,
-        onPointerUp: _handlePointerUp,
+        onPointerDown: handlePointerDown,
+        onPointerUp: handlePointerUp,
         child: Container(
           // Content of the Widgetbook shell
           child: widget.child,
