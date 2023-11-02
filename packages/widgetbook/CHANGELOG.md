@@ -16,6 +16,7 @@
 - **FEAT**: Add Accessibility Addon. ([#1020](https://github.com/widgetbook/widgetbook/pull/1020))
 - **FEAT**: Add `q` query param for search. ([#950](https://github.com/widgetbook/widgetbook/pull/950))
 - **REFACTOR**: Deprecate `WidgetbookAddon`'s `initialSetting`. Should be replaced by a local field in relevant addons. ([#1023](https://github.com/widgetbook/widgetbook/pull/1023))
+- **REFACTOR**: Deprecate `Field.onChanged`. ([#1024](https://github.com/widgetbook/widgetbook/pull/1024))
 
 ## 3.3.0
 

@@ -14,7 +14,7 @@ class ListField<T> extends Field<T> {
     required this.values,
     required super.initialValue,
     this.labelBuilder = defaultLabelBuilder,
-    super.onChanged,
+    @deprecated super.onChanged,
   }) : super(
           type: FieldType.list,
           codec: FieldCodec(

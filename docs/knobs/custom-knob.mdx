@@ -42,28 +42,16 @@ The Knob class has several properties that can be overridden:
 @override
 List<Field> get fields => [
   DoubleInputField(
-    group: 'knobs',
     name: 'min-$label',
     initialValue: value.start,
-    onChanged: (context, value) {
-      //...
-    },
   ),
   DoubleInputField(
-    group: 'knobs',
     name: 'max-$label',
     initialValue: value.end,
-    onChanged: (context, value) {
-      //...
-    },
   ),
 ];
 
 ```
-
-Each `DoubleInputField` also has an `onChanged` callback that's triggered when the field's
-value is changed. Inside this callback, we update the knob value using
-`WidgetbookState.of(context).updateKnobValue()` method.
 
 - `valueFromQueryGroup`: This property is used to parse the value of the knob from a query
   string.

@@ -26,32 +26,10 @@ class RangeKnob extends Knob<RangeValues> {
         DoubleInputField(
           name: 'min-$label',
           initialValue: value.start,
-          onChanged: (context, value) {
-            if (value == null) return;
-
-            final state = WidgetbookState.of(context);
-            final endValue = (state.knobs[label]!.value as RangeValues).end;
-
-            state.knobs.updateValue<RangeValues>(
-              label,
-              RangeValues(value, endValue),
-            );
-          },
         ),
         DoubleInputField(
           name: 'max-$label',
           initialValue: value.end,
-          onChanged: (context, value) {
-            if (value == null) return;
-
-            final state = WidgetbookState.of(context);
-            final startValue = (state.knobs[label]!.value as RangeValues).start;
-
-            state.knobs.updateValue<RangeValues>(
-              label,
-              RangeValues(startValue, value),
-            );
-          },
         ),
       ];
 

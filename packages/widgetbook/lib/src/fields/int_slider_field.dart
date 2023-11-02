@@ -7,7 +7,7 @@ class IntSliderField extends NumSliderField<int> {
   IntSliderField({
     required super.name,
     super.initialValue = 0,
-    super.onChanged,
+    @deprecated super.onChanged,
     required super.min,
     required super.max,
     this.divisions,

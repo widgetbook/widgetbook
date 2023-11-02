@@ -15,12 +15,6 @@ class MockField extends Field<bool> {
 
   final Fn3Mock<Widget, BuildContext, String, bool?> toWidgetMock = Fn3Mock();
   final FnMock<Map<String, dynamic>> toJsonMock = FnMock();
-  final VoidFn2Mock<BuildContext, bool?> onChangeMock = VoidFn2Mock();
-
-  @override
-  void Function(BuildContext context, bool? value)? get onChanged {
-    return onChangeMock.call;
-  }
 
   @override
   Widget toWidget(
@@ -128,10 +122,6 @@ void main() {
               state.queryParams[group],
             ),
           );
-
-          verify(
-            () => field.onChangeMock(any(), true),
-          ).called(1);
 
           expect(result, equals(true));
         },

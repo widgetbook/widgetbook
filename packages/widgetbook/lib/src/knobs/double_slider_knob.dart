@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 
 import '../fields/fields.dart';
-import '../state/state.dart';
 import 'knob.dart';
 
 @internal
@@ -37,10 +36,6 @@ class DoubleSliderKnob extends Knob<double?> {
         min: min,
         max: max,
         divisions: divisions,
-        onChanged: (context, value) {
-          if (value == null) return;
-          WidgetbookState.of(context).knobs.updateValue(label, value);
-        },
       ),
     ];
   }

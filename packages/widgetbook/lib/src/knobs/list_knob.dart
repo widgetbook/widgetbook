@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 
 import '../fields/fields.dart';
-import '../state/state.dart';
 import 'knob.dart';
 
 @internal
@@ -33,10 +32,6 @@ class ListKnob<T> extends Knob<T?> {
         values: options,
         initialValue: value,
         labelBuilder: labelBuilder ?? ListField.defaultLabelBuilder,
-        onChanged: (context, value) {
-          if (value == null) return;
-          WidgetbookState.of(context).knobs.updateValue<T>(label, value);
-        },
       ),
     ];
   }

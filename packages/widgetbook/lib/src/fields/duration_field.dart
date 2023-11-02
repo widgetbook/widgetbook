@@ -8,7 +8,7 @@ class DurationField extends Field<Duration> {
   DurationField({
     required super.name,
     super.initialValue = defaultDuration,
-    super.onChanged,
+    @deprecated super.onChanged,
   }) : super(
           type: FieldType.duration,
           codec: FieldCodec(
