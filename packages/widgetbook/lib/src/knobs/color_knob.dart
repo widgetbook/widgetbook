@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:meta/meta.dart';
 
 import '../fields/fields.dart';
-import '../state/state.dart';
 import 'knob.dart';
 
 @internal
@@ -24,10 +23,6 @@ class ColorKnob extends Knob<Color> {
         name: label,
         initialValue: value,
         initialColorSpace: initialColorSpace,
-        onChanged: (context, value) {
-          if (value == null) return;
-          WidgetbookState.of(context).knobs.updateValue(label, value);
-        },
       ),
     ];
   }

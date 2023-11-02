@@ -19,7 +19,7 @@ class DateTimeField extends Field<DateTime> {
   DateTimeField({
     required super.name,
     required super.initialValue,
-    super.onChanged,
+    @deprecated super.onChanged,
     required this.start,
     required this.end,
   }) : super(

@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 
 import '../fields/fields.dart';
-import '../state/state.dart';
 import 'knob.dart';
 
 @internal
@@ -36,10 +35,6 @@ class DateTimeKnob extends Knob<DateTime?> {
         initialValue: value,
         start: start,
         end: end,
-        onChanged: (context, value) {
-          if (value == null) return;
-          WidgetbookState.of(context).knobs.updateValue(label, value);
-        },
       ),
     ];
   }

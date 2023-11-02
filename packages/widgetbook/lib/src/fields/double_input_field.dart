@@ -9,7 +9,7 @@ class DoubleInputField extends NumInputField<double> {
   DoubleInputField({
     required super.name,
     super.initialValue = 0,
-    super.onChanged,
+    @deprecated super.onChanged,
   }) : super(
           type: FieldType.doubleInput,
         );

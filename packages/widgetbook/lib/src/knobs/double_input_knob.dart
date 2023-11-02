@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 
 import '../fields/fields.dart';
-import '../state/widgetbook_state.dart';
 import 'knob.dart';
 
 @internal
@@ -24,10 +23,6 @@ class DoubleInputKnob extends Knob<double?> {
       DoubleInputField(
         name: label,
         initialValue: value,
-        onChanged: (context, value) {
-          if (value == null) return;
-          WidgetbookState.of(context).knobs.updateValue(label, value);
-        },
       ),
     ];
   }

@@ -9,7 +9,7 @@ class BooleanField extends Field<bool> {
   BooleanField({
     required super.name,
     super.initialValue = true,
-    super.onChanged,
+    @deprecated super.onChanged,
   }) : super(
           type: FieldType.boolean,
           codec: FieldCodec(

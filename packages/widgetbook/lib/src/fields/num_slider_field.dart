@@ -7,7 +7,7 @@ class NumSliderField<T extends num> extends Field<T> {
     required super.name,
     this.divisions,
     super.initialValue,
-    super.onChanged,
+    @deprecated super.onChanged,
     required this.min,
     required this.max,
     required super.codec,

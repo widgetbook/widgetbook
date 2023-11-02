@@ -6,7 +6,7 @@ class IntInputField extends NumInputField<int> {
   IntInputField({
     required super.name,
     super.initialValue = 0,
-    super.onChanged,
+    @deprecated super.onChanged,
   }) : super(
           type: FieldType.intInput,
         );
