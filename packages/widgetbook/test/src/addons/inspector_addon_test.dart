@@ -10,7 +10,7 @@ void main() {
     final addon = InspectorAddon();
 
     test('initial setting is false', () {
-      expect(addon.initialSetting, isFalse);
+      expect(addon.enabled, isFalse);
     });
 
     test('fields contain isEnabled BooleanField with initial value false', () {

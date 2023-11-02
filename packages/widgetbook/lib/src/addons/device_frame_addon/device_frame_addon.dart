@@ -11,23 +11,22 @@ import 'none_device.dart';
 class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
   DeviceFrameAddon({
     required List<DeviceInfo> devices,
-    DeviceInfo? initialDevice,
+    this.initialDevice = NoneDevice.instance,
   })  : assert(
           devices.isNotEmpty,
           'devices cannot be empty',
         ),
         assert(
-          initialDevice == null || devices.contains(initialDevice),
+          initialDevice == NoneDevice.instance ||
+              devices.contains(initialDevice),
           'initialDevice must be in devices',
         ),
         this.devices = [NoneDevice.instance, ...devices],
         super(
           name: 'Device',
-          initialSetting: DeviceFrameSetting(
-            device: initialDevice ?? NoneDevice.instance,
-          ),
         );
 
+  final DeviceInfo initialDevice;
   final List<DeviceInfo> devices;
 
   @override
@@ -36,13 +35,13 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
       ListField<DeviceInfo>(
         name: 'name',
         values: devices,
-        initialValue: initialSetting.device,
+        initialValue: initialDevice,
         labelBuilder: (device) => device.name,
       ),
       ListField<Orientation>(
         name: 'orientation',
         values: Orientation.values,
-        initialValue: initialSetting.orientation,
+        initialValue: Orientation.portrait,
         labelBuilder: (orientation) =>
             orientation.name.substring(0, 1).toUpperCase() +
             orientation.name.substring(1),
@@ -50,7 +49,7 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
       ListField<bool>(
         name: 'frame',
         values: [false, true],
-        initialValue: initialSetting.hasFrame,
+        initialValue: true,
         labelBuilder: (hasFrame) => hasFrame ? 'Device Frame' : 'None',
       ),
     ];

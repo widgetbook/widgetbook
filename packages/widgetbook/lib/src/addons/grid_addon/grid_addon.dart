@@ -5,11 +5,11 @@ import '../common/common.dart';
 import 'grid_painter.dart';
 
 class GridAddon extends WidgetbookAddon<int> {
-  GridAddon([this.dimension = 50])
-      : assert(dimension > 0),
+  GridAddon([
+    this.dimension = 50,
+  ])  : assert(dimension > 0),
         super(
           name: 'Grid',
-          initialSetting: dimension,
         );
 
   final int dimension;
