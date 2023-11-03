@@ -44,6 +44,7 @@ void main() {
               context.knobs
                   .booleanOrNull(
                     label: 'Knob',
+                    initialValue: false,
                   )
                   .toString(),
             ),
@@ -68,6 +69,7 @@ void main() {
               context.knobs
                   .booleanOrNull(
                     label: 'Knob',
+                    initialValue: false,
                   )
                   .toString(),
             ),
