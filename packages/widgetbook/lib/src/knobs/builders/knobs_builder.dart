@@ -48,7 +48,7 @@ class KnobsBuilder {
   bool? booleanOrNull({
     required String label,
     String? description,
-    bool? initialValue = false,
+    bool? initialValue,
   }) {
     return onKnobAdded(
       BooleanKnob.nullable(
