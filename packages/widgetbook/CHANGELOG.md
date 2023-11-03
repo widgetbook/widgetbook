@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **BREAKING**: Set minimum SDK version to 2.19.0 & minimum Flutter version to 3.7.0. ([#1030](https://github.com/widgetbook/widgetbook/pull/1030))
 - **FEAT**: Introduce `WidgetbookLeafComponent` navigation node for components with a single use-case. ([#1015](https://github.com/widgetbook/widgetbook/pull/1015))
 - **FIX**: Add default values for `slider` knobs' parameters. ([#1016](https://github.com/widgetbook/widgetbook/pull/1016))
 - **FIX**: Use `MapMixin` instead of `MapBase` for `KnobsRegistry`. ([#903](https://github.com/widgetbook/widgetbook/pull/903))
