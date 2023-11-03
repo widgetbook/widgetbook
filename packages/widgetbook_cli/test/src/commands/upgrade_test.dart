@@ -23,7 +23,7 @@ void main() {
       when(() => logger.progress(any())).thenReturn(MockProgress());
       when(
         () => pubUpdater.update(packageName: packageName),
-      ).thenAnswer((_) => Future.value(FakeProcessResult()));
+      ).thenAnswer((_) => Future.value(MockProcessResult.success('')));
 
       when(() => globalContext.environment).thenReturn(FakeEnvironment());
 

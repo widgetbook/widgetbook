@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **BREAKING**: Set minimum SDK version to 2.19.0. ([#1030](https://github.com/widgetbook/widgetbook/pull/1030))
 - **FEAT**: Add `designLink` to `WidgetbookUseCase`. ([#926](https://github.com/widgetbook/widgetbook/pull/926))
 - **FEAT**: Support custom `path` for `@UseCase`. ([#988](https://github.com/widgetbook/widgetbook/pull/988))
 - **FEAT**: Support `WidgetbookLeafComponent` navigation node for components with a single use-case. ([#1015](https://github.com/widgetbook/widgetbook/pull/1015))

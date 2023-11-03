@@ -73,8 +73,6 @@ class MockStdin extends Mock implements Stdin {}
 
 class MockProcessManager extends Mock implements ProcessManager {}
 
-class FakeProcessResult extends Fake implements ProcessResult {}
-
 class MockProcessResult {
   static ProcessResult success(String result) {
     return ProcessResult(
