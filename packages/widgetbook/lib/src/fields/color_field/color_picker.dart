@@ -51,7 +51,9 @@ class _ColorPickerState extends State<ColorPicker> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
           children: [
             Container(
               padding: const EdgeInsets.all(12),
@@ -63,9 +65,6 @@ class _ColorPickerState extends State<ColorPicker> {
                 Icons.square,
                 color: opaqueColor.toColor(),
               ),
-            ),
-            const SizedBox(
-              width: 8,
             ),
             DropdownMenu<ColorSpace>(
               width: 100,
@@ -82,10 +81,8 @@ class _ColorPickerState extends State<ColorPicker> {
                   )
                   .toList(),
             ),
-            const SizedBox(
-              width: 8,
-            ),
-            Expanded(
+            SizedBox(
+              width: 80,
               child: NumberTextField.percentage(
                 value: opacity,
                 onChanged: (value) {
