@@ -10,7 +10,7 @@ class NumInputField<T extends num> extends Field<T> {
     super.initialValue,
     @deprecated super.onChanged,
     required super.type,
-    this.formatters,
+    required this.formatters,
   }) : super(
           codec: FieldCodec<T>(
             toParam: (value) => value.toString(),
@@ -18,7 +18,7 @@ class NumInputField<T extends num> extends Field<T> {
           ),
         );
 
-  final List<TextInputFormatter>? formatters;
+  final List<TextInputFormatter> formatters;
 
   @override
   Widget toWidget(BuildContext context, String group, T? value) {

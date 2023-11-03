@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import 'field_type.dart';
 import 'num_input_field.dart';
 
@@ -9,5 +11,8 @@ class IntInputField extends NumInputField<int> {
     @deprecated super.onChanged,
   }) : super(
           type: FieldType.intInput,
+          formatters: [
+            FilteringTextInputFormatter.digitsOnly,
+          ],
         );
 }
