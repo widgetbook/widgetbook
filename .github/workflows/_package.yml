@@ -14,8 +14,31 @@ on:
         required: false
         type: boolean
         default: true
+      min_flutter_version:
+        required: true
+        type: string
 
 jobs:
+
+  check-min-version:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ inputs.min_flutter_version }}
+
+      - name: Check Dependencies Compitability
+        run: flutter pub get
+
   doctor:
     runs-on: ubuntu-latest
 
