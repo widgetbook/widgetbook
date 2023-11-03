@@ -59,8 +59,7 @@ class KnobsBuilder {
     );
   }
 
-  /// Creates a textfield that can be typed in and optionally hold a
-  /// color value
+  /// Creates a color picker that can be used to select a color.
   Color color({
     required String label,
     required Color initialValue,
@@ -75,6 +74,23 @@ class KnobsBuilder {
         description: description,
       ),
     )!;
+  }
+
+  /// Creates a color picker that can be used to select a color.
+  Color? colorOrNull({
+    required String label,
+    Color? initialValue,
+    ColorSpace initialColorSpace = ColorSpace.hex,
+    String? description,
+  }) {
+    return onKnobAdded(
+      ColorKnob.nullable(
+        label: label,
+        initialValue: initialValue,
+        initialColorSpace: initialColorSpace,
+        description: description,
+      ),
+    );
   }
 
   /// Creates a textfield that can be typed in

@@ -98,7 +98,9 @@ class WidgetbookApp extends StatelessWidget {
                       label: 'color',
                       initialValue: const Color(0xFF000000),
                     ),
-                    nullable: null, // N/A
+                    nullable: context.knobs.colorOrNull(
+                      label: 'colorOrNull',
+                    ), // N/A
                   ),
                   KnobEntry<Duration>(
                     name: 'Duration',
@@ -123,7 +125,6 @@ class WidgetbookApp extends StatelessWidget {
                     ),
                     nullable: context.knobs.dateTimeOrNull(
                       label: 'dateTimeOrNull',
-                      initialValue: initialDate,
                       start: DateTime(initialDate.year - 1),
                       end: DateTime(initialDate.year + 1),
                     ),
