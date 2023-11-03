@@ -6,7 +6,7 @@ import '../fields/fields.dart';
 import 'knob.dart';
 
 @internal
-class ColorKnob extends Knob<Color> {
+class ColorKnob extends Knob<Color?> {
   ColorKnob({
     required super.label,
     required super.initialValue,
@@ -14,7 +14,14 @@ class ColorKnob extends Knob<Color> {
     this.initialColorSpace = ColorSpace.hex,
   });
 
-  ColorSpace initialColorSpace;
+  ColorKnob.nullable({
+    required super.label,
+    required super.initialValue,
+    super.description,
+    this.initialColorSpace = ColorSpace.hex,
+  }) : super(isNullable: true);
+
+  final ColorSpace initialColorSpace;
 
   @override
   List<Field> get fields {
@@ -28,7 +35,7 @@ class ColorKnob extends Knob<Color> {
   }
 
   @override
-  Color valueFromQueryGroup(Map<String, String> group) {
-    return valueOf(label, group)!;
+  Color? valueFromQueryGroup(Map<String, String> group) {
+    return valueOf(label, group);
   }
 }
