@@ -14,6 +14,7 @@ void main() {
         name: 'double_input_field',
         initialValue: 5.0,
         type: FieldType.doubleInput,
+        formatters: [],
       );
 
       test(
