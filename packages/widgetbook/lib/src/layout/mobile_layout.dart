@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../navigation/navigation.dart';
 import '../settings/settings.dart';
 import '../state/state.dart';
+import 'shell_mixin.dart';
 
-class MobileWidgetbookShell extends StatefulWidget {
+class MobileWidgetbookShell extends StatelessWidget with WidgetbookShellMixin {
   const MobileWidgetbookShell({
     super.key,
     required this.child,
@@ -11,11 +11,6 @@ class MobileWidgetbookShell extends StatefulWidget {
 
   final Widget child;
 
-  @override
-  State<MobileWidgetbookShell> createState() => MobileWidgetbookShellState();
-}
-
-class MobileWidgetbookShellState extends State<MobileWidgetbookShell> {
   void _showModalBottomSheet(BuildContext context, Widget child) {
     showModalBottomSheet<void>(
       context: context,
@@ -49,48 +44,19 @@ class MobileWidgetbookShellState extends State<MobileWidgetbookShell> {
             case 0:
               _showModalBottomSheet(
                 context,
-                NavigationPanel(
-                  initialPath: state.path,
-                  root: state.root,
-                  onNodeSelected: (node) {
-                    WidgetbookState.of(context).updatePath(node.path);
-                  },
-                ),
+                buildNavigationPanel(context, state),
               );
               break;
             case 1:
               _showModalBottomSheet(
                 context,
-                SettingsPanel(
-                  settings: [
-                    if (state.addons != null) ...{
-                      SettingsPanelData(
-                        name: 'Addons',
-                        builder: (context) => WidgetbookState.of(context)
-                            .effectiveAddons!
-                            .map((addon) => addon.buildFields(context))
-                            .toList(),
-                      ),
-                    },
-                  ],
-                ),
+                SettingsPanel(settings: [buildAddonsPanel(context, state)]),
               );
               break;
             case 2:
               _showModalBottomSheet(
                 context,
-                SettingsPanel(
-                  settings: [
-                    SettingsPanelData(
-                      name: 'Knobs',
-                      builder: (context) => WidgetbookState.of(context)
-                          .knobs
-                          .values
-                          .map((knob) => knob.buildFields(context))
-                          .toList(),
-                    ),
-                  ],
-                ),
+                SettingsPanel(settings: [buildKnobsPanel(context, state)]),
               );
               break;
           }
@@ -98,7 +64,7 @@ class MobileWidgetbookShellState extends State<MobileWidgetbookShell> {
       ),
       body: Container(
         // Content of the Widgetbook shell
-        child: widget.child,
+        child: child,
       ),
     );
   }
