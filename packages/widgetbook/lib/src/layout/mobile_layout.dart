@@ -11,15 +11,6 @@ class MobileWidgetbookShell extends StatelessWidget with WidgetbookShellMixin {
 
   final Widget child;
 
-  void _showModalBottomSheet(BuildContext context, Widget child) {
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (context) {
-        return child;
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
@@ -27,39 +18,39 @@ class MobileWidgetbookShell extends StatelessWidget with WidgetbookShellMixin {
       bottomNavigationBar: BottomNavigationBar(
         items: [
           const BottomNavigationBarItem(
-            icon: Icon(Icons.navigation),
+            icon: Icon(Icons.list_outlined),
             label: 'Navigation',
           ),
           const BottomNavigationBarItem(
-            icon: Icon(Icons.add),
+            icon: Icon(Icons.dashboard_customize_outlined),
             label: 'Addons',
           ),
           const BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.tune_outlined),
             label: 'Knobs',
           ),
         ],
         onTap: (index) {
+          Widget panel;
           switch (index) {
             case 0:
-              _showModalBottomSheet(
-                context,
-                buildNavigationPanel(context, state),
-              );
+              panel = buildNavigationPanel(context, state);
               break;
             case 1:
-              _showModalBottomSheet(
-                context,
-                SettingsPanel(settings: [buildAddonsPanel(context, state)]),
-              );
+              panel =
+                  SettingsPanel(settings: [buildAddonsPanel(context, state)]);
               break;
             case 2:
-              _showModalBottomSheet(
-                context,
-                SettingsPanel(settings: [buildKnobsPanel(context, state)]),
-              );
+              panel =
+                  SettingsPanel(settings: [buildKnobsPanel(context, state)]);
               break;
+            default:
+              throw Exception('Invalid index');
           }
+          showModalBottomSheet<void>(
+            context: context,
+            builder: (context) => panel,
+          );
         },
       ),
       body: Container(

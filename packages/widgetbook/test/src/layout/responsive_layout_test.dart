@@ -156,7 +156,7 @@ void main() {
           await tester.pumpAndSettle();
 
           expect(
-            find.byType(SettingsPanel, skipOffstage: false),
+            find.byType(SettingsPanel),
             findsOneWidget,
           );
 
@@ -201,7 +201,7 @@ void main() {
           await tester.pumpAndSettle();
 
           expect(
-            find.byType(SettingsPanel, skipOffstage: false),
+            find.byType(SettingsPanel),
             findsOneWidget,
           );
 
