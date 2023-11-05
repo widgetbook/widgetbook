@@ -110,7 +110,7 @@ void main() {
             ),
           );
 
-          await tester.tap(find.byIcon(Icons.navigation));
+          await tester.tap(find.byIcon(Icons.list_outlined));
           await tester.pumpAndSettle();
 
           expect(find.byType(NavigationPanel), findsOneWidget);
@@ -152,7 +152,7 @@ void main() {
             ),
           );
 
-          await tester.tap(find.byIcon(Icons.add));
+          await tester.tap(find.byIcon(Icons.dashboard_customize_outlined));
           await tester.pumpAndSettle();
 
           expect(
@@ -197,7 +197,7 @@ void main() {
             ),
           );
 
-          await tester.tap(find.byIcon(Icons.settings));
+          await tester.tap(find.byIcon(Icons.tune_outlined));
           await tester.pumpAndSettle();
 
           expect(
