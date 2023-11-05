@@ -8,9 +8,7 @@ class BuilderAddon extends WidgetbookAddon<void> {
   BuilderAddon({
     required super.name,
     required this.builder,
-  }) : super(
-          initialSetting: null,
-        );
+  });
 
   final Widget Function(BuildContext context, Widget child) builder;
 

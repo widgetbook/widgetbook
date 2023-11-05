@@ -6,11 +6,12 @@ import '../common/common.dart';
 /// A [WidgetbookAddon] for wrapping use-cases with [Align] widget.
 class AlignmentAddon extends WidgetbookAddon<Alignment> {
   AlignmentAddon({
-    Alignment initialAlignment = Alignment.center,
+    this.initialAlignment = Alignment.center,
   }) : super(
           name: 'Alignment',
-          initialSetting: initialAlignment,
         );
+
+  final Alignment initialAlignment;
 
   static final alignments = {
     Alignment.topLeft: 'Top Left',
@@ -29,7 +30,7 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
     return [
       ListField<Alignment>(
         name: 'alignment',
-        initialValue: initialSetting,
+        initialValue: initialAlignment,
         values: alignments.keys.toList(),
         labelBuilder: (value) => alignments[value]!,
       ),

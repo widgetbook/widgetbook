@@ -65,30 +65,30 @@ void main() {
     test('IntKnob.nullable constructor sets correct values', () {
       final knob = IntInputKnob.nullable(
         label: 'Test Int',
-        value: 5,
+        initialValue: 5,
         description: 'A test int knob',
       );
 
       expect(knob.label, 'Test Int');
-      expect(knob.value, 5);
+      expect(knob.initialValue, 5);
       expect(knob.description, 'A test int knob');
     });
 
     test('IntKnob.nullable constructor handles null value', () {
       final knob = IntInputKnob.nullable(
         label: 'Test Int',
-        value: null,
+        initialValue: null,
         description: 'A test int knob with null value',
       );
 
       expect(knob.label, 'Test Int');
-      expect(knob.value, null);
+      expect(knob.initialValue, null);
       expect(knob.description, 'A test int knob with null value');
     });
   });
 
   group('$KnobsBuilder', () {
-    int? mockOnKnobAdded<int>(Knob<int?> knob) => knob.value;
+    int? mockOnKnobAdded<int>(Knob<int?> knob) => knob.initialValue;
     final builder = KnobsBuilder(mockOnKnobAdded);
 
     test('intOrNull sets correct values', () {

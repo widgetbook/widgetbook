@@ -1,20 +1,19 @@
 import 'package:meta/meta.dart';
 
 import '../fields/fields.dart';
-import '../state/state.dart';
 import 'knob.dart';
 
 @internal
 class BooleanKnob extends Knob<bool?> {
   BooleanKnob({
     required super.label,
-    required super.value,
+    required super.initialValue,
     super.description,
   });
 
   BooleanKnob.nullable({
     required super.label,
-    required super.value,
+    required super.initialValue,
     super.description,
   }) : super(isNullable: true);
 
@@ -23,11 +22,7 @@ class BooleanKnob extends Knob<bool?> {
     return [
       BooleanField(
         name: label,
-        initialValue: value,
-        onChanged: (context, value) {
-          if (value == null) return;
-          WidgetbookState.of(context).knobs.updateValue(label, value);
-        },
+        initialValue: initialValue,
       ),
     ];
   }

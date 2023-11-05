@@ -13,8 +13,8 @@ values.
 ## Creating a Custom Knob
 
 To create a custom knob, you must extend the `Knob` class from the `widgetbook` package.
-This class has a `label` and `value` property, both required. The `label` uniquely
-identifies the Knob, and the `value` holds the current value of the Knob.
+This class has a `label` and `initialValue` property. The `label` uniquely
+identifies the Knob, and the `initialValue` holds the initial value of the Knob.
 
 For our `RangeSlider`, we create a `RangeKnob` class that extends `Knob<RangeValues>`.
 `RangeValues` is a class in Flutter that holds two double values - start and end,
@@ -24,7 +24,7 @@ representing the range.
 class RangeKnob extends Knob<RangeValues> {
   RangeKnob({
     required super.label,
-    required super.value,
+    required super.initialValue,
   });
   //...
 }
@@ -42,28 +42,16 @@ The Knob class has several properties that can be overridden:
 @override
 List<Field> get fields => [
   DoubleInputField(
-    group: 'knobs',
     name: 'min-$label',
-    initialValue: value.start,
-    onChanged: (context, value) {
-      //...
-    },
+    initialValue: initialValue.start,
   ),
   DoubleInputField(
-    group: 'knobs',
     name: 'max-$label',
-    initialValue: value.end,
-    onChanged: (context, value) {
-      //...
-    },
+    initialValue: initialValue.end,
   ),
 ];
 
 ```
-
-Each `DoubleInputField` also has an `onChanged` callback that's triggered when the field's
-value is changed. Inside this callback, we update the knob value using
-`WidgetbookState.of(context).updateKnobValue()` method.
 
 - `valueFromQueryGroup`: This property is used to parse the value of the knob from a query
   string.
@@ -93,7 +81,7 @@ extension RangeKnobBuilder on KnobsBuilder {
       onKnobAdded(
         RangeKnob(
           label: label,
-          value: initialValue,
+          initialValue: initialValue,
         ),
       )!;
 }

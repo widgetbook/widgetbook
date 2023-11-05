@@ -11,7 +11,6 @@ class TimeDilationAddon extends WidgetbookAddon<double> {
   TimeDilationAddon()
       : super(
           name: 'Time Dilation',
-          initialSetting: 1,
         );
 
   static const values = <double>[0.25, 0.5, 1, 2, 4, 8, 16];
@@ -22,7 +21,7 @@ class TimeDilationAddon extends WidgetbookAddon<double> {
       ListField<double>(
         name: 'value',
         values: values,
-        initialValue: initialSetting,
+        initialValue: 1,
         labelBuilder: (scale) => scale.toStringAsFixed(2),
       ),
     ];

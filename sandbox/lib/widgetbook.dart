@@ -21,6 +21,7 @@ class WidgetbookApp extends StatelessWidget {
         WidgetbookCloudIntegration(),
       ],
       addons: [
+        AccessibilityAddon(),
         TimeDilationAddon(),
         DeviceFrameAddon(
           devices: [

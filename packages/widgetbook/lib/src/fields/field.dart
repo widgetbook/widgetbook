@@ -28,7 +28,7 @@ abstract class Field<T> {
     required this.type,
     required this.initialValue,
     required this.codec,
-    this.onChanged,
+    @deprecated this.onChanged,
   });
 
   /// Name of this inside the query group.
@@ -47,6 +47,7 @@ abstract class Field<T> {
   /// Callback for when [Field]'s value changed through:
   /// 1. [WidgetbookState.queryParams], used for deep linking.
   /// 2. [Field]'s widget from the side panel.
+  @Deprecated('Fields should not be aware of their context')
   final void Function(BuildContext context, T? value)? onChanged;
 
   /// Extracts the value from [groupMap],
@@ -68,8 +69,6 @@ abstract class Field<T> {
   Widget toWidget(BuildContext context, String group, T? value);
 
   void updateField(BuildContext context, String group, T value) {
-    onChanged?.call(context, value);
-
     WidgetbookState.of(context).updateQueryField(
       group: group,
       field: name,

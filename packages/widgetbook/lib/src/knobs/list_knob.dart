@@ -1,14 +1,13 @@
 import 'package:meta/meta.dart';
 
 import '../fields/fields.dart';
-import '../state/state.dart';
 import 'knob.dart';
 
 @internal
 class ListKnob<T> extends Knob<T?> {
   ListKnob({
     required super.label,
-    required super.value,
+    required super.initialValue,
     required this.options,
     super.description,
     this.labelBuilder,
@@ -16,7 +15,7 @@ class ListKnob<T> extends Knob<T?> {
 
   ListKnob.nullable({
     required super.label,
-    required super.value,
+    required super.initialValue,
     required this.options,
     super.description,
     this.labelBuilder,
@@ -31,12 +30,8 @@ class ListKnob<T> extends Knob<T?> {
       ListField<T>(
         name: label,
         values: options,
-        initialValue: value,
+        initialValue: initialValue,
         labelBuilder: labelBuilder ?? ListField.defaultLabelBuilder,
-        onChanged: (context, value) {
-          if (value == null) return;
-          WidgetbookState.of(context).knobs.updateValue<T>(label, value);
-        },
       ),
     ];
   }

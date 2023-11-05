@@ -1,14 +1,13 @@
 import 'package:meta/meta.dart';
 
 import '../fields/fields.dart';
-import '../state/state.dart';
 import 'knob.dart';
 
 @internal
 class IntSliderKnob extends Knob<int?> {
   IntSliderKnob({
     required super.label,
-    required super.value,
+    required super.initialValue,
     super.description,
     this.max = 1,
     this.min = 0,
@@ -17,7 +16,7 @@ class IntSliderKnob extends Knob<int?> {
 
   IntSliderKnob.nullable({
     required super.label,
-    required super.value,
+    required super.initialValue,
     super.description,
     this.max = 1,
     this.min = 0,
@@ -33,14 +32,10 @@ class IntSliderKnob extends Knob<int?> {
     return [
       IntSliderField(
         name: label,
-        initialValue: value,
+        initialValue: initialValue,
         min: min,
         max: max,
         divisions: divisions,
-        onChanged: (context, value) {
-          if (value == null) return;
-          WidgetbookState.of(context).knobs.updateValue(label, value);
-        },
       ),
     ];
   }

@@ -1,14 +1,13 @@
 import 'package:meta/meta.dart';
 
 import '../fields/fields.dart';
-import '../state/state.dart';
 import 'knob.dart';
 
 @internal
 class DateTimeKnob extends Knob<DateTime?> {
   DateTimeKnob({
     required super.label,
-    required super.value,
+    required super.initialValue,
     super.description,
     required this.start,
     required this.end,
@@ -16,7 +15,7 @@ class DateTimeKnob extends Knob<DateTime?> {
 
   DateTimeKnob.nullable({
     required super.label,
-    required super.value,
+    required super.initialValue,
     super.description,
     required this.start,
     required this.end,
@@ -33,13 +32,9 @@ class DateTimeKnob extends Knob<DateTime?> {
     return [
       DateTimeField(
         name: label,
-        initialValue: value,
+        initialValue: initialValue,
         start: start,
         end: end,
-        onChanged: (context, value) {
-          if (value == null) return;
-          WidgetbookState.of(context).knobs.updateValue(label, value);
-        },
       ),
     ];
   }

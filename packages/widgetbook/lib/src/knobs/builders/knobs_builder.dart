@@ -38,7 +38,7 @@ class KnobsBuilder {
       BooleanKnob(
         label: label,
         description: description,
-        value: initialValue,
+        initialValue: initialValue,
       ),
     )!;
   }
@@ -48,19 +48,18 @@ class KnobsBuilder {
   bool? booleanOrNull({
     required String label,
     String? description,
-    bool? initialValue = false,
+    bool? initialValue,
   }) {
     return onKnobAdded(
       BooleanKnob.nullable(
         label: label,
         description: description,
-        value: initialValue,
+        initialValue: initialValue,
       ),
     );
   }
 
-  /// Creates a textfield that can be typed in and optionally hold a
-  /// color value
+  /// Creates a color picker that can be used to select a color.
   Color color({
     required String label,
     required Color initialValue,
@@ -70,11 +69,28 @@ class KnobsBuilder {
     return onKnobAdded(
       ColorKnob(
         label: label,
-        value: initialValue,
+        initialValue: initialValue,
         initialColorSpace: initialColorSpace,
         description: description,
       ),
     )!;
+  }
+
+  /// Creates a color picker that can be used to select a color.
+  Color? colorOrNull({
+    required String label,
+    Color? initialValue,
+    ColorSpace initialColorSpace = ColorSpace.hex,
+    String? description,
+  }) {
+    return onKnobAdded(
+      ColorKnob.nullable(
+        label: label,
+        initialValue: initialValue,
+        initialColorSpace: initialColorSpace,
+        description: description,
+      ),
+    );
   }
 
   /// Creates a textfield that can be typed in
@@ -87,7 +103,7 @@ class KnobsBuilder {
     return onKnobAdded(
       StringKnob(
         label: label,
-        value: initialValue,
+        initialValue: initialValue,
         description: description,
         maxLines: maxLines,
       ),
@@ -105,7 +121,7 @@ class KnobsBuilder {
     return onKnobAdded(
       StringKnob.nullable(
         label: label,
-        value: initialValue,
+        initialValue: initialValue,
         description: description,
         maxLines: maxLines,
       ),
@@ -125,7 +141,7 @@ class KnobsBuilder {
     return onKnobAdded(
       ListKnob<T>(
         label: label,
-        value: initialOption ?? options.first,
+        initialValue: initialOption ?? options.first,
         description: description,
         options: options,
         labelBuilder: labelBuilder,
@@ -146,7 +162,7 @@ class KnobsBuilder {
     return onKnobAdded(
       ListKnob<T?>.nullable(
         label: label,
-        value: initialOption ?? options.first,
+        initialValue: initialOption ?? options.first,
         description: description,
         options: options,
         labelBuilder: labelBuilder,
@@ -163,7 +179,7 @@ class KnobsBuilder {
     return onKnobAdded(
       DurationKnob(
         label: label,
-        value: initialValue,
+        initialValue: initialValue,
         description: description,
       ),
     )!;
@@ -179,7 +195,7 @@ class KnobsBuilder {
     return onKnobAdded(
       DurationKnob.nullable(
         label: label,
-        value: initialValue,
+        initialValue: initialValue,
         description: description,
       ),
     );
@@ -196,7 +212,7 @@ class KnobsBuilder {
     return onKnobAdded(
       DateTimeKnob(
         label: label,
-        value: initialValue,
+        initialValue: initialValue,
         description: description,
         start: start,
         end: end,
@@ -216,7 +232,7 @@ class KnobsBuilder {
     return onKnobAdded(
       DateTimeKnob.nullable(
         label: label,
-        value: initialValue,
+        initialValue: initialValue,
         description: description,
         start: start,
         end: end,

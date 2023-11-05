@@ -4,17 +4,19 @@ import '../../fields/fields.dart';
 import '../common/common.dart';
 
 class InspectorAddon extends WidgetbookAddon<bool> {
-  InspectorAddon({bool enabled = false})
-      : super(
+  InspectorAddon({
+    this.enabled = false,
+  }) : super(
           name: 'Inspector',
-          initialSetting: enabled,
         );
+
+  final bool enabled;
 
   @override
   List<Field> get fields => [
         BooleanField(
           name: 'isEnabled',
-          initialValue: initialSetting,
+          initialValue: enabled,
         ),
       ];
 
@@ -24,8 +26,12 @@ class InspectorAddon extends WidgetbookAddon<bool> {
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child, bool isEnabled) {
-    return isEnabled
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    bool setting,
+  ) {
+    return setting
         ? Scaffold(
             backgroundColor: const Color(0xFF121515),
             body: Inspector(child: child),

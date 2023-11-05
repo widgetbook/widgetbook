@@ -62,24 +62,24 @@ void main() {
     test('DoubleSliderKnob.nullable constructor sets correct values', () {
       final knob = DoubleSliderKnob.nullable(
         label: 'Test Int',
-        value: 5.0,
+        initialValue: 5.0,
         description: 'A test double knob',
       );
 
       expect(knob.label, 'Test Int');
-      expect(knob.value, 5.0);
+      expect(knob.initialValue, 5.0);
       expect(knob.description, 'A test double knob');
     });
 
     test('DoubleSliderKnob.nullable constructor handles null value', () {
       final knob = DoubleSliderKnob.nullable(
         label: 'Test double',
-        value: null,
+        initialValue: null,
         description: 'A test double knob with null value',
       );
 
       expect(knob.label, 'Test double');
-      expect(knob.value, null);
+      expect(knob.initialValue, null);
       expect(knob.description, 'A test double knob with null value');
     });
   });

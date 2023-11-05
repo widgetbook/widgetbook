@@ -12,10 +12,11 @@ screenshots:
     path: assets/logo.png
 
 environment:
-  sdk: ">=2.17.0 <4.0.0"
-  flutter: ">=3.0.0"
+  sdk: ">=2.19.0 <4.0.0"
+  flutter: ">=3.7.0"
 
 dependencies:
+  accessibility_tools: ">=0.2.0 <=1.0.0"
   collection: ^1.15.0
   device_frame: ^1.1.0
   flutter:

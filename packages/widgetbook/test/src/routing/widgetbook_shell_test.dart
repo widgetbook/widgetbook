@@ -7,7 +7,7 @@ import 'package:widgetbook/src/state/state.dart';
 
 void main() {
   group(
-    'WidgetbookShell',
+    '$WidgetbookShell',
     () {
       testWidgets(
         'given a small screen, '

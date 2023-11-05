@@ -17,3 +17,4 @@ jobs:
     uses: ./.github/workflows/_package.yml
     with:
       working_directory: packages/widgetbook
+      min_flutter_version: 3.7.0

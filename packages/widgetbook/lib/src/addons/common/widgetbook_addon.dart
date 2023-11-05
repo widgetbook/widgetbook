@@ -24,11 +24,13 @@ import '../addons.dart';
 abstract class WidgetbookAddon<T> extends FieldsComposable<T> {
   WidgetbookAddon({
     required this.name,
-    required this.initialSetting,
+    @Deprecated('Use local field instead') this.initialSetting,
   });
 
   final String name;
-  final T initialSetting;
+
+  @deprecated
+  final T? initialSetting;
 
   @override
   String get groupName => slugify(name);

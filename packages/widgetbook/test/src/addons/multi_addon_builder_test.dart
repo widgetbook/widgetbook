@@ -9,7 +9,6 @@ class MockAddon extends WidgetbookAddon<void> {
   MockAddon()
       : super(
           name: 'Mock Addon',
-          initialSetting: null,
         );
 
   @override

@@ -34,6 +34,7 @@ linter:
     - noop_primitive_operations
     - use_super_parameters
     - avoid_redundant_argument_values
+    - avoid_renaming_method_parameters
 
     # Types
     - unrelated_type_equality_checks

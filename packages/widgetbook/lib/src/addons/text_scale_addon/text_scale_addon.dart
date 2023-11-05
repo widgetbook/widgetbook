@@ -8,7 +8,7 @@ import '../common/common.dart';
 class TextScaleAddon extends WidgetbookAddon<double> {
   TextScaleAddon({
     required this.scales,
-    double? initialScale,
+    this.initialScale,
   })  : assert(
           scales.isNotEmpty,
           'scales cannot be empty',
@@ -19,9 +19,9 @@ class TextScaleAddon extends WidgetbookAddon<double> {
         ),
         super(
           name: 'Text scale',
-          initialSetting: initialScale ?? scales.first,
         );
 
+  final double? initialScale;
   final List<double> scales;
 
   @override
@@ -30,7 +30,7 @@ class TextScaleAddon extends WidgetbookAddon<double> {
       ListField<double>(
         name: 'factor',
         values: scales,
-        initialValue: initialSetting,
+        initialValue: initialScale ?? scales.first,
         labelBuilder: (scale) => scale.toStringAsFixed(2),
       ),
     ];

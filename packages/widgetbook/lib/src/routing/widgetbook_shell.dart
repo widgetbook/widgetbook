@@ -39,12 +39,14 @@ class DesktopWidgetbookShell extends StatelessWidget {
         percentages: [0.2, 0.6, 0.2],
         separatorColor: Colors.white24,
         children: [
-          NavigationPanel(
-            initialPath: state.path,
-            root: state.root,
-            onNodeSelected: (node) {
-              WidgetbookState.of(context).updatePath(node.path);
-            },
+          ExcludeSemantics(
+            child: NavigationPanel(
+              initialPath: state.path,
+              root: state.root,
+              onNodeSelected: (node) {
+                WidgetbookState.of(context).updatePath(node.path);
+              },
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -52,26 +54,28 @@ class DesktopWidgetbookShell extends StatelessWidget {
             ),
             child: child,
           ),
-          SettingsPanel(
-            settings: [
-              if (state.addons != null) ...{
+          ExcludeSemantics(
+            child: SettingsPanel(
+              settings: [
+                if (state.addons != null) ...{
+                  SettingsPanelData(
+                    name: 'Addons',
+                    builder: (context) => WidgetbookState.of(context)
+                        .effectiveAddons!
+                        .map((addon) => addon.buildFields(context))
+                        .toList(),
+                  ),
+                },
                 SettingsPanelData(
-                  name: 'Addons',
+                  name: 'Knobs',
                   builder: (context) => WidgetbookState.of(context)
-                      .effectiveAddons!
-                      .map((addon) => addon.buildFields(context))
+                      .knobs
+                      .values
+                      .map((knob) => knob.buildFields(context))
                       .toList(),
                 ),
-              },
-              SettingsPanelData(
-                name: 'Knobs',
-                builder: (context) => WidgetbookState.of(context)
-                    .knobs
-                    .values
-                    .map((knob) => knob.buildFields(context))
-                    .toList(),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

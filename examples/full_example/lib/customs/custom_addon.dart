@@ -6,31 +6,19 @@ import 'package:widgetbook/widgetbook.dart';
 
 class AlignmentAddon extends WidgetbookAddon<Alignment> {
   AlignmentAddon({
-    Alignment initialAlignment = Alignment.center,
+    this.initialAlignment = Alignment.center,
   }) : super(
           name: 'Alignment',
-          initialSetting: initialAlignment,
         );
 
-  @override
-  Widget buildUseCase(
-    BuildContext context,
-    Widget child,
-    Alignment setting,
-  ) {
-    // customize how the use case is built using your custom Addon
-    return Align(
-      alignment: setting,
-      child: child,
-    );
-  }
+  final Alignment initialAlignment;
 
   @override
   List<Field<Alignment>> get fields {
     return [
       ListField<Alignment>(
         name: 'alignment',
-        initialValue: initialSetting,
+        initialValue: initialAlignment,
         values: [
           Alignment.topLeft,
           Alignment.topCenter,
@@ -49,5 +37,18 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
   @override
   Alignment valueFromQueryGroup(Map<String, String> group) {
     return valueOf<Alignment>('alignment', group)!;
+  }
+
+  @override
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    Alignment setting,
+  ) {
+    // customize how the use case is built using your custom Addon
+    return Align(
+      alignment: setting,
+      child: child,
+    );
   }
 }

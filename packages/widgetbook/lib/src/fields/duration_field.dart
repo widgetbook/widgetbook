@@ -8,7 +8,7 @@ class DurationField extends Field<Duration> {
   DurationField({
     required super.name,
     super.initialValue = defaultDuration,
-    super.onChanged,
+    @deprecated super.onChanged,
   }) : super(
           type: FieldType.duration,
           codec: FieldCodec(
@@ -26,17 +26,20 @@ class DurationField extends Field<Duration> {
   static const defaultDuration = Duration.zero;
 
   @override
-  Widget toWidget(BuildContext context, String label, Duration? currentValue) {
+  Widget toWidget(
+    BuildContext context,
+    String group,
+    Duration? value,
+  ) {
     return TextFormField(
-      initialValue:
-          codec.toParam(currentValue ?? initialValue ?? defaultDuration),
+      initialValue: codec.toParam(value ?? initialValue ?? defaultDuration),
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
         suffix: Text('ms'),
       ),
       onChanged: (value) => updateField(
         context,
-        label,
+        group,
         codec.toValue(value) ?? initialValue ?? defaultDuration,
       ),
     );

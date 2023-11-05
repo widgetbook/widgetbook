@@ -20,7 +20,7 @@ class DoubleKnobsBuilder {
     return onKnobAdded(
       DoubleSliderKnob(
         label: label,
-        value: initialValue,
+        initialValue: initialValue,
         description: description,
         min: min,
         max: max,
@@ -39,7 +39,7 @@ class DoubleKnobsBuilder {
     return onKnobAdded(
       DoubleInputKnob(
         label: label,
-        value: initialValue,
+        initialValue: initialValue,
         description: description,
       ),
     )!;
@@ -67,7 +67,7 @@ class DoubleOrNullKnobsBuilder {
     return onKnobAdded(
       DoubleSliderKnob.nullable(
         label: label,
-        value: initialValue,
+        initialValue: initialValue,
         description: description,
         min: min,
         max: max,
@@ -87,7 +87,7 @@ class DoubleOrNullKnobsBuilder {
     return onKnobAdded(
       DoubleInputKnob.nullable(
         label: label,
-        value: initialValue,
+        initialValue: initialValue,
         description: description,
       ),
     );

@@ -1,21 +1,20 @@
 import 'package:meta/meta.dart';
 
 import '../fields/fields.dart';
-import '../state/state.dart';
 import 'knob.dart';
 
 @internal
 class StringKnob extends Knob<String?> {
   StringKnob({
     required super.label,
-    required super.value,
+    required super.initialValue,
     super.description,
     this.maxLines,
   });
 
   StringKnob.nullable({
     required super.label,
-    required super.value,
+    required super.initialValue,
     super.description,
     this.maxLines,
   }) : super(isNullable: true);
@@ -27,12 +26,8 @@ class StringKnob extends Knob<String?> {
     return [
       StringField(
         name: label,
-        initialValue: value,
+        initialValue: initialValue,
         maxLines: maxLines,
-        onChanged: (context, value) {
-          if (value == null) return;
-          WidgetbookState.of(context).knobs.updateValue(label, value);
-        },
       ),
     ];
   }

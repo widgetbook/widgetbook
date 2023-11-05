@@ -11,15 +11,16 @@ abstract class Knob<T> extends FieldsComposable<T> {
   Knob({
     required this.label,
     this.description,
-    required this.value,
+    @Deprecated('Use initialValue instead.') T? value,
+    T? initialValue,
     this.isNullable = false,
     @Deprecated(
       'This parameter is not used anymore. '
       'It defaults to [value == null] instead of [false]',
     )
     this.isNull = false,
-  }) {
-    this.isNull = value == null;
+  }) : this.initialValue = (initialValue ?? value) as T {
+    this.isNull = this.initialValue == null;
   }
 
   /// The label that's put above a knob.
@@ -28,10 +29,17 @@ abstract class Knob<T> extends FieldsComposable<T> {
   /// The Description of what the user can put on the knob.
   final String? description;
 
-  /// The current value the knob is set to.
-  T value;
+  /// The initial value the knob is set to.
+  final T initialValue;
 
   final bool isNullable;
+
+  @Deprecated(
+    'Knobs are stateless. '
+    'They know about their value from [valueFromQueryGroup]. '
+    'You can use [initialValue] if you want to set a default value. ',
+  )
+  T? value;
 
   bool isNull;
 
@@ -70,7 +78,7 @@ abstract class Knob<T> extends FieldsComposable<T> {
   @override
   bool operator ==(Object other) {
     return other is Knob<T> &&
-        other.value == value &&
+        other.initialValue == initialValue &&
         other.label == label &&
         other.description == description;
   }
