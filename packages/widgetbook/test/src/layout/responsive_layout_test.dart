@@ -4,9 +4,8 @@ import 'package:widgetbook/src/layout/desktop_layout.dart';
 import 'package:widgetbook/src/layout/mobile_layout.dart';
 import 'package:widgetbook/src/layout/responsive_layout.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
-import 'package:widgetbook/src/routing/routing.dart';
 import 'package:widgetbook/src/settings/settings.dart';
-import 'package:widgetbook/src/state/state.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 void main() {
   group(
@@ -14,26 +13,14 @@ void main() {
     () {
       testWidgets(
         'given a small screen, '
-        'then MobileWidgetbookShell is used',
+        'then $DesktopLayout is used',
         (tester) async {
           tester.view.physicalSize = const Size(400, 800);
           tester.view.devicePixelRatio = 1.0;
 
-          final state = WidgetbookState(
-            appBuilder: materialAppBuilder,
-            root: WidgetbookRoot(children: []),
-          );
-
-          final router = AppRouter(
-            state: state,
-          );
-
           await tester.pumpWidget(
-            WidgetbookScope(
-              state: state,
-              child: MaterialApp.router(
-                routerConfig: router,
-              ),
+            Widgetbook.material(
+              directories: [],
             ),
           );
 
@@ -46,26 +33,14 @@ void main() {
 
       testWidgets(
         'given a large screen, '
-        'then DesktopWidgetbookShell is used',
+        'then $DesktopLayout is used',
         (tester) async {
           tester.view.physicalSize = const Size(1200, 800);
           tester.view.devicePixelRatio = 1.0;
 
-          final state = WidgetbookState(
-            appBuilder: materialAppBuilder,
-            root: WidgetbookRoot(children: []),
-          );
-
-          final router = AppRouter(
-            state: state,
-          );
-
           await tester.pumpWidget(
-            WidgetbookScope(
-              state: state,
-              child: MaterialApp.router(
-                routerConfig: router,
-              ),
+            Widgetbook.material(
+              directories: [],
             ),
           );
 
@@ -79,41 +54,24 @@ void main() {
       testWidgets(
         'given a small screen, '
         'when the navigation icon on bottom bar is tapped, '
-        'then the navigation panel on bottom sheet is displayed',
+        'then the $NavigationPanel on bottom sheet is displayed',
         (tester) async {
           tester.view.physicalSize = const Size(400, 800);
           tester.view.devicePixelRatio = 1.0;
 
-          final state = WidgetbookState(
-            appBuilder: materialAppBuilder,
-            addons: [],
-            root: WidgetbookRoot(
-              children: [
-                WidgetbookFolder(
-                  name: 'Widgets',
-                  children: [],
-                ),
-              ],
-            ),
-          );
-
-          final router = AppRouter(
-            state: state,
-          );
-
           await tester.pumpWidget(
-            WidgetbookScope(
-              state: state,
-              child: MaterialApp.router(
-                routerConfig: router,
-              ),
+            Widgetbook.material(
+              directories: [],
             ),
           );
 
           await tester.tap(find.byIcon(Icons.list_outlined));
           await tester.pumpAndSettle();
 
-          expect(find.byType(NavigationPanel), findsOneWidget);
+          expect(
+            find.byType(NavigationPanel),
+            findsOneWidget,
+          );
 
           addTearDown(tester.view.resetPhysicalSize);
         },
@@ -122,33 +80,14 @@ void main() {
       testWidgets(
         'given a small screen, '
         'when the addons icon on bottom bar is tapped, '
-        'then the settings panel on bottom sheet is displayed',
+        'then the $MobileSettingsPanel on bottom sheet is displayed',
         (tester) async {
           tester.view.physicalSize = const Size(400, 800);
           tester.view.devicePixelRatio = 1.0;
 
-          final state = WidgetbookState(
-            appBuilder: materialAppBuilder,
-            root: WidgetbookRoot(
-              children: [
-                WidgetbookFolder(
-                  name: 'Widgets',
-                  children: [],
-                ),
-              ],
-            ),
-          );
-
-          final router = AppRouter(
-            state: state,
-          );
-
           await tester.pumpWidget(
-            WidgetbookScope(
-              state: state,
-              child: MaterialApp.router(
-                routerConfig: router,
-              ),
+            Widgetbook.material(
+              directories: [],
             ),
           );
 
@@ -156,7 +95,7 @@ void main() {
           await tester.pumpAndSettle();
 
           expect(
-            find.byType(SettingsPanel),
+            find.byType(MobileSettingsPanel),
             findsOneWidget,
           );
 
@@ -167,33 +106,14 @@ void main() {
       testWidgets(
         'given a small screen, '
         'when the knob icon on bottom bar is tapped, '
-        'then the settings panel on bottom sheet is displayed',
+        'then the $MobileSettingsPanel on bottom sheet is displayed',
         (tester) async {
           tester.view.physicalSize = const Size(400, 800);
           tester.view.devicePixelRatio = 1.0;
 
-          final state = WidgetbookState(
-            appBuilder: materialAppBuilder,
-            root: WidgetbookRoot(
-              children: [
-                WidgetbookFolder(
-                  name: 'Widgets',
-                  children: [],
-                ),
-              ],
-            ),
-          );
-
-          final router = AppRouter(
-            state: state,
-          );
-
           await tester.pumpWidget(
-            WidgetbookScope(
-              state: state,
-              child: MaterialApp.router(
-                routerConfig: router,
-              ),
+            Widgetbook.material(
+              directories: [],
             ),
           );
 
@@ -201,7 +121,7 @@ void main() {
           await tester.pumpAndSettle();
 
           expect(
-            find.byType(SettingsPanel),
+            find.byType(MobileSettingsPanel),
             findsOneWidget,
           );
 

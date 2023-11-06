@@ -32,9 +32,11 @@ class ResponsiveLayout extends StatelessWidget {
   List<Widget> buildAddons(BuildContext context) {
     final state = WidgetbookState.of(context);
 
-    return state.effectiveAddons!
-        .map((addon) => addon.buildFields(context))
-        .toList();
+    return state.addons == null
+        ? []
+        : state.effectiveAddons!
+            .map((addon) => addon.buildFields(context))
+            .toList();
   }
 
   List<Widget> buildKnobs(BuildContext context) {
