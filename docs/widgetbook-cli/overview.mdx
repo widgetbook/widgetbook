@@ -1,6 +1,7 @@
 # Overview
 
 The CLI supports:
+
 - uploading a [Widgetbook Build](https://docs.widgetbook.io/widgetbook-cloud/hosting)
 - uploading a [Widgetbook Review](https://docs.widgetbook.io/widgetbook-cloud/reviews)
 
@@ -18,13 +19,14 @@ widgetbook publish --api-key <key>
 
 The `widgetbook-cli` is available as the [widgetbook_cli](https://pub.dev/packages/widgetbook_cli) package.
 
-Install the CLI globally by running: 
+Install the CLI globally by running:
 
 ```bash
 dart pub global activate widgetbook_cli
 ```
 
 Run the CLI by using
+
 ```bash
 widgetbook <command> [arguments]
 ```
@@ -37,15 +39,15 @@ An existing Widgetbook can be uploaded via the `publish` command.
 
 The CLI accepts the following arguments.
 
-| Argument         | Mandatory | Description |
-| ---------------- | --------- | ----------- |
-| `--path`         | ➖        | The path to your project. Defaults to `./`. |
-| `--api-key`      | ✅        | The project specific API key for Widgetbook Cloud. See [How to create an API key](https://docs.widgetbook.io/widgetbook-cloud/hosting#how-to-create-an-api-key).|
-| `--branch`       | ➖        | The name of the branch for which the Widgetbook is uploaded. Defaults to the current git branch. |
-| `--commit`       | ➖        | The SHA hash of the commit for which the Widgetbook is uploaded. Defaults to the last commit of the current git branch. |
-| `--repository`   | ➖        | The name of the repository for which the Widgetbook is uploaded.|
-| `--actor`        | ➖        | The username of the actor which triggered the build.|
-| `--base-branch`  | ➖        | The name of the pull-request's base branch. |
+| Argument        | Mandatory | Description                                                                                                                                                      |
+| --------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--path`        | ➖        | The path to your project. Defaults to `./`.                                                                                                                      |
+| `--api-key`     | ✅        | The project specific API key for Widgetbook Cloud. See [How to create an API key](https://docs.widgetbook.io/widgetbook-cloud/hosting#how-to-create-an-api-key). |
+| `--branch`      | ➖        | The name of the branch for which the Widgetbook is uploaded. Defaults to the current git branch.                                                                 |
+| `--commit`      | ➖        | The SHA hash of the commit for which the Widgetbook is uploaded. Defaults to the last commit of the current git branch.                                          |
+| `--repository`  | ➖        | The name of the repository for which the Widgetbook is uploaded.                                                                                                 |
+| `--actor`       | ➖        | The username of the actor which triggered the build.                                                                                                             |
+| `--base-branch` | ➖        | The name of the pull-request's base branch.                                                                                                                      |
 
 If `base-branch` is omitted, a **Widgetbook Build** is created.  
 If `base-branch` is provided, a **Widgetbook Build** and a **Widgetbook Review** is created.
@@ -53,5 +55,5 @@ If `base-branch` is provided, a **Widgetbook Build** and a **Widgetbook Review**
 ### Example
 
 ```bash
-widgetbook publish --api-key aaabbbccc
+widgetbook publish --api-key <API_KEY_HERE>
 ```

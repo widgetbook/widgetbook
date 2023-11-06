@@ -32,10 +32,6 @@
   },
   "sidebar": [
     [
-      "Hacktoberfest",
-      [["Read more", "https://github.com/widgetbook/widgetbook/issues/918"]]
-    ],
-    [
       "Overview",
       [
         ["Overview", "/index"],
@@ -65,14 +61,18 @@
       "Addons",
       [
         ["1. Introduction", "/addons/overview"],
-        ["2. Theme Addon", "/addons/theme-addon"],
-        ["3. Device Frame Addon", "/addons/device-frame-addon"],
-        ["4. Localization Addon", "/addons/localization-addon"],
-        ["5. Text Scale Addon", "/addons/text-scale-addon"],
-        ["6. Alignment Addon", "/addons/alignment-addon"],
-        ["7. Time Dilation Addon", "/addons/time-dilation-addon"],
-        ["8. Builder Addon", "/addons/builder-addon"],
-        ["9. Custom Addon", "/addons/custom-addon"]
+        ["2. Accessibility Addon", "/addons/accessibility-addon"],
+        ["3. Alignment Addon", "/addons/alignment-addon"],
+        ["4. Builder Addon", "/addons/builder-addon"],
+        ["5. Device Frame Addon", "/addons/device-frame-addon"],
+        ["6. Grid Addon", "/addons/grid-addon"],
+        ["7. Inspector Addon", "/addons/inspector-addon"],
+        ["8. Localization Addon", "/addons/localization-addon"],
+        ["9. Text Scale Addon", "/addons/text-scale-addon"],
+        ["10. Theme Addon", "/addons/theme-addon"],
+        ["11. Time Dilation Addon", "/addons/time-dilation-addon"],
+        ["12. Zoom Addon", "/addons/zoom-addon"],
+        ["13. Custom Addon", "/addons/custom-addon"]
       ]
     ],
     [
