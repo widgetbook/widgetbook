@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class SettingsPanelData {
-  const SettingsPanelData({
+  SettingsPanelData({
     required this.name,
-    required this.builder,
+    required this.children,
   });
 
   final String name;
-  final List<Widget> Function(BuildContext context) builder;
+  final List<Widget> children;
 }
 
 class SettingsPanel extends StatelessWidget {
-  const SettingsPanel({
+  SettingsPanel({
     super.key,
     required this.settings,
   });
@@ -25,13 +25,12 @@ class SettingsPanel extends StatelessWidget {
         itemCount: settings.length,
         itemBuilder: (context, index) {
           final setting = settings[index];
-          final children = setting.builder(context);
 
           return ExpansionTile(
             initiallyExpanded: true,
             title: Text(setting.name),
-            children: children.isNotEmpty
-                ? children
+            children: setting.children.isNotEmpty
+                ? setting.children
                 : [
                     Padding(
                       padding: const EdgeInsets.all(8),

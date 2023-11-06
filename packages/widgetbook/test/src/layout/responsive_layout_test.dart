@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/layout/desktop_layout.dart';
-import 'package:widgetbook/src/layout/layout.dart';
 import 'package:widgetbook/src/layout/mobile_layout.dart';
+import 'package:widgetbook/src/layout/responsive_layout.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook/src/routing/routing.dart';
 import 'package:widgetbook/src/settings/settings.dart';
@@ -10,7 +10,7 @@ import 'package:widgetbook/src/state/state.dart';
 
 void main() {
   group(
-    '$WidgetbookShell',
+    '$ResponsiveLayout',
     () {
       testWidgets(
         'given a small screen, '
@@ -37,8 +37,8 @@ void main() {
             ),
           );
 
-          expect(find.byType(MobileWidgetbookShell), findsOneWidget);
-          expect(find.byType(DesktopWidgetbookShell), findsNothing);
+          expect(find.byType(MobileLayout), findsOneWidget);
+          expect(find.byType(DesktopLayout), findsNothing);
 
           addTearDown(tester.view.resetPhysicalSize);
         },
@@ -69,8 +69,8 @@ void main() {
             ),
           );
 
-          expect(find.byType(MobileWidgetbookShell), findsNothing);
-          expect(find.byType(DesktopWidgetbookShell), findsOneWidget);
+          expect(find.byType(MobileLayout), findsNothing);
+          expect(find.byType(DesktopLayout), findsOneWidget);
 
           addTearDown(tester.view.resetPhysicalSize);
         },

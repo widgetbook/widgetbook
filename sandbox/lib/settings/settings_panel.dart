@@ -8,11 +8,11 @@ Widget settingsPanel(BuildContext context) {
     settings: [
       SettingsPanelData(
         name: 'Addons',
-        builder: (_) => [],
+        children: [],
       ),
       SettingsPanelData(
         name: 'Knobs',
-        builder: (_) => [],
+        children: [],
       ),
     ],
   );

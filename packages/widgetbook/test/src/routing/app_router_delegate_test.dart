@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:widgetbook/src/layout/layout.dart';
+import 'package:widgetbook/src/layout/responsive_layout.dart';
 import 'package:widgetbook/src/routing/routing.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -75,7 +75,7 @@ void main() {
           );
 
           expect(
-            find.byType(WidgetbookShell),
+            find.byType(ResponsiveLayout),
             findsNothing,
           );
         },
