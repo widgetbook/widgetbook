@@ -20,7 +20,9 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: workbench,
+      body: SafeArea(
+        child: workbench,
+      ),
       bottomNavigationBar: ExcludeSemantics(
         child: BottomNavigationBar(
           items: [
