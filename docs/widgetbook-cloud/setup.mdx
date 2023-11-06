@@ -73,7 +73,7 @@ widgetbook publish --api-key API-KEY
 ### 2. Pull request workflow
 
 Whenever a pull-request is created or updated, Widgetbook Cloud requires information on what changed. 
-Therefore, the CLI requires the `--base-branch` agrument to compare the current feature branch against the base branch. 
+Therefore, the CLI requires the `--base-branch` argument to compare the current feature branch against the base branch. 
 For this to fully work, the CLI also requires the `build_runner` outputs. 
 Therefore, make sure that `build_runner` runs before the CLI even if you have committed all generated files. 
 
@@ -82,7 +82,7 @@ Therefore, make sure that `build_runner` runs before the CLI even if you have co
 flutter pub get
 # !!! 
 # !!! Run the build runner
-# !!! This is mandatory even if you have commited the generated files since 
+# !!! This is mandatory even if you have committed the generated files since 
 # !!! the generator creates files that are consumed by the Widgetbook CLI
 # !!!
 flutter pub run build_runner build --delete-conflicting-outputs

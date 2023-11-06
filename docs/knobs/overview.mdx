@@ -68,25 +68,15 @@ Widgetbook's UI:
 
 ## Available Knobs
 
-| Name                | Type        |
-| ------------------- | ----------- |
-| boolean             | `bool`      |
-| booleanOrNull       | `bool?`     |
-| string              | `String`    |
-| stringOrNull        | `String?`   |
-| double.slider       | `double`    |
-| doubleOrNull.slider | `double?`   |
-| double.input        | `num`       |
-| doubleOrNull.input  | `num?`      |
-| list                | `T`         |
-| listOrNull          | `T?`        |
-| duration            | `Duration`  |
-| durationOrNull      | `Duration?` |
-| dateTime            | `DateTime`  |
-| dateTimeOrNull      | `DateTime?` |
-| int.slider          | `int`       |
-| intOrNull.slider    | `int?`      |
-| int.input           | `int`       |
-| intOrNull.input     | `int?`      |
-| color               | `Color`     |
-| colorOrNull         | `Color?`    |
+| Type       | Regular Knob    | Nullable Knob         |
+| ---------- | --------------- | --------------------- |
+| `bool`     | `boolean`       | `booleanOrNull`       |
+| `int`      | `int.input`     | `int.input`           |
+| `int`      | `int.slider`    | `int.slider`          |
+| `double`   | `double.input`  | `doubleOrNull.input`  |
+| `double`   | `double.slider` | `doubleOrNull.slider` |
+| `String`   | `string`        | `stringOrNull`        |
+| `Duration` | `duration`      | `durationOrNull`      |
+| `DateTime` | `dateTime`      | `dateTimeOrNull`      |
+| `Color`    | `color`         | `colorOrNull`         |
+| `T`        | `list`          | `listOrNull`          |
