@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
+import '../settings/settings.dart';
 import 'base_layout.dart';
 
 class MobileLayout extends StatelessWidget implements BaseLayout {
   const MobileLayout({
     super.key,
-    required this.addons,
-    required this.knobs,
-    required this.navigation,
+    required this.navigationBuilder,
+    required this.addonsBuilder,
+    required this.knobsBuilder,
     required this.workbench,
   });
 
-  final List<Widget> addons;
-  final List<Widget> knobs;
-  final Widget navigation;
+  final Widget Function(BuildContext context) navigationBuilder;
+  final List<Widget> Function(BuildContext context) addonsBuilder;
+  final List<Widget> Function(BuildContext context) knobsBuilder;
   final Widget workbench;
 
   @override
@@ -42,16 +43,22 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
               builder: (context) {
                 switch (index) {
                   case 0:
-                    return navigation;
+                    return ExcludeSemantics(
+                      child: navigationBuilder(context),
+                    );
                   case 1:
-                    return ListView.builder(
-                      itemCount: addons.length,
-                      itemBuilder: (context, index) => addons[index],
+                    return ExcludeSemantics(
+                      child: MobileSettingsPanel(
+                        name: 'Addons',
+                        builder: addonsBuilder,
+                      ),
                     );
                   case 2:
-                    return ListView.builder(
-                      itemCount: knobs.length,
-                      itemBuilder: (context, index) => knobs[index],
+                    return ExcludeSemantics(
+                      child: MobileSettingsPanel(
+                        name: 'Knobs',
+                        builder: knobsBuilder,
+                      ),
                     );
                   default:
                     return Container();

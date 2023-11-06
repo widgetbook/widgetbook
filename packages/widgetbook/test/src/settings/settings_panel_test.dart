@@ -19,7 +19,7 @@ void main() {
               settings: [
                 SettingsPanelData(
                   name: title,
-                  children: [],
+                  builder: (_) => [],
                 ),
               ],
             ),
@@ -41,7 +41,7 @@ void main() {
               settings: [
                 SettingsPanelData(
                   name: title,
-                  children: [],
+                  builder: (_) => [],
                 ),
               ],
             ),
@@ -63,7 +63,7 @@ void main() {
               settings: [
                 SettingsPanelData(
                   name: title,
-                  children: const [
+                  builder: (_) => const [
                     Placeholder(),
                     Placeholder(),
                     Placeholder(),

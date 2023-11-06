@@ -13,39 +13,53 @@ class ResponsiveLayout extends StatelessWidget {
 
   final Widget child;
 
-  @override
-  Widget build(BuildContext context) {
+  Widget buildNavigation(BuildContext context, bool isMobile) {
     final state = WidgetbookState.of(context);
 
-    final addons = state.effectiveAddons!
-        .map((addon) => addon.buildFields(context))
-        .toList();
-
-    final knobs = state.knobs.values //
-        .map((knob) => knob.buildFields(context))
-        .toList();
-
-    final navigationPanel = NavigationPanel(
+    return NavigationPanel(
       initialPath: state.path,
       root: state.root,
       onNodeSelected: (node) {
-        WidgetbookState.of(context).updatePath(node.path);
+        WidgetbookState.of(context).updatePath(node.path); // Fresh context
+
+        if (isMobile) {
+          Navigator.pop(context); // Close the modal
+        }
       },
     );
+  }
 
+  List<Widget> buildAddons(BuildContext context) {
+    final state = WidgetbookState.of(context);
+
+    return state.effectiveAddons!
+        .map((addon) => addon.buildFields(context))
+        .toList();
+  }
+
+  List<Widget> buildKnobs(BuildContext context) {
+    final state = WidgetbookState.of(context);
+
+    return state.knobs.values //
+        .map((knob) => knob.buildFields(context))
+        .toList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final isMobile = MediaQuery.sizeOf(context).width < 800;
 
     return isMobile
         ? MobileLayout(
-            navigation: navigationPanel,
-            addons: addons,
-            knobs: knobs,
+            navigationBuilder: (context) => buildNavigation(context, true),
+            addonsBuilder: buildAddons,
+            knobsBuilder: buildKnobs,
             workbench: child,
           )
         : DesktopLayout(
-            navigation: navigationPanel,
-            addons: addons,
-            knobs: knobs,
+            navigationBuilder: (context) => buildNavigation(context, false),
+            addonsBuilder: buildAddons,
+            knobsBuilder: buildKnobs,
             workbench: child,
           );
   }
