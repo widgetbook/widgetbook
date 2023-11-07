@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:build/build.dart';
 import 'package:crypto/crypto.dart';
 
+import '../../metadata.dart';
 import '../generators/app_generator.dart';
 import 'ci_keys.dart';
 import 'usage_report.dart';
@@ -105,6 +106,7 @@ class TelemetryReporter extends Builder {
         trackingId: trackingId,
         project: buildStep.inputId.package,
         useCases: useCases,
+        version: packageVersion,
       );
 
       await sendUsageReport(report);
