@@ -18,7 +18,7 @@ class MobileSettingsPanel extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.all(8),
         child: Center(
-          child: Text('No ${name} available'),
+          child: Text('No $name available'),
         ),
       );
     }
