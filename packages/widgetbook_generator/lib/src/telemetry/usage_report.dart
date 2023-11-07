@@ -7,6 +7,7 @@ class UsageReport {
     required this.trackingId,
     required this.project,
     required List<UseCaseMetadata> useCases,
+    required this.version,
   }) {
     packages = useCases.map((e) => e.component.package).toSet();
 
@@ -30,7 +31,9 @@ class UsageReport {
   final String trackingId;
   final String project;
   final DateTime timestamp = DateTime.now();
-  final String version = '3.x.x';
+
+  /// `widgetbook_generator` version
+  final String version;
 
   /// Unique set of components' packages.
   /// This helps identify different projects

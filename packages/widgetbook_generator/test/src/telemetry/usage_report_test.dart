@@ -6,6 +6,7 @@ import '../../helpers/mock_use_case_metadata.dart';
 void main() {
   group('$UsageReport', () {
     final report = UsageReport.from(
+      version: '3.x.x',
       project: 'test',
       trackingId: 'xxxx',
       useCases: [
