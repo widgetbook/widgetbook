@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+import '../layout/responsive_layout.dart';
 import '../state/state.dart';
 import '../workbench/workbench.dart';
 import 'app_route_config.dart';
-import 'widgetbook_shell.dart';
 
 @internal
 class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
@@ -44,7 +44,7 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
         MaterialPage(
           child: _configuration.previewMode
               ? const Workbench()
-              : WidgetbookShell(
+              : ResponsiveLayout(
                   key: ValueKey(_configuration),
                   child: const Workbench(),
                 ),

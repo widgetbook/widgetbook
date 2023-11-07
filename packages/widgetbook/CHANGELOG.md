@@ -21,6 +21,7 @@
 - **REFACTOR**: Deprecate `Field.onChanged`. ([#1024](https://github.com/widgetbook/widgetbook/pull/1024))
 - **REFACTOR**: Deprecate `Knob.value` & `KnobsRegistry.updateValue` in favor of `Knob.initialValue`. ([#1025](https://github.com/widgetbook/widgetbook/pull/1025))
 - **FIX**: Change `booleanOrNull` knobs's `initialValue` to null; to match other `orNull` knobs. ([#1026](https://github.com/widgetbook/widgetbook/pull/1026))
+- **FEAT**: Add mobile support. ([#1019](https://github.com/widgetbook/widgetbook/pull/1019))
 
 ## 3.3.0
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SettingsPanelData {
-  const SettingsPanelData({
+  SettingsPanelData({
     required this.name,
     required this.builder,
   });
@@ -11,7 +11,7 @@ class SettingsPanelData {
 }
 
 class SettingsPanel extends StatelessWidget {
-  const SettingsPanel({
+  SettingsPanel({
     super.key,
     required this.settings,
   });
