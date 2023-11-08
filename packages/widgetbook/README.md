@@ -7,9 +7,8 @@
 A Flutter package that helps developers catalog their widgets, test them quickly on multiple devices and themes and share them easily with designers and clients. 
 Inspired by Storybook.js.
 
-<p align="center">
-<img src="https://github.com/widgetbook/widgetbook/blob/main/docs/assets/screenshots/widgetbook.png?raw=true" alt="Widgetbook Screenshot" />
-</p>
+
+[![Widgetbook Demo](https://github.com/widgetbook/widgetbook/blob/main/docs/assets/screenshots/widgetbook.png?raw=true)](https://demo.widgetbook.io/)
 
 ## Features
 
