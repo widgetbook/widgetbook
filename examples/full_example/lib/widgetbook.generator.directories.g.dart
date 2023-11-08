@@ -12,7 +12,8 @@
 import 'package:full_example/components/container.dart' as _i2;
 import 'package:full_example/components/custom_card.dart' as _i3;
 import 'package:full_example/components/custom_text_field.dart' as _i4;
-import 'package:full_example/customs/custom_knob.dart' as _i5;
+import 'package:full_example/components/stepped_counter.dart' as _i5;
+import 'package:full_example/customs/custom_knob.dart' as _i6;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
 final directories = <_i1.WidgetbookNode>[
@@ -68,6 +69,13 @@ final directories = <_i1.WidgetbookNode>[
           ),
         ],
       ),
+      _i1.WidgetbookLeafComponent(
+        name: 'SteppedCounter',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'Default',
+          builder: _i5.steppedCounterUseCase,
+        ),
+      ),
     ],
   ),
   _i1.WidgetbookFolder(
@@ -77,7 +85,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'RangeSlider',
         useCase: _i1.WidgetbookUseCase(
           name: 'CustomRangeSlider',
-          builder: _i5.rangeSlider,
+          builder: _i6.rangeSlider,
         ),
       )
     ],
