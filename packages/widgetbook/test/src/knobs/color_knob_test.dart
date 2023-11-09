@@ -235,7 +235,6 @@ void main() {
             (context) => ColoredBox(
               color: context.knobs.color(
                 label: 'Knob',
-                initialValue: white,
               ),
             ),
           );
