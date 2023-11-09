@@ -105,7 +105,6 @@ class WidgetbookApp extends StatelessWidget {
                     name: 'Duration',
                     regular: context.knobs.duration(
                       label: 'duration',
-                      initialValue: Duration.zero,
                     ),
                     nullable: context.knobs.durationOrNull(
                       label: 'durationOrNull',
