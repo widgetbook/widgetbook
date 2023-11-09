@@ -13,7 +13,10 @@ class MaterialThemeAddon extends ThemeAddon<ThemeData> {
               data: theme,
               child: ColoredBox(
                 color: theme.scaffoldBackgroundColor,
-                child: child,
+                child: DefaultTextStyle(
+                  style: theme.textTheme.bodyMedium!,
+                  child: child,
+                ),
               ),
             );
           },
