@@ -14,7 +14,10 @@ class CupertinoThemeAddon extends ThemeAddon<CupertinoThemeData> {
               data: theme,
               child: ColoredBox(
                 color: theme.scaffoldBackgroundColor,
-                child: child,
+                child: DefaultTextStyle(
+                  style: theme.textTheme.textStyle,
+                  child: child,
+                ),
               ),
             );
           },

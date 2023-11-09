@@ -23,6 +23,7 @@
 - **FIX**: Change `booleanOrNull` knobs's `initialValue` to null; to match other `orNull` knobs. ([#1026](https://github.com/widgetbook/widgetbook/pull/1026))
 - **REFACTOR**: Add default parameter value to `color` knobs's `initialValue`. ([#1039](https://github.com/widgetbook/widgetbook/pull/1039))
 - **FEAT**: Add mobile support. ([#1019](https://github.com/widgetbook/widgetbook/pull/1019))
+- **FIX**: Add `DefaultTextStyle` to `ThemeAddon`s. ([#1041](https://github.com/widgetbook/widgetbook/pull/1041))
 
 ## 3.3.0
 
