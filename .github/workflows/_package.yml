@@ -28,7 +28,7 @@ jobs:
           cache: true
 
       - name: Check Dependencies Compatibility
-        run: flutter pub get
+        run: flutter pub downgrade
 
   test:
     runs-on: ubuntu-latest
