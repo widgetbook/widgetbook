@@ -6,23 +6,13 @@ on:
       working_directory:
         required: true
         type: string
-      post_checkout:
-        required: false
-        type: string
-        default: ""
-      run_pana:
-        required: false
-        type: boolean
-        default: true
       min_flutter_version:
         required: true
         type: string
 
 jobs:
-
   check-min-version:
     runs-on: ubuntu-latest
-
     defaults:
       run:
         working-directory: ${{ inputs.working_directory }}
@@ -35,13 +25,13 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ inputs.min_flutter_version }}
+          cache: true
 
-      - name: Check Dependencies Compitability
+      - name: Check Dependencies Compatibility
         run: flutter pub get
 
-  doctor:
+  test:
     runs-on: ubuntu-latest
-
     defaults:
       run:
         working-directory: ${{ inputs.working_directory }}
@@ -50,21 +40,41 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Run Post Checkout Script
-        if: "${{ inputs.post_checkout != '' }}"
-        run: ${{ inputs.post_checkout }}
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install Melos
+        run: flutter pub global activate melos
+
+      - name: Bootstrap Package
+        run: |
+          PACKAGE_NAME=$(head -1 pubspec.yaml | cut -c7-)
+          melos bootstrap --scope=$PACKAGE_NAME --include-dependencies
+
+      - name: Run Tests
+        run: flutter test --coverage
+
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+          cache: true
 
       - name: Install Melos
         run: flutter pub global activate melos
-
-      - name: Bootstrap Workspace
-        working-directory: ${{ github.workspace }}
-        run: flutter pub get
 
       - name: Bootstrap Package
         run: |
@@ -77,19 +87,38 @@ jobs:
       - name: Analyze
         run: dart analyze . --fatal-infos
 
-      - name: Run Tests
-        run: flutter test --coverage
+  pana:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install Melos
+        run: flutter pub global activate melos
+
+      - name: Bootstrap Package
+        run: |
+          PACKAGE_NAME=$(head -1 pubspec.yaml | cut -c7-)
+          melos bootstrap --scope=$PACKAGE_NAME --include-dependencies
 
       - name: Install pana
-        if: inputs.run_pana
         run: |
           dart pub global activate pana
           sudo apt-get update
           sudo apt-get install webp # Needed for screenshots validation
 
       - name: Check Package Score
-        if: inputs.run_pana
-        run: pana . --no-warning --exit-code-threshold 0
+        run: pana . --no-warning --exit-code-threshold 0 --no-dartdoc
 
   publish:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
@@ -120,10 +149,6 @@ jobs:
 
       - name: Install Melos
         run: flutter pub global activate melos
-
-      - name: Bootstrap Workspace
-        working-directory: ${{ github.workspace }}
-        run: flutter pub get
 
       - name: Bootstrap Package
         run: |
