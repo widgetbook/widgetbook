@@ -1,7 +1,7 @@
-## Unreleased
+## 3.1.0
 
 - **BREAKING**: Set minimum SDK version to 2.19.0. ([#1030](https://github.com/widgetbook/widgetbook/pull/1030))
- - **FEAT** Add `path` property on `@UseCase` to specify a custom path to be used instead of the component's location. ([#988](https://github.com/widgetbook/widgetbook/pull/988))
+ - **FEAT** Add `path` property on `@UseCase` to specify a custom path to be used instead of the component's location. ([#988](https://github.com/widgetbook/widgetbook/pull/988) - by [@geisterfurz007](https://github.com/geisterfurz007))
 
 ## 3.0.0
 
