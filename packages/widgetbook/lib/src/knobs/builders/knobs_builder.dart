@@ -173,7 +173,7 @@ class KnobsBuilder {
   /// Creates a duration input that can be typed in
   Duration duration({
     required String label,
-    required Duration initialValue,
+    Duration initialValue = Duration.zero,
     String? description,
   }) {
     return onKnobAdded(
