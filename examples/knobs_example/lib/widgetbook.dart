@@ -96,7 +96,6 @@ class WidgetbookApp extends StatelessWidget {
                     ),
                     regular: context.knobs.color(
                       label: 'color',
-                      initialValue: const Color(0xFF000000),
                     ),
                     nullable: context.knobs.colorOrNull(
                       label: 'colorOrNull',

@@ -62,7 +62,7 @@ class KnobsBuilder {
   /// Creates a color picker that can be used to select a color.
   Color color({
     required String label,
-    required Color initialValue,
+    Color initialValue = Colors.white,
     ColorSpace initialColorSpace = ColorSpace.hex,
     String? description,
   }) {
