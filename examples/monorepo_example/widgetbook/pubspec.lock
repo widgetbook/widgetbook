@@ -555,7 +555,7 @@ packages:
       path: "../../../packages/widgetbook_generator"
       relative: true
     source: path
-    version: "3.2.0"
+    version: "3.3.0"
   yaml:
     dependency: transitive
     description:
