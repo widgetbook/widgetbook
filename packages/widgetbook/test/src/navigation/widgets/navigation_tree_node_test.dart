@@ -28,6 +28,37 @@ void main() {
       );
 
       testWidgets(
+        'given a $WidgetbookLeafComponent node, '
+        'when its use-case is selected, '
+        'then the node is selected',
+        (tester) async {
+          final leaf = WidgetbookLeafComponent(
+            name: 'Leaf',
+            useCase: WidgetbookUseCase(
+              name: 'UseCase',
+              builder: (context) => Container(),
+            ),
+          );
+
+          await tester.pumpWidgetWithMaterialApp(
+            NavigationTreeNode(
+              selectedNode: leaf.useCase,
+              node: leaf,
+            ),
+          );
+
+          final tile = await tester.widget<NavigationTreeTile>(
+            find.byType(NavigationTreeTile),
+          );
+
+          expect(
+            tile.isSelected,
+            equals(true),
+          );
+        },
+      );
+
+      testWidgets(
         'when a node is tapped, '
         'then the onNodeSelected callback is called',
         (tester) async {
