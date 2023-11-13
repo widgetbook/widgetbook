@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Highlight selected `WidgetbookLeafComponent`. ([#1047](https://github.com/widgetbook/widgetbook/pull/1047))
+
 ## 3.4.0
 
 - **BREAKING**: Set minimum SDK version to 2.19.0 & minimum Flutter version to 3.7.0. ([#1030](https://github.com/widgetbook/widgetbook/pull/1030))
