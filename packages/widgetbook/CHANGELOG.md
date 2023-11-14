@@ -1,4 +1,4 @@
-## Unreleased
+## 3.4.1
 
 - **FIX**: Use `MediaQuery.of(context).size` instead of `MediaQuery.sizeOf`, to maintain compatibility with Flutter v3.7. ([#1049](https://github.com/widgetbook/widgetbook/pull/1049))
 - **FIX**: Highlight selected `WidgetbookLeafComponent`. ([#1047](https://github.com/widgetbook/widgetbook/pull/1047))
