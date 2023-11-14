@@ -20,27 +20,25 @@ class SettingsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListView.builder(
-        itemCount: settings.length,
-        itemBuilder: (context, index) {
-          final setting = settings[index];
-          final children = setting.builder(context);
+    return ListView.builder(
+      itemCount: settings.length,
+      itemBuilder: (context, index) {
+        final setting = settings[index];
+        final children = setting.builder(context);
 
-          return ExpansionTile(
-            initiallyExpanded: true,
-            title: Text(setting.name),
-            children: children.isNotEmpty
-                ? children
-                : [
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Text('No ${setting.name} available'),
-                    ),
-                  ],
-          );
-        },
-      ),
+        return ExpansionTile(
+          initiallyExpanded: true,
+          title: Text(setting.name),
+          children: children.isNotEmpty
+              ? children
+              : [
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Text('No ${setting.name} available'),
+                  ),
+                ],
+        );
+      },
     );
   }
 }

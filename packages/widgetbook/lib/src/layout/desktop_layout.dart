@@ -31,23 +31,27 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
         separatorColor: Colors.white24,
         children: [
           ExcludeSemantics(
-            child: navigationBuilder(context),
+            child: Card(
+              child: navigationBuilder(context),
+            ),
           ),
           workbench,
           ExcludeSemantics(
-            child: SettingsPanel(
-              settings: [
-                if (state.addons != null) ...{
+            child: Card(
+              child: SettingsPanel(
+                settings: [
+                  if (state.addons != null) ...{
+                    SettingsPanelData(
+                      name: 'Addons',
+                      builder: addonsBuilder,
+                    ),
+                  },
                   SettingsPanelData(
-                    name: 'Addons',
-                    builder: addonsBuilder,
+                    name: 'Knobs',
+                    builder: knobsBuilder,
                   ),
-                },
-                SettingsPanelData(
-                  name: 'Knobs',
-                  builder: knobsBuilder,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
