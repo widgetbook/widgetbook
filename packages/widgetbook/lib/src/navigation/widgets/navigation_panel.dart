@@ -44,37 +44,35 @@ class _NavigationPanelState extends State<NavigationPanel> {
         ? widget.root
         : widget.root.filter((node) => filterNode(node, query)) ?? widget.root;
 
-    return Card(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: SearchField(
-              value: query,
-              onChanged: WidgetbookState.of(context).updateQuery,
-              onCleared: () => WidgetbookState.of(context).updateQuery(''),
-            ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: SearchField(
+            value: query,
+            onChanged: WidgetbookState.of(context).updateQuery,
+            onCleared: () => WidgetbookState.of(context).updateQuery(''),
           ),
-          if (filteredRoot.children != null)
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                ),
-                itemCount: filteredRoot.children!.length,
-                itemBuilder: (context, index) => NavigationTreeNode(
-                  node: filteredRoot.children![index],
-                  selectedNode: selectedNode,
-                  onNodeSelected: (node) {
-                    if (!node.isLeaf || node.path == selectedNode?.path) return;
-                    setState(() => selectedNode = node);
-                    widget.onNodeSelected?.call(node);
-                  },
-                ),
+        ),
+        if (filteredRoot.children != null)
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              itemCount: filteredRoot.children!.length,
+              itemBuilder: (context, index) => NavigationTreeNode(
+                node: filteredRoot.children![index],
+                selectedNode: selectedNode,
+                onNodeSelected: (node) {
+                  if (!node.isLeaf || node.path == selectedNode?.path) return;
+                  setState(() => selectedNode = node);
+                  widget.onNodeSelected?.call(node);
+                },
               ),
             ),
-        ],
-      ),
+          ),
+      ],
     );
   }
 }
