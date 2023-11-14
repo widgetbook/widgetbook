@@ -49,7 +49,8 @@ class ResponsiveLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.sizeOf(context).width < 800;
+    // MediaQuery.sizeOf is not backwards compatible with Flutter < 3.10.0
+    final isMobile = MediaQuery.of(context).size.width < 800;
 
     return isMobile
         ? MobileLayout(
