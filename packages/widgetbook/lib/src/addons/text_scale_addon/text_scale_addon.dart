@@ -1,3 +1,8 @@
+// [MediaQuery.textScaleFactor] is deprecated in Flutter 3.16.0,
+// Since our minimum Flutter version is 3.7.0, we cannot use [TextScaler] yet.
+// More info: https://docs.flutter.dev/release/breaking-changes/deprecate-textscalefactor
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 
 import '../../fields/fields.dart';

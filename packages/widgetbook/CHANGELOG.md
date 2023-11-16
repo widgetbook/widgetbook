@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX** Ignore deprecated `MediaQuery.textScaleFactor`; to maintain compatibility with Flutter versions < 3.16.0. ([#1053](https://github.com/widgetbook/widgetbook/pull/1053))
+
 ## 3.4.1
 
 - **FIX**: Use `MediaQuery.of(context).size` instead of `MediaQuery.sizeOf`, to maintain compatibility with Flutter v3.7. ([#1049](https://github.com/widgetbook/widgetbook/pull/1049))
@@ -6,7 +10,7 @@
 ## 3.4.0
 
 - **BREAKING**: Set minimum SDK version to 2.19.0 & minimum Flutter version to 3.7.0. ([#1030](https://github.com/widgetbook/widgetbook/pull/1030))
-- **FEAT**: Add mobile support. ([#1019](https://github.com/widgetbook/widgetbook/pull/1019) - by [@Mastersam07](https://github.com/Mastersam07)) 
+- **FEAT**: Add mobile support. ([#1019](https://github.com/widgetbook/widgetbook/pull/1019) - by [@Mastersam07](https://github.com/Mastersam07))
 - **FEAT**: Add light theme support. ([#919](https://github.com/widgetbook/widgetbook/pull/919) - by [@07Abhinavkapoor](https://github.com/07Abhinavkapoor))
 - **FEAT**: Introduce `WidgetbookLeafComponent` navigation node for components with a single use-case. ([#1015](https://github.com/widgetbook/widgetbook/pull/1015))
 - **FEAT**: Add `designLink` to `WidgetbookUseCase`. ([#926](https://github.com/widgetbook/widgetbook/pull/926) - by [@Mastersam07](https://github.com/Mastersam07))
