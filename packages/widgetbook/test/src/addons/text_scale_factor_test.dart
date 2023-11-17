@@ -42,6 +42,7 @@ void main() {
           );
 
           expect(
+            // ignore: deprecated_member_use
             mediaQuery.textScaleFactor,
             equals(factor),
           );

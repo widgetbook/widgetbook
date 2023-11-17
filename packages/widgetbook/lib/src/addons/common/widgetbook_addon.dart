@@ -16,7 +16,7 @@ import '../addons.dart';
 /// * [ThemeAddon], changes the active custom theme.
 /// * [MaterialThemeAddon], changes the active [ThemeData].
 /// * [CupertinoThemeAddon], changes the active [CupertinoThemeData].
-/// * [TextScaleAddon], changes the active [MediaQueryData.textScaleFactor].
+/// * [TextScaleAddon], changes the active text scale.
 /// * [LocalizationAddon], changes the active [Locale].
 /// * [DeviceFrameAddon], an [WidgetbookAddon] to change the active frame that
 ///   allows to view the [WidgetbookUseCase] on different screens.
