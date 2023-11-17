@@ -6,6 +6,8 @@ import 'field_codec.dart';
 /// Interface for defining APIs for features that
 /// use [fields] as a building block.
 abstract class FieldsComposable<T> {
+  const FieldsComposable();
+
   // The name of the query group param.
   String get groupName;
 
