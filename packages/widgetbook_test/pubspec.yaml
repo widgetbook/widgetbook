@@ -1,0 +1,18 @@
+name: widgetbook_test
+description: A placeholder for future use of the name for improve.
+version: 0.0.0
+homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=widgetbook_test
+repository: https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_test
+issue_tracker: https://github.com/widgetbook/widgetbook/issues
+documentation: https://docs.widgetbook.io
+topics: [widgetbook, storybook, ui, test, golden-test]
+
+screenshots:
+  - description: "Widgetbook Logo"
+    path: assets/logo.png
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dev_dependencies:
+  test: ^1.24.1

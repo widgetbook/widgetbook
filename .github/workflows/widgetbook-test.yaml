@@ -1,0 +1,20 @@
+name: widgetbook_test
+
+on:
+  pull_request:
+    paths:
+      - packages/widgetbook_test/**
+      - .github/workflows/widgetbook-test.yaml
+      - .github/workflows/_package.yml
+  push:
+    branches:
+      - main
+    tags:
+      - widgetbook_test-v[0-9]+.[0-9]+.[0-9]+*
+
+jobs:
+  _:
+    uses: ./.github/workflows/_package.yml
+    with:
+      working_directory: packages/widgetbook_test
+      min_flutter_version: 3.10.0
