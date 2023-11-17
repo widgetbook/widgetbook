@@ -1,6 +1,9 @@
+import 'package:flutter/material.dart';
+
 import '../navigation/nodes/nodes.dart';
 import 'widgetbook_args.dart';
 
+@optionalTypeArgs
 class WidgetbookStory<TWidget, TArgs extends WidgetbookArgs<TWidget, TArgs>>
     extends WidgetbookUseCase {
   WidgetbookStory({
