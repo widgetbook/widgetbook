@@ -51,7 +51,7 @@ class ResponsiveLayout extends StatelessWidget {
     final state = WidgetbookState.of(context);
     final story = state.story;
 
-    return story == null ? [] : [story.args.buildFields(context)];
+    return story?.args.list.map((e) => e.buildFields(context)).toList() ?? [];
   }
 
   @override

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../fields/fields.dart';
 import '../navigation/nodes/nodes.dart';
+import '../state/state.dart';
 import 'widgetbook_args.dart';
 
 @optionalTypeArgs
@@ -11,7 +13,14 @@ class WidgetbookStory<TWidget, TArgs extends WidgetbookArgs<TWidget, TArgs>>
     required this.args,
     super.designLink,
   }) : super(
-          builder: (context) => args.build(context),
+          builder: (context) {
+            final state = WidgetbookState.of(context);
+            final groupMap = FieldCodec.decodeQueryGroup(
+              state.queryParams['args'],
+            );
+
+            return args.build(context, groupMap);
+          },
         );
 
   final TArgs args;

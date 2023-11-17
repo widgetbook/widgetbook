@@ -26,23 +26,8 @@ class TextArgs extends WidgetbookArgs<Text, TextArgs> {
   List<WidgetbookArg> get list => [data];
 
   @override
-  Widget build(BuildContext context) {
-    return Text(data.value);
-  }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'data': data.value,
-    };
-  }
-
-  @override
-  TextArgs valueFromQueryGroup(Map<String, String> group) {
-    return TextArgs(
-      data: data.copyWithValue(
-        valueOf<String>(data.name, group)!,
-      ),
-    );
+  Widget build(BuildContext context, Map<String, String> group) {
+    final data$value = data.valueFromQueryGroup(group);
+    return Text(data$value);
   }
 }
