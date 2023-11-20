@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/next.dart';
 
+part 'text.stories.g.dart';
+
+const metadata = ComponentMetadata(
+  type: Text,
+);
+
 final $Text = TextStory(
   name: 'Text',
 );
