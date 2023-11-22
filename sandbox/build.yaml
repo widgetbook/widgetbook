@@ -2,5 +2,6 @@ targets:
   $default:
     builders:
       widgetbook_generator:telemetry:
-        options:
-          debug: true
+        enabled: false
+      widgetbook_generator:experimental_story_builder:
+        enabled: true # Disabled by default

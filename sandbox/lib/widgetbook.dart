@@ -3,7 +3,7 @@ import 'package:widgetbook/src/themes.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-import 'text.stories.dart';
+import 'next/simple_text.stories.dart';
 import 'widgetbook.directories.g.dart';
 
 void main() {
@@ -17,7 +17,10 @@ class WidgetbookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
-      directories: [...directories, $Text],
+      directories: [
+        ...directories,
+        $SimpleText,
+      ],
       integrations: [
         WidgetbookCloudIntegration(),
       ],
