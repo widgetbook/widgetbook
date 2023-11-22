@@ -19,7 +19,7 @@ class WidgetbookApp extends StatelessWidget {
     return Widgetbook.material(
       directories: [
         ...directories,
-        $SimpleText,
+        ...SimpleTextComponent.stories,
       ],
       integrations: [
         WidgetbookCloudIntegration(),
