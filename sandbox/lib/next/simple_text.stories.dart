@@ -18,9 +18,9 @@ final $SimpleText = SimpleTextStory(
 );
 
 class SimpleText extends StatelessWidget {
-  const SimpleText(
-    this.data, {
+  const SimpleText({
     super.key,
+    required this.data,
   });
 
   final String data;

@@ -110,12 +110,35 @@ class StoryGenerator extends Generator {
                       ..type = refer('Map<String, String>'),
                   ),
                 )
-                ..body = Code(
-                  'return ${name}('
-                  '${argsWithoutKey.map((arg) => '${arg.name}.valueFromQueryGroup(group),').join()}'
-                  ');',
+                ..body = Block(
+                  (b) => b
+                    ..addExpression(
+                      InvokeExpression.newOf(
+                        refer(name),
+                        argsWithoutKey
+                            .where((arg) => arg.isPositional)
+                            .map(
+                              (arg) => refer('${arg.name}')
+                                  .property('valueFromQueryGroup')
+                                  .call([refer('group')]),
+                            )
+                            .toList(),
+                        Map.fromEntries(
+                          argsWithoutKey //
+                              .where((arg) => arg.isNamed)
+                              .map(
+                                (arg) => MapEntry(
+                                  arg.name,
+                                  refer('${arg.name}')
+                                      .property('valueFromQueryGroup')
+                                      .call([refer('group')]),
+                                ),
+                              ),
+                        ),
+                      ).returned,
+                    ),
                 ),
-            )
+            ),
           ],
         ),
     );
