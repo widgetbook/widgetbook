@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/next.dart';
 import 'package:widgetbook/src/themes.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -34,13 +35,12 @@ class WidgetbookApp extends StatelessWidget {
             Devices.ios.iPhone13,
           ],
         ),
-        MaterialThemeAddon(
-          themes: [
-            WidgetbookTheme(
-              name: 'Dark',
-              data: Themes.dark,
-            ),
-          ],
+        MaterialThemeMode(
+          initialTheme: Themes.dark,
+          themes: {
+            'Light': Themes.light,
+            'Dark': Themes.dark,
+          },
         ),
         GridAddon(),
         AlignmentAddon(),
