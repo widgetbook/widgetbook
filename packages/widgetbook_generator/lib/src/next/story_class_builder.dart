@@ -12,7 +12,7 @@ class StoryClassBuilder {
     return Class(
       (b) => b
         ..name = '${name}Story'
-        ..extend = refer('WidgetbookStory<$name, ${name}Args>')
+        ..extend = refer('WidgetbookStory<$name>')
         ..constructors.add(
           Constructor(
             (b) => b.optionalParameters
@@ -31,7 +31,10 @@ class StoryClassBuilder {
                     ..name = 'args'
                     ..named = true
                     ..toSuper = true
-                    ..required = true, // TODO: make optional
+                    ..defaultTo = InvokeExpression.constOf(
+                      refer('${name}Args'),
+                      [],
+                    ).code,
                 ),
               ),
           ),

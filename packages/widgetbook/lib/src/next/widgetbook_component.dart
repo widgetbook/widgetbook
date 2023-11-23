@@ -8,5 +8,5 @@ class WidgetbookComponent<T> {
   });
 
   final ComponentMetadata metadata;
-  final List<WidgetbookStory<T, dynamic>> stories;
+  final List<WidgetbookStory<T>> stories;
 }

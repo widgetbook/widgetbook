@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../fields/fields.dart';
 import '../settings/settings.dart';
 
-abstract class WidgetbookArgs<T, TSelf> {
+abstract class WidgetbookArgs<T> {
   const WidgetbookArgs();
 
   List<WidgetbookArg> get list;
@@ -59,7 +59,7 @@ abstract class WidgetbookArg<T> extends FieldsComposable<T> {
 class StringArg extends WidgetbookArg<String> {
   const StringArg({
     required super.name,
-    required super.value,
+    super.value = '',
   });
 
   @override
