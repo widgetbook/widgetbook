@@ -25,7 +25,7 @@ class ArgsClassBuilder {
     return Class(
       (b) => b
         ..name = '${name}Args'
-        ..extend = refer('WidgetbookArgs<$name, ${name}Args>')
+        ..extend = refer('WidgetbookArgs<$name>')
         ..fields.addAll(
           argsWithoutKey.map(
             (arg) => Field(

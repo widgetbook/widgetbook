@@ -6,7 +6,7 @@ import '../state/state.dart';
 import 'widgetbook_args.dart';
 
 @optionalTypeArgs
-class WidgetbookStory<TWidget, TArgs extends WidgetbookArgs<TWidget, TArgs>>
+class WidgetbookStory<TWidget, TArgs extends WidgetbookArgs<TWidget>>
     extends WidgetbookUseCase {
   WidgetbookStory({
     required super.name,
@@ -26,7 +26,7 @@ class WidgetbookStory<TWidget, TArgs extends WidgetbookArgs<TWidget, TArgs>>
   final TArgs args;
 
   @override
-  WidgetbookStory<dynamic, WidgetbookArgs<dynamic, dynamic>> copyWith({
+  WidgetbookStory<TWidget, WidgetbookArgs<TWidget>> copyWith({
     String? name,
     List<WidgetbookNode>? children,
   }) {
