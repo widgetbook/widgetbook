@@ -14,40 +14,16 @@ Widget resolveIcon(WidgetbookNode node) {
   } else if (node is WidgetbookFolder) {
     return const Icon(Icons.folder, size: 16);
   } else if (node is WidgetbookComponent || node is WidgetbookLeafComponent) {
-    return _NextWrapper(
-      isNext: node is next.WidgetbookComponent,
+    return next.NextFeatWrapper(
+      enable: node is next.WidgetbookComponent,
       child: const ComponentIcon(),
     );
   } else if (node is WidgetbookUseCase) {
-    return _NextWrapper(
-      isNext: node is next.WidgetbookStory,
+    return next.NextFeatWrapper(
+      enable: node is next.WidgetbookStory,
       child: const UseCaseIcon(),
     );
   } else {
     return const SizedBox();
-  }
-}
-
-class _NextWrapper extends StatelessWidget {
-  const _NextWrapper({
-    required this.isNext,
-    required this.child,
-  });
-
-  final bool isNext;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return !isNext
-        ? child
-        : Tooltip(
-            message: 'Experimental',
-            child: Badge(
-              backgroundColor: Colors.red,
-              alignment: AlignmentDirectional.centerStart,
-              child: child,
-            ),
-          );
   }
 }

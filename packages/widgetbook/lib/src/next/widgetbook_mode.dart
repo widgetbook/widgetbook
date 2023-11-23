@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../next.dart';
 import '../../widgetbook.dart';
 
 abstract class WidgetbookMode<T> extends WidgetbookAddon<T> {
@@ -9,6 +10,13 @@ abstract class WidgetbookMode<T> extends WidgetbookAddon<T> {
   String get groupName {
     // To temporarily avoid conflicts with other addons.
     return super.groupName + '-mode';
+  }
+
+  @override
+  Widget buildFields(BuildContext context) {
+    return NextFeatWrapper(
+      child: super.buildFields(context),
+    );
   }
 }
 

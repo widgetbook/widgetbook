@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../next.dart';
 import '../fields/fields.dart';
 import '../settings/settings.dart';
 
@@ -28,20 +29,22 @@ abstract class WidgetbookArg<T> extends FieldsComposable<T> {
 
   @override
   Widget buildFields(BuildContext context) {
-    return Setting(
-      name: name,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: fields
-            .map(
-              (field) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 4.0,
+    return NextFeatWrapper(
+      child: Setting(
+        name: name,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: fields
+              .map(
+                (field) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 4.0,
+                  ),
+                  child: field.build(context, groupName),
                 ),
-                child: field.build(context, groupName),
-              ),
-            )
-            .toList(),
+              )
+              .toList(),
+        ),
       ),
     );
   }
