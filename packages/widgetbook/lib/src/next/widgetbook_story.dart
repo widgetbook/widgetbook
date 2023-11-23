@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../fields/fields.dart';
-import '../navigation/nodes/nodes.dart';
+import '../navigation/nodes/nodes.dart' as v3;
 import '../state/state.dart';
 import 'widgetbook_args.dart';
 
 @optionalTypeArgs
-class WidgetbookStory<TWidget> extends WidgetbookUseCase {
+class WidgetbookStory<TWidget> extends v3.WidgetbookUseCase {
   WidgetbookStory({
     required super.name,
     required this.args,
@@ -27,7 +27,7 @@ class WidgetbookStory<TWidget> extends WidgetbookUseCase {
   @override
   WidgetbookStory<TWidget> copyWith({
     String? name,
-    List<WidgetbookNode>? children,
+    List<v3.WidgetbookNode>? children,
   }) {
     return this;
   }
