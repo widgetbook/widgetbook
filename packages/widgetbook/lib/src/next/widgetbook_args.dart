@@ -29,8 +29,6 @@ abstract class WidgetbookArg<T> extends FieldsComposable<T> {
   @override
   String get groupName => 'args';
 
-  WidgetbookArg<T> copyWithValue(T value);
-
   @override
   Widget buildFields(BuildContext context) {
     return Setting(
@@ -75,14 +73,6 @@ class StringArg extends WidgetbookArg<String> {
           initialValue: value,
         ),
       ];
-
-  @override
-  StringArg copyWithValue(String value) {
-    return StringArg(
-      name: name,
-      value: value,
-    );
-  }
 
   @override
   String valueFromQueryGroup(Map<String, String> group) {
