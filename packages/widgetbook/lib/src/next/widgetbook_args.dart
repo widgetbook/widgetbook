@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../next.dart';
 import '../fields/fields.dart';
 import '../settings/settings.dart';
+import 'experimental_badge.dart';
 
 abstract class WidgetbookArgs<T> {
   const WidgetbookArgs();
@@ -33,22 +33,21 @@ abstract class WidgetbookArg<T> extends FieldsComposable<T> {
 
   @override
   Widget buildFields(BuildContext context) {
-    return NextFeatWrapper(
-      child: Setting(
-        name: name,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: fields
-              .map(
-                (field) => Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 4.0,
-                  ),
-                  child: field.build(context, groupName),
+    return Setting(
+      name: name,
+      trailing: const ExperimentalBadge(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: fields
+            .map(
+              (field) => Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 4.0,
                 ),
-              )
-              .toList(),
-        ),
+                child: field.build(context, groupName),
+              ),
+            )
+            .toList(),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../../../next.dart' as next;
 import '../icons/icons.dart';
 import '../icons/resolve_icon.dart';
 import '../nodes/nodes.dart';
@@ -64,6 +65,14 @@ class NavigationTreeTile extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
+            if (node is next.WidgetbookStory ||
+                node is next.WidgetbookComponent) ...{
+              const Spacer(),
+              const next.ExperimentalBadge(),
+              const SizedBox(
+                width: 8,
+              ),
+            },
           ],
         ),
       ),
