@@ -5,6 +5,7 @@ import 'package:source_gen/source_gen.dart';
 
 import 'args_class_builder.dart';
 import 'component_builder.dart';
+import 'scenario_typedef_builder.dart';
 import 'story_class_builder.dart';
 
 class StoryGenerator extends Generator {
@@ -32,6 +33,7 @@ class StoryGenerator extends Generator {
         ..body.addAll(
           [
             ComponentBuilder(widgetType, storiesVariables).build(),
+            ScenarioTypedefBuilder(widgetType).build(),
             StoryClassBuilder(widgetType).build(),
             ArgsClassBuilder(widgetType).build(),
           ],

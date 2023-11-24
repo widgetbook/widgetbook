@@ -37,10 +37,4 @@ class ArgBuilder {
         ).code,
     );
   }
-
-  Expression buildValue() {
-    return refer(param.name)
-        .property('valueFromQueryGroup')
-        .call([refer('group')]);
-  }
 }

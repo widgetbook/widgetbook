@@ -22,6 +22,27 @@ class ArgsClassBuilder {
         .whereNot((param) => param.name == 'key');
   }
 
+  InvokeExpression instantiate(
+    Expression Function(ParameterElement) assigner,
+  ) {
+    return InvokeExpression.newOf(
+      refer(name),
+      params //
+          .where((param) => param.isPositional)
+          .map(assigner)
+          .toList(),
+      params //
+          .where((param) => param.isNamed)
+          .lastBy((param) => param.name)
+          .map(
+            (_, param) => MapEntry(
+              param.name,
+              assigner(param),
+            ),
+          ),
+    );
+  }
+
   Class build() {
     return Class(
       (b) => b
@@ -60,7 +81,7 @@ class ArgsClassBuilder {
             ),
             Method(
               (b) => b
-                ..name = 'build'
+                ..name = 'buildReactive'
                 ..annotations.add(refer('override'))
                 ..returns = refer('Widget')
                 ..requiredParameters.addAll([
@@ -75,21 +96,26 @@ class ArgsClassBuilder {
                       ..type = refer('Map<String, String>'),
                   ),
                 ])
-                ..body = InvokeExpression.newOf(
-                  refer(name),
-                  params
-                      .where((param) => param.isPositional)
-                      .map((param) => ArgBuilder(param).buildValue())
-                      .toList(),
-                  params //
-                      .where((param) => param.isNamed)
-                      .lastBy((param) => param.name)
-                      .map(
-                        (_, param) => MapEntry(
-                          param.name,
-                          ArgBuilder(param).buildValue(),
-                        ),
-                      ),
+                ..body = instantiate(
+                  (param) => refer(param.name)
+                      .property('valueFromQueryGroup')
+                      .call([refer('group')]),
+                ).returned.statement,
+            ),
+            Method(
+              (b) => b
+                ..name = 'buildStatic'
+                ..annotations.add(refer('override'))
+                ..returns = refer('Widget')
+                ..requiredParameters.add(
+                  Parameter(
+                    (b) => b
+                      ..name = 'context'
+                      ..type = refer('BuildContext'),
+                  ),
+                )
+                ..body = instantiate(
+                  (param) => refer(param.name).property('value'),
                 ).returned.statement,
             ),
           ],

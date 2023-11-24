@@ -18,7 +18,7 @@ class WidgetbookStory<TWidget> extends v3.WidgetbookUseCase {
               state.queryParams['args'],
             );
 
-            return args.build(context, groupMap);
+            return args.buildReactive(context, groupMap);
           },
         );
 
