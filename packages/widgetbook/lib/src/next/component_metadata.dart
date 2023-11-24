@@ -1,7 +1,7 @@
-class ComponentMetadata {
-  const ComponentMetadata({
-    required this.type,
-  });
+class ComponentMetadata<T> {
+  ComponentMetadata({
+    String? name,
+  }) : name = name == null ? T.toString() : name;
 
-  final Type type;
+  final String name;
 }

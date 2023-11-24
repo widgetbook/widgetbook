@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:source_gen/source_gen.dart';
@@ -23,10 +24,9 @@ class StoryGenerator extends Generator {
         .whereType<TopLevelVariableElement>()
         .firstWhere((element) => element.name == 'metadata');
 
-    final widgetType = metadataVariable
-        .computeConstantValue()!
-        .getField('type')!
-        .toTypeValue()!;
+    final widgetType = (metadataVariable.type as InterfaceType) //
+        .typeArguments
+        .first;
 
     final genLib = Library(
       (b) => b

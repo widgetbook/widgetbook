@@ -7,10 +7,10 @@ class WidgetbookComponent<T> extends v3.WidgetbookComponent {
     required this.metadata,
     required this.stories,
   }) : super(
-          name: metadata.type.toString(),
+          name: metadata.name,
           useCases: stories,
         );
 
-  final ComponentMetadata metadata;
+  final ComponentMetadata<T> metadata;
   final List<WidgetbookStory<T>> stories;
 }

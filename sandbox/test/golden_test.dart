@@ -3,11 +3,9 @@ import 'package:sandbox/next/simple_text.stories.dart';
 import 'package:widgetbook/next.dart';
 
 void main() {
-  final name = SimpleTextComponent.metadata.type.toString();
-
   goldenTest(
-    '$name renders correctly',
-    fileName: name,
+    '${SimpleTextComponent.name} renders correctly',
+    fileName: SimpleTextComponent.name,
     builder: () => GoldenTestGroup(
       children: [
         SimpleTextScenario(

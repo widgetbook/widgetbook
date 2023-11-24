@@ -3,8 +3,8 @@ import 'package:widgetbook/next.dart';
 
 part 'simple_text.stories.g.dart';
 
-const metadata = ComponentMetadata(
-  type: SimpleText,
+final metadata = ComponentMetadata<SimpleText>(
+  name: 'Simple Text',
 );
 
 final $SimpleText = SimpleTextStory(
