@@ -2,6 +2,8 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
 
+import 'extensions.dart';
+
 class ComponentBuilder {
   ComponentBuilder(
     this.type,
@@ -11,15 +13,11 @@ class ComponentBuilder {
   final DartType type;
   final List<TopLevelVariableElement> stories;
 
-  String get name {
-    return type.getDisplayString(withNullability: false);
-  }
-
   Code build() {
-    return declareFinal('${name}Component')
+    return declareFinal('${type.displayName}Component')
         .assign(
           InvokeExpression.newOf(
-            refer('WidgetbookComponent<$name>'),
+            refer('WidgetbookComponent<${type.displayName}>'),
             [],
             {
               'metadata': refer('metadata'),

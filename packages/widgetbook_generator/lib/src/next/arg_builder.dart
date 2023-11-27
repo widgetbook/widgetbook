@@ -1,6 +1,8 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:code_builder/code_builder.dart';
 
+import 'extensions.dart';
+
 class ArgBuilder {
   ArgBuilder(this.param);
 
@@ -16,9 +18,7 @@ class ArgBuilder {
         ..modifier = FieldModifier.final$
         ..name = param.name
         ..type = refer(
-          'WidgetbookArg<${param.type.getDisplayString(
-            withNullability: false,
-          )}>',
+          'WidgetbookArg<${param.type.displayName}>',
         ),
     );
   }
@@ -28,15 +28,11 @@ class ArgBuilder {
       (b) => b
         ..named = true
         ..name = param.name
-        ..type = refer('WidgetbookArg<${param.type.getDisplayString(
-          withNullability: false,
-        )}>')
+        ..type = refer('WidgetbookArg<${param.type.displayName}>')
         ..required = false
         ..defaultTo = InvokeExpression.constOf(
           refer(
-            SupportedArgs[param.type.getDisplayString(
-              withNullability: false,
-            )]!,
+            SupportedArgs[param.type.displayName]!,
           ),
           [],
           {'name': literalString(param.name)},

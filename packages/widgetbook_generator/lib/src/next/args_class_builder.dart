@@ -4,15 +4,12 @@ import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 
 import 'arg_builder.dart';
+import 'extensions.dart';
 
 class ArgsClassBuilder {
   ArgsClassBuilder(this.type);
 
   final DartType type;
-
-  String get name {
-    return type.getDisplayString(withNullability: false);
-  }
 
   Iterable<ParameterElement> get params {
     return (type.element as ClassElement)
@@ -26,7 +23,7 @@ class ArgsClassBuilder {
     Expression Function(ParameterElement) assigner,
   ) {
     return InvokeExpression.newOf(
-      refer(name),
+      refer(type.displayName),
       params //
           .where((param) => param.isPositional)
           .map(assigner)
@@ -46,8 +43,8 @@ class ArgsClassBuilder {
   Class build() {
     return Class(
       (b) => b
-        ..name = '${name}Args'
-        ..extend = refer('WidgetbookArgs<$name>')
+        ..name = '${type.displayName}Args'
+        ..extend = refer('WidgetbookArgs<${type.displayName}>')
         ..fields.addAll(
           params.map(
             (param) => ArgBuilder(param).buildField(),

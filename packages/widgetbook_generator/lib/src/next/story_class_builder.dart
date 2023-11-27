@@ -1,18 +1,18 @@
 import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
 
+import 'extensions.dart';
+
 class StoryClassBuilder {
   StoryClassBuilder(this.type);
 
   final DartType type;
 
-  String get name => type.getDisplayString(withNullability: false);
-
   Class build() {
     return Class(
       (b) => b
-        ..name = '${name}Story'
-        ..extend = refer('WidgetbookStory<$name>')
+        ..name = '${type.displayName}Story'
+        ..extend = refer('WidgetbookStory<${type.displayName}>')
         ..constructors.add(
           Constructor(
             (b) => b
@@ -21,7 +21,7 @@ class StoryClassBuilder {
                   [],
                   {
                     'args': refer('args').ifNullThen(
-                      refer('${name}Args()'),
+                      refer('${type.displayName}Args()'),
                     ),
                   },
                 ).code,
@@ -38,7 +38,7 @@ class StoryClassBuilder {
                   (b) => b
                     ..name = 'args'
                     ..named = true
-                    ..type = refer('${name}Args?'),
+                    ..type = refer('${type.displayName}Args?'),
                 ),
               ]),
           ),
