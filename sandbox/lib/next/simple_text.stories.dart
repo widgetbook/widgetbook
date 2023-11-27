@@ -9,6 +9,11 @@ final metadata = ComponentMetadata<SimpleText>(
 
 final $SimpleText = SimpleTextStory(
   name: 'Default',
+  args: SimpleTextArgs(
+    data: const StringArg(
+      value: 'Hello World',
+    ),
+  ),
 );
 
 class SimpleText extends StatelessWidget {

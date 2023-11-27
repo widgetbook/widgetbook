@@ -19,7 +19,7 @@ abstract class WidgetbookArgs<T> {
 @optionalTypeArgs
 abstract class WidgetbookArg<T> extends FieldsComposable<T> {
   const WidgetbookArg({
-    required this.name,
+    this.name = '<unknown>',
     required this.value,
   });
 
@@ -28,6 +28,10 @@ abstract class WidgetbookArg<T> extends FieldsComposable<T> {
 
   @override
   String get groupName => 'args';
+
+  WidgetbookArg<T> init({
+    required String name,
+  });
 
   @override
   Widget buildFields(BuildContext context) {
@@ -62,7 +66,7 @@ abstract class WidgetbookArg<T> extends FieldsComposable<T> {
 
 class StringArg extends WidgetbookArg<String> {
   const StringArg({
-    required super.name,
+    super.name,
     super.value = '',
   });
 
@@ -77,5 +81,15 @@ class StringArg extends WidgetbookArg<String> {
   @override
   String valueFromQueryGroup(Map<String, String> group) {
     return valueOf(name, group)!;
+  }
+
+  @override
+  StringArg init({
+    required String name,
+  }) {
+    return StringArg(
+      name: name,
+      value: value,
+    );
   }
 }

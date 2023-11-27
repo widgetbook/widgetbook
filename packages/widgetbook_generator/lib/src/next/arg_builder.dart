@@ -28,10 +28,16 @@ class ArgBuilder {
       (b) => b
         ..named = true
         ..name = param.name
-        ..toThis = true
+        ..type = refer('WidgetbookArg<${param.type.getDisplayString(
+          withNullability: false,
+        )}>')
         ..required = false
         ..defaultTo = InvokeExpression.constOf(
-          refer('StringArg'),
+          refer(
+            SupportedArgs[param.type.getDisplayString(
+              withNullability: false,
+            )]!,
+          ),
           [],
           {'name': literalString(param.name)},
         ).code,

@@ -15,8 +15,18 @@ class StoryClassBuilder {
         ..extend = refer('WidgetbookStory<$name>')
         ..constructors.add(
           Constructor(
-            (b) => b.optionalParameters
-              ..add(
+            (b) => b
+              ..initializers.add(
+                refer('super').call(
+                  [],
+                  {
+                    'args': refer('args').ifNullThen(
+                      refer('${name}Args()'),
+                    ),
+                  },
+                ).code,
+              )
+              ..optionalParameters.addAll([
                 Parameter(
                   (b) => b
                     ..name = 'name'
@@ -24,19 +34,13 @@ class StoryClassBuilder {
                     ..toSuper = true
                     ..required = true,
                 ),
-              )
-              ..add(
                 Parameter(
                   (b) => b
                     ..name = 'args'
                     ..named = true
-                    ..toSuper = true
-                    ..defaultTo = InvokeExpression.constOf(
-                      refer('${name}Args'),
-                      [],
-                    ).code,
+                    ..type = refer('${name}Args?'),
                 ),
-              ),
+              ]),
           ),
         ),
     );

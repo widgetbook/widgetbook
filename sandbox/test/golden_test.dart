@@ -11,9 +11,8 @@ void main() {
         SimpleTextScenario(
           name: 'Default',
           story: $SimpleText,
-          args: const SimpleTextArgs(
-            data: StringArg(
-              name: 'data',
+          args: SimpleTextArgs(
+            data: const StringArg(
               value: 'Hello World',
             ),
           ),

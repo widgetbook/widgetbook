@@ -56,10 +56,21 @@ class ArgsClassBuilder {
         ..constructors.add(
           Constructor(
             (b) => b
-              ..constant = true
               ..optionalParameters.addAll(
                 params.map(
                   (param) => ArgBuilder(param).buildParam(),
+                ),
+              )
+              ..initializers.addAll(
+                params.map(
+                  (param) => refer('this')
+                      .property(param.name)
+                      .assign(
+                        refer(param.name)
+                            .property('init')
+                            .call([], {'name': literalString(param.name)}),
+                      )
+                      .code,
                 ),
               ),
           ),
