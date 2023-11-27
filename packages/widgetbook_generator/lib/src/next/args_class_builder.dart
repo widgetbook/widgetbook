@@ -89,30 +89,7 @@ class ArgsClassBuilder {
             ),
             Method(
               (b) => b
-                ..name = 'buildReactive'
-                ..annotations.add(refer('override'))
-                ..returns = refer('Widget')
-                ..requiredParameters.addAll([
-                  Parameter(
-                    (b) => b
-                      ..name = 'context'
-                      ..type = refer('BuildContext'),
-                  ),
-                  Parameter(
-                    (b) => b
-                      ..name = 'group'
-                      ..type = refer('Map<String, String>'),
-                  ),
-                ])
-                ..body = instantiate(
-                  (param) => refer(param.name)
-                      .property('valueFromQueryGroup')
-                      .call([refer('group')]),
-                ).returned.statement,
-            ),
-            Method(
-              (b) => b
-                ..name = 'buildStatic'
+                ..name = 'build'
                 ..annotations.add(refer('override'))
                 ..returns = refer('Widget')
                 ..requiredParameters.add(
@@ -122,9 +99,27 @@ class ArgsClassBuilder {
                       ..type = refer('BuildContext'),
                   ),
                 )
-                ..body = instantiate(
-                  (param) => refer(param.name).property('value'),
-                ).returned.statement,
+                ..optionalParameters.add(
+                  Parameter(
+                    (b) => b
+                      ..name = 'group'
+                      ..type = refer('Map<String, String>?'),
+                  ),
+                )
+                ..body = refer('group')
+                    .equalTo(literalNull)
+                    .conditional(
+                      instantiate(
+                        (param) => refer(param.name).property('value'),
+                      ),
+                      instantiate(
+                        (param) => refer(param.name)
+                            .property('valueFromQueryGroup')
+                            .call([refer('group')]),
+                      ),
+                    )
+                    .returned
+                    .statement,
             ),
           ],
         ),

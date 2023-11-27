@@ -9,11 +9,10 @@ abstract class WidgetbookArgs<T> {
 
   List<WidgetbookArg> get list;
 
-  Widget buildReactive(BuildContext context, Map<String, String> group);
-
-  /// Builds the [T] class directly without needing the [Field] API.
-  /// Used for building the story in tests.
-  Widget buildStatic(BuildContext context);
+  /// Builds the story with this.
+  /// If a [group] is given, the values are taken from the group.
+  /// Otherwise, the default values are used.
+  Widget build(BuildContext context, [Map<String, String>? group]);
 }
 
 @optionalTypeArgs

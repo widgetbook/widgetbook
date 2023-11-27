@@ -20,6 +20,6 @@ class WidgetbookScenario<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final effectiveArgs = args ?? story.args;
 
-    return effectiveArgs.buildStatic(context);
+    return effectiveArgs.build(context);
   }
 }
