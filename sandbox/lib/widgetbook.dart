@@ -26,9 +26,9 @@ class WidgetbookApp extends StatelessWidget {
         WidgetbookCloudIntegration(),
       ],
       addons: [
-        AccessibilityAddon(),
-        TimeDilationAddon(),
-        DeviceFrameAddon(
+        AccessibilityMode(),
+        TimeDilationMode(),
+        DeviceFrameMode(
           devices: [
             Devices.ios.iPhoneSE,
             Devices.ios.iPhone12,
@@ -42,12 +42,12 @@ class WidgetbookApp extends StatelessWidget {
             'Dark': Themes.dark,
           },
         ),
-        GridAddon(),
-        AlignmentAddon(),
-        TextScaleAddon(
+        GridMode(),
+        AlignmentMode(),
+        TextScaleMode(
           scales: [1.0, 2.0],
         ),
-        LocalizationAddon(
+        LocalizationMode(
           locales: [
             const Locale('en', 'US'),
           ],
@@ -56,7 +56,7 @@ class WidgetbookApp extends StatelessWidget {
             DefaultMaterialLocalizations.delegate,
           ],
         ),
-        BuilderAddon(
+        BuilderMode(
           name: 'Bounds',
           builder: (context, child) => Container(
             decoration: BoxDecoration(

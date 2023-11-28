@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import 'args/story_args.dart';
-import 'mode.dart';
+import 'modes/mode.dart';
 import 'story.dart';
 
 class Scenario<T> extends StatelessWidget {
