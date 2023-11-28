@@ -9,7 +9,12 @@ class ArgBuilder {
   final ParameterElement param;
 
   static final SupportedArgs = {
-    '$String': 'StringArg',
+    'bool': 'BoolArg',
+    'int': 'IntArg',
+    'double': 'DoubleArg',
+    'String': 'StringArg',
+    'Color': 'ColorArg',
+    'Duration': 'DurationArg',
   };
 
   Field buildField() {

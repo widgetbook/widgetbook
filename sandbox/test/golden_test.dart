@@ -1,21 +1,15 @@
 import 'package:alchemist/alchemist.dart';
-import 'package:sandbox/next/simple_text.stories.dart';
-import 'package:widgetbook/next.dart';
+import 'package:sandbox/next/types_table.stories.dart';
 
 void main() {
   goldenTest(
-    '${SimpleTextComponent.name} renders correctly',
-    fileName: SimpleTextComponent.name,
+    '${TypesTableComponent.name} renders correctly',
+    fileName: TypesTableComponent.name,
     builder: () => GoldenTestGroup(
       children: [
-        SimpleTextScenario(
+        TypesTableScenario(
           name: 'Default',
-          story: $SimpleText,
-          args: SimpleTextArgs(
-            data: const StringArg(
-              value: 'Hello World',
-            ),
-          ),
+          story: $Default,
         ),
       ],
     ),
