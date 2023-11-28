@@ -1,5 +1,5 @@
-class ComponentMetadata<T> {
-  ComponentMetadata({
+class Meta<T> {
+  Meta({
     String? name,
   }) : name = name == null ? T.toString() : name;
 

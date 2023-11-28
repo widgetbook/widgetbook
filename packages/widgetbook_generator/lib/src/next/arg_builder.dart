@@ -18,7 +18,7 @@ class ArgBuilder {
         ..modifier = FieldModifier.final$
         ..name = param.name
         ..type = refer(
-          'WidgetbookArg<${param.type.displayName}>',
+          'Arg<${param.type.displayName}>',
         ),
     );
   }
@@ -28,7 +28,7 @@ class ArgBuilder {
       (b) => b
         ..named = true
         ..name = param.name
-        ..type = refer('WidgetbookArg<${param.type.displayName}>')
+        ..type = refer('Arg<${param.type.displayName}>')
         ..required = false
         ..defaultTo = InvokeExpression.constOf(
           refer(

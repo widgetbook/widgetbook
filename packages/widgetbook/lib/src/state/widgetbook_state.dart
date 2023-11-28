@@ -182,9 +182,9 @@ class WidgetbookState extends ChangeNotifier {
 
   /// Return `true` if SAM (Story-Arg-Mode) structure is used.
   @experimental
-  bool get isNext => useCase is WidgetbookStory;
+  bool get isNext => useCase is Story;
 
-  /// Returns the current active [WidgetbookStory].
+  /// Returns the current active [Story].
   @experimental
-  WidgetbookStory? get story => isNext ? useCase as WidgetbookStory : null;
+  Story? get story => isNext ? useCase as Story : null;
 }

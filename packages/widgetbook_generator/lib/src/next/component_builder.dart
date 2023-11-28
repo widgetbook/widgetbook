@@ -17,10 +17,10 @@ class ComponentBuilder {
     return declareFinal('${type.displayName}Component')
         .assign(
           InvokeExpression.newOf(
-            refer('WidgetbookComponent<${type.displayName}>'),
+            refer('Component<${type.displayName}>'),
             [],
             {
-              'metadata': refer('metadata'),
+              'meta': refer('meta'),
               'stories': literalList(
                 stories.map((story) => refer(story.name)).toList(),
               ),

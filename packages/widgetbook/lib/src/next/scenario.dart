@@ -2,8 +2,8 @@ import 'package:flutter/widgets.dart';
 
 import '../../next.dart';
 
-class WidgetbookScenario<T> extends StatelessWidget {
-  const WidgetbookScenario({
+class Scenario<T> extends StatelessWidget {
+  const Scenario({
     super.key,
     required this.name,
     this.modes,
@@ -13,9 +13,9 @@ class WidgetbookScenario<T> extends StatelessWidget {
 
   final String name;
   // ignore: strict_raw_type
-  final List<WidgetbookMode>? modes;
-  final WidgetbookArgs<T>? args;
-  final WidgetbookStory<T> story;
+  final List<Mode>? modes;
+  final StoryArgs<T>? args;
+  final Story<T> story;
 
   Widget build(BuildContext context) {
     final effectiveArgs = args ?? story.args;

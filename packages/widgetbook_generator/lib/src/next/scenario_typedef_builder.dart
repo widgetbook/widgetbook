@@ -12,7 +12,7 @@ class ScenarioTypedefBuilder {
     return TypeDef(
       (b) => b
         ..name = '${type.displayName}Scenario'
-        ..definition = refer('WidgetbookScenario<${type.displayName}>'),
+        ..definition = refer('Scenario<${type.displayName}>'),
     );
   }
 }

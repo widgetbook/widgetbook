@@ -4,8 +4,8 @@ import '../../widgetbook.dart';
 import '../settings/setting.dart';
 import 'experimental_badge.dart';
 
-abstract class WidgetbookMode<T> extends WidgetbookAddon<T> {
-  WidgetbookMode({required super.name});
+abstract class Mode<T> extends WidgetbookAddon<T> {
+  Mode({required super.name});
 
   @override
   String get groupName {
@@ -35,7 +35,7 @@ abstract class WidgetbookMode<T> extends WidgetbookAddon<T> {
   }
 }
 
-class MaterialThemeMode extends WidgetbookMode<ThemeData> {
+class MaterialThemeMode extends Mode<ThemeData> {
   MaterialThemeMode({
     required this.initialTheme,
     required this.themes,

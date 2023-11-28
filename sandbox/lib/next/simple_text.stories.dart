@@ -3,7 +3,7 @@ import 'package:widgetbook/next.dart';
 
 part 'simple_text.stories.g.dart';
 
-final metadata = ComponentMetadata<SimpleText>(
+final meta = Meta<SimpleText>(
   name: 'Simple Text',
 );
 

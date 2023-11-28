@@ -44,7 +44,7 @@ class ArgsClassBuilder {
     return Class(
       (b) => b
         ..name = '${type.displayName}Args'
-        ..extend = refer('WidgetbookArgs<${type.displayName}>')
+        ..extend = refer('StoryArgs<${type.displayName}>')
         ..fields.addAll(
           params.map(
             (param) => ArgBuilder(param).buildField(),
@@ -78,7 +78,7 @@ class ArgsClassBuilder {
               (b) => b
                 ..name = 'list'
                 ..type = MethodType.getter
-                ..returns = refer('List<WidgetbookArg>')
+                ..returns = refer('List<Arg>')
                 ..annotations.add(refer('override'))
                 ..lambda = true
                 ..body = literalList(

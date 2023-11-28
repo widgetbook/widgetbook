@@ -4,10 +4,10 @@ import '../fields/fields.dart';
 import '../settings/settings.dart';
 import 'experimental_badge.dart';
 
-abstract class WidgetbookArgs<T> {
-  const WidgetbookArgs();
+abstract class StoryArgs<T> {
+  const StoryArgs();
 
-  List<WidgetbookArg> get list;
+  List<Arg> get list;
 
   /// Builds the story with this.
   /// If a [group] is given, the values are taken from the group.
@@ -16,8 +16,8 @@ abstract class WidgetbookArgs<T> {
 }
 
 @optionalTypeArgs
-abstract class WidgetbookArg<T> extends FieldsComposable<T> {
-  const WidgetbookArg({
+abstract class Arg<T> extends FieldsComposable<T> {
+  const Arg({
     this.name = '<unknown>',
     required this.value,
   });
@@ -28,7 +28,7 @@ abstract class WidgetbookArg<T> extends FieldsComposable<T> {
   @override
   String get groupName => 'args';
 
-  WidgetbookArg<T> init({
+  Arg<T> init({
     required String name,
   });
 
@@ -63,7 +63,7 @@ abstract class WidgetbookArg<T> extends FieldsComposable<T> {
   }
 }
 
-class StringArg extends WidgetbookArg<String> {
+class StringArg extends Arg<String> {
   const StringArg({
     super.name,
     super.value = '',

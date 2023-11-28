@@ -20,11 +20,11 @@ class StoryGenerator extends Generator {
         .where((element) => element.name.startsWith('\$'))
         .toList();
 
-    final metadataVariable = library.allElements
+    final metaVariable = library.allElements
         .whereType<TopLevelVariableElement>()
-        .firstWhere((element) => element.name == 'metadata');
+        .firstWhere((element) => element.name == 'meta');
 
-    final widgetType = (metadataVariable.type as InterfaceType) //
+    final widgetType = (metaVariable.type as InterfaceType) //
         .typeArguments
         .first;
 

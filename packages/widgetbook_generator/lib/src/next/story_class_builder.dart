@@ -12,7 +12,7 @@ class StoryClassBuilder {
     return Class(
       (b) => b
         ..name = '${type.displayName}Story'
-        ..extend = refer('WidgetbookStory<${type.displayName}>')
+        ..extend = refer('Story<${type.displayName}>')
         ..constructors.add(
           Constructor(
             (b) => b
