@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../fields/fields.dart';
 import '../navigation/nodes/nodes.dart' as v3;
 import '../state/state.dart';
-import 'args.dart';
+import 'args/story_args.dart';
 
 @optionalTypeArgs
 class Story<TWidget> extends v3.WidgetbookUseCase {

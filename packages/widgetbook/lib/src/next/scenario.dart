@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 
-import '../../next.dart';
+import 'args/story_args.dart';
+import 'mode.dart';
+import 'story.dart';
 
 class Scenario<T> extends StatelessWidget {
   const Scenario({

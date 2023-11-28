@@ -1,19 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
-import '../fields/fields.dart';
-import '../settings/settings.dart';
-import 'experimental_badge.dart';
-
-abstract class StoryArgs<T> {
-  const StoryArgs();
-
-  List<Arg> get list;
-
-  /// Builds the story with this.
-  /// If a [group] is given, the values are taken from the group.
-  /// Otherwise, the default values are used.
-  Widget build(BuildContext context, [Map<String, String>? group]);
-}
+import '../../fields/fields.dart';
+import '../../settings/settings.dart';
+import '../experimental_badge.dart';
 
 @optionalTypeArgs
 abstract class Arg<T> extends FieldsComposable<T> {
@@ -60,35 +49,5 @@ abstract class Arg<T> extends FieldsComposable<T> {
       'group': groupName,
       'fields': fields.map((field) => field.toFullJson()).toList(),
     };
-  }
-}
-
-class StringArg extends Arg<String> {
-  const StringArg({
-    super.name,
-    super.value = '',
-  });
-
-  @override
-  List<Field> get fields => [
-        StringField(
-          name: name,
-          initialValue: value,
-        ),
-      ];
-
-  @override
-  String valueFromQueryGroup(Map<String, String> group) {
-    return valueOf(name, group)!;
-  }
-
-  @override
-  StringArg init({
-    required String name,
-  }) {
-    return StringArg(
-      name: name,
-      value: value,
-    );
   }
 }
