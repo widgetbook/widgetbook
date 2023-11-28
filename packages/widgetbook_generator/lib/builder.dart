@@ -63,6 +63,6 @@ Builder reportTelemetry(BuilderOptions options) {
 Builder storyBuilder(BuilderOptions options) {
   return PartBuilder(
     [StoryGenerator()],
-    '.g.dart',
+    '.book.dart',
   );
 }

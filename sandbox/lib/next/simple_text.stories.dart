@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/next.dart';
 
-part 'simple_text.stories.g.dart';
+part 'simple_text.stories.book.dart';
 
 final meta = Meta<SimpleText>(
   name: 'Simple Text',
