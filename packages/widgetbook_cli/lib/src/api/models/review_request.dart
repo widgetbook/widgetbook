@@ -10,6 +10,7 @@ class ReviewRequest {
     required this.headBranch,
     required this.baseSha,
     required this.headSha,
+    required this.takeScreenshots,
   });
 
   final String apiKey;
@@ -20,6 +21,7 @@ class ReviewRequest {
   final String headBranch;
   final String baseSha;
   final String headSha;
+  final bool takeScreenshots;
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -31,6 +33,7 @@ class ReviewRequest {
       'headBranch': headBranch,
       'baseSha': baseSha,
       'headSha': headSha,
+      'takeScreenshots': takeScreenshots,
     };
   }
 }

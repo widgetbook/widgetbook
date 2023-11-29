@@ -13,6 +13,7 @@ import '../../metadata.dart';
 import '../api/api.dart';
 import '../core/core.dart';
 import '../git/git.dart';
+import '../models/changed_use_case.dart';
 import '../utils/executable_manager.dart';
 import '../utils/utils.dart';
 import 'publish_args.dart';
@@ -68,6 +69,12 @@ class PublishCommand extends CliCommand<PublishArgs> {
         'base-branch',
         help:
             'The base branch of the pull-request. For example, main or master.',
+      )
+      ..addFlag(
+        'experimental-visual-diff',
+        negatable: false,
+        help: 'Runs golden tests on Widgetbook Cloud to detect changes. '
+            '(experimental ✨)',
       );
   }
 
@@ -109,6 +116,8 @@ class PublishCommand extends CliCommand<PublishArgs> {
       throw RepositoryNotFoundException();
     }
 
+    final visualDiff = results['experimental-visual-diff'] != null;
+
     return PublishArgs(
       apiKey: apiKey,
       branch: branch,
@@ -118,6 +127,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
       actor: actor,
       repository: repoName,
       baseBranch: baseBranch,
+      visualDiff: visualDiff,
     );
   }
 
@@ -276,33 +286,49 @@ class PublishCommand extends CliCommand<PublishArgs> {
     }
 
     final useCases = await useCaseReader.read(args.path);
-    final diffs = await context.repository!.diff(args.baseBranch!.fullName);
 
-    final changeUseCases = useCaseReader.compare(
-      useCases: useCases,
-      diffs: diffs,
-    );
+    if (args.visualDiff) {
+      logger.warn(
+        '✨ Experimental Visual Diff is enabled.\n'
+        'This feature is still in development and might not work as expected.',
+      );
+    }
 
-    if (changeUseCases.isEmpty) {
+    final reviewUseCases = args.visualDiff
+        ? useCases
+            .map(
+              (useCase) => ChangedUseCase.fromUseCase(
+                useCase: useCase,
+                modification: Modification.changed, // Redundant
+              ),
+            )
+            .toList()
+        : useCaseReader.compare(
+            useCases: useCases,
+            diffs: await context.repository!.diff(args.baseBranch!.fullName),
+          );
+
+    if (reviewUseCases.isEmpty) {
       logger.err('Could not find any changed use-cases files.');
       throw ReviewNotFoundException();
     }
 
     progress.update(
-      'Uploading review [${changeUseCases.length} modified use-case(s)]',
+      'Uploading ${reviewUseCases.length} use-case(s) for review',
     );
 
     final response = await _client.uploadReview(
       versions,
       ReviewRequest(
         apiKey: args.apiKey,
-        useCases: changeUseCases,
+        useCases: reviewUseCases,
         buildId: buildResponse.build,
         projectId: buildResponse.project,
         baseBranch: args.baseBranch!.fullName,
         headBranch: args.branch,
         baseSha: args.baseBranch!.sha,
         headSha: args.commit,
+        takeScreenshots: args.visualDiff,
       ),
     );
 
