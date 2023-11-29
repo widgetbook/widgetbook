@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **BREAKING**: Set minimum SDK version to 3.0.0. ([#1030](https://github.com/widgetbook/widgetbook/pull/1030))
+- **FEAT**: Add `--experimental-visual-diff` flag to `widgetbook publish` command to run golden tests on Widgetbook Cloud and detect changes for review. ([#1062](https://github.com/widgetbook/widgetbook/pull/1062))
 - **FIX**: Remove `#` from build/review URLs. ([#1063](https://github.com/widgetbook/widgetbook/pull/1063))
 
 ## 3.0.1
