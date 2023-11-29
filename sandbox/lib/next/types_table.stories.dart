@@ -12,12 +12,12 @@ final $Default = TypesTableStory(
 class TypesTable extends StatelessWidget {
   const TypesTable({
     super.key,
-    required this.boolean,
+    this.boolean = true,
     required this.integer,
     required this.decimal,
     required this.string,
     required this.color,
-    required this.duration,
+    this.duration = const Duration(seconds: 1),
   });
 
   final bool boolean;

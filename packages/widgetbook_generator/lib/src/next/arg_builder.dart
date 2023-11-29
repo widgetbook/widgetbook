@@ -40,7 +40,10 @@ class ArgBuilder {
             SupportedArgs[param.type.displayName]!,
           ),
           [],
-          {'name': literalString(param.name)},
+          {
+            'name': literalString(param.name),
+            if (param.hasDefaultValue) 'value': refer(param.defaultValueCode!),
+          },
         ).code,
     );
   }
