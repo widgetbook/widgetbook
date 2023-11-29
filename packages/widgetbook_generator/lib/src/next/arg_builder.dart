@@ -8,15 +8,6 @@ class ArgBuilder {
 
   final ParameterElement param;
 
-  static final SupportedArgs = {
-    'bool': 'BoolArg',
-    'int': 'IntArg',
-    'double': 'DoubleArg',
-    'String': 'StringArg',
-    'Color': 'ColorArg',
-    'Duration': 'DurationArg',
-  };
-
   Field buildField() {
     return Field(
       (b) => b
@@ -34,17 +25,18 @@ class ArgBuilder {
         ..named = true
         ..name = param.name
         ..type = refer('Arg<${param.type.displayName}>')
-        ..required = false
-        ..defaultTo = InvokeExpression.constOf(
-          refer(
-            SupportedArgs[param.type.displayName]!,
-          ),
-          [],
-          {
-            'name': literalString(param.name),
-            if (param.hasDefaultValue) 'value': refer(param.defaultValueCode!),
-          },
-        ).code,
+        ..required = !param.type.isPrimitive
+        ..defaultTo = !param.type.isPrimitive
+            ? null
+            : InvokeExpression.constOf(
+                refer(param.type.primitiveArg),
+                [],
+                {
+                  'name': literalString(param.name),
+                  if (param.hasDefaultValue)
+                    'value': refer(param.defaultValueCode!),
+                },
+              ).code,
     );
   }
 }
