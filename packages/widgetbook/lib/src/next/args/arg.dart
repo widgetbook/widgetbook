@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../fields/fields.dart';
 import '../../settings/settings.dart';
 import '../experimental_badge.dart';
+import 'const_arg.dart';
 
 @optionalTypeArgs
 abstract class Arg<T> extends FieldsComposable<T> {
@@ -20,6 +21,8 @@ abstract class Arg<T> extends FieldsComposable<T> {
   Arg<T> init({
     required String name,
   });
+
+  static ConstArg<T> of<T>(T value) => ConstArg<T>(value);
 
   @override
   Widget buildFields(BuildContext context) {

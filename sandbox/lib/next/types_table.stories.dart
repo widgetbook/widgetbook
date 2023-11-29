@@ -11,6 +11,7 @@ final meta = Meta<TypesTable>();
 final $Default = TypesTableStory(
   name: 'Default',
   args: TypesTableArgs(
+    duration: Arg.of(Duration.zero), // constant arg (not shown in UI)
     person: const PersonArg(
       value: Person(
         name: 'John Doe',
