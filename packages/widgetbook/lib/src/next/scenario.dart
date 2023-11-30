@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
+import 'package:nested/nested.dart';
 
+import 'addons/base/mode.dart';
 import 'args/story_args.dart';
-import 'modes/mode.dart';
 import 'story.dart';
 
 class Scenario<T> extends StatelessWidget {
@@ -21,7 +22,19 @@ class Scenario<T> extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final effectiveArgs = args ?? story.args;
+    final effectiveStory = effectiveArgs.build(context);
 
-    return effectiveArgs.build(context);
+    return modes == null || modes!.isEmpty
+        ? effectiveStory
+        : Nested(
+            children: modes!
+                .map(
+                  (mode) => SingleChildBuilder(
+                    builder: (context, child) => mode.build(context, child!),
+                  ),
+                )
+                .toList(),
+            child: effectiveStory,
+          );
   }
 }
