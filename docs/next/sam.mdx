@@ -27,6 +27,16 @@ The Story-Arg-Mode architecture or "SAM" (_inspired by [Samwise Gamgee](https://
    flutter pub add widgetbook dev:widgetbook_generator dev:build_runner
    ```
 
+1. Opt-in to the new `widgetbook_generator` by creating the file `widgetbook/build.yaml`, and adding the following content:
+
+   ```yaml
+   targets:
+     $default:
+       builders:
+         widgetbook_generator:experimental_story_builder:
+           enabled: true
+   ```
+
 1. Create the **cyclic dependency** between your app and `widgetbook`:  
    Although it hurts developers to see the _c-word_ used, but this case is completely fine. The cyclic dependency is only used to generate code and will not be part of the final app.
 
