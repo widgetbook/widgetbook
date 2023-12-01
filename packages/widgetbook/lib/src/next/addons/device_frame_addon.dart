@@ -35,7 +35,7 @@ class DeviceFrameMode extends Mode<DeviceFrameConfig> {
 
   @override
   Widget build(BuildContext context, Widget child) {
-    if (value is NoneDevice) {
+    if (value.device is NoneDevice) {
       return child;
     }
 
