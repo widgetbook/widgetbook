@@ -97,6 +97,7 @@
         ["3.0.0 beta to rc", "/migration/3.0.0-beta-to-rc"]
       ]
     ],
+    ["Next", [["1. SAM Architecture", "/next/sam"]]],
     ["Cookbook", [["Custom Theme", "/cookbook/custom-theme"]]],
     [
       "Widgetbook Cloud",
