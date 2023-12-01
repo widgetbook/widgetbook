@@ -6,10 +6,6 @@ analyzer:
     strict-inference: true
     strict-raw-types: true
 
-  exclude:
-    - "**/*.g.dart"
-    - "**/*.freezed.dart"
-
 linter:
   rules:
     # Constructors

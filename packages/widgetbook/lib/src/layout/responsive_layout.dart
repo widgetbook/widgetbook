@@ -47,6 +47,16 @@ class ResponsiveLayout extends StatelessWidget {
         .toList();
   }
 
+  List<Widget> buildArgs(BuildContext context) {
+    final state = WidgetbookState.of(context);
+    final story = state.story;
+
+    return story?.args.nonConstList
+            .map((e) => e.buildFields(context))
+            .toList() ??
+        [];
+  }
+
   @override
   Widget build(BuildContext context) {
     // MediaQuery.sizeOf is not backwards compatible with Flutter < 3.10.0
@@ -57,12 +67,14 @@ class ResponsiveLayout extends StatelessWidget {
             navigationBuilder: (context) => buildNavigation(context, true),
             addonsBuilder: buildAddons,
             knobsBuilder: buildKnobs,
+            argsBuilder: buildArgs,
             workbench: child,
           )
         : DesktopLayout(
             navigationBuilder: (context) => buildNavigation(context, false),
             addonsBuilder: buildAddons,
             knobsBuilder: buildKnobs,
+            argsBuilder: buildArgs,
             workbench: child,
           );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../settings/settings.dart';
+import '../state/state.dart';
 import 'base_layout.dart';
 
 class MobileLayout extends StatelessWidget implements BaseLayout {
@@ -9,17 +10,22 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
     required this.navigationBuilder,
     required this.addonsBuilder,
     required this.knobsBuilder,
+    required this.argsBuilder,
     required this.workbench,
   });
 
   final Widget Function(BuildContext context) navigationBuilder;
   final List<Widget> Function(BuildContext context) addonsBuilder;
   final List<Widget> Function(BuildContext context) knobsBuilder;
+  final List<Widget> Function(BuildContext context) argsBuilder;
   final Widget workbench;
 
   @override
   Widget build(BuildContext context) {
+    final state = WidgetbookState.of(context);
+
     return Scaffold(
+      key: ValueKey(state.isNext), // Rebuild when switching to next
       body: SafeArea(
         child: workbench,
       ),
@@ -34,9 +40,9 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
               label: 'Addons',
               icon: Icon(Icons.dashboard_customize_outlined),
             ),
-            const BottomNavigationBarItem(
-              label: 'Knobs',
-              icon: Icon(Icons.tune_outlined),
+            BottomNavigationBarItem(
+              label: state.isNext ? 'Args' : 'Knobs',
+              icon: const Icon(Icons.tune_outlined),
             ),
           ],
           onTap: (index) {
@@ -57,10 +63,15 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
                     );
                   case 2:
                     return ExcludeSemantics(
-                      child: MobileSettingsPanel(
-                        name: 'Knobs',
-                        builder: knobsBuilder,
-                      ),
+                      child: state.isNext
+                          ? MobileSettingsPanel(
+                              name: 'Args',
+                              builder: argsBuilder,
+                            )
+                          : MobileSettingsPanel(
+                              name: 'Knobs',
+                              builder: knobsBuilder,
+                            ),
                     );
                   default:
                     return Container();

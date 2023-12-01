@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/next.dart' as next;
 import 'package:widgetbook/src/themes.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import 'next/types_table.stories.dart';
 import 'widgetbook.directories.g.dart';
 
 void main() {
@@ -16,43 +18,36 @@ class WidgetbookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
-      directories: directories,
+      directories: [
+        ...directories,
+        TypesTableComponent,
+      ],
       integrations: [
         WidgetbookCloudIntegration(),
       ],
       addons: [
-        AccessibilityAddon(),
-        TimeDilationAddon(),
-        DeviceFrameAddon(
-          devices: [
-            Devices.ios.iPhoneSE,
-            Devices.ios.iPhone12,
-            Devices.ios.iPhone13,
-          ],
-        ),
-        MaterialThemeAddon(
-          themes: [
-            WidgetbookTheme(
-              name: 'Dark',
-              data: Themes.dark,
-            ),
-          ],
-        ),
-        GridAddon(),
-        AlignmentAddon(),
-        TextScaleAddon(
-          scales: [1.0, 2.0],
-        ),
-        LocalizationAddon(
-          locales: [
-            const Locale('en', 'US'),
-          ],
-          localizationsDelegates: [
+        next.AccessibilityAddon(),
+        next.TimeDilationAddon(),
+        next.DeviceFrameAddon([
+          Devices.ios.iPhoneSE,
+          Devices.ios.iPhone12,
+          Devices.ios.iPhone13,
+        ]),
+        next.MaterialThemeAddon({
+          'Dark': Themes.dark,
+          'Light': Themes.light,
+        }),
+        next.GridAddon(),
+        next.AlignmentAddon(),
+        next.TextScaleAddon(),
+        next.LocaleAddon(
+          [const Locale('en', 'US')],
+          [
             DefaultWidgetsLocalizations.delegate,
             DefaultMaterialLocalizations.delegate,
           ],
         ),
-        BuilderAddon(
+        next.BuilderAddon(
           name: 'Bounds',
           builder: (context, child) => Container(
             decoration: BoxDecoration(

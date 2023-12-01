@@ -5,6 +5,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'src/generators/app_generator.dart';
 import 'src/generators/json_builder.dart';
 import 'src/generators/use_case_generator.dart';
+import 'src/next/story_generator.dart';
 import 'src/telemetry/telemetry_reporter.dart';
 import 'widgetbook_generator.dart';
 
@@ -56,5 +57,12 @@ Builder appBuilder(BuilderOptions options) {
 Builder reportTelemetry(BuilderOptions options) {
   return TelemetryReporter(
     isDebug: options.config['debug'] as bool? ?? false,
+  );
+}
+
+Builder storyBuilder(BuilderOptions options) {
+  return PartBuilder(
+    [StoryGenerator()],
+    '.book.dart',
   );
 }

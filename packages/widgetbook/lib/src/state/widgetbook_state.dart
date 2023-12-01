@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
+import '../../next.dart';
 import '../addons/addons.dart';
 import '../fields/fields.dart';
 import '../integrations/widgetbook_integration.dart';
@@ -174,7 +175,16 @@ class WidgetbookState extends ChangeNotifier {
     query = routeConfig.query;
     previewMode = routeConfig.previewMode;
     queryParams = routeConfig.queryParams;
-
     notifyListeners();
   }
+
+  /* Widgetbook Next: SAM (Story-Arg-Mode) Structure */
+
+  /// Return `true` if SAM (Story-Arg-Mode) structure is used.
+  @experimental
+  bool get isNext => useCase is Story;
+
+  /// Returns the current active [Story].
+  @experimental
+  Story? get story => isNext ? useCase as Story : null;
 }
