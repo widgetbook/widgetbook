@@ -72,6 +72,41 @@ The Story-Arg-Mode architecture or "SAM" (_inspired by [Samwise Gamgee](https://
 
 1. Run `dart run build_runner build -d` again to add the new story to the generated `MyCoolWidgetComponent.stories` list.
 
+1. Add the following code to your `widgetbook/lib/main.dart` file:
+
+   ```dart
+   import 'package:flutter/material.dart';
+   import 'package:widgetbook/next.dart' as next;
+   import 'package:widgetbook/widgetbook.dart';
+
+   import 'my_cool_widget.stories.dart';
+
+   void main() {
+     runApp(const WidgetbookApp());
+   }
+
+   class WidgetbookApp extends StatelessWidget {
+     const WidgetbookApp({super.key});
+
+     @override
+     Widget build(BuildContext context) {
+       return Widgetbook.material(
+         directories: [
+           MyCoolWidgetComponent,
+           // You can add v3 Use-cases here:
+           // ...directories,
+         ],
+         addons: [
+           next.MaterialThemeAddon({
+             'Dark': ThemeData.dark(),
+             'Light': ThemeData.light(),
+           }),
+         ],
+       );
+     }
+   }
+   ```
+
 ## Args
 
 Args are the replacement of knobs from Widgetbook 3. They can be thought of as "typed" knobs. They are also used for golden testing later on. They are generated based on the default constructor of your widget you are trying to catalog.
