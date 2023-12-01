@@ -189,7 +189,7 @@ Modes are introduces to make golden testing easier with Widgetbook 4.
 
    void main() {
      goldenTest(
-       'renders correctly',
+       MyCoolWidgetComponent.name,
        fileName: MyCoolWidgetComponent.name,
        builder: () => GoldenTestGroup(
          children: [
