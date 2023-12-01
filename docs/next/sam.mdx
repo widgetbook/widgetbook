@@ -196,6 +196,10 @@ Modes are introduces to make golden testing easier with Widgetbook 4.
            MyCoolWidgetScenario(
              name: 'Primary',
              story: $Primary,
+             modes: [ThemeMode(ThemeData.dark())]
+             args: MyCoolWidgetArgs.fixed(
+              foo: 'bar',
+             ),
            ),
          ],
        ),
