@@ -24,7 +24,7 @@ void main() {
             name: 'Default',
             story: $Default,
             args: TypesTableArgs(
-              person: Arg.of(
+              person: Arg.fixed(
                 const Person(
                   name: 'John Doe',
                   age: 42,

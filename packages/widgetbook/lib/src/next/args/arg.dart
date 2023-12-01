@@ -22,7 +22,7 @@ abstract class Arg<T> extends FieldsComposable<T> {
     required String name,
   });
 
-  static ConstArg<T> of<T>(T value) => ConstArg<T>(value);
+  static ConstArg<T> fixed<T>(T value) => ConstArg<T>(value);
 
   @override
   Widget buildFields(BuildContext context) {
