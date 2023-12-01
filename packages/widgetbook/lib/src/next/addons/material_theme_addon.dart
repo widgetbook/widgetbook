@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../fields/fields.dart';
 import 'base/mode.dart';
-import 'base/modes_addon.dart';
+import 'base/mode_addon.dart';
 
 class MaterialThemeMode extends Mode<ThemeData> {
   MaterialThemeMode(super.value);
@@ -22,13 +22,11 @@ class MaterialThemeMode extends Mode<ThemeData> {
   }
 }
 
-class MaterialThemeAddon extends ModesAddon<MaterialThemeMode> {
+class MaterialThemeAddon extends ModeAddon<ThemeData> {
   MaterialThemeAddon(this.themes)
       : super(
           name: 'Material Theme',
-          modes: themes.entries
-              .map((entry) => MaterialThemeMode(entry.value))
-              .toList(),
+          modeBuilder: MaterialThemeMode.new,
         );
 
   final Map<String, ThemeData> themes;
@@ -48,9 +46,7 @@ class MaterialThemeAddon extends ModesAddon<MaterialThemeMode> {
   }
 
   @override
-  MaterialThemeMode valueFromQueryGroup(Map<String, String> group) {
-    return MaterialThemeMode(
-      valueOf<ThemeData>('name', group)!,
-    );
+  ThemeData valueFromQueryGroup(Map<String, String> group) {
+    return valueOf('name', group)!;
   }
 }

@@ -4,17 +4,34 @@ import 'package:flutter/widgets.dart';
 import '../../addons/device_frame_addon/none_device.dart';
 import '../../fields/fields.dart';
 import 'base/mode.dart';
-import 'base/modes_addon.dart';
+import 'base/mode_addon.dart';
 
-class DeviceFrameMode extends Mode<DeviceInfo> {
-  DeviceFrameMode({
-    required DeviceInfo device,
+class DeviceFrameConfig {
+  const DeviceFrameConfig({
+    required this.device,
     required this.orientation,
     required this.hasFrame,
-  }) : super(device);
+  });
 
+  final DeviceInfo device;
   final Orientation orientation;
   final bool hasFrame;
+}
+
+class DeviceFrameMode extends Mode<DeviceFrameConfig> {
+  DeviceFrameMode({
+    required DeviceInfo device,
+    Orientation orientation = Orientation.portrait,
+    bool hasFrame = false,
+  }) : super(
+          DeviceFrameConfig(
+            device: device,
+            orientation: orientation,
+            hasFrame: hasFrame,
+          ),
+        );
+
+  DeviceFrameMode.fromConfig(super.value);
 
   @override
   Widget build(BuildContext context, Widget child) {
@@ -26,10 +43,10 @@ class DeviceFrameMode extends Mode<DeviceInfo> {
       padding: const EdgeInsets.all(32),
       child: Center(
         child: DeviceFrame(
-          orientation: orientation,
-          device: value,
-          isFrameVisible: hasFrame,
-          screen: hasFrame
+          orientation: value.orientation,
+          device: value.device,
+          isFrameVisible: value.hasFrame,
+          screen: value.hasFrame
               ? child
               : SafeArea(
                   child: child,
@@ -40,19 +57,12 @@ class DeviceFrameMode extends Mode<DeviceInfo> {
   }
 }
 
-class DeviceFrameAddon extends ModesAddon<DeviceFrameMode> {
+class DeviceFrameAddon extends ModeAddon<DeviceFrameConfig> {
   DeviceFrameAddon(List<DeviceInfo> devices)
       : this.devices = [NoneDevice.instance, ...devices],
         super(
           name: 'Device Frame',
-          modes: [
-            // TODO: this is redundant
-            DeviceFrameMode(
-              device: devices.first,
-              orientation: Orientation.portrait,
-              hasFrame: true,
-            ),
-          ],
+          modeBuilder: DeviceFrameMode.fromConfig,
         );
 
   final List<DeviceInfo> devices;
@@ -84,8 +94,8 @@ class DeviceFrameAddon extends ModesAddon<DeviceFrameMode> {
   }
 
   @override
-  DeviceFrameMode valueFromQueryGroup(Map<String, String> group) {
-    return DeviceFrameMode(
+  DeviceFrameConfig valueFromQueryGroup(Map<String, String> group) {
+    return DeviceFrameConfig(
       device: valueOf<DeviceInfo>('name', group)!,
       orientation: valueOf<Orientation>('orientation', group)!,
       hasFrame: valueOf<bool>('frame', group)!,

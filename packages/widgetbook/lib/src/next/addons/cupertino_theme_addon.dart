@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../fields/fields.dart';
 import 'base/mode.dart';
-import 'base/modes_addon.dart';
+import 'base/mode_addon.dart';
 
 class CupertinoThemeMode extends Mode<CupertinoThemeData> {
   CupertinoThemeMode(super.value);
@@ -22,13 +22,11 @@ class CupertinoThemeMode extends Mode<CupertinoThemeData> {
   }
 }
 
-class CupertinoThemeAddon extends ModesAddon<CupertinoThemeMode> {
+class CupertinoThemeAddon extends ModeAddon<CupertinoThemeData> {
   CupertinoThemeAddon(this.themes)
       : super(
           name: 'Cupertino Theme',
-          modes: themes.entries
-              .map((entry) => CupertinoThemeMode(entry.value))
-              .toList(),
+          modeBuilder: CupertinoThemeMode.new,
         );
 
   final Map<String, CupertinoThemeData> themes;
@@ -48,9 +46,7 @@ class CupertinoThemeAddon extends ModesAddon<CupertinoThemeMode> {
   }
 
   @override
-  CupertinoThemeMode valueFromQueryGroup(Map<String, String> group) {
-    return CupertinoThemeMode(
-      valueOf<CupertinoThemeData>('name', group)!,
-    );
+  CupertinoThemeData valueFromQueryGroup(Map<String, String> group) {
+    return valueOf('name', group)!;
   }
 }

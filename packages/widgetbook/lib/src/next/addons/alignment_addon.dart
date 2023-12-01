@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../fields/fields.dart';
 import 'base/mode.dart';
-import 'base/modes_addon.dart';
+import 'base/mode_addon.dart';
 
 class AlignmentMode extends Mode<Alignment> {
   AlignmentMode(super.value);
@@ -16,13 +16,11 @@ class AlignmentMode extends Mode<Alignment> {
   }
 }
 
-class AlignmentAddon extends ModesAddon<AlignmentMode> {
+class AlignmentAddon extends ModeAddon<Alignment> {
   AlignmentAddon([this.alignment = Alignment.center])
       : super(
           name: 'Alignment',
-          modes: alignments.entries
-              .map((entry) => AlignmentMode(entry.key))
-              .toList(),
+          modeBuilder: AlignmentMode.new,
         );
 
   final Alignment alignment;
@@ -52,9 +50,7 @@ class AlignmentAddon extends ModesAddon<AlignmentMode> {
   }
 
   @override
-  AlignmentMode valueFromQueryGroup(Map<String, String> group) {
-    return AlignmentMode(
-      valueOf<Alignment>('alignment', group)!,
-    );
+  Alignment valueFromQueryGroup(Map<String, String> group) {
+    return valueOf('alignment', group)!;
   }
 }

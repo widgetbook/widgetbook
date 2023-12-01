@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../fields/fields.dart';
 import 'base/mode.dart';
-import 'base/modes_addon.dart';
+import 'base/mode_addon.dart';
 
 class TimeDilationMode extends Mode<double> {
   TimeDilationMode(super.value);
@@ -11,16 +11,15 @@ class TimeDilationMode extends Mode<double> {
   @override
   Widget build(BuildContext context, Widget child) {
     timeDilation = value;
-
     return child;
   }
 }
 
-class TimeDilationAddon extends ModesAddon<TimeDilationMode> {
+class TimeDilationAddon extends ModeAddon<double> {
   TimeDilationAddon()
       : super(
           name: 'Time Dilation',
-          modes: [],
+          modeBuilder: TimeDilationMode.new,
         );
 
   @override
@@ -37,9 +36,7 @@ class TimeDilationAddon extends ModesAddon<TimeDilationMode> {
   }
 
   @override
-  TimeDilationMode valueFromQueryGroup(Map<String, String> group) {
-    return TimeDilationMode(
-      valueOf<double>('factor', group)!,
-    );
+  double valueFromQueryGroup(Map<String, String> group) {
+    return valueOf('factor', group)!;
   }
 }

@@ -5,7 +5,9 @@ import 'package:meta/meta.dart';
 
 export 'src/next/addons/accessibility_addon.dart';
 export 'src/next/addons/alignment_addon.dart';
+export 'src/next/addons/base/addon.dart';
 export 'src/next/addons/base/builder_addon.dart';
+export 'src/next/addons/base/mode_addon.dart';
 export 'src/next/addons/cupertino_theme_addon.dart';
 export 'src/next/addons/device_frame_addon.dart';
 export 'src/next/addons/grid_addon.dart';

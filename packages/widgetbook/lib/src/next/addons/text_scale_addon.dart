@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../fields/fields.dart';
 import 'base/mode.dart';
-import 'base/modes_addon.dart';
+import 'base/mode_addon.dart';
 
 class TextScaleMode extends Mode<double> {
   TextScaleMode(super.value);
@@ -23,11 +23,11 @@ class TextScaleMode extends Mode<double> {
   }
 }
 
-class TextScaleAddon extends ModesAddon<TextScaleMode> {
+class TextScaleAddon extends ModeAddon<double> {
   TextScaleAddon()
       : super(
           name: 'Text Scale',
-          modes: [], // TODO: this is redundant
+          modeBuilder: TextScaleMode.new,
         );
 
   @override
@@ -44,9 +44,7 @@ class TextScaleAddon extends ModesAddon<TextScaleMode> {
   }
 
   @override
-  TextScaleMode valueFromQueryGroup(Map<String, String> group) {
-    return TextScaleMode(
-      valueOf<double>('factor', group)!,
-    );
+  double valueFromQueryGroup(Map<String, String> group) {
+    return valueOf('factor', group)!;
   }
 }

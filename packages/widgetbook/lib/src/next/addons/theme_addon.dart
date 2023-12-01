@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../fields/fields.dart';
 import 'base/mode.dart';
-import 'base/modes_addon.dart';
+import 'base/mode_addon.dart';
 
 typedef ThemeBuilder<T> = Widget Function(
   BuildContext context,
@@ -21,13 +21,11 @@ class ThemeMode<T> extends Mode<T> {
   }
 }
 
-class ThemeAddon<T> extends ModesAddon<ThemeMode<T>> {
+class ThemeAddon<T> extends ModeAddon<T> {
   ThemeAddon(this.themes, this.builder)
       : super(
           name: 'Theme',
-          modes: themes.entries
-              .map((entry) => ThemeMode(entry.value, builder))
-              .toList(),
+          modeBuilder: (theme) => ThemeMode(theme, builder),
         );
 
   final Map<String, T> themes;
@@ -48,10 +46,7 @@ class ThemeAddon<T> extends ModesAddon<ThemeMode<T>> {
   }
 
   @override
-  ThemeMode<T> valueFromQueryGroup(Map<String, String> group) {
-    return ThemeMode<T>(
-      valueOf<T>('name', group)!,
-      builder, // TODO: this is redundant
-    );
+  T valueFromQueryGroup(Map<String, String> group) {
+    return valueOf<T>('name', group)!;
   }
 }

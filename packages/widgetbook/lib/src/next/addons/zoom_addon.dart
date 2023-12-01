@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../fields/fields.dart';
 import 'base/mode.dart';
-import 'base/modes_addon.dart';
+import 'base/mode_addon.dart';
 
 class ZoomMode extends Mode<double> {
   ZoomMode(super.value);
@@ -16,11 +16,11 @@ class ZoomMode extends Mode<double> {
   }
 }
 
-class ZoomAddon extends ModesAddon<ZoomMode> {
+class ZoomAddon extends ModeAddon<double> {
   ZoomAddon()
       : super(
           name: 'Zoom',
-          modes: [],
+          modeBuilder: ZoomMode.new,
         );
 
   @override
@@ -37,9 +37,7 @@ class ZoomAddon extends ModesAddon<ZoomMode> {
   }
 
   @override
-  ZoomMode valueFromQueryGroup(Map<String, String> group) {
-    return ZoomMode(
-      valueOf<double>('ratio', group)!,
-    );
+  double valueFromQueryGroup(Map<String, String> group) {
+    return valueOf('ratio', group)!;
   }
 }

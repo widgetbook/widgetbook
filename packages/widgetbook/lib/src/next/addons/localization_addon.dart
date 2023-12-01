@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../fields/fields.dart';
 import 'base/mode.dart';
-import 'base/modes_addon.dart';
+import 'base/mode_addon.dart';
 
 class LocaleMode extends Mode<Locale> {
   LocaleMode(super.value, this.delegates);
@@ -19,18 +19,17 @@ class LocaleMode extends Mode<Locale> {
   }
 }
 
-class LocaleAddon extends ModesAddon<LocaleMode> {
+class LocaleAddon extends ModeAddon<Locale> {
   LocaleAddon(
     this.locales, [
-    this.delegates = const [],
+    List<LocalizationsDelegate<dynamic>> delegates = const [],
   ])  : assert(locales.isNotEmpty, 'locales cannot be empty'),
         super(
           name: 'Locale',
-          modes: locales.map((entry) => LocaleMode(entry, delegates)).toList(),
+          modeBuilder: (locale) => LocaleMode(locale, delegates),
         );
 
   final List<Locale> locales;
-  final List<LocalizationsDelegate<dynamic>> delegates;
 
   @override
   List<Field> get fields {
@@ -45,10 +44,7 @@ class LocaleAddon extends ModesAddon<LocaleMode> {
   }
 
   @override
-  LocaleMode valueFromQueryGroup(Map<String, String> group) {
-    return LocaleMode(
-      valueOf<Locale>('name', group)!,
-      delegates,
-    );
+  Locale valueFromQueryGroup(Map<String, String> group) {
+    return valueOf<Locale>('name', group)!;
   }
 }
