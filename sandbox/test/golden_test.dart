@@ -23,12 +23,10 @@ void main() {
           TypesTableScenario(
             name: 'Default',
             story: $Default,
-            args: TypesTableArgs(
-              person: Arg.fixed(
-                const Person(
-                  name: 'John Doe',
-                  age: 42,
-                ),
+            args: TypesTableArgs.fixed(
+              person: const Person(
+                name: 'John Doe',
+                age: 42,
               ),
             ),
           ),

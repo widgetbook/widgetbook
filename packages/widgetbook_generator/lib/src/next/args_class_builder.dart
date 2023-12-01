@@ -50,12 +50,12 @@ class ArgsClassBuilder {
             (param) => ArgBuilder(param).buildField(),
           ),
         )
-        ..constructors.add(
+        ..constructors.addAll([
           Constructor(
             (b) => b
               ..optionalParameters.addAll(
                 params.map(
-                  (param) => ArgBuilder(param).buildParam(),
+                  (param) => ArgBuilder(param).buildArgParam(),
                 ),
               )
               ..initializers.addAll(
@@ -71,7 +71,29 @@ class ArgsClassBuilder {
                 ),
               ),
           ),
-        )
+          Constructor(
+            (b) => b
+              ..name = 'fixed'
+              ..optionalParameters.addAll(
+                params.map(
+                  (param) => ArgBuilder(param).buildFixedParam(),
+                ),
+              )
+              ..initializers.addAll(
+                params.map(
+                  (param) => refer('this')
+                      .property(param.name)
+                      .assign(
+                        InvokeExpression.newOf(
+                          refer('Arg.fixed'),
+                          [refer(param.name)],
+                        ),
+                      )
+                      .code,
+                ),
+              ),
+          ),
+        ])
         ..methods.addAll(
           [
             Method(
