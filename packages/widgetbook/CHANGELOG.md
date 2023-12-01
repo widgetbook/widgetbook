@@ -1,4 +1,4 @@
-## Unreleased
+## 3.5.0
 
 - **FIX** Ignore deprecated `MediaQuery.textScaleFactor`; to maintain compatibility with Flutter versions < 3.16.0. ([#1053](https://github.com/widgetbook/widgetbook/pull/1053))
 - **EXPERIMENTAL**: Add support for [SAM Architecture](https://docs.widgetbook.io/next/sam). ([#1064](https://github.com/widgetbook/widgetbook/pull/1064))
