@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/type.dart';
 
 extension DartTypeX on DartType {
-  static final SupportedArgs = {
+  static final supportedArgs = {
     'bool': 'BoolArg',
     'int': 'IntArg',
     'double': 'DoubleArg',
@@ -15,10 +15,10 @@ extension DartTypeX on DartType {
   }
 
   bool get isPrimitive {
-    return SupportedArgs.containsKey(displayName);
+    return supportedArgs.containsKey(displayName);
   }
 
   String get primitiveArg {
-    return SupportedArgs[displayName]!;
+    return supportedArgs[displayName]!;
   }
 }
