@@ -19,7 +19,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            Widgetbook.material(
+            const Widgetbook.material(
               directories: [],
             ),
           );
@@ -39,7 +39,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            Widgetbook.material(
+            const Widgetbook.material(
               directories: [],
             ),
           );
@@ -60,7 +60,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            Widgetbook.material(
+            const Widgetbook.material(
               directories: [],
             ),
           );
@@ -86,7 +86,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            Widgetbook.material(
+            const Widgetbook.material(
               directories: [],
             ),
           );
@@ -112,7 +112,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            Widgetbook.material(
+            const Widgetbook.material(
               directories: [],
             ),
           );
