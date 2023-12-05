@@ -1,3 +1,7 @@
+## Unreleased
+
+- **REFACTOR**: Use const named constructors for `Widgetbook`, instead of static methods. ([#1066](https://github.com/widgetbook/widgetbook/pull/1066))
+
 ## 3.5.0
 
 - **FIX** Ignore deprecated `MediaQuery.textScaleFactor`; to maintain compatibility with Flutter versions < 3.16.0. ([#1053](https://github.com/widgetbook/widgetbook/pull/1053))

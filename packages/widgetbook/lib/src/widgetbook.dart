@@ -27,6 +27,26 @@ class Widgetbook extends StatefulWidget {
     this.integrations,
   });
 
+  /// A [Widgetbook] with [CupertinoApp] as an [appBuilder].
+  const Widgetbook.cupertino({
+    super.key,
+    this.initialRoute = '/',
+    required this.directories,
+    this.appBuilder = cupertinoAppBuilder,
+    this.addons,
+    this.integrations,
+  });
+
+  /// A [Widgetbook] with [MaterialApp] as an [appBuilder].
+  const Widgetbook.material({
+    super.key,
+    this.initialRoute = '/',
+    required this.directories,
+    this.appBuilder = materialAppBuilder,
+    this.addons,
+    this.integrations,
+  });
+
   /// The initial route for that will be used on first startup.
   final String initialRoute;
 
@@ -50,44 +70,6 @@ class Widgetbook extends StatefulWidget {
   /// integrate with Widgetbook Cloud via [WidgetbookCloudIntegration], but
   /// can also be used to integrate with third-party packages.
   final List<WidgetbookIntegration>? integrations;
-
-  /// A [Widgetbook] with [CupertinoApp] as an [appBuilder].
-  static Widgetbook cupertino({
-    Key? key,
-    String initialRoute = '/',
-    required List<WidgetbookNode> directories,
-    AppBuilder appBuilder = cupertinoAppBuilder,
-    List<WidgetbookAddon>? addons,
-    List<WidgetbookIntegration>? integrations,
-  }) {
-    return Widgetbook(
-      key: key,
-      initialRoute: initialRoute,
-      directories: directories,
-      appBuilder: appBuilder,
-      addons: addons,
-      integrations: integrations,
-    );
-  }
-
-  /// A [Widgetbook] with [MaterialApp] as an [appBuilder].
-  static Widgetbook material({
-    Key? key,
-    String initialRoute = '/',
-    required List<WidgetbookNode> directories,
-    AppBuilder appBuilder = materialAppBuilder,
-    List<WidgetbookAddon>? addons,
-    List<WidgetbookIntegration>? integrations,
-  }) {
-    return Widgetbook(
-      key: key,
-      initialRoute: initialRoute,
-      directories: directories,
-      appBuilder: appBuilder,
-      addons: addons,
-      integrations: integrations,
-    );
-  }
 
   @override
   State<Widgetbook> createState() => _WidgetbookState();
