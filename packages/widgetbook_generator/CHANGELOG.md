@@ -1,3 +1,7 @@
+## Unreleased
+
+- **EXPERIMENTAL**: Add support for [SAM Architecture](https://docs.widgetbook.io/next/sam). ([#1064](https://github.com/widgetbook/widgetbook/pull/1064))
+
 ## 3.3.0
 
 - **BREAKING**: Set minimum SDK version to 2.19.0. ([#1030](https://github.com/widgetbook/widgetbook/pull/1030))
