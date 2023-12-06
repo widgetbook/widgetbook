@@ -10,6 +10,17 @@ final meta = Meta<TypesTable>();
 
 final $Default = TypesTableStory(
   name: 'Default',
+  setup: (context, child) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.red,
+          width: 6,
+        ),
+      ),
+      child: child,
+    );
+  },
   args: TypesTableArgs(
     duration: Arg.fixed(Duration.zero), // constant arg (not shown in UI)
     person: const PersonArg(

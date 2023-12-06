@@ -5,12 +5,15 @@ import '../navigation/nodes/nodes.dart' as v3;
 import '../state/state.dart';
 import 'args/story_args.dart';
 
+typedef StoryBuilder = Widget Function(BuildContext context, Widget story);
+
 @optionalTypeArgs
 class Story<TWidget> extends v3.WidgetbookUseCase {
   Story({
     required super.name,
     required this.args,
     super.designLink,
+    this.setup,
   }) : super(
           builder: (context) {
             final state = WidgetbookState.of(context);
@@ -18,11 +21,14 @@ class Story<TWidget> extends v3.WidgetbookUseCase {
               state.queryParams['args'],
             );
 
-            return args.build(context, groupMap);
+            final story = args.build(context, groupMap);
+
+            return setup != null ? setup(context, story) : story;
           },
         );
 
   final StoryArgs<TWidget> args;
+  final StoryBuilder? setup;
 
   @override
   Story<TWidget> copyWith({

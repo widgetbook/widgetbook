@@ -46,6 +46,12 @@ class StoryClassBuilder {
                         ? null
                         : refer('${type.displayName}Args?'),
                 ),
+                Parameter(
+                  (b) => b
+                    ..name = 'setup'
+                    ..named = true
+                    ..toSuper = true,
+                ),
               ]);
 
               if (!isPrimitiveArgs) {
