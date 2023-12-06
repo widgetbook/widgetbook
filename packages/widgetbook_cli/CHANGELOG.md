@@ -30,148 +30,148 @@
 
 ## 3.0.0-rc.2
 
- - **FIX**: Include generated files. ([#761](https://github.com/widgetbook/widgetbook/pull/761))
+- **FIX**: Include generated files. ([#761](https://github.com/widgetbook/widgetbook/pull/761))
 
 ## 3.0.0-rc.1
 
- - **FEAT**: Add Dart 3 and Flutter 3.10 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
- - **BREAKING**: Drop Flutter 2 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
+- **FEAT**: Add Dart 3 and Flutter 3.10 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
+- **BREAKING**: Drop Flutter 2 support. ([#676](https://github.com/widgetbook/widgetbook/pull/676))
 
 ## 3.0.0-beta.27
 
- - **REFACTOR**: :recycle: removed lint package from projects.
- - **REFACTOR**: :recycle: removed package analysis_options files.
- - **REFACTOR**: :recycle: warnings.
- - **REFACTOR**: :recycle: settings.
- - **REFACTOR**: :recycle: git usage.
- - **FIX**: use CI's commit environment variables ([#608](https://github.com/widgetbook/widgetbook/issues/608)).
- - **FIX**: :bug: use cases not found.
- - **FIX**: :bug: skips most recent commit on base ref.
- - **FIX**: :bug: identifying merge commits with incorrect keywords.
- - **FIX**: :bug: provides wrong `sha` when running on GitHub action pull-requests.
- - **FIX**: :bug: directing to incorrect route.
- - **FIX**: :bug: upload of properties.
- - **FIX**: :bug: fails pipeline when no generator files exist.
- - **FIX**: :bug: reads actor and repository including newline.
- - **FIX**: :bug: bad revision on git diff.
- - **FIX**: 🐛 CLI fails on environments without terminal.
- - **FIX**: :bug: HttpClient connects to incorrect endpoint.
- - **FIX**: :bug: UseCaseParser contains hard-coded branch name.
- - **FIX**: :bug: ambiguous warning for no generator themes.
- - **FIX**: :bug: rename cli to widgetbook.
- - **FEAT**: :sparkles: log number of use-cases.
- - **FEAT**: support for Codemagic.
- - **FEAT**: :sparkles: link to review.
- - **FEAT**: :sparkles: add `designLink` property.
- - **FEAT**: :sparkles: implement ci parser class to parse ci/cd runner information.
- - **FEAT**: comment link to review.
- - **FEAT**: :sparkles: improve markdown on PR comments.
- - **FEAT**: :sparkles: comment link to Build in PR.
- - **FEAT**: :sparkles: changed branch and commit argument to optional.
- - **FEAT**: :bookmark: publish CLI to pub.dev.
- - **DOCS**: :memo: add `pr` and `github-token` args.
- - **DOCS**: :bug: change relative links to global links.
- - **DOCS**: :memo: add documentation for CLI.
+- **REFACTOR**: :recycle: removed lint package from projects.
+- **REFACTOR**: :recycle: removed package analysis_options files.
+- **REFACTOR**: :recycle: warnings.
+- **REFACTOR**: :recycle: settings.
+- **REFACTOR**: :recycle: git usage.
+- **FIX**: use CI's commit environment variables ([#608](https://github.com/widgetbook/widgetbook/issues/608)).
+- **FIX**: :bug: use cases not found.
+- **FIX**: :bug: skips most recent commit on base ref.
+- **FIX**: :bug: identifying merge commits with incorrect keywords.
+- **FIX**: :bug: provides wrong `sha` when running on GitHub action pull-requests.
+- **FIX**: :bug: directing to incorrect route.
+- **FIX**: :bug: upload of properties.
+- **FIX**: :bug: fails pipeline when no generator files exist.
+- **FIX**: :bug: reads actor and repository including newline.
+- **FIX**: :bug: bad revision on git diff.
+- **FIX**: 🐛 CLI fails on environments without terminal.
+- **FIX**: :bug: HttpClient connects to incorrect endpoint.
+- **FIX**: :bug: UseCaseParser contains hard-coded branch name.
+- **FIX**: :bug: ambiguous warning for no generator themes.
+- **FIX**: :bug: rename cli to widgetbook.
+- **FEAT**: :sparkles: log number of use-cases.
+- **FEAT**: support for Codemagic.
+- **FEAT**: :sparkles: link to review.
+- **FEAT**: :sparkles: add `designLink` property.
+- **FEAT**: :sparkles: implement ci parser class to parse ci/cd runner information.
+- **FEAT**: comment link to review.
+- **FEAT**: :sparkles: improve markdown on PR comments.
+- **FEAT**: :sparkles: comment link to Build in PR.
+- **FEAT**: :sparkles: changed branch and commit argument to optional.
+- **FEAT**: :bookmark: publish CLI to pub.dev.
+- **DOCS**: :memo: add `pr` and `github-token` args.
+- **DOCS**: :bug: change relative links to global links.
+- **DOCS**: :memo: add documentation for CLI.
 
 ## 3.0.0-beta.26
 
- - **REFACTOR**: :recycle: settings.
- - **REFACTOR**: :recycle: git usage.
- - **FIX**: :bug: use cases not found.
- - **FIX**: :bug: skips most recent commit on base ref.
- - **FIX**: :bug: identifying merge commits with incorrect keywords.
- - **FIX**: :bug: provides wrong `sha` when running on GitHub action pull-requests.
- - **FIX**: :bug: directing to incorrect route.
- - **FIX**: :bug: upload of properties.
- - **FIX**: :bug: fails pipeline when no generator files exist.
- - **FIX**: :bug: reads actor and repository including newline.
- - **FIX**: :bug: bad revision on git diff.
- - **FIX**: 🐛 CLI fails on environments without terminal.
- - **FIX**: :bug: HttpClient connects to incorrect endpoint.
- - **FIX**: :bug: UseCaseParser contains hard-coded branch name.
- - **FIX**: :bug: ambiguous warning for no generator themes.
- - **FIX**: :bug: rename cli to widgetbook.
- - **FEAT**: :sparkles: log number of use-cases.
- - **FEAT**: support for Codemagic.
- - **FEAT**: :sparkles: link to review.
- - **FEAT**: :sparkles: add `designLink` property.
- - **FEAT**: :sparkles: implement ci parser class to parse ci/cd runner information.
- - **FEAT**: comment link to review.
- - **FEAT**: :sparkles: improve markdown on PR comments.
- - **FEAT**: :sparkles: comment link to Build in PR.
- - **FEAT**: :sparkles: changed branch and commit argument to optional.
- - **FEAT**: :bookmark: publish CLI to pub.dev.
- - **DOCS**: :memo: add `pr` and `github-token` args.
- - **DOCS**: :bug: change relative links to global links.
- - **DOCS**: :memo: add documentation for CLI.
+- **REFACTOR**: :recycle: settings.
+- **REFACTOR**: :recycle: git usage.
+- **FIX**: :bug: use cases not found.
+- **FIX**: :bug: skips most recent commit on base ref.
+- **FIX**: :bug: identifying merge commits with incorrect keywords.
+- **FIX**: :bug: provides wrong `sha` when running on GitHub action pull-requests.
+- **FIX**: :bug: directing to incorrect route.
+- **FIX**: :bug: upload of properties.
+- **FIX**: :bug: fails pipeline when no generator files exist.
+- **FIX**: :bug: reads actor and repository including newline.
+- **FIX**: :bug: bad revision on git diff.
+- **FIX**: 🐛 CLI fails on environments without terminal.
+- **FIX**: :bug: HttpClient connects to incorrect endpoint.
+- **FIX**: :bug: UseCaseParser contains hard-coded branch name.
+- **FIX**: :bug: ambiguous warning for no generator themes.
+- **FIX**: :bug: rename cli to widgetbook.
+- **FEAT**: :sparkles: log number of use-cases.
+- **FEAT**: support for Codemagic.
+- **FEAT**: :sparkles: link to review.
+- **FEAT**: :sparkles: add `designLink` property.
+- **FEAT**: :sparkles: implement ci parser class to parse ci/cd runner information.
+- **FEAT**: comment link to review.
+- **FEAT**: :sparkles: improve markdown on PR comments.
+- **FEAT**: :sparkles: comment link to Build in PR.
+- **FEAT**: :sparkles: changed branch and commit argument to optional.
+- **FEAT**: :bookmark: publish CLI to pub.dev.
+- **DOCS**: :memo: add `pr` and `github-token` args.
+- **DOCS**: :bug: change relative links to global links.
+- **DOCS**: :memo: add documentation for CLI.
 
 ## 3.0.0-beta.25
 
- - **FEAT**: :sparkles: log number of use-cases.
+- **FEAT**: :sparkles: log number of use-cases.
 
 ## 3.0.0-beta.22
 
- - **FEAT**: support for Codemagic. ([a2271e5f](https://github.com/widgetbook/widgetbook/commit/a2271e5f2361855b5046ed5ff946a39559288afc))
+- **FEAT**: support for Codemagic. ([a2271e5f](https://github.com/widgetbook/widgetbook/commit/a2271e5f2361855b5046ed5ff946a39559288afc))
 
 ## 3.0.0-beta.21
 
- - **FIX**: :bug: skips most recent commit on base ref. ([1e23ec58](https://github.com/widgetbook/widgetbook/commit/1e23ec5868cebb9883e7b9b14da2d8e9db373ab5))
+- **FIX**: :bug: skips most recent commit on base ref. ([1e23ec58](https://github.com/widgetbook/widgetbook/commit/1e23ec5868cebb9883e7b9b14da2d8e9db373ab5))
 
 ## 3.0.0-beta.20
 
- - **FIX**: :bug: identifying merge commits with incorrect keywords. ([984f1bfb](https://github.com/widgetbook/widgetbook/commit/984f1bfb0c2eb516057056605bdb5210b97e8142))
+- **FIX**: :bug: identifying merge commits with incorrect keywords. ([984f1bfb](https://github.com/widgetbook/widgetbook/commit/984f1bfb0c2eb516057056605bdb5210b97e8142))
 
 ## 3.0.0-beta.19
 
- - **REFACTOR**: :recycle: settings. ([254ebef6](https://github.com/widgetbook/widgetbook/commit/254ebef6fe38b2d8f3fc847366f4725ab9292ccb))
- - **REFACTOR**: :recycle: git usage. ([4f5db511](https://github.com/widgetbook/widgetbook/commit/4f5db511b5a6bb7e07b2ef440ebb97d0d5082048))
- - **FIX**: :bug: provides wrong `sha` when running on GitHub action pull-requests. ([2d2cf624](https://github.com/widgetbook/widgetbook/commit/2d2cf624b213c49f3617fcc55872bbeb522f7fce))
- - **FIX**: :bug: directing to incorrect route. ([4e610cf8](https://github.com/widgetbook/widgetbook/commit/4e610cf871951f31b813ada05d351a0542b442c6))
- - **FIX**: :bug: upload of properties. ([a9996bbd](https://github.com/widgetbook/widgetbook/commit/a9996bbd79f19ddc2fd2601fa5ba7f8a96f8c16f))
- - **FIX**: :bug: fails pipeline when no generator files exist. ([65ad1e67](https://github.com/widgetbook/widgetbook/commit/65ad1e67428ab7146c583871b9d58e6d5ed2ef7e))
- - **FIX**: :bug: reads actor and repository including newline. ([3bc05624](https://github.com/widgetbook/widgetbook/commit/3bc05624c608a5cbd7abb70cf20fda703110ca53))
- - **FIX**: :bug: bad revision on git diff. ([7019e1a9](https://github.com/widgetbook/widgetbook/commit/7019e1a91b09f8d7702f605f9cec8888d6d6e428))
- - **FIX**: 🐛 CLI fails on environments without terminal. ([d5101d56](https://github.com/widgetbook/widgetbook/commit/d5101d56140caaa86dae2caa28e13737ce2c7203))
- - **FIX**: :bug: HttpClient connects to incorrect endpoint. ([58dd870f](https://github.com/widgetbook/widgetbook/commit/58dd870f42ca7f5b27080ccea64705dbfbb2274c))
- - **FIX**: :bug: UseCaseParser contains hard-coded branch name. ([8acf8db4](https://github.com/widgetbook/widgetbook/commit/8acf8db41d9af5c206e92d41adb569bd3b366b61))
- - **FIX**: :bug: ambiguous warning for no generator themes. ([fbc56b54](https://github.com/widgetbook/widgetbook/commit/fbc56b547b021448cd72bca839e61f7fb34c20e3))
- - **FIX**: :bug: rename cli to widgetbook. ([3819094e](https://github.com/widgetbook/widgetbook/commit/3819094e43a1924677fd74a2ff34651a33b8f222))
- - **FEAT**: :sparkles: link to review. ([db2f239a](https://github.com/widgetbook/widgetbook/commit/db2f239ab2792199559de53f0d270cc991e91765))
- - **FEAT**: :sparkles: add `designLink` property. ([daad8e9c](https://github.com/widgetbook/widgetbook/commit/daad8e9cbcbdda94f2a6e985d20879e96e19d0b9))
- - **FEAT**: :sparkles: implement ci parser class to parse ci/cd runner information. ([fb95a76b](https://github.com/widgetbook/widgetbook/commit/fb95a76b467a1ecfcc410b3ac9b6cb7a4fdac0ad))
- - **FEAT**: comment link to review. ([c320a727](https://github.com/widgetbook/widgetbook/commit/c320a7270d6a70f9e706375db9d576997afec374))
- - **FEAT**: :sparkles: improve markdown on PR comments. ([0b598639](https://github.com/widgetbook/widgetbook/commit/0b598639d43ccf9957bd1baa8cd3064eb2124b24))
- - **FEAT**: :sparkles: comment link to Build in PR. ([9ea0ebf3](https://github.com/widgetbook/widgetbook/commit/9ea0ebf34b2b60f6b3b9cc19da8bc63d4765b333))
- - **FEAT**: :sparkles: changed branch and commit argument to optional. ([2c37580c](https://github.com/widgetbook/widgetbook/commit/2c37580cb0abbd2389ce3796388121a9317c0ac3))
- - **FEAT**: :bookmark: publish CLI to pub.dev. ([f40a4512](https://github.com/widgetbook/widgetbook/commit/f40a45120cbe401b2593fb2b32d67c630fc289df))
- - **DOCS**: :memo: add `pr` and `github-token` args. ([7f600037](https://github.com/widgetbook/widgetbook/commit/7f60003763f2ea966d27f1bebec66f7491fa9718))
- - **DOCS**: :bug: change relative links to global links. ([c0b5e408](https://github.com/widgetbook/widgetbook/commit/c0b5e40881f8946f5c76e82825e74971be8d0443))
- - **DOCS**: :memo: add documentation for CLI. ([2aeabef9](https://github.com/widgetbook/widgetbook/commit/2aeabef9f05b9d24fd46d0794fae0e7f16ac9ed7))
+- **REFACTOR**: :recycle: settings. ([254ebef6](https://github.com/widgetbook/widgetbook/commit/254ebef6fe38b2d8f3fc847366f4725ab9292ccb))
+- **REFACTOR**: :recycle: git usage. ([4f5db511](https://github.com/widgetbook/widgetbook/commit/4f5db511b5a6bb7e07b2ef440ebb97d0d5082048))
+- **FIX**: :bug: provides wrong `sha` when running on GitHub action pull-requests. ([2d2cf624](https://github.com/widgetbook/widgetbook/commit/2d2cf624b213c49f3617fcc55872bbeb522f7fce))
+- **FIX**: :bug: directing to incorrect route. ([4e610cf8](https://github.com/widgetbook/widgetbook/commit/4e610cf871951f31b813ada05d351a0542b442c6))
+- **FIX**: :bug: upload of properties. ([a9996bbd](https://github.com/widgetbook/widgetbook/commit/a9996bbd79f19ddc2fd2601fa5ba7f8a96f8c16f))
+- **FIX**: :bug: fails pipeline when no generator files exist. ([65ad1e67](https://github.com/widgetbook/widgetbook/commit/65ad1e67428ab7146c583871b9d58e6d5ed2ef7e))
+- **FIX**: :bug: reads actor and repository including newline. ([3bc05624](https://github.com/widgetbook/widgetbook/commit/3bc05624c608a5cbd7abb70cf20fda703110ca53))
+- **FIX**: :bug: bad revision on git diff. ([7019e1a9](https://github.com/widgetbook/widgetbook/commit/7019e1a91b09f8d7702f605f9cec8888d6d6e428))
+- **FIX**: 🐛 CLI fails on environments without terminal. ([d5101d56](https://github.com/widgetbook/widgetbook/commit/d5101d56140caaa86dae2caa28e13737ce2c7203))
+- **FIX**: :bug: HttpClient connects to incorrect endpoint. ([58dd870f](https://github.com/widgetbook/widgetbook/commit/58dd870f42ca7f5b27080ccea64705dbfbb2274c))
+- **FIX**: :bug: UseCaseParser contains hard-coded branch name. ([8acf8db4](https://github.com/widgetbook/widgetbook/commit/8acf8db41d9af5c206e92d41adb569bd3b366b61))
+- **FIX**: :bug: ambiguous warning for no generator themes. ([fbc56b54](https://github.com/widgetbook/widgetbook/commit/fbc56b547b021448cd72bca839e61f7fb34c20e3))
+- **FIX**: :bug: rename cli to widgetbook. ([3819094e](https://github.com/widgetbook/widgetbook/commit/3819094e43a1924677fd74a2ff34651a33b8f222))
+- **FEAT**: :sparkles: link to review. ([db2f239a](https://github.com/widgetbook/widgetbook/commit/db2f239ab2792199559de53f0d270cc991e91765))
+- **FEAT**: :sparkles: add `designLink` property. ([daad8e9c](https://github.com/widgetbook/widgetbook/commit/daad8e9cbcbdda94f2a6e985d20879e96e19d0b9))
+- **FEAT**: :sparkles: implement ci parser class to parse ci/cd runner information. ([fb95a76b](https://github.com/widgetbook/widgetbook/commit/fb95a76b467a1ecfcc410b3ac9b6cb7a4fdac0ad))
+- **FEAT**: comment link to review. ([c320a727](https://github.com/widgetbook/widgetbook/commit/c320a7270d6a70f9e706375db9d576997afec374))
+- **FEAT**: :sparkles: improve markdown on PR comments. ([0b598639](https://github.com/widgetbook/widgetbook/commit/0b598639d43ccf9957bd1baa8cd3064eb2124b24))
+- **FEAT**: :sparkles: comment link to Build in PR. ([9ea0ebf3](https://github.com/widgetbook/widgetbook/commit/9ea0ebf34b2b60f6b3b9cc19da8bc63d4765b333))
+- **FEAT**: :sparkles: changed branch and commit argument to optional. ([2c37580c](https://github.com/widgetbook/widgetbook/commit/2c37580cb0abbd2389ce3796388121a9317c0ac3))
+- **FEAT**: :bookmark: publish CLI to pub.dev. ([f40a4512](https://github.com/widgetbook/widgetbook/commit/f40a45120cbe401b2593fb2b32d67c630fc289df))
+- **DOCS**: :memo: add `pr` and `github-token` args. ([7f600037](https://github.com/widgetbook/widgetbook/commit/7f60003763f2ea966d27f1bebec66f7491fa9718))
+- **DOCS**: :bug: change relative links to global links. ([c0b5e408](https://github.com/widgetbook/widgetbook/commit/c0b5e40881f8946f5c76e82825e74971be8d0443))
+- **DOCS**: :memo: add documentation for CLI. ([2aeabef9](https://github.com/widgetbook/widgetbook/commit/2aeabef9f05b9d24fd46d0794fae0e7f16ac9ed7))
 
 ## 3.0.0-beta.18
 
- - **REFACTOR**: :recycle: settings. ([254ebef6](https://github.com/widgetbook/widgetbook/commit/254ebef6fe38b2d8f3fc847366f4725ab9292ccb))
- - **REFACTOR**: :recycle: git usage. ([4f5db511](https://github.com/widgetbook/widgetbook/commit/4f5db511b5a6bb7e07b2ef440ebb97d0d5082048))
- - **FIX**: :bug: upload of properties. ([a9996bbd](https://github.com/widgetbook/widgetbook/commit/a9996bbd79f19ddc2fd2601fa5ba7f8a96f8c16f))
- - **FIX**: :bug: fails pipeline when no generator files exist. ([65ad1e67](https://github.com/widgetbook/widgetbook/commit/65ad1e67428ab7146c583871b9d58e6d5ed2ef7e))
- - **FIX**: :bug: reads actor and repository including newline. ([3bc05624](https://github.com/widgetbook/widgetbook/commit/3bc05624c608a5cbd7abb70cf20fda703110ca53))
- - **FIX**: :bug: bad revision on git diff. ([7019e1a9](https://github.com/widgetbook/widgetbook/commit/7019e1a91b09f8d7702f605f9cec8888d6d6e428))
- - **FIX**: 🐛 CLI fails on environments without terminal. ([d5101d56](https://github.com/widgetbook/widgetbook/commit/d5101d56140caaa86dae2caa28e13737ce2c7203))
- - **FIX**: :bug: HttpClient connects to incorrect endpoint. ([58dd870f](https://github.com/widgetbook/widgetbook/commit/58dd870f42ca7f5b27080ccea64705dbfbb2274c))
- - **FIX**: :bug: UseCaseParser contains hard-coded branch name. ([8acf8db4](https://github.com/widgetbook/widgetbook/commit/8acf8db41d9af5c206e92d41adb569bd3b366b61))
- - **FIX**: :bug: ambiguous warning for no generator themes. ([fbc56b54](https://github.com/widgetbook/widgetbook/commit/fbc56b547b021448cd72bca839e61f7fb34c20e3))
- - **FIX**: :bug: rename cli to widgetbook. ([3819094e](https://github.com/widgetbook/widgetbook/commit/3819094e43a1924677fd74a2ff34651a33b8f222))
- - **FEAT**: :sparkles: link to review. ([db2f239a](https://github.com/widgetbook/widgetbook/commit/db2f239ab2792199559de53f0d270cc991e91765))
- - **FEAT**: :sparkles: add `designLink` property. ([daad8e9c](https://github.com/widgetbook/widgetbook/commit/daad8e9cbcbdda94f2a6e985d20879e96e19d0b9))
- - **FEAT**: :sparkles: implement ci parser class to parse ci/cd runner information. ([fb95a76b](https://github.com/widgetbook/widgetbook/commit/fb95a76b467a1ecfcc410b3ac9b6cb7a4fdac0ad))
- - **FEAT**: comment link to review. ([c320a727](https://github.com/widgetbook/widgetbook/commit/c320a7270d6a70f9e706375db9d576997afec374))
- - **FEAT**: :sparkles: improve markdown on PR comments. ([0b598639](https://github.com/widgetbook/widgetbook/commit/0b598639d43ccf9957bd1baa8cd3064eb2124b24))
- - **FEAT**: :sparkles: comment link to Build in PR. ([9ea0ebf3](https://github.com/widgetbook/widgetbook/commit/9ea0ebf34b2b60f6b3b9cc19da8bc63d4765b333))
- - **FEAT**: :sparkles: changed branch and commit argument to optional. ([2c37580c](https://github.com/widgetbook/widgetbook/commit/2c37580cb0abbd2389ce3796388121a9317c0ac3))
- - **FEAT**: :bookmark: publish CLI to pub.dev. ([f40a4512](https://github.com/widgetbook/widgetbook/commit/f40a45120cbe401b2593fb2b32d67c630fc289df))
- - **DOCS**: :memo: add `pr` and `github-token` args. ([7f600037](https://github.com/widgetbook/widgetbook/commit/7f60003763f2ea966d27f1bebec66f7491fa9718))
- - **DOCS**: :bug: change relative links to global links. ([c0b5e408](https://github.com/widgetbook/widgetbook/commit/c0b5e40881f8946f5c76e82825e74971be8d0443))
- - **DOCS**: :memo: add documentation for CLI. ([2aeabef9](https://github.com/widgetbook/widgetbook/commit/2aeabef9f05b9d24fd46d0794fae0e7f16ac9ed7))
+- **REFACTOR**: :recycle: settings. ([254ebef6](https://github.com/widgetbook/widgetbook/commit/254ebef6fe38b2d8f3fc847366f4725ab9292ccb))
+- **REFACTOR**: :recycle: git usage. ([4f5db511](https://github.com/widgetbook/widgetbook/commit/4f5db511b5a6bb7e07b2ef440ebb97d0d5082048))
+- **FIX**: :bug: upload of properties. ([a9996bbd](https://github.com/widgetbook/widgetbook/commit/a9996bbd79f19ddc2fd2601fa5ba7f8a96f8c16f))
+- **FIX**: :bug: fails pipeline when no generator files exist. ([65ad1e67](https://github.com/widgetbook/widgetbook/commit/65ad1e67428ab7146c583871b9d58e6d5ed2ef7e))
+- **FIX**: :bug: reads actor and repository including newline. ([3bc05624](https://github.com/widgetbook/widgetbook/commit/3bc05624c608a5cbd7abb70cf20fda703110ca53))
+- **FIX**: :bug: bad revision on git diff. ([7019e1a9](https://github.com/widgetbook/widgetbook/commit/7019e1a91b09f8d7702f605f9cec8888d6d6e428))
+- **FIX**: 🐛 CLI fails on environments without terminal. ([d5101d56](https://github.com/widgetbook/widgetbook/commit/d5101d56140caaa86dae2caa28e13737ce2c7203))
+- **FIX**: :bug: HttpClient connects to incorrect endpoint. ([58dd870f](https://github.com/widgetbook/widgetbook/commit/58dd870f42ca7f5b27080ccea64705dbfbb2274c))
+- **FIX**: :bug: UseCaseParser contains hard-coded branch name. ([8acf8db4](https://github.com/widgetbook/widgetbook/commit/8acf8db41d9af5c206e92d41adb569bd3b366b61))
+- **FIX**: :bug: ambiguous warning for no generator themes. ([fbc56b54](https://github.com/widgetbook/widgetbook/commit/fbc56b547b021448cd72bca839e61f7fb34c20e3))
+- **FIX**: :bug: rename cli to widgetbook. ([3819094e](https://github.com/widgetbook/widgetbook/commit/3819094e43a1924677fd74a2ff34651a33b8f222))
+- **FEAT**: :sparkles: link to review. ([db2f239a](https://github.com/widgetbook/widgetbook/commit/db2f239ab2792199559de53f0d270cc991e91765))
+- **FEAT**: :sparkles: add `designLink` property. ([daad8e9c](https://github.com/widgetbook/widgetbook/commit/daad8e9cbcbdda94f2a6e985d20879e96e19d0b9))
+- **FEAT**: :sparkles: implement ci parser class to parse ci/cd runner information. ([fb95a76b](https://github.com/widgetbook/widgetbook/commit/fb95a76b467a1ecfcc410b3ac9b6cb7a4fdac0ad))
+- **FEAT**: comment link to review. ([c320a727](https://github.com/widgetbook/widgetbook/commit/c320a7270d6a70f9e706375db9d576997afec374))
+- **FEAT**: :sparkles: improve markdown on PR comments. ([0b598639](https://github.com/widgetbook/widgetbook/commit/0b598639d43ccf9957bd1baa8cd3064eb2124b24))
+- **FEAT**: :sparkles: comment link to Build in PR. ([9ea0ebf3](https://github.com/widgetbook/widgetbook/commit/9ea0ebf34b2b60f6b3b9cc19da8bc63d4765b333))
+- **FEAT**: :sparkles: changed branch and commit argument to optional. ([2c37580c](https://github.com/widgetbook/widgetbook/commit/2c37580cb0abbd2389ce3796388121a9317c0ac3))
+- **FEAT**: :bookmark: publish CLI to pub.dev. ([f40a4512](https://github.com/widgetbook/widgetbook/commit/f40a45120cbe401b2593fb2b32d67c630fc289df))
+- **DOCS**: :memo: add `pr` and `github-token` args. ([7f600037](https://github.com/widgetbook/widgetbook/commit/7f60003763f2ea966d27f1bebec66f7491fa9718))
+- **DOCS**: :bug: change relative links to global links. ([c0b5e408](https://github.com/widgetbook/widgetbook/commit/c0b5e40881f8946f5c76e82825e74971be8d0443))
+- **DOCS**: :memo: add documentation for CLI. ([2aeabef9](https://github.com/widgetbook/widgetbook/commit/2aeabef9f05b9d24fd46d0794fae0e7f16ac9ed7))
 
 ## 3.0.0-beta.17
 
@@ -186,6 +186,7 @@
 - fix: `designLink` is not uploaded
 
 ## 3.0.0-beta.14
+
 - feat: add upload of `designLink` property
 - fix: CLI returns code `>0` when no review information is available
 
@@ -204,7 +205,7 @@
 
 ## 2.0.1
 
-- feat: improve comment link markdown. 
+- feat: improve comment link markdown.
 
 ## 2.0.0
 
