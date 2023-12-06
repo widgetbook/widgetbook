@@ -20,6 +20,7 @@ dependencies:
   code_builder: ^4.1.0
   collection: ^1.15.0
   crypto: ^3.0.0
+  dart_style: ^2.3.0
   glob: ^2.0.2
   meta: ^1.7.0
   path: ^1.8.0
@@ -29,5 +30,4 @@ dependencies:
   yaml: ^3.1.1
 
 dev_dependencies:
-  dart_style: ^2.3.0
   test: ^1.21.0
