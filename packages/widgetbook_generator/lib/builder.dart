@@ -5,6 +5,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'src/generators/app_generator.dart';
 import 'src/generators/json_builder.dart';
 import 'src/generators/use_case_generator.dart';
+import 'src/next/components_builder.dart';
 import 'src/next/story_generator.dart';
 import 'src/telemetry/telemetry_reporter.dart';
 import 'widgetbook_generator.dart';
@@ -65,4 +66,8 @@ Builder storyBuilder(BuilderOptions options) {
     [StoryGenerator()],
     '.book.dart',
   );
+}
+
+Builder componentsBuilder(BuilderOptions options) {
+  return ComponentsBuilder();
 }

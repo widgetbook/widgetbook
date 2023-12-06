@@ -4,7 +4,7 @@ import 'package:widgetbook/src/themes.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-import 'next/types_table.stories.dart';
+import 'components.book.dart';
 import 'widgetbook.directories.g.dart';
 
 void main() {
@@ -20,7 +20,7 @@ class WidgetbookApp extends StatelessWidget {
     return Widgetbook.material(
       directories: [
         ...directories,
-        TypesTableComponent,
+        ...components,
       ],
       integrations: [
         WidgetbookCloudIntegration(),
