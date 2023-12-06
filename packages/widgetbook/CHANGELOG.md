@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **REFACTOR**: Use const named constructors for `Widgetbook`, instead of static methods. ([#1066](https://github.com/widgetbook/widgetbook/pull/1066))
+- **EXPERIMENTAL**: Add `setup` to `Story`. ([#1069](https://github.com/widgetbook/widgetbook/pull/1069))
 
 ## 3.5.0
 

@@ -1,3 +1,7 @@
+## Unreleased
+
+- **EXPERIMENTAL**: Add `setup` to `Story`. ([#1069](https://github.com/widgetbook/widgetbook/pull/1069))
+
 ## 3.4.0
 
 - **EXPERIMENTAL**: Add support for [SAM Architecture](https://docs.widgetbook.io/next/sam). ([#1064](https://github.com/widgetbook/widgetbook/pull/1064))
