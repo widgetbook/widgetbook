@@ -35,6 +35,8 @@ The Story-Arg-Mode architecture or "SAM" (_inspired by [Samwise Gamgee](https://
        builders:
          widgetbook_generator:experimental_story_builder:
            enabled: true
+         widgetbook_generator:experimental_components_builder:
+           enabled: true
    ```
 
 1. Create the **cyclic dependency** between your app and `widgetbook`:  
@@ -89,7 +91,7 @@ The Story-Arg-Mode architecture or "SAM" (_inspired by [Samwise Gamgee](https://
    import 'package:widgetbook/next.dart' as next;
    import 'package:widgetbook/widgetbook.dart';
 
-   import 'my_cool_widget.stories.dart';
+   import 'components.book.dart';
 
    void main() {
      runApp(const WidgetbookApp());
@@ -101,11 +103,12 @@ The Story-Arg-Mode architecture or "SAM" (_inspired by [Samwise Gamgee](https://
      @override
      Widget build(BuildContext context) {
        return Widgetbook.material(
-         directories: [
-           MyCoolWidgetComponent,
-           // You can add v3 Use-cases here:
-           // ...directories,
-         ],
+         // You can add both v3 Use-cases here:
+         // directories: [
+         //   ...components,
+         //   ...directories,
+         // ],
+         directories: components
          addons: [
            next.MaterialThemeAddon({
              'Dark': ThemeData.dark(),
