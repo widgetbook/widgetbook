@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **EXPERIMENTAL**: Add `EnumArg`. ([#1073](https://github.com/widgetbook/widgetbook/pull/1073))
+- **EXPERIMENTAL**: Add `SingleArg`. ([#1075](https://github.com/widgetbook/widgetbook/pull/1075))
 
 ## 3.6.0
 
