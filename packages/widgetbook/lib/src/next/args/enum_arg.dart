@@ -1,32 +1,15 @@
-import '../../../next.dart';
-import '../../fields/fields.dart';
+import 'single_arg.dart';
 
-class EnumArg<T extends Enum> extends Arg<T> {
+class EnumArg<T extends Enum> extends SingleArg<T> {
   const EnumArg({
     super.name,
     required super.value,
-    required this.values,
-    this.labelBuilder,
+    required super.values,
+    super.labelBuilder = enumLabelBuilder,
   });
 
-  final List<T> values;
-  final LabelBuilder<T>? labelBuilder;
-
-  @override
-  List<Field> get fields {
-    return [
-      ListField<T>(
-        name: name,
-        values: values,
-        initialValue: value,
-        labelBuilder: labelBuilder ?? ((value) => value.name),
-      ),
-    ];
-  }
-
-  @override
-  T valueFromQueryGroup(Map<String, String> group) {
-    return valueOf(name, group)!;
+  static String enumLabelBuilder(Enum value) {
+    return value.name;
   }
 
   @override
