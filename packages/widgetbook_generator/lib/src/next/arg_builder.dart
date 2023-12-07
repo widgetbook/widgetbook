@@ -53,7 +53,9 @@ class ArgBuilder {
         ..required = !param.type.isPrimitive
         ..defaultTo = !param.type.isPrimitive //
             ? null
-            : param.type.meta.defaultValue.code,
+            : param.hasDefaultValue
+                ? refer(param.defaultValueCode!).code
+                : param.type.meta.defaultValue.code,
     );
   }
 }
