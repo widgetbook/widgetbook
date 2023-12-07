@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+enum Status {
+  none,
+  loading,
+  success,
+  error,
+}
+
 class TypesTable extends StatelessWidget {
   const TypesTable({
     super.key,
@@ -10,6 +17,7 @@ class TypesTable extends StatelessWidget {
     required this.color,
     this.duration = const Duration(seconds: 1),
     required this.person,
+    required this.status,
   });
 
   final bool boolean;
@@ -19,6 +27,7 @@ class TypesTable extends StatelessWidget {
   final Color color;
   final Duration duration;
   final Person person;
+  final Status status;
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +79,12 @@ class TypesTable extends StatelessWidget {
           children: [
             Text('$Person'),
             Text('${person.name} (${person.age})'),
+          ],
+        ),
+        TableRow(
+          children: [
+            Text('$Status'),
+            Text('${status.name})'),
           ],
         ),
       ],
