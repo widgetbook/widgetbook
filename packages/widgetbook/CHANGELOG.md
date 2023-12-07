@@ -1,3 +1,7 @@
+## Unreleased
+
+- **EXPERIMENTAL**: Add `EnumArg`. ([#1073](https://github.com/widgetbook/widgetbook/pull/1073))
+
 ## 3.6.0
 
 - **REFACTOR**: Use const named constructors for `Widgetbook`, instead of static methods. ([#1066](https://github.com/widgetbook/widgetbook/pull/1066))
