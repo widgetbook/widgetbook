@@ -23,6 +23,7 @@ export 'src/next/args/bool_arg.dart';
 export 'src/next/args/color_arg.dart';
 export 'src/next/args/double_arg.dart';
 export 'src/next/args/duration_arg.dart';
+export 'src/next/args/enum_arg.dart';
 export 'src/next/args/int_arg.dart';
 export 'src/next/args/story_args.dart';
 export 'src/next/args/string_arg.dart';

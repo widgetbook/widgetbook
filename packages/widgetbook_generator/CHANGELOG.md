@@ -1,3 +1,7 @@
+## Unreleased
+
+- **EXPERIMENTAL**: Support `EnumArg`. ([#1073](https://github.com/widgetbook/widgetbook/pull/1073))
+
 ## 3.5.0
 
 - **EXPERIMENTAL**: Add `setup` to `Story`. ([#1069](https://github.com/widgetbook/widgetbook/pull/1069))

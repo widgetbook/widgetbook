@@ -35,6 +35,10 @@ class ArgBuilder {
                   'name': literalString(param.name),
                   if (param.hasDefaultValue)
                     'value': refer(param.defaultValueCode!),
+                  if (param.type.isEnum && !param.hasDefaultValue)
+                    'value': param.type.meta.defaultValue,
+                  if (param.type.isEnum)
+                    'values': refer(param.type.displayName).property('values'),
                 },
               ).code,
     );
@@ -47,9 +51,9 @@ class ArgBuilder {
         ..name = param.name
         ..type = refer(param.type.displayName)
         ..required = !param.type.isPrimitive
-        ..defaultTo = !param.type.isPrimitive
+        ..defaultTo = !param.type.isPrimitive //
             ? null
-            : refer(param.type.meta.defaultValue).code,
+            : param.type.meta.defaultValue.code,
     );
   }
 }
