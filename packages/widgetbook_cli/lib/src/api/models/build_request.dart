@@ -12,6 +12,7 @@ class BuildRequest {
     required this.actor,
     required this.provider,
     required this.file,
+    required this.takeScreenshots,
   });
 
   final String apiKey;
@@ -21,6 +22,7 @@ class BuildRequest {
   final String actor;
   final String provider;
   final File file;
+  final bool takeScreenshots;
 
   Future<FormData> toFormData() async {
     return FormData.fromMap({
@@ -35,6 +37,7 @@ class BuildRequest {
         filename: basename(file.path),
         contentType: MediaType.parse('application/zip'),
       ),
+      'take-screenshots': takeScreenshots,
     });
   }
 }

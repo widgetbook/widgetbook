@@ -248,6 +248,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
         actor: args.actor,
         provider: args.vendor,
         file: zipFile,
+        takeScreenshots: args.visualDiff,
       ),
     );
 
