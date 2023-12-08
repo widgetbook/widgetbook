@@ -26,12 +26,15 @@ final $Default = TypesTableStory(
       'Hello World',
       name: 'Text',
     ),
-    duration: Arg.fixed(Duration.zero), // constant arg (not shown in UI)
+    duration: Arg.fixed(Duration.zero),
     person: const PersonArg(
       Person(
         name: 'John Doe',
         age: 42,
       ),
+    ),
+    child: BuilderArg(
+      (context) => const FlutterLogo(),
     ),
   ),
 );

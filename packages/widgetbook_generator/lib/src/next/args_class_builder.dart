@@ -128,20 +128,13 @@ class ArgsClassBuilder {
                       ..type = refer('Map<String, String>?'),
                   ),
                 )
-                ..body = refer('group')
-                    .equalTo(literalNull)
-                    .conditional(
-                      instantiate(
-                        (param) => refer(param.name).property('value'),
-                      ),
-                      instantiate(
-                        (param) => refer(param.name)
-                            .property('valueFromQueryGroup')
-                            .call([refer('group')]),
-                      ),
-                    )
-                    .returned
-                    .statement,
+                ..body = instantiate(
+                  (param) => refer('resolve').call([
+                    refer(param.name),
+                    refer('context'),
+                    refer('group'),
+                  ]),
+                ).returned.statement,
             ),
           ],
         ),

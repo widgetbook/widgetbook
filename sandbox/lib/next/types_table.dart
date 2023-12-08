@@ -18,6 +18,7 @@ class TypesTable extends StatelessWidget {
     this.duration = const Duration(seconds: 1),
     required this.person,
     required this.status,
+    required this.child,
   });
 
   final bool boolean;
@@ -28,63 +29,73 @@ class TypesTable extends StatelessWidget {
   final Duration duration;
   final Person person;
   final Status status;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return Table(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const TableRow(
-          children: [
-            Text('Type'),
-            Text('Value'),
-          ],
+        Padding(
+          padding: const EdgeInsets.all(32),
+          child: child,
         ),
-        TableRow(
+        Table(
           children: [
-            Text('$bool'),
-            Text('$boolean'),
-          ],
-        ),
-        TableRow(
-          children: [
-            Text('$int'),
-            Text('$integer'),
-          ],
-        ),
-        TableRow(
-          children: [
-            Text('$double'),
-            Text('$decimal'),
-          ],
-        ),
-        TableRow(
-          children: [
-            Text('$String'),
-            Text(string),
-          ],
-        ),
-        TableRow(
-          children: [
-            Text('$Color'),
-            Text('$color'),
-          ],
-        ),
-        TableRow(
-          children: [
-            Text('$Duration'),
-            Text('$duration'),
-          ],
-        ),
-        TableRow(
-          children: [
-            Text('$Person'),
-            Text('${person.name} (${person.age})'),
-          ],
-        ),
-        TableRow(
-          children: [
-            Text('$Status'),
-            Text('${status.name})'),
+            const TableRow(
+              children: [
+                Text('Type'),
+                Text('Value'),
+              ],
+            ),
+            TableRow(
+              children: [
+                Text('$bool'),
+                Text('$boolean'),
+              ],
+            ),
+            TableRow(
+              children: [
+                Text('$int'),
+                Text('$integer'),
+              ],
+            ),
+            TableRow(
+              children: [
+                Text('$double'),
+                Text('$decimal'),
+              ],
+            ),
+            TableRow(
+              children: [
+                Text('$String'),
+                Text(string),
+              ],
+            ),
+            TableRow(
+              children: [
+                Text('$Color'),
+                Text('$color'),
+              ],
+            ),
+            TableRow(
+              children: [
+                Text('$Duration'),
+                Text('$duration'),
+              ],
+            ),
+            TableRow(
+              children: [
+                Text('$Person'),
+                Text('${person.name} (${person.age})'),
+              ],
+            ),
+            TableRow(
+              children: [
+                Text('$Status'),
+                Text('${status.name}'),
+              ],
+            ),
           ],
         ),
       ],
