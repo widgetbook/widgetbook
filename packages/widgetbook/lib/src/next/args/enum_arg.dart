@@ -1,9 +1,9 @@
 import 'single_arg.dart';
 
 class EnumArg<T extends Enum> extends SingleArg<T> {
-  const EnumArg({
+  const EnumArg(
+    super.value, {
     super.name,
-    required super.value,
     required super.values,
     super.labelBuilder = enumLabelBuilder,
   });
@@ -17,8 +17,8 @@ class EnumArg<T extends Enum> extends SingleArg<T> {
     required String name,
   }) {
     return EnumArg<T>(
+      value,
       name: name,
-      value: value,
       values: values,
       labelBuilder: labelBuilder,
     );

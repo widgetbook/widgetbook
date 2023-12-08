@@ -30,13 +30,11 @@ class ArgBuilder {
             ? null
             : InvokeExpression.constOf(
                 refer(param.type.meta.argName),
-                [],
+                param.hasDefaultValue
+                    ? [refer(param.defaultValueCode!)]
+                    : [param.type.meta.defaultValue],
                 {
                   'name': literalString(param.name),
-                  if (param.hasDefaultValue)
-                    'value': refer(param.defaultValueCode!),
-                  if (param.type.isEnum && !param.hasDefaultValue)
-                    'value': param.type.meta.defaultValue,
                   if (param.type.isEnum)
                     'values': refer(param.type.displayName).property('values'),
                 },

@@ -7,9 +7,9 @@ import 'const_arg.dart';
 
 @optionalTypeArgs
 abstract class Arg<T> extends FieldsComposable<T> {
-  const Arg({
+  const Arg(
+    this.value, {
     this.name = '<unknown>',
-    required this.value,
   });
 
   final String name;

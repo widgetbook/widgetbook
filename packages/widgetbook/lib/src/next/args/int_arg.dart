@@ -2,9 +2,9 @@ import '../../fields/fields.dart';
 import 'arg.dart';
 
 class IntArg extends Arg<int> {
-  const IntArg({
+  const IntArg(
+    super.value, {
     super.name,
-    super.value = 0,
   });
 
   @override
@@ -25,8 +25,8 @@ class IntArg extends Arg<int> {
     required String name,
   }) {
     return IntArg(
+      value,
       name: name,
-      value: value,
     );
   }
 }

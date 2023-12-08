@@ -2,9 +2,9 @@ import '../../fields/fields.dart';
 import 'arg.dart';
 
 class BoolArg extends Arg<bool> {
-  const BoolArg({
+  const BoolArg(
+    super.value, {
     super.name,
-    super.value = false,
   });
 
   @override
@@ -25,8 +25,8 @@ class BoolArg extends Arg<bool> {
     required String name,
   }) {
     return BoolArg(
+      value,
       name: name,
-      value: value,
     );
   }
 }

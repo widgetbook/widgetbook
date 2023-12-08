@@ -24,7 +24,7 @@ final $Default = TypesTableStory(
   args: TypesTableArgs(
     duration: Arg.fixed(Duration.zero), // constant arg (not shown in UI)
     person: const PersonArg(
-      value: Person(
+      Person(
         name: 'John Doe',
         age: 42,
       ),
@@ -33,9 +33,9 @@ final $Default = TypesTableStory(
 );
 
 class PersonArg extends Arg<Person> {
-  const PersonArg({
+  const PersonArg(
+    super.value, {
     super.name,
-    required super.value,
   });
 
   @override
@@ -63,8 +63,8 @@ class PersonArg extends Arg<Person> {
     required String name,
   }) {
     return PersonArg(
+      value,
       name: name,
-      value: value,
     );
   }
 }

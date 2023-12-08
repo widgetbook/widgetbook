@@ -4,9 +4,9 @@ import '../../fields/fields.dart';
 import 'arg.dart';
 
 class ColorArg extends Arg<Color> {
-  const ColorArg({
+  const ColorArg(
+    super.value, {
     super.name,
-    super.value = const Color(0xFF000000),
   });
 
   @override
@@ -27,8 +27,8 @@ class ColorArg extends Arg<Color> {
     required String name,
   }) {
     return ColorArg(
+      value,
       name: name,
-      value: value,
     );
   }
 }
