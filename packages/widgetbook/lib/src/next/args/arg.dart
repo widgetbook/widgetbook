@@ -8,15 +8,19 @@ import 'const_arg.dart';
 @optionalTypeArgs
 abstract class Arg<T> extends FieldsComposable<T> {
   const Arg(
-    this.value, {
+    T value, {
     String? name,
-  }) : $name = name;
+  })  : $value = value,
+        $name = name;
 
-  final T value;
+  const Arg.empty()
+      : $value = null,
+        $name = null;
+
+  final T? $value;
   final String? $name;
 
-  @override
-  String get groupName => 'args';
+  T get value => $value!;
 
   String get name {
     // A safe way to access [$name] in a non-nullable behavior for simplicity.
@@ -40,6 +44,9 @@ abstract class Arg<T> extends FieldsComposable<T> {
   });
 
   static ConstArg<T> fixed<T>(T value) => ConstArg<T>(value);
+
+  @override
+  String get groupName => 'args';
 
   @override
   Widget buildFields(BuildContext context) {

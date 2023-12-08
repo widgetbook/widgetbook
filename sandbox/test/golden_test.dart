@@ -28,6 +28,7 @@ void main() {
                 name: 'John Doe',
                 age: 42,
               ),
+              child: const Text('Hello World'),
             ),
           ),
           TypesTableScenario(

@@ -2,7 +2,8 @@ import '../../fields/fields.dart';
 import 'arg.dart';
 
 class ConstArg<T> extends Arg<T> {
-  ConstArg(super.value);
+  const ConstArg(super.value);
+  const ConstArg.empty() : super.empty();
 
   @override
   List<Field> get fields => [];

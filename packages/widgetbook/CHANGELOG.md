@@ -2,8 +2,9 @@
 
 - **EXPERIMENTAL**: Add `EnumArg`. ([#1073](https://github.com/widgetbook/widgetbook/pull/1073))
 - **EXPERIMENTAL**: Add `SingleArg`. ([#1075](https://github.com/widgetbook/widgetbook/pull/1075))
+- **EXPERIMENTAL**: Add `BuilderArg`. ([#1079](https://github.com/widgetbook/widgetbook/pull/1079))
 - **EXPERIMENTAL**: Change `Arg.value` to be positional parameter instead of named one. ([#1077](https://github.com/widgetbook/widgetbook/pull/1077))
-- **EXPERIMENTAL**: Allow overriding `Arg.name`. ([#1078](https://github.com/widgetbook/widgetbook/pull/1077))
+- **EXPERIMENTAL**: Allow overriding `Arg.name`. ([#1078](https://github.com/widgetbook/widgetbook/pull/1078))
 
 ## 3.6.0
 

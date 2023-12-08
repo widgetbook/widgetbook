@@ -20,6 +20,7 @@ export 'src/next/addons/time_dilation_addon.dart';
 export 'src/next/addons/zoom_addon.dart';
 export 'src/next/args/arg.dart';
 export 'src/next/args/bool_arg.dart';
+export 'src/next/args/builder_arg.dart';
 export 'src/next/args/color_arg.dart';
 export 'src/next/args/double_arg.dart';
 export 'src/next/args/duration_arg.dart';
