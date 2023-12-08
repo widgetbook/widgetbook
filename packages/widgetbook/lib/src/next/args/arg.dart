@@ -9,15 +9,32 @@ import 'const_arg.dart';
 abstract class Arg<T> extends FieldsComposable<T> {
   const Arg(
     this.value, {
-    this.name = '<unknown>',
-  });
+    String? name,
+  }) : $name = name;
 
-  final String name;
   final T value;
+  final String? $name;
 
   @override
   String get groupName => 'args';
 
+  String get name {
+    // A safe way to access [$name] in a non-nullable behavior for simplicity.
+    // The name should ne provided via constructor or init method.
+    assert(
+      $name != null,
+      'Name must be set via constructor or init method',
+    );
+
+    return $name!;
+  }
+
+  /// Creates a copy of this using the provided [name] for late initialization.
+  /// If [$name] was already set, it should have precedence over [name].
+  ///
+  /// Example:
+  /// Arg(0).init(name: 'integer') => Arg(0, name: 'integer')
+  /// Arg(0, name: 'int').init(name: 'integer') => Arg(0, name: 'int')
   Arg<T> init({
     required String name,
   });

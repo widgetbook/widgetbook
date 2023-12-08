@@ -22,6 +22,10 @@ final $Default = TypesTableStory(
     );
   },
   args: TypesTableArgs(
+    string: const StringArg(
+      'Hello World',
+      name: 'Text',
+    ),
     duration: Arg.fixed(Duration.zero), // constant arg (not shown in UI)
     person: const PersonArg(
       Person(
