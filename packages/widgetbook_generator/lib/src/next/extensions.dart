@@ -22,7 +22,10 @@ extension DartTypeX on DartType {
     ),
     'Color': TypeMeta(
       'ColorArg',
-      refer('Colors').property('white'),
+      InvokeExpression.constOf(
+        refer('Color'),
+        [literalNum(0xFF000000)],
+      ),
     ),
     'Duration': TypeMeta(
       'DurationArg',

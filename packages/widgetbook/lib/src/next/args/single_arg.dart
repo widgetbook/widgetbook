@@ -2,9 +2,9 @@ import '../../../next.dart';
 import '../../fields/fields.dart';
 
 class SingleArg<T> extends Arg<T> {
-  const SingleArg({
+  const SingleArg(
+    super.value, {
     super.name,
-    required super.value,
     required this.values,
     this.labelBuilder,
   });
@@ -34,8 +34,8 @@ class SingleArg<T> extends Arg<T> {
     required String name,
   }) {
     return SingleArg<T>(
+      value,
       name: name,
-      value: value,
       values: values,
       labelBuilder: labelBuilder,
     );

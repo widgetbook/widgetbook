@@ -2,9 +2,9 @@ import '../../fields/fields.dart';
 import 'arg.dart';
 
 class DurationArg extends Arg<Duration> {
-  const DurationArg({
+  const DurationArg(
+    super.value, {
     super.name,
-    super.value = Duration.zero,
   });
 
   @override
@@ -25,8 +25,8 @@ class DurationArg extends Arg<Duration> {
     required String name,
   }) {
     return DurationArg(
+      value,
       name: name,
-      value: value,
     );
   }
 }

@@ -2,9 +2,9 @@ import '../../fields/fields.dart';
 import 'arg.dart';
 
 class DoubleArg extends Arg<double> {
-  const DoubleArg({
+  const DoubleArg(
+    super.value, {
     super.name,
-    super.value = 0,
   });
 
   @override
@@ -25,8 +25,8 @@ class DoubleArg extends Arg<double> {
     required String name,
   }) {
     return DoubleArg(
+      value,
       name: name,
-      value: value,
     );
   }
 }
