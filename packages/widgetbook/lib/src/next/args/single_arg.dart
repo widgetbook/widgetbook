@@ -35,7 +35,7 @@ class SingleArg<T> extends Arg<T> {
   }) {
     return SingleArg<T>(
       value,
-      name: name,
+      name: $name == null ? name : $name,
       values: values,
       labelBuilder: labelBuilder,
     );

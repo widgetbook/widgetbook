@@ -18,7 +18,7 @@ class EnumArg<T extends Enum> extends SingleArg<T> {
   }) {
     return EnumArg<T>(
       value,
-      name: name,
+      name: $name == null ? name : $name,
       values: values,
       labelBuilder: labelBuilder,
     );

@@ -26,7 +26,7 @@ class BoolArg extends Arg<bool> {
   }) {
     return BoolArg(
       value,
-      name: name,
+      name: $name == null ? name : $name,
     );
   }
 }

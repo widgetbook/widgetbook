@@ -34,7 +34,6 @@ class ArgBuilder {
                     ? [refer(param.defaultValueCode!)]
                     : [param.type.meta.defaultValue],
                 {
-                  'name': literalString(param.name),
                   if (param.type.isEnum)
                     'values': refer(param.type.displayName).property('values'),
                 },
