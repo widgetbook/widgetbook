@@ -103,7 +103,7 @@ The Story-Arg-Mode architecture or "SAM" (_inspired by [Samwise Gamgee](https://
      @override
      Widget build(BuildContext context) {
        return Widgetbook.material(
-         // You can add both v3 Use-cases here:
+         // If you need backwards compatibility with v3:
          // directories: [
          //   ...components,
          //   ...directories,
@@ -156,13 +156,29 @@ final $Primary = CoolButtonStory(
 );
 
 final $Default = CoolButtonStory(
-  name: 'Primary',
+  name: 'Default',
   args: CoolButtonArgs(
     text: Arg.fixed('constant text'), // Constant Arg (no knob)
     // color: uses the default value from the constructor
   ),
 );
 ```
+
+If you were using Widgetbook 3 knobs, here is a mapping of the knobs to the new args:
+
+| Type       | Knob            | Arg            |
+| ---------- | --------------- | -------------- |
+| `bool`     | `boolean`       | `BoolArg`      |
+| `int`      | `int.input`     | `IntArg`       |
+| `int`      | `int.slider`    | -              |
+| `double`   | `double.input`  | `DoubleArg`    |
+| `double`   | `double.slider` | -              |
+| `String`   | `string`        | `StringArg`    |
+| `Duration` | `duration`      | `DurationArg`  |
+| `DateTime` | `dateTime`      | _WIP_          |
+| `Color`    | `color`         | `ColorArg`     |
+| `T`        | `list`          | `SingleArg<T>` |
+| `Enum`     | `list`          | `EnumArg<T>`   |
 
 ## Modes
 
@@ -211,3 +227,65 @@ Modes are introduces to make golden testing easier with Widgetbook 4.
    ```
 
 1. Run `flutter test --update-goldens`.
+
+## Snippets
+
+To make the process of creating new stories easier, you can add the following snippet to your IDE / Text Editor.
+
+### Visual Studio Code
+
+1. Go to **Configure User Snippets** under **Code** > **Settings**
+1. Choose **Dart**.
+1. Add the following:
+
+   ```json
+   {
+     "Widgetbook Story": {
+       "prefix": "stry",
+       "description": "Creates a new Widgetbook Story",
+       "body": [
+         "import 'package:flutter/widgets.dart';",
+         "import 'package:widgetbook/next.dart';",
+         "",
+         "part '$TM_FILENAME_BASE.book.dart';",
+         "",
+         "",
+         "final meta = Meta<${1:Widget}>();",
+         "",
+         "final $Default = ${1:Widget}Story(",
+         "  name: 'Default',",
+         ");"
+       ]
+     }
+   }
+   ```
+
+### JetBrains IDEs
+
+1. Setting > Editor > Live Templates > "+" > Live Template
+1. Abbreviation: `stry`
+1. Description: `Creates a new Widgetbook Story`
+1. Template Text:
+
+   ```dart
+   import 'package:flutter/widgets.dart';
+   import 'package:widgetbook/next.dart';
+
+   part '$FILE$.book.dart';
+
+
+   final meta = Meta<$WIDGET$>();
+
+   final $Default = $WIDGET$Story(
+     name: 'Default',
+   );
+   ```
+
+1. Click on "Edit Variables" and add the following:
+
+   | Name     | Expression                   | Skip if defined |
+   | -------- | ---------------------------- | --------------- |
+   | `FILE`   | `fileNameWithoutExtension()` | ✅              |
+   | `WIDGET` | `variableOfType("Widget")`   |                 |
+
+1. Click "Apply" and "OK".
