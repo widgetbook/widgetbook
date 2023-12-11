@@ -5,7 +5,8 @@ import 'addons/base/mode.dart';
 import 'args/story_args.dart';
 import 'story.dart';
 
-class Scenario<T> extends StatelessWidget {
+class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
+    extends StatelessWidget {
   const Scenario({
     super.key,
     required this.name,
@@ -17,12 +18,12 @@ class Scenario<T> extends StatelessWidget {
   final String name;
   // ignore: strict_raw_type
   final List<Mode>? modes;
-  final StoryArgs<T>? args;
-  final Story<T> story;
+  final TArgs? args;
+  final Story<TWidget, TArgs> story;
 
   Widget build(BuildContext context) {
     final effectiveArgs = args ?? story.args;
-    final effectiveStory = effectiveArgs.build(context);
+    final effectiveStory = story.buildWith(context, effectiveArgs);
 
     return modes == null || modes!.isEmpty
         ? effectiveStory

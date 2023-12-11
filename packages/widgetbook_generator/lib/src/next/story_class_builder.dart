@@ -6,12 +6,16 @@ import 'package:collection/collection.dart';
 import 'extensions.dart';
 
 class StoryClassBuilder {
-  StoryClassBuilder(this.type);
+  StoryClassBuilder(
+    this.widgetType,
+    this.argsType,
+  );
 
-  final DartType type;
+  final DartType widgetType;
+  final DartType argsType;
 
   Iterable<ParameterElement> get params {
-    return (type.element as ClassElement)
+    return (argsType.element as ClassElement)
         .constructors
         .first
         .parameters
@@ -23,8 +27,15 @@ class StoryClassBuilder {
 
     return Class(
       (b) => b
-        ..name = '${type.displayName}Story'
-        ..extend = refer('Story<${type.displayName}>')
+        ..name = '${widgetType.displayName}Story'
+        ..extend = TypeReference(
+          (b) => b
+            ..symbol = 'Story'
+            ..types.addAll([
+              refer(widgetType.displayName),
+              refer('${argsType.displayName}Args'),
+            ]),
+        )
         ..constructors.add(
           Constructor(
             (b) {
@@ -44,7 +55,7 @@ class StoryClassBuilder {
                     ..required = !isPrimitiveArgs
                     ..type = !isPrimitiveArgs
                         ? null
-                        : refer('${type.displayName}Args?'),
+                        : refer('${argsType.displayName}Args?'),
                 ),
                 Parameter(
                   (b) => b
@@ -63,14 +74,68 @@ class StoryClassBuilder {
                   [],
                   {
                     'args': refer('args').ifNullThen(
-                      refer('${type.displayName}Args()'),
+                      refer('${argsType.displayName}Args()'),
                     ),
                   },
                 ).code,
               );
             },
           ),
+        )
+        ..methods.add(
+          Method(
+            (b) => b
+              ..name = 'buildWith'
+              ..annotations.add(refer('override'))
+              ..returns = refer(widgetType.displayName)
+              ..requiredParameters.addAll([
+                Parameter(
+                  (b) => b
+                    ..name = 'context'
+                    ..type = refer('BuildContext'),
+                ),
+                Parameter(
+                  (b) => b
+                    ..name = 'args'
+                    ..type = refer('${argsType.displayName}Args'),
+                ),
+              ])
+              ..body = (widgetType != argsType
+                      ? refer('meta').property('argsBuilder').call([
+                          refer('context'),
+                          refer('args'),
+                        ])
+                      : instantiate(
+                          (param) => refer('args') //
+                              .property(param.name)
+                              .property('resolve')
+                              .call([refer('context')]),
+                        ))
+                  .returned
+                  .statement,
+          ),
         ),
+    );
+  }
+
+  InvokeExpression instantiate(
+    Expression Function(ParameterElement) assigner,
+  ) {
+    return InvokeExpression.newOf(
+      refer(widgetType.displayName),
+      params //
+          .where((param) => param.isPositional)
+          .map(assigner)
+          .toList(),
+      params //
+          .where((param) => param.isNamed)
+          .lastBy((param) => param.name)
+          .map(
+            (_, param) => MapEntry(
+              param.name,
+              assigner(param),
+            ),
+          ),
     );
   }
 }

@@ -24,18 +24,18 @@ class StoryGenerator extends Generator {
         .whereType<TopLevelVariableElement>()
         .firstWhere((element) => element.name == 'meta');
 
-    final widgetType = (metaVariable.type as InterfaceType) //
-        .typeArguments
-        .first;
+    final metaType = metaVariable.type as InterfaceType;
+    final widgetType = metaType.typeArguments.first;
+    final argsType = metaType.typeArguments.last;
 
     final genLib = Library(
       (b) => b
         ..body.addAll(
           [
-            ComponentBuilder(widgetType, storiesVariables).build(),
-            ScenarioTypedefBuilder(widgetType).build(),
-            StoryClassBuilder(widgetType).build(),
-            ArgsClassBuilder(widgetType).build(),
+            ComponentBuilder(widgetType, argsType, storiesVariables).build(),
+            ScenarioTypedefBuilder(widgetType, argsType).build(),
+            StoryClassBuilder(widgetType, argsType).build(),
+            ArgsClassBuilder(widgetType, argsType).build(),
           ],
         ),
     );

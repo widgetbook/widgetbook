@@ -44,6 +44,10 @@ class WidgetbookUseCase extends WidgetbookNode {
   final WidgetBuilder builder;
   final String? designLink;
 
+  Widget build(BuildContext context) {
+    return builder(context);
+  }
+
   @override
   WidgetbookUseCase copyWith({
     String? name,
