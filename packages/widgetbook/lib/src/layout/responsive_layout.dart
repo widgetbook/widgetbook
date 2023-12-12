@@ -51,7 +51,7 @@ class ResponsiveLayout extends StatelessWidget {
     final state = WidgetbookState.of(context);
     final story = state.story;
 
-    return story?.args.nonConstList
+    return story?.args.safeList //
             .map((e) => e.buildFields(context))
             .toList() ??
         [];

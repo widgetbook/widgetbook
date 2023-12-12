@@ -19,6 +19,9 @@ class TypesTable extends StatelessWidget {
     required this.person,
     required this.status,
     required this.child,
+    this.padding,
+    this.margin = const EdgeInsets.all(16),
+    this.decoration = const BoxDecoration(),
   });
 
   final bool boolean;
@@ -30,75 +33,83 @@ class TypesTable extends StatelessWidget {
   final Person person;
   final Status status;
   final Widget child;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
+  final Decoration decoration;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(32),
-          child: child,
-        ),
-        Table(
-          children: [
-            const TableRow(
-              children: [
-                Text('Type'),
-                Text('Value'),
-              ],
-            ),
-            TableRow(
-              children: [
-                Text('$bool'),
-                Text('$boolean'),
-              ],
-            ),
-            TableRow(
-              children: [
-                Text('$int'),
-                Text('$integer'),
-              ],
-            ),
-            TableRow(
-              children: [
-                Text('$double'),
-                Text('$decimal'),
-              ],
-            ),
-            TableRow(
-              children: [
-                Text('$String'),
-                Text(string),
-              ],
-            ),
-            TableRow(
-              children: [
-                Text('$Color'),
-                Text('$color'),
-              ],
-            ),
-            TableRow(
-              children: [
-                Text('$Duration'),
-                Text('$duration'),
-              ],
-            ),
-            TableRow(
-              children: [
-                Text('$Person'),
-                Text('${person.name} (${person.age})'),
-              ],
-            ),
-            TableRow(
-              children: [
-                Text('$Status'),
-                Text('${status.name}'),
-              ],
-            ),
-          ],
-        ),
-      ],
+    return Container(
+      padding: padding,
+      margin: margin,
+      decoration: decoration,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(32),
+            child: child,
+          ),
+          Table(
+            children: [
+              const TableRow(
+                children: [
+                  Text('Type'),
+                  Text('Value'),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Text('$bool'),
+                  Text('$boolean'),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Text('$int'),
+                  Text('$integer'),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Text('$double'),
+                  Text('$decimal'),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Text('$String'),
+                  Text(string),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Text('$Color'),
+                  Text('$color'),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Text('$Duration'),
+                  Text('$duration'),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Text('$Person'),
+                  Text('${person.name} (${person.age})'),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Text('$Status'),
+                  Text('${status.name}'),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
