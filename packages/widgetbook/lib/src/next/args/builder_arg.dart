@@ -11,5 +11,6 @@ class BuilderArg<T> extends ConstArg<T> {
 
   final ArgBuilder<T> builder;
 
+  @override
   T resolve(BuildContext context) => builder(context);
 }

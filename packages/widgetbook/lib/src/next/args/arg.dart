@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../fields/fields.dart';
 import '../../settings/settings.dart';
+import '../../state/state.dart';
 import '../experimental_badge.dart';
 import 'const_arg.dart';
 
@@ -47,6 +48,12 @@ abstract class Arg<T> extends FieldsComposable<T> {
 
   @override
   String get groupName => 'args';
+
+  T resolve(BuildContext context) {
+    final state = WidgetbookState.of(context);
+    final queryGroup = FieldCodec.decodeQueryGroup(state.queryParams['args']);
+    return valueFromQueryGroup(queryGroup);
+  }
 
   @override
   Widget buildFields(BuildContext context) {

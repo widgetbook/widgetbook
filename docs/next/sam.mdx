@@ -164,6 +164,8 @@ final $Default = CoolButtonStory(
 );
 ```
 
+### Args vs Knobs
+
 If you were using Widgetbook 3 knobs, here is a mapping of the knobs to the new args:
 
 | Type       | Knob            | Arg            |
@@ -179,6 +181,32 @@ If you were using Widgetbook 3 knobs, here is a mapping of the knobs to the new 
 | `Color`    | `color`         | `ColorArg`     |
 | `T`        | `list`          | `SingleArg<T>` |
 | `Enum`     | `list`          | `EnumArg<T>`   |
+
+### Custom Args
+
+Args usually match the Widget's constructor, but in some cases users want to customize that.
+
+```dart
+// 1. Define the custom args class
+class CustomInputs {
+  CustomInputs({
+    required this.number,
+  });
+
+  final int number;
+}
+
+// 2. Use `MetaWithArgs` instead of `Meta`
+final meta = MetaWithArgs<CoolWidget, CustomInputs>();
+
+final $Default = CoolWidgetStory(
+  name: 'Default',
+  // 3. Specify how to convert the args (CustomInputsArgs) to a widget (CoolWidget)
+  argsBuilder: (context, args) => CoolWidget(
+    text: args.number.resolve(context).toString(),
+  ),
+);
+```
 
 ## Modes
 

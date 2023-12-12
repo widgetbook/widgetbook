@@ -5,6 +5,7 @@
 - **EXPERIMENTAL**: Support `BuilderArg`. ([#1079](https://github.com/widgetbook/widgetbook/pull/1079))
 - **EXPERIMENTAL**: Support positional `Arg.value` parameter. ([#1077](https://github.com/widgetbook/widgetbook/pull/1077))
 - **EXPERIMENTAL**: Set `Arg.name` via `init` instead of constructor. ([#1078](https://github.com/widgetbook/widgetbook/pull/1078))
+- **EXPERIMENTAL**: Support custom args via `MetaWithArgs`. ([#1080](https://github.com/widgetbook/widgetbook/pull/1080))
 
 ## 3.5.0
 

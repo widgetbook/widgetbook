@@ -46,7 +46,7 @@ class Workbench extends StatelessWidget {
                   builder: (context) {
                     return WidgetbookState.of(context)
                             .useCase
-                            ?.builder(context) ??
+                            ?.build(context) ??
                         const SizedBox.shrink();
                   },
                 ),

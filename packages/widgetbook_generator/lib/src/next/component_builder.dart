@@ -6,18 +6,27 @@ import 'extensions.dart';
 
 class ComponentBuilder {
   ComponentBuilder(
-    this.type,
+    this.widgetType,
+    this.argsType,
     this.stories,
   );
 
-  final DartType type;
+  final DartType widgetType;
+  final DartType argsType;
   final List<TopLevelVariableElement> stories;
 
   Code build() {
-    return declareFinal('${type.displayName}Component')
+    return declareFinal('${widgetType.displayName}Component')
         .assign(
           InvokeExpression.newOf(
-            refer('Component<${type.displayName}>'),
+            TypeReference(
+              (b) => b
+                ..symbol = 'Component'
+                ..types.addAll([
+                  refer(widgetType.displayName),
+                  refer('${argsType.displayName}Args'),
+                ]),
+            ),
             [],
             {
               'meta': refer('meta'),

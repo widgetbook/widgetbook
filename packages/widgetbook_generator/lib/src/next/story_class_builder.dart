@@ -6,12 +6,16 @@ import 'package:collection/collection.dart';
 import 'extensions.dart';
 
 class StoryClassBuilder {
-  StoryClassBuilder(this.type);
+  StoryClassBuilder(
+    this.widgetType,
+    this.argsType,
+  );
 
-  final DartType type;
+  final DartType widgetType;
+  final DartType argsType;
 
   Iterable<ParameterElement> get params {
-    return (type.element as ClassElement)
+    return (argsType.element as ClassElement)
         .constructors
         .first
         .parameters
@@ -20,11 +24,19 @@ class StoryClassBuilder {
 
   Class build() {
     final isPrimitiveArgs = params.every((param) => param.type.isPrimitive);
+    final isCustomArgs = widgetType != argsType;
 
     return Class(
       (b) => b
-        ..name = '${type.displayName}Story'
-        ..extend = refer('Story<${type.displayName}>')
+        ..name = '${widgetType.displayName}Story'
+        ..extend = TypeReference(
+          (b) => b
+            ..symbol = 'Story'
+            ..types.addAll([
+              refer(widgetType.displayName),
+              refer('${argsType.displayName}Args'),
+            ]),
+        )
         ..constructors.add(
           Constructor(
             (b) {
@@ -44,7 +56,7 @@ class StoryClassBuilder {
                     ..required = !isPrimitiveArgs
                     ..type = !isPrimitiveArgs
                         ? null
-                        : refer('${type.displayName}Args?'),
+                        : refer('${argsType.displayName}Args?'),
                 ),
                 Parameter(
                   (b) => b
@@ -52,25 +64,70 @@ class StoryClassBuilder {
                     ..named = true
                     ..toSuper = true,
                 ),
+                if (isCustomArgs)
+                  Parameter(
+                    (b) => b
+                      ..name = 'argsBuilder'
+                      ..named = true
+                      ..toSuper = true
+                      ..required = true,
+                  ),
               ]);
 
-              if (!isPrimitiveArgs) {
-                return;
-              }
+              final superInitializers = {
+                if (isPrimitiveArgs)
+                  'args': refer('args').ifNullThen(
+                    refer('${argsType.displayName}Args()'),
+                  ),
+                if (!isCustomArgs)
+                  'argsBuilder': Method(
+                    (b) => b
+                      ..lambda = true
+                      ..requiredParameters.addAll([
+                        Parameter((b) => b.name = 'context'),
+                        Parameter((b) => b.name = 'args'),
+                      ])
+                      ..body = instantiate(
+                        (param) => refer('args') //
+                            .property(param.name)
+                            .property('resolve')
+                            .call([refer('context')]),
+                      ).code,
+                  ).closure,
+              };
 
-              b.initializers.add(
-                refer('super').call(
-                  [],
-                  {
-                    'args': refer('args').ifNullThen(
-                      refer('${type.displayName}Args()'),
-                    ),
-                  },
-                ).code,
-              );
+              if (superInitializers.isNotEmpty) {
+                b.initializers.add(
+                  refer('super').call(
+                    [],
+                    superInitializers,
+                  ).code,
+                );
+              }
             },
           ),
         ),
+    );
+  }
+
+  InvokeExpression instantiate(
+    Expression Function(ParameterElement) assigner,
+  ) {
+    return InvokeExpression.newOf(
+      refer(widgetType.displayName),
+      params //
+          .where((param) => param.isPositional)
+          .map(assigner)
+          .toList(),
+      params //
+          .where((param) => param.isNamed)
+          .lastBy((param) => param.name)
+          .map(
+            (_, param) => MapEntry(
+              param.name,
+              assigner(param),
+            ),
+          ),
     );
   }
 }

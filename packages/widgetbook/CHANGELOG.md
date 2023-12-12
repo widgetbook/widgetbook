@@ -5,6 +5,7 @@
 - **EXPERIMENTAL**: Add `BuilderArg`. ([#1079](https://github.com/widgetbook/widgetbook/pull/1079))
 - **EXPERIMENTAL**: Change `Arg.value` to be positional parameter instead of named one. ([#1077](https://github.com/widgetbook/widgetbook/pull/1077))
 - **EXPERIMENTAL**: Allow overriding `Arg.name`. ([#1078](https://github.com/widgetbook/widgetbook/pull/1078))
+- **EXPERIMENTAL**: Support custom args via `MetaWithArgs`. ([#1080](https://github.com/widgetbook/widgetbook/pull/1080))
 
 ## 3.6.0
 
