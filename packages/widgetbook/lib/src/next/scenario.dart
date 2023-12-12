@@ -23,7 +23,7 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
 
   Widget build(BuildContext context) {
     final effectiveArgs = args ?? story.args;
-    final effectiveStory = story.argsBuilder(context, effectiveArgs);
+    final effectiveStory = story.buildWithArgs(context, effectiveArgs);
 
     return modes == null || modes!.isEmpty
         ? effectiveStory

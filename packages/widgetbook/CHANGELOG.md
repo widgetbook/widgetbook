@@ -7,6 +7,7 @@
 - **EXPERIMENTAL**: Allow overriding `Arg.name`. ([#1078](https://github.com/widgetbook/widgetbook/pull/1078))
 - **EXPERIMENTAL**: Support custom args via `MetaWithArgs`. ([#1080](https://github.com/widgetbook/widgetbook/pull/1080))
 - **EXPERIMENTAL**: Add `args` parameter to `Story.setup`. ([#1081](https://github.com/widgetbook/widgetbook/pull/1081))
+- **EXPERIMENTAL**: Use `setup` in `Scenario`s. ([#1082](https://github.com/widgetbook/widgetbook/pull/1082))
 
 ## 3.6.0
 
