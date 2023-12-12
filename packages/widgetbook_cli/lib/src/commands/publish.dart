@@ -238,6 +238,28 @@ class PublishCommand extends CliCommand<PublishArgs> {
     }
 
     progress.update('Uploading build');
+
+    if (args.visualDiff) {
+      logger.warn(
+        tag: '',
+        '\n\n✨ Experimental Visual Diff is enabled.\n'
+        'This feature is still in development and might not work as expected.\n',
+      );
+    }
+
+    final useCases = !args.visualDiff //
+        ? null
+        : await useCaseReader.read(args.path).then(
+              (value) => value
+                  .map(
+                    (useCase) => ChangedUseCase.fromUseCase(
+                      useCase: useCase,
+                      modification: Modification.changed, // Redundant
+                    ),
+                  )
+                  .toList(),
+            );
+
     final response = await _client.uploadBuild(
       versions,
       BuildRequest(
@@ -249,6 +271,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
         provider: args.vendor,
         file: zipFile,
         takeScreenshots: args.visualDiff,
+        useCases: useCases,
       ),
     );
 
@@ -287,14 +310,6 @@ class PublishCommand extends CliCommand<PublishArgs> {
     }
 
     final useCases = await useCaseReader.read(args.path);
-
-    if (args.visualDiff) {
-      logger.warn(
-        '✨ Experimental Visual Diff is enabled.\n'
-        'This feature is still in development and might not work as expected.',
-      );
-    }
-
     final reviewUseCases = args.visualDiff
         ? useCases
             .map(

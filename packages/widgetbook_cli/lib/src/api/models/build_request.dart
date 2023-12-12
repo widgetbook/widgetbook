@@ -3,6 +3,8 @@ import 'package:file/file.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
 
+import '../../models/models.dart';
+
 class BuildRequest {
   const BuildRequest({
     required this.apiKey,
@@ -13,6 +15,7 @@ class BuildRequest {
     required this.provider,
     required this.file,
     required this.takeScreenshots,
+    required this.useCases,
   });
 
   final String apiKey;
@@ -22,7 +25,10 @@ class BuildRequest {
   final String actor;
   final String provider;
   final File file;
+
+  // Experimental Visual Diff
   final bool takeScreenshots;
+  final List<ChangedUseCase>? useCases;
 
   Future<FormData> toFormData() async {
     return FormData.fromMap({
@@ -38,6 +44,7 @@ class BuildRequest {
         contentType: MediaType.parse('application/zip'),
       ),
       'take-screenshots': takeScreenshots,
+      'use-cases': useCases?.map((x) => x.toJson()).toList(),
     });
   }
 }
