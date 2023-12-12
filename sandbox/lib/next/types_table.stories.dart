@@ -10,12 +10,12 @@ final meta = Meta<TypesTable>();
 
 final $Default = TypesTableStory(
   name: 'Default',
-  setup: (context, child) {
+  setup: (context, child, args) {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.red,
-          width: 6,
+          width: args.decimal.resolve(context),
         ),
       ),
       child: child,

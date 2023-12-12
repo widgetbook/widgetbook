@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import '../navigation/nodes/nodes.dart' as v3;
 import 'args/story_args.dart';
 
-typedef SetupBuilder = Widget Function(BuildContext context, Widget story);
+typedef SetupBuilder<TArgs> = Widget Function(
+  BuildContext context,
+  Widget story,
+  TArgs args,
+);
+
 typedef ArgsBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
     = TWidget Function(BuildContext context, TArgs args);
 
@@ -21,12 +26,13 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
         );
 
   final TArgs args;
-  final SetupBuilder setup;
+  final SetupBuilder<TArgs> setup;
   final ArgsBuilder<TWidget, TArgs> argsBuilder;
 
   static Widget defaultSetup(
     BuildContext context,
     Widget story,
+    dynamic args,
   ) {
     return story;
   }
@@ -34,7 +40,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
   @override
   Widget build(BuildContext context) {
     final story = argsBuilder(context, args);
-    return setup(context, story);
+    return setup(context, story, args);
   }
 
   @override
