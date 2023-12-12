@@ -50,7 +50,7 @@ class ComponentsBuilder implements Builder {
             ),
           )
           .toList(),
-      refer('Component', 'package:widgetbook/next.dart'),
+      refer('WidgetbookNode', 'package:widgetbook/widgetbook.dart'),
     );
 
     final outputLibrary = Library(

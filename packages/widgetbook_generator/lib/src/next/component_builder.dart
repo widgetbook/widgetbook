@@ -21,7 +21,7 @@ class ComponentBuilder {
           InvokeExpression.newOf(
             TypeReference(
               (b) => b
-                ..symbol = 'Component'
+                ..symbol = stories.length == 1 ? 'LeafComponent' : 'Component'
                 ..types.addAll([
                   refer(widgetType.displayName),
                   refer('${argsType.displayName}Args'),
@@ -30,9 +30,12 @@ class ComponentBuilder {
             [],
             {
               'meta': refer('meta'),
-              'stories': literalList(
-                stories.map((story) => refer(story.name)).toList(),
-              ),
+              if (stories.length == 1)
+                'story': refer(stories.first.name)
+              else
+                'stories': literalList(
+                  stories.map((story) => refer(story.name)).toList(),
+                ),
             },
           ),
         )
