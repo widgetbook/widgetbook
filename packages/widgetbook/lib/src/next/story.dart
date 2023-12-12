@@ -39,6 +39,11 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
 
   @override
   Widget build(BuildContext context) {
+    return buildWithArgs(context, args);
+  }
+
+  /// Same as [build], but uses external [args] instead of [Story.args].
+  Widget buildWithArgs(BuildContext context, TArgs args) {
     final story = argsBuilder(context, args);
     return setup(context, story, args);
   }
