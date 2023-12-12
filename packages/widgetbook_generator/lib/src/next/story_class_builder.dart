@@ -24,6 +24,7 @@ class StoryClassBuilder {
 
   Class build() {
     final isPrimitiveArgs = params.every((param) => param.type.isPrimitive);
+    final isCustomArgs = widgetType != argsType;
 
     return Class(
       (b) => b
@@ -63,56 +64,47 @@ class StoryClassBuilder {
                     ..named = true
                     ..toSuper = true,
                 ),
+                if (isCustomArgs)
+                  Parameter(
+                    (b) => b
+                      ..name = 'argsBuilder'
+                      ..named = true
+                      ..toSuper = true
+                      ..required = true,
+                  ),
               ]);
 
-              if (!isPrimitiveArgs) {
-                return;
-              }
+              final superInitializers = {
+                if (isPrimitiveArgs)
+                  'args': refer('args').ifNullThen(
+                    refer('${argsType.displayName}Args()'),
+                  ),
+                if (!isCustomArgs)
+                  'argsBuilder': Method(
+                    (b) => b
+                      ..lambda = true
+                      ..requiredParameters.addAll([
+                        Parameter((b) => b.name = 'context'),
+                        Parameter((b) => b.name = 'args'),
+                      ])
+                      ..body = instantiate(
+                        (param) => refer('args') //
+                            .property(param.name)
+                            .property('resolve')
+                            .call([refer('context')]),
+                      ).code,
+                  ).closure,
+              };
 
-              b.initializers.add(
-                refer('super').call(
-                  [],
-                  {
-                    'args': refer('args').ifNullThen(
-                      refer('${argsType.displayName}Args()'),
-                    ),
-                  },
-                ).code,
-              );
+              if (superInitializers.isNotEmpty) {
+                b.initializers.add(
+                  refer('super').call(
+                    [],
+                    superInitializers,
+                  ).code,
+                );
+              }
             },
-          ),
-        )
-        ..methods.add(
-          Method(
-            (b) => b
-              ..name = 'buildWith'
-              ..annotations.add(refer('override'))
-              ..returns = refer(widgetType.displayName)
-              ..requiredParameters.addAll([
-                Parameter(
-                  (b) => b
-                    ..name = 'context'
-                    ..type = refer('BuildContext'),
-                ),
-                Parameter(
-                  (b) => b
-                    ..name = 'args'
-                    ..type = refer('${argsType.displayName}Args'),
-                ),
-              ])
-              ..body = (widgetType != argsType
-                      ? refer('meta').property('argsBuilder').call([
-                          refer('context'),
-                          refer('args'),
-                        ])
-                      : instantiate(
-                          (param) => refer('args') //
-                              .property(param.name)
-                              .property('resolve')
-                              .call([refer('context')]),
-                        ))
-                  .returned
-                  .statement,
           ),
         ),
     );
