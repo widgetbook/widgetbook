@@ -3,7 +3,7 @@ import 'args/story_args.dart';
 class Meta<T> {
   const Meta({
     String? name,
-  }) : name = name ?? '${T}';
+  }) : name = name ?? '$T';
 
   final String name;
 }
