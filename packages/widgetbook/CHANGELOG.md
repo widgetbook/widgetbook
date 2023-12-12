@@ -8,6 +8,7 @@
 - **EXPERIMENTAL**: Support custom args via `MetaWithArgs`. ([#1080](https://github.com/widgetbook/widgetbook/pull/1080))
 - **EXPERIMENTAL**: Add `args` parameter to `Story.setup`. ([#1081](https://github.com/widgetbook/widgetbook/pull/1081))
 - **EXPERIMENTAL**: Use `setup` in `Scenario`s. ([#1082](https://github.com/widgetbook/widgetbook/pull/1082))
+- **EXPERIMENTAL**: Add `LeafComponent`. ([#1083](https://github.com/widgetbook/widgetbook/pull/1083))
 
 ## 3.6.0
 

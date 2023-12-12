@@ -65,7 +65,9 @@ class NavigationTreeTile extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            if (node is next.Story || node is next.Component) ...{
+            if (node is next.Story ||
+                node is next.Component ||
+                node is next.LeafComponent) ...{
               const Spacer(),
               const next.ExperimentalBadge(),
               const SizedBox(

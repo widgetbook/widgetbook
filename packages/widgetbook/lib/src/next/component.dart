@@ -18,3 +18,17 @@ class Component<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
   final Meta<TWidget> meta;
   final List<Story<TWidget, TArgs>> stories;
 }
+
+class LeafComponent<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
+    extends v3.WidgetbookLeafComponent {
+  LeafComponent({
+    required this.meta,
+    required this.story,
+  }) : super(
+          name: meta.name,
+          useCase: story,
+        );
+
+  final Meta<TWidget> meta;
+  final Story<TWidget, TArgs> story;
+}
