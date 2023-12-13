@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FIX**: Enable `InspectorAddon` on release builds. ([#1087](https://github.com/widgetbook/widgetbook/pull/1087))
 - **EXPERIMENTAL**: Add `EnumArg`. ([#1073](https://github.com/widgetbook/widgetbook/pull/1073))
 - **EXPERIMENTAL**: Add `SingleArg`. ([#1075](https://github.com/widgetbook/widgetbook/pull/1075))
 - **EXPERIMENTAL**: Add `BuilderArg`. ([#1079](https://github.com/widgetbook/widgetbook/pull/1079))
