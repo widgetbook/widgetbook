@@ -31,14 +31,14 @@ class InspectorAddon extends WidgetbookAddon<bool> {
     Widget child,
     bool setting,
   ) {
-    return setting
-        ? Scaffold(
-            backgroundColor: const Color(0xFF121515),
-            body: Inspector(
-              child: child,
-              isEnabled: setting,
-            ),
-          )
-        : child;
+    if (!setting) return child;
+
+    return Scaffold(
+      backgroundColor: const Color(0xFF121515),
+      body: Inspector(
+        isEnabled: true, // To bypass disabling on release builds
+        child: child,
+      ),
+    );
   }
 }
