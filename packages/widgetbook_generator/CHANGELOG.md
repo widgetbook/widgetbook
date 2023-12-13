@@ -1,4 +1,4 @@
-## Unreleased
+## 3.6.0
 
 - **EXPERIMENTAL**: Use params' default values for `StoryArgs.fixed` constructor. ([#1074](https://github.com/widgetbook/widgetbook/pull/1074))
 - **EXPERIMENTAL**: Support `EnumArg`. ([#1073](https://github.com/widgetbook/widgetbook/pull/1073))
