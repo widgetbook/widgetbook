@@ -13,8 +13,11 @@ class ArgBuilder {
       (b) => b
         ..modifier = FieldModifier.final$
         ..name = param.name
-        ..type = refer(
-          'Arg<${param.type.displayName}>',
+        ..type = TypeReference(
+          (b) => b
+            ..symbol = 'Arg'
+            ..isNullable = param.type.isNullable
+            ..types.add(refer(param.type.displayName)),
         ),
     );
   }
@@ -24,10 +27,20 @@ class ArgBuilder {
       (b) => b
         ..named = true
         ..name = param.name
-        ..type = refer('Arg<${param.type.displayName}>')
-        ..required = !param.type.isPrimitive
+        ..type = TypeReference(
+          (b) => b
+            ..symbol = 'Arg'
+            ..isNullable = param.type.isNullable
+            ..types.add(refer(param.type.displayName)),
+        )
+        ..required = param.requiresArg
         ..defaultTo = !param.type.isPrimitive
-            ? null
+            ? param.hasDefaultValue
+                ? InvokeExpression.constOf(
+                    refer('ConstArg'),
+                    [refer(param.defaultValueCode!)],
+                  ).code
+                : null
             : InvokeExpression.constOf(
                 refer(param.type.meta.argName),
                 param.hasDefaultValue
@@ -46,13 +59,17 @@ class ArgBuilder {
       (b) => b
         ..named = true
         ..name = param.name
-        ..type = refer(param.type.displayName)
-        ..required = !param.type.isPrimitive
-        ..defaultTo = !param.type.isPrimitive //
-            ? null
-            : param.hasDefaultValue
-                ? refer(param.defaultValueCode!).code
-                : param.type.meta.defaultValue.code,
+        ..type = TypeReference(
+          (b) => b
+            ..symbol = param.type.displayName
+            ..isNullable = param.type.isNullable,
+        )
+        ..required = param.requiresArg
+        ..defaultTo = param.hasDefaultValue //
+            ? refer(param.defaultValueCode!).code
+            : param.type.isPrimitive
+                ? param.type.meta.defaultValue.code
+                : null,
     );
   }
 }

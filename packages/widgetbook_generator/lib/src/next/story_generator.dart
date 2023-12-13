@@ -40,6 +40,10 @@ class StoryGenerator extends Generator {
         ),
     );
 
-    return genLib.accept(DartEmitter()).toString();
+    final emitter = DartEmitter(
+      useNullSafetySyntax: true,
+    );
+
+    return genLib.accept(emitter).toString();
   }
 }

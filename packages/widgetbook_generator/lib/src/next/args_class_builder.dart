@@ -50,7 +50,10 @@ class ArgsClassBuilder {
                       .property(param.name)
                       .assign(
                         refer(param.name)
-                            .property('init')
+                            .maybeProperty(
+                          'init',
+                          nullSafe: param.type.isNullable,
+                        )
                             .call([], {'name': literalString(param.name)}),
                       )
                       .code,
@@ -70,10 +73,20 @@ class ArgsClassBuilder {
                   (param) => refer('this')
                       .property(param.name)
                       .assign(
-                        InvokeExpression.newOf(
-                          refer('Arg.fixed'),
-                          [refer(param.name)],
-                        ),
+                        param.type.isNullable
+                            ? refer(param.name)
+                                .equalTo(literalNull)
+                                .conditional(
+                                  literalNull,
+                                  InvokeExpression.newOf(
+                                    refer('Arg.fixed'),
+                                    [refer(param.name)],
+                                  ),
+                                )
+                            : InvokeExpression.newOf(
+                                refer('Arg.fixed'),
+                                [refer(param.name)],
+                              ),
                       )
                       .code,
                 ),
@@ -85,7 +98,17 @@ class ArgsClassBuilder {
             (b) => b
               ..name = 'list'
               ..type = MethodType.getter
-              ..returns = refer('List<Arg>')
+              ..returns = TypeReference(
+                (b) => b
+                  ..symbol = 'List'
+                  ..types.add(
+                    TypeReference(
+                      (b) => b
+                        ..symbol = 'Arg'
+                        ..isNullable = true,
+                    ),
+                  ),
+              )
               ..annotations.add(refer('override'))
               ..lambda = true
               ..body = literalList(

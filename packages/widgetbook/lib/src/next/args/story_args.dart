@@ -1,12 +1,15 @@
+import 'package:collection/collection.dart';
+
 import 'arg.dart';
 import 'const_arg.dart';
 
 abstract class StoryArgs<T> {
   const StoryArgs();
 
-  List<Arg> get list;
+  List<Arg?> get list;
 
-  List<Arg> get nonConstList {
-    return list.where((arg) => arg is! ConstArg).toList();
+  /// Non-nullable and non-const args
+  List<Arg> get safeList {
+    return list.whereNotNull().where((arg) => arg is! ConstArg).toList();
   }
 }

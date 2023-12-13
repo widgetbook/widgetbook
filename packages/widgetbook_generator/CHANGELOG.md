@@ -7,6 +7,7 @@
 - **EXPERIMENTAL**: Set `Arg.name` via `init` instead of constructor. ([#1078](https://github.com/widgetbook/widgetbook/pull/1078))
 - **EXPERIMENTAL**: Support custom args via `MetaWithArgs`. ([#1080](https://github.com/widgetbook/widgetbook/pull/1080))
 - **EXPERIMENTAL**: Support `LeafComponent`. ([#1083](https://github.com/widgetbook/widgetbook/pull/1083))
+- **EXPERIMENTAL**: Support optional parameters arg-generation. ([#1084](https://github.com/widgetbook/widgetbook/pull/1084))
 
 ## 3.5.0
 

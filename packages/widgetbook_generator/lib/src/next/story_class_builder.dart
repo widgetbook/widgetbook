@@ -23,8 +23,8 @@ class StoryClassBuilder {
   }
 
   Class build() {
-    final isPrimitiveArgs = params.every((param) => param.type.isPrimitive);
     final isCustomArgs = widgetType != argsType;
+    final hasRequiredArgs = params.any((param) => param.requiresArg);
 
     return Class(
       (b) => b
@@ -52,9 +52,9 @@ class StoryClassBuilder {
                   (b) => b
                     ..name = 'args'
                     ..named = true
-                    ..toSuper = !isPrimitiveArgs
-                    ..required = !isPrimitiveArgs
-                    ..type = !isPrimitiveArgs
+                    ..toSuper = hasRequiredArgs
+                    ..required = hasRequiredArgs
+                    ..type = hasRequiredArgs
                         ? null
                         : refer('${argsType.displayName}Args?'),
                 ),
@@ -75,7 +75,7 @@ class StoryClassBuilder {
               ]);
 
               final superInitializers = {
-                if (isPrimitiveArgs)
+                if (!hasRequiredArgs)
                   'args': refer('args').ifNullThen(
                     refer('${argsType.displayName}Args()'),
                   ),
@@ -90,7 +90,10 @@ class StoryClassBuilder {
                       ..body = instantiate(
                         (param) => refer('args') //
                             .property(param.name)
-                            .property('resolve')
+                            .maybeProperty(
+                              'resolve',
+                              nullSafe: param.type.isNullable,
+                            )
                             .call([refer('context')]),
                       ).code,
                   ).closure,
