@@ -1,4 +1,4 @@
-## Unreleased
+## 3.7.0
 
 - **FIX**: Enable `InspectorAddon` on release builds. ([#1087](https://github.com/widgetbook/widgetbook/pull/1087))
 - **EXPERIMENTAL**: Add `EnumArg`. ([#1073](https://github.com/widgetbook/widgetbook/pull/1073))
