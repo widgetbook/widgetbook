@@ -36,7 +36,7 @@ class InspectorAddon extends WidgetbookAddon<bool> {
             backgroundColor: const Color(0xFF121515),
             body: Inspector(
               child: child,
-              isEnabled: enabled,
+              isEnabled: setting,
             ),
           )
         : child;
