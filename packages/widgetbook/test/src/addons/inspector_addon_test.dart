@@ -39,6 +39,19 @@ void main() {
       expect(find.text('Test'), findsOneWidget);
     });
 
+    testWidgets(
+        'buildUseCase with isEnabled true has Inspector with isEnabled true',
+        (tester) async {
+      await tester.pumpWidgetWithBuilder(
+        (context) => addon.buildUseCase(context, const Text('Test'), true),
+      );
+
+      final inspectorFinder = find.byType(Inspector);
+      expect(inspectorFinder, findsOneWidget);
+      final inspector = tester.firstWidget(inspectorFinder) as Inspector;
+      expect(inspector.isEnabled, true);
+    });
+
     testWidgets('buildUseCase with isEnabled false returns child directly',
         (tester) async {
       await tester.pumpWidgetWithBuilder(
