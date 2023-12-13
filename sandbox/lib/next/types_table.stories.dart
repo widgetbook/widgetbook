@@ -15,7 +15,7 @@ final $Default = TypesTableStory(
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.red,
-          width: args.decimal.resolve(context),
+          width: args.decimal?.resolve(context) ?? 0,
         ),
       ),
       child: child,

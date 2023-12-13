@@ -182,6 +182,27 @@ If you were using Widgetbook 3 knobs, here is a mapping of the knobs to the new 
 | `T`        | `list`          | `SingleArg<T>` |
 | `Enum`     | `list`          | `EnumArg<T>`   |
 
+### Param-Arg Resolution
+
+If you are wondering what type of arg you will have generated based on your constructor parameter, here is a mapping:
+
+<Warning>
+  This mapping will change once the nullable Args are implemented.
+</Warning>
+
+| Primitive | Nullable | Required | Default | Arg                                                 |
+| --------- | -------- | -------- | ------- | --------------------------------------------------- |
+| ✅        | ✅       | ✅       | ❌      | `Arg<Primitive>? = PrimitiveArg(primitive.default)` |
+| ✅        | ✅       | ❌       | ✅      | `Arg<Primitive>? = PrimitiveArg(param.default)`     |
+| ✅        | ✅       | ❌       | ❌      | `Arg<Primitive>? = PrimitiveArg(primitive.default)` |
+| ✅        | ❌       | ✅       | ❌      | `Arg<Primitive> = PrimitiveArg(primitive.default)`  |
+| ✅        | ❌       | ❌       | ✅      | `Arg<Primitive> = PrimitiveArg(param.default)`      |
+| ❌        | ✅       | ✅       | ❌      | `Arg<Type>?`                                        |
+| ❌        | ✅       | ❌       | ✅      | `Arg<Type>? = Arg.fixed(param.default)`             |
+| ❌        | ✅       | ❌       | ❌      | `Arg<Type>?`                                        |
+| ❌        | ❌       | ✅       | ❌      | `required Arg<Type>`                                |
+| ❌        | ❌       | ❌       | ✅      | `Arg<Type> = Arg.fixed(param.default)`              |
+
 ### Custom Args
 
 Args usually match the Widget's constructor, but in some cases users want to customize that.

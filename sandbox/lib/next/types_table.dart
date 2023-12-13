@@ -10,32 +10,37 @@ enum Status {
 class TypesTable extends StatelessWidget {
   const TypesTable({
     super.key,
-    this.boolean = true,
-    required this.integer,
-    required this.decimal,
-    required this.string,
-    required this.color,
-    this.duration = const Duration(seconds: 1),
-    required this.person,
+
+    // Primitive Params
+    required this.boolean, // Nullable-Required
+    this.integer = 1, // Nullable-Default
+    this.decimal, // Nullable
+    required this.string, // Required
+    this.color = Colors.red, // Default
+    required this.duration,
     required this.status,
-    required this.child,
-    this.padding,
-    this.margin = const EdgeInsets.all(16),
-    this.decoration = const BoxDecoration(),
+
+    // Object Params
+    required this.person, // Nullable-Required
+    this.margin = const EdgeInsets.all(16), // Nullable-Default
+    this.padding, // Nullable
+    required this.child, // Required
+    this.decoration = const BoxDecoration(), // Default
   });
 
-  final bool boolean;
-  final int integer;
-  final double decimal;
+  final bool? boolean;
+  final int? integer;
+  final double? decimal;
   final String string;
   final Color color;
   final Duration duration;
-  final Person person;
   final Status status;
-  final Widget child;
+
+  final Person? person;
   final EdgeInsets? padding;
   final EdgeInsets? margin;
   final Decoration decoration;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +102,7 @@ class TypesTable extends StatelessWidget {
               TableRow(
                 children: [
                   Text('$Person'),
-                  Text('${person.name} (${person.age})'),
+                  Text(person?.toString() ?? '-'),
                 ],
               ),
               TableRow(
@@ -122,4 +127,9 @@ class Person {
 
   final String name;
   final int age;
+
+  @override
+  String toString() {
+    return '$name ($age)';
+  }
 }
