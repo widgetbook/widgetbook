@@ -1,0 +1,16 @@
+import 'package:widgetbook/next.dart';
+
+import 'responsive_image.dart';
+
+part 'responsive_image.stories.book.dart';
+
+final meta = Meta<ResponsiveImage>();
+
+final $Default = ResponsiveImageStory(
+  name: 'Default',
+  args: ResponsiveImageArgs(
+    url: Arg.fixed(
+      'https://images.nintendolife.com/bb503ef1f79ff/ash-and-pikachu.original.jpg',
+    ),
+  ),
+);

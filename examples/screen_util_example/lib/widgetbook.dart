@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-import 'responsive_image.dart';
-import 'screen_container.dart';
+import 'components.book.dart';
 
 void main() {
   runApp(const WidgetbookApp());
@@ -15,6 +14,7 @@ class WidgetbookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
+      directories: components,
       addons: [
         TextScaleAddon(
           scales: [1.0, 2.0],
@@ -39,33 +39,6 @@ class WidgetbookApp extends StatelessWidget {
               child: child,
             );
           },
-        ),
-      ],
-      directories: [
-        WidgetbookComponent(
-          name: '$ScreenContainer',
-          useCases: [
-            WidgetbookUseCase(
-              name: 'Default',
-              builder: (context) {
-                return const ScreenContainer();
-              },
-            ),
-          ],
-        ),
-        WidgetbookComponent(
-          name: '$ResponsiveImage',
-          useCases: [
-            WidgetbookUseCase(
-              name: 'Default',
-              builder: (context) {
-                return const ResponsiveImage(
-                  url: 'https://images.nintendolife.com/bb503ef1f79ff/'
-                      'ash-and-pikachu.original.jpg',
-                );
-              },
-            ),
-          ],
         ),
       ],
     );
