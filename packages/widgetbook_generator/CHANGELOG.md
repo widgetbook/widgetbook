@@ -1,3 +1,7 @@
+## Unreleased
+
+- **EXPERIMENTAL**: Preserve nullability of generic/function parameters. ([#1092](https://github.com/widgetbook/widgetbook/pull/1092))
+
 ## 3.6.0
 
 - **EXPERIMENTAL**: Use params' default values for `StoryArgs.fixed` constructor. ([#1074](https://github.com/widgetbook/widgetbook/pull/1074))

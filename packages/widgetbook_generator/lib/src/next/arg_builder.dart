@@ -17,7 +17,7 @@ class ArgBuilder {
           (b) => b
             ..symbol = 'Arg'
             ..isNullable = param.type.isNullable
-            ..types.add(refer(param.type.displayName)),
+            ..types.add(refer(param.type.nonNullableName)),
         ),
     );
   }
@@ -31,7 +31,7 @@ class ArgBuilder {
           (b) => b
             ..symbol = 'Arg'
             ..isNullable = param.type.isNullable
-            ..types.add(refer(param.type.displayName)),
+            ..types.add(refer(param.type.nonNullableName)),
         )
         ..required = param.requiresArg
         ..defaultTo = !param.type.isPrimitive
@@ -48,7 +48,9 @@ class ArgBuilder {
                     : [param.type.meta.defaultValue],
                 {
                   if (param.type.isEnum)
-                    'values': refer(param.type.displayName).property('values'),
+                    'values': refer(
+                      param.type.nonNullableName,
+                    ).property('values'),
                 },
               ).code,
     );
@@ -61,7 +63,7 @@ class ArgBuilder {
         ..name = param.name
         ..type = TypeReference(
           (b) => b
-            ..symbol = param.type.displayName
+            ..symbol = param.type.nonNullableName
             ..isNullable = param.type.isNullable,
         )
         ..required = param.requiresArg

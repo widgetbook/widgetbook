@@ -23,12 +23,12 @@ class ArgsClassBuilder {
   Class build() {
     return Class(
       (b) => b
-        ..name = '${argsType.displayName}Args'
+        ..name = '${argsType.nonNullableName}Args'
         ..extend = TypeReference(
           (b) => b
             ..symbol = 'StoryArgs'
             ..types.addAll([
-              refer(widgetType.displayName),
+              refer(widgetType.nonNullableName),
             ]),
         )
         ..fields.addAll(

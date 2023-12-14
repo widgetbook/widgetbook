@@ -16,15 +16,15 @@ class ComponentBuilder {
   final List<TopLevelVariableElement> stories;
 
   Code build() {
-    return declareFinal('${widgetType.displayName}Component')
+    return declareFinal('${widgetType.nonNullableName}Component')
         .assign(
           InvokeExpression.newOf(
             TypeReference(
               (b) => b
                 ..symbol = stories.length == 1 ? 'LeafComponent' : 'Component'
                 ..types.addAll([
-                  refer(widgetType.displayName),
-                  refer('${argsType.displayName}Args'),
+                  refer(widgetType.nonNullableName),
+                  refer('${argsType.nonNullableName}Args'),
                 ]),
             ),
             [],
