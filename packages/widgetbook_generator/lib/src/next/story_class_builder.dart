@@ -28,13 +28,13 @@ class StoryClassBuilder {
 
     return Class(
       (b) => b
-        ..name = '${widgetType.displayName}Story'
+        ..name = '${widgetType.nonNullableName}Story'
         ..extend = TypeReference(
           (b) => b
             ..symbol = 'Story'
             ..types.addAll([
-              refer(widgetType.displayName),
-              refer('${argsType.displayName}Args'),
+              refer(widgetType.nonNullableName),
+              refer('${argsType.nonNullableName}Args'),
             ]),
         )
         ..constructors.add(
@@ -56,7 +56,7 @@ class StoryClassBuilder {
                     ..required = hasRequiredArgs
                     ..type = hasRequiredArgs
                         ? null
-                        : refer('${argsType.displayName}Args?'),
+                        : refer('${argsType.nonNullableName}Args?'),
                 ),
                 Parameter(
                   (b) => b
@@ -77,7 +77,7 @@ class StoryClassBuilder {
               final superInitializers = {
                 if (!hasRequiredArgs)
                   'args': refer('args').ifNullThen(
-                    refer('${argsType.displayName}Args()'),
+                    refer('${argsType.nonNullableName}Args()'),
                   ),
                 if (!isCustomArgs)
                   'argsBuilder': Method(
@@ -117,7 +117,7 @@ class StoryClassBuilder {
     Expression Function(ParameterElement) assigner,
   ) {
     return InvokeExpression.newOf(
-      refer(widgetType.displayName),
+      refer(widgetType.nonNullableName),
       params //
           .where((param) => param.isPositional)
           .map(assigner)

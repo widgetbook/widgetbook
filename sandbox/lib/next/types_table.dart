@@ -26,6 +26,10 @@ class TypesTable extends StatelessWidget {
     this.padding, // Nullable
     required this.child, // Required
     this.decoration = const BoxDecoration(), // Default
+
+    // Generics/Function Params
+    this.future,
+    this.onChanged,
   });
 
   final bool? boolean;
@@ -41,6 +45,9 @@ class TypesTable extends StatelessWidget {
   final EdgeInsets? margin;
   final Decoration decoration;
   final Widget child;
+
+  final Future<bool?>? future;
+  final ValueChanged<bool?>? onChanged;
 
   @override
   Widget build(BuildContext context) {

@@ -49,12 +49,31 @@ extension DartTypeX on DartType {
     ),
   };
 
-  String get displayName {
-    return getDisplayString(withNullability: false);
+  String get nonNullableName {
+    // We get the display string with nullability then we remove the trailing
+    // "?" if it exists, to avoid this issue with function and generic types:
+    // 1. Function Types:
+    //    - Type                : void Function(bool?)?
+    //    - With nullability    : void Function(bool?)?
+    //    - Without nullability : void Function(bool)
+    //    - Expected            : void Function(bool?)
+    // 2. Generics:
+    //    - Type                : Future<bool?>?
+    //    - With nullability    : Future<bool?>?
+    //    - Without nullability : Future<bool>
+    //    - Expected            : Future<bool?>
+
+    final displayString = getDisplayString(
+      withNullability: true,
+    );
+
+    return nullabilitySuffix != NullabilitySuffix.none
+        ? displayString.substring(0, displayString.length - 1)
+        : displayString;
   }
 
   bool get isPrimitive {
-    return isEnum || typesMeta.containsKey(displayName);
+    return isEnum || typesMeta.containsKey(nonNullableName);
   }
 
   bool get isNullable {
@@ -68,12 +87,12 @@ extension DartTypeX on DartType {
   TypeMeta get meta {
     return isEnum
         ? TypeMeta(
-            'EnumArg<$displayName>',
-            refer(displayName).property(
+            'EnumArg<$nonNullableName>',
+            refer(nonNullableName).property(
               (element as EnumElement).fields.first.name,
             ),
           )
-        : typesMeta[displayName]!;
+        : typesMeta[nonNullableName]!;
   }
 }
 
