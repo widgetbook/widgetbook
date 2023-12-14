@@ -6,14 +6,14 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.text,
-    required this.onPressed,
+    this.onPressed,
     this.color = Colors.blue,
     this.textColor = Colors.white,
     this.borderRadius = 8.0,
   });
 
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color color;
   final Color textColor;
   final double borderRadius;
