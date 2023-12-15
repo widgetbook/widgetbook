@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **EXPERIMENTAL**: Preserve nullability of generic/function parameters. ([#1092](https://github.com/widgetbook/widgetbook/pull/1092))
+- **EXPERIMENTAL**: Allow `key` args. ([#1094](https://github.com/widgetbook/widgetbook/pull/1094))
 
 ## 3.6.0
 
