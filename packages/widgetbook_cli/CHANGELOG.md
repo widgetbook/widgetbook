@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **BREAKING**: Set minimum SDK version to 3.0.0. ([#1030](https://github.com/widgetbook/widgetbook/pull/1030))
+- **BREAKING**: Require Dart 3.0. ([#1099](https://github.com/widgetbook/widgetbook/pull/1099))
 - **FIX**: Remove `#` from build/review URLs. ([#1063](https://github.com/widgetbook/widgetbook/pull/1063))
 
 ## 3.0.1

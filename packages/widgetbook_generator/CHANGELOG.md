@@ -1,3 +1,7 @@
+## Unreleased
+
+- **BREAKING**: Require Dart 3.0. ([#1099](https://github.com/widgetbook/widgetbook/pull/1099))
+
 ## 3.7.0
 
 - **EXPERIMENTAL**: Preserve nullability of generic/function parameters. ([#1092](https://github.com/widgetbook/widgetbook/pull/1092))

@@ -1,3 +1,7 @@
+## Unreleased
+
+- **BREAKING**: Require Dart 3.0. ([#1099](https://github.com/widgetbook/widgetbook/pull/1099))
+
 ## 3.1.0
 
 - **BREAKING**: Set minimum SDK version to 2.19.0. ([#1030](https://github.com/widgetbook/widgetbook/pull/1030))

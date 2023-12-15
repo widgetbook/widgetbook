@@ -12,22 +12,21 @@ screenshots:
     path: assets/logo.png
 
 environment:
-  sdk: ">=2.19.0 <4.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  analyzer: ">=5.10.0 <7.0.0"
-  build: ^2.1.0
-  code_builder: ^4.1.0
+  analyzer: ^6.0.0
+  build: ^2.4.1
+  code_builder: ^4.8.0
   collection: ^1.15.0
   crypto: ^3.0.0
   dart_style: ^2.3.0
-  glob: ^2.0.2
+  glob: ^2.1.0
   meta: ^1.7.0
   path: ^1.8.0
-  source_gen: ^1.1.0
-  widgetbook: ^3.7.0
+  source_gen: ^1.4.0
   widgetbook_annotation: ^3.1.0
-  yaml: ^3.1.1
+  yaml: ^3.1.2
 
 dev_dependencies:
-  test: ^1.21.0
+  test: ^1.24.0
