@@ -72,7 +72,7 @@ The Story-Arg-Mode architecture or "SAM" (_inspired by [Samwise Gamgee](https://
 
 1. Run `dart run build_runner build -d` inside the `widgetbook` directory to generate the `my_cool_widget.stories.book.dart` file, which contains some generated classes to help you catalog your widget.
 
-1. Add a new stroy to the `my_cool_widget.stories.dart` file:
+1. Add a new story to the `my_cool_widget.stories.dart` file:
 
    ```dart
    final $Primary = MyCoolWidgetStory(
@@ -108,7 +108,7 @@ The Story-Arg-Mode architecture or "SAM" (_inspired by [Samwise Gamgee](https://
          //   ...components,
          //   ...directories,
          // ],
-         directories: components
+         directories: components,
          addons: [
            next.MaterialThemeAddon({
              'Dark': ThemeData.dark(),
@@ -142,7 +142,7 @@ class CoolButton extends StatelessWidget {
 }
 ```
 
-Then the generated `CoolButtonStroy` class can accept `CoolButtonArgs` as follows:
+Then the generated `CoolButtonStory` class can accept `CoolButtonArgs` as follows:
 
 ```dart
 final meta = Meta<CoolButton>();
