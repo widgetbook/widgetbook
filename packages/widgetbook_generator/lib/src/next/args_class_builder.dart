@@ -1,7 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
-import 'package:collection/collection.dart';
 
 import 'arg_builder.dart';
 import 'extensions.dart';
@@ -13,11 +12,7 @@ class ArgsClassBuilder {
   final DartType argsType;
 
   Iterable<ParameterElement> get params {
-    return (argsType.element as ClassElement)
-        .constructors
-        .first
-        .parameters
-        .whereNot((param) => param.name == 'key');
+    return (argsType.element as ClassElement).constructors.first.parameters;
   }
 
   Class build() {
