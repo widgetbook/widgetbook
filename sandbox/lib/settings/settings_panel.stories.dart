@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:widgetbook/next.dart';
 import 'package:widgetbook/src/settings/settings_panel.dart';
 
