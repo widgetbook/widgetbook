@@ -1,6 +1,4 @@
-// lib/components/custom_text_field.dart
 import 'package:flutter/material.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -22,25 +20,4 @@ class CustomTextField extends StatelessWidget {
       ),
     );
   }
-}
-
-@widgetbook.UseCase(
-  name: 'Default Style',
-  type: CustomTextField,
-)
-CustomTextField defaultCustomTextField(BuildContext context) {
-  return CustomTextField(
-    controller: TextEditingController(),
-  );
-}
-
-@widgetbook.UseCase(
-  name: 'With Hint Text',
-  type: CustomTextField,
-)
-CustomTextField hintTextCustomTextField(BuildContext context) {
-  return CustomTextField(
-    controller: TextEditingController(),
-    hintText: 'Enter your text here',
-  );
 }
