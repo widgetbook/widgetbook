@@ -1,54 +1,54 @@
-/// A custom addon example for Widgetbook
-///
-/// [Ref link]: https://docs.widgetbook.io/addons/custom-addon
 import 'package:flutter/material.dart';
+import 'package:widgetbook/next.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-class AlignmentAddon extends WidgetbookAddon<Alignment> {
-  AlignmentAddon({
-    this.initialAlignment = Alignment.center,
-  }) : super(
-          name: 'Alignment',
-        );
-
-  final Alignment initialAlignment;
+class AlignMode extends Mode<Alignment> {
+  AlignMode(super.value);
 
   @override
-  List<Field<Alignment>> get fields {
+  Widget build(BuildContext context, Widget child) {
+    return Align(
+      alignment: value,
+      child: child,
+    );
+  }
+}
+
+class AlignAddon extends ModeAddon<Alignment> {
+  AlignAddon([this.alignment = Alignment.center])
+      : super(
+          name: 'Alignment',
+          modeBuilder: AlignmentMode.new,
+        );
+
+  final Alignment alignment;
+
+  static final alignments = {
+    Alignment.topLeft: 'Top Left',
+    Alignment.topCenter: 'Top Center',
+    Alignment.topRight: 'Top Right',
+    Alignment.centerLeft: 'Center Left',
+    Alignment.center: 'Center',
+    Alignment.centerRight: 'Center Right',
+    Alignment.bottomLeft: 'Bottom Left',
+    Alignment.bottomCenter: 'Bottom Center',
+    Alignment.bottomRight: 'Bottom Right',
+  };
+
+  @override
+  List<Field> get fields {
     return [
       ListField<Alignment>(
         name: 'alignment',
-        initialValue: initialAlignment,
-        values: [
-          Alignment.topLeft,
-          Alignment.topCenter,
-          Alignment.topRight,
-          Alignment.centerLeft,
-          Alignment.center,
-          Alignment.centerRight,
-          Alignment.bottomLeft,
-          Alignment.bottomCenter,
-          Alignment.bottomRight,
-        ],
+        initialValue: alignment,
+        values: alignments.keys.toList(),
+        labelBuilder: (value) => alignments[value]!,
       ),
     ];
   }
 
   @override
   Alignment valueFromQueryGroup(Map<String, String> group) {
-    return valueOf<Alignment>('alignment', group)!;
-  }
-
-  @override
-  Widget buildUseCase(
-    BuildContext context,
-    Widget child,
-    Alignment setting,
-  ) {
-    // customize how the use case is built using your custom Addon
-    return Align(
-      alignment: setting,
-      child: child,
-    );
+    return valueOf('alignment', group)!;
   }
 }

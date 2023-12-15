@@ -536,7 +536,7 @@ packages:
     source: path
     version: "3.7.0"
   widgetbook_annotation:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "../../packages/widgetbook_annotation"
       relative: true

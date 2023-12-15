@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppThemeData {
-  AppThemeData({
-    required this.color,
-  });
+  AppThemeData(this.color);
 
   final Color color;
 }
@@ -48,5 +46,3 @@ class AwesomeWidget extends StatelessWidget {
     );
   }
 }
-
-// Now check widgetbook.theme.dart
