@@ -29,13 +29,6 @@
             "type": "dart"
         },
         {
-            "name": "knobs_example",
-            "cwd": "examples/knobs_example",
-            "request": "launch",
-            "program": "lib/widgetbook.dart",
-            "type": "dart"
-        },
-        {
             "name": "screen_util_example",
             "cwd": "examples/screen_util_example",
             "request": "launch",

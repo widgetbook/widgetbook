@@ -5,7 +5,6 @@ A list of examples that help you getting to know Widgetbook more.
 | Name                                            | Description                                                                    |
 | :---------------------------------------------- | :----------------------------------------------------------------------------- |
 | [`full_example`](./full_example/)               | Covers all features of Widgetbook                                              |
-| [`knobs_example`](./knobs_example/)             | Knobs help make Widgetbook much more useful                                    |
 | [`monorepo_example`](./monorepo_example/)       | For repos with multiple packages                                               |
 | [`screen_util_example`](./screen_util_example/) | Usage with [`flutter_screenutil`](https://pub.dev/packages/flutter_screenutil) |
 
