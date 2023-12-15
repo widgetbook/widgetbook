@@ -18,7 +18,7 @@ dependencies:
   analyzer: ^6.0.0
   build: ^2.4.1
   code_builder: ^4.8.0
-  collection: ^1.18.0
+  collection: ^1.15.0
   crypto: ^3.0.0
   dart_style: ^2.3.0
   glob: ^2.1.0
