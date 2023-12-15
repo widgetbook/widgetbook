@@ -46,6 +46,12 @@ class StoryClassBuilder {
                 ),
                 Parameter(
                   (b) => b
+                    ..name = 'setup'
+                    ..named = true
+                    ..toSuper = true,
+                ),
+                Parameter(
+                  (b) => b
                     ..name = 'args'
                     ..named = true
                     ..toSuper = hasRequiredArgs
@@ -56,18 +62,22 @@ class StoryClassBuilder {
                 ),
                 Parameter(
                   (b) => b
-                    ..name = 'setup'
+                    ..name = 'argsBuilder'
                     ..named = true
-                    ..toSuper = true,
+                    ..toSuper = isCustomArgs
+                    ..required = isCustomArgs
+                    ..type = isCustomArgs
+                        ? null
+                        : TypeReference(
+                            (b) => b
+                              ..symbol = 'ArgsBuilder'
+                              ..isNullable = true
+                              ..types.addAll([
+                                refer(widgetType.nonNullableName),
+                                refer('${argsType.nonNullableName}Args'),
+                              ]),
+                          ),
                 ),
-                if (isCustomArgs)
-                  Parameter(
-                    (b) => b
-                      ..name = 'argsBuilder'
-                      ..named = true
-                      ..toSuper = true
-                      ..required = true,
-                  ),
               ]);
 
               final superInitializers = {
@@ -76,23 +86,25 @@ class StoryClassBuilder {
                     refer('${argsType.nonNullableName}Args()'),
                   ),
                 if (!isCustomArgs)
-                  'argsBuilder': Method(
-                    (b) => b
-                      ..lambda = true
-                      ..requiredParameters.addAll([
-                        Parameter((b) => b.name = 'context'),
-                        Parameter((b) => b.name = 'args'),
-                      ])
-                      ..body = instantiate(
-                        (param) => refer('args') //
-                            .property(param.name)
-                            .maybeProperty(
-                              'resolve',
-                              nullSafe: param.type.isNullable,
-                            )
-                            .call([refer('context')]),
-                      ).code,
-                  ).closure,
+                  'argsBuilder': refer('argsBuilder').ifNullThen(
+                    Method(
+                      (b) => b
+                        ..lambda = true
+                        ..requiredParameters.addAll([
+                          Parameter((b) => b.name = 'context'),
+                          Parameter((b) => b.name = 'args'),
+                        ])
+                        ..body = instantiate(
+                          (param) => refer('args') //
+                              .property(param.name)
+                              .maybeProperty(
+                                'resolve',
+                                nullSafe: param.type.isNullable,
+                              )
+                              .call([refer('context')]),
+                        ).code,
+                    ).closure,
+                  ),
               };
 
               if (superInitializers.isNotEmpty) {
