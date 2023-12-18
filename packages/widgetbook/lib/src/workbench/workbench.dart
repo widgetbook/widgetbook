@@ -4,7 +4,6 @@ import '../addons/addons.dart';
 import '../fields/fields.dart';
 import '../state/state.dart';
 import 'safe_boundaries.dart';
-import 'use_case_builder.dart';
 
 class Workbench extends StatelessWidget {
   const Workbench({super.key});
@@ -43,14 +42,11 @@ class Workbench extends StatelessWidget {
                 // the UseCaseBuilder. Without the Stack, UseCaseBuilder
                 // would expand to the whole size of the Workbench.
                 children: [
-                  UseCaseBuilder(
+                  KeyedSubtree(
                     key: ValueKey(state.uri),
-                    builder: (context) {
-                      return WidgetbookState.of(context)
-                              .useCase
-                              ?.build(context) ??
-                          const SizedBox.shrink();
-                    },
+                    child:
+                        WidgetbookState.of(context).useCase?.build(context) ??
+                            const SizedBox.shrink(),
                   ),
                 ],
               ),

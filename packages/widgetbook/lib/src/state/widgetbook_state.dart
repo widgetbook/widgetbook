@@ -6,7 +6,6 @@ import '../../next.dart';
 import '../addons/addons.dart';
 import '../fields/fields.dart';
 import '../integrations/widgetbook_integration.dart';
-import '../knobs/knobs.dart';
 import '../navigation/navigation.dart';
 import '../routing/routing.dart';
 import 'default_app_builders.dart';
@@ -24,26 +23,13 @@ class WidgetbookState extends ChangeNotifier {
     this.addons,
     this.integrations,
     required this.root,
-  }) {
-    this.knobs = KnobsRegistry(
-      onLock: () {
-        integrations?.forEach(
-          (integration) => integration.onKnobsRegistered(this),
-        );
-      },
-    );
-
-    knobs.addListener(
-      notifyListeners,
-    );
-  }
+  });
 
   String? path;
   String? query;
   bool previewMode;
   Map<String, String> queryParams;
 
-  late final KnobsRegistry knobs;
   final AppBuilder appBuilder;
   final List<WidgetbookAddon>? addons;
   final List<WidgetbookIntegration>? integrations;
@@ -140,14 +126,17 @@ class WidgetbookState extends ChangeNotifier {
   }
 
   /// Update the [path], causing a new [useCase] to bet returned.
-  /// Resets the [knobs] during the update.
+  /// Resets the args during the update.
   @internal
   void updatePath(String newPath) {
     path = newPath;
+    queryParams.remove('args'); // Reset args
 
-    // Reset Knobs
-    knobs.clear();
-    queryParams.remove('knobs');
+    if (story != null) {
+      integrations?.forEach(
+        (integration) => integration.onStoryChange(story!),
+      );
+    }
 
     notifyListeners();
   }
@@ -157,12 +146,6 @@ class WidgetbookState extends ChangeNotifier {
   void updateQuery(String value) {
     query = value;
     notifyListeners();
-  }
-
-  /// Updates [Knob.value] using the [label] to find the [Knob].
-  @Deprecated('Use [knobs.updateValue] instead.')
-  void updateKnobValue<T>(String label, T value) {
-    knobs.updateValue<T>(label, value);
   }
 
   /// Update the current state using [AppRouteConfig] to update

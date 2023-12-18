@@ -1,3 +1,4 @@
+import '../../next.dart';
 import '../state/state.dart';
 import '../widgetbook.dart';
 import 'widgetbook_cloud_integration/widgetbook_cloud_integration.dart';
@@ -13,8 +14,8 @@ abstract class WidgetbookIntegration {
   /// Gets called on first launch of [Widgetbook] with the initial [state].
   void onInit(WidgetbookState state) {}
 
-  /// Gets called when all knobs are registered after.
-  void onKnobsRegistered(WidgetbookState state) {}
+  /// Gets called when story changes.
+  void onStoryChange(Story story) {}
 
   /// Gets called on every [WidgetbookState] change.
   void onChange(WidgetbookState state) {}

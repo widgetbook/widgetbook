@@ -99,22 +99,4 @@ extension TesterExtension on WidgetTester {
       find.byType(TWidget),
     );
   }
-
-  Future<void> pumpKnob(WidgetBuilder builder) async {
-    await pumpWidgetWithQueryParams(
-      queryParams: {},
-      builder: (context) {
-        final state = WidgetbookState.of(context);
-
-        return Column(
-          children: [
-            builder(context),
-            ...state.knobs.values.map(
-              (knob) => knob.buildFields(context),
-            ),
-          ],
-        );
-      },
-    );
-  }
 }

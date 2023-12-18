@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../fields/fields.dart';
-import '../../knobs/knobs.dart';
 import '../../navigation/navigation.dart';
 import '../../settings/settings.dart';
 import '../addons.dart';

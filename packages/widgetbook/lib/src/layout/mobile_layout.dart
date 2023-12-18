@@ -9,14 +9,12 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
     super.key,
     required this.navigationBuilder,
     required this.addonsBuilder,
-    required this.knobsBuilder,
     required this.argsBuilder,
     required this.workbench,
   });
 
   final Widget Function(BuildContext context) navigationBuilder;
   final List<Widget> Function(BuildContext context) addonsBuilder;
-  final List<Widget> Function(BuildContext context) knobsBuilder;
   final List<Widget> Function(BuildContext context) argsBuilder;
   final Widget workbench;
 
@@ -40,9 +38,9 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
               label: 'Addons',
               icon: Icon(Icons.dashboard_customize_outlined),
             ),
-            BottomNavigationBarItem(
-              label: state.isNext ? 'Args' : 'Knobs',
-              icon: const Icon(Icons.tune_outlined),
+            const BottomNavigationBarItem(
+              label: 'Args',
+              icon: Icon(Icons.tune_outlined),
             ),
           ],
           onTap: (index) {
@@ -63,15 +61,10 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
                     );
                   case 2:
                     return ExcludeSemantics(
-                      child: state.isNext
-                          ? MobileSettingsPanel(
-                              name: 'Args',
-                              builder: argsBuilder,
-                            )
-                          : MobileSettingsPanel(
-                              name: 'Knobs',
-                              builder: knobsBuilder,
-                            ),
+                      child: MobileSettingsPanel(
+                        name: 'Args',
+                        builder: argsBuilder,
+                      ),
                     );
                   default:
                     return Container();

@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/knobs/string_knob.dart';
 import 'package:widgetbook/src/routing/routing.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -99,10 +98,10 @@ void main() {
       test(
         'given a state, '
         'when the path is updated, '
-        'then the knobs are cleared and removed from query params',
+        'then the args are removed from query params',
         () {
           final state = WidgetbookState(
-            queryParams: {'knobs': '{any_knob:any_value}'},
+            queryParams: {'args': '{arg:value}'},
             root: WidgetbookRoot(
               children: [],
             ),
@@ -110,64 +109,7 @@ void main() {
 
           state.updatePath('component/use-case');
 
-          expect(state.knobs, isEmpty);
-          expect(state.queryParams['knobs'], isNull);
-        },
-      );
-
-      test(
-        'given a knob with a value, '
-        'when registering the knob, '
-        'then the value is returned',
-        () {
-          final knob = StringKnob(
-            label: 'Knob',
-            initialValue: 'Widgetbook',
-          );
-
-          final state = WidgetbookState(
-            queryParams: {'knobs': '{${knob.label}:${knob.initialValue}}'},
-            root: WidgetbookRoot(
-              children: [],
-            ),
-          );
-
-          final result = state.knobs.register(
-            knob,
-            state.queryParams,
-          );
-
-          expect(result, knob.initialValue);
-        },
-      );
-
-      test(
-        'given a knob with a value, '
-        'when the knob is update to be null, '
-        'then the knob value is null when retrieved',
-        () {
-          final knob = StringKnob.nullable(
-            label: 'Knob',
-            initialValue: 'Widgetbook',
-          );
-
-          final state = WidgetbookState(
-            queryParams: {'knobs': '{${knob.label}:${knob.initialValue}}'},
-            root: WidgetbookRoot(
-              children: [],
-            ),
-          );
-
-          state.knobs
-            ..register(knob, state.queryParams)
-            ..updateNullability(knob.label, true);
-
-          final result = state.knobs.register(
-            knob,
-            state.queryParams,
-          );
-
-          expect(result, isNull);
+          expect(state.queryParams['args'], isNull);
         },
       );
 
@@ -195,36 +137,6 @@ void main() {
           expect(state.query, query);
           expect(state.previewMode, true);
           expect(state.queryParams, equals({'foo': 'bar'}));
-        },
-      );
-
-      test(
-        'given a state, '
-        'when the search is updated, '
-        'path and knobs are preserved in query params and search is updated',
-        () {
-          final knob = StringKnob.nullable(
-            label: 'Knob',
-            initialValue: 'Widgetbook',
-          );
-
-          final path = 'component/use-case';
-
-          final state = WidgetbookState(
-            queryParams: {'knobs': '{${knob.label}:${knob.initialValue}}'},
-            path: path,
-            root: WidgetbookRoot(
-              children: [],
-            ),
-          );
-          state.knobs.register(knob, state.queryParams);
-
-          const query = 'some widget';
-          state.updateQuery(query);
-
-          expect(state.query, query);
-          expect(state.path, path);
-          expect(state.knobs, {knob.label: knob});
         },
       );
 
