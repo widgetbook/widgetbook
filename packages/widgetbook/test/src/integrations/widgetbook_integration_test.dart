@@ -56,21 +56,24 @@ void main() {
 
       test(
         'given an integration, '
-        'when state notifies knobs locked, '
-        'then integration.onKnobsRegistered is called',
+        'when state updates path, '
+        'then integration.onStoryChange is called',
         () {
+          final story = MockStory();
+          final root = MockWidgetbookRoot();
+          when(() => root.table).thenReturn({'story': story});
+
           final integration = MockIntegration();
           final state = WidgetbookState(
+            queryParams: {},
             integrations: [integration],
-            root: WidgetbookRoot(
-              children: [],
-            ),
+            root: root,
           );
 
-          state.knobs.lock();
+          state.updatePath('story');
 
           verify(
-            () => integration.onKnobsRegistered(state),
+            () => integration.onStoryChange(story),
           ).called(1);
         },
       );

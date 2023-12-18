@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+import '../../../next.dart';
 import '../../state/state.dart';
 import '../widgetbook_integration.dart';
 import 'no_messaging.dart' if (dart.library.html) 'web_messaging.dart';
@@ -27,11 +28,11 @@ class WidgetbookCloudIntegration extends WidgetbookIntegration {
   }
 
   @override
-  void onKnobsRegistered(WidgetbookState state) {
-    final knobsJson = state.knobs.values //
-        .map((knob) => knob.toJson())
+  void onStoryChange(Story story) {
+    final argsJson = story.args.safeList //
+        .map((arg) => arg.toJson())
         .toList();
 
-    notifyCloud('knobs', knobsJson);
+    notifyCloud('args', argsJson);
   }
 }

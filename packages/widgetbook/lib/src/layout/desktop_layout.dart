@@ -10,14 +10,12 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
     super.key,
     required this.navigationBuilder,
     required this.addonsBuilder,
-    required this.knobsBuilder,
     required this.argsBuilder,
     required this.workbench,
   });
 
   final Widget Function(BuildContext context) navigationBuilder;
   final List<Widget> Function(BuildContext context) addonsBuilder;
-  final List<Widget> Function(BuildContext context) knobsBuilder;
   final List<Widget> Function(BuildContext context) argsBuilder;
   final Widget workbench;
 
@@ -49,17 +47,10 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
                       builder: addonsBuilder,
                     ),
                   },
-                  if (state.isNext) ...{
-                    SettingsPanelData(
-                      name: 'Args',
-                      builder: argsBuilder,
-                    ),
-                  } else ...{
-                    SettingsPanelData(
-                      name: 'Knobs',
-                      builder: knobsBuilder,
-                    ),
-                  },
+                  SettingsPanelData(
+                    name: 'Args',
+                    builder: argsBuilder,
+                  ),
                 ],
               ),
             ),

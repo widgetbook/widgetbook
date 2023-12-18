@@ -1,10 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:widgetbook/src/knobs/knobs.dart';
-import 'package:widgetbook/src/state/state.dart';
+import 'package:widgetbook/next.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 class MockBuildContext extends Mock implements BuildContext {}
 
 class MockWidgetbookState extends Mock implements WidgetbookState {}
 
-class MockKnobsRegistry extends Mock implements KnobsRegistry {}
+class MockWidgetbookRoot extends Mock implements WidgetbookRoot {}
+
+class MockStory extends Mock implements Story {}
+
+class MockStoryArgs extends Mock implements StoryArgs<Widget> {}

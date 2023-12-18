@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:widgetbook/src/knobs/knobs.dart';
+import 'package:widgetbook/next.dart' hide AlignmentAddon;
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
@@ -62,30 +62,27 @@ void main() {
       );
 
       test(
-        'when onKnobsRegistered is called, '
-        'then knobs data is sent',
+        'when onStoryChanged is called, '
+        'then args data is sent',
         () {
-          final state = MockWidgetbookState();
-          final registry = MockKnobsRegistry();
-          final knobs = {
-            'key': StringKnob(
-              label: 'description',
-              initialValue: 'Lorem ipsum',
-            ),
-          };
-
-          when(() => registry.values).thenReturn(knobs.values);
-          when(() => state.knobs).thenReturn(registry);
-
+          final story = MockStory();
+          final storyArgs = MockStoryArgs();
           final integration = MockCloudIntegration();
-          integration.onKnobsRegistered(state);
+          const args = [
+            StringArg(
+              'Lorem ipsum',
+              name: 'key',
+            ),
+          ];
+
+          when(() => storyArgs.safeList).thenReturn(args);
+          when(() => story.args).thenReturn(storyArgs);
+          integration.onStoryChange(story);
 
           verify(
             () => integration.onNotifyMock.call(
-              'knobs',
-              knobs.values //
-                  .map((knob) => knob.toJson())
-                  .toList(),
+              'args',
+              args.map((arg) => arg.toJson()).toList(),
             ),
           ).called(1);
         },

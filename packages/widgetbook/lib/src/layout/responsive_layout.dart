@@ -39,14 +39,6 @@ class ResponsiveLayout extends StatelessWidget {
             .toList();
   }
 
-  List<Widget> buildKnobs(BuildContext context) {
-    final state = WidgetbookState.of(context);
-
-    return state.knobs.values //
-        .map((knob) => knob.buildFields(context))
-        .toList();
-  }
-
   List<Widget> buildArgs(BuildContext context) {
     final state = WidgetbookState.of(context);
     final story = state.story;
@@ -66,14 +58,12 @@ class ResponsiveLayout extends StatelessWidget {
         ? MobileLayout(
             navigationBuilder: (context) => buildNavigation(context, true),
             addonsBuilder: buildAddons,
-            knobsBuilder: buildKnobs,
             argsBuilder: buildArgs,
             workbench: child,
           )
         : DesktopLayout(
             navigationBuilder: (context) => buildNavigation(context, false),
             addonsBuilder: buildAddons,
-            knobsBuilder: buildKnobs,
             argsBuilder: buildArgs,
             workbench: child,
           );

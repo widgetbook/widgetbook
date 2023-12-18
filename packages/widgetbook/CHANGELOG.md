@@ -2,6 +2,7 @@
 
 - **REFACTOR**: Wrap workbench with `Scaffold`. ([#1091](https://github.com/widgetbook/widgetbook/pull/1091))
 - **BREAKING**: Require Dart 3.0 and Flutter 3.10. ([#1099](https://github.com/widgetbook/widgetbook/pull/1099))
+- **BREAKING**: Remove `widgetbook/knobs` in favor of `next/args`. ([#1101](https://github.com/widgetbook/widgetbook/pull/1101))
 
 ## 3.7.0
 
