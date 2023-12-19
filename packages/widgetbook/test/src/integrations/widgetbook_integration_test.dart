@@ -1,5 +1,7 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:widgetbook/next.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
@@ -60,19 +62,22 @@ void main() {
         'then integration.onStoryChange is called',
         () {
           final story = MockStory();
-          final root = MockWidgetbookRoot();
-          when(() => root.table).thenReturn({'story': story});
+          when(() => story.name).thenReturn('Story');
 
           final integration = MockIntegration();
           final state = WidgetbookState(
             queryParams: {},
             integrations: [integration],
-            v3Root: WidgetbookRoot(
-              children: [],
-            ),
+            v3Root: MockWidgetbookRoot(),
+            components: [
+              Component(
+                meta: Meta<Placeholder>(),
+                stories: [story],
+              ),
+            ],
           );
 
-          state.updatePath('story');
+          state.updatePath('Placeholder/Story');
 
           verify(
             () => integration.onStoryChange(story),
