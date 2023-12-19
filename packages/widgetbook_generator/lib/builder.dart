@@ -33,23 +33,10 @@ Builder useCaseBuilder(BuilderOptions options) {
 /// Creates exactly one .g.dart file next to the file containing
 /// the [App] annotation.
 Builder appBuilder(BuilderOptions options) {
-  const ignoredLintRules = {
-    'unused_import',
-    'prefer_relative_imports',
-    'directives_ordering',
-  };
-
-  final headerParts = [
-    '// coverage:ignore-file',
-    '// ignore_for_file: type=lint',
-    '// ignore_for_file: ${ignoredLintRules.join(", ")}',
-    '\n$defaultFileHeader',
-  ];
-
   return LibraryBuilder(
     AppGenerator(),
     generatedExtension: '.directories.g.dart',
-    header: headerParts.join('\n'),
+    header: header,
   );
 }
 
@@ -65,9 +52,30 @@ Builder storyBuilder(BuilderOptions options) {
   return PartBuilder(
     [StoryGenerator()],
     '.book.dart',
+    header: header,
   );
 }
 
 Builder componentsBuilder(BuilderOptions options) {
-  return ComponentsBuilder();
+  return ComponentsBuilder(
+    header: header,
+  );
+}
+
+String get header {
+  const ignoredLintRules = {
+    'unused_import',
+    'prefer_relative_imports',
+    'directives_ordering',
+  };
+
+  final parts = [
+    '$defaultFileHeader',
+    '',
+    '// coverage:ignore-file',
+    '// ignore_for_file: type=lint',
+    '// ignore_for_file: ${ignoredLintRules.join(", ")}',
+  ];
+
+  return parts.join('\n');
 }

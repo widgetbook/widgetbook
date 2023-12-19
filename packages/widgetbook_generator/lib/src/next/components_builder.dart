@@ -6,20 +6,12 @@ import 'package:glob/glob.dart';
 import 'package:source_gen/source_gen.dart';
 
 class ComponentsBuilder implements Builder {
+  const ComponentsBuilder({
+    required this.header,
+  });
+
   static const outputFile = 'components.book.dart';
-
-  static const ignoredLintRules = {
-    'unused_import',
-    'prefer_relative_imports',
-    'directives_ordering',
-  };
-
-  static final headerParts = [
-    '// coverage:ignore-file',
-    '\n$defaultFileHeader',
-    '// ignore_for_file: type=lint',
-    '// ignore_for_file: ${ignoredLintRules.join(", ")}',
-  ];
+  final String header;
 
   @override
   final buildExtensions = const {
@@ -68,7 +60,7 @@ class ComponentsBuilder implements Builder {
 
     final outputAsset = AssetId(buildStep.inputId.package, 'lib/$outputFile');
     final content = '''
-      ${headerParts.join('\n')}
+      $header
       ${outputLibrary.accept(emitter)}
     ''';
 

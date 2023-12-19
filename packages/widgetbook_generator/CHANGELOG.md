@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **BREAKING**: Require Dart 3.0. ([#1099](https://github.com/widgetbook/widgetbook/pull/1099))
+- **REFACTOR**: Add headers to all builders. ([#1104](https://github.com/widgetbook/widgetbook/pull/1104))
 
 ## 3.7.0
 
