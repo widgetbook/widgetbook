@@ -2,7 +2,6 @@
 /// to catalogue their widgets.
 library widgetbook;
 
-export 'src/addons/addons.dart';
 export 'src/fields/fields.dart';
 export 'src/integrations/integrations.dart';
 export 'src/navigation/nodes/nodes.dart';

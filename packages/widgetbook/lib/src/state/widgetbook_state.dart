@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
 import '../../next.dart';
-import '../addons/addons.dart';
 import '../fields/fields.dart';
 import '../integrations/widgetbook_integration.dart';
 import '../navigation/navigation.dart';
@@ -31,7 +30,7 @@ class WidgetbookState extends ChangeNotifier {
   Map<String, String> queryParams;
 
   final AppBuilder appBuilder;
-  final List<WidgetbookAddon>? addons;
+  final List<Addon>? addons;
   final List<WidgetbookIntegration>? integrations;
   final WidgetbookRoot root;
 
@@ -41,7 +40,7 @@ class WidgetbookState extends ChangeNotifier {
 
   /// Same as [addons] but without the ones that have no fields.
   @internal
-  List<WidgetbookAddon>? get effectiveAddons {
+  List<Addon>? get effectiveAddons {
     return addons?.where((addon) => addon.fields.isNotEmpty).toList();
   }
 

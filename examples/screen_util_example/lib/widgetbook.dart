@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:widgetbook/next.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import 'components.book.dart';
@@ -16,16 +17,12 @@ class WidgetbookApp extends StatelessWidget {
     return Widgetbook.material(
       directories: components,
       addons: [
-        TextScaleAddon(
-          scales: [1.0, 2.0],
-        ),
-        DeviceFrameAddon(
-          devices: [
-            Devices.ios.iPhoneSE,
-            Devices.ios.iPhone12,
-            Devices.ios.iPhone13,
-          ],
-        ),
+        TextScaleAddon(),
+        DeviceFrameAddon([
+          Devices.ios.iPhoneSE,
+          Devices.ios.iPhone12,
+          Devices.ios.iPhone13,
+        ]),
         BuilderAddon(
           name: 'ScreenUtil',
           builder: (context, child) {
