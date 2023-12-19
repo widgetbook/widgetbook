@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../addons/addons.dart';
-import '../fields/fields.dart';
+import '../next/addons/base/addons_builder.dart';
 import '../state/state.dart';
 import 'safe_boundaries.dart';
 
@@ -21,22 +20,8 @@ class Workbench extends StatelessWidget {
             // Background color for the area behind device frame if
             // the [DeviceFrameAddon] is used.
             color: Theme.of(context).scaffoldBackgroundColor,
-            child: MultiAddonBuilder(
+            child: AddonsBuilder(
               addons: state.addons,
-              builder: (context, addon, child) {
-                final state = WidgetbookState.of(context);
-                final groupMap = FieldCodec.decodeQueryGroup(
-                  state.queryParams[addon.groupName],
-                );
-
-                final newSetting = addon.valueFromQueryGroup(groupMap);
-
-                return addon.buildUseCase(
-                  context,
-                  child,
-                  newSetting,
-                );
-              },
               child: Stack(
                 // The Stack is used to loosen the constraints of
                 // the UseCaseBuilder. Without the Stack, UseCaseBuilder

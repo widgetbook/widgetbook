@@ -1,10 +1,12 @@
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../addons/device_frame_addon/none_device.dart';
 import '../../fields/fields.dart';
+import 'base/addon.dart';
 import 'base/mode.dart';
 import 'base/mode_addon.dart';
+
+export 'package:device_frame/device_frame.dart';
 
 class DeviceFrameConfig {
   const DeviceFrameConfig({
@@ -57,6 +59,8 @@ class DeviceFrameMode extends Mode<DeviceFrameConfig> {
   }
 }
 
+/// An [Addon] for changing the active device/frame. It's based on
+/// the [`device_frame`](https://pub.dev/packages/device_frame) package.
 class DeviceFrameAddon extends ModeAddon<DeviceFrameConfig> {
   DeviceFrameAddon(List<DeviceInfo> devices)
       : this.devices = [NoneDevice.instance, ...devices],
@@ -101,4 +105,40 @@ class DeviceFrameAddon extends ModeAddon<DeviceFrameConfig> {
       hasFrame: valueOf<bool>('frame', group)!,
     );
   }
+}
+
+class NoneDevice implements DeviceInfo {
+  const NoneDevice._();
+
+  static const NoneDevice instance = NoneDevice._();
+
+  @override
+  String get name => 'None';
+
+  @override
+  DeviceIdentifier get identifier => throw UnimplementedError();
+
+  @override
+  Size get frameSize => throw UnimplementedError();
+
+  @override
+  Size get screenSize => throw UnimplementedError();
+
+  @override
+  double get pixelRatio => throw UnimplementedError();
+
+  @override
+  EdgeInsets? get rotatedSafeAreas => throw UnimplementedError();
+
+  @override
+  EdgeInsets get safeAreas => throw UnimplementedError();
+
+  @override
+  Path get screenPath => throw UnimplementedError();
+
+  @override
+  $DeviceInfoCopyWith<DeviceInfo> get copyWith => throw UnimplementedError();
+
+  @override
+  CustomPainter get framePainter => throw UnimplementedError();
 }

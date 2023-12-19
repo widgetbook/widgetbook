@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../fields/fields.dart';
+import 'base/addon.dart';
 import 'base/mode.dart';
 import 'base/mode_addon.dart';
 
@@ -22,6 +23,7 @@ class MaterialThemeMode extends Mode<ThemeData> {
   }
 }
 
+/// An [Addon] for changing the active [ThemeData] via [Theme].
 class MaterialThemeAddon extends ModeAddon<ThemeData> {
   MaterialThemeAddon(this.themes)
       : super(

@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../fields/fields.dart';
+import 'base/addon.dart';
 import 'base/mode.dart';
 import 'base/mode_addon.dart';
 
@@ -21,6 +22,8 @@ class ThemeMode<T> extends Mode<T> {
   }
 }
 
+/// An [Addon] for changing the active custom theme. A [builder] must be
+/// provided that returns an [InheritedWidget] or similar [Widget]s.
 class ThemeAddon<T> extends ModeAddon<T> {
   ThemeAddon(this.themes, this.builder)
       : super(

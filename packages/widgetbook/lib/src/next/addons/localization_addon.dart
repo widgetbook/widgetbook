@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../fields/fields.dart';
+import 'base/addon.dart';
 import 'base/mode.dart';
 import 'base/mode_addon.dart';
 
@@ -19,6 +20,7 @@ class LocaleMode extends Mode<Locale> {
   }
 }
 
+/// An [Addon] for changing the active [Locale] via [Localizations].
 class LocaleAddon extends ModeAddon<Locale> {
   LocaleAddon(
     this.locales, [

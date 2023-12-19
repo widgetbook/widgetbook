@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../fields/fields.dart';
+import 'base/addon.dart';
 import 'base/mode.dart';
 import 'base/mode_addon.dart';
 
@@ -22,6 +23,8 @@ class CupertinoThemeMode extends Mode<CupertinoThemeData> {
   }
 }
 
+/// An [Addon] for changing the active [CupertinoThemeData] via
+/// [CupertinoTheme].
 class CupertinoThemeAddon extends ModeAddon<CupertinoThemeData> {
   CupertinoThemeAddon(this.themes)
       : super(

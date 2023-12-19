@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'addons/addons.dart';
+import '../next.dart';
 import 'integrations/integrations.dart';
 import 'navigation/navigation.dart';
 import 'routing/routing.dart';
@@ -64,7 +64,7 @@ class Widgetbook extends StatefulWidget {
   final AppBuilder appBuilder;
 
   /// The list of add-ons for your [Widget] library
-  final List<WidgetbookAddon>? addons;
+  final List<Addon>? addons;
 
   /// The list of integrations for your [Widget] library. Primarily used to
   /// integrate with Widgetbook Cloud via [WidgetbookCloudIntegration], but

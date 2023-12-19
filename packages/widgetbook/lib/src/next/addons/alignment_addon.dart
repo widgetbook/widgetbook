@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../fields/fields.dart';
+import 'base/addon.dart';
 import 'base/mode.dart';
 import 'base/mode_addon.dart';
 
@@ -16,6 +17,7 @@ class AlignmentMode extends Mode<Alignment> {
   }
 }
 
+/// An [Addon] for wrapping use-cases with [Align] widget.
 class AlignmentAddon extends ModeAddon<Alignment> {
   AlignmentAddon([this.alignment = Alignment.center])
       : super(

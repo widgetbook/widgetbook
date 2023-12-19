@@ -6,6 +6,7 @@ import 'experimental_addon.dart';
 
 typedef ChildBuilder = Widget Function(BuildContext context, Widget child);
 
+/// An [Addon] for wrapping use-cases with a [builder].
 class BuilderAddon extends Addon<void> with ExperimentalAddon {
   BuilderAddon({
     required super.name,

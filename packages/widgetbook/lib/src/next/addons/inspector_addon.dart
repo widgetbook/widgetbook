@@ -9,6 +9,7 @@ class InspectorAddon extends BuilderAddon {
           builder: (context, child) {
             return Inspector(
               child: child,
+              isEnabled: true, // To bypass disabling on release builds
             );
           },
         );
