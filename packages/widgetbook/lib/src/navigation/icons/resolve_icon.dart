@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../widgetbook.dart';
 import '../nodes/nodes.dart';
 import 'component_icon.dart';
-import 'use_case_icon.dart';
+import 'story_icon.dart';
 
 Widget resolveIcon(WidgetbookNode node) {
   if (node is WidgetbookPackage) {
@@ -15,7 +15,7 @@ Widget resolveIcon(WidgetbookNode node) {
   } else if (node is WidgetbookComponent || node is WidgetbookLeafComponent) {
     return const ComponentIcon();
   } else if (node is WidgetbookUseCase) {
-    return const UseCaseIcon();
+    return const StoryIcon();
   } else {
     return const SizedBox();
   }

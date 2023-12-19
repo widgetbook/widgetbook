@@ -1,72 +1,55 @@
 import 'package:flutter/material.dart';
 
 import '../../../next.dart';
+import '../../navigation/navigation.dart';
 import '../../state/state.dart';
+import 'navigation_tree_node.dart';
 import 'tree_node.dart';
 
 class NextNavigationPanel extends StatelessWidget {
   const NextNavigationPanel({
     super.key,
+    this.initialPath,
+    this.onStoryNodeSelect,
     required this.root,
   });
 
+  final String? initialPath;
+  final ValueChanged<TreeNode<Story>>? onStoryNodeSelect;
   final TreeNode<Null> root;
 
   @override
   Widget build(BuildContext context) {
-    return NavigationList(
-      node: root,
+    final query = WidgetbookState.of(context).query ?? '';
+    final filteredRoot = root.filter(
+      (node) {
+        final regex = RegExp(query, caseSensitive: false);
+        return query.isEmpty || node.name.contains(regex);
+      },
     );
-  }
-}
 
-class NavigationList extends StatelessWidget {
-  const NavigationList({
-    super.key,
-    this.depth = 0,
-    required this.node,
-  });
-
-  final int depth;
-  final TreeNode node;
-
-  @override
-  Widget build(BuildContext context) {
-    final isLeafComponent = node.data is Component && node.children.length == 1;
-    final children = node.children;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (node is! TreeNode<Null>)
-          InkWell(
-            child: Text(node.name),
-            onTap: () {
-              if (node is TreeNode<Story>) {
-                WidgetbookState.of(context).updatePath(node.path);
-              } else if (isLeafComponent) {
-                WidgetbookState.of(context).updatePath(children.first.path);
-              }
-            },
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          SearchField(
+            value: query,
+            onChanged: WidgetbookState.of(context).updateQuery,
+            onCleared: () => WidgetbookState.of(context).updateQuery(''),
           ),
-        if (!isLeafComponent && node.children.isNotEmpty)
-          Padding(
-            padding: EdgeInsets.only(
-              left: depth * 8,
-            ),
-            child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: children.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                final node = children[index];
-                return NavigationList(
-                  depth: depth + 1,
-                  node: node,
-                );
+          const SizedBox(
+            height: 16,
+          ),
+          Expanded(
+            child: NextNavigationTreeNode(
+              node: filteredRoot ?? root,
+              onNodeSelected: (node) {
+                WidgetbookState.of(context).updatePath(node.path);
               },
             ),
           ),
-      ],
+        ],
+      ),
     );
   }
 }
