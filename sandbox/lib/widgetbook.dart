@@ -15,7 +15,16 @@ class WidgetbookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
-      directories: components,
+      directories: [
+        WidgetbookLeafComponent(
+          name: 'Container',
+          useCase: WidgetbookUseCase.child(
+            name: 'Default',
+            child: const FlutterLogo(),
+          ),
+        ),
+      ],
+      components: components,
       integrations: [
         WidgetbookCloudIntegration(),
       ],

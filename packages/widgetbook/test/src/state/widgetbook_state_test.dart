@@ -16,7 +16,7 @@ void main() {
           final paramKey = 'foo';
           final state = WidgetbookState(
             queryParams: {paramKey: 'bar'},
-            root: WidgetbookRoot(
+            v3Root: WidgetbookRoot(
               children: [],
             ),
           );
@@ -37,7 +37,7 @@ void main() {
             queryParams: {
               'knobs': '{foo:bar,qux:baz}',
             },
-            root: WidgetbookRoot(
+            v3Root: WidgetbookRoot(
               children: [],
             ),
           );
@@ -62,7 +62,7 @@ void main() {
         () {
           final state = WidgetbookState(
             queryParams: {},
-            root: WidgetbookRoot(
+            v3Root: WidgetbookRoot(
               children: [],
             ),
           );
@@ -83,7 +83,7 @@ void main() {
           final state = WidgetbookState(
             path: 'component/use-case',
             queryParams: {'foo': 'bar'},
-            root: WidgetbookRoot(
+            v3Root: WidgetbookRoot(
               children: [],
             ),
           );
@@ -102,7 +102,7 @@ void main() {
         () {
           final state = WidgetbookState(
             queryParams: {'args': '{arg:value}'},
-            root: WidgetbookRoot(
+            v3Root: WidgetbookRoot(
               children: [],
             ),
           );
@@ -120,7 +120,7 @@ void main() {
         () {
           final state = WidgetbookState(
             queryParams: {},
-            root: WidgetbookRoot(
+            v3Root: WidgetbookRoot(
               children: [],
             ),
           );
@@ -146,7 +146,7 @@ void main() {
         'search query param is removed',
         () {
           final state = WidgetbookState(
-            root: WidgetbookRoot(
+            v3Root: WidgetbookRoot(
               children: [],
             ),
           )..updateQuery('');

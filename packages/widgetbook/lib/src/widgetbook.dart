@@ -21,7 +21,8 @@ class Widgetbook extends StatefulWidget {
   const Widgetbook({
     super.key,
     this.initialRoute = '/',
-    required this.directories,
+    this.directories = const [],
+    this.components = const [],
     this.appBuilder = widgetsAppBuilder,
     this.addons,
     this.integrations,
@@ -31,7 +32,8 @@ class Widgetbook extends StatefulWidget {
   const Widgetbook.cupertino({
     super.key,
     this.initialRoute = '/',
-    required this.directories,
+    this.directories = const [],
+    this.components = const [],
     this.appBuilder = cupertinoAppBuilder,
     this.addons,
     this.integrations,
@@ -41,7 +43,8 @@ class Widgetbook extends StatefulWidget {
   const Widgetbook.material({
     super.key,
     this.initialRoute = '/',
-    required this.directories,
+    this.directories = const [],
+    this.components = const [],
     this.appBuilder = materialAppBuilder,
     this.addons,
     this.integrations,
@@ -59,6 +62,8 @@ class Widgetbook extends StatefulWidget {
   /// and [WidgetbookComponent] elements. However, [WidgetbookComponent] can
   /// only contain [WidgetbookUseCase]s.
   final List<WidgetbookNode> directories;
+
+  final List<Component> components;
 
   /// A wrapper builder method for all [WidgetbookUseCase]s.
   final AppBuilder appBuilder;
@@ -87,7 +92,8 @@ class _WidgetbookState extends State<Widgetbook> {
       appBuilder: widget.appBuilder,
       addons: widget.addons,
       integrations: widget.integrations,
-      root: WidgetbookRoot(
+      components: widget.components,
+      v3Root: WidgetbookRoot(
         children: widget.directories,
       ),
     );

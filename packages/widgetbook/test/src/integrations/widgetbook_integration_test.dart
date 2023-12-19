@@ -41,7 +41,7 @@ void main() {
           final integration = MockIntegration();
           final state = WidgetbookState(
             integrations: [integration],
-            root: WidgetbookRoot(
+            v3Root: WidgetbookRoot(
               children: [],
             ),
           );
@@ -67,7 +67,9 @@ void main() {
           final state = WidgetbookState(
             queryParams: {},
             integrations: [integration],
-            root: root,
+            v3Root: WidgetbookRoot(
+              children: [],
+            ),
           );
 
           state.updatePath('story');

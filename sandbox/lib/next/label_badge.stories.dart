@@ -1,19 +1,37 @@
+import 'package:flutter/material.dart';
 import 'package:widgetbook/next.dart';
 
 import 'label_badge.dart';
 
 part 'label_badge.stories.book.dart';
 
-final meta = MetaWithArgs<LabelBadge, NumericBadgeInput>();
+final meta = MetaWithArgs<LabelBadge, NumericBadgeInput>(
+  path: 'sam/stories',
+);
 
-final $Default = LabelBadgeStory(
-  name: 'Default',
+LabelBadge argsBuilder(
+  BuildContext context,
+  NumericBadgeInputArgs args,
+) {
+  return LabelBadge(
+    text: args.number.resolve(context).toString(),
+  );
+}
+
+final $Primary = LabelBadgeStory(
+  name: 'Primary',
   args: NumericBadgeInputArgs(
     number: const IntArg(1),
   ),
-  argsBuilder: (context, args) => LabelBadge(
-    text: args.number.resolve(context).toString(),
+  argsBuilder: argsBuilder,
+);
+
+final $Secondary = LabelBadgeStory(
+  name: 'Secondary',
+  args: NumericBadgeInputArgs(
+    number: const IntArg(2),
   ),
+  argsBuilder: argsBuilder,
 );
 
 class NumericBadgeInput {

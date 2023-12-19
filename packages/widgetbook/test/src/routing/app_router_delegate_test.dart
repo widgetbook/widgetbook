@@ -57,7 +57,7 @@ void main() {
         (tester) async {
           final state = WidgetbookState(
             appBuilder: materialAppBuilder,
-            root: WidgetbookRoot(
+            v3Root: WidgetbookRoot(
               children: [],
             ),
           );

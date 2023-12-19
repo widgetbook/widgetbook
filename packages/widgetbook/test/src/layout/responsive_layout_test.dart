@@ -19,9 +19,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(
-              directories: [],
-            ),
+            const Widgetbook.material(),
           );
 
           expect(find.byType(MobileLayout), findsOneWidget);
@@ -39,9 +37,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(
-              directories: [],
-            ),
+            const Widgetbook.material(),
           );
 
           expect(find.byType(MobileLayout), findsNothing);
@@ -60,9 +56,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(
-              directories: [],
-            ),
+            const Widgetbook.material(),
           );
 
           await tester.tap(find.byIcon(Icons.list_outlined));
@@ -86,9 +80,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(
-              directories: [],
-            ),
+            const Widgetbook.material(),
           );
 
           await tester.tap(find.byIcon(Icons.dashboard_customize_outlined));
@@ -112,9 +104,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(
-              directories: [],
-            ),
+            const Widgetbook.material(),
           );
 
           await tester.tap(find.byIcon(Icons.tune_outlined));

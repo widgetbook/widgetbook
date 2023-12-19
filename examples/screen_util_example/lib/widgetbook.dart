@@ -15,7 +15,7 @@ class WidgetbookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
-      directories: components,
+      components: components,
       addons: [
         TextScaleAddon(),
         DeviceFrameAddon([

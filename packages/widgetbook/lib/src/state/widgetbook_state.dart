@@ -6,6 +6,8 @@ import '../../next.dart';
 import '../fields/fields.dart';
 import '../integrations/widgetbook_integration.dart';
 import '../navigation/navigation.dart';
+import '../next/navigation/tree.dart';
+import '../next/navigation/tree_node.dart';
 import '../routing/routing.dart';
 import 'default_app_builders.dart';
 import 'widgetbook_scope.dart';
@@ -21,8 +23,10 @@ class WidgetbookState extends ChangeNotifier {
     this.appBuilder = widgetsAppBuilder,
     this.addons,
     this.integrations,
-    required this.root,
-  });
+    required this.v3Root,
+    this.components = const [],
+  })  : this.root = Tree.build(components),
+        this.index = Tree.index(components);
 
   String? path;
   String? query;
@@ -32,11 +36,19 @@ class WidgetbookState extends ChangeNotifier {
   final AppBuilder appBuilder;
   final List<Addon>? addons;
   final List<WidgetbookIntegration>? integrations;
-  final WidgetbookRoot root;
 
-  List<WidgetbookNode> get directories => root.children!;
+  // v3 Navigation
+  final WidgetbookRoot v3Root;
+  List<WidgetbookNode> get directories => v3Root.children!;
+  WidgetbookUseCase? get useCase => path == null ? null : v3Root.table[path!];
 
-  WidgetbookUseCase? get useCase => path == null ? null : root.table[path!];
+  final List<Component> components;
+  final TreeNode<Null> root;
+  final Map<String, Story> index;
+
+  Story? get story => path == null ? null : index[path!];
+
+  WidgetbookUseCase? get storyOrUseCase => story ?? useCase;
 
   /// Same as [addons] but without the ones that have no fields.
   @internal
@@ -159,14 +171,4 @@ class WidgetbookState extends ChangeNotifier {
     queryParams = routeConfig.queryParams;
     notifyListeners();
   }
-
-  /* Widgetbook Next: SAM (Story-Arg-Mode) Structure */
-
-  /// Return `true` if SAM (Story-Arg-Mode) structure is used.
-  @experimental
-  bool get isNext => useCase is Story;
-
-  /// Returns the current active [Story].
-  @experimental
-  Story? get story => isNext ? useCase as Story : null;
 }

@@ -25,6 +25,7 @@ dependencies:
   meta: ^1.8.0
   nested: ^1.0.0
   resizable_widget: ^1.0.5
+  path: ^1.8.0
 
 dev_dependencies:
   flutter_test:
