@@ -2,29 +2,35 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../icons/icons.dart';
-import '../icons/resolve_icon.dart';
-import '../nodes/nodes.dart';
+import '../../../next.dart';
+import '../../navigation/icons/icons.dart';
+import 'tree_node.dart';
 
-class NavigationTreeTile extends StatelessWidget {
-  const NavigationTreeTile({
+class NextNavigationTreeTile extends StatelessWidget {
+  const NextNavigationTreeTile({
     super.key,
     required this.node,
     this.onTap,
+    this.isLeaf = false,
     this.isExpanded = false,
     this.isSelected = false,
   });
 
   static const indentation = 24.0;
 
-  final WidgetbookNode node;
+  final TreeNode node;
   final VoidCallback? onTap;
+  final bool isLeaf;
   final bool isExpanded;
   final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(indentation);
+    final categoryRegex = RegExp(r'^\[(.+)\]$');
+    final isCategory = categoryRegex.hasMatch(node.name);
+    final match = categoryRegex.firstMatch(node.name);
+    final nodeName = isCategory ? match!.group(1)! : node.name;
 
     return Container(
       height: indentation,
@@ -44,7 +50,7 @@ class NavigationTreeTile extends StatelessWidget {
             ),
             SizedBox(
               width: indentation,
-              child: node.isLeaf || node is WidgetbookLeafComponent
+              child: isLeaf
                   ? null
                   : ExpanderIcon(
                       isExpanded: isExpanded,
@@ -52,14 +58,21 @@ class NavigationTreeTile extends StatelessWidget {
             ),
             SizedBox(
               width: indentation,
-              child: resolveIcon(node),
+              child: switch (node) {
+                TreeNode<Story>() => const StoryIcon(),
+                TreeNode<Component>() => const ComponentIcon(),
+                TreeNode<String>() => isCategory
+                    ? const Icon(Icons.auto_awesome_mosaic, size: 16)
+                    : const Icon(Icons.folder, size: 16),
+                _ => const SizedBox(),
+              },
             ),
             const SizedBox(
               width: 4,
             ),
             Expanded(
               child: Text(
-                node.name,
+                nodeName,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

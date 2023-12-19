@@ -24,7 +24,6 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
     final state = WidgetbookState.of(context);
 
     return ColoredBox(
-      key: ValueKey(state.isNext), // Rebuild when switching to next
       color: Theme.of(context).colorScheme.surface,
       child: ResizableWidget(
         separatorSize: 2,

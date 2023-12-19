@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../settings/settings.dart';
-import '../state/state.dart';
 import 'base_layout.dart';
 
 class MobileLayout extends StatelessWidget implements BaseLayout {
@@ -20,10 +19,7 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
 
   @override
   Widget build(BuildContext context) {
-    final state = WidgetbookState.of(context);
-
     return Scaffold(
-      key: ValueKey(state.isNext), // Rebuild when switching to next
       body: SafeArea(
         child: workbench,
       ),

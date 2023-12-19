@@ -24,6 +24,7 @@ dependencies:
   inspector: ^2.1.0
   meta: ^1.8.0
   nested: ^1.0.0
+  path: ^1.8.0
   resizable_widget: ^1.0.5
 
 dev_dependencies:

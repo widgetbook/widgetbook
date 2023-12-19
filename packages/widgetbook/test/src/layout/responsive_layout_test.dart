@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/layout/desktop_layout.dart';
 import 'package:widgetbook/src/layout/mobile_layout.dart';
 import 'package:widgetbook/src/layout/responsive_layout.dart';
-import 'package:widgetbook/src/navigation/navigation.dart';
+import 'package:widgetbook/src/next/navigation/navigation_panel.dart';
 import 'package:widgetbook/src/settings/settings.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -19,9 +19,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(
-              directories: [],
-            ),
+            const Widgetbook.material(),
           );
 
           expect(find.byType(MobileLayout), findsOneWidget);
@@ -39,9 +37,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(
-              directories: [],
-            ),
+            const Widgetbook.material(),
           );
 
           expect(find.byType(MobileLayout), findsNothing);
@@ -54,22 +50,20 @@ void main() {
       testWidgets(
         'given a small screen, '
         'when the navigation icon on bottom bar is tapped, '
-        'then the $NavigationPanel on bottom sheet is displayed',
+        'then the $NextNavigationPanel on bottom sheet is displayed',
         (tester) async {
           tester.view.physicalSize = const Size(400, 800);
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(
-              directories: [],
-            ),
+            const Widgetbook.material(),
           );
 
           await tester.tap(find.byIcon(Icons.list_outlined));
           await tester.pumpAndSettle();
 
           expect(
-            find.byType(NavigationPanel),
+            find.byType(NextNavigationPanel),
             findsOneWidget,
           );
 
@@ -86,9 +80,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(
-              directories: [],
-            ),
+            const Widgetbook.material(),
           );
 
           await tester.tap(find.byIcon(Icons.dashboard_customize_outlined));
@@ -112,9 +104,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(
-              directories: [],
-            ),
+            const Widgetbook.material(),
           );
 
           await tester.tap(find.byIcon(Icons.tune_outlined));

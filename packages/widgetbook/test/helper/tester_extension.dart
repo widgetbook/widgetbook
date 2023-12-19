@@ -69,7 +69,7 @@ extension TesterExtension on WidgetTester {
   }) async {
     final state = WidgetbookState(
       queryParams: queryParams,
-      root: WidgetbookRoot(
+      v3Root: WidgetbookRoot(
         children: [],
       ),
     );

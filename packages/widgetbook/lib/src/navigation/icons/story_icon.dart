@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class UseCaseIcon extends StatelessWidget {
-  const UseCaseIcon({
+class StoryIcon extends StatelessWidget {
+  const StoryIcon({
     super.key,
     this.size = 14,
   });

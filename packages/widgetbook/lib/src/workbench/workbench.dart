@@ -27,11 +27,14 @@ class Workbench extends StatelessWidget {
                 // the UseCaseBuilder. Without the Stack, UseCaseBuilder
                 // would expand to the whole size of the Workbench.
                 children: [
-                  KeyedSubtree(
+                  Builder(
                     key: ValueKey(state.uri),
-                    child:
-                        WidgetbookState.of(context).useCase?.build(context) ??
-                            const SizedBox.shrink(),
+                    builder: (context) {
+                      return WidgetbookState.of(context)
+                              .storyOrUseCase
+                              ?.build(context) ??
+                          const SizedBox.shrink();
+                    },
                   ),
                 ],
               ),

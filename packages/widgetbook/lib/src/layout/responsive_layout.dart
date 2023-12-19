@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../next.dart';
 import '../layout/desktop_layout.dart';
 import '../layout/mobile_layout.dart';
 import '../navigation/navigation.dart';
+import '../next/navigation/navigation_panel.dart';
 import '../state/state.dart';
 
 class ResponsiveLayout extends StatelessWidget {
@@ -16,16 +18,42 @@ class ResponsiveLayout extends StatelessWidget {
   Widget buildNavigation(BuildContext context, bool isMobile) {
     final state = WidgetbookState.of(context);
 
-    return NavigationPanel(
-      initialPath: state.path,
-      root: state.root,
-      onNodeSelected: (node) {
-        WidgetbookState.of(context).updatePath(node.path); // Fresh context
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        children: [
+          const TabBar(
+            tabs: [
+              Tab(
+                text: 'Next',
+                icon: ExperimentalBadge(),
+              ),
+              Tab(text: 'V3'),
+            ],
+          ),
+          Expanded(
+            child: TabBarView(
+              children: [
+                NextNavigationPanel(
+                  root: state.root,
+                ),
+                NavigationPanel(
+                  initialPath: state.path,
+                  root: state.v3Root,
+                  onNodeSelected: (node) {
+                    WidgetbookState.of(context)
+                        .updatePath(node.path); // Fresh context
 
-        if (isMobile) {
-          Navigator.pop(context); // Close the modal
-        }
-      },
+                    if (isMobile) {
+                      Navigator.pop(context); // Close the modal
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
