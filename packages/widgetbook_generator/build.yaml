@@ -4,7 +4,7 @@ builders:
     builder_factories: ["useCaseBuilder"]
     build_extensions: { ".dart": [".usecase.widgetbook.json"] }
     auto_apply: dependents
-    runs_before: [":app_builder", ":telemetry"]
+    runs_before: [":app_builder"]
     build_to: cache
 
   app_builder:
@@ -13,17 +13,6 @@ builders:
     build_extensions: { ".dart": [".directories.g.dart"] }
     auto_apply: dependents
     build_to: source
-
-  telemetry:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["reportTelemetry"]
-    build_extensions: { ".directories.g.dart": [".track"] }
-    required_inputs: [".directories.g.dart"]
-    auto_apply: root_package
-    build_to: cache
-    defaults:
-      options:
-        debug: false
 
   experimental_story_builder:
     import: "package:widgetbook_generator/builder.dart"
@@ -40,5 +29,19 @@ builders:
     import: "package:widgetbook_generator/builder.dart"
     builder_factories: ["componentsBuilder"]
     build_extensions: { ".stories.dart": [".dart"] }
+    runs_before: [":telemetry"]
     auto_apply: none # Disabled by default
     build_to: source
+
+  telemetry:
+    import: "package:widgetbook_generator/builder.dart"
+    builder_factories: ["reportTelemetry"]
+    build_extensions: { ".book.dart": [".track"] }
+    required_inputs: [".book.dart"]
+    auto_apply: root_package
+    build_to: cache
+    defaults:
+      options:
+        debug: false
+      generate_for:
+        - lib/components.book.dart
