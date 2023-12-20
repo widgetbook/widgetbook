@@ -2,6 +2,7 @@
 
 - **BREAKING**: Require Dart 3.0. ([#1099](https://github.com/widgetbook/widgetbook/pull/1099))
 - **REFACTOR**: Add headers to all builders. ([#1104](https://github.com/widgetbook/widgetbook/pull/1104))
+- **REFACTOR**: Change telemetry to SAM. ([#1105](https://github.com/widgetbook/widgetbook/pull/1105))
 
 ## 3.7.0
 

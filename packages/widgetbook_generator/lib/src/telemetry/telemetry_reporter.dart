@@ -6,7 +6,6 @@ import 'package:build/build.dart';
 import 'package:crypto/crypto.dart';
 
 import '../../metadata.dart';
-import '../generators/app_generator.dart';
 import 'ci_keys.dart';
 import 'usage_report.dart';
 
@@ -31,7 +30,7 @@ class TelemetryReporter extends Builder {
 
   @override
   Map<String, List<String>> get buildExtensions => {
-        '.directories.g.dart': ['.track'],
+        'components.book.dart': ['.track'],
       };
 
   /// Get a tracking ID based on git's config.
@@ -101,11 +100,9 @@ class TelemetryReporter extends Builder {
         );
       }
 
-      final useCases = await AppGenerator.readUseCases(buildStep);
       final report = UsageReport.from(
         trackingId: trackingId,
         project: buildStep.inputId.package,
-        useCases: useCases,
         version: packageVersion,
       );
 
