@@ -57,9 +57,6 @@ void main() {
         (tester) async {
           final state = WidgetbookState(
             appBuilder: materialAppBuilder,
-            v3Root: WidgetbookRoot(
-              children: [],
-            ),
           );
 
           final delegate = AppRouterDelegate(

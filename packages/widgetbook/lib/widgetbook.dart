@@ -4,6 +4,5 @@ library widgetbook;
 
 export 'src/fields/fields.dart';
 export 'src/integrations/integrations.dart';
-export 'src/navigation/nodes/nodes.dart';
 export 'src/state/state.dart' hide WidgetbookScope;
 export 'src/widgetbook.dart';

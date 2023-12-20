@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../../../next.dart';
-import '../../navigation/icons/icons.dart';
+import 'icons/component_icon.dart';
+import 'icons/expander_icon.dart';
+import 'icons/story_icon.dart';
 import 'tree_node.dart';
 
 class NextNavigationTreeTile extends StatelessWidget {

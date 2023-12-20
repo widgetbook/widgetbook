@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../next.dart';
 import 'integrations/integrations.dart';
-import 'navigation/navigation.dart';
 import 'routing/routing.dart';
 import 'state/state.dart';
 import 'themes.dart';
@@ -21,7 +20,6 @@ class Widgetbook extends StatefulWidget {
   const Widgetbook({
     super.key,
     this.initialRoute = '/',
-    this.directories = const [],
     this.components = const [],
     this.appBuilder = widgetsAppBuilder,
     this.addons,
@@ -32,7 +30,6 @@ class Widgetbook extends StatefulWidget {
   const Widgetbook.cupertino({
     super.key,
     this.initialRoute = '/',
-    this.directories = const [],
     this.components = const [],
     this.appBuilder = cupertinoAppBuilder,
     this.addons,
@@ -43,7 +40,6 @@ class Widgetbook extends StatefulWidget {
   const Widgetbook.material({
     super.key,
     this.initialRoute = '/',
-    this.directories = const [],
     this.components = const [],
     this.appBuilder = materialAppBuilder,
     this.addons,
@@ -52,16 +48,6 @@ class Widgetbook extends StatefulWidget {
 
   /// The initial route for that will be used on first startup.
   final String initialRoute;
-
-  /// The directory structure of your [Widget] library.
-  ///
-  /// The available organizers are: [WidgetbookCategory], [WidgetbookFolder],
-  /// [WidgetbookComponent] and [WidgetbookUseCase].
-  ///
-  /// Both [WidgetbookCategory] and [WidgetbookFolder] can contain sub folders
-  /// and [WidgetbookComponent] elements. However, [WidgetbookComponent] can
-  /// only contain [WidgetbookUseCase]s.
-  final List<WidgetbookNode> directories;
 
   final List<Component> components;
 
@@ -93,9 +79,6 @@ class _WidgetbookState extends State<Widgetbook> {
       addons: widget.addons,
       integrations: widget.integrations,
       components: widget.components,
-      v3Root: WidgetbookRoot(
-        children: widget.directories,
-      ),
     );
 
     router = AppRouter(

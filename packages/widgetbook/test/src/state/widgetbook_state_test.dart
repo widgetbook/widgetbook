@@ -16,9 +16,6 @@ void main() {
           final paramKey = 'foo';
           final state = WidgetbookState(
             queryParams: {paramKey: 'bar'},
-            v3Root: WidgetbookRoot(
-              children: [],
-            ),
           );
 
           final newValue = 'qux';
@@ -37,9 +34,6 @@ void main() {
             queryParams: {
               'knobs': '{foo:bar,qux:baz}',
             },
-            v3Root: WidgetbookRoot(
-              children: [],
-            ),
           );
 
           state.updateQueryField(
@@ -62,9 +56,6 @@ void main() {
         () {
           final state = WidgetbookState(
             queryParams: {},
-            v3Root: WidgetbookRoot(
-              children: [],
-            ),
           );
 
           final reservedKey = AppRouteConfig.reservedKeys.first;
@@ -83,9 +74,6 @@ void main() {
           final state = WidgetbookState(
             path: 'component/use-case',
             queryParams: {'foo': 'bar'},
-            v3Root: WidgetbookRoot(
-              children: [],
-            ),
           );
 
           expect(
@@ -102,9 +90,6 @@ void main() {
         () {
           final state = WidgetbookState(
             queryParams: {'args': '{arg:value}'},
-            v3Root: WidgetbookRoot(
-              children: [],
-            ),
           );
 
           state.updatePath('component/use-case');
@@ -120,9 +105,6 @@ void main() {
         () {
           final state = WidgetbookState(
             queryParams: {},
-            v3Root: WidgetbookRoot(
-              children: [],
-            ),
           );
 
           const path = 'component/use-case';
@@ -145,11 +127,7 @@ void main() {
         'when the search is set to empty string, '
         'search query param is removed',
         () {
-          final state = WidgetbookState(
-            v3Root: WidgetbookRoot(
-              children: [],
-            ),
-          )..updateQuery('');
+          final state = WidgetbookState()..updateQuery('');
 
           expect(state.queryParams, <String, String>{});
         },

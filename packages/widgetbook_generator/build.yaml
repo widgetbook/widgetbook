@@ -1,19 +1,4 @@
 builders:
-  use_case_builder:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["useCaseBuilder"]
-    build_extensions: { ".dart": [".usecase.widgetbook.json"] }
-    auto_apply: dependents
-    runs_before: [":app_builder"]
-    build_to: cache
-
-  app_builder:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["appBuilder"]
-    build_extensions: { ".dart": [".directories.g.dart"] }
-    auto_apply: dependents
-    build_to: source
-
   experimental_story_builder:
     import: "package:widgetbook_generator/builder.dart"
     builder_factories: ["storyBuilder"]

@@ -5,6 +5,7 @@
 - **BREAKING**: Require Dart 3.0 and Flutter 3.10. ([#1099](https://github.com/widgetbook/widgetbook/pull/1099))
 - **BREAKING**: Remove `widgetbook/knobs` in favor of `next/args`. ([#1101](https://github.com/widgetbook/widgetbook/pull/1101))
 - **BREAKING**: Remove `widgetbook/addons` in favor of `next/addons`. ([#1102](https://github.com/widgetbook/widgetbook/pull/1102))
+- **BREAKING**: Remove `widgetbook/navigation` in favor of `next/navigation`; This also removes the `directories` parameter in `Widgetbook` constructor. ([#1107](https://github.com/widgetbook/widgetbook/pull/1107))
 
 ## 3.7.0
 

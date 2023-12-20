@@ -7,8 +7,6 @@ class MockBuildContext extends Mock implements BuildContext {}
 
 class MockWidgetbookState extends Mock implements WidgetbookState {}
 
-class MockWidgetbookRoot extends Mock implements WidgetbookRoot {}
-
 class MockStory extends Mock implements Story {}
 
 class MockStoryArgs extends Mock implements StoryArgs<Widget> {}

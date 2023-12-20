@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../navigation/nodes/nodes.dart' as v3;
 import 'args/story_args.dart';
 
 typedef SetupBuilder<TArgs> = Widget Function(
@@ -13,18 +12,17 @@ typedef ArgsBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
     = TWidget Function(BuildContext context, TArgs args);
 
 @optionalTypeArgs
-abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
-    extends v3.WidgetbookUseCase {
-  Story({
-    required super.name,
-    super.designLink,
+abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
+  const Story({
+    required this.name,
+    this.designLink,
     this.setup = defaultSetup,
     required this.args,
     required this.argsBuilder,
-  }) : super(
-          builder: (context) => const SizedBox.shrink(), // TODO: remove
-        );
+  });
 
+  final String name;
+  final String? designLink;
   final TArgs args;
   final SetupBuilder<TArgs> setup;
   final ArgsBuilder<TWidget, TArgs> argsBuilder;
@@ -37,7 +35,6 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
     return story;
   }
 
-  @override
   Widget build(BuildContext context) {
     return buildWithArgs(context, args);
   }
@@ -46,13 +43,5 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
   Widget buildWithArgs(BuildContext context, TArgs args) {
     final story = argsBuilder(context, args);
     return setup(context, story, args);
-  }
-
-  @override
-  Story<TWidget, TArgs> copyWith({
-    String? name,
-    List<v3.WidgetbookNode>? children,
-  }) {
-    return this;
   }
 }
