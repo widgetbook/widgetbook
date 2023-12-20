@@ -3,11 +3,25 @@ import 'args/story_args.dart';
 class Meta<T> {
   const Meta({
     String? name,
-    this.path,
-  }) : name = name ?? '$T';
+    String? path,
+  })  : name = name ?? '$T',
+        $path = path;
 
   final String name;
-  final String? path;
+  final String? $path;
+
+  String? get path => $path;
+
+  /// Creates a copy of this using the provided [path] for late initialization.
+  /// If [$path] was already set, it should have precedence over [path].
+  Meta<T> init({
+    required String path,
+  }) {
+    return Meta<T>(
+      name: name,
+      path: $path == null ? path : $path,
+    );
+  }
 }
 
 /// Same as [Meta] but for custom [StoryArgs].
