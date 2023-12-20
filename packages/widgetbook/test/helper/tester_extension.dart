@@ -69,9 +69,6 @@ extension TesterExtension on WidgetTester {
   }) async {
     final state = WidgetbookState(
       queryParams: queryParams,
-      v3Root: WidgetbookRoot(
-        children: [],
-      ),
     );
 
     return pumpWidgetWithState(

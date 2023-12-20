@@ -25,7 +25,6 @@ void main() {
           await tester.pumpWidgetWithMaterialApp(
             Widgetbook.material(
               integrations: [integration],
-              directories: [],
             ),
           );
 
@@ -43,9 +42,6 @@ void main() {
           final integration = MockIntegration();
           final state = WidgetbookState(
             integrations: [integration],
-            v3Root: WidgetbookRoot(
-              children: [],
-            ),
           );
 
           state.notifyListeners();
@@ -68,7 +64,6 @@ void main() {
           final state = WidgetbookState(
             queryParams: {},
             integrations: [integration],
-            v3Root: MockWidgetbookRoot(),
             components: [
               Component(
                 meta: Meta<Placeholder>(),

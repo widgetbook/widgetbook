@@ -5,7 +5,6 @@ import 'package:meta/meta.dart';
 import '../../next.dart';
 import '../fields/fields.dart';
 import '../integrations/widgetbook_integration.dart';
-import '../navigation/navigation.dart';
 import '../next/navigation/tree.dart';
 import '../next/navigation/tree_node.dart';
 import '../routing/routing.dart';
@@ -23,7 +22,6 @@ class WidgetbookState extends ChangeNotifier {
     this.appBuilder = widgetsAppBuilder,
     this.addons,
     this.integrations,
-    required this.v3Root,
     this.components = const [],
   })  : this.root = Tree.build(components),
         this.index = Tree.index(components);
@@ -37,18 +35,11 @@ class WidgetbookState extends ChangeNotifier {
   final List<Addon>? addons;
   final List<WidgetbookIntegration>? integrations;
 
-  // v3 Navigation
-  final WidgetbookRoot v3Root;
-  List<WidgetbookNode> get directories => v3Root.children!;
-  WidgetbookUseCase? get useCase => path == null ? null : v3Root.table[path!];
-
   final List<Component> components;
   final TreeNode<Null> root;
   final Map<String, Story> index;
 
   Story? get story => path == null ? null : index[path!];
-
-  WidgetbookUseCase? get storyOrUseCase => story ?? useCase;
 
   /// Same as [addons] but without the ones that have no fields.
   @internal
@@ -136,7 +127,7 @@ class WidgetbookState extends ChangeNotifier {
     );
   }
 
-  /// Update the [path], causing a new [useCase] to bet returned.
+  /// Update the [path], causing a new [story] to bet returned.
   /// Resets the args during the update.
   @internal
   void updatePath(String newPath) {

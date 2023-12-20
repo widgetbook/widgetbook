@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../next.dart';
-import '../../navigation/navigation.dart';
 import '../../state/state.dart';
 import 'navigation_tree_node.dart';
+import 'search_field.dart';
 import 'tree_node.dart';
 
 class NextNavigationPanel extends StatelessWidget {

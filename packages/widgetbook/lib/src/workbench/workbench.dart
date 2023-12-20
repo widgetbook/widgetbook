@@ -31,7 +31,7 @@ class Workbench extends StatelessWidget {
                     key: ValueKey(state.uri),
                     builder: (context) {
                       return WidgetbookState.of(context)
-                              .storyOrUseCase
+                              .story
                               ?.build(context) ??
                           const SizedBox.shrink();
                     },
