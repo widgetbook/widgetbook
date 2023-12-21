@@ -74,7 +74,7 @@ void main() {
       testWidgets(
         'given a small screen, '
         'when the addons icon on bottom bar is tapped, '
-        'then the $MobileSettingsPanel on bottom sheet is displayed',
+        'then the $SettingsList on bottom sheet is displayed',
         (tester) async {
           tester.view.physicalSize = const Size(400, 800);
           tester.view.devicePixelRatio = 1.0;
@@ -87,7 +87,7 @@ void main() {
           await tester.pumpAndSettle();
 
           expect(
-            find.byType(MobileSettingsPanel),
+            find.byType(SettingsList),
             findsOneWidget,
           );
 
@@ -98,7 +98,7 @@ void main() {
       testWidgets(
         'given a small screen, '
         'when the knob icon on bottom bar is tapped, '
-        'then the $MobileSettingsPanel on bottom sheet is displayed',
+        'then the $SettingsList on bottom sheet is displayed',
         (tester) async {
           tester.view.physicalSize = const Size(400, 800);
           tester.view.devicePixelRatio = 1.0;
@@ -111,7 +111,7 @@ void main() {
           await tester.pumpAndSettle();
 
           expect(
-            find.byType(MobileSettingsPanel),
+            find.byType(SettingsList),
             findsOneWidget,
           );
 

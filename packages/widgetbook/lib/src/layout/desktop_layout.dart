@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:resizable_widget/resizable_widget.dart';
 
-import '../settings/settings.dart';
-import '../state/state.dart';
+import '../settings/settings_list.dart';
 import 'base_layout.dart';
 
 class DesktopLayout extends StatelessWidget implements BaseLayout {
@@ -21,8 +20,6 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
 
   @override
   Widget build(BuildContext context) {
-    final state = WidgetbookState.of(context);
-
     return ColoredBox(
       color: Theme.of(context).colorScheme.surface,
       child: ResizableWidget(
@@ -38,19 +35,32 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
           workbench,
           ExcludeSemantics(
             child: Card(
-              child: SettingsPanel(
-                settings: [
-                  if (state.addons != null) ...{
-                    SettingsPanelData(
-                      name: 'Addons',
-                      builder: addonsBuilder,
+              child: DefaultTabController(
+                length: 2,
+                child: Column(
+                  children: [
+                    const TabBar(
+                      tabs: [
+                        Tab(text: 'Addons'),
+                        Tab(text: 'Args'),
+                      ],
                     ),
-                  },
-                  SettingsPanelData(
-                    name: 'Args',
-                    builder: argsBuilder,
-                  ),
-                ],
+                    Expanded(
+                      child: TabBarView(
+                        children: [
+                          SettingsList(
+                            name: 'Addons',
+                            builder: addonsBuilder,
+                          ),
+                          SettingsList(
+                            name: 'Args',
+                            builder: argsBuilder,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
