@@ -14,7 +14,7 @@ class FolderTreeTile extends StatelessWidget {
     required this.node,
     required this.depth,
     this.onTap,
-    this.isLeaf = false,
+    this.isTerminal = false,
     this.isExpanded = false,
     this.isSelected = false,
   });
@@ -24,7 +24,7 @@ class FolderTreeTile extends StatelessWidget {
   final TreeNode node;
   final int depth;
   final VoidCallback? onTap;
-  final bool isLeaf;
+  final bool isTerminal;
   final bool isExpanded;
   final bool isSelected;
 
@@ -50,7 +50,7 @@ class FolderTreeTile extends StatelessWidget {
             ),
             SizedBox(
               width: indentation,
-              child: isLeaf
+              child: isTerminal
                   ? null
                   : ExpanderIcon(
                       isExpanded: isExpanded,

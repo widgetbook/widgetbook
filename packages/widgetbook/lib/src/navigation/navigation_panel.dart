@@ -10,12 +10,12 @@ class NavigationPanel extends StatelessWidget {
   const NavigationPanel({
     super.key,
     this.initialPath,
-    this.onStoryNodeSelect,
+    this.onStoryTap,
     required this.root,
   });
 
   final String? initialPath;
-  final ValueChanged<TreeNode<Story>>? onStoryNodeSelect;
+  final ValueChanged<TreeNode<Story>>? onStoryTap;
   final TreeNode<Null> root;
 
   @override
@@ -43,9 +43,7 @@ class NavigationPanel extends StatelessWidget {
           Expanded(
             child: NavigationTreeNode(
               node: filteredRoot ?? root,
-              onNodeSelected: (node) {
-                WidgetbookState.of(context).updatePath(node.path);
-              },
+              onStoryTap: onStoryTap,
             ),
           ),
         ],
