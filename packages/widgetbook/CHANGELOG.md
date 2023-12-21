@@ -6,6 +6,7 @@
 - **BREAKING**: Remove `widgetbook/knobs` in favor of `next/args`. ([#1101](https://github.com/widgetbook/widgetbook/pull/1101))
 - **BREAKING**: Remove `widgetbook/addons` in favor of `next/addons`. ([#1102](https://github.com/widgetbook/widgetbook/pull/1102))
 - **BREAKING**: Remove `widgetbook/navigation` in favor of `next/navigation`; This also removes the `directories` parameter in `Widgetbook` constructor. ([#1107](https://github.com/widgetbook/widgetbook/pull/1107))
+- **BREAKING**: Make `next` library the new default `widgetbook` library, and remove experimental badges. ([#1108](https://github.com/widgetbook/widgetbook/pull/1108))
 
 ## 3.7.0
 
