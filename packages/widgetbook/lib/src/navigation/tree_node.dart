@@ -19,23 +19,29 @@ class TreeNode<T> {
 
   bool get isRoot => parent == null;
   bool get isLeaf => children.isEmpty;
+  bool get isCategory {
+    return T == String && name.startsWith('[') && name.endsWith(']');
+  }
 
-  List<TreeNode> get children => _children.values.sortedBy((node) => node.name);
+  List<TreeNode> get children {
+    return _children.values.sorted(
+      (a, b) {
+        if (a.isCategory == b.isCategory) {
+          // Both categories or both folders
+          return a.name.compareTo(b.name);
+        } else {
+          // Sort categories after folders
+          return a.isCategory ? 1 : -1;
+        }
+      },
+    );
+  }
 
   /// Gets the path from root to this node without leading slash
   /// Example: root/child/grandchild
   String get path => isRoot //
       ? name
       : p.join(parent!.path, name).replaceAll(' ', '-');
-
-  /// Gets the depth of the node within the tree.
-  int get depth {
-    if (isRoot) {
-      return 0;
-    } else {
-      return parent!.depth + 1;
-    }
-  }
 
   TreeNode<TChild> add<TChild>(TreeNode<TChild> node) {
     return _children.putIfAbsent(

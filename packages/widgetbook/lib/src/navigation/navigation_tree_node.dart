@@ -3,17 +3,20 @@ import 'package:flutter/material.dart';
 import '../core/core.dart';
 import '../state/state.dart';
 
-import 'navigation_tree_tile.dart';
+import 'category_tree_tile.dart';
+import 'folder_tree_tile.dart';
 import 'tree_node.dart';
 
 class NavigationTreeNode extends StatefulWidget {
   const NavigationTreeNode({
     super.key,
     required this.node,
+    this.depth = 0,
     this.onNodeSelected,
   });
 
   final TreeNode node;
+  final int depth;
   final ValueChanged<TreeNode>? onNodeSelected;
 
   @override
@@ -25,43 +28,54 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
 
   @override
   Widget build(BuildContext context) {
-    final isLeaf = switch (widget.node) {
+    final node = widget.node;
+    final isCategory = node.isCategory;
+    final isLeaf = switch (node) {
       TreeNode<Story>() => true,
-      TreeNode<Component>() => widget.node.children.length == 1,
+      TreeNode<Component>() => node.children.length == 1,
       _ => false,
     };
 
     return Column(
       children: [
-        if (widget.node.parent != null) // non-root
-          NavigationTreeTile(
-            node: widget.node,
-            isLeaf: isLeaf,
-            isExpanded: isExpanded,
-            isSelected: widget.node.path == WidgetbookState.of(context).path,
-            onTap: () {
-              if (!isLeaf) {
+        if (node.parent != null) // non-root
+          if (isCategory)
+            CategoryTreeTile(
+              node: node as TreeNode<String>,
+              onTap: () {
                 setState(() => isExpanded = !isExpanded);
-              } else if (widget.node is TreeNode<Story>) {
-                widget.onNodeSelected?.call(widget.node);
-              } else {
-                // Redirect interactions to the use-case of the leaf component,
-                // so that when it's clicked, the route is updated to the use-case
-                // of the leaf component, and not the leaf component itself.
-                final node = widget.node as TreeNode<Component>;
-                widget.onNodeSelected?.call(node.children.first);
-              }
-            },
-          ),
+              },
+            )
+          else
+            FolderTreeTile(
+              node: node,
+              depth: widget.depth,
+              isLeaf: isLeaf,
+              isExpanded: isExpanded,
+              isSelected: node.path == WidgetbookState.of(context).path,
+              onTap: () {
+                if (!isLeaf) {
+                  setState(() => isExpanded = !isExpanded);
+                } else if (node is TreeNode<Story>) {
+                  widget.onNodeSelected?.call(node);
+                } else {
+                  // Redirect interactions to the use-case of the leaf component,
+                  // so that when it's clicked, the route is updated to the use-case
+                  // of the leaf component, and not the leaf component itself.
+                  widget.onNodeSelected?.call(node.children.first);
+                }
+              },
+            ),
         if (!isLeaf)
           _SlideAnimator(
             forward: isExpanded,
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: widget.node.children.length,
+              itemCount: node.children.length,
               shrinkWrap: true,
               itemBuilder: (context, index) => NavigationTreeNode(
-                node: widget.node.children[index],
+                depth: isCategory ? widget.depth : widget.depth + 1,
+                node: node.children[index],
                 onNodeSelected: widget.onNodeSelected,
               ),
             ),
