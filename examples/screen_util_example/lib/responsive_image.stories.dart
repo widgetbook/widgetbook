@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:widgetbook/next.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 import 'responsive_image.dart';
 

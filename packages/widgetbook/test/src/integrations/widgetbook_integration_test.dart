@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:widgetbook/next.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';

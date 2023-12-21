@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:widgetbook/next.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 part 'container.stories.book.dart';
 

@@ -27,18 +27,6 @@ The Story-Arg-Mode architecture or "SAM" (_inspired by [Samwise Gamgee](https://
    flutter pub add widgetbook dev:widgetbook_generator dev:build_runner
    ```
 
-1. Opt-in to the new `widgetbook_generator` by creating the file `widgetbook/build.yaml`, and adding the following content:
-
-   ```yaml
-   targets:
-     $default:
-       builders:
-         widgetbook_generator:experimental_story_builder:
-           enabled: true
-         widgetbook_generator:experimental_components_builder:
-           enabled: true
-   ```
-
 1. Create the **cyclic dependency** between your app and `widgetbook`:  
    Although it hurts developers to see the _c-word_ used, but this case is completely fine. The cyclic dependency is only used to generate code and will not be part of the final app.
 
@@ -62,7 +50,7 @@ The Story-Arg-Mode architecture or "SAM" (_inspired by [Samwise Gamgee](https://
 
    ```dart
    import 'package:flutter/material.dart';
-   import 'package:widgetbook/next.dart';
+   import 'package:widgetbook/widgetbook.dart';
    import 'package:<your_app_name>/path/to/my_cool_widget.dart';
 
    part 'my_cool_widget.stories.book.dart';
@@ -88,7 +76,6 @@ The Story-Arg-Mode architecture or "SAM" (_inspired by [Samwise Gamgee](https://
 
    ```dart
    import 'package:flutter/material.dart';
-   import 'package:widgetbook/next.dart' as next;
    import 'package:widgetbook/widgetbook.dart';
 
    import 'components.book.dart';
@@ -103,14 +90,9 @@ The Story-Arg-Mode architecture or "SAM" (_inspired by [Samwise Gamgee](https://
      @override
      Widget build(BuildContext context) {
        return Widgetbook.material(
-         // If you need backwards compatibility with v3:
-         // directories: [
-         //   ...components,
-         //   ...directories,
-         // ],
-         directories: components,
+         components: components,
          addons: [
-           next.MaterialThemeAddon({
+           MaterialThemeAddon({
              'Dark': ThemeData.dark(),
              'Light': ThemeData.light(),
            }),
@@ -250,7 +232,7 @@ Modes are introduces to make golden testing easier with Widgetbook 4.
    ```dart
    import 'package:alchemist/alchemist.dart';
    import 'package:flutter/material.dart';
-   import 'package:widgetbook/next.dart';
+   import 'package:widgetbook/widgetbook.dart';
 
    import 'package:<your_app_name>/path/to/my_cool_widget.dart';
    import 'package:widgetbook_workspace/my_cool_widget.stories.dart';
@@ -294,7 +276,7 @@ To make the process of creating new stories easier, you can add the following sn
        "description": "Creates a new Widgetbook Story",
        "body": [
          "import 'package:flutter/widgets.dart';",
-         "import 'package:widgetbook/next.dart';",
+         "import 'package:widgetbook/widgetbook.dart';",
          "",
          "part '$TM_FILENAME_BASE.book.dart';",
          "",
@@ -318,7 +300,7 @@ To make the process of creating new stories easier, you can add the following sn
 
    ```dart
    import 'package:flutter/widgets.dart';
-   import 'package:widgetbook/next.dart';
+   import 'package:widgetbook/widgetbook.dart';
 
    part '$FILE$.book.dart';
 
