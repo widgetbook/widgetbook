@@ -8,10 +8,11 @@ import 'icons/expander_icon.dart';
 import 'icons/story_icon.dart';
 import 'tree_node.dart';
 
-class NavigationTreeTile extends StatelessWidget {
-  const NavigationTreeTile({
+class FolderTreeTile extends StatelessWidget {
+  const FolderTreeTile({
     super.key,
     required this.node,
+    required this.depth,
     this.onTap,
     this.isLeaf = false,
     this.isExpanded = false,
@@ -21,6 +22,7 @@ class NavigationTreeTile extends StatelessWidget {
   static const indentation = 24.0;
 
   final TreeNode node;
+  final int depth;
   final VoidCallback? onTap;
   final bool isLeaf;
   final bool isExpanded;
@@ -29,10 +31,6 @@ class NavigationTreeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(indentation);
-    final categoryRegex = RegExp(r'^\[(.+)\]$');
-    final isCategory = categoryRegex.hasMatch(node.name);
-    final match = categoryRegex.firstMatch(node.name);
-    final nodeName = isCategory ? match!.group(1)! : node.name;
 
     return Container(
       height: indentation,
@@ -48,7 +46,7 @@ class NavigationTreeTile extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(
-              width: max(node.depth - 1, 0) * indentation,
+              width: max(depth - 1, 0) * indentation,
             ),
             SizedBox(
               width: indentation,
@@ -63,9 +61,7 @@ class NavigationTreeTile extends StatelessWidget {
               child: switch (node) {
                 TreeNode<Story>() => const StoryIcon(),
                 TreeNode<Component>() => const ComponentIcon(),
-                TreeNode<String>() => isCategory
-                    ? const Icon(Icons.auto_awesome_mosaic, size: 16)
-                    : const Icon(Icons.folder, size: 16),
+                TreeNode<String>() => const Icon(Icons.folder, size: 16),
                 _ => const SizedBox(),
               },
             ),
@@ -74,7 +70,7 @@ class NavigationTreeTile extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                nodeName,
+                node.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
