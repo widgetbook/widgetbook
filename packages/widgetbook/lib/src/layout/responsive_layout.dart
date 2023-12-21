@@ -16,6 +16,14 @@ class ResponsiveLayout extends StatelessWidget {
   Widget buildNavigation(BuildContext context, bool isMobile) {
     return NavigationPanel(
       root: WidgetbookState.of(context).root,
+      onStoryTap: (story) {
+        WidgetbookState.of(context).updatePath(story.path);
+
+        if (isMobile) {
+          // Close navigation bottom sheet
+          Navigator.of(context).pop();
+        }
+      },
     );
   }
 
