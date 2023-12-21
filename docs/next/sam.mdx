@@ -271,20 +271,20 @@ To make the process of creating new stories easier, you can add the following sn
 
    ```json
    {
-     "Widgetbook Story": {
+     "Widgetbook 4 Story": {
+       "scope": "dart",
        "prefix": "stry",
-       "description": "Creates a new Widgetbook Story",
+       "description": "Creates a new Widgetbook 4 story",
        "body": [
-         "import 'package:flutter/widgets.dart';",
          "import 'package:widgetbook/widgetbook.dart';",
          "",
          "part '$TM_FILENAME_BASE.book.dart';",
          "",
-         "",
          "final meta = Meta<${1:Widget}>();",
          "",
-         "final $Default = ${1:Widget}Story(",
+         "final \\$Default = ${1:Widget}Story(",
          "  name: 'Default',",
+         "  args: ${1:Widget}Args(),",
          ");"
        ]
      }
@@ -295,20 +295,19 @@ To make the process of creating new stories easier, you can add the following sn
 
 1. Setting > Editor > Live Templates > "+" > Live Template
 1. Abbreviation: `stry`
-1. Description: `Creates a new Widgetbook Story`
+1. Description: `Creates a new Widgetbook 4 Story`
 1. Template Text:
 
    ```dart
-   import 'package:flutter/widgets.dart';
    import 'package:widgetbook/widgetbook.dart';
 
    part '$FILE$.book.dart';
-
 
    final meta = Meta<$WIDGET$>();
 
    final $Default = $WIDGET$Story(
      name: 'Default',
+     args: $WIDGET$Args(),
    );
    ```
 
