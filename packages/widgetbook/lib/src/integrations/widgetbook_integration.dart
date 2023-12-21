@@ -1,4 +1,4 @@
-import '../../next.dart';
+import '../core/core.dart';
 import '../state/state.dart';
 import '../widgetbook.dart';
 import 'widgetbook_cloud_integration/widgetbook_cloud_integration.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../../../next.dart';
+import '../../core/core.dart';
 import '../../state/state.dart';
 import '../widgetbook_integration.dart';
 import 'no_messaging.dart' if (dart.library.html) 'web_messaging.dart';

@@ -1,8 +1,8 @@
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 
-import 'src/next/components_builder.dart';
-import 'src/next/story_generator.dart';
+import 'src/core/components_builder.dart';
+import 'src/core/story_generator.dart';
 import 'src/telemetry/telemetry_reporter.dart';
 
 Builder storyBuilder(BuilderOptions options) {

@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:widgetbook/next.dart';
 import 'package:widgetbook/src/settings/settings_panel.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 part 'settings_panel.stories.book.dart';
 

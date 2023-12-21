@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../layout/desktop_layout.dart';
 import '../layout/mobile_layout.dart';
-import '../next/navigation/navigation_panel.dart';
+import '../navigation/navigation.dart';
 import '../state/state.dart';
 
 class ResponsiveLayout extends StatelessWidget {
@@ -14,7 +14,7 @@ class ResponsiveLayout extends StatelessWidget {
   final Widget child;
 
   Widget buildNavigation(BuildContext context, bool isMobile) {
-    return NextNavigationPanel(
+    return NavigationPanel(
       root: WidgetbookState.of(context).root,
     );
   }

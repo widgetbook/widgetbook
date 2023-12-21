@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/next.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 import 'custom_text_field.dart';
 

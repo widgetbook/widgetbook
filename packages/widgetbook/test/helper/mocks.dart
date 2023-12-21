@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:widgetbook/next.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 class MockBuildContext extends Mock implements BuildContext {}

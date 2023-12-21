@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:widgetbook/next.dart';
 import 'package:widgetbook/src/settings/nullable_setting.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 part 'nullable_setting.stories.book.dart';
 

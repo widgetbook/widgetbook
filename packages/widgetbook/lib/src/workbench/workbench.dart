@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../next/addons/base/addons_builder.dart';
 import '../state/state.dart';
+import 'addons_builder.dart';
 import 'safe_boundaries.dart';
 
 class Workbench extends StatelessWidget {

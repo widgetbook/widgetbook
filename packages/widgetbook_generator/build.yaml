@@ -1,21 +1,21 @@
 builders:
-  experimental_story_builder:
+  story_builder:
     import: "package:widgetbook_generator/builder.dart"
     builder_factories: ["storyBuilder"]
-    runs_before: [":experimental_components_builder"]
+    runs_before: [":components_builder"]
     build_extensions: { ".stories.dart": [".stories.book.dart"] }
-    auto_apply: none # Disabled by default
+    auto_apply: dependents
     build_to: source
     defaults:
       generate_for:
         - lib/**.stories.dart
 
-  experimental_components_builder:
+  components_builder:
     import: "package:widgetbook_generator/builder.dart"
     builder_factories: ["componentsBuilder"]
     build_extensions: { ".stories.dart": [".dart"] }
     runs_before: [":telemetry"]
-    auto_apply: none # Disabled by default
+    auto_apply: dependents
     build_to: source
 
   telemetry:

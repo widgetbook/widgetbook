@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../next.dart';
+import 'core/core.dart';
 import 'integrations/integrations.dart';
 import 'routing/routing.dart';
 import 'state/state.dart';

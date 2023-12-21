@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
-import '../../next.dart';
+import '../core/core.dart';
 import '../fields/fields.dart';
 import '../integrations/widgetbook_integration.dart';
-import '../next/navigation/tree.dart';
-import '../next/navigation/tree_node.dart';
+import '../navigation/navigation.dart';
 import '../routing/routing.dart';
 import 'default_app_builders.dart';
 import 'widgetbook_scope.dart';
