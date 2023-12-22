@@ -26,7 +26,7 @@ class DoubleArg extends Arg<double> {
   }) {
     return DoubleArg(
       value,
-      name: $name == null ? name : $name,
+      name: $name ?? name,
     );
   }
 }

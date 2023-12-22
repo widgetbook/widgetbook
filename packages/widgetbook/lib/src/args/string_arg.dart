@@ -26,7 +26,7 @@ class StringArg extends Arg<String> {
   }) {
     return StringArg(
       value,
-      name: $name == null ? name : $name,
+      name: $name ?? name,
     );
   }
 }

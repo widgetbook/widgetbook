@@ -33,7 +33,7 @@ class RangeArg extends Arg<RangeValues> {
   }) {
     return RangeArg(
       value,
-      name: $name == null ? name : $name,
+      name: $name ?? name,
     );
   }
 }
