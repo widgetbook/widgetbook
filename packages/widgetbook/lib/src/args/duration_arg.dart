@@ -26,7 +26,7 @@ class DurationArg extends Arg<Duration> {
   }) {
     return DurationArg(
       value,
-      name: $name == null ? name : $name,
+      name: $name ?? name,
     );
   }
 }

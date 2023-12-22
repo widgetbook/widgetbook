@@ -28,7 +28,7 @@ class ColorArg extends Arg<Color> {
   }) {
     return ColorArg(
       value,
-      name: $name == null ? name : $name,
+      name: $name ?? name,
     );
   }
 }

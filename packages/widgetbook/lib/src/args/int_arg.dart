@@ -26,7 +26,7 @@ class IntArg extends Arg<int> {
   }) {
     return IntArg(
       value,
-      name: $name == null ? name : $name,
+      name: $name ?? name,
     );
   }
 }

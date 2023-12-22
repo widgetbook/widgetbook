@@ -19,7 +19,7 @@ class Meta<T> {
   }) {
     return Meta<T>(
       name: name,
-      path: $path == null ? path : $path,
+      path: $path ?? path,
     );
   }
 }
