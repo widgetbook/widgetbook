@@ -10,7 +10,6 @@ final meta = Meta<TypesTable>(
 );
 
 final $Default = TypesTableStory(
-  name: 'Default',
   setup: (context, child, args) {
     return Container(
       decoration: BoxDecoration(

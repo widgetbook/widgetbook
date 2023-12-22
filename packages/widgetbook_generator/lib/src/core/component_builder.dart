@@ -35,7 +35,16 @@ class ComponentBuilder {
                 {'path': literalString(navPath)},
               ),
               'stories': literalList(
-                stories.map((story) => refer(story.name)).toList(),
+                stories
+                    .map(
+                      (story) => refer(story.name).property('init').call(
+                        [],
+                        {
+                          'name': literalString(story.name.substring(1)),
+                        },
+                      ),
+                    )
+                    .toList(),
               ),
             },
           ),
