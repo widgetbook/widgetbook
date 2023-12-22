@@ -10,11 +10,13 @@ class ComponentBuilder {
     this.widgetType,
     this.argsType,
     this.stories,
+    this.path,
   );
 
   final DartType widgetType;
   final DartType argsType;
   final List<TopLevelVariableElement> stories;
+  final String path;
 
   Code build() {
     return declareFinal('${widgetType.nonNullableName}Component')
@@ -58,8 +60,7 @@ class ComponentBuilder {
   /// For example, `package:my_app/src/widgets/foo/bar.dart`
   /// will be converted to `widgets/foo`.
   String get navPath {
-    final uri = widgetType.element!.source!.uri.toString();
-    final directory = p.dirname(uri);
+    final directory = p.dirname(path);
     final parts = p.split(directory);
     final hasSrc = parts.length >= 2 && parts[1] == 'src';
 

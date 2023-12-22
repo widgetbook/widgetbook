@@ -5,9 +5,7 @@ import 'types_table.dart';
 
 part 'types_table.stories.book.dart';
 
-final meta = Meta<TypesTable>(
-  path: '[sam]/stories',
-);
+final meta = Meta<TypesTable>();
 
 final $Default = TypesTableStory(
   setup: (context, child, args) {

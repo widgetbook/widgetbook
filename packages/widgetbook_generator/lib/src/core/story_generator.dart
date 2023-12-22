@@ -27,12 +27,14 @@ class StoryGenerator extends Generator {
     final metaType = metaVariable.type as InterfaceType;
     final widgetType = metaType.typeArguments.first;
     final argsType = metaType.typeArguments.last;
+    final path = buildStep.inputId.path;
 
     final genLib = Library(
       (b) => b
         ..body.addAll(
           [
-            ComponentBuilder(widgetType, argsType, storiesVariables).build(),
+            ComponentBuilder(widgetType, argsType, storiesVariables, path)
+                .build(),
             ScenarioTypedefBuilder(widgetType, argsType).build(),
             StoryClassBuilder(widgetType, argsType).build(),
             ArgsClassBuilder(widgetType, argsType).build(),
