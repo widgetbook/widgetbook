@@ -3,6 +3,7 @@
 - **REFACTOR**: Wrap workbench with `Scaffold`. ([#1091](https://github.com/widgetbook/widgetbook/pull/1091))
 - **FIX**: Update `DoubleInputField` regex to accept more digits before the decimal point. ([#1117](https://github.com/widgetbook/widgetbook/pull/1117))
 - **FIX**: Use `T` codecs for `NumInputField`; to differentiate between the parsing of `double` & `int`. ([#1118](https://github.com/widgetbook/widgetbook/pull/1118))
+- **FIX**: Allow negative numbers for numeric field. ([#1119](https://github.com/widgetbook/widgetbook/pull/1119))
 
 ## 3.7.0
 
