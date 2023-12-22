@@ -5,9 +5,7 @@ import 'label_badge.dart';
 
 part 'label_badge.stories.book.dart';
 
-final meta = MetaWithArgs<LabelBadge, NumericBadgeInput>(
-  path: '[sam]/stories',
-);
+final meta = MetaWithArgs<LabelBadge, NumericBadgeInput>();
 
 LabelBadge argsBuilder(
   BuildContext context,

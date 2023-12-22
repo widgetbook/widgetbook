@@ -4,7 +4,9 @@ import 'package:widgetbook/widgetbook.dart';
 
 part 'nullable_setting.stories.book.dart';
 
-final meta = Meta<NullableSetting>();
+final meta = Meta<NullableSetting>(
+  path: 'widgetbook/settings',
+);
 
 final $Default = NullableSettingStory(
   args: NullableSettingArgs(

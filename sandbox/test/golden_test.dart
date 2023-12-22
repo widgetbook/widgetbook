@@ -1,7 +1,7 @@
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/material.dart';
-import 'package:sandbox/next/types_table.dart';
-import 'package:sandbox/next/types_table.stories.dart';
+import 'package:sandbox/[sam]/types_table.dart';
+import 'package:sandbox/[sam]/types_table.stories.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 void main() {
