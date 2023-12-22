@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **REFACTOR**: Wrap workbench with `Scaffold`. ([#1091](https://github.com/widgetbook/widgetbook/pull/1091))
+- **FIX**: Update `DoubleInputField` regex to accept more digits before the decimal point. ([#1117](https://github.com/widgetbook/widgetbook/pull/1117))
 
 ## 3.7.0
 
