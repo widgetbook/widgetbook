@@ -63,9 +63,7 @@ The Story-Arg-Mode architecture or "SAM" (_inspired by [Samwise Gamgee](https://
 1. Add a new story to the `my_cool_widget.stories.dart` file:
 
    ```dart
-   final $Primary = MyCoolWidgetStory(
-     name: 'Default',
-   );
+   final $Primary = MyCoolWidgetStory();
    ```
 
    <Info>The `$` prefix is used to indicate that the variable is a story.</Info>
@@ -130,7 +128,6 @@ Then the generated `CoolButtonStory` class can accept `CoolButtonArgs` as follow
 final meta = Meta<CoolButton>();
 
 final $Primary = CoolButtonStory(
-  name: 'Primary',
   args: CoolButtonArgs(
     text: StringArg('Hello World'),
     color: ColorArg(Colors.blue),
@@ -138,7 +135,6 @@ final $Primary = CoolButtonStory(
 );
 
 final $Default = CoolButtonStory(
-  name: 'Default',
   args: CoolButtonArgs(
     text: Arg.fixed('constant text'), // Constant Arg (no knob)
     // color: uses the default value from the constructor
@@ -203,7 +199,6 @@ class CustomInputs {
 final meta = MetaWithArgs<CoolWidget, CustomInputs>();
 
 final $Default = CoolWidgetStory(
-  name: 'Default',
   // 3. Specify how to convert the args (CustomInputsArgs) to a widget (CoolWidget)
   argsBuilder: (context, args) => CoolWidget(
     text: args.number.resolve(context).toString(),
@@ -283,7 +278,6 @@ To make the process of creating new stories easier, you can add the following sn
          "final meta = Meta<${1:Widget}>();",
          "",
          "final \\$Default = ${1:Widget}Story(",
-         "  name: 'Default',",
          "  args: ${1:Widget}Args(),",
          ");"
        ]
@@ -306,7 +300,6 @@ To make the process of creating new stories easier, you can add the following sn
    final meta = Meta<$WIDGET$>();
 
    final $Default = $WIDGET$Story(
-     name: 'Default',
      args: $WIDGET$Args(),
    );
    ```

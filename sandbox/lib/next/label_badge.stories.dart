@@ -19,19 +19,18 @@ LabelBadge argsBuilder(
 }
 
 final $Primary = LabelBadgeStory(
-  name: 'Primary',
+  argsBuilder: argsBuilder,
   args: NumericBadgeInputArgs(
     number: const IntArg(1),
   ),
-  argsBuilder: argsBuilder,
 );
 
 final $Secondary = LabelBadgeStory(
-  name: 'Secondary',
+  name: 'Custom Name',
+  argsBuilder: argsBuilder,
   args: NumericBadgeInputArgs(
     number: const IntArg(2),
   ),
-  argsBuilder: argsBuilder,
 );
 
 class NumericBadgeInput {

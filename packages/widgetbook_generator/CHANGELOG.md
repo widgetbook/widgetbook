@@ -5,6 +5,7 @@
 - **REFACTOR**: Change telemetry to SAM. ([#1105](https://github.com/widgetbook/widgetbook/pull/1105))
 - **BREAKING**: Remove `use_case_builder` and `app_builder`. ([#1107](https://github.com/widgetbook/widgetbook/pull/1107))
 - **BREAKING**: Remove `experimental_` prefix from builders, and change them to be opt-out instead of opt-in. ([#1108](https://github.com/widgetbook/widgetbook/pull/1108))
+- **FEAT**: Generate `Story.name` based on the variable name. ([#1113](https://github.com/widgetbook/widgetbook/pull/1113))
 
 ## 3.7.0
 

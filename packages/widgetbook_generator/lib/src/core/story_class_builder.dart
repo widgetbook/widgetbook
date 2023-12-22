@@ -41,8 +41,7 @@ class StoryClassBuilder {
                   (b) => b
                     ..name = 'name'
                     ..named = true
-                    ..toSuper = true
-                    ..required = true,
+                    ..toSuper = true,
                 ),
                 Parameter(
                   (b) => b
@@ -116,6 +115,36 @@ class StoryClassBuilder {
                 );
               }
             },
+          ),
+        )
+        ..methods.add(
+          Method(
+            (b) => b
+              ..name = 'init'
+              ..annotations.add(refer('override'))
+              ..optionalParameters.add(
+                Parameter(
+                  (b) => b
+                    ..name = 'name'
+                    ..named = true
+                    ..required = true
+                    ..type = refer('String'),
+                ),
+              )
+              ..returns = refer(
+                '${widgetType.nonNullableName}Story',
+              )
+              ..lambda = true
+              ..body = InvokeExpression.newOf(
+                refer('${widgetType.nonNullableName}Story'),
+                [],
+                {
+                  'name': refer('\$name').ifNullThen(refer('name')),
+                  'setup': refer('setup'),
+                  'args': refer('args'),
+                  'argsBuilder': refer('argsBuilder'),
+                },
+              ).code,
           ),
         ),
     );
