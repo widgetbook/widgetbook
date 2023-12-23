@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  widgetbook: ^3.7.1
+  widgetbook: ^4.0.0-alpha.1
 
 dev_dependencies:
   alchemist: ^0.7.0
