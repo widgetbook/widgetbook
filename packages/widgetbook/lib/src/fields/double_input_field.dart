@@ -15,7 +15,7 @@ class DoubleInputField extends NumInputField<double> {
           type: FieldType.doubleInput,
           formatters: [
             FilteringTextInputFormatter.allow(
-              RegExp(r'[0-9](.[0-9]*)?'),
+              RegExp(r'^-?\d*\.?\d*'),
             ),
           ],
         );

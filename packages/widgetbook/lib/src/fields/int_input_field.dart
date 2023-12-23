@@ -12,7 +12,9 @@ class IntInputField extends NumInputField<int> {
   }) : super(
           type: FieldType.intInput,
           formatters: [
-            FilteringTextInputFormatter.digitsOnly,
+            FilteringTextInputFormatter.allow(
+              RegExp(r'^-?\d*'),
+            ),
           ],
         );
 }
