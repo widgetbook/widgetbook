@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-alpha.1
 
 - **FEAT**: Introduce SAM navigation via `components` parameter in `Widgetbook` constructor. ([#1103](https://github.com/widgetbook/widgetbook/pull/1103))
 - **BREAKING**: Require Dart 3.0 and Flutter 3.10. ([#1099](https://github.com/widgetbook/widgetbook/pull/1099))
