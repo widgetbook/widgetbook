@@ -16,6 +16,7 @@ class BuildRequest {
     required this.file,
     required this.takeScreenshots,
     required this.useCases,
+    required this.baseSha,
   });
 
   final String apiKey;
@@ -29,6 +30,7 @@ class BuildRequest {
   // Experimental Visual Diff
   final bool takeScreenshots;
   final List<ChangedUseCase>? useCases;
+  final String? baseSha;
 
   Future<FormData> toFormData() async {
     return FormData.fromMap({
@@ -45,6 +47,7 @@ class BuildRequest {
       ),
       'take-screenshots': takeScreenshots,
       'use-cases': useCases?.map((x) => x.toJson()).toList(),
+      'base-sha': baseSha,
     });
   }
 }

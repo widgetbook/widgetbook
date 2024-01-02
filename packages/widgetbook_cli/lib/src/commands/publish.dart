@@ -272,6 +272,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
         file: zipFile,
         takeScreenshots: args.visualDiff,
         useCases: useCases,
+        baseSha: args.baseBranch?.sha,
       ),
     );
 
