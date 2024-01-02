@@ -33,11 +33,10 @@ holds the theme data and exposes it through a static of method. Here's an exampl
 ```dart
 class AppTheme extends InheritedWidget {
   const AppTheme({
-    Key? key,
     required this.data,
     required Widget child,
+    super.key,
   }) : super(
-          key: key,
           child: child,
         );
 
