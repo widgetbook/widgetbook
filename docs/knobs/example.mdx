@@ -95,7 +95,6 @@ void main() {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
-    Key? key,
     required this.title,
     this.incrementBy = 1,
     this.countLabel,
@@ -104,7 +103,8 @@ class MyHomePage extends StatefulWidget {
     this.color = Colors.blue
     this.duration = Duration.zero,
     this.dateTime,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final int incrementBy;
@@ -173,7 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class KnobsExample extends StatelessWidget {
-  const KnobsExample({Key? key}) : super(key: key);
+  const KnobsExample({super.key});
 
   @override
   Widget build(BuildContext context) {

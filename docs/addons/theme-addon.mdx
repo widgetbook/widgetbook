@@ -139,11 +139,10 @@ accomplished using an `InheritedWidget`. For instance, you could define an AppTh
 ```dart title="Example: AppTheme InheritedWidget"
 class AppTheme extends InheritedWidget {
   const AppTheme({
-    Key? key,
     required this.data,
     required Widget child,
+    super.key,
   }) : super(
-          key: key,
           child: child,
         );
 
