@@ -14,9 +14,6 @@ class BuildRequest {
     required this.actor,
     required this.provider,
     required this.file,
-    required this.takeScreenshots,
-    required this.useCases,
-    required this.baseSha,
   });
 
   final String apiKey;
@@ -27,27 +24,51 @@ class BuildRequest {
   final String provider;
   final File file;
 
-  // Experimental Visual Diff
-  final bool takeScreenshots;
-  final List<ChangedUseCase>? useCases;
-  final String? baseSha;
-
-  Future<FormData> toFormData() async {
-    return FormData.fromMap({
+  Map<String, dynamic> toJson() {
+    return {
       'api-key': apiKey,
       'branch': branchName,
       'repository': repositoryName,
       'commit': commitSha,
       'actor': actor,
       'version-control-provider': provider,
+    };
+  }
+
+  Future<FormData> toFormData() async {
+    return FormData.fromMap({
+      ...toJson(),
       'file': await MultipartFile.fromFile(
         file.path,
         filename: basename(file.path),
         contentType: MediaType.parse('application/zip'),
       ),
-      'take-screenshots': takeScreenshots,
-      'use-cases': useCases?.map((x) => x.toJson()).toList(),
-      'base-sha': baseSha,
     });
+  }
+}
+
+class BuildRequestNext extends BuildRequest {
+  const BuildRequestNext({
+    required super.apiKey,
+    required super.branchName,
+    required super.repositoryName,
+    required super.commitSha,
+    required super.actor,
+    required super.provider,
+    required super.file,
+    required this.baseSha,
+    required this.useCases,
+  });
+
+  final String baseSha;
+  final List<UseCaseMetadata> useCases;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      ...super.toJson(),
+      'base-sha': baseSha,
+      'use-cases': useCases.map((x) => x.toJson()).toList(),
+    };
   }
 }

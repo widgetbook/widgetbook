@@ -36,7 +36,32 @@ class WidgetbookHttpClient {
 
     try {
       final response = await client.post<Map<String, dynamic>>(
-        '/reviews',
+        'v1/reviews',
+        data: request.toJson(),
+        options: Options(
+          headers: versions?.toHeaders(),
+        ),
+      );
+
+      return ReviewResponse.fromJson(response.data!);
+    } catch (e) {
+      final message = e is DioException //
+          ? e.response?.toString()
+          : e.toString();
+
+      throw WidgetbookApiException(
+        message: message,
+      );
+    }
+  }
+
+  Future<ReviewResponse> uploadReviewNext(
+    VersionsMetadata? versions,
+    ReviewRequestNext request,
+  ) async {
+    try {
+      final response = await client.post<Map<String, dynamic>>(
+        'v1.5/reviews',
         data: request.toJson(),
         options: Options(
           headers: versions?.toHeaders(),
@@ -63,7 +88,34 @@ class WidgetbookHttpClient {
     try {
       final formData = await request.toFormData();
       final response = await client.post<Map<String, dynamic>>(
-        '/builds/deploy',
+        'v1/builds/deploy',
+        data: formData,
+        options: Options(
+          headers: versions?.toHeaders(),
+        ),
+      );
+
+      return BuildResponse.fromJson(response.data!);
+    } catch (e) {
+      final message = e is DioException //
+          ? e.response?.toString()
+          : e.toString();
+
+      throw WidgetbookApiException(
+        message: message,
+      );
+    }
+  }
+
+  /// Uploads the build .zip and use-cases file to the Widgetbook Cloud backend.
+  Future<BuildResponse> uploadBuildNext(
+    VersionsMetadata? versions,
+    BuildRequestNext request,
+  ) async {
+    try {
+      final formData = await request.toFormData();
+      final response = await client.post<Map<String, dynamic>>(
+        'v1.5/builds/deploy',
         data: formData,
         options: Options(
           headers: versions?.toHeaders(),

@@ -13,7 +13,6 @@ import '../../metadata.dart';
 import '../api/api.dart';
 import '../core/core.dart';
 import '../git/git.dart';
-import '../models/changed_use_case.dart';
 import '../utils/executable_manager.dart';
 import '../utils/utils.dart';
 import 'publish_args.dart';
@@ -116,7 +115,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
       throw RepositoryNotFoundException();
     }
 
-    final visualDiff = results['experimental-visual-diff'] != null;
+    final visualDiff = results['experimental-visual-diff'] ?? false;
 
     return PublishArgs(
       apiKey: apiKey,
@@ -127,7 +126,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
       actor: actor,
       repository: repoName,
       baseBranch: baseBranch,
-      visualDiff: visualDiff,
+      visualDiff: visualDiff as bool,
     );
   }
 
@@ -247,34 +246,33 @@ class PublishCommand extends CliCommand<PublishArgs> {
       );
     }
 
-    final useCases = !args.visualDiff //
-        ? null
-        : await useCaseReader.read(args.path).then(
-              (value) => value
-                  .map(
-                    (useCase) => ChangedUseCase.fromUseCase(
-                      useCase: useCase,
-                      modification: Modification.changed, // Redundant
-                    ),
-                  )
-                  .toList(),
-            );
-
-    final response = await _client.uploadBuild(
-      versions,
-      BuildRequest(
-        apiKey: args.apiKey,
-        branchName: args.branch,
-        repositoryName: args.repository,
-        commitSha: args.commit,
-        actor: args.actor,
-        provider: args.vendor,
-        file: zipFile,
-        takeScreenshots: args.visualDiff,
-        useCases: useCases,
-        baseSha: args.baseBranch?.sha,
-      ),
-    );
+    final response = args.visualDiff
+        ? await _client.uploadBuildNext(
+            versions,
+            BuildRequestNext(
+              apiKey: args.apiKey,
+              branchName: args.branch,
+              repositoryName: args.repository,
+              commitSha: args.commit,
+              actor: args.actor,
+              provider: args.vendor,
+              file: zipFile,
+              useCases: await useCaseReader.read(args.path),
+              baseSha: args.baseBranch!.sha,
+            ),
+          )
+        : await _client.uploadBuild(
+            versions,
+            BuildRequest(
+              apiKey: args.apiKey,
+              branchName: args.branch,
+              repositoryName: args.repository,
+              commitSha: args.commit,
+              actor: args.actor,
+              provider: args.vendor,
+              file: zipFile,
+            ),
+          );
 
     for (final task in response.tasks) {
       if (task.status == UploadTaskStatus.success) {
@@ -297,6 +295,25 @@ class PublishCommand extends CliCommand<PublishArgs> {
     required BuildResponse buildResponse,
     required VersionsMetadata? versions,
   }) async {
+    if (args.visualDiff) {
+      final response = await _client.uploadReviewNext(
+        versions,
+        ReviewRequestNext(
+          apiKey: args.apiKey,
+          buildId: buildResponse.build,
+          projectId: buildResponse.project,
+          baseBranch: args.baseBranch!.fullName,
+          headBranch: args.branch,
+          baseSha: args.baseBranch!.sha,
+          headSha: args.commit,
+        ),
+      );
+
+      progress.complete('Review upload completed');
+
+      return response;
+    }
+
     final genDirPath = p.join(args.path, '.dart_tool', 'build', 'generated');
     final genDir = fileSystem.directory(genDirPath);
 
@@ -311,19 +328,11 @@ class PublishCommand extends CliCommand<PublishArgs> {
     }
 
     final useCases = await useCaseReader.read(args.path);
-    final reviewUseCases = args.visualDiff
-        ? useCases
-            .map(
-              (useCase) => ChangedUseCase.fromUseCase(
-                useCase: useCase,
-                modification: Modification.changed, // Redundant
-              ),
-            )
-            .toList()
-        : useCaseReader.compare(
-            useCases: useCases,
-            diffs: await context.repository!.diff(args.baseBranch!.fullName),
-          );
+    final diffs = await context.repository!.diff(args.baseBranch!.fullName);
+    final reviewUseCases = useCaseReader.compare(
+      useCases: useCases,
+      diffs: diffs,
+    );
 
     if (reviewUseCases.isEmpty) {
       logger.err('Could not find any changed use-cases files.');
@@ -345,7 +354,6 @@ class PublishCommand extends CliCommand<PublishArgs> {
         headBranch: args.branch,
         baseSha: args.baseBranch!.sha,
         headSha: args.commit,
-        takeScreenshots: args.visualDiff,
       ),
     );
 
