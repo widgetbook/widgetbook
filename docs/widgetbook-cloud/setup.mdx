@@ -10,9 +10,10 @@ If you don't have one, [check out the steps to get signed up](/widgetbook-cloud/
 1. [Create a company](/widgetbook-cloud/setup#how-to-create-a-company)
 2. [Create a project](/widgetbook-cloud/setup#how-to-create-a-project)
 3. [Create an API key](/widgetbook-cloud/setup#how-to-create-an-api-key)
-4. [Connect our GitHub app](/widgetbook-cloud/setup#how-to-connect-our-github-app)
-5. [Add workflows for CI/CD](/widgetbook-cloud/setup#how-to-add-workflows-for-cicd)
-6. [Workflow for the first review](/widgetbook-cloud/setup#workflow-for-the-first-review)
+4. [Invite users](/widgetbook-cloud/setup#how-to-invite-users)
+5. [Connect our GitHub app](/widgetbook-cloud/setup#how-to-connect-our-github-app)
+6. [Add workflows for CI/CD](/widgetbook-cloud/setup#how-to-add-workflows-for-cicd)
+7. [Workflow for the first review](/widgetbook-cloud/setup#workflow-for-the-first-review)
 
 ## How to create a company
 
@@ -36,6 +37,26 @@ If you don't have one, [check out the steps to get signed up](/widgetbook-cloud/
 4. If you are not a project owner but need the API key, ask your project owner to promote you from member to owner. For more information on member management, see [Member Management](/widgetbook-cloud/projects#member-management).
 5. To create a new project, [create a company](/widgetbook-cloud/setup#how-to-create-a-company) first.
 6. On the project's detail page, a card with a button to fetch the API key is displayed. Click the button to copy the API key to your clipboard.
+
+## How to invite users
+
+### Member Management
+
+Company admins can invite and remove users from the company. To modify user access, navigate to your company's page and click on _View Members_. Follow the user interface instructions to adjust these lists.
+
+Admins can add users via email addresses, even if they have not yet registered with Widgetbook Cloud. These users will have a _Pending_ status and will become active once they register for Widgetbook Cloud via the invitation email they receive.
+
+Please note that adding users may affect your Stripe billing charges.
+
+### Roles
+
+Widgetbook Cloud users have the following roles:
+
+| Role    | Permissions                                                                                                                                            |
+|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Editor  | Can view project branches and reviews, participate in reviews by accepting/rejecting use-cases and writing comments, and leave projects and companies. |
+| Manager | In addition to Editor privileges, a Manager can update/delete projects and manage project API keys.                                                    |
+| Admin   | In addition to Manager privileges, an Admin can manage companies and their members and create projects.                                                |
 
 ## How to connect our GitHub app
 
