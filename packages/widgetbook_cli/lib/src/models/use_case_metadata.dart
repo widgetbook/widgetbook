@@ -57,15 +57,12 @@ class UseCaseMetadata {
   }
 
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'name': name,
-      'useCaseName': useCaseName,
+    return {
+      'name': useCaseName,
       'componentName': componentName,
-      'importStatement': importStatement,
       'navPath': navPath,
-      'componentImportStatement': componentImportStatement,
       'componentDefinitionPath': componentDefinitionPath,
-      'useCaseDefinitionPath': useCaseDefinitionPath,
+      'componentImportStatement': componentImportStatement,
       'designLink': designLink,
     };
   }
