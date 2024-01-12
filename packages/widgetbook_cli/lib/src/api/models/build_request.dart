@@ -60,7 +60,7 @@ class BuildRequestNext extends BuildRequest {
     required this.useCases,
   });
 
-  final String baseSha;
+  final String? baseSha;
   final List<UseCaseMetadata> useCases;
 
   @override

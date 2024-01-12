@@ -258,7 +258,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
               provider: args.vendor,
               file: zipFile,
               useCases: await useCaseReader.read(args.path),
-              baseSha: args.baseBranch!.sha,
+              baseSha: args.baseBranch?.sha,
             ),
           )
         : await _client.uploadBuild(
