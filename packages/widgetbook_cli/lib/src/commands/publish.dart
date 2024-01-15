@@ -220,7 +220,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
 
     progress.update('Generating zip');
     final encoder = zipEncoder;
-    final zipFile = await encoder.zip(buildDir);
+    final zipFile = await encoder.zip(buildDir, 'web.zip');
 
     if (zipFile == null) {
       logger.err('Could not create .zip file.');
