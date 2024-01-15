@@ -68,12 +68,6 @@ class PublishCommand extends CliCommand<PublishArgs> {
         'base-branch',
         help:
             'The base branch of the pull-request. For example, main or master.',
-      )
-      ..addFlag(
-        'experimental-visual-diff',
-        negatable: false,
-        help: 'Runs golden tests on Widgetbook Cloud to detect changes. '
-            '(experimental ✨)',
       );
   }
 
@@ -115,8 +109,6 @@ class PublishCommand extends CliCommand<PublishArgs> {
       throw RepositoryNotFoundException();
     }
 
-    final visualDiff = results['experimental-visual-diff'] ?? false;
-
     return PublishArgs(
       apiKey: apiKey,
       branch: branch,
@@ -126,7 +118,6 @@ class PublishCommand extends CliCommand<PublishArgs> {
       actor: actor,
       repository: repoName,
       baseBranch: baseBranch,
-      visualDiff: visualDiff as bool,
     );
   }
 
@@ -229,7 +220,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
 
     progress.update('Generating zip');
     final encoder = zipEncoder;
-    final zipFile = await encoder.zip(buildDir);
+    final zipFile = await encoder.zip(buildDir, 'web.zip');
 
     if (zipFile == null) {
       logger.err('Could not create .zip file.');
@@ -238,41 +229,18 @@ class PublishCommand extends CliCommand<PublishArgs> {
 
     progress.update('Uploading build');
 
-    if (args.visualDiff) {
-      logger.warn(
-        tag: '',
-        '\n\n✨ Experimental Visual Diff is enabled.\n'
-        'This feature is still in development and might not work as expected.\n',
-      );
-    }
-
-    final response = args.visualDiff
-        ? await _client.uploadBuildNext(
-            versions,
-            BuildRequestNext(
-              apiKey: args.apiKey,
-              branchName: args.branch,
-              repositoryName: args.repository,
-              commitSha: args.commit,
-              actor: args.actor,
-              provider: args.vendor,
-              file: zipFile,
-              useCases: await useCaseReader.read(args.path),
-              baseSha: args.baseBranch?.sha,
-            ),
-          )
-        : await _client.uploadBuild(
-            versions,
-            BuildRequest(
-              apiKey: args.apiKey,
-              branchName: args.branch,
-              repositoryName: args.repository,
-              commitSha: args.commit,
-              actor: args.actor,
-              provider: args.vendor,
-              file: zipFile,
-            ),
-          );
+    final response = await _client.uploadBuild(
+      versions,
+      BuildRequest(
+        apiKey: args.apiKey,
+        branchName: args.branch,
+        repositoryName: args.repository,
+        commitSha: args.commit,
+        actor: args.actor,
+        provider: args.vendor,
+        file: zipFile,
+      ),
+    );
 
     for (final task in response.tasks) {
       if (task.status == UploadTaskStatus.success) {
@@ -295,25 +263,6 @@ class PublishCommand extends CliCommand<PublishArgs> {
     required BuildResponse buildResponse,
     required VersionsMetadata? versions,
   }) async {
-    if (args.visualDiff) {
-      final response = await _client.uploadReviewNext(
-        versions,
-        ReviewRequestNext(
-          apiKey: args.apiKey,
-          buildId: buildResponse.build,
-          projectId: buildResponse.project,
-          baseBranch: args.baseBranch!.fullName,
-          headBranch: args.branch,
-          baseSha: args.baseBranch!.sha,
-          headSha: args.commit,
-        ),
-      );
-
-      progress.complete('Review upload completed');
-
-      return response;
-    }
-
     final genDirPath = p.join(args.path, '.dart_tool', 'build', 'generated');
     final genDir = fileSystem.directory(genDirPath);
 

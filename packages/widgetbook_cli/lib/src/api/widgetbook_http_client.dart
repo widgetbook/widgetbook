@@ -1,7 +1,14 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:file/file.dart';
 
 import '../core/core.dart';
 import '../utils/utils.dart';
+import 'models/build_draft_request.dart';
+import 'models/build_draft_response.dart';
+import 'models/build_ready_request.dart';
+import 'models/build_ready_response.dart';
 import 'models/build_request.dart';
 import 'models/build_response.dart';
 import 'models/review_request.dart';
@@ -107,22 +114,20 @@ class WidgetbookHttpClient {
     }
   }
 
-  /// Uploads the build .zip and use-cases file to the Widgetbook Cloud backend.
-  Future<BuildResponse> uploadBuildNext(
+  Future<BuildDraftResponse> createBuildDraft(
     VersionsMetadata? versions,
-    BuildRequestNext request,
+    BuildDraftRequest request,
   ) async {
     try {
-      final formData = await request.toFormData();
       final response = await client.post<Map<String, dynamic>>(
-        'v1.5/builds/deploy',
-        data: formData,
+        'v1.5/builds/draft',
+        data: request.toJson(),
         options: Options(
           headers: versions?.toHeaders(),
         ),
       );
 
-      return BuildResponse.fromJson(response.data!);
+      return BuildDraftResponse.fromJson(response.data!);
     } catch (e) {
       final message = e is DioException //
           ? e.response?.toString()
@@ -132,5 +137,40 @@ class WidgetbookHttpClient {
         message: message,
       );
     }
+  }
+
+  Future<BuildReadyResponse> submitBuildDraft(
+    BuildReadyRequest request,
+  ) async {
+    try {
+      final response = await client.post<Map<String, dynamic>>(
+        'v1.5/builds/submit',
+        data: request.toJson(),
+      );
+
+      return BuildReadyResponse.fromJson(response.data!);
+    } catch (e) {
+      final message = e is DioException //
+          ? e.response?.toString()
+          : e.toString();
+
+      throw WidgetbookApiException(
+        message: message,
+      );
+    }
+  }
+
+  Future<void> uploadBuildFile(String signedUrl, File zipFile) {
+    // File name must match the name in the signed URL
+    return client.put<void>(
+      signedUrl,
+      data: zipFile.openRead(),
+      options: Options(
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/zip',
+          HttpHeaders.contentLengthHeader: zipFile.lengthSync(),
+        },
+      ),
+    );
   }
 }

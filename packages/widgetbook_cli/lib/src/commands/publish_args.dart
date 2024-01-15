@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import '../git/git.dart';
 
 /// Typed representation of the arguments passed to the publish command.
@@ -13,7 +11,6 @@ class PublishArgs {
     required this.actor,
     required this.repository,
     this.baseBranch,
-    this.visualDiff = false,
   });
 
   final String apiKey;
@@ -24,9 +21,6 @@ class PublishArgs {
   final String actor;
   final String repository;
   final Reference? baseBranch;
-
-  @experimental
-  final bool visualDiff;
 
   bool get hasReview => baseBranch != null;
 
@@ -41,8 +35,7 @@ class PublishArgs {
         other.vendor == vendor &&
         other.actor == actor &&
         other.repository == repository &&
-        other.baseBranch == baseBranch &&
-        other.visualDiff == visualDiff;
+        other.baseBranch == baseBranch;
   }
 
   @override
@@ -54,7 +47,6 @@ class PublishArgs {
         vendor.hashCode ^
         actor.hashCode ^
         repository.hashCode ^
-        baseBranch.hashCode ^
-        visualDiff.hashCode;
+        baseBranch.hashCode;
   }
 }
