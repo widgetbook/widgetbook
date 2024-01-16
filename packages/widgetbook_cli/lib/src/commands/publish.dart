@@ -34,7 +34,6 @@ class PublishCommand extends CliCommand<PublishArgs> {
           name: 'publish',
           description: 'Publish a new build',
         ) {
-    progress = logger.progress('Publishing Widgetbook');
     argParser
       ..addOption(
         'path',
@@ -76,7 +75,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
   final ZipEncoder zipEncoder;
   final UseCaseReader useCaseReader;
   final WidgetbookHttpClient _client;
-  late final Progress progress;
+  late final Progress progress = logger.progress('Publishing Widgetbook');
 
   @override
   Future<PublishArgs> parseResults(Context context, ArgResults results) async {
