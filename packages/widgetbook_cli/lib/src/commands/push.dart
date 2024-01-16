@@ -59,6 +59,8 @@ class PushCommand extends CliCommand<PushArgs> {
   @override
   FutureOr<int> runWith(Context context, PushArgs args) async {
     final versions = await getVersions(args);
+
+    final draftProgress = logger.progress('Creating build draft');
     final buildDraft = await client.createBuildDraft(
       versions,
       BuildDraftRequest(
@@ -75,13 +77,25 @@ class PushCommand extends CliCommand<PushArgs> {
 
     final buildId = buildDraft.buildId;
     final signedUrl = buildDraft.storageUrl;
+    draftProgress.complete('Build draft [$buildId] created');
 
+    final archiveProgress = logger.progress('Creating build archive');
     final buildDirPath = p.join('build', 'web'); // TODO: custom path
     final buildDir = fileSystem.directory(buildDirPath);
     final zipFile = await zipEncoder.zip(buildDir, '$buildId.zip');
 
-    await client.uploadBuildFile(signedUrl, zipFile!); // TODO: handle null
+    if (zipFile == null) {
+      archiveProgress.fail('Failed to create build archive');
+      return 23;
+    }
 
+    archiveProgress.complete('Build archive created at ${zipFile.path}');
+
+    final uploadProgress = logger.progress('Uploading build archive');
+    await client.uploadBuildFile(signedUrl, zipFile);
+    uploadProgress.complete('Build archive uploaded');
+
+    final submitProgress = logger.progress('Submitting build');
     final response = await client.submitBuildDraft(
       BuildReadyRequest(
         apiKey: args.apiKey,
@@ -89,7 +103,7 @@ class PushCommand extends CliCommand<PushArgs> {
       ),
     );
 
-    logger.info('Build $buildId is ready at ${response.buildUrl}');
+    submitProgress.complete('Build ready at ${response.buildUrl}');
 
     return 0;
   }
