@@ -74,26 +74,13 @@ class PushCommand extends CliCommand<PushArgs> {
     );
 
     final buildId = buildDraft.buildId;
-    final buildDirPath = p.join('build', 'web'); // TODO: custom path
-    final buildDir = fileSystem.directory(buildDirPath);
-
-    // Modify index.html
-    final indexFile = buildDir.childFile('index.html');
-    final indexContent = await indexFile.readAsString();
-    final regex = RegExp(r'<base href=".+" */?>');
-    final modifiedContent = indexContent.replaceAll(
-      regex,
-      '<base href="/${buildDraft.buildId}/">',
-    );
-
-    await indexFile.writeAsString(modifiedContent); // TODO: avoid overwriting
-
-    final zipFile = await zipEncoder.zip(buildDir, '$buildId.zip');
     final signedUrl = buildDraft.storageUrl;
 
-    await client.uploadBuildFile(signedUrl, zipFile!); // TODO: handle null
+    final buildDirPath = p.join('build', 'web'); // TODO: custom path
+    final buildDir = fileSystem.directory(buildDirPath);
+    final zipFile = await zipEncoder.zip(buildDir, '$buildId.zip');
 
-    print('Uploaded build $buildId to $signedUrl');
+    await client.uploadBuildFile(signedUrl, zipFile!); // TODO: handle null
 
     final response = await client.submitBuildDraft(
       BuildReadyRequest(
