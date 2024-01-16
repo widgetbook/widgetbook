@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:args/src/arg_results.dart';
-
 import 'package:file/file.dart';
-
 import 'package:file/local.dart';
 import 'package:path/path.dart' as p;
 import 'package:process/process.dart';
-import 'package:yaml/yaml.dart';
 
 import '../../widgetbook_cli.dart';
 import '../api/models/build_draft_request.dart';
@@ -58,7 +55,11 @@ class PushCommand extends CliCommand<PushArgs> {
 
   @override
   FutureOr<int> runWith(Context context, PushArgs args) async {
-    final versions = await getVersions(args);
+    final lockPath = p.join('pubspec.lock'); // TODO: custom path
+    final versions = await VersionsMetadata.from(
+      lockFile: fileSystem.file(lockPath),
+      flutterVersionOutput: await processManager.runFlutter(['--version']),
+    );
 
     final draftProgress = logger.progress('Creating build draft');
     final buildDraft = await client.createBuildDraft(
@@ -106,39 +107,5 @@ class PushCommand extends CliCommand<PushArgs> {
     submitProgress.complete('Build ready at ${response.buildUrl}');
 
     return 0;
-  }
-
-  /// Gets metadata about the currently used versions of Flutter and
-  /// all Widgetbook packages.
-  Future<VersionsMetadata?> getVersions(PushArgs args) async {
-    try {
-      final lockPath = p.join('pubspec.lock'); // TODO: custom path
-      final lockContent = await fileSystem.file(lockPath).readAsString();
-      final lockFile = loadYaml(lockContent) as YamlMap;
-      final packages = lockFile['packages'] as YamlMap;
-
-      return VersionsMetadata(
-        cli: packageVersion,
-        flutter: await getFlutterVersion(),
-        widgetbook: getPackageVersion(packages, 'widgetbook'),
-        annotation: getPackageVersion(packages, 'widgetbook_annotation'),
-        generator: getPackageVersion(packages, 'widgetbook_generator'),
-      );
-    } catch (_) {
-      return null;
-    }
-  }
-
-  Future<String?> getFlutterVersion() async {
-    final result = await processManager.runFlutter(['--version']);
-    final regex = RegExp(r'Flutter (\d+.\d+.\d+)');
-    final match = regex.firstMatch(result);
-
-    return match?.group(1);
-  }
-
-  String? getPackageVersion(YamlMap packages, String name) {
-    final package = packages[name] as YamlMap?;
-    return package?['version']?.toString();
   }
 }
