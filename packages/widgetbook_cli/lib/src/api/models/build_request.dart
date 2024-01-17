@@ -3,8 +3,6 @@ import 'package:file/file.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
 
-import '../../models/models.dart';
-
 class BuildRequest {
   const BuildRequest({
     required this.apiKey,
@@ -44,31 +42,5 @@ class BuildRequest {
         contentType: MediaType.parse('application/zip'),
       ),
     });
-  }
-}
-
-class BuildRequestNext extends BuildRequest {
-  const BuildRequestNext({
-    required super.apiKey,
-    required super.branchName,
-    required super.repositoryName,
-    required super.commitSha,
-    required super.actor,
-    required super.provider,
-    required super.file,
-    required this.baseSha,
-    required this.useCases,
-  });
-
-  final String? baseSha;
-  final List<UseCaseMetadata> useCases;
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      ...super.toJson(),
-      'base-sha': baseSha,
-      'use-cases': useCases.map((x) => x.toJson()).toList(),
-    };
   }
 }
