@@ -9,10 +9,14 @@ class StoryClassBuilder {
   StoryClassBuilder(
     this.widgetType,
     this.argsType,
+    this.hasSetup,
+    this.hasArgsBuilder,
   );
 
   final DartType widgetType;
   final DartType argsType;
+  final bool hasSetup;
+  final bool hasArgsBuilder;
 
   Iterable<ParameterElement> get params {
     return (argsType.element as ClassElement).constructors.first.parameters;
@@ -47,7 +51,8 @@ class StoryClassBuilder {
                   (b) => b
                     ..name = 'setup'
                     ..named = true
-                    ..toSuper = true,
+                    ..toSuper = true
+                    ..defaultTo = hasSetup ? refer('setup').code : null,
                 ),
                 Parameter(
                   (b) => b
@@ -64,7 +69,9 @@ class StoryClassBuilder {
                     ..name = 'argsBuilder'
                     ..named = true
                     ..toSuper = isCustomArgs
-                    ..required = isCustomArgs
+                    ..defaultTo =
+                        hasArgsBuilder ? refer('argsBuilder').code : null
+                    ..required = isCustomArgs && !hasArgsBuilder
                     ..type = isCustomArgs
                         ? null
                         : TypeReference(
@@ -139,10 +146,12 @@ class StoryClassBuilder {
                 refer('${widgetType.nonNullableName}Story'),
                 [],
                 {
-                  'name': refer('\$name').ifNullThen(refer('name')),
-                  'setup': refer('setup'),
-                  'args': refer('args'),
-                  'argsBuilder': refer('argsBuilder'),
+                  'name': refer('this').property('\$name').ifNullThen(
+                        refer('name'),
+                      ),
+                  'setup': refer('this').property('setup'),
+                  'args': refer('this').property('args'),
+                  'argsBuilder': refer('this').property('argsBuilder'),
                 },
               ).code,
           ),

@@ -29,6 +29,14 @@ class StoryGenerator extends Generator {
     final argsType = metaType.typeArguments.last;
     final path = buildStep.inputId.path;
 
+    final hasSetup = library.allElements
+        .whereType<FunctionElement>()
+        .any((element) => element.name == 'setup');
+
+    final hasArgsBuilder = library.allElements
+        .whereType<FunctionElement>()
+        .any((element) => element.name == 'argsBuilder');
+
     final genLib = Library(
       (b) => b
         ..body.addAll(
@@ -36,7 +44,12 @@ class StoryGenerator extends Generator {
             ComponentBuilder(widgetType, argsType, storiesVariables, path)
                 .build(),
             ScenarioTypedefBuilder(widgetType, argsType).build(),
-            StoryClassBuilder(widgetType, argsType).build(),
+            StoryClassBuilder(
+              widgetType,
+              argsType,
+              hasSetup,
+              hasArgsBuilder,
+            ).build(),
             ArgsClassBuilder(widgetType, argsType).build(),
           ],
         ),

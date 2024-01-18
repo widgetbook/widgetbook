@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Support default `setup` & `argsBuilder` via top-level definitions. ([#1130](https://github.com/widgetbook/widgetbook/pull/1130))
+
 ## 4.0.0-alpha.1
 
 - **BREAKING**: Require Dart 3.0. ([#1099](https://github.com/widgetbook/widgetbook/pull/1099))

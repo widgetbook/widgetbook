@@ -7,6 +7,20 @@ part 'label_badge.stories.book.dart';
 
 final meta = MetaWithArgs<LabelBadge, NumericBadgeInput>();
 
+// This will be used as the default `setup`
+Widget setup(
+  BuildContext context,
+  Widget child,
+  NumericBadgeInputArgs args,
+) {
+  return Container(
+    padding: const EdgeInsets.all(8),
+    color: Colors.grey[300],
+    child: child,
+  );
+}
+
+// This will be used as the default `argsBuilder`
 LabelBadge argsBuilder(
   BuildContext context,
   NumericBadgeInputArgs args,
@@ -17,7 +31,6 @@ LabelBadge argsBuilder(
 }
 
 final $Primary = LabelBadgeStory(
-  argsBuilder: argsBuilder,
   args: NumericBadgeInputArgs(
     number: const IntArg(1),
   ),
@@ -25,7 +38,6 @@ final $Primary = LabelBadgeStory(
 
 final $Secondary = LabelBadgeStory(
   name: 'Custom Name',
-  argsBuilder: argsBuilder,
   args: NumericBadgeInputArgs(
     number: const IntArg(2),
   ),
