@@ -206,6 +206,23 @@ final $Default = CoolWidgetStory(
 );
 ```
 
+<Info>
+  In **v4-alpha**, if you have more than one story, you can share the `argsBuilder`
+  function between them by defining a top-level function named `argsBuilder`
+  with the same signature, and the generator will use it as the default parameter.
+
+  ```dart
+  Widget argsBuilder(BuildContext context, CustomInputs args) {
+    return CoolWidget(
+      text: args.number.resolve(context).toString(),
+    );
+  }
+
+  final $First = CoolWidgetStory();
+  final $Second = CoolWidgetStory();
+  ```
+</Info>
+
 ## Modes
 
 In Widgetbook 4, a new building block is added, called "Mode". You can think of Modes as a global state that customizes your widget. And addon is mostly used to toggle between these modes.
