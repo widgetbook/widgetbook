@@ -3,20 +3,17 @@ import 'upload_task.dart';
 class Review {
   const Review({
     required this.id,
+    required this.projectId,
   });
 
   final String id;
-
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'id': id,
-    };
-  }
+  final String projectId;
 
   // ignore: sort_constructors_first
   factory Review.fromJson(Map<String, dynamic> map) {
     return Review(
       id: map['id'] as String,
+      projectId: map['projectId'] as String,
     );
   }
 }

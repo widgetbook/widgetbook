@@ -113,7 +113,17 @@ class ReviewSyncCommand extends CliCommand<ReviewSyncArgs> {
     );
 
     // TODO: get review URL from response
-    syncProgress.complete('Synced review [${response.review.id}]');
+    final reviewUrl = Uri.parse(
+      p.join(
+        context.environment.appUrl,
+        'projects/${response.review.projectId}',
+        'reviews/${response.review.id}',
+        'builds/${args.buildId}',
+        'use-cases',
+      ),
+    );
+
+    syncProgress.complete('Review ready at $reviewUrl');
 
     return 0;
   }

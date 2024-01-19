@@ -31,6 +31,7 @@ void main() {
     tasks: [],
     review: Review(
       id: 'reviewId',
+      projectId: 'widgetbook',
     ),
   );
 
