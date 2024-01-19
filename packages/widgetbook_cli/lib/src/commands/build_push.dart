@@ -10,10 +10,10 @@ import '../../widgetbook_cli.dart';
 import '../api/models/build_draft_request.dart';
 import '../api/models/build_ready_request.dart';
 import '../utils/executable_manager.dart';
-import 'push_args.dart';
+import 'build_push_args.dart';
 
-class PushCommand extends CliCommand<PushArgs> {
-  PushCommand({
+class BuildPushCommand extends CliCommand<BuildPushArgs> {
+  BuildPushCommand({
     required super.context,
     this.processManager = const LocalProcessManager(),
     this.fileSystem = const LocalFileSystem(),
@@ -63,7 +63,8 @@ class PushCommand extends CliCommand<PushArgs> {
   final UseCaseReader useCaseReader;
 
   @override
-  FutureOr<PushArgs> parseResults(Context context, ArgResults results) async {
+  FutureOr<BuildPushArgs> parseResults(
+      Context context, ArgResults results) async {
     final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
 
@@ -92,7 +93,7 @@ class PushCommand extends CliCommand<PushArgs> {
       throw RepositoryNotFoundException();
     }
 
-    return PushArgs(
+    return BuildPushArgs(
       apiKey: apiKey,
       branch: branch,
       commit: commit,
@@ -105,7 +106,7 @@ class PushCommand extends CliCommand<PushArgs> {
   }
 
   @override
-  FutureOr<int> runWith(Context context, PushArgs args) async {
+  FutureOr<int> runWith(Context context, BuildPushArgs args) async {
     final lockPath = p.join(args.path, 'pubspec.lock');
     final versions = await VersionsMetadata.from(
       lockFile: fileSystem.file(lockPath),

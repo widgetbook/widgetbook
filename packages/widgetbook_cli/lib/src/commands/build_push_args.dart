@@ -1,8 +1,8 @@
 import '../git/git.dart';
 
 /// Typed representation of the arguments passed to the push command.
-class PushArgs {
-  const PushArgs({
+class BuildPushArgs {
+  const BuildPushArgs({
     required this.apiKey,
     required this.branch,
     required this.commit,
@@ -25,7 +25,7 @@ class PushArgs {
   final Reference? baseBranch;
 
   @override
-  bool operator ==(covariant PushArgs other) {
+  bool operator ==(covariant BuildPushArgs other) {
     if (identical(this, other)) return true;
 
     return other.apiKey == apiKey &&

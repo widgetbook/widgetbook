@@ -1,14 +1,14 @@
 import 'package:args/command_runner.dart';
 
 import '../core/core.dart';
-import 'push.dart';
+import 'build_push.dart';
 
 class CloudCommand extends Command<int> {
   CloudCommand({
     required Context context,
   }) {
     addSubcommand(
-      PushCommand(
+      BuildPushCommand(
         context: context,
       ),
     );
