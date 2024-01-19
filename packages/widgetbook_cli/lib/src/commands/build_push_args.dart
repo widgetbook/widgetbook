@@ -23,30 +23,4 @@ class BuildPushArgs {
 
   // TODO: remove when API endpoint no longer needs this
   final Reference? baseBranch;
-
-  @override
-  bool operator ==(covariant BuildPushArgs other) {
-    if (identical(this, other)) return true;
-
-    return other.apiKey == apiKey &&
-        other.branch == branch &&
-        other.commit == commit &&
-        other.path == path &&
-        other.vendor == vendor &&
-        other.actor == actor &&
-        other.repository == repository &&
-        other.baseBranch == baseBranch;
-  }
-
-  @override
-  int get hashCode {
-    return apiKey.hashCode ^
-        branch.hashCode ^
-        commit.hashCode ^
-        path.hashCode ^
-        vendor.hashCode ^
-        actor.hashCode ^
-        repository.hashCode ^
-        baseBranch.hashCode;
-  }
 }

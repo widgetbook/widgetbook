@@ -64,7 +64,9 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
   @override
   FutureOr<BuildPushArgs> parseResults(
-      Context context, ArgResults results) async {
+    Context context,
+    ArgResults results,
+  ) async {
     final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
 

@@ -4,7 +4,7 @@ class ReviewRequest extends ReviewRequestNext {
   const ReviewRequest({
     required super.apiKey,
     required super.buildId,
-    required super.projectId,
+    required this.projectId,
     required super.baseBranch,
     required super.headBranch,
     required super.baseSha,
@@ -12,12 +12,14 @@ class ReviewRequest extends ReviewRequestNext {
     required this.useCases,
   });
 
+  final String projectId;
   final List<ChangedUseCase> useCases;
 
   @override
   Map<String, dynamic> toJson() {
     return {
       ...super.toJson(),
+      'projectId': projectId,
       'useCases': useCases.map((e) => e.toJson()).toList(),
     };
   }
@@ -27,7 +29,6 @@ class ReviewRequestNext {
   const ReviewRequestNext({
     required this.apiKey,
     required this.buildId,
-    required this.projectId,
     required this.baseBranch,
     required this.headBranch,
     required this.baseSha,
@@ -36,7 +37,6 @@ class ReviewRequestNext {
 
   final String apiKey;
   final String buildId;
-  final String projectId;
   final String baseBranch;
   final String headBranch;
   final String baseSha;
@@ -46,7 +46,6 @@ class ReviewRequestNext {
     return {
       'apiKey': apiKey,
       'buildId': buildId,
-      'projectId': projectId,
       'baseBranch': baseBranch,
       'headBranch': headBranch,
       'baseSha': baseSha,
