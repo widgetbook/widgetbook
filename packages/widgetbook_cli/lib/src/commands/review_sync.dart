@@ -19,7 +19,7 @@ class ReviewSyncCommand extends CliCommand<ReviewSyncArgs> {
           environment: context.environment,
         ),
         super(
-          name: 'review sync',
+          name: 'sync',
           description: 'Syncs Widgetbook Cloud Review',
         ) {
     argParser

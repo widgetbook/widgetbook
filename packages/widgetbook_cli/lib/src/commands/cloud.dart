@@ -1,32 +1,43 @@
-import 'package:args/command_runner.dart';
+import 'dart:async';
+
+import 'package:args/src/arg_results.dart';
 
 import '../core/core.dart';
 import 'build_push.dart';
 import 'review_sync.dart';
 
-class CloudCommand extends Command<int> {
+class CloudCommand extends CliVoidCommand {
   CloudCommand({
-    required Context context,
-  }) {
+    required super.context,
+  }) : super(
+          name: 'cloud',
+          description: 'Manage your Widgetbook Cloud projects.',
+        ) {
     addSubcommand(
-      BuildPushCommand(
-        context: context,
+      CliCommandsGroup(
+        name: 'build',
+        description: 'Manage your Widgetbook Cloud builds.',
+        commands: [
+          BuildPushCommand(
+            context: context,
+          ),
+        ],
       ),
     );
 
     addSubcommand(
-      ReviewSyncCommand(
-        context: context,
+      CliCommandsGroup(
+        name: 'review',
+        description: 'Manage your Widgetbook Cloud reviews.',
+        commands: [
+          ReviewSyncCommand(
+            context: context,
+          ),
+        ],
       ),
     );
   }
 
   @override
-  final String name = 'cloud';
-
-  @override
-  final String description = 'Manage your Widgetbook Cloud projects.';
-
-  @override
-  Future<int> run() async => 0;
+  FutureOr<int> runWith(Context context, ArgResults args) => 0;
 }

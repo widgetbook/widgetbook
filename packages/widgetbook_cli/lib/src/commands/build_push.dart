@@ -25,7 +25,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
           environment: context.environment,
         ),
         super(
-          name: 'build push',
+          name: 'push',
           description: 'Pushes a new build to Widgetbook Cloud',
         ) {
     argParser
@@ -42,6 +42,11 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       ..addOption(
         'branch',
         help: 'The name of the branch for which the Widgetbook is uploaded.',
+      )
+      ..addOption(
+        'repository',
+        help:
+            'The name of the repository for which the Widgetbook is uploaded.',
       )
       ..addOption(
         'commit',
