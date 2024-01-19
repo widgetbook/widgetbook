@@ -11,6 +11,8 @@ import '../api/models/build_draft_request.dart';
 import '../api/models/build_ready_request.dart';
 import '../utils/executable_manager.dart';
 import 'build_push_args.dart';
+import 'review_sync.dart';
+import 'review_sync_args.dart';
 
 class BuildPushCommand extends CliCommand<BuildPushArgs> {
   BuildPushCommand({
@@ -51,7 +53,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         help: 'The username of the actor which triggered the build.',
       )
       ..addOption(
-        'base-branch',
+        '--sync-reviews-of',
         help: 'The base branch of the pull-request. For example, main.',
       );
   }
@@ -77,7 +79,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         context.providerSha ??
         currentBranch.sha;
 
-    final baseBranchName = results['base-branch'] as String?;
+    final baseBranchName = results['sync-reviews-of'] as String?;
     final baseBranch = baseBranchName == null
         ? null
         : await repository.findBranch(
@@ -163,6 +165,28 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     );
 
     submitProgress.complete('Build ready at ${response.buildUrl}');
+
+    /// TODO: remove this once the `review sync` command works without a build
+    if (args.baseBranch != null) {
+      final syncCmd = ReviewSyncCommand(
+        context: context,
+        fileSystem: fileSystem,
+        processManager: processManager,
+      );
+
+      await syncCmd.runWith(
+        context,
+        ReviewSyncArgs(
+          apiKey: args.apiKey,
+          path: args.path,
+          buildId: buildId,
+          baseBranch: args.baseBranch!.name,
+          headBranch: args.branch,
+          baseSha: args.baseBranch!.sha,
+          headSha: args.commit,
+        ),
+      );
+    }
 
     return 0;
   }
