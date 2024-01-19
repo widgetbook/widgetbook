@@ -15,7 +15,7 @@ class ProductionEnv extends Environment {
       : super(
           name: 'production',
           appUrl: 'https://app.widgetbook.io/',
-          apiUrl: 'https://api.widgetbook.io/v1/',
+          apiUrl: 'https://api.widgetbook.io/',
         );
 }
 
@@ -24,7 +24,7 @@ class StagingEnv extends Environment {
       : super(
           name: 'staging',
           appUrl: 'https://staging.app.widgetbook.io/',
-          apiUrl: 'https://staging.api.widgetbook.io/v1/',
+          apiUrl: 'https://staging.api.widgetbook.io/',
         );
 }
 
@@ -33,6 +33,6 @@ class DebugEnv extends Environment {
       : super(
           name: 'debug',
           appUrl: 'https://staging.app.widgetbook.io/',
-          apiUrl: 'http://localhost:3000/v1/',
+          apiUrl: 'http://localhost:3000/',
         );
 }
