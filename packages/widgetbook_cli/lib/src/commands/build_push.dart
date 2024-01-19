@@ -25,7 +25,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
           environment: context.environment,
         ),
         super(
-          name: 'push',
+          name: 'build push',
           description: 'Pushes a new build to Widgetbook Cloud',
         ) {
     argParser
@@ -53,7 +53,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         help: 'The username of the actor which triggered the build.',
       )
       ..addOption(
-        '--sync-reviews-of',
+        'sync-reviews-of',
         help: 'The base branch of the pull-request. For example, main.',
       );
   }
