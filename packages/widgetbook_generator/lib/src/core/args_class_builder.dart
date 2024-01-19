@@ -16,15 +16,17 @@ class ArgsClassBuilder {
   }
 
   Class build() {
+    final widgetClassRef = widgetType.getRef();
+    final argsClassRef = argsType.getRef(suffix: 'Args');
+
     return Class(
       (b) => b
-        ..name = '${argsType.nonNullableName}Args'
+        ..name = argsClassRef.symbol
+        ..types.addAll(argsType.getTypeParams())
         ..extend = TypeReference(
           (b) => b
             ..symbol = 'StoryArgs'
-            ..types.addAll([
-              refer(widgetType.nonNullableName),
-            ]),
+            ..types.addAll([widgetClassRef]),
         )
         ..fields.addAll(
           params.map(

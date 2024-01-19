@@ -49,6 +49,46 @@ extension DartTypeX on DartType {
     ),
   };
 
+  /// Gets class name without generic parameters
+  /// Can only be used on classes.
+  String get nonGenericName {
+    return element!.displayName;
+  }
+
+  List<Reference> getTypeParams({
+    bool withBounds = true,
+  }) {
+    if (this is ParameterizedType)
+      return element!.children
+          .whereType<TypeParameterElement>()
+          .map(
+            (e) => TypeReference(
+              (b) => b
+                ..symbol = e.name
+                ..bound = withBounds && e.bound != null
+                    ? refer(e.bound!.nonGenericName)
+                    : null,
+            ),
+          )
+          .toList();
+    else
+      return <TypeReference>[];
+  }
+
+  TypeReference getRef({
+    String? suffix,
+    bool isNullable = false,
+  }) {
+    return TypeReference(
+      (b) => b
+        ..isNullable = isNullable
+        ..symbol = suffix == null ? nonGenericName : '$nonGenericName$suffix'
+        ..types.addAll(
+          getTypeParams(withBounds: false),
+        ),
+    );
+  }
+
   String get nonNullableName {
     // We get the display string with nullability then we remove the trailing
     // "?" if it exists, to avoid this issue with function and generic types:

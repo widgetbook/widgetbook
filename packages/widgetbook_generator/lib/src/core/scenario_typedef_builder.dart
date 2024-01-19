@@ -10,15 +10,20 @@ class ScenarioTypedefBuilder {
   final DartType argsType;
 
   TypeDef build() {
+    final widgetTypeRef = widgetType.getRef();
+    final argsTypeRef = argsType.getRef(suffix: 'Args');
+    final scenarioTypeRef = widgetType.getRef(suffix: 'Scenario');
+
     return TypeDef(
       (b) => b
-        ..name = '${widgetType.nonNullableName}Scenario'
+        ..name = scenarioTypeRef.symbol
+        ..types.addAll(widgetType.getTypeParams())
         ..definition = TypeReference(
           (b) => b
             ..symbol = 'Scenario'
             ..types.addAll([
-              refer(widgetType.nonNullableName),
-              refer('${argsType.nonNullableName}Args'),
+              widgetTypeRef,
+              argsTypeRef,
             ]),
         ),
     );
