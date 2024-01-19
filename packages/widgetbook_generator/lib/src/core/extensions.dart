@@ -55,24 +55,22 @@ extension DartTypeX on DartType {
     return element!.displayName;
   }
 
-  List<Reference> getTypeParams({
+  Iterable<Reference> getTypeParams({
     bool withBounds = true,
   }) {
-    if (this is ParameterizedType)
-      return element!.children
-          .whereType<TypeParameterElement>()
-          .map(
-            (e) => TypeReference(
-              (b) => b
-                ..symbol = e.name
-                ..bound = withBounds && e.bound != null
-                    ? refer(e.bound!.nonGenericName)
-                    : null,
-            ),
-          )
-          .toList();
-    else
-      return <TypeReference>[];
+    if (this is! ParameterizedType) return [];
+
+    return element!.children //
+        .whereType<TypeParameterElement>()
+        .map(
+          (typeElement) => TypeReference(
+            (b) => b
+              ..symbol = typeElement.name
+              ..bound = withBounds && typeElement.bound != null
+                  ? refer(typeElement.bound!.nonGenericName)
+                  : null,
+          ),
+        );
   }
 
   TypeReference getRef({

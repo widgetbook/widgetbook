@@ -30,16 +30,16 @@ GenericNum<T> $argsBuilder<T extends num, R>(
 
 final $Integer = GenericNumStory<int, String>(
   argsBuilder: $argsBuilder,
-  args: GenericNumInputArgs(
-    number: Arg.fixed(0),
-    other: Arg.fixed('other'),
+  args: GenericNumInputArgs.fixed(
+    number: 0,
+    other: 'foo',
   ),
 );
 
 final $Double = GenericNumStory<double, Color>(
   argsBuilder: $argsBuilder,
-  args: GenericNumInputArgs(
-    number: Arg.fixed(0.0),
-    other: Arg.fixed(Colors.black),
+  args: GenericNumInputArgs.fixed(
+    number: 0.0,
+    other: Colors.black,
   ),
 );

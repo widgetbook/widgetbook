@@ -32,22 +32,23 @@ class StoryClassBuilder {
   Class build() {
     final isCustomArgs = widgetType != argsType;
     final hasRequiredArgs = params.any((param) => param.requiresArg);
+    final unboundedTypeParams = getTypeParams(withBounds: false);
 
     final widgetClassRef = widgetType.getRef();
 
     final storyClassRef = widgetType.getRef(
       suffix: 'Story',
-      types: getTypeParams(withBounds: false),
+      types: unboundedTypeParams,
     );
 
     final argsClassRef = argsType.getRef(
       suffix: 'Args',
-      types: getTypeParams(withBounds: false),
+      types: unboundedTypeParams,
     );
 
     final nullableArgsClassRef = argsType.getRef(
       suffix: 'Args',
-      types: getTypeParams(withBounds: false),
+      types: unboundedTypeParams,
       isNullable: true,
     );
 

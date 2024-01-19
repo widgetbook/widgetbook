@@ -9,13 +9,13 @@ part 'generic_text.stories.book.dart';
 final meta = Meta<GenericText>();
 
 final $IntStory = GenericTextStory<int>(
-  args: GenericTextArgs(
-    value: Arg.fixed(0),
+  args: GenericTextArgs.fixed(
+    value: 0,
   ),
 );
 
 final $BoolStory = GenericTextStory<bool>(
-  args: GenericTextArgs(
-    value: Arg.fixed(false),
+  args: GenericTextArgs.fixed(
+    value: false,
   ),
 );

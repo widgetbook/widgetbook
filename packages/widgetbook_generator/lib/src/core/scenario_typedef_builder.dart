@@ -17,14 +17,17 @@ class ScenarioTypedefBuilder {
   }
 
   TypeDef build() {
+    final unboundedTypeParams = getTypeParams(withBounds: false);
     final widgetTypeRef = widgetType.getRef();
+
     final scenarioTypeRef = widgetType.getRef(
       suffix: 'Scenario',
-      types: getTypeParams(withBounds: false),
+      types: unboundedTypeParams,
     );
+
     final argsTypeRef = argsType.getRef(
       suffix: 'Args',
-      types: getTypeParams(withBounds: false),
+      types: unboundedTypeParams,
     );
 
     return TypeDef(
