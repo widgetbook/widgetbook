@@ -78,13 +78,14 @@ extension DartTypeX on DartType {
   TypeReference getRef({
     String? suffix,
     bool isNullable = false,
+    Set<Reference>? types,
   }) {
     return TypeReference(
       (b) => b
         ..isNullable = isNullable
         ..symbol = suffix == null ? nonGenericName : '$nonGenericName$suffix'
         ..types.addAll(
-          getTypeParams(withBounds: false),
+          types ?? getTypeParams(withBounds: false),
         ),
     );
   }

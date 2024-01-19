@@ -1,40 +1,45 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import 'generic_num.dart';
 
 part 'generic_num.stories.book.dart';
 
+// ignore: strict_raw_type
 final meta = MetaWithArgs<GenericNum, GenericNumInput>();
 
-class GenericNumInput<T extends num> {
+class GenericNumInput<T extends num, R> {
   const GenericNumInput({
     required this.number,
+    required this.other,
   });
 
   final T number;
+  final R other;
 }
 
 // TODO: support global argsBuilder/setup for generic types
-GenericNum<T> $argsBuilder<T extends num>(
+GenericNum<T> $argsBuilder<T extends num, R>(
   BuildContext context,
-  GenericNumInputArgs<T> args,
+  GenericNumInputArgs<T, R> args,
 ) {
-  return GenericNum(
+  return GenericNum<T>(
     value: args.number.resolve(context),
   );
 }
 
-final $Integer = GenericNumStory<int>(
+final $Integer = GenericNumStory<int, String>(
   argsBuilder: $argsBuilder,
   args: GenericNumInputArgs(
     number: Arg.fixed(0),
+    other: Arg.fixed('other'),
   ),
 );
 
-final $Double = GenericNumStory<double>(
+final $Double = GenericNumStory<double, Color>(
   argsBuilder: $argsBuilder,
   args: GenericNumInputArgs(
     number: Arg.fixed(0.0),
+    other: Arg.fixed(Colors.black),
   ),
 );

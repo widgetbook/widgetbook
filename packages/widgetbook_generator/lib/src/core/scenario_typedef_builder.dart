@@ -9,15 +9,28 @@ class ScenarioTypedefBuilder {
   final DartType widgetType;
   final DartType argsType;
 
+  Set<Reference> getTypeParams({bool withBounds = true}) {
+    return {
+      ...widgetType.getTypeParams(withBounds: withBounds),
+      ...argsType.getTypeParams(withBounds: withBounds),
+    };
+  }
+
   TypeDef build() {
     final widgetTypeRef = widgetType.getRef();
-    final argsTypeRef = argsType.getRef(suffix: 'Args');
-    final scenarioTypeRef = widgetType.getRef(suffix: 'Scenario');
+    final scenarioTypeRef = widgetType.getRef(
+      suffix: 'Scenario',
+      types: getTypeParams(withBounds: false),
+    );
+    final argsTypeRef = argsType.getRef(
+      suffix: 'Args',
+      types: getTypeParams(withBounds: false),
+    );
 
     return TypeDef(
       (b) => b
         ..name = scenarioTypeRef.symbol
-        ..types.addAll(widgetType.getTypeParams())
+        ..types.addAll(getTypeParams())
         ..definition = TypeReference(
           (b) => b
             ..symbol = 'Scenario'

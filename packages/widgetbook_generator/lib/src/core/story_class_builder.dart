@@ -22,22 +22,39 @@ class StoryClassBuilder {
     return (argsType.element as ClassElement).constructors.first.parameters;
   }
 
+  Set<Reference> getTypeParams({bool withBounds = true}) {
+    return {
+      ...widgetType.getTypeParams(withBounds: withBounds),
+      ...argsType.getTypeParams(withBounds: withBounds),
+    };
+  }
+
   Class build() {
     final isCustomArgs = widgetType != argsType;
     final hasRequiredArgs = params.any((param) => param.requiresArg);
 
     final widgetClassRef = widgetType.getRef();
-    final storyClassRef = widgetType.getRef(suffix: 'Story');
-    final argsClassRef = argsType.getRef(suffix: 'Args');
+
+    final storyClassRef = widgetType.getRef(
+      suffix: 'Story',
+      types: getTypeParams(withBounds: false),
+    );
+
+    final argsClassRef = argsType.getRef(
+      suffix: 'Args',
+      types: getTypeParams(withBounds: false),
+    );
+
     final nullableArgsClassRef = argsType.getRef(
       suffix: 'Args',
+      types: getTypeParams(withBounds: false),
       isNullable: true,
     );
 
     return Class(
       (b) => b
         ..name = storyClassRef.symbol
-        ..types.addAll(widgetType.getTypeParams())
+        ..types.addAll(getTypeParams())
         ..extend = TypeReference(
           (b) => b
             ..symbol = 'Story'
