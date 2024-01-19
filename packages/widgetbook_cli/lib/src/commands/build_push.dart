@@ -143,8 +143,18 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     final archiveProgress = logger.progress('Creating build archive');
     final buildDirPath = p.join(args.path, 'build', 'web');
     final buildDir = fileSystem.directory(buildDirPath);
-    final zipFile = await zipEncoder.zip(buildDir, '$buildId.zip');
 
+    if (!buildDir.existsSync()) {
+      archiveProgress.fail();
+      logger.err(
+        'build/web directory does not exist.\n'
+        'Run the following command before publishing:\n\n\t'
+        'flutter build web --target path/to/widgetbook.dart\n\n',
+      );
+      return 22;
+    }
+
+    final zipFile = await zipEncoder.zip(buildDir, '$buildId.zip');
     if (zipFile == null) {
       archiveProgress.fail('Failed to create build archive');
       return 23;
