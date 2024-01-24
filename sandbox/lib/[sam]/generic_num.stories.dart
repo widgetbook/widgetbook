@@ -18,7 +18,16 @@ class GenericNumInput<T extends num, R> {
   final R other;
 }
 
-// TODO: support global argsBuilder/setup for generic types
+Widget $setup<T extends num, R>(
+  BuildContext context,
+  Widget child,
+  GenericNumInputArgs<T, R> args,
+) {
+  return GenericNum<T>(
+    value: args.number.resolve(context),
+  );
+}
+
 GenericNum<T> $argsBuilder<T extends num, R>(
   BuildContext context,
   GenericNumInputArgs<T, R> args,

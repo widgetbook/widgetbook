@@ -8,7 +8,7 @@ part 'label_badge.stories.book.dart';
 final meta = MetaWithArgs<LabelBadge, NumericBadgeInput>();
 
 // This will be used as the default `setup`
-Widget setup(
+Widget $setup(
   BuildContext context,
   Widget child,
   NumericBadgeInputArgs args,
@@ -21,7 +21,7 @@ Widget setup(
 }
 
 // This will be used as the default `argsBuilder`
-LabelBadge argsBuilder(
+LabelBadge $argsBuilder(
   BuildContext context,
   NumericBadgeInputArgs args,
 ) {

@@ -75,8 +75,15 @@ class StoryClassBuilder {
                   (b) => b
                     ..name = 'setup'
                     ..named = true
-                    ..toSuper = true
-                    ..defaultTo = hasSetup ? refer('setup').code : null,
+                    ..toSuper = !hasArgsBuilder
+                    ..type = !hasArgsBuilder
+                        ? null
+                        : TypeReference(
+                            (b) => b
+                              ..symbol = 'SetupBuilder'
+                              ..isNullable = true
+                              ..types.addAll([argsClassRef]),
+                          ),
                 ),
                 Parameter(
                   (b) => b
@@ -90,11 +97,9 @@ class StoryClassBuilder {
                   (b) => b
                     ..name = 'argsBuilder'
                     ..named = true
-                    ..toSuper = isCustomArgs
-                    ..defaultTo =
-                        hasArgsBuilder ? refer('argsBuilder').code : null
+                    ..toSuper = isCustomArgs && !hasArgsBuilder
                     ..required = isCustomArgs && !hasArgsBuilder
-                    ..type = isCustomArgs
+                    ..type = isCustomArgs && !hasArgsBuilder
                         ? null
                         : TypeReference(
                             (b) => b
@@ -113,7 +118,7 @@ class StoryClassBuilder {
                       [],
                     ),
                   ),
-                if (!isCustomArgs)
+                if (!isCustomArgs && !hasArgsBuilder)
                   'argsBuilder': refer('argsBuilder').ifNullThen(
                     Method(
                       (b) => b
@@ -132,6 +137,14 @@ class StoryClassBuilder {
                               .call([refer('context')]),
                         ).code,
                     ).closure,
+                  ),
+                if (hasArgsBuilder)
+                  'argsBuilder': refer('argsBuilder').ifNullThen(
+                    refer('\$argsBuilder'),
+                  ),
+                if (hasSetup)
+                  'setup': refer('setup').ifNullThen(
+                    refer('\$setup'),
                   ),
               };
 
