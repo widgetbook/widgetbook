@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'story_args.dart';
 
-typedef SetupBuilder<TArgs> = Widget Function(
+typedef SetupBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
+    = Widget Function(
   BuildContext context,
-  Widget story,
+  TWidget widget,
   TArgs args,
 );
 
@@ -24,15 +25,15 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   final String? $name;
   final String? designLink;
   final TArgs args;
-  final SetupBuilder<TArgs> setup;
+  final SetupBuilder<TWidget, TArgs> setup;
   final ArgsBuilder<TWidget, TArgs> argsBuilder;
 
   static Widget defaultSetup(
     BuildContext context,
-    Widget story,
+    Widget widget,
     dynamic args,
   ) {
-    return story;
+    return widget;
   }
 
   Widget build(BuildContext context) {
@@ -41,8 +42,9 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
 
   /// Same as [build], but uses external [args] instead of [Story.args].
   Widget buildWithArgs(BuildContext context, TArgs args) {
-    final story = argsBuilder(context, args);
-    return setup(context, story, args);
+    final widget = argsBuilder(context, args);
+    final story = setup(context, widget, args);
+    return story;
   }
 
   String get name {

@@ -1,3 +1,7 @@
+## Unreleased
+
+- **BREAKING**: Add `TWidget` type param to `SetupBuilder`. ([#1134](https://github.com/widgetbook/widgetbook/pull/1134))
+
 ## 4.0.0-alpha.1
 
 - **FEAT**: Introduce SAM navigation via `components` parameter in `Widgetbook` constructor. ([#1103](https://github.com/widgetbook/widgetbook/pull/1103))
