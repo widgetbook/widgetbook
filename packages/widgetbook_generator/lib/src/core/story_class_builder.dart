@@ -82,7 +82,7 @@ class StoryClassBuilder {
                             (b) => b
                               ..symbol = 'SetupBuilder'
                               ..isNullable = true
-                              ..types.addAll([argsClassRef]),
+                              ..types.addAll([widgetClassRef, argsClassRef]),
                           ),
                 ),
                 Parameter(
