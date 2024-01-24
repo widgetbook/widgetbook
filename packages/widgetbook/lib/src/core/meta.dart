@@ -17,8 +17,9 @@ class Meta<T> {
   Meta<T> init({
     required String path,
   }) {
+    final genericRegex = RegExp(r'<.*>');
     return Meta<T>(
-      name: name,
+      name: name.replaceAll(genericRegex, ''),
       path: $path ?? path,
     );
   }
