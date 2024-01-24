@@ -31,11 +31,11 @@ class StoryGenerator extends Generator {
 
     final hasSetup = library.allElements
         .whereType<FunctionElement>()
-        .any((element) => element.name == 'setup');
+        .any((element) => element.name == '\$setup');
 
     final hasArgsBuilder = library.allElements
         .whereType<FunctionElement>()
-        .any((element) => element.name == 'argsBuilder');
+        .any((element) => element.name == '\$argsBuilder');
 
     final genLib = Library(
       (b) => b
