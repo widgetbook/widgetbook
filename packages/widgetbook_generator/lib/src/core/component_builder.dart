@@ -19,39 +19,42 @@ class ComponentBuilder {
   final String path;
 
   Code build() {
-    return declareFinal('${widgetType.nonNullableName}Component')
-        .assign(
-          InvokeExpression.newOf(
-            TypeReference(
-              (b) => b
-                ..symbol = 'Component'
-                ..types.addAll([
-                  refer(widgetType.nonNullableName),
-                  refer('${argsType.nonNullableName}Args'),
-                ]),
+    return Block.of([
+      const Code('// ignore: strict_raw_type'),
+      declareFinal('${widgetType.nonGenericName}Component')
+          .assign(
+            InvokeExpression.newOf(
+              TypeReference(
+                (b) => b
+                  ..symbol = 'Component'
+                  ..types.addAll([
+                    refer(widgetType.nonGenericName),
+                    refer('${argsType.nonGenericName}Args'),
+                  ]),
+              ),
+              [],
+              {
+                'meta': refer('meta').property('init').call(
+                  [],
+                  {'path': literalString(navPath)},
+                ),
+                'stories': literalList(
+                  stories
+                      .map(
+                        (story) => refer(story.name).property('init').call(
+                          [],
+                          {
+                            'name': literalString(story.name.substring(1)),
+                          },
+                        ),
+                      )
+                      .toList(),
+                ),
+              },
             ),
-            [],
-            {
-              'meta': refer('meta').property('init').call(
-                [],
-                {'path': literalString(navPath)},
-              ),
-              'stories': literalList(
-                stories
-                    .map(
-                      (story) => refer(story.name).property('init').call(
-                        [],
-                        {
-                          'name': literalString(story.name.substring(1)),
-                        },
-                      ),
-                    )
-                    .toList(),
-              ),
-            },
-          ),
-        )
-        .statement;
+          )
+          .statement,
+    ]);
   }
 
   /// Gets the navigation path based on [widgetType], skipping both

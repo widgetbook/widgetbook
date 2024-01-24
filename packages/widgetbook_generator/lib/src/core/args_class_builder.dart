@@ -15,16 +15,28 @@ class ArgsClassBuilder {
     return (argsType.element as ClassElement).constructors.first.parameters;
   }
 
+  Set<Reference> getTypeParams({bool withBounds = true}) {
+    return {
+      ...widgetType.getTypeParams(withBounds: withBounds),
+      ...argsType.getTypeParams(withBounds: withBounds),
+    };
+  }
+
   Class build() {
+    final widgetClassRef = widgetType.getRef();
+    final argsClassRef = argsType.getRef(
+      suffix: 'Args',
+      types: getTypeParams(withBounds: false),
+    );
+
     return Class(
       (b) => b
-        ..name = '${argsType.nonNullableName}Args'
+        ..name = argsClassRef.symbol
+        ..types.addAll(getTypeParams())
         ..extend = TypeReference(
           (b) => b
             ..symbol = 'StoryArgs'
-            ..types.addAll([
-              refer(widgetType.nonNullableName),
-            ]),
+            ..types.addAll([widgetClassRef]),
         )
         ..fields.addAll(
           params.map(
