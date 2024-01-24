@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-alpha.2
 
 - **BREAKING**: Add `TWidget` type param to `SetupBuilder`. ([#1134](https://github.com/widgetbook/widgetbook/pull/1134))
 - **REFACTOR**: Remove generic suffix from component's name. ([#1135](https://github.com/widgetbook/widgetbook/pull/1135))
