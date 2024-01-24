@@ -22,15 +22,15 @@ For every pull request in your Git provider, our integration initiates a Widgetb
 
 ## Publish a Review
 
-1. Make sure to incorporate the [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) version `{{ versions.generator }}`. No additional configuration needed.
-2. Integrate the [widgetbook package](https://pub.dev/packages/widgetbook) version `{{ versions.widgetbook }}`. No extra setup required.
-3. Employ the CLI from [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli).
-4. Set up our GitHub app.
-5. Upload a build of your base branch, e.g. main. See [how to upload a build](https://docs.widgetbook.io/widgetbook-cloud/hosting).
-6. Add new or change existing Widgetbook use cases in your feature branch. Note: Without changed use cases, the review feature won't work, as there would be nothing to review.
-7. Optionally, [add addons and knobs](/widgetbook-cloud/reviews#how-to-set-up-addons-and-knobs) as well as [Figma design links](/widgetbook-cloud/reviews#how-to-add-a-figma-design-link).
-8. Upload a build for the feature branch with changed Widgetbook use cases.
-9. Publish a review using this command: `widgetbook publish --api-key KEY --base-branch BASE-BRANCH`.
+1. Make sure to incorporate the [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) version `{{ versions.generator }}`.
+1. Integrate the [widgetbook package](https://pub.dev/packages/widgetbook) version `{{ versions.widgetbook }}`.
+1. Employ the CLI from [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli).
+1. Set up our [GitHub app](/widgetbook-cloud/integrating-github).
+1. Upload a build of your base branch, e.g. `main`. Using this command `widgetbook publish --api-key <API>`. See [how to upload a build](/widgetbook-cloud/hosting).
+1. Create a new branch for your changes, e.g. `feat/awesome-feature`.
+1. Add new or change existing Widgetbook use cases in your feature branch. Note: Without changed use cases, the review feature won't work, as there would be nothing to review.
+1. Optionally, [add addons and knobs](/widgetbook-cloud/reviews#how-to-set-up-addons-and-knobs) as well as [Figma design links](/widgetbook-cloud/reviews#how-to-add-a-figma-design-link).
+1. Publish a review for the feature branch with changed Widgetbook use cases using this command: `widgetbook publish --api-key <API> --base-branch main`. This will publish both a **build and a review** for the latest commit in your feature branch.
 
 <Info>
     Most CI/CD providers expose the `BASE-BRANCH` via environment variables for pull-requests. Check our [CI/CD Setup guide](/widgetbook-cloud/setup) for more insights.
