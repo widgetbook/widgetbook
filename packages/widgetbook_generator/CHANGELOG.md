@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-alpha.2
 
 - **FEAT**: Support default `setup` & `argsBuilder` via top-level definitions of `$setup` & `$argsBuilder`. ([#1130](https://github.com/widgetbook/widgetbook/pull/1130), [#1133](https://github.com/widgetbook/widgetbook/pull/1133))
 - **FEAT**: Support generic widgets. ([#1131](https://github.com/widgetbook/widgetbook/pull/1131))
