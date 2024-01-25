@@ -16,8 +16,8 @@ typedef ThemeBuilder<T> = Widget Function(
 /// [Widget]s.
 ///
 /// {@template ThemeAddon.initialTheme}
-/// The [initialTheme] is the first theme used when the app is started. When
-/// provided, it must be within [themes]. Otherwise, if [initialTheme] is `null`,
+/// The [initialTheme] is the first theme used when the app is started. If
+/// provided, it must be within [themes]. Otherwise, when [initialTheme] is `null`,
 /// the first theme in [themes] is used.
 /// {@endtemplate}
 class ThemeAddon<T> extends WidgetbookAddon<WidgetbookTheme<T>> {
