@@ -4,21 +4,66 @@ Widgetbook Cloud introduces a _Review_ feature, that empowers Flutter teams to c
 
 ## Overview
 
-1. [Understanding Reviews](/widgetbook-cloud/reviews#understanding-reviews)
-2. [Review Statuses](/widgetbook-cloud/reviews#review-statuses)
-3. [Requirements](/widgetbook-cloud/reviews#requirements)
+1. [Concept of reviews](/widgetbook-cloud/reviews#understanding-reviews)
+2. [Publish a review](/widgetbook-cloud/reviews#publishing-a-review)
+3. [Review Statuses](/widgetbook-cloud/reviews#review-statuses)
 4. [Set up addons and knobs](/widgetbook-cloud/reviews#how-to-set-up-addons-and-knobs)
 5. [Add a Figma design link](/widgetbook-cloud/reviews#how-to-add-a-figma-design-link)
-6. [Publishing a review](/widgetbook-cloud/reviews#publishing-a-review)
+
 
 ---
 
-## Understanding Reviews
+## Concept of reviews
 
 A Widgetbook Review lets teams contrast UI changes between two versions. Moreover, it enables comparison of the current Widget version against its Figma design.
 - In a standard Pull Request, code differences between a `base` (previous version) and a `feature` (new version) branch are evaluated.
 - Similarly, in a Widgetbook Review, visual differences between the base build (last version) and feature build (current version) are assessed.
 For every pull request in your Git provider, our integration initiates a Widgetbook Cloud review. To facilitate this visual comparison, Widgetbook Cloud necessitates uploaded builds for both base and feature branches.
+
+## Publish a Review
+
+1. Make sure to incorporate the [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) version `{{ versions.generator }}`.
+1. Integrate the [widgetbook package](https://pub.dev/packages/widgetbook) version `{{ versions.widgetbook }}`.
+1. Employ the CLI from [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli).
+1. Set up our [GitHub app](/widgetbook-cloud/integrating-github).
+1. Upload a build of your base branch, e.g. `main`. Using this command `widgetbook publish --api-key <API>`. See [how to upload a build](/widgetbook-cloud/hosting).
+1. Create a new branch for your changes, e.g. `feat/awesome-feature`.
+1. Add new or change existing Widgetbook use cases in your feature branch. Note: Without changed use cases, the review feature won't work, as there would be nothing to review.
+1. Optionally, [add addons and knobs](/widgetbook-cloud/reviews#how-to-set-up-addons-and-knobs) as well as [Figma design links](/widgetbook-cloud/reviews#how-to-add-a-figma-design-link).
+1. Publish a review for the feature branch with changed Widgetbook use cases using this command: `widgetbook publish --api-key <API> --base-branch main`. This will publish both a **build and a review** for the latest commit in your feature branch.
+
+<Info>
+    Most CI/CD providers expose the `BASE-BRANCH` via environment variables for pull-requests. Check our [CI/CD Setup guide](/widgetbook-cloud/setup) for more insights.
+</Info>
+
+### Example
+
+```bash
+# Install dependencies
+flutter pub get
+# !!! 
+# !!! Run the build runner
+# !!! This is mandatory even if you have committed the generated files since 
+# !!! the generator creates files that are consumed by the Widgetbook CLI
+# !!!
+flutter pub run build_runner build --delete-conflicting-outputs
+# Build the Widgetbook
+flutter build web -t lib/ui_catalogs.widgetbook.dart
+# Install the CLI
+dart pub global activate widgetbook_cli
+# Run the CLI
+widgetbook publish --api-key API-KEY --base-branch main
+```
+
+## Review Information
+To populate a review, information regarding the changes in use cases is mandatory. When the `--base-branch` argument is used, the CLI fetches details about the altered use cases.
+
+<Info>
+Widgetbook Cloud showcases Reviews for all pull requests. But, only those Reviews with use case alterations are accessible.
+</Info>
+<Warning>
+At present, Widgetbook Cloud exclusively displays use cases that underwent changes, additions, or removals within the feature branch compared to the base branch. Consequently, existing use cases, even if unreviewed, won't be displayed.
+</Warning>
 
 ## Review Statuses
 
@@ -32,15 +77,6 @@ Different statuses can be assigned to the reviews:
   - A base build is available or at least one use-case is tied with a DesignLink.
 
 Once a review's changes are approved, the developer closes the Pull-Request, updating the review status to `merged`.
-
-## Requirements
-
-To harness the Widgetbook Cloud _Review_ feature, ensure your setup aligns with the following prerequisites:
-
-- Incorporate the [widgetbook_generator package](https://pub.dev/packages/widgetbook_generator) version `{{ versions.generator }}`. No additional configuration needed.
-- Integrate the [widgetbook package](https://pub.dev/packages/widgetbook) version `{{ versions.widgetbook }}`. No extra setup required.
-- Employ the CLI from [widgetbook_cli package](https://pub.dev/packages/widgetbook_cli).
-- Set up our GitHub app.
 
 ## How to set up addons and knobs
 
@@ -85,43 +121,4 @@ To add a Figma design link, you need to provide the `designLink` property to a u
   type: AppBar
 )
 ```
-
-## Publishing a Review
-
-The review feature works best if a build for the base branch and a build for the feature branch is available. 
-In addition to uploading a feature branch, information about what has changed is important. 
-To add this information, you can use the `--base-branch` argument of the CLI: `widgetbook publish --api-key KEY --base-branch BASE-BRANCH`.
-
-<Info>
-    Most CI/CD providers expose the `BASE-BRANCH` via environment variables for pull-requests. Check our [CI/CD Setup guide](/widgetbook-cloud/setup) for more insights.
-</Info>
-
-### Example
-
-```bash
-# Install dependencies
-flutter pub get
-# !!! 
-# !!! Run the build runner
-# !!! This is mandatory even if you have committed the generated files since 
-# !!! the generator creates files that are consumed by the Widgetbook CLI
-# !!!
-flutter pub run build_runner build --delete-conflicting-outputs
-# Build the Widgetbook
-flutter build web -t lib/ui_catalogs.widgetbook.dart
-# Install the CLI
-dart pub global activate widgetbook_cli
-# Run the CLI
-widgetbook publish --api-key API-KEY --base-branch main
-```
-
-## Review Information
-To populate a review, information regarding the changes in use cases is mandatory. When the `--base-branch` argument is used, the CLI fetches details about the altered use cases.
-
-<Info>
-Widgetbook Cloud showcases Reviews for all pull requests. But, only those Reviews with use case alterations are accessible.
-</Info>
-<Warning>
-At present, Widgetbook Cloud exclusively displays use cases that underwent changes, additions, or removals within the feature branch compared to the base branch. Consequently, existing use cases, even if unreviewed, won't be displayed.
-</Warning>
 
