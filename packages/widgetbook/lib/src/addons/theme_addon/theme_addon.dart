@@ -10,8 +10,16 @@ typedef ThemeBuilder<T> = Widget Function(
   Widget child,
 );
 
-/// A [WidgetbookAddon] for changing the active custom theme. A [themeBuilder]
-/// must be provided that returns an [InheritedWidget] or similar [Widget]s.
+/// A [WidgetbookAddon] for changing the active custom theme.
+///
+/// A [themeBuilder] must be provided that returns an [InheritedWidget] or similar
+/// [Widget]s.
+///
+/// {@template ThemeAddon.initialTheme}
+/// The [initialTheme] is the first theme used when the app is started. When
+/// provided, it must be within [themes]. Otherwise, if [initialTheme] is `null`,
+/// the first theme in [themes] is used.
+/// {@endtemplate}
 class ThemeAddon<T> extends WidgetbookAddon<WidgetbookTheme<T>> {
   ThemeAddon({
     required this.themes,
