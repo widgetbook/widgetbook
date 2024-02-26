@@ -39,3 +39,18 @@ class ReviewResponse {
     );
   }
 }
+
+class ReviewSyncResponse {
+  const ReviewSyncResponse({
+    required this.reviewId,
+  });
+
+  final String reviewId;
+
+  // ignore: sort_constructors_first
+  factory ReviewSyncResponse.fromJson(Map<String, dynamic> map) {
+    return ReviewSyncResponse(
+      reviewId: map['reviewId'] as String,
+    );
+  }
+}

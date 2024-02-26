@@ -1,5 +1,3 @@
-import '../git/git.dart';
-
 /// Typed representation of the arguments passed to the push command.
 class BuildPushArgs {
   const BuildPushArgs({
@@ -10,7 +8,6 @@ class BuildPushArgs {
     required this.vendor,
     required this.actor,
     required this.repository,
-    this.baseBranch,
   });
 
   final String apiKey;
@@ -20,7 +17,4 @@ class BuildPushArgs {
   final String vendor;
   final String actor;
   final String repository;
-
-  // TODO: remove when API endpoint no longer needs this
-  final Reference? baseBranch;
 }

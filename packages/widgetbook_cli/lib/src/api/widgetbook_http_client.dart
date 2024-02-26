@@ -63,9 +63,9 @@ class WidgetbookHttpClient {
   }
 
   /// Sends review data to the Widgetbook Cloud backend.
-  Future<ReviewResponse> syncReview(
+  Future<ReviewSyncResponse> syncReview(
     VersionsMetadata? versions,
-    ReviewRequestNext request,
+    ReviewSyncRequest request,
   ) async {
     try {
       final response = await client.post<Map<String, dynamic>>(
@@ -76,7 +76,7 @@ class WidgetbookHttpClient {
         ),
       );
 
-      return ReviewResponse.fromJson(response.data!);
+      return ReviewSyncResponse.fromJson(response.data!);
     } catch (e) {
       final message = e is DioException //
           ? e.response?.toString()

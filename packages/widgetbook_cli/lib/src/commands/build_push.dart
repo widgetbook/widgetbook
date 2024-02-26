@@ -11,8 +11,6 @@ import '../api/models/build_draft_request.dart';
 import '../api/models/build_ready_request.dart';
 import '../utils/executable_manager.dart';
 import 'build_push_args.dart';
-import 'review_sync.dart';
-import 'review_sync_args.dart';
 
 class BuildPushCommand extends CliCommand<BuildPushArgs> {
   BuildPushCommand({
@@ -56,10 +54,6 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       ..addOption(
         'actor',
         help: 'The username of the actor which triggered the build.',
-      )
-      ..addOption(
-        'sync-reviews-of',
-        help: 'The base branch of the pull-request. For example, main.',
       );
   }
 
@@ -84,14 +78,6 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         context.providerSha ??
         currentBranch.sha;
 
-    final baseBranchName = results['sync-reviews-of'] as String?;
-    final baseBranch = baseBranchName == null
-        ? null
-        : await repository.findBranch(
-            baseBranchName,
-            remote: true,
-          );
-
     final actor = results['actor'] as String? ?? context.user;
     if (actor == null) {
       throw ActorNotFoundException();
@@ -110,7 +96,6 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       vendor: context.name,
       actor: actor,
       repository: repoName,
-      baseBranch: baseBranch,
     );
   }
 
@@ -135,8 +120,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         repository: args.repository,
         actor: args.actor,
         branch: args.branch,
-        headSha: args.commit,
-        baseSha: args.baseBranch?.sha,
+        sha: args.commit,
         useCases: useCases,
       ),
     );
@@ -179,29 +163,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       ),
     );
 
-    submitProgress.complete('Build ready at ${response.buildUrl}');
-
-    /// TODO: remove this once the `review sync` command works without a build
-    if (args.baseBranch != null) {
-      final syncCmd = ReviewSyncCommand(
-        context: context,
-        fileSystem: fileSystem,
-        processManager: processManager,
-      );
-
-      await syncCmd.runWith(
-        context,
-        ReviewSyncArgs(
-          apiKey: args.apiKey,
-          path: args.path,
-          buildId: buildId,
-          baseBranch: args.baseBranch!.name,
-          headBranch: args.branch,
-          baseSha: args.baseBranch!.sha,
-          headSha: args.commit,
-        ),
-      );
-    }
+    submitProgress.complete('Build will be ready at ${response.buildUrl}');
 
     return 0;
   }

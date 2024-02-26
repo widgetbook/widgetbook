@@ -1,9 +1,9 @@
 import '../../models/changed_use_case.dart';
 
-class ReviewRequest extends ReviewRequestNext {
+class ReviewRequest extends ReviewSyncRequest {
   const ReviewRequest({
     required super.apiKey,
-    required super.buildId,
+    required this.buildId,
     required this.projectId,
     required super.baseBranch,
     required super.headBranch,
@@ -12,6 +12,7 @@ class ReviewRequest extends ReviewRequestNext {
     required this.useCases,
   });
 
+  final String buildId;
   final String projectId;
   final List<ChangedUseCase> useCases;
 
@@ -19,16 +20,16 @@ class ReviewRequest extends ReviewRequestNext {
   Map<String, dynamic> toJson() {
     return {
       ...super.toJson(),
+      'buildId': buildId,
       'projectId': projectId,
       'useCases': useCases.map((e) => e.toJson()).toList(),
     };
   }
 }
 
-class ReviewRequestNext {
-  const ReviewRequestNext({
+class ReviewSyncRequest {
+  const ReviewSyncRequest({
     required this.apiKey,
-    required this.buildId,
     required this.baseBranch,
     required this.headBranch,
     required this.baseSha,
@@ -36,7 +37,6 @@ class ReviewRequestNext {
   });
 
   final String apiKey;
-  final String buildId;
   final String baseBranch;
   final String headBranch;
   final String baseSha;
@@ -45,7 +45,6 @@ class ReviewRequestNext {
   Map<String, dynamic> toJson() {
     return {
       'apiKey': apiKey,
-      'buildId': buildId,
       'baseBranch': baseBranch,
       'headBranch': headBranch,
       'baseSha': baseSha,

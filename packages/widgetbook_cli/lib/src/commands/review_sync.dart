@@ -29,11 +29,6 @@ class ReviewSyncCommand extends CliCommand<ReviewSyncArgs> {
         mandatory: true,
       )
       ..addOption(
-        'build-id',
-        help: 'ID of the build to sync.',
-        mandatory: true,
-      )
-      ..addOption(
         'head-branch',
         help: 'The head branch of the pull-request. For example, feat/foo.',
       )
@@ -63,7 +58,6 @@ class ReviewSyncCommand extends CliCommand<ReviewSyncArgs> {
   ) async {
     final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
-    final buildId = results['build-id'] as String;
 
     final repository = context.repository!;
     final currentBranch = await repository.currentBranch;
@@ -83,7 +77,6 @@ class ReviewSyncCommand extends CliCommand<ReviewSyncArgs> {
     return ReviewSyncArgs(
       apiKey: apiKey,
       path: path,
-      buildId: buildId,
       headBranch: headBranch,
       baseBranch: baseBranch,
       headSha: headSha,
@@ -102,9 +95,8 @@ class ReviewSyncCommand extends CliCommand<ReviewSyncArgs> {
     final syncProgress = logger.progress('Syncing review');
     final response = await client.syncReview(
       versions,
-      ReviewRequestNext(
+      ReviewSyncRequest(
         apiKey: args.apiKey,
-        buildId: args.buildId,
         baseBranch: args.baseBranch,
         headBranch: args.headBranch,
         baseSha: args.baseSha,
@@ -112,18 +104,7 @@ class ReviewSyncCommand extends CliCommand<ReviewSyncArgs> {
       ),
     );
 
-    // TODO: get review URL from response
-    final reviewUrl = Uri.parse(
-      p.join(
-        context.environment.appUrl,
-        'projects/${response.review.projectId}',
-        'reviews/${response.review.id}',
-        'builds/${args.buildId}',
-        'use-cases',
-      ),
-    );
-
-    syncProgress.complete('Review ready at $reviewUrl');
+    syncProgress.complete('Review [${response.reviewId}] synced');
 
     return 0;
   }

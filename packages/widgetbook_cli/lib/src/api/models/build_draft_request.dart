@@ -7,8 +7,7 @@ class BuildDraftRequest {
     required this.repository,
     required this.actor,
     required this.branch,
-    required this.headSha,
-    this.baseSha,
+    required this.sha,
     required this.useCases,
   });
 
@@ -17,8 +16,7 @@ class BuildDraftRequest {
   final String repository;
   final String actor;
   final String branch;
-  final String headSha;
-  final String? baseSha;
+  final String sha;
   final List<UseCaseMetadata> useCases;
 
   Map<String, dynamic> toJson() {
@@ -28,8 +26,7 @@ class BuildDraftRequest {
       'repository': repository,
       'actor': actor,
       'branch': branch,
-      'headSha': headSha,
-      'baseSha': baseSha,
+      'sha': sha,
       'useCases': useCases.map((x) => x.toJson()).toList(),
     };
   }
