@@ -29,6 +29,11 @@ class ReviewSyncCommand extends CliCommand<ReviewSyncArgs> {
         mandatory: true,
       )
       ..addOption(
+        'path',
+        help: 'The path to the build folder of your application.',
+        defaultsTo: './',
+      )
+      ..addOption(
         'head-branch',
         help: 'The head branch of the pull-request. For example, feat/foo.',
       )
