@@ -3,11 +3,9 @@ import 'dart:async';
 import 'package:args/src/arg_results.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
-import 'package:path/path.dart' as p;
 import 'package:process/process.dart';
 
 import '../../widgetbook_cli.dart';
-import '../utils/executable_manager.dart';
 import 'review_sync_args.dart';
 
 class ReviewSyncCommand extends CliCommand<ReviewSyncArgs> {
@@ -27,11 +25,6 @@ class ReviewSyncCommand extends CliCommand<ReviewSyncArgs> {
         'api-key',
         help: 'The project specific API key for Widgetbook Cloud.',
         mandatory: true,
-      )
-      ..addOption(
-        'path',
-        help: 'The path to the build folder of your application.',
-        defaultsTo: './',
       )
       ..addOption(
         'head-branch',
@@ -61,9 +54,7 @@ class ReviewSyncCommand extends CliCommand<ReviewSyncArgs> {
     Context context,
     ArgResults results,
   ) async {
-    final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
-
     final repository = context.repository!;
     final currentBranch = await repository.currentBranch;
     final headBranch = results['head-branch'] as String? ?? currentBranch.name;
@@ -81,7 +72,6 @@ class ReviewSyncCommand extends CliCommand<ReviewSyncArgs> {
 
     return ReviewSyncArgs(
       apiKey: apiKey,
-      path: path,
       headBranch: headBranch,
       baseBranch: baseBranch,
       headSha: headSha,
@@ -91,15 +81,8 @@ class ReviewSyncCommand extends CliCommand<ReviewSyncArgs> {
 
   @override
   FutureOr<int> runWith(Context context, ReviewSyncArgs args) async {
-    final lockPath = p.join(args.path, 'pubspec.lock');
-    final versions = await VersionsMetadata.from(
-      lockFile: fileSystem.file(lockPath),
-      flutterVersionOutput: await processManager.runFlutter(['--version']),
-    );
-
     final syncProgress = logger.progress('Syncing review');
     final response = await client.syncReview(
-      versions,
       ReviewSyncRequest(
         apiKey: args.apiKey,
         baseBranch: args.baseBranch,

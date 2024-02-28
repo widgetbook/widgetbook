@@ -64,16 +64,12 @@ class WidgetbookHttpClient {
 
   /// Sends review data to the Widgetbook Cloud backend.
   Future<ReviewSyncResponse> syncReview(
-    VersionsMetadata? versions,
     ReviewSyncRequest request,
   ) async {
     try {
       final response = await client.post<Map<String, dynamic>>(
         'v1.5/reviews',
         data: request.toJson(),
-        options: Options(
-          headers: versions?.toHeaders(),
-        ),
       );
 
       return ReviewSyncResponse.fromJson(response.data!);
