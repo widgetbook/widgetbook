@@ -38,7 +38,11 @@ class ListField<T> extends Field<T> {
       trailingIcon: const Icon(Icons.keyboard_arrow_down_rounded),
       selectedTrailingIcon: const Icon(Icons.keyboard_arrow_up_rounded),
       initialSelection: value ?? values.first,
-      onSelected: (value) => updateField(context, group, value!),
+      onSelected: (value) {
+        if (value != null) {
+          updateField(context, group, value);
+        }
+      },
       dropdownMenuEntries: values
           .map(
             (value) => DropdownMenuEntry(
