@@ -38,12 +38,12 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         defaultsTo: './',
       )
       ..addOption(
-        'branch',
-        help: 'Branch name (e.g. main, feature/cool-feature)',
-      )
-      ..addOption(
         'repository',
         help: 'Repository name (e.g. widgetbook/cool-app) ',
+      )
+      ..addOption(
+        'branch',
+        help: 'Branch name (e.g. main, feature/cool-feature)',
       )
       ..addOption(
         'commit',
