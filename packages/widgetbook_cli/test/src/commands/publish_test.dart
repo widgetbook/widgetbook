@@ -15,8 +15,6 @@ class FakeDirectory extends Fake implements Directory {}
 
 class FakeBuildRequest extends Fake implements BuildRequest {}
 
-class FakeReviewRequest extends Fake implements ReviewRequest {}
-
 class FakeVersionsMetadata extends Fake implements VersionsMetadata {}
 
 void main() {
@@ -27,13 +25,6 @@ void main() {
     tasks: [],
   );
 
-  const reviewResponse = ReviewResponse(
-    tasks: [],
-    review: Review(
-      id: 'reviewId',
-    ),
-  );
-
   group('$PublishCommand', () {
     final versions = FakeVersionsMetadata();
 
@@ -41,7 +32,6 @@ void main() {
     late Repository repository;
     late WidgetbookHttpClient client;
     late FileSystem fileSystem;
-    late UseCaseReader useCaseReader;
     late Progress progress;
     late Stdin stdin;
     late Context context;
@@ -53,7 +43,6 @@ void main() {
       registerFallbackValue(versions);
       registerFallbackValue(FakeFile());
       registerFallbackValue(FakeBuildRequest());
-      registerFallbackValue(FakeReviewRequest());
       registerFallbackValue(FakeDirectory());
       registerFallbackValue(FakeEnvironment());
 
@@ -61,7 +50,6 @@ void main() {
       repository = MockRepository();
       client = MockWidgetbookHttpClient();
       fileSystem = MockFileSystem();
-      useCaseReader = MockUseCaseReader();
       progress = MockProgress();
       stdin = MockStdin();
       context = MockContext();
@@ -469,90 +457,6 @@ void main() {
         ),
       ).thenAnswer(
         (_) async => buildResponse,
-      );
-
-      expect(
-        await command.runWith(context, args),
-        equals(ExitCode.success.code),
-      );
-    });
-
-    test('exits with code 0 when publishing a review succeeds', () async {
-      const args = PublishArgs(
-        apiKey: 'apiKey',
-        branch: 'feat',
-        commit: 'sha',
-        path: 'path/to/build/',
-        vendor: 'Test',
-        actor: 'tester',
-        repository: 'widgetbook',
-        baseBranch: Reference(
-          '98d8ca84d7e311fe09fd5bc1887bc6b2e501f6bf',
-          'main',
-        ),
-      );
-
-      final command = PublishCommand(
-        context: context,
-        fileSystem: fileSystem,
-        logger: logger,
-        client: client,
-        useCaseReader: useCaseReader,
-        zipEncoder: zipEncoder,
-      );
-
-      when(() => context.repository).thenAnswer((_) => repository);
-      when(() => repository.isClean).thenAnswer((_) async => true);
-
-      when(() => directory.existsSync()).thenReturn(true);
-      when(
-        () => fileSystem.directory(any<String>()),
-      ).thenReturn(directory);
-
-      when(() => zipEncoder.zip(any())).thenAnswer((_) async => file);
-
-      when(
-        () => client.uploadBuild(
-          any<VersionsMetadata>(),
-          any<BuildRequest>(),
-        ),
-      ).thenAnswer(
-        (_) async => buildResponse,
-      );
-
-      when(() => repository.diff(any())).thenAnswer((_) async => []);
-      when(() => useCaseReader.read(any())).thenAnswer(
-        (_) async => [],
-      );
-
-      when(
-        () => useCaseReader.compare(
-          useCases: any(named: 'useCases'),
-          diffs: any(named: 'diffs'),
-        ),
-      ).thenReturn([
-        ChangedUseCase.fromUseCase(
-          modification: Modification.changed,
-          useCase: const UseCaseMetadata(
-            name: 'Name',
-            useCaseName: 'UseCase',
-            componentName: 'Component',
-            navPath: 'widgets',
-            importStatement: 'package:foo/bar.dart',
-            componentImportStatement: 'package:foo/bar.dart',
-            componentDefinitionPath: 'path/to/use_case.dart',
-            useCaseDefinitionPath: 'path/to/use_case.dart',
-          ),
-        ),
-      ]);
-
-      when(
-        () => client.uploadReview(
-          any<VersionsMetadata>(),
-          any<ReviewRequest>(),
-        ),
-      ).thenAnswer(
-        (_) async => reviewResponse,
       );
 
       expect(

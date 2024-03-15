@@ -1,7 +1,8 @@
 ## Unreleased
 
 - **BREAKING**: Set minimum SDK version to 3.0.0. ([#1030](https://github.com/widgetbook/widgetbook/pull/1030))
-- **FIX**: Remove `#` from build/review URLs. ([#1063](https://github.com/widgetbook/widgetbook/pull/1063))
+- **FIX**: Remove `#` from build URLs. ([#1063](https://github.com/widgetbook/widgetbook/pull/1063))
+- **REFACTOR**: Remove reviews feature in favor of the [GitHub app](https://github.com/apps/widgetbook). The `--base-branch` option has no effect anymore. ([#1155](https://github.com/widgetbook/widgetbook/pull/1155))
 
 ## 3.0.1
 

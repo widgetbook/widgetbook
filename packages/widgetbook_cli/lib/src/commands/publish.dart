@@ -24,7 +24,6 @@ class PublishCommand extends CliCommand<PublishArgs> {
     this.processManager = const LocalProcessManager(),
     this.fileSystem = const LocalFileSystem(),
     this.zipEncoder = const ZipEncoder(),
-    this.useCaseReader = const UseCaseReader(),
     WidgetbookHttpClient? client,
   })  : _client = client ??
             WidgetbookHttpClient(
@@ -34,7 +33,6 @@ class PublishCommand extends CliCommand<PublishArgs> {
           name: 'publish',
           description: 'Publish a new build',
         ) {
-    progress = logger.progress('Publishing Widgetbook');
     argParser
       ..addOption(
         'path',
@@ -66,7 +64,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
       )
       ..addOption(
         'base-branch',
-        help:
+        help: '[Deprecated: Use GitHub App instead]. '
             'The base branch of the pull-request. For example, main or master.',
       );
   }
@@ -74,9 +72,8 @@ class PublishCommand extends CliCommand<PublishArgs> {
   final ProcessManager processManager;
   final FileSystem fileSystem;
   final ZipEncoder zipEncoder;
-  final UseCaseReader useCaseReader;
   final WidgetbookHttpClient _client;
-  late final Progress progress;
+  late final Progress progress = logger.progress('Publishing Widgetbook');
 
   @override
   Future<PublishArgs> parseResults(Context context, ArgResults results) async {
@@ -89,15 +86,6 @@ class PublishCommand extends CliCommand<PublishArgs> {
     final commit = results['commit'] as String? ??
         context.providerSha ??
         currentBranch.sha;
-
-    progress.update('finding base branch');
-    final baseBranchName = results['base-branch'] as String?;
-    final baseBranch = baseBranchName == null
-        ? null
-        : await repository.findBranch(
-            baseBranchName,
-            remote: true,
-          );
 
     final actor = results['actor'] as String? ?? context.user;
     if (actor == null) {
@@ -117,7 +105,6 @@ class PublishCommand extends CliCommand<PublishArgs> {
       vendor: context.name,
       actor: actor,
       repository: repoName,
-      baseBranch: baseBranch,
     );
   }
 
@@ -151,28 +138,11 @@ class PublishCommand extends CliCommand<PublishArgs> {
         versions: versions,
       );
 
-      if (!args.hasReview) {
-        logger.info(
-          '💡Tip: You can upload a review by specifying a `base-branch` option.\n'
-          'For more information: https://docs.widgetbook.io/widgetbook-cloud/reviews',
-        );
-      }
-
-      final reviewResponse = args.hasReview
-          ? await publishReview(
-              args: args,
-              buildResponse: buildResponse,
-              context: context,
-              versions: versions,
-            )
-          : null;
-
       progress.complete();
       logSuccess(
         baseUrl: context.environment.appUrl,
         projectId: buildResponse.project,
         buildId: buildResponse.build,
-        reviewId: reviewResponse?.review.id,
       );
 
       return ExitCode.success.code;
@@ -256,66 +226,10 @@ class PublishCommand extends CliCommand<PublishArgs> {
     return response;
   }
 
-  Future<ReviewResponse?> publishReview({
-    required Context context,
-    required PublishArgs args,
-    required BuildResponse buildResponse,
-    required VersionsMetadata? versions,
-  }) async {
-    final genDirPath = p.join(args.path, '.dart_tool', 'build', 'generated');
-    final genDir = fileSystem.directory(genDirPath);
-
-    if (!genDir.existsSync()) {
-      logger.err(
-        'Could not find generator files. Therefore, no review has been created.\n'
-        'Make sure to use widgetbook_generator and run build_runner before this CLI.\n'
-        'For more information: https://docs.widgetbook.io/widgetbook-cloud/reviews',
-      );
-
-      throw ReviewNotFoundException();
-    }
-
-    final useCases = await useCaseReader.read(args.path);
-    final diffs = await context.repository!.diff(args.baseBranch!.fullName);
-
-    final changeUseCases = useCaseReader.compare(
-      useCases: useCases,
-      diffs: diffs,
-    );
-
-    if (changeUseCases.isEmpty) {
-      logger.err('Could not find any changed use-cases files.');
-      throw ReviewNotFoundException();
-    }
-
-    progress.update(
-      'Uploading review [${changeUseCases.length} modified use-case(s)]',
-    );
-
-    final response = await _client.uploadReview(
-      versions,
-      ReviewRequest(
-        apiKey: args.apiKey,
-        useCases: changeUseCases,
-        buildId: buildResponse.build,
-        projectId: buildResponse.project,
-        baseBranch: args.baseBranch!.fullName,
-        headBranch: args.branch,
-        baseSha: args.baseBranch!.sha,
-        headSha: args.commit,
-      ),
-    );
-
-    progress.complete('Review upload completed');
-
-    return response;
-  }
-
   void logSuccess({
     required String baseUrl,
     required String projectId,
     required String buildId,
-    required String? reviewId,
   }) {
     final buildUrl = lightCyan.wrap(
       styleUnderlined.wrap(
@@ -331,27 +245,8 @@ class PublishCommand extends CliCommand<PublishArgs> {
       ),
     );
 
-    final reviewUrl = lightCyan.wrap(
-      styleUnderlined.wrap(
-        link(
-          uri: Uri.parse(
-            p.join(
-              baseUrl,
-              'projects/$projectId',
-              'reviews/$reviewId',
-              'builds/$buildId',
-              'use-cases',
-            ),
-          ),
-        ),
-      ),
-    );
-
-    logger.success(
-      'Successfully published to Widgetbook Cloud 🎉'
-      '\n> Build: $buildUrl'
-      "${reviewId != null ? '\n> Review: $reviewUrl' : ''}",
-    );
+    logger.success('Successfully published to Widgetbook Cloud 🎉'
+        '\n> Build: $buildUrl');
   }
 
   /// Gets metadata about the currently used versions of Flutter and

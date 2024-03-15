@@ -1,5 +1,3 @@
-import '../git/git.dart';
-
 /// Typed representation of the arguments passed to the publish command.
 class PublishArgs {
   const PublishArgs({
@@ -10,7 +8,6 @@ class PublishArgs {
     required this.vendor,
     required this.actor,
     required this.repository,
-    this.baseBranch,
   });
 
   final String apiKey;
@@ -20,9 +17,6 @@ class PublishArgs {
   final String vendor;
   final String actor;
   final String repository;
-  final Reference? baseBranch;
-
-  bool get hasReview => baseBranch != null;
 
   @override
   bool operator ==(covariant PublishArgs other) {
@@ -34,8 +28,7 @@ class PublishArgs {
         other.path == path &&
         other.vendor == vendor &&
         other.actor == actor &&
-        other.repository == repository &&
-        other.baseBranch == baseBranch;
+        other.repository == repository;
   }
 
   @override
@@ -46,7 +39,6 @@ class PublishArgs {
         path.hashCode ^
         vendor.hashCode ^
         actor.hashCode ^
-        repository.hashCode ^
-        baseBranch.hashCode;
+        repository.hashCode;
   }
 }
