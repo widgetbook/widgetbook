@@ -4,6 +4,8 @@ import 'theme_addon.dart';
 
 /// A [ThemeAddon] for changing the active [CupertinoThemeData] via
 /// [CupertinoTheme].
+///
+/// {@macro ThemeAddon.initialTheme}
 class CupertinoThemeAddon extends ThemeAddon<CupertinoThemeData> {
   CupertinoThemeAddon({
     required super.themes,
