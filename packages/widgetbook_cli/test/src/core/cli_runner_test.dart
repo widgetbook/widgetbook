@@ -18,6 +18,7 @@ const expectedUsage = [
       '    --version    Print the current version.\n'
       '\n'
       'Available commands:\n'
+      '  cloud     Manage your Widgetbook Cloud projects.\n'
       '  publish   Publish a new build\n'
       '  upgrade   Upgrade Widgetbook CLI\n'
       '\n'

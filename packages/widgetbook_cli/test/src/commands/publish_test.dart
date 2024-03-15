@@ -447,6 +447,9 @@ void main() {
       when(
         () => fileSystem.directory(any<String>()),
       ).thenReturn(directory);
+      when(
+        () => fileSystem.file(any<String>()),
+      ).thenReturn(file);
 
       when(() => zipEncoder.zip(any(), any())).thenAnswer((_) async => file);
 
