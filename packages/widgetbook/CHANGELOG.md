@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Guard `list` knob against null values when searching. ([#1152](https://github.com/widgetbook/widgetbook/pull/1152) - by [@bramp](https://github.com/bramp))
+
 ## 3.7.1
 
 - **REFACTOR**: Wrap workbench with `Scaffold`. ([#1091](https://github.com/widgetbook/widgetbook/pull/1091))
