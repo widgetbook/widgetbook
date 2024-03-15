@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'theme_addon.dart';
 
 /// A [ThemeAddon] for changing the active [ThemeData] via [Theme].
+///
+/// {@macro ThemeAddon.initialTheme}
 class MaterialThemeAddon extends ThemeAddon<ThemeData> {
   MaterialThemeAddon({
     required super.themes,
