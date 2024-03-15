@@ -108,6 +108,15 @@ class PublishCommand extends CliCommand<PublishArgs> {
 
   @override
   FutureOr<int> runWith(Context context, PublishArgs args) async {
+    logger.warn(
+      '⚠️ Deprecation Notice\n'
+      'The `publish` command is deprecated and will be removed in the future.\n'
+      'Use the `widgetbook cloud build push` command instead.\n'
+      'For more information, '
+      'see: https://docs.widgetbook.io/widgetbook-cloud/overview'
+      '\n-------------------------------------------------------------\n',
+    );
+
     try {
       if (context.repository == null) {
         GitDirectoryNotFound(
