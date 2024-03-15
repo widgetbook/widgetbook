@@ -33,10 +33,18 @@ abstract class CliCommand<TArgs> extends Command<int> {
 
   @override
   FutureOr<int>? run() async {
-    final results = argResults!;
-    final args = await parseResults(context, results);
+    try {
+      final results = argResults!;
+      final args = await parseResults(context, results);
 
-    return runWith(context, args);
+      return runWith(context, args);
+    } catch (e, stackTrace) {
+      logger.err('Something wrong happened');
+      logger.err(e.toString());
+      logger.err(stackTrace.toString());
+
+      return -1;
+    }
   }
 }
 

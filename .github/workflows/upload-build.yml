@@ -1,4 +1,4 @@
-name: Upload Build
+name: Push Build to Widgetbook Cloud
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  push-build:
     runs-on: ubuntu-latest
 
     defaults:
@@ -37,9 +37,5 @@ jobs:
       - name: Install Widgetbook CLI
         run: dart pub global activate --source path ../packages/widgetbook_cli
 
-      - name: Upload Build
-        run: |
-          widgetbook publish \
-            --api-key ${{ secrets.WIDGETBOOK_CLOUD_API_KEY }} \
-            --repository $GITHUB_REPOSITORY \
-            --actor $GITHUB_ACTOR
+      - name: Push Build
+        run: widgetbook cloud build push --api-key ${{ secrets.WIDGETBOOK_CLOUD_API_KEY }} 

@@ -7,9 +7,7 @@ import 'package:file/local.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
 import 'package:process/process.dart';
-import 'package:yaml/yaml.dart';
 
-import '../../metadata.dart';
 import '../api/api.dart';
 import '../core/core.dart';
 import '../git/git.dart';
@@ -110,6 +108,15 @@ class PublishCommand extends CliCommand<PublishArgs> {
 
   @override
   FutureOr<int> runWith(Context context, PublishArgs args) async {
+    logger.warn(
+      '⚠️ Deprecation Notice\n'
+      'The `publish` command is deprecated and will be removed in the future.\n'
+      'Use the `widgetbook cloud build push` command instead.\n'
+      'For more information, '
+      'see: https://docs.widgetbook.io/widgetbook-cloud/overview'
+      '\n-------------------------------------------------------------\n',
+    );
+
     try {
       if (context.repository == null) {
         GitDirectoryNotFound(
@@ -126,7 +133,12 @@ class PublishCommand extends CliCommand<PublishArgs> {
 
       progress.update('Getting versions');
 
-      final versions = await getVersions(args);
+      final lockPath = p.join(args.path, 'pubspec.lock');
+      final versions = await VersionsMetadata.from(
+        lockFile: fileSystem.file(lockPath),
+        flutterVersionOutput: await processManager.runFlutter(['--version']),
+      );
+
       logger.info('\nThe following versions are used: ');
       logger.info('  Flutter    : ${versions?.flutter ?? '-'}');
       logger.info('  Widgetbook : ${versions?.widgetbook ?? '-'}');
@@ -190,7 +202,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
 
     progress.update('Generating zip');
     final encoder = zipEncoder;
-    final zipFile = await encoder.zip(buildDir);
+    final zipFile = await encoder.zip(buildDir, 'web.zip');
 
     if (zipFile == null) {
       logger.err('Could not create .zip file.');
@@ -247,39 +259,5 @@ class PublishCommand extends CliCommand<PublishArgs> {
 
     logger.success('Successfully published to Widgetbook Cloud 🎉'
         '\n> Build: $buildUrl');
-  }
-
-  /// Gets metadata about the currently used versions of Flutter and
-  /// all Widgetbook packages.
-  Future<VersionsMetadata?> getVersions(PublishArgs args) async {
-    try {
-      final lockPath = p.join(args.path, 'pubspec.lock');
-      final lockContent = await fileSystem.file(lockPath).readAsString();
-      final lockFile = loadYaml(lockContent) as YamlMap;
-      final packages = lockFile['packages'] as YamlMap;
-
-      return VersionsMetadata(
-        cli: packageVersion,
-        flutter: await getFlutterVersion(),
-        widgetbook: getPackageVersion(packages, 'widgetbook'),
-        annotation: getPackageVersion(packages, 'widgetbook_annotation'),
-        generator: getPackageVersion(packages, 'widgetbook_generator'),
-      );
-    } catch (_) {
-      return null;
-    }
-  }
-
-  Future<String?> getFlutterVersion() async {
-    final result = await processManager.runFlutter(['--version']);
-    final regex = RegExp(r'Flutter (\d+.\d+.\d+)');
-    final match = regex.firstMatch(result);
-
-    return match?.group(1);
-  }
-
-  String? getPackageVersion(YamlMap packages, String name) {
-    final package = packages[name] as YamlMap?;
-    return package?['version']?.toString();
   }
 }

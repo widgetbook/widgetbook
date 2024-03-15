@@ -55,4 +55,15 @@ class UseCaseMetadata {
           map['designLink'] != null ? map['designLink'] as String : null,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': useCaseName,
+      'componentName': componentName,
+      'navPath': navPath,
+      'componentDefinitionPath': componentDefinitionPath,
+      'componentImportStatement': componentImportStatement,
+      'designLink': designLink,
+    };
+  }
 }

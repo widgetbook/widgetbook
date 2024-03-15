@@ -409,7 +409,7 @@ void main() {
           () => fileSystem.directory(any<String>()),
         ).thenReturn(directory);
 
-        when(() => zipEncoder.zip(any())).thenAnswer((_) async => null);
+        when(() => zipEncoder.zip(any(), any())).thenAnswer((_) async => null);
 
         expectLater(
           () => command.publishBuild(
@@ -447,8 +447,11 @@ void main() {
       when(
         () => fileSystem.directory(any<String>()),
       ).thenReturn(directory);
+      when(
+        () => fileSystem.file(any<String>()),
+      ).thenReturn(file);
 
-      when(() => zipEncoder.zip(any())).thenAnswer((_) async => file);
+      when(() => zipEncoder.zip(any(), any())).thenAnswer((_) async => file);
 
       when(
         () => client.uploadBuild(

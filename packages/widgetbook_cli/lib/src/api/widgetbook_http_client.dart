@@ -1,7 +1,14 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:file/file.dart';
 
 import '../core/core.dart';
 import '../utils/utils.dart';
+import 'models/build_draft_request.dart';
+import 'models/build_draft_response.dart';
+import 'models/build_ready_request.dart';
+import 'models/build_ready_response.dart';
 import 'models/build_request.dart';
 import 'models/build_response.dart';
 import 'models/versions_metadata.dart';
@@ -29,7 +36,7 @@ class WidgetbookHttpClient {
     try {
       final formData = await request.toFormData();
       final response = await client.post<Map<String, dynamic>>(
-        '/builds/deploy',
+        'v1/builds/deploy',
         data: formData,
         options: Options(
           headers: versions?.toHeaders(),
@@ -46,5 +53,65 @@ class WidgetbookHttpClient {
         message: message,
       );
     }
+  }
+
+  Future<BuildDraftResponse> createBuildDraft(
+    VersionsMetadata? versions,
+    BuildDraftRequest request,
+  ) async {
+    try {
+      final response = await client.post<Map<String, dynamic>>(
+        'v1.5/builds/draft',
+        data: request.toJson(),
+        options: Options(
+          headers: versions?.toHeaders(),
+        ),
+      );
+
+      return BuildDraftResponse.fromJson(response.data!);
+    } catch (e) {
+      final message = e is DioException //
+          ? e.response?.toString()
+          : e.toString();
+
+      throw WidgetbookApiException(
+        message: message,
+      );
+    }
+  }
+
+  Future<BuildReadyResponse> submitBuildDraft(
+    BuildReadyRequest request,
+  ) async {
+    try {
+      final response = await client.post<Map<String, dynamic>>(
+        'v1.5/builds/submit',
+        data: request.toJson(),
+      );
+
+      return BuildReadyResponse.fromJson(response.data!);
+    } catch (e) {
+      final message = e is DioException //
+          ? e.response?.toString()
+          : e.toString();
+
+      throw WidgetbookApiException(
+        message: message,
+      );
+    }
+  }
+
+  Future<void> uploadBuildFile(String signedUrl, File zipFile) {
+    // File name must match the name in the signed URL
+    return client.put<void>(
+      signedUrl,
+      data: zipFile.openRead(),
+      options: Options(
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/zip',
+          HttpHeaders.contentLengthHeader: zipFile.lengthSync(),
+        },
+      ),
+    );
   }
 }
