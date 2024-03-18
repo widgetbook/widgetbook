@@ -1,9 +1,8 @@
-## Unreleased
+## 3.1.0
 
 - **BREAKING**: Set minimum SDK version to 3.0.0. ([#1030](https://github.com/widgetbook/widgetbook/pull/1030))
 - **FEAT**: Introduce new `cloud build push` command, and deprecate the old `publish` command. ([#1153](https://github.com/widgetbook/widgetbook/pull/1155))
-- **FIX**: Remove `#` from build URLs. ([#1063](https://github.com/widgetbook/widgetbook/pull/1063))
-- **REFACTOR**: Remove reviews feature in favor of the [GitHub app](https://github.com/apps/widgetbook). The `--base-branch` option has no effect anymore. ([#1155](https://github.com/widgetbook/widgetbook/pull/1155))
+- **REFACTOR**: Remove reviews feature in favor of the [GitHub app](https://github.com/apps/widgetbook). The `--base-branch` option has no effect anymore. For more info, check our [docs for reviews](https://docs.widgetbook.io/widgetbook-cloud/reviews). ([#1155](https://github.com/widgetbook/widgetbook/pull/1155))
 
 ## 3.0.1
 
