@@ -1,48 +1,39 @@
-# Builds
+# Widgetbook Cloud Hosting
 
 When you create a new commit in Git, a new version of your code is created.
 With Widgetbook builds developers make the new version of their local Widgetbook accessible for the whole team.
 If set up with CI/CD, you can have a build for each commit, for each pull-request and for each branch.
 
-## Build process
+## Pushing new build
 
-Widgetbook Cloud builds have to be uploaded based on a Flutter web build.
-To create a Flutter web build, follow these steps:
+To create a Widgetbook Cloud build, follow these steps inside your Widgetbook project:
 
-1. Locate your Widgetbook project
-1. Run the build runner by using `dart run build_runner build -d`
-1. Run `flutter build web -t widgetbook.dart`
+1. Run `widgetbook_generator` to generate metadata about your use-cases and components
 
-## Publish a build
+   ```bash
+   dart run build_runner build -d
+   ```
 
-A Flutter web build of Widgetbook is published by using the [Widgetbook CLI](/widgetbook-cli/overview).
+1. Build the Widgetbook for the web
 
-To publish a build, follow these steps:
+   ```bash
+   # Default target (i.e. `lib/main.dart`)
+   flutter build web
 
+   # Custom target
+   flutter build web -t lib/main.widgetbook.dart
+   ```
 
-1. Activate the CLI by running `flutter pub global activate widgetbook_cli`
-1. An API key is required to publish a build. See [How to Create an API Key](/widgetbook-cloud/setup#How-to-Create-an-API-Key) for more information.
-1. Run `widgetbook publish --api-key YOUR-API-KEY`
+1. Install the [Widgetbook CLI](/widgetbook-cli/overview)
 
-Feel free to customize the `publish` command by reading into the [CLI arguments](/widgetbook-cli/overview#arguments).
+   ```bash
+   dart pub global activate widgetbook_cli
+   ```
 
-<Info>
-  Publishing builds with the CI/CD is recommended as the setup is less error
-  prone and more autonomous. See [CI/CD Setup](/widgetbook-cloud/setup) for more
-  information.
-</Info>
+1. Get your **API key** from the Widgetbook Cloud's **project settings page**.
 
-### Example
+1. Push the build to Widgetbook Cloud
 
-```bash
-# Install dependencies
-flutter pub get
-# Optional: Run the build runner
-flutter pub run build_runner build --delete-conflicting-outputs
-# Build the Widgetbook
-flutter build web -t lib/ui_catalogs.widgetbook.dart
-# Install the CLI
-dart pub global activate widgetbook_cli
-# Run the CLI
-widgetbook publish --api-key API-KEY
-```
+   ```bash
+   widgetbook cloud build push --api-key <API_KEY_HERE>
+   ```
