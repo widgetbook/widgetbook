@@ -1,12 +1,12 @@
 # Widgetbook Cloud Hosting
 
 When you create a new commit in Git, a new version of your code is created.
-With Widgetbook builds developers make the new version of their local Widgetbook accessible for the whole team.
+With _Widgetbook Builds_ developers make the new version of their local Widgetbook accessible for the whole team.
 If set up with CI/CD, you can have a build for each commit, for each pull-request and for each branch.
 
-## Pushing new build
+## Pushing a new build
 
-To create a Widgetbook Cloud build, follow these steps inside your Widgetbook project:
+To create a Widgetbook Build, follow these steps inside your Widgetbook project:
 
 1. Run `widgetbook_generator` to generate metadata about your use-cases and components
 
@@ -35,5 +35,5 @@ To create a Widgetbook Cloud build, follow these steps inside your Widgetbook pr
 1. Push the build to Widgetbook Cloud
 
    ```bash
-   widgetbook cloud build push --api-key <API_KEY_HERE>
+   widgetbook cloud build push --api-key PROJECT_API_KEY
    ```

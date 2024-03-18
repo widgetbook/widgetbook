@@ -1,29 +1,52 @@
 # Widgetbook Cloud Review
 
 <Warning>
-  Widgetbook Cloud Review currently only works with GitHub, we are planning to
-  add more Git providers in the future.
+  Widgetbook Cloud Review currently works with **GitHub only**. We are planning
+  to add more Git providers in the future.
 </Warning>
 
-Widgetbook Cloud introduces a _Review_ feature, a zero-configuration UI regression detection tool that you can get out-of-the-box if you have Widgetbook setup for your project.
+Widgetbook Cloud Review has two main features that can help you improve your development workflow:
 
-| GitHub PRs                                                       | Widgetbook Cloud Reviews                                             |
-| ---------------------------------------------------------------- | -------------------------------------------------------------------- |
-| Compare **code changes** between `base` commit and `head` commit | Compare **visual differences** between `base` build and `head` build |
+1. [**UI Regression Detection**](/widgetbook-cloud/reviews#ui-regression-detection): to automatically detect UI regressions.
+1. [**Figma x Flutter Comparison**](/widgetbook-cloud/reviews#figma-x-flutter-comparison): to verify if the developer meets the design requirements.
 
 ## Pre-requisites
 
 1. Connect your Widgetbook Project to a GitHub repo from the project settings page.
 1. Make sure to you have a [Widgetbook Build](/widgetbook-cloud/hosting) on pushes of new commits via CI (e.g. GitHub Actions).
-1. _[Optional]_ [Add Figma URL](#widgetbook-x-figma) to your use-cases.
 
-## Guide
+## UI Regression Detection
+
+Widgetbook Cloud provides a zero-config UI regression detection system. It automatically compares the visual differences between different builds and highlights the changes in the UI.
+
+It works similarly like GitHub PRs. Instead of only comparing code changes, with Widgetbook Cloud Reviews, you can now also compare visual differences and detect **UI regressions** between different branches or commits.
+
+| GitHub PRs                                                       | Widgetbook Cloud Reviews                                             |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Compare **code changes** between `base` commit and `head` commit | Compare **visual differences** between `base` build and `head` build |
+
+### Guide
 
 1. Create a new branch (e.g. `feat/new-button`) and commit your changes to it.
 1. [Create a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) from your `head` branch (e.g. `feat/new-button`) to the `base` branch (e.g. `main`).
 1. After your build upload finishes (i.e. the CI job from [Pre-requisites](#pre-requisites)), a [commit status](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks) will be added to your PR once the review is ready.
 
-## Review Statuses
+### Reviewing
+
+After your review is ready, you can start comparing the visual differences between the `base` and `head` builds. Here are some things that can help improving your workflow:
+
+1. **Validate** if your visual changes are intentional or not.
+2. **Ask team mates for review** if all changes were intentional.
+3. **Provide feedback** by copying the link to the Widgetbook Cloud Review Story and leaving a comment in the GitHub PR.
+
+<Info>
+  If the reviewer doesn't have access to GitHub _(e.g. a designer)_, we suggest
+  using messaging tools _(e.g. Slack)_. Please [reach
+  out](https://discord.com/invite/zT4AMStAJA) to us in case this doesn't suit
+  you and you want to use a dedicated comment feature in Widgetbook Cloud.
+</Info>
+
+### Review Statuses
 
 | Status   | Description                                             |
 | -------- | ------------------------------------------------------- |
@@ -32,11 +55,15 @@ Widgetbook Cloud introduces a _Review_ feature, a zero-configuration UI regressi
 | Closed   | Associated with closed PRs, hence viewed as closed.     |
 | Updating | Missing crucial information for an open classification. |
 
-## Widgetbook x Figma
+## Figma x Flutter Comparison
+
+Widgetbook Cloud Review can also help with verifying if the developer meets the **design requirements** by comparing the **Flutter widgets** to their corresponding **Figma designs**.
+
+### Guide
 
 To have "View in Figma" button in your reviews, you need to add the Figma URL to your use-cases:
 
-1. In you Figma design file, navigate to the component that resembles your Widget.
+1. In your Figma design file, navigate to the component that resembles your Widget.
 1. Copy the link to the component by right-mouse clicking on the component and selecting `Copy/Paste as` > `Copy Link`.
 1. Set the `designLink` property of the `@UseCase` annotation by pasting the copied link.
 
