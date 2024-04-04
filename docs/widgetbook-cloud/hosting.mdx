@@ -42,68 +42,78 @@ To create a Widgetbook Build, follow these steps inside your Widgetbook project:
 
 To automate the process of pushing a new build to Widgetbook Cloud, you can use CI/CD.
 
-### GitHub Actions
-
-```yaml
-name: Widgetbook Cloud Hosting
-on: push
-
-jobs:
-  widgetbook-cloud-hosting:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-
-      - name: Install Widgetbook CLI
-        run: dart pub global activate widgetbook_cli
-
-      - name: Build Widgetbook
-        working-directory: widgetbook
-        run: |
-          flutter pub get
-          dart run build_runner build -d
-          flutter build web -t lib/main.dart
-
-      - name: Push Widgetbook Build
-        working-directory: widgetbook
-        run: widgetbook cloud build push --api-key ${{ secrets.WIDGETBOOK_API_KEY }}
-```
-
-### Codemagic
-
-```yaml
-workflows:
-  widgetbook-cloud-hosting:
+<Tabs
+  groupId="ci"
+  values={[
+    { label: "GitHub Actions", value: "github" },
+    { label: "Codemagic", value: "codemagic" },
+  ]}
+>
+  <TabItem value="github">
+    ```yaml
     name: Widgetbook Cloud Hosting
+    on: push
 
-    triggering:
-      events:
-        - push
+    jobs:
+      widgetbook-cloud-hosting:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v3
 
-    environment:
-      flutter: stable
-      groups:
-        - widgetbook_credentials
+          - name: Setup flutter
+            uses: subosito/flutter-action@v2
+            with:
+              channel: stable
 
-    scripts:
-      - name: Install Widgetbook CLI
-        working_directory: mobile/ios
-        script: dart pub global activate widgetbook_cli
+          - name: Install Widgetbook CLI
+            run: dart pub global activate widgetbook_cli
 
-      - name: Build Widgetbook
-        working_directory: widgetbook
-        script: |
-          flutter pub get
-          dart run build_runner build -d
-          flutter build web -t lib/main.dart
+          - name: Build Widgetbook
+            working-directory: widgetbook
+            run: |
+              flutter pub get
+              dart run build_runner build -d
+              flutter build web -t lib/main.dart
 
-      - name: Push Widgetbook Build
-        working_directory: widgetbook
-        script: widgetbook cloud build push --api-key $WIDGETBOOK_API_KEY
-```
+          - name: Push Widgetbook Build
+            working-directory: widgetbook
+            run: widgetbook cloud build push --api-key ${{ secrets.WIDGETBOOK_API_KEY }}
+    ```
+
+  </TabItem>
+
+  <TabItem value="codemagic">
+    ```yaml
+    workflows:
+      widgetbook-cloud-hosting:
+        name: Widgetbook Cloud Hosting
+
+        triggering:
+          events:
+            - push
+
+        environment:
+          flutter: stable
+          groups:
+            - widgetbook_credentials
+
+        scripts:
+          - name: Install Widgetbook CLI
+            working_directory: mobile/ios
+            script: dart pub global activate widgetbook_cli
+
+          - name: Build Widgetbook
+            working_directory: widgetbook
+            script: |
+              flutter pub get
+              dart run build_runner build -d
+              flutter build web -t lib/main.dart
+
+          - name: Push Widgetbook Build
+            working_directory: widgetbook
+            script: widgetbook cloud build push --api-key $WIDGETBOOK_API_KEY
+    ```
+
+  </TabItem>
+</Tabs>
