@@ -42,6 +42,20 @@ To create a Widgetbook Build, follow these steps inside your Widgetbook project:
 
 To automate the process of pushing a new build to Widgetbook Cloud, you can use CI/CD.
 
+
+<Info>
+The following workflows assume you have Widgetbook structured as a sub-package
+
+```tree
+your_app/
+├── pubsepc.yaml
+├── lib/
+└── widgetbook/
+    ├── pubsepc.yaml
+    └── lib/
+```
+</Info>
+
 <Tabs
   groupId="ci"
   values={[
@@ -66,8 +80,11 @@ To automate the process of pushing a new build to Widgetbook Cloud, you can use 
             with:
               channel: stable
 
-          - name: Install Widgetbook CLI
-            run: dart pub global activate widgetbook_cli
+          - name: Bootstrap App
+            run: |
+              flutter pub get
+              # Add any other steps needed to make your
+              # app widgets available for Widgetbook
 
           - name: Build Widgetbook
             working-directory: widgetbook
@@ -76,11 +93,13 @@ To automate the process of pushing a new build to Widgetbook Cloud, you can use 
               dart run build_runner build -d
               flutter build web -t lib/main.dart
 
+          - name: Install Widgetbook CLI
+            run: dart pub global activate widgetbook_cli
+
           - name: Push Widgetbook Build
             working-directory: widgetbook
             run: widgetbook cloud build push --api-key ${{ secrets.WIDGETBOOK_API_KEY }}
     ```
-
   </TabItem>
 
   <TabItem value="codemagic">
@@ -99,9 +118,11 @@ To automate the process of pushing a new build to Widgetbook Cloud, you can use 
             - widgetbook_credentials
 
         scripts:
-          - name: Install Widgetbook CLI
-            working_directory: mobile/ios
-            script: dart pub global activate widgetbook_cli
+          - name: Bootstrap App
+            script: |
+              flutter pub get
+              # Add any other steps needed to make your
+              # app widgets available for Widgetbook
 
           - name: Build Widgetbook
             working_directory: widgetbook
@@ -110,10 +131,12 @@ To automate the process of pushing a new build to Widgetbook Cloud, you can use 
               dart run build_runner build -d
               flutter build web -t lib/main.dart
 
+          - name: Install Widgetbook CLI
+            script: dart pub global activate widgetbook_cli
+
           - name: Push Widgetbook Build
             working_directory: widgetbook
             script: widgetbook cloud build push --api-key $WIDGETBOOK_API_KEY
     ```
-
   </TabItem>
 </Tabs>
