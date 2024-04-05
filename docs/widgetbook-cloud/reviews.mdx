@@ -12,8 +12,8 @@ Widgetbook Cloud Review has two main features that can help you improve your dev
 
 ## Pre-requisites
 
-1. Connect your Widgetbook Project to a GitHub repo from the project settings page.
-1. Make sure to you have a [Widgetbook Build](/widgetbook-cloud/hosting) on pushes of new commits via CI (e.g. GitHub Actions).
+1. **Connect** your Widgetbook Project to a **GitHub repo** from the project settings page.
+1. Make sure to you have a [Widgetbook Build](/widgetbook-cloud/hosting) on pushes of new commits [via CI](/widgetbook-cloud/hosting#pushing-new-builds-with-ci) (e.g. GitHub Actions).
 
 ## UI Regression Detection
 
@@ -27,6 +27,7 @@ It works similarly like GitHub PRs. Instead of only comparing code changes, with
 
 ### Guide
 
+1. Finish the [pre-requisites](/widgetbook-cloud/reviews#pre-requisites) set up.
 1. Create a new branch (e.g. `feat/new-button`) and commit your changes to it.
 1. [Create a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) from your `head` branch (e.g. `feat/new-button`) to the `base` branch (e.g. `main`).
 1. After your build upload finishes (i.e. the CI job from [Pre-requisites](#pre-requisites)), a [commit status](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks) will be added to your PR once the review is ready.
