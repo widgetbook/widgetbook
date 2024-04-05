@@ -39,9 +39,11 @@ To create a Widgetbook Build, follow these steps inside your Widgetbook project:
    ```
 
 <Info>
-The `cloud push` command uses the following directories:
-  1. `build/web/`: to create a `.zip` archive that will be uploaded to Widgetbook Cloud.
-  2. `.dart_tool/build/generated/[your_app_name]/`: to send metadata, _about the generated use-cases_, that will be used for [Widgetbook Cloud Review](/widgetbook-cloud/reviews). 
+  The `cloud push` command uses the following directories: 1. `build/web/`: to
+  create a `.zip` archive that will be uploaded to Widgetbook Cloud. 2.
+  `.dart_tool/build/generated/[your_app_name]/`: to send metadata, _about the
+  generated use-cases_, that will be used for [Widgetbook Cloud
+  Review](/widgetbook-cloud/reviews).
 </Info>
 
 ## Pushing new builds with CI
@@ -59,6 +61,7 @@ your_app/
     ├── pubsepc.yaml
     └── lib/
 ```
+
 </Info>
 
 <Tabs
@@ -69,79 +72,89 @@ your_app/
   ]}
 >
   <TabItem value="github">
-    ```yaml
-    name: Widgetbook Cloud Hosting
-    on: push
+    1. Add `WIDGETBOOK_API_KEY` to your [GitHub repository's secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository). You can find the API key in the Widgetbook Cloud's **project settings page**.
 
-    jobs:
-      widgetbook-cloud-hosting:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout
-            uses: actions/checkout@v3
+    1. Create a new GitHub Actions workflow file in your repository under `.github/workflows/widgetbook-cloud-hosting.yml` with the following content:
 
-          - name: Setup flutter
-            uses: subosito/flutter-action@v2
-            with:
-              channel: stable
+        ```yaml
+        name: Widgetbook Cloud Hosting
+        on: push
 
-          - name: Bootstrap App
-            run: |
-              flutter pub get
-              # Add any other steps needed to make your
-              # app widgets available for Widgetbook
+        jobs:
+          widgetbook-cloud-hosting:
+            runs-on: ubuntu-latest
+            steps:
+              - name: Checkout
+                uses: actions/checkout@v3
 
-          - name: Build Widgetbook
-            working-directory: widgetbook
-            run: |
-              flutter pub get
-              dart run build_runner build -d
-              flutter build web -t lib/main.dart
+              - name: Setup flutter
+                uses: subosito/flutter-action@v2
+                with:
+                  channel: stable
 
-          - name: Install Widgetbook CLI
-            run: dart pub global activate widgetbook_cli
+              - name: Bootstrap App
+                run: |
+                  flutter pub get
+                  # Add any other steps needed to make your
+                  # app widgets available for Widgetbook
 
-          - name: Push Widgetbook Build
-            working-directory: widgetbook
-            run: widgetbook cloud build push --api-key ${{ secrets.WIDGETBOOK_API_KEY }}
-    ```
+              - name: Build Widgetbook
+                working-directory: widgetbook
+                run: |
+                  flutter pub get
+                  dart run build_runner build -d
+                  flutter build web -t lib/main.dart
+
+              - name: Install Widgetbook CLI
+                run: dart pub global activate widgetbook_cli
+
+              - name: Push Widgetbook Build
+                working-directory: widgetbook
+                run: widgetbook cloud build push --api-key ${{ secrets.WIDGETBOOK_API_KEY }}
+        ```
+
   </TabItem>
 
   <TabItem value="codemagic">
-    ```yaml
-    workflows:
-      widgetbook-cloud-hosting:
-        name: Widgetbook Cloud Hosting
+    1. Add `WIDGETBOOK_API_KEY` under `widgetbook_credentials` group in your [Codemagic project's environment variables](https://docs.codemagic.io/yaml-basic-configuration/configuring-environment-variables/#configuring-environment-variables). You can find the API key in the Widgetbook Cloud's **project settings page**.
 
-        triggering:
-          events:
-            - push
+    1. Add the following workflow to your Codemagic `codemagic.yaml` file.
 
-        environment:
-          flutter: stable
-          groups:
-            - widgetbook_credentials
+        ```yaml
+        workflows:
+          widgetbook-cloud-hosting:
+            name: Widgetbook Cloud Hosting
 
-        scripts:
-          - name: Bootstrap App
-            script: |
-              flutter pub get
-              # Add any other steps needed to make your
-              # app widgets available for Widgetbook
+            triggering:
+              events:
+                - push
 
-          - name: Build Widgetbook
-            working_directory: widgetbook
-            script: |
-              flutter pub get
-              dart run build_runner build -d
-              flutter build web -t lib/main.dart
+            environment:
+              flutter: stable
+              groups:
+                - widgetbook_credentials
 
-          - name: Install Widgetbook CLI
-            script: dart pub global activate widgetbook_cli
+            scripts:
+              - name: Bootstrap App
+                script: |
+                  flutter pub get
+                  # Add any other steps needed to make your
+                  # app widgets available for Widgetbook
 
-          - name: Push Widgetbook Build
-            working_directory: widgetbook
-            script: widgetbook cloud build push --api-key $WIDGETBOOK_API_KEY
-    ```
+              - name: Build Widgetbook
+                working_directory: widgetbook
+                script: |
+                  flutter pub get
+                  dart run build_runner build -d
+                  flutter build web -t lib/main.dart
+
+              - name: Install Widgetbook CLI
+                script: dart pub global activate widgetbook_cli
+
+              - name: Push Widgetbook Build
+                working_directory: widgetbook
+                script: widgetbook cloud build push --api-key $WIDGETBOOK_API_KEY
+        ```
+
   </TabItem>
 </Tabs>
