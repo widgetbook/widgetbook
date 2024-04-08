@@ -7,7 +7,7 @@ cases for manual and generator approaches.
 
 ## Folder structure
 
-```dart
+```tree
 lib/
 ├── components/
 │ ├── container.dart
@@ -92,14 +92,6 @@ class CustomTextField extends StatelessWidget {
 
 Update the `lib/widgetbook.dart` file to add the new components and their use-cases:
 
-<Tabs
-  groupId="approach"
-  values={[
-    { label: 'Generator', value: 'generator' },
-    { label: 'Manual', value: 'manual' },
-  ]}
->
-  <TabItem value="generator">
 1. Update the `lib/components/custom_card.dart` and `lib/components/custom_text_field.dart` files to add the `@UseCase` annotation for the new components:
 
 ```dart
@@ -192,94 +184,6 @@ class WidgetbookApp extends StatelessWidget {
 2. run `flutter pub run build_runner build`;
 
 3. run `flutter run -d chrome -t lib/widgetbook_generator.dart`
-
-  </TabItem>
-  <TabItem value="manual">
-1. Add both component to your directories under `WidgetbookFolder` names `Widgets`;
-
-```dart
-import 'package:flutter/material.dart';
-import 'package:widgetbook/widgetbook.dart';
-
-import 'components/container.dart';
-import 'components/custom_card.dart';
-import 'components/custom_text_field.dart';
-
-void main() {
-  runApp(const HotReload());
-}
-
-class HotReload extends StatelessWidget {
-  const HotReload({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook.material(
-      addons: [],
-      directories: [
-        WidgetbookFolder(
-          name: 'Widgets',
-          children: [
-            WidgetbookComponent(
-              name: 'CustomContainer',
-              useCases: [
-                WidgetbookUseCase(
-                  name: 'Default Style',
-                  builder: (context) => greenContainerUseCase(context),
-                ),
-              ],
-            ),
-            WidgetbookComponent(
-              name: 'CustomCard',
-              useCases: [
-                WidgetbookUseCase(
-                  name: 'Default Style',
-                  builder: (context) => const CustomCard(
-                    child: Text('This is a custom card'),
-                  ),
-                ),
-                WidgetbookUseCase(
-                  name: 'With Custom Background Color',
-                  builder: (context) => CustomCard(
-                    backgroundColor: Colors.green.shade100,
-                    child: const Text(
-                      'This is a custom card with a custom background color',
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            // CustomTextField component use-cases
-            WidgetbookComponent(
-              name: 'CustomTextField',
-              useCases: [
-                WidgetbookUseCase(
-                  name: 'Default Style',
-                  builder: (context) => CustomTextField(
-                    controller: TextEditingController(),
-                  ),
-                ),
-                WidgetbookUseCase(
-                  name: 'With Hint Text',
-                  builder: (context) => CustomTextField(
-                    controller: TextEditingController(),
-                    hintText: 'Enter your text here',
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-```
-
-2. run `flutter run -d chrome -t lib/widgetbook.dart`
-
-  </TabItem>
-</Tabs>
 
 <Info>
   See [source

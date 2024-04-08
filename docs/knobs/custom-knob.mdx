@@ -89,15 +89,6 @@ extension RangeKnobBuilder on KnobsBuilder {
 
 This `range` method can now be used inside the widget to apply the custom knob:
 
-<Tabs
-  groupId="approach"
-  values={[
-    { label: 'Generator', value: 'generator' },
-    { label: 'Manual', value: 'manual' },
-  ]}
->
-<TabItem value="generator">
-
 ```dart
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -113,29 +104,6 @@ Widget rangeSlider(BuildContext context) {
   );
 }
 ```
-
-</TabItem>
-<TabItem value="manual">
-
-```dart
-WidgetbookFolder(
-    name: 'knobs',
-    children: [
-    WidgetbookComponent(
-        name: 'RangeSlider',
-        useCases: [
-        WidgetbookUseCase(
-            name: 'CustomRangeSlider',
-            builder: (context) => rangeSlider(context),
-         ),
-        ],
-    ),
-    ],
-),
-```
-
-</TabItem>
-</Tabs>
 
 And that's it! We have successfully created and used a custom knob in Widgetbook. This
 knob can now be used to adjust the `RangeValues` in the `RangeSlider` widget directly from
