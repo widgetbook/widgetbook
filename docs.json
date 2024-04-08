@@ -42,17 +42,12 @@
     [
       "Getting Started",
       [
-        ["1. Install", "/getting-started/install"],
-        ["2. Setup", "/getting-started/setup"],
-        ["3. Run", "/getting-started/run"],
-        ["4. Components", "/getting-started/components"],
-        ["5. Structure", "/getting-started/structure"],
-        ["6. Addons", "/getting-started/addons"],
-        ["7. Knobs", "/getting-started/knobs"],
-        ["8. Themes", "/getting-started/themes"],
-        ["9. Configure", "/getting-started/configure"],
-        ["10. Complete Example", "/getting-started/complete-example"],
-        ["11. Mocking", "/getting-started/mocking"],
+        ["Getting Started", "/getting-started/index"],
+        ["Components", "/getting-started/components"],
+        ["Themes", "/getting-started/themes"],
+        ["Configure", "/getting-started/configure"],
+        ["Complete Example", "/getting-started/complete-example"],
+        ["Mocking", "/getting-started/mocking"],
         ["FAQs", "/faq"],
         ["Telemetry", "/telemetry"]
       ]
