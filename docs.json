@@ -78,13 +78,6 @@
       ]
     ],
     [
-      "Monorepo",
-      [
-        ["1. Introduction", "/monorepo/introduction"],
-        ["2. Getting started", "/monorepo/getting-started"]
-      ]
-    ],
-    [
       "Migration",
       [
         ["2.4.0 to 3.0.0", "/migration/2.4.0-to-3.0.0"],
