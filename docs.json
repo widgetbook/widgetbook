@@ -40,11 +40,11 @@
       ]
     ],
     [
-      "Getting Started",
+      "Core",
       [
         ["Getting Started", "/getting-started/index"],
-        ["Components", "/getting-started/components"],
         ["Configuration", "/getting-started/configuration"],
+        ["Annotations", "/getting-started/annotations"],
         ["Complete Example", "/getting-started/complete-example"],
         ["Mocking", "/getting-started/mocking"],
         ["FAQs", "/faq"],
