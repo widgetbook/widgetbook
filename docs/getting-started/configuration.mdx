@@ -1,0 +1,37 @@
+# Configuration
+
+All use-cases are wrapped in an root widget. Here are the available constructors for the root widget:
+
+| Constructor            | Root Widget    |
+| ---------------------- | -------------- |
+| `Widgetbook.material`  | `MaterialApp`  |
+| `Widgetbook.cupertino` | `CupertinoApp` |
+| `Widgetbook`           | Custom Widget  |
+
+## Custom Root Widget
+
+You can use a custom root widget by providing an `appBuilder` function to the `Widgetbook` constructor.
+This is helpful if you need to wrap your app widget (i.e. `MaterialApp`, `CupertinoApp`) with a custom widget.
+
+<Info>
+  While the `appBuilder` function is still available for use, developers also
+  have the flexibility to define their Addons to inject functionality directly
+  into the Widget tree. [Follow the Addons documentation](/addons/overview)
+</Info>
+
+```dart
+@override
+Widget build(BuildContext context) {
+  return Widgetbook(
+    // ...
+    appBuilder: (context, child) {
+      return AwesomePackage(
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: child,
+        )
+      );
+    }
+  );
+}
+```

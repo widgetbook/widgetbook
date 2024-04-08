@@ -44,8 +44,7 @@
       [
         ["Getting Started", "/getting-started/index"],
         ["Components", "/getting-started/components"],
-        ["Themes", "/getting-started/themes"],
-        ["Configure", "/getting-started/configure"],
+        ["Configuration", "/getting-started/configuration"],
         ["Complete Example", "/getting-started/complete-example"],
         ["Mocking", "/getting-started/mocking"],
         ["FAQs", "/faq"],
