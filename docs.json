@@ -40,13 +40,14 @@
       ]
     ],
     [
-      "Core",
+      "Guides",
       [
-        ["Getting Started", "/getting-started/index"],
-        ["Configuration", "/getting-started/configuration"],
-        ["Annotations", "/getting-started/annotations"],
-        ["Complete Example", "/getting-started/complete-example"],
-        ["Mocking", "/getting-started/mocking"],
+        ["Quick Start", "/guides/quick-start"],
+        ["Customization", "/guides/customization"],
+        ["Components", "/guides/components"],
+        ["Annotations", "/guides/annotations"],
+        ["Complete Example", "/guides/complete-example"],
+        ["Mocking", "/guides/mocking"],
         ["FAQs", "/faq"],
         ["Telemetry", "/telemetry"]
       ]
