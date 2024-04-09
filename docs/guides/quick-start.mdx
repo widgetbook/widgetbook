@@ -1,4 +1,4 @@
-# Getting Started
+# Quick Start
 
 ## Bootstrap
 
@@ -8,16 +8,17 @@ The first step to start using Widgetbook is to create a new separate Flutter app
 
    ```bash
    ## All platforms
-   flutter create widgetbook_workspace --empty
+   flutter create widgetbook --empty
 
    ## Certain platforms
-   flutter create widgetbook_workspace --empty --platforms=web,macos
+   flutter create widgetbook --empty --platforms=web,macos
    ```
 
-1. Rename `widgetbook_workspace` directory to `widgetbook`:
+1. To avoid naming conflict with the [Widgetbook pub package](https://pub.dev/packages/widgetbook), change the project `name` to `widgetbook_workspace` inside the `widgetbook/pubspec.yaml` file:
 
-   ```bash
-   mv widgetbook_workspace widgetbook
+   ```diff
+   - name: widgetbook
+   + name: widgetbook_workspace
    ```
 
 1. Add the following dependencies to your `widgetbook` project:
@@ -33,7 +34,6 @@ The first step to start using Widgetbook is to create a new separate Flutter app
      your_app:
        path: ../
    ```
-
 
 After finishing the setup, the folder structure should look something like this:
 
