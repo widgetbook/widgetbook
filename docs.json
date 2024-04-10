@@ -44,6 +44,7 @@
       [
         ["Quick Start", "/guides/quick-start"],
         ["Customization", "/guides/customization"],
+        ["Assets", "/guides/assets"],
         ["Components", "/guides/components"],
         ["Annotations", "/guides/annotations"],
         ["Complete Example", "/guides/complete-example"],
