@@ -45,6 +45,7 @@
         ["Quick Start", "/guides/quick-start"],
         ["Customization", "/guides/customization"],
         ["Assets", "/guides/assets"],
+        ["Localizations", "/guides/l10n"],
         ["Components", "/guides/components"],
         ["Annotations", "/guides/annotations"],
         ["Complete Example", "/guides/complete-example"],
