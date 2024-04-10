@@ -28,7 +28,7 @@ class UserTile extends StatelessWidget {
 }
 ```
 
-## Method I: Extraction
+## Approach I: Extraction
 
 The simplest method to catalog `UserTile` is to extract the `UserProvider` dependency into a parameter.
 
@@ -57,7 +57,7 @@ Widget buildUserTile(BuildContext context) {
 }
 ```
 
-## Method II: Mocking
+## Approach II: Mocking Libraries
 
 Not in all cases, you can extract the dependency. In some case you need to mock the dependency, for example if you are cataloging a "screen" widget.
 
