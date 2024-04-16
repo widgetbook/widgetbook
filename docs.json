@@ -57,19 +57,19 @@
     [
       "Addons",
       [
-        ["1. Introduction", "/addons/overview"],
-        ["2. Accessibility Addon", "/addons/accessibility-addon"],
-        ["3. Alignment Addon", "/addons/alignment-addon"],
-        ["4. Builder Addon", "/addons/builder-addon"],
-        ["5. Device Frame Addon", "/addons/device-frame-addon"],
-        ["6. Grid Addon", "/addons/grid-addon"],
-        ["7. Inspector Addon", "/addons/inspector-addon"],
-        ["8. Localization Addon", "/addons/localization-addon"],
-        ["9. Text Scale Addon", "/addons/text-scale-addon"],
-        ["10. Theme Addon", "/addons/theme-addon"],
-        ["11. Time Dilation Addon", "/addons/time-dilation-addon"],
-        ["12. Zoom Addon", "/addons/zoom-addon"],
-        ["13. Custom Addon", "/addons/custom-addon"]
+        ["Overview", "/addons/overview"],
+        ["Accessibility Addon", "/addons/accessibility-addon"],
+        ["Alignment Addon", "/addons/alignment-addon"],
+        ["Builder Addon", "/addons/builder-addon"],
+        ["Device Frame Addon", "/addons/device-frame-addon"],
+        ["Grid Addon", "/addons/grid-addon"],
+        ["Inspector Addon", "/addons/inspector-addon"],
+        ["Localization Addon", "/addons/localization-addon"],
+        ["Text Scale Addon", "/addons/text-scale-addon"],
+        ["Theme Addon", "/addons/theme-addon"],
+        ["Time Dilation Addon", "/addons/time-dilation-addon"],
+        ["Zoom Addon", "/addons/zoom-addon"],
+        ["Custom Addon", "/addons/custom-addon"]
       ]
     ],
     [
@@ -91,9 +91,9 @@
     [
       "Widgetbook Cloud",
       [
-        ["1. Overview", "/widgetbook-cloud/overview"],
-        ["2. Hosting", "/widgetbook-cloud/hosting"],
-        ["3. Reviews", "/widgetbook-cloud/reviews"]
+        ["Overview", "/widgetbook-cloud/overview"],
+        ["Hosting", "/widgetbook-cloud/hosting"],
+        ["Reviews", "/widgetbook-cloud/reviews"]
       ]
     ],
     ["CLI", [["Overview", "/widgetbook-cli/overview"]]],
