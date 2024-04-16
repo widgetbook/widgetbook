@@ -48,8 +48,8 @@
         ["Localizations", "/guides/l10n"],
         ["Components", "/guides/components"],
         ["Annotations", "/guides/annotations"],
-        ["Complete Example", "/guides/complete-example"],
         ["Mocking", "/guides/mocking"],
+        ["Complete Example", "/demo"],
         ["FAQs", "/faq"],
         ["Telemetry", "/telemetry"]
       ]
