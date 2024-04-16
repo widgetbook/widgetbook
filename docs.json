@@ -75,9 +75,8 @@
     [
       "Knobs",
       [
-        ["1. Overview", "/knobs/overview"],
-        ["2. Example", "/knobs/example"],
-        ["3. Custom Knob", "/knobs/custom-knob"]
+        ["Overview", "/knobs/overview"],
+        ["Custom Knob", "/knobs/custom-knob"]
       ]
     ],
     [
