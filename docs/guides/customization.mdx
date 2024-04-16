@@ -2,7 +2,18 @@
 
 ## Root Widget
 
-All use-cases are wrapped in an root widget. Here are the available constructors for the root widget:
+All use-cases are wrapped in an root widget (i.e. an `App` widget) to provide a context for the use-cases to render in.
+
+```tree
+RootWidget
+└── Addon 1
+  └── Addon 2
+    └── UseCaseRenderer
+      └── UseCase
+        └── Widget
+```
+
+Here are the available constructors for the root widgets:
 
 | Constructor            | Root Widget    |
 | ---------------------- | -------------- |
@@ -14,9 +25,7 @@ You can use a custom root widget by providing an `appBuilder` function to the `W
 This is helpful if you need to wrap your app widget (i.e. `MaterialApp`, `CupertinoApp`) with a custom widget.
 
 <Info>
-  While the `appBuilder` function is still available for use, developers also
-  have the flexibility to define their Addons to inject functionality directly
-  into the Widget tree. [Follow the Addons documentation](/addons/overview)
+  If you want to wrap your use-case in a custom widget, you can also use the [Addons API](/addons/overview), which provide some more flexibility.
 </Info>
 
 ```dart
