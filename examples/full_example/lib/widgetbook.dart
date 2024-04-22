@@ -2,7 +2,7 @@
 ///
 /// Use [WidgetbookFolder],[WidgetbookComponent], and [WidgetbookUseCase]
 /// to create directories
-/// [Ref link]: https://docs.widgetbook.io/getting-started/complete-example
+/// [Ref link]: https://docs.widgetbook.io/guides/complete-example
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart' hide AlignmentAddon;
 

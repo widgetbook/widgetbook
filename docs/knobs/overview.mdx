@@ -4,21 +4,14 @@ Knobs are dynamic tools in Widgetbook that allow you to modify the parameters pa
 use-case on the fly. They allow you to adapt and examine your widgets under various
 conditions and inputs, enhancing the overall understanding of a component's behavior.
 
+<Image src="/assets/knobs/knobs.png" zoom />
+
 ## Usage
 
 To incorporate knobs into your widgets, use the `context.knobs` function to access the
 knobs builder:
 
-<Tabs
-  groupId="approach"
-  values={[
-    { label: 'Generator', value: 'generator' },
-    { label: 'Manual', value: 'manual' },
-  ]}
->
-<TabItem value="generator">
-
-```dart title="Example: Knobs with generator"
+```dart title="Example: Knobs"
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -36,24 +29,6 @@ Widget myWidget(BuildContext context) {
 }
 
 ```
-
-</TabItem>
-<TabItem value="manual">
-
-```dart title="Example: Knobs"
-WidgetbookUseCase(
-  name: 'elevated',
-  builder: (context) => MyHomePage(
-    title: context.knobs.string(
-      label: 'Title Label',
-      initialValue: 'HomePage',
-    ),
-  )
-)
-```
-
-</TabItem>
-</Tabs>
 
 ## Properties
 

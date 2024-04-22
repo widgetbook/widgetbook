@@ -1,0 +1,52 @@
+# Localizations
+
+If you are using the [`flutter_localizations`](https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization#introduction-to-localizations-in-flutter) package, you will need access to the generated localization files inside your Widgetbook app. Here's how you can do it:
+
+1. Change the `l10n.yaml` file by setting the [`synthetic-package`](https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization#configuring-the-l10n-yaml-file:~:text=won%27t%20be%20generated.-,synthetic%2Dpackage,-Determines%20whether%20the) option to `false`:
+
+   ```yaml
+   arb-dir: lib/l10n
+   template-arb-file: app_en.arb
+   output-localization-file: app_localizations.dart
+   synthetic-package: false
+   ```
+
+1. Update your `.gitignore` file to include the generated localization files:
+
+   ```gitignore
+   # Generated localization files
+   lib/l10n/*.dart
+   ```
+
+1. Generate the localization files by running the following command:
+
+   ```bash
+   flutter gen-l10n
+   ```
+
+1. Add the generated localization files to your Widgetbook app via the [`LocalizationAddon`](/addons/localization-addon):
+
+   ```dart
+   import 'package:your_app/l10n/app_localizations.dart';
+
+   // ...
+
+   @App()
+   class WidgetbookApp extends StatelessWidget {
+     const WidgetbookApp({super.key});
+
+     @override
+     Widget build(BuildContext context) {
+       return Widgetbook(
+         // ...
+         addons: [
+           LocalizationAddon(
+             locales: AppLocalizations.supportedLocales,
+             localizationsDelegates: AppLocalizations.localizationsDelegates,
+             initialLocale: AppLocalizations.supportedLocales.last,
+           ),
+         ],
+       );
+     }
+   }
+   ```

@@ -1,0 +1,115 @@
+# Customization
+
+## Root Widget
+
+All use-cases are wrapped in an root widget (i.e. an `App` widget) to provide a context for the use-cases to render in.
+
+```tree
+RootWidget
+└── Addon 1
+  └── Addon 2
+    └── UseCaseRenderer
+      └── UseCase
+        └── Widget
+```
+
+Here are the available constructors for the root widgets:
+
+| Constructor            | Root Widget    |
+| ---------------------- | -------------- |
+| `Widgetbook.material`  | `MaterialApp`  |
+| `Widgetbook.cupertino` | `CupertinoApp` |
+| `Widgetbook`           | Custom Widget  |
+
+You can use a custom root widget by providing an `appBuilder` function to the `Widgetbook` constructor.
+This is helpful if you need to wrap your app widget (i.e. `MaterialApp`, `CupertinoApp`) with a custom widget.
+
+<Info>
+  If you want to wrap your use-case in a custom widget, you can also use the
+  [Addons API](/addons/overview), which provides some more flexibility.
+</Info>
+
+```dart
+@override
+Widget build(BuildContext context) {
+  return Widgetbook(
+    // ...
+    appBuilder: (context, child) {
+      return AwesomePackage(
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: child,
+        )
+      );
+    }
+  );
+}
+```
+
+## Use-cases Navigation Path
+
+By default, use-cases has a navigation path in Widgetbook that is based on where their component file is located.
+
+<Info>
+  The component name (e.g. `Button`) and the use-case name (e.g. `Primary`) are
+  concatenated at the end of the path.
+
+```
+[ Component Directory ] / [ Component Name ] / [ Use-case Name ]
+```
+
+</Info>
+
+```dart
+import 'package:your_app/widgets/button.dart';
+
+// Navigation path: `widgets/Button/Primary`
+@widgetbook.UseCase(
+  name: 'Primary',
+  type: Button
+)
+Widget buildPrimaryButton() {
+  return Button();
+}
+```
+
+To provide a custom navigation path, you can use the `path` parameter in the `@UseCase` annotation.
+
+<Info>
+  If you wrap a folder name in **square brackets**, it will be treated as a
+  **category** in the navigation path.
+</Info>
+
+```dart
+import 'package:your_app/components/button.dart';
+
+// Navigation path: `[Interactions]/buttons/Button/Primary`
+@widgetbook.UseCase(
+  name: 'Primary',
+  type: Button,
+  path: '[Interactions]/buttons',
+)
+Widget buildPrimaryButton() {
+  return Button();
+}
+```
+
+## Initial Route
+
+Initial routes can be used to pick the home page that is used on first launch by providing a `initialRoute` parameter to the `Widgetbook` constructor.
+
+<Info>
+  To easily get the exact route for a use-case, run your Widgetbook project on
+  web, and copy the value of the URL, then paste it as the value of the
+  `initialRoute` parameter.
+</Info>
+
+```dart
+@override
+Widget build(BuildContext context) {
+  return Widgetbook(
+    initialRoute: '?path=introduction/home-use-case',
+    // ...
+  );
+}
+```
