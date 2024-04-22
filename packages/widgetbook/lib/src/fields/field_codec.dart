@@ -25,7 +25,10 @@ class FieldCodec<T> {
   /// print(encoded); // {foo:bar,baz:qux}
   /// ```
   static String encodeQueryGroup(Map<String, String> group) {
-    final pairs = group.entries.map((entry) => '${entry.key}:${entry.value}');
+    final pairs = group.entries.map((entry) {
+      final String encodedKey = Uri.encodeComponent(entry.key);
+      return '$encodedKey:${entry.value}';
+    });
     return '{${pairs.join(',')}}';
   }
 
@@ -39,7 +42,8 @@ class FieldCodec<T> {
       params.map(
         (param) {
           final parts = param.split(':');
-          return MapEntry(parts[0], parts[1]);
+          final String decodedKey = Uri.decodeComponent(parts[0]);
+          return MapEntry(decodedKey, parts[1]);
         },
       ),
     );

@@ -37,6 +37,23 @@ void main() {
           expect(result, equals(decodedGroup));
         },
       );
+
+      const queryGroupWithColon = {
+        'first_field : ': 'false',
+        'second_field': '2',
+      };
+
+      test(
+        'given a query group with field name containing a colon, '
+        'when [encodeQueryGroup] and [decodeQueryGroup] are successively called, '
+        'then the decoded result is the same as before encoding',
+        () {
+          final encodedResult =
+              FieldCodec.encodeQueryGroup(queryGroupWithColon);
+          final decodedResult = FieldCodec.decodeQueryGroup(encodedResult);
+          expect(decodedResult, equals(queryGroupWithColon));
+        },
+      );
     },
   );
 }
