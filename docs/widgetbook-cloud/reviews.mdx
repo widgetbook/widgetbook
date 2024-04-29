@@ -84,3 +84,65 @@ To have "View in Figma" button in your reviews, you need to add the Figma URL to
    ```
 
 1. Commit your changes and push them to your repository; to create a new build.
+
+## Limitations
+
+### Animations
+
+If your use-cases have any animations (e.g. `CircularProgressIndication`), then the visual comparison might not work as expected. This is because the visual comparison algorithm is not able to compare animations.
+
+We suggest using one of the following workarounds:
+
+1. **Starting animations on-demand**: you can use a `boolean` knob to start your animations. This way, you can disable the animations during the visual comparison but you can still see the animations in the Widgetbook.
+
+   ```dart
+   @UseCase(name: 'Default', type: CircularProgressIndicator)
+   Widget onDemandAnimationUseCase(BuildContext context) {
+     return CircularProgressIndicator(
+       value: context.knobs.boolean(label: 'Animate') ? null : 0.5,
+     );
+   }
+   ```
+
+1. **Disable animations**: by providing a constant value to the parameter that controls the animation, you can disable the animations during the visual comparison.
+
+   ```dart
+   @UseCase(name: 'Default', type: CircularProgressIndicator)
+   Widget disabledAnimationUseCase(BuildContext context) {
+     return CircularProgressIndicator(
+       value: 0.5,
+     );
+   }
+   ```
+
+### Random values
+
+If your use-case displays random values (e.g. dates), that can be different across different builds, the visual comparison might not work as expected.
+
+We suggest using one of the following workarounds:
+
+1. Use a **constant value** for the random value.
+
+   ```diff
+   @UseCase(name: 'Default', type: Text)
+   Widget constantValueUseCase(BuildContext context) {
+   -  return Text(Random().nextInt(10).toString());
+   +  return Text('10');
+   }
+   ```
+
+1. Use [**Knobs**](/knobs/overview) with a default value.
+
+   ```diff
+   @UseCase(name: 'Default', type: Text)
+   Widget constantValueUseCase(BuildContext context) {
+   -  return Text(Random().nextInt(10).toString());
+   +  return Text(
+   +    context.knobs.string(label: 'value', defaultValue: '10'),
+   +  );
+   }
+   ```
+
+### Addons and Knobs
+
+Currently, only the default use-case configuration is considered for the visual comparison. If you have multiple addons/knobs configurations, we have good news for you! **We are working on supporting this in the near future**.
