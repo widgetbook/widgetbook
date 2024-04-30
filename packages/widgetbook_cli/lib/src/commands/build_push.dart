@@ -109,24 +109,6 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     final useCases = await useCaseReader.read(args.path);
     useCasesProgress.complete('${useCases.length} Use-case(s) read');
 
-    final draftProgress = logger.progress('Creating build draft');
-    final buildDraft = await client.createBuildDraft(
-      versions,
-      BuildDraftRequest(
-        apiKey: args.apiKey,
-        versionControlProvider: args.vendor,
-        repository: args.repository,
-        actor: args.actor,
-        branch: args.branch,
-        sha: args.commit,
-        useCases: useCases,
-      ),
-    );
-
-    final buildId = buildDraft.buildId;
-    final signedUrl = buildDraft.storageUrl;
-    draftProgress.complete('Build draft [$buildId] created');
-
     final archiveProgress = logger.progress('Creating build archive');
     final buildDirPath = p.join(args.path, 'build', 'web');
     final buildDir = fileSystem.directory(buildDirPath);
@@ -141,16 +123,50 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       return 22;
     }
 
-    final zipFile = await zipEncoder.zip(buildDir, '$buildId.zip');
+    final zipFilename = 'build.tmp.zip';
+    final zipFile = await zipEncoder.zip(buildDir, zipFilename);
+
     if (zipFile == null) {
       archiveProgress.fail('Failed to create build archive');
       return 23;
     }
 
-    archiveProgress.complete('Build archive created at ${zipFile.path}');
+    archiveProgress.complete('Build draft archive created at ${zipFile.path}');
+
+    final draftProgress = logger.progress('Creating build draft');
+    final buildSize = await zipFile.length();
+    final buildDraft = await client.createBuildDraft(
+      versions,
+      BuildDraftRequest(
+        apiKey: args.apiKey,
+        versionControlProvider: args.vendor,
+        repository: args.repository,
+        actor: args.actor,
+        branch: args.branch,
+        sha: args.commit,
+        useCases: useCases,
+        size: buildSize,
+      ),
+    );
+
+    final buildId = buildDraft.buildId;
+    draftProgress.complete('Build draft [$buildId] created');
+
+    final renameProgress = logger.progress('Renaming build archive');
+    final draftFilename = zipFile.path.replaceAll(
+      zipFilename,
+      '${buildId}.zip',
+    );
+
+    final draftFile = await fileSystem //
+        .file(zipFile.path)
+        .rename(draftFilename);
+
+    renameProgress.complete('Build archive renamed to ${draftFile.path}');
 
     final uploadProgress = logger.progress('Uploading build archive');
-    await client.uploadBuildFile(signedUrl, zipFile);
+    final signedUrl = buildDraft.storageUrl;
+    await client.uploadBuildFile(signedUrl, draftFile);
     uploadProgress.complete('Build archive uploaded');
 
     final submitProgress = logger.progress('Submitting build');

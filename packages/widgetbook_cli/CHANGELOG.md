@@ -1,3 +1,7 @@
+## Unreleased
+
+- **REFACTOR**: send build archive file size while creating the build draft. ([#1170](https://github.com/widgetbook/widgetbook/pull/1170))
+
 ## 3.1.0
 
 - **BREAKING**: Set minimum SDK version to 3.0.0. ([#1030](https://github.com/widgetbook/widgetbook/pull/1030))

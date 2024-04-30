@@ -102,7 +102,6 @@ class WidgetbookHttpClient {
   }
 
   Future<void> uploadBuildFile(String signedUrl, File zipFile) {
-    // File name must match the name in the signed URL
     return client.put<void>(
       signedUrl,
       data: zipFile.openRead(),

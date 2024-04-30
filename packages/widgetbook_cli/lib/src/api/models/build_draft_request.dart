@@ -9,6 +9,7 @@ class BuildDraftRequest {
     required this.branch,
     required this.sha,
     required this.useCases,
+    required this.size,
   });
 
   final String apiKey;
@@ -19,6 +20,9 @@ class BuildDraftRequest {
   final String sha;
   final List<UseCaseMetadata> useCases;
 
+  // Build file size in bytes
+  final int size;
+
   Map<String, dynamic> toJson() {
     return {
       'apiKey': apiKey,
@@ -28,6 +32,7 @@ class BuildDraftRequest {
       'branch': branch,
       'sha': sha,
       'useCases': useCases.map((x) => x.toJson()).toList(),
+      'size': size,
     };
   }
 }
