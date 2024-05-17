@@ -4,5 +4,5 @@ environment:
   sdk: ">=2.19.0 <4.0.0"
 
 dev_dependencies:
-  melos: ^3.2.0
+  melos: ^6.0.0
   very_good_analysis: ^5.0.0
