@@ -22,12 +22,11 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 class AlignmentAddon extends WidgetbookAddon<Alignment> {
+  final Alignment initialAlignment;
+
   AlignmentAddon({
-    Alignment initialAlignment = Alignment.center,
-  }) : super(
-          name: 'Alignment',
-          initialSetting: initialAlignment,
-        );
+    this.initialAlignment = Alignment.center,
+  }) : super(name: 'Alignment');
 
   @override
   Widget buildUseCase(
@@ -47,7 +46,7 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
     return [
       ListField<Alignment>(
         name: 'alignment',
-        initialValue: initialSetting,
+        initialValue: initialAlignment,
         values: [
           Alignment.topLeft,
           Alignment.topCenter,
@@ -93,12 +92,11 @@ We create a new class called `AlignmentAddon`, which extends `WidgetbookAddon`. 
 
 ```dart
 class AlignmentAddon extends WidgetbookAddon<Alignment> {
+  final Alignment initialAlignment;
+
   AlignmentAddon({
-    Alignment initialAlignment = Alignment.center,
-  }) : super(
-          name: 'Alignment',
-          initialSetting: initialAlignment,
-        );
+    this.initialAlignment = Alignment.center,
+  }) : super(name: 'Alignment');
 ```
 
 The constructor for `AlignmentAddon` takes a parameter. `initialAlignment` is `Alignment`
@@ -134,7 +132,7 @@ setting for this addon) as its alignment value.
     return [
       ListField<Alignment>(
         name: 'alignment',
-        initialValue: initialSetting,
+        initialValue: initialAlignment,
         values: [
           Alignment.topLeft,
           Alignment.topCenter,
@@ -154,13 +152,13 @@ setting for this addon) as its alignment value.
 
 The fields getter is where we specify the fields that will represent the addon in the
 Widgetbook UI. Each field corresponds to an input field in the UI. In this case, we have a
-single `ListField` with an initial value of `initialSetting` and values of possible
+single `ListField` with an initial value of `initialAlignment` and values of possible
 alignments for `Align` widget.
 
 ```dart
   @override
   Alignment valueFromQueryGroup(Map<String, String> group) {
-    return valueOf<Alignment>('alignment', group) ?? initialSetting;
+    return valueOf<Alignment>('alignment', group) ?? initialAlignment;
   }
 ```
 
@@ -168,7 +166,7 @@ Lastly, the `valueFromQueryGroup` method is overridden. This method is responsib
 generating a new `Alignment` setting for the addon from the URL's query parameters. It
 uses the helper method `valueOf` to extract the `Alignment` value associated with the
 'alignment' key from the group map. If the value is not found (i.e., it's null), it falls
-back to the `initialSetting`.
+back to the `initialAlignment`.
 
 Congratulation! you have managed to created your first custom Addon that wraps `Align`
 widget. So now, nothing cannot stop you to write what your project need.
