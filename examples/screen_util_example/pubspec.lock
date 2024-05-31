@@ -74,10 +74,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_screenutil
-      sha256: b372c35a772a1dc84142a3b9c5ee89a390834bd258e5e6a450d9b975b985d1c9
+      sha256: "8239210dd68bee6b0577aa4a090890342d04a136ce1c81f98ee513fc0ce891de"
       url: "https://pub.dev"
     source: hosted
-    version: "5.9.1"
+    version: "5.9.3"
   flutter_test:
     dependency: transitive
     description: flutter
@@ -251,9 +251,10 @@ packages:
   widgetbook:
     dependency: "direct main"
     description:
-      path: "../../packages/widgetbook"
-      relative: true
-    source: path
+      name: widgetbook
+      sha256: be0588cd864a70bd2817ca2fab0dbd147c460b712cfe53fd13e6fd46b5c3f368
+      url: "https://pub.dev"
+    source: hosted
     version: "3.7.1"
 sdks:
   dart: ">=3.4.0 <4.0.0"
