@@ -16,7 +16,7 @@ environment:
   flutter: ">=3.7.0"
 
 dependencies:
-  accessibility_tools: ">=0.2.0 <=1.0.0"
+  accessibility_tools: ^2.1.0
   collection: ^1.15.0
   device_frame: ^1.1.0
   flutter:
