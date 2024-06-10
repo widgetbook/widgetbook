@@ -6,6 +6,12 @@ builders:
     auto_apply: dependents
     runs_before: [":app_builder", ":telemetry"]
     build_to: cache
+    defaults:
+      options:
+        # Possible values: "component" or "use_case"
+        # For more info:
+        # https://docs.widgetbook.io/guides/customization#use-cases-navigation-path
+        nav_path_mode: component
 
   app_builder:
     import: "package:widgetbook_generator/builder.dart"

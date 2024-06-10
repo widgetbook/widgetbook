@@ -9,9 +9,12 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:yaml/yaml.dart';
 
 import '../models/element_metadata.dart';
+import '../models/nav_path_mode.dart';
 import '../models/use_case_metadata.dart';
 
 class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
+  UseCaseGenerator(this.navPathMode);
+
   final packagesMapResource = Resource<YamlMap>(
     () async {
       final lockFile = await File('pubspec.lock').readAsString();
@@ -20,6 +23,8 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
       return yaml['packages'] as YamlMap;
     },
   );
+
+  final NavPathMode navPathMode;
 
   @override
   Future<String> generateForAnnotatedElement(
@@ -56,7 +61,11 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     final useCasePath = await resolveElementPath(element, buildStep);
     final componentPath = await resolveElementPath(type.element!, buildStep);
 
-    final navPath = path ?? getNavPath(componentUri);
+    final targetNavUri = navPathMode == NavPathMode.component //
+        ? componentUri
+        : useCaseUri;
+
+    final navPath = path ?? getNavPath(targetNavUri);
 
     final metadata = UseCaseMetadata(
       functionName: element.name!,

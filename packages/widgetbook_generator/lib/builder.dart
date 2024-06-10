@@ -5,6 +5,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'src/generators/app_generator.dart';
 import 'src/generators/json_builder.dart';
 import 'src/generators/use_case_generator.dart';
+import 'src/models/nav_path_mode.dart';
 import 'src/next/components_builder.dart';
 import 'src/next/story_generator.dart';
 import 'src/telemetry/telemetry_reporter.dart';
@@ -16,8 +17,11 @@ import 'widgetbook_generator.dart';
 /// json objects representing the annotated elements. These files are used
 /// later on by other builders to generate more code.
 Builder useCaseBuilder(BuilderOptions options) {
+  final navPathModeConfig = options.config['nav_path_mode'] as String;
+  final navPathMode = parseNavPathMode(navPathModeConfig);
+
   return JsonBuilder(
-    UseCaseGenerator(),
+    UseCaseGenerator(navPathMode),
     generatedExtension: '.usecase.widgetbook.json',
     formatOutput: (input) {
       // [GeneratorForAnnotation] joins the JSON objects by two newlines,
