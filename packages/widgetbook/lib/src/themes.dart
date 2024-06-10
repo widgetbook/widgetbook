@@ -114,6 +114,11 @@ class Themes {
     hoverColor: const Color(0xFFE3E2E6).withOpacity(0.08),
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
+      // By default, this is [ColorScheme.surfaceContainerHighest], but we
+      // need to override it to [ColorScheme.surfaceVariant] due to the minimum
+      // Flutter version being 3.7.0, which does not have the new parameter.
+      // ignore: deprecated_member_use
+      inactiveTrackColor: _darkColorScheme.surfaceVariant,
     ),
     inputDecorationTheme: _buildInputTheme(_darkColorScheme),
     dropdownMenuTheme: DropdownMenuThemeData(
@@ -133,6 +138,11 @@ class Themes {
     hoverColor: const Color(0xFF1A1C1E).withOpacity(0.08),
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
+      // By default, this is [ColorScheme.surfaceContainerHighest], but we
+      // need to override it to [ColorScheme.surfaceVariant] due to the minimum
+      // Flutter version being 3.7.0, which does not have the new parameter.
+      // ignore: deprecated_member_use
+      inactiveTrackColor: _lightColorScheme.surfaceVariant,
     ),
     inputDecorationTheme: _buildInputTheme(_lightColorScheme),
     dropdownMenuTheme: DropdownMenuThemeData(
