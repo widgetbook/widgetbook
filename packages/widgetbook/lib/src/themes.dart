@@ -20,11 +20,8 @@ class Themes {
     errorContainer: Color(0xFF93000A),
     onError: Color(0xFF690005),
     onErrorContainer: Color(0xFFFFDAD6),
-    background: Color(0xFF1A1C1E),
-    onBackground: Color(0xFFE3E2E6),
     surface: Color(0xFF1A1C1E),
     onSurface: Color(0xFFE3E2E6),
-    surfaceVariant: Color(0xFF43474E),
     onSurfaceVariant: Color(0xFFC3C6CF),
     outline: Color(0xFF8D9199),
     onInverseSurface: Color(0xFF1A1C1E),
@@ -32,6 +29,17 @@ class Themes {
     inversePrimary: Color(0xFF0060A7),
     shadow: Color(0xFF000000),
     surfaceTint: Color(0xFFA1C9FF),
+
+    // The following parameters are deprecated in Flutter 3.22.0,
+    // But we cannot remove them because our minimum version is 3.7.0,
+    // and these parameters are required there.
+
+    // ignore: deprecated_member_use
+    background: Color(0xFF1A1C1E),
+    // ignore: deprecated_member_use
+    onBackground: Color(0xFFE3E2E6),
+    // ignore: deprecated_member_use
+    surfaceVariant: Color(0xFF43474E),
   );
 
   static const _lightColorScheme = ColorScheme(
@@ -52,11 +60,8 @@ class Themes {
     onError: Color(0xFFFFFFFF),
     errorContainer: Color(0xFFFFDAD6),
     onErrorContainer: Color(0xFF410002),
-    background: Color(0xFFFDFCFF),
-    onBackground: Color(0xFF1A1C1E),
     surface: Color(0xFFFDFCFF),
     onSurface: Color(0xFF1A1C1E),
-    surfaceVariant: Color(0xFFDFE2EB),
     onSurfaceVariant: Color(0xFF43474E),
     outline: Color(0xFF73777F),
     onInverseSurface: Color(0xFFE3E2E6),
@@ -64,22 +69,42 @@ class Themes {
     inversePrimary: Color(0xFFA1C9FF),
     shadow: Color(0xFF000000),
     surfaceTint: Color(0xFF0060A7),
+
+    // The following parameters are deprecated in Flutter 3.22.0,
+    // But we cannot remove them because our minimum version is 3.7.0,
+    // and these parameters are required there.
+
+    // ignore: deprecated_member_use
+    background: Color(0xFFFDFCFF),
+    // ignore: deprecated_member_use
+    onBackground: Color(0xFF1A1C1E),
+    // ignore: deprecated_member_use
+    surfaceVariant: Color(0xFFDFE2EB),
   );
 
-  static final _inputDecorationTheme = InputDecorationTheme(
-    filled: true,
-    isDense: true,
-    focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(
-        color: _darkColorScheme.primary,
+  static InputDecorationTheme _buildInputTheme(
+    ColorScheme colorScheme,
+  ) {
+    return InputDecorationTheme(
+      filled: true,
+      isDense: true,
+      // By default, this is [ColorScheme.surfaceContainerHighest], but we
+      // need to override it to [ColorScheme.surfaceVariant] due to the minimum
+      // Flutter version being 3.7.0, which does not have the new parameter.
+      // ignore: deprecated_member_use
+      fillColor: colorScheme.surfaceVariant,
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: colorScheme.primary,
+        ),
       ),
-    ),
-    enabledBorder: const OutlineInputBorder(
-      borderSide: BorderSide(
-        color: Colors.transparent,
+      enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.transparent,
+        ),
       ),
-    ),
-  );
+    );
+  }
 
   static ThemeData dark = ThemeData(
     useMaterial3: true,
@@ -89,10 +114,15 @@ class Themes {
     hoverColor: const Color(0xFFE3E2E6).withOpacity(0.08),
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
+      // By default, this is [ColorScheme.surfaceContainerHighest], but we
+      // need to override it to [ColorScheme.surfaceVariant] due to the minimum
+      // Flutter version being 3.7.0, which does not have the new parameter.
+      // ignore: deprecated_member_use
+      inactiveTrackColor: _darkColorScheme.surfaceVariant,
     ),
-    inputDecorationTheme: _inputDecorationTheme,
+    inputDecorationTheme: _buildInputTheme(_darkColorScheme),
     dropdownMenuTheme: DropdownMenuThemeData(
-      inputDecorationTheme: _inputDecorationTheme,
+      inputDecorationTheme: _buildInputTheme(_darkColorScheme),
     ),
     expansionTileTheme: const ExpansionTileThemeData(
       collapsedShape: RoundedRectangleBorder(),
@@ -108,10 +138,15 @@ class Themes {
     hoverColor: const Color(0xFF1A1C1E).withOpacity(0.08),
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
+      // By default, this is [ColorScheme.surfaceContainerHighest], but we
+      // need to override it to [ColorScheme.surfaceVariant] due to the minimum
+      // Flutter version being 3.7.0, which does not have the new parameter.
+      // ignore: deprecated_member_use
+      inactiveTrackColor: _lightColorScheme.surfaceVariant,
     ),
-    inputDecorationTheme: _inputDecorationTheme,
+    inputDecorationTheme: _buildInputTheme(_lightColorScheme),
     dropdownMenuTheme: DropdownMenuThemeData(
-      inputDecorationTheme: _inputDecorationTheme,
+      inputDecorationTheme: _buildInputTheme(_lightColorScheme),
     ),
     expansionTileTheme: const ExpansionTileThemeData(
       collapsedShape: RoundedRectangleBorder(),
