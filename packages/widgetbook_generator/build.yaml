@@ -10,7 +10,7 @@ builders:
       options:
         # Possible values: "component" or "use_case"
         # For more info:
-        # https://docs.widgetbook.io/guides/customization#use-cases-navigation-path
+        # https://docs.widgetbook.io/guides/customization#using-nav_path_mode-option
         nav_path_mode: component
 
   app_builder:
