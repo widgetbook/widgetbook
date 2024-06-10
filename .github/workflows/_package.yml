@@ -30,6 +30,9 @@ jobs:
       - name: Check Dependencies Compatibility
         run: flutter pub downgrade
 
+      - name: Check Analysis Issues
+        run: dart analyze
+
   test:
     runs-on: ubuntu-latest
     defaults:
