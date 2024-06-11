@@ -52,6 +52,23 @@ class TelemetryReporter extends Builder {
     }
   }
 
+  /// Get an ID for the project based on the SHA of the first
+  /// commit in the repository.
+  Future<String?> getProjectId() async {
+    try {
+      final result = await Process.run(
+        'git',
+        ['rev-list', '--max-parents=0', 'HEAD'],
+      );
+
+      final sha = result.stdout.toString().trim();
+
+      return sha.isEmpty ? null : sha;
+    } catch (_) {
+      return null;
+    }
+  }
+
   Future<void> sendUsageReport(UsageReport report) async {
     final projectToken = 'e9326ce582275574ff5e5691295cd420';
     final event = report.toMixpanelEvent(
@@ -91,6 +108,9 @@ class TelemetryReporter extends Builder {
       final trackingId = await getTrackingId();
       if (trackingId == null) return;
 
+      final projectId = await getProjectId();
+      if (projectId == null) return;
+
       final lockFile = File('.dart_tool/widgetbook/telemetry.lock');
       final firstRun = !lockFile.existsSync();
 
@@ -104,6 +124,7 @@ class TelemetryReporter extends Builder {
       final useCases = await AppGenerator.readUseCases(buildStep);
       final report = UsageReport.from(
         trackingId: trackingId,
+        projectId: projectId,
         project: buildStep.inputId.package,
         useCases: useCases,
         version: packageVersion,
