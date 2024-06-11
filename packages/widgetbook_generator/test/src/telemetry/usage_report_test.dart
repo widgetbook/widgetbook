@@ -76,7 +76,7 @@ void main() {
     test('correct id', () {
       expect(
         report.id,
-        equals('test-C2-U5-P2-V3.x.x'),
+        equals('yyyy-C2-U5-P2-V3.x.x'),
       );
     });
 
