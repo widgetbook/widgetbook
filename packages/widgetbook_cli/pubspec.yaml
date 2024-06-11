@@ -19,7 +19,7 @@ dependencies:
   args: ^2.3.0
   ci: ^0.1.0
   collection: ^1.15.0
-  dio: ^5.1.1
+  dio: ^5.2.0
   file: ^7.0.0
   http_parser: ^4.0.1
   mason_logger: ^0.2.5
