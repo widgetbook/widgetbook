@@ -1,4 +1,4 @@
-## Unreleased
+## 3.8.0
 
 - **FIX**: Maintain theme in Flutter v3.22. ([#1184](https://github.com/widgetbook/widgetbook/pull/1184))
 - **FIX**: Allow colons _(and other special characters)_ in fields' names. ([#1165](https://github.com/widgetbook/widgetbook/pull/1165) - by [@maudFrz](https://github.com/maudFrz))
