@@ -3,6 +3,7 @@
 - **FIX**: Maintain theme in Flutter v3.22. ([#1184](https://github.com/widgetbook/widgetbook/pull/1184))
 - **FIX**: Allow colons _(and other special characters)_ in fields' names. ([#1165](https://github.com/widgetbook/widgetbook/pull/1165) - by [@maudFrz](https://github.com/maudFrz))
 - **FIX**: Guard `list` knob against null values when searching. ([#1152](https://github.com/widgetbook/widgetbook/pull/1152) - by [@bramp](https://github.com/bramp))
+- **REFACTOR**: Deprecate `AccessibilityAddon` in favor of `BuilderAddon`. Check out the [setup guide](https://docs.widgetbook.io/addons/accessibility-addon) to know how to migrate. ([#1193](https://github.com/widgetbook/widgetbook/pull/1193))
 
 ## 3.7.1
 
