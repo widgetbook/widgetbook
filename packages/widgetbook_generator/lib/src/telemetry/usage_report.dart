@@ -5,6 +5,7 @@ import '../models/use_case_metadata.dart';
 class UsageReport {
   UsageReport.from({
     required this.trackingId,
+    required this.projectId,
     required this.project,
     required List<UseCaseMetadata> useCases,
     required this.version,
@@ -29,6 +30,7 @@ class UsageReport {
   }
 
   final String trackingId;
+  final String projectId;
   final String project;
   final DateTime timestamp = DateTime.now();
 
@@ -55,7 +57,7 @@ class UsageReport {
       );
 
   /// Unique ID to identify the report
-  String get id => '$project'
+  String get id => '$projectId'
       '-C$componentsCount'
       '-U$useCasesCount'
       '-P${packages.length}'
@@ -74,6 +76,7 @@ class UsageReport {
         '\$insert_id': id,
         'version': version,
         'project': project,
+        'project_id': projectId,
         'packages': packages.toList(),
         'components': componentsCount,
         'use_cases': useCasesCount,
