@@ -3,10 +3,46 @@
 The Accessibility Addon helps detect accessibility issues using
 the [`accessibility_tools`](https://pub.dev/packages/accessibility_tools) package.
 
+<Warning>
+  Due to maintenance issues, the `AccessibilityAddon` will no longer be shipped
+  with future Widgetbook versions. The addon is **deprecated** and you can use
+  the setup guide below to use it again in your app.
+</Warning>
+
 ## Setup
 
-Here's how to configure it:
+1. Add [`accessibility_tools`](https://pub.dev/packages/accessibility_tools) to your `pubspec.yaml` file:
 
-```dart
-AccessibilityAddon(),
-```
+   ```yaml title="pubspec.yaml"
+   dependencies:
+     accessibility_tools:
+   ```
+
+1. Create a new file called `accessibility_addon.dart` in your `widgetbook_workspace` project, with the following content:
+
+   ```dart title="addons/accessibility_addon.dart"
+   import 'package:accessibility_tools/accessibility_tools.dart';
+   import 'package:flutter/material.dart';
+   import 'package:widgetbook/widgetbook.dart';
+
+   class AccessibilityAddon extends BuilderAddon {
+     AccessibilityAddon()
+         : super(
+             name: 'Accessibility',
+             builder: (context, child) => AccessibilityTools(
+               child: child,
+             ),
+           );
+   }
+   ```
+
+1. Start using the addon as follows:
+
+   ```dart
+   Widgetbook.material(
+     addons: [
+       AccessibilityAddon(),
+       // ...
+     ],
+   );
+   ```
