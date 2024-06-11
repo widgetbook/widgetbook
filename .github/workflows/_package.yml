@@ -11,6 +11,11 @@ on:
         type: string
 
 jobs:
+  # Although pana is now checking for pub downgrade, but the check
+  # does not validate the backwards compatibility of Flutter itself,
+  # but only the compatibility of the dependencies.
+  # This job installs the minimum Flutter version and checks if the
+  # dependencies are compatible with it.
   check-min-version:
     runs-on: ubuntu-latest
     defaults:
@@ -29,6 +34,9 @@ jobs:
 
       - name: Check Dependencies Compatibility
         run: flutter pub downgrade
+
+      - name: Check Analysis issues
+        run: dart analyze lib
 
   test:
     runs-on: ubuntu-latest
