@@ -1,6 +1,9 @@
 targets:
   $default:
     builders:
+      widgetbook_generator:use_case_builder:
+        options:
+          nav_path_mode: use-case
       widgetbook_generator:telemetry:
         enabled: false
       widgetbook_generator:experimental_story_builder:
