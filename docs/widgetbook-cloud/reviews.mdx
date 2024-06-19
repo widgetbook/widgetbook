@@ -93,24 +93,32 @@ If your use-cases have any animations (e.g. `CircularProgressIndication`), then 
 
 We suggest using one of the following workarounds:
 
+1. **Adaptive animations**: you might want to still enjoy your animations while running Widgetbook, but you just need to disable them when the use-case is being used in a Widgetbook-Cloud-context. To do so, you can use the following `extension`, to make your use-cases adaptive to the Widgetbook Cloud Reviews and disable the animations during the visual comparison.
+
+   ```dart
+   extension WidgetbookContext on BuildContext {
+     /// The `preview` query parameter is used while taking snapshots of the
+     /// use-case for Widgetbook Cloud Reviews. This getter can be used to
+     /// customize the behavior of the use-case while taking the snapshots,
+     /// it can be used to disable animations for example.
+     bool get isInWidgetbookCloud => WidgetbookState.of(this).previewMode;
+   }
+
+   @UseCase(name: 'Default', type: CircularProgressIndicator)
+   Widget adaptiveAnimationUseCase(BuildContext context) {
+     return CircularProgressIndicator(
+       value: context.isInWidgetbookCloud ? 0.5 : null,
+     );
+   }
+   ```
+
 1. **Starting animations on-demand**: you can use a `boolean` knob to start your animations. This way, you can disable the animations during the visual comparison but you can still see the animations in the Widgetbook.
 
    ```dart
    @UseCase(name: 'Default', type: CircularProgressIndicator)
    Widget onDemandAnimationUseCase(BuildContext context) {
      return CircularProgressIndicator(
-       value: context.knobs.boolean(label: 'Animate') ? null : 0.5,
-     );
-   }
-   ```
-
-1. **Disable animations**: by providing a constant value to the parameter that controls the animation, you can disable the animations during the visual comparison.
-
-   ```dart
-   @UseCase(name: 'Default', type: CircularProgressIndicator)
-   Widget disabledAnimationUseCase(BuildContext context) {
-     return CircularProgressIndicator(
-       value: 0.5,
+       value: context.knobs.boolean(label: 'Static') ? 0.5 : null,
      );
    }
    ```
