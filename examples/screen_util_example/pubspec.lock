@@ -251,9 +251,10 @@ packages:
   widgetbook:
     dependency: "direct main"
     description:
-      path: "../../packages/widgetbook"
-      relative: true
-    source: path
+      name: widgetbook
+      sha256: be0588cd864a70bd2817ca2fab0dbd147c460b712cfe53fd13e6fd46b5c3f368
+      url: "https://pub.dev"
+    source: hosted
     version: "3.7.1"
 sdks:
   dart: ">=3.4.0 <4.0.0"
