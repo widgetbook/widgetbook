@@ -9,10 +9,18 @@ import '../integrations/widgetbook_integration.dart';
 import '../knobs/knobs.dart';
 import '../navigation/navigation.dart';
 import '../routing/routing.dart';
-import 'default_app_builders.dart';
+import 'default_builders.dart';
 import 'widgetbook_scope.dart';
 
 typedef AppBuilder = Widget Function(BuildContext context, Widget child);
+
+typedef AddonsBuilder = Widget Function(BuildContext context, Widget child);
+
+typedef WidgetbookBuilder = Widget Function(
+  BuildContext context,
+  AddonsBuilder addonsBuilder,
+  Widget useCase,
+);
 
 class WidgetbookState extends ChangeNotifier {
   WidgetbookState({
@@ -20,7 +28,8 @@ class WidgetbookState extends ChangeNotifier {
     this.query,
     this.previewMode = false,
     this.queryParams = const {},
-    this.appBuilder = widgetsAppBuilder,
+    this.appBuilder,
+    this.builder = widgetsBuilder,
     this.addons,
     this.integrations,
     required this.root,
@@ -44,10 +53,13 @@ class WidgetbookState extends ChangeNotifier {
   Map<String, String> queryParams;
 
   late final KnobsRegistry knobs;
-  final AppBuilder appBuilder;
+  final WidgetbookBuilder builder;
   final List<WidgetbookAddon>? addons;
   final List<WidgetbookIntegration>? integrations;
   final WidgetbookRoot root;
+
+  @Deprecated('Use [builder] instead.')
+  final AppBuilder? appBuilder;
 
   List<WidgetbookNode> get directories => root.children!;
 
