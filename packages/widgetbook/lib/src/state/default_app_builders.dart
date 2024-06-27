@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+@Deprecated('Use [widgetBuilder] instead.')
 Widget widgetsAppBuilder(BuildContext context, Widget child) {
   return WidgetsApp(
     debugShowCheckedModeBanner: false,
@@ -9,6 +10,7 @@ Widget widgetsAppBuilder(BuildContext context, Widget child) {
   );
 }
 
+@Deprecated('Use [materialBuilder] instead.')
 Widget materialAppBuilder(BuildContext context, Widget child) {
   return MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -18,6 +20,7 @@ Widget materialAppBuilder(BuildContext context, Widget child) {
   );
 }
 
+@Deprecated('Use [cupertinoBuilder] instead.')
 Widget cupertinoAppBuilder(BuildContext context, Widget child) {
   return CupertinoApp(
     debugShowCheckedModeBanner: false,

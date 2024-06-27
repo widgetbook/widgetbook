@@ -16,13 +16,15 @@ class Workbench extends StatelessWidget {
     return Scaffold(
       // Some addons require a Scaffold to work properly.
       body: SafeBoundaries(
-        child: state.appBuilder(
-          context,
-          ColoredBox(
-            // Background color for the area behind device frame if
-            // the [DeviceFrameAddon] is used.
-            color: Theme.of(context).scaffoldBackgroundColor,
-            child: MultiAddonBuilder(
+        child: ColoredBox(
+          // Background color for the area behind device frame if
+          // the [DeviceFrameAddon] is used. This has to be here instead of
+          // inside the [DeviceFrameAddon] because the state.builder provides
+          // a new [WidgetsApp] that will have its own theme.
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: state.builder(
+            context,
+            (context, child) => MultiAddonBuilder(
               addons: state.addons,
               builder: (context, addon, child) {
                 final state = WidgetbookState.of(context);
@@ -38,22 +40,23 @@ class Workbench extends StatelessWidget {
                   newSetting,
                 );
               },
-              child: Stack(
-                // The Stack is used to loosen the constraints of
-                // the UseCaseBuilder. Without the Stack, UseCaseBuilder
-                // would expand to the whole size of the Workbench.
-                children: [
-                  UseCaseBuilder(
-                    key: ValueKey(state.uri),
-                    builder: (context) {
-                      return WidgetbookState.of(context)
-                              .useCase
-                              ?.build(context) ??
-                          const SizedBox.shrink();
-                    },
-                  ),
-                ],
-              ),
+              child: child,
+            ),
+            Stack(
+              // The Stack is used to loosen the constraints of
+              // the UseCaseBuilder. Without the Stack, UseCaseBuilder
+              // would expand to the whole size of the Workbench.
+              children: [
+                UseCaseBuilder(
+                  key: ValueKey(state.uri),
+                  builder: (context) {
+                    return WidgetbookState.of(context)
+                            .useCase
+                            ?.build(context) ??
+                        const SizedBox.shrink();
+                  },
+                ),
+              ],
             ),
           ),
         ),

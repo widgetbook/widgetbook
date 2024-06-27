@@ -22,7 +22,8 @@ class Widgetbook extends StatefulWidget {
     super.key,
     this.initialRoute = '/',
     required this.directories,
-    this.appBuilder = widgetsAppBuilder,
+    this.appBuilder,
+    this.builder = widgetsBuilder,
     this.addons,
     this.integrations,
   });
@@ -32,7 +33,8 @@ class Widgetbook extends StatefulWidget {
     super.key,
     this.initialRoute = '/',
     required this.directories,
-    this.appBuilder = cupertinoAppBuilder,
+    this.appBuilder,
+    this.builder = cupertinoBuilder,
     this.addons,
     this.integrations,
   });
@@ -42,7 +44,8 @@ class Widgetbook extends StatefulWidget {
     super.key,
     this.initialRoute = '/',
     required this.directories,
-    this.appBuilder = materialAppBuilder,
+    this.appBuilder,
+    this.builder = materialBuilder,
     this.addons,
     this.integrations,
   });
@@ -61,7 +64,33 @@ class Widgetbook extends StatefulWidget {
   final List<WidgetbookNode> directories;
 
   /// A wrapper builder method for all [WidgetbookUseCase]s.
-  final AppBuilder appBuilder;
+  @Deprecated('Use [builder] instead.')
+  final AppBuilder? appBuilder;
+
+  /// Controls how the root [WidgetsApp] is built, and can be used to inject
+  /// additional widgets into the widget tree.
+  ///
+  /// It provides three parameters:
+  /// - [BuildContext], the current context.
+  /// - [AddonsBuilder], function that wraps the child with [WidgetbookAddon]s.
+  /// - [Widget], the current [WidgetbookUseCase].
+  ///
+  /// The [addonsBuilder] and [useCase] are separated to allow injecting
+  /// widgets between them. For example, you might want to inject the
+  /// [Navigator] below the addons, but above the use case, to make popup
+  /// routes work properly with addons like [DeviceFrameAddon].
+  ///
+  /// ```dart
+  /// builder: (context, addonsBuilder, useCase) {
+  ///   return WidgetsApp(
+  ///     // The child here is the [Navigator] widget,
+  ///     // it will always be non-null, as [home] is provided.
+  ///     builder: (context, child) => addonsBuilder(context, child!),
+  ///     home: useCase,
+  ///   );
+  /// }
+  /// ```
+  final WidgetbookBuilder builder;
 
   /// The list of add-ons for your [Widget] library
   final List<WidgetbookAddon>? addons;
@@ -84,7 +113,21 @@ class _WidgetbookState extends State<Widgetbook> {
     super.initState();
 
     state = WidgetbookState(
+      // ignore: deprecated_member_use_from_same_package
       appBuilder: widget.appBuilder,
+      // For backwards compatibility, we need to check if the appBuilder is set.
+      // The default app builders are set to null after the deprecation.
+      // If the appBuilder is not null, means the user is setting a custom one
+      // that we should use to avoid breaking changes.
+      //
+      // ignore: deprecated_member_use_from_same_package
+      builder: widget.appBuilder == null
+          ? widget.builder
+          // ignore: deprecated_member_use_from_same_package
+          : (context, addonsBuilder, useCase) => widget.appBuilder!(
+                context,
+                addonsBuilder(context, useCase),
+              ),
       addons: widget.addons,
       integrations: widget.integrations,
       root: WidgetbookRoot(
