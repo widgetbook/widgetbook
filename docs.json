@@ -3,7 +3,7 @@
   "twitter": "widgetbook_io",
   "logo": "/assets/logos/logo-light.png",
   "logoDark": "/assets/logos/logo-dark.png",
-  "theme": "0060A7",
+  "theme": "#0060A7",
   "googleAnalytics": "G-74GW877FF8",
   "docsearch": {
     "appId": "325TRD6FM7",
