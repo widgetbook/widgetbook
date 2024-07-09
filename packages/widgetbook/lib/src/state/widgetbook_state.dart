@@ -9,6 +9,7 @@ import '../integrations/widgetbook_integration.dart';
 import '../knobs/knobs.dart';
 import '../navigation/navigation.dart';
 import '../routing/routing.dart';
+import 'default_app_builders.dart';
 import 'default_builders.dart';
 import 'widgetbook_scope.dart';
 
@@ -28,7 +29,8 @@ class WidgetbookState extends ChangeNotifier {
     this.query,
     this.previewMode = false,
     this.queryParams = const {},
-    this.appBuilder,
+    // ignore: deprecated_member_use_from_same_package
+    this.appBuilder = widgetsAppBuilder,
     this.builder = widgetsBuilder,
     this.addons,
     this.integrations,
@@ -59,7 +61,7 @@ class WidgetbookState extends ChangeNotifier {
   final WidgetbookRoot root;
 
   @Deprecated('Use [builder] instead.')
-  final AppBuilder? appBuilder;
+  final AppBuilder appBuilder;
 
   List<WidgetbookNode> get directories => root.children!;
 

@@ -56,7 +56,7 @@ void main() {
         'then shell is hidden',
         (tester) async {
           final state = WidgetbookState(
-            appBuilder: materialAppBuilder,
+            builder: materialBuilder,
             root: WidgetbookRoot(
               children: [],
             ),

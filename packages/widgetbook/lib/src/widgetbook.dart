@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,33 +24,45 @@ class Widgetbook extends StatefulWidget {
     super.key,
     this.initialRoute = '/',
     required this.directories,
-    this.appBuilder,
+    this.appBuilder = widgetsAppBuilder,
     this.builder = widgetsBuilder,
     this.addons,
     this.integrations,
-  });
+  }) : assert(
+          appBuilder == cupertinoAppBuilder || builder == cupertinoBuilder,
+          'Cannot provide both [appBuilder] and [builder] at the same time. '
+          'Replace your [appBuilder] with [builder].',
+        );
 
   /// A [Widgetbook] with [CupertinoApp] as an [appBuilder].
   const Widgetbook.cupertino({
     super.key,
     this.initialRoute = '/',
     required this.directories,
-    this.appBuilder,
+    this.appBuilder = cupertinoAppBuilder,
     this.builder = cupertinoBuilder,
     this.addons,
     this.integrations,
-  });
+  }) : assert(
+          appBuilder == cupertinoAppBuilder || builder == cupertinoBuilder,
+          'Cannot provide both [appBuilder] and [builder] at the same time. '
+          'Replace your [appBuilder] with [builder].',
+        );
 
   /// A [Widgetbook] with [MaterialApp] as an [appBuilder].
   const Widgetbook.material({
     super.key,
     this.initialRoute = '/',
     required this.directories,
-    this.appBuilder,
+    this.appBuilder = materialAppBuilder,
     this.builder = materialBuilder,
     this.addons,
     this.integrations,
-  });
+  }) : assert(
+          appBuilder == materialAppBuilder || builder == materialBuilder,
+          'Cannot provide both [appBuilder] and [builder] at the same time. '
+          'Replace your [appBuilder] with [builder].',
+        );
 
   /// The initial route for that will be used on first startup.
   final String initialRoute;
@@ -65,7 +79,7 @@ class Widgetbook extends StatefulWidget {
 
   /// A wrapper builder method for all [WidgetbookUseCase]s.
   @Deprecated('Use [builder] instead.')
-  final AppBuilder? appBuilder;
+  final AppBuilder appBuilder;
 
   /// Controls how the root [WidgetsApp] is built, and can be used to inject
   /// additional widgets into the widget tree.
@@ -112,22 +126,31 @@ class _WidgetbookState extends State<Widgetbook> {
   void initState() {
     super.initState();
 
+    final defaultAppBuilder = {
+      widgetsAppBuilder,
+      materialAppBuilder,
+      cupertinoAppBuilder,
+    };
+
+    final isDefaultAppBuilder = defaultAppBuilder.any(
+      (builder) => widget.appBuilder == builder,
+    );
+
     state = WidgetbookState(
-      // ignore: deprecated_member_use_from_same_package
-      appBuilder: widget.appBuilder,
       // For backwards compatibility, we need to check if the appBuilder is set.
-      // The default app builders are set to null after the deprecation.
-      // If the appBuilder is not null, means the user is setting a custom one
-      // that we should use to avoid breaking changes.
-      //
-      // ignore: deprecated_member_use_from_same_package
-      builder: widget.appBuilder == null
+      // If the user is using the default appBuilder, then it is safe to migrate
+      // them to the new flow of using builder.
+      // If the user is setting a custom appBuilder, then we need to respect it
+      // and give it a higher priority until they migrate to builder.
+      // An assertion is used to prevent that both the appBuilder
+      // and the builder are set together, because the latter will be ignored.
+      builder: isDefaultAppBuilder
           ? widget.builder
-          // ignore: deprecated_member_use_from_same_package
-          : (context, addonsBuilder, useCase) => widget.appBuilder!(
+          : (context, addonsBuilder, useCase) => widget.appBuilder(
                 context,
                 addonsBuilder(context, useCase),
               ),
+      appBuilder: widget.appBuilder,
       addons: widget.addons,
       integrations: widget.integrations,
       root: WidgetbookRoot(
