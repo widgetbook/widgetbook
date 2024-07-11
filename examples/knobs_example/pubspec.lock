@@ -246,7 +246,7 @@ packages:
       path: "../../packages/widgetbook"
       relative: true
     source: path
-    version: "3.8.0"
+    version: "3.8.1"
 sdks:
   dart: ">=3.4.0 <4.0.0"
   flutter: ">=3.22.0"

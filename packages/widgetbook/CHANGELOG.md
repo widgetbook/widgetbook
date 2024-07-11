@@ -1,4 +1,4 @@
-## Unreleased
+## 3.8.1
 
 - **FIX**: Show popup routes (e.g. dialogs and modal sheets) inside the boundaries on the device frame. ([#1209](https://github.com/widgetbook/widgetbook/pull/1209))
 
