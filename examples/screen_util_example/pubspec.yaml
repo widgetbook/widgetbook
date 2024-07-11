@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.7.0
-  widgetbook: ^3.8.0
+  widgetbook: ^3.8.1
 
 flutter:
   uses-material-design: true
