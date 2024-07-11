@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -78,6 +78,89 @@ void main() {
           expect(
             deviceFrame.device,
             equals(device),
+          );
+        },
+      );
+
+      testWidgets(
+        'given a use-case that has a dialog, '
+        'when the dialog is opened, '
+        'then it is show inside the [DeviceFrame]',
+        (tester) async {
+          final device = devices.last;
+
+          await tester.pumpWidgetWithBuilder(
+            (context) => addon.buildUseCase(
+              context,
+              Builder(
+                builder: (context) {
+                  return TextButton(
+                    onPressed: () {
+                      showDialog<void>(
+                        useRootNavigator: false,
+                        context: context,
+                        builder: (context) => const Placeholder(),
+                      );
+                    },
+                    child: const Text('Open'),
+                  );
+                },
+              ),
+              DeviceFrameSetting(
+                device: device,
+              ),
+            ),
+          );
+
+          await tester.findAndTap(find.byType(TextButton));
+
+          expect(
+            find.descendant(
+              of: find.byType(DeviceFrame),
+              matching: find.byType(Placeholder),
+            ),
+            findsOneWidget,
+          );
+        },
+      );
+
+      testWidgets(
+        'given a use-case that has a bottom modal sheet, '
+        'when the dialog is opened, '
+        'then it is show inside the [DeviceFrame]',
+        (tester) async {
+          final device = devices.last;
+
+          await tester.pumpWidgetWithBuilder(
+            (context) => addon.buildUseCase(
+              context,
+              Builder(
+                builder: (context) {
+                  return TextButton(
+                    onPressed: () {
+                      showModalBottomSheet<void>(
+                        context: context,
+                        builder: (context) => const Placeholder(),
+                      );
+                    },
+                    child: const Text('Open'),
+                  );
+                },
+              ),
+              DeviceFrameSetting(
+                device: device,
+              ),
+            ),
+          );
+
+          await tester.findAndTap(find.byType(TextButton));
+
+          expect(
+            find.descendant(
+              of: find.byType(DeviceFrame),
+              matching: find.byType(Placeholder),
+            ),
+            findsOneWidget,
           );
         },
       );

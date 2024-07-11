@@ -46,11 +46,20 @@ class DeviceFrameMode extends Mode<DeviceFrameConfig> {
           orientation: value.orientation,
           device: value.device,
           isFrameVisible: value.hasFrame,
-          screen: value.hasFrame
-              ? child
-              : SafeArea(
-                  child: child,
-                ),
+          // A navigator below the device frame is necessary to make
+          // the popup routes (e.g. dialogs and bottom sheets) work within
+          // the device frame, otherwise they would use the navigator from
+          // the app builder, causing these routes to fill the whole
+          // workbench and not just the device frame.
+          screen: Navigator(
+            onGenerateRoute: (_) => PageRouteBuilder(
+              pageBuilder: (context, _, __) => value.hasFrame
+                  ? child
+                  : SafeArea(
+                      child: child,
+                    ),
+            ),
+          ),
         ),
       ),
     );

@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Show popup routes (e.g. dialogs and modal sheets) inside the boundaries on the device frame. ([#1209](https://github.com/widgetbook/widgetbook/pull/1209))
+
 ## 3.8.0
 
 - **FIX**: Maintain theme in Flutter v3.22. ([#1184](https://github.com/widgetbook/widgetbook/pull/1184))
