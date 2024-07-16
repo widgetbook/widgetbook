@@ -42,6 +42,10 @@ class FieldCodec<T> {
       params.map(
         (param) {
           final parts = param.split(':');
+          final isNonAscii = parts[0].codeUnits.any((code) => code > 127);
+          if (isNonAscii) {
+            return MapEntry(parts[0], parts[1]);
+          }
           final String decodedKey = Uri.decodeComponent(parts[0]);
           return MapEntry(decodedKey, parts[1]);
         },
