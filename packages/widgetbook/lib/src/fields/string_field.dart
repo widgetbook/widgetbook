@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 import 'field.dart';
@@ -19,8 +17,7 @@ class StringField extends Field<String> {
             toParam: (value) => Uri.encodeComponent(value),
             toValue: (param) {
               if (param == null) return null;
-              final isNonAscii = param.codeUnits.any((code) => code > 127);
-              return isNonAscii ? param : Uri.decodeComponent(param);
+              return param;
             },
           ),
         );
