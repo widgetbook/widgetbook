@@ -32,6 +32,17 @@ class FieldCodec<T> {
     return '{${pairs.join(',')}}';
   }
 
+  /// Tring to decode [component] if possible.
+  ///
+  /// If not possible returned null.
+  static String? tryDecodeComponent(String component) {
+    try {
+      return Uri.decodeComponent(component);
+    } on ArgumentError {
+      return null;
+    }
+  }
+
   /// Decodes a query group encoded value back to a [Map].
   static Map<String, String> decodeQueryGroup(String? group) {
     if (group == null) return {};
@@ -42,12 +53,9 @@ class FieldCodec<T> {
       params.map(
         (param) {
           final parts = param.split(':');
-          final isNonAscii = parts[0].codeUnits.any((code) => code > 127);
-          if (isNonAscii) {
-            return MapEntry(parts[0], parts[1]);
-          }
-          final String decodedKey = Uri.decodeComponent(parts[0]);
-          return MapEntry(decodedKey, parts[1]);
+          final decodedKey = tryDecodeComponent(parts[0]);
+          final decodedValue = tryDecodeComponent(parts[1]);
+          return MapEntry(decodedKey ?? parts[0], decodedValue ?? parts[1]);
         },
       ),
     );
