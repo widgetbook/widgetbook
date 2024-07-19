@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Reject builds without use-cases. ([#1213](https://github.com/widgetbook/widgetbook/pull/1213))
+
 ## 3.1.0
 
 - **BREAKING**: Set minimum SDK version to 3.0.0. ([#1030](https://github.com/widgetbook/widgetbook/pull/1030))
