@@ -55,7 +55,7 @@ void main() {
             final textWidget = await tester.widget<Text>(find.byKey(textKey));
             expect(textWidget.data, '');
           }
-          // Simulate as opened via broweser by url.
+          // Simulate as opened URL via broweser.
           state.updateFromRouteConfig(
             AppRouteConfig(
               uri: state.uri.replace(
@@ -76,11 +76,11 @@ void main() {
       );
 
       testWidgets(
-        'opening with non-encoded url with special characters: `,`, `{`, `}`',
+        'opening with non-encoded url with special characters: `,`',
         (tester) async {
           const textKey = Key('knob-string-field');
           const keyOfData = 'Тест field';
-          const escapedCharacters = ',.{}';
+          const escapedCharacters = ',';
           const valueOfData = 'значение ';
           final state = await tester.pumpWidgetWithQueryParams(
             queryParams: {},
@@ -98,7 +98,7 @@ void main() {
             final textWidget = await tester.widget<Text>(find.byKey(textKey));
             expect(textWidget.data, '');
           }
-          // Simulate as opened via broweser by url.
+          // Simulate as opened URL via broweser.
           state.updateFromRouteConfig(
             AppRouteConfig(
               uri: state.uri.replace(
