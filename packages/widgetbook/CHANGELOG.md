@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FIX**: Changed behavior for handle non-ASCII characters (e.g. Russian symbols, commas, colons etc)
 - **FIX**: Encode all fields values to allow reserved characters (e.g. commas, colons and curly brackets). ([#1214](https://github.com/widgetbook/widgetbook/pull/1214))
 
 ## 3.8.1
