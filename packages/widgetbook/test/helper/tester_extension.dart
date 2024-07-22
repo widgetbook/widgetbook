@@ -86,13 +86,14 @@ extension TesterExtension on WidgetTester {
     Field<TValue> field,
     TValue? value,
   ) async {
-    const group = 'group_name';
+    const groupKey = 'group_name';
+    final groupValue = FieldCodec.encodeQueryGroup(
+      value != null ? {field.name: field.codec.toParam(value)} : {},
+    );
 
     await pumpWidgetWithQueryParams(
-      queryParams: value != null
-          ? {group: '{${field.name}:${field.codec.toParam(value)}}'}
-          : {},
-      builder: (context) => field.build(context, group),
+      queryParams: groupValue.isNotEmpty ? {groupKey: groupValue} : {},
+      builder: (context) => field.build(context, groupKey),
     );
 
     return widget<TWidget>(

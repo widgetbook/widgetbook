@@ -38,20 +38,21 @@ void main() {
         },
       );
 
-      const queryGroupWithColon = {
-        'first_field : ': 'false',
-        'second_field': '2',
-      };
-
       test(
-        'given a query group with field name containing a colon, '
+        'given a query group reserved characters, '
         'when [encodeQueryGroup] and [decodeQueryGroup] are successively called, '
         'then the decoded result is the same as before encoding',
         () {
-          final encodedResult =
-              FieldCodec.encodeQueryGroup(queryGroupWithColon);
-          final decodedResult = FieldCodec.decodeQueryGroup(encodedResult);
-          expect(decodedResult, equals(queryGroupWithColon));
+          final group = {
+            'Comma Field': 'Hello, World!',
+            'Colon Field': '2022-01-01 00:00',
+            'Special:Key': 'Special%Value',
+          };
+
+          final encodedGroup = FieldCodec.encodeQueryGroup(group);
+          final decodedGroup = FieldCodec.decodeQueryGroup(encodedGroup);
+
+          expect(decodedGroup, equals(group));
         },
       );
     },

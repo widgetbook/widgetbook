@@ -26,9 +26,16 @@ class FieldCodec<T> {
   /// ```
   static String encodeQueryGroup(Map<String, String> group) {
     final pairs = group.entries.map((entry) {
-      final String encodedKey = Uri.encodeComponent(entry.key);
-      return '$encodedKey:${entry.value}';
+      // Both key and value are encoded to ensure that reserved
+      // characters (e.g. `:`, `{`, `}` and `,`) are not misinterpreted.
+      // For example, using a comma in a string value or a colon
+      // in a date value would break the decoding process.
+      final encodedKey = Uri.encodeComponent(entry.key);
+      final encodedValue = Uri.encodeComponent(entry.value);
+
+      return '$encodedKey:$encodedValue';
     });
+
     return '{${pairs.join(',')}}';
   }
 
@@ -42,8 +49,10 @@ class FieldCodec<T> {
       params.map(
         (param) {
           final parts = param.split(':');
-          final String decodedKey = Uri.decodeComponent(parts[0]);
-          return MapEntry(decodedKey, parts[1]);
+          final decodedKey = Uri.decodeComponent(parts[0]);
+          final decodedValue = Uri.decodeComponent(parts[1]);
+
+          return MapEntry(decodedKey, decodedValue);
         },
       ),
     );
