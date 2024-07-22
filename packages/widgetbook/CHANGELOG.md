@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Encode all fields values to allow reserved characters (e.g. commas, colons and curly brackets). ([#1214](https://github.com/widgetbook/widgetbook/pull/1214))
+
 ## 3.8.1
 
 - **FIX**: Show popup routes (e.g. dialogs and modal sheets) inside the boundaries on the device frame. ([#1209](https://github.com/widgetbook/widgetbook/pull/1209))

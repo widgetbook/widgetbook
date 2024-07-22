@@ -24,16 +24,6 @@ void main() {
       );
 
       test(
-        'given a value with commas, '
-        'when [codec.toParam] is called, '
-        'then it returns the value as URL-encoded string',
-        () {
-          final result = field.codec.toParam('doggo,');
-          expect(result, equals('doggo%2C'));
-        },
-      );
-
-      test(
         'given a string param, '
         'when [codec.toValue] is called, '
         'then it returns the actual value',
@@ -66,6 +56,20 @@ void main() {
           );
 
           expect(widget.initialValue, equals('doggo'));
+        },
+      );
+
+      testWidgets(
+        'given a state that has a field value with reserved character, '
+        'then [toWidget] builds that value correctly',
+        (tester) async {
+          const value = 'doggo, ';
+          final widget = await tester.pumpField<String, TextFormField>(
+            field,
+            value,
+          );
+
+          expect(widget.initialValue, equals(value));
         },
       );
     },

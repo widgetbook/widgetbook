@@ -14,10 +14,8 @@ class StringField extends Field<String> {
   }) : super(
           type: FieldType.string,
           codec: FieldCodec(
-            toParam: (value) => Uri.encodeComponent(value),
-            toValue: (param) => param != null
-                ? Uri.decodeComponent(param) //
-                : null,
+            toParam: (value) => value,
+            toValue: (param) => param,
           ),
         );
 
