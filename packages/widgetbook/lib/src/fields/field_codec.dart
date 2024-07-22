@@ -61,10 +61,8 @@ class FieldCodec<T> {
     return Map<String, String>.fromEntries(
       filteredParams.map(
         (parts) {
-          final decodedKey =
-              parts[0].isNotEmpty ? tryDecodeComponent(parts[0]) : parts[0];
-          final decodedValue =
-              parts[1].isNotEmpty ? tryDecodeComponent(parts[1]) : parts[1];
+          final decodedKey = tryDecodeComponent(parts[0]);
+          final decodedValue = tryDecodeComponent(parts[1]);
           return MapEntry(decodedKey ?? parts[0], decodedValue ?? parts[1]);
         },
       ),
