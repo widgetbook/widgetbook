@@ -15,10 +15,7 @@ class StringField extends Field<String> {
           type: FieldType.string,
           codec: FieldCodec(
             toParam: (value) => value,
-            toValue: (param) {
-              if (param == null) return null;
-              return param;
-            },
+            toValue: (param) => param,
           ),
         );
 
