@@ -92,7 +92,7 @@ extension TesterExtension on WidgetTester {
     );
 
     await pumpWidgetWithQueryParams(
-      queryParams: groupValue.isNotEmpty ? {groupKey: groupValue} : {},
+      queryParams: value != null ? {groupKey: groupValue} : {},
       builder: (context) => field.build(context, groupKey),
     );
 

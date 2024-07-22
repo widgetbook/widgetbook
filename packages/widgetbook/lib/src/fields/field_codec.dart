@@ -41,7 +41,7 @@ class FieldCodec<T> {
 
   /// Decodes a query group encoded value back to a [Map].
   static Map<String, String> decodeQueryGroup(String? group) {
-    if (group == null) return {};
+    if (group == null || group == '{}') return {};
 
     final params = group.substring(1, group.length - 1).split(',');
 
