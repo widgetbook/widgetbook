@@ -34,7 +34,8 @@ void main() {
       );
 
       testWidgets(
-        'opening with non-encoded url',
+        'given non-ASCII characters in URL'
+        'then the application is open without decoding',
         (tester) async {
           const textKey = Key('knob-string-field');
           const keyOfData = 'Тест field';
@@ -51,10 +52,10 @@ void main() {
           await tester.pumpAndSettle();
 
           // Checking not initialized field
-          {
-            final textWidget = await tester.widget<Text>(find.byKey(textKey));
-            expect(textWidget.data, '');
-          }
+          final emptyTextWidget =
+              await tester.widget<Text>(find.byKey(textKey));
+          expect(emptyTextWidget.data, '');
+
           // Simulate as opened URL via broweser.
           state.updateFromRouteConfig(
             AppRouteConfig(
@@ -68,20 +69,20 @@ void main() {
 
           await tester.pumpAndSettle();
 
-          {
-            final textWidget = await tester.widget<Text>(find.byKey(textKey));
-            expect(textWidget.data, valueOfData);
-          }
+          final actualTextWidget =
+              await tester.widget<Text>(find.byKey(textKey));
+          expect(actualTextWidget.data, valueOfData);
         },
       );
 
       testWidgets(
-        'opening with non-encoded url with special characters: `,`',
+        'given non-ASCII characters and special charater (`,`) in URL'
+        'then app opened without errors but some characters not included',
         (tester) async {
           const textKey = Key('knob-string-field');
-          const keyOfData = 'Тест field';
-          const escapedCharacters = ',';
-          const valueOfData = 'значение ';
+          const keyOfData = 'text field';
+          const escapedCharacters = ',,,';
+          const valueOfData = 'value ';
           final state = await tester.pumpWidgetWithQueryParams(
             queryParams: {},
             builder: (context) {
@@ -93,11 +94,11 @@ void main() {
           );
           await tester.pumpAndSettle();
 
-          // Checking not initialized field
-          {
-            final textWidget = await tester.widget<Text>(find.byKey(textKey));
-            expect(textWidget.data, '');
-          }
+          // Checking for not initialized field
+          final emptyTextWidget =
+              await tester.widget<Text>(find.byKey(textKey));
+          expect(emptyTextWidget.data, '');
+
           // Simulate as opened URL via broweser.
           state.updateFromRouteConfig(
             AppRouteConfig(
@@ -111,10 +112,8 @@ void main() {
 
           await tester.pumpAndSettle();
 
-          {
-            final textWidget = await tester.widget<Text>(find.byKey(textKey));
-            expect(textWidget.data, valueOfData);
-          }
+          final textWithData = await tester.widget<Text>(find.byKey(textKey));
+          expect(textWithData.data, valueOfData);
         },
       );
     },
