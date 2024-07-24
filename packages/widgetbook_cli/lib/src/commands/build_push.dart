@@ -107,19 +107,6 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     final useCasesProgress = logger.progress('Reading use-cases');
     final useCases = await useCaseReader.read(args.path);
-
-    if (useCases.isEmpty) {
-      useCasesProgress.fail(
-        'No use-cases found\n\n'
-        'Make sure you have done the following:\n'
-        ' 1. Ran `dart run build_runner build -d` to generate metadata files.\n'
-        ' 2. Included at least one use-case in your project.'
-        ' 3. Ran the CLI from within the directory that contains your `.dart_tool`',
-      );
-
-      return 21;
-    }
-
     useCasesProgress.complete('${useCases.length} Use-case(s) read');
 
     final draftProgress = logger.progress('Creating build draft');
