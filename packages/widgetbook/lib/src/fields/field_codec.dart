@@ -48,12 +48,11 @@ class FieldCodec<T> {
     if (group == null) return {};
 
     final params = group.substring(1, group.length - 1).split(',');
-    final filteredParams =
-        params.where((p) => p.split(':').length == 2).map((p) => p.split(':'));
 
     return Map<String, String>.fromEntries(
-      filteredParams.map(
-        (parts) {
+      params.map(
+        (param) {
+          final parts = param.split(':');
           final decodedKey = tryDecodeComponent(parts[0]);
           final decodedValue = tryDecodeComponent(parts[1]);
           return MapEntry(decodedKey ?? parts[0], decodedValue ?? parts[1]);
