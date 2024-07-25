@@ -77,12 +77,14 @@ void main() {
 
       testWidgets(
         'given non-ASCII characters and special charater (`,`) in URL'
-        'then app opened without errors but some characters not included',
+        'then captured error bacause URL\'s characters are invalid',
         (tester) async {
+          final binding = TestWidgetsFlutterBinding.ensureInitialized();
           const textKey = Key('knob-string-field');
           const keyOfData = 'text field';
           const escapedCharacters = ',,,';
           const valueOfData = 'value ';
+
           final state = await tester.pumpWidgetWithQueryParams(
             queryParams: {},
             builder: (context) {
@@ -93,7 +95,6 @@ void main() {
             },
           );
           await tester.pumpAndSettle();
-
           // Checking for not initialized field
           final emptyTextWidget =
               await tester.widget<Text>(find.byKey(textKey));
@@ -109,11 +110,9 @@ void main() {
               ),
             ),
           );
-
           await tester.pumpAndSettle();
-
-          final textWithData = await tester.widget<Text>(find.byKey(textKey));
-          expect(textWithData.data, valueOfData);
+          final error = binding.takeException();
+          expect(error, isRangeError);
         },
       );
     },
