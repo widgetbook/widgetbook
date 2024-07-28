@@ -12,7 +12,9 @@ void main() {
     '$AppRouteConfig with non-ascii symbols',
     () {
       testWidgets(
-        'encoding for unsafe ASCII characters with a "%"',
+        'given query parameter in URL address '
+        'when query contains encoded special characters like: ` `, `,` etc. '
+        'then this query string should decode',
         (tester) async {
           final state = await tester.pumpWidgetWithQueryParams(
             queryParams: {},
