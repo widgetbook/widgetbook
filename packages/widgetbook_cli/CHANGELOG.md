@@ -1,4 +1,4 @@
-## Unreleased
+## 3.1.1
 
 - **FIX**: Reject builds without use-cases. ([#1213](https://github.com/widgetbook/widgetbook/pull/1213))
 
