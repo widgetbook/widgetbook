@@ -17,6 +17,7 @@ environment:
 
 dependencies:
   accessibility_tools: ">=0.2.0 <=1.0.0"
+  back_button_interceptor: ^7.0.3
   collection: ^1.15.0
   device_frame: ^1.1.0
   flutter:
