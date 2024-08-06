@@ -39,9 +39,8 @@ class FieldCodec<T> {
     return '{${pairs.join(',')}}';
   }
 
-  /// Tring to decode [component] if possible.
-  ///
-  /// If not possible returned null.
+  /// Decodes [component] using [Uri.decodeComponent],
+  /// but returns null if the decoding fails due to non-ASCII characters.
   static String? tryDecodeComponent(String component) {
     try {
       return Uri.decodeComponent(component);
