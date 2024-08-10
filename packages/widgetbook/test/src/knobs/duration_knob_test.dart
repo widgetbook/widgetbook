@@ -54,7 +54,7 @@ void main() {
 
           await tester.findAndEnter(
             find.byType(TextField),
-            tenSeconds.inMilliseconds.toString(),
+            tenSeconds.inSeconds.toString(),
           );
 
           expect(

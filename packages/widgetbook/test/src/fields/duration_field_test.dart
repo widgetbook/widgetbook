@@ -7,10 +7,11 @@ import '../../helper/helper.dart';
 void main() {
   group('$DurationField', () {
     const fiveSeconds = Duration(seconds: 5);
-    const fiveSecondsInMilliseconds = '5000';
+    const fiveSecondsFormatted = '00d 00h 00m 05s';
 
     const tenSeconds = Duration(seconds: 10);
     const tenSecondsInMilliseconds = '10000';
+    const tenSecondsFormatted = '00d 00h 00m 10s';
 
     final field = DurationField(
       name: 'duration_field',
@@ -57,7 +58,7 @@ void main() {
           ),
         );
 
-        expect(find.text(fiveSecondsInMilliseconds), findsOneWidget);
+        expect(find.text(fiveSecondsFormatted), findsOneWidget);
       },
     );
 
@@ -70,7 +71,7 @@ void main() {
           tenSeconds,
         );
 
-        expect(widget.initialValue, equals(tenSecondsInMilliseconds));
+        expect(widget.initialValue, equals(tenSecondsFormatted));
       },
     );
   });
