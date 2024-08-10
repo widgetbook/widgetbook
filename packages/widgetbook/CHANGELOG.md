@@ -2,6 +2,7 @@
 
 - **FIX**: Skip decoding non-ascii characters in URLs. ([#1218](https://github.com/widgetbook/widgetbook/pull/1218) - by [@shigomany](https://github.com/shigomany))
 - **FIX**: Encode all fields values to allow reserved characters (e.g. commas, colons and curly brackets). ([#1214](https://github.com/widgetbook/widgetbook/pull/1214))
+- **Feat**: improve duration knob. ([#1226](https://github.com/widgetbook/widgetbook/pull/1226))
 
 ## 3.8.1
 
