@@ -9,4 +9,5 @@ enum FieldType {
   dateTime,
   intInput,
   intSlider,
+  multiSelect,
 }

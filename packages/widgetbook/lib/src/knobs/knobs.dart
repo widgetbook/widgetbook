@@ -12,4 +12,5 @@ export 'int_slider_knob.dart';
 export 'knob.dart';
 export 'knobs_registry.dart';
 export 'list_knob.dart';
+export 'multi_select_list_knob.dart';
 export 'string_knob.dart';

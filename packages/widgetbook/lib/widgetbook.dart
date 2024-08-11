@@ -16,6 +16,7 @@ export 'src/knobs/knobs.dart'
         IntInputKnob,
         IntSliderKnob,
         ListKnob,
+        MultiSelectListKnob,
         StringKnob;
 export 'src/navigation/nodes/nodes.dart';
 export 'src/state/state.dart' hide WidgetbookScope;

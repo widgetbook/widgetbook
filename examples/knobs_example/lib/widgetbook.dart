@@ -127,6 +127,28 @@ class WidgetbookApp extends StatelessWidget {
                       end: DateTime(initialDate.year + 1),
                     ),
                   ),
+                  KnobEntry<int>(
+                    name: 'List',
+                    regular: context.knobs.list(
+                      label: 'list',
+                      options: [1, 2, 3],
+                    ),
+                    nullable: context.knobs.listOrNull(
+                      label: 'listOrNull',
+                      options: [1, null, 3],
+                    ),
+                  ),
+                  KnobEntry<List<int?>>(
+                    name: 'Multiselect list',
+                    regular: context.knobs.multiSelectList(
+                      label: 'multiSelectList',
+                      options: [1, 2, 3],
+                    ),
+                    nullable: context.knobs.multiSelectListOrNull(
+                      label: 'multiSelectListOrNull',
+                      options: [1, null, 3],
+                    ),
+                  ),
                 ],
               );
             },

@@ -11,4 +11,5 @@ export 'fields_composable.dart';
 export 'int_input_field.dart';
 export 'int_slider_field.dart';
 export 'list_field.dart';
+export 'multi_select_field.dart';
 export 'string_field.dart';

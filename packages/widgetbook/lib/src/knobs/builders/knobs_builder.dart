@@ -7,6 +7,7 @@ import '../date_time_knob.dart';
 import '../duration_knob.dart';
 import '../knob.dart';
 import '../list_knob.dart';
+import '../multi_select_list_knob.dart';
 import '../string_knob.dart';
 import 'double_knobs_builder.dart';
 import 'int_knobs_builder.dart';
@@ -236,6 +237,48 @@ class KnobsBuilder {
         description: description,
         start: start,
         end: end,
+      ),
+    );
+  }
+
+  /// Allow the users to multi-select from a list of options.
+  /// Returns a list of selected options.
+  List<T?> multiSelectList<T>({
+    required String label,
+    required List<T> options,
+    List<T> initialSelection = const [],
+    String? description,
+    LabelBuilder<T?>? labelBuilder,
+  }) {
+    assert(options.isNotEmpty, 'Must specify at least one option');
+    return onKnobAdded(
+      MultiSelectListKnob<T>(
+        label: label,
+        initialValue: initialSelection,
+        description: description,
+        options: options,
+        labelBuilder: labelBuilder,
+      ),
+    )!;
+  }
+
+  /// Allow the users to multi-select from a list of options with an option for a null value.
+  /// Returns a list of selected options or null.
+  List<T?>? multiSelectListOrNull<T>({
+    required String label,
+    required List<T?> options,
+    List<T>? initialSelection,
+    String? description,
+    LabelBuilder<T?>? labelBuilder,
+  }) {
+    assert(options.isNotEmpty, 'Must specify at least one option');
+    return onKnobAdded(
+      MultiSelectListKnob<T?>.nullable(
+        label: label,
+        initialValue: initialSelection ?? [],
+        description: description,
+        options: options,
+        labelBuilder: labelBuilder,
       ),
     );
   }
