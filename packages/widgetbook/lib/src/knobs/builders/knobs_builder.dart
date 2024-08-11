@@ -243,12 +243,12 @@ class KnobsBuilder {
 
   /// Allow the users to multi-select from a list of options.
   /// Returns a list of selected options.
-  List<T?> multiSelectList<T>({
+  List<T> multiSelectList<T>({
     required String label,
     required List<T> options,
     List<T> initialSelection = const [],
     String? description,
-    LabelBuilder<T?>? labelBuilder,
+    LabelBuilder<T>? labelBuilder,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return onKnobAdded(
@@ -264,16 +264,16 @@ class KnobsBuilder {
 
   /// Allow the users to multi-select from a list of options with an option for a null value.
   /// Returns a list of selected options or null.
-  List<T?>? multiSelectListOrNull<T>({
+  List<T>? multiSelectListOrNull<T>({
     required String label,
-    required List<T?> options,
+    required List<T> options,
     List<T>? initialSelection,
     String? description,
     LabelBuilder<T?>? labelBuilder,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return onKnobAdded(
-      MultiSelectListKnob<T?>.nullable(
+      MultiSelectListKnob<T>.nullable(
         label: label,
         initialValue: initialSelection ?? [],
         description: description,

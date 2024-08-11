@@ -37,7 +37,7 @@ class MultiSelectField<T> extends Field<List<T>> {
 
   @override
   Widget toWidget(BuildContext context, String group, List<T>? value) {
-    List<T> selectedValues = value ?? initialValue ?? [];
+    final selectedValues = value ?? initialValue ?? [];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

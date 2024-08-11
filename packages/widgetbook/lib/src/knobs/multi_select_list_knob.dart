@@ -3,7 +3,7 @@ import '../fields/fields.dart';
 import 'knob.dart';
 
 @internal
-class MultiSelectListKnob<T> extends Knob<List<T?>> {
+class MultiSelectListKnob<T> extends Knob<List<T>?> {
   MultiSelectListKnob({
     required super.label,
     required super.initialValue,
@@ -21,12 +21,12 @@ class MultiSelectListKnob<T> extends Knob<List<T?>> {
   }) : super(isNullable: true);
 
   final List<T> options;
-  final LabelBuilder<T?>? labelBuilder;
+  final LabelBuilder<T>? labelBuilder;
 
   @override
   List<Field> get fields {
     return [
-      MultiSelectField<T?>(
+      MultiSelectField<T>(
         name: label,
         values: options,
         initialValue: initialValue,
