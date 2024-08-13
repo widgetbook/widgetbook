@@ -1,17 +1,17 @@
 class BuildDraftResponse {
   const BuildDraftResponse({
     required this.buildId,
-    required this.storageUrl,
+    required this.urls,
   });
 
   final String buildId;
-  final String storageUrl;
+  final Map<String, String> urls;
 
   // ignore: sort_constructors_first
   factory BuildDraftResponse.fromJson(Map<String, dynamic> json) {
     return BuildDraftResponse(
       buildId: json['buildId'] as String,
-      storageUrl: json['storageUrl'] as String,
+      urls: Map<String, String>.from(json['urls'] as Map),
     );
   }
 }

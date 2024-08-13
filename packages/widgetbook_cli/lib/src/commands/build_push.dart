@@ -9,6 +9,7 @@ import 'package:process/process.dart';
 import '../../widgetbook_cli.dart';
 import '../api/models/build_draft_request.dart';
 import '../api/models/build_ready_request.dart';
+import '../api/storage_client.dart';
 import '../utils/executable_manager.dart';
 import 'build_push_args.dart';
 
@@ -19,9 +20,13 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     this.fileSystem = const LocalFileSystem(),
     this.zipEncoder = const ZipEncoder(),
     this.useCaseReader = const UseCaseReader(),
-  })  : client = WidgetbookHttpClient(
-          environment: context.environment,
-        ),
+    WidgetbookHttpClient? cloudClient,
+    StorageClient? storageClient,
+  })  : cloudClient = cloudClient ??
+            WidgetbookHttpClient(
+              environment: context.environment,
+            ),
+        storageClient = storageClient ?? StorageClient(),
         super(
           name: 'push',
           description: 'Pushes a new build to Widgetbook Cloud',
@@ -55,7 +60,8 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       );
   }
 
-  final WidgetbookHttpClient client;
+  final WidgetbookHttpClient cloudClient;
+  final StorageClient storageClient;
   final ProcessManager processManager;
   final FileSystem fileSystem;
   final ZipEncoder zipEncoder;
@@ -113,8 +119,8 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         'No use-cases found\n\n'
         'Make sure you have done the following:\n'
         ' 1. Ran `dart run build_runner build -d` to generate metadata files.\n'
-        ' 2. Included at least one use-case in your project.'
-        ' 3. Ran the CLI from within the directory that contains your `.dart_tool`',
+        ' 2. Included at least one use-case in your project.\n'
+        ' 3. Ran the CLI from the directory that contains your `.dart_tool`',
       );
 
       return 21;
@@ -122,8 +128,37 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     useCasesProgress.complete('${useCases.length} Use-case(s) read');
 
+    final filesProgress = logger.progress('Reading Files');
+
+    final buildDirPath = p.join(args.path, 'build', 'web');
+    final buildDir = fileSystem.directory(buildDirPath);
+
+    if (!buildDir.existsSync()) {
+      logger.err(
+        'build/web directory does not exist.\n'
+        'Run the following command before publishing:\n\n\t'
+        'flutter build web --target path/to/widgetbook.dart\n\n',
+      );
+      return 22;
+    }
+
+    final files = buildDir //
+        .listSync(recursive: true)
+        .whereType<File>();
+
+    String pathOf(File file) => p.relative(
+          file.path,
+          from: buildDirPath,
+        );
+
+    final filesSizeMap = {
+      for (final file in files) pathOf(file): file.statSync().size,
+    };
+
+    filesProgress.complete('${files.length} File(s) read');
+
     final draftProgress = logger.progress('Creating build draft');
-    final buildDraft = await client.createBuildDraft(
+    final buildDraft = await cloudClient.createBuildDraft(
       versions,
       BuildDraftRequest(
         apiKey: args.apiKey,
@@ -133,44 +168,26 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         branch: args.branch,
         sha: args.commit,
         useCases: useCases,
+        files: filesSizeMap,
       ),
     );
 
-    final buildId = buildDraft.buildId;
-    final signedUrl = buildDraft.storageUrl;
-    draftProgress.complete('Build draft [$buildId] created');
+    draftProgress.complete('Build draft [${buildDraft.buildId}] created');
 
-    final archiveProgress = logger.progress('Creating build archive');
-    final buildDirPath = p.join(args.path, 'build', 'web');
-    final buildDir = fileSystem.directory(buildDirPath);
+    final filesUrlMap = {
+      for (final file in files) file: buildDraft.urls[pathOf(file)]!,
+    };
 
-    if (!buildDir.existsSync()) {
-      archiveProgress.fail();
-      logger.err(
-        'build/web directory does not exist.\n'
-        'Run the following command before publishing:\n\n\t'
-        'flutter build web --target path/to/widgetbook.dart\n\n',
-      );
-      return 22;
-    }
+    final uploadProgress = logger.progress('Uploading build files');
+    await storageClient.uploadFiles(filesUrlMap);
 
-    final zipFile = await zipEncoder.zip(buildDir, '$buildId.zip');
-    if (zipFile == null) {
-      archiveProgress.fail('Failed to create build archive');
-      return 23;
-    }
-
-    archiveProgress.complete('Build archive created at ${zipFile.path}');
-
-    final uploadProgress = logger.progress('Uploading build archive');
-    await client.uploadBuildFile(signedUrl, zipFile);
-    uploadProgress.complete('Build archive uploaded');
+    uploadProgress.complete('Build files uploaded');
 
     final submitProgress = logger.progress('Submitting build');
-    final response = await client.submitBuildDraft(
+    final response = await cloudClient.submitBuildDraft(
       BuildReadyRequest(
         apiKey: args.apiKey,
-        buildId: buildId,
+        buildId: buildDraft.buildId,
       ),
     );
 
