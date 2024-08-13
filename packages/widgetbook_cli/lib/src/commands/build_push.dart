@@ -174,11 +174,26 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     draftProgress.complete('Build draft [${buildDraft.buildId}] created');
 
+    // TODO: revert on failure or success, or adjust in-memory only
+    final indexProgress = logger.progress('Modifying index.html');
+    final indexFile = fileSystem.file(p.join(buildDirPath, 'index.html'));
+    final indexFileContent = await indexFile.readAsString();
+    final modifiedContent = indexFileContent.replaceFirst(
+      RegExp('<base href=".*">'),
+      '<base href="${buildDraft.baseHref}">',
+    );
+
+    await fileSystem
+        .file(p.join(buildDirPath, 'index.html'))
+        .writeAsString(modifiedContent);
+
+    indexProgress.complete('index.html modified');
+
+    final uploadProgress = logger.progress('Uploading build files');
     final filesUrlMap = {
       for (final file in files) file: buildDraft.urls[pathOf(file)]!,
     };
 
-    final uploadProgress = logger.progress('Uploading build files');
     await storageClient.uploadFiles(filesUrlMap);
 
     uploadProgress.complete('Build files uploaded');
