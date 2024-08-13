@@ -24,7 +24,7 @@ dependencies:
   http_parser: ^4.0.1
   mason_logger: ^0.2.5
   meta: ^1.8.0
-  mime: ^1.0.5
+  mime: ^1.0.4
   path: ^1.8.2
   platform: ^3.0.0
   pool: ^1.5.1
