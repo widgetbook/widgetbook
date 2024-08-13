@@ -180,24 +180,29 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       (file) {
         final key = pathOf(file);
 
+        if (key != 'index.html') {
+          return StorageObject(
+            key: key,
+            url: buildDraft.urls[key]!,
+            size: filesSizeMap[key]!,
+            data: file.openRead(),
+          );
+        }
+
         // Modify index.html to include the correct base href
-        final data = key != 'index.html'
-            ? file.openRead()
-            : Stream.value(
-                file
-                    .readAsStringSync()
-                    .replaceFirst(
-                      RegExp('<base href=".*">'),
-                      '<base href="${buildDraft.baseHref}">',
-                    )
-                    .codeUnits,
-              );
+        final content = file.readAsStringSync();
+        final modifiedContent = content.replaceFirst(
+          RegExp('<base href=".*">'),
+          '<base href="${buildDraft.baseHref}">',
+        );
 
         return StorageObject(
           key: key,
           url: buildDraft.urls[key]!,
-          size: filesSizeMap[key]!,
-          data: data,
+          size: modifiedContent.length,
+          data: Stream.value(
+            modifiedContent.codeUnits,
+          ),
         );
       },
     );
