@@ -1,16 +1,16 @@
 import 'dart:async';
 
-import 'package:args/src/arg_results.dart';
+import 'package:args/args.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:path/path.dart' as p;
 import 'package:process/process.dart';
 
-import '../../widgetbook_cli.dart';
-import '../api/models/build_draft_request.dart';
-import '../api/models/build_ready_request.dart';
-import '../api/storage_client.dart';
+import '../api/api.dart';
+import '../core/core.dart';
+import '../storage/storage.dart';
 import '../utils/executable_manager.dart';
+import '../utils/utils.dart';
 import 'build_push_args.dart';
 
 class BuildPushCommand extends CliCommand<BuildPushArgs> {
@@ -174,27 +174,35 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     draftProgress.complete('Build draft [${buildDraft.buildId}] created');
 
-    // TODO: revert on failure or success, or adjust in-memory only
-    final indexProgress = logger.progress('Modifying index.html');
-    final indexFile = fileSystem.file(p.join(buildDirPath, 'index.html'));
-    final indexFileContent = await indexFile.readAsString();
-    final modifiedContent = indexFileContent.replaceFirst(
-      RegExp('<base href=".*">'),
-      '<base href="${buildDraft.baseHref}">',
+    final uploadProgress = logger.progress('Uploading build files');
+
+    final objects = files.map(
+      (file) {
+        final key = pathOf(file);
+
+        // Modify index.html to include the correct base href
+        final data = key != 'index.html'
+            ? file.openRead()
+            : Stream.value(
+                file
+                    .readAsStringSync()
+                    .replaceFirst(
+                      RegExp('<base href=".*">'),
+                      '<base href="${buildDraft.baseHref}">',
+                    )
+                    .codeUnits,
+              );
+
+        return StorageObject(
+          key: key,
+          url: buildDraft.urls[key]!,
+          size: filesSizeMap[key]!,
+          data: data,
+        );
+      },
     );
 
-    await fileSystem
-        .file(p.join(buildDirPath, 'index.html'))
-        .writeAsString(modifiedContent);
-
-    indexProgress.complete('index.html modified');
-
-    final uploadProgress = logger.progress('Uploading build files');
-    final filesUrlMap = {
-      for (final file in files) file: buildDraft.urls[pathOf(file)]!,
-    };
-
-    await storageClient.uploadFiles(filesUrlMap);
+    await storageClient.uploadObjects(objects);
 
     uploadProgress.complete('Build files uploaded');
 

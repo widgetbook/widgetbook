@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:file/file.dart';
-import 'package:mime/mime.dart';
 import 'package:pool/pool.dart';
 import 'package:retry/retry.dart';
+
+import 'storage_object.dart';
 
 /// HTTP client to connect to the Widgetbook Cloud Storage
 class StorageClient {
@@ -15,10 +15,8 @@ class StorageClient {
 
   final Dio client;
 
-  Future<void> uploadFiles(
-    Map<File, String> files,
-  ) async {
-    // The files count can reach up to 20K, posting all of them concurrently
+  Future<void> uploadObjects(Iterable<StorageObject> objects) async {
+    // The object count can reach up to 20K, posting all of them concurrently
     // can lead to going beyond the rate limit of the server. That's why we
     // limit the number of concurrent requests using a pool.
     final pool = Pool(
@@ -28,11 +26,11 @@ class StorageClient {
       ),
     );
 
-    final promises = files.entries.map((entry) async {
+    final promises = objects.map((object) async {
       return retry(
         maxAttempts: 3,
         () => pool.withResource(
-          () => _uploadFile(entry.key, entry.value),
+          () => _uploadObject(object),
         ),
       );
     });
@@ -43,20 +41,14 @@ class StorageClient {
     );
   }
 
-  Future<Response<void>> _uploadFile(
-    File file,
-    String url,
-  ) async {
-    final mimeType = lookupMimeType(file.path) ?? 'application/octet-stream';
-    final fileSize = file.statSync().size;
-
+  Future<Response<void>> _uploadObject(StorageObject object) async {
     return client.put<void>(
-      url,
-      data: file.openRead(),
+      object.url,
+      data: object.data,
       options: Options(
         headers: {
-          HttpHeaders.contentTypeHeader: mimeType,
-          HttpHeaders.contentLengthHeader: fileSize,
+          HttpHeaders.contentTypeHeader: object.mimeType,
+          HttpHeaders.contentLengthHeader: object.size,
         },
       ),
     );
