@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
-import 'package:file/file.dart';
 
 import '../core/core.dart';
 import '../utils/utils.dart';
@@ -61,7 +58,7 @@ class WidgetbookHttpClient {
   ) async {
     try {
       final response = await client.post<Map<String, dynamic>>(
-        'v1.5/builds/draft',
+        'v2/builds/draft',
         data: request.toJson(),
         options: Options(
           headers: versions?.toHeaders(),
@@ -85,7 +82,7 @@ class WidgetbookHttpClient {
   ) async {
     try {
       final response = await client.post<Map<String, dynamic>>(
-        'v1.5/builds/submit',
+        'v2/builds/submit',
         data: request.toJson(),
       );
 
@@ -99,19 +96,5 @@ class WidgetbookHttpClient {
         message: message,
       );
     }
-  }
-
-  Future<void> uploadBuildFile(String signedUrl, File zipFile) {
-    // File name must match the name in the signed URL
-    return client.put<void>(
-      signedUrl,
-      data: zipFile.openRead(),
-      options: Options(
-        headers: {
-          HttpHeaders.contentTypeHeader: 'application/zip',
-          HttpHeaders.contentLengthHeader: zipFile.lengthSync(),
-        },
-      ),
-    );
   }
 }
