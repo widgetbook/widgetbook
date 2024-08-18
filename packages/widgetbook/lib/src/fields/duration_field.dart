@@ -31,82 +31,142 @@ class DurationField extends Field<Duration> {
     String group,
     Duration? value,
   ) {
-    final formattedDuration =
-        _formatDuration(value ?? initialValue ?? defaultDuration);
-    TextEditingController _controller = TextEditingController(
-      text: formattedDuration,
-    );
-
-    return StatefulBuilder(
-      builder: (context, setstate) {
-        return TextFormField(
-          controller: _controller,
-          keyboardType: TextInputType.number,
-          onChanged: (input) {
-            // Reformat the input and update the field
-            final formatted = _reformatInput(input);
-            final parsedDuration = _parseDuration(formatted);
-
-            _controller.value = _controller.value.copyWith(
-              text: formatted,
-            );
-
-            setstate(() {});
-
-            updateField(
-              context,
-              group,
-              parsedDuration,
-            );
-          },
-        );
-      },
+    return _DurationFieldWidget(
+      group: group,
+      initialValue: value ?? defaultDuration,
+      updateField: updateField,
     );
   }
+}
 
-  // Formats Duration object into '00d 00h 00m 00s'
-  String _formatDuration(Duration duration) {
-    final days = duration.inDays;
-    final hours = duration.inHours.remainder(24);
-    final minutes = duration.inMinutes.remainder(60);
-    final seconds = duration.inSeconds.remainder(60);
-    return '${days.toString().padLeft(2, '0')}d ${hours.toString().padLeft(2, '0')}h ${minutes.toString().padLeft(2, '0')}m ${seconds.toString().padLeft(2, '0')}s';
+class _DurationFieldWidget extends StatefulWidget {
+  const _DurationFieldWidget({
+    required this.group,
+    required this.initialValue,
+    required this.updateField,
+  });
+  final String group;
+  final Duration initialValue;
+  final void Function(BuildContext context, String group, Duration value)
+      updateField;
+
+  @override
+  __DurationFieldWidgetState createState() => __DurationFieldWidgetState();
+}
+
+class __DurationFieldWidgetState extends State<_DurationFieldWidget> {
+  late final TextEditingController daysController;
+  late final TextEditingController hoursController;
+  late final TextEditingController minutesController;
+  late final TextEditingController secondsController;
+
+  late final FocusNode daysFocusNode;
+  late final FocusNode hoursFocusNode;
+  late final FocusNode minutesFocusNode;
+  late final FocusNode secondsFocusNode;
+
+  @override
+  void initState() {
+    super.initState();
+
+    daysController = TextEditingController(
+      text: (widget.initialValue.inDays).toString().padLeft(2, '0'),
+    );
+    hoursController = TextEditingController(
+      text: (widget.initialValue.inHours.remainder(24))
+          .toString()
+          .padLeft(2, '0'),
+    );
+    minutesController = TextEditingController(
+      text: (widget.initialValue.inMinutes.remainder(60))
+          .toString()
+          .padLeft(2, '0'),
+    );
+    secondsController = TextEditingController(
+      text: (widget.initialValue.inSeconds.remainder(60))
+          .toString()
+          .padLeft(2, '0'),
+    );
   }
 
-  // Parses the input into a Duration object
-  Duration _parseDuration(String input) {
-    final regex = RegExp(r'(\d+)d (\d{2})h (\d{2})m (\d{2})s');
-    final match = regex.firstMatch(input);
+  @override
+  void dispose() {
+    daysController.dispose();
+    hoursController.dispose();
+    minutesController.dispose();
+    secondsController.dispose();
 
-    if (match != null) {
-      final days = int.parse(match.group(1)!);
-      final hours = int.parse(match.group(2)!);
-      final minutes = int.parse(match.group(3)!);
-      final seconds = int.parse(match.group(4)!);
-      return Duration(
-        days: days,
-        hours: hours,
-        minutes: minutes,
-        seconds: seconds,
-      );
-    } else {
-      return Duration.zero;
-    }
+    super.dispose();
   }
 
-  String _reformatInput(String input) {
-    // Remove non-numeric characters
-    input = input.replaceAll(RegExp(r'[^0-9]'), '');
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: TextFormField(
+            controller: daysController,
+            maxLength: 2,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(labelText: 'd', counterText: ''),
+            onChanged: (_) {
+              _updateDuration();
+            },
+          ),
+        ),
+        const Text(':'),
+        Expanded(
+          child: TextFormField(
+            controller: hoursController,
+            maxLength: 2,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(labelText: 'h', counterText: ''),
+            onChanged: (_) {
+              _updateDuration();
+            },
+          ),
+        ),
+        const Text(':'),
+        Expanded(
+          child: TextFormField(
+            controller: minutesController,
+            maxLength: 2,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(labelText: 'm', counterText: ''),
+            onChanged: (_) {
+              _updateDuration();
+            },
+          ),
+        ),
+        const Text(':'),
+        Expanded(
+          child: TextFormField(
+            controller: secondsController,
+            maxLength: 2,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(labelText: 's', counterText: ''),
+            onChanged: (_) {
+              _updateDuration();
+            },
+          ),
+        ),
+      ],
+    );
+  }
 
-    // Pad input with leading zeros to ensure it has at least 8 characters
-    input = input.padLeft(8, '0');
+  void _updateDuration() {
+    final days = int.tryParse(daysController.text) ?? 0;
+    final hours = int.tryParse(hoursController.text) ?? 0;
+    final minutes = int.tryParse(minutesController.text) ?? 0;
+    final seconds = int.tryParse(secondsController.text) ?? 0;
 
-    // Split the input into chunks from the end for days, hours, minutes, seconds
-    String seconds = input.substring(input.length - 2);
-    String minutes = input.substring(input.length - 4, input.length - 2);
-    String hours = input.substring(input.length - 6, input.length - 4);
-    String days = input.substring(0, input.length - 6);
+    final newDuration = Duration(
+      days: days,
+      hours: hours,
+      minutes: minutes,
+      seconds: seconds,
+    );
 
-    return '${days}d ${hours}h ${minutes}m ${seconds}s';
+    widget.updateField(context, widget.group, newDuration);
   }
 }

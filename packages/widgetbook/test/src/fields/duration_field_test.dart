@@ -7,11 +7,9 @@ import '../../helper/helper.dart';
 void main() {
   group('$DurationField', () {
     const fiveSeconds = Duration(seconds: 5);
-    const fiveSecondsFormatted = '00d 00h 00m 05s';
 
     const tenSeconds = Duration(seconds: 10);
     const tenSecondsInMilliseconds = '10000';
-    const tenSecondsFormatted = '00d 00h 00m 10s';
 
     final field = DurationField(
       name: 'duration_field',
@@ -42,23 +40,52 @@ void main() {
       'given a state that has no field value, '
       'then [toWidget] builds the initial value',
       (tester) async {
-        await tester.pumpWidget(
-          Builder(
-            builder: (context) {
-              return MaterialApp(
-                home: Scaffold(
-                  body: field.toWidget(
-                    context,
-                    'duration_field',
-                    null,
-                  ),
-                ),
-              );
-            },
-          ),
+        await tester.pumpField<Duration, Row>(
+          field,
+          null,
         );
 
-        expect(find.text(fiveSecondsFormatted), findsOneWidget);
+        expect(
+          find.widgetWithText(TextFormField, '00').evaluate().length,
+          3,
+        ); // days, hours, minutes
+        expect(
+          find.widgetWithText(TextFormField, '05'),
+          findsOneWidget,
+        ); // seconds
+
+        // verify field by specific labels
+        expect(
+          find.descendant(
+            of: find.widgetWithText(TextFormField, 'd'),
+            matching: find.text('00'),
+          ),
+          findsOneWidget,
+        );
+
+        expect(
+          find.descendant(
+            of: find.widgetWithText(TextFormField, 'h'),
+            matching: find.text('00'),
+          ),
+          findsOneWidget,
+        );
+
+        expect(
+          find.descendant(
+            of: find.widgetWithText(TextFormField, 'm'),
+            matching: find.text('00'),
+          ),
+          findsOneWidget,
+        );
+
+        expect(
+          find.descendant(
+            of: find.widgetWithText(TextFormField, 's'),
+            matching: find.text('05'),
+          ),
+          findsOneWidget,
+        );
       },
     );
 
@@ -66,12 +93,52 @@ void main() {
       'given a state that has a field value, '
       'then [toWidget] builds that value',
       (tester) async {
-        final widget = await tester.pumpField<Duration, TextFormField>(
+        await tester.pumpField<Duration, Row>(
           field,
           tenSeconds,
         );
 
-        expect(widget.initialValue, equals(tenSecondsFormatted));
+        expect(
+          find.widgetWithText(TextFormField, '00').evaluate().length,
+          3,
+        ); // days, hours, minutes
+        expect(
+          find.widgetWithText(TextFormField, '10'),
+          findsOneWidget,
+        ); // seconds
+
+        // verify field by specific labels
+        expect(
+          find.descendant(
+            of: find.widgetWithText(TextFormField, 'd'),
+            matching: find.text('00'),
+          ),
+          findsOneWidget,
+        );
+
+        expect(
+          find.descendant(
+            of: find.widgetWithText(TextFormField, 'h'),
+            matching: find.text('00'),
+          ),
+          findsOneWidget,
+        );
+
+        expect(
+          find.descendant(
+            of: find.widgetWithText(TextFormField, 'm'),
+            matching: find.text('00'),
+          ),
+          findsOneWidget,
+        );
+
+        expect(
+          find.descendant(
+            of: find.widgetWithText(TextFormField, 's'),
+            matching: find.text('10'),
+          ),
+          findsOneWidget,
+        );
       },
     );
   });
