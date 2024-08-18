@@ -53,7 +53,7 @@ void main() {
           );
 
           await tester.findAndEnter(
-            find.byType(TextField),
+            find.widgetWithText(TextFormField, 's'),
             tenSeconds.inSeconds.toString(),
           );
 
