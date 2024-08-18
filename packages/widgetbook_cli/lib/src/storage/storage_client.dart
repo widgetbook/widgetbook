@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:pool/pool.dart';
@@ -15,7 +14,11 @@ class StorageClient {
 
   final Dio client;
 
-  Future<void> uploadObjects(Iterable<StorageObject> objects) async {
+  Future<void> uploadObjects(
+    String url,
+    Map<String, String> fields,
+    Iterable<StorageObject> objects,
+  ) async {
     // The object count can reach up to 20K, posting all of them concurrently
     // can lead to going beyond the rate limit of the server. That's why we
     // limit the number of concurrent requests using a pool.
@@ -30,7 +33,7 @@ class StorageClient {
       return retry(
         maxAttempts: 3,
         () => pool.withResource(
-          () => _uploadObject(object),
+          () => _uploadObject(url, fields, object),
         ),
       );
     });
@@ -41,16 +44,29 @@ class StorageClient {
     );
   }
 
-  Future<Response<void>> _uploadObject(StorageObject object) async {
-    return client.put<void>(
-      object.url,
-      data: object.data,
-      options: Options(
-        headers: {
-          HttpHeaders.contentTypeHeader: object.mimeType,
-          HttpHeaders.contentLengthHeader: object.size,
-        },
-      ),
+  Future<Response<void>> _uploadObject(
+    String url,
+    Map<String, String> fields,
+    StorageObject object,
+  ) async {
+    final baseKey = fields['key']!;
+    final fileKey = baseKey.replaceAll(
+      r'${filename}',
+      object.key,
+    );
+
+    return client.post(
+      url,
+      data: FormData.fromMap({
+        ...fields,
+        'key': fileKey,
+        'file': MultipartFile.fromStream(
+          () => object.data,
+          object.size,
+          filename: fileKey,
+          contentType: DioMediaType.parse(object.mimeType),
+        ),
+      }),
     );
   }
 }
