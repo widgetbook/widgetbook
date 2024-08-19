@@ -1,4 +1,4 @@
-## Unreleased
+## 3.3.0
 
 - **REFACTOR**: Speed up the creation of build drafts, by reducing the payload size. ([#1232](https://github.com/widgetbook/widgetbook/pull/1232))
 
