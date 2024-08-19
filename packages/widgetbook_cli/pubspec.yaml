@@ -22,7 +22,7 @@ dependencies:
   dio: ^5.6.0
   file: ^7.0.0
   http_parser: ^4.0.1
-  mason_logger: ^0.2.5
+  mason_logger: ^0.3.0
   meta: ^1.8.0
   mime: ^1.0.4
   path: ^1.8.2
