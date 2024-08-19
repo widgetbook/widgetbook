@@ -1,3 +1,7 @@
+## Unreleased
+
+- **REFACTOR**: Speed up the creation of build drafts, by reducing the payload size. ([#1232](https://github.com/widgetbook/widgetbook/pull/1232))
+
 ## 3.2.0
 
 - **REFACTOR**: Upload build files directly to storage, bypassing Widgetbook Cloud's server. This enhancement ensures that builds are instantly available on Widgetbook Cloud upon completion of the `cloud build push` command, eliminating the need for additional processing. ([#1229](https://github.com/widgetbook/widgetbook/pull/1229))
