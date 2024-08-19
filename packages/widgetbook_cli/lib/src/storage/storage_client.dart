@@ -23,7 +23,7 @@ class StorageClient {
     // can lead to going beyond the rate limit of the server. That's why we
     // limit the number of concurrent requests using a pool.
     final pool = Pool(
-      1000,
+      500,
       timeout: const Duration(
         seconds: 30,
       ),
