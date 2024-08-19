@@ -61,8 +61,8 @@ void main() {
     '$ListKnob.nullable',
     () {
       testWidgets(
-        'when field is updated, '
-        'then the value should be updated',
+        'when no initial value is provided, '
+        'then a null value is returned',
         (tester) async {
           await tester.pumpKnob(
             (context) => Text(
@@ -70,6 +70,39 @@ void main() {
                 label: 'Knob',
                 options: ['A', 'B', 'C'],
               ).toString(),
+            ),
+          );
+
+          final menu = tester.widget<DropdownMenu<String?>>(
+            find.byType(DropdownMenu<String?>),
+          );
+
+          // DropdownMenu has no initialSelection as
+          // no initial value is provided
+          expect(
+            menu.initialSelection,
+            isNull,
+          );
+          expect(
+            find.text('null'),
+            findsOneWidget,
+          );
+        },
+      );
+
+      testWidgets(
+        'when field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs
+                  .listOrNull(
+                    label: 'Knob',
+                    options: ['A', 'B', 'C'],
+                    initialOption: 'A',
+                  )
+                  .toString(),
             ),
           );
 
@@ -90,16 +123,14 @@ void main() {
         (tester) async {
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.listOrNull(
-                label: 'Knob',
-                options: ['A', 'B', 'C'],
-              ).toString(),
+              context.knobs
+                  .listOrNull(
+                    label: 'Knob',
+                    options: ['A', 'B', 'C'],
+                    initialOption: 'A',
+                  )
+                  .toString(),
             ),
-          );
-
-          expect(
-            find.textWidget('A'),
-            findsNWidgets(2),
           );
 
           const value = 'C';

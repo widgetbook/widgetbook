@@ -158,11 +158,10 @@ class KnobsBuilder {
     String? description,
     LabelBuilder<T?>? labelBuilder,
   }) {
-    assert(options.isNotEmpty, 'Must specify at least one option');
     return onKnobAdded(
       ListKnob<T?>.nullable(
         label: label,
-        initialValue: initialOption ?? options.first,
+        initialValue: initialOption,
         description: description,
         options: options,
         labelBuilder: labelBuilder,
