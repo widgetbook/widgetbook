@@ -183,7 +183,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
           return StorageObject(
             key: key,
             size: file.statSync().size,
-            data: file.openRead(),
+            reader: file.openRead,
           );
         }
 
@@ -197,7 +197,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         return StorageObject(
           key: key,
           size: modifiedContent.length,
-          data: Stream.value(
+          reader: () => Stream.value(
             modifiedContent.codeUnits,
           ),
         );

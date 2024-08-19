@@ -61,7 +61,7 @@ class StorageClient {
         ...fields,
         'key': fileKey,
         'file': MultipartFile.fromStream(
-          () => object.data,
+          () => object.reader(),
           object.size,
           filename: fileKey,
           contentType: DioMediaType.parse(object.mimeType),
