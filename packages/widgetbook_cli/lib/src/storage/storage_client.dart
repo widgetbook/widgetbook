@@ -60,6 +60,7 @@ class StorageClient {
       data: FormData.fromMap({
         ...fields,
         'key': fileKey,
+        'Content-Type': object.mimeType,
         'file': MultipartFile.fromStream(
           () => object.reader(),
           object.size,
