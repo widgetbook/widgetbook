@@ -37,7 +37,7 @@ class ListField<T> extends Field<T> {
     return DropdownMenu<T>(
       trailingIcon: const Icon(Icons.keyboard_arrow_down_rounded),
       selectedTrailingIcon: const Icon(Icons.keyboard_arrow_up_rounded),
-      initialSelection: value ?? values.first,
+      initialSelection: value,
       onSelected: (value) {
         if (value != null) {
           updateField(context, group, value);
