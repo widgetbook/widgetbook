@@ -1,10 +1,11 @@
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 
 import '../settings/settings.dart';
 import '../state/state.dart';
 import 'base_layout.dart';
 
-class MobileLayout extends StatelessWidget implements BaseLayout {
+class MobileLayout extends StatefulWidget implements BaseLayout {
   const MobileLayout({
     super.key,
     required this.navigationBuilder,
@@ -21,13 +22,64 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
   final Widget workbench;
 
   @override
+  State<MobileLayout> createState() => _MobileLayoutState();
+}
+
+class _MobileLayoutState extends State<MobileLayout> {
+
+  @override
+  void initState() {
+    super.initState();
+    BackButtonInterceptor.add(interceptor);
+  }
+
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(interceptor);
+    super.dispose();
+  }
+
+  Future<bool> interceptor(bool stopDefaultButtonEvent, RouteInfo info) async {
+    final navigator = Navigator.of(context);
+    if (navigator.canPop()) {
+      navigator.pop();
+      return true;
+    } else {
+      final exitApp = await showDialog<bool>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Exit'),
+            content: const Text('Do you want to exit app?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: const Text('NO'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                child: const Text('YES'),
+              ),
+            ],
+          );
+        },
+      );
+      return exitApp != true;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
 
     return Scaffold(
       key: ValueKey(state.isNext), // Rebuild when switching to next
       body: SafeArea(
-        child: workbench,
+        child: widget.workbench,
       ),
       bottomNavigationBar: ExcludeSemantics(
         child: BottomNavigationBar(
@@ -52,13 +104,13 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
                 switch (index) {
                   case 0:
                     return ExcludeSemantics(
-                      child: navigationBuilder(context),
+                      child: widget.navigationBuilder(context),
                     );
                   case 1:
                     return ExcludeSemantics(
                       child: MobileSettingsPanel(
                         name: 'Addons',
-                        builder: addonsBuilder,
+                        builder: widget.addonsBuilder,
                       ),
                     );
                   case 2:
@@ -66,11 +118,11 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
                       child: state.isNext
                           ? MobileSettingsPanel(
                               name: 'Args',
-                              builder: argsBuilder,
+                              builder: widget.argsBuilder,
                             )
                           : MobileSettingsPanel(
                               name: 'Knobs',
-                              builder: knobsBuilder,
+                              builder: widget.knobsBuilder,
                             ),
                     );
                   default:
