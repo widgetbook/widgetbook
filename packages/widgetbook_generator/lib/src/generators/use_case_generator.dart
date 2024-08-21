@@ -50,7 +50,13 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
         : null;
 
     final componentName = type
-        .getDisplayString(withNullability: false)
+        .getDisplayString(
+          // The `withNullability` parameter is deprecated after analyzer 6.0.0,
+          // since we support analyzer 5.x (to support Dart <3.0.0), then
+          // the deprecation is ignored.
+          // ignore: deprecated_member_use
+          withNullability: false,
+        )
         // Generic widgets shouldn't have a "<dynamic>" suffix
         // if no type parameter is specified.
         .replaceAll('<dynamic>', '');
