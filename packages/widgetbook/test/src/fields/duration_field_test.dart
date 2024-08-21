@@ -76,7 +76,7 @@ void main() {
   });
 
   group('Duration Codec', () {
-    final FieldCodec<Duration> codec = FieldCodec<Duration>(
+    final codec = FieldCodec<Duration>(
       toParam: (duration) => duration.inMilliseconds.toString(),
       toValue: (param) {
         if (param == null) return null;

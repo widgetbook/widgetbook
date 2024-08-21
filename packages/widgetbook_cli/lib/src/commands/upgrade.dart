@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:args/src/arg_results.dart';
+import 'package:args/args.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:pub_updater/pub_updater.dart';
 
