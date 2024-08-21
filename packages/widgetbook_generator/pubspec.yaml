@@ -12,10 +12,10 @@ screenshots:
     path: assets/logo.png
 
 environment:
-  sdk: ">=2.19.0 <4.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  analyzer: ">=5.10.0 <7.0.0"
+  analyzer: ^6.0.0
   build: ^2.1.0
   code_builder: ^4.5.0
   collection: ^1.15.0

@@ -1,3 +1,7 @@
+## Unreleased
+
+- **BREAKING**: Set minimum SDK version to 3.0.0. ([#1243](https://github.com/widgetbook/widgetbook/pull/1243))
+
 ## 3.1.0
 
 - **BREAKING**: Set minimum SDK version to 2.19.0. ([#1030](https://github.com/widgetbook/widgetbook/pull/1030))
