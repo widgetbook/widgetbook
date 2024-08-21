@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:args/src/arg_results.dart';
+import 'package:args/args.dart';
 
 import '../core/core.dart';
 import 'build_push.dart';
