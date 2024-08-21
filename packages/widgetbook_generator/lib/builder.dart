@@ -2,6 +2,7 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
+import 'src/generators/addons_configs_builder.dart';
 import 'src/generators/app_generator.dart';
 import 'src/generators/json_builder.dart';
 import 'src/generators/use_case_generator.dart';
@@ -55,6 +56,13 @@ Builder appBuilder(BuilderOptions options) {
     generatedExtension: '.directories.g.dart',
     header: headerParts.join('\n'),
   );
+}
+
+/// Generates a JSON file that contains information about the addons config.
+/// The JSON file is sent by Widgetbook CLI to Widgetbook Cloud when a build
+/// is pushed.
+Builder addonsConfigsBuilder(BuilderOptions options) {
+  return AddonsConfigsBuilder();
 }
 
 /// Tracks some usage statistics to help us improve Widgetbook.
