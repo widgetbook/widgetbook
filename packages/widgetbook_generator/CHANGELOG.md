@@ -1,3 +1,7 @@
+## Unreleased
+
+- **REFACTOR**: Remove `widgetbook` dependency. ([#1242](https://github.com/widgetbook/widgetbook/pull/1242))
+
 ## 3.8.0
 
 - **FEAT**: Add new builder option named `nav_path_mode`, that allows using the navigation path of the use-case instead of the component. For more info, check out the [customization docs](https://docs.widgetbook.io/guides/customization#using-nav_path_mode-option). ([#1188](https://github.com/widgetbook/widgetbook/pull/1188))
