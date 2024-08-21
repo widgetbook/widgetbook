@@ -2,6 +2,7 @@
 
 - **BREAKING**: Set minimum SDK version to 3.0.0 & minimum Flutter version to 3.16.0. ([#1243](https://github.com/widgetbook/widgetbook/pull/1243))
 - **FEAT**: Allow changing Widgetbook's theme and mode. ([#1225](https://github.com/widgetbook/widgetbook/pull/1225) - by [@Mastersam07](https://github.com/Mastersam07))
+- **REFACTOR**: Use `MediaQuery.textScaler` instead of `MediaQuery.textScaleFactor` for `TextScaleAddon`. ([#1244](https://github.com/widgetbook/widgetbook/pull/1244))
 - **FIX**: Skip decoding non-ascii characters in URLs. ([#1218](https://github.com/widgetbook/widgetbook/pull/1218) - by [@shigomany](https://github.com/shigomany))
 - **FIX**: Encode all fields values to allow reserved characters (e.g. commas, colons and curly brackets). ([#1214](https://github.com/widgetbook/widgetbook/pull/1214))
 - **FIX**: Remove default value (i.e. first item) from `listOrNull` knob. ([#1233](https://github.com/widgetbook/widgetbook/pull/1233))
