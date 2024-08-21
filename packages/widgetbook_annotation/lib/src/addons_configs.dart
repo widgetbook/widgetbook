@@ -7,7 +7,9 @@ extension AddonsConfigsExtension on AddonsConfigs {
     return map(
       (key, value) => MapEntry(
         key,
-        value.map((e) => e.toMapEntry()).toList(),
+        Map<String, String>.fromEntries(
+          value.map((e) => e.toMapEntry()),
+        ),
       ),
     );
   }
