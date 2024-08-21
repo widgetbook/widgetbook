@@ -39,6 +39,9 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
   Widget build(BuildContext context) {
     return Navigator(
       key: navigatorKey,
+      // The onPopPage parameter is deprecated after Flutter 3.16.0,
+      // But we cannot migrate it because our minimum version is 3.7.0.
+      // ignore: deprecated_member_use
       onPopPage: (route, result) => route.didPop(result),
       pages: [
         MaterialPage(

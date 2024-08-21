@@ -26,7 +26,6 @@ class WidgetbookApp extends StatelessWidget {
         WidgetbookCloudIntegration(),
       ],
       addons: [
-        next.AccessibilityAddon(),
         next.TimeDilationAddon(),
         next.DeviceFrameAddon([
           Devices.ios.iPhoneSE,
