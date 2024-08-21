@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 
+import 'base_builder.dart';
+
 /// Builder for the .json file which contains the necessary information to
 /// generate code for Widgetbook. The information is saved as a .json file
 /// to be consumed by the WidgetbookGenerator
-class JsonBuilder extends Builder {
+class JsonBuilder extends BaseBuilder {
   /// Create a new instance of a [JsonBuilder] based on the generator.
   JsonBuilder(
     this.generator, {
@@ -33,11 +35,10 @@ class JsonBuilder extends Builder {
       };
 
   @override
-  Future<void> build(BuildStep buildStep) async {
-    final resolver = buildStep.resolver;
-    if (!await resolver.isLibrary(buildStep.inputId)) return;
-
-    final library = LibraryReader(await buildStep.inputLibrary);
+  Future<void> buildForLibrary(
+    BuildStep buildStep,
+    LibraryReader library,
+  ) async {
     final output = await generator.generate(library, buildStep);
 
     if (output == null || output.isEmpty) return;

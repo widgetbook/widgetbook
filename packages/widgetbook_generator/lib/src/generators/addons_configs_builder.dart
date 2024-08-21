@@ -6,18 +6,19 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-class AddonsConfigsBuilder extends Builder {
+import 'base_builder.dart';
+
+class AddonsConfigsBuilder extends BaseBuilder {
   @override
   final buildExtensions = const {
     '.dart': ['.config.widgetbook.json'],
   };
 
   @override
-  FutureOr<void> build(BuildStep buildStep) async {
-    final resolver = buildStep.resolver;
-    if (!await resolver.isLibrary(buildStep.inputId)) return;
-
-    final library = LibraryReader(await buildStep.inputLibrary);
+  Future<void> buildForLibrary(
+    BuildStep buildStep,
+    LibraryReader library,
+  ) async {
     final annotatedElements = library.annotatedWith(
       const TypeChecker.fromRuntime(App),
     );
