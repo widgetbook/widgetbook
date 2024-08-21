@@ -1,6 +1,6 @@
 import 'addon_config.dart';
 
-typedef AddonsConfigs = Map<String, List<AddonConfig>>;
+typedef AddonsConfigs = Map<String, Iterable<AddonConfig>>;
 
 extension AddonsConfigsExtension on AddonsConfigs {
   Map<String, dynamic> toJson() {

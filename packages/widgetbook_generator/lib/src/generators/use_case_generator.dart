@@ -11,6 +11,7 @@ import 'package:yaml/yaml.dart';
 import '../models/element_metadata.dart';
 import '../models/nav_path_mode.dart';
 import '../models/use_case_metadata.dart';
+import '../util/constant_reader.dart';
 
 class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
   UseCaseGenerator(this.navPathMode);
@@ -41,13 +42,8 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
 
     final name = annotation.read('name').stringValue;
     final type = annotation.read('type').typeValue;
-    final designLink = !annotation.read('designLink').isNull
-        ? annotation.read('designLink').stringValue
-        : null;
-
-    final path = !annotation.read('path').isNull
-        ? annotation.read('path').stringValue
-        : null;
+    final designLink = annotation.readOrNull('designLink')?.stringValue;
+    final path = annotation.readOrNull('path')?.stringValue;
 
     final componentName = type
         .getDisplayString(

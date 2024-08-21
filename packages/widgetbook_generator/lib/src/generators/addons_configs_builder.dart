@@ -1,17 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:analyzer/dart/constant/value.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
+import '../util/constant_reader.dart';
 import 'base_builder.dart';
 
 class AddonsConfigsBuilder extends BaseBuilder {
+  static const checker = TypeChecker.fromRuntime(App);
+  static const extension = '.config.widgetbook.json';
+
   @override
   final buildExtensions = const {
-    '.dart': ['.config.widgetbook.json'],
+    '.dart': [extension],
   };
 
   @override
@@ -19,9 +22,7 @@ class AddonsConfigsBuilder extends BaseBuilder {
     BuildStep buildStep,
     LibraryReader library,
   ) async {
-    final annotatedElements = library.annotatedWith(
-      const TypeChecker.fromRuntime(App),
-    );
+    final annotatedElements = library.annotatedWith(checker);
 
     if (annotatedElements.isEmpty) return;
     if (annotatedElements.length > 1) {
@@ -32,49 +33,41 @@ class AddonsConfigsBuilder extends BaseBuilder {
 
     final annotatedElement = annotatedElements.first;
     final appAnnotation = annotatedElement.annotation;
+    final addonsConfigs = appAnnotation
+        .readOrNull('cloudAddonsConfigs')
+        ?.parse(_parseAddonsConfigs);
 
-    final rawAddonsConfigs = !appAnnotation.read('cloudAddonsConfigs').isNull
-        ? appAnnotation.read('cloudAddonsConfigs').mapValue
-        : null;
+    if (addonsConfigs == null) return;
 
-    if (rawAddonsConfigs == null) return;
-
-    final addonsConfigs = _parseAddonsConfigs(rawAddonsConfigs);
     final json = jsonEncode(addonsConfigs.toJson());
 
     return buildStep.writeAsString(
-      buildStep.inputId.changeExtension('.config.widgetbook.json'),
+      buildStep.inputId.changeExtension(extension),
       json,
     );
   }
-}
 
-AddonConfig _parseAddonConfig(
-  DartObject addonConfig,
-) {
-  // The config could be extending the base [AddonConfig] class
-  final target = addonConfig.getField('(super)') ?? addonConfig;
-  final key = target.getField('key')!.toStringValue()!;
-  final value = target.getField('value')!.toStringValue()!;
+  AddonsConfigs _parseAddonsConfigs(
+    ConstantReader reader,
+  ) {
+    final rawMap = reader.mapValue.map(
+      (key, value) => MapEntry(
+        key!.toStringValue()!,
+        value!.toListValue()!,
+      ),
+    );
 
-  return AddonConfig(key, value);
-}
-
-AddonsConfigs _parseAddonsConfigs(
-  Map<DartObject?, DartObject?> addonsConfigs,
-) {
-  return addonsConfigs.entries.fold<AddonsConfigs>(
-    {},
-    (json, entry) {
-      final configName = entry.key!.toStringValue()!;
-      final addonConfigList = entry.value! //
-          .toListValue()!
-          .map(_parseAddonConfig)
-          .toList();
-
-      json[configName] = addonConfigList;
-
-      return json;
-    },
-  );
+    return {
+      for (final entry in rawMap.entries)
+        entry.key: entry.value.map(
+          (e) {
+            final reader = ConstantReader(e);
+            return AddonConfig(
+              reader.read('key').stringValue,
+              reader.read('value').stringValue,
+            );
+          },
+        ),
+    };
+  }
 }
