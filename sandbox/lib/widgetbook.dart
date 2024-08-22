@@ -13,10 +13,16 @@ void main() {
 
 @App(
   cloudAddonsConfigs: {
-    'Dark DE': [
-      AddonConfig('custom', 'value'),
+    'German Dark Center x2': [
       LocalizationAddonConfig('de'),
       ThemeAddonConfig('Dark'),
+      AlignmentAddonConfig('Center'),
+      TextScaleAddonConfig(2),
+      ZoomAddonConfig(2),
+      AddonConfig('custom', 'name:value'),
+    ],
+    'English': [
+      LocalizationAddonConfig('en'),
     ],
   },
 )

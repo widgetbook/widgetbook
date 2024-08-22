@@ -49,4 +49,57 @@ class ThemeAddonConfig extends AddonConfig {
         );
 }
 
-// TODO: add more addons
+/// [AddonConfig] for the AlignmentAddon.
+class AlignmentAddonConfig extends AddonConfig {
+  /// Can only be one of the predefined values:
+  /// - 'Top Left'
+  /// - 'Top Center'
+  /// - 'Top Right'
+  /// - 'Center Left'
+  /// - 'Center'
+  /// - 'Center Right'
+  /// - 'Bottom Left'
+  /// - 'Bottom Center'
+  /// - 'Bottom Right'
+  const AlignmentAddonConfig(
+    String alignmentName,
+  )   : assert(
+          // Since we can only use constant values, that means we cannot use
+          // an enum or the [Alignment] class from Flutter. We have to use
+          // strings instead, and we have to make sure that the string is
+          // one of the predefined values.
+          alignmentName == 'Top Left' ||
+              alignmentName == 'Top Center' ||
+              alignmentName == 'Top Right' ||
+              alignmentName == 'Center Left' ||
+              alignmentName == 'Center' ||
+              alignmentName == 'Center Right' ||
+              alignmentName == 'Bottom Left' ||
+              alignmentName == 'Bottom Center' ||
+              alignmentName == 'Bottom Right',
+        ),
+        super(
+          'Alignment',
+          'alignment:${alignmentName}',
+        );
+}
+
+/// [AddonConfig] for the TextScaleAddon.
+class TextScaleAddonConfig extends AddonConfig {
+  const TextScaleAddonConfig(
+    double factor,
+  ) : super(
+          'Text scale',
+          'factor:$factor',
+        );
+}
+
+/// [AddonConfig] for the ZoomAddon.
+class ZoomAddonConfig extends AddonConfig {
+  const ZoomAddonConfig(
+    double zoom,
+  ) : super(
+          'Zoom',
+          'value:$zoom',
+        );
+}
