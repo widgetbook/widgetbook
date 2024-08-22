@@ -1,4 +1,8 @@
-## 3.3.1 
+## Unreleased
+
+- **FEAT**: Support Multi Snapshot for addons. For more information, check our [docs](https://docs.widgetbook.io/widgetbook-cloud/multi-snapshot). ([#1239](https://github.com/widgetbook/widgetbook/pull/1239))
+
+## 3.3.1
 
 - **FIX**: `base href` replacement for older Flutter versions ([#1247](https://github.com/widgetbook/widgetbook/pull/1247))
 
