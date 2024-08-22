@@ -1,0 +1,139 @@
+# Multi Snapshot
+
+If you are using [Widgetbook Cloud Review](/widgetbook-cloud/reviews), you can now create multiple snapshots for a single use-case. This feature is useful if you want to test different states of your use-case using different addons or knobs configurations, instead of just using the default configurations.
+
+## Multi Snapshot for Addons
+
+You can use the `@App` annotation to include a configuration matrix for addons.
+These are the available configurations:
+
+- `LocalizationAddonConfig`
+- `ThemeAddonConfig`
+- `AlignmentAddonConfig`
+- `TextScaleAddonConfig`
+- `ZoomAddonConfig`
+
+```dart
+@App(
+  cloudAddonsConfigs: {
+    'German Dark': [
+      LocalizationAddonConfig('de'),
+      ThemeAddonConfig('Dark'),
+    ],
+    'English Light': [
+      LocalizationAddonConfig('en'),
+      ThemeAddonConfig('Light'),
+    ],
+  },
+)
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook.material(...);
+  }
+}
+```
+
+## Multi Snapshot for Custom Addons
+
+If you have a [custom addon](/addons/custom-addon) you can create a custom `AddonConfig` class and use it in the `@App` annotation.
+Assuming your addon looks as follows, then you will need three values for your configuration:
+
+1. Addon Name: `Border`
+1. Fields Names: [`width`]
+1. Config Values: [`0.5`]
+
+```dart
+class BorderAddon extends WidgetbookAddon<double> {
+  ZoomAddon({
+    this.initialWidth = 0.0,
+  }) : super(
+          name: 'Border', // 1. Addon Name
+        );
+
+  final double initialWidth;
+
+  @override
+  List<Field> get fields => [
+        DoubleInputField(
+          name: 'width', // 2. Field Name
+          initialValue: initialWidth,
+        ),
+      ];
+
+  // ...
+}
+```
+
+Then you create a custom `AddonConfig` class:
+
+```dart
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+class BorderAddonConfig extends AddonConfig {
+  const BorderAddonConfig(
+    double width,
+  ) : super(
+          'Locale', // 1. Addon Name
+          // If you have more than one value, you can separate them with commas
+          // like this: 'width:$width,color:$color',
+          'width:$width', // 2. Fields Names and 3. Config Values
+        );
+}
+```
+
+Finally, you can use the custom `AddonConfig` in the `@App` annotation:
+
+```dart
+@App(
+  cloudAddonsConfigs: {
+    'Border 1': [
+      BorderAddonConfig(0.5),
+    ],
+    'Border 2': [
+      BorderAddonConfig(1.0),
+    ],
+  },
+)
+class WidgetbookApp extends StatelessWidget { ... }
+```
+
+## Multi Snapshot for Knobs
+
+<Warning>
+  Currently only the addons configuration is supported. Configuring knobs will
+  be available soon using the `@UseCase` annotation, without the need to create
+  multiple use-cases.
+</Warning>
+
+Until the first-class support is available, we suggest splitting your variants in different use-cases instead of using knobs as follows:
+
+```dart title="Before"
+@UseCase(name: 'Default', type: Button)
+Widget buttonUseCase(BuildContext context) {
+  return Button(
+    type: context.knobs.list(
+      label: 'Type',
+      options: [ButtonType.primary, ButtonType.secondary]
+    ),
+  );
+}
+```
+
+```dart title="After"
+@UseCase(name: 'Primary', type: Button)
+Widget primaryButtonUseCase(BuildContext context) {
+  return Button(
+    type: ButtonType.primary,
+  );
+}
+
+@UseCase(name: 'Secondary', type: Button)
+Widget secondaryButtonUseCase(BuildContext context) {
+  return Button(
+    type: ButtonType.secondary,
+  );
+}
+```

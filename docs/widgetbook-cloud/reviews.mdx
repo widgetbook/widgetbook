@@ -49,11 +49,11 @@ After your review is ready, you can start comparing the visual differences betwe
 
 ### Review Statuses
 
-| Status   | Description                                             |
-| -------- | ------------------------------------------------------- |
-| Open     | Awaiting assessment.                                    |
-| Merged   | Linked with merged PRs, thus considered merged.         |
-| Closed   | Associated with closed PRs, hence viewed as closed.     |
+| Status | Description                                         |
+| ------ | --------------------------------------------------- |
+| Open   | Awaiting assessment.                                |
+| Merged | Linked with merged PRs, thus considered merged.     |
+| Closed | Associated with closed PRs, hence viewed as closed. |
 
 ## Figma x Flutter Comparison
 
@@ -149,42 +149,3 @@ We suggest using one of the following workarounds:
    +  );
    }
    ```
-
-### Addons and Knobs
-
-Currently, only the default use-case configuration is considered for the visual comparison.
-
-<Info>
-  If you have multiple addons/knobs configurations, we have good news for you!
-  **We are working on supporting this in the near future.**
-</Info>
-
-Until the first-class support is available, we suggest splitting your variants in different use-cases instead of using knobs as follows:
-
-```dart title="Before"
-@UseCase(name: 'Default', type: Button)
-Widget buttonUseCase(BuildContext context) {
-  return Button(
-    type: context.knobs.list(
-      label: 'Type',
-      options: [ButtonType.primary, ButtonType.secondary]
-    ),
-  );
-}
-```
-
-```dart title="After"
-@UseCase(name: 'Primary', type: Button)
-Widget primaryButtonUseCase(BuildContext context) {
-  return Button(
-    type: ButtonType.primary,
-  );
-}
-
-@UseCase(name: 'Secondary', type: Button)
-Widget secondaryButtonUseCase(BuildContext context) {
-  return Button(
-    type: ButtonType.secondary,
-  );
-}
-```

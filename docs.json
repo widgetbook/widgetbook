@@ -212,6 +212,10 @@
         {
           "title": "Reviews",
           "href": "/widgetbook-cloud/reviews"
+        },
+        {
+          "title": "Multi Snapshot",
+          "href": "/widgetbook-cloud/multi-snapshot"
         }
       ]
     },
