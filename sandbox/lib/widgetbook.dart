@@ -19,7 +19,7 @@ void main() {
       AlignmentAddonConfig('Center'),
       TextScaleAddonConfig(2),
       ZoomAddonConfig(2),
-      AddonConfig('custom', 'name:value'),
+      AddonConfig('custom-addon', 'name:value'),
     ],
     'English': [
       LocalizationAddonConfig('en'),

@@ -4,19 +4,19 @@ class AddonConfig {
   ///
   /// Given the following Widgetbook URL:
   /// ```url
-  /// /?Locale={name:de}
+  /// /?text-scale={factor:2.0}
   /// ```
   ///
   /// Then this would be:
   /// ```dart
-  /// const AddonConfigEntry('Locale', 'name:de');
+  /// const AddonConfigEntry('text-scale', 'factor:2.0');
   /// ```
   ///
-  /// You can use other pre-defined entries for first-class addons that are
+  /// You can use other pre-defined entries for first-cla=ss addons that are
   /// provided by Widgetbook.
   const AddonConfig(this.key, this.value);
 
-  /// They key of the entry must match the name of the addon.
+  /// They key of the entry must match the name of the addon in **kebab-case**.
   final String key;
 
   /// The value of the entry must be a query string that can be parsed by the
@@ -34,7 +34,7 @@ class LocalizationAddonConfig extends AddonConfig {
   const LocalizationAddonConfig(
     String languageTag,
   ) : super(
-          'Locale',
+          'locale',
           'name:$languageTag',
         );
 }
@@ -44,7 +44,7 @@ class ThemeAddonConfig extends AddonConfig {
   const ThemeAddonConfig(
     String themeName,
   ) : super(
-          'Theme',
+          'theme',
           'name:$themeName',
         );
 }
@@ -79,7 +79,7 @@ class AlignmentAddonConfig extends AddonConfig {
               alignmentName == 'Bottom Right',
         ),
         super(
-          'Alignment',
+          'alignment',
           'alignment:${alignmentName}',
         );
 }
@@ -89,7 +89,7 @@ class TextScaleAddonConfig extends AddonConfig {
   const TextScaleAddonConfig(
     double factor,
   ) : super(
-          'Text scale',
+          'text-scale',
           'factor:$factor',
         );
 }
@@ -99,7 +99,7 @@ class ZoomAddonConfig extends AddonConfig {
   const ZoomAddonConfig(
     double zoom,
   ) : super(
-          'Zoom',
+          'zoom',
           'value:$zoom',
         );
 }
