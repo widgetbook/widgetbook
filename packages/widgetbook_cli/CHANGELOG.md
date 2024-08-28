@@ -1,4 +1,4 @@
-## UNRELEASED
+## 3.3.1 
 
 - **FIX**: `base href` replacement for older Flutter versions ([#1247](https://github.com/widgetbook/widgetbook/pull/1247))
 
