@@ -190,7 +190,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         // Modify index.html to include the correct base href
         final content = file.readAsStringSync();
         final modifiedContent = content.replaceFirst(
-          RegExp('<base href=".*">'),
+          RegExp('<base href=".*" ?\/?>'),
           '<base href="${buildDraft.baseHref}">',
         );
 
