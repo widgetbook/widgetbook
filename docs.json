@@ -30,85 +30,249 @@
       "widgetbook": "3.8.1"
     }
   },
+  "tabs": [
+    {
+      "id": "root",
+      "title": "Documentation",
+      "href": "/"
+    }
+  ],
   "sidebar": [
-    [
-      "Overview",
-      [
-        ["Overview", "/index"],
-        ["Terminology", "/terminology"],
-        ["Why Widgetbook", "/why-widgetbook"]
+    {
+      "group": "Overview",
+      "tab": "root",
+      "pages": [
+        {
+          "title": "Overview",
+          "path": "/index"
+        },
+        {
+          "title": "Terminology",
+          "path": "/terminology"
+        },
+        {
+          "title": "Why Widgetbook",
+          "path": "/why-widgetbook"
+        }
       ]
-    ],
-    [
-      "Guides",
-      [
-        ["Quick Start", "/guides/quick-start"],
-        ["Customization", "/guides/customization"],
-        ["Assets", "/guides/assets"],
-        ["Localizations", "/guides/l10n"],
-        ["Components", "/guides/components"],
-        ["Annotations", "/guides/annotations"],
-        ["Mocking", "/guides/mocking"],
-        ["Complete Example", "/demo"],
-        ["FAQs", "/faq"],
-        ["Telemetry", "/telemetry"]
+    },
+    {
+      "group": "Guides",
+      "tab": "root",
+      "pages": [
+        {
+          "title": "Quick Start",
+          "path": "/guides/quick-start"
+        },
+        {
+          "title": "Customization",
+          "path": "/guides/customization"
+        },
+        {
+          "title": "Assets",
+          "path": "/guides/assets"
+        },
+        {
+          "title": "Localizations",
+          "path": "/guides/l10n"
+        },
+        {
+          "title": "Components",
+          "path": "/guides/components"
+        },
+        {
+          "title": "Annotations",
+          "path": "/guides/annotations"
+        },
+        {
+          "title": "Mocking",
+          "path": "/guides/mocking"
+        },
+        {
+          "title": "Complete Example",
+          "path": "/demo"
+        },
+        {
+          "title": "FAQs",
+          "path": "/faq"
+        },
+        {
+          "title": "Telemetry",
+          "path": "/telemetry"
+        }
       ]
-    ],
-    [
-      "Addons",
-      [
-        ["Overview", "/addons/overview"],
-        ["Accessibility Addon", "/addons/accessibility-addon"],
-        ["Alignment Addon", "/addons/alignment-addon"],
-        ["Builder Addon", "/addons/builder-addon"],
-        ["Device Frame Addon", "/addons/device-frame-addon"],
-        ["Grid Addon", "/addons/grid-addon"],
-        ["Inspector Addon", "/addons/inspector-addon"],
-        ["Localization Addon", "/addons/localization-addon"],
-        ["Text Scale Addon", "/addons/text-scale-addon"],
-        ["Theme Addon", "/addons/theme-addon"],
-        ["Time Dilation Addon", "/addons/time-dilation-addon"],
-        ["Zoom Addon", "/addons/zoom-addon"],
-        ["Custom Addon", "/addons/custom-addon"]
+    },
+    {
+      "group": "Addons",
+      "tab": "root",
+      "pages": [
+        {
+          "title": "Overview",
+          "path": "/addons/overview"
+        },
+        {
+          "title": "Accessibility Addon",
+          "path": "/addons/accessibility-addon"
+        },
+        {
+          "title": "Alignment Addon",
+          "path": "/addons/alignment-addon"
+        },
+        {
+          "title": "Builder Addon",
+          "path": "/addons/builder-addon"
+        },
+        {
+          "title": "Device Frame Addon",
+          "path": "/addons/device-frame-addon"
+        },
+        {
+          "title": "Grid Addon",
+          "path": "/addons/grid-addon"
+        },
+        {
+          "title": "Inspector Addon",
+          "path": "/addons/inspector-addon"
+        },
+        {
+          "title": "Localization Addon",
+          "path": "/addons/localization-addon"
+        },
+        {
+          "title": "Text Scale Addon",
+          "path": "/addons/text-scale-addon"
+        },
+        {
+          "title": "Theme Addon",
+          "path": "/addons/theme-addon"
+        },
+        {
+          "title": "Time Dilation Addon",
+          "path": "/addons/time-dilation-addon"
+        },
+        {
+          "title": "Zoom Addon",
+          "path": "/addons/zoom-addon"
+        },
+        {
+          "title": "Custom Addon",
+          "path": "/addons/custom-addon"
+        }
       ]
-    ],
-    [
-      "Knobs",
-      [
-        ["Overview", "/knobs/overview"],
-        ["Custom Knob", "/knobs/custom-knob"]
+    },
+    {
+      "group": "Knobs",
+      "tab": "root",
+      "pages": [
+        {
+          "title": "Overview",
+          "path": "/knobs/overview"
+        },
+        {
+          "title": "Custom Knob",
+          "path": "/knobs/custom-knob"
+        }
       ]
-    ],
-    [
-      "Migration",
-      [
-        ["2.4.0 to 3.0.0", "/migration/2.4.0-to-3.0.0"],
-        ["3.0.0 beta to rc", "/migration/3.0.0-beta-to-rc"]
+    },
+    {
+      "group": "Migration",
+      "tab": "root",
+      "pages": [
+        {
+          "title": "2.4.0 to 3.0.0",
+          "path": "/migration/2.4.0-to-3.0.0"
+        },
+        {
+          "title": "3.0.0 beta to rc",
+          "path": "/migration/3.0.0-beta-to-rc"
+        }
       ]
-    ],
-    ["Next", [["SAM Architecture", "/next/sam"]]],
-    ["Cookbook", [["Custom Theme", "/cookbook/custom-theme"]]],
-    [
-      "Widgetbook Cloud",
-      [
-        ["Overview", "/widgetbook-cloud/overview"],
-        ["Hosting", "/widgetbook-cloud/hosting"],
-        ["Reviews", "/widgetbook-cloud/reviews"]
+    },
+    {
+      "group": "Next",
+      "tab": "root",
+      "pages": [
+        {
+          "title": "SAM Architecture",
+          "path": "/next/sam"
+        }
       ]
-    ],
-    ["CLI", [["Overview", "/widgetbook-cli/overview"]]],
-    [
-      "Contribution",
-      [
-        ["1. Ways to Contribute", "/contribution/ways-to-contribute"],
-        ["2. Getting Started", "/contribution/get-started"],
-        ["3. Contribution Workflow", "/contribution/workflow"],
-        ["4. Adding Example", "/contribution/adding-example"],
-        ["5. PR Title Conventions", "/contribution/pr-conventions"],
-        ["6. Code Review", "/contribution/code-reviews"],
-        ["7. Sync Your Fork", "/contribution/sync-your-fork"],
-        ["8. Quick Guide", "/contribution/quick-guide"]
+    },
+    {
+      "group": "Cookbook",
+      "tab": "root",
+      "pages": [
+        {
+          "title": "Custom Theme",
+          "path": "/cookbook/custom-theme"
+        }
       ]
-    ]
+    },
+    {
+      "group": "Widgetbook Cloud",
+      "tab": "root",
+      "pages": [
+        {
+          "title": "Overview",
+          "path": "/widgetbook-cloud/overview"
+        },
+        {
+          "title": "Hosting",
+          "path": "/widgetbook-cloud/hosting"
+        },
+        {
+          "title": "Reviews",
+          "path": "/widgetbook-cloud/reviews"
+        }
+      ]
+    },
+    {
+      "group": "CLI",
+      "tab": "root",
+      "pages": [
+        {
+          "title": "Overview",
+          "path": "/widgetbook-cli/overview"
+        }
+      ]
+    },
+    {
+      "group": "Contribution",
+      "tab": "root",
+      "pages": [
+        {
+          "title": "Ways to Contribute",
+          "path": "/contribution/ways-to-contribute"
+        },
+        {
+          "title": "Getting Started",
+          "path": "/contribution/get-started"
+        },
+        {
+          "title": "Contribution Workflow",
+          "path": "/contribution/workflow"
+        },
+        {
+          "title": "Adding Example",
+          "path": "/contribution/adding-example"
+        },
+        {
+          "title": "PR Title Conventions",
+          "path": "/contribution/pr-conventions"
+        },
+        {
+          "title": "Code Review",
+          "path": "/contribution/code-reviews"
+        },
+        {
+          "title": "Sync Your Fork",
+          "path": "/contribution/sync-your-fork"
+        },
+        {
+          "title": "Quick Guide",
+          "path": "/contribution/quick-guide"
+        }
+      ]
+    }
   ]
 }
