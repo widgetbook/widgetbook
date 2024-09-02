@@ -78,10 +78,12 @@ abstract class Field<T> {
 
   /// Same as [toJson] put prepends some metadata like [name], [type] and value.
   Map<String, dynamic> toFullJson() {
+    final _value = initialValue; // local variable promotion
+
     return {
       'name': name,
       'type': type.name,
-      'value': initialValue == null ? null : codec.toParam(initialValue!),
+      'value': _value == null ? null : codec.toParam(_value),
       ...toJson(),
     };
   }
