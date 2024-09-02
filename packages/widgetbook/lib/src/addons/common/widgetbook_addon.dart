@@ -29,7 +29,7 @@ abstract class WidgetbookAddon<T> extends FieldsComposable<T> {
 
   final String name;
 
-  @deprecated
+  @Deprecated('Use local field instead')
   final T? initialSetting;
 
   @override

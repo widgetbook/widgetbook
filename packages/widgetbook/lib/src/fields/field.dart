@@ -28,7 +28,7 @@ abstract class Field<T> {
     required this.type,
     required this.initialValue,
     required this.codec,
-    @deprecated this.onChanged,
+    @Deprecated('Fields should not be aware of their context') this.onChanged,
   });
 
   /// Name of this inside the query group.
