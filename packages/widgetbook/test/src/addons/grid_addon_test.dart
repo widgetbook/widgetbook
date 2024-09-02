@@ -24,7 +24,7 @@ void main() {
 
     testWidgets(
       'given a grid dimension, '
-      'then [buildUseCase] wraps child with stack',
+      'then [buildUseCase] wraps child with stack and grid paper',
       (tester) async {
         await tester.pumpWidgetWithBuilder(
           (context) => addon.buildUseCase(
@@ -38,45 +38,12 @@ void main() {
           (widget) {
             return widget is Stack &&
                 widget.children.length == 2 &&
-                widget.children[0] is LayoutBuilder &&
+                widget.children[0] is GridPaper &&
                 widget.children[1] is Text;
           },
         );
 
         expect(stack, findsOneWidget);
-      },
-    );
-
-    testWidgets(
-      'given a grid setting, '
-      'then [GridPainter] paints the grid correctly',
-      (tester) async {
-        const dimension = 20;
-        await tester.pumpWidgetWithBuilder(
-          (context) => addon.buildUseCase(
-            context,
-            const Text('child'),
-            dimension,
-          ),
-        );
-
-        final paintWidget = find.descendant(
-          of: find.byType(Stack),
-          matching: find.byType(CustomPaint),
-        );
-
-        final customPaint = tester.widget<CustomPaint>(paintWidget);
-
-        expect(paintWidget, findsOneWidget);
-        expect(
-          customPaint,
-          predicate<CustomPaint>(
-            (widget) {
-              final painter = widget.painter as GridPainter;
-              return painter.dimension == dimension;
-            },
-          ),
-        );
       },
     );
   });
