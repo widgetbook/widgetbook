@@ -18,10 +18,10 @@ packages:
     dependency: transitive
     description:
       name: accessibility_tools
-      sha256: deca88d9f181ad6fdd12df9c5fa952c763264da14336ca1c0e4124525725b174
+      sha256: "4627f89350b9997c68279b72b6cb3f262c83468a857956c6f8439215a727ab63"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "2.2.1"
   analyzer:
     dependency: transitive
     description:
