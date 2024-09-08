@@ -10,14 +10,14 @@ import 'app_route_config.dart';
 class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRouteConfig> {
   AppRouterDelegate({
-    this.initialRoute = '/',
+    required this.uri,
     required this.state,
   })  : _navigatorKey = GlobalKey<NavigatorState>(),
         _configuration = AppRouteConfig(
-          uri: Uri.parse(initialRoute),
+          uri: uri,
         );
 
-  final String initialRoute;
+  final Uri uri;
   final WidgetbookState state;
   final GlobalKey<NavigatorState> _navigatorKey;
   AppRouteConfig _configuration;
@@ -39,6 +39,9 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
   Widget build(BuildContext context) {
     return Navigator(
       key: navigatorKey,
+      // The onPopPage parameter is deprecated in Flutter 3.24.0,
+      // But we cannot migrate it because our minimum version is 3.16.0.
+      // ignore: deprecated_member_use
       onPopPage: (route, result) => route.didPop(result),
       pages: [
         MaterialPage(

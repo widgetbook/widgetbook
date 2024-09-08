@@ -12,10 +12,10 @@ screenshots:
     path: assets/logo.png
 
 environment:
-  sdk: ">=2.19.0 <4.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  analyzer: ">=5.10.0 <7.0.0"
+  analyzer: ^6.0.0
   build: ^2.1.0
   code_builder: ^4.5.0
   collection: ^1.15.0
@@ -25,7 +25,6 @@ dependencies:
   meta: ^1.7.0
   path: ^1.8.0
   source_gen: ^1.1.0
-  widgetbook: ^3.7.0
   widgetbook_annotation: ^3.1.0
   yaml: ^3.1.1
 

@@ -146,14 +146,10 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         .listSync(recursive: true)
         .whereType<File>();
 
-    String pathOf(File file) => p.relative(
-          file.path,
-          from: buildDirPath,
-        );
-
-    final filesSizeMap = {
-      for (final file in files) pathOf(file): file.statSync().size,
-    };
+    final dirSize = files.fold<int>(
+      0,
+      (previousValue, file) => previousValue + file.statSync().size,
+    );
 
     filesProgress.complete('${files.length} File(s) read');
 
@@ -168,7 +164,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         branch: args.branch,
         sha: args.commit,
         useCases: useCases,
-        files: filesSizeMap,
+        size: dirSize,
       ),
     );
 
@@ -178,36 +174,41 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     final objects = files.map(
       (file) {
-        final key = pathOf(file);
+        final key = p.relative(
+          file.path,
+          from: buildDirPath,
+        );
 
         if (key != 'index.html') {
           return StorageObject(
             key: key,
-            url: buildDraft.urls[key]!,
-            size: filesSizeMap[key]!,
-            data: file.openRead(),
+            size: file.statSync().size,
+            reader: file.openRead,
           );
         }
 
         // Modify index.html to include the correct base href
         final content = file.readAsStringSync();
         final modifiedContent = content.replaceFirst(
-          RegExp('<base href=".*">'),
+          RegExp('<base href=".*" ?\/?>'),
           '<base href="${buildDraft.baseHref}">',
         );
 
         return StorageObject(
           key: key,
-          url: buildDraft.urls[key]!,
           size: modifiedContent.length,
-          data: Stream.value(
+          reader: () => Stream.value(
             modifiedContent.codeUnits,
           ),
         );
       },
     );
 
-    await storageClient.uploadObjects(objects);
+    await storageClient.uploadObjects(
+      buildDraft.storage.url,
+      buildDraft.storage.fields,
+      objects,
+    );
 
     uploadProgress.complete('Build files uploaded');
 

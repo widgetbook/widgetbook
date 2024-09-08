@@ -10,7 +10,7 @@ class StringField extends Field<String> {
     required super.name,
     super.initialValue = '',
     this.maxLines,
-    @deprecated super.onChanged,
+    @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
           type: FieldType.string,
           codec: FieldCodec(

@@ -1,6 +1,5 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
-import '../../addons/grid_addon/grid_painter.dart';
 import 'base/builder_addon.dart';
 
 class GridAddon extends BuilderAddon {
@@ -11,16 +10,11 @@ class GridAddon extends BuilderAddon {
           builder: (context, child) {
             return Stack(
               children: [
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    return CustomPaint(
-                      painter: GridPainter(dimension),
-                      size: Size(
-                        constraints.maxWidth,
-                        constraints.maxHeight,
-                      ),
-                    );
-                  },
+                GridPaper(
+                  color: Colors.grey.withOpacity(0.5),
+                  interval: dimension.toDouble(),
+                  subdivisions: 2,
+                  child: Container(),
                 ),
                 child,
               ],

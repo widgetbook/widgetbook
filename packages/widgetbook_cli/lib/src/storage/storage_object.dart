@@ -3,15 +3,13 @@ import 'package:mime/mime.dart';
 class StorageObject {
   StorageObject({
     required this.key,
-    required this.url,
     required this.size,
-    required this.data,
+    required this.reader,
   });
 
   final String key;
-  final String url;
   final int size;
-  final Stream<List<int>> data;
+  final Stream<List<int>> Function() reader;
 
   String get mimeType => lookupMimeType(key) ?? 'application/octet-stream';
 }

@@ -14,7 +14,7 @@ class ListField<T> extends Field<T> {
     required this.values,
     required super.initialValue,
     this.labelBuilder = defaultLabelBuilder,
-    @deprecated super.onChanged,
+    @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
           type: FieldType.list,
           codec: FieldCodec(
@@ -37,7 +37,7 @@ class ListField<T> extends Field<T> {
     return DropdownMenu<T>(
       trailingIcon: const Icon(Icons.keyboard_arrow_down_rounded),
       selectedTrailingIcon: const Icon(Icons.keyboard_arrow_up_rounded),
-      initialSelection: value ?? values.first,
+      initialSelection: value,
       onSelected: (value) {
         if (value != null) {
           updateField(context, group, value);

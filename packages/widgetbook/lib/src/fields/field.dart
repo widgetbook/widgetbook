@@ -28,7 +28,7 @@ abstract class Field<T> {
     required this.type,
     required this.initialValue,
     required this.codec,
-    @deprecated this.onChanged,
+    @Deprecated('Fields should not be aware of their context') this.onChanged,
   });
 
   /// Name of this inside the query group.
@@ -78,10 +78,12 @@ abstract class Field<T> {
 
   /// Same as [toJson] put prepends some metadata like [name], [type] and value.
   Map<String, dynamic> toFullJson() {
+    final _value = initialValue; // local variable promotion
+
     return {
       'name': name,
       'type': type.name,
-      'value': initialValue == null ? null : codec.toParam(initialValue!),
+      'value': _value == null ? null : codec.toParam(_value),
       ...toJson(),
     };
   }

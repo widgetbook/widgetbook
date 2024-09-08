@@ -118,10 +118,13 @@ class _WidgetbookState extends State<Widgetbook> {
     );
 
     router = AppRouter(
-      initialRoute: Uri.base.fragment.isNotEmpty
-          ? Uri.base.fragment
-          : widget.initialRoute,
       state: state,
+      // Do not use the initial route if there is an existing URL fragment.
+      // That means that the user has navigated to a different route then
+      // they restarted the app, so we should not override that.
+      uri: Uri.base.fragment.isNotEmpty
+          ? Uri.parse(Uri.base.fragment)
+          : Uri.parse(widget.initialRoute),
     );
 
     widget.integrations?.forEach(

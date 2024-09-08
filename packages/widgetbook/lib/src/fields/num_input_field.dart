@@ -8,7 +8,7 @@ class NumInputField<T extends num> extends Field<T> {
   NumInputField({
     required super.name,
     super.initialValue,
-    @deprecated super.onChanged,
+    @Deprecated('Fields should not be aware of their context') super.onChanged,
     required super.type,
     required this.formatters,
   }) : super(

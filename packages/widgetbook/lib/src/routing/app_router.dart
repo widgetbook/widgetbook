@@ -9,19 +9,17 @@ import 'app_router_delegate.dart';
 @internal
 class AppRouter extends RouterConfig<AppRouteConfig> {
   AppRouter({
-    String initialRoute = '/',
+    required Uri uri,
     required WidgetbookState state,
   }) : super(
           routeInformationParser: AppRouteParser(),
           routeInformationProvider: PlatformRouteInformationProvider(
             initialRouteInformation: RouteInformation(
-              // Not backwards compatible with Flutter < 3.13.0
-              // ignore: deprecated_member_use
-              location: initialRoute,
+              uri: uri,
             ),
           ),
           routerDelegate: AppRouterDelegate(
-            initialRoute: initialRoute,
+            uri: uri,
             state: state,
           ),
         );

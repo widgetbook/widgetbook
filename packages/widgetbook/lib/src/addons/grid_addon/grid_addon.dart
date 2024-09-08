@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../fields/fields.dart';
 import '../common/common.dart';
-import 'grid_painter.dart';
 
 class GridAddon extends WidgetbookAddon<int> {
   GridAddon([
@@ -28,16 +27,11 @@ class GridAddon extends WidgetbookAddon<int> {
   ) {
     return Stack(
       children: [
-        LayoutBuilder(
-          builder: (context, constraints) {
-            return CustomPaint(
-              painter: GridPainter(setting),
-              size: Size(
-                constraints.maxWidth,
-                constraints.maxHeight,
-              ),
-            );
-          },
+        GridPaper(
+          color: Colors.grey.withOpacity(0.5),
+          interval: setting.toDouble(),
+          subdivisions: 2,
+          child: Container(),
         ),
         child,
       ],

@@ -15,7 +15,7 @@ class ColorField extends Field<Color> {
     required super.name,
     super.initialValue = defaultColor,
     this.initialColorSpace = ColorSpace.hex,
-    @deprecated super.onChanged,
+    @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
           type: FieldType.color,
           codec: FieldCodec(

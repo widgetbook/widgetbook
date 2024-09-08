@@ -42,9 +42,8 @@ void main() {
           );
 
           expect(
-            // ignore: deprecated_member_use
-            mediaQuery.textScaleFactor,
-            equals(factor),
+            mediaQuery.textScaler,
+            equals(const TextScaler.linear(factor)),
           );
         },
       );
