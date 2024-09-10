@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:path/path.dart';
@@ -46,8 +47,8 @@ class CacheReader {
         .toList();
 
     final addonsConfigs = await cacheFiles
-        .firstWhere((file) => file.path.endsWith(configExtension))
-        .readAsString()
+        .firstWhereOrNull((file) => file.path.endsWith(configExtension))
+        ?.readAsString()
         .then((jsonStr) => jsonDecode(jsonStr) as Map<String, dynamic>)
         .then((json) => parseAddonsConfigsJson(json));
 
