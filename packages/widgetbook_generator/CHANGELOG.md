@@ -1,4 +1,4 @@
-## Unreleased
+## 3.9.0
 
 - **BREAKING**: Set minimum SDK version to 3.0.0. ([#1243](https://github.com/widgetbook/widgetbook/pull/1243))
 - **BREAKING**: Drop `analyzer` 5.x support. ([#1243](https://github.com/widgetbook/widgetbook/pull/1243))
