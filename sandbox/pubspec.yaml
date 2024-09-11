@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  widgetbook: ^3.8.1
+  widgetbook: ^3.9.0
   widgetbook_annotation: ^3.2.0
 
 dev_dependencies:
