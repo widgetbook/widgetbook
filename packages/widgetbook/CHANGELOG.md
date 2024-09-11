@@ -1,4 +1,4 @@
-## Unreleased
+## 3.9.0
 
 - **BREAKING**: Set minimum SDK version to 3.0.0 & minimum Flutter version to 3.16.0. ([#1243](https://github.com/widgetbook/widgetbook/pull/1243))
 - **FEAT**: Allow changing Widgetbook's theme and mode. ([#1225](https://github.com/widgetbook/widgetbook/pull/1225) - by [@Mastersam07](https://github.com/Mastersam07))
