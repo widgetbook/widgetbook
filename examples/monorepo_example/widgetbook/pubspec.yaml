@@ -13,7 +13,7 @@ dependencies:
   shared_ui:
     path: ../packages/shared_ui
   widgetbook: ^3.8.1
-  widgetbook_annotation: ^3.1.0
+  widgetbook_annotation: ^3.2.0
 
 dev_dependencies:
   build_runner:
