@@ -7,6 +7,7 @@ import 'package:path/path.dart' as p;
 import 'package:process/process.dart';
 
 import '../api/api.dart';
+import '../cache/cache.dart';
 import '../core/core.dart';
 import '../storage/storage.dart';
 import '../utils/executable_manager.dart';
@@ -19,7 +20,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     this.processManager = const LocalProcessManager(),
     this.fileSystem = const LocalFileSystem(),
     this.zipEncoder = const ZipEncoder(),
-    this.useCaseReader = const UseCaseReader(),
+    this.cacheReader = const CacheReader(),
     WidgetbookHttpClient? cloudClient,
     StorageClient? storageClient,
   })  : cloudClient = cloudClient ??
@@ -65,7 +66,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
   final ProcessManager processManager;
   final FileSystem fileSystem;
   final ZipEncoder zipEncoder;
-  final UseCaseReader useCaseReader;
+  final CacheReader cacheReader;
 
   @override
   FutureOr<BuildPushArgs> parseResults(
@@ -111,14 +112,14 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       flutterVersionOutput: await processManager.runFlutter(['--version']),
     );
 
-    final useCasesProgress = logger.progress('Reading use-cases');
-    final useCases = await useCaseReader.read(args.path);
+    final cacheProgress = logger.progress('Reading cache');
+    final cache = await cacheReader.read(args.path);
 
-    if (useCases.isEmpty) {
-      useCasesProgress.fail(
-        'No use-cases found\n\n'
+    if (cache.isEmpty) {
+      cacheProgress.fail(
+        'No cache files were found\n\n'
         'Make sure you have done the following:\n'
-        ' 1. Ran `dart run build_runner build -d` to generate metadata files.\n'
+        ' 1. Ran `dart run build_runner build -d` to generate cache files.\n'
         ' 2. Included at least one use-case in your project.\n'
         ' 3. Ran the CLI from the directory that contains your `.dart_tool`',
       );
@@ -126,7 +127,10 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       return 21;
     }
 
-    useCasesProgress.complete('${useCases.length} Use-case(s) read');
+    cacheProgress.complete(
+      'Cache: ${cache.useCases.length} Use-case(s) '
+      '+ ${cache.addonsConfigs?.length ?? 0} AddonsConfig(s)',
+    );
 
     final filesProgress = logger.progress('Reading Files');
 
@@ -163,7 +167,8 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         actor: args.actor,
         branch: args.branch,
         sha: args.commit,
-        useCases: useCases,
+        useCases: cache.useCases,
+        addonsConfigs: cache.addonsConfigs,
         size: dirSize,
       ),
     );

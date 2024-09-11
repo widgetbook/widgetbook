@@ -67,7 +67,7 @@ class MockCiManager extends Mock implements CiManager {
 
 class MockPlatform extends Mock implements Platform {}
 
-class MockUseCaseReader extends Mock implements UseCaseReader {}
+class MockCacheReader extends Mock implements CacheReader {}
 
 class MockStdin extends Mock implements Stdin {}
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/next.dart' as next;
 import 'package:widgetbook/src/themes.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 import 'components.book.dart';
 import 'widgetbook.directories.g.dart';
@@ -11,7 +11,21 @@ void main() {
   runApp(const WidgetbookApp());
 }
 
-@widgetbook.App()
+@App(
+  cloudAddonsConfigs: {
+    'German Dark Center x2': [
+      LocalizationAddonConfig('de'),
+      ThemeAddonConfig('Dark'),
+      AlignmentAddonConfig('Center'),
+      TextScaleAddonConfig(2),
+      ZoomAddonConfig(2),
+      AddonConfig('custom-addon', 'name:value'),
+    ],
+    'English': [
+      LocalizationAddonConfig('en'),
+    ],
+  },
+)
 class WidgetbookApp extends StatelessWidget {
   const WidgetbookApp({super.key});
 

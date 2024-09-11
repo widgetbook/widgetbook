@@ -20,6 +20,13 @@ builders:
     auto_apply: dependents
     build_to: source
 
+  addons_configs_builder:
+    import: "package:widgetbook_generator/builder.dart"
+    builder_factories: ["addonsConfigsBuilder"]
+    build_extensions: { ".dart": [".config.widgetbook.json"] }
+    auto_apply: dependents
+    build_to: cache
+
   telemetry:
     import: "package:widgetbook_generator/builder.dart"
     builder_factories: ["reportTelemetry"]
