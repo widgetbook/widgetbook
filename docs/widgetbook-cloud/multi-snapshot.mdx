@@ -1,40 +1,40 @@
-# Multi Snapshot
+# Multi Snapshot Reviews
 
 If you are using [Widgetbook Cloud Review](/widgetbook-cloud/reviews), you can now create multiple snapshots for a single use-case. This feature is useful if you want to test different states of your use-case using different addons or knobs configurations, instead of just using the default configurations.
 
 ## Multi Snapshot for Addons
 
-You can use the `@App` annotation to include a configuration matrix for addons.
-These are the available configurations:
+1. Go to the main file of your app, where your Widgetbook's `@App` annotation is defined.
+1. Choose the addons you like to test and include them, e.g. Themes and Languages. Here are the available `AddonConfig` classes:
+   - `LocalizationAddonConfig`
+   - `ThemeAddonConfig`
+   - `AlignmentAddonConfig`
+   - `TextScaleAddonConfig`
+   - `ZoomAddonConfig`
+1. Add the configurations matrix to the `cloudAddonsConfigs` parameter of the `@App` annotation. In this example, we’d like to test German in dark mode but English in light mode.
 
-- `LocalizationAddonConfig`
-- `ThemeAddonConfig`
-- `AlignmentAddonConfig`
-- `TextScaleAddonConfig`
-- `ZoomAddonConfig`
+   ```dart
+   @App(
+     cloudAddonsConfigs: {
+       'German Dark': [
+         LocalizationAddonConfig('de'),
+         ThemeAddonConfig('Dark'),
+       ],
+       'English Light': [
+         LocalizationAddonConfig('en'),
+         ThemeAddonConfig('Light'),
+       ],
+     },
+   )
+   class WidgetbookApp extends StatelessWidget {
+     const WidgetbookApp({super.key});
 
-```dart
-@App(
-  cloudAddonsConfigs: {
-    'German Dark': [
-      LocalizationAddonConfig('de'),
-      ThemeAddonConfig('Dark'),
-    ],
-    'English Light': [
-      LocalizationAddonConfig('en'),
-      ThemeAddonConfig('Light'),
-    ],
-  },
-)
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook.material(...);
-  }
-}
-```
+     @override
+     Widget build(BuildContext context) {
+       return Widgetbook.material(...);
+     }
+   }
+   ```
 
 ## Multi Snapshot for Custom Addons
 
