@@ -8,12 +8,15 @@ import '../common/common.dart';
 class TextScaleAddon extends WidgetbookAddon<double> {
   TextScaleAddon({
     this.scales,
-
     this.initialScale,
     this.min = 0.8,
     this.max = 2.0,
     this.divisions = 6,
   })  : assert(
+          scales == null || scales.isNotEmpty,
+          'scales must not be empty, if set',
+        ),
+        assert(
           scales == null || initialScale == null || scales.contains(initialScale),
           'initialScale must be in scales',
         ),
