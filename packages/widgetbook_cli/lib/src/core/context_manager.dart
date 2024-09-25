@@ -22,12 +22,20 @@ class ContextManager {
     Environment environment,
   ) async {
     if (ciManager.isAzure) {
+      final sourceBranch = platform.environment['BUILD_SOURCEBRANCH'];
+      final prSourceBranch =
+          platform.environment['SYSTEM_PULLREQUEST_SOURCEBRANCH'];
+
+      final isPr = sourceBranch?.contains('refs/pull/') ?? false;
+      final branch = isPr ? prSourceBranch : sourceBranch;
+
       return Context(
         name: 'Azure',
         repository: repository,
         environment: environment,
-        user: platform.environment['Agent.Name'],
-        project: platform.environment['Build.Repository.Name'],
+        user: platform.environment['BUILD_SOURCEVERSIONAUTHOR'],
+        project: platform.environment['BUILD_REPOSITORY_NAME'],
+        providerBranch: branch != null ? Reference.nameOf(branch) : null,
       );
     }
 

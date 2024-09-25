@@ -42,8 +42,8 @@ void main() {
     test('Azure', () {
       ciManager.mock(isAzure: true);
       when(() => platform.environment).thenReturn({
-        'Agent.Name': userName,
-        'Build.Repository.Name': repoName,
+        'BUILD_SOURCEVERSIONAUTHOR': userName,
+        'BUILD_REPOSITORY_NAME': repoName,
       });
 
       expectLater(
