@@ -1,4 +1,4 @@
-## Unreleased
+## 3.4.1
 
 - **FIX**: Provide default values for arguments when running in Azure Pipelines. ([#1271](https://github.com/widgetbook/widgetbook/pull/1271))
 
