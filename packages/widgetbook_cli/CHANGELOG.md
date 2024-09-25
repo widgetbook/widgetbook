@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Provide default values for arguments when running in Azure Pipelines. ([#1271](https://github.com/widgetbook/widgetbook/pull/1271))
+
 ## 3.4.0
 
 - **FEAT**: Support Multi Snapshot for addons. For more information, check our [docs](https://docs.widgetbook.io/widgetbook-cloud/multi-snapshot). ([#1239](https://github.com/widgetbook/widgetbook/pull/1239))
