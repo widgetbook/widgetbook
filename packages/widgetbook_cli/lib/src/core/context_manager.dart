@@ -26,8 +26,8 @@ class ContextManager {
         name: 'Azure',
         repository: repository,
         environment: environment,
-        user: platform.environment['Agent.Name'],
-        project: platform.environment['Build.Repository.Name'],
+        user: platform.environment['BUILD_SOURCEVERSIONAUTHOR'],
+        project: platform.environment['BUILD_REPOSITORY_NAME'],
       );
     }
 
