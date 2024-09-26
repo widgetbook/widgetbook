@@ -69,6 +69,7 @@ your_app/
   values={[
     { label: "GitHub Actions", value: "github" },
     { label: "Codemagic", value: "codemagic" },
+    { label: "Azure Pipelines", value: "azure" },
   ]}
 >
   <TabItem value="github">
@@ -154,6 +155,75 @@ your_app/
               - name: Push Widgetbook Build
                 working_directory: widgetbook
                 script: widgetbook cloud build push --api-key $WIDGETBOOK_API_KEY
+        ```
+
+  </TabItem>
+
+  <TabItem value="azure">
+    1. Add `WIDGETBOOK_API_KEY` to your [Azure DevOps project's secrets](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables). You can find the API key in the Widgetbook Cloud's **project settings page**.
+
+    1. Add the following workflow to your `azure-pipeline.yaml` file.
+
+        ```yaml
+        trigger:
+          branches:
+            include:
+              - "*"
+
+        pr:
+          branches:
+            include:
+              - "*"
+
+        stages:
+          - stage: WidgetbookHostingStage
+            displayName: Hosting
+            jobs:
+              - job: HostingJob
+                displayName: Hosting
+                pool:
+                  vmImage: "ubuntu-latest"
+                steps:
+                  - task: FlutterInstall@0
+                    displayName: "Install Flutter SDK"
+                    inputs:
+                      mode: "auto"
+                      channel: "stable"
+                      version: "latest"
+
+                  - task: Bash@3
+                    displayName: "Bootstrap App"
+                    inputs:
+                      targetType: "inline"
+                      script: |
+                        $(FlutterToolPath)/flutter pub get
+                        # Add any other steps needed to make your
+                        # app widgets available for Widgetbook
+
+                  - task: Bash@3
+                    displayName: "Build Widgetbook"
+                    inputs:
+                      workingDirectory: "widgetbook"
+                      targetType: "inline"
+                      script: |
+                        $(FlutterToolPath)/flutter pub get
+                        $(DartToolPath)/dart run build_runner build -d
+                        $(FlutterToolPath)/flutter build web -t lib/main.dart
+
+                  - task: Bash@3
+                    displayName: "Install Widgetbook CLI"
+                    inputs:
+                      targetType: "inline"
+                      script: |
+                        $(DartToolPath)/dart pub global activate widgetbook_cli
+
+                  - task: Bash@3
+                    displayName: "Push Widgetbook Build"
+                    inputs:
+                      workingDirectory: "widgetbook"
+                      targetType: "inline"
+                      script: |
+                        $HOME/.pub-cache/bin/widgetbook cloud build push --api-key $(WIDGETBOOK_API_KEY)
         ```
 
   </TabItem>
