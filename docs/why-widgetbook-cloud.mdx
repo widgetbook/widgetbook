@@ -1,0 +1,38 @@
+# Why Widgetbook Cloud
+
+It is possible to self-host your local Widgetbook without using Widgetbook Cloud. However, self-hosting comes with downsides. Most importantly, your team remains stuck with an unstructured review process. Our customers found that switching to Widgetbook Cloud has been saving every designer and developer on their team 20% of their time. Here, you can watch a [recording of their talk](https://youtu.be/Du5yVtnmNzg?feature=shared&t=1319) showcasing their workflow before and after Widgetbook Cloud.
+
+## The Problem
+
+- **Designer / Developer collaboration is a mess:** Often designers only create the design and don't review the implemented UI before the release to the users. However, the implemented UI often differs from the design and thus the users might not have the best user experience leading to less usage and higher churn. Some teams already run UI reviews with designers. However, these  UI reviews are unstructured. Designers, developers, and other stakeholders often struggle to communicate effectively leading to misunderstandings and design inconsistencies. This process is already simplified by just sharing the entire Widgetbook with designers, product managers and QA testers. However, reviewers are often overwehelmed reviewing the entire Widgetbook and doing accurate reviews of all relevant widgets in every relevant configuration (addon and knob) is difficult. There is no process for providing feedback and informing developers about change requests before shipping to customers.
+
+- **No automated Golden Testing:** When changing existing components or screens, it is difficult to detect all resulting UI changes to ensure that all changes look and feel as intended. [Golden Tests](xyz) can help but they are often flaky and developers need to write them manually which takes time.
+
+- **No Figma integration:** Especially designers want to compare the Flutter implementation to their original Figma design. Without a Figma integration, designers have to navigate through their Figma file first until they find the design to the Flutter implementation.
+
+- **Setting up and maintaining hosting is cumbersome:** If you decide to self-host your Widgetbook you need to setup and maintain the hosting of Widgetbook yourself.
+
+- **Limited hosting of only one branch:** Self-hosting usually comes at the expense of having only a minimal hosting setup that only allows developers to host one Widgetbook for one branch.
+
+## The Solution: Widgetbook Cloud
+
+Widgetbook Cloud addresses these challenges by offering a structured review platform the entire product team. You can start using it for free. Watch a [demo video](https://youtu.be/gCTSc99V-KI?feature=shared).
+{/* TODO (Youssef) can we embed all videos into the docs page so that users don't need to leave our docs page? */}
+
+- **Structured review process:** Enable designers to easily review every UI change in your PR before potential UI flaws are released to your users.
+
+- **UI Regression Detection:** A zero-configuration way to automatically detect UI regressions (via Golden Tests) in your _Widgetbook Builds_ by comparing builds across different branches or commits. With our _Multi Mode Snapshots_ you can automatically detect UI regressions for different addon and knob configurations.
+
+- **Figma integration:** You can connect your Flutter widgets to their corresponding Figma designs. Thereby, you can verify if the developer meets the design requirements.
+
+- **Managed Hosting:** Follow 4 simple steps to host your Widgetbook on Widgetbook Cloud. [Check out the docs](/widgetbook-cloud/builds).
+
+- **Host one Widgetbook per commit:** Easily share one Widgetbook for every commit with your entire team. [Watch a tutorial video](https://youtu.be/-7w1VqZD004?feature=shared).
+
+## What our customers say about Widgetbook Cloud
+
+{/* TODO (Youssef) include party picture */}
+
+Our customers have been reporting that Widgetbook Cloud shortens the feedback loop between developers and designers a lot! At a Flutter conference, selected customers shared that their designers and developers save 20% of their time using Widgetbook Cloud! Here, you can watch the [recording of our Fluttercon talk](https://youtu.be/Du5yVtnmNzg?feature=shared&t=868).
+
+{/* TODO (Youssef) please check with Julius if we can include the tweets from the website here. */}

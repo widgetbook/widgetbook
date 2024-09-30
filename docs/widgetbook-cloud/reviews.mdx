@@ -1,14 +1,20 @@
-# Widgetbook Cloud Review
+# Widgetbook Cloud Reviews
 
 <Warning>
-  Widgetbook Cloud Review currently works with **GitHub only**. We are planning
+  Widgetbook Cloud Reviews currently works with **GitHub only**. We are planning
   to add more Git providers in the future.
 </Warning>
 
-Widgetbook Cloud Review has two main features that can help you improve your development workflow:
+Widgetbook Cloud Reviews has four main features to improve your review workflow:
 
 1. [**UI Regression Detection**](/widgetbook-cloud/reviews#ui-regression-detection): to automatically detect UI regressions.
+1. [**Multi Mode Snapshots**](/widgetbook-cloud/reviews#multi-snapshot-reviews): to automatically detect UI regressions for different addon and knob configurations.
+1. [**Structured Review Process**](/widgetbook-cloud/reviews#structured-review-process): to ensure that all UI changes are intentional and match the design expectations.
 1. [**Figma x Flutter Comparison**](/widgetbook-cloud/reviews#figma-x-flutter-comparison): to verify if the developer meets the design requirements.
+
+
+## Tutorial video
+Watch the [Reviews tutorial video](https://youtu.be/CalXXyThDi4?feature=shared).
 
 ## Pre-requisites
 
@@ -32,7 +38,11 @@ It works similarly like GitHub PRs. Instead of only comparing code changes, with
 1. [Create a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) from your `head` branch (e.g. `feat/new-button`) to the `base` branch (e.g. `main`).
 1. After your build upload finishes (i.e. the CI job from [Pre-requisites](#pre-requisites)), a [commit status](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks) will be added to your PR once the review is ready.
 
-### Reviewing
+## Multi Mode Snapshots
+Find more information in the dedicated [Multi Snapshot Reviews page](/widgetbook-cloud/multi-snapshot).
+{/* TODO (Youssef) it is weird that we have a separate page for that. But I don't want to make this page super long. Any ideas? */}
+
+## Structured Review Process
 
 After your review is ready, you can start comparing the visual differences between the `base` and `head` builds. Here are some things that can help improving your workflow:
 
@@ -46,6 +56,9 @@ After your review is ready, you can start comparing the visual differences betwe
   out](https://discord.com/invite/zT4AMStAJA) to us in case this doesn't suit
   you and you want to use a dedicated comment feature in Widgetbook Cloud.
 </Info>
+
+#### Best Practices
+Our customer 1Komma5º explains how they are using Widgetbook Cloud's Review feature in their development process. They report that every designer and developer working with Widgetbook Cloud saves 20% of their time. Watch the [recording of their Widgetbook talk](https://youtu.be/Du5yVtnmNzg?feature=shared).
 
 ### Review Statuses
 

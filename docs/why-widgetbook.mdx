@@ -1,68 +1,41 @@
 # Why Widgetbook
 
-Design Systems offer numerous advantages, such as improved consistency, collaboration, efficiency, and scalability. To maximize these benefits, it is crucial to have an effective tool for managing and cataloguing the components of the Design System.
-Widgetbook, a Flutter package serves as an excellent solution for this purpose.
+Coming from a JavaScript background, our team used Storybook.js for years to build their React components in isolation, and cataloguing them in a consistent design system. However, when we switched to Flutter, there was no compelling Storybook solution. That's why we decided to build Widgetbook.
 
 ## The Problem
 
 Developing user interfaces in Flutter applications often involves creating and managing numerous widgets. However, developers face several challenges in the process:
 
-- **Inconsistent Design:** Ensuring design consistency across applications and platforms can be difficult, leading to a disjointed user experience.
+- **Keeping the overview of the design system is difficult** Setting up and maintaining the structure for a [design system](/design-system) that catalogs every widget is time-consuming. As it's not the core business of a Flutter team, it also distracts the developers from actual feature development.
+{/* TODO (Lucas) insert Design System section */}
 
-- **Efficiency Bottlenecks:** Reusing components without a proper cataloging system can be cumbersome, resulting in duplicated work and wasted resources.
+- **UI flaws:** Testing widgets across multiple devices, themes, and settings is time-consuming and prone to errors. When changing existing widgets, it is difficult to detect all resulting UI changes to ensure that all changes look and feel as intended.
 
-- **Collaboration Barriers:** Designers, developers, and other stakeholders often struggle to communicate effectively, leading to misunderstandings and design inconsistencies.
+- **Tracking visual changes is hard:** When changing existing components or screens, it is difficult to detect all resulting UI changes to ensure that all changes look and feel as intended. [Golden Tests](/golden-tests) can help but they are often flaky and developers need to write them manually which takes time.
+{/* TODO (Lucas) insert Golden Testing section */}
 
-- **Testing Limitations:** Testing widgets across multiple devices, themes, and settings can be time-consuming and prone to errors.
-
-- **Documentation Gaps:** The lack of clear, up-to-date documentation can make it difficult for developers to understand and use existing components effectively.
+- **Misalignment between design and developmnent:** UI reviews are unstructured. Designers, developers, and other stakeholders often struggle to communicate effectively leading to misunderstandings and design inconsistencies.
 
 ## The Solution: Widgetbook
 
-Widgetbook addresses these challenges by providing a comprehensive Flutter package that streamlines widget management, fosters collaboration, and optimizes the design and development process:
+Widgetbook addresses these challenges by providing an open source Storybook for Flutter as well as Widgetbook Cloud. We've been featured as experts for design systems and designer/developer collaboration by Google's Flutter team. Feel free to watch [Google's demo video of Widgetbook](https://youtu.be/-g2KYjiPzzA?feature=shared).
 
-- **Design Consistency:** Widgetbook's cataloging system helps maintain a cohesive look and feel across applications and platforms, promoting a unified user experience.
+- **Build your own design system:** Widgetbook's cataloging system helps maintain a cohesive look and feel across applications and platforms, promoting a unified user experience. 
+Watch how our customers create their own design systems with Widgetbook:
+  - 1Komma5º creates an in-house design system which is used accross 6 different projects. [Watch their presentation](https://youtu.be/Du5yVtnmNzg?feature=shared&t=1319).
+  - LeanCode is a software agency which creates a design system template that they share with every new client for the project start. [Watch their presentation](https://youtu.be/Du5yVtnmNzg?feature=shared&t=1803).
 
-- **Efficiency Gains:** With Widgetbook's efficient widget cataloging feature, developers can reuse components easily, eliminating duplication and conserving resources.
+- **Build your widgets in isolation:** Implement widgets without needing to fuss with data, APIs, or business logic. Use Widgetbook's [Addons](/addons/overview) and [Knobs](/knobs/overview) to quickly test your widgets in all relevant configurations. Watch how our customer Lotum speeds up their app development by building their widgets in isolation with Widgetbook. [Watch their presentation](https://youtu.be/Du5yVtnmNzg?feature=shared&t=868).
 
-- **Enhanced Collaboration:** Widgetbook facilitates communication and collaboration among designers, developers, and clients by providing an interactive catalog of widgets that can be easily shared and reviewed.
+- **Automated Golden Tests:** Widgetbook Cloud automatically detects all visual changes of your PR. Every widget can automatically be tested in different configurations, like themes or locales. Watch a [demo video](https://youtu.be/gCTSc99V-KI?feature=shared).
 
-- **Comprehensive Testing:** Widgetbook enables developers to test widgets across different devices, themes, locales, text scales, and more, ensuring adaptability and responsiveness.
+- **Alignment between design and code:** Widgetbook Cloud shortens the feedback loop of UI reviews between designers, developers, product managers and QA testers. Every changed widget of a PR is presented in a side by side comparison to its original Figma design, so that it can be quickly and accurately reviewed.
+Watch a [demo video](https://youtu.be/gCTSc99V-KI?feature=shared).
 
-- **Detailed Documentation:** Widgetbook offers comprehensive, easy-to-understand documentation that supports developers throughout their journey.
+## What users say about Widgetbook
 
-## Widgetbook Cloud: Streamlining Reviews and Collaboration
+{/* TODO (Youssef) include party picture */}
 
-To further enhance the review process and collaboration, Widgetbook Cloud offers the following features:
+Our customers have been reporting that Widgetbook Cloud shortens the feedback loop between developers and designers a lot! At a Flutter conference, selected customers shared that their designers and developers save 20% of their time using Widgetbook Cloud! Here, you can watch the [recording of our Fluttercon talk](https://youtu.be/Du5yVtnmNzg?feature=shared&t=868).
 
-Widget Sharing: Effortlessly share your widgets with designers, product owners, clients, and other stakeholders.
-Simplified Reviews: Utilize the guided process to streamline reviews and ensure consistent feedback.
-Figma Integration: Connect your widgets to their design counterparts in Figma for seamless design consistency.
-
-## 12 reasons you should use Widgetbook
-
-On top of problems and solutions, there are 12 reasons that you should use Widgetbook for your next Flutter project.
-
-1. **Made for Flutter:** Widgetbook is specifically designed for the Flutter framework, ensuring seamless integration and ease of use for managing widgets and components in your Flutter projects.
-
-2. **Open source:** Widgetbook is an open-source project, making it accessible for everyone to use, contribute to, and benefit from its continued development.
-
-3. **Feature-rich:** Widgetbook provides a wide range of features, allowing you to test widgets on different devices, themes, locales, text scales, and more. This ensures that your components are adaptable and responsive to various user experiences.
-
-4. **Customizable:** Widgetbook is highly configurable, enabling you to add additional settings tailored to your specific needs and preferences.
-
-5. **Well-maintained:** Widgetbook is maintained by a fast-growing Flutter startup from Germany, ensuring that it stays up-to-date and aligned with best practices in the Flutter ecosystem.
-
-6. **Support:** Widgetbook offers support via a dedicated Discord community, where you can connect with other developers and receive assistance when needed.
-
-7. **Efficient Widget Cataloging:** Widgetbook allows you to catalog existing widgets, ensuring that you never develop the same widget twice, saving time and resources.
-
-8. **Isolated Development:** Widgetbook enables developers to work on widgets in isolation without worrying about business logic, focusing solely on the design and functionality of the components.
-
-9. **Knobs:** Widgetbook allows you to define customizable knobs, specifying how your team interacts with your widgets and providing granular control over their behavior.
-
-10. **Hot Reload:** Widgetbook supports hot reloading, enabling you to quickly find and fix bugs during the development process.
-
-11. **Beautiful Documentation:** Widgetbook offers readable, easy-to-understand, and ever-improving documentation to support your development journey.
-
-12. **Widgetbook Cloud:** Widgetbook Cloud is a collaboration platform that simplifies the review process for professional teams. It allows you to share widgets with designers, product owners, clients, and more. Widgetbook Cloud also features a guided review process and Figma integration, connecting your widgets to their design counterparts in Figma.
+{/* TODO (Youssef) please check with Julius if we can include the tweets from the website here. */}
