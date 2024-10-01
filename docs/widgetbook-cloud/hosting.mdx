@@ -68,6 +68,7 @@ your_app/
   groupId="ci"
   values={[
     { label: "GitHub Actions", value: "github" },
+    { label: "GitLab CI/CD", value: "gitlab" },
     { label: "Codemagic", value: "codemagic" },
     { label: "Azure Pipelines", value: "azure" },
   ]}
@@ -112,6 +113,36 @@ your_app/
               - name: Push Widgetbook Build
                 working-directory: widgetbook
                 run: widgetbook cloud build push --api-key ${{ secrets.WIDGETBOOK_API_KEY }}
+        ```
+
+  </TabItem>
+
+  <TabItem value="gitlab">
+    1. Add `WIDGETBOOK_API_KEY` to your [GitLab's CI/CD Variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project). You can find the API key in the Widgetbook Cloud's **project settings page**. Make sure you **uncheck "Protect variable" checkbox**, to allow the variable to be accessible from feature branches.
+
+    1. Create a new GitLab pipeline file in your repository under `.gitlab-ci.yml` with the following content:
+
+        ```yaml
+        image: ghcr.io/cirruslabs/flutter
+
+        stages:
+          - widgetbook
+
+        widgetbook_cloud_hosting:
+          stage: widgetbook
+          script:
+            # Bootstrap App
+            - flutter pub get
+            - flutter gen-l10n
+            # Bootstrap Widgetbook
+            - cd widgetbook
+            - flutter pub get
+            - dart run build_runner build -d
+            - flutter build web
+            # Upload to Widgetbook Cloud
+            - dart pub global activate widgetbook_cli
+            - export PATH="$PATH":"$HOME/.pub-cache/bin"
+            - widgetbook cloud build push --api-key "$WIDGETBOOK_API_KEY"
         ```
 
   </TabItem>
