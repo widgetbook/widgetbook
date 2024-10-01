@@ -76,8 +76,10 @@ class ContextManager {
         name: 'GitLab',
         repository: repository,
         environment: environment,
-        user: platform.environment['GITLAB_USER_NAME'],
-        project: platform.environment['CI_PROJECT_NAME'],
+        user: platform.environment['GITLAB_USER_LOGIN'],
+        project: platform.environment['CI_PROJECT_PATH'],
+        providerBranch: platform.environment['CI_COMMIT_BRANCH'],
+        providerSha: platform.environment['CI_COMMIT_SHA'],
       );
     }
 

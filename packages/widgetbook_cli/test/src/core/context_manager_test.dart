@@ -129,8 +129,10 @@ void main() {
     test('GitLab', () {
       ciManager.mock(isGitLab: true);
       when(() => platform.environment).thenReturn({
-        'GITLAB_USER_NAME': userName,
-        'CI_PROJECT_NAME': repoName,
+        'GITLAB_USER_LOGIN': userName,
+        'CI_PROJECT_PATH': repoName,
+        'CI_COMMIT_BRANCH': 'main',
+        'CI_COMMIT_SHA': sha,
       });
 
       expectLater(
@@ -142,6 +144,8 @@ void main() {
             environment: environment,
             user: userName,
             project: repoName,
+            providerBranch: 'main',
+            providerSha: sha,
           ),
         ),
       );
