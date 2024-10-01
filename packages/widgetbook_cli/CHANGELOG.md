@@ -1,4 +1,4 @@
-## Unreleased
+## 3.4.2
 
 - **FIX**: Provide default values for arguments when running in GitLab CI/CD. ([#1277](https://github.com/widgetbook/widgetbook/pull/1277))
 
