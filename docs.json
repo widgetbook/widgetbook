@@ -29,7 +29,7 @@
   "variables": {
     "versions": {
       "annotation": "3.2.0",
-      "cli": "3.4.0",
+      "cli": "3.4.2",
       "generator": "3.9.0",
       "widgetbook": "3.9.0"
     }

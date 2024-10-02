@@ -10,6 +10,7 @@ class Context {
     required this.environment,
     required this.user,
     required this.project,
+    this.providerBranch,
     this.providerSha,
   });
 
@@ -18,6 +19,7 @@ class Context {
   final Environment environment;
   final String? user;
   final String? project;
+  final String? providerBranch;
   final String? providerSha;
 
   @override
@@ -29,6 +31,7 @@ class Context {
         other.environment == environment &&
         other.user == user &&
         other.project == project &&
+        other.providerBranch == providerBranch &&
         other.providerSha == providerSha;
   }
 
@@ -39,6 +42,7 @@ class Context {
         environment.hashCode ^
         user.hashCode ^
         project.hashCode ^
+        providerBranch.hashCode ^
         providerSha.hashCode;
   }
 }
