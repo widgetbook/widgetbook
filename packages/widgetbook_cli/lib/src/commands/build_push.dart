@@ -78,7 +78,11 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     final repository = context.repository!;
     final currentBranch = await repository.currentBranch;
-    final branch = results['branch'] as String? ?? currentBranch.name;
+
+    final branch = results['branch'] as String? ??
+        context.providerBranch ??
+        currentBranch.name;
+
     final commit = results['commit'] as String? ??
         context.providerSha ??
         currentBranch.sha;

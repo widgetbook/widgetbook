@@ -1,3 +1,3 @@
 # Widgetbook CLI
 
-Check out the [docs](https://docs.widgetbook.io/widgetbook-cli/overview) for more information.
+Check out the [docs](https://docs.widgetbook.io/widgetbook-cli) for more information.
