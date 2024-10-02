@@ -1,11 +1,11 @@
 {
+  "$schema": "https://docs.page/schema.json",
   "name": "Widgetbook",
   "description": "Build your Design System's widgets in isolation.",
   "theme": {
     "primary": "#0060A7"
   },
   "logo": {
-    "href": "/widgetbook",
     "light": "/assets/logos/logo-light.png",
     "dark": "/assets/logos/logo-dark.png"
   },
@@ -34,17 +34,32 @@
       "widgetbook": "3.9.0"
     }
   },
+
+  "tabs": [
+    {
+      "id": "root",
+      "title": "OSS",
+      "href": "/"
+    },
+    {
+      "id": "cloud",
+      "title": "Widgetbook Cloud",
+      "href": "/widgetbook-cloud"
+    },
+    {
+      "id": "cli",
+      "title": "CLI",
+      "href": "/widgetbook-cli"
+    }
+  ],
   "sidebar": [
     {
       "group": "Overview",
+      "tab": "root",
       "pages": [
         {
           "title": "Overview",
           "href": "/index"
-        },
-        {
-          "title": "Terminology",
-          "href": "/terminology"
         },
         {
           "title": "Why Widgetbook",
@@ -54,6 +69,7 @@
     },
     {
       "group": "Guides",
+      "tab": "root",
       "pages": [
         {
           "title": "Quick Start",
@@ -88,126 +104,162 @@
           "href": "/demo"
         },
         {
-          "title": "FAQs",
-          "href": "/faq"
-        },
-        {
           "title": "Telemetry",
           "href": "/telemetry"
+        },
+        {
+          "group": "Knobs",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/knobs/overview"
+            },
+            {
+              "title": "Custom Knob",
+              "href": "/knobs/custom-knob"
+            }
+          ]
+        },
+        {
+          "group": "Addons",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/addons/overview"
+            },
+            {
+              "title": "Accessibility Addon",
+              "href": "/addons/accessibility-addon"
+            },
+            {
+              "title": "Alignment Addon",
+              "href": "/addons/alignment-addon"
+            },
+            {
+              "title": "Builder Addon",
+              "href": "/addons/builder-addon"
+            },
+            {
+              "title": "Device Frame Addon",
+              "href": "/addons/device-frame-addon"
+            },
+            {
+              "title": "Grid Addon",
+              "href": "/addons/grid-addon"
+            },
+            {
+              "title": "Inspector Addon",
+              "href": "/addons/inspector-addon"
+            },
+            {
+              "title": "Localization Addon",
+              "href": "/addons/localization-addon"
+            },
+            {
+              "title": "Text Scale Addon",
+              "href": "/addons/text-scale-addon"
+            },
+            {
+              "title": "Theme Addon",
+              "href": "/addons/theme-addon"
+            },
+            {
+              "title": "Time Dilation Addon",
+              "href": "/addons/time-dilation-addon"
+            },
+            {
+              "title": "Zoom Addon",
+              "href": "/addons/zoom-addon"
+            },
+            {
+              "title": "Custom Addon",
+              "href": "/addons/custom-addon"
+            }
+          ]
+        },
+        {
+          "group": "Migration",
+          "tab": "root",
+          "pages": [
+            {
+              "title": "2.4.0 to 3.0.0",
+              "href": "/migration/2.4.0-to-3.0.0"
+            },
+            {
+              "title": "3.0.0 beta to rc",
+              "href": "/migration/3.0.0-beta-to-rc"
+            }
+          ]
+        },
+        {
+          "group": "Next",
+          "tab": "root",
+          "pages": [
+            {
+              "title": "SAM Architecture",
+              "href": "/next/sam"
+            }
+          ]
+        },
+
+        {
+          "group": "Cookbook",
+          "pages": [
+            {
+              "title": "Custom Theme",
+              "href": "/cookbook/custom-theme"
+            }
+          ]
+        },
+        {
+          "group": "Contribution",
+          "pages": [
+            {
+              "title": "Ways to Contribute",
+              "href": "/contribution/ways-to-contribute"
+            },
+            {
+              "title": "Getting Started",
+              "href": "/contribution/get-started"
+            },
+            {
+              "title": "Contribution Workflow",
+              "href": "/contribution/workflow"
+            },
+            {
+              "title": "Adding Example",
+              "href": "/contribution/adding-example"
+            },
+            {
+              "title": "PR Title Conventions",
+              "href": "/contribution/pr-conventions"
+            },
+            {
+              "title": "Code Review",
+              "href": "/contribution/code-reviews"
+            },
+            {
+              "title": "Sync Your Fork",
+              "href": "/contribution/sync-your-fork"
+            },
+            {
+              "title": "Quick Guide",
+              "href": "/contribution/quick-guide"
+            }
+          ]
         }
       ]
     },
     {
-      "group": "Addons",
+      "tab": "cloud",
       "pages": [
         {
           "title": "Overview",
-          "href": "/addons/overview"
+          "href": "/widgetbook-cloud"
         },
         {
-          "title": "Accessibility Addon",
-          "href": "/addons/accessibility-addon"
-        },
-        {
-          "title": "Alignment Addon",
-          "href": "/addons/alignment-addon"
-        },
-        {
-          "title": "Builder Addon",
-          "href": "/addons/builder-addon"
-        },
-        {
-          "title": "Device Frame Addon",
-          "href": "/addons/device-frame-addon"
-        },
-        {
-          "title": "Grid Addon",
-          "href": "/addons/grid-addon"
-        },
-        {
-          "title": "Inspector Addon",
-          "href": "/addons/inspector-addon"
-        },
-        {
-          "title": "Localization Addon",
-          "href": "/addons/localization-addon"
-        },
-        {
-          "title": "Text Scale Addon",
-          "href": "/addons/text-scale-addon"
-        },
-        {
-          "title": "Theme Addon",
-          "href": "/addons/theme-addon"
-        },
-        {
-          "title": "Time Dilation Addon",
-          "href": "/addons/time-dilation-addon"
-        },
-        {
-          "title": "Zoom Addon",
-          "href": "/addons/zoom-addon"
-        },
-        {
-          "title": "Custom Addon",
-          "href": "/addons/custom-addon"
-        }
-      ]
-    },
-    {
-      "group": "Knobs",
-      "pages": [
-        {
-          "title": "Overview",
-          "href": "/knobs/overview"
-        },
-        {
-          "title": "Custom Knob",
-          "href": "/knobs/custom-knob"
-        }
-      ]
-    },
-    {
-      "group": "Migration",
-      "pages": [
-        {
-          "title": "2.4.0 to 3.0.0",
-          "href": "/migration/2.4.0-to-3.0.0"
-        },
-        {
-          "title": "3.0.0 beta to rc",
-          "href": "/migration/3.0.0-beta-to-rc"
-        }
-      ]
-    },
-    {
-      "group": "Next",
-      "pages": [
-        {
-          "title": "SAM Architecture",
-          "href": "/next/sam"
-        }
-      ]
-    },
-    {
-      "group": "Cookbook",
-      "pages": [
-        {
-          "title": "Custom Theme",
-          "href": "/cookbook/custom-theme"
-        }
-      ]
-    },
-    {
-      "group": "Widgetbook Cloud",
-      "pages": [
-        {
-          "title": "Overview",
-          "href": "/widgetbook-cloud/overview"
-        },
-        {
-          "title": "Hosting",
-          "href": "/widgetbook-cloud/hosting"
+          "title": "Builds",
+          "href": "/widgetbook-cloud/builds"
         },
         {
           "title": "Reviews",
@@ -220,48 +272,11 @@
       ]
     },
     {
-      "group": "CLI",
+      "tab": "cli",
       "pages": [
         {
           "title": "Overview",
-          "href": "/widgetbook-cli/overview"
-        }
-      ]
-    },
-    {
-      "group": "Contribution",
-      "pages": [
-        {
-          "title": "Ways to Contribute",
-          "href": "/contribution/ways-to-contribute"
-        },
-        {
-          "title": "Getting Started",
-          "href": "/contribution/get-started"
-        },
-        {
-          "title": "Contribution Workflow",
-          "href": "/contribution/workflow"
-        },
-        {
-          "title": "Adding Example",
-          "href": "/contribution/adding-example"
-        },
-        {
-          "title": "PR Title Conventions",
-          "href": "/contribution/pr-conventions"
-        },
-        {
-          "title": "Code Review",
-          "href": "/contribution/code-reviews"
-        },
-        {
-          "title": "Sync Your Fork",
-          "href": "/contribution/sync-your-fork"
-        },
-        {
-          "title": "Quick Guide",
-          "href": "/contribution/quick-guide"
+          "href": "/widgetbook-cli"
         }
       ]
     }
