@@ -201,16 +201,6 @@
             }
           ]
         },
-
-        {
-          "group": "Cookbook",
-          "pages": [
-            {
-              "title": "Custom Theme",
-              "href": "/cookbook/custom-theme"
-            }
-          ]
-        },
         {
           "group": "Contribution",
           "pages": [
