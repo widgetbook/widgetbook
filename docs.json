@@ -64,6 +64,10 @@
         {
           "title": "Why Widgetbook",
           "href": "/why-widgetbook"
+        },
+        {
+          "title": "Demo",
+          "href": "https://demo.widgetbook.io/"
         }
       ]
     },
