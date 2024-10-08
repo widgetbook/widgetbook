@@ -44,12 +44,12 @@
     {
       "id": "cloud",
       "title": "Widgetbook Cloud",
-      "href": "/widgetbook-cloud"
+      "href": "/cloud"
     },
     {
       "id": "cli",
       "title": "CLI",
-      "href": "/widgetbook-cli"
+      "href": "/cli"
     }
   ],
   "sidebar": [
@@ -249,19 +249,19 @@
       "pages": [
         {
           "title": "Overview",
-          "href": "/widgetbook-cloud"
+          "href": "/cloud"
         },
         {
           "title": "Builds",
-          "href": "/widgetbook-cloud/builds"
+          "href": "/cloud/builds"
         },
         {
           "title": "Reviews",
-          "href": "/widgetbook-cloud/reviews"
+          "href": "/cloud/reviews"
         },
         {
           "title": "Multi Snapshot Reviews",
-          "href": "/widgetbook-cloud/multi-snapshot"
+          "href": "/cloud/multi-snapshot"
         }
       ]
     },
@@ -270,7 +270,7 @@
       "pages": [
         {
           "title": "Overview",
-          "href": "/widgetbook-cli"
+          "href": "/cli"
         }
       ]
     }

@@ -7,10 +7,10 @@
 
 Widgetbook Cloud Reviews has four main features to improve your review workflow:
 
-1. [**UI Regression Detection**](/widgetbook-cloud/reviews#ui-regression-detection): to automatically detect UI regressions.
-1. [**Multi Mode Snapshots**](/widgetbook-cloud/reviews#multi-snapshot-reviews): to automatically detect UI regressions for different addon and knob configurations.
-1. [**Structured Review Process**](/widgetbook-cloud/reviews#structured-review-process): to ensure that all UI changes are intentional and match the design expectations.
-1. [**Figma x Flutter Comparison**](/widgetbook-cloud/reviews#figma-x-flutter-comparison): to verify if the developer meets the design requirements.
+1. [**UI Regression Detection**](/cloud/reviews#ui-regression-detection): to automatically detect UI regressions.
+1. [**Multi Mode Snapshots**](/cloud/reviews#multi-snapshot-reviews): to automatically detect UI regressions for different addon and knob configurations.
+1. [**Structured Review Process**](/cloud/reviews#structured-review-process): to ensure that all UI changes are intentional and match the design expectations.
+1. [**Figma x Flutter Comparison**](/cloud/reviews#figma-x-flutter-comparison): to verify if the developer meets the design requirements.
 
 ## Tutorial video
 
@@ -19,7 +19,7 @@ Widgetbook Cloud Reviews has four main features to improve your review workflow:
 ## Pre-requisites
 
 1. **Connect** your Widgetbook Project to a git repository from the project settings page.
-1. Make sure you have a [Widgetbook Build](/widgetbook-cloud/builds) on pushes of new commits [via CI](/widgetbook-cloud/builds#pushing-new-builds-with-ci) (e.g. GitHub Actions).
+1. Make sure you have a [Widgetbook Build](/cloud/builds) on pushes of new commits [via CI](/cloud/builds#pushing-new-builds-with-ci) (e.g. GitHub Actions).
 
 ## UI Regression Detection
 
@@ -33,14 +33,14 @@ It works similarly like GitHub PRs. Instead of only comparing code changes, with
 
 ### Guide
 
-1. Finish the [pre-requisites](/widgetbook-cloud/reviews#pre-requisites) set up.
+1. Finish the [pre-requisites](/cloud/reviews#pre-requisites) set up.
 1. Create a new branch (e.g. `feat/new-button`) and commit your changes to it.
 1. [Create a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) from your `head` branch (e.g. `feat/new-button`) to the `base` branch (e.g. `main`).
 1. After your build upload finishes (i.e. the CI job from [Pre-requisites](#pre-requisites)), a [commit status](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks) will be added to your PR once the review is ready.
 
 ## Multi Mode Snapshots
 
-Find more information in the dedicated [Multi Snapshot Reviews page](/widgetbook-cloud/multi-snapshot).
+Find more information in the dedicated [Multi Snapshot Reviews page](/cloud/multi-snapshot).
 {/* TODO (Youssef) it is weird that we have a separate page for that. But I don't want to make this page super long. Any ideas? */}
 
 ## Structured Review Process
@@ -99,7 +99,7 @@ To have a "View in Figma" button in your reviews, you need to add the Figma URL 
 
 1. Commit your changes and push them to your repository; to create a new build.
 
-1. Add [**more configurations**](/widgetbook-cloud/multi-snapshot) to test your use-cases with different **addons** and **knobs**.
+1. Add [**more configurations**](/cloud/multi-snapshot) to test your use-cases with different **addons** and **knobs**.
 
 ## Limitations
 

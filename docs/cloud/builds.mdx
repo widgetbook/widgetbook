@@ -34,7 +34,7 @@ To create a Widgetbook Build, follow these steps inside your Widgetbook project:
    flutter build web -t lib/main.widgetbook.dart
    ```
 
-1. Install the [Widgetbook CLI](/widgetbook-cli)
+1. Install the [Widgetbook CLI](/cli)
 
    ```bash
    dart pub global activate widgetbook_cli
@@ -52,7 +52,7 @@ To create a Widgetbook Build, follow these steps inside your Widgetbook project:
 The `cloud push` command uses the following directories:
 
 1. `build/web/` to create a `.zip` archive that will be uploaded to Widgetbook Cloud.
-1. `.dart_tool/build/generated/[your_app_name]/` to send metadata, _about the generated use-cases_, that will be used for [Widgetbook Cloud Review](/widgetbook-cloud/reviews).
+1. `.dart_tool/build/generated/[your_app_name]/` to send metadata, _about the generated use-cases_, that will be used for [Widgetbook Cloud Review](/cloud/reviews).
 
 </Info>
 
@@ -86,7 +86,7 @@ your_app/
   <TabItem value="github">
     1. Add `WIDGETBOOK_API_KEY` to your [GitHub repository's secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository). You can find the API key in the Widgetbook Cloud's **project settings page**.
 
-    1. Create a new GitHub Actions workflow file in your repository under `.github/workflows/widgetbook-cloud-hosting.yml` with the following content:
+    1. Create a new GitHub Actions workflow file in your repository under `.github/workflows/cloud-hosting.yml` with the following content:
 
         ```yaml
         name: Widgetbook Cloud Hosting
