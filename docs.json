@@ -36,7 +36,7 @@
   },
   "tabs": [
     {
-      "id": "root",
+      "id": "docs",
       "title": "Docs",
       "href": "/"
     },
@@ -54,7 +54,7 @@
   "sidebar": [
     {
       "group": "Overview",
-      "tab": "root",
+      "tab": "docs",
       "pages": [
         {
           "title": "Overview",
@@ -80,7 +80,7 @@
     },
     {
       "group": "Guides",
-      "tab": "root",
+      "tab": "docs",
       "pages": [
         {
           "title": "Quick Start",
