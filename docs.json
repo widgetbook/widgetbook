@@ -183,7 +183,6 @@
         },
         {
           "group": "Migration",
-          "tab": "root",
           "pages": [
             {
               "title": "2.4.0 to 3.0.0",
@@ -197,7 +196,6 @@
         },
         {
           "group": "Next",
-          "tab": "root",
           "pages": [
             {
               "title": "SAM Architecture",
@@ -266,6 +264,31 @@
         {
           "title": "Reviews",
           "href": "/cloud/reviews"
+        },
+        {
+          "group": "Setup",
+          "pages": [
+            {
+              "title": "GitHub",
+              "href": "/cloud/setup/github"
+            },
+            {
+              "title": "GitLab",
+              "href": "/cloud/setup/gitlab"
+            },
+            {
+              "title": "Bitbucket",
+              "href": "/cloud/setup/bitbucket"
+            },
+            {
+              "title": "Azure DevOps",
+              "href": "/cloud/setup/azure"
+            },
+            {
+              "title": "Codemagic",
+              "href": "/cloud/setup/Codemagic"
+            }
+          ]
         },
         {
           "title": "Multi Snapshot Reviews",
