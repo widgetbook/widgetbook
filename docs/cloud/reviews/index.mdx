@@ -1,0 +1,104 @@
+# Widgetbook Cloud Reviews
+
+> We are already saving 20% of time for our designers and developers.  
+> – [1KOMMA5°](https://1komma5grad.com/de) _([source](https://youtu.be/Du5yVtnmNzg?t=1759))_
+
+Widgetbook Cloud Reviews has four main features to improve your review workflow:
+
+1. [**UI Regression Detection**](/cloud/reviews#ui-regression-detection): to automatically detect UI regressions.
+1. [**Structured Review Process**](/cloud/reviews#structured-review-process): to ensure that all UI changes are intentional and match the design expectations.
+1. [**Multi Mode Snapshots**](/cloud/reviews/multi-snapshot): to automatically detect UI regressions for different addon and knob configurations.
+1. [**Figma x Flutter Comparison**](/cloud/reviews/figma): to verify if the developer meets the design requirements.
+
+## Tutorial video
+
+<YouTube id="CalXXyThDi4" />
+
+## UI Regression Detection
+
+Widgetbook Cloud provides a zero-config UI regression detection system. It automatically compares the visual differences between different builds and highlights the changes in the UI.
+
+It works similarly like Git PRs. Instead of only comparing code changes, with Widgetbook Cloud Reviews, you can now also compare visual differences and detect **UI regressions** between different branches or commits.
+
+| Git PRs                                                          | Widgetbook Cloud Reviews                                             |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Compare **code changes** between `base` commit and `head` commit | Compare **visual differences** between `base` build and `head` build |
+
+## Structured Review Process
+
+After your review is ready, you can start comparing the visual differences between the `base` and `head` builds. Here are some things that can help improving your workflow:
+
+1. **Validate** if your visual changes are intentional or not.
+2. **Ask team mates for review** if all changes were intentional.
+3. **Provide feedback** the reviewer will be able to either approve the changes or request changes. The status of the review will be reflected in the commit status of your git PR.
+
+<Info>
+  You can disable the commit status from blocking your git PRs via the commit
+  status in your Widgetbook Cloud project settings
+</Info>
+
+## Limitations
+
+### Animations
+
+If your use-cases have any animations (e.g. `CircularProgressIndication`), then the visual comparison might not work as expected. This is because the visual comparison algorithm is not able to compare animations.
+
+We suggest using one of the following workarounds:
+
+1. **Adaptive animations**: you might want to still enjoy your animations while running Widgetbook, but you just need to disable them when the use-case is being used in a Widgetbook-Cloud-context. To do so, you can use the following `extension`, to make your use-cases adaptive to the Widgetbook Cloud Reviews and disable the animations during the visual comparison.
+
+   ```dart
+   extension WidgetbookContext on BuildContext {
+     /// The `preview` query parameter is used while taking snapshots of the
+     /// use-case for Widgetbook Cloud Reviews. This getter can be used to
+     /// customize the behavior of the use-case while taking the snapshots,
+     /// it can be used to disable animations for example.
+     bool get isInWidgetbookCloud => WidgetbookState.of(this).previewMode;
+   }
+
+   @UseCase(name: 'Default', type: CircularProgressIndicator)
+   Widget adaptiveAnimationUseCase(BuildContext context) {
+     return CircularProgressIndicator(
+       value: context.isInWidgetbookCloud ? 0.5 : null,
+     );
+   }
+   ```
+
+1. **Starting animations on-demand**: you can use a `boolean` knob to start your animations. This way, you can disable the animations during the visual comparison but you can still see the animations in the Widgetbook.
+
+   ```dart
+   @UseCase(name: 'Default', type: CircularProgressIndicator)
+   Widget onDemandAnimationUseCase(BuildContext context) {
+     return CircularProgressIndicator(
+       value: context.knobs.boolean(label: 'Static') ? 0.5 : null,
+     );
+   }
+   ```
+
+### Random values
+
+If your use-case displays random values (e.g. dates), that can be different across different builds, the visual comparison might not work as expected.
+
+We suggest using one of the following workarounds:
+
+1. Use a **constant value** for the random value.
+
+   ```diff
+   @UseCase(name: 'Default', type: Text)
+   Widget constantValueUseCase(BuildContext context) {
+   -  return Text(Random().nextInt(10).toString());
+   +  return Text('10');
+   }
+   ```
+
+1. Use [**Knobs**](/knobs/overview) with a default value.
+
+   ```diff
+   @UseCase(name: 'Default', type: Text)
+   Widget constantValueUseCase(BuildContext context) {
+   -  return Text(Random().nextInt(10).toString());
+   +  return Text(
+   +    context.knobs.string(label: 'value', defaultValue: '10'),
+   +  );
+   }
+   ```

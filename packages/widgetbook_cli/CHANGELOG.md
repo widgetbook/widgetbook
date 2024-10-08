@@ -8,7 +8,7 @@
 
 ## 3.4.0
 
-- **FEAT**: Support Multi Snapshot for addons. For more information, check our [docs](https://docs.widgetbook.io/cloud/multi-snapshot). ([#1239](https://github.com/widgetbook/widgetbook/pull/1239))
+- **FEAT**: Support Multi Snapshot for addons. For more information, check our [docs](https://docs.widgetbook.io/cloud/reviews/multi-snapshot). ([#1239](https://github.com/widgetbook/widgetbook/pull/1239))
 
 ## 3.3.1
 

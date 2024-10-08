@@ -34,7 +34,6 @@
       "widgetbook": "3.9.0"
     }
   },
-
   "tabs": [
     {
       "id": "root",
@@ -289,10 +288,20 @@
               "href": "/cloud/setup/Codemagic"
             }
           ]
+        }
+      ]
+    },
+    {
+      "tab": "cloud",
+      "group": "Guides",
+      "pages": [
+        {
+          "title": "Figma Reviews",
+          "href": "/cloud/reviews/figma"
         },
         {
           "title": "Multi Snapshot Reviews",
-          "href": "/cloud/multi-snapshot"
+          "href": "/cloud/reviews/multi-snapshot"
         }
       ]
     },
