@@ -38,7 +38,7 @@
   "tabs": [
     {
       "id": "root",
-      "title": "OSS",
+      "title": "Docs",
       "href": "/"
     },
     {
@@ -68,6 +68,14 @@
         {
           "title": "Demo",
           "href": "https://demo.widgetbook.io/"
+        },
+        {
+          "title": "Design System",
+          "href": "/design-system"
+        },
+        {
+          "title": "Telemetry",
+          "href": "/telemetry"
         }
       ]
     },
@@ -102,14 +110,6 @@
         {
           "title": "Mocking",
           "href": "/guides/mocking"
-        },
-        {
-          "title": "Complete Example",
-          "href": "/demo"
-        },
-        {
-          "title": "Telemetry",
-          "href": "/telemetry"
         },
         {
           "group": "Knobs",
@@ -250,6 +250,14 @@
         {
           "title": "Overview",
           "href": "/cloud"
+        },
+        {
+          "title": "Why Widgetbook Cloud?",
+          "href": "/cloud/why-widgetbook-cloud"
+        },
+        {
+          "title": "Golden Tests",
+          "href": "/cloud/golden-tests"
         },
         {
           "title": "Builds",
