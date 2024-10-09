@@ -92,22 +92,22 @@ We suggest using one of the following workarounds:
 
 1. Use a **constant value** for the random value.
 
-   ```diff
+   ```dart
    @UseCase(name: 'Default', type: Text)
    Widget constantValueUseCase(BuildContext context) {
-   -  return Text(Random().nextInt(10).toString());
-   +  return Text('10');
+     return Text(Random().nextInt(10).toString()); // [!code --]
+     return Text('10'); // [!code ++]
    }
    ```
 
 1. Use [**Knobs**](/knobs) with a default value.
 
-   ```diff
+   ```dart
    @UseCase(name: 'Default', type: Text)
    Widget constantValueUseCase(BuildContext context) {
-   -  return Text(Random().nextInt(10).toString());
-   +  return Text(
-   +    context.knobs.string(label: 'value', defaultValue: '10'),
-   +  );
+     return Text(Random().nextInt(10).toString()); // [!code --]
+     return Text( // [!code ++]
+       context.knobs.string(label: 'value', defaultValue: '10'), // [!code ++]
+     ); // [!code ++]
    }
    ```
