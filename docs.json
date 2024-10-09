@@ -61,10 +61,6 @@
           "href": "/index"
         },
         {
-          "title": "Why Widgetbook",
-          "href": "/why-widgetbook"
-        },
-        {
           "title": "Demo",
           "href": "https://demo.widgetbook.io/"
         }
@@ -276,20 +272,16 @@
           "href": "/cloud"
         },
         {
-          "title": "Why Widgetbook Cloud?",
-          "href": "/cloud/why-widgetbook-cloud"
-        },
-        {
-          "title": "Product Tour",
-          "href": "https://app.arcade.software/share/KAUbnlpbFF26PJzIGrwG"
-        },
-        {
           "title": "Builds",
           "href": "/cloud/builds"
         },
         {
           "title": "Reviews",
           "href": "/cloud/reviews"
+        },
+        {
+          "title": "Product Tour",
+          "href": "https://app.arcade.software/share/KAUbnlpbFF26PJzIGrwG"
         }
       ]
     },

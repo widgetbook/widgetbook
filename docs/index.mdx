@@ -1,30 +1,42 @@
-<Card
-  title="🎉 Widgetbook Cloud is now Live!"
-  href="https://www.youtube.com/watch?v=gCTSc99V-KI"
->
+<Card title="🎉 Widgetbook Cloud is now Live!" href="/cloud">
   **Save 20% of your time** by shortening the feedback loop between designers
   and developers.
 </Card>
 
 # Overview
 
-Welcome to Widgetbook!👋 Widgetbook is split into the open source Widgetbook and Widgetbook Cloud.
+Widgetbook is a Flutter package inspired by [Storybook.js](https://storybook.js.org/) that simplifies the process of cataloging widgets to create your own [design system](/glossary/design-system), and testing the widgets across various configurations, like different devices, languages and themes.
 
-The open source Widgetbook a Flutter package inspired by Storybook.js that simplifies the process of cataloging widgets to create your own design system, and testing the widgets across various configurations, like different devices, languages and themes.
-
-Widgetbook Cloud is a review platform for the entire product team that simplifies UI reviews among designers, developers, product managers and QA testers. Our customers have been reporting that every designer and developer working with Widgetbook saves 20% of their time. You can find presentations of 3 selected customers showcasing how they benefit from Widgetbook [here](xyz)
-
-Widgetbook is recommended by Google's Flutter team who features us as experts for design systems and designer/developer collaboration. Feel free to check Google's demo video of Widgetbook [here](xyz)
-{/* TODO (Lucas) insert Google video */}
+Widgetbook is [recommended by Google's Flutter team](https://www.youtube.com/watch?v=-g2KYjiPzzA) who features us as experts for design systems and designer/developer collaboration.
 
 <Image src="/assets/screenshots/widgetbook.png" zoom />
 
-## Experience Widgetbook in Action
+## The Problem
 
-Explore the capabilities of the open source Widgetbook and Widgetbook Cloud:
+Developing user interfaces in Flutter applications often involves creating and managing numerous widgets. However, developers face several challenges in the process:
 
-- Try the interactive demo of the open source Widgetbook and Widgetbook Cloud
-  {/* TODO (Lucas) insert Arcade link */}
-- Try the open source Widgetbook with our example app by visiting our [demo page](https://demo.widgetbook.io).
-- Watch a dedicted Widgetbook Cloud [demo video](https://demo.widgetbook.io)
-  {/* TODO (Lucas) insert Open Launch video */}
+- **Keeping the overview of the design system is difficult** Setting up and maintaining the structure for a [design system](/glossary/design-system) that catalogs every widget is time-consuming. As it's not the core business of a Flutter team, it also distracts the developers from actual feature development.
+
+- **UI flaws:** Testing widgets across multiple devices, themes, and settings is time-consuming and prone to errors. When changing existing widgets, it is difficult to detect all resulting UI changes to ensure that all changes look and feel as intended.
+
+## The Solution: Widgetbook
+
+- **Build your own design system:** Widgetbook's cataloging system helps maintain a cohesive look and feel across applications and platforms, promoting a unified user experience.
+
+- **Build your widgets in isolation:** Implement widgets without needing to fuss with data, APIs, or business logic. Use Widgetbook's [Addons](/addons) and [Knobs](/knobs) to quickly test your widgets in all relevant configurations.
+
+<Info>
+  On top of our [open-source](https://github.com/widgetbook/widgetbook) package,
+  we've built [**Widgetbook Cloud**](/cloud) to help teams save more time and
+  ensure better collaboration between designers and developers.
+</Info>
+
+<YouTube id="Du5yVtnmNzg" />
+
+## Customers Showcase
+
+### Lotum
+
+Lotum speeds up their app development by building their widgets in isolation with Widgetbook.
+
+<YouTube id="0xV-OzfY2zg" />
