@@ -115,7 +115,7 @@
           "pages": [
             {
               "title": "Overview",
-              "href": "/knobs/overview"
+              "href": "/knobs"
             },
             {
               "title": "Custom Knob",
@@ -128,7 +128,7 @@
           "pages": [
             {
               "title": "Overview",
-              "href": "/addons/overview"
+              "href": "/addons"
             },
             {
               "title": "Accessibility Addon",
