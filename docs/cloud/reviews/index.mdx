@@ -3,39 +3,48 @@
 > We are already saving 20% of time for our designers and developers.  
 > – [1KOMMA5°](https://1komma5grad.com/de) _([source](https://youtu.be/Du5yVtnmNzg?t=1759))_
 
-Widgetbook Cloud Reviews has four main features to improve your review workflow:
+Widgetbook Cloud Reviews not just helps you introduce a **"Design Review"** in your workflow, but also helps you to **detect UI regressions automatically**. It provides a structured review process to ensure that all **UI changes are intentional** and match the design expectations.
 
-1. [**UI Regression Detection**](/cloud/reviews#ui-regression-detection): to automatically detect UI regressions.
-1. [**Structured Review Process**](/cloud/reviews#structured-review-process): to ensure that all UI changes are intentional and match the design expectations.
-1. [**Multi Mode Snapshots**](/cloud/reviews/multi-snapshot): to automatically detect UI regressions for different addon and knob configurations.
-1. [**Figma x Flutter Comparison**](/cloud/reviews/figma): to verify if the developer meets the design requirements.
+<Image theme="light" src="/assets/cloud/review.light.png" />
+<Image theme="dark" src="/assets/cloud/review.dark.png" />
 
 ## Tutorial video
 
 <YouTube id="CalXXyThDi4" />
 
-## UI Regression Detection
+## Code Review vs Design Review
 
-Widgetbook Cloud provides a zero-config UI regression detection system. It automatically compares the visual differences between different builds and highlights the changes in the UI.
+In a code review, you are looking for bugs, performance issues, and code quality. In a design review, you are looking for visual differences between the design and the implementation. It is important to have both types of reviews to ensure that the code is correct and the design is implemented as expected.
 
-It works similarly like Git PRs. Instead of only comparing code changes, with Widgetbook Cloud Reviews, you can now also compare visual differences and detect **UI regressions** between different branches or commits.
+Design reviews does not only help designers to ensure that the design is implemented correctly, but also help **developers** to **detect UI regressions automatically**.
 
-| Git PRs                                                          | Widgetbook Cloud Reviews                                             |
-| ---------------------------------------------------------------- | -------------------------------------------------------------------- |
-| Compare **code changes** between `base` commit and `head` commit | Compare **visual differences** between `base` build and `head` build |
+|                | Code Review                                        | Design Review                                                            |
+| -------------- | -------------------------------------------------- | ------------------------------------------------------------------------ |
+| **Purpose**    | To find bugs, performance issues, and code quality | To find visual differences between the design and the implementation     |
+| **Comparison** | **Code changes** between `base` and `head` commits | **Visual differences** between `base` and `head` [builds](/cloud/builds) |
+| **Reviewer**   | Developers                                         | Designers and Developers                                                 |
+| **Tool**       | Version Control Systems (e.g. GitHub, GitLab)      | Widgetbook Cloud                                                         |
 
-## Structured Review Process
-
-After your review is ready, you can start comparing the visual differences between the `base` and `head` builds. Here are some things that can help improving your workflow:
-
-1. **Validate** if your visual changes are intentional or not.
-2. **Ask team mates for review** if all changes were intentional.
-3. **Provide feedback** the reviewer will be able to either approve the changes or request changes. The status of the review will be reflected in the commit status of your git PR.
+## Design Review Workflow
 
 <Info>
-  You can disable the commit status from blocking your git PRs via the commit
-  status in your Widgetbook Cloud project settings
+  **Prerequisite:** Make sure you have finished the setup of Widgetbook Cloud
+  for [GitHub](/cloud/setup/github), [GitLab](/cloud/setup/gitlab) or [Azure
+  DevOps](/cloud/setup/azure-devops).
 </Info>
+
+1. Submit a PR with your changes using your version control system (e.g. GitHub, GitLab).
+1. Widgetbook Cloud will **automatically** create a review for your PR and post the URL in your git PR as a **commit status**.
+1. Designers and Developers should review the visual differences _(if any)_, and either **approve** the changes or **request changes**.
+1. The review status will be **reflected** in the commit status of your git PR.
+1. If changes are requested, the commit status will **block your PR from getting merged** until the requested changes are applied. _(you can disable this behavior from your project settings)_
+
+## Empower Design Reviews
+
+To give the reviewer more power, you can use the following features:
+
+1. [**Figma Reviews**](/cloud/reviews/figma): Compare the implementation with the Figma design.
+1. [**Multi Snapshot Reviews**](/cloud/reviews/multi-snapshot): Generate snapshots for each use-case in multiple configurations (i.e. themes, locales, devices, etc.); to ensure that the UI is consistent across all configurations.
 
 ## Limitations
 
