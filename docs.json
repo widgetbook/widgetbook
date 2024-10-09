@@ -82,14 +82,7 @@
           "title": "Customization",
           "href": "/guides/customization"
         },
-        {
-          "title": "Assets",
-          "href": "/guides/assets"
-        },
-        {
-          "title": "Localizations",
-          "href": "/guides/l10n"
-        },
+
         {
           "title": "Components",
           "href": "/guides/components"
@@ -97,10 +90,6 @@
         {
           "title": "Annotations",
           "href": "/guides/annotations"
-        },
-        {
-          "title": "Mocking",
-          "href": "/guides/mocking"
         },
         {
           "group": "Knobs",
@@ -171,6 +160,28 @@
               "href": "/addons/custom-addon"
             }
           ]
+        }
+      ]
+    },
+    {
+      "tab": "docs",
+      "group": "Advanced",
+      "pages": [
+        {
+          "title": "Mocking",
+          "href": "/guides/mocking"
+        },
+        {
+          "title": "Assets",
+          "href": "/guides/assets"
+        },
+        {
+          "title": "Localizations",
+          "href": "/guides/l10n"
+        },
+        {
+          "title": "Fields",
+          "href": "/guides/fields"
         },
         {
           "group": "Migration",
@@ -280,7 +291,13 @@
         {
           "title": "Reviews",
           "href": "/cloud/reviews"
-        },
+        }
+      ]
+    },
+    {
+      "tab": "cloud",
+      "group": "Guides",
+      "pages": [
         {
           "group": "Setup",
           "pages": [
@@ -305,13 +322,7 @@
               "href": "/cloud/setup/codemagic"
             }
           ]
-        }
-      ]
-    },
-    {
-      "tab": "cloud",
-      "group": "Guides",
-      "pages": [
+        },
         {
           "title": "Figma Reviews",
           "href": "/cloud/reviews/figma"
