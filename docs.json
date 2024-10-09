@@ -79,13 +79,12 @@
           "href": "/guides/quick-start"
         },
         {
+          "title": "Use-cases",
+          "href": "/guides/use-cases"
+        },
+        {
           "title": "Customization",
           "href": "/guides/customization"
-        },
-
-        {
-          "title": "Components",
-          "href": "/guides/components"
         },
         {
           "title": "Annotations",
