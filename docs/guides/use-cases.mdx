@@ -32,13 +32,7 @@ class Button extends StatelessWidget {
 }
 ```
 
-<Info>
-  In the following code, instead of passing `text` as a constant value, you can
-  use a [knob](/knobs) to change the text value in the Widgetbook UI, and see
-  how your button behaves with extra-long text, or with an empty text.
-</Info>
-
-```dart title="widgetbook/lib/button.use_cases.dart"
+```dart title="widgetbook/lib/button.dart"
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
@@ -68,6 +62,12 @@ Widget disabledButton(BuildContext context) {
   );
 }
 ```
+
+<Info>
+  In the previous code, instead of passing `text` as a constant value, you can
+  use a [knob](/knobs) to change the text value in the Widgetbook UI, and see
+  how your button behaves with extra-long text, or with an empty text.
+</Info>
 
 ## Use-cases for Screens
 
