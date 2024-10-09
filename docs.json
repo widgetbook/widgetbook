@@ -353,6 +353,15 @@
         {
           "title": "Overview",
           "href": "/cli"
+        },
+        {
+          "group": "Commands",
+          "pages": [
+            {
+              "title": "cloud build push",
+              "href": "/cli/commands/cloud-build-push"
+            }
+          ]
         }
       ]
     }
