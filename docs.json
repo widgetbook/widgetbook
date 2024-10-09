@@ -221,6 +221,10 @@
       "group": "Misc",
       "pages": [
         {
+          "title": "Resources",
+          "href": "/resources"
+        },
+        {
           "title": "Telemetry",
           "href": "/telemetry"
         },
