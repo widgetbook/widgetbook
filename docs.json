@@ -53,8 +53,8 @@
   ],
   "sidebar": [
     {
-      "group": "Overview",
       "tab": "docs",
+      "group": "Introduction",
       "pages": [
         {
           "title": "Overview",
@@ -67,14 +67,6 @@
         {
           "title": "Demo",
           "href": "https://demo.widgetbook.io/"
-        },
-        {
-          "title": "Design System",
-          "href": "/design-system"
-        },
-        {
-          "title": "Telemetry",
-          "href": "/telemetry"
         }
       ]
     },
@@ -201,6 +193,30 @@
               "href": "/next/sam"
             }
           ]
+        }
+      ]
+    },
+    {
+      "tab": "docs",
+      "group": "Glossary",
+      "pages": [
+        {
+          "title": "Design System",
+          "href": "/glossary/design-system"
+        },
+        {
+          "title": "Golden Tests",
+          "href": "/glossary/golden-tests"
+        }
+      ]
+    },
+    {
+      "tab": "docs",
+      "group": "Misc",
+      "pages": [
+        {
+          "title": "Telemetry",
+          "href": "/telemetry"
         },
         {
           "group": "Contribution",
@@ -243,6 +259,7 @@
     },
     {
       "tab": "cloud",
+      "group": "Introduction",
       "pages": [
         {
           "title": "Overview",
@@ -255,10 +272,6 @@
         {
           "title": "Product Tour",
           "href": "https://app.arcade.software/share/KAUbnlpbFF26PJzIGrwG"
-        },
-        {
-          "title": "Golden Tests",
-          "href": "/cloud/golden-tests"
         },
         {
           "title": "Builds",
