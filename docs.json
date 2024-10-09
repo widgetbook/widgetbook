@@ -310,6 +310,20 @@
       ]
     },
     {
+      "tab": "cloud",
+      "group": "Help",
+      "pages": [
+        {
+          "title": "Book a Call",
+          "href": "https://meetings-eu1.hubspot.com/lucas-josefiak"
+        },
+        {
+          "title": "Discord Support",
+          "href": "https://discord.com/channels/879618555560218625/1141761613070860450"
+        }
+      ]
+    },
+    {
       "tab": "cli",
       "pages": [
         {
