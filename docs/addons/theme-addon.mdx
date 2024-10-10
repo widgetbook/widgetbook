@@ -148,6 +148,7 @@ class AppTheme extends InheritedWidget {
 
   final AppThemeData data;
 
+  // Access the theme's data using AppTheme.of(context)
   static AppThemeData of(BuildContext context) {
     final widget = context.dependOnInheritedWidgetOfExactType<AppTheme>();
     return widget!.data;
@@ -177,28 +178,17 @@ are available while the `initialTheme` property defines which theme is active an
 selected.
 
 ```dart title="Example: ThemeAddon"
-final themeAddon = ThemeAddon<AppThemeData>(
+ThemeAddon<AppThemeData>(
+  initialTheme: blueTheme,
   themes: [
-    WidgetbookTheme(
-      name: 'Blue',
-      data: blueTheme,
-    ),
-    WidgetbookTheme(
-      name: 'Yellow',
-      data: yellowTheme,
-    ),
+    blueTheme,
+    yellowTheme,
   ],
-  initialTheme: WidgetbookTheme(
-      name: 'Blue',
-      data: blueTheme,
-  ),
-  themeBuilder: (context, AppThemeData theme, child){
-    // your custom builder
-    return Theme(
+  themeBuilder: (context, theme, child) {
+    return AppTheme(
       data: theme,
       child: child,
     );
    }
 );
-
 ```

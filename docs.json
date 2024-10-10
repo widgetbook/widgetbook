@@ -1,11 +1,11 @@
 {
+  "$schema": "https://docs.page/schema.json",
   "name": "Widgetbook",
   "description": "Build your Design System's widgets in isolation.",
   "theme": {
     "primary": "#0060A7"
   },
   "logo": {
-    "href": "/widgetbook",
     "light": "/assets/logos/logo-light.png",
     "dark": "/assets/logos/logo-dark.png"
   },
@@ -34,34 +34,141 @@
       "widgetbook": "3.9.0"
     }
   },
+  "tabs": [
+    {
+      "id": "docs",
+      "title": "Docs",
+      "href": "/"
+    },
+    {
+      "id": "cloud",
+      "title": "Widgetbook Cloud",
+      "href": "/cloud"
+    },
+    {
+      "id": "cli",
+      "title": "CLI",
+      "href": "/cli"
+    }
+  ],
   "sidebar": [
     {
-      "group": "Overview",
+      "tab": "docs",
+      "group": "Introduction",
       "pages": [
         {
           "title": "Overview",
           "href": "/index"
         },
         {
-          "title": "Terminology",
-          "href": "/terminology"
-        },
-        {
-          "title": "Why Widgetbook",
-          "href": "/why-widgetbook"
+          "title": "Demo",
+          "href": "https://demo.widgetbook.io/"
         }
       ]
     },
     {
       "group": "Guides",
+      "tab": "docs",
       "pages": [
         {
           "title": "Quick Start",
           "href": "/guides/quick-start"
         },
         {
+          "title": "Use-cases",
+          "href": "/guides/use-cases"
+        },
+        {
           "title": "Customization",
           "href": "/guides/customization"
+        },
+        {
+          "title": "Annotations",
+          "href": "/guides/annotations"
+        },
+        {
+          "group": "Knobs",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/knobs"
+            },
+            {
+              "title": "Custom Knob",
+              "href": "/knobs/custom-knob"
+            }
+          ]
+        },
+        {
+          "group": "Addons",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/addons"
+            },
+            {
+              "title": "Accessibility Addon",
+              "href": "/addons/accessibility-addon"
+            },
+            {
+              "title": "Alignment Addon",
+              "href": "/addons/alignment-addon"
+            },
+            {
+              "title": "Builder Addon",
+              "href": "/addons/builder-addon"
+            },
+            {
+              "title": "Device Frame Addon",
+              "href": "/addons/device-frame-addon"
+            },
+            {
+              "title": "Grid Addon",
+              "href": "/addons/grid-addon"
+            },
+            {
+              "title": "Inspector Addon",
+              "href": "/addons/inspector-addon"
+            },
+            {
+              "title": "Localization Addon",
+              "href": "/addons/localization-addon"
+            },
+            {
+              "title": "Text Scale Addon",
+              "href": "/addons/text-scale-addon"
+            },
+            {
+              "title": "Theme Addon",
+              "href": "/addons/theme-addon"
+            },
+            {
+              "title": "Time Dilation Addon",
+              "href": "/addons/time-dilation-addon"
+            },
+            {
+              "title": "Zoom Addon",
+              "href": "/addons/zoom-addon"
+            },
+            {
+              "title": "Custom Addon",
+              "href": "/addons/custom-addon"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tab": "docs",
+      "group": "Advanced",
+      "pages": [
+        {
+          "title": "Monorepo",
+          "href": "/guides/monorepo"
+        },
+        {
+          "title": "Mocking",
+          "href": "/guides/mocking"
         },
         {
           "title": "Assets",
@@ -72,196 +179,188 @@
           "href": "/guides/l10n"
         },
         {
-          "title": "Components",
-          "href": "/guides/components"
+          "title": "Fields",
+          "href": "/guides/fields"
         },
         {
-          "title": "Annotations",
-          "href": "/guides/annotations"
+          "group": "Migration",
+          "pages": [
+            {
+              "title": "2.4.0 to 3.0.0",
+              "href": "/migration/2.4.0-to-3.0.0"
+            },
+            {
+              "title": "3.0.0 beta to rc",
+              "href": "/migration/3.0.0-beta-to-rc"
+            }
+          ]
         },
         {
-          "title": "Mocking",
-          "href": "/guides/mocking"
+          "group": "Next",
+          "pages": [
+            {
+              "title": "SAM Architecture",
+              "href": "/next/sam"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tab": "docs",
+      "group": "Glossary",
+      "pages": [
+        {
+          "title": "Design System",
+          "href": "/glossary/design-system"
         },
         {
-          "title": "Complete Example",
-          "href": "/demo"
-        },
+          "title": "Golden Tests",
+          "href": "/glossary/golden-tests"
+        }
+      ]
+    },
+    {
+      "tab": "docs",
+      "group": "Misc",
+      "pages": [
         {
-          "title": "FAQs",
-          "href": "/faq"
+          "title": "Resources",
+          "href": "/resources"
         },
         {
           "title": "Telemetry",
           "href": "/telemetry"
+        },
+        {
+          "group": "Contribution",
+          "pages": [
+            {
+              "title": "Ways to Contribute",
+              "href": "/contribution/ways-to-contribute"
+            },
+            {
+              "title": "Getting Started",
+              "href": "/contribution/get-started"
+            },
+            {
+              "title": "Contribution Workflow",
+              "href": "/contribution/workflow"
+            },
+            {
+              "title": "Adding Example",
+              "href": "/contribution/adding-example"
+            },
+            {
+              "title": "PR Title Conventions",
+              "href": "/contribution/pr-conventions"
+            },
+            {
+              "title": "Code Review",
+              "href": "/contribution/code-reviews"
+            },
+            {
+              "title": "Sync Your Fork",
+              "href": "/contribution/sync-your-fork"
+            },
+            {
+              "title": "Quick Guide",
+              "href": "/contribution/quick-guide"
+            }
+          ]
         }
       ]
     },
     {
-      "group": "Addons",
+      "tab": "cloud",
+      "group": "Introduction",
       "pages": [
         {
           "title": "Overview",
-          "href": "/addons/overview"
+          "href": "/cloud"
         },
         {
-          "title": "Accessibility Addon",
-          "href": "/addons/accessibility-addon"
-        },
-        {
-          "title": "Alignment Addon",
-          "href": "/addons/alignment-addon"
-        },
-        {
-          "title": "Builder Addon",
-          "href": "/addons/builder-addon"
-        },
-        {
-          "title": "Device Frame Addon",
-          "href": "/addons/device-frame-addon"
-        },
-        {
-          "title": "Grid Addon",
-          "href": "/addons/grid-addon"
-        },
-        {
-          "title": "Inspector Addon",
-          "href": "/addons/inspector-addon"
-        },
-        {
-          "title": "Localization Addon",
-          "href": "/addons/localization-addon"
-        },
-        {
-          "title": "Text Scale Addon",
-          "href": "/addons/text-scale-addon"
-        },
-        {
-          "title": "Theme Addon",
-          "href": "/addons/theme-addon"
-        },
-        {
-          "title": "Time Dilation Addon",
-          "href": "/addons/time-dilation-addon"
-        },
-        {
-          "title": "Zoom Addon",
-          "href": "/addons/zoom-addon"
-        },
-        {
-          "title": "Custom Addon",
-          "href": "/addons/custom-addon"
-        }
-      ]
-    },
-    {
-      "group": "Knobs",
-      "pages": [
-        {
-          "title": "Overview",
-          "href": "/knobs/overview"
-        },
-        {
-          "title": "Custom Knob",
-          "href": "/knobs/custom-knob"
-        }
-      ]
-    },
-    {
-      "group": "Migration",
-      "pages": [
-        {
-          "title": "2.4.0 to 3.0.0",
-          "href": "/migration/2.4.0-to-3.0.0"
-        },
-        {
-          "title": "3.0.0 beta to rc",
-          "href": "/migration/3.0.0-beta-to-rc"
-        }
-      ]
-    },
-    {
-      "group": "Next",
-      "pages": [
-        {
-          "title": "SAM Architecture",
-          "href": "/next/sam"
-        }
-      ]
-    },
-    {
-      "group": "Cookbook",
-      "pages": [
-        {
-          "title": "Custom Theme",
-          "href": "/cookbook/custom-theme"
-        }
-      ]
-    },
-    {
-      "group": "Widgetbook Cloud",
-      "pages": [
-        {
-          "title": "Overview",
-          "href": "/widgetbook-cloud/overview"
-        },
-        {
-          "title": "Hosting",
-          "href": "/widgetbook-cloud/hosting"
+          "title": "Builds",
+          "href": "/cloud/builds"
         },
         {
           "title": "Reviews",
-          "href": "/widgetbook-cloud/reviews"
+          "href": "/cloud/reviews"
+        },
+        {
+          "title": "Product Tour",
+          "href": "https://app.arcade.software/share/KAUbnlpbFF26PJzIGrwG"
+        }
+      ]
+    },
+    {
+      "tab": "cloud",
+      "group": "Guides",
+      "pages": [
+        {
+          "group": "Setup",
+          "pages": [
+            {
+              "title": "GitHub",
+              "href": "/cloud/setup/github"
+            },
+            {
+              "title": "GitLab",
+              "href": "/cloud/setup/gitlab"
+            },
+            {
+              "title": "Bitbucket",
+              "href": "/cloud/setup/bitbucket"
+            },
+            {
+              "title": "Azure DevOps",
+              "href": "/cloud/setup/azure"
+            },
+            {
+              "title": "Codemagic",
+              "href": "/cloud/setup/codemagic"
+            }
+          ]
+        },
+        {
+          "title": "Figma Reviews",
+          "href": "/cloud/reviews/figma"
         },
         {
           "title": "Multi Snapshot Reviews",
-          "href": "/widgetbook-cloud/multi-snapshot"
+          "href": "/cloud/reviews/multi-snapshot"
         }
       ]
     },
     {
-      "group": "CLI",
+      "tab": "cloud",
+      "group": "Help",
+      "pages": [
+        {
+          "title": "Book a Call",
+          "href": "https://meetings-eu1.hubspot.com/lucas-josefiak"
+        },
+        {
+          "title": "Discord Support",
+          "href": "https://discord.com/channels/879618555560218625/1141761613070860450"
+        }
+      ]
+    },
+    {
+      "tab": "cli",
       "pages": [
         {
           "title": "Overview",
-          "href": "/widgetbook-cli/overview"
-        }
-      ]
-    },
-    {
-      "group": "Contribution",
-      "pages": [
-        {
-          "title": "Ways to Contribute",
-          "href": "/contribution/ways-to-contribute"
+          "href": "/cli"
         },
         {
-          "title": "Getting Started",
-          "href": "/contribution/get-started"
-        },
-        {
-          "title": "Contribution Workflow",
-          "href": "/contribution/workflow"
-        },
-        {
-          "title": "Adding Example",
-          "href": "/contribution/adding-example"
-        },
-        {
-          "title": "PR Title Conventions",
-          "href": "/contribution/pr-conventions"
-        },
-        {
-          "title": "Code Review",
-          "href": "/contribution/code-reviews"
-        },
-        {
-          "title": "Sync Your Fork",
-          "href": "/contribution/sync-your-fork"
-        },
-        {
-          "title": "Quick Guide",
-          "href": "/contribution/quick-guide"
+          "group": "Commands",
+          "pages": [
+            {
+              "title": "cloud build push",
+              "href": "/cli/commands/cloud-build-push"
+            }
+          ]
         }
       ]
     }

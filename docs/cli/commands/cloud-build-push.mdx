@@ -1,38 +1,14 @@
-# Overview
+# `cloud build push`
 
-The CLI supports uploading Widgetbook builds to Widgetbook Cloud.
+Pushes a [Widgetbook build](/cloud/builds) to Widgetbook Cloud.
 
-## Quick start
-
-```bash
-# 🎯 Activate from https://pub.dev
-dart pub global activate widgetbook_cli
-
-# 🚀 Use CLI
-widgetbook cloud build push --api-key PROJECT_API_KEY
-```
-
-## Setup
-
-The CLI is available as the [widgetbook_cli](https://pub.dev/packages/widgetbook_cli) package.
-
-Install the CLI globally by running:
+## Usage
 
 ```bash
-dart pub global activate widgetbook_cli
+widgetbook cloud build push --api-key <API_KEY>
 ```
 
-Run the CLI by using
-
-```bash
-widgetbook <command> [arguments]
-```
-
-## Push Widgetbook Builds to Widgetbook Cloud
-
-An existing Widgetbook can be uploaded via the `cloud build push` command.
-
-### Arguments
+## Arguments
 
 The CLI accepts the following arguments.
 
@@ -47,9 +23,3 @@ The CLI accepts the following arguments.
 
 _\* These defaults are used when the CLI is used locally.
 If the CLI is used in a CI/CD environment, the defaults have different respective values._
-
-### Example
-
-```bash
-widgetbook cloud build push --api-key PROJECT_API_KEY
-```

@@ -113,7 +113,7 @@ class PublishCommand extends CliCommand<PublishArgs> {
       'The `publish` command is deprecated and will be removed in the future.\n'
       'Use the `widgetbook cloud build push` command instead.\n'
       'For more information, '
-      'see: https://docs.widgetbook.io/widgetbook-cloud/overview'
+      'see: https://docs.widgetbook.io/cloud'
       '\n-------------------------------------------------------------\n',
     );
 

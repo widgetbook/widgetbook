@@ -1,0 +1,53 @@
+# Widgetbook Cloud x GitLab
+
+If you want to use Widgetbook Cloud with your existing GitLab repository, here's a step-by-step guide to help you get started.
+
+<Steps>
+  <Step title="Setup Widgetbook Cloud Project">
+    Create a new project in Widgetbook Cloud by importing your GitLab repository.
+    You might need to connect your GitLab account to Widgetbook Cloud to access your repositories.
+  </Step>
+  
+  <Step title="Add API Key as a Variable">
+    Add `WIDGETBOOK_API_KEY` to your [GitLab's CI/CD Variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project). You can find the API key in the Widgetbook Cloud's **project settings page**. Make sure you **uncheck "Protect variable" checkbox**, to allow the variable to be accessible from feature branches.
+  </Step>
+
+  <Step title="Create GitLab CI/CD Pipeline">
+    To upload a [Widgetbook Build](/cloud/builds) for each new commit in your repository, you need to setup up a pipeline in GitLab CI/CD that runs on every push.
+
+    Create a new GitLab pipeline file in your repository under `.gitlab-ci.yml` with the following content:
+
+    ```yaml
+    image: ghcr.io/cirruslabs/flutter
+
+    stages:
+      - widgetbook
+
+    widgetbook_cloud_hosting:
+      stage: widgetbook
+      script:
+        # Bootstrap App
+        - flutter pub get
+        - flutter gen-l10n
+        # Bootstrap Widgetbook
+        - cd widgetbook
+        - flutter pub get
+        - dart run build_runner build -d
+        - flutter build web
+        # Upload to Widgetbook Cloud
+        - dart pub global activate widgetbook_cli
+        - export PATH="$PATH":"$HOME/.pub-cache/bin"
+        - widgetbook cloud build push --api-key "$WIDGETBOOK_API_KEY"
+    ```
+
+  </Step>
+  
+  <Step title="Create a Merge Request">
+    To test out if everything works properly, create a new branch and push a commit to it, then submit a MR with the new branch.
+    After the build upload finishes, a commit status will be added to your MR once the [Widgetbook Review](/cloud/reviews) is ready.
+  </Step>
+</Steps>
+
+## Troubleshooting
+
+To make sure that your Widgetbook Cloud setup works properly, you can check that your repository has a Webhook configured _(under Project Settings > Webhooks)_ to notify Widgetbook Cloud about new MRs.
