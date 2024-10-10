@@ -163,6 +163,10 @@
       "group": "Advanced",
       "pages": [
         {
+          "title": "Monorepo",
+          "href": "/guides/monorepo"
+        },
+        {
           "title": "Mocking",
           "href": "/guides/mocking"
         },
