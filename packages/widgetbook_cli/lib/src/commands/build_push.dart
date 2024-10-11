@@ -76,7 +76,18 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
 
-    final repository = context.repository!;
+    final repository = context.repository;
+
+    if (repository == null) {
+      logger.err(
+        'No repository found.\n'
+        'Make sure you are in a git repository '
+        'or run `git init` to initialize a new one.',
+      );
+
+      throw RepositoryNotFoundException();
+    }
+
     final currentBranch = await repository.currentBranch;
 
     final branch = results['branch'] as String? ??
