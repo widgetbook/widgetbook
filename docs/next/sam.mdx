@@ -299,10 +299,10 @@ To make the process of creating new stories easier, you can add the following sn
          "part '$TM_FILENAME_BASE.book.dart';",
          "",
          "",
-         "final meta = Meta<${1:Widget}>();",
+         "final meta = Meta<${TM_FILENAME_BASE/(^[^.]+)(.*)/${1:/pascalcase}/}>();",
          "",
-         "final $Default = ${1:Widget}Story(",
-         "  name: 'Default',",
+         "final $${1:Default} = ${TM_FILENAME_BASE/(^[^.]+)(.*)/${1:/pascalcase}/}Story(",
+         "  name: '${1:Default}',",
          ");"
        ]
      }
