@@ -291,20 +291,20 @@ To make the process of creating new stories easier, you can add the following sn
    {
      "Widgetbook Story": {
        "prefix": "stry",
-        "description": "Creates a new Widgetbook Story",
-        "body": [
-          "import 'package:flutter/widgets.dart';",
-          "import 'package:widgetbook/next.dart';",
-          "",
-          "part '$TM_FILENAME_BASE.book.dart';",
-          "",
-          "",
-          "final meta = Meta<${TM_FILENAME_BASE/(^[^.]+)(.*)/${1:/pascalcase}/}>();",
-          "",
-          "final $${1:Default} = ${TM_FILENAME_BASE/(^[^.]+)(.*)/${1:/pascalcase}/}Story(",
-          "  name: '${1:Default}',",
-          ");"
-        ]
+       "description": "Creates a new Widgetbook Story",
+       "body": [
+         "import 'package:flutter/widgets.dart';",
+         "import 'package:widgetbook/next.dart';",
+         "",
+         "part '$TM_FILENAME_BASE.book.dart';",
+         "",
+         "",
+         "final meta = Meta<${TM_FILENAME_BASE/(^[^.]+)(.*)/${1:/pascalcase}/}>();",
+         "",
+         "final $${1:Default} = ${TM_FILENAME_BASE/(^[^.]+)(.*)/${1:/pascalcase}/}Story(",
+         "  name: '${1:Default}',",
+         ");"
+       ]
      }
    }
    ```
