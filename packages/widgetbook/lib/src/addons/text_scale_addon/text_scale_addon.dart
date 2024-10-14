@@ -27,9 +27,7 @@ class TextScaleAddon extends WidgetbookAddon<double> {
           name: 'Text scale',
         );
 
-  @Deprecated('Use TextScaleAddon.min and TextScaleAddon.max instead')
   final List<double>? scales;
-
   final double? initialScale;
   final double min;
   final double max;
