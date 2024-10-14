@@ -10,7 +10,9 @@ void main() {
     () {
       const factor = 3.0;
       final addon = TextScaleAddon(
-        scales: [2.0, 3.0, 4.0],
+        min: 1.0,
+        max: 4.0,
+        divisions: 3,
       );
 
       test(
