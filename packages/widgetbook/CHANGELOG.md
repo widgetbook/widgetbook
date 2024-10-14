@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **REFACTOR**: Use a slider instead of a dropdown for `TextScaleAddon`. The `scales` parameter is deprecated, and can be removed or replaced with a combination of `min`, `max` and `divisions` parameters if the default values are not sufficient. ([#1224](https://github.com/widgetbook/widgetbook/pull/1225) - by [@ash14](https://github.com/ash14))
+- **REFACTOR**: Use a slider instead of a dropdown for `TextScaleAddon`. The `scales` parameter is deprecated, and can be removed or replaced with a combination of `min`, `max` and `divisions` parameters if the default values are not sufficient. ([#1224](https://github.com/widgetbook/widgetbook/pull/1224) - by [@ash14](https://github.com/ash14))
 
 ## 3.9.0
 
