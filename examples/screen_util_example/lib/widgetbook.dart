@@ -16,9 +16,7 @@ class WidgetbookApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook.material(
       addons: [
-        TextScaleAddon(
-          scales: [1.0, 2.0],
-        ),
+        TextScaleAddon(),
         DeviceFrameAddon(
           devices: [
             Devices.ios.iPhoneSE,
