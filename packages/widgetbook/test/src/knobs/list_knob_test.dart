@@ -26,7 +26,7 @@ void main() {
 
           expect(
             find.textWidget(value),
-            findsNWidgets(2),
+            findsOneWidget,
           );
         },
       );
@@ -50,7 +50,7 @@ void main() {
 
           expect(
             find.textWidget(value),
-            findsNWidgets(2),
+            findsOneWidget,
           );
         },
       );
@@ -112,7 +112,7 @@ void main() {
 
           expect(
             find.textWidget(value),
-            findsNWidgets(2),
+            findsOneWidget,
           );
         },
       );
@@ -138,7 +138,7 @@ void main() {
           await tester.findAndTap(find.text(value).last);
           expect(
             find.textWidget(value),
-            findsNWidgets(2),
+            findsOneWidget,
           );
 
           await tester.findAndTap(find.byType(Checkbox));
@@ -147,7 +147,7 @@ void main() {
           await tester.findAndTap(find.byType(Checkbox));
           expect(
             find.textWidget(value),
-            findsNWidgets(2),
+            findsOneWidget,
           );
         },
       );
