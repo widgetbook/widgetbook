@@ -20,25 +20,52 @@ class SettingsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: settings.length,
-      itemBuilder: (context, index) {
-        final setting = settings[index];
-        final children = setting.builder(context);
-
-        return ExpansionTile(
-          initiallyExpanded: true,
-          title: Text(setting.name),
-          children: children.isNotEmpty
-              ? children
-              : [
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Text('No ${setting.name} available'),
+    return DefaultTabController(
+      animationDuration: Duration.zero,
+      length: settings.length,
+      child: Column(
+        children: [
+          TabBar(
+            tabs: settings
+                .map(
+                  (setting) => Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 16,
+                      horizontal: 8,
+                    ),
+                    child: Text(
+                      setting.name,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ],
-        );
-      },
+                )
+                .toList(),
+          ),
+          Expanded(
+            child: TabBarView(
+              children: settings.map(
+                (setting) {
+                  final children = setting.builder(context);
+
+                  return children.isEmpty
+                      ? Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Text('No ${setting.name} available'),
+                          ),
+                        )
+                      : SingleChildScrollView(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Column(
+                            children: children,
+                          ),
+                        );
+                },
+              ).toList(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

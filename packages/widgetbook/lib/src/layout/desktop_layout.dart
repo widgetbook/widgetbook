@@ -43,12 +43,6 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
             child: Card(
               child: SettingsPanel(
                 settings: [
-                  if (state.addons != null) ...{
-                    SettingsPanelData(
-                      name: 'Addons',
-                      builder: addonsBuilder,
-                    ),
-                  },
                   if (state.isNext) ...{
                     SettingsPanelData(
                       name: 'Args',
@@ -58,6 +52,12 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
                     SettingsPanelData(
                       name: 'Knobs',
                       builder: knobsBuilder,
+                    ),
+                  },
+                  if (state.addons != null) ...{
+                    SettingsPanelData(
+                      name: 'Addons',
+                      builder: addonsBuilder,
                     ),
                   },
                 ],

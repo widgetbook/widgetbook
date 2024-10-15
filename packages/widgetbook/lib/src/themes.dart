@@ -112,6 +112,9 @@ class Themes {
     fontFamily: 'Poppins',
     colorScheme: _darkColorScheme,
     hoverColor: const Color(0xFFE3E2E6).withOpacity(0.08),
+    tabBarTheme: TabBarTheme(
+      dividerColor: _darkColorScheme.outline,
+    ),
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
       // By default, this is [ColorScheme.surfaceContainerHighest], but we
@@ -136,6 +139,9 @@ class Themes {
     fontFamily: 'Poppins',
     colorScheme: _lightColorScheme,
     hoverColor: const Color(0xFF1A1C1E).withOpacity(0.08),
+    tabBarTheme: TabBarTheme(
+      dividerColor: _darkColorScheme.outline,
+    ),
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
       // By default, this is [ColorScheme.surfaceContainerHighest], but we
