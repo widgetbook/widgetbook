@@ -334,6 +334,16 @@
     },
     {
       "tab": "cloud",
+      "group": "Security",
+      "pages": [
+        {
+          "title": "Overview",
+          "href": "/cloud/security/overview"
+        }
+      ]
+    },
+    {
+      "tab": "cloud",
       "group": "Help",
       "pages": [
         {
