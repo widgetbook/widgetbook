@@ -58,5 +58,28 @@ void main() {
         );
       },
     );
+
+    testWidgets(
+      'when search for query that has special characters, '
+      'then the query is handled properly',
+      (tester) async {
+        await tester.pumpWidgetWithQueryParams(
+          queryParams: {},
+          builder: (_) => NavigationPanel(
+            root: treeRoot,
+          ),
+        );
+
+        await tester.findAndEnter(
+          find.byType(TextFormField),
+          '[',
+        );
+
+        expect(
+          find.byType(NavigationTreeTile),
+          findsNWidgets(treeRoot.count - 1), // exclude root node
+        );
+      },
+    );
   });
 }
