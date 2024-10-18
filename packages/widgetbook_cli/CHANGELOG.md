@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FIX**: Convert Windows paths to POSIX paths when uploading files. ([#1294](https://github.com/widgetbook/widgetbook/pull/1294))
 - **FIX**: Show an error when no git repository is found. ([#1286](https://github.com/widgetbook/widgetbook/pull/1286))
 
 ## 3.4.2
