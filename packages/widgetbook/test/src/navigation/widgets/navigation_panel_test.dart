@@ -60,8 +60,8 @@ void main() {
     );
 
     testWidgets(
-      'when search for query which has no match, '
-      'then the full tree is shown',
+      'when search for query that has special characters, '
+      'then the query is handled properly',
       (tester) async {
         await tester.pumpWidgetWithQueryParams(
           queryParams: {},

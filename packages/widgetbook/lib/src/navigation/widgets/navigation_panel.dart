@@ -26,12 +26,8 @@ class _NavigationPanelState extends State<NavigationPanel> {
 
   bool filterNode(WidgetbookNode node, String query) {
     // Escapes all the special character which are treated differently in regex
-    final regexString =
-        query.replaceAllMapped(RegExp(r'[-[\]{}()*+?.,\\^$|#\s]'), (match) {
-      return '\\${match[0]}';
-    });
-
-    final regex = RegExp(regexString, caseSensitive: false);
+    final escapedQuery = RegExp.escape(query);
+    final regex = RegExp(escapedQuery, caseSensitive: false);
     return node.name.contains(regex);
   }
 
