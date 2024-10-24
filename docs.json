@@ -36,8 +36,8 @@
   },
   "tabs": [
     {
-      "id": "docs",
-      "title": "Docs",
+      "id": "package",
+      "title": "Flutter package",
       "href": "/"
     },
     {
@@ -53,7 +53,7 @@
   ],
   "sidebar": [
     {
-      "tab": "docs",
+      "tab": "package",
       "group": "Introduction",
       "pages": [
         {
@@ -68,7 +68,7 @@
     },
     {
       "group": "Guides",
-      "tab": "docs",
+      "tab": "package",
       "pages": [
         {
           "title": "Quick Start",
@@ -159,7 +159,7 @@
       ]
     },
     {
-      "tab": "docs",
+      "tab": "package",
       "group": "Advanced",
       "pages": [
         {
@@ -207,7 +207,7 @@
       ]
     },
     {
-      "tab": "docs",
+      "tab": "package",
       "group": "Glossary",
       "pages": [
         {
@@ -221,7 +221,7 @@
       ]
     },
     {
-      "tab": "docs",
+      "tab": "package",
       "group": "Misc",
       "pages": [
         {
