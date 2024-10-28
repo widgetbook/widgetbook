@@ -16,6 +16,14 @@
       "indexName": "widgetbook"
     }
   },
+  "header": {
+    "links": [
+      {
+        "title": "Discord",
+        "href": "https://discord.gg/zT4AMStAJA"
+      }
+    ]
+  },
   "scripts": {
     "googleAnalytics": "G-74GW877FF8"
   },
