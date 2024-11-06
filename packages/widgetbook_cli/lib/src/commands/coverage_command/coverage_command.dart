@@ -12,7 +12,7 @@ import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
-import 'cli_exception.dart';
+import '../../../widgetbook_cli.dart';
 
 part 'get_project_widgetbook_usecases.dart';
 part 'get_project_widgets.dart';
@@ -21,51 +21,38 @@ part 'time_logger.dart';
 part 'widget_visitor.dart';
 part 'widgetbook_use_case_visitor.dart';
 
-///TODO: bug can currently have a different flutter project and widgetbook project
-
-////TODO: Feature ideas:
-/// POLISH:    - Allow user to exclude private widgets
-/// ESSENTIAL: - add strict flag to fail if there are any uncovered widgets
-/// - Allow options, flags to be set in a widgetbook_coverage yaml file
-/// - Allow user to ignore certain files, folders
-/// - Add a lcov coverage file
-/// - Allow user to specify the output file for the coverage report
-/// - cache the initial analyzer context for future runs
-///   - For example we know that ConsumerWidget, so we can cache that and not reanalyze it for subsequent runs
-///   - So what we need to do is to cache the superclasses of unknown widget types ConsumerWidget etc and
-///     reuse them for subsequent runs so we dont need to reload the analyzer for them. And maybe we only use the
-///     analyzer for new uknown widget types that might pop up.
-
 class CoverageCommand extends Command<int> {
   CoverageCommand({
     required Logger logger,
   }) : _logger = logger {
     argParser
       ..addOption(
-        'flutter_project',
-        help:
-            'Target path for analyzer context of the Flutter project, defaults to the current directory if not specified.',
+        'package',
+        help: '(required) Target path of the Flutter package.',
       )
       ..addOption(
-        'widgetbook_project',
-        help:
-            'Target path for analyzer context of the widgetbook project, defaults to the current directory if not specified.',
+        'widgetbook',
+        help: '(required) Target path of the widgetbook package.',
       )
       ..addOption(
         'widgets_target',
         help:
-            'Target path for the widgets folder, defaults to  <flutter_project>/lib if not specified.',
+            'Target path for the root widgets folder, defaults to  <package>/lib if not specified.',
       )
       ..addOption(
         'widgetbook_usecases_target',
         help:
-            'Target path for the widgetbook usecases folder, defaults to  <widgetbook_project>/lib if not specified.',
+            'Target path for the root widgetbook usecases folder, defaults to  <widgetbook>/lib if not specified.',
+      )
+      ..addFlag(
+        'verbose',
+        help: 'Prints out verbose output for debugging purposes.',
       );
   }
 
   @override
   String get description =>
-      'A command that checks for widgetbook coverage in a project.';
+      'A command that checks for widgetbook coverage in a package.';
 
   @override
   String get name => 'coverage';
@@ -74,9 +61,9 @@ class CoverageCommand extends Command<int> {
 
   late final TimeLogger _timeLogger = TimeLogger(_logger);
 
-  String? _flutterProjectName;
-  String get flutterProjectName {
-    _flutterProjectName ??= File('$flutterProject/pubspec.yaml')
+  String? _packageName;
+  String get packageName {
+    _packageName ??= File('$package/pubspec.yaml')
         .readAsStringSync()
         .split('\n')
         .firstWhere((line) => line.contains('name:'))
@@ -85,102 +72,119 @@ class CoverageCommand extends Command<int> {
         .trim()
         .replaceAll(RegExp(r'''^[\'"]|[\'"]$'''), '');
 
-    return _flutterProjectName!;
+    return _packageName!;
   }
 
   /* --------------------------------- Options -------------------------------- */
   /// The target path used by the analyzer to include the context to output
   /// The widgets in the project and their dependencies.
-  String get flutterProject =>
-      argResults?['flutter_project'] as String? ?? Directory.current.path;
+  String get package {
+    if (argResults?['package'] == null) {
+      throw FolderNotFoundException(
+        message:
+            'Package path not found, please provide a valid package path using the "--package" option.',
+      );
+    }
+
+    if (argResults?['package'] == '.') return Directory.current.path;
+    if (argResults?['package'] == '..') return Directory.current.parent.path;
+    return Directory(argResults!['package'] as String).absolute.path;
+  }
 
   /// The option used by the analyzer to include enough context to output
   /// the widgets included in widgetbook.
-  String get widgetbookProject =>
-      argResults?['widgetbook_project'] as String? ?? Directory.current.path;
+  String get widgetbook {
+    if (argResults?['widgetbook'] == null) {
+      throw FolderNotFoundException(
+        message:
+            'Widgetbook path not found, please provide a valid widgetbook path using the "--widgetbook" option.',
+      );
+    }
+
+    if (argResults?['widgetbook'] == '.') return Directory.current.path;
+    if (argResults?['widgetbook'] == '..') return Directory.current.parent.path;
+    return Directory(argResults!['widgetbook'] as String).absolute.path;
+  }
 
   /// The target path for the widgets folder we wish to check for coverage.
   String get widgetsTarget =>
-      argResults?['widgets_target'] as String? ?? '$flutterProject/lib';
+      argResults?['widgets_target'] as String? ?? '$package/lib';
 
   /// The target path for the widgetbook folder we wish to check for coverage.
   String get widgetbookUsecasesTarget =>
-      argResults?['widgetbook_usecases_target'] as String? ??
-      '$widgetbookProject/lib';
+      argResults?['widgetbook_usecases_target'] as String? ?? '$widgetbook/lib';
   /* --------------------------------- Options -------------------------------- */
+
+  /* ---------------------------------- Flags --------------------------------- */
+  bool get verbose => argResults!['verbose'] as bool;
+  /* ---------------------------------- Flags --------------------------------- */
 
   @override
   Future<int> run() async {
-    try {
-      /* ---------------------- validity checks of the input ---------------------- */
-      _timeLogger.start('Validating input directories...');
-      if (!_isValidDirectoryInputs()) {
-        return ExitCode.usage.code;
-      }
-
-      if (!_isFlutterProject() || !_isValidWidgetbookProject()) {
-        return ExitCode.usage.code;
-      }
-      _timeLogger.stop('Finished validating input directories.');
-      /* ---------------------- validity checks of the input ---------------------- */
-
-      /* ------------- get file paths to be evaluated by the analyzer ------------- */
-      _timeLogger.start('Loading widget and widgetbook target file paths...');
-      final widgetPaths = _getFilePaths(widgetsTarget);
-      final widgetbookPaths = widgetsTarget == widgetbookUsecasesTarget
-          ? widgetPaths
-          : _getFilePaths(widgetbookUsecasesTarget);
-      _timeLogger
-          .stop('Finished loading widget and widgetbook target file paths.');
-      /* ------------- get file paths to be evaluated by the analyzer ------------ */
-
-      /* ------------------------ get widgets and usecases ------------------------ */
-      final futures = await Future.wait([
-        _getProjectWidgets(
-          PathData(
-            filePaths: widgetPaths,
-            projectRootPath: flutterProject,
-          ),
-          _logger,
-        ),
-        _getProjectWidgetbookUseCases(
-          PathData(
-            filePaths: widgetbookPaths,
-            projectRootPath: widgetbookProject,
-          ),
-          _logger,
-        ),
-      ]);
-
-      final widgets = futures.first;
-      final usecases = futures.last;
-      final uncoveredWidgets = <String>[];
-      /* ------------------------ get widgets and usecases ------------------------ */
-
-      /* ---------------------- compare widgets and usecases ---------------------- */
-      for (var widget in widgets) {
-        if (!usecases.contains(widget)) {
-          uncoveredWidgets.add(widget);
-        }
-      }
-
-      _logger.info('Currently Uncovered widgets: ${uncoveredWidgets.length} \n '
-          'Uncovered widgets: ${uncoveredWidgets.join(', ')}');
-      /* ---------------------- compare widgets and usecases ---------------------- */
-
-      return ExitCode.success.code;
-    } on CliException catch (e) {
-      //display message but remove any new lines
-      _logger.err(e.message
-          .replaceAll('\n', '')
-          .trim()
-          .replaceAll(RegExp(r'\s+'), ' '));
-
-      return e.exitCode;
-    } catch (e) {
-      _logger.err(e.toString());
-      return ExitCode.software.code;
+    if (verbose) {
+      _logger.info('package: $package');
+      _logger.info('widgetbook: $widgetbook');
+      _logger.info('widgets_target: $widgetsTarget');
+      _logger.info('widgetbook_usecases_target: $widgetbookUsecasesTarget');
     }
+
+    /* ---------------------- validity checks of the input ---------------------- */
+    _timeLogger.start('Validating input directories...');
+    if (!_isValidDirectoryInputs()) {
+      return ExitCode.usage.code;
+    }
+
+    if (!_isPackage() || !_isValidWidgetbook()) {
+      return ExitCode.usage.code;
+    }
+    _timeLogger.stop('Finished validating input directories.');
+    /* ---------------------- validity checks of the input ---------------------- */
+
+    /* ------------- get file paths to be evaluated by the analyzer ------------- */
+    _timeLogger.start('Loading widget and widgetbook target file paths...');
+    final widgetPaths = _getFilePaths(widgetsTarget);
+    final widgetbookPaths = widgetsTarget == widgetbookUsecasesTarget
+        ? widgetPaths
+        : _getFilePaths(widgetbookUsecasesTarget);
+    _timeLogger
+        .stop('Finished loading widget and widgetbook target file paths.');
+    /* ------------- get file paths to be evaluated by the analyzer ------------ */
+
+    /* ------------------------ get widgets and usecases ------------------------ */
+    final futures = await Future.wait([
+      _getProjectWidgets(
+        PathData(
+          filePaths: widgetPaths,
+          projectRootPath: package,
+        ),
+        _logger,
+      ),
+      _getProjectWidgetbookUseCases(
+        PathData(
+          filePaths: widgetbookPaths,
+          projectRootPath: widgetbook,
+        ),
+        _logger,
+      ),
+    ]);
+
+    final widgets = futures.first;
+    final usecases = futures.last;
+    final uncoveredWidgets = <String>[];
+    /* ------------------------ get widgets and usecases ------------------------ */
+
+    /* ---------------------- compare widgets and usecases ---------------------- */
+    for (var widget in widgets) {
+      if (!usecases.contains(widget)) {
+        uncoveredWidgets.add(widget);
+      }
+    }
+
+    _logger.info('Currently Uncovered widgets: ${uncoveredWidgets.length} \n '
+        'Uncovered widgets: ${uncoveredWidgets.join(', ')}');
+    /* ---------------------- compare widgets and usecases ---------------------- */
+
+    return ExitCode.success.code;
   }
 
   /// gets all the absolute file paths in a directory path.
@@ -193,31 +197,26 @@ class CoverageCommand extends Command<int> {
         .toList();
 
     if (dartFiles.isEmpty) {
-      throw CliException(
-        '''
-        Cannot find dart files in $directoryPath and 
-        therefore cannot be set as a widgets_target
-        ''',
-        ExitCode.ioError.code,
+      throw FileNotFoundException(
+        message:
+            'Dart files not found for --widgets_target option $directoryPath',
       );
     }
     return dartFiles;
   }
 
-  /// Checks if the [flutterProject] directory is a Flutter project root directory.
+  /// Checks if the [package] directory is a Flutter project root directory.
   /// By checking for the presence of a pubspec.yaml file
   /// and Flutter dependency in the pubspec.yaml file.
-  bool _isFlutterProject() {
-    final pubspecFile = File('$flutterProject/pubspec.yaml').absolute;
+  /// Checks also that widgets_target and package are the same project.
+  bool _isPackage() {
+    final pubspecFile = File('$package/pubspec.yaml').absolute;
 
     // Check if pubspec.yaml exists
     if (!pubspecFile.existsSync()) {
-      throw CliException(
-        '''
-        Cannot find a pubspec.yaml file for $flutterProject, 
-        the coverage command can only run from a Flutter project root directory.
-        ''',
-        ExitCode.usage.code,
+      throw InvalidFlutterPackageException(
+        message:
+            'pubspec.yaml file is missing for --package option $package, please provide a valid Flutter project root directory.',
       );
     }
 
@@ -226,46 +225,36 @@ class CoverageCommand extends Command<int> {
 
     // Check for the presence of 'flutter' in the pubspec.yaml file
     if (!pubspecContent.contains('flutter:')) {
-      throw CliException(
-        '''
-        Cannot find Flutter dependency in pubspec.yaml file, the coverage 
-        command can only run from a Flutter project root directory.
-        ''',
-        ExitCode.usage.code,
+      throw InvalidFlutterPackageException(
+        message:
+            'Flutter dependency is missing for --package option $package, please provide a valid Flutter project root directory.',
       );
     }
 
-    if (!widgetsTarget.contains(flutterProject)) {
-      throw CliException(
-        '''
-        The flutter_project and widgets_target options should point to the
-        same project. The flutter_project project is $flutterProject and
-        the widgets_target project is $widgetsTarget.
-        ''',
-        ExitCode.usage.code,
+    if (!widgetsTarget.contains(package)) {
+      throw InvalidFlutterPackageException(
+        message:
+            'The package and widgets_target options should point to the same project. The package project is $package and the widgets_target project is $widgetsTarget.',
       );
     }
 
     return true;
   }
 
-  /// Checks if the [widgetbookProject] directory is a valid widgetbook project.
+  /// Checks if the [widgetbook] directory is a valid widgetbook project.
   /// By checking for the presence of a pubspec.yaml file
   /// and widgetbook dependency in the pubspec.yaml file.
-  /// If the [widgetbookProject] is different from the [flutterProject],
+  /// If the [widgetbook] is different from the [package],
   /// it checks if the widgetbook project imports the flutter project in the
-  /// [flutterProject] directory.
-  bool _isValidWidgetbookProject() {
-    final pubspecFile = File('$widgetbookProject/pubspec.yaml');
+  /// [package] directory.
+  bool _isValidWidgetbook() {
+    final pubspecFile = File('$widgetbook/pubspec.yaml');
 
     // Check if pubspec.yaml exists
     if (!pubspecFile.existsSync()) {
-      throw CliException(
-        '''
-        Cannot find a pubspec.yaml file for $widgetbookProject, 
-        the coverage command can only run from a Flutter project root directory.
-        ''',
-        ExitCode.usage.code,
+      throw InvalidWidgetbookPackageException(
+        message:
+            'pubspec.yaml file is missing for --widgetbook option $widgetbook, please provide a valid Widgetbook project root directory.',
       );
     }
 
@@ -274,41 +263,27 @@ class CoverageCommand extends Command<int> {
 
     // Check for the presence of 'widgetbook' in the pubspec.yaml file
     if (!pubspecContent.contains('widgetbook:')) {
-      throw CliException(
-        '''
-        Cannot find widgetbook dependency in pubspec.yaml file, the coverage 
-        command can only run from a Flutter project containing a widgetbook
-        dependency. Specify the widgetbook_project option to a project
-        containing a widgetbook dependency.
-        ''',
-        ExitCode.usage.code,
+      throw InvalidWidgetbookPackageException(
+        message:
+            'Widgetbook dependency is missing for --widgetbook option $widgetbook, please provide a valid Widgetbook project root directory.',
       );
     }
 
     // if widgetbook context is a different project, check if the widgetbook
     // project imports the flutter project
-    if (widgetbookProject != flutterProject) {
-      if (!pubspecContent.contains('$flutterProjectName:')) {
-        throw CliException(
-          '''
-          The widgetbook project in $widgetbookProject does not depend on the
-          Flutter project $flutterProjectName. widgetbook_project
-          should point to the widgetbook project related to the Flutter project
-          in flutter_project $flutterProject. 
-          ''',
-          ExitCode.usage.code,
+    if (widgetbook != package) {
+      if (!pubspecContent.contains('$packageName:')) {
+        throw InvalidWidgetbookPackageException(
+        message:  'The widgetbook project for --widgetbook option $widgetbook does not depend on the Flutter project $packageName. Widgetbook project should depend on the Flutter project.',
         );
       }
     }
 
-    if (!widgetbookUsecasesTarget.contains(widgetbookProject)) {
-      throw CliException(
-        '''
-        The widgetbook_project and widgetbook_usecases_target options should point to the
-        same project, the widgetbook_project project is $widgetbookProject and
-        and the widgetbook_usecases_target project is $widgetbookUsecasesTarget.
-        ''',
-        ExitCode.usage.code,
+    if (!widgetbookUsecasesTarget.contains(widgetbook)) {
+      throw InvalidWidgetbookPackageException(
+        message:             'The widgetbook and widgetbook_usecases_target options should point to the same project. The widgetbook project is $widgetbook and the widgetbook_usecases_target project is $widgetbookUsecasesTarget.',
+
+ 
       );
     }
 
@@ -317,12 +292,12 @@ class CoverageCommand extends Command<int> {
 
   bool _isValidDirectoryInputs() =>
       _isValidDirectory(
-        flutterProject,
-        option: 'flutter_project',
+        package,
+        option: 'package',
       ) &&
       _isValidDirectory(
-        widgetbookProject,
-        option: 'widgetbook_project',
+        widgetbook,
+        option: 'widgetbook',
       ) &&
       _isValidDirectory(
         widgetsTarget,
@@ -341,30 +316,28 @@ class CoverageCommand extends Command<int> {
     final directory = Directory(path);
 
     if (path.isEmpty) {
-      throw CliException(
-        'Empty path argument is invalid for $option.',
-        ExitCode.usage.code,
+      throw FolderNotFoundException(
+        message: 'Empty path argument is invalid for option --$option.',
       );
     }
 
     if (directory.statSync().type != FileSystemEntityType.directory) {
-      throw CliException(
-        '$path is not a directory for $option.',
-        ExitCode.ioError.code,
+      throw FolderNotFoundException(
+        message:
+            'Path $path is not a valid folder directory for option --$option.',
       );
     }
 
     if (!directory.existsSync()) {
-      throw CliException(
-        'Directory $path not found for $option.',
-        ExitCode.ioError.code,
+      throw FolderNotFoundException(
+        message: 'Folder directory path $path is not found for --$option.',
       );
     }
 
     if (directory.listSync().isEmpty) {
-      throw CliException(
-        'Empty directory $path cannot be set as target for coverage for $option.',
-        ExitCode.ioError.code,
+      throw FolderNotFoundException(
+        message:
+            'Empty folder directory path $path cannot be set as target for option --$option.',
       );
     }
 
