@@ -34,7 +34,8 @@ Future<List<String>> _getProjectWidgetbookUseCases(
 
     if (data is List<String>) {
       stdout.write(
-          '\rWidgetbook usecases found: ${data.result.length}'.padRight(30));
+        '\rWidgetbook usecases found: ${data.result.length}'.padRight(30),
+      );
     }
   }
 

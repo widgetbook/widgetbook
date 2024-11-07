@@ -50,6 +50,7 @@ class CliRunner extends CommandRunner<int> {
 
     addCommand(
       CoverageCommand(
+        context: context,
         logger: _logger,
       ),
     );
