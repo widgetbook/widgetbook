@@ -37,21 +37,23 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     argParser
       ..addOption(
         'package',
-        help: '(required) Target path of the Flutter package.',
+        help: 'Target path of the Flutter package.',
+        mandatory: true,
       )
       ..addOption(
         'widgetbook',
-        help: '(required) Target path of the widgetbook package.',
+        help: 'Target path of the widgetbook package.',
+        mandatory: true,
       )
       ..addOption(
         'widgets_target',
         help:
-            'Target path for the root widgets folder, defaults to  <package>/lib if not specified.',
+            'Target path for the root widgets folder.\n(defaults to <package>/lib)',
       )
       ..addOption(
         'widgetbook_usecases_target',
         help:
-            'Target path for the root widgetbook usecases folder, defaults to  <widgetbook>/lib if not specified.',
+            'Target path for the root usecases folder.\n(defaults to <widgetbook>/lib)',
       );
   }
 

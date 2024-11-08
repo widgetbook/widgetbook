@@ -1,0 +1,21 @@
+# `coverage`
+
+Generates a coverage report for the widgetbook usecase of the widgets in the Flutter package.
+
+## Usage
+
+```bash
+widgetbook coverage --package=<FLUTTER_PACKAGE>  --widgetbook=<WIDGETBOOK_PACKAGE>
+```
+
+## Arguments
+
+The CLI accepts the following arguments.
+
+| Argument                       | Mandatory | Default\*          | Description                                                               |
+| ------------------------------ | --------- | ------------------ | ------------------------------------------------------------------------- |
+| `--package`                    | ✅        | ➖                 | The root folder of the Flutter package.                                   |
+| `--widgetbook`                 | ✅        | ➖                 | The root folder of the Widgetbook package related to the flutter package. |
+| `--widgets_target`             | ➖        | `<package>/lib`    | The target path for the widgets folder.                                   |
+| `--widgetbook_usecases_target` | ➖        | `<widgetbook>/lib` | The target path for the usecases folder.                                  |
+| `--help`                       | ➖        | ➖                 | Shows the help message for the coverage command.                          |
