@@ -141,18 +141,38 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
 
     final widgets = futures.first;
     final usecases = futures.last;
-    final uncoveredWidgets = <String>[];
     /* ------------------------ get widgets and usecases ------------------------ */
 
     /* ---------------------- compare widgets and usecases ---------------------- */
+    final coveredWidgets = <String>[];
+    final uncoveredWidgets = <String>[];
+    final privateWidgets = <String>[];
+
+    // get covered widgets
+    for (var usecase in usecases) {
+      if (widgets.contains(usecase)) {
+        coveredWidgets.add(usecase);
+      }
+    }
+
+    //get uncovered widgets
     for (var widget in widgets) {
-      if (!usecases.contains(widget)) {
+      if (!usecases.contains(widget) && !widget.startsWith('_')) {
         uncoveredWidgets.add(widget);
       }
     }
 
-    _logger.info('Currently Uncovered widgets: ${uncoveredWidgets.length} \n '
+    // get private widgets
+    privateWidgets.addAll(
+      widgets.where(
+        (widget) => widget.startsWith('_'),
+      ),
+    );
+
+    _logger.info('Covered widgets: ${coveredWidgets.length}');
+    _logger.info('Uncovered widgets: ${uncoveredWidgets.length} \n '
         'Uncovered widgets: ${uncoveredWidgets.join(', ')}');
+    _logger.info('Private widgets: ${privateWidgets.length}');
     /* ---------------------- compare widgets and usecases ---------------------- */
 
     return ExitCode.success.code;

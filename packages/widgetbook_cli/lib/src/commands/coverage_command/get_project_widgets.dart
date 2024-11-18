@@ -27,7 +27,7 @@ Future<List<String>> _getProjectWidgets(
       widgets = [...data.result];
       widgetIsolateTask.kill();
       stdout.write('\r');
-      timerLogger.stop('Total widgets found: ${data.result.length}');
+      timerLogger.stop('Total widgets found: ${widgets.length}');
       break;
     }
     stdout.write('\rWidgets found: ${data.result.length}'.padRight(30));
