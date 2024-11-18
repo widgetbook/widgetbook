@@ -110,6 +110,16 @@ class FolderNotFoundException implements WidgetbookException {
   String get message => _message!;
 }
 
+class InvalidInputException implements WidgetbookException {
+  InvalidInputException({String? message})
+      : _message = message ??= 'Invalid user input.';
+
+  final String? _message;
+
+  @override
+  String get message => _message!;
+}
+
 class InvalidFlutterPackageException implements WidgetbookException {
   InvalidFlutterPackageException({String? message})
       : _message = message ??= 'Invalid Flutter package.';

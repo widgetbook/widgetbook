@@ -46,14 +46,20 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
         mandatory: true,
       )
       ..addOption(
-        'widgets_target',
+        'widgets-target',
         help:
             'Target path for the root widgets folder.\n(defaults to <package>/lib)',
       )
       ..addOption(
-        'widgetbook_usecases_target',
+        'widgetbook-usecases-target',
         help:
             'Target path for the root usecases folder.\n(defaults to <widgetbook>/lib)',
+      )
+      ..addOption(
+        'min-coverage',
+        help:
+            'Minimum coverage percentage required, integer value from (0-100).',
+        defaultsTo: '50',
       );
   }
 
@@ -67,9 +73,10 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     final package = _getOptionPath('package', results);
     final widgetbook = _getOptionPath('widgetbook', results);
     final widgetsTarget =
-        results['widgets_target'] as String? ?? '$package/lib';
+        results['widgets-target'] as String? ?? '$package/lib';
     final widgetbookUsecasesTarget =
-        results['widgetbook_usecases_target'] as String? ?? '$widgetbook/lib';
+        results['widgetbook-usecases-target'] as String? ?? '$widgetbook/lib';
+    final minCoverage = _getMinCoverageInput(results);
 
     /* ---------------------- validity checks of the input ---------------------- */
     _timeLogger.start('Validating input directories...');
@@ -101,6 +108,7 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
       widgetbook: widgetbook,
       widgetsTarget: widgetsTarget,
       widgetbookUsecasesTarget: widgetbookUsecasesTarget,
+      minCoverage: minCoverage,
     );
   }
 
@@ -175,6 +183,21 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     _logger.info('Private widgets: ${privateWidgets.length}');
     /* ---------------------- compare widgets and usecases ---------------------- */
 
+    /* ---------------------- calculate coverage percentage --------------------- */
+    final coveredWidgetsPercentage = (coveredWidgets.length /
+            (coveredWidgets.length + uncoveredWidgets.length)) *
+        100;
+
+    if (coveredWidgetsPercentage < args.minCoverage) {
+      throw '❌ Insufficient coverage of $coveredWidgetsPercentage% found, '
+          'minimum coverage of ${args.minCoverage}% required!';
+    } else {
+      _logger.info(
+        '✅ Minimum coverage of ${args.minCoverage}% is satisfied with $coveredWidgetsPercentage% coverage!',
+      );
+    }
+    /* ---------------------- calculate coverage percentage --------------------- */
+
     return ExitCode.success.code;
   }
 
@@ -209,6 +232,24 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
       );
     }
     return dartFiles;
+  }
+
+  /// if not an integer it will throw and if not between 0 and 100 it will throw.
+  /// Else it will return the integer value.
+  int _getMinCoverageInput(ArgResults results) {
+    try {
+      final minCoverage = int.parse(results['min-coverage'] as String);
+      if (minCoverage < 0 || minCoverage > 100) {
+        throw Exception();
+      }
+
+      return minCoverage;
+    } catch (e) {
+      throw InvalidInputException(
+        message:
+            'Invalid min-coverage value, please provide a valid integer value between 0 and 100.',
+      );
+    }
   }
 
   bool _isValidDirectoryInputs(

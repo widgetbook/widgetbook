@@ -47,6 +47,7 @@ abstract class CliCommand<TArgs> extends Command<int> {
       if (e is FolderNotFoundException ||
           e is InvalidWidgetbookPackageException ||
           e is InvalidFlutterPackageException ||
+          e is InvalidInputException ||
           e is FileNotFoundException) {
         logger.err((e as WidgetbookException).message);
         return -1;
