@@ -5,6 +5,7 @@ class BuildPushArgs {
     required this.path,
     required this.branch,
     required this.commit,
+    required this.mergedResultCommit,
     required this.vendor,
     required this.actor,
     required this.repository,
@@ -14,6 +15,7 @@ class BuildPushArgs {
   final String path;
   final String branch;
   final String commit;
+  final String? mergedResultCommit;
   final String vendor;
   final String actor;
   final String repository;

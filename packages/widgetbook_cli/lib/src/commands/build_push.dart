@@ -56,6 +56,11 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         help: 'Full commit SHA',
       )
       ..addOption(
+        'merged-result-commit',
+        help: 'For GitLab Merged Results, '
+            'this commit will be used for commit status.',
+      )
+      ..addOption(
         'actor',
         help: 'Author of the commit',
       );
@@ -98,6 +103,8 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         context.providerSha ??
         currentBranch.sha;
 
+    final mergedResultCommit = results['merged-result-commit'] as String?;
+
     final actor = results['actor'] as String? ?? context.user;
     if (actor == null) {
       throw ActorNotFoundException();
@@ -112,6 +119,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       apiKey: apiKey,
       branch: branch,
       commit: commit,
+      mergedResultCommit: mergedResultCommit,
       path: path,
       vendor: context.name,
       actor: actor,
@@ -182,6 +190,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         actor: args.actor,
         branch: args.branch,
         sha: args.commit,
+        mergedResultSha: args.mergedResultCommit,
         useCases: cache.useCases,
         addonsConfigs: cache.addonsConfigs,
         size: dirSize,
