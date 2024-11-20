@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:analyzer/file_system/file_system.dart';
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 
+import '../../widgetbook_cli.dart';
 import 'cli_runner.dart';
 import 'context.dart';
 
@@ -39,6 +41,18 @@ abstract class CliCommand<TArgs> extends Command<int> {
 
       return runWith(context, args);
     } catch (e, stackTrace) {
+      // could be done differently but this if statement is added to
+      // make sure the error messages are displayed correctly for
+      // the coverage command.
+      if (e is FolderNotFoundException ||
+          e is InvalidWidgetbookPackageException ||
+          e is InvalidFlutterPackageException ||
+          e is InvalidInputException ||
+          e is FileNotFoundException) {
+        logger.err((e as WidgetbookException).message);
+        return -1;
+      }
+
       logger.err('Something wrong happened');
       logger.err(e.toString());
       logger.err(stackTrace.toString());
