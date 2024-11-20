@@ -60,12 +60,12 @@ You will get an error because the `UserProvider` is missing from the Widget tree
 ```tree
 WidgetbookApp
 └── UserTile
-    └── Consumer<UserProvider>
+    └── Consumer<UserProvider> // ❌ Error: UserProvider not found
         └── Text
 ```
 
 To catalog the `UserTile` widget, you need to provide the `UserProvider` to the Widget tree or extract the property of the `UserTile` so it can be easily provided.
 
 <Info>
-  For information about mocking a provider or refacting a widget using property extraction please refer to the [Mocking](/guides/mocking) guide.
+  For information about mocking a provider or refactoring a widget using property extraction please refer to the [Mocking](/guides/mocking) guide.
 </Info>
