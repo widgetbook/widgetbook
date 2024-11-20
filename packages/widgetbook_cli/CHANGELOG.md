@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Add support for [GitLab Merged Results Pipelines](https://docs.gitlab.com/ee/ci/pipelines/merged_results_pipelines.html) via the `cloud build push` command. Check [our docs](https://docs.widgetbook.io/cloud/setup/gitlab#gitlab-merged-result-pipelines) for more info. ([#1312](https://github.com/widgetbook/widgetbook/pull/1312))
+
 ## 3.4.3
 
 - **FIX**: Convert Windows paths to POSIX paths when uploading files. ([#1294](https://github.com/widgetbook/widgetbook/pull/1294))
