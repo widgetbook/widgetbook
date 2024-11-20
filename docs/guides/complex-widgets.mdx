@@ -64,4 +64,8 @@ WidgetbookApp
         └── Text
 ```
 
-To catalog the `HomePage` widget, you need to provide the `UserProvider` with a [mock implementation](/guides/mocking#approach-ii-mocking-libraries) or by using [property extraction](/guides/mocking#approach-i-extraction).
+To catalog the `UserTile` widget, you need to provide the `UserProvider` to the Widget tree or extract the property of the `UserTile` so it can be easily provided.
+
+<Info>
+  For information about properly mock a widget or screen please refer to the [Mocking](/guides/mocking) guide.
+</Info>
