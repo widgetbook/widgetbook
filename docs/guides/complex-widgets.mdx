@@ -4,8 +4,64 @@
 
 While the core components of your design system can be cataloged easily, complex widgets and screens can be challenging to catalog due to their dependencies to other widgets or providers. 
 Fortunately, even screens are just a composition of widgets, and you can catalog them with a few adjustments.
-To catalog these widgets, you need to make sure that all the dependencies are provided by [mocking](/guides/mocking) the necessary data.
 
 ## Webinar video
 
 <YouTube id="ytu7ADEsukE" />
+
+## Understanding your dependencies
+
+In the following example, the `HomePage` widget depends on the `UserProvider` to display the user's name.
+
+```dart
+class UserProvider with ChangeNotifier {
+  // For simplicity, we're hardcoding the user's name.
+  // In a real-world scenario, this would be fetched from an API or a database.
+  String user => "John Doe";
+}
+```
+
+```dart
+class UserTile extends StatelessWidget {
+  const UserTile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<UserProvider>(
+      builder: (context, provider, child) {
+        return Text(provider.user);
+      },
+    );
+  }
+}
+```
+
+For this example, the Widget tree for your `HomePage` widget might look like this:
+
+```tree
+App
+└── UserProvider
+    └── HomePage
+        └── UserTile
+            └── Consumer<UserProvider>
+                └── Text
+```
+
+If you just catalog the `UserTile` using the following code:
+
+```dart
+Widget userTileUseCase(BuildContext context) {
+  return UserTile();
+}
+```
+
+You will get an error because the `UserProvider` is missing from the Widget tree.
+
+```tree
+WidgetbookApp
+└── UserTile
+    └── Consumer<UserProvider>
+        └── Text
+```
+
+To catalog the `HomePage` widget, you need to provide the `UserProvider` with a [mock implementation](/guides/mocking#approach-ii-mocking-libraries) or by using [property extraction](/guides/mocking#approach-i-extraction).
