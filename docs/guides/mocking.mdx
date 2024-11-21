@@ -3,6 +3,12 @@
 Adding a use-case for a widget that has external dependencies can be challenging.
 In this guide, we'll explore how to mock these dependencies to make cataloging the widget easier.
 
+## Video tutorial
+
+<YouTube id="ytu7ADEsukE?start=1410&end=1730" />
+
+## Example
+
 In the following example, the `HomePage` widget depends on the `UserProvider` to display the user's name.
 
 ```dart
@@ -27,6 +33,40 @@ class UserTile extends StatelessWidget {
   }
 }
 ```
+
+For this example, the Widget tree for your `HomePage` widget in your app might look like this:
+
+```tree
+App
+└── UserProvider
+    └── HomePage
+        └── UserTile
+            └── Consumer<UserProvider>
+                └── Text
+```
+
+## Problem
+
+If the `UserTile` is cataloged using the following code
+
+```dart
+Widget userTileUseCase(BuildContext context) {
+  return UserTile();
+}
+```
+
+Flutter throws an error indicating that a `UserProvider` is missing from the Widget tree, as the `Consumer` within the `UserTile` depends on the `UserProvider`.
+
+```tree
+WidgetbookApp
+└── UserTile
+    └── Consumer<UserProvider>         ❌ Error: UserProvider not found
+        └── Text
+```
+
+To catalog the `UserTile` widget, you need to do **one of the following**:
+1. Remove the dependency of the `UserTile` by using property extraction.
+1. Provide the `UserProvider` to the Widget tree. 
 
 ## Approach I: Extraction
 
@@ -55,6 +95,25 @@ Widget buildUserTile(BuildContext context) {
     user: 'John'
   );
 }
+```
+
+Extracting the dependency into a parameter will also change your Widget tree structure of your app
+
+```tree
+App
+└── UserProvider
+    └── HomePage
+        └── Consumer<UserProvider>
+            └── UserTile
+                └── Text
+```
+
+The Widget tree in Widgetbook will also change accordingly 
+
+```tree
+WidgetbookApp
+└── UserTile
+    └── Text
 ```
 
 ## Approach II: Mocking Libraries
@@ -92,3 +151,24 @@ Not in all cases, you can extract the dependency. In some case you need to mock 
     );
    }
    ```
+
+In this approach, the Widget tree of your app stays the same
+
+```tree
+App
+└── UserProvider
+    └── HomePage
+        └── UserTile
+            └── Consumer<UserProvider>
+                └── Text
+```
+
+But the Widget tree in Widgetbook will change according to your mocking
+
+```tree
+WidgetbookApp
+└── MockUserProvider
+    └── UserTile
+        └── Consumer<UserProvider>
+            └── Text
+```

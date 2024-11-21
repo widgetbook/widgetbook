@@ -87,6 +87,10 @@
           "href": "/guides/use-cases"
         },
         {
+          "title": "Mock Widgets & Screens",
+          "href": "/guides/mocking"
+        },
+        {
           "title": "Customization",
           "href": "/guides/customization"
         },
@@ -173,10 +177,6 @@
         {
           "title": "Monorepo",
           "href": "/guides/monorepo"
-        },
-        {
-          "title": "Mocking",
-          "href": "/guides/mocking"
         },
         {
           "title": "Assets",
