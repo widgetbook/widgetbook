@@ -47,7 +47,7 @@ App
 
 ## Problem
 
-If you just catalog the `UserTile` using the following code:
+If the `UserTile` is cataloged using the following code
 
 ```dart
 Widget userTileUseCase(BuildContext context) {
@@ -55,7 +55,7 @@ Widget userTileUseCase(BuildContext context) {
 }
 ```
 
-You will see an error because the `UserProvider` is missing from the Widget tree but the `Consumer` within the `UserTile` depends on it. 
+Flutter throws an error which indicates a missing `UserProvider` in the Widget tree since the `Consumer` within the `UserTile` depends on the `UserProvider`. 
 
 ```tree
 WidgetbookApp
@@ -95,6 +95,25 @@ Widget buildUserTile(BuildContext context) {
 }
 ```
 
+Extracting the dependency into a parameter will also change your Widget tree structure of your app
+
+```tree
+App
+└── UserProvider
+    └── HomePage
+        └── Consumer<UserProvider>
+            └── UserTile
+                └── Text
+```
+
+The Widget tree in Widgetbook will also change accordingly 
+
+```tree
+WidgetbookApp
+└── UserTile
+    └── Text
+```
+
 ## Approach II: Mocking Libraries
 
 Not in all cases, you can extract the dependency. In some case you need to mock the dependency, for example if you are cataloging a "screen" widget.
@@ -130,3 +149,24 @@ Not in all cases, you can extract the dependency. In some case you need to mock 
     );
    }
    ```
+
+In this approach, the Widget tree of your app stays the same
+
+```tree
+App
+└── UserProvider
+    └── HomePage
+        └── UserTile
+            └── Consumer<UserProvider>
+                └── Text
+```
+
+But the Widget tree in Widgetbook will change according to your mocking
+
+```tree
+WidgetbookApp
+└── MockUserProvider
+    └── UserTile
+        └── Consumer<UserProvider>
+            └── Text
+```
