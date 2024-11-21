@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FEAT**: Add support for [GitLab Merged Results Pipelines](https://docs.gitlab.com/ee/ci/pipelines/merged_results_pipelines.html) via the `cloud build push` command. Check [our docs](https://docs.widgetbook.io/cloud/setup/gitlab#gitlab-merged-result-pipelines) for more info. ([#1312](https://github.com/widgetbook/widgetbook/pull/1312))
+- **BREAKING**: Remove the deprecated `publish` command. Use [`cloud build push` command](https://docs.widgetbook.io/cli/commands/cloud-build-push) instead. ([#1315](https://github.com/widgetbook/widgetbook/pull/1315))
 
 ## 3.4.3
 
