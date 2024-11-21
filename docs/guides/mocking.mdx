@@ -55,7 +55,7 @@ Widget userTileUseCase(BuildContext context) {
 }
 ```
 
-Flutter throws an error which indicates a missing `UserProvider` in the Widget tree since the `Consumer` within the `UserTile` depends on the `UserProvider`. 
+Flutter throws an error indicating that a `UserProvider` is missing from the Widget tree, as the `Consumer` within the `UserTile` depends on the `UserProvider`.
 
 ```tree
 WidgetbookApp
@@ -64,7 +64,9 @@ WidgetbookApp
         └── Text
 ```
 
-To catalog the `UserTile` widget, you need to provide the `UserProvider` to the Widget tree or remove the dependency of the `UserTile` by using property extraction so its value can be easily provided.
+To catalog the `UserTile` widget, you need to
+1. provide the `UserProvider` to the Widget tree or 
+1. remove the dependency of the `UserTile` by using property extraction.
 
 ## Approach I: Extraction
 
