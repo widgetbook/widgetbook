@@ -3,6 +3,12 @@
 Adding a use-case for a widget that has external dependencies can be challenging.
 In this guide, we'll explore how to mock these dependencies to make cataloging the widget easier.
 
+## Video tutorial
+
+<YouTube id="ytu7ADEsukE?start=1410&end=1730" />
+
+## Example
+
 In the following example, the `HomePage` widget depends on the `UserProvider` to display the user's name.
 
 ```dart
@@ -27,6 +33,38 @@ class UserTile extends StatelessWidget {
   }
 }
 ```
+
+For this example, the Widget tree for your `HomePage` widget in your app might look like this:
+
+```tree
+App
+└── UserProvider
+    └── HomePage
+        └── UserTile
+            └── Consumer<UserProvider>
+                └── Text
+```
+
+## Problem
+
+If you just catalog the `UserTile` using the following code:
+
+```dart
+Widget userTileUseCase(BuildContext context) {
+  return UserTile();
+}
+```
+
+You will see an error because the `UserProvider` is missing from the Widget tree but the `Consumer` within the `UserTile` depends on it. 
+
+```tree
+WidgetbookApp
+└── UserTile
+    └── Consumer<UserProvider>         ❌ Error: UserProvider not found
+        └── Text
+```
+
+To catalog the `UserTile` widget, you need to provide the `UserProvider` to the Widget tree or remove the dependency of the `UserTile` by using property extraction so its value can be easily provided.
 
 ## Approach I: Extraction
 
