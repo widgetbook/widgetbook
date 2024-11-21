@@ -2,7 +2,6 @@ import 'package:args/args.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
-import 'package:widgetbook_cli/src/commands/build_push.dart';
 import 'package:widgetbook_cli/widgetbook_cli.dart';
 
 import '../../helper/mocks.dart';

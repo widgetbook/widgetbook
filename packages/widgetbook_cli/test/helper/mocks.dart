@@ -37,13 +37,9 @@ class MockWidgetbookHttpClient extends Mock implements WidgetbookHttpClient {}
 
 class MockFileSystem extends Mock implements FileSystem {}
 
-class MockPublishArgs extends Mock implements PublishArgs {}
-
 class MockFile extends Mock implements File {}
 
 class MockDirectory extends Mock implements Directory {}
-
-class MockZipEncoder extends Mock implements ZipEncoder {}
 
 class MockArgResults extends Mock implements ArgResults {}
 
