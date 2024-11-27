@@ -39,11 +39,37 @@ This will prevent PRs from being merged until the Widgetbook review is accepted.
 
     <Image src="/assets/cloud/reviews/enforcing-reviews/create-new-target.png" />
   </Step>
-  <Step title="Enable branch rules">
+  <Step title="Require status checks to pass">
     On the page scroll down to the rules section.
     Optional: Make sure to disable the pre-selected rules. 
-    Once everything is deselected enable the rule *Require status check to pass*. 
+    Once everything is deselected enable the rule *Require status checks to pass*. 
 
     <Image src="/assets/cloud/reviews/enforcing-reviews/enable-status-checks.png" />
+  </Step>
+    <Step title="Add Widgetbook status check">
+    To make the Widgetbook Review commit status required, click the *Add checks* button.
+    In the searchbox copy the name of the Widgetbook review status check which is formatted as `Widgetbook Review (<widgetbook-project-name>)`.
+    If you already have a pull-request with a Widgetbook Review commit status you can also obtain the name from the status checks section in the PR.
+
+    <Image src="/assets/cloud/reviews/enforcing-reviews/review-commit-status.png" />
+
+    In the example above the status check is named `Widgetbook Review (widgetbook-explained)`.
+
+    In the searchbox, select the item that is shown.
+    <Image src="/assets/cloud/reviews/enforcing-reviews/create-new-check.png" />
+
+    Once the dropdown menu is deselected, the check will be added.
+
+    In case no source is configured, make sure to select the *Widgetbook* app as the source.
+
+    <Image src="/assets/cloud/reviews/enforcing-reviews/edit-check-source.png" />
+  </Step>
+  <Step title="Create the branch ruleset">
+    At the bottom of the page, make sure to press the *Create* button. 
+  </Step>
+  <Step title="Verify ruleset">
+    You can navigate to a PR to verify that the Widgetbook Review status check is now required to merge the PR.
+
+    <Image src="/assets/cloud/reviews/enforcing-reviews/result.png" />
   </Step>
 </Steps>
