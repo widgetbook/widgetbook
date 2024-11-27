@@ -1,0 +1,26 @@
+## Enforcing reviews
+
+Depending on your goals and workflow you might want to enforce reviews for all changes in your project requiring an accepted Widgetbook review for each pull or merge request with changes.
+
+### GitHub
+
+When Widgetbook review is enabled for your project, Widgetbook Cloud will automatically create a review for your PR and post the URL in your git PR as a commit status. 
+If changes are requested, the commit status will block your PR from getting merged until the requested changes are applied.
+However, the default configuration in GitHub allows for PRs to be merged even if the status checks are not passing or pending.
+
+<Image src="/assets/cloud/reviews/enforcing-reviews.png" />
+
+To enforce reviews for all changes in your project, you can set up a branch protection rule in your GitHub repository. 
+This will prevent PRs from being merged until the Widgetbook review is accepted.
+
+<Steps>
+  <Step title="Open repository settings">
+    Navigate to the repository settings in GitHub.
+  </Step>
+  <Step title="Open the ruleset page" icon="gear">
+    In the navigation, click on *Rules* to open the accordion. 
+    Then click on *Rulesets* to open the rulesets page.
+
+    <Image src="/assets/cloud/reviews/rulesets-page.png" />
+  </Step>
+</Steps>
