@@ -4,20 +4,21 @@ Depending on your goals and workflow you might want to enforce reviews for all c
 
 ### GitHub
 
-When Widgetbook review is enabled for your project, Widgetbook Cloud will automatically create a review for your PR and post the URL in your git PR as a commit status. 
-If changes are requested, the commit status will block your PR from getting merged until the requested changes are applied.
+When Widgetbook Cloud reviews are enabled for your project, Widgetbook Cloud will automatically create a review for your PR and post the URL in your GitHub PR as a commit status. 
+If changes are requested, the commit status will reflect the Widgetbook review status on your PR.
 However, the default configuration in GitHub allows for PRs to be merged even if the status checks are not passing or pending.
 
-<Image src="/assets/cloud/reviews/enforcing-reviews/unblocked-review.png" />
+<Image 
+  caption="Example of a pending review not blocking the merge of the PR." 
+  src="/assets/cloud/reviews/enforcing-reviews/unblocked-review.png" 
+/>
 
 To enforce reviews for all changes in your project, you can set up a branch protection rule in your GitHub repository. 
 This will prevent PRs from being merged until the Widgetbook review is accepted.
 
 <Steps>
-  <Step title="Open repository settings">
+  <Step title="Open the rulesets settings page">
     Navigate to the repository settings in GitHub.
-  </Step>
-  <Step title="Open the ruleset page">
     In the navigation, click on *Rules* to open the accordion. 
     Then click on *Rulesets* to open the rulesets page.
 
@@ -35,13 +36,13 @@ This will prevent PRs from being merged until the Widgetbook review is accepted.
   <Step title="Create new target">
     Scroll down to the *Targets* section and click on *Create target*.
     Select make sure to select the branch you want to protect.
-    We recommend to choose *Include default branch* but depending on your workflow you might want to choose one more multiple different branches.
+    We recommend to choose *Include default branch* but depending on your workflow you might want to choose one or multiple branches.
 
     <Image src="/assets/cloud/reviews/enforcing-reviews/create-new-target.png" />
   </Step>
   <Step title="Require status checks to pass">
     On the page scroll down to the rules section.
-    Optional: Make sure to disable the pre-selected rules. 
+    Make sure to disable the pre-selected rules. 
     Once everything is deselected enable the rule *Require status checks to pass*. 
 
     <Image src="/assets/cloud/reviews/enforcing-reviews/enable-status-checks.png" />
@@ -59,7 +60,8 @@ This will prevent PRs from being merged until the Widgetbook review is accepted.
     <Image src="/assets/cloud/reviews/enforcing-reviews/create-new-check.png" />
 
     Once the dropdown menu is deselected, the check will be added.
-
+  </Step>
+  <Step title="Add a check source">
     In case no source is configured, make sure to select the *Widgetbook* app as the source.
 
     <Image src="/assets/cloud/reviews/enforcing-reviews/edit-check-source.png" />
