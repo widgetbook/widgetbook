@@ -65,15 +65,15 @@ class AddonsConfigsBuilder extends BaseBuilder {
             final key = reader.read('key').stringValue;
 
             if (key == 'viewport') {
-              final data = reader.read('data');
-              final name = data.read('name').stringValue;
+              final data = reader.read('value');
+              final id = data.read('id').stringValue;
               final ratio = data.read('pixelRatio').doubleValue;
               final width = data.read('width').doubleValue;
               final height = data.read('height').doubleValue;
 
               return AddonConfig(
                 key,
-                'name:$name,\$meta:{w:$width,h:$height,p:$ratio}',
+                'id:$id,\$meta:{w:$width,h:$height,p:$ratio}',
               );
             }
 
