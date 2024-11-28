@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import 'viewport_data.dart';
 
 abstract class Viewports {
@@ -9,6 +11,7 @@ abstract class Viewports {
     width: 375,
     height: 667,
     pixelRatio: 2,
+    platform: TargetPlatform.iOS,
   );
 
   static const iphone11 = ViewportData(
@@ -17,6 +20,7 @@ abstract class Viewports {
     width: 414,
     height: 896,
     pixelRatio: 2,
+    platform: TargetPlatform.iOS,
   );
 
   static const iphone12 = ViewportData(
@@ -25,6 +29,7 @@ abstract class Viewports {
     width: 390,
     height: 844,
     pixelRatio: 3,
+    platform: TargetPlatform.iOS,
   );
 
   static const iphone13ProMax = ViewportData(
@@ -33,6 +38,7 @@ abstract class Viewports {
     width: 428,
     height: 926,
     pixelRatio: 3,
+    platform: TargetPlatform.iOS,
   );
 
   static const ipad = ViewportData(
@@ -41,6 +47,7 @@ abstract class Viewports {
     width: 768,
     height: 1024,
     pixelRatio: 2,
+    platform: TargetPlatform.iOS,
   );
 
   static const ipadPro = ViewportData(
@@ -49,6 +56,7 @@ abstract class Viewports {
     width: 1024,
     height: 1366,
     pixelRatio: 2,
+    platform: TargetPlatform.iOS,
   );
 
   static const galaxyS10 = ViewportData(
@@ -57,6 +65,7 @@ abstract class Viewports {
     width: 360,
     height: 740,
     pixelRatio: 3,
+    platform: TargetPlatform.android,
   );
 
   static const pixel2 = ViewportData(
@@ -65,6 +74,7 @@ abstract class Viewports {
     width: 411,
     height: 731,
     pixelRatio: 3,
+    platform: TargetPlatform.android,
   );
 
   static const pixel4a = ViewportData(
@@ -73,6 +83,7 @@ abstract class Viewports {
     width: 360,
     height: 640,
     pixelRatio: 3,
+    platform: TargetPlatform.android,
   );
 
   static const pixel5 = ViewportData(
@@ -81,6 +92,7 @@ abstract class Viewports {
     width: 411,
     height: 823,
     pixelRatio: 3,
+    platform: TargetPlatform.android,
   );
 
   static const galaxyTabS7Plus = ViewportData(
@@ -89,6 +101,7 @@ abstract class Viewports {
     width: 832,
     height: 1200,
     pixelRatio: 3,
+    platform: TargetPlatform.android,
   );
 
   static const all = <ViewportData?>[

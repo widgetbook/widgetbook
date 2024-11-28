@@ -24,10 +24,8 @@ class Viewport extends StatelessWidget {
     );
 
     final theme = Theme.of(context).copyWith(
-        // TODO:
-        // platform: data.platform,
-        // visualDensity: density,
-        );
+      platform: data.platform,
+    );
 
     return FittedBox(
       child: _ViewportFrame(
