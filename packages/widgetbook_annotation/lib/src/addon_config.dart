@@ -1,5 +1,3 @@
-import 'package:widgetbook/widgetbook.dart';
-
 /// A configuration entry for a WidgetbookAddon.
 class AddonConfig<T> {
   /// Creates a new [AddonConfig] using a [key] and a [value].
@@ -103,14 +101,5 @@ class ZoomAddonConfig extends AddonConfig<String> {
   ) : super(
           'zoom',
           'value:$zoom',
-        );
-}
-
-class ViewportAddonConfig extends AddonConfig<ViewportData> {
-  const ViewportAddonConfig(
-    ViewportData data,
-  ) : super(
-          'viewport',
-          data,
         );
 }
