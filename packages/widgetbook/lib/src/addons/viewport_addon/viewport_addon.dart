@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart' hide Viewport;
 import 'package:meta/meta.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 import '../../fields/fields.dart';
 import '../../state/state.dart';
 import '../common/common.dart';
 import 'viewport.dart';
 import 'viewport_data.dart';
+
+// NOTE: this cannot be defined in widgetbook_annotation because it depends on
+// the ViewportData class which is defined in this file.
+// If we add `widgetbook` as a dependency to `widgetbook_annotation`, then the
+// `widgetbook_generator` will also depend on `widgetbook` which causes
+// it to not work, as `widgetbook` has flutter as a dependency.
+@experimental
+class ViewportAddonConfig extends AddonConfig<ViewportData> {
+  const ViewportAddonConfig(
+    ViewportData data,
+  ) : super(
+          'viewport',
+          data,
+        );
+}
 
 @experimental
 class ViewportAddon extends WidgetbookAddon<ViewportData?> {

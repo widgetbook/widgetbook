@@ -11,15 +11,6 @@ void main() {
   runApp(const WidgetbookApp());
 }
 
-class ViewportAddonConfig extends AddonConfig<ViewportData> {
-  const ViewportAddonConfig(
-    ViewportData data,
-  ) : super(
-          'viewport',
-          data,
-        );
-}
-
 @App(
   cloudAddonsConfigs: {
     'German Dark Center x2': [
