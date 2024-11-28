@@ -1,5 +1,7 @@
+import 'package:widgetbook/widgetbook.dart';
+
 /// A configuration entry for a WidgetbookAddon.
-class AddonConfig {
+class AddonConfig<T> {
   /// Creates a new [AddonConfig] using a [key] and a [value].
   ///
   /// Given the following Widgetbook URL:
@@ -22,15 +24,15 @@ class AddonConfig {
   /// The value of the entry must be a query string that can be parsed by the
   /// addon. The easiest way to get the value is to use the URL query string
   /// of a Widgetbook web build.
-  final String value;
+  final T value;
 
-  MapEntry<String, String> toMapEntry() {
+  MapEntry<String, T> toMapEntry() {
     return MapEntry(key, value);
   }
 }
 
 /// [AddonConfig] for the LocalizationAddon.
-class LocalizationAddonConfig extends AddonConfig {
+class LocalizationAddonConfig extends AddonConfig<String> {
   const LocalizationAddonConfig(
     String languageTag,
   ) : super(
@@ -40,7 +42,7 @@ class LocalizationAddonConfig extends AddonConfig {
 }
 
 /// [AddonConfig] for the ThemeAddon.
-class ThemeAddonConfig extends AddonConfig {
+class ThemeAddonConfig extends AddonConfig<String> {
   const ThemeAddonConfig(
     String themeName,
   ) : super(
@@ -50,7 +52,7 @@ class ThemeAddonConfig extends AddonConfig {
 }
 
 /// [AddonConfig] for the AlignmentAddon.
-class AlignmentAddonConfig extends AddonConfig {
+class AlignmentAddonConfig extends AddonConfig<String> {
   /// Can only be one of the predefined values:
   /// - 'Top Left'
   /// - 'Top Center'
@@ -85,7 +87,7 @@ class AlignmentAddonConfig extends AddonConfig {
 }
 
 /// [AddonConfig] for the TextScaleAddon.
-class TextScaleAddonConfig extends AddonConfig {
+class TextScaleAddonConfig extends AddonConfig<String> {
   const TextScaleAddonConfig(
     double factor,
   ) : super(
@@ -95,11 +97,20 @@ class TextScaleAddonConfig extends AddonConfig {
 }
 
 /// [AddonConfig] for the ZoomAddon.
-class ZoomAddonConfig extends AddonConfig {
+class ZoomAddonConfig extends AddonConfig<String> {
   const ZoomAddonConfig(
     double zoom,
   ) : super(
           'zoom',
           'value:$zoom',
+        );
+}
+
+class ViewportAddonConfig extends AddonConfig<ViewportData> {
+  const ViewportAddonConfig(
+    ViewportData data,
+  ) : super(
+          'viewport',
+          data,
         );
 }

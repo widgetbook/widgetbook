@@ -14,6 +14,7 @@ void main() {
 @App(
   cloudAddonsConfigs: {
     'German Dark Center x2': [
+      ViewportAddonConfig(Viewports.iphone12),
       LocalizationAddonConfig('de'),
       ThemeAddonConfig('Dark'),
       AlignmentAddonConfig('Center'),
@@ -37,12 +38,8 @@ class WidgetbookApp extends StatelessWidget {
         ...components,
       ],
       addons: [
+        ViewportAddon(Viewports.all),
         next.TimeDilationAddon(),
-        next.DeviceFrameAddon([
-          Devices.ios.iPhoneSE,
-          Devices.ios.iPhone12,
-          Devices.ios.iPhone13,
-        ]),
         next.MaterialThemeAddon({
           'Dark': Themes.dark,
           'Light': Themes.light,

@@ -14,5 +14,10 @@ screenshots:
 environment:
   sdk: ">=3.3.0 <4.0.0"
 
+dependencies:
+  # This is only used to define addons configurations that use types
+  # from the widgetbook package, for example, the viewport addon.
+  widgetbook: ^3.10.0
+
 dev_dependencies:
   test: ^1.24.1
