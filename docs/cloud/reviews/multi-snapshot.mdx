@@ -8,21 +8,28 @@ If you are using [Widgetbook Cloud Review](/cloud/reviews), you can now create m
 
 1. Go to the main file of your app, where your Widgetbook's `@App` annotation is defined.
 1. Choose the addons you like to test and include them, e.g. Themes and Languages. Here are the available `AddonConfig` classes:
-   - `LocalizationAddonConfig`
-   - `ThemeAddonConfig`
-   - `AlignmentAddonConfig`
-   - `TextScaleAddonConfig`
-   - `ZoomAddonConfig`
-1. Add the configurations matrix to the `cloudAddonsConfigs` parameter of the `@App` annotation. In this example, we’d like to test German in dark mode but English in light mode.
+
+   | Config Name               | Notes                                                                                                        |
+   | ------------------------- | ------------------------------------------------------------------------------------------------------------ |
+   | `LocalizationAddonConfig` | -                                                                                                            |
+   | `ThemeAddonConfig`        | -                                                                                                            |
+   | `AlignmentAddonConfig`    | -                                                                                                            |
+   | `TextScaleAddonConfig`    | -                                                                                                            |
+   | `ZoomAddonConfig`         | -                                                                                                            |
+   | `ViewportAddonConfig` 🧪  | Unlike other `AddonConfig`s, this one is available in `widgetbook` package, and not `widgetbook_annotation`. |
+
+1. Add the configurations matrix to the `cloudAddonsConfigs` parameter of the `@App` annotation. In this example, we’d like to test German in dark mode but English in light mode, but both of them on an iPhone 12 viewport:
 
    ```dart
    @App(
      cloudAddonsConfigs: {
        'German Dark': [
+         ViewportAddonConfig(Viewports.iphone12),
          LocalizationAddonConfig('de'),
          ThemeAddonConfig('Dark'),
        ],
        'English Light': [
+         ViewportAddonConfig(Viewports.iphone12),
          LocalizationAddonConfig('en'),
          ThemeAddonConfig('Light'),
        ],

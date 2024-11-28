@@ -1,0 +1,22 @@
+# Viewport Addon
+
+<Warning>
+  This addon is currently experimental, and it will replace the [Device Frame
+  Addon](/addons/device-frame-addon) in the future.
+</Warning>
+
+The Viewport Addon is an invaluable tool that lets you preview your use-cases on various viewports. These viewports simulate a realistic environment by:
+
+1. Setting width and height boundaries to your use-case.
+1. Overriding `MediaQuery`'s `devicePixelRatio` to ensure your component behaves as as expected on different devices.
+1. Overriding `ThemeData.platform` to simulate different platforms.
+
+If you are using [Widgetbook Cloud](/cloud), unlike the [Device Frame Addon](/addons/device-frame-addon), the Viewport Addon works with [**Multi Snapshot Reviews**](/cloud/reviews/multi-snapshot).
+
+## Setup
+
+Here's how to configure it:
+
+```dart
+ViewportAddon(Viewports.all),
+```
