@@ -247,6 +247,13 @@ packages:
       relative: true
     source: path
     version: "3.10.0"
+  widgetbook_annotation:
+    dependency: "direct overridden"
+    description:
+      path: "../../packages/widgetbook_annotation"
+      relative: true
+    source: path
+    version: "3.2.0"
 sdks:
   dart: ">=3.4.0 <4.0.0"
   flutter: ">=3.22.0"
