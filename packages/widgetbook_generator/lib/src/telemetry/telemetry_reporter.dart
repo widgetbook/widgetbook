@@ -69,7 +69,7 @@ class TelemetryReporter extends Builder {
     }
   }
 
-  // Gets an owner URL based on the remote origin URL.
+  /// Get an owner URL based on the remote origin URL.
   Future<String?> getOwnerUrl() async {
     try {
       final result = await Process.run('git', ['config', 'remote.origin.url']);
