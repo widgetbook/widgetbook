@@ -1,3 +1,7 @@
+## Unreleased
+
+- **REFACTOR**: Send an owner URL for [telemetry](https://docs.widgetbook.io/telemetry). ([#1324](https://github.com/widgetbook/widgetbook/pull/1324))
+
 ## 3.9.0
 
 - **BREAKING**: Set minimum SDK version to 3.0.0. ([#1243](https://github.com/widgetbook/widgetbook/pull/1243))
