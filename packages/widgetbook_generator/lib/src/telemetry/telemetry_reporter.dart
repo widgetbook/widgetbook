@@ -72,16 +72,20 @@ class TelemetryReporter extends Builder {
   // Gets an owner URL based on the remote origin URL.
   Future<String?> getOwnerUrl() async {
     try {
-      // Can be SSH or HTTPs, for example:
-      // git@github.com:owner/repo.git
-      // https://github.com/owner/repo.git
       final result = await Process.run('git', ['config', 'remote.origin.url']);
       final remoteUrl = result.stdout.toString().trim();
 
       if (remoteUrl.isEmpty) return null;
 
+      // Convert SSH to HTTPs, e.g. git@github.com:owner/repo.git
+      // will be converted to https://github.com/owner/repo.git
+      final isSSH = remoteUrl.startsWith('git@');
+      final httpUrl = isSSH
+          ? remoteUrl.replaceAll(':', '/').replaceFirst('git@', 'https://')
+          : remoteUrl;
+
       // Remove the repo name as it may contain sensitive information.
-      final ownerUrl = remoteUrl.substring(0, remoteUrl.lastIndexOf('/'));
+      final ownerUrl = httpUrl.substring(0, httpUrl.lastIndexOf('/'));
 
       return ownerUrl;
     } catch (_) {
