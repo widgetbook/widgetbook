@@ -9,6 +9,7 @@ class UsageReport {
     required this.project,
     required List<UseCaseMetadata> useCases,
     required this.version,
+    required this.ownerUrl,
   }) {
     packages = useCases.map((e) => e.component.package).toSet();
 
@@ -36,6 +37,10 @@ class UsageReport {
 
   /// `widgetbook_generator` version
   final String version;
+
+  /// URL to the owner's git account
+  /// Example: https://github.com/widgetbook
+  final String? ownerUrl;
 
   /// Unique set of components' packages.
   /// This helps identify different projects
@@ -81,6 +86,7 @@ class UsageReport {
         'components': componentsCount,
         'use_cases': useCasesCount,
         'heat_map': heatMap.map((key, value) => MapEntry('$key', value)),
+        'owner_url': ownerUrl,
       },
     };
   }

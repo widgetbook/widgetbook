@@ -69,6 +69,30 @@ class TelemetryReporter extends Builder {
     }
   }
 
+  /// Get an owner URL based on the remote origin URL.
+  Future<String?> getOwnerUrl() async {
+    try {
+      final result = await Process.run('git', ['config', 'remote.origin.url']);
+      final remoteUrl = result.stdout.toString().trim();
+
+      if (remoteUrl.isEmpty) return null;
+
+      // Convert SSH to HTTPs, e.g. git@github.com:owner/repo.git
+      // will be converted to https://github.com/owner/repo.git
+      final isSSH = remoteUrl.startsWith('git@');
+      final httpUrl = isSSH
+          ? remoteUrl.replaceAll(':', '/').replaceFirst('git@', 'https://')
+          : remoteUrl;
+
+      // Remove the repo name as it may contain sensitive information.
+      final ownerUrl = httpUrl.substring(0, httpUrl.lastIndexOf('/'));
+
+      return ownerUrl;
+    } catch (_) {
+      return null;
+    }
+  }
+
   Future<void> sendUsageReport(UsageReport report) async {
     final projectToken = 'e9326ce582275574ff5e5691295cd420';
     final event = report.toMixpanelEvent(
@@ -105,6 +129,10 @@ class TelemetryReporter extends Builder {
       final isCI = ciKeys.any(Platform.environment.containsKey);
       if (isCI) return;
 
+      // Owner URL can be null if the repository has no remote,
+      // Or a remote that's not named `origin`.
+      final ownerUrl = await getOwnerUrl();
+
       final trackingId = await getTrackingId();
       if (trackingId == null) return;
 
@@ -128,6 +156,7 @@ class TelemetryReporter extends Builder {
         project: buildStep.inputId.package,
         useCases: useCases,
         version: packageVersion,
+        ownerUrl: ownerUrl,
       );
 
       await sendUsageReport(report);
