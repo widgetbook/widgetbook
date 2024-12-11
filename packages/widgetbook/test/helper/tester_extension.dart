@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/state/widgetbook_scope.dart';
 import 'package:widgetbook/src/themes.dart';
 import 'package:widgetbook/widgetbook.dart';
 
