@@ -8,7 +8,7 @@ documentation: https://docs.widgetbook.io
 topics: [widgetbook, storybook, ui, tool, test]
 
 screenshots:
-  - description: 'Widgetbook Logo'
+  - description: "Widgetbook Logo"
     path: assets/logo.png
 
 environment:
@@ -25,6 +25,10 @@ dependencies:
   meta: ^1.8.0
   nested: ^1.0.0
   resizable_widget: ^1.0.5
+  # To create custom AddonConfig(s) that use types from
+  # the widgetbook package, we need to depend on the
+  # annotation package.
+  widgetbook_annotation: ^3.2.0
 
 dev_dependencies:
   flutter_test:

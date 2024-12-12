@@ -25,14 +25,14 @@ import 'addon_config.dart';
 /// See [AddonConfig] for more information about other
 /// available configurations.
 /// {@endtemplate}
-typedef AddonsConfigs = Map<String, Iterable<AddonConfig>>;
+typedef AddonsConfigs = Map<String, Iterable<AddonConfig<dynamic>>>;
 
 extension AddonsConfigsExtension on AddonsConfigs {
   Map<String, dynamic> toJson() {
     return map(
       (key, value) => MapEntry(
         key,
-        Map<String, String>.fromEntries(
+        Map<String, dynamic>.fromEntries(
           value.map((e) => e.toMapEntry()),
         ),
       ),
