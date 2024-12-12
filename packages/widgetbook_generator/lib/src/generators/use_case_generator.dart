@@ -16,12 +16,19 @@ import '../util/constant_reader.dart';
 class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
   UseCaseGenerator(this.navPathMode);
 
-  final packagesMapResource = Resource<YamlMap>(
+  final packagesMapResource = Resource<YamlMap?>(
     () async {
-      final lockFile = await File('pubspec.lock').readAsString();
-      final yaml = loadYaml(lockFile) as YamlMap;
+      try {
+        final lockFile = await File('pubspec.lock').readAsString();
+        final yaml = loadYaml(lockFile) as YamlMap;
 
-      return yaml['packages'] as YamlMap;
+        return yaml['packages'] as YamlMap;
+      } catch (_) {
+        // The pubspec.lock can be missing in certain cases,
+        // For example when using the dart workspaces.
+        // See: https://github.com/widgetbook/widgetbook/issues/1326
+        return null;
+      }
     },
   );
 
@@ -142,9 +149,10 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     }
 
     final resource = await buildStep.fetchResource(packagesMapResource);
+    if (resource == null) return elementPath;
+
     final packageData = resource[elementPackage] as YamlMap;
     final isLocalPackage = packageData['source'] == 'path';
-
     if (!isLocalPackage) return elementPath;
 
     final packagePath = packageData['description']['path'] as String;
