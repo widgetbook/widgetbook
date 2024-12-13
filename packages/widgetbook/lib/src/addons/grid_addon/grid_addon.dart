@@ -28,7 +28,7 @@ class GridAddon extends WidgetbookAddon<int> {
     return Stack(
       children: [
         GridPaper(
-          color: Colors.grey.withOpacity(0.5),
+          color: Colors.grey.withAlpha(255 ~/ 2),
           interval: setting.toDouble(),
           subdivisions: 2,
           child: Container(),
