@@ -1,4 +1,4 @@
-## Unreleased
+## 3.10.1
 
 - **FIX**: Expose `WidgetbookScope` to allow importing it in tests. ([#1325](https://github.com/widgetbook/widgetbook/pull/1325))
 - **FIX**: Allow special characters in search query. ([#1293](https://github.com/widgetbook/widgetbook/pull/1293) - by [@07Abhinavkapoor](https://github.com/07Abhinavkapoor))
