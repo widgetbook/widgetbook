@@ -111,7 +111,7 @@ class Themes {
     brightness: Brightness.dark,
     fontFamily: 'Poppins',
     colorScheme: _darkColorScheme,
-    hoverColor: const Color(0xFFE3E2E6).withOpacity(0.08),
+    hoverColor: const Color(0xFFE3E2E6).withAlpha(20),
     tabBarTheme: TabBarTheme(
       dividerColor: _darkColorScheme.outline,
     ),
@@ -138,7 +138,7 @@ class Themes {
     brightness: Brightness.light,
     fontFamily: 'Poppins',
     colorScheme: _lightColorScheme,
-    hoverColor: const Color(0xFF1A1C1E).withOpacity(0.08),
+    hoverColor: const Color(0xFF1A1C1E).withAlpha(20),
     tabBarTheme: TabBarTheme(
       dividerColor: _darkColorScheme.outline,
     ),

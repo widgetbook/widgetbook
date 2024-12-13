@@ -19,6 +19,10 @@ class ColorField extends Field<Color> {
   }) : super(
           type: FieldType.color,
           codec: FieldCodec(
+            // Color.value was deprecated in Flutter 3.27.0, the alternative
+            // apis (.r, .g, .b, .a) are not available in Color for our minimum
+            // Flutter version (3.16.0), as they were also introduced in 3.27.0.
+            // ignore: deprecated_member_use
             toParam: (color) => color.value.toRadixString(16),
             toValue: (param) {
               if (param == null) return null;
