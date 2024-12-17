@@ -211,6 +211,10 @@
               "href": "/next/sam"
             }
           ]
+        },
+        {
+          "title": "Entries Generator VSC Extension",
+          "href": "https://marketplace.visualstudio.com/items?itemName=LeanCode.widgetbook-generator"
         }
       ]
     },
