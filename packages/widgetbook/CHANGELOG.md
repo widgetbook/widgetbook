@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Add `WidgetbookState.maybeOf`. ([#1342](https://github.com/widgetbook/widgetbook/pull/1342) - by [@ABausG](https://github.com/ABausG))
+
 ## 3.10.1
 
 - **FIX**: Expose `WidgetbookScope` to allow importing it in tests. ([#1325](https://github.com/widgetbook/widgetbook/pull/1325))
