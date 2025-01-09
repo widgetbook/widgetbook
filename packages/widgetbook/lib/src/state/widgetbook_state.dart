@@ -73,7 +73,8 @@ class WidgetbookState extends ChangeNotifier {
     );
   }
 
-  /// Gets the current state using [context] returns `null` if no Widgetbook is found.
+  /// Gets the current state using [context], if any.
+  /// If there is no state in scope, then this function will return null.
   static WidgetbookState? maybeOf(BuildContext context) {
     return context
         .dependOnInheritedWidgetOfExactType<WidgetbookScope>()
