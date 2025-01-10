@@ -1,4 +1,4 @@
-## Unreleased
+## 3.10.2
 
 - **FEAT**: Add `WidgetbookState.maybeOf`. ([#1342](https://github.com/widgetbook/widgetbook/pull/1342) - by [@ABausG](https://github.com/ABausG))
 
