@@ -343,6 +343,10 @@
               "href": "/cloud/setup/azure"
             },
             {
+              "title": "Self-managed GitLab",
+              "href": "/cloud/setup/self-managed-gitlab"
+            },
+            {
               "title": "Codemagic",
               "href": "/cloud/setup/codemagic"
             }
