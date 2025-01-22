@@ -1,3 +1,7 @@
+## Unreleased
+
+- **BREAKING**: Set minimum SDK version to 3.3.0. ([#1349](https://github.com/widgetbook/widgetbook/pull/1349))
+
 ## 3.5.0
 
 - **FEAT**: Add support for [GitLab Merged Results Pipelines](https://docs.gitlab.com/ee/ci/pipelines/merged_results_pipelines.html) via the `cloud build push` command. Check [our docs](https://docs.widgetbook.io/cloud/setup/gitlab#gitlab-merged-result-pipelines) for more info. ([#1312](https://github.com/widgetbook/widgetbook/pull/1312))
