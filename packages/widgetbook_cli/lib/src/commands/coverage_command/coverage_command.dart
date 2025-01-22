@@ -177,11 +177,22 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
       ),
     );
 
+    /* ---------------------- compare widgets and usecases ---------------------- */
+
+    /* ------------------------------ print results ----------------------------- */
     _logger.info('Covered widgets: ${coveredWidgets.length}');
     _logger.info('Uncovered widgets: ${uncoveredWidgets.length} \n '
         'Uncovered widgets: ${uncoveredWidgets.join(', ')}');
     _logger.info('Private widgets: ${privateWidgets.length}');
-    /* ---------------------- compare widgets and usecases ---------------------- */
+
+    _logger.info('Widget Name | Coverage Status');
+    coveredWidgets.forEach((widget) {
+      _logger.info('$widget | ✅ Covered');
+    });
+    uncoveredWidgets.forEach((widget) {
+      _logger.info('$widget | ❌ Uncovered');
+    });
+    /* ------------------------------ print results ----------------------------- */
 
     /* ---------------------- calculate coverage percentage --------------------- */
     final coveredWidgetsPercentage = (coveredWidgets.length /
