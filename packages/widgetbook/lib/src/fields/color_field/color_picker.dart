@@ -22,26 +22,30 @@ class ColorPicker extends StatefulWidget {
 }
 
 class _ColorPickerState extends State<ColorPicker> {
-  late int opacity;
+  late int alpha;
   late ColorSpace colorSpace;
   late OpaqueColor opaqueColor;
 
   @override
   void initState() {
     super.initState();
-    opacity = widget.value.alpha ~/ 2.55;
+    // Color.alpha was deprecated in Flutter 3.27.0, the alternative
+    // api (.a) is not available in Color for our minimum
+    // Flutter version (3.19.0), as they were also introduced in 3.27.0.
+    // ignore: deprecated_member_use
+    alpha = widget.value.alpha;
     colorSpace = widget.colorSpace;
     opaqueColor = OpaqueColor.fromColor(widget.value);
   }
 
-  void onChange(int newOpacity, OpaqueColor newColor) {
+  void onChange(int newAlpha, OpaqueColor newColor) {
     setState(() {
-      opacity = newOpacity;
+      alpha = newAlpha;
       opaqueColor = newColor;
     });
 
     widget.onChanged.call(
-      newColor.toColor().withOpacity(newOpacity / 100),
+      newColor.toColor().withAlpha(newAlpha),
     );
   }
 
@@ -58,7 +62,7 @@ class _ColorPickerState extends State<ColorPicker> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.18),
+                color: Colors.white.withAlpha(46),
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Icon(
@@ -84,10 +88,11 @@ class _ColorPickerState extends State<ColorPicker> {
             SizedBox(
               width: 80,
               child: NumberTextField.percentage(
-                value: opacity,
+                value: alpha ~/ 255 * 100,
                 onChanged: (value) {
-                  setState(() => this.opacity = value);
-                  onChange(value, opaqueColor);
+                  final newValue = (value / 100 * 255).round();
+                  setState(() => this.alpha = newValue);
+                  onChange(newValue, opaqueColor);
                 },
               ),
             ),
@@ -101,7 +106,7 @@ class _ColorPickerState extends State<ColorPicker> {
           value: opaqueColor,
           onChanged: (value) {
             setState(() => this.opaqueColor = value);
-            onChange(opacity, value);
+            onChange(alpha, value);
           },
         ),
       ],

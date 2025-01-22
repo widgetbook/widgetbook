@@ -8,6 +8,7 @@ class BuildDraftRequest {
     required this.actor,
     required this.branch,
     required this.sha,
+    required this.mergedResultSha,
     required this.useCases,
     required this.addonsConfigs,
     required this.size,
@@ -19,6 +20,7 @@ class BuildDraftRequest {
   final String actor;
   final String branch;
   final String sha;
+  final String? mergedResultSha;
   final List<UseCaseMetadata> useCases;
   final AddonsConfigs? addonsConfigs;
   final int size;
@@ -31,6 +33,7 @@ class BuildDraftRequest {
       'actor': actor,
       'branch': branch,
       'sha': sha,
+      'mergedResultSha': mergedResultSha,
       'useCases': useCases.map((x) => x.toJson()).toList(),
       'addonsConfigs': addonsConfigs,
       'size': size,

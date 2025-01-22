@@ -51,3 +51,35 @@ If you want to use Widgetbook Cloud with your existing GitLab repository, here's
 ## Troubleshooting
 
 To make sure that your Widgetbook Cloud setup works properly, you can check that your repository has a Webhook configured _(under Project Settings > Webhooks)_ to notify Widgetbook Cloud about new MRs.
+
+## GitLab Merged Result Pipelines
+
+If you are using [GitLab Merged Result Pipelines](https://docs.gitlab.com/ee/ci/pipelines/merged_results_pipelines.html), that means your pipeline runs on a commit that is not in your MR branch (i.e. the merged result commit). In this case, the commit status from Widgetbook Cloud needs to be added to that "merged result" commit, to be visible in the MR, and block the merge if the Widgetbook Review fails.
+
+<Warning>
+  Since your builds will be uploaded from a **merged result commit**, that means
+  you need to keep your MR's **base build** up-to-date, by merging the base
+  branch into your MR branch _(rebasing also works)_ before you review the
+  changes on Widgetbook Cloud.
+</Warning>
+
+To achieve this, replace the `cloud build push` command as follows:
+
+```yaml
+widgetbook:
+  script:
+    - # Previous scripts...
+    - widgetbook cloud build push --api-key "$WIDGETBOOK_API_KEY" // [!code --]
+    - | // [!code ++]
+      if [ "$CI_PIPELINE_SOURCE" == "merge_request_event" ]; then // [!code ++]
+        # Upload a merged result build // [!code ++]
+        widgetbook cloud build push \ // [!code ++]
+          --api-key "$WIDGETBOOK_API_KEY" \ // [!code ++]
+          --commit "$CI_MERGE_REQUEST_SOURCE_BRANCH_SHA" \ // [!code ++]
+          --branch "$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME" \ // [!code ++]
+          --merged-result-commit "$CI_COMMIT_SHA" // [!code ++]
+      else // [!code ++]
+        # Upload a regular build // [!code ++]
+        widgetbook cloud build push --api-key "$WIDGETBOOK_API_KEY"  // [!code ++]
+      fi // [!code ++]
+```

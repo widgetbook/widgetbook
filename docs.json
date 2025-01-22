@@ -37,9 +37,9 @@
   "variables": {
     "versions": {
       "annotation": "3.2.0",
-      "cli": "3.4.3",
-      "generator": "3.9.0",
-      "widgetbook": "3.10.0"
+      "cli": "3.5.0",
+      "generator": "3.9.1",
+      "widgetbook": "3.10.2"
     }
   },
   "tabs": [
@@ -85,6 +85,10 @@
         {
           "title": "Use-cases",
           "href": "/guides/use-cases"
+        },
+        {
+          "title": "Mock Widgets & Screens",
+          "href": "/guides/mocking"
         },
         {
           "title": "Customization",
@@ -175,10 +179,6 @@
           "href": "/guides/monorepo"
         },
         {
-          "title": "Mocking",
-          "href": "/guides/mocking"
-        },
-        {
           "title": "Assets",
           "href": "/guides/assets"
         },
@@ -211,6 +211,10 @@
               "href": "/next/sam"
             }
           ]
+        },
+        {
+          "title": "Entries Generator VSC Extension",
+          "href": "https://marketplace.visualstudio.com/items?itemName=LeanCode.widgetbook-generator"
         }
       ]
     },
@@ -337,6 +341,10 @@
             {
               "title": "Azure DevOps",
               "href": "/cloud/setup/azure"
+            },
+            {
+              "title": "Self-managed GitLab",
+              "href": "/cloud/setup/self-managed-gitlab"
             },
             {
               "title": "Codemagic",

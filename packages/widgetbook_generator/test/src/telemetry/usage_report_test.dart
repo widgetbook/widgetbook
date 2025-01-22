@@ -10,6 +10,7 @@ void main() {
       project: 'test',
       projectId: 'yyyy',
       trackingId: 'xxxx',
+      ownerUrl: null,
       useCases: [
         MockUseCaseMetadata(
           componentName: 'ComponentA',
@@ -100,6 +101,7 @@ void main() {
             'components': 2,
             'use_cases': 5,
             'heat_map': {'3': 1, '2': 1},
+            'owner_url': null,
           },
         }),
       );

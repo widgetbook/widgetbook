@@ -1,3 +1,12 @@
+## Unreleased
+
+- **BREAKING**: Set minimum SDK version to 3.3.0. ([#1349](https://github.com/widgetbook/widgetbook/pull/1349))
+
+## 3.9.1
+
+- **FIX**: Escape path resolution if `pubspec.lock` is not found. This bug was affecting running the generator in [Pub Workspaces](https://dart.dev/tools/pub/workspaces). ([#1327](https://github.com/widgetbook/widgetbook/pull/1327))
+- **REFACTOR**: Send an owner URL for [telemetry](https://docs.widgetbook.io/telemetry). ([#1324](https://github.com/widgetbook/widgetbook/pull/1324))
+
 ## 3.9.0
 
 - **BREAKING**: Set minimum SDK version to 3.0.0. ([#1243](https://github.com/widgetbook/widgetbook/pull/1243))

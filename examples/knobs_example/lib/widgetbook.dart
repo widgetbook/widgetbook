@@ -89,7 +89,7 @@ class WidgetbookApp extends StatelessWidget {
                   KnobEntry<Color>(
                     name: 'Color',
                     builder: (color) => Text(
-                      color.value.toRadixString(16),
+                      '${color}',
                       style: TextStyle(
                         color: color,
                       ),

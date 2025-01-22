@@ -40,7 +40,7 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
     return Navigator(
       key: navigatorKey,
       // The onPopPage parameter is deprecated in Flutter 3.24.0,
-      // But we cannot migrate it because our minimum version is 3.16.0.
+      // But we cannot migrate it because our minimum version is 3.19.0.
       // ignore: deprecated_member_use
       onPopPage: (route, result) => route.didPop(result),
       pages: [

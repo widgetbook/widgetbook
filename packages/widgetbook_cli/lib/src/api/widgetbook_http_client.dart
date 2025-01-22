@@ -6,8 +6,6 @@ import 'models/build_draft_request.dart';
 import 'models/build_draft_response.dart';
 import 'models/build_ready_request.dart';
 import 'models/build_ready_response.dart';
-import 'models/build_request.dart';
-import 'models/build_response.dart';
 import 'models/versions_metadata.dart';
 
 /// HTTP client to connect to the Widgetbook Cloud backend
@@ -24,33 +22,6 @@ class WidgetbookHttpClient {
             );
 
   final Dio client;
-
-  /// Uploads the build .zip file to the Widgetbook Cloud backend.
-  Future<BuildResponse> uploadBuild(
-    VersionsMetadata? versions,
-    BuildRequest request,
-  ) async {
-    try {
-      final formData = await request.toFormData();
-      final response = await client.post<Map<String, dynamic>>(
-        'v1/builds/deploy',
-        data: formData,
-        options: Options(
-          headers: versions?.toHeaders(),
-        ),
-      );
-
-      return BuildResponse.fromJson(response.data!);
-    } catch (e) {
-      final message = e is DioException //
-          ? e.response?.toString()
-          : e.toString();
-
-      throw WidgetbookApiException(
-        message: message,
-      );
-    }
-  }
 
   Future<BuildDraftResponse> createBuildDraft(
     VersionsMetadata? versions,

@@ -19,7 +19,6 @@ const expectedUsage = [
       '\n'
       'Available commands:\n'
       '  cloud     Manage your Widgetbook Cloud projects.\n'
-      '  publish   Publish a new build\n'
       '  upgrade   Upgrade Widgetbook CLI\n'
       '\n'
       'Run "widgetbook help <command>" for more information about a command.'

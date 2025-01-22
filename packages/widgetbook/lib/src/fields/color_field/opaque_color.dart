@@ -12,7 +12,12 @@ class OpaqueColor {
 
   OpaqueColor.fromColor(
     Color color,
-  ) : value = color.value & 0xffffff;
+  ) :
+        // Color.value was deprecated in Flutter 3.27.0, the alternative
+        // apis (.r, .g, .b, .a) are not available in Color for our minimum
+        // Flutter version (3.19.0), as they were also introduced in 3.27.0.
+        // ignore: deprecated_member_use
+        value = color.value & 0xffffff;
 
   final int value;
 

@@ -8,7 +8,6 @@ import 'package:pub_updater/pub_updater.dart';
 import '../../metadata.dart';
 import '../commands/cloud.dart';
 import '../commands/coverage_command/coverage_command.dart';
-import '../commands/publish.dart';
 import '../commands/upgrade.dart';
 import '../utils/utils.dart';
 import 'context.dart';
@@ -32,13 +31,6 @@ class CliRunner extends CommandRunner<int> {
         context: context,
         logger: _logger,
         pubUpdater: _pubUpdater,
-      ),
-    );
-
-    addCommand(
-      PublishCommand(
-        context: context,
-        logger: _logger,
       ),
     );
 

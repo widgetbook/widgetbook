@@ -64,7 +64,7 @@ class _SearchFieldState extends State<SearchField> {
                     focusNode.unfocus();
                     widget.onCleared?.call();
                   },
-                  hoverColor: Colors.white.withOpacity(0.2),
+                  hoverColor: Colors.white.withAlpha(25),
                   icon: const Icon(Icons.close),
                 ),
               )

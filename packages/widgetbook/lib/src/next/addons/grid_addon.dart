@@ -11,7 +11,7 @@ class GridAddon extends BuilderAddon {
             return Stack(
               children: [
                 GridPaper(
-                  color: Colors.grey.withOpacity(0.5),
+                  color: Colors.grey.withAlpha(255 ~/ 2),
                   interval: dimension.toDouble(),
                   subdivisions: 2,
                   child: Container(),
