@@ -31,7 +31,7 @@ class Themes {
     surfaceTint: Color(0xFFA1C9FF),
 
     // The following parameters are deprecated in Flutter 3.22.0,
-    // But we cannot remove them because our minimum version is 3.16.0,
+    // But we cannot remove them because our minimum version is 3.19.0,
     // and these parameters are required there.
 
     // ignore: deprecated_member_use
@@ -71,7 +71,7 @@ class Themes {
     surfaceTint: Color(0xFF0060A7),
 
     // The following parameters are deprecated in Flutter 3.22.0,
-    // But we cannot remove them because our minimum version is 3.16.0,
+    // But we cannot remove them because our minimum version is 3.19.0,
     // and these parameters are required there.
 
     // ignore: deprecated_member_use
@@ -90,7 +90,7 @@ class Themes {
       isDense: true,
       // By default, this is [ColorScheme.surfaceContainerHighest], but we
       // need to override it to [ColorScheme.surfaceVariant] due to the minimum
-      // Flutter version being 3.16.0, which does not have the new parameter.
+      // Flutter version being 3.19.0, which does not have the new parameter.
       // ignore: deprecated_member_use
       fillColor: colorScheme.surfaceVariant,
       focusedBorder: OutlineInputBorder(
@@ -119,7 +119,7 @@ class Themes {
       overlayShape: SliderComponentShape.noThumb,
       // By default, this is [ColorScheme.surfaceContainerHighest], but we
       // need to override it to [ColorScheme.surfaceVariant] due to the minimum
-      // Flutter version being 3.16.0, which does not have the new parameter.
+      // Flutter version being 3.19.0, which does not have the new parameter.
       // ignore: deprecated_member_use
       inactiveTrackColor: _darkColorScheme.surfaceVariant,
     ),
@@ -146,7 +146,7 @@ class Themes {
       overlayShape: SliderComponentShape.noThumb,
       // By default, this is [ColorScheme.surfaceContainerHighest], but we
       // need to override it to [ColorScheme.surfaceVariant] due to the minimum
-      // Flutter version being 3.16.0, which does not have the new parameter.
+      // Flutter version being 3.19.0, which does not have the new parameter.
       // ignore: deprecated_member_use
       inactiveTrackColor: _lightColorScheme.surfaceVariant,
     ),

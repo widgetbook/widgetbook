@@ -1,3 +1,7 @@
+## Unreleased
+
+- **BREAKING**: Set minimum SDK version to 3.3.0 & minimum Flutter version to 3.19.0. ([#1349](https://github.com/widgetbook/widgetbook/pull/1349))
+
 ## 3.10.2
 
 - **FEAT**: Add `WidgetbookState.maybeOf`. ([#1342](https://github.com/widgetbook/widgetbook/pull/1342) - by [@ABausG](https://github.com/ABausG))
