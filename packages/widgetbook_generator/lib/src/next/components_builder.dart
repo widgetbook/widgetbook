@@ -61,7 +61,10 @@ class ComponentsBuilder implements Builder {
       },
     );
 
-    final formatter = DartFormatter();
+    final formatter = DartFormatter(
+      languageVersion: DartFormatter.latestShortStyleLanguageVersion,
+    );
+
     final emitter = DartEmitter(
       allocator: Allocator.simplePrefixing(),
     );

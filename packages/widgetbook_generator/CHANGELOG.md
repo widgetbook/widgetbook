@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **BREAKING**: Set minimum SDK version to 3.3.0. ([#1349](https://github.com/widgetbook/widgetbook/pull/1349))
+- **REFACTOR**: Allow analyzer 7.x. ([#1351](https://github.com/widgetbook/widgetbook/pull/1351))
 
 ## 3.9.1
 
