@@ -15,25 +15,25 @@ environment:
   sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
-  args: ^2.3.0
+  args: ^2.6.0
   ci: ^0.1.0
-  collection: ^1.15.0
-  dio: ^5.6.0
+  collection: ^1.18.0
+  dio: ^5.7.0
   file: ^7.0.0
-  mason_logger: ^0.2.5
-  meta: ^1.8.0
-  mime: ^1.0.4
-  path: ^1.8.2
-  platform: ^3.0.0
+  mason_logger: ^0.2.16
+  meta: ^1.16.0
+  mime: ^2.0.0
+  path: ^1.9.0
+  platform: ^3.1.0
   pool: ^1.5.1
-  process: ^5.0.0
+  process: ^5.0.3
   pub_updater: ^0.4.0
   retry: ^3.1.2
   yaml: ^3.1.2
 
 dev_dependencies:
   mocktail: ^1.0.0
-  test: ^1.12.1
+  test: ^1.25.7
 
 executables:
   widgetbook: cli_production
