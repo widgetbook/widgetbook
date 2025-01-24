@@ -36,6 +36,4 @@ dev_dependencies:
   test: ^1.25.7
 
 executables:
-  widgetbook: cli_production
-  widgetbook_staging: cli_staging
-  widgetbook_debug: cli_debug
+  widgetbook:

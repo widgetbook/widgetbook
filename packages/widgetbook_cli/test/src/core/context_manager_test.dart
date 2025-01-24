@@ -18,7 +18,6 @@ void main() {
 
   group('$ContextManager', () {
     final repository = MockRepository();
-    final environment = FakeEnvironment();
 
     test('Local', () async {
       ciManager.mock();
@@ -26,12 +25,11 @@ void main() {
       when(() => repository.user).thenAnswer((_) async => userName);
 
       expectLater(
-        contextManager.load(repository, environment),
+        contextManager.load(repository),
         completion(
           Context(
             name: 'Local',
             repository: repository,
-            environment: environment,
             user: userName,
             project: repoName,
           ),
@@ -47,12 +45,11 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(repository, environment),
+        contextManager.load(repository),
         completion(
           Context(
             name: 'Azure',
             repository: repository,
-            environment: environment,
             user: userName,
             project: repoName,
           ),
@@ -68,12 +65,11 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(repository, environment),
+        contextManager.load(repository),
         completion(
           Context(
             name: 'Bitbucket',
             repository: repository,
-            environment: environment,
             user: userName,
             project: repoName,
           ),
@@ -89,12 +85,11 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(repository, environment),
+        contextManager.load(repository),
         completion(
           Context(
             name: 'Codemagic',
             repository: repository,
-            environment: environment,
             user: 'Codemagic',
             project: repoName,
             providerSha: userName,
@@ -112,12 +107,11 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(repository, environment),
+        contextManager.load(repository),
         completion(
           Context(
             name: 'GitHub',
             repository: repository,
-            environment: environment,
             user: userName,
             project: repoName,
             providerSha: sha,
@@ -136,12 +130,11 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(repository, environment),
+        contextManager.load(repository),
         completion(
           Context(
             name: 'GitLab',
             repository: repository,
-            environment: environment,
             user: userName,
             project: repoName,
             providerBranch: 'main',

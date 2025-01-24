@@ -22,10 +22,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     this.cacheReader = const CacheReader(),
     WidgetbookHttpClient? cloudClient,
     StorageClient? storageClient,
-  })  : cloudClient = cloudClient ??
-            WidgetbookHttpClient(
-              environment: context.environment,
-            ),
+  })  : cloudClient = cloudClient ?? WidgetbookHttpClient(),
         storageClient = storageClient ?? StorageClient(),
         super(
           name: 'push',
@@ -62,6 +59,14 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       ..addOption(
         'actor',
         help: 'Author of the commit',
+      )
+      ..addOption(
+        'api-url',
+        hide: true,
+        callback: (url) {
+          if (url == null) return;
+          this.cloudClient.client.options.baseUrl = url;
+        },
       );
   }
 

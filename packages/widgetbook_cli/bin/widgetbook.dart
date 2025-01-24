@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:widgetbook_cli/widgetbook_cli.dart';
 
-void main(List<String> arguments, Environment environment) async {
+void main(List<String> args) async {
   const contextManager = ContextManager();
   final repository = await Repository.load(
     Directory.current.path,
@@ -10,13 +10,12 @@ void main(List<String> arguments, Environment environment) async {
 
   final context = await contextManager.load(
     repository,
-    environment,
   );
 
   await flushThenExit(
     await CliRunner(
       context: context,
-    ).run(arguments),
+    ).run(args),
   );
 }
 

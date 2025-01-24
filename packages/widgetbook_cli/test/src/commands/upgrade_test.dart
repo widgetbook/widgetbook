@@ -25,8 +25,6 @@ void main() {
         () => pubUpdater.update(packageName: packageName),
       ).thenAnswer((_) => Future.value(MockProcessResult.success('')));
 
-      when(() => globalContext.environment).thenReturn(FakeEnvironment());
-
       cliRunner = CliRunner(
         context: globalContext,
         logger: logger,

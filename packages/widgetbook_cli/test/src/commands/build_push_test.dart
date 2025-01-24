@@ -14,8 +14,6 @@ void main() {
     late Context context;
 
     setUp(() async {
-      registerFallbackValue(FakeEnvironment());
-
       logger = MockLogger();
       repository = MockRepository();
       progress = MockProgress();
@@ -24,8 +22,6 @@ void main() {
       when(() => logger.progress(any<String>())).thenReturn(progress);
 
       when(() => context.repository).thenReturn(repository);
-      when(() => context.environment).thenReturn(FakeEnvironment());
-      when(() => context.environment).thenReturn(FakeEnvironment());
     });
 
     group('parseResults', () {

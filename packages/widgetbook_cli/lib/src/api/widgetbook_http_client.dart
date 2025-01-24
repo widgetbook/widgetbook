@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 
-import '../core/core.dart';
 import '../utils/utils.dart';
 import 'models/build_draft_request.dart';
 import 'models/build_draft_response.dart';
@@ -8,15 +7,16 @@ import 'models/build_ready_request.dart';
 import 'models/build_ready_response.dart';
 import 'models/versions_metadata.dart';
 
+const BASE_API_URL = 'https://api.widgetbook.io/';
+
 /// HTTP client to connect to the Widgetbook Cloud backend
 class WidgetbookHttpClient {
   WidgetbookHttpClient({
     Dio? client,
-    required Environment environment,
   }) : client = client ??
             Dio(
               BaseOptions(
-                baseUrl: environment.apiUrl,
+                baseUrl: BASE_API_URL,
                 contentType: Headers.jsonContentType,
               ),
             );
