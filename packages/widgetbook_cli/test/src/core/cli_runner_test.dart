@@ -61,8 +61,6 @@ void main() {
         () => pubUpdater.getLatestVersion(any()),
       ).thenAnswer((_) async => packageVersion);
 
-      when(() => globalContext.environment).thenReturn(FakeEnvironment());
-
       cliRunner = CliRunner(
         context: globalContext,
         logger: logger,
