@@ -27,6 +27,8 @@ class WidgetbookApp extends StatelessWidget {
         BuilderAddon(
           name: 'ScreenUtil',
           builder: (context, child) {
+            // flutter_screenutil must be version 3.9.1 or lower
+            // to work properly with Widgetbook
             return ScreenUtilInit(
               designSize: const Size(375, 812),
               minTextAdapt: true,
