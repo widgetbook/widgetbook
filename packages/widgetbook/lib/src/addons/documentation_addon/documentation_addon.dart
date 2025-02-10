@@ -15,6 +15,18 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../fields/fields.dart';
 import '../common/common.dart';
 
+/// An addon that displays documentation for the widget.
+///
+/// The documentation is displayed in a markdown format.
+///
+/// The documentation is loaded from a markdown file in the assets folder.
+/// The path to the markdown file is determined by the query parameter `path`.
+/// Example: `?path=dss-components/form/textdynamicinput/textdynamicinput.percent`
+/// give the path to the markdown file `assets/markdown/dss-components/form/textdynamicinput/textdynamicinput.percent.md`
+///
+/// The documentation is displayed in a resizable container.
+///
+/// The documentation can be toggled on and off using the `documentation` field.
 class DocumentationAddon extends WidgetbookAddon<bool> {
   DocumentationAddon({
     this.initialBool = true,
