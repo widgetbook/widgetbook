@@ -135,6 +135,10 @@
               "href": "/addons/device-frame-addon"
             },
             {
+              "title": "Documentation Addon",
+              "href": "/addons/documentation-addon"
+            },
+            {
               "title": "Grid Addon",
               "href": "/addons/grid-addon"
             },
