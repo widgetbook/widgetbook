@@ -42,6 +42,9 @@ class DocumentationAddon extends WidgetbookAddon<bool> {
     if (!setting) {
       return child.animate().fade();
     }
+    final backgroundColor = (Theme.of(context).brightness == Brightness.light)
+        ? const Color(0xFFFDFCFF)
+        : const Color(0xFF1A1C1E);
     return FutureBuilder(
       future: loadMarkdown(),
       builder: (context, snapshot) {
@@ -52,7 +55,7 @@ class DocumentationAddon extends WidgetbookAddon<bool> {
               ResizableChild(
                 size: const ResizableSize.expand(flex: 2),
                 child: Card(
-                  color: Colors.white,
+                  color: backgroundColor,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListView(
@@ -75,7 +78,7 @@ class DocumentationAddon extends WidgetbookAddon<bool> {
               ResizableChild(
                 child: (snapshot.hasData)
                     ? Card(
-                        color: Colors.white,
+                        color: backgroundColor,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: MarkdownWithHighlight(
@@ -84,13 +87,13 @@ class DocumentationAddon extends WidgetbookAddon<bool> {
                               .fade(),
                         ),
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
               ),
             ],
           ).animate().fade();
         }
         return Card(
-          color: Colors.white,
+          color: backgroundColor,
           child: Padding(padding: const EdgeInsets.all(8.0), child: child),
         ).animate().fade();
       },
@@ -103,7 +106,7 @@ class DocumentationAddon extends WidgetbookAddon<bool> {
         "${kDebugMode ? "" : "assets/"}markdown/${Uri.base.queryParameters['path']}.md",
       );
     } catch (_) {
-      return "";
+      return '';
     }
   }
 
