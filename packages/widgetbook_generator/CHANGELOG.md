@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **BREAKING**: Set minimum SDK version to 3.3.0. ([#1349](https://github.com/widgetbook/widgetbook/pull/1349))
+- **REFACTOR**: Remove direct dependency on [`dart_style`](https://pub.dev/packages/dart_style). ([#1363](https://github.com/widgetbook/widgetbook/pull/1363))
 
 ## 3.9.1
 
