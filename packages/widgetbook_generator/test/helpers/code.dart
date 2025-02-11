@@ -1,11 +1,17 @@
 import 'package:code_builder/code_builder.dart';
+import 'package:dart_style/dart_style.dart';
 import 'package:test/test.dart';
-import 'package:widgetbook_generator/src/util/format.dart';
 
 /// Formats output with dart formatter.
 void useDartFormatter() {
+  final _formatter = DartFormatter();
+
   EqualsDart.format = (source) {
-    return $format(source);
+    try {
+      return _formatter.format(source);
+    } on FormatException catch (_) {
+      return _formatter.formatStatement(source);
+    }
   };
 }
 
