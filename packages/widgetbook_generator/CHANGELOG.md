@@ -3,6 +3,7 @@
 - **BREAKING**: Set minimum SDK version to 3.3.0. ([#1349](https://github.com/widgetbook/widgetbook/pull/1349))
 - **BREAKING**: Remove `components.book.dart` formatting. If you are using the [SAM architecture](https://docs.widgetbook.io/next/sam), upgrade to `4.0.0-alpha.2` or later versions, instead of using the `experimental_components_builder`. ([#1366](https://github.com/widgetbook/widgetbook/pull/1366))
 - **REFACTOR**: Remove direct dependency on [`dart_style`](https://pub.dev/packages/dart_style). ([#1363](https://github.com/widgetbook/widgetbook/pull/1363))
+- **REFACTOR**: Allow `analyzer` 7.x. ([#1351](https://github.com/widgetbook/widgetbook/pull/1351))
 
 ## 3.9.1
 
