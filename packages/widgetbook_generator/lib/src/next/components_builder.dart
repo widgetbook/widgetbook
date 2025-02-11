@@ -4,8 +4,6 @@ import 'package:code_builder/code_builder.dart';
 import 'package:glob/glob.dart';
 import 'package:source_gen/source_gen.dart';
 
-import '../util/format.dart';
-
 class ComponentsBuilder implements Builder {
   static const outputFile = 'components.book.dart';
 
@@ -72,8 +70,6 @@ class ComponentsBuilder implements Builder {
       ${outputLibrary.accept(emitter)}
     ''';
 
-    final formattedContent = $format(content);
-
-    buildStep.writeAsString(outputAsset, formattedContent);
+    buildStep.writeAsString(outputAsset, content);
   }
 }
