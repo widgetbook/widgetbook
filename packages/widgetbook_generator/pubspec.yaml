@@ -15,7 +15,7 @@ environment:
   sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
-  analyzer: ^6.0.0
+  analyzer: ">=6.0.0 <8.0.0"
   build: ^2.1.0
   code_builder: ^4.5.0
   collection: ^1.15.0
@@ -23,7 +23,7 @@ dependencies:
   glob: ^2.0.2
   meta: ^1.7.0
   path: ^1.8.0
-  source_gen: ^1.1.0
+  source_gen: ">=1.1.0 <3.0.0"
   widgetbook_annotation: ^3.2.0
   yaml: ^3.1.1
 
