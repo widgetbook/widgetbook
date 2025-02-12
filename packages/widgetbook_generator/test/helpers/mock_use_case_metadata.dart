@@ -7,16 +7,13 @@ class MockUseCaseMetadata extends UseCaseMetadata {
     super.designLink = null,
     super.name = 'Default',
     super.importUri = 'package:widgetbook/src/widgets/component.usecase.dart',
-    super.filePath = 'lib/src/widgets/component.usecase.dart',
     super.navPath = 'widgets',
     String componentName = 'Component',
     String componentImportUri = 'package:widgetbook/src/widgets/component.dart',
-    String componentFilePath = 'lib/src/widgets/component.dart',
   }) : super(
           component: ElementMetadata(
             name: componentName,
             importUri: componentImportUri,
-            filePath: componentFilePath,
           ),
         );
 }

@@ -4,6 +4,7 @@
 - **BREAKING**: Remove `components.book.dart` formatting. If you are using the [SAM architecture](https://docs.widgetbook.io/next/sam), upgrade to `4.0.0-alpha.2` or later versions, instead of using the `experimental_components_builder`. ([#1366](https://github.com/widgetbook/widgetbook/pull/1366))
 - **REFACTOR**: Remove direct dependency on [`dart_style`](https://pub.dev/packages/dart_style). ([#1363](https://github.com/widgetbook/widgetbook/pull/1363))
 - **REFACTOR**: Allow `analyzer` 7.x. ([#1351](https://github.com/widgetbook/widgetbook/pull/1351))
+- **REFACTOR**: Remove unused `useCaseDefinitionPath` and `componentDefinitionPath` from generated use-case metadata. ([#1369](https://github.com/widgetbook/widgetbook/pull/1369))
 
 ## 3.9.1
 
