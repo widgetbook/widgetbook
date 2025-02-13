@@ -1,4 +1,4 @@
-## Unreleased
+## 3.11.0
 
 - **BREAKING**: Set minimum SDK version to 3.3.0 & minimum Flutter version to 3.19.0. ([#1349](https://github.com/widgetbook/widgetbook/pull/1349))
 - **REFACTOR**: Deprecate `WidgetbookCloudIntegration` as it is not used anymore, and can be safely removed. ([#1372](https://github.com/widgetbook/widgetbook/pull/1372))
