@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **BREAKING**: Set minimum SDK version to 3.3.0. ([#1349](https://github.com/widgetbook/widgetbook/pull/1349))
+- **REFACTOR**: Reduce build drafts payload size by removing `componentDefinitionPath` and `componentImportStatement` props. ([#1368](https://github.com/widgetbook/widgetbook/pull/1368))
 
 ## 3.5.0
 

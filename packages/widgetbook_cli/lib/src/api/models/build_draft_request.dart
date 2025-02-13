@@ -34,7 +34,7 @@ class BuildDraftRequest {
       'branch': branch,
       'sha': sha,
       'mergedResultSha': mergedResultSha,
-      'useCases': useCases.map((x) => x.toJson()).toList(),
+      'useCases': useCases.map((x) => x.toCloudUseCase()).toList(),
       'addonsConfigs': addonsConfigs,
       'size': size,
     };

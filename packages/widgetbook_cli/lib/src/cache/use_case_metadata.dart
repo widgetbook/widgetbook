@@ -56,13 +56,14 @@ class UseCaseMetadata {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toCloudUseCase() {
+    // Not all properties are needed by the Cloud, so we only serialize the
+    // required ones. This insures that the payload size is as small as possible
+    // when there are many use-cases.
     return {
       'name': useCaseName,
       'componentName': componentName,
       'navPath': navPath,
-      'componentDefinitionPath': componentDefinitionPath,
-      'componentImportStatement': componentImportStatement,
       'designLink': designLink,
     };
   }
