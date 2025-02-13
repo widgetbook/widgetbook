@@ -9,7 +9,6 @@ class UseCaseMetadata extends ElementMetadata {
     required this.designLink,
     required super.name,
     required super.importUri,
-    required super.filePath,
     required this.component,
     required this.navPath,
   });
@@ -33,12 +32,10 @@ class UseCaseMetadata extends ElementMetadata {
       designLink: json['designLink'] as String?,
       name: json['useCaseName'] as String,
       importUri: json['importStatement'] as String,
-      filePath: json['useCaseDefinitionPath'] as String,
       navPath: json['navPath'] as String,
       component: ElementMetadata(
         name: json['componentName'] as String,
         importUri: json['componentImportStatement'] as String,
-        filePath: json['componentDefinitionPath'] as String,
       ),
     );
   }
@@ -53,10 +50,8 @@ class UseCaseMetadata extends ElementMetadata {
       'designLink': designLink,
       'useCaseName': name,
       'importStatement': importUri,
-      'useCaseDefinitionPath': filePath,
       'componentName': component.name,
       'componentImportStatement': component.importUri,
-      'componentDefinitionPath': component.filePath,
       'navPath': navPath,
     };
   }

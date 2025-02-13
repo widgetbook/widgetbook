@@ -20,8 +20,8 @@ class DuplicateUseCasesError extends Error {
     return '''
       Duplicate use-case name "${useCase.name}" for `${componentNode.data}`.
       Change the `@${UseCase}.name` for one of the following:
-        1. ${existingUseCase.filePath} -> ${existingUseCase.functionName}
-        2. ${useCase.filePath} -> ${useCase.functionName}
+        1. ${existingUseCase.importUri} -> ${existingUseCase.functionName}
+        2. ${useCase.importUri} -> ${useCase.functionName}
       ''';
   }
 }
