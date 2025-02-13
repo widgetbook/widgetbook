@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../integrations/integrations.dart';
 import '../state/state.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
@@ -9,8 +8,7 @@ import 'field_type.dart';
 /// panel. They should be convertible to:
 ///
 /// 1. [Widget] through [toWidget]; used to display this in the settings panel.
-/// 2. [Map] through [toJson]; used to send a JSON-representation of the field
-/// to be interpreted by [WidgetbookCloudIntegration].
+/// 2. [Map] through [toJson]; used to send a JSON-representation of the field.
 ///
 /// [Field]s keep their changes in sync with [WidgetbookState] which syncs them
 /// with the query parameters. A [Field] is encoded into a query parameter using
