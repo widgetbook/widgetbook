@@ -1,4 +1,4 @@
-## Unreleased
+## 3.10.0
 
 - **BREAKING**: Set minimum SDK version to 3.3.0. ([#1349](https://github.com/widgetbook/widgetbook/pull/1349))
 - **BREAKING**: Remove `components.book.dart` formatting. If you are using the [SAM architecture](https://docs.widgetbook.io/next/sam), upgrade to `4.0.0-alpha.2` or later versions, instead of using the `experimental_components_builder`. ([#1366](https://github.com/widgetbook/widgetbook/pull/1366))
