@@ -75,9 +75,7 @@ class Widgetbook extends StatefulWidget {
   /// The list of add-ons for your [Widget] library
   final List<WidgetbookAddon>? addons;
 
-  /// The list of integrations for your [Widget] library. Primarily used to
-  /// integrate with Widgetbook Cloud via [WidgetbookCloudIntegration], but
-  /// can also be used to integrate with third-party packages.
+  /// The list of integrations for your [Widget] library.
   final List<WidgetbookIntegration>? integrations;
 
   /// The custom theme for the Widgetbook interface when using light mode.

@@ -36,9 +36,6 @@ class WidgetbookApp extends StatelessWidget {
         ...directories,
         ...components,
       ],
-      integrations: [
-        WidgetbookCloudIntegration(),
-      ],
       addons: [
         next.TimeDilationAddon(),
         next.DeviceFrameAddon([
