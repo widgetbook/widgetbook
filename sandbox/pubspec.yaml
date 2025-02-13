@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   widgetbook: ^3.10.2
-  widgetbook_annotation: ^3.2.0
+  widgetbook_annotation: ^3.3.0
 
 dev_dependencies:
   alchemist: ^0.7.0
