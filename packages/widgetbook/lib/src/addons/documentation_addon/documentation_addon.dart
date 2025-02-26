@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_highlighter/flutter_highlighter.dart';
 import 'package:flutter_highlighter/themes/atom-one-dark.dart';
@@ -28,17 +27,13 @@ import '../common/common.dart';
 ///
 /// The documentation can be toggled on and off using the `documentation` field.
 class DocumentationAddon extends WidgetbookAddon<bool> {
-  DocumentationAddon({
-    this.initialBool = true,
-  }) : super(name: 'Documentation');
+  DocumentationAddon({required this.assetBundle, this.initialBool = true})
+      : super(name: 'Documentation');
+  final AssetBundle assetBundle;
   final bool initialBool;
 
   @override
-  Widget buildUseCase(
-    BuildContext context,
-    Widget child,
-    bool setting,
-  ) {
+  Widget buildUseCase(BuildContext context, Widget child, bool setting) {
     if (!setting) {
       return child.animate().fade();
     }
@@ -82,9 +77,8 @@ class DocumentationAddon extends WidgetbookAddon<bool> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: MarkdownWithHighlight(
-                                  markdown: snapshot.data ?? "")
-                              .animate()
-                              .fade(),
+                            markdown: snapshot.data ?? "",
+                          ).animate().fade(),
                         ),
                       )
                     : const SizedBox(),
@@ -102,7 +96,7 @@ class DocumentationAddon extends WidgetbookAddon<bool> {
 
   Future<String> loadMarkdown() async {
     try {
-      return await rootBundle.loadString(
+      return await assetBundle.loadString(
         "${kDebugMode ? "" : "assets/"}markdown/${Uri.base.queryParameters['path']}.md",
       );
     } catch (_) {
@@ -112,12 +106,7 @@ class DocumentationAddon extends WidgetbookAddon<bool> {
 
   @override
   List<Field<bool>> get fields {
-    return [
-      BooleanField(
-        name: 'documentation',
-        initialValue: initialBool,
-      ),
-    ];
+    return [BooleanField(name: 'documentation', initialValue: initialBool)];
   }
 
   @override
@@ -127,10 +116,7 @@ class DocumentationAddon extends WidgetbookAddon<bool> {
 }
 
 class MarkdownWithHighlight extends StatelessWidget {
-  const MarkdownWithHighlight({
-    super.key,
-    required this.markdown,
-  });
+  const MarkdownWithHighlight({super.key, required this.markdown});
   final String markdown;
 
   @override
@@ -139,9 +125,7 @@ class MarkdownWithHighlight extends StatelessWidget {
     return Markdown(
       shrinkWrap: true,
       data: markdown,
-      builders: {
-        'code': _CodeElementBuilder(),
-      },
+      builders: {'code': _CodeElementBuilder()},
       styleSheet: MarkdownStyleSheet(
         p: theme.bodySmall,
         strong: theme.bodySmall?.copyWith(fontWeight: FontWeight.bold),
@@ -166,9 +150,7 @@ class MarkdownWithHighlight extends StatelessWidget {
       ),
       onTapLink: (text, url, title) {
         if (url != null) {
-          launchUrl(
-            Uri.parse(url),
-          );
+          launchUrl(Uri.parse(url));
         }
       },
       selectable: true,
@@ -182,15 +164,15 @@ class _CodeElementBuilder extends MarkdownElementBuilder {
     var language = '';
 
     if (element.attributes['class'] != null) {
-      String lg = element.attributes['class'] as String;
+      var lg = element.attributes['class'] as String;
       language = lg.substring(9);
     }
     return HighlightView(
       element.textContent,
       language: language,
       theme: MediaQueryData.fromView(
-                      RendererBinding.instance.renderViews.first.flutterView)
-                  .platformBrightness ==
+                RendererBinding.instance.renderViews.first.flutterView,
+              ).platformBrightness ==
               Brightness.light
           ? atomOneLightTheme
           : atomOneDarkTheme,

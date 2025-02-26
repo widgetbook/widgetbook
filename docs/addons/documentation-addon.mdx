@@ -12,19 +12,19 @@ This addon allows you to easily add documentation to your widgets by integrating
 ## How It Works
 
 1. **Activating Assets**  
-   To allow the addon to load your documentation, ensure that assets are enabled in your Flutter project.
+To allow the addon to load your documentation, ensure that assets are enabled in your Flutter project.
 
 2. **Organizing Markdown Files**  
-   Place your Markdown files in the `/assets/markdown/` folder. The filename must correspond to the full widget path (provided via query parameters) followed by the `.md` extension.
-   
-   **Example:**  
-   If the widget path is `components/button`, the file should be placed as:
+Place your Markdown files in the `/assets/markdown/` folder. The filename must correspond to the full widget path (provided via query parameters) followed by the `.md` extension.
+
+**Example:**
+If the widget path is `components/button`, the file should be placed as:
 ```
 /assets/markdown/components/button.md
 ```
 
-3. **Addon Configuration**  
-   The addon is enabled via the `documentation` parameter (a boolean value). By default, it is initialized to `true`. You can control its state via query parameters or by configuring it in the Widgetbook addons panel.
+3. **Addon Configuration**
+The addon is enabled via the `documentation` parameter (a boolean value). By default, it is initialized to `true`. You can control its state via query parameters or by configuring it in the Widgetbook addons panel.
 
 ## Integration Example
 
@@ -37,14 +37,9 @@ class HotReload extends StatelessWidget {
   Widget build(BuildContext context) {
     Map<String, String> params =
         Map.fromEntries(Uri.base.queryParameters.entries);
-    var path = params["path"] ?? 'accueil%2Freadme';
-    var knobs = params["knobs"] ?? '{}';
-    var device = params["device"] ?? '{name:None}';
     return Widgetbook.material(
-      initialRoute: "/?path=$path&knobs=$knobs&device=$device",
-      themeMode: ThemeMode.light,
       addons: [
-        DocumentationAddon(),
+        DocumentationAddon(assetBundle: rootBundle),
         DeviceFrameAddon(devices: [
           ...Devices.android.all,
           ...Devices.ios.all,
@@ -54,12 +49,6 @@ class HotReload extends StatelessWidget {
       ],
       directories: [
         WidgetbookComponent(name: "Accueil", useCases: [
-          usercaseWithMarkdown(
-            "README",
-            null,
-            "markdown/introduction.md",
-          ),
-        ]),
         ...directories,
       ],
     );
@@ -67,11 +56,25 @@ class HotReload extends StatelessWidget {
 }
 
 @widgetbook.UseCase(
-  name: 'TextDynamicInput.percent',
+  name: 'Percent',
   type: TextDynamicInput,
   path: 'components/text_dynamic_input',
 ) // with this configuration, you have to add a markdown file in the assets/markdown/components/text_dynamic_input/textdynamicinput.percent.md
 Widget buildPercentTextDynamicInputUseCase(BuildContext context) {
   return Percent();
 }
+```
+
+## Add automatically your assets on `pubspec.yaml`
+
+You can use `asset_manager_cli` ([pub.dev link](https://pub.dev/packages/asset_manager_cli))
+
+### Install
+```shell
+dart pub global activate asset_manager_cli
+```
+
+### Using
+```shell
+asset_manager add
 ```

@@ -29,6 +29,12 @@ class AddonConfig {
   }
 }
 
+/// [AddonConfig] for the DocumentationAddon.
+class DocumentationAddonConfig extends AddonConfig {
+  const DocumentationAddonConfig(bool active)
+      : super('documentation', 'documentation:$active');
+}
+
 /// [AddonConfig] for the LocalizationAddon.
 class LocalizationAddonConfig extends AddonConfig {
   const LocalizationAddonConfig(
