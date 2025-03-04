@@ -33,35 +33,31 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
         percentages: [0.2, 0.6, 0.2],
         separatorColor: Colors.white24,
         children: [
-          ExcludeSemantics(
-            child: Card(
-              child: navigationBuilder(context),
-            ),
+          Card(
+            child: navigationBuilder(context),
           ),
           workbench,
-          ExcludeSemantics(
-            child: Card(
-              child: SettingsPanel(
-                settings: [
-                  if (state.isNext) ...{
-                    SettingsPanelData(
-                      name: 'Args',
-                      builder: argsBuilder,
-                    ),
-                  } else ...{
-                    SettingsPanelData(
-                      name: 'Knobs',
-                      builder: knobsBuilder,
-                    ),
-                  },
-                  if (state.addons != null) ...{
-                    SettingsPanelData(
-                      name: 'Addons',
-                      builder: addonsBuilder,
-                    ),
-                  },
-                ],
-              ),
+          Card(
+            child: SettingsPanel(
+              settings: [
+                if (state.isNext) ...{
+                  SettingsPanelData(
+                    name: 'Args',
+                    builder: argsBuilder,
+                  ),
+                } else ...{
+                  SettingsPanelData(
+                    name: 'Knobs',
+                    builder: knobsBuilder,
+                  ),
+                },
+                if (state.addons != null) ...{
+                  SettingsPanelData(
+                    name: 'Addons',
+                    builder: addonsBuilder,
+                  ),
+                },
+              ],
             ),
           ),
         ],
