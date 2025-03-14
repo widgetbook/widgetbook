@@ -28,7 +28,7 @@ class DurationKnob extends Knob<Duration?> {
   }
 
   @override
-  Duration valueFromQueryGroup(Map<String, String> group) {
-    return valueOf(label, group)!;
+  Duration? valueFromQueryGroup(Map<String, String> group) {
+    return valueOf(label, group);
   }
 }
