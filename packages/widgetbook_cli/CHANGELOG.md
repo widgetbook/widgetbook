@@ -1,4 +1,4 @@
-## Unreleased
+## 3.6.1
 
 - **REFACTOR**: Improve error logging. ([#1386](https://github.com/widgetbook/widgetbook/pull/1386))
 
