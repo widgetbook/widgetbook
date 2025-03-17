@@ -1,60 +1,65 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "sandbox",
-            "cwd": "sandbox",
-            "request": "launch",
-            "program": "lib/widgetbook.dart",
-            "type": "dart",
-        },
-        {
-            "name": "cli",
-            "cwd": "packages/widgetbook_cli",
-            "request": "launch",
-            "program": "bin/cli_debug.dart",
-            "type": "dart",
-            "args": [
-                "--api-key", "abc",
-                "--repository", "test-repo",
-                "--actor", "jenshor",
-                "--base-branch", "main"
-            ]
-        },
-        {
-            "name": "full_example (default)",
-            "cwd": "examples/full_example",
-            "request": "launch",
-            "program": "lib/widgetbook.dart",
-            "type": "dart"
-        },
-        {
-            "name": "full_example (generator)",
-            "cwd": "examples/full_example",
-            "request": "launch",
-            "program": "lib/widgetbook.generator.dart",
-            "type": "dart"
-        },
-        {
-            "name": "full_example (theme)",
-            "cwd": "examples/full_example",
-            "request": "launch",
-            "program": "lib/widgetbook.theme.dart",
-            "type": "dart"
-        },
-        {
-            "name": "knobs_example",
-            "cwd": "examples/knobs_example",
-            "request": "launch",
-            "program": "lib/widgetbook.dart",
-            "type": "dart"
-        },
-        {
-            "name": "screen_util_example",
-            "cwd": "examples/screen_util_example",
-            "request": "launch",
-            "program": "lib/widgetbook.dart",
-            "type": "dart"
-        },
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "sandbox",
+      "cwd": "sandbox",
+      "request": "launch",
+      "program": "lib/widgetbook.dart",
+      "type": "dart"
+    },
+    {
+      "name": "cli",
+      "cwd": "packages/widgetbook_cli",
+      "request": "launch",
+      "program": "bin/widgetbook.dart",
+      "type": "dart",
+      "args": [
+        "cloud",
+        "build",
+        "push",
+        "--api-key",
+        "xxx",
+        "--api-url",
+        "http://localhost:3001/",
+        "--path",
+        "${workspaceFolder}/sandbox"
+      ]
+    },
+    {
+      "name": "full_example (default)",
+      "cwd": "examples/full_example",
+      "request": "launch",
+      "program": "lib/widgetbook.dart",
+      "type": "dart"
+    },
+    {
+      "name": "full_example (generator)",
+      "cwd": "examples/full_example",
+      "request": "launch",
+      "program": "lib/widgetbook.generator.dart",
+      "type": "dart"
+    },
+    {
+      "name": "full_example (theme)",
+      "cwd": "examples/full_example",
+      "request": "launch",
+      "program": "lib/widgetbook.theme.dart",
+      "type": "dart"
+    },
+    {
+      "name": "knobs_example",
+      "cwd": "examples/knobs_example",
+      "request": "launch",
+      "program": "lib/widgetbook.dart",
+      "type": "dart"
+    },
+    {
+      "name": "screen_util_example",
+      "cwd": "examples/screen_util_example",
+      "request": "launch",
+      "program": "lib/widgetbook.dart",
+      "type": "dart"
+    }
+  ]
 }
