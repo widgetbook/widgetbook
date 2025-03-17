@@ -1,3 +1,5 @@
+import 'cache_exception.dart';
+
 class UseCaseMetadata {
   const UseCaseMetadata({
     required this.name,
@@ -34,16 +36,20 @@ class UseCaseMetadata {
 
   // ignore: sort_constructors_first
   factory UseCaseMetadata.fromJson(Map<String, dynamic> map) {
-    return UseCaseMetadata(
-      name: map['name'] as String,
-      useCaseName: map['useCaseName'] as String,
-      componentName: map['componentName'] as String,
-      importStatement: map['importStatement'] as String,
-      navPath: map['navPath'] as String?,
-      componentImportStatement: map['componentImportStatement'] as String,
-      designLink:
-          map['designLink'] != null ? map['designLink'] as String : null,
-    );
+    try {
+      return UseCaseMetadata(
+        name: map['name'] as String,
+        useCaseName: map['useCaseName'] as String,
+        componentName: map['componentName'] as String,
+        importStatement: map['importStatement'] as String,
+        navPath: map['navPath'] as String?,
+        componentImportStatement: map['componentImportStatement'] as String,
+        designLink:
+            map['designLink'] != null ? map['designLink'] as String : null,
+      );
+    } catch (e) {
+      throw CacheFormatException('use-case', map, e);
+    }
   }
 
   Map<String, dynamic> toCloudUseCase() {

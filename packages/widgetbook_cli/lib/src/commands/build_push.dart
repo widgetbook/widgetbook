@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:args/args.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
+import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
 import 'package:process/process.dart';
 
@@ -11,7 +12,6 @@ import '../cache/cache.dart';
 import '../core/core.dart';
 import '../storage/storage.dart';
 import '../utils/executable_manager.dart';
-import '../utils/utils.dart';
 import 'build_push_args.dart';
 
 class BuildPushCommand extends CliCommand<BuildPushArgs> {
@@ -87,13 +87,12 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     final repository = context.repository;
 
     if (repository == null) {
-      logger.err(
+      throw CliException(
         'No repository found.\n'
         'Make sure you are in a git repository '
         'or run `git init` to initialize a new one.',
+        ExitCode.data.code,
       );
-
-      throw RepositoryNotFoundException();
     }
 
     final currentBranch = await repository.currentBranch;
@@ -110,12 +109,12 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     final actor = results['actor'] as String? ?? context.user;
     if (actor == null) {
-      throw ActorNotFoundException();
+      throw MissingOptionException('actor');
     }
 
     final repoName = results['repository'] as String? ?? context.project;
     if (repoName == null) {
-      throw RepositoryNotFoundException();
+      throw MissingOptionException('repository');
     }
 
     return BuildPushArgs(
@@ -142,8 +141,10 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     final cache = await cacheReader.read(args.path);
 
     if (cache.isEmpty) {
+      final absolutePath = p.absolute(args.path);
+
       cacheProgress.fail(
-        'No cache files were found\n\n'
+        'No cache files were found in ${absolutePath}\n\n'
         'Make sure you have done the following:\n'
         ' 1. Ran `dart run build_runner build -d` to generate cache files.\n'
         ' 2. Included at least one use-case in your project.\n'

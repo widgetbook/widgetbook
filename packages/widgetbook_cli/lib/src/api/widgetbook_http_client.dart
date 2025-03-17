@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../utils/utils.dart';
+import 'cloud_exception.dart';
 import 'models/build_draft_request.dart';
 import 'models/build_draft_response.dart';
 import 'models/build_ready_request.dart';
@@ -37,14 +37,8 @@ class WidgetbookHttpClient {
       );
 
       return BuildDraftResponse.fromJson(response.data!);
-    } catch (e) {
-      final message = e is DioException //
-          ? e.response?.toString()
-          : e.toString();
-
-      throw WidgetbookApiException(
-        message: message,
-      );
+    } catch (e, stackTrace) {
+      throw CloudException.parse(e, stackTrace);
     }
   }
 
@@ -58,14 +52,8 @@ class WidgetbookHttpClient {
       );
 
       return BuildReadyResponse.fromJson(response.data!);
-    } catch (e) {
-      final message = e is DioException //
-          ? e.response?.toString()
-          : e.toString();
-
-      throw WidgetbookApiException(
-        message: message,
-      );
+    } catch (e, stackTrace) {
+      throw CloudException.parse(e, stackTrace);
     }
   }
 }

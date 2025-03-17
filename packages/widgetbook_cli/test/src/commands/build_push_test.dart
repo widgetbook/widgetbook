@@ -92,13 +92,19 @@ void main() {
           expect(args.actor, equals(userName));
         });
 
-        test('throws $ActorNotFoundException', () async {
+        test('throws $MissingOptionException', () async {
           when(() => results['actor']).thenReturn(null);
           when(() => context.user).thenReturn(null);
 
           expectLater(
             () => command.parseResults(context, results),
-            throwsA(const TypeMatcher<ActorNotFoundException>()),
+            throwsA(
+              isA<MissingOptionException>().having(
+                (e) => e.option,
+                'option',
+                equals('actor'),
+              ),
+            ),
           );
         });
       });
@@ -123,13 +129,19 @@ void main() {
           expect(args.repository, equals(repoName));
         });
 
-        test('throws $RepositoryNotFoundException', () async {
+        test('throws $MissingOptionException', () async {
           when(() => results['repository']).thenReturn(null);
           when(() => context.project).thenReturn(null);
 
           expectLater(
             () => command.parseResults(context, results),
-            throwsA(const TypeMatcher<RepositoryNotFoundException>()),
+            throwsA(
+              isA<MissingOptionException>().having(
+                (e) => e.option,
+                'option',
+                equals('repository'),
+              ),
+            ),
           );
         });
 
