@@ -306,6 +306,10 @@
           "href": "/cloud"
         },
         {
+          "title": "Workspaces",
+          "href": "/cloud/workspaces"
+        },
+        {
           "title": "Builds",
           "href": "/cloud/builds"
         },
