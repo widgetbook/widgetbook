@@ -88,11 +88,14 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
           // workbench and not just the device frame.
           screen: Navigator(
             onGenerateRoute: (_) => PageRouteBuilder(
-              pageBuilder: (context, _, __) => setting.hasFrame
-                  ? child
-                  : SafeArea(
-                      child: child,
-                    ),
+              pageBuilder: (context, _, __) => ColoredBox(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                child: setting.hasFrame
+                    ? child
+                    : SafeArea(
+                        child: child,
+                      ),
+              ),
             ),
           ),
         ),
