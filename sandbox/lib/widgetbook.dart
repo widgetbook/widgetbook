@@ -14,7 +14,7 @@ void main() {
 @App(
   cloudAddonsConfigs: {
     'German Dark Center x2': [
-      ViewportAddonConfig(Viewports.iphone12),
+      ViewportAddonConfig(IosViewports.iPhone12),
       LocalizationAddonConfig('de'),
       ThemeAddonConfig('Dark'),
       AlignmentAddonConfig('Center'),
@@ -22,9 +22,7 @@ void main() {
       ZoomAddonConfig(2),
       AddonConfig('custom-addon', 'name:value'),
     ],
-    'English': [
-      LocalizationAddonConfig('en'),
-    ],
+    'English': [LocalizationAddonConfig('en')],
   },
 )
 class WidgetbookApp extends StatelessWidget {
@@ -33,17 +31,11 @@ class WidgetbookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
-      directories: [
-        ...directories,
-        ...components,
-      ],
+      directories: [...directories, ...components],
       addons: [
         ViewportAddon(Viewports.all),
         next.TimeDilationAddon(),
-        next.MaterialThemeAddon({
-          'Dark': Themes.dark,
-          'Light': Themes.light,
-        }),
+        next.MaterialThemeAddon({'Dark': Themes.dark, 'Light': Themes.light}),
         next.GridAddon(),
         next.AlignmentAddon(),
         next.TextScaleAddon(),
@@ -56,14 +48,13 @@ class WidgetbookApp extends StatelessWidget {
         ),
         next.BuilderAddon(
           name: 'Bounds',
-          builder: (context, child) => Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.white,
+          builder:
+              (context, child) => Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white),
+                ),
+                child: child,
               ),
-            ),
-            child: child,
-          ),
         ),
       ],
     );
