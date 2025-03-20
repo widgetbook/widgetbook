@@ -310,6 +310,23 @@
           "href": "/cloud/workspaces"
         },
         {
+          "group": "Projects",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/projects/overview"
+            },
+            {
+              "title": "Create project",
+              "href": "/cloud/projects/create"
+            },
+            {
+              "title": "Connect & disconnect projects",
+              "href": "/cloud/projects/connect"
+            }
+          ]
+        },
+        {
           "title": "Builds",
           "href": "/cloud/builds"
         },
