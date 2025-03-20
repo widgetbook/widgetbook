@@ -27,25 +27,30 @@ class Viewport extends StatelessWidget {
       platform: data.platform,
     );
 
-    return FittedBox(
-      child: _ViewportFrame(
-        title: data.name ?? data.id,
-        color: frameColor,
-        child: SizedBox(
-          width: data.width,
-          height: data.height,
-          child: Theme(
-            data: theme,
-            child: MediaQuery(
-              data: mediaQuery,
-              child: Navigator(
-                // A navigator below the device frame is necessary to make
-                // the popup routes (e.g. dialogs and bottom sheets) work within
-                // the device frame, otherwise they would use the navigator from
-                // the app builder, causing these routes to fill the whole
-                // workbench and not just the device frame.
-                onGenerateRoute: (_) => PageRouteBuilder(
-                  pageBuilder: (context, _, __) => child,
+    return Padding(
+      // Padding is needed to make sure that the frame's edge
+      // is not on directly on the workbench's edge.
+      padding: const EdgeInsets.all(16),
+      child: FittedBox(
+        child: _ViewportFrame(
+          title: data.name ?? data.id,
+          color: frameColor,
+          child: SizedBox(
+            width: data.width,
+            height: data.height,
+            child: Theme(
+              data: theme,
+              child: MediaQuery(
+                data: mediaQuery,
+                child: Navigator(
+                  // A navigator below the device frame is necessary to make
+                  // the popup routes (e.g. dialogs and bottom sheets) work within
+                  // the device frame, otherwise they would use the navigator from
+                  // the app builder, causing these routes to fill the whole
+                  // workbench and not just the device frame.
+                  onGenerateRoute: (_) => PageRouteBuilder(
+                    pageBuilder: (context, _, __) => child,
+                  ),
                 ),
               ),
             ),
@@ -56,6 +61,8 @@ class Viewport extends StatelessWidget {
   }
 }
 
+/// A frame around the viewport that displays the viewport's title
+/// and a border around the viewport.
 class _ViewportFrame extends StatelessWidget {
   const _ViewportFrame({
     required this.title,

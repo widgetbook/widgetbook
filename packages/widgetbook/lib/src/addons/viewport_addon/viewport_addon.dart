@@ -38,7 +38,7 @@ class ViewportAddon extends WidgetbookAddon<ViewportData?> {
           name: 'id',
           initialValue: viewports.first,
           values: viewports,
-          labelBuilder: (viewport) => viewport?.id ?? '',
+          labelBuilder: (viewport) => viewport?.name ?? viewport?.id ?? 'None',
         ),
       ];
 
