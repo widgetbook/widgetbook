@@ -1,0 +1,15 @@
+# Overview
+
+With _Widgetbook Builds_ developers can host a Widgetbook for each Git commit and make it easily accessible for the whole team on Widgetbook Cloud.
+When setup with CI/CD, you consistantly upload builds for each commit, pull-request and branch and make those builds accessible from your favorite Git provider.
+
+<Image src="/assets/cloud/projects/overview.png" caption="List of builds with their corresponding commit SHAs" zoom />
+
+## Status
+
+A build can have the following statuses:
+
+- Draft: The upload of a new build has been requested and is in the process of uploading.
+- In progress: The build uploaded and we're processing the snapshots.
+- Successful: The build successfully uploaded and all snapshots are processed.
+- Failed: The build failed to upload or process snapshots.
