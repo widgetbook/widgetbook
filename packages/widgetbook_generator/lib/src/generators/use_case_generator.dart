@@ -33,6 +33,9 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     final type = annotation.read('type').typeValue;
     final designLink = annotation.readOrNull('designLink')?.stringValue;
     final path = annotation.readOrNull('path')?.stringValue;
+    final knobsConfigs = annotation //
+        .readOrNull('cloudKnobsConfigs')
+        ?.parse(_parseKnobsConfigs);
 
     final componentName = type
         .getDisplayString(
@@ -65,6 +68,7 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
         name: componentName,
         importUri: componentUri,
       ),
+      knobsConfigs: knobsConfigs,
     );
 
     const encoder = JsonEncoder.withIndent('  ');
@@ -90,5 +94,30 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
   String resolveElementUri(Element element) {
     final source = element.librarySource ?? element.source!;
     return source.uri.toString();
+  }
+
+  KnobsConfigs _parseKnobsConfigs(
+    ConstantReader reader,
+  ) {
+    final rawMap = reader.mapValue.map(
+      (key, value) => MapEntry(
+        key!.toStringValue()!,
+        value!.toListValue()!,
+      ),
+    );
+
+    return {
+      for (final entry in rawMap.entries)
+        entry.key: entry.value.map(
+          (e) {
+            final reader = ConstantReader(e);
+
+            return KnobConfig(
+              reader.read('key').stringValue,
+              reader.read('value'),
+            );
+          },
+        ),
+    };
   }
 }

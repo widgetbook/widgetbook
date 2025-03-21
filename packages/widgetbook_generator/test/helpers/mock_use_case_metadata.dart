@@ -11,6 +11,7 @@ class MockUseCaseMetadata extends UseCaseMetadata {
     String componentName = 'Component',
     String componentImportUri = 'package:widgetbook/src/widgets/component.dart',
   }) : super(
+          knobsConfigs: null,
           component: ElementMetadata(
             name: componentName,
             importUri: componentImportUri,
