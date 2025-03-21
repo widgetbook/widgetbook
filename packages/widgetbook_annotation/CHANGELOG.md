@@ -1,3 +1,7 @@
+## Unreleased
+
+- **REFACTOR**: Add generic parameter to `AddonConfig`; to allow supporting non-primitive addon configs (e.g. `ViewportAddonConfig`). ([#1318](https://github.com/widgetbook/widgetbook/pull/1318))
+
 ## 3.3.0
 
 - **BREAKING**: Set minimum SDK version to 3.3.0. ([#1349](https://github.com/widgetbook/widgetbook/pull/1349))
