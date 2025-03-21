@@ -1,4 +1,7 @@
+import 'package:meta/meta.dart';
+
 /// A configuration entry for a WidgetbookAddon.
+@optionalTypeArgs
 class AddonConfig<T> {
   /// Creates a new [AddonConfig] using a [key] and a [value].
   ///
