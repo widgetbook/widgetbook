@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:nested/nested.dart';
 
 import 'viewport_data.dart';
 
@@ -8,12 +9,12 @@ class Viewport extends StatelessWidget {
   const Viewport({
     super.key,
     required this.data,
-    required this.frameColor,
+    required this.frameless,
     required this.child,
   });
 
   final ViewportData data;
-  final Color? frameColor;
+  final bool frameless;
   final Widget child;
 
   @override
@@ -27,30 +28,42 @@ class Viewport extends StatelessWidget {
       platform: data.platform,
     );
 
-    return Padding(
-      // Padding is needed to make sure that the frame's edge
-      // is not on directly on the workbench's edge.
-      padding: const EdgeInsets.all(16),
-      child: FittedBox(
-        child: _ViewportFrame(
-          title: data.name ?? data.id,
-          color: frameColor,
-          child: SizedBox(
-            width: data.width,
-            height: data.height,
-            child: Theme(
-              data: theme,
-              child: MediaQuery(
-                data: mediaQuery,
-                child: Navigator(
-                  // A navigator below the device frame is necessary to make
-                  // the popup routes (e.g. dialogs and bottom sheets) work within
-                  // the device frame, otherwise they would use the navigator from
-                  // the app builder, causing these routes to fill the whole
-                  // workbench and not just the device frame.
-                  onGenerateRoute: (_) => PageRouteBuilder(
-                    pageBuilder: (context, _, __) => child,
-                  ),
+    return FittedBox(
+      child: Nested(
+        children: [
+          SingleChildBuilder(
+            builder: (context, child) {
+              // Exclude frame if frameless mode is enabled
+              return frameless
+                  ? child!
+                  : Padding(
+                      // Padding is needed to make sure that the frame's edge
+                      // is not on directly on the workbench's edge, but
+                      // we don't want that in the frameless mode
+                      padding: const EdgeInsets.all(16),
+                      child: _ViewportFrame(
+                        title: data.name ?? data.id,
+                        child: child!,
+                      ),
+                    );
+            },
+          ),
+        ],
+        child: SizedBox(
+          width: data.width,
+          height: data.height,
+          child: Theme(
+            data: theme,
+            child: MediaQuery(
+              data: mediaQuery,
+              child: Navigator(
+                // A navigator below the device frame is necessary to make
+                // the popup routes (e.g. dialogs and bottom sheets) work within
+                // the device frame, otherwise they would use the navigator from
+                // the app builder, causing these routes to fill the whole
+                // workbench and not just the device frame.
+                onGenerateRoute: (_) => PageRouteBuilder(
+                  pageBuilder: (context, _, __) => child,
                 ),
               ),
             ),
@@ -66,23 +79,15 @@ class Viewport extends StatelessWidget {
 class _ViewportFrame extends StatelessWidget {
   const _ViewportFrame({
     required this.title,
-    required this.color,
     required this.child,
   });
 
   final String title;
-  final Color? color;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    final frameColor = color;
-
-    // If no frame color is provided, don't wrap the child in a frame
-    if (frameColor == null) {
-      return child;
-    }
-
+    final color = Colors.green;
     final borderWidth = 2.0;
 
     return Column(
@@ -93,7 +98,7 @@ class _ViewportFrame extends StatelessWidget {
           offset: Offset(-borderWidth, 0),
           child: Container(
             child: Text(title),
-            color: frameColor,
+            color: color,
             padding: const EdgeInsets.symmetric(
               vertical: 4,
               horizontal: 12,
@@ -103,7 +108,7 @@ class _ViewportFrame extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             border: Border.all(
-              color: frameColor,
+              color: color,
               width: borderWidth,
               strokeAlign: BorderSide.strokeAlignOutside,
             ),
