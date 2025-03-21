@@ -19,6 +19,11 @@ class ViewportAddonConfig extends AddonConfig<ViewportData> {
     ViewportData data,
   ) : super(
           'viewport',
+          // It would have been easier to parse the `data` to the string format
+          // that is required by the Cloud (i.e. "id:${data.id},$meta{...}")
+          // but we cannot do this here, because it's a constant class that
+          // is used as an annotation, so the parsing is done in the generator.
+          // For that reason, we have the generic parameter on AddonConfig.
           data,
         );
 }
