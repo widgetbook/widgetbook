@@ -12,10 +12,10 @@ class AddonConfig<T> {
   ///
   /// Then this would be:
   /// ```dart
-  /// const AddonConfigEntry('text-scale', 'factor:2.0');
+  /// const AddonConfig('text-scale', 'factor:2.0');
   /// ```
   ///
-  /// You can use other pre-defined entries for first-cla=ss addons that are
+  /// You can use other pre-defined entries for first-class addons that are
   /// provided by Widgetbook.
   const AddonConfig(this.key, this.value);
 
