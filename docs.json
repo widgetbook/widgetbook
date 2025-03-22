@@ -331,8 +331,21 @@
           ]
         },
         {
-          "title": "Builds",
-          "href": "/cloud/builds"
+          "group": "Builds",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/builds/overview"
+            },
+            {
+              "title": "Upload build",
+              "href": "/cloud/builds/upload"
+            },
+            {
+              "title": "Synchronize with Git provider",
+              "href": "/cloud/builds/synchronize"
+            }
+          ]
         },
         {
           "title": "Reviews",
