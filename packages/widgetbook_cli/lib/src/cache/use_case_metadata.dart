@@ -68,6 +68,7 @@ class UseCaseMetadata {
       'componentName': componentName,
       'navPath': navPath,
       'designLink': designLink,
+      'knobsConfigs': knobsConfigs,
     };
   }
 }

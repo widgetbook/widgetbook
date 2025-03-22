@@ -64,11 +64,11 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
       name: name,
       importUri: useCaseUri,
       navPath: navPath,
+      knobsConfigs: knobsConfigs?.toJson(),
       component: ElementMetadata(
         name: componentName,
         importUri: componentUri,
       ),
-      knobsConfigs: knobsConfigs,
     );
 
     const encoder = JsonEncoder.withIndent('  ');
@@ -114,7 +114,7 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
 
             return KnobConfig(
               reader.read('key').stringValue,
-              reader.read('value'),
+              reader.read('value').literalValue,
             );
           },
         ),
