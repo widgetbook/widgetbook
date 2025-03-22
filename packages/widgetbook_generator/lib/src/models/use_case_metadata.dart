@@ -26,7 +26,7 @@ class UseCaseMetadata extends ElementMetadata {
   /// The path this element is placed under in the rendered widgetbook.
   final String navPath;
 
-  final KnobsConfigs? knobsConfigs;
+  final Map<String, dynamic>? knobsConfigs;
 
   // ignore: sort_constructors_first
   factory UseCaseMetadata.fromJson(Map<String, dynamic> json) {
@@ -40,7 +40,9 @@ class UseCaseMetadata extends ElementMetadata {
         name: json['componentName'] as String,
         importUri: json['componentImportStatement'] as String,
       ),
-      knobsConfigs: null, // TODO: Implement knobsConfigs
+      knobsConfigs: json['knobsConfigs'] != null
+          ? Map<String, Map<String, dynamic>>.from(json['knobsConfigs'] as Map)
+          : null,
     );
   }
 
