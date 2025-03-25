@@ -367,27 +367,33 @@
           ]
         },
         {
-          "group": "Setup",
+          "group": "GitLab",
           "pages": [
             {
-              "title": "GitLab",
-              "href": "/cloud/setup/gitlab"
+              "title": "Upload builds with GitLab pipelines",
+              "href": "/cloud/guides/gitlab/upload"
             },
             {
-              "title": "Bitbucket",
-              "href": "/cloud/setup/bitbucket"
-            },
+              "title": "Upload builds with GitLab pipelines",
+              "href": "/cloud/guides/gitlab/upload-self-managed"
+            }
+          ]
+        },
+        {
+          "group": "Azure DevOps",
+          "pages": [
             {
-              "title": "Azure DevOps",
-              "href": "/cloud/setup/azure"
-            },
+              "title": "Upload builds with GitHub actions",
+              "href": "/cloud/guides/azure/upload"
+            }
+          ]
+        },
+        {
+          "group": "Codemagic",
+          "pages": [
             {
-              "title": "Self-managed GitLab",
-              "href": "/cloud/setup/self-managed-gitlab"
-            },
-            {
-              "title": "Codemagic",
-              "href": "/cloud/setup/codemagic"
+              "title": "Upload builds with GitHub actions",
+              "href": "/cloud/guides/codemagic/upload"
             }
           ]
         },
