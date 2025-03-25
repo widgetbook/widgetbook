@@ -358,12 +358,17 @@
       "group": "Guides",
       "pages": [
         {
-          "group": "Setup",
+          "group": "GitHub",
           "pages": [
             {
-              "title": "GitHub",
-              "href": "/cloud/setup/github"
-            },
+              "title": "Upload builds with GitHub actions",
+              "href": "/cloud/guides/github/upload"
+            }
+          ]
+        },
+        {
+          "group": "Setup",
+          "pages": [
             {
               "title": "GitLab",
               "href": "/cloud/setup/gitlab"
