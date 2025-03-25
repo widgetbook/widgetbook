@@ -338,8 +338,21 @@
               "href": "/cloud/builds/upload"
             },
             {
-              "title": "Synchronize with Git provider",
+              "title": "Synchronize with Git provider (page)",
               "href": "/cloud/builds/synchronize"
+            },
+            {
+              "group": "Synchronize with Git provider",
+              "pages": [
+                {
+                  "title": "GitHub",
+                  "href": "/cloud/builds/synchronize-github"
+                },
+                {
+                  "title": "GitLab",
+                  "href": "/cloud/builds/synchronize-gitlab"
+                }
+              ]
             }
           ]
         },
