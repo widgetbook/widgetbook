@@ -374,7 +374,7 @@
               "href": "/cloud/guides/gitlab/upload"
             },
             {
-              "title": "Upload builds with GitLab pipelines",
+              "title": "Upload builds with self-managed GitLab",
               "href": "/cloud/guides/gitlab/upload-self-managed"
             }
           ]
@@ -383,7 +383,7 @@
           "group": "Azure DevOps",
           "pages": [
             {
-              "title": "Upload builds with GitHub actions",
+              "title": "Upload builds with Azure pipelines",
               "href": "/cloud/guides/azure/upload"
             }
           ]
@@ -392,8 +392,17 @@
           "group": "Codemagic",
           "pages": [
             {
-              "title": "Upload builds with GitHub actions",
+              "title": "Upload builds with Codemagic",
               "href": "/cloud/guides/codemagic/upload"
+            }
+          ]
+        },
+        {
+          "group": "Bitbucket",
+          "pages": [
+            {
+              "title": "Upload builds with Bitbucket pipelines",
+              "href": "/cloud/guides/bitbucket/upload"
             }
           ]
         },
