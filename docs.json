@@ -334,12 +334,12 @@
               "href": "/cloud/builds/overview"
             },
             {
-              "title": "Upload build",
+              "title": "Upload builds",
               "href": "/cloud/builds/upload"
             },
             {
-              "title": "Synchronize with Git provider",
-              "href": "/cloud/builds/synchronize"
+              "title": "Access builds",
+              "href": "/cloud/builds/access-from-commit"
             }
           ]
         },
