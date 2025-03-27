@@ -363,6 +363,10 @@
             {
               "title": "Upload builds",
               "href": "/cloud/guides/github/upload"
+            },
+            {
+              "title": "Access builds from GitHub",
+              "href": "/cloud/guides/github/access-from-commit"
             }
           ]
         },
