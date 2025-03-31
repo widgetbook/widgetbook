@@ -1,3 +1,7 @@
+## 3.11.0
+
+- **FEAT**: Support the **experimental** [`ViewportAddon`](https://docs.widgetbook.io/addons/viewport-addon). ([#1318](https://github.com/widgetbook/widgetbook/pull/1318))
+
 ## 3.10.0
 
 - **BREAKING**: Set minimum SDK version to 3.3.0. ([#1349](https://github.com/widgetbook/widgetbook/pull/1349))
