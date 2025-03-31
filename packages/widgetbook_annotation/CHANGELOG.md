@@ -1,4 +1,4 @@
-## Unreleased
+## 3.3.1
 
 - **REFACTOR**: Add generic parameter to `AddonConfig`; to allow supporting non-primitive addon configs (e.g. `ViewportAddonConfig`). ([#1318](https://github.com/widgetbook/widgetbook/pull/1318))
 
