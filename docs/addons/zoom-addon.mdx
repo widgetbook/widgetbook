@@ -1,18 +1,64 @@
 # Zoom Addon
 
-The Zoom Addon is a Widgetbook utility designed for adding a zoom
-use-case being previewed within the Workbench.
+A utility addon designed for zooming in/out of the previewed use-case.
 
-## Setup
+## Usage
 
-Here's how to configure it:
+```dart title=widgetbook/lib/main.dart
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
 
-<Warning>
-  In case `ZoomAddon` is used with other addons, then it must be defined after
-  both [`AlignmentAddon`](/addons/alignment-addon) and
-  [`DeviceFrameAddon`](/addons/device-frame-addon)
-</Warning>
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        ZoomAddon(), // [!code highlight]
+      ],
+    );
+  }
+}
+```
 
-```dart
-ZoomAddon(initialZoom: 1.0),
+## Order
+
+Since the [order of addons](/addons#order-of-addons) matters, here are some guidelines to follow when using the `ZoomAddon`:
+
+Addons that should come before the `ZoomAddon`:
+
+- `ViewportAddon`
+- `DeviceFrameAddon`
+- `AlignmentAddon`
+
+## Multi-snapshot Support
+
+The `ZoomAddon` is supported in the [Multi Snapshot Reviews](/cloud/reviews/multi-snapshot) via the `ZoomAddonConfig`. Here's how to configure it:
+
+```dart title=widgetbook/lib/main.dart
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@App(
+  cloudAddonsConfigs: {
+    'x1': [
+      ZoomAddonConfig(1), // [!code highlight]
+    ],
+    'x2': [
+      ZoomAddonConfig(2), // [!code highlight]
+    ],
+  },
+)
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        ZoomAddon(), // [!code highlight]
+      ],
+    );
+  }
+}
 ```
