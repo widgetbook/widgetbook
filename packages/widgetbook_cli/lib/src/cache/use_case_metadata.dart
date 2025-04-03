@@ -1,14 +1,17 @@
 import 'cache_exception.dart';
 
+typedef KnobsConfigs = Map<String, Map<String, dynamic>>;
+
 class UseCaseMetadata {
   const UseCaseMetadata({
     required this.name,
     required this.useCaseName,
     required this.componentName,
     required this.importStatement,
-    required this.navPath,
     required this.componentImportStatement,
+    required this.navPath,
     this.designLink,
+    this.knobsConfigs,
   });
 
   // Name of the builder function defining the use-case
@@ -24,15 +27,17 @@ class UseCaseMetadata {
   // Import statement of the use-case definition
   final String importStatement;
 
+  // Import statement of the component
+  final String componentImportStatement;
+
   // Path to the element in Widgetbook
   // This might be null if users are using widgetbook_generator <= 3.2.0
   final String? navPath;
 
-  // Import statement of the component
-  final String componentImportStatement;
-
   // A link to a component or variant
   final String? designLink;
+
+  final KnobsConfigs? knobsConfigs;
 
   // ignore: sort_constructors_first
   factory UseCaseMetadata.fromJson(Map<String, dynamic> map) {
@@ -42,10 +47,12 @@ class UseCaseMetadata {
         useCaseName: map['useCaseName'] as String,
         componentName: map['componentName'] as String,
         importStatement: map['importStatement'] as String,
-        navPath: map['navPath'] as String?,
         componentImportStatement: map['componentImportStatement'] as String,
-        designLink:
-            map['designLink'] != null ? map['designLink'] as String : null,
+        navPath: map['navPath'] as String?,
+        designLink: map['designLink'] as String?,
+        knobsConfigs: map['knobsConfigs'] != null
+            ? Map<String, Map<String, dynamic>>.from(map['knobsConfigs'] as Map)
+            : null,
       );
     } catch (e) {
       throw CacheFormatException('use-case', map, e);
@@ -61,6 +68,7 @@ class UseCaseMetadata {
       'componentName': componentName,
       'navPath': navPath,
       'designLink': designLink,
+      'knobsConfigs': knobsConfigs,
     };
   }
 }
