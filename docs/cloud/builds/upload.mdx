@@ -1,0 +1,74 @@
+# Upload builds
+
+A build can be uploaded to Widgetbook Cloud using the Widgetbook CLI.
+We recommend to setup a CI/CD workflow to automatically upload builds for each commit and branch.
+
+## Tutorial video
+
+<YouTube id="-7w1VqZD004" />
+
+## Upload build using CI/CD
+
+<Info>
+Uploading builds using CI/CD is the recommended way to publish Widgetbook Cloud builds for each of your commits.
+If you're trying Widgetbook Cloud for the first time, following the [manual upload instructions](/cloud/builds/upload#upload-build-manually) is helpful to understand the process.
+</Info>
+
+To follow the CI/CD setup guide select your Git provider below
+
+<CardGroup>
+    <Card title="GitHub" href="/cloud/guides/github/upload">
+        Upload builds with GitHub action.
+    </Card>
+    <Card title="GitLab" href="/cloud/guides/gitlab/upload">
+        Upload builds with GitLab pipelines.
+    </Card>
+    <Card title="Azure DevOps" href="/cloud/guides/azure/upload">
+        Upload builds with Azure Pipelines.
+    </Card>
+    <Card title="Bitbucket" href="/cloud/guides/bitbucket/upload">
+        Upload builds with Bitbucket Pipelines.
+    </Card>
+</CardGroup>
+
+## Upload build manually
+
+To create a Widgetbook Build, follow these steps inside your Widgetbook project:
+
+1. Run `widgetbook_generator` to generate metadata about your use-cases and components
+
+   ```bash
+   dart run build_runner build -d
+   ```
+
+1. Build the Widgetbook for the web
+
+   ```bash
+   # Default target (i.e. `lib/main.dart`)
+   flutter build web
+
+   # Custom target
+   flutter build web -t lib/main.widgetbook.dart
+   ```
+
+1. Install the [Widgetbook CLI](/cli)
+
+   ```bash
+   dart pub global activate widgetbook_cli
+   ```
+
+1. Get your **API key** from the Widgetbook Cloud's **project settings page**.
+
+1. Push the build to Widgetbook Cloud
+
+   ```bash
+   widgetbook cloud build push --api-key PROJECT_API_KEY
+   ```
+
+<Info>
+The `cloud push` command uses the following directories:
+
+1. `build/web/` to create a `.zip` archive that will be uploaded to Widgetbook Cloud.
+1. `.dart_tool/build/generated/[your_app_name]/` to send metadata, _about the generated use-cases_, that will be used for [Widgetbook Cloud Review](/cloud/reviews).
+
+</Info>
