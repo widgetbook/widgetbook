@@ -1,14 +1,21 @@
 # Time Dilation Addon
 
-<Warning>This Addon is Experimental.</Warning>
+A utility addon designed for modifying the scheduler's [`timeDilation`](https://api.flutter.dev/flutter/scheduler/timeDilation.html) property.
 
-The Time Dilation Addon is a Widgetbook utility designed for modifying
-the scheduler's [`timeDilation`](https://api.flutter.dev/flutter/scheduler/timeDilation.html) property.
+## Usage
 
-## Setup
+```dart title=widgetbook/lib/main.dart
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
 
-Here's how to configure it:
-
-```dart
-TimeDilationAddon()
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        TimeDilationAddon(), // [!code highlight]
+      ],
+    );
+  }
+}
 ```

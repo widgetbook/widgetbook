@@ -1,9 +1,10 @@
-# Viewport Addon
+
+# Viewport Addon 
 
 <Warning>
   This addon is currently **experimental**, so any breaking changes can be
-  introduced at any minor version. It will also replace the [Device Frame
-  Addon](/addons/device-frame-addon) in the future.
+  introduced at any minor version. It will replace the [Device Frame
+  Addon](/addons/device-frame-addon) in the near future.
 </Warning>
 
 The Viewport Addon is an invaluable tool that lets you preview your use-cases on various viewports. These viewports simulate a realistic environment by:
@@ -12,12 +13,82 @@ The Viewport Addon is an invaluable tool that lets you preview your use-cases on
 1. Overriding `MediaQuery`'s `devicePixelRatio` to ensure your component behaves as as expected on different devices.
 1. Overriding `ThemeData.platform` to simulate different platforms.
 
-If you are using [Widgetbook Cloud](/cloud), unlike the [Device Frame Addon](/addons/device-frame-addon), the Viewport Addon works with [**Multi Snapshot Reviews**](/cloud/reviews/multi-snapshot).
+## Usage
 
-## Setup
+```dart title=widgetbook/lib/main.dart
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
 
-Here's how to configure it:
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        ViewportAddon([ // [!code highlight]
+          Viewports.none, // [!code highlight]
+          IosViewports.iPhone13, // [!code highlight]
+          AndroidViewports.samsungGalaxyNote20, // [!code highlight]
+          MacosViewports.macbookPro, // [!code highlight]
+          WindowsViewports.desktop, // [!code highlight]
+          LinuxViewports.desktop, // [!code highlight]
+        ]), // [!code highlight]
+      ],
+    );
+  }
+}
+```
 
-```dart
-ViewportAddon(Viewports.all),
+<Info>
+  You can use `.all` getter to add all available viewports to the addon:
+
+    ```dart
+    ViewportAddon(Viewports.all) // All platforms
+    ViewportAddon(IosViewports.all) // Specific platform
+    ```
+
+</Info>
+
+## Order
+
+Since the [order of addons](/addons#order-of-addons) matters. The `ViewportAddon` should be used **before all other addons**.
+
+## Multi-snapshot Support
+
+The `ViewportAddon` is supported in the [Multi Snapshot Reviews](/cloud/reviews/multi-snapshot) via the `ViewportAddonConfig`. Here's how to configure it:
+
+<Info>
+  Unlike other `AddonConfig`s, the `ViewportAddonConfig` is defined in
+  `widgetbook` package, and not in `widgetbook_annotation` package.
+</Info>
+
+```dart title=widgetbook/lib/main.dart
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@App(
+  cloudAddonsConfigs: {
+    'iPhone 13': [
+      ViewportAddonConfig(IosViewports.iPhone13), // [!code highlight]
+    ],
+    'iPhone 12': [
+      ViewportAddonConfig(IosViewports.iPhone12), // [!code highlight]
+    ],
+  },
+)
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        ViewportAddon([ // [!code highlight]
+          IosViewports.iPhone13, // [!code highlight]
+          IosViewports.iPhone12, // [!code highlight]
+        ]), // [!code highlight]
+      ],
+    );
+  }
+}
 ```
