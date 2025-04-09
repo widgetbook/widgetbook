@@ -1,0 +1,71 @@
+# Semantics Addon
+
+<Warning>
+  This addon is currently **experimental**, so any breaking changes can be
+  introduced at any minor version.
+</Warning>
+
+The Semantics Addon is a powerful tool that allows you to visualize the semantics tree of your widget. This is particularly useful for debugging accessibility issues and ensuring that your app is accessible to all users.
+
+The addon is based on a minimal variant of Flutter's [`SemanticsDebugger`](https://api.flutter.dev/flutter/widgets/SemanticsDebugger-class.html) widget.
+
+
+## Usage
+
+```dart title=widgetbook/lib/main.dart
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        SemanticsAddon(), // [!code highlight]
+      ],
+    );
+  }
+}
+```
+
+## Order
+
+Since the [order of addons](/addons#order-of-addons) matters, here are some guidelines to follow when using the `SemanticsAddon`:
+
+Addons that should come before the `SemanticsAddon`:
+
+- `ViewportAddon`
+- `DeviceFrameAddon`
+
+## Multi-snapshot Support
+
+The `SemanticsAddon` is supported in the [Multi Snapshot Reviews](/cloud/reviews/multi-snapshot) via the `SemanticsAddonConfig`. Here's how to configure it:
+
+```dart title=widgetbook/lib/main.dart
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@App(
+  cloudAddonsConfigs: {
+    'Semantics Tree': [
+      SemanticsAddonConfig(true), // [!code highlight]
+    ],
+    'No Semantics Tree': [
+      SemanticsAddonConfig(false), // [!code highlight]
+    ],
+  },
+)
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        SemanticsAddon(), // [!code highlight]
+      ],
+    );
+  }
+}
+```
