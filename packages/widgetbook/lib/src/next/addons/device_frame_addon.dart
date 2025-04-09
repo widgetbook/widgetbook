@@ -1,4 +1,4 @@
-import 'package:device_frame/device_frame.dart';
+import 'package:device_frame_plus/device_frame_plus.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../addons/device_frame_addon/none_device.dart';
