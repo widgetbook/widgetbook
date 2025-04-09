@@ -106,3 +106,13 @@ class ZoomAddonConfig extends AddonConfig<String> {
           'value:$zoom',
         );
 }
+
+/// [AddonConfig] for the SemanticsAddon.
+@experimental
+class SemanticsAddonConfig extends AddonConfig<String> {
+  const SemanticsAddonConfig(bool enabled)
+      : super(
+          'semantics',
+          'enabled:$enabled',
+        );
+}

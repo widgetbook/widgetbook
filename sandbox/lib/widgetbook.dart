@@ -20,6 +20,7 @@ void main() {
       AlignmentAddonConfig('Center'),
       TextScaleAddonConfig(2),
       ZoomAddonConfig(2),
+      SemanticsAddonConfig(true),
       AddonConfig('custom-addon', 'name:value'),
     ],
     'English': [LocalizationAddonConfig('en')],
@@ -34,6 +35,7 @@ class WidgetbookApp extends StatelessWidget {
       directories: [...directories, ...components],
       addons: [
         ViewportAddon(Viewports.all),
+        SemanticsAddon(),
         next.TimeDilationAddon(),
         next.MaterialThemeAddon({'Dark': Themes.dark, 'Light': Themes.light}),
         next.GridAddon(),
