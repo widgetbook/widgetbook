@@ -2,6 +2,7 @@
 
 - **FEAT**: Add [Semantics Addon](https://docs.widgetbook.io/addons/semantics-addon). ([#1402](https://github.com/widgetbook/widgetbook/pull/1402))
 - **FEAT**: Add a banner to the bottom of the navigation panel that shows the total number of components and use-cases. ([#1405](https://github.com/widgetbook/widgetbook/pull/1405))
+- **REFACTOR**: Allow [`inspector`](https://pub.dev/packages/inspector) v3. ([#1407](https://github.com/widgetbook/widgetbook/pull/1407))
 
 ## 3.12.0
 
