@@ -4,6 +4,7 @@ import '../../state/widgetbook_state.dart';
 import '../nodes/nodes.dart';
 import 'navigation_tree_node.dart';
 import 'search_field.dart';
+import 'stats_banner.dart';
 
 class NavigationPanel extends StatefulWidget {
   const NavigationPanel({
@@ -47,6 +48,7 @@ class _NavigationPanelState extends State<NavigationPanel> {
         : widget.root.filter((node) => filterNode(node, query)) ?? widget.root;
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
           padding: const EdgeInsets.all(16),
@@ -74,6 +76,13 @@ class _NavigationPanelState extends State<NavigationPanel> {
               ),
             ),
           ),
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: StatsBanner(
+            componentsCount: WidgetbookState.of(context).root.componentsCount,
+            useCasesCount: WidgetbookState.of(context).root.useCasesCount,
+          ),
+        ),
       ],
     );
   }
