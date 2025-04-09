@@ -18,14 +18,14 @@ class SemanticsAddon extends WidgetbookAddon<bool> {
   @override
   List<Field> get fields => [
         BooleanField(
-          name: 'Enabled',
+          name: 'enabled',
           initialValue: enabled,
         ),
       ];
 
   @override
   bool valueFromQueryGroup(Map<String, String> group) {
-    return valueOf('Enabled', group) ?? false;
+    return valueOf('enabled', group) ?? false;
   }
 
   @override
