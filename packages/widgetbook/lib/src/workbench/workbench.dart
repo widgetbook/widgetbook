@@ -12,6 +12,11 @@ class Workbench extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
+    final useCase = state.useCase;
+
+    if (useCase == null) {
+      return state.homeBuilder(context);
+    }
 
     return Scaffold(
       // Some addons require a Scaffold to work properly.
@@ -46,10 +51,10 @@ class Workbench extends StatelessWidget {
                   UseCaseBuilder(
                     key: ValueKey(state.uri),
                     builder: (context) {
-                      return WidgetbookState.of(context)
-                              .useCase
-                              ?.build(context) ??
-                          const SizedBox.shrink();
+                      final state = WidgetbookState.of(context);
+                      final useCase = state.useCase;
+
+                      return useCase?.build(context) ?? const SizedBox.shrink();
                     },
                   ),
                 ],
