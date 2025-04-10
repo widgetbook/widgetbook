@@ -331,8 +331,21 @@
           ]
         },
         {
-          "title": "Builds",
-          "href": "/cloud/builds"
+          "group": "Builds",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/builds/overview"
+            },
+            {
+              "title": "Upload builds",
+              "href": "/cloud/builds/upload"
+            },
+            {
+              "title": "Access builds",
+              "href": "/cloud/builds/access-from-commit"
+            }
+          ]
         },
         {
           "title": "Reviews",
@@ -349,31 +362,63 @@
       "group": "Guides",
       "pages": [
         {
-          "group": "Setup",
+          "group": "GitHub",
           "pages": [
             {
-              "title": "GitHub",
-              "href": "/cloud/setup/github"
+              "title": "Upload builds",
+              "href": "/cloud/guides/github/upload"
             },
             {
-              "title": "GitLab",
-              "href": "/cloud/setup/gitlab"
+              "title": "Access builds from GitHub",
+              "href": "/cloud/guides/github/access-from-commit"
+            }
+          ]
+        },
+        {
+          "group": "GitLab",
+          "pages": [
+            {
+              "title": "Upload builds",
+              "href": "/cloud/guides/gitlab/upload"
             },
             {
-              "title": "Bitbucket",
-              "href": "/cloud/setup/bitbucket"
+              "title": "Builds with self-managed GitLab",
+              "href": "/cloud/guides/gitlab/upload-self-managed"
             },
             {
-              "title": "Azure DevOps",
-              "href": "/cloud/setup/azure"
+              "title": "Access builds from GitLab",
+              "href": "/cloud/guides/gitlab/access-from-commit"
+            }
+          ]
+        },
+        {
+          "group": "Azure DevOps",
+          "pages": [
+            {
+              "title": "Upload builds",
+              "href": "/cloud/guides/azure/upload"
             },
             {
-              "title": "Self-managed GitLab",
-              "href": "/cloud/setup/self-managed-gitlab"
-            },
+              "title": "Access builds from Azure",
+              "href": "/cloud/guides/azure/access-from-commit"
+            }
+          ]
+        },
+        {
+          "group": "Codemagic",
+          "pages": [
             {
-              "title": "Codemagic",
-              "href": "/cloud/setup/codemagic"
+              "title": "Upload builds",
+              "href": "/cloud/guides/codemagic/upload"
+            }
+          ]
+        },
+        {
+          "group": "Bitbucket",
+          "pages": [
+            {
+              "title": "Upload builds",
+              "href": "/cloud/guides/bitbucket/upload"
             }
           ]
         },
