@@ -1,3 +1,7 @@
+## 3.6.1
+
+- **REFACTOR**: Improve error logging. ([#1386](https://github.com/widgetbook/widgetbook/pull/1386))
+
 ## 3.6.0
 
 - **BREAKING**: Set minimum SDK version to 3.3.0. ([#1349](https://github.com/widgetbook/widgetbook/pull/1349))

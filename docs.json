@@ -36,10 +36,10 @@
   },
   "variables": {
     "versions": {
-      "annotation": "3.3.0",
-      "cli": "3.6.0",
-      "generator": "3.10.0",
-      "widgetbook": "3.11.0"
+      "annotation": "3.3.1",
+      "cli": "3.6.1",
+      "generator": "3.11.0",
+      "widgetbook": "3.12.0"
     }
   },
   "tabs": [
@@ -163,6 +163,14 @@
               "href": "/addons/zoom-addon"
             },
             {
+              "title": "Semantics Addon 🧪",
+              "href": "/addons/semantics-addon"
+            },
+            {
+              "title": "Viewport Addon 🧪",
+              "href": "/addons/viewport-addon"
+            },
+            {
               "title": "Custom Addon",
               "href": "/addons/custom-addon"
             }
@@ -181,10 +189,6 @@
         {
           "title": "Assets",
           "href": "/guides/assets"
-        },
-        {
-          "title": "Localizations",
-          "href": "/guides/l10n"
         },
         {
           "title": "Fields",
@@ -304,6 +308,27 @@
         {
           "title": "Overview",
           "href": "/cloud"
+        },
+        {
+          "title": "Workspaces",
+          "href": "/cloud/workspaces"
+        },
+        {
+          "group": "Projects",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/projects/overview"
+            },
+            {
+              "title": "Create project",
+              "href": "/cloud/projects/create"
+            },
+            {
+              "title": "Connect & disconnect projects",
+              "href": "/cloud/projects/connect"
+            }
+          ]
         },
         {
           "title": "Builds",

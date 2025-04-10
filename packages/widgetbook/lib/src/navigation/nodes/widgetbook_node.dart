@@ -118,6 +118,17 @@ abstract class WidgetbookNode {
     }
   }
 
+  /// Returns an [Iterable] of all nodes that match the [predicate].
+  Iterable<WidgetbookNode> findAll(
+    bool Function(WidgetbookNode node) predicate,
+  ) {
+    if (predicate(this)) {
+      return [this];
+    } else {
+      return children?.expand((child) => child.findAll(predicate)) ?? [];
+    }
+  }
+
   /// Creates a copy of this node with the given properties.
   /// Used in [filter] to create a copy of the sub-tree.
   WidgetbookNode copyWith({

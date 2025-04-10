@@ -1,47 +1,31 @@
 # Accessibility Addon
 
-The Accessibility Addon helps detect accessibility issues using
-the [`accessibility_tools`](https://pub.dev/packages/accessibility_tools) package.
-
 <Warning>
-  Due to maintenance issues, the `AccessibilityAddon` will no longer be shipped
-  with future Widgetbook versions. The addon is **deprecated** and you can use
-  the setup guide below to use it again in your app.
+  This addon is **deprecated** due to maintenance issues. Please use the
+  [`BuilderAddon` +
+  `accessibility_tools`](/addons/builder-addon#accessibility_tools) instead.
 </Warning>
 
-## Setup
+Uses the [`accessibility_tools`](https://pub.dev/packages/accessibility_tools) package to detect any accessibility issues in your use-cases.
 
-1. Add [`accessibility_tools`](https://pub.dev/packages/accessibility_tools) to your `pubspec.yaml` file:
+## Usage
 
-   ```yaml title="pubspec.yaml"
-   dependencies:
-     accessibility_tools:
-   ```
+```dart title=widgetbook/lib/main.dart
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
 
-1. Create a new file called `accessibility_addon.dart` in your `widgetbook_workspace` project, with the following content:
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        AccessibilityAddon(), // [!code highlight]
+      ],
+    );
+  }
+}
+```
 
-   ```dart title="addons/accessibility_addon.dart"
-   import 'package:accessibility_tools/accessibility_tools.dart';
-   import 'package:widgetbook/widgetbook.dart';
+## Order
 
-   class AccessibilityAddon extends BuilderAddon {
-     AccessibilityAddon()
-         : super(
-             name: 'Accessibility',
-             builder: (context, child) => AccessibilityTools(
-               child: child,
-             ),
-           );
-   }
-   ```
-
-1. Start using the addon as follows:
-
-   ```dart
-   Widgetbook.material(
-     addons: [
-       AccessibilityAddon(),
-       // ...
-     ],
-   );
-   ```
+Since the [order of addons](/addons#order-of-addons) matters, the `AccessibilityAddon` must be the **last** addon in the list.

@@ -1,14 +1,96 @@
 # Alignment Addon
 
-The Alignment Addon is a Widgetbook utility designed for modifying the alignment of the
-use-case being previewed within the Workbench.
+Wraps all use-cases with an [`Align`](https://api.flutter.dev/flutter/widgets/Align-class.html) widget. This is useful when you want to center all your use cases without having to wrap each one of them manually.
 
-## Setup
+Without this addon, all your use-cases will be aligned in the top-left corner, unless you wrap them in a `Center` widget or similar.
 
-Here's how to configure it:
+<Tabs
+  values={[
+    { label: "Center", value: "center" },
+    { label: "Top Left", value: "top-left" },
+  ]}
+>
+  <TabItem value="center">
+    <iframe
+      src="https://demo.widgetbook.io/#/?path=ui/widgets/primarybutton/default&alignment={alignment:Center}&device={name:None}&preview"
+      width="100%"
+      height="420px"
+    />
+  </TabItem>
+  <TabItem value="top-left">
+    <iframe
+      src="https://demo.widgetbook.io/#/?path=ui/widgets/primarybutton/default&alignment={alignment:Top%20Left}&device={name:None}&preview"
+      width="100%"
+      height="420px"
+    />
+  </TabItem>
+</Tabs>
 
-```dart
-AlignmentAddon(
-  initialAlignment: Alignment.center,
-),
+## Usage
+
+```dart title=widgetbook/lib/main.dart
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        AlignmentAddon(), // [!code highlight]
+      ],
+    );
+  }
+}
+```
+
+## Order
+
+Since the [order of addons](/addons#order-of-addons) matters, here are some guidelines to follow when using the `AlignmentAddon`:
+
+Addons that should come before the `AlignmentAddon`:
+
+- `ViewportAddon`
+- `DeviceFrameAddon`
+- `ThemeAddon`
+- `MaterialThemeAddon`
+- `CupertinoThemeAddon`
+- `GridAddon`
+- `InspectorAddon`
+
+Addons that should come after the `AlignmentAddon`:
+
+- `ZoomAddon`
+
+## Multi-snapshot Support
+
+The `AlignmentAddon` is supported in the [Multi Snapshot Reviews](/cloud/reviews/multi-snapshot) via the `AlignmentAddonConfig`. Here's how to configure it:
+
+```dart title=widgetbook/lib/main.dart
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@App(
+  cloudAddonsConfigs: {
+    'Center': [
+      AlignmentAddonConfig('Center'), // [!code highlight]
+    ],
+    'Bottom Center': [
+      AlignmentAddonConfig('Bottom Center'), // [!code highlight]
+    ],
+  },
+)
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        AlignmentAddon(), // [!code highlight]
+      ],
+    );
+  }
+}
 ```

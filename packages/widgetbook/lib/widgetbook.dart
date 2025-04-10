@@ -2,7 +2,7 @@
 /// to catalogue their widgets.
 library widgetbook;
 
-export 'src/addons/addons.dart';
+export 'src/addons/addons.dart' hide NoneViewport;
 export 'src/fields/fields.dart';
 export 'src/integrations/integrations.dart';
 export 'src/knobs/knobs.dart'

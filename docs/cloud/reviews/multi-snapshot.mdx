@@ -8,21 +8,28 @@ If you are using [Widgetbook Cloud Review](/cloud/reviews), you can now create m
 
 1. Go to the main file of your app, where your Widgetbook's `@App` annotation is defined.
 1. Choose the addons you like to test and include them, e.g. Themes and Languages. Here are the available `AddonConfig` classes:
-   - `LocalizationAddonConfig`
-   - `ThemeAddonConfig`
-   - `AlignmentAddonConfig`
-   - `TextScaleAddonConfig`
-   - `ZoomAddonConfig`
-1. Add the configurations matrix to the `cloudAddonsConfigs` parameter of the `@App` annotation. In this example, we’d like to test German in dark mode but English in light mode.
+
+   - [`AlignmentAddonConfig`](/addons/alignment-addon#multi-snapshot-support)
+   - [`LocalizationAddonConfig`](/addons/localization-addon#multi-snapshot-support)
+   - [`SemanticsAddonConfig`](/addons/semantics-addon#multi-snapshot-support) 🧪
+   - [`ThemeAddonConfig`](/addons/theme-addon#multi-snapshot-support)
+   - [`TextScaleAddonConfig`](/addons/text-scale-addon#multi-snapshot-support)
+   - [`ViewportAddonConfig`](/addons/viewport-addon#multi-snapshot-support) 🧪
+   - [`ZoomAddonConfig`](/addons/zoom-addon#multi-snapshot-support)
+   - [Custom Addon Config](/addons/custom-addon#multi-snapshot-support)
+
+1. Add the configurations matrix to the `cloudAddonsConfigs` parameter of the `@App` annotation. In this example, we’d like to test German in dark mode but English in light mode, but both of them on an iPhone 12 viewport:
 
    ```dart
    @App(
      cloudAddonsConfigs: {
        'German Dark': [
+         ViewportAddonConfig(IosViewports.iPhone12),
          LocalizationAddonConfig('de'),
          ThemeAddonConfig('Dark'),
        ],
        'English Light': [
+         ViewportAddonConfig(IosViewports.iPhone12),
          LocalizationAddonConfig('en'),
          ThemeAddonConfig('Light'),
        ],
@@ -37,70 +44,6 @@ If you are using [Widgetbook Cloud Review](/cloud/reviews), you can now create m
      }
    }
    ```
-
-## Multi Snapshot for Custom Addons
-
-If you have a [custom addon](/addons/custom-addon) you can create a custom `AddonConfig` class and use it in the `@App` annotation.
-Assuming your addon looks as follows, then you will need three values for your configuration:
-
-1. Addon Name: `Border`
-1. Fields Names: [`width`]
-1. Config Values: [`0.5`]
-
-```dart
-class BorderAddon extends WidgetbookAddon<double> {
-  ZoomAddon({
-    this.initialWidth = 0.0,
-  }) : super(
-          name: 'Border', // 1. Addon Name
-        );
-
-  final double initialWidth;
-
-  @override
-  List<Field> get fields => [
-        DoubleInputField(
-          name: 'width', // 2. Field Name
-          initialValue: initialWidth,
-        ),
-      ];
-
-  // ...
-}
-```
-
-Then you create a custom `AddonConfig` class:
-
-```dart
-import 'package:widgetbook_annotation/widgetbook_annotation.dart';
-
-class BorderAddonConfig extends AddonConfig {
-  const BorderAddonConfig(
-    double width,
-  ) : super(
-          'border', // 1. Addon Name in kebab-case
-          // If you have more than one value, you can separate them with commas
-          // like this: 'width:$width,color:$color',
-          'width:$width', // 2. Fields Names and 3. Config Values
-        );
-}
-```
-
-Finally, you can use the custom `AddonConfig` in the `@App` annotation:
-
-```dart
-@App(
-  cloudAddonsConfigs: {
-    'Border 1': [
-      BorderAddonConfig(0.5),
-    ],
-    'Border 2': [
-      BorderAddonConfig(1.0),
-    ],
-  },
-)
-class WidgetbookApp extends StatelessWidget { ... }
-```
 
 ## Multi Snapshot for Knobs
 

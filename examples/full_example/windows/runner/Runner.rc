@@ -89,11 +89,11 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "io.widgetbook.fullexample" "\0"
+            VALUE "CompanyName", "com.example" "\0"
             VALUE "FileDescription", "full_example" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "full_example" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2023 io.widgetbook.fullexample. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
             VALUE "OriginalFilename", "full_example.exe" "\0"
             VALUE "ProductName", "full_example" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"

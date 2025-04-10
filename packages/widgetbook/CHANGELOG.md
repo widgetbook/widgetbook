@@ -1,3 +1,13 @@
+## Unreleased
+
+- **FEAT**: Add [Semantics Addon](https://docs.widgetbook.io/addons/semantics-addon). ([#1402](https://github.com/widgetbook/widgetbook/pull/1402))
+- **FEAT**: Add a banner to the bottom of the navigation panel that shows the total number of components and use-cases. ([#1405](https://github.com/widgetbook/widgetbook/pull/1405))
+- **REFACTOR**: Allow [`inspector`](https://pub.dev/packages/inspector) v3. ([#1407](https://github.com/widgetbook/widgetbook/pull/1407))
+
+## 3.12.0
+
+- **FEAT**: Add the **experimental** _(subject to breaking changes)_ [`ViewportAddon`](https://docs.widgetbook.io/addons/viewport-addon) alongside its [`ViewportAddonConfig`](https://docs.widgetbook.io/cloud/reviews/multi-snapshot#multi-snapshot-for-addons). This new addon will replace the `DeviceFrameAddon` in the future. ([#1318](https://github.com/widgetbook/widgetbook/pull/1318))
+
 ## 3.11.0
 
 - **BREAKING**: Set minimum SDK version to 3.3.0 & minimum Flutter version to 3.19.0. ([#1349](https://github.com/widgetbook/widgetbook/pull/1349))
