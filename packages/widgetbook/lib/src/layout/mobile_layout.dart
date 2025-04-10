@@ -29,57 +29,49 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
       body: SafeArea(
         child: workbench,
       ),
-      bottomNavigationBar: ExcludeSemantics(
-        child: BottomNavigationBar(
-          items: [
-            const BottomNavigationBarItem(
-              label: 'Navigation',
-              icon: Icon(Icons.list_outlined),
-            ),
-            const BottomNavigationBarItem(
-              label: 'Addons',
-              icon: Icon(Icons.dashboard_customize_outlined),
-            ),
-            BottomNavigationBarItem(
-              label: state.isNext ? 'Args' : 'Knobs',
-              icon: const Icon(Icons.tune_outlined),
-            ),
-          ],
-          onTap: (index) {
-            showModalBottomSheet<void>(
-              context: context,
-              builder: (context) {
-                switch (index) {
-                  case 0:
-                    return ExcludeSemantics(
-                      child: navigationBuilder(context),
-                    );
-                  case 1:
-                    return ExcludeSemantics(
-                      child: MobileSettingsPanel(
-                        name: 'Addons',
-                        builder: addonsBuilder,
-                      ),
-                    );
-                  case 2:
-                    return ExcludeSemantics(
-                      child: state.isNext
-                          ? MobileSettingsPanel(
-                              name: 'Args',
-                              builder: argsBuilder,
-                            )
-                          : MobileSettingsPanel(
-                              name: 'Knobs',
-                              builder: knobsBuilder,
-                            ),
-                    );
-                  default:
-                    return Container();
-                }
-              },
-            );
-          },
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          const BottomNavigationBarItem(
+            label: 'Navigation',
+            icon: Icon(Icons.list_outlined),
+          ),
+          const BottomNavigationBarItem(
+            label: 'Addons',
+            icon: Icon(Icons.dashboard_customize_outlined),
+          ),
+          BottomNavigationBarItem(
+            label: state.isNext ? 'Args' : 'Knobs',
+            icon: const Icon(Icons.tune_outlined),
+          ),
+        ],
+        onTap: (index) {
+          showModalBottomSheet<void>(
+            context: context,
+            builder: (context) {
+              switch (index) {
+                case 0:
+                  return navigationBuilder(context);
+                case 1:
+                  return MobileSettingsPanel(
+                    name: 'Addons',
+                    builder: addonsBuilder,
+                  );
+                case 2:
+                  return state.isNext
+                      ? MobileSettingsPanel(
+                          name: 'Args',
+                          builder: argsBuilder,
+                        )
+                      : MobileSettingsPanel(
+                          name: 'Knobs',
+                          builder: knobsBuilder,
+                        );
+                default:
+                  return Container();
+              }
+            },
+          );
+        },
       ),
     );
   }
