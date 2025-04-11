@@ -42,6 +42,7 @@ class SemanticsAddon extends WidgetbookAddon<bool> {
       // This semantics node will be used as the root of the semantics tree
       // for the widget being debugged.
       identifier: identifier,
+      container: true, // prevent node from getting merged
       child: MinimalSemanticsDebugger(
         rootIdentifier: identifier,
         child: child,
