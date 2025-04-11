@@ -35,7 +35,6 @@ class WidgetbookApp extends StatelessWidget {
       directories: [...directories, ...components],
       addons: [
         ViewportAddon(Viewports.all),
-        SemanticsAddon(),
         next.TimeDilationAddon(),
         next.MaterialThemeAddon({'Dark': Themes.dark, 'Light': Themes.light}),
         next.GridAddon(),
@@ -58,6 +57,7 @@ class WidgetbookApp extends StatelessWidget {
                 child: child,
               ),
         ),
+        SemanticsAddon(),
       ],
     );
   }
