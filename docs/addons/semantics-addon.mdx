@@ -9,7 +9,6 @@ The Semantics Addon is a powerful tool that allows you to visualize the semantic
 
 The addon is based on a minimal variant of Flutter's [`SemanticsDebugger`](https://api.flutter.dev/flutter/widgets/SemanticsDebugger-class.html) widget.
 
-
 ## Usage
 
 ```dart title=widgetbook/lib/main.dart
@@ -30,12 +29,7 @@ class WidgetbookApp extends StatelessWidget {
 
 ## Order
 
-Since the [order of addons](/addons#order-of-addons) matters, here are some guidelines to follow when using the `SemanticsAddon`:
-
-Addons that should come before the `SemanticsAddon`:
-
-- `ViewportAddon`
-- `DeviceFrameAddon`
+Since the [order of addons](/addons#order-of-addons) matters, the `SemanticsAddon` should be used **after all other addons**, as they might be adding some semantics nodes to the tree.
 
 ## Multi-snapshot Support
 
