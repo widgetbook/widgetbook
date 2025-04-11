@@ -1,0 +1,26 @@
+# Embedding
+
+If you want to embed Widgetbook in your documentation, but you want to hide Widgetbook's UI, you can do so by adding the **`preview` query parameter** to the URL of your hosted Widgetbook.
+
+```url
+https://widgetbook.acme.com/#/?path=my/us-case/path/default&preview
+```
+
+For example here's an embedding of [our demo app](https://demo.widgetbook.io/):
+
+```diff
+https://demo.widgetbook.io/#/?path=features/about/aboutscreen/default // [!code --]
+https://demo.widgetbook.io/#/?path=features/about/aboutscreen/default&preview // [!code ++]
+```
+
+<iframe
+  src="https://demo.widgetbook.io/#/?path=features/about/aboutscreen/default&preview"
+  width="100%"
+  height="720px"
+/>
+
+<br />
+<Info>
+  You can host your Widgetbook using [Widgetbook Cloud
+  Builds](/cloud/builds/overview).
+</Info>

@@ -195,6 +195,10 @@
           "href": "/guides/fields"
         },
         {
+          "title": "Embedding",
+          "href": "/guides/embedding"
+        },
+        {
           "group": "Migration",
           "pages": [
             {
