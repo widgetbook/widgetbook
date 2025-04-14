@@ -57,12 +57,12 @@ If you are using [Widgetbook Cloud Review](/cloud/reviews), you can now create m
   type: Button,
   cloudAddonsConfigs: {
     'Disabled Long Text': [
-      KnobConfig('enabled', false),
-      KnobConfig('text', 'This is a very very long text for a button that might cause overflow'),
+      BooleanKnobConfig('enabled', false),
+      StringKnobConfig('text', 'This is a very very long text for a button that might cause overflow'),
     ],
     'Enabled Short Text': [
-      KnobConfig('enabled', true),
-      KnobConfig('text', 'Button'),
+      BooleanKnobConfig('enabled', true),
+      StringKnobConfig('text', 'Button'),
     ],
   },
 )

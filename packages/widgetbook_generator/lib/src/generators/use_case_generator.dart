@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
+import 'package:collection/collection.dart';
 import 'package:path/path.dart' as path;
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
@@ -10,6 +11,7 @@ import '../models/element_metadata.dart';
 import '../models/nav_path_mode.dart';
 import '../models/use_case_metadata.dart';
 import '../util/constant_reader.dart';
+import '../util/dart_object.dart';
 
 class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
   UseCaseGenerator(this.navPathMode);
@@ -112,12 +114,34 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
           (e) {
             final reader = ConstantReader(e);
 
-            return KnobConfig(
-              reader.read('key').stringValue,
-              reader.read('value').literalValue,
-            );
+            // A special type of KnobConfig is the MultiFieldKnobConfig
+            // This allows users to configure more than one field.
+            // Since for first-class knobs we have 1-1 relation between
+            // knob and field (i.e. each knob has only one field),
+            // we need to convert the MultiFieldKnobConfig into
+            // multiple KnobConfig (i.e. multiple fields).
+            if (e.type.toString() == '$MultiFieldKnobConfig') {
+              final fields = reader.read('value').mapValue;
+
+              return fields.entries.map(
+                // Add each field as a separate KnobConfig
+                (entry) {
+                  return KnobConfig(
+                    entry.key!.toStringValue()!,
+                    entry.value?.toPrimitiveValue(),
+                  );
+                },
+              ).toList();
+            }
+
+            return [
+              KnobConfig(
+                reader.read('label').stringValue,
+                reader.read('value').literalValue,
+              )
+            ];
           },
-        ),
+        ).flattened,
     };
   }
 }

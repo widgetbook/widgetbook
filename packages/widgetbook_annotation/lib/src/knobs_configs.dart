@@ -15,8 +15,8 @@ import 'knob_config.dart';
 /// ```dart
 /// {
 ///   'Disabled Long Text': [
-///     KnobConfig('text', 'This is a long text...'),
-///     KnobConfig('enabled', false),
+///     StringKnobConfig('text', 'This is a long text...'),
+///     BooleanKnobConfig('enabled', false),
 ///   ],
 /// }
 /// ```

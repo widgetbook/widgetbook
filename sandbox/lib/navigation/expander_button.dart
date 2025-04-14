@@ -8,12 +8,12 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
   type: ExpanderIcon,
   cloudKnobsConfigs: {
     'Large Expanded': [
-      KnobConfig('is-expanded', true),
-      KnobConfig('size', 84.0),
+      BooleanKnobConfig('is-expanded', true),
+      DoubleKnobConfig('size', 84.0),
     ],
     'Small Collapsed': [
-      KnobConfig('is-expanded', false),
-      KnobConfig('size', 12.0),
+      BooleanKnobConfig('is-expanded', false),
+      DoubleKnobConfig('size', 12.0),
     ],
   },
 )
