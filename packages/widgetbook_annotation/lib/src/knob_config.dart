@@ -27,7 +27,7 @@ class KnobConfig<T> {
   }
 }
 
-class IntKnobConfig extends KnobConfig<int?> {
+class IntKnobConfig extends KnobConfig<int> {
   /// Creates a new [KnobConfig] for `knobs.int`.
   ///
   /// ```dart
@@ -36,7 +36,7 @@ class IntKnobConfig extends KnobConfig<int?> {
   const IntKnobConfig(super.label, super.value);
 }
 
-class DoubleKnobConfig extends KnobConfig<double?> {
+class DoubleKnobConfig extends KnobConfig<double> {
   /// Creates a new [KnobConfig] for `knobs.double`.
   ///
   /// ```dart
@@ -45,7 +45,7 @@ class DoubleKnobConfig extends KnobConfig<double?> {
   const DoubleKnobConfig(super.label, super.value);
 }
 
-class StringKnobConfig extends KnobConfig<String?> {
+class StringKnobConfig extends KnobConfig<String> {
   /// Creates a new [KnobConfig] for `knobs.string`.
   ///
   /// ```dart
@@ -54,7 +54,7 @@ class StringKnobConfig extends KnobConfig<String?> {
   const StringKnobConfig(super.label, super.value);
 }
 
-class BooleanKnobConfig extends KnobConfig<bool?> {
+class BooleanKnobConfig extends KnobConfig<bool> {
   /// Creates a new [KnobConfig] for `knobs.boolean`.
   ///
   /// ```dart
@@ -64,7 +64,7 @@ class BooleanKnobConfig extends KnobConfig<bool?> {
   const BooleanKnobConfig(super.label, super.value);
 }
 
-class ColorKnobConfig extends KnobConfig<String?> {
+class ColorKnobConfig extends KnobConfig<String> {
   /// Creates a new [KnobConfig] for `knobs.color`.
   ///
   /// ```dart
@@ -74,7 +74,7 @@ class ColorKnobConfig extends KnobConfig<String?> {
   const ColorKnobConfig(super.label, super.colorInAlphaHex);
 }
 
-class DurationKnobConfig extends KnobConfig<int?> {
+class DurationKnobConfig extends KnobConfig<int> {
   /// Creates a new [KnobConfig] for `knobs.duration`.
   ///
   /// ```dart
@@ -84,7 +84,7 @@ class DurationKnobConfig extends KnobConfig<int?> {
   const DurationKnobConfig(super.label, super.durationInMilliseconds);
 }
 
-class DateTimeKnobConfig extends KnobConfig<String?> {
+class DateTimeKnobConfig extends KnobConfig<String> {
   /// Creates a new [KnobConfig] for `knobs.dateTime`.
   /// The [dateTimeInSimpleFormat] is a string representation of the
   /// [DateTime] object in `yyyy-MM-dd HH:mm` format.
@@ -95,7 +95,7 @@ class DateTimeKnobConfig extends KnobConfig<String?> {
   const DateTimeKnobConfig(super.label, super.dateTimeInSimpleFormat);
 }
 
-class ListKnobConfig extends KnobConfig<String?> {
+class ListKnobConfig extends KnobConfig<String> {
   /// Creates a new [KnobConfig] for `knobs.list`.
   /// The easiest way to get the `itemLabel` is to check the URL query string
   /// of a Widgetbook web build.
@@ -146,5 +146,8 @@ class MultiFieldKnobConfig extends KnobConfig<Map<String, dynamic>> {
   ///   'user.age': 42,
   /// });
   /// ```
+  ///
+  /// For more info, check out our docs:
+  /// https://docs.widgetbook.io/knobs/custom-knob
   const MultiFieldKnobConfig(Map<String, dynamic> fields) : super('', fields);
 }

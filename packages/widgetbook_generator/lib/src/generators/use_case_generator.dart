@@ -138,7 +138,7 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
               KnobConfig(
                 reader.read('label').stringValue,
                 reader.read('value').literalValue,
-              )
+              ),
             ];
           },
         ).flattened,
