@@ -3,7 +3,20 @@ import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@UseCase(name: 'Default', type: ExpanderIcon)
+@UseCase(
+  name: 'Default',
+  type: ExpanderIcon,
+  cloudKnobsConfigs: {
+    'Large Expanded': [
+      BooleanKnobConfig('is-expanded', true),
+      DoubleKnobConfig('size', 84.0),
+    ],
+    'Small Collapsed': [
+      BooleanKnobConfig('is-expanded', false),
+      DoubleKnobConfig('size', 12.0),
+    ],
+  },
+)
 Widget expanderButton(BuildContext context) {
   return ExpanderIcon(
     isExpanded: context.knobs.boolean(label: 'Is expanded'),

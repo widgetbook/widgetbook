@@ -47,38 +47,29 @@ If you are using [Widgetbook Cloud Review](/cloud/reviews), you can now create m
 
 ## Multi Snapshot for Knobs
 
-<Warning>
-  Currently only the addons configuration is supported. Configuring knobs will
-  be available soon using the `@UseCase` annotation, without the need to create
-  multiple use-cases.
-</Warning>
+1. Go to the file where your use-case is defined.
+1. Add the configurations matrix to the `cloudKnobsConfigs` parameter of the `@UseCase` annotation. In this example we want to test "Disabled Long Text" and "Enabled Short Text" variants of the use-case:
 
-Until the first-class support is available, we suggest splitting your variants in different use-cases instead of using knobs as follows:
+```dart
 
-```dart title="Before"
-@UseCase(name: 'Default', type: Button)
-Widget buttonUseCase(BuildContext context) {
+@UseCase(
+  name: 'Default',
+  type: Button,
+  cloudAddonsConfigs: {
+    'Disabled Long Text': [
+      BooleanKnobConfig('enabled', false),
+      StringKnobConfig('text', 'This is a very very long text for a button that might cause overflow'),
+    ],
+    'Enabled Short Text': [
+      BooleanKnobConfig('enabled', true),
+      StringKnobConfig('text', 'Button'),
+    ],
+  },
+)
+Widget buildButtonUseCase(BuildContext context) {
   return Button(
-    type: context.knobs.list(
-      label: 'Type',
-      options: [ButtonType.primary, ButtonType.secondary]
-    ),
-  );
-}
-```
-
-```dart title="After"
-@UseCase(name: 'Primary', type: Button)
-Widget primaryButtonUseCase(BuildContext context) {
-  return Button(
-    type: ButtonType.primary,
-  );
-}
-
-@UseCase(name: 'Secondary', type: Button)
-Widget secondaryButtonUseCase(BuildContext context) {
-  return Button(
-    type: ButtonType.secondary,
+    text: context.knobs.string(label: 'text'),
+    enabled: context.knobs.boolean(label: 'enabled'),
   );
 }
 ```

@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Support Multi Snapshot for knobs. For more information, check our [docs](https://docs.widgetbook.io/cloud/reviews/multi-snapshot#multi-snapshot-for-knobs). ([#1394](https://github.com/widgetbook/widgetbook/pull/1394))
+
 ## 3.11.0
 
 - **FEAT**: Support the **experimental** [`ViewportAddon`](https://docs.widgetbook.io/addons/viewport-addon). ([#1318](https://github.com/widgetbook/widgetbook/pull/1318))
