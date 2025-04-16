@@ -6,7 +6,7 @@
 
 # Widgetbook CLI
 
-The CLI supports uploading [Widgetbook Builds](https://docs.widgetbook.io/cloud/builds) & [Widgetbook Reviews](https://docs.widgetbook.io/cloud/reviews).
+The CLI supports uploading [Widgetbook Builds](https://docs.widgetbook.io/cloud/builds/overview) & [Widgetbook Reviews](https://docs.widgetbook.io/cloud/reviews).
 
 ## Documentation
 
