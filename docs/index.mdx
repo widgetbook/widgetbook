@@ -1,35 +1,33 @@
 <Card title="🎉 Widgetbook Cloud is now Live!" href="/cloud">
-  **Save 20% of your time** by shortening the feedback loop between designers
-  and developers.
+  **Save 20% of your time** by introducing UI reviews in your workflow.
 </Card>
 
 # Overview
 
-Widgetbook is a Flutter package inspired by Storybook.js that simplifies the process of cataloging widgets to create your own [design system](/glossary/design-system), and testing the widgets across various configurations, like different devices, languages and themes.
+Widgetbook is a sandbox for building **widgets and screens in isolation**. It helps you develop and share hard-to-reach states and edge cases without needing to run your whole app. Widgetbook is [open-source](https://github.com/widgetbook/widgetbook) and **free** to use.
 
-Widgetbook is [recommended by Google's Flutter team](https://www.youtube.com/watch?v=-g2KYjiPzzA) who features us as experts for design systems and designer/developer collaboration.
+Still don't get what Widgetbook really is? Maybe [the Flutter team can explain it better](https://www.youtube.com/watch?v=-g2KYjiPzzA) _(note that this is a very old version of Widgetbook, and the UI has changed since then)_.
 
 <Image src="/assets/screenshots/widgetbook.png" zoom />
 
 ## The Problem
 
-Developing user interfaces in Flutter applications often involves creating and managing numerous widgets. However, developers face several challenges in the process:
+While developing widgets or screens, you have probably faced one of the following problems:
 
-- **Keeping the overview of the design system is difficult:** Setting up and maintaining the structure for a [design system](/glossary/design-system) that catalogs every widget is time-consuming. As it's not the core business of a Flutter team, it also distracts the developers from actual feature development.
-
-- **UI flaws:** Testing widgets across multiple devices, themes, and settings is time-consuming and prone to errors. When changing existing widgets, it is difficult to detect all resulting UI changes to ensure that all changes look and feel as intended.
-
-- **Collaboration between designers and developers:** Designers and developers often work in silos, leading to misunderstandings and inconsistencies between the design and the implementation. This can result in a poor user experience and a lack of trust between the two teams.
+- **Hard-to-reach states:** You need to test a widget in a specific state (e.g. error, loading, etc.) but it is hard to reach that state in your app.
+- **Time consuming:** You need to run your whole app to test a single widget or screen, and even spend more time to test in in different configurations (e.g. dark mode, different locales, etc.).
+- **API/Datasource dependencies:** You need to mock data or APIs to test your screens, which is time-consuming and error-prone, and it is even not always possible to do that.
+- **Collaboration:** You need to share your widgets with your design team or other developers, but it is hard to do that without a proper documentation or cataloging system.
 
 ## The Solution: Widgetbook
 
-- **Build your own design system:** Widgetbook's cataloging system helps maintain a cohesive look and feel across applications and platforms, promoting a unified user experience.
+With Widgetbook you can **build UI in isolation** without the depending on any external data source or API. This allows you to:
 
-- **Build your widgets in isolation:** Implement widgets without needing to fuss with data, APIs, or business logic. Use Widgetbook's [Addons](/addons) and [Knobs](/knobs) to quickly test your widgets in all relevant configurations.
+- **Easily test your widgets** in different **states** (e.g. error, loading, etc.) via [Knobs](/knobs), and **configurations** (e.g. dark mode, different locales, etc.) via [Addons](/addons).
+- **Mock your data** so you can test your widgets without the need to run your whole app (learn more about [Mocking](/guides/mocking)).
+- **Catalog your widgets and screens** in a single place, so you can easily share them with all your team members (e.g. developers, designers, product managers, QA testers).
 
-- **Collaborate between designers and developers:** Share your Widgetbook with your design team via [Widgetbook Cloud Reviews](/cloud/reviews) to ensure that the implementation matches the design.
-
-<YouTube id="Du5yVtnmNzg" />
+<YouTube id="5cNUX7eDZWE" />
 
 ## Customers Showcase
 
