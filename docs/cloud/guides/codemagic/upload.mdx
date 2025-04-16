@@ -1,6 +1,6 @@
 # Widgetbook Cloud x Codemagic
 
-Codemagic is just a CI/CD platform, which means it needs to be accompanied by a version control system (i.e. [GitHub](/cloud/setup/github), [GitLab](/cloud/setup/gitlab), [Azure](/cloud/setup/azure) or [Bitbucket](/cloud/setup/bitbucket)). In this guide, we will just be showing the workflow setup, but you need to check other version control system guides to make the [Widgetbook Cloud Reviews](/cloud/reviews) work.
+Codemagic is just a CI/CD platform, which means it needs to be accompanied by a version control system (i.e. [GitHub](/cloud/guides/github/upload), [GitLab](/cloud/guides/gitlab/upload), [Azure](/cloud/guides/azure/upload) or [Bitbucket](/cloud/guides/bitbucket/upload)). In this guide, we will just be showing the workflow setup, but you need to check other version control system guides to make the [Widgetbook Cloud Reviews](/cloud/reviews) work.
 
 <Steps>
   <Step title="Add API Key as a Secret">
@@ -11,7 +11,7 @@ Codemagic is just a CI/CD platform, which means it needs to be accompanied by a 
   </Step>
 
   <Step title="Setup Workflow">
-    To upload a [Widgetbook Build](/cloud/builds) for each new commit in your repository, add the following workflow to your Codemagic `codemagic.yaml` file
+    To upload a [Widgetbook Build](/cloud/builds/overview) for each new commit in your repository, add the following workflow to your Codemagic `codemagic.yaml` file
 
     ```yaml
     workflows:
