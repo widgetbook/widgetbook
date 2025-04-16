@@ -1,44 +1,50 @@
 # Overview
 
-Widgetbook Cloud is a review platform that simplifies UI reviews among designers, developers, product managers, and QA testers.
+Widgetbook Cloud is a managed hosting solution for Widgetbook that allows you to run golden tests on every commit so that you can catch UI regressions before they reach production.
 
 <Info>
-  Get free demo and access for Widgetbook Cloud
-  [here](https://meetings-eu1.hubspot.com/lucas-josefiak).
+  Get [free demo](https://meetings-eu1.hubspot.com/lucas-josefiak) or [direct
+  access](https://app.widgetbook.io/) to Widgetbook Cloud.
 </Info>
 
 <YouTube id="gCTSc99V-KI" />
 
 ## The Problem
 
-- **Designer / Developer collaboration:** Designers often don't review the implemented UI before release, leading to inconsistencies and poor user experience. Current UI reviews are unstructured, causing misunderstandings and design inconsistencies.
+After submitting a PR for review, both you and the reviewer have no idea which **UI changes** were made. The reviewer has to do the following to make sure that everything works as excepted:
 
-- **No automated Golden Testing:** Detecting UI changes is difficult without automated tests. Golden Tests can help but are often flaky and time-consuming to write manually.
+1. Check out the PR locally.
+2. Run the app in the simulator or on desktop.
+3. Execute the required flow (e.g. authentication) to reach the desired screen to review.
+4. Test out the screen in different states (e.g. empty, error, loading, etc.) or different configurations (e.g. dark mode, different locales, etc.).
 
-- **No Figma integration:** Designers struggle to compare Flutter implementations with their original Figma designs without integration.
+That process is time-consuming that most reviewers skip it, and just settle down for only reviewing the code. By skipping the UI review process, the risk of introducing UI regressions increases significantly.
 
-- **Cumbersome hosting setup:** Self-hosting Widgetbook requires setup and maintenance, usually allowing only one branch or the latest commit to be hosted.
+<Image
+  src="/assets/cloud/code-review.png"
+  zoom
+  caption="Code review doesn't show how the changes look like"
+/>
 
 ## The Solution: Widgetbook Cloud
 
-Widgetbook Cloud addresses these challenges by offering a structured review platform for the entire product team.
+Widgetbook Cloud can help you doing **UI Reviews in your browser** without the need to check out the PR locally or the need to write any code to test the UI. You can easily see all the changes made in the PR and test them in different states or configurations.
 
 <CardGroup>
   <Card title="Builds" icon="hammer" href="/cloud/builds">
-    - **Managed Hosting:** Follow 4 simple steps to host your Widgetbook on Widgetbook Cloud.
-  
-    - **Host one Widgetbook per commit:** Share one Widgetbook for every commit with your entire team.
-
+    Host a Widgetbook build for each commit without all the hassle of self-hosting. Simple and optimized for Widgetbook.
   </Card>
+
   <Card title="Reviews" icon="code-compare" href="/cloud/reviews">
-    - **Design Reviews:** Designers can easily review every UI change in your PR before merging it.
-    
-    - **UI Regression Detection:** Automatically detect UI regressions (via Golden Tests) by comparing builds across different branches or commits.
-
-    - **Figma integration:** Connect your Flutter widgets to their corresponding Figma designs to verify design requirements.
-
+    Review UI changes and detect UI regressions before you merge PRs into your main branch.
   </Card>
 </CardGroup>
+
+<Image
+  src="/assets/cloud/ui-review.png"
+  zoom
+  caption="UI review gives your review workflow superpowers"
+/>
 
 ## Customers Showcase
 
