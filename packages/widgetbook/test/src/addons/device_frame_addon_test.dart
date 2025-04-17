@@ -164,6 +164,32 @@ void main() {
           );
         },
       );
+
+      testWidgets(
+        'given a use-case, '
+        'then the background is set to [scaffoldBackgroundColor]',
+        (tester) async {
+          final device = devices.last;
+          const color = Color(0xff123456);
+
+          await tester.pumpWidgetWithBuilder(
+            (context) => Theme(
+              data: Theme.of(context).copyWith(
+                scaffoldBackgroundColor: color,
+              ),
+              child: addon.buildUseCase(
+                context,
+                const SizedBox(),
+                DeviceFrameSetting(
+                  device: device,
+                ),
+              ),
+            ),
+          );
+
+          expect(find.byType(ColoredBox).last, paints..rect(color: color));
+        },
+      );
     },
   );
 }
