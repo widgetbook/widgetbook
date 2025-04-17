@@ -10,6 +10,7 @@ import '../knobs/knobs.dart';
 import '../navigation/navigation.dart';
 import '../routing/routing.dart';
 import 'default_app_builders.dart';
+import 'default_home_page.dart';
 import 'widgetbook_scope.dart';
 
 typedef AppBuilder = Widget Function(BuildContext context, Widget child);
@@ -24,6 +25,7 @@ class WidgetbookState extends ChangeNotifier {
     this.addons,
     this.integrations,
     required this.root,
+    this.home = const DefaultHomePage(),
   }) {
     this.knobs = KnobsRegistry(
       onLock: () {
@@ -48,6 +50,7 @@ class WidgetbookState extends ChangeNotifier {
   final List<WidgetbookAddon>? addons;
   final List<WidgetbookIntegration>? integrations;
   final WidgetbookRoot root;
+  final Widget home;
 
   List<WidgetbookNode> get directories => root.children!;
 

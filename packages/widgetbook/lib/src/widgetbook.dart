@@ -5,6 +5,7 @@ import 'addons/addons.dart';
 import 'integrations/integrations.dart';
 import 'navigation/navigation.dart';
 import 'routing/routing.dart';
+import 'state/default_home_page.dart';
 import 'state/state.dart';
 import 'themes.dart';
 
@@ -28,6 +29,7 @@ class Widgetbook extends StatefulWidget {
     this.lightTheme,
     this.darkTheme,
     this.themeMode,
+    this.home = const DefaultHomePage(),
   });
 
   /// A [Widgetbook] with [CupertinoApp] as an [appBuilder].
@@ -41,6 +43,7 @@ class Widgetbook extends StatefulWidget {
     this.lightTheme,
     this.darkTheme,
     this.themeMode,
+    this.home = const DefaultHomePage(),
   });
 
   /// A [Widgetbook] with [MaterialApp] as an [appBuilder].
@@ -54,6 +57,7 @@ class Widgetbook extends StatefulWidget {
     this.lightTheme,
     this.darkTheme,
     this.themeMode,
+    this.home = const DefaultHomePage(),
   });
 
   /// The initial route for that will be used on first startup.
@@ -94,6 +98,13 @@ class Widgetbook extends StatefulWidget {
   /// By default, it follows the system theme.
   final ThemeMode? themeMode;
 
+  /// The home widget is a widget that is shown on startup when no use-case is
+  /// selected. This widget does not inherit from the [appBuilder] or the
+  /// [addons]; meaning that if `Theme.of(context)` is called inside this
+  /// widget, then it will use Widgetbook's [lightTheme] or [darkTheme] and
+  /// not the [Theme] from the [appBuilder] or the [ThemeAddon].
+  final Widget home;
+
   @override
   State<Widgetbook> createState() => _WidgetbookState();
 }
@@ -108,6 +119,7 @@ class _WidgetbookState extends State<Widgetbook> {
 
     state = WidgetbookState(
       appBuilder: widget.appBuilder,
+      home: widget.home,
       addons: widget.addons,
       integrations: widget.integrations,
       root: WidgetbookRoot(
