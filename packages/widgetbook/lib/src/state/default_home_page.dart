@@ -22,7 +22,8 @@ class DefaultHomePage extends StatelessWidget {
               children: [
                 _Card(
                   title: '📖 Docs',
-                  url: 'https://docs.widgetbook.io',
+                  url:
+                      'https://docs.widgetbook.io?utm_source=oss&utm_medium=home',
                   description:
                       'Learn more about knobs, addons, mocking, and more.',
                 ),
@@ -39,13 +40,15 @@ class DefaultHomePage extends StatelessWidget {
               children: [
                 _Card(
                   title: '🚀 Deploy',
-                  url: 'https://docs.widgetbook.io/cloud/builds/overview',
+                  url:
+                      'https://docs.widgetbook.io/cloud/builds/overview?utm_source=oss&utm_medium=home',
                   description:
                       'Deploy your Widgetbook with our managed-hosting solution.',
                 ),
                 _Card(
                   title: '✨ Detect Changes',
-                  url: 'https://docs.widgetbook.io/cloud/reviews',
+                  url:
+                      'https://docs.widgetbook.io/cloud/reviews?utm_source=oss&utm_medium=home',
                   description:
                       'Detect visual changes in your PRs with Widgetbook Cloud.',
                 ),
