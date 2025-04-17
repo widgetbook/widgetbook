@@ -1,4 +1,4 @@
-## Unreleased
+## 3.4.0
 
 - **FEAT**: Add `SemanticsAddonConfig` for supporting the new **experimental** [`SemanticsAddon`](https://docs.widgetbook.io/addons/semantics-addon). ([#1402](https://github.com/widgetbook/widgetbook/pull/1402))
 - **FEAT**: Support Multi Snapshot for knobs. For more information, check our [docs](https://docs.widgetbook.io/cloud/reviews/multi-snapshot#multi-snapshot-for-knobs). ([#1394](https://github.com/widgetbook/widgetbook/pull/1394))
