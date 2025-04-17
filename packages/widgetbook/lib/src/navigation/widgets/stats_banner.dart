@@ -40,7 +40,7 @@ class StatsBanner extends StatelessWidget {
               const SizedBox(height: 2),
               const _SummaryItem(
                 icon: Icons.open_in_new,
-                text: 'Golden test your use-cases with Widgetbook Cloud',
+                text: 'Golden test with Widgetbook Cloud',
                 url: 'https://docs.widgetbook.io/cloud',
               ),
             ],
