@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DefaultHomePage extends StatelessWidget {
   const DefaultHomePage({super.key});
@@ -78,13 +79,12 @@ class _Card extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side:
-              BorderSide(color: Theme.of(context).dividerColor.withAlpha(100)),
+          side: BorderSide(
+            color: Theme.of(context).dividerColor.withAlpha(100),
+          ),
         ),
         child: InkWell(
-          onTap: () {
-            // Handle URL launch logic here
-          },
+          onTap: () => launchUrl(Uri.parse(url)),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
