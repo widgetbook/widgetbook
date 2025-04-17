@@ -7,7 +7,7 @@ class DefaultHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(16),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -15,9 +15,9 @@ class DefaultHomePage extends StatelessWidget {
             Text(
               'Welcome to Widgetbook',
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.displayMedium,
+              style: Theme.of(context).textTheme.displaySmall,
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 24),
             const Wrap(
               children: [
                 _Card(
@@ -93,7 +93,7 @@ class _Card extends StatelessWidget {
               children: [
                 RichText(
                   text: TextSpan(
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context).textTheme.titleMedium,
                     children: [
                       TextSpan(
                         text: title,
@@ -102,6 +102,7 @@ class _Card extends StatelessWidget {
                       const WidgetSpan(
                         child: Icon(
                           Icons.arrow_forward,
+                          size: 16,
                         ),
                       ),
                     ],
