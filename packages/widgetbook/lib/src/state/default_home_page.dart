@@ -1,7 +1,60 @@
 import 'package:flutter/material.dart';
 
-Widget defaultHomeBuilder(BuildContext context) {
-  return const _DefaultHome();
+class DefaultHomePage extends StatelessWidget {
+  const DefaultHomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(24),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Welcome to Widgetbook',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+            const SizedBox(height: 32),
+            const Wrap(
+              children: [
+                _Card(
+                  title: '📖 Docs',
+                  url: 'https://docs.widgetbook.io',
+                  description:
+                      'Learn more about knobs, addons, mocking, and more.',
+                ),
+                _Card(
+                  title: '📝 Examples',
+                  url:
+                      'https://github.com/widgetbook/widgetbook/tree/main/examples',
+                  description:
+                      'Explore the Widgetbook examples and learn how to use them.',
+                ),
+              ],
+            ),
+            const Wrap(
+              children: [
+                _Card(
+                  title: '🚀 Deploy',
+                  url: 'https://docs.widgetbook.io/cloud/builds/overview',
+                  description:
+                      'Deploy your Widgetbook with our managed-hosting solution.',
+                ),
+                _Card(
+                  title: '✨ Detect Changes',
+                  url: 'https://docs.widgetbook.io/cloud/reviews',
+                  description:
+                      'Detect visual changes in your PRs with Widgetbook Cloud.',
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _Card extends StatelessWidget {
@@ -67,63 +120,6 @@ class _Card extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _DefaultHome extends StatelessWidget {
-  const _DefaultHome();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(24),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Welcome to Widgetbook',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
-            const SizedBox(height: 32),
-            const Wrap(
-              children: [
-                _Card(
-                  title: '📖 Docs',
-                  url: 'https://docs.widgetbook.io',
-                  description:
-                      'Learn more about knobs, addons, mocking, and more.',
-                ),
-                _Card(
-                  title: '📝 Examples',
-                  url:
-                      'https://github.com/widgetbook/widgetbook/tree/main/examples',
-                  description:
-                      'Explore the Widgetbook examples and learn how to use them.',
-                ),
-              ],
-            ),
-            const Wrap(
-              children: [
-                _Card(
-                  title: '🚀 Deploy',
-                  url: 'https://docs.widgetbook.io/cloud/builds/overview',
-                  description:
-                      'Deploy your Widgetbook with our managed-hosting solution.',
-                ),
-                _Card(
-                  title: '✨ Detect Changes',
-                  url: 'https://docs.widgetbook.io/cloud/reviews',
-                  description:
-                      'Detect visual changes in your PRs with Widgetbook Cloud.',
-                ),
-              ],
-            ),
-          ],
         ),
       ),
     );

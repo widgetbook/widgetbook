@@ -15,7 +15,7 @@ class Workbench extends StatelessWidget {
     final useCase = state.useCase;
 
     if (useCase == null) {
-      return state.homeBuilder(context);
+      return state.home;
     }
 
     return Scaffold(
