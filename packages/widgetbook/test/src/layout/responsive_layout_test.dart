@@ -35,7 +35,7 @@ void main() {
         'given a large screen, '
         'then $DesktopLayout is used',
         (tester) async {
-          tester.view.physicalSize = const Size(1200, 800);
+          tester.view.physicalSize = const Size(840, 800);
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
