@@ -5,7 +5,7 @@
 - **REFACTOR**: Allow [`inspector`](https://pub.dev/packages/inspector) v3. ([#1407](https://github.com/widgetbook/widgetbook/pull/1407))
 - **FIX**: Remove `ExcludeSemantics` from Widgetbook UI; to allow screen readers. ([#1401](https://github.com/widgetbook/widgetbook/pull/1401) - by [@Goddchen](https://github.com/Goddchen))
 - **REFACTOR**: Replace [`device_frame`](https://pub.dev/packages/device_frame) with [`device_frame_plus`](https://pub.dev/packages/device_frame_plus). ([#1411](https://github.com/widgetbook/widgetbook/pull/1411))
-
+- **REFACTOR**: Change mobile breakpoint to 840px. ([#1416](https://github.com/widgetbook/widgetbook/pull/1416) - by [@Goddchen](https://github.com/Goddchen))
 
 ## 3.12.0
 
