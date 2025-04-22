@@ -1,3 +1,7 @@
+## Unreleased
+
+- **REVERT**: Switch back to `device_frame` package. ([#1429](https://github.com/widgetbook/widgetbook/pull/1429))
+
 ## 3.13.0
 
 - **FEAT**: Add the **experimental** _(subject to breaking changes)_ [`SemanticsAddon`](https://docs.widgetbook.io/addons/semantics-addon). ([#1402](https://github.com/widgetbook/widgetbook/pull/1402))
