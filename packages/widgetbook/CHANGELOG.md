@@ -1,4 +1,4 @@
-## Unreleased
+## 3.13.1
 
 - **FIX**: Add missing fields to `NoneDevice`. These fields were introduced in `device_frame_plus` v1.3.1. ([#1430](https://github.com/widgetbook/widgetbook/pull/1430))
 
