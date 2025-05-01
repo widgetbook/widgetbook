@@ -106,6 +106,10 @@
               "href": "/knobs/overview"
             },
             {
+              "title": "String",
+              "href": "/knobs/string"
+            },
+            {
               "title": "Custom Knob",
               "href": "/knobs/custom-knob"
             }
