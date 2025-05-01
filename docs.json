@@ -103,7 +103,7 @@
           "pages": [
             {
               "title": "Overview",
-              "href": "/knobs"
+              "href": "/knobs/overview"
             },
             {
               "title": "Custom Knob",

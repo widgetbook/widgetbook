@@ -35,11 +35,18 @@ Widget myWidget(BuildContext context) {
 Each Knob possesses a set of inherent properties to control its display in the
 Widgetbook's UI:
 
-- **label:** A String that provides a title to the Knob. Each label must be unique for a
-  WidgetbookUseCase.
-- **description:** An optional String that explains the Knob's functionality. It serves as
-  a form of documentation within Widgetbook, assisting your team members in understanding
-  how to manipulate the Knob.
+<Accordion title="Knob" defaultOpen>
+  <Property name="label" type="String" required>
+    A String that provides a title to the Knob. Each label must be unique for a WidgetbookUseCase.
+  </Property>
+
+  ---
+
+  <Property name="description" type="String" optional>
+    An optional String that explains the Knob's functionality. 
+    It serves as  a form of documentation within Widgetbook, assisting your team members in understanding how to manipulate the Knob.
+  </Property>
+</Accordion>
 
 ## Available Knobs
 
