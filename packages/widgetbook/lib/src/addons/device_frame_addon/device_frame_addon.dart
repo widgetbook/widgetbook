@@ -2,6 +2,7 @@ import 'package:device_frame_plus/device_frame_plus.dart';
 import 'package:flutter/material.dart';
 
 import '../../fields/fields.dart';
+import '../../state/state.dart';
 import '../common/common.dart';
 import 'device_frame_setting.dart';
 import 'none_device.dart';
@@ -74,6 +75,10 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
       return child;
     }
 
+    // Try to get the WidgetbookState from context, but don't fail if it's not available
+    // This makes the addon work in both regular usage and in tests
+    final widgetbookState = WidgetbookState.maybeOf(context);
+
     return Padding(
       padding: const EdgeInsets.all(32),
       child: Center(
@@ -86,15 +91,28 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
           // the device frame, otherwise they would use the navigator from
           // the app builder, causing these routes to fill the whole
           // workbench and not just the device frame.
-          screen: Navigator(
-            onGenerateRoute: (_) => PageRouteBuilder(
-              pageBuilder: (context, _, __) => setting.hasFrame
-                  ? child
-                  : SafeArea(
-                      child: child,
+          screen: widgetbookState != null
+              ? InheritedWidgetbookState(
+                  state: widgetbookState,
+                  child: Navigator(
+                    onGenerateRoute: (_) => PageRouteBuilder(
+                      pageBuilder: (context, _, __) => setting.hasFrame
+                          ? child
+                          : SafeArea(
+                              child: child,
+                            ),
                     ),
-            ),
-          ),
+                  ),
+                )
+              : Navigator(
+                  onGenerateRoute: (_) => PageRouteBuilder(
+                    pageBuilder: (context, _, __) => setting.hasFrame
+                        ? child
+                        : SafeArea(
+                            child: child,
+                          ),
+                  ),
+                ),
         ),
       ),
     );

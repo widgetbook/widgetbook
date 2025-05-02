@@ -8,7 +8,9 @@ import 'knobs_builder.dart';
 extension KnobsExtension on BuildContext {
   /// Creates adjustable parameters for the WidgetbookUseCase
   KnobsBuilder get knobs {
-    final state = WidgetbookState.of(this);
+    // Use InheritedWidgetbookState.of instead of WidgetbookState.of to ensure
+    // knobs work correctly even when nested in a Navigator (like with DeviceFrameAddon)
+    final state = InheritedWidgetbookState.of(this);
     final queryGroup = FieldCodec.decodeQueryGroup(
       state.queryParams['knobs'],
     );

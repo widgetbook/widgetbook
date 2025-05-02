@@ -23,7 +23,9 @@ class _UseCaseBuilderState extends State<UseCaseBuilder> {
     // to rebuild the use case with all registered knobs
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        WidgetbookState.of(context).knobs.lock();
+        // Use InheritedWidgetbookState.of instead of WidgetbookState.of to ensure
+        // knobs work correctly even when nested in a Navigator (like with DeviceFrameAddon)
+        InheritedWidgetbookState.of(context).knobs.lock();
       }
     });
   }
