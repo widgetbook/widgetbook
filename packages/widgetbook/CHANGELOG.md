@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FEAT**: Add [`panels` query param](https://docs.widgetbook.io/guides/embedding#customizing-panels) to show/hide panels when embedding Widgetbook. ([#1439](https://github.com/widgetbook/widgetbook/pull/1439))
 - **FIX**: Ensure a fresh state is used when building the use-case. This prevented some rebuilds from happening, causing knobs to not be registered properly. ([#1441](https://github.com/widgetbook/widgetbook/pull/1441))
 
 ## 3.13.1
