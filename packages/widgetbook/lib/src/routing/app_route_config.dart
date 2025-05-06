@@ -6,7 +6,7 @@ class AppRouteConfig {
     required this.uri,
   });
 
-  static const reservedKeys = {'path', 'preview', 'q'};
+  static const reservedKeys = {'path', 'preview', 'q', 'panels'};
 
   final Uri uri;
 
@@ -16,8 +16,13 @@ class AppRouteConfig {
 
   bool get previewMode => uri.queryParameters.containsKey('preview');
 
-  /// Returns a modifiable copy of the query parameters without the
-  /// keys: `path` and `preview`.
+  /// Example: `panels=navigation,settings`
+  Set<String>? get panels {
+    return uri.queryParameters['panels']?.split(',').toSet();
+  }
+
+  /// Returns a modifiable copy of the query parameters
+  /// without the reserved keys.
   Map<String, String> get queryParams {
     return Map<String, String>.from(uri.queryParameters)
       ..removeWhere(

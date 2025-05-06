@@ -25,22 +25,23 @@ class SettingsPanel extends StatelessWidget {
       length: settings.length,
       child: Column(
         children: [
-          TabBar(
-            tabs: settings
-                .map(
-                  (setting) => Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 16,
-                      horizontal: 8,
+          if (settings.length > 1)
+            TabBar(
+              tabs: settings
+                  .map(
+                    (setting) => Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 8,
+                      ),
+                      child: Text(
+                        setting.name,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                    child: Text(
-                      setting.name,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
+                  )
+                  .toList(),
+            ),
           Expanded(
             child: TabBarView(
               children: settings.map(
