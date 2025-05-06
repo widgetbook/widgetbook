@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Ensure a fresh state is used when building the use-case. This prevented some rebuilds from happening, causing knobs to not be registered properly. ([#1441](https://github.com/widgetbook/widgetbook/pull/1441))
+
 ## 3.13.1
 
 - **FIX**: Add missing fields to `NoneDevice`. These fields were introduced in `device_frame_plus` v1.3.1. ([#1430](https://github.com/widgetbook/widgetbook/pull/1430))
