@@ -5,10 +5,6 @@ import '../settings/settings.dart';
 import '../state/state.dart';
 import 'base_layout.dart';
 
-extension _BoolExtension on bool {
-  int toInt() => this ? 1 : 0;
-}
-
 class DesktopLayout extends StatelessWidget implements BaseLayout {
   const DesktopLayout({
     super.key,
@@ -29,69 +25,94 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
 
-    // Original percentages for panels and workbench
-    final originalPanelPercentage = 0.2;
-    final originalWorkbenchPercentage = 1 - (2 * originalPanelPercentage);
+    const kSidePanelPercentage = 0.2;
+    const kWorkbenchPercentage = 1 - 2 * kSidePanelPercentage;
 
     final showNavigationPanel = state.canShowPanel(LayoutPanel.navigation);
     final showSettingsPanel = state.canShowPanel(LayoutPanel.addons) ||
         state.canShowPanel(LayoutPanel.knobs);
 
-    // If some panels are missing, distribute the remaining percentage
-    // equally among the remaining panels and the workbench
-    final missingPanelsCount =
-        2 - showNavigationPanel.toInt() - showSettingsPanel.toInt();
-    final childrenCount = 1 + (2 - missingPanelsCount);
-
-    final remainingPercentage = missingPanelsCount * originalPanelPercentage;
-    final extraPercentage = remainingPercentage / childrenCount;
-
     return ColoredBox(
       key: ValueKey(state.isNext), // Rebuild when switching to next
       color: Theme.of(context).colorScheme.surface,
-      child: ResizableWidget(
-        separatorSize: 2,
-        percentages: [
-          if (showNavigationPanel) originalPanelPercentage + extraPercentage,
-          originalWorkbenchPercentage + extraPercentage,
-          if (showSettingsPanel) originalPanelPercentage + extraPercentage,
-        ],
-        separatorColor: Colors.white24,
-        children: [
+      child: ResizableLayout(
+        items: [
           if (showNavigationPanel)
-            Card(
-              child: navigationBuilder(context),
+            ResizableLayoutItem(
+              percentage: kSidePanelPercentage,
+              child: Card(
+                child: navigationBuilder(context),
+              ),
             ),
-          workbench,
+          ResizableLayoutItem(
+            percentage: kWorkbenchPercentage,
+            child: workbench,
+          ),
           if (showSettingsPanel)
-            Card(
-              child: SettingsPanel(
-                settings: [
-                  if (state.canShowPanel(LayoutPanel.knobs)) ...{
-                    if (state.isNext) ...{
+            ResizableLayoutItem(
+              percentage: kSidePanelPercentage,
+              child: Card(
+                child: SettingsPanel(
+                  settings: [
+                    if (state.canShowPanel(LayoutPanel.knobs)) ...{
+                      if (state.isNext) ...{
+                        SettingsPanelData(
+                          name: 'Args',
+                          builder: argsBuilder,
+                        ),
+                      } else ...{
+                        SettingsPanelData(
+                          name: 'Knobs',
+                          builder: knobsBuilder,
+                        ),
+                      },
+                    },
+                    if (state.canShowPanel(LayoutPanel.addons) &&
+                        state.addons != null) ...{
                       SettingsPanelData(
-                        name: 'Args',
-                        builder: argsBuilder,
-                      ),
-                    } else ...{
-                      SettingsPanelData(
-                        name: 'Knobs',
-                        builder: knobsBuilder,
+                        name: 'Addons',
+                        builder: addonsBuilder,
                       ),
                     },
-                  },
-                  if (state.canShowPanel(LayoutPanel.addons) &&
-                      state.addons != null) ...{
-                    SettingsPanelData(
-                      name: 'Addons',
-                      builder: addonsBuilder,
-                    ),
-                  },
-                ],
+                  ],
+                ),
               ),
             ),
         ],
       ),
+    );
+  }
+}
+
+class ResizableLayoutItem {
+  const ResizableLayoutItem({
+    required this.percentage,
+    required this.child,
+  });
+
+  final double percentage;
+  final Widget child;
+}
+
+/// An improved API for [ResizableWidget] that allows passing both percentage
+/// and child in a single object, allowing to easily add or remove items.
+/// Also distributes the remaining space equally among all items.
+class ResizableLayout extends StatelessWidget {
+  const ResizableLayout({super.key, required this.items});
+
+  final List<ResizableLayoutItem> items;
+
+  @override
+  Widget build(BuildContext context) {
+    final totalPercentage = items.fold(0.0, (sum, x) => sum + x.percentage);
+    final remainingPercentage = 1 - totalPercentage;
+    final extraPercentage = remainingPercentage / items.length;
+
+    return ResizableWidget(
+      separatorSize: 2,
+      separatorColor: Colors.white24,
+      percentages: items.map((x) => x.percentage + extraPercentage).toList(),
+      children: items.map((x) => x.child).toList(),
     );
   }
 }
