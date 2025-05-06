@@ -1,9 +1,11 @@
 # Embedding
 
+## Preview Mode
+
 If you want to embed Widgetbook in your documentation, but you want to hide Widgetbook's UI, you can do so by adding the **`preview` query parameter** to the URL of your hosted Widgetbook.
 
 ```url
-https://widgetbook.acme.com/#/?path=my/us-case/path/default&preview
+https://widgetbook.acme.com/#/?path=my/use-case/path/default&preview
 ```
 
 For example here's an embedding of [our demo app](https://demo.widgetbook.io/):
@@ -24,3 +26,23 @@ https://demo.widgetbook.io/#/?path=features/about/aboutscreen/default&preview //
   You can host your Widgetbook using [Widgetbook Cloud
   Builds](/cloud/builds/overview).
 </Info>
+
+## Customizing Panels
+
+You may want to show or hide certain panels in the embedded Widgetbook. You can do this by adding the **`panels` query parameter** to the URL of your hosted Widgetbook.
+
+<Warning>
+  The `panels` query parameter is not compatible with the `preview` query
+  parameter. If you use both, the `panels` parameter will be ignored.
+</Warning>
+
+```url
+# Knobs panel only
+https://widgetbook.acme.com/#/?path=my/use-case/path/default&panels=knobs
+
+# Knobs and Addons panels
+https://widgetbook.acme.com/#/?path=my/use-case/path/default&panels=knobs,addons
+
+# Navigation panel only
+https://widgetbook.acme.com/#/?path=my/use-case/path/default&panels=navigation
+```
