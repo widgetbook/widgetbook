@@ -11,6 +11,33 @@ void main() {
       const title = 'Panel Title';
 
       testWidgets(
+        'given settings data one item, '
+        'then the title is not displayed',
+        (tester) async {
+          await tester.pumpWidgetWithMaterialApp(
+            SettingsPanel(
+              settings: [
+                SettingsPanelData(
+                  name: title,
+                  builder: (_) => [],
+                ),
+              ],
+            ),
+          );
+
+          expect(
+            find.byType(TabBar),
+            findsNothing,
+          );
+
+          expect(
+            find.text(title),
+            findsNothing,
+          );
+        },
+      );
+
+      testWidgets(
         'given settings data has a name, '
         'then the name is displayed',
         (tester) async {
@@ -19,6 +46,10 @@ void main() {
               settings: [
                 SettingsPanelData(
                   name: title,
+                  builder: (_) => [],
+                ),
+                SettingsPanelData(
+                  name: 'foo',
                   builder: (_) => [],
                 ),
               ],
