@@ -1,0 +1,63 @@
+# Double Knob
+
+The Double knob renders a text field or slider in the Widgetbook UI where you can dynamically enter a double value for a widget property. 
+This is particularly useful for properties that require a double input, such as a percentage or currency.
+
+## Varients and Usage
+
+The Double knob has two variants with each a non-nullable and a nullable type:
+- [Double Input Knob](/knobs/double/input)
+- [Double Slider Knob](/knobs/double/slider)
+
+For the usage please refer to the respective pages.
+
+## Example Input
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/double-input-knob&preview" 
+  width="100%"
+  height="240px"
+/>
+
+## Example Slider
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/double-slider-knob&preview" 
+  width="100%"
+  height="240px"
+/>
+
+## Multi-snapshot Support
+
+Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/reviews/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/reviews/multi-snapshot#multi-snapshot-for-addons).
+
+<Info>The blow information shows the `DoubleKnobConfig` for the [Double Input Knob](/knobs/double/input), but the `DoubleKnobConfig` can be applied to the [Double Slider Knob](/knobs/double/slider) as well.</Info>
+
+### Non-nullable Double Knob
+
+```dart title="Example: DoubleKnobConfig"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(
+  type: CircularProgressIndicator,
+  name: 'Double Input Knob',
+  cloudKnobsConfigs: {
+    '0%': [DoubleKnobConfig('value', 0)],
+    '50%': [DoubleKnobConfig('value', 0.5)],
+    '100%': [DoubleKnobConfig('value', 1)],
+  },
+)
+Widget buildDoubleInputKnob(BuildContext context) {
+  return CircularProgressIndicator(
+    value: context.knobs.double.input(label: 'Count', initialValue: 0.2),
+    backgroundColor: Colors.amber,
+  );
+}
+```
+
+### Nullable Double Knob
+
+Multi-snapshot support is currently not available for the nullable Double knob.
+We're working on adding this feature until the mid of May 2025.
