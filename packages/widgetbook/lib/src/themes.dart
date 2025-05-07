@@ -93,6 +93,11 @@ class Themes {
       // Flutter version being 3.19.0, which does not have the new parameter.
       // ignore: deprecated_member_use
       fillColor: colorScheme.surfaceVariant,
+      // Match TextField and DropdownMenu heights
+      contentPadding: const EdgeInsets.symmetric(
+        vertical: 16.0,
+        horizontal: 12.0,
+      ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: colorScheme.primary,
