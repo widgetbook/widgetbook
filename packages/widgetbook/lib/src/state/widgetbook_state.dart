@@ -9,6 +9,7 @@ import '../integrations/widgetbook_integration.dart';
 import '../knobs/knobs.dart';
 import '../navigation/navigation.dart';
 import '../routing/routing.dart';
+import '../utils.dart';
 import 'default_app_builders.dart';
 import 'default_home_page.dart';
 import 'widgetbook_scope.dart';
@@ -211,7 +212,10 @@ class WidgetbookState extends ChangeNotifier {
     queryParams = routeConfig.queryParams;
     panels = previewMode
         ? null // Panels are ignored in preview mode
-        : routeConfig.panels?.map(LayoutPanel.values.byName).toSet();
+        : routeConfig.panels
+            ?.map(LayoutPanel.values.byNameOrNull)
+            .nonNulls
+            .toSet();
 
     notifyListeners();
   }

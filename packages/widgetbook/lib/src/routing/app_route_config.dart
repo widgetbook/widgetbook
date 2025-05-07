@@ -16,7 +16,7 @@ class AppRouteConfig {
 
   bool get previewMode => uri.queryParameters.containsKey('preview');
 
-  /// Example: `panels=navigation,settings`
+  /// Example: `panels=navigation,addons,knobs`
   Set<String>? get panels {
     return uri.queryParameters['panels']?.split(',').toSet();
   }
