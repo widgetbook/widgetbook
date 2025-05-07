@@ -110,6 +110,23 @@
               "href": "/knobs/bool"
             },
             {
+              "group": "Double",
+              "pages": [
+                {
+                  "title": "Overview",
+                  "href": "/knobs/double/overview"
+                },
+                {
+                  "title": "Input",
+                  "href": "/knobs/double/input"
+                },
+                {
+                  "title": "Slider",
+                  "href": "/knobs/double/slider"
+                }
+              ]
+            },
+            {
               "title": "String",
               "href": "/knobs/string"
             },
