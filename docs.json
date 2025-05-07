@@ -127,6 +127,23 @@
               ]
             },
             {
+              "group": "Integer",
+              "pages": [
+                {
+                  "title": "Overview",
+                  "href": "/knobs/integer/overview"
+                },
+                {
+                  "title": "Input",
+                  "href": "/knobs/integer/input"
+                },
+                {
+                  "title": "Slider",
+                  "href": "/knobs/integer/slider"
+                }
+              ]
+            },
+            {
               "title": "String",
               "href": "/knobs/string"
             },
