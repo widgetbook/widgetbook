@@ -25,6 +25,9 @@ class SettingsPanel extends StatelessWidget {
       length: settings.length,
       child: Column(
         children: [
+          // If only one tab (e.g. Knobs), is provided (because the other is
+          // hidden via `panels` query parameter), then we don't need to
+          // show the TabBar.
           if (settings.length > 1)
             TabBar(
               tabs: settings
