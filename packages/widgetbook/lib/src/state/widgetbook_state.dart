@@ -9,11 +9,18 @@ import '../integrations/widgetbook_integration.dart';
 import '../knobs/knobs.dart';
 import '../navigation/navigation.dart';
 import '../routing/routing.dart';
+import '../utils.dart';
 import 'default_app_builders.dart';
 import 'default_home_page.dart';
 import 'widgetbook_scope.dart';
 
 typedef AppBuilder = Widget Function(BuildContext context, Widget child);
+
+enum LayoutPanel {
+  navigation,
+  addons,
+  knobs,
+}
 
 class WidgetbookState extends ChangeNotifier {
   WidgetbookState({
@@ -26,6 +33,7 @@ class WidgetbookState extends ChangeNotifier {
     this.integrations,
     required this.root,
     this.home = const DefaultHomePage(),
+    this.panels = null,
   }) {
     this.knobs = KnobsRegistry(
       onLock: () {
@@ -44,6 +52,14 @@ class WidgetbookState extends ChangeNotifier {
   String? query;
   bool previewMode;
   Map<String, String> queryParams;
+
+  /// Determines which panels are shown.
+  /// - If `null`, all panels are shown.
+  /// - If empty, no panels are shown (similar to [previewMode]).
+  /// - If [previewMode] is `true`, the [panels] are ignored.
+  ///
+  /// NOTE: this only works in desktop mode.
+  Set<LayoutPanel>? panels;
 
   late final KnobsRegistry knobs;
   final AppBuilder appBuilder;
@@ -67,6 +83,8 @@ class WidgetbookState extends ChangeNotifier {
     final queryParameters = {
       if (path != null) 'path': path,
       if (query?.isNotEmpty ?? false) 'q': query,
+      if (panels?.isNotEmpty ?? false)
+        'panels': panels?.map((x) => x.name).join(','),
       ...queryParams,
     };
 
@@ -96,15 +114,23 @@ class WidgetbookState extends ChangeNotifier {
   void notifyListeners() {
     super.notifyListeners();
 
-    // Do not sync route in preview mode, since the widget state is already
-    // controlled by using the URL.
-    if (!previewMode) {
+    // Do not sync route if the panels are not showing up,
+    // since the widget state is already controlled by using the URL.
+    if (canShowPanel(LayoutPanel.navigation) ||
+        canShowPanel(LayoutPanel.addons) ||
+        canShowPanel(LayoutPanel.knobs)) {
       _syncRouteInformation();
     }
 
     integrations?.forEach(
       (integration) => integration.onChange(this),
     );
+  }
+
+  bool canShowPanel(LayoutPanel panel) {
+    if (previewMode) return false;
+    if (panels == null) return true;
+    return panels!.contains(panel);
   }
 
   /// Syncs this with the router's location using [SystemNavigator].
@@ -184,6 +210,13 @@ class WidgetbookState extends ChangeNotifier {
     query = routeConfig.query;
     previewMode = routeConfig.previewMode;
     queryParams = routeConfig.queryParams;
+    panels = previewMode
+        ? null // Panels are ignored in preview mode
+        : routeConfig.panels
+            ?.map(LayoutPanel.values.byNameOrNull)
+            .nonNulls
+            .toSet();
+
     notifyListeners();
   }
 
