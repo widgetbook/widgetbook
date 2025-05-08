@@ -30,11 +30,12 @@ class NumInputField<T extends num> extends Field<T> {
       initialValue: codec.toParam(value ?? initialValue ?? defaultValue),
       keyboardType: TextInputType.number,
       inputFormatters: formatters,
-      onChanged: (value) => updateField(
-        context,
-        group,
-        codec.toValue(value) ?? initialValue!,
-      ),
+      onChanged: (value) {
+        final number = codec.toValue(value);
+        if (number == null) return;
+
+        updateField(context, group, number);
+      },
     );
   }
 }
