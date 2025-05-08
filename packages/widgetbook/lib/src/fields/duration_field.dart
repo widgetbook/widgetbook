@@ -37,11 +37,12 @@ class DurationField extends Field<Duration> {
       decoration: const InputDecoration(
         suffix: Text('ms'),
       ),
-      onChanged: (value) => updateField(
-        context,
-        group,
-        codec.toValue(value) ?? initialValue ?? defaultDuration,
-      ),
+      onChanged: (value) {
+        final duration = codec.toValue(value);
+        if (duration == null) return;
+
+        updateField(context, group, duration);
+      },
     );
   }
 }

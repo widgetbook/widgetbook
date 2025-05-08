@@ -54,19 +54,16 @@ class DateTimeField extends Field<DateTime> {
 
             if (dateTime == null) return;
 
-            updateField(
-              context,
-              group,
-              dateTime,
-            );
+            updateField(context, group, dateTime);
           },
         ),
       ),
-      onChanged: (value) => updateField(
-        context,
-        group,
-        codec.toValue(value) ?? initialValue ?? DateTime.now(),
-      ),
+      onChanged: (value) {
+        final dateTime = codec.toValue(value);
+        if (dateTime == null) return;
+
+        updateField(context, group, dateTime);
+      },
     );
   }
 
