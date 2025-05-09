@@ -152,6 +152,10 @@
               "href": "/knobs/string"
             },
             {
+              "title": "DateTime",
+              "href": "/knobs/datetime"
+            },
+            {
               "title": "Color",
               "href": "/knobs/color"
             },
