@@ -1,0 +1,138 @@
+# Duration Knob
+
+The Duration knob renders a text field in the Widgetbook UI where you can dynamically enter a string value to specify a Duration is milliseconds for a widget property. 
+
+## Varients
+
+The String knob has two variants:
+- `context.knobs.duration()`: This variant allows you to enter a Duration value. It does not accept `null` values.
+- `context.knobs.durationOrNull()`: This variant allows you to enter a Duration value or `null`. It is useful when the property can be optional.
+
+## Properties
+
+Besides the knob's [base properties](/knobs/overview#properties), the Duration knob does not feature any additional properties.
+
+## `context.knobs.duration()`
+
+### Example
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/duration-knob&preview" 
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use a Duration knob, call the `context.knobs.duration()` method.
+
+```dart title="Example: Duration Knob"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(type: DurationText, name: 'Duration Knob')
+Widget buildDurationKnob(BuildContext context) {
+  return DurationText(duration: context.knobs.duration(label: 'duration'));
+}
+
+class DurationText extends StatelessWidget {
+  const DurationText({super.key, required this.duration});
+
+  final Duration? duration;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      duration == null
+          ? 'You selected no duration'
+          : 'You selected ${duration!.inMilliseconds}ms',
+    );
+  }
+}
+```
+
+## `context.knobs.durationOrNull()` 
+
+### Example
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/duration?-knob&preview" 
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use the nullable Duration knob, call the `context.knobs.durationOrNull()` method.
+
+```dart title="Example: Nullable Duration Knob"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(type: DurationText, name: 'Duration? Knob')
+Widget buildNullableDurationKnob(BuildContext context) {
+  return DurationText(
+    duration: context.knobs.durationOrNull(label: 'duration'),
+  );
+}
+
+class DurationText extends StatelessWidget {
+  const DurationText({super.key, required this.duration});
+
+  final Duration? duration;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      duration == null
+          ? 'You selected no duration'
+          : 'You selected ${duration!.inMilliseconds}ms',
+    );
+  }
+}
+```
+
+## Multi-snapshot Support
+
+Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/reviews/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/reviews/multi-snapshot#multi-snapshot-for-addons).
+
+### Non-nullable String Knob
+
+```dart title="Example: DurationKnobConfig"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(
+  type: DurationText,
+  name: 'Duration Knob',
+  cloudKnobsConfigs: {
+    'duration': [DurationKnobConfig('duration', 2000)],
+  },
+)
+Widget buildDurationKnob(BuildContext context) {
+  return DurationText(duration: context.knobs.duration(label: 'duration'));
+}
+
+class DurationText extends StatelessWidget {
+  const DurationText({super.key, required this.duration});
+
+  final Duration? duration;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      duration == null
+          ? 'You selected no duration'
+          : 'You selected ${duration!.inMilliseconds}ms',
+    );
+  }
+}
+```
+
+### Nullable String Knob
+
+Multi-snapshot support is currently not available for the nullable Duration knob.
+We're working on adding this feature until the mid of May 2025.
