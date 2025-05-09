@@ -41,6 +41,11 @@ class DateTimeField extends Field<DateTime> {
   @override
   Widget toWidget(BuildContext context, String group, DateTime? value) {
     return TextFormField(
+      // The "value" used in the key ensures that the TextFormField is rebuilt
+      // when the value is changed via the DateTime picker. Without this
+      // unique key, the TextFormField will only react to value changes
+      // triggered by the user typing in the field.
+      key: ValueKey('$group-$name-$value'),
       initialValue: (value ?? initialValue)?.toSimpleFormat(),
       keyboardType: TextInputType.datetime,
       decoration: InputDecoration(
