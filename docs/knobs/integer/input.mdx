@@ -20,7 +20,7 @@ Besides the knob's [base properties](/knobs/overview#properties), the integer in
 ### Example
 
 <iframe 
-  src="https://preview.widgetbook.io/#/?path=knobpreview/int-input-knob&preview" 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/int-input-knob&panels=knobs" 
   width="100%"
   height="240px"
 />
@@ -34,10 +34,10 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@UseCase(type: NotificationBadge, name: 'Int Input Knob')
-Widget buildIntInputKnob(BuildContext context) {
+@UseCase(type: NotificationBadge, name: 'Default')
+Widget buildNotificationUseCase(BuildContext context) {
   return NotificationBadge(
-    count: context.knobs.int.input(label: 'count', initialValue: 100),
+    count: context.knobs.int.input(label: 'count', initialValue: 100), // [!code highlight]
   );
 }
 
@@ -67,7 +67,7 @@ class NotificationBadge extends StatelessWidget {
 ### Example
 
 <iframe 
-  src="https://preview.widgetbook.io/#/?path=knobpreview/int?-input-knob&preview" 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/int-input-nullable-knob&panels=knobs" 
   width="100%"
   height="240px"
 />
@@ -81,10 +81,10 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@UseCase(type: NotificationBadge, name: 'Int? Input Knob')
-Widget buildNullableIntInputKnob(BuildContext context) {
+@UseCase(type: NotificationBadge, name: 'Default')
+Widget buildNotificationUseCase(BuildContext context) {
   return NotificationBadge(
-    count: context.knobs.intOrNull.input(label: 'count'),
+    count: context.knobs.intOrNull.input(label: 'count'), // [!code highlight]
   );
 }
 
@@ -107,10 +107,9 @@ class NotificationBadge extends StatelessWidget {
     );
   }
 }
-
 ```
 
 ## Multi-snapshot Support
 
 Multi-snapshot support for Widgetbook Cloud allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/reviews/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/reviews/multi-snapshot#multi-snapshot-for-addons).
-Please refer to the [Multi-snapshot Support page](/knobs/integer/overview#multi-snapshot-support) for more information about `IntegerKnobConfig`.
+Please refer to the [IntKnobConfig page](/knobs/integer/overview#multi-snapshot-support) for more information.
