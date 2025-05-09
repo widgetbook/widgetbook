@@ -17,7 +17,7 @@ Besides the knob's [base properties](/knobs/overview#properties), the Duration k
 ### Example
 
 <iframe 
-  src="https://preview.widgetbook.io/#/?path=knobpreview/duration-knob&preview" 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/duration-knob&panels=knobs" 
   width="100%"
   height="240px"
 />
@@ -31,9 +31,9 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@UseCase(type: DurationText, name: 'Duration Knob')
-Widget buildDurationKnob(BuildContext context) {
-  return DurationText(duration: context.knobs.duration(label: 'duration'));
+@UseCase(type: DurationText, name: 'Default')
+Widget buildDurationTextUseCase(BuildContext context) {
+  return DurationText(duration: context.knobs.duration(label: 'duration')); // [!code highlight]
 }
 
 class DurationText extends StatelessWidget {
@@ -57,7 +57,7 @@ class DurationText extends StatelessWidget {
 ### Example
 
 <iframe 
-  src="https://preview.widgetbook.io/#/?path=knobpreview/duration?-knob&preview" 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/duration-nullable-knob&panels=knobs" 
   width="100%"
   height="240px"
 />
@@ -71,10 +71,10 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@UseCase(type: DurationText, name: 'Duration? Knob')
-Widget buildNullableDurationKnob(BuildContext context) {
+@UseCase(type: DurationText, name: 'Default')
+Widget buildDurationTextUseCase(BuildContext context) {
   return DurationText(
-    duration: context.knobs.durationOrNull(label: 'duration'),
+    duration: context.knobs.durationOrNull(label: 'duration'), // [!code highlight]
   );
 }
 
@@ -98,7 +98,7 @@ class DurationText extends StatelessWidget {
 
 Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/reviews/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/reviews/multi-snapshot#multi-snapshot-for-addons).
 
-### Non-nullable String Knob
+### Regular String Knob
 
 ```dart title="Example: DurationKnobConfig"
 import 'package:flutter/material.dart';
@@ -108,9 +108,9 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 @UseCase(
   type: DurationText,
   name: 'Duration Knob',
-  cloudKnobsConfigs: {
-    'duration': [DurationKnobConfig('duration', 2000)],
-  },
+  cloudKnobsConfigs: { // [!code highlight]
+    'duration': [DurationKnobConfig('duration', 2000)], // [!code highlight]
+  }, // [!code highlight]
 )
 Widget buildDurationKnob(BuildContext context) {
   return DurationText(duration: context.knobs.duration(label: 'duration'));
@@ -132,7 +132,7 @@ class DurationText extends StatelessWidget {
 }
 ```
 
-### Nullable String Knob
+### Nullable Duration Knob
 
 Multi-snapshot support is currently not available for the nullable Duration knob.
 We're working on adding this feature until the mid of May 2025.
