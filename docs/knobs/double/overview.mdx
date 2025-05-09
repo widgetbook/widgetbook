@@ -1,11 +1,11 @@
 # Double Knob
 
-The Double knob renders a text field or slider in the Widgetbook UI where you can dynamically enter a double value for a widget property. 
+The double knob renders a text field or slider in the Widgetbook UI where you can dynamically enter a double value for a widget property. 
 This is particularly useful for properties that require a double input, such as a percentage or currency.
 
 ## Varients and Usage
 
-The Double knob has two variants with each a non-nullable and a nullable type:
+The double knob has two variants with each a regular and a nullable type:
 - [Double Input Knob](/knobs/double/input)
 - [Double Slider Knob](/knobs/double/slider)
 
@@ -14,7 +14,7 @@ For the usage please refer to the respective pages.
 ## Example Input
 
 <iframe 
-  src="https://preview.widgetbook.io/#/?path=knobpreview/double-input-knob&preview" 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/double-input-knob&panels=knobs" 
   width="100%"
   height="240px"
 />
@@ -22,7 +22,7 @@ For the usage please refer to the respective pages.
 ## Example Slider
 
 <iframe 
-  src="https://preview.widgetbook.io/#/?path=knobpreview/double-slider-knob&preview" 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/double-slider-knob&panels=knobs" 
   width="100%"
   height="240px"
 />
@@ -33,7 +33,7 @@ Multi-snapshot support allows you to generate multiple screenshots of a single u
 
 <Info>The blow information shows the `DoubleKnobConfig` for the [Double Input Knob](/knobs/double/input), but the `DoubleKnobConfig` can be applied to the [Double Slider Knob](/knobs/double/slider) as well.</Info>
 
-### Non-nullable Double Knob
+### Regular double Knob
 
 ```dart title="Example: DoubleKnobConfig"
 import 'package:flutter/material.dart';
@@ -43,11 +43,11 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 @UseCase(
   type: CircularProgressIndicator,
   name: 'Double Input Knob',
-  cloudKnobsConfigs: {
-    '0%': [DoubleKnobConfig('value', 0)],
-    '50%': [DoubleKnobConfig('value', 0.5)],
-    '100%': [DoubleKnobConfig('value', 1)],
-  },
+  cloudKnobsConfigs: { // [!code highlight]
+    '0%': [DoubleKnobConfig('value', 0)], // [!code highlight]
+    '50%': [DoubleKnobConfig('value', 0.5)], // [!code highlight]
+    '100%': [DoubleKnobConfig('value', 1)], // [!code highlight]
+  }, // [!code highlight]
 )
 Widget buildDoubleInputKnob(BuildContext context) {
   return CircularProgressIndicator(
@@ -57,7 +57,7 @@ Widget buildDoubleInputKnob(BuildContext context) {
 }
 ```
 
-### Nullable Double Knob
+### Nullable double knob
 
-Multi-snapshot support is currently not available for the nullable Double knob.
+Multi-snapshot support is currently not available for the nullable double knob.
 We're working on adding this feature until the mid of May 2025.
