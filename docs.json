@@ -144,6 +144,10 @@
               ]
             },
             {
+              "title": "List",
+              "href": "/knobs/list"
+            },
+            {
               "title": "String",
               "href": "/knobs/string"
             },
