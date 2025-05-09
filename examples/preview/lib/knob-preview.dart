@@ -25,7 +25,7 @@ Widget buildIntInputKnob(BuildContext context) {
   );
 }
 
-@UseCase(type: KnobPreview, name: 'Int? Input Knob')
+@UseCase(type: KnobPreview, name: 'Int Input Nullable Knob')
 Widget buildNullableIntInputKnob(BuildContext context) {
   return NotificationBadge(
     count: context.knobs.intOrNull.input(label: 'count'),
@@ -45,7 +45,7 @@ Widget buildIntSliderKnob(BuildContext context) {
   );
 }
 
-@UseCase(type: KnobPreview, name: 'Int? Slider Knob')
+@UseCase(type: KnobPreview, name: 'Int Slider Nullable Knob')
 Widget buildNullableIntSliderKnob(BuildContext context) {
   return NotificationBadge(
     count: context.knobs.intOrNull.slider(
@@ -65,7 +65,7 @@ Widget buildDoubleInputKnob(BuildContext context) {
   );
 }
 
-@UseCase(type: KnobPreview, name: 'Double? Input Knob')
+@UseCase(type: KnobPreview, name: 'Double Input Nullable Knob')
 Widget buildNullableDoubleInputKnob(BuildContext context) {
   return CircularProgressIndicator(
     value: context.knobs.doubleOrNull.input(label: 'value'),
@@ -87,7 +87,7 @@ Widget buildDoubleSliderKnob(BuildContext context) {
   );
 }
 
-@UseCase(type: KnobPreview, name: 'Double? Slider Knob')
+@UseCase(type: KnobPreview, name: 'Double Slider Nullable Knob')
 Widget buildNullableDoubleSliderKnob(BuildContext context) {
   return CircularProgressIndicator(
     value: context.knobs.doubleOrNull.slider(
@@ -107,7 +107,7 @@ Widget buildStringKnob(BuildContext context) {
   );
 }
 
-@UseCase(type: KnobPreview, name: 'String? Knob')
+@UseCase(type: KnobPreview, name: 'String Nullable Knob')
 Widget buildNullableStringKnob(BuildContext context) {
   return UserAvatar(
     name: context.knobs.stringOrNull(label: 'name', initialValue: 'John Doe'),
@@ -122,7 +122,7 @@ Widget buildBoolKnob(BuildContext context) {
   );
 }
 
-@UseCase(type: KnobPreview, name: 'Bool? Knob')
+@UseCase(type: KnobPreview, name: 'Bool Nullable Knob')
 Widget buildNullableBoolKnob(BuildContext context) {
   return Checkbox(
     value: context.knobs.booleanOrNull(label: 'value'),
@@ -136,7 +136,7 @@ Widget buildDurationKnob(BuildContext context) {
   return DurationText(duration: context.knobs.duration(label: 'duration'));
 }
 
-@UseCase(type: KnobPreview, name: 'Duration? Knob')
+@UseCase(type: KnobPreview, name: 'Duration Nullable Knob')
 Widget buildNullableDurationKnob(BuildContext context) {
   return DurationText(
     duration: context.knobs.durationOrNull(label: 'duration'),
@@ -155,7 +155,7 @@ Widget buildDateTimeKnob(BuildContext context) {
   );
 }
 
-@UseCase(type: KnobPreview, name: 'DateTime? Knob')
+@UseCase(type: KnobPreview, name: 'DateTime Nullable Knob')
 Widget buildNullableDateTimeKnob(BuildContext context) {
   return DateTimeText(
     dateTime: context.knobs.dateTimeOrNull(
@@ -173,7 +173,7 @@ Widget buildColorKnob(BuildContext context) {
   );
 }
 
-@UseCase(type: KnobPreview, name: 'Color? Knob')
+@UseCase(type: KnobPreview, name: 'Color Nullable Knob')
 Widget buildNullableColorKnob(BuildContext context) {
   return ColoredTextBox(color: context.knobs.colorOrNull(label: 'color'));
 }
@@ -201,7 +201,7 @@ Widget buildListKnob(BuildContext context) {
   );
 }
 
-@UseCase(type: KnobPreview, name: 'List? Knob')
+@UseCase(type: KnobPreview, name: 'List Nullable Knob')
 Widget buildNullableListKnob(BuildContext context) {
   return OnlineStatusBadge(
     status: context.knobs.listOrNull(
