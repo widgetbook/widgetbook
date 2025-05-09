@@ -5,8 +5,8 @@ The DateTime knob renders a DateTime indicator field in the Widgetbook UI where 
 ## Varients
 
 The String knob has two variants:
-- `context.knobs.string()`: This variant allows you to enter a string value. It does not accept `null` values.
-- `context.knobs.stringOrNull()`: This variant allows you to enter a string value or `null`. It is useful when the property can be optional.
+- `context.knobs.dateTime()`: This variant allows you to enter a DateTime via a date and time picker. It does not accept `null` values.
+- `context.knobs.dateTimeOrNull()`: This variant allows you to enter a DateTime via a date and time picker or `null`. It is useful when the property can be optional.
 
 ## Properties
 
@@ -26,7 +26,7 @@ In addition to the knob's [base properties](/knobs/overview#properties), the Str
 ### Example
 
 <iframe 
-  src="https://preview.widgetbook.io/#/?path=knobpreview/datetime-knob&preview" 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/datetime-knob&panels=knobs" 
   width="100%"
   height="240px"
 />
@@ -40,8 +40,8 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@UseCase(type: DateTimeText, name: 'DateTime Knob')
-Widget buildDateTimeKnob(BuildContext context) {
+@UseCase(type: DateTimeText, name: 'Default')
+Widget buildDateTimeTextUseCase(BuildContext context) {
   return DateTimeText(
     dateTime: context.knobs.dateTime( // [!code highlight]
       label: 'dateTime', // [!code highlight]
@@ -73,7 +73,7 @@ class DateTimeText extends StatelessWidget {
 ### Example
 
 <iframe 
-  src="https://preview.widgetbook.io/#/?path=knobpreview/datetime?-knob&preview" 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/datetime-nullable-knob&panels=knobs" 
   width="100%"
   height="240px"
 />
@@ -87,8 +87,8 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@UseCase(type: DateTimeText, name: 'DateTime? Knob')
-Widget buildNullableDateTimeKnob(BuildContext context) {
+@UseCase(type: DateTimeText, name: 'Default')
+Widget buildDateTimeTextUseCase(BuildContext context) {
   return DateTimeText(
     dateTime: context.knobs.dateTimeOrNull( // [!code highlight]
       label: 'dateTime', // [!code highlight]
@@ -118,7 +118,7 @@ class DateTimeText extends StatelessWidget {
 
 Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/reviews/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/reviews/multi-snapshot#multi-snapshot-for-addons).
 
-### Non-nullable DateTime Knob
+### Regular DateTime Knob
 
 ```dart title="Example: StringKnobConfig"
 import 'package:flutter/material.dart';
