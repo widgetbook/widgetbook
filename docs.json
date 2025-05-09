@@ -152,6 +152,10 @@
               "href": "/knobs/string"
             },
             {
+              "title": "Color",
+              "href": "/knobs/color"
+            },
+            {
               "title": "Custom Knob",
               "href": "/knobs/custom-knob"
             }
