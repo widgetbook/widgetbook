@@ -156,6 +156,10 @@
               "href": "/knobs/datetime"
             },
             {
+              "title": "Duration",
+              "href": "/knobs/duration"
+            },
+            {
               "title": "Color",
               "href": "/knobs/color"
             },
