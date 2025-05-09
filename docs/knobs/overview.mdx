@@ -1,15 +1,13 @@
 # Introduction to Knobs
 
-Knobs are dynamic tools in Widgetbook that allow you to modify the parameters passed to a
-use-case on the fly. They allow you to adapt and examine your widgets under various
-conditions and inputs, enhancing the overall understanding of a component's behavior.
+Knobs are dynamic tools in Widgetbook that allow you to modify the parameters passed to a use-case on the fly. 
+They allow you to adapt and examine your widgets under various conditions and inputs, enhancing the overall understanding of a component's behavior.
 
 <Image src="/assets/knobs/knobs.png" zoom />
 
 ## Usage
 
-To incorporate knobs into your widgets, use the `context.knobs` function to access the
-knobs builder:
+To incorporate knobs into your widgets, use the `context.knobs` function to access the knobs builder:
 
 ```dart title="Example: Knobs"
 import 'package:flutter/material.dart';
@@ -27,19 +25,32 @@ Widget myWidget(BuildContext context) {
     ),
   );
 }
-
 ```
 
 ## Properties
 
-Each Knob possesses a set of inherent properties to control its display in the
-Widgetbook's UI:
+Each Knob possesses a set of inherent properties to control its display in the Widgetbook's UI:
 
-- **label:** A String that provides a title to the Knob. Each label must be unique for a
-  WidgetbookUseCase.
-- **description:** An optional String that explains the Knob's functionality. It serves as
-  a form of documentation within Widgetbook, assisting your team members in understanding
-  how to manipulate the Knob.
+<Accordion title="Knob" defaultOpen>
+  <Property name="label" type="String" required>
+    A String that provides a title to the Knob. Each label must be unique for a WidgetbookUseCase.
+  </Property>
+
+  ---
+
+  <Property name="initialValue" type="T" optional>
+    The initial value of the knob when the WidgetbookUseCase is loaded. 
+    The accepted type depends on the Knob. For instance, a [Non-nullable Integer Knob](/knobs/integer/overview) accepts `int` as a type. 
+    The default value depends on the specifics of the knob but is `null` for nullable knobs.
+  </Property>
+
+  ---
+
+  <Property name="description" type="String" optional>
+    An optional String that explains the Knob's functionality. 
+    It serves as a form of documentation within Widgetbook, assisting your team members in understanding how to manipulate the Knob.
+  </Property>
+</Accordion>
 
 ## Available Knobs
 

@@ -1,0 +1,31 @@
+name: preview
+description: "A new Flutter project."
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  widgetbook: ^3.13.1
+  widgetbook_generator: ^3.12.0
+  widgetbook_annotation: ^3.4.0
+  build_runner: ^2.4.15
+  url_launcher: ^6.3.1
+  font_awesome_flutter: ^10.8.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/avatar.png
