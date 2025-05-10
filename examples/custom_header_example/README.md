@@ -4,14 +4,14 @@ This example demonstrates how to use the custom header feature in Widgetbook to 
 
 ## Usage
 
-To add a custom header to your Widgetbook, simply provide a `customHeader` parameter to the Widgetbook constructor:
+To add a custom header to your Widgetbook, simply provide a `header` parameter to the Widgetbook constructor:
 
 ```dart
 Widgetbook.material(
   directories: [
     // Add your directories here
   ],
-  customHeader: Column(
+  header: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Row(

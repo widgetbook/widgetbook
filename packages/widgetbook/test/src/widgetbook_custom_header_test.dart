@@ -5,11 +5,11 @@ import 'package:widgetbook/widgetbook.dart';
 void main() {
   group('Widgetbook with custom header', () {
     testWidgets(
-      'when customHeader is provided, '
+      'when header is provided, '
       'then it is passed to the WidgetbookState',
       (tester) async {
         // Create a simple custom header
-        final customHeader = Container(
+        final header = Container(
           padding: const EdgeInsets.all(8),
           color: Colors.blue.shade100,
           child: const Text('My Design System'),
@@ -32,7 +32,7 @@ void main() {
                 ],
               ),
             ],
-            customHeader: customHeader,
+            header: header,
           ),
         );
 
@@ -42,7 +42,7 @@ void main() {
         // Verify the custom header is passed to the Widgetbook
         final widgetbookState =
             (widgetbookKey.currentState as State).widget as Widgetbook;
-        expect(widgetbookState.customHeader, equals(customHeader));
+        expect(widgetbookState.header, equals(header));
       },
     );
   });

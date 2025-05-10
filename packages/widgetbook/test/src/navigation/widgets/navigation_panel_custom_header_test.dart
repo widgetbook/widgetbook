@@ -11,12 +11,12 @@ void main() {
       'when custom header is provided, '
       'then it is displayed above the search field',
       (tester) async {
-        const customHeaderText = 'Custom Header';
-        final customHeader = Container(
+        const headerText = 'Custom Header';
+        final header = Container(
           padding: const EdgeInsets.all(8),
           color: Colors.blue.shade100,
           child: const Text(
-            customHeaderText,
+            headerText,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         );
@@ -25,23 +25,23 @@ void main() {
           queryParams: {},
           builder: (_) => NavigationPanel(
             root: treeRoot,
-            customHeader: customHeader,
+            header: header,
           ),
         );
 
         // Verify the custom header is displayed
-        expect(find.text(customHeaderText), findsOneWidget);
-        
+        expect(find.text(headerText), findsOneWidget);
+
         // Verify the search field is still displayed
         expect(find.byType(TextFormField), findsOneWidget);
-        
+
         // Verify the custom header appears before the search field
-        final customHeaderWidget = find.text(customHeaderText);
+        final headerWidget = find.text(headerText);
         final searchFieldWidget = find.byType(TextFormField);
-        
+
         expect(
-          tester.getTopLeft(customHeaderWidget).dy < 
-          tester.getTopLeft(searchFieldWidget).dy,
+          tester.getTopLeft(headerWidget).dy <
+              tester.getTopLeft(searchFieldWidget).dy,
           isTrue,
         );
       },

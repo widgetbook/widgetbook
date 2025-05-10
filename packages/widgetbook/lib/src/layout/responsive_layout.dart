@@ -19,7 +19,7 @@ class ResponsiveLayout extends StatelessWidget {
     return NavigationPanel(
       initialPath: state.path,
       root: state.root,
-      customHeader: state.customHeader,
+      header: state.header,
       onNodeSelected: (node) {
         WidgetbookState.of(context).updatePath(node.path); // Fresh context
 

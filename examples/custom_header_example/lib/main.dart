@@ -25,7 +25,7 @@ class WidgetbookApp extends StatelessWidget {
         ),
       ],
       // Custom header for branding and description
-      customHeader: const Column(
+      header: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(

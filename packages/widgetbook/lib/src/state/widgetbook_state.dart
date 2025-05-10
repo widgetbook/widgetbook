@@ -34,7 +34,7 @@ class WidgetbookState extends ChangeNotifier {
     required this.root,
     this.home = const DefaultHomePage(),
     this.panels = null,
-    this.customHeader,
+    this.header,
   }) {
     this.knobs = KnobsRegistry(
       onLock: () {
@@ -71,7 +71,7 @@ class WidgetbookState extends ChangeNotifier {
 
   /// An optional widget to display at the top of the navigation panel.
   /// This can be used for branding or additional information.
-  final Widget? customHeader;
+  final Widget? header;
 
   List<WidgetbookNode> get directories => root.children!;
 
