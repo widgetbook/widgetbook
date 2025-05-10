@@ -12,11 +12,16 @@ class NavigationPanel extends StatefulWidget {
     this.initialPath,
     this.onNodeSelected,
     required this.root,
+    this.header,
   });
 
   final String? initialPath;
   final ValueChanged<WidgetbookNode>? onNodeSelected;
   final WidgetbookNode root;
+
+  /// An optional widget to display at the top of the navigation panel.
+  /// This can be used for branding or additional information.
+  final Widget? header;
 
   @override
   State<NavigationPanel> createState() => _NavigationPanelState();
@@ -50,6 +55,11 @@ class _NavigationPanelState extends State<NavigationPanel> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        if (widget.header != null)
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: widget.header!,
+          ),
         Padding(
           padding: const EdgeInsets.all(16),
           child: SearchField(
