@@ -6,7 +6,6 @@
 - **FIX**: Unify `color` knob fields' heights. ([#1445](https://github.com/widgetbook/widgetbook/pull/1445))
 - **FIX**: Prevent falling back to initial/default values when changing `NumInputField`, `DurationField` and `DateTimeField` values. ([#1446](https://github.com/widgetbook/widgetbook/pull/1446))
 - **FIX**: Rebuild `DateTimeField` after using the picker. ([#1447](https://github.com/widgetbook/widgetbook/pull/1447))
-- **FEAT**: Add `customHeader` parameter to Widgetbook to allow adding a custom header to the navigation sidebar. ([#1438](https://github.com/widgetbook/widgetbook/issues/1438))
 - **FEAT**: Add `header` parameter to Widgetbook to allow adding a custom header to the navigation sidebar. ([#1438](https://github.com/widgetbook/widgetbook/issues/1438))
 
 ## 3.13.1
