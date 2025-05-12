@@ -59,13 +59,18 @@ class ResponsiveLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Force desktop mode if `panels` query param is set.
+    // This is useful for when Widgetbook is used in docs, and users don't
+    // want the bottom navigation bar to be shown in the embedding.
+    final isEmbedded = WidgetbookState.of(context).panels != null;
+
     // MediaQuery.sizeOf is not backwards compatible with Flutter < 3.10.0
     //
     // 840 is "Expanded" or "Tablet in landscape", "Desktop", ...
     // See: https://m3.material.io/foundations/layout/applying-layout/window-size-classes#2bb70e22-d09b-4b73-9c9f-9ef60311ccc8
     final isMobile = MediaQuery.of(context).size.width < 840;
 
-    return isMobile
+    return isMobile && !isEmbedded
         ? MobileLayout(
             navigationBuilder: (context) => buildNavigation(context, true),
             addonsBuilder: buildAddons,
