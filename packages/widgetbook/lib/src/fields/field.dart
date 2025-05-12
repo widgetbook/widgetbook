@@ -29,6 +29,8 @@ abstract class Field<T> {
     @Deprecated('Fields should not be aware of their context') this.onChanged,
   });
 
+  static const nullabilitySymbol = '??';
+
   /// Name of this inside the query group.
   final String name;
 
@@ -48,9 +50,19 @@ abstract class Field<T> {
   @Deprecated('Fields should not be aware of their context')
   final void Function(BuildContext context, T? value)? onChanged;
 
+  /// A field is considered nullable if the param's value starts
+  /// with [nullabilitySymbol].
+  bool isNull(Map<String, String> groupMap) {
+    final param = groupMap[name];
+    return param?.startsWith(nullabilitySymbol) ?? false;
+  }
+
   /// Extracts the value from [groupMap],
   /// fallback to [initialValue] if not found.
+  /// If the field value starts with [nullabilitySymbol], it will be
+  /// interpreted as null.
   T? valueFrom(Map<String, String> groupMap) {
+    if (isNull(groupMap)) return null;
     return codec.toValue(groupMap[name]) ?? initialValue;
   }
 
@@ -67,10 +79,20 @@ abstract class Field<T> {
   Widget toWidget(BuildContext context, String group, T? value);
 
   void updateField(BuildContext context, String group, T value) {
-    WidgetbookState.of(context).updateQueryField(
+    final state = WidgetbookState.of(context);
+    final groupMap = FieldCodec.decodeQueryGroup(state.queryParams[group]);
+
+    // Preserve the nullability symbol in the new value if the previous
+    // value was null (i.e. had the nullability symbol).
+    final rawNewValue = codec.toParam(value);
+    final newValue = isNull(groupMap)
+        ? '${Field.nullabilitySymbol}$rawNewValue'
+        : rawNewValue;
+
+    state.updateQueryField(
       group: group,
       field: name,
-      value: codec.toParam(value),
+      value: newValue,
     );
   }
 

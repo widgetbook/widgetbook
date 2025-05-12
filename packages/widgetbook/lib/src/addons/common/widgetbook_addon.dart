@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../fields/fields.dart';
 import '../../knobs/knobs.dart';
 import '../../navigation/navigation.dart';
-import '../../settings/settings.dart';
 import '../addons.dart';
 
 /// [WidgetbookAddon]s are like global [Knob]s, they change the state for all
@@ -23,37 +22,15 @@ import '../addons.dart';
 @optionalTypeArgs
 abstract class WidgetbookAddon<T> extends FieldsComposable<T> {
   WidgetbookAddon({
-    required this.name,
+    required super.name,
     @Deprecated('Use local field instead') this.initialSetting,
   });
-
-  final String name;
 
   @Deprecated('Use local field instead')
   final T? initialSetting;
 
   @override
   String get groupName => slugify(name);
-
-  @override
-  Widget buildFields(BuildContext context) {
-    return Setting(
-      name: name,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: fields
-            .map(
-              (field) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 4.0,
-                ),
-                child: field.build(context, groupName),
-              ),
-            )
-            .toList(),
-      ),
-    );
-  }
 
   /// Wraps use cases with a custom widget depending on the addon [setting]
   /// that is obtained from [valueFromQueryGroup].
