@@ -103,7 +103,65 @@
           "pages": [
             {
               "title": "Overview",
-              "href": "/knobs"
+              "href": "/knobs/overview"
+            },
+            {
+              "title": "Bool",
+              "href": "/knobs/bool"
+            },
+            {
+              "group": "Double",
+              "pages": [
+                {
+                  "title": "Overview",
+                  "href": "/knobs/double/overview"
+                },
+                {
+                  "title": "Input",
+                  "href": "/knobs/double/input"
+                },
+                {
+                  "title": "Slider",
+                  "href": "/knobs/double/slider"
+                }
+              ]
+            },
+            {
+              "group": "Integer",
+              "pages": [
+                {
+                  "title": "Overview",
+                  "href": "/knobs/integer/overview"
+                },
+                {
+                  "title": "Input",
+                  "href": "/knobs/integer/input"
+                },
+                {
+                  "title": "Slider",
+                  "href": "/knobs/integer/slider"
+                }
+              ]
+            },
+            {
+              "title": "List",
+              "href": "/knobs/list"
+            },
+            {
+              "title": "String",
+              "href": "/knobs/string"
+            },
+            {
+              "title": "DateTime",
+              "href": "/knobs/datetime"
+            },
+            {
+              "title": "Duration",
+              "href": "/knobs/duration"
+            },
+            {
+              "title": "Color",
+              "href": "/knobs/color"
             },
             {
               "title": "Custom Knob",
