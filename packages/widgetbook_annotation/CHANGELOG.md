@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Add `NullKnobConfig` to support null values in `KnobConfig`s. ([#1451](https://github.com/widgetbook/widgetbook/pull/1451))
+
 ## 3.4.0
 
 - **FEAT**: Add `SemanticsAddonConfig` for supporting the new **experimental** [`SemanticsAddon`](https://docs.widgetbook.io/addons/semantics-addon). ([#1402](https://github.com/widgetbook/widgetbook/pull/1402))
