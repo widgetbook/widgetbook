@@ -152,6 +152,21 @@ Widget build(BuildContext context) {
 }
 ```
 
+## Header Widget
+
+You can add a custom header to the navigation panel by providing a `header` parameter to the `Widgetbook` constructor.
+This can be used for branding or additional information.
+
+```dart
+@override
+Widget build(BuildContext context) {
+  return Widgetbook(
+    header: const MyCustomHeaderWidget(),
+    // ...
+  );
+}
+```
+
 ## Widgetbook's UI
 
 If you want to change some Widgetbook's UI colors, or want to enforce a specific theme mode, you can do so using these parameters:

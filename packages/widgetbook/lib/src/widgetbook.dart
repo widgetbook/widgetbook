@@ -30,6 +30,7 @@ class Widgetbook extends StatefulWidget {
     this.darkTheme,
     this.themeMode,
     this.home = const DefaultHomePage(),
+    this.header,
   });
 
   /// A [Widgetbook] with [CupertinoApp] as an [appBuilder].
@@ -44,6 +45,7 @@ class Widgetbook extends StatefulWidget {
     this.darkTheme,
     this.themeMode,
     this.home = const DefaultHomePage(),
+    this.header,
   });
 
   /// A [Widgetbook] with [MaterialApp] as an [appBuilder].
@@ -58,6 +60,7 @@ class Widgetbook extends StatefulWidget {
     this.darkTheme,
     this.themeMode,
     this.home = const DefaultHomePage(),
+    this.header,
   });
 
   /// The initial route for that will be used on first startup.
@@ -105,6 +108,10 @@ class Widgetbook extends StatefulWidget {
   /// not the [Theme] from the [appBuilder] or the [ThemeAddon].
   final Widget home;
 
+  /// An optional widget to display at the top of the navigation panel.
+  /// This can be used for branding or additional information.
+  final Widget? header;
+
   @override
   State<Widgetbook> createState() => _WidgetbookState();
 }
@@ -120,6 +127,7 @@ class _WidgetbookState extends State<Widgetbook> {
     state = WidgetbookState(
       appBuilder: widget.appBuilder,
       home: widget.home,
+      header: widget.header,
       addons: widget.addons,
       integrations: widget.integrations,
       root: WidgetbookRoot(
