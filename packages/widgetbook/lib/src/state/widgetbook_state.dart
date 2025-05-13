@@ -59,7 +59,7 @@ class WidgetbookState extends ChangeNotifier {
   /// - If empty, no panels are shown (similar to [previewMode]).
   /// - If [previewMode] is `true`, the [panels] are ignored.
   ///
-  /// NOTE: this only works in desktop mode.
+  /// NOTE: this forces the desktop mode, even if the screen size is small.
   Set<LayoutPanel>? panels;
 
   late final KnobsRegistry knobs;
