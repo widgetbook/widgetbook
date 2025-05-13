@@ -68,7 +68,7 @@ Widget buildUseCase(BuildContext context) {
 
 Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/reviews/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/reviews/multi-snapshot#multi-snapshot-for-addons).
 
-### Regular String Knob
+### Regular Color Knob
 
 ```dart title="Example: ColorKnobConfig"
 import 'package:flutter/material.dart';
@@ -89,7 +89,24 @@ Widget buildUseCase(BuildContext context) {
 }
 ```
 
-### Nullable String Knob
+### Nullable Color Knob
 
-Multi-snapshot support is currently not available for the nullable String knob.
-We're working on adding this feature until the mid of May 2025.
+```dart title="Example: NullKnobConfig"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'No color': [NullKnobConfig('color')], // [!code highlight]
+    'Red': [ColorKnobConfig('color', 'FFF44336')], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    color: context.knobs.colorOrNull(label: 'color'),
+  );
+}
+```

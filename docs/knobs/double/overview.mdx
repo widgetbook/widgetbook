@@ -58,5 +58,22 @@ Widget buildUseCase(BuildContext context) {
 
 ### Nullable double knob
 
-Multi-snapshot support is currently not available for the nullable double knob.
-We're working on adding this feature until the mid of May 2025.
+```dart title="Example: NullKnobConfig"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'Without value': [NullKnobConfig('value')], // [!code highlight]
+    'With value': [DoubleKnobConfig('value', 1)], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    value: context.knobs.doubleOrNull.input(label: 'value'),
+  );
+}
+```
