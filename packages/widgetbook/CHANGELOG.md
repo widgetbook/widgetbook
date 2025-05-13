@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FEAT**: Add [`panels` query param](https://docs.widgetbook.io/guides/embedding#customizing-panels) to show/hide panels when embedding Widgetbook. ([#1439](https://github.com/widgetbook/widgetbook/pull/1439))
+- **FEAT**: Rework nullable knobs to allow them to be expressed in the URL. To indicate that a knob is null it can be expressed as `??` (e.g. `/?path=my-use-case&knobs={my_knob:??}`). ([#1450](https://github.com/widgetbook/widgetbook/pull/1450))
 - **FIX**: Ensure a fresh state is used when building the use-case. This prevented some rebuilds from happening, causing knobs to not be registered properly. ([#1441](https://github.com/widgetbook/widgetbook/pull/1441))
 - **FIX**: Handle `null` in `durationOrNull` knob. ([#1444](https://github.com/widgetbook/widgetbook/pull/1444))
 - **FIX**: Unify `color` knob fields' heights. ([#1445](https://github.com/widgetbook/widgetbook/pull/1445))
