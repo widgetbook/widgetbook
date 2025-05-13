@@ -1,12 +1,22 @@
 import 'package:flutter/widgets.dart';
 
+import '../settings/settings.dart';
+import '../state/state.dart';
 import 'field.dart';
 import 'field_codec.dart';
 
 /// Interface for defining APIs for features that
 /// use [fields] as a building block.
 abstract class FieldsComposable<T> {
-  const FieldsComposable();
+  const FieldsComposable({
+    required this.name,
+    this.description,
+    this.isNullable = false,
+  });
+
+  final String name;
+  final String? description;
+  final bool isNullable;
 
   // The name of the query group param.
   String get groupName;
@@ -22,7 +32,38 @@ abstract class FieldsComposable<T> {
 
   /// Converts the [fields] into a [Widget] that will be rendered in the
   /// settings side panel.
-  Widget buildFields(BuildContext context);
+  Widget buildFields(BuildContext context) {
+    final child = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: fields
+          .map(
+            (field) => Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 4.0,
+              ),
+              child: field.build(context, groupName),
+            ),
+          )
+          .toList(),
+    );
+
+    return !isNullable
+        ? Setting(
+            name: name,
+            description: description,
+            child: child,
+          )
+        : NullableSetting(
+            name: name,
+            description: description,
+            isNullified: isNullified(context),
+            onNullified: (isNullified) => toggleNullification(
+              context,
+              nullify: isNullified,
+            ),
+            child: child,
+          );
+  }
 
   /// Decodes the value of the [Field] with [name] from the query [group]
   /// using the [FieldCodec.toValue] from [Field.codec].
@@ -32,6 +73,60 @@ abstract class FieldsComposable<T> {
     ) as Field<TField>;
 
     return field.valueFrom(group);
+  }
+
+  /// Checks if this has been nullified by [toggleNullification].
+  bool isNullified(BuildContext context) {
+    final state = WidgetbookState.of(context);
+    final groupMap = FieldCodec.decodeQueryGroup(
+      state.queryParams[groupName],
+    );
+
+    return fields.every(
+      (field) => field.valueFrom(groupMap) == null,
+    );
+  }
+
+  /// Adds/removes [Field.nullabilitySymbol] to/from all [fields] depending on
+  /// the [nullify] state.
+  /// If [nullify] is `true`, the [Field.nullabilitySymbol] is added.
+  /// If [nullify] is `false`, the [Field.nullabilitySymbol] is removed.
+  @protected
+  void toggleNullification(
+    BuildContext context, {
+    required bool nullify,
+  }) {
+    assert(
+      isNullable,
+      'toggleNullification is only available for nullable composables',
+    );
+
+    // NOTE:
+    // Currently, we are nullifying the [FieldsComposable] by nullifying all
+    // the fields in the group. A better approach would be by nullifying the
+    // group itself only (for example: `group={...}` > `group=?{...}).
+    // This approach is not currently feasible as all knobs are located under
+    // the same group. This is a limitation of the current implementation.
+    // We can revisit in future major releases.
+
+    final state = WidgetbookState.of(context);
+    final groupMap = FieldCodec.decodeQueryGroup(
+      state.queryParams[groupName],
+    );
+
+    fields.forEach((field) {
+      final value = groupMap[field.name];
+      if (value == null) return;
+
+      final rawValue = value.replaceFirst(Field.nullabilitySymbol, '');
+      final nullishValue = '${Field.nullabilitySymbol}$rawValue';
+
+      state.updateQueryField(
+        group: groupName,
+        field: field.name,
+        value: nullify ? nullishValue : rawValue,
+      );
+    });
   }
 
   Map<String, dynamic> toJson();

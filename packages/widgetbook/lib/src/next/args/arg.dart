@@ -12,11 +12,13 @@ abstract class Arg<T> extends FieldsComposable<T> {
     T value, {
     String? name,
   })  : $value = value,
-        $name = name;
+        $name = name,
+        super(name: name ?? '');
 
   const Arg.empty()
       : $value = null,
-        $name = null;
+        $name = null,
+        super(name: '');
 
   final T? $value;
   final String? $name;

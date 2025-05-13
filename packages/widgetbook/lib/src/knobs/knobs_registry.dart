@@ -24,16 +24,8 @@ class KnobsRegistry extends ChangeNotifier with MapMixin<String, Knob> {
     Knob<T?> knob,
     Map<String, String> queryGroup,
   ) {
-    final cachedKnob = _registry.putIfAbsent(
-      knob.label,
-      () => knob,
-    );
+    _registry.putIfAbsent(knob.label, () => knob);
 
-    // Return `null` even if the knob has value, but it was marked as null
-    // using [updateNullability].
-    if (cachedKnob.isNullable && cachedKnob.isNull) return null;
-
-    // Get value from query group
     return knob.valueFromQueryGroup(queryGroup);
   }
 
@@ -42,17 +34,6 @@ class KnobsRegistry extends ChangeNotifier with MapMixin<String, Knob> {
     'they rely on query groups.',
   )
   void updateValue<T>(String label, T value) {}
-
-  /// Updates [Knob.isNull] using the [label] to find the [Knob].
-  @internal
-  void updateNullability(String label, bool isNull) {
-    _registry.update(
-      label,
-      (knob) => knob..isNull = isNull,
-    );
-
-    notifyListeners();
-  }
 
   @override
   Knob? operator [](Object? key) => _registry[key as String];
