@@ -1,12 +1,12 @@
 ## Unreleased
 
+- **FEAT**: Add [`header` parameter](https://docs.widgetbook.io/guides/customization#header-widget) to Widgetbook to allow adding a custom header to the navigation sidebar. ([#1443](https://github.com/widgetbook/widgetbook/pull/1443) - by [@Sourav-Sonkar](https://github.com/Sourav-Sonkar))
 - **FEAT**: Add [`panels` query param](https://docs.widgetbook.io/guides/embedding#customizing-panels) to show/hide panels when embedding Widgetbook. ([#1439](https://github.com/widgetbook/widgetbook/pull/1439))
 - **FIX**: Ensure a fresh state is used when building the use-case. This prevented some rebuilds from happening, causing knobs to not be registered properly. ([#1441](https://github.com/widgetbook/widgetbook/pull/1441))
 - **FIX**: Handle `null` in `durationOrNull` knob. ([#1444](https://github.com/widgetbook/widgetbook/pull/1444))
 - **FIX**: Unify `color` knob fields' heights. ([#1445](https://github.com/widgetbook/widgetbook/pull/1445))
 - **FIX**: Prevent falling back to initial/default values when changing `NumInputField`, `DurationField` and `DateTimeField` values. ([#1446](https://github.com/widgetbook/widgetbook/pull/1446))
 - **FIX**: Rebuild `DateTimeField` after using the picker. ([#1447](https://github.com/widgetbook/widgetbook/pull/1447))
-- **FEAT**: Add `header` parameter to Widgetbook to allow adding a custom header to the navigation sidebar. ([#1438](https://github.com/widgetbook/widgetbook/issues/1438))
 
 ## 3.13.1
 
