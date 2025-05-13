@@ -73,7 +73,6 @@ void main() {
             text,
           );
 
-          await tester.findAndTap(find.byType(Checkbox));
           expect(find.textWidget(text), findsOneWidget);
         },
       );
@@ -101,10 +100,10 @@ void main() {
           );
 
           await tester.findAndTap(find.byType(Checkbox));
-          expect(find.textWidget(text), findsOneWidget);
+          expect(find.textWidget('null'), findsOneWidget);
 
           await tester.findAndTap(find.byType(Checkbox));
-          expect(find.textWidget('null'), findsOneWidget);
+          expect(find.textWidget(text), findsOneWidget);
         },
       );
     },
