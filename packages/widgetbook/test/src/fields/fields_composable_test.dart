@@ -5,6 +5,8 @@ import 'package:widgetbook/widgetbook.dart';
 import 'field_test.dart';
 
 class MockFieldsComposable extends FieldsComposable<bool> {
+  MockFieldsComposable() : super(name: '$MockFieldsComposable');
+
   @override
   Widget buildFields(BuildContext context) {
     return Container();
