@@ -1,5 +1,9 @@
 # Widgetbook Cloud x Self-managed GitLab
 
+<Info>
+  This guide works for both **GitLab self-managed** and **GitLab Dedicated**.
+</Info>
+
 If you want to use Widgetbook Cloud with your self-managed GitLab instance (e.g. `gitlab.acme.dev`), here's a pre-requisite guide to help you get started, then you can follow our normal [Gitlab setup guide](/cloud/guides/gitlab/upload).
 
 <Steps>
@@ -19,11 +23,12 @@ If you want to use Widgetbook Cloud with your self-managed GitLab instance (e.g.
 
   </Step>
   <Step title="Send us the Information">
-    Since this information contains sensitive field (like Application Secret), we recommend sending the information in the following way:
+    Send the following information to [engineering@widgetbook.io](mailto:engineering@widgetbook.io):
 
-    1. Create a Google Doc filled with the items below.
-    2. Share the document with [engineering@widgetbook.io](mailto:engineering@widgetbook.io) via email.
-    3. Once your information is processed, you can safely delete the document.
+    <Warning>
+      (*) Do not send the **Application Secret** as plain text as it is **sensitive information**.
+      Instead, use a one-time shared link from your password or secret manager service (e.g. [1Password](https://support.1password.com/share-items/))
+    </Warning>
 
     | Item                   | Reason                |
     | ---------------------- | --------------------- |
@@ -32,7 +37,7 @@ If you want to use Widgetbook Cloud with your self-managed GitLab instance (e.g.
     | Company Email Domain (e.g. acme.com) | Users who have a Widgetbook Cloud account with an email having this domain, will be able to see the integration is the user profile page. |
     | Company GitLab Domain (e.g. gitlab.acme.com) | To send GitLab API requests to. |
     | Application (from previous step) | For OAuth Integration |
-    | Application Secret (from previous step) | For OAuth Integration |
+    | (*) Application Secret (from previous step) | For OAuth Integration |
 
   </Step>
 </Steps>
