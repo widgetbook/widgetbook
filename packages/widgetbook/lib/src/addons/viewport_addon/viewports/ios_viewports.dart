@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/rendering.dart';
 
 import '../viewport_data.dart';
 
@@ -33,6 +34,10 @@ abstract class IosViewports {
     height: 812,
     pixelRatio: 3,
     platform: TargetPlatform.iOS,
+    safeAreas: const EdgeInsets.only(
+      top: 44,
+      bottom: 34,
+    ),
   );
 
   static const iPhone12 = ViewportData(
@@ -42,6 +47,10 @@ abstract class IosViewports {
     height: 844,
     pixelRatio: 3,
     platform: TargetPlatform.iOS,
+    safeAreas: const EdgeInsets.only(
+      top: 24,
+      bottom: 20,
+    ),
   );
 
   static const iPhone12ProMax = ViewportData(
@@ -51,6 +60,10 @@ abstract class IosViewports {
     height: 926,
     pixelRatio: 3,
     platform: TargetPlatform.iOS,
+    safeAreas: const EdgeInsets.only(
+      top: 44,
+      bottom: 34,
+    ),
   );
 
   static const iPhone13Mini = ViewportData(
@@ -60,6 +73,10 @@ abstract class IosViewports {
     height: 812,
     pixelRatio: 2,
     platform: TargetPlatform.iOS,
+    safeAreas: const EdgeInsets.only(
+      top: 47,
+      bottom: 34,
+    ),
   );
 
   static const iPhone13 = ViewportData(
@@ -69,6 +86,10 @@ abstract class IosViewports {
     height: 844,
     pixelRatio: 3,
     platform: TargetPlatform.iOS,
+    safeAreas: const EdgeInsets.only(
+      top: 47,
+      bottom: 34,
+    ),
   );
 
   static const iPhone13ProMax = ViewportData(
@@ -78,6 +99,10 @@ abstract class IosViewports {
     height: 926,
     pixelRatio: 3,
     platform: TargetPlatform.iOS,
+    safeAreas: const EdgeInsets.only(
+      top: 47,
+      bottom: 34,
+    ),
   );
 
   static const iPhoneSE = ViewportData(
@@ -87,6 +112,9 @@ abstract class IosViewports {
     height: 667,
     pixelRatio: 2,
     platform: TargetPlatform.iOS,
+    safeAreas: const EdgeInsets.only(
+      top: 20,
+    ),
   );
 
   static const iPadAir4 = ViewportData(
@@ -96,6 +124,9 @@ abstract class IosViewports {
     height: 1180,
     pixelRatio: 3,
     platform: TargetPlatform.iOS,
+    safeAreas: const EdgeInsets.only(
+      top: 20,
+    ),
   );
 
   static const iPad = ViewportData(
@@ -105,6 +136,9 @@ abstract class IosViewports {
     height: 1080,
     pixelRatio: 2,
     platform: TargetPlatform.iOS,
+    safeAreas: const EdgeInsets.only(
+      top: 20,
+    ),
   );
 
   static const iPadPro11Inches = ViewportData(
@@ -114,6 +148,9 @@ abstract class IosViewports {
     height: 1194,
     pixelRatio: 3,
     platform: TargetPlatform.iOS,
+    safeAreas: const EdgeInsets.only(
+      top: 20,
+    ),
   );
 
   static const iPad12InchesGen2 = ViewportData(
@@ -123,6 +160,9 @@ abstract class IosViewports {
     height: 1366,
     pixelRatio: 2,
     platform: TargetPlatform.iOS,
+    safeAreas: const EdgeInsets.only(
+      top: 20,
+    ),
   );
 
   static const iPad12InchesGen4 = ViewportData(
@@ -132,5 +172,9 @@ abstract class IosViewports {
     height: 1366,
     pixelRatio: 2,
     platform: TargetPlatform.iOS,
+    safeAreas: const EdgeInsets.only(
+      top: 24,
+      bottom: 20,
+    ),
   );
 }

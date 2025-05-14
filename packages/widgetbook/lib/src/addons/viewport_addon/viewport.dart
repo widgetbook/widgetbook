@@ -22,6 +22,8 @@ class Viewport extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context).copyWith(
       size: data.size,
       devicePixelRatio: data.pixelRatio,
+      padding: data.safeAreas,
+      viewPadding: data.safeAreas,
     );
 
     final theme = Theme.of(context).copyWith(
