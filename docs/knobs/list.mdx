@@ -107,6 +107,34 @@ Multi-snapshot support allows you to generate multiple screenshots of a single u
 )
 Widget buildUseCase(BuildContext context) {
   return MyWidget(
+    status: context.knobs.list(
+      label: 'status',
+      options: [
+        OnlineStatusType.online,
+        OnlineStatusType.offline,
+        OnlineStatusType.busy,
+      ],
+      labelBuilder: (value) => value.name,
+    ),
+  );
+}
+
+enum OnlineStatusType { online, offline, busy }
+```
+
+### Nullable String Knob
+
+```dart title="Example: NullKnobConfig"
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'no status': [NullKnobConfig('status')], // [!code highlight]
+    'online': [ListKnobConfig('status', 'online')], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
     status: context.knobs.listOrNull(
       label: 'status',
       options: [
@@ -121,8 +149,3 @@ Widget buildUseCase(BuildContext context) {
 
 enum OnlineStatusType { online, offline, busy }
 ```
-
-### Nullable String Knob
-
-Multi-snapshot support is currently not available for the nullable list knob.
-We're working on adding this feature until the mid of May 2025.

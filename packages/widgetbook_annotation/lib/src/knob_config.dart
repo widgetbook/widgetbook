@@ -14,6 +14,8 @@ class KnobConfig<T> {
   /// ```
   const KnobConfig(this.label, this.value);
 
+  static const nullabilitySymbol = '??';
+
   /// The knob's label.
   final String label;
 
@@ -25,6 +27,20 @@ class KnobConfig<T> {
   MapEntry<String, T> toMapEntry() {
     return MapEntry(label, value);
   }
+}
+
+class NullKnobConfig extends KnobConfig<String> {
+  /// Creates a new [KnobConfig] for the nullable knobs
+  /// with a null value.
+  ///
+  /// ```dart
+  /// const NullKnobConfig('label');
+  /// ```
+  const NullKnobConfig(String label)
+      : super(
+          label,
+          KnobConfig.nullabilitySymbol,
+        );
 }
 
 class IntKnobConfig extends KnobConfig<int> {

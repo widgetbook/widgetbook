@@ -48,7 +48,7 @@ If you are using [Widgetbook Cloud Review](/cloud/reviews), you can now create m
 ## Multi Snapshot for Knobs
 
 1. Go to the file where your use-case is defined.
-1. Add the configurations matrix to the `cloudKnobsConfigs` parameter of the `@UseCase` annotation. In this example we want to test "Disabled Long Text" and "Enabled Short Text" variants of the use-case:
+1. Add the configurations matrix to the `cloudKnobsConfigs` parameter of the `@UseCase` annotation. In this example we want to test two common variants of the use-case:
 
 ```dart
 
@@ -56,13 +56,15 @@ If you are using [Widgetbook Cloud Review](/cloud/reviews), you can now create m
   name: 'Default',
   type: Button,
   cloudAddonsConfigs: {
-    'Disabled Long Text': [
+    'Disabled Long Text Without Badge': [
       BooleanKnobConfig('enabled', false),
       StringKnobConfig('text', 'This is a very very long text for a button that might cause overflow'),
+      NullKnobConfig('badge'),
     ],
-    'Enabled Short Text': [
+    'Enabled Short Text With Badge': [
       BooleanKnobConfig('enabled', true),
       StringKnobConfig('text', 'Button'),
+      IntKnobConfig('badge', 1),
     ],
   },
 )
@@ -70,6 +72,7 @@ Widget buildButtonUseCase(BuildContext context) {
   return Button(
     text: context.knobs.string(label: 'text'),
     enabled: context.knobs.boolean(label: 'enabled'),
+    badge: context.knobs.intOrNull(label: 'badge'),
   );
 }
 ```

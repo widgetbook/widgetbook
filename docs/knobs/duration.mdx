@@ -81,5 +81,18 @@ Widget buildUseCase(BuildContext context) {
 
 ### Nullable Duration Knob
 
-Multi-snapshot support is currently not available for the nullable Duration knob.
-We're working on adding this feature until the mid of May 2025.
+```dart title="Example: NullKnobConfig"
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'Without duration': [NullKnobConfig('duration')], // [!code highlight]
+    'With duration': [DurationKnobConfig('duration', 2000)], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    duration: context.knobs.durationOrNull(label: 'duration')
+  );
+}
+```

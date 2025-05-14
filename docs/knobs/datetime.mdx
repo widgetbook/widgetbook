@@ -82,12 +82,35 @@ Multi-snapshot support allows you to generate multiple screenshots of a single u
 
 ### Regular DateTime Knob
 
-```dart title="Example: StringKnobConfig"
+```dart title="Example: DateTimeKnobConfig"
 @UseCase(
   type: MyWidget,
   name: 'Default',
   cloudKnobsConfigs: { // [!code highlight]
     'dateTime': [DateTimeKnobConfig('dateTime', '2020-01-31 16:10')], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    dateTime: context.knobs.dateTime(
+      label: 'dateTime',
+      initialValue: DateTime.now(),
+      start: DateTime.now().subtract(const Duration(days: 30)),
+      end: DateTime.now().add(const Duration(days: 30)),
+    ),
+  );
+}
+```
+
+### Nullable DateTime Knob
+
+```dart title="Example: NullKnobConfig"
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'Without date': [NullKnobConfig('dateTime')], // [!code highlight]
+    'With date': [DateTimeKnobConfig('dateTime', '2020-01-31 16:10')], // [!code highlight]
   }, // [!code highlight]
 )
 Widget buildUseCase(BuildContext context) {
@@ -100,8 +123,3 @@ Widget buildUseCase(BuildContext context) {
   );
 }
 ```
-
-### Nullable DateTime Knob
-
-Multi-snapshot support is currently not available for the nullable DateTime knob.
-We're working on adding this feature until the mid of May 2025.

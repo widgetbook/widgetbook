@@ -91,5 +91,20 @@ Widget buildUseCase(BuildContext context) {
 
 ### Nullable String Knob
 
-Multi-snapshot support is currently not available for the nullable String knob.
-We're working on adding this feature until the mid of May 2025.
+```dart title="Example: NullKnobConfig"
+import 'package:widgetbook/widgetbook.dart';
+
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { /// [!code highlight]
+    'no name': [NullKnobConfig('name')], // [!code highlight]
+    'with name': [StringKnobConfig('name', 'John Doe')], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    name: context.knobs.stringOrNull(label: 'name'),
+  );
+}
+```

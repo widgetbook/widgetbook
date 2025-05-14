@@ -87,8 +87,8 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
   type: Checkbox,
   name: 'Duo state',
   cloudKnobsConfigs: { // [!code highlight]
-    'on': [BooleanKnobConfig('value', true)], // [!code highlight]
-    'off': [BooleanKnobConfig('value', false)], // [!code highlight]
+    'Checked': [BooleanKnobConfig('value', true)], // [!code highlight]
+    'Unchecked': [BooleanKnobConfig('value', false)], // [!code highlight]
   }, // [!code highlight]
 )
 Widget buildCheckboxUseCase(BuildContext context) {
@@ -101,5 +101,24 @@ Widget buildCheckboxUseCase(BuildContext context) {
 
 ### Nullable Bool Knob
 
-Multi-snapshot support is currently not available for the nullable bool knob.
-We're working on adding this feature until the mid of May 2025.
+```dart title="Example: NullKnobConfig"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(
+  type: Checkbox,
+  name: 'Tristate',
+  cloudKnobsConfigs: { // [!code highlight]
+    'Mixed': [NullKnobConfig('value')], // [!code highlight]
+    'Checked': [BooleanKnobConfig('value', true)], // [!code highlight]
+    'Unchecked': [BooleanKnobConfig('value', false)], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildCheckboxUseCase(BuildContext context) {
+  return Checkbox(
+    value: context.knobs.booleanOrNull(label: 'value'),
+    onChanged: (value) {},
+  );
+}
+```
