@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/rendering.dart';
 
 import '../viewport_data.dart';
 
@@ -30,6 +31,10 @@ abstract class AndroidViewports {
     height: 800,
     pixelRatio: 4,
     platform: TargetPlatform.android,
+    safeAreas: const EdgeInsets.only(
+      top: 40,
+      bottom: 20,
+    ),
   );
 
   static const samsungGalaxyA50 = ViewportData(
@@ -39,6 +44,10 @@ abstract class AndroidViewports {
     height: 892,
     pixelRatio: 2.625,
     platform: TargetPlatform.android,
+    safeAreas: const EdgeInsets.only(
+      top: 32,
+      bottom: 32,
+    ),
   );
 
   static const samsungGalaxyNote20 = ViewportData(
@@ -48,6 +57,10 @@ abstract class AndroidViewports {
     height: 916,
     pixelRatio: 2.625,
     platform: TargetPlatform.android,
+    safeAreas: const EdgeInsets.only(
+      top: 48,
+      bottom: 32,
+    ),
   );
 
   static const samsungGalaxyNote20Ultra = ViewportData(
@@ -57,6 +70,10 @@ abstract class AndroidViewports {
     height: 883,
     pixelRatio: 3.5,
     platform: TargetPlatform.android,
+    safeAreas: const EdgeInsets.only(
+      top: 36,
+      bottom: 24,
+    ),
   );
 
   static const samsungGalaxyS20 = ViewportData(
@@ -66,6 +83,10 @@ abstract class AndroidViewports {
     height: 800,
     pixelRatio: 4,
     platform: TargetPlatform.android,
+    safeAreas: const EdgeInsets.only(
+      top: 32,
+      bottom: 32,
+    ),
   );
 
   static const sonyXperia1II = ViewportData(
@@ -75,6 +96,9 @@ abstract class AndroidViewports {
     height: 960,
     pixelRatio: 4,
     platform: TargetPlatform.android,
+    safeAreas: const EdgeInsets.only(
+      top: 24,
+    ),
   );
 
   static const smallTablet = ViewportData(
@@ -84,6 +108,9 @@ abstract class AndroidViewports {
     height: 1280,
     pixelRatio: 2,
     platform: TargetPlatform.android,
+    safeAreas: const EdgeInsets.only(
+      top: 24,
+    ),
   );
 
   static const mediumTablet = ViewportData(
@@ -93,6 +120,9 @@ abstract class AndroidViewports {
     height: 1350,
     pixelRatio: 2,
     platform: TargetPlatform.android,
+    safeAreas: const EdgeInsets.only(
+      top: 24,
+    ),
   );
 
   static const largeTablet = ViewportData(
@@ -102,5 +132,8 @@ abstract class AndroidViewports {
     height: 1880,
     pixelRatio: 2,
     platform: TargetPlatform.android,
+    safeAreas: const EdgeInsets.only(
+      top: 24,
+    ),
   );
 }
