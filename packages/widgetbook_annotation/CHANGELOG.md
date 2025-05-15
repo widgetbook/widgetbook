@@ -1,4 +1,4 @@
-## Unreleased
+## 3.5.0
 
 - **FEAT**: Add `NullKnobConfig` to support null values in `KnobConfig`s. ([#1451](https://github.com/widgetbook/widgetbook/pull/1451))
 
