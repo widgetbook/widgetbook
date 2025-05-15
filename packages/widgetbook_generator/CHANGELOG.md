@@ -1,4 +1,4 @@
-## Unreleased
+## 3.13.0
 
 - **BREAKING**: Use `ViewportData.name` instead of `ViewportData.id`. Requires `widgetbook` >=3.14.0. ([#1454](https://github.com/widgetbook/widgetbook/pull/1454))
 
