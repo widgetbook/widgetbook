@@ -9,7 +9,6 @@ abstract class MacosViewports {
   ];
 
   static const desktop = ViewportData(
-    id: 'macos-desktop',
     name: 'macOS Desktop',
     width: 1920,
     height: 1080,
@@ -18,7 +17,6 @@ abstract class MacosViewports {
   );
 
   static const macbookPro = ViewportData(
-    id: 'macbook-pro',
     name: 'MacBook Pro',
     width: 1800 - 30,
     height: 1000 - 30,

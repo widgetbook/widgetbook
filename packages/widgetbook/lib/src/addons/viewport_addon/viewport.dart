@@ -44,7 +44,7 @@ class Viewport extends StatelessWidget {
                       // we don't want that in the frameless mode
                       padding: const EdgeInsets.all(16),
                       child: _ViewportFrame(
-                        title: data.name ?? data.id,
+                        title: data.name,
                         child: child!,
                       ),
                     );

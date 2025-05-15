@@ -5,8 +5,7 @@ import 'package:meta/meta.dart';
 @experimental
 class ViewportData {
   const ViewportData({
-    required this.id,
-    this.name,
+    required this.name,
     required this.width,
     required this.height,
     required this.pixelRatio,
@@ -14,8 +13,7 @@ class ViewportData {
     this.safeAreas = EdgeInsets.zero,
   });
 
-  final String id;
-  final String? name;
+  final String name;
   final double width;
   final double height;
   final double pixelRatio;

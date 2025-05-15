@@ -6,7 +6,6 @@ abstract class WindowsViewports {
   static const all = [desktop];
 
   static const desktop = ViewportData(
-    id: 'windows-desktop',
     name: 'Windows Desktop',
     width: 1920,
     height: 1080,
