@@ -9,7 +9,9 @@ import 'widgets/notification_badge.dart';
 import 'widgets/online_status.dart';
 import 'widgets/user_avatar.dart';
 
-typedef KnobPreview = Widget;
+abstract class KnobPreview extends StatelessWidget {
+  const KnobPreview({super.key});
+}
 
 @UseCase(type: KnobPreview, name: 'Int Input Knob')
 Widget buildIntInputKnob(BuildContext context) {
