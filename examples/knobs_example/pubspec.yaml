@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  widgetbook: ^3.13.1
+  widgetbook: ^3.14.0
 
 flutter:
   uses-material-design: true
