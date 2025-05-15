@@ -45,16 +45,16 @@ class ViewportAddon extends WidgetbookAddon<ViewportData> {
   @override
   List<Field> get fields => [
         ListField<ViewportData>(
-          name: 'id',
+          name: 'name',
           initialValue: viewports.first,
           values: viewports,
-          labelBuilder: (viewport) => viewport.id,
+          labelBuilder: (viewport) => viewport.name,
         ),
       ];
 
   @override
   ViewportData valueFromQueryGroup(Map<String, String> group) {
-    return valueOf<ViewportData>('id', group)!;
+    return valueOf<ViewportData>('name', group)!;
   }
 
   @override

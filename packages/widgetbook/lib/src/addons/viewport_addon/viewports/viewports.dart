@@ -14,7 +14,6 @@ import 'windows_viewports.dart';
 class NoneViewport extends ViewportData {
   const NoneViewport()
       : super(
-          id: 'none',
           name: 'None',
           width: 0,
           height: 0,

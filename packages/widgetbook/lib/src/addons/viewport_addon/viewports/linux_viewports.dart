@@ -6,7 +6,6 @@ abstract class LinuxViewports {
   static const all = [desktop];
 
   static const desktop = ViewportData(
-    id: 'linux-desktop',
     name: 'Linux Desktop',
     width: 1920,
     height: 1080,
