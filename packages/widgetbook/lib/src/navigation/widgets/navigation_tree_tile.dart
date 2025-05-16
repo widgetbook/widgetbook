@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../../../next.dart' as next;
+import '../../widgetbook_theme.dart';
 import '../icons/icons.dart';
 import '../icons/resolve_icon.dart';
 import '../nodes/nodes.dart';
@@ -32,7 +33,7 @@ class NavigationTreeTile extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: borderRadius,
         color: isSelected
-            ? Theme.of(context).colorScheme.secondaryContainer
+            ? WidgetbookTheme.of(context).colorScheme.secondaryContainer
             : null,
       ),
       child: InkWell(
