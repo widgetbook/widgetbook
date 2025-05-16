@@ -15,7 +15,13 @@ If you want to use Widgetbook Cloud with your existing GitLab repository, here's
   <Step title="Create GitLab CI/CD Pipeline">
     To upload a [Widgetbook Build](/cloud/builds/overview) for each new commit in your repository, you need to setup up a pipeline in GitLab CI/CD that runs on every push.
 
-    Create a new GitLab pipeline file in your repository under `.gitlab-ci.yml` with the following content:
+    Create a new GitLab [branch pipeline](https://docs.gitlab.com/ci/pipelines/pipeline_types/#branch-pipeline) file in your repository under `.gitlab-ci.yml` with the following content:
+
+    <Warning>
+      Make sure that you are using a branch pipeline (i.e. no `if: $CI_PIPELINE_SOURCE == 'merge_request_event'` rule), and not a merge request pipeline.
+
+      Widgetbook builds should be uploaded for all branches to ensure a build is always available from the base branch (e.g., `main`).
+    </Warning>
 
     ```yaml
     image: ghcr.io/cirruslabs/flutter
