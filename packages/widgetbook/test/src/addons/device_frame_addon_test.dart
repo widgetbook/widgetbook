@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/inherited_widgetbook_theme.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
@@ -163,32 +162,6 @@ void main() {
             ),
             findsOneWidget,
           );
-        },
-      );
-
-      testWidgets(
-        'given a use-case, '
-        'then the background is set to [scaffoldBackgroundColor]',
-        (tester) async {
-          final device = devices.last;
-          const color = Color(0xff123456);
-
-          await tester.pumpWidgetWithBuilder(
-            (context) => InheritedWidgetbookTheme(
-              theme: Theme.of(context).copyWith(
-                scaffoldBackgroundColor: color,
-              ),
-              child: addon.buildUseCase(
-                context,
-                const SizedBox(),
-                DeviceFrameSetting(
-                  device: device,
-                ),
-              ),
-            ),
-          );
-
-          expect(find.byType(ColoredBox), paints..rect(color: color));
         },
       );
     },

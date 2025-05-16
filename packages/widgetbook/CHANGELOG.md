@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FIX**: Fix inconsistent background color of the workbench and device add-on. ([#1378](https://github.com/widgetbook/widgetbook/pull/1378) - by [@ValentinVignal](https://github.com/ValentinVignal)).
+- **FEAT**: Add `InheritedWidgetbookTheme` to provide the widget book theme. ([#1378](https://github.com/widgetbook/widgetbook/pull/1378) - by [@ValentinVignal](https://github.com/ValentinVignal)).
 
 ## 3.14.0
 
