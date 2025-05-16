@@ -1,7 +1,3 @@
-## Unreleased
-
-- **FEAT**: Add `InheritedWidgetbookTheme` to provide the widget book theme. ([#1378](https://github.com/widgetbook/widgetbook/pull/1378) - by [@ValentinVignal](https://github.com/ValentinVignal)).
-
 ## 3.14.0
 
 - **FEAT**: Add [`header` parameter](https://docs.widgetbook.io/guides/customization#header-widget) to Widgetbook to allow adding a custom header to the navigation sidebar. ([#1443](https://github.com/widgetbook/widgetbook/pull/1443) - by [@Sourav-Sonkar](https://github.com/Sourav-Sonkar))
