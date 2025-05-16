@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/src/inherited_widgetbook_theme.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
@@ -173,8 +174,8 @@ void main() {
           const color = Color(0xff123456);
 
           await tester.pumpWidgetWithBuilder(
-            (context) => Theme(
-              data: Theme.of(context).copyWith(
+            (context) => InheritedWidgetbookTheme(
+              theme: Theme.of(context).copyWith(
                 scaffoldBackgroundColor: color,
               ),
               child: addon.buildUseCase(
@@ -187,7 +188,7 @@ void main() {
             ),
           );
 
-          expect(find.byType(ColoredBox).last, paints..rect(color: color));
+          expect(find.byType(ColoredBox), paints..rect(color: color));
         },
       );
     },
