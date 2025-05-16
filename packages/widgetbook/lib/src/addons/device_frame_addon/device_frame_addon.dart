@@ -2,6 +2,7 @@ import 'package:device_frame_plus/device_frame_plus.dart';
 import 'package:flutter/material.dart';
 
 import '../../fields/fields.dart';
+import '../../inherited_widgetbook_theme.dart';
 import '../common/common.dart';
 import 'device_frame_setting.dart';
 import 'none_device.dart';
@@ -89,7 +90,9 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
           screen: Navigator(
             onGenerateRoute: (_) => PageRouteBuilder(
               pageBuilder: (context, _, __) => ColoredBox(
-                color: Theme.of(context).scaffoldBackgroundColor,
+                color: InheritedWidgetbookTheme.maybeOf(context)
+                        ?.scaffoldBackgroundColor ??
+                    Colors.transparent,
                 child: setting.hasFrame
                     ? child
                     : SafeArea(
