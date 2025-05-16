@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/themes.dart';
-import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook/src/widgetbook_theme.dart';
+import 'package:widgetbook/widgetbook.dart' hide WidgetbookTheme;
 
 extension TesterExtension on WidgetTester {
   /// Executes [tap] on the [finder] then [pumpAndSettle].
@@ -30,8 +31,15 @@ extension TesterExtension on WidgetTester {
     return pumpWidget(
       MaterialApp(
         theme: Themes.dark,
-        home: Scaffold(
-          body: widget,
+        home: Builder(
+          builder: (context) {
+            return WidgetbookTheme(
+              data: Theme.of(context),
+              child: Scaffold(
+                body: widget,
+              ),
+            );
+          },
         ),
       ),
     );

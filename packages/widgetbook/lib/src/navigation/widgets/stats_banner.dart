@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../widgetbook_theme.dart';
+
 class StatsBanner extends StatelessWidget {
   const StatsBanner({
     super.key,
@@ -23,7 +25,7 @@ class StatsBanner extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: Theme.of(context).colorScheme.outline,
+            color: WidgetbookTheme.of(context).colorScheme.outline,
           ),
         ),
         child: Padding(
@@ -83,7 +85,10 @@ class _SummaryItem extends StatelessWidget {
             Expanded(
               child: Text(
                 text,
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                style: WidgetbookTheme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(
                       decoration: isClickable ? TextDecoration.underline : null,
                     ),
               ),

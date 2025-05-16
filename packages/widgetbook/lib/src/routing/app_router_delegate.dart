@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 
 import '../layout/responsive_layout.dart';
 import '../state/state.dart';
+import '../widgetbook_theme.dart';
 import '../workbench/workbench.dart';
 import 'app_route_config.dart';
 
@@ -37,22 +38,28 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
 
   @override
   Widget build(BuildContext context) {
-    return Navigator(
-      key: navigatorKey,
-      // The onPopPage parameter is deprecated in Flutter 3.24.0,
-      // But we cannot migrate it because our minimum version is 3.19.0.
-      // ignore: deprecated_member_use
-      onPopPage: (route, result) => route.didPop(result),
-      pages: [
-        MaterialPage(
-          child: _configuration.previewMode
-              ? const Workbench()
-              : ResponsiveLayout(
-                  key: ValueKey(_configuration),
-                  child: const Workbench(),
-                ),
+    final theme = Theme.of(context);
+    return WidgetbookTheme(
+      data: theme,
+      child: Center(
+        child: Navigator(
+          key: navigatorKey,
+          // The onPopPage parameter is deprecated in Flutter 3.24.0,
+          // But we cannot migrate it because our minimum version is 3.19.0.
+          // ignore: deprecated_member_use
+          onPopPage: (route, result) => route.didPop(result),
+          pages: [
+            MaterialPage(
+              child: _configuration.previewMode
+                  ? const Workbench()
+                  : ResponsiveLayout(
+                      key: ValueKey(_configuration),
+                      child: const Workbench(),
+                    ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

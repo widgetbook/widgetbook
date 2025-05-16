@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../widgetbook_theme.dart';
+
 class DefaultHomePage extends StatelessWidget {
   const DefaultHomePage({super.key});
 
@@ -15,7 +17,7 @@ class DefaultHomePage extends StatelessWidget {
             Text(
               'Welcome to Widgetbook',
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.displaySmall,
+              style: WidgetbookTheme.of(context).textTheme.displaySmall,
             ),
             const SizedBox(height: 24),
             const Wrap(
@@ -83,7 +85,7 @@ class _Card extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
           side: BorderSide(
-            color: Theme.of(context).dividerColor.withAlpha(100),
+            color: WidgetbookTheme.of(context).dividerColor.withAlpha(100),
           ),
         ),
         child: InkWell(
@@ -96,7 +98,7 @@ class _Card extends StatelessWidget {
               children: [
                 RichText(
                   text: TextSpan(
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: WidgetbookTheme.of(context).textTheme.titleMedium,
                     children: [
                       TextSpan(
                         text: title,
@@ -114,8 +116,11 @@ class _Card extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   description,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Theme.of(context)
+                  style: WidgetbookTheme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(
+                        color: WidgetbookTheme.of(context)
                             .colorScheme
                             .onSurface
                             .withAlpha(120),

@@ -3,6 +3,7 @@ import 'package:resizable_widget/resizable_widget.dart';
 
 import '../settings/settings.dart';
 import '../state/state.dart';
+import '../widgetbook_theme.dart';
 import 'base_layout.dart';
 
 class DesktopLayout extends StatelessWidget implements BaseLayout {
@@ -34,7 +35,7 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
 
     return ColoredBox(
       key: ValueKey(state.isNext), // Rebuild when switching to next
-      color: Theme.of(context).colorScheme.surface,
+      color: WidgetbookTheme.of(context).colorScheme.surface,
       child: ResizableLayout(
         items: [
           if (showNavigationPanel)
