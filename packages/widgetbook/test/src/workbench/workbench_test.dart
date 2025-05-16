@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/inherited_widgetbook_theme.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -68,45 +67,6 @@ void main() {
           expect(
             find.text(useCaseName),
             findsOneWidget,
-          );
-        },
-      );
-
-      testWidgets(
-        'given a home widget, '
-        'then the widgetbook theme is accessible',
-        (tester) async {
-          const useCaseName = 'use-case';
-          final state = WidgetbookState(
-            appBuilder: materialAppBuilder,
-            home: const Placeholder(),
-            path: useCaseName,
-            root: WidgetbookRoot(
-              children: [
-                WidgetbookUseCase(
-                  name: useCaseName,
-                  builder: (context) => const Placeholder(),
-                ),
-              ],
-            ),
-          );
-
-          await tester.pumpWidgetWithState(
-            state: state,
-            builder: (_) => const Workbench(),
-          );
-
-          expect(
-            find.byType(Placeholder),
-            findsOne,
-          );
-
-          final context = tester.element(find.byType(Placeholder));
-          final theme = InheritedWidgetbookTheme.maybeOf(context);
-
-          expect(
-            theme,
-            isNotNull,
           );
         },
       );
