@@ -41,24 +41,22 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
     final theme = Theme.of(context);
     return WidgetbookTheme(
       data: theme,
-      child: Center(
-        child: Navigator(
-          key: navigatorKey,
-          // The onPopPage parameter is deprecated in Flutter 3.24.0,
-          // But we cannot migrate it because our minimum version is 3.19.0.
-          // ignore: deprecated_member_use
-          onPopPage: (route, result) => route.didPop(result),
-          pages: [
-            MaterialPage(
-              child: _configuration.previewMode
-                  ? const Workbench()
-                  : ResponsiveLayout(
-                      key: ValueKey(_configuration),
-                      child: const Workbench(),
-                    ),
-            ),
-          ],
-        ),
+      child: Navigator(
+        key: navigatorKey,
+        // The onPopPage parameter is deprecated in Flutter 3.24.0,
+        // But we cannot migrate it because our minimum version is 3.19.0.
+        // ignore: deprecated_member_use
+        onPopPage: (route, result) => route.didPop(result),
+        pages: [
+          MaterialPage(
+            child: _configuration.previewMode
+                ? const Workbench()
+                : ResponsiveLayout(
+                    key: ValueKey(_configuration),
+                    child: const Workbench(),
+                  ),
+          ),
+        ],
       ),
     );
   }
