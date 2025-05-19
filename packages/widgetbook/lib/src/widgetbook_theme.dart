@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-/// A widget that provides the themed used in the [Widgetbook] app.
+/// A widget that provides the theme used in the [Widgetbook] app.
 @internal
 class WidgetbookTheme extends InheritedWidget {
-  /// A widget that provides the themed used in the [Widgetbook] app.
+  /// A widget that provides the theme used in the [Widgetbook] app.
   const WidgetbookTheme({
     required super.child,
     required this.data,
     super.key,
   });
 
-  /// The theme to provides.
+  /// The theme to provide.
   final ThemeData data;
 
   /// The data from the closest [WidgetbookTheme] instance that
