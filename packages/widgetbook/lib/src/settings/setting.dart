@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgetbook_theme.dart';
+
 class Setting extends StatelessWidget {
   const Setting({
     super.key,
@@ -32,8 +34,11 @@ class Setting extends StatelessWidget {
                   name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
+                  style: WidgetbookTheme.of(context)
+                      .textTheme
+                      .titleSmall!
+                      .copyWith(
+                        color: WidgetbookTheme.of(context).colorScheme.primary,
                       ),
                 ),
               ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../addons/addons.dart';
+import '../addons/addons.dart' hide WidgetbookTheme;
 import '../fields/fields.dart';
 import '../state/state.dart';
+import '../widgetbook_theme.dart';
 import 'safe_boundaries.dart';
 import 'use_case_builder.dart';
 
@@ -18,6 +19,8 @@ class Workbench extends StatelessWidget {
       return state.home;
     }
 
+    final theme = WidgetbookTheme.of(context);
+
     return Scaffold(
       // Some addons require a Scaffold to work properly.
       body: SafeBoundaries(
@@ -26,7 +29,7 @@ class Workbench extends StatelessWidget {
           ColoredBox(
             // Background color for the area behind device frame if
             // the [DeviceFrameAddon] is used.
-            color: Theme.of(context).scaffoldBackgroundColor,
+            color: theme.scaffoldBackgroundColor,
             child: MultiAddonBuilder(
               addons: state.addons,
               builder: (context, addon, child) {
