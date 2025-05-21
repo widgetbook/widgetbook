@@ -4,8 +4,8 @@ publish_to: none
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.7.0 <4.0.0"
-  flutter: ">=3.29.0"
+  sdk: ">=3.8.0 <4.0.0"
+  flutter: ">=3.32.0"
 
 dependencies:
   flutter:
@@ -14,7 +14,7 @@ dependencies:
   widgetbook_annotation: ^3.5.0
 
 dev_dependencies:
-  alchemist: ^0.7.0
+  alchemist: ^0.11.0
   build_runner: ^2.3.2
   flutter_test:
     sdk: flutter
