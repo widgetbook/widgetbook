@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../addons/device_frame_addon/none_device.dart';
 import '../../fields/fields.dart';
+import '../../widgetbook_theme.dart';
 import 'base/mode.dart';
 import 'base/mode_addon.dart';
 
@@ -53,11 +54,14 @@ class DeviceFrameMode extends Mode<DeviceFrameConfig> {
           // workbench and not just the device frame.
           screen: Navigator(
             onGenerateRoute: (_) => PageRouteBuilder(
-              pageBuilder: (context, _, __) => value.hasFrame
-                  ? child
-                  : SafeArea(
-                      child: child,
-                    ),
+              pageBuilder: (context, _, __) => ColoredBox(
+                color: WidgetbookTheme.of(context).scaffoldBackgroundColor,
+                child: value.hasFrame
+                    ? child
+                    : SafeArea(
+                        child: child,
+                      ),
+              ),
             ),
           ),
         ),
