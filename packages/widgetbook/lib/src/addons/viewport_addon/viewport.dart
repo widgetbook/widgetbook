@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:nested/nested.dart';
 
+import '../../widgetbook_theme.dart';
 import 'viewport_data.dart';
 
 @experimental
@@ -65,7 +66,10 @@ class Viewport extends StatelessWidget {
                 // the app builder, causing these routes to fill the whole
                 // workbench and not just the device frame.
                 onGenerateRoute: (_) => PageRouteBuilder(
-                  pageBuilder: (context, _, __) => child,
+                  pageBuilder: (context, _, __) => ColoredBox(
+                    color: WidgetbookTheme.of(context).scaffoldBackgroundColor,
+                    child: child,
+                  ),
                 ),
               ),
             ),
