@@ -24,6 +24,7 @@ class Themes {
     onSurface: Color(0xFFE3E2E6),
     onSurfaceVariant: Color(0xFFC3C6CF),
     outline: Color(0xFF8D9199),
+    outlineVariant: Color(0xFF8D9199),
     onInverseSurface: Color(0xFF1A1C1E),
     inverseSurface: Color(0xFFE3E2E6),
     inversePrimary: Color(0xFF0060A7),
@@ -64,6 +65,7 @@ class Themes {
     onSurface: Color(0xFF1A1C1E),
     onSurfaceVariant: Color(0xFF43474E),
     outline: Color(0xFF73777F),
+    outlineVariant: Color(0xFF73777F),
     onInverseSurface: Color(0xFFE3E2E6),
     inverseSurface: Color(0xFF1A1C1E),
     inversePrimary: Color(0xFFA1C9FF),
@@ -117,9 +119,6 @@ class Themes {
     fontFamily: 'Poppins',
     colorScheme: _darkColorScheme,
     hoverColor: const Color(0xFFE3E2E6).withAlpha(20),
-    tabBarTheme: TabBarTheme(
-      dividerColor: _darkColorScheme.outline,
-    ),
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
       // By default, this is [ColorScheme.surfaceContainerHighest], but we
@@ -144,9 +143,6 @@ class Themes {
     fontFamily: 'Poppins',
     colorScheme: _lightColorScheme,
     hoverColor: const Color(0xFF1A1C1E).withAlpha(20),
-    tabBarTheme: TabBarTheme(
-      dividerColor: _darkColorScheme.outline,
-    ),
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
       // By default, this is [ColorScheme.surfaceContainerHighest], but we
