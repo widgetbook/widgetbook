@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_import, prefer_relative_imports, directives_ordering
@@ -35,9 +36,9 @@ final directories = <_i1.WidgetbookNode>[
                 builder: _i2.greenContainerUseCase,
               ),
             ],
-          )
+          ),
         ],
-      )
+      ),
     ],
   ),
   _i1.WidgetbookFolder(
@@ -87,7 +88,7 @@ final directories = <_i1.WidgetbookNode>[
           name: 'CustomRangeSlider',
           builder: _i6.rangeSlider,
         ),
-      )
+      ),
     ],
   ),
 ];
