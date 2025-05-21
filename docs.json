@@ -2,6 +2,7 @@
   "$schema": "https://docs.page/schema.json",
   "name": "Widgetbook",
   "description": "Build your Design System's widgets in isolation.",
+  "favicon": "/assets/logos/logo-dark.png",
   "theme": {
     "primary": "#0060A7"
   },
