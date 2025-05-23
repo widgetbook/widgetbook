@@ -1,4 +1,4 @@
-## Unreleased
+## 3.14.1
 
 - **FIX**: Support Flutter 3.32.0. ([#1467](https://github.com/widgetbook/widgetbook/pull/1467))
 
