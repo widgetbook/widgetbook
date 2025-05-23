@@ -659,7 +659,7 @@ packages:
       path: "../../packages/widgetbook"
       relative: true
     source: path
-    version: "3.14.0"
+    version: "3.14.1"
   widgetbook_annotation:
     dependency: "direct main"
     description:
