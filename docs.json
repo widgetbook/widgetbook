@@ -107,8 +107,8 @@
               "href": "/knobs/overview"
             },
             {
-              "title": "Bool",
-              "href": "/knobs/bool"
+              "title": "Boolean",
+              "href": "/knobs/boolean"
             },
             {
               "group": "Double",

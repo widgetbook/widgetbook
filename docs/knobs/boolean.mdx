@@ -1,17 +1,17 @@
-# Bool Knob
+# Boolean Knob
 
-The bool knob renders a toggle switch in the Widgetbook UI where you can dynamically toggle a bool value for a widget property. 
+The boolean knob renders a toggle switch in the Widgetbook UI where you can dynamically toggle a bool value for a widget property. 
 
 ## Varients
 
-The bool knob has two variants:
-- `context.knobs.bool()`: This variant allows you to toggle a bool value. It does not accept `null` values.
-- `context.knobs.boolOrNull()`: This variant allows you to toggle a bool value or `null`. It is useful when the property can be optional.
+The boolean knob has two variants:
+- `context.knobs.boolean()`: This variant allows you to toggle a bool value. It does not accept `null` values.
+- `context.knobs.booleanOrNull()`: This variant allows you to toggle a bool value or `null`. It is useful when the property can be optional.
 
-## `context.knobs.bool()`
+## `context.knobs.boolean()`
 ### Properties
 
-Besides the knob's [base properties](/knobs/overview#properties), the bool knob does not feature any additional properties.
+Besides the knob's [base properties](/knobs/overview#properties), the boolean knob does not feature any additional properties.
 
 ### Example
 
@@ -23,9 +23,9 @@ Besides the knob's [base properties](/knobs/overview#properties), the bool knob 
 
 ### Usage
 
-To use a bool knob, call the `context.knobs.bool()` method.
+To use a boolean knob, call the `context.knobs.boolean()` method.
 
-```dart title="Example: Bool Knob"
+```dart title="Example: Boolean Knob"
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
@@ -39,11 +39,11 @@ Widget buildCheckboxUseCase(BuildContext context) {
 }
 ```
 
-## `context.knobs.boolOrNull()` 
+## `context.knobs.booleanOrNull()` 
 
 ### Properties
 
-Besides the knob's [base properties](/knobs/overview#properties), the nullable bool knob does not feature any additional properties.
+Besides the knob's [base properties](/knobs/overview#properties), the nullable boolean knob does not feature any additional properties.
 
 ### Example
 
@@ -55,9 +55,9 @@ Besides the knob's [base properties](/knobs/overview#properties), the nullable b
 
 ### Usage
 
-To use the nullable bool knob, call the `context.knobs.boolOrNull()` method.
+To use the nullable boolean knob, call the `context.knobs.booleanOrNull()` method.
 
-```dart title="Example: Nullable Bool Knob"
+```dart title="Example: Nullable Boolean Knob"
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
@@ -76,7 +76,7 @@ Widget buildCheckboxUseCase(BuildContext context) {
 
 Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/reviews/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/reviews/multi-snapshot#multi-snapshot-for-addons).
 
-### Regular Bool Knob
+### Regular Boolean Knob
 
 ```dart title="Example: BooleanKnobConfig"
 import 'package:flutter/material.dart';
