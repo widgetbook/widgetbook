@@ -1,6 +1,6 @@
-## Unreleased
+## 3.14.2
 
-- **FIX**: Tighten `device_frame_plus` version constraints; to prevent the [breaking changes](https://github.com/StorybookToolkit/device_frame_plus/issues/5#issuecomment-2907648670) introduced in v1.4.0. ([#1475](https://github.com/widgetbook/widgetbook/pull/1475))
+- **FIX**: Tighten `device_frame_plus` version constraints; to prevent the [breaking changes](https://github.com/StorybookToolkit/device_frame_plus/issues/5#issuecomment-2907648670) introduced in v1.4.0. ([#1475](https://github.com/widgetbook/widgetbook/pull/1475) - by [@Peetee06](https://github.com/Peetee06))
 
 ## 3.14.1
 
