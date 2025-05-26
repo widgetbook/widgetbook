@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Tighten `device_frame_plus` version constraints; to prevent the [breaking changes](https://github.com/StorybookToolkit/device_frame_plus/issues/5#issuecomment-2907648670) introduced in v1.4.0. ([#1475](https://github.com/widgetbook/widgetbook/pull/1475))
+
 ## 3.14.1
 
 - **FIX**: Support Flutter 3.32.0. ([#1467](https://github.com/widgetbook/widgetbook/pull/1467))
