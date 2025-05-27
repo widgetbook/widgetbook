@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FIX**: Fix inconsistent background color between the workbench and device frame add-on. ([#1461](https://github.com/widgetbook/widgetbook/pull/1461) - by [@ValentinVignal](https://github.com/ValentinVignal)).
+- **FIX**: Unify background color between the workbench and `DeviceFrameAddon`. ([#1461](https://github.com/widgetbook/widgetbook/pull/1461) - by [@ValentinVignal](https://github.com/ValentinVignal))
 
 ## 3.14.2
 
