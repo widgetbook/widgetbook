@@ -178,12 +178,16 @@ void main() {
               data: Theme.of(context).copyWith(
                 scaffoldBackgroundColor: color,
               ),
-              child: addon.buildUseCase(
-                context,
-                const SizedBox(),
-                DeviceFrameSetting(
-                  device: device,
-                ),
+              child: Builder(
+                builder: (context) {
+                  return addon.buildUseCase(
+                    context,
+                    const SizedBox(),
+                    DeviceFrameSetting(
+                      device: device,
+                    ),
+                  );
+                },
               ),
             ),
           );
