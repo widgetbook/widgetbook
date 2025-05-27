@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../addons/device_frame_addon/none_device.dart';
 import '../../fields/fields.dart';
+import '../../widgetbook_theme.dart';
 import 'base/mode.dart';
 import 'base/mode_addon.dart';
 
@@ -46,18 +47,21 @@ class DeviceFrameMode extends Mode<DeviceFrameConfig> {
           orientation: value.orientation,
           device: value.device,
           isFrameVisible: value.hasFrame,
-          // A navigator below the device frame is necessary to make
-          // the popup routes (e.g. dialogs and bottom sheets) work within
-          // the device frame, otherwise they would use the navigator from
-          // the app builder, causing these routes to fill the whole
-          // workbench and not just the device frame.
-          screen: Navigator(
-            onGenerateRoute: (_) => PageRouteBuilder(
-              pageBuilder: (context, _, __) => value.hasFrame
-                  ? child
-                  : SafeArea(
-                      child: child,
-                    ),
+          screen: ColoredBox(
+            color: WidgetbookTheme.of(context).scaffoldBackgroundColor,
+            // A navigator below the device frame is necessary to make the popup
+            // routes (e.g. dialogs and bottom sheets) work within the device
+            // frame, otherwise they would use the navigator from the app
+            // builder, causing these routes to fill the whole workbench and not
+            // just the device frame.
+            child: Navigator(
+              onGenerateRoute: (_) => PageRouteBuilder(
+                pageBuilder: (context, _, __) => value.hasFrame
+                    ? child
+                    : SafeArea(
+                        child: child,
+                      ),
+              ),
             ),
           ),
         ),
