@@ -7,6 +7,7 @@ import '../date_time_knob.dart';
 import '../duration_knob.dart';
 import '../knob.dart';
 import '../list_knob.dart';
+import '../segment_button_knob.dart';
 import '../string_knob.dart';
 import 'double_knobs_builder.dart';
 import 'int_knobs_builder.dart';
@@ -168,6 +169,27 @@ class KnobsBuilder {
       ),
     );
   }
+
+  /// Allow the users to select from a list of options in a segmentbutton.
+  /// Must contain at least one value.
+  T segment<T>({
+    required String label,
+    required List<T> options,
+    T? initialOption,
+    String? description,
+    LabelBuilder<T>? labelBuilder,
+  }) {
+    return onKnobAdded(
+      SegmentButtonKnob<T>(
+        label: label,
+        initialValue: initialOption ?? options.first,
+        description: description,
+        options: options,
+        labelBuilder: labelBuilder,
+      ),
+    )!;
+  }
+
 
   /// Creates a duration input that can be typed in
   Duration duration({

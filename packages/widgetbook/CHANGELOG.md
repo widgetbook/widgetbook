@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FIX**: Unify background color between the workbench and `DeviceFrameAddon`. ([#1461](https://github.com/widgetbook/widgetbook/pull/1461) - by [@ValentinVignal](https://github.com/ValentinVignal))
+- **FEAT**: Add [SegmentButton Knob] to widgetbook.( - by [@Sourav-Sonkar](https://github.com/Sourav-Sonkar))
 
 ## 3.14.2
 
