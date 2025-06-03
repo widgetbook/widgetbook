@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.page/schema.json",
-  "name": "Widgetbook",
+  "name": "Widgetbook Docs",
   "description": "Build your Design System's widgets in isolation.",
   "favicon": "/assets/logos/logo-dark.png",
   "theme": {
