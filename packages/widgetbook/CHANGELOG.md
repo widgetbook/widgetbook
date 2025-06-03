@@ -4,6 +4,7 @@
 - **FIX**: Fix memory leaks by disposing `WidgetbookState`'s `KnobsRegistry`. ([#1487](https://github.com/widgetbook/widgetbook/pull/1487) - by [@ValentinVignal](https://github.com/ValentinVignal))
 - **FIX**: Add hints to `TextField`s to improve accessibility. ([#1483](https://github.com/widgetbook/widgetbook/pull/1483) - by [@lsaudon](https://github.com/lsaudon))
 - **FIX**: Preserve Viewport's title style when a custom `ThemeData` is used in the `appBuilder`. ([#1489](https://github.com/widgetbook/widgetbook/pull/1489))
+- **REFACTOR**: Support `device_frame_plus` v1.5.0. ([#1481](https://github.com/widgetbook/widgetbook/pull/1481))
 
 ## 3.14.2
 
