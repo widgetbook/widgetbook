@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FIX**: Unify background color between the workbench and `DeviceFrameAddon`. ([#1461](https://github.com/widgetbook/widgetbook/pull/1461) - by [@ValentinVignal](https://github.com/ValentinVignal))
+- **REFACTOR**: Support `device_frame_plus` v1.4.0. ([#1481](https://github.com/widgetbook/widgetbook/pull/1481))
 
 ## 3.14.2
 
