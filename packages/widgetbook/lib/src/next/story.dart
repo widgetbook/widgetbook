@@ -22,7 +22,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
     required this.args,
     required this.argsBuilder,
   }) : super(
-          builder: (context) => const SizedBox.shrink(), // TODO: remove
+          builder: (context) => const SizedBox.shrink(),
         );
 
   final TArgs args;

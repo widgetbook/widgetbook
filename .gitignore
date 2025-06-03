@@ -153,3 +153,6 @@ app.*.symbols
 
 # Do not ignore generate files in full_example
 !**/full_example/**/*.g.dart
+
+# FVM Version Cache
+.fvm/

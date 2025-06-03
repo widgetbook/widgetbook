@@ -656,23 +656,26 @@ packages:
   widgetbook:
     dependency: "direct main"
     description:
-      path: "../../packages/widgetbook"
-      relative: true
-    source: path
+      name: widgetbook
+      sha256: "116efd339f9d060ac4a063f3c1c91266757198bcfb43083fb3f1b7bcbb9e6f75"
+      url: "https://pub.dev"
+    source: hosted
     version: "3.14.2"
   widgetbook_annotation:
     dependency: "direct main"
     description:
-      path: "../../packages/widgetbook_annotation"
-      relative: true
-    source: path
+      name: widgetbook_annotation
+      sha256: "41662c48c2a0e82cac676a83727203d863621a5f6fb2505395287b8789afdf38"
+      url: "https://pub.dev"
+    source: hosted
     version: "3.5.0"
   widgetbook_generator:
     dependency: "direct dev"
     description:
-      path: "../../packages/widgetbook_generator"
-      relative: true
-    source: path
+      name: widgetbook_generator
+      sha256: "38320c313a425e5a354bfdf6d2922efd69b5c3e9c0bf414d3ba7f947c303448a"
+      url: "https://pub.dev"
+    source: hosted
     version: "3.13.0"
   yaml:
     dependency: transitive

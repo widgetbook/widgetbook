@@ -8,12 +8,15 @@
     "generator",
     "examples"
   ],
-  "cSpell.words": ["Widgetbook"],
+  "cSpell.words": [
+    "Widgetbook"
+  ],
   "cmake.sourceDirectory": "${workspaceFolder}/examples/knobs_example/linux/flutter",
   "grammarly.selectors": [
     {
       "language": "plaintext",
       "scheme": "file"
     }
-  ]
+  ],
+  "dart.flutterSdkPath": ".fvm/versions/3.32.0"
 }
