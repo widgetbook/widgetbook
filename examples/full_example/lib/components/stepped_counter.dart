@@ -2,27 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+part 'stepped_counter.builder.dart';
+
 final counterKey = GlobalKey();
 
-@widgetbook.UseCase(
-  name: 'Default',
-  type: SteppedCounter,
-)
+@widgetbook.UseCase(name: 'Default', type: SteppedCounter)
 Widget steppedCounterUseCase(BuildContext context) {
   return SteppedCounter(
     key: counterKey, // To preserve state
-    step: context.knobs.int.slider(
-      label: 'Step',
-      initialValue: 1,
-    ),
+    step: context.knobs.int.slider(label: 'Step', initialValue: 1),
   );
 }
 
 class SteppedCounter extends StatefulWidget {
-  const SteppedCounter({
-    super.key,
-    required this.step,
-  });
+  const SteppedCounter({super.key, required this.step});
 
   final int step;
 

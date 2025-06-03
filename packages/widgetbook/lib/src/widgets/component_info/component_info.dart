@@ -8,13 +8,13 @@ class ComponentInfo extends StatelessWidget {
     required this.componentName,
     required this.description,
     required this.component,
-    required this.codeSnippet,
+    this.codeSnippet,
   });
 
   final String componentName;
   final String description;
   final Widget component;
-  final String codeSnippet;
+  final String? codeSnippet;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +27,11 @@ class ComponentInfo extends StatelessWidget {
           const SizedBox(height: 8),
           Text(description, style: Theme.of(context).textTheme.bodyMedium),
           const SizedBox(height: 8),
-          const TabBar(
+          TabBar(
             indicatorSize: TabBarIndicatorSize.tab,
             tabs: [
-              Tab(text: 'Preview'),
-              Tab(text: 'Code'),
+              const Tab(text: 'Preview'),
+              if (codeSnippet != null) const Tab(text: 'Code'),
             ],
           ),
           SizedBox(
@@ -39,10 +39,11 @@ class ComponentInfo extends StatelessWidget {
             child: TabBarView(
               children: [
                 Center(child: CheckerboardBackground(child: component)),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: DartCodeViewer(codeSnippet),
-                ),
+                if (codeSnippet != null)
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: DartCodeViewer(codeSnippet!),
+                  ),
               ],
             ),
           ),

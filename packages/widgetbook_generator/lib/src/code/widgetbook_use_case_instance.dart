@@ -12,7 +12,7 @@ class WidgetbookUseCaseInstance extends WidgetbookInstance {
           args: {
             'name': literalString(useCase.name),
             'builder': refer(
-              useCase.functionName,
+              '${useCase.functionName}Generated',
               useCase.importUri,
             ),
             if (useCase.designLink != null)

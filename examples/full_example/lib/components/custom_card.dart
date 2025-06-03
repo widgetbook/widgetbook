@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+part 'custom_card.builder.dart';
+
 class CustomCard extends StatelessWidget {
   const CustomCard({
     super.key,
@@ -25,20 +27,12 @@ class CustomCard extends StatelessWidget {
   }
 }
 
-@widgetbook.UseCase(
-  name: 'Default Style',
-  type: CustomCard,
-)
+@widgetbook.UseCase(name: 'Default Style', type: CustomCard)
 CustomCard defaultCustomCard(BuildContext context) {
-  return const CustomCard(
-    child: Text('This is a custom card'),
-  );
+  return const CustomCard(child: Text('This is a custom card'));
 }
 
-@widgetbook.UseCase(
-  name: 'With Custom Background Color',
-  type: CustomCard,
-)
+@widgetbook.UseCase(name: 'With Custom Background Color', type: CustomCard)
 CustomCard customBackgroundCustomCard(BuildContext context) {
   return CustomCard(
     backgroundColor: Colors.green.shade100,

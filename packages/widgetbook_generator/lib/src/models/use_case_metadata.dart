@@ -4,7 +4,7 @@ import 'element_metadata.dart';
 
 /// Contains metadata about elements annotated with [UseCase].
 class UseCaseMetadata extends ElementMetadata {
-  const UseCaseMetadata({
+  UseCaseMetadata({
     required this.functionName,
     required this.designLink,
     required super.name,
@@ -21,7 +21,7 @@ class UseCaseMetadata extends ElementMetadata {
   final String? designLink;
 
   /// Metadata about the component that contains the [UseCase].
-  final ElementMetadata component;
+  ElementMetadata component;
 
   /// The path this element is placed under in the rendered widgetbook.
   final String navPath;

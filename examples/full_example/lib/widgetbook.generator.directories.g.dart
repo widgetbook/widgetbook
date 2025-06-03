@@ -24,18 +24,12 @@ final directories = <_i1.WidgetbookNode>[
       _i1.WidgetbookFolder(
         name: 'containers',
         children: [
-          _i1.WidgetbookComponent(
+          _i1.WidgetbookLeafComponent(
             name: 'Container',
-            useCases: [
-              _i1.WidgetbookUseCase(
-                name: 'with different title',
-                builder: _i2.myWidget,
-              ),
-              _i1.WidgetbookUseCase(
-                name: 'with green color',
-                builder: _i2.greenContainerUseCase,
-              ),
-            ],
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Component',
+              builder: _i2.myWidgetGenerated,
+            ),
           ),
         ],
       ),
@@ -49,11 +43,11 @@ final directories = <_i1.WidgetbookNode>[
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'Default Style',
-            builder: _i3.defaultCustomCard,
+            builder: _i3.defaultCustomCardGenerated,
           ),
           _i1.WidgetbookUseCase(
             name: 'With Custom Background Color',
-            builder: _i3.customBackgroundCustomCard,
+            builder: _i3.customBackgroundCustomCardGenerated,
           ),
         ],
       ),
@@ -62,11 +56,11 @@ final directories = <_i1.WidgetbookNode>[
         useCases: [
           _i1.WidgetbookUseCase(
             name: 'Default Style',
-            builder: _i4.defaultCustomTextField,
+            builder: _i4.defaultCustomTextFieldGenerated,
           ),
           _i1.WidgetbookUseCase(
             name: 'With Hint Text',
-            builder: _i4.hintTextCustomTextField,
+            builder: _i4.hintTextCustomTextFieldGenerated,
           ),
         ],
       ),
@@ -74,7 +68,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'SteppedCounter',
         useCase: _i1.WidgetbookUseCase(
           name: 'Default',
-          builder: _i5.steppedCounterUseCase,
+          builder: _i5.steppedCounterUseCaseGenerated,
         ),
       ),
     ],
@@ -86,7 +80,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'RangeSlider',
         useCase: _i1.WidgetbookUseCase(
           name: 'CustomRangeSlider',
-          builder: _i6.rangeSlider,
+          builder: _i6.rangeSliderGenerated,
         ),
       ),
     ],

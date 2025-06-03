@@ -4,6 +4,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 import 'src/generators/addons_configs_builder.dart';
 import 'src/generators/app_generator.dart';
+import 'src/generators/builder_generator.dart';
 import 'src/generators/json_builder.dart';
 import 'src/generators/use_case_generator.dart';
 import 'src/models/nav_path_mode.dart';
@@ -55,6 +56,16 @@ Builder appBuilder(BuilderOptions options) {
     AppGenerator(),
     generatedExtension: '.directories.g.dart',
     header: headerParts.join('\n'),
+  );
+}
+
+/// Builder for the builder files.
+/// Creates a `.builder.dart` file for each file containing use cases.
+Builder builderGenerator(BuilderOptions options) {
+  return LibraryBuilder(
+    BuilderGenerator(),
+    generatedExtension: '.builder.dart',
+    header: '// coverage:ignore-file\n// ignore_for_file: type=lint\n',
   );
 }
 
