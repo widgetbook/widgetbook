@@ -49,6 +49,7 @@ class DateTimeField extends Field<DateTime> {
       initialValue: (value ?? initialValue)?.toSimpleFormat(),
       keyboardType: TextInputType.datetime,
       decoration: InputDecoration(
+        hintText: 'Enter a DateTime',
         suffixIcon: IconButton(
           icon: const Icon(Icons.calendar_today_rounded),
           onPressed: () async {

@@ -29,6 +29,7 @@ class NumInputField<T extends num> extends Field<T> {
     return TextFormField(
       initialValue: codec.toParam(value ?? initialValue ?? defaultValue),
       keyboardType: TextInputType.number,
+      decoration: const InputDecoration(hintText: 'Enter a number'),
       inputFormatters: formatters,
       onChanged: (value) {
         final number = codec.toValue(value);

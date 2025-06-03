@@ -24,6 +24,7 @@ class HexColorPicker extends StatelessWidget implements OpaqueColorPicker {
       initialValue: hexValue,
       maxLength: 6,
       decoration: const InputDecoration(
+        hintText: 'Enter a hex color',
         counterText: '',
         prefixText: '#',
       ),

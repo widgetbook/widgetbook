@@ -183,6 +183,30 @@ void main() {
           expect(find.text('50'), findsOneWidget);
         },
       );
+
+      testWidgets(
+        'given a field, '
+        'then [toWidget] builds a [$HexColorPicker] the hintText value',
+        (tester) async {
+          await tester.pumpField<Color, ColorPicker>(
+            field,
+            null,
+          );
+
+          await tester.findAndTap(find.byType(DropdownMenu<ColorSpace>));
+          await tester.findAndTap(find.text('HEX').last);
+          await tester.pumpAndSettle();
+
+          final widget = tester.widget<TextField>(
+            find.descendant(
+              of: find.byType(HexColorPicker),
+              matching: find.byType(TextField),
+            ),
+          );
+
+          expect(widget.decoration?.hintText, equals('Enter a hex color'));
+        },
+      );
     },
   );
 }

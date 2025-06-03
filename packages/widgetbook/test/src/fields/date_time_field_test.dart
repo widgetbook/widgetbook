@@ -86,5 +86,18 @@ void main() {
         expect(widget.initialValue, equals(field.end.toSimpleFormat()));
       },
     );
+
+    testWidgets(
+      'given a field, '
+      'then [toWidget] builds the hintText value',
+      (tester) async {
+        final widget = await tester.pumpField<DateTime, TextField>(
+          field,
+          null,
+        );
+
+        expect(widget.decoration?.hintText, equals('Enter a DateTime'));
+      },
+    );
   });
 }

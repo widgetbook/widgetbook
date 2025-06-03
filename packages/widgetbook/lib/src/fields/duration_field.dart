@@ -35,6 +35,7 @@ class DurationField extends Field<Duration> {
       initialValue: codec.toParam(value ?? initialValue ?? defaultDuration),
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
+        hintText: 'Enter a duration',
         suffix: Text('ms'),
       ),
       onChanged: (value) {
