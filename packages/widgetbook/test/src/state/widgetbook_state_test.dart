@@ -254,6 +254,31 @@ void main() {
           expect(state.queryParams, <String, String>{});
         },
       );
+
+      test(
+        'given a state, '
+        'when it is disposed, '
+        'its knobs registry is disposed too ',
+        () {
+          final state = WidgetbookState(
+            root: WidgetbookRoot(
+              children: const [],
+            ),
+          );
+          state.dispose();
+
+          expect(
+            () => state.knobs.dispose(),
+            throwsA(
+              isFlutterError.having(
+                (error) => error.message,
+                'message',
+                contains('A KnobsRegistry was used after being disposed'),
+              ),
+            ),
+          );
+        },
+      );
     },
   );
 }

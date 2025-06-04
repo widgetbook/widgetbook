@@ -234,4 +234,10 @@ class WidgetbookState extends ChangeNotifier {
   /// Returns the current active [Story].
   @experimental
   Story? get story => isNext ? useCase as Story : null;
+
+  @override
+  void dispose() {
+    knobs.dispose();
+    super.dispose();
+  }
 }
