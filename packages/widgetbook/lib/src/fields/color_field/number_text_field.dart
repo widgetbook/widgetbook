@@ -46,6 +46,7 @@ class NumberTextField extends StatelessWidget {
         onChanged(newValue);
       },
       decoration: InputDecoration(
+        hintText: 'Enter a number',
         counterText: '',
         labelText: labelText,
         suffixText: suffixText,
