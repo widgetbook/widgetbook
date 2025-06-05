@@ -108,7 +108,7 @@ void main() {
             ),
           );
 
-          state.updatePath('component/use-case');
+          state.open('component/use-case');
 
           expect(state.knobs, isEmpty);
           expect(state.queryParams['knobs'], isNull);

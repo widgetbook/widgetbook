@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-part 'custom_text_field.builder.dart';
-
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,

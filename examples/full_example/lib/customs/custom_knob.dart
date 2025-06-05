@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-part 'custom_knob.builder.dart';
-
 @widgetbook.UseCase(name: 'CustomRangeSlider', type: RangeSlider)
 Widget rangeSlider(BuildContext context) {
   return RangeSlider(
@@ -22,9 +20,9 @@ class RangeKnob extends Knob<RangeValues> {
 
   @override
   List<Field> get fields => [
-    DoubleInputField(name: 'min-$label', initialValue: initialValue.start),
-    DoubleInputField(name: 'max-$label', initialValue: initialValue.end),
-  ];
+        DoubleInputField(name: 'min-$label', initialValue: initialValue.start),
+        DoubleInputField(name: 'max-$label', initialValue: initialValue.end),
+      ];
 
   @override
   RangeValues valueFromQueryGroup(Map<String, String> group) {
@@ -39,5 +37,6 @@ extension RangeKnobBuilder on KnobsBuilder {
   RangeValues range({
     required String label,
     RangeValues initialValue = const RangeValues(1, 10),
-  }) => onKnobAdded(RangeKnob(label: label, initialValue: initialValue))!;
+  }) =>
+      onKnobAdded(RangeKnob(label: label, initialValue: initialValue))!;
 }

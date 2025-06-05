@@ -181,8 +181,7 @@ class WidgetbookState extends ChangeNotifier {
 
   /// Update the [path], causing a new [useCase] to bet returned.
   /// Resets the [knobs] during the update.
-  @internal
-  void updatePath(String newPath) {
+  void open(String newPath) {
     path = newPath;
 
     // Reset Knobs

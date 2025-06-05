@@ -28,7 +28,7 @@ class NavigationPanel extends StatefulWidget {
 }
 
 class _NavigationPanelState extends State<NavigationPanel> {
-  WidgetbookNode? selectedNode;
+  late WidgetbookState _state;
 
   bool filterNode(WidgetbookNode node, String query) {
     // Escapes all the special character which are treated differently in regex
@@ -40,60 +40,75 @@ class _NavigationPanelState extends State<NavigationPanel> {
   @override
   void initState() {
     super.initState();
-    selectedNode = widget.initialPath != null
-        ? widget.root.find((child) => child.path == widget.initialPath)
-        : null;
+  }
+
+  @override
+  void didUpdateWidget(NavigationPanel oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialPath != oldWidget.initialPath) {
+      _state.open(widget.initialPath ?? '');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    _state = WidgetbookState.of(context);
     final query = WidgetbookState.of(context).query ?? '';
     final filteredRoot = query.isEmpty
         ? widget.root
         : widget.root.filter((node) => filterNode(node, query)) ?? widget.root;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        if (widget.header != null)
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: widget.header!,
-          ),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: SearchField(
-            value: query,
-            onChanged: WidgetbookState.of(context).updateQuery,
-            onCleared: () => WidgetbookState.of(context).updateQuery(''),
-          ),
-        ),
-        if (filteredRoot.children != null)
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
+    return ListenableBuilder(
+      listenable: _state,
+      builder: (context, child) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (widget.header != null)
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: widget.header!,
               ),
-              itemCount: filteredRoot.children!.length,
-              itemBuilder: (context, index) => NavigationTreeNode(
-                node: filteredRoot.children![index],
-                selectedNode: selectedNode,
-                onNodeSelected: (node) {
-                  if (!node.isLeaf || node.path == selectedNode?.path) return;
-                  setState(() => selectedNode = node);
-                  widget.onNodeSelected?.call(node);
-                },
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: SearchField(
+                value: query,
+                onChanged: WidgetbookState.of(context).updateQuery,
+                onCleared: () => WidgetbookState.of(context).updateQuery(''),
               ),
             ),
-          ),
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: StatsBanner(
-            componentsCount: WidgetbookState.of(context).root.componentsCount,
-            useCasesCount: WidgetbookState.of(context).root.useCasesCount,
-          ),
-        ),
-      ],
+            if (filteredRoot.children != null)
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ),
+                  itemCount: filteredRoot.children!.length,
+                  itemBuilder: (context, index) => NavigationTreeNode(
+                    node: filteredRoot.children![index],
+                    selectedPath: _state.path,
+                    onNodeSelected: (node) {
+                      final isSelected = node.path == _state.path;
+                      if (!node.isLeaf || isSelected) {
+                        return;
+                      }
+
+                      widget.onNodeSelected?.call(node);
+                    },
+                  ),
+                ),
+              ),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: StatsBanner(
+                componentsCount:
+                    WidgetbookState.of(context).root.componentsCount,
+                useCasesCount: WidgetbookState.of(context).root.useCasesCount,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

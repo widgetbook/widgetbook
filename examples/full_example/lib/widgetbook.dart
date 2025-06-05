@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart' hide AlignmentAddon;
 
 import 'customs/custom_addon.dart';
+import 'homepage.dart';
 import 'widgetbook.generator.directories.g.dart';
 
 void main() {
@@ -27,6 +28,7 @@ class WidgetbookApp extends StatelessWidget {
         ZoomAddon(),
       ],
       directories: directories,
+      home: const Homepage(),
     );
   }
 }

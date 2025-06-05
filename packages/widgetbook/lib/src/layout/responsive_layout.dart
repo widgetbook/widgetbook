@@ -21,7 +21,7 @@ class ResponsiveLayout extends StatelessWidget {
       root: state.root,
       header: state.header,
       onNodeSelected: (node) {
-        WidgetbookState.of(context).updatePath(node.path); // Fresh context
+        WidgetbookState.of(context).open(node.path); // Fresh context
 
         if (isMobile) {
           Navigator.pop(context); // Close the modal

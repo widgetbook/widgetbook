@@ -42,7 +42,7 @@ void main() {
 
           await tester.pumpWidgetWithMaterialApp(
             NavigationTreeNode(
-              selectedNode: leaf.useCase,
+              selectedPath: leaf.useCase.path,
               node: leaf,
             ),
           );
