@@ -26,7 +26,7 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
 
-    const kSidePanelPercentage = 0.2;
+    const kSidePanelPercentage = 0.14;
     const kWorkbenchPercentage = 1 - 2 * kSidePanelPercentage;
 
     final showNavigationPanel = state.canShowPanel(LayoutPanel.navigation);

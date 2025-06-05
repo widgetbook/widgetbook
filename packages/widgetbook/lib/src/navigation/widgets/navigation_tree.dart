@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
 import '../navigation.dart';
-import '../nodes/widgetbook_node.dart';
 import 'tiles/category_tile.dart';
 import 'tiles/component_tile.dart';
-import 'tiles/folder_tile.dart';
 
 class NavigationTree extends StatelessWidget {
   const NavigationTree({
     super.key,
     required this.nodes,
     required this.selectedPath,
+    required this.searchQuery,
   });
 
   final List<WidgetbookNode> nodes;
   final String? selectedPath;
+  final String? searchQuery;
 
   @override
   Widget build(BuildContext context) {
@@ -25,21 +25,22 @@ class NavigationTree extends StatelessWidget {
         final isSelected = node.path == selectedPath;
 
         return switch (node) {
-          WidgetbookRoot() => const SizedBox.shrink(),
-          WidgetbookPackage() => Text('package: ${node.name}'),
-          WidgetbookComponent() || WidgetbookCategory() => CategoryTile(
+          WidgetbookFolder() ||
+          WidgetbookComponent() ||
+          WidgetbookCategory() =>
+            CategoryTile(
               node: node,
               selectedPath: selectedPath,
-            ),
-          WidgetbookFolder() => FolderTile(
-              node: node,
-              selectedPath: selectedPath,
+              searchQuery: searchQuery,
             ),
           WidgetbookUseCase() || WidgetbookLeafComponent() => ComponentTile(
               node: node,
               isSelected: isSelected,
             ),
-          _ => const SizedBox.shrink(),
+          WidgetbookPackage() ||
+          WidgetbookRoot() ||
+          _ =>
+            const SizedBox.shrink(),
         };
       },
     );

@@ -49,9 +49,6 @@ class _NavigationPanelState extends State<NavigationPanel> {
   Widget build(BuildContext context) {
     _state = WidgetbookState.of(context);
     final query = WidgetbookState.of(context).query ?? '';
-    final filteredRoot = query.isEmpty
-        ? widget.root
-        : widget.root.filter((node) => filterNode(node, query)) ?? widget.root;
 
     return ListenableBuilder(
       listenable: _state,
@@ -72,21 +69,21 @@ class _NavigationPanelState extends State<NavigationPanel> {
                 onCleared: () => WidgetbookState.of(context).updateQuery(''),
               ),
             ),
-            if (filteredRoot.children != null)
-              Expanded(
-                child: Theme(
-                  data: Theme.of(context).copyWith(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    splashFactory: NoSplash.splashFactory,
-                    hoverColor: Colors.transparent,
-                  ),
-                  child: NavigationTree(
-                    nodes: filteredRoot.children!,
-                    selectedPath: _state.path,
-                  ),
+            Expanded(
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  splashFactory: NoSplash.splashFactory,
+                  hoverColor: Colors.transparent,
+                ),
+                child: NavigationTree(
+                  nodes: widget.root.children!,
+                  selectedPath: _state.path,
+                  searchQuery: query,
                 ),
               ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8),
               child: StatsBanner(

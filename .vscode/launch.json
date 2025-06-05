@@ -34,31 +34,9 @@
       "type": "dart"
     },
     {
-      "name": "full_example (generator)",
-      "cwd": "examples/full_example",
+      "name": "tractian-flutter-ui",
+      "cwd": "examples/tractian-flutter-ui/widgetbook",
       "request": "launch",
-      "program": "lib/widgetbook.generator.dart",
-      "type": "dart"
-    },
-    {
-      "name": "full_example (theme)",
-      "cwd": "examples/full_example",
-      "request": "launch",
-      "program": "lib/widgetbook.theme.dart",
-      "type": "dart"
-    },
-    {
-      "name": "knobs_example",
-      "cwd": "examples/knobs_example",
-      "request": "launch",
-      "program": "lib/widgetbook.dart",
-      "type": "dart"
-    },
-    {
-      "name": "screen_util_example",
-      "cwd": "examples/screen_util_example",
-      "request": "launch",
-      "program": "lib/widgetbook.dart",
       "type": "dart"
     }
   ]
