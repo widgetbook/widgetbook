@@ -38,11 +38,6 @@ class _NavigationPanelState extends State<NavigationPanel> {
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void didUpdateWidget(NavigationPanel oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.initialPath != oldWidget.initialPath) {
