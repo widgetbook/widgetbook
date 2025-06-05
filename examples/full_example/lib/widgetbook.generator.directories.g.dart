@@ -30,9 +30,9 @@ final directories = <_i1.WidgetbookNode>[
               name: 'Component',
               builder: _i2.myWidgetGenerated,
             ),
-          ),
+          )
         ],
-      ),
+      )
     ],
   ),
   _i1.WidgetbookFolder(
@@ -82,7 +82,7 @@ final directories = <_i1.WidgetbookNode>[
           name: 'CustomRangeSlider',
           builder: _i6.rangeSliderGenerated,
         ),
-      ),
+      )
     ],
   ),
 ];

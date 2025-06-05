@@ -6,6 +6,7 @@ repository: https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbo
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
 documentation: https://docs.widgetbook.io
 topics: [widgetbook, storybook, ui, codegen, build-runner]
+publish_to: none
 
 screenshots:
   - description: Widgetbook Logo
