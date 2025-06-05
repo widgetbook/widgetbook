@@ -18,7 +18,7 @@ class CategoryTile extends StatelessWidget {
   final bool isExpanded;
 
   bool get isSelected {
-    final child = node.filter(
+    final child = node.find(
       (child) => child.path == selectedPath,
     );
 
@@ -31,7 +31,7 @@ class CategoryTile extends StatelessWidget {
 
     if (isNodeSearched) return true;
 
-    final child = node.filter(
+    final child = node.find(
       (child) => child.name.toLowerCase().contains(searchQuery!.toLowerCase()),
     );
 
