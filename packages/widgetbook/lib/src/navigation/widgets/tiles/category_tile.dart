@@ -9,17 +9,20 @@ class CategoryTile extends StatelessWidget {
     required this.node,
     required this.selectedPath,
     required this.searchQuery,
+    this.isExpanded = false,
   });
 
   final WidgetbookNode node;
   final String? selectedPath;
   final String? searchQuery;
+  final bool isExpanded;
 
   bool get isSelected {
-    final paths = selectedPath?.split('/') ?? [];
-    final nodePaths = node.path.split('/');
+    final child = node.filter(
+      (child) => child.path == selectedPath,
+    );
 
-    return paths.any((path) => nodePaths.contains(path));
+    return child != null;
   }
 
   bool get isVisible {
@@ -35,7 +38,9 @@ class CategoryTile extends StatelessWidget {
     return child != null;
   }
 
-  bool get isExpanded {
+  bool get _isExpanded {
+    if (isExpanded) return true;
+
     if (searchQuery == null || searchQuery!.isEmpty) return isSelected;
 
     return isSelected || isVisible;
@@ -51,7 +56,7 @@ class CategoryTile extends StatelessWidget {
           children: _buildHighlightedText(node.name, searchQuery, context),
         ),
       ),
-      initiallyExpanded: isExpanded,
+      initiallyExpanded: _isExpanded,
       childrenPadding: const EdgeInsets.only(left: 16),
       children: node.children!
           .map(

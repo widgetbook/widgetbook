@@ -32,6 +32,7 @@ class NavigationTree extends StatelessWidget {
               node: node,
               selectedPath: selectedPath,
               searchQuery: searchQuery,
+              isExpanded: true,
             ),
           WidgetbookUseCase() || WidgetbookLeafComponent() => ComponentTile(
               node: node,
