@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../state/widgetbook_state.dart';
 import '../nodes/nodes.dart';
-import 'navigation_tree_node.dart';
+import 'navigation_tree.dart';
 import 'search_field.dart';
 import 'stats_banner.dart';
 
@@ -79,22 +79,16 @@ class _NavigationPanelState extends State<NavigationPanel> {
             ),
             if (filteredRoot.children != null)
               Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    splashFactory: NoSplash.splashFactory,
+                    hoverColor: Colors.transparent,
                   ),
-                  itemCount: filteredRoot.children!.length,
-                  itemBuilder: (context, index) => NavigationTreeNode(
-                    node: filteredRoot.children![index],
+                  child: NavigationTree(
+                    nodes: filteredRoot.children!,
                     selectedPath: _state.path,
-                    onNodeSelected: (node) {
-                      final isSelected = node.path == _state.path;
-                      if (!node.isLeaf || isSelected) {
-                        return;
-                      }
-
-                      widget.onNodeSelected?.call(node);
-                    },
                   ),
                 ),
               ),

@@ -27,6 +27,7 @@ class WidgetbookApp extends StatelessWidget {
         AlignmentAddon(),
         ZoomAddon(),
       ],
+      themeMode: ThemeMode.light,
       directories: directories,
       home: const Homepage(),
     );

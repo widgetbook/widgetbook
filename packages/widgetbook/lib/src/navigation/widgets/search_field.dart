@@ -30,7 +30,7 @@ class _SearchFieldState extends State<SearchField> {
   @override
   Widget build(BuildContext context) {
     final border = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(50),
+      borderRadius: BorderRadius.circular(8),
       borderSide: const BorderSide(
         color: Colors.transparent,
         width: 0,

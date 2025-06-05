@@ -26,7 +26,7 @@ class NavigationTreeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderRadius = BorderRadius.circular(indentation);
+    final borderRadius = BorderRadius.circular(4);
 
     return Container(
       height: indentation,

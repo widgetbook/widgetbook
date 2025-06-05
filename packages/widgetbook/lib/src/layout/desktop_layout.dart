@@ -30,8 +30,12 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
     const kWorkbenchPercentage = 1 - 2 * kSidePanelPercentage;
 
     final showNavigationPanel = state.canShowPanel(LayoutPanel.navigation);
-    final showSettingsPanel = state.canShowPanel(LayoutPanel.addons) ||
-        state.canShowPanel(LayoutPanel.knobs);
+    final showAddonsPanel = state.canShowPanel(LayoutPanel.addons) &&
+        state.addons != null &&
+        state.addons!.isNotEmpty;
+    final showKnobsPanel =
+        state.canShowPanel(LayoutPanel.knobs) && state.knobs.isNotEmpty;
+    final showSettingsPanel = showAddonsPanel && showKnobsPanel;
 
     return ColoredBox(
       key: ValueKey(state.isNext), // Rebuild when switching to next
@@ -55,7 +59,7 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
               child: Card(
                 child: SettingsPanel(
                   settings: [
-                    if (state.canShowPanel(LayoutPanel.knobs)) ...{
+                    if (showKnobsPanel) ...{
                       if (state.isNext) ...{
                         SettingsPanelData(
                           name: 'Args',
@@ -68,8 +72,7 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
                         ),
                       },
                     },
-                    if (state.canShowPanel(LayoutPanel.addons) &&
-                        state.addons != null) ...{
+                    if (showAddonsPanel) ...{
                       SettingsPanelData(
                         name: 'Addons',
                         builder: addonsBuilder,
