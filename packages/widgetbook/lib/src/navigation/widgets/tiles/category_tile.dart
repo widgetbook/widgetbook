@@ -82,7 +82,10 @@ class CategoryTile extends StatelessWidget {
   ) {
     if (query == null || query.isEmpty) {
       return [
-        TextSpan(text: text),
+        TextSpan(
+          text: text,
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
       ];
     }
 
@@ -98,26 +101,32 @@ class CategoryTile extends StatelessWidget {
         spans.add(
           TextSpan(
             text: text.substring(start, index),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         );
       }
 
-      spans.add(TextSpan(
-        text: text.substring(index, index + query.length),
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
-          fontWeight: FontWeight.bold,
-          backgroundColor: Theme.of(context).colorScheme.primary.withAlpha(10),
+      spans.add(
+        TextSpan(
+          text: text.substring(index, index + query.length),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.w500,
+                color: Theme.of(context).colorScheme.primary,
+              ),
         ),
-      ));
+      );
 
       start = index + query.length;
       index = lowerText.indexOf(lowerQuery, start);
     }
 
-    // Add remaining text
     if (start < text.length) {
-      spans.add(TextSpan(text: text.substring(start)));
+      spans.add(
+        TextSpan(
+          text: text.substring(start),
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      );
     }
 
     return spans;
