@@ -104,17 +104,35 @@ abstract class WidgetbookNode {
 
   /// Searches for a node that matches [predicate] in the sub-tree of this node.
   WidgetbookNode? find(
-    bool Function(WidgetbookNode node) predicate,
-  ) {
+    bool Function(WidgetbookNode node) predicate, {
+    bool searchInParent = false,
+    bool searchInChildren = true,
+  }) {
     if (predicate(this)) {
       return this;
     } else {
-      return children //
-          ?.map((child) => child.find(predicate))
-          .firstWhere(
-            (child) => child != null,
-            orElse: () => null,
+      if (searchInChildren) {
+        final child =
+            children?.map((child) => child.find(predicate)).firstWhere(
+                  (child) => child != null,
+                  orElse: () => null,
+                );
+
+        if (child != null) return child;
+      }
+
+      if (searchInParent) {
+        final parent = this.parent;
+        if (parent != null) {
+          return parent.find(
+            predicate,
+            searchInParent: true,
+            searchInChildren: false,
           );
+        }
+      }
+
+      return null;
     }
   }
 

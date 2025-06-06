@@ -33,6 +33,7 @@ class CategoryTile extends StatelessWidget {
 
     final child = node.find(
       (child) => child.name.toLowerCase().contains(searchQuery!.toLowerCase()),
+      searchInParent: true,
     );
 
     return child != null;
