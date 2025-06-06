@@ -26,7 +26,7 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
 
-    const kSidePanelPercentage = 0.14;
+    const kSidePanelPercentage = 0.2;
     const kWorkbenchPercentage = 1 - 2 * kSidePanelPercentage;
 
     final showNavigationPanel = state.canShowPanel(LayoutPanel.navigation);
@@ -51,35 +51,34 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
             percentage: kWorkbenchPercentage,
             child: workbench,
           ),
-          if (state.useCase != null)
-            ResizableLayoutItem(
-              percentage: kSidePanelPercentage,
-              child: Card(
-                child: SettingsPanel(
-                  settings: [
-                    if (showKnobsPanel) ...{
-                      if (state.isNext) ...{
-                        SettingsPanelData(
-                          name: 'Args',
-                          builder: argsBuilder,
-                        ),
-                      } else ...{
-                        SettingsPanelData(
-                          name: 'Knobs',
-                          builder: knobsBuilder,
-                        ),
-                      },
-                    },
-                    if (showAddonsPanel) ...{
+          ResizableLayoutItem(
+            percentage: kSidePanelPercentage,
+            child: Card(
+              child: SettingsPanel(
+                settings: [
+                  if (showKnobsPanel) ...{
+                    if (state.isNext) ...{
                       SettingsPanelData(
-                        name: 'Addons',
-                        builder: addonsBuilder,
+                        name: 'Args',
+                        builder: argsBuilder,
+                      ),
+                    } else ...{
+                      SettingsPanelData(
+                        name: 'Knobs',
+                        builder: knobsBuilder,
                       ),
                     },
-                  ],
-                ),
+                  },
+                  if (showAddonsPanel) ...{
+                    SettingsPanelData(
+                      name: 'Addons',
+                      builder: addonsBuilder,
+                    ),
+                  },
+                ],
               ),
             ),
+          ),
         ],
       ),
     );
