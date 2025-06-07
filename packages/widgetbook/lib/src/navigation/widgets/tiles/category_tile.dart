@@ -52,6 +52,7 @@ class CategoryTile extends StatelessWidget {
     if (!isVisible) return const SizedBox.shrink();
 
     return ExpansionTile(
+      key: UniqueKey(),
       title: RichText(
         text: TextSpan(
           children: _buildHighlightedText(node.name, searchQuery, context),
