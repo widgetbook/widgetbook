@@ -19,7 +19,9 @@ class WidgetbookApp extends StatelessWidget {
       addons: [
         BuilderAddon(
           name: 'Addon',
-          builder: (_, child) => Scaffold(body: child),
+          builder: (_, child) => Scaffold(
+            body: child,
+          ),
         ),
       ],
       directories: [
@@ -32,21 +34,27 @@ class WidgetbookApp extends StatelessWidget {
                 entries: [
                   KnobEntry<int>(
                     name: 'Int (Input)',
-                    regular: context.knobs.int.input(label: 'int.input'),
+                    regular: context.knobs.int.input(
+                      label: 'int.input',
+                    ),
                     nullable: context.knobs.intOrNull.input(
                       label: 'intOrNull.input',
                     ),
                   ),
                   KnobEntry<int>(
                     name: 'Int (Slider)',
-                    regular: context.knobs.int.slider(label: 'int.slider'),
+                    regular: context.knobs.int.slider(
+                      label: 'int.slider',
+                    ),
                     nullable: context.knobs.intOrNull.slider(
                       label: 'intOrNull.slider',
                     ),
                   ),
                   KnobEntry<double>(
                     name: 'Double (Input)',
-                    regular: context.knobs.double.input(label: 'double.input'),
+                    regular: context.knobs.double.input(
+                      label: 'double.input',
+                    ),
                     nullable: context.knobs.doubleOrNull.input(
                       label: 'doubleOrNull.input',
                     ),
@@ -62,29 +70,42 @@ class WidgetbookApp extends StatelessWidget {
                   ),
                   KnobEntry<String>(
                     name: 'String',
-                    regular: context.knobs.string(label: 'string'),
-                    nullable: context.knobs.stringOrNull(label: 'stringOrNull'),
+                    regular: context.knobs.string(
+                      label: 'string',
+                    ),
+                    nullable: context.knobs.stringOrNull(
+                      label: 'stringOrNull',
+                    ),
                   ),
                   KnobEntry<bool>(
                     name: 'Boolean',
-                    regular: context.knobs.boolean(label: 'boolean'),
+                    regular: context.knobs.boolean(
+                      label: 'boolean',
+                    ),
                     nullable: context.knobs.booleanOrNull(
                       label: 'booleanOrNull',
                     ),
                   ),
                   KnobEntry<Color>(
                     name: 'Color',
-                    builder:
-                        (color) =>
-                            Text('${color}', style: TextStyle(color: color)),
-                    regular: context.knobs.color(label: 'color'),
+                    builder: (color) => Text(
+                      '${color}',
+                      style: TextStyle(
+                        color: color,
+                      ),
+                    ),
+                    regular: context.knobs.color(
+                      label: 'color',
+                    ),
                     nullable: context.knobs.colorOrNull(
                       label: 'colorOrNull',
                     ), // N/A
                   ),
                   KnobEntry<Duration>(
                     name: 'Duration',
-                    regular: context.knobs.duration(label: 'duration'),
+                    regular: context.knobs.duration(
+                      label: 'duration',
+                    ),
                     nullable: context.knobs.durationOrNull(
                       label: 'durationOrNull',
                     ),
