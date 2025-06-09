@@ -20,7 +20,7 @@ class SegmentButtonKnob<T> extends Knob<T?> {
   @override
   List<Field> get fields {
     return [
-      SegmentButtonField<T>(
+      SegmentButton<T>(
         name: label,
         values: options,
         initialValue: initialValue,

@@ -5,8 +5,8 @@ import '../../widgetbook.dart';
 
 
 /// [Field] that builds [SegmentButton]<[T]> for [List]<[T]> values.
-class SegmentButtonField<T> extends Field<T> {
-  SegmentButtonField({
+class SegmentButton<T> extends Field<T> {
+  SegmentButton({
     required super.name,
     required this.values,
     required super.initialValue,
