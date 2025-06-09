@@ -13,6 +13,7 @@ class UseCase {
   const UseCase({
     required this.name,
     required this.type,
+    this.customType,
     this.designLink,
     this.path,
     this.cloudKnobsConfigs,
@@ -24,6 +25,11 @@ class UseCase {
   /// The type of the Widget shown in the UseCase.
   /// It is used to generate the WidgetbookComponent of the Widgetbook.
   final Type type;
+
+  /// A custom type for the UseCase.
+  ///
+  /// This is used to override the type of the UseCase.
+  final String? customType;
 
   /// A link to the design for the component or use-case.
   final String? designLink;
