@@ -1,3 +1,6 @@
+## unreleased
+- **FEAT**: Add `SegmentButtonKnobConfig` to support segment buttons in `KnobConfig`s. ([#1478](https://github.com/widgetbook/widgetbook/pull/1478) - by [@Sourav-Sonkar](https://github.com/Sourav-Sonkar))
+
 ## 3.5.0
 
 - **FEAT**: Add `NullKnobConfig` to support null values in `KnobConfig`s. ([#1451](https://github.com/widgetbook/widgetbook/pull/1451))
