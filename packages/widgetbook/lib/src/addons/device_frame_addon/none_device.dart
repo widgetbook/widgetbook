@@ -32,8 +32,20 @@ class NoneDevice with DiagnosticableTreeMixin implements DeviceInfo {
   Path get screenPath => throw UnimplementedError();
 
   @override
-  $DeviceInfoCopyWith<DeviceInfo> get copyWith => throw UnimplementedError();
+  CustomPainter get framePainter => throw UnimplementedError();
 
   @override
-  CustomPainter get framePainter => throw UnimplementedError();
+  DeviceInfo copyWith({
+    DeviceIdentifier? identifier,
+    String? name,
+    EdgeInsets? rotatedSafeAreas,
+    EdgeInsets? safeAreas,
+    Path? screenPath,
+    double? pixelRatio,
+    CustomPainter? framePainter,
+    Size? frameSize,
+    Size? screenSize,
+  }) {
+    return instance;
+  }
 }
