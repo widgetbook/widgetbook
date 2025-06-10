@@ -17,6 +17,7 @@ environment:
 dependencies:
   analyzer: ">=6.0.0 <8.0.0"
   build: ^2.1.0
+  change_case: ^2.2.0
   code_builder: ^4.5.0
   collection: ^1.15.0
   crypto: ^3.0.0

@@ -1,3 +1,4 @@
+import 'package:change_case/change_case.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:path/path.dart' as path;
 
@@ -10,7 +11,7 @@ class ResolverAllocator implements Allocator {
   ResolverAllocator(this.baseDir);
 
   final String baseDir;
-  final _allocator = Allocator.simplePrefixing();
+  final _allocator = _NamedAllocator();
 
   @override
   String allocate(Reference reference) {
@@ -34,4 +35,25 @@ class ResolverAllocator implements Allocator {
 
     return uri.scheme == 'asset' ? relativeUrl : url;
   }
+}
+
+class _NamedAllocator implements Allocator {
+  static const _doNotPrefix = ['dart:core'];
+
+  final _imports = <String, String>{};
+
+  @override
+  String allocate(Reference reference) {
+    final symbol = reference.symbol;
+    final url = reference.url;
+    if (url == null || _doNotPrefix.contains(url)) {
+      return symbol!;
+    }
+    return '_${_imports.putIfAbsent(url, () => url.split('/').last.replaceAll('.dart', '').toNoCase().toSnakeCase())}.$symbol';
+  }
+
+  @override
+  Iterable<Directive> get imports => _imports.keys.map(
+        (u) => Directive.import(u, as: '_${_imports[u]}'),
+      );
 }
