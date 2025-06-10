@@ -1,4 +1,4 @@
-## Unreleased
+## 3.14.3
 
 - **FIX**: Unify background color between the workbench and `DeviceFrameAddon`. ([#1461](https://github.com/widgetbook/widgetbook/pull/1461) - by [@ValentinVignal](https://github.com/ValentinVignal))
 - **FIX**: Fix memory leaks by disposing `WidgetbookState`'s `KnobsRegistry`. ([#1487](https://github.com/widgetbook/widgetbook/pull/1487) - by [@ValentinVignal](https://github.com/ValentinVignal))
