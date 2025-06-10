@@ -9,6 +9,11 @@ import 'none_device.dart';
 
 /// A [WidgetbookAddon] for changing the active device/frame. It's based on
 /// the [`device_frame`](https://pub.dev/packages/device_frame) package.
+@Deprecated(
+  'The [DeviceFrameAddon] is deprecated and will be removed in a future version. '
+  'Please use the [ViewportAddon] instead. '
+  'More info: https://docs.widgetbook.io/addons/viewport-addon',
+)
 class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
   DeviceFrameAddon({
     required List<DeviceInfo> devices,

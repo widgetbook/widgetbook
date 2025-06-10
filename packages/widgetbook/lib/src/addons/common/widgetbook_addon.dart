@@ -17,7 +17,7 @@ import '../addons.dart';
 /// * [CupertinoThemeAddon], changes the active [CupertinoThemeData].
 /// * [TextScaleAddon], changes the active text scale.
 /// * [LocalizationAddon], changes the active [Locale].
-/// * [DeviceFrameAddon], an [WidgetbookAddon] to change the active frame that
+/// * [ViewportAddon], an [WidgetbookAddon] to change the active frame that
 ///   allows to view the [WidgetbookUseCase] on different screens.
 @optionalTypeArgs
 abstract class WidgetbookAddon<T> extends FieldsComposable<T> {
