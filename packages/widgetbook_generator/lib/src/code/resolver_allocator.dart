@@ -1,4 +1,3 @@
-import 'package:change_case/change_case.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:path/path.dart' as path;
 
@@ -49,7 +48,7 @@ class _NamedAllocator implements Allocator {
     if (url == null || _doNotPrefix.contains(url)) {
       return symbol!;
     }
-    return '_${_imports.putIfAbsent(url, () => url.split('/').last.replaceAll('.dart', '').toNoCase().toSnakeCase())}.$symbol';
+    return '_${_imports.putIfAbsent(url, () => url.split('/').last.replaceAll('.dart', ''))}.$symbol';
   }
 
   @override
