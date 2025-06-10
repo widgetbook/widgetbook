@@ -4,9 +4,10 @@ import '../fields/fields.dart';
 import '../fields/segment_button_field.dart';
 import 'knob.dart';
 
+/// A segmented knob for selecting an object value from a list of options.
 @internal
-class SegmentButtonKnob<T> extends Knob<T?> {
-  SegmentButtonKnob({
+class ObjectSegmentedKnob<T> extends Knob<T?> {
+  ObjectSegmentedKnob({
     required super.label,
     required super.initialValue,
     required this.options,

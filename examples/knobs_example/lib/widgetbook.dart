@@ -140,7 +140,7 @@ class WidgetbookApp extends StatelessWidget {
                   ),
                   KnobEntry<int>(
                     name: 'SegmentButton<int>',
-                    regular: context.knobs.segment(
+                    regular: context.knobs.object.segmented(
                       label: 'segment',
                       options: List.generate(4, (index) => index),
                     ),
