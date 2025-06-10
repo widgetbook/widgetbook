@@ -26,6 +26,9 @@ class StringField extends Field<String> {
     return TextFormField(
       maxLines: maxLines,
       initialValue: value ?? initialValue,
+      decoration: const InputDecoration(
+        hintText: 'Enter a value',
+      ),
       onChanged: (value) => updateField(context, group, value),
     );
   }

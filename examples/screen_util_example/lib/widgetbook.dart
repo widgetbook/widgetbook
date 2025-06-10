@@ -17,13 +17,11 @@ class WidgetbookApp extends StatelessWidget {
     return Widgetbook.material(
       addons: [
         TextScaleAddon(),
-        DeviceFrameAddon(
-          devices: [
-            Devices.ios.iPhoneSE,
-            Devices.ios.iPhone12,
-            Devices.ios.iPhone13,
-          ],
-        ),
+        ViewportAddon([
+          IosViewports.iPhoneSE,
+          IosViewports.iPhone12,
+          IosViewports.iPhone13,
+        ]),
         BuilderAddon(
           name: 'ScreenUtil',
           builder: (context, child) {

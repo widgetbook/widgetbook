@@ -1,7 +1,16 @@
 ## Unreleased
 
-- **FIX**: Unify background color between the workbench and `DeviceFrameAddon`. ([#1461](https://github.com/widgetbook/widgetbook/pull/1461) - by [@ValentinVignal](https://github.com/ValentinVignal))
+- **REFACTOR**: Deprecate `DeviceFrameAddon` in favor of `ViewportAddon`. ([#1494](https://github.com/widgetbook/widgetbook/pull/1494))
+- **REFACTOR**: Remove `@experimental` annotation from `ViewportAddon`. ([#1493](https://github.com/widgetbook/widgetbook/pull/1493))
 - **FEAT**: Add [SegmentButton Knob] to widgetbook. ([#1478](https://github.com/widgetbook/widgetbook/pull/1478) - by [@Sourav-Sonkar](https://github.com/Sourav-Sonkar))
+
+## 3.14.3
+
+- **FIX**: Unify background color between the workbench and `DeviceFrameAddon`. ([#1461](https://github.com/widgetbook/widgetbook/pull/1461) - by [@ValentinVignal](https://github.com/ValentinVignal))
+- **FIX**: Fix memory leaks by disposing `WidgetbookState`'s `KnobsRegistry`. ([#1487](https://github.com/widgetbook/widgetbook/pull/1487) - by [@ValentinVignal](https://github.com/ValentinVignal))
+- **FIX**: Add hints to `TextField`s to improve accessibility. ([#1483](https://github.com/widgetbook/widgetbook/pull/1483) - by [@lsaudon](https://github.com/lsaudon))
+- **FIX**: Preserve Viewport's title style when a custom `ThemeData` is used in the `appBuilder`. ([#1489](https://github.com/widgetbook/widgetbook/pull/1489))
+- **REFACTOR**: Support `device_frame_plus` v1.5.0. ([#1481](https://github.com/widgetbook/widgetbook/pull/1481))
 
 ## 3.14.2
 

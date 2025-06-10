@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:meta/meta.dart';
 
-@experimental
 class ViewportData {
   const ViewportData({
     required this.name,

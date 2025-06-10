@@ -8,7 +8,7 @@ documentation: https://docs.widgetbook.io
 topics: [widgetbook, storybook, ui, tool, cli]
 
 screenshots:
-  - description: 'Widgetbook Logo'
+  - description: Widgetbook Logo
     path: assets/logo.png
 
 environment:

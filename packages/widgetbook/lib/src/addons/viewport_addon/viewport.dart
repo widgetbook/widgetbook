@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:nested/nested.dart';
 
+import '../../widgetbook_theme.dart';
 import 'viewport_data.dart';
 
-@experimental
 class Viewport extends StatelessWidget {
   const Viewport({
     super.key,
@@ -99,11 +98,16 @@ class _ViewportFrame extends StatelessWidget {
         Transform.translate(
           offset: Offset(-borderWidth, 0),
           child: Container(
-            child: Text(title),
             color: color,
             padding: const EdgeInsets.symmetric(
               vertical: 4,
               horizontal: 12,
+            ),
+            child: Text(
+              title,
+              style: WidgetbookTheme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Colors.black87,
+                  ),
             ),
           ),
         ),
