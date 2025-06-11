@@ -2,7 +2,10 @@ import 'package:code_builder/code_builder.dart';
 import 'package:path/path.dart' as path;
 
 /// Converts 'asset:' import URIs to relative paths, relative to [baseDir],
-/// then delegates all imports to [Allocator.simplePrefixing].
+/// then delegates all imports to [_NamedAllocator].
+///
+/// [_NamedAllocator] prefixes imports with a namespace derived from basename
+/// of the import URL.
 ///
 /// The 'asset:' URIs happen when a file is located outside the
 /// `lib` directory, for example in the `test` directory.
