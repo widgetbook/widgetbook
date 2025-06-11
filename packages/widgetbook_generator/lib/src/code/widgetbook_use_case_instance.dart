@@ -17,6 +17,8 @@ class WidgetbookUseCaseInstance extends WidgetbookInstance {
             ),
             if (useCase.designLink != null)
               'designLink': literalString(useCase.designLink!),
+            if (useCase.docsLink != null)
+              'docsLink': literalString(useCase.docsLink!),
           },
         );
 }

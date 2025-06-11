@@ -5,6 +5,7 @@ class MockUseCaseMetadata extends UseCaseMetadata {
   MockUseCaseMetadata({
     super.functionName = 'defaultUseCase',
     super.designLink = null,
+    super.docsLink = null,
     super.name = 'Default',
     super.importUri = 'package:widgetbook/src/widgets/component.usecase.dart',
     super.navPath = 'widgets',

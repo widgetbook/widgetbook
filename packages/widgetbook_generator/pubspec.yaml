@@ -26,10 +26,7 @@ dependencies:
   path: ^1.8.0
   source_gen: ">=1.1.0 <3.0.0"
   widgetbook_annotation:
-    git:
-      url: https://github.com/luiz-misseno/widgetbook.git
-      ref: main
-      path: packages/widgetbook_annotation
+    path: ../../packages/widgetbook_annotation
 
 dev_dependencies:
   dart_style: ^2.3.0

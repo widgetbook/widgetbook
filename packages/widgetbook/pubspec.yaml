@@ -24,6 +24,7 @@ dependencies:
   device_frame_plus: ">=1.2.1 <1.4.0"
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.0
   inspector: ">=2.1.0 <4.0.0"
   meta: ^1.8.0
   nested: ^1.0.0
@@ -33,10 +34,7 @@ dependencies:
   # the widgetbook package, we need to depend on the
   # annotation package.
   widgetbook_annotation:
-    git:
-      url: https://github.com/luiz-misseno/widgetbook.git
-      ref: main
-      path: packages/widgetbook_annotation
+    path: ../../packages/widgetbook_annotation
 
 dev_dependencies:
   flutter_test:

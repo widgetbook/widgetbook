@@ -9,6 +9,7 @@ class WidgetbookUseCase extends WidgetbookNode {
     required super.name,
     required this.builder,
     this.designLink,
+    this.docsLink,
   }) : super(
           children: null,
           isInitiallyExpanded: false,
@@ -43,6 +44,7 @@ class WidgetbookUseCase extends WidgetbookNode {
 
   final WidgetBuilder builder;
   final String? designLink;
+  final String? docsLink;
 
   Widget build(BuildContext context) {
     return builder(context);

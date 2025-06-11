@@ -15,6 +15,8 @@ abstract class WidgetbookNode {
     required this.name,
     required this.children,
     this.isInitiallyExpanded = true,
+    this.figmaLink,
+    this.docsLink,
   }) {
     children?.forEach(
       (child) => child.parent = this,
@@ -25,6 +27,8 @@ abstract class WidgetbookNode {
   final bool isInitiallyExpanded;
   final List<WidgetbookNode>? children;
   WidgetbookNode? parent;
+  final String? figmaLink;
+  final String? docsLink;
 
   bool get isRoot => parent == null;
 

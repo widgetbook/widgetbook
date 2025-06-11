@@ -7,6 +7,7 @@ class UseCaseMetadata extends ElementMetadata {
   UseCaseMetadata({
     required this.functionName,
     required this.designLink,
+    required this.docsLink,
     required super.name,
     required super.importUri,
     required this.component,
@@ -19,6 +20,9 @@ class UseCaseMetadata extends ElementMetadata {
 
   /// URL to Figma's design file as defined in [UseCase.designLink].
   final String? designLink;
+
+  /// URL to documentation file as defined in [UseCase.docsLink].
+  final String? docsLink;
 
   /// Metadata about the component that contains the [UseCase].
   ElementMetadata component;
@@ -33,6 +37,7 @@ class UseCaseMetadata extends ElementMetadata {
     return UseCaseMetadata(
       functionName: json['name'] as String,
       designLink: json['designLink'] as String?,
+      docsLink: json['docsLink'] as String?,
       name: json['useCaseName'] as String,
       importUri: json['importStatement'] as String,
       navPath: json['navPath'] as String,
@@ -54,6 +59,7 @@ class UseCaseMetadata extends ElementMetadata {
     return {
       'name': functionName,
       'designLink': designLink,
+      'docsLink': docsLink,
       'useCaseName': name,
       'importStatement': importUri,
       'componentName': component.name,

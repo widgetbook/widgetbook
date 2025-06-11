@@ -34,6 +34,7 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     final name = annotation.read('name').stringValue;
     final type = annotation.read('type').typeValue;
     final designLink = annotation.readOrNull('designLink')?.stringValue;
+    final docsLink = annotation.readOrNull('docsLink')?.stringValue;
     final path = annotation.readOrNull('path')?.stringValue;
     final knobsConfigs = annotation //
         .readOrNull('cloudKnobsConfigs')
@@ -64,6 +65,7 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     final metadata = UseCaseMetadata(
       functionName: element.name!,
       designLink: designLink,
+      docsLink: docsLink,
       name: name,
       importUri: useCaseUri,
       navPath: navPath,

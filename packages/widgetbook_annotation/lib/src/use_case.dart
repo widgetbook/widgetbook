@@ -14,6 +14,8 @@ class UseCase {
     required this.name,
     required this.type,
     this.customType,
+    this.figmaLink,
+    this.docsLink,
     this.designLink,
     this.path,
     this.cloudKnobsConfigs,
@@ -30,6 +32,12 @@ class UseCase {
   ///
   /// This is used to override the type of the UseCase.
   final String? customType;
+
+  /// A link to the Figma file for the component or use-case.
+  final String? figmaLink;
+
+  /// A link to the documentation for the component or use-case.
+  final String? docsLink;
 
   /// A link to the design for the component or use-case.
   final String? designLink;

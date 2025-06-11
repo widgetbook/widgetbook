@@ -5,6 +5,7 @@ import '../settings/settings.dart';
 import '../state/state.dart';
 import '../widgetbook_theme.dart';
 import 'base_layout.dart';
+import 'examples_panel_data.dart';
 
 class DesktopLayout extends StatelessWidget implements BaseLayout {
   const DesktopLayout({
@@ -33,10 +34,9 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
     final showAddonsPanel = state.canShowPanel(LayoutPanel.addons) &&
         state.addons != null &&
         state.addons!.isNotEmpty;
-    final showKnobsPanel = state.canShowPanel(LayoutPanel.knobs);
 
     return ColoredBox(
-      key: ValueKey(state.isNext), // Rebuild when switching to next
+      key: ValueKey(state.isNext),
       color: WidgetbookTheme.of(context).colorScheme.surface,
       child: ResizableLayout(
         items: [
@@ -44,6 +44,7 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
             ResizableLayoutItem(
               percentage: kSidePanelPercentage,
               child: Card(
+                key: ValueKey(state.isNext),
                 child: navigationBuilder(context),
               ),
             ),
@@ -53,30 +54,48 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
           ),
           ResizableLayoutItem(
             percentage: kSidePanelPercentage,
-            child: Card(
-              child: SettingsPanel(
-                settings: [
-                  if (showKnobsPanel) ...{
-                    if (state.isNext) ...{
-                      SettingsPanelData(
-                        name: 'Args',
-                        builder: argsBuilder,
-                      ),
-                    } else ...{
-                      SettingsPanelData(
-                        name: 'Knobs',
-                        builder: knobsBuilder,
-                      ),
-                    },
-                  },
-                  if (showAddonsPanel) ...{
-                    SettingsPanelData(
-                      name: 'Addons',
-                      builder: addonsBuilder,
-                    ),
-                  },
-                ],
-              ),
+            child: Builder(
+              builder: (context) {
+                final state = WidgetbookState.of(context);
+                final showKnobsPanel = state.canShowPanel(LayoutPanel.knobs) &&
+                    state.knobs.isNotEmpty;
+
+                return Card(
+                  child: SettingsPanel(
+                    settings: showKnobsPanel
+                        ? [
+                            if (state.isNext) ...{
+                              SettingsPanelData(
+                                name: 'Args',
+                                builder: argsBuilder,
+                              ),
+                            } else ...{
+                              SettingsPanelData(
+                                name: 'Knobs',
+                                builder: knobsBuilder,
+                              ),
+                            },
+                            if (showAddonsPanel) ...{
+                              SettingsPanelData(
+                                name: 'Addons',
+                                builder: addonsBuilder,
+                              ),
+                            },
+                          ]
+                        : [
+                            SettingsPanelData(
+                              name: 'Utils',
+                              builder: (context) => [
+                                ExamplesPanelData(
+                                  designLink: state.useCase?.designLink,
+                                  documentationLink: state.useCase?.docsLink,
+                                ),
+                              ],
+                            ),
+                          ],
+                  ),
+                );
+              },
             ),
           ),
         ],
