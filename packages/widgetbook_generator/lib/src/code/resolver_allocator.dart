@@ -43,6 +43,7 @@ class _NamedAllocator implements Allocator {
   static const _doNotPrefix = ['dart:core'];
 
   final _imports = <String, String>{};
+  final _namespaces = <String>{};
 
   @override
   String allocate(Reference reference) {
@@ -52,15 +53,46 @@ class _NamedAllocator implements Allocator {
       return symbol!;
     }
 
-    final namespace = _imports.putIfAbsent(url, () {
-      return path.basenameWithoutExtension(url);
-    });
+    final namespace = _imports.putIfAbsent(url, () => _getNamespace(url));
 
-    return '_${namespace}.$symbol';
+    return '${namespace}.$symbol';
+  }
+
+  String _getNamespace(String url) {
+    final basename = path.basenameWithoutExtension(url);
+
+    final segments = path.split(url).reversed.skip(1);
+
+    int? index;
+    String indexedNamespace() {
+      final dirs = segments.take(index ?? 0).toList().reversed;
+      return switch (index) {
+        null => '_$basename',
+        int() => '_${dirs.join('_')}_${basename}',
+      };
+    }
+
+    while (_namespaces.contains(indexedNamespace())) {
+      index ??= 0;
+      index++;
+
+      // If we've tried all segments, throw an error.
+      //
+      // This is a sanity check to prevent infinite loops.
+      if (index > segments.length) {
+        throw Exception('Failed to find a unique namespace for $url');
+      }
+    }
+
+    final namespace = indexedNamespace();
+
+    _namespaces.add(namespace);
+
+    return namespace;
   }
 
   @override
   Iterable<Directive> get imports => _imports.keys.map(
-        (u) => Directive.import(u, as: '_${_imports[u]}'),
+        (u) => Directive.import(u, as: _imports[u]),
       );
 }
