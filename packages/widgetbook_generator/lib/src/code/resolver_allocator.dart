@@ -48,7 +48,12 @@ class _NamedAllocator implements Allocator {
     if (url == null || _doNotPrefix.contains(url)) {
       return symbol!;
     }
-    return '_${_imports.putIfAbsent(url, () => url.split('/').last.replaceAll('.dart', ''))}.$symbol';
+
+    final namespace = _imports.putIfAbsent(url, () {
+      return path.basenameWithoutExtension(url);
+    });
+
+    return '_${namespace}.$symbol';
   }
 
   @override
