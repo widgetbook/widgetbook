@@ -1,3 +1,4 @@
+import 'package:change_case/change_case.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:path/path.dart' as path;
 
@@ -69,7 +70,9 @@ class _NamedAllocator implements Allocator {
       return switch (index) {
         null => '_$basename',
         int() => '_${dirs.join('_')}_${basename}',
-      };
+      }
+          .toNoCase()
+          .toSnakeCase();
     }
 
     while (_namespaces.contains(indexedNamespace())) {
