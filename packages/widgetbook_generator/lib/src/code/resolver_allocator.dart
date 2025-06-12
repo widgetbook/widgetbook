@@ -1,4 +1,3 @@
-import 'package:change_case/change_case.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:path/path.dart' as path;
 
@@ -54,40 +53,25 @@ class _NamedAllocator implements Allocator {
       return symbol!;
     }
 
-    final namespace = _imports.putIfAbsent(url, () => _getNamespace(url));
+    final namespace = _imports.putIfAbsent(url, () => _getUniqueNamespace(url));
 
     return '${namespace}.$symbol';
   }
 
-  String _getNamespace(String url) {
-    final basename = path.basenameWithoutExtension(url);
+  String _getUniqueNamespace(String url) {
+    // We convert the URL `package:foo/bar/qux.dart` to `foo/bar/qux`
+    // to generate namespaces like `_qux`, `_bar_qux`, `_foo_bar_qux`.
+    final plainUrl = url.replaceFirst('package:', '').replaceAll('.dart', '');
 
-    final segments = path.split(url).reversed.skip(1);
+    // We replace all non-alphanumeric characters with underscores.
+    final sanitizedUrl = plainUrl.replaceAll(RegExp('[^a-zA-Z0-9]'), '_');
 
-    int? index;
-    String indexedNamespace() {
-      final dirs = segments.take(index ?? 0).toList().reversed;
-      return switch (index) {
-        null => '_$basename',
-        int() => '_${dirs.join('_')}_${basename}',
-      }
-          .toNoCase()
-          .toSnakeCase();
+    // We generate a namespace like `_qux`, `_bar_qux`, `_foo_bar_qux`.
+    final namespace = '_$sanitizedUrl';
+
+    if (_namespaces.contains(namespace)) {
+      throw StateError('Failed to find a unique namespace for $url');
     }
-
-    while (_namespaces.contains(indexedNamespace())) {
-      index ??= 0;
-      index++;
-
-      // If we've tried all segments, throw an error.
-      //
-      // This is a sanity check to prevent infinite loops.
-      if (index > segments.length) {
-        throw Exception('Failed to find a unique namespace for $url');
-      }
-    }
-
-    final namespace = indexedNamespace();
 
     _namespaces.add(namespace);
 
@@ -95,7 +79,11 @@ class _NamedAllocator implements Allocator {
   }
 
   @override
-  Iterable<Directive> get imports => _imports.keys.map(
-        (u) => Directive.import(u, as: _imports[u]),
-      );
+  Iterable<Directive> get imports => [
+        for (final MapEntry(key: url, value: namespace) in _imports.entries)
+          Directive.import(
+            url,
+            as: namespace,
+          ),
+      ];
 }

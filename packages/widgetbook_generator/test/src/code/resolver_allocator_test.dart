@@ -58,7 +58,28 @@ void main() {
 
       expect(
         allocator.imports.map((import) => import.as),
-        equals(['_qux', '_other_qux', '_some_other_qux']),
+        equals(
+          ['_foo_bar_qux', '_foo_bar_other_qux', '_foo_bar_some_other_qux'],
+        ),
+      );
+    });
+
+    test('prefixed imports with common basename', () {
+      final allocator = ResolverAllocator('foo/widgetbook.dart');
+
+      // import 'package:foo/widgets.dart';
+      // import 'package:bar/widgets.dart';
+      allocator.allocate(refer('widgets', 'package:foo/widgets.dart'));
+      allocator.allocate(refer('widgets', 'package:bar/widgets.dart'));
+
+      expect(
+        allocator.imports.map((import) => import.url),
+        equals(['package:foo/widgets.dart', 'package:bar/widgets.dart']),
+      );
+
+      expect(
+        allocator.imports.map((import) => import.as),
+        equals(['_foo_widgets', '_bar_widgets']),
       );
     });
   });
