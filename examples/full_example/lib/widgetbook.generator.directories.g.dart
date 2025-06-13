@@ -10,30 +10,36 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:full_example/components/container.dart' as _i2;
-import 'package:full_example/components/custom_card.dart' as _i3;
-import 'package:full_example/components/custom_text_field.dart' as _i4;
-import 'package:full_example/components/stepped_counter.dart' as _i5;
-import 'package:full_example/customs/custom_knob.dart' as _i6;
-import 'package:widgetbook/widgetbook.dart' as _i1;
+import 'package:full_example/components/container.dart'
+    as _full_example_components_container;
+import 'package:full_example/components/custom_card.dart'
+    as _full_example_components_custom_card;
+import 'package:full_example/components/custom_text_field.dart'
+    as _full_example_components_custom_text_field;
+import 'package:full_example/components/stepped_counter.dart'
+    as _full_example_components_stepped_counter;
+import 'package:full_example/customs/custom_knob.dart'
+    as _full_example_customs_custom_knob;
+import 'package:widgetbook/widgetbook.dart' as _widgetbook;
 
-final directories = <_i1.WidgetbookNode>[
-  _i1.WidgetbookCategory(
+final directories = <_widgetbook.WidgetbookNode>[
+  _widgetbook.WidgetbookCategory(
     name: 'widgets',
     children: [
-      _i1.WidgetbookFolder(
+      _widgetbook.WidgetbookFolder(
         name: 'containers',
         children: [
-          _i1.WidgetbookComponent(
+          _widgetbook.WidgetbookComponent(
             name: 'Container',
             useCases: [
-              _i1.WidgetbookUseCase(
+              _widgetbook.WidgetbookUseCase(
                 name: 'with different title',
-                builder: _i2.myWidget,
+                builder: _full_example_components_container.myWidget,
               ),
-              _i1.WidgetbookUseCase(
+              _widgetbook.WidgetbookUseCase(
                 name: 'with green color',
-                builder: _i2.greenContainerUseCase,
+                builder:
+                    _full_example_components_container.greenContainerUseCase,
               ),
             ],
           ),
@@ -41,52 +47,56 @@ final directories = <_i1.WidgetbookNode>[
       ),
     ],
   ),
-  _i1.WidgetbookFolder(
+  _widgetbook.WidgetbookFolder(
     name: 'components',
     children: [
-      _i1.WidgetbookComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'CustomCard',
         useCases: [
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'Default Style',
-            builder: _i3.defaultCustomCard,
+            builder: _full_example_components_custom_card.defaultCustomCard,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'With Custom Background Color',
-            builder: _i3.customBackgroundCustomCard,
+            builder:
+                _full_example_components_custom_card.customBackgroundCustomCard,
           ),
         ],
       ),
-      _i1.WidgetbookComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'CustomTextField',
         useCases: [
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'Default Style',
-            builder: _i4.defaultCustomTextField,
+            builder: _full_example_components_custom_text_field
+                .defaultCustomTextField,
           ),
-          _i1.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'With Hint Text',
-            builder: _i4.hintTextCustomTextField,
+            builder: _full_example_components_custom_text_field
+                .hintTextCustomTextField,
           ),
         ],
       ),
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'SteppedCounter',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'Default',
-          builder: _i5.steppedCounterUseCase,
+          builder:
+              _full_example_components_stepped_counter.steppedCounterUseCase,
         ),
       ),
     ],
   ),
-  _i1.WidgetbookFolder(
+  _widgetbook.WidgetbookFolder(
     name: 'material',
     children: [
-      _i1.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'RangeSlider',
-        useCase: _i1.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'CustomRangeSlider',
-          builder: _i6.rangeSlider,
+          builder: _full_example_customs_custom_knob.rangeSlider,
         ),
       ),
     ],

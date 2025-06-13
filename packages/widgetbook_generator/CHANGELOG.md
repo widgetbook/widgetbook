@@ -1,3 +1,7 @@
+## Unreleased
+
+- **REFACTOR**: Change generated imports prefixes to use a deterministic format based on the path. ([#1495](https://github.com/widgetbook/widgetbook/pull/1495) - by [@mrgnhnt96](https://github.com/mrgnhnt96))
+
 ## 3.13.0
 
 - **BREAKING**: Use `ViewportData.name` instead of `ViewportData.id`. Requires `widgetbook` >=3.14.0. ([#1454](https://github.com/widgetbook/widgetbook/pull/1454))
