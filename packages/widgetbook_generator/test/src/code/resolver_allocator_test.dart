@@ -82,5 +82,16 @@ void main() {
         equals(['_foo_widgets', '_bar_widgets']),
       );
     });
+
+    test('prefix should be the package name when a barrel export is used', () {
+      final allocator = ResolverAllocator('foo/widgetbook.dart');
+
+      allocator.allocate(refer('widgets', 'package:foo/foo.dart'));
+
+      expect(
+        allocator.imports.map((import) => import.as),
+        equals(['_foo']),
+      );
+    });
   });
 }

@@ -43,7 +43,6 @@ class _NamedAllocator implements Allocator {
   static const _doNotPrefix = ['dart:core'];
 
   final _imports = <String, String>{};
-  final _namespaces = <String>{};
 
   @override
   String allocate(Reference reference) {
@@ -55,25 +54,26 @@ class _NamedAllocator implements Allocator {
 
     final namespace = _imports.putIfAbsent(url, () => _getUniqueNamespace(url));
 
-    return '${namespace}.$symbol';
+    return '$namespace.$symbol';
   }
 
   String _getUniqueNamespace(String url) {
-    // We convert the URL `package:foo/bar/qux.dart` to `foo/bar/qux`
-    // to generate namespaces like `_qux`, `_bar_qux`, `_foo_bar_qux`.
+    // Convert the URL `package:foo/bar/qux.dart` to `foo/bar/qux` by removing
+    // the 'package:' prefix and '.dart' suffix.
     final plainUrl = url.replaceFirst('package:', '').replaceAll('.dart', '');
 
-    // We replace all non-alphanumeric characters with underscores.
-    final sanitizedUrl = plainUrl.replaceAll(RegExp('[^a-zA-Z0-9]'), '_');
-
-    // We generate a namespace like `_qux`, `_bar_qux`, `_foo_bar_qux`.
-    final namespace = '_$sanitizedUrl';
-
-    if (_namespaces.contains(namespace)) {
-      throw StateError('Failed to find a unique namespace for $url');
+    // If the URL is a barrel export, use the package name as the namespace.
+    if (path.split(plainUrl) case [final String package, final String file]
+        when package == file) {
+      return '_$package';
     }
 
-    _namespaces.add(namespace);
+    // Replace all non-alphanumeric characters in the URL with underscores
+    // to ensure a valid namespace.
+    final sanitizedUrl = plainUrl.replaceAll(RegExp('[^a-zA-Z0-9]'), '_');
+
+    // Generate a namespace by prefixing the sanitized URL with an underscore.
+    final namespace = '_$sanitizedUrl';
 
     return namespace;
   }
