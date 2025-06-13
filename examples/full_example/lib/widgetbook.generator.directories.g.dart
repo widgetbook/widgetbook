@@ -20,23 +20,23 @@ import 'package:full_example/components/stepped_counter.dart'
     as _full_example_components_stepped_counter;
 import 'package:full_example/customs/custom_knob.dart'
     as _full_example_customs_custom_knob;
-import 'package:widgetbook/widgetbook.dart' as _widgetbook_widgetbook;
+import 'package:widgetbook/widgetbook.dart' as _widgetbook;
 
-final directories = <_widgetbook_widgetbook.WidgetbookNode>[
-  _widgetbook_widgetbook.WidgetbookCategory(
+final directories = <_widgetbook.WidgetbookNode>[
+  _widgetbook.WidgetbookCategory(
     name: 'widgets',
     children: [
-      _widgetbook_widgetbook.WidgetbookFolder(
+      _widgetbook.WidgetbookFolder(
         name: 'containers',
         children: [
-          _widgetbook_widgetbook.WidgetbookComponent(
+          _widgetbook.WidgetbookComponent(
             name: 'Container',
             useCases: [
-              _widgetbook_widgetbook.WidgetbookUseCase(
+              _widgetbook.WidgetbookUseCase(
                 name: 'with different title',
                 builder: _full_example_components_container.myWidget,
               ),
-              _widgetbook_widgetbook.WidgetbookUseCase(
+              _widgetbook.WidgetbookUseCase(
                 name: 'with green color',
                 builder:
                     _full_example_components_container.greenContainerUseCase,
@@ -47,41 +47,41 @@ final directories = <_widgetbook_widgetbook.WidgetbookNode>[
       ),
     ],
   ),
-  _widgetbook_widgetbook.WidgetbookFolder(
+  _widgetbook.WidgetbookFolder(
     name: 'components',
     children: [
-      _widgetbook_widgetbook.WidgetbookComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'CustomCard',
         useCases: [
-          _widgetbook_widgetbook.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'Default Style',
             builder: _full_example_components_custom_card.defaultCustomCard,
           ),
-          _widgetbook_widgetbook.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'With Custom Background Color',
             builder:
                 _full_example_components_custom_card.customBackgroundCustomCard,
           ),
         ],
       ),
-      _widgetbook_widgetbook.WidgetbookComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'CustomTextField',
         useCases: [
-          _widgetbook_widgetbook.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'Default Style',
             builder: _full_example_components_custom_text_field
                 .defaultCustomTextField,
           ),
-          _widgetbook_widgetbook.WidgetbookUseCase(
+          _widgetbook.WidgetbookUseCase(
             name: 'With Hint Text',
             builder: _full_example_components_custom_text_field
                 .hintTextCustomTextField,
           ),
         ],
       ),
-      _widgetbook_widgetbook.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'SteppedCounter',
-        useCase: _widgetbook_widgetbook.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'Default',
           builder:
               _full_example_components_stepped_counter.steppedCounterUseCase,
@@ -89,12 +89,12 @@ final directories = <_widgetbook_widgetbook.WidgetbookNode>[
       ),
     ],
   ),
-  _widgetbook_widgetbook.WidgetbookFolder(
+  _widgetbook.WidgetbookFolder(
     name: 'material',
     children: [
-      _widgetbook_widgetbook.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookLeafComponent(
         name: 'RangeSlider',
-        useCase: _widgetbook_widgetbook.WidgetbookUseCase(
+        useCase: _widgetbook.WidgetbookUseCase(
           name: 'CustomRangeSlider',
           builder: _full_example_customs_custom_knob.rangeSlider,
         ),
