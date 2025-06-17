@@ -88,6 +88,10 @@
           "href": "/guides/use-cases"
         },
         {
+          "title": "Generate use-cases with LLMs",
+          "href": "/guides/generate-use-cases"
+        },
+        {
           "title": "Mock Widgets & Screens",
           "href": "/guides/mocking"
         },
