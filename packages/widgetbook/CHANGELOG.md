@@ -2,6 +2,7 @@
 
 - **REFACTOR**: Deprecate `DeviceFrameAddon` in favor of `ViewportAddon`. ([#1494](https://github.com/widgetbook/widgetbook/pull/1494))
 - **REFACTOR**: Remove `@experimental` annotation from `ViewportAddon`. ([#1493](https://github.com/widgetbook/widgetbook/pull/1493))
+- **FEAT**: Add [SegmentButton Knob] to widgetbook. ([#1478](https://github.com/widgetbook/widgetbook/pull/1478) - by [@Sourav-Sonkar](https://github.com/Sourav-Sonkar))
 
 ## 3.14.3
 
