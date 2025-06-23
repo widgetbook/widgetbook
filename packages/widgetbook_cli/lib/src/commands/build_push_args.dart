@@ -9,6 +9,7 @@ class BuildPushArgs {
     required this.vendor,
     required this.actor,
     required this.repository,
+    required this.noTurbo,
   });
 
   final String apiKey;
@@ -19,4 +20,5 @@ class BuildPushArgs {
   final String vendor;
   final String actor;
   final String repository;
+  final bool noTurbo;
 }
