@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:crypto/crypto.dart';
 import 'package:file/file.dart';
 
@@ -23,6 +25,20 @@ class BuildHasher {
     final resourcesMap = resourcesVariable?.group(1);
     if (resourcesMap == null) return null;
 
-    return md5.convert(resourcesMap.codeUnits).toString();
+    // These are keys that are indeterministic
+    // and change from one build to another.
+    // We exclude them from the hash calculation.
+    const excludedKeys = [
+      'flutter_bootstrap.js', // `serviceWorkerVersion` changes on every build.
+    ];
+
+    final resourcesJson = jsonDecode(resourcesMap) as Map<String, dynamic>;
+    resourcesJson.removeWhere(
+      (key, value) => excludedKeys.contains(key),
+    );
+
+    final encodedResources = utf8.encode(jsonEncode(resourcesJson));
+
+    return md5.convert(encodedResources).toString();
   }
 }
