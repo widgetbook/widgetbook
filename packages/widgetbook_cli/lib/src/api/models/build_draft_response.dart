@@ -8,10 +8,13 @@ abstract class BuildDraftResponse {
 
   // ignore: sort_constructors_first
   factory BuildDraftResponse.fromJson(Map<String, dynamic> json) {
-    if (json.containsKey('turbo')) {
+    final type = json['type'] as String;
+    if (type == 'turbo') {
       return TurboBuildResponse.fromJson(json);
-    } else {
+    } else if (type == 'draft') {
       return DraftBuildResponse.fromJson(json);
+    } else {
+      throw ArgumentError('Unknown build draft response: $json');
     }
   }
 
