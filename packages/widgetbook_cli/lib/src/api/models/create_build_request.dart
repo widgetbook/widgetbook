@@ -1,7 +1,7 @@
 import '../../cache/cache.dart';
 
-class BuildDraftRequest {
-  const BuildDraftRequest({
+class CreateBuildRequest {
+  const CreateBuildRequest({
     required this.apiKey,
     required this.versionControlProvider,
     required this.repository,
