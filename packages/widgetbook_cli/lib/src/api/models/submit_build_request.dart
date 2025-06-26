@@ -1,5 +1,5 @@
-class BuildReadyRequest {
-  const BuildReadyRequest({
+class SubmitBuildRequest {
+  const SubmitBuildRequest({
     required this.apiKey,
     required this.buildId,
   });

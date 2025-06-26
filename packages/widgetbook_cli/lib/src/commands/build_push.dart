@@ -204,10 +204,10 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     filesProgress.complete('${files.length} File(s) read');
 
-    final draftProgress = logger.progress('Creating build draft');
-    final draftResponse = await cloudClient.createBuildDraft(
+    final createProgress = logger.progress('Creating build');
+    final createResponse = await cloudClient.createBuild(
       versions,
-      BuildDraftRequest(
+      CreateBuildRequest(
         apiKey: args.apiKey,
         versionControlProvider: args.vendor,
         repository: args.repository,
@@ -222,19 +222,19 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       ),
     );
 
-    if (draftResponse.isTurbo) {
-      final turboBuild = draftResponse.asTurbo;
+    if (createResponse.isTurbo) {
+      final turboResponse = createResponse.asTurbo;
 
-      draftProgress.complete(
-        '🚀 Turbo build is ready at ${turboBuild.buildUrl}',
+      createProgress.complete(
+        '🚀 Turbo build is ready at ${turboResponse.buildUrl}',
       );
 
       return 0;
     }
 
-    draftProgress.complete('Build draft [${draftResponse.buildId}] created');
+    createProgress.complete('Draft build [${createResponse.buildId}] created');
 
-    final draftBuild = draftResponse.asDraft;
+    final draftResponse = createResponse.asDraft;
     final uploadProgress = logger.progress('Uploading build files');
     final objects = files.map(
       (file) {
@@ -255,7 +255,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         final content = file.readAsStringSync();
         final modifiedContent = content.replaceFirst(
           RegExp('<base href=".*" ?\/?>'),
-          '<base href="${draftBuild.baseHref}">',
+          '<base href="${draftResponse.baseHref}">',
         );
 
         return StorageObject(
@@ -269,22 +269,24 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     );
 
     await storageClient.uploadObjects(
-      draftBuild.storage.url,
-      draftBuild.storage.fields,
+      draftResponse.storage.url,
+      draftResponse.storage.fields,
       objects,
     );
 
     uploadProgress.complete('Build files uploaded');
 
     final submitProgress = logger.progress('Submitting build');
-    final response = await cloudClient.submitBuildDraft(
-      BuildReadyRequest(
+    final submitResponse = await cloudClient.submitBuild(
+      SubmitBuildRequest(
         apiKey: args.apiKey,
-        buildId: draftResponse.buildId,
+        buildId: createResponse.buildId,
       ),
     );
 
-    submitProgress.complete('Build will be ready at ${response.buildUrl}');
+    submitProgress.complete(
+      'Build will be ready at ${submitResponse.buildUrl}',
+    );
 
     return 0;
   }
