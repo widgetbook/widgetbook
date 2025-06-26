@@ -12,6 +12,7 @@ class BuildDraftRequest {
     required this.useCases,
     required this.addonsConfigs,
     required this.size,
+    required this.hash,
   });
 
   final String apiKey;
@@ -24,6 +25,7 @@ class BuildDraftRequest {
   final List<UseCaseMetadata> useCases;
   final AddonsConfigs? addonsConfigs;
   final int size;
+  final String? hash;
 
   Map<String, dynamic> toJson() {
     return {
@@ -37,6 +39,7 @@ class BuildDraftRequest {
       'useCases': useCases.map((x) => x.toCloudUseCase()).toList(),
       'addonsConfigs': addonsConfigs,
       'size': size,
+      'hash': hash,
     };
   }
 }

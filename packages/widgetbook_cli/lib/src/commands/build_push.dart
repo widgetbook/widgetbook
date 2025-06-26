@@ -11,6 +11,7 @@ import '../api/api.dart';
 import '../cache/cache.dart';
 import '../core/core.dart';
 import '../storage/storage.dart';
+import '../utils/build_hasher.dart';
 import '../utils/executable_manager.dart';
 import 'build_push_args.dart';
 
@@ -20,6 +21,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     this.processManager = const LocalProcessManager(),
     this.fileSystem = const LocalFileSystem(),
     this.cacheReader = const CacheReader(),
+    this.buildHasher = const BuildHasher(),
     WidgetbookHttpClient? cloudClient,
     StorageClient? storageClient,
   })  : cloudClient = cloudClient ?? WidgetbookHttpClient(),
@@ -67,6 +69,11 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
           if (url == null) return;
           this.cloudClient.client.options.baseUrl = url;
         },
+      )
+      ..addOption(
+        'no-turbo',
+        hide: true,
+        defaultsTo: 'false',
       );
   }
 
@@ -75,6 +82,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
   final ProcessManager processManager;
   final FileSystem fileSystem;
   final CacheReader cacheReader;
+  final BuildHasher buildHasher;
 
   @override
   FutureOr<BuildPushArgs> parseResults(
@@ -117,6 +125,8 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       throw MissingOptionException('repository');
     }
 
+    final noTurbo = bool.parse(results['no-turbo'] as String);
+
     return BuildPushArgs(
       apiKey: apiKey,
       branch: branch,
@@ -126,6 +136,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       vendor: context.name,
       actor: actor,
       repository: repoName,
+      noTurbo: noTurbo,
     );
   }
 
@@ -173,6 +184,15 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       return 22;
     }
 
+    // If `-no-turbo` is passed, we skip the hashing step
+    // as it is not needed for non-turbo builds.
+    final hash = args.noTurbo
+        ? null
+        : await buildHasher.convert(
+            buildDir,
+            cache,
+          );
+
     final files = buildDir //
         .listSync(recursive: true)
         .whereType<File>();
@@ -185,7 +205,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     filesProgress.complete('${files.length} File(s) read');
 
     final draftProgress = logger.progress('Creating build draft');
-    final buildDraft = await cloudClient.createBuildDraft(
+    final draftResponse = await cloudClient.createBuildDraft(
       versions,
       BuildDraftRequest(
         apiKey: args.apiKey,
@@ -198,13 +218,24 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         useCases: cache.useCases,
         addonsConfigs: cache.addonsConfigs,
         size: dirSize,
+        hash: hash,
       ),
     );
 
-    draftProgress.complete('Build draft [${buildDraft.buildId}] created');
+    if (draftResponse.isTurbo) {
+      final turboBuild = draftResponse.asTurbo;
 
+      draftProgress.complete(
+        '🚀 Turbo build is ready at ${turboBuild.buildUrl}',
+      );
+
+      return 0;
+    }
+
+    draftProgress.complete('Build draft [${draftResponse.buildId}] created');
+
+    final draftBuild = draftResponse.asDraft;
     final uploadProgress = logger.progress('Uploading build files');
-
     final objects = files.map(
       (file) {
         final key = p.relative(
@@ -224,7 +255,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         final content = file.readAsStringSync();
         final modifiedContent = content.replaceFirst(
           RegExp('<base href=".*" ?\/?>'),
-          '<base href="${buildDraft.baseHref}">',
+          '<base href="${draftBuild.baseHref}">',
         );
 
         return StorageObject(
@@ -238,8 +269,8 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     );
 
     await storageClient.uploadObjects(
-      buildDraft.storage.url,
-      buildDraft.storage.fields,
+      draftBuild.storage.url,
+      draftBuild.storage.fields,
       objects,
     );
 
@@ -249,7 +280,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     final response = await cloudClient.submitBuildDraft(
       BuildReadyRequest(
         apiKey: args.apiKey,
-        buildId: buildDraft.buildId,
+        buildId: draftResponse.buildId,
       ),
     );
 

@@ -18,6 +18,7 @@ dependencies:
   args: ^2.6.0
   ci: ^0.1.0
   collection: ^1.18.0
+  crypto: ^3.0.0
   dio: ^5.7.0
   file: ^7.0.0
   mason_logger: ">=0.2.16 <1.0.0"
