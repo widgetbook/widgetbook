@@ -3,18 +3,20 @@
 > We are already saving 20% of our time.
 > – [1KOMMA5°](https://1komma5grad.com/de) _([source](https://youtu.be/Du5yVtnmNzg?t=1759))_
 
-Widgetbook Cloud Reviews not just helps you introduce **UI Reviews** in your workflow, but also helps you to **detect UI regressions automatically** with a zero-configuration setup _(i.e. without writing any golden tests)_. It provides a structured review process to ensure that all **UI changes are intentional** and match the design expectations.
+Widgetbook Cloud Reviews not only help you introduce **UI Reviews** into your workflow, but also enable you to **automatically detect UI regressions** with zero configuration (i.e., without writing any golden tests). It provides a structured review process to ensure that all **UI changes are intentional** and match design expectations.
 
 <Image theme="light" src="/assets/cloud/review.light.png" />
 <Image theme="dark" src="/assets/cloud/review.dark.png" />
 
-## Tutorial video
+## Tutorial Video
 
 <YouTube id="CalXXyThDi4" />
 
-## Code Review vs UI Review
+## Code Review vs. UI Review
 
-In a code review, you are looking for bugs, performance issues, and code quality. In a UI review, you are looking for visual differences between the design and the implementation. It is important to have both types of reviews to ensure that the code is correct and the design is implemented as expected.
+In a code review, you look for bugs, performance issues, and code quality. 
+In a UI review, you look for visual differences between the design and the implementation. 
+Both types of reviews are important to ensure the code is correct and the design is implemented as expected.
 
 |                | Code Review                                        | UI Review                                                                         |
 | -------------- | -------------------------------------------------- | --------------------------------------------------------------------------------- |
@@ -25,88 +27,22 @@ In a code review, you are looking for bugs, performance issues, and code quality
 ## UI Review Workflow
 
 <Info>
-  **Prerequisite:** Make sure you have finished the setup of Widgetbook Cloud
-  for [GitHub](/cloud/guides/github/upload),
-  [GitLab](/cloud/guides/gitlab/upload), [Azure
-  DevOps](cloud/guides/azure/upload) or
-  [Bitbucket](cloud/guides/bitbucket/upload).
+**Prerequisite:** Make sure you have completed the setup of Widgetbook Cloud for 
+[GitHub](/cloud/guides/github/upload),
+[GitLab](/cloud/guides/gitlab/upload), 
+[Azure DevOps](cloud/guides/azure/upload), or
+[Bitbucket](cloud/guides/bitbucket/upload).
 </Info>
 
-1. Submit a PR with your changes using your version control system (e.g. GitHub, GitLab).
+1. Submit a pull request (PR) with your changes using your version control system (e.g., GitHub, GitLab).
 1. Widgetbook Cloud will **automatically** create a review for your PR and post the URL in your git PR as a **commit status**.
-1. Reviewers should review the visual differences _(if any)_, and either **approve** the changes or **request changes**.
+1. Reviewers should review the visual differences (if any) and either **approve** the changes or **request changes**.
 1. The review status will be **reflected** in the commit status of your git PR.
-1. If changes are requested, the commit status will **block your PR from getting merged** until the requested changes are applied. _(you can disable this behavior from your project settings)_
+1. If changes are requested, the commit status will **block your PR from being merged** until the requested changes are applied. (You can disable this behavior in your project settings.)
 
 ## Empower UI Reviews
 
-To give the reviewer more power, you can use the following features:
+To give reviewers more power, you can use the following features:
 
 1. [**Figma Reviews**](/cloud/reviews/figma): Compare the implementation with the Figma design.
-1. [**Multi Snapshot Reviews**](/cloud/reviews/multi-snapshot): Generate snapshots for each use-case in multiple configurations (i.e. themes, locales, devices, etc.); to ensure that the UI is consistent across all configurations.
-
-## Limitations
-
-### Animations
-
-If your use-cases have any animations (e.g. `CircularProgressIndication`), then the visual comparison might not work as expected. This is because the visual comparison algorithm is not able to compare animations.
-
-We suggest using one of the following workarounds:
-
-1. **Adaptive animations**: you might want to still enjoy your animations while running Widgetbook, but you just need to disable them when the use-case is being used in a Widgetbook-Cloud-context. To do so, you can use the following `extension`, to make your use-cases adaptive to the Widgetbook Cloud Reviews and disable the animations during the visual comparison.
-
-   ```dart
-   extension WidgetbookContext on BuildContext {
-     /// The `preview` query parameter is used while taking snapshots of the
-     /// use-case for Widgetbook Cloud Reviews. This getter can be used to
-     /// customize the behavior of the use-case while taking the snapshots,
-     /// it can be used to disable animations for example.
-     bool get isInWidgetbookCloud => WidgetbookState.of(this).previewMode;
-   }
-
-   @UseCase(name: 'Default', type: CircularProgressIndicator)
-   Widget adaptiveAnimationUseCase(BuildContext context) {
-     return CircularProgressIndicator(
-       value: context.isInWidgetbookCloud ? 0.5 : null,
-     );
-   }
-   ```
-
-1. **Starting animations on-demand**: you can use a `boolean` knob to start your animations. This way, you can disable the animations during the visual comparison but you can still see the animations in the Widgetbook.
-
-   ```dart
-   @UseCase(name: 'Default', type: CircularProgressIndicator)
-   Widget onDemandAnimationUseCase(BuildContext context) {
-     return CircularProgressIndicator(
-       value: context.knobs.boolean(label: 'Static') ? 0.5 : null,
-     );
-   }
-   ```
-
-### Random values
-
-If your use-case displays random values (e.g. dates), that can be different across different builds, the visual comparison might not work as expected.
-
-We suggest using one of the following workarounds:
-
-1. Use a **constant value** for the random value.
-
-   ```dart
-   @UseCase(name: 'Default', type: Text)
-   Widget constantValueUseCase(BuildContext context) {
-     return Text(Random().nextInt(10).toString()); // [!code --]
-     return Text('10'); // [!code ++]
-   }
-   ```
-
-1. Use [**Knobs**](/knobs/overview) with a default value.
-
-   ```dart
-   @UseCase(name: 'Default', type: Text)
-   Widget constantValueUseCase(BuildContext context) {
-     return Text(Random().nextInt(10).toString()); // [!code --]
-     return Text( // [!code ++]
-       context.knobs.string(label: 'value', defaultValue: '10'), // [!code ++]
-     ); // [!code ++]
-   }
-   ```
+1. [**Multi Snapshot Reviews**](/cloud/reviews/multi-snapshot): Generate snapshots for each use case in multiple configurations (e.g., themes, locales, devices) to ensure UI consistency across all configurations.

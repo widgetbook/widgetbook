@@ -415,8 +415,34 @@
           ]
         },
         {
-          "title": "Reviews",
-          "href": "/cloud/reviews"
+          "group": "Visual Pull Requests",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/visual-pull-request/overview"
+            },
+            {
+              "title": "Create Pull Requests",
+              "href": "/cloud/visual-pull-request/create"
+            }
+          ]
+        },
+        {
+          "group": "Reviews",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/reviews"
+            },
+            {
+              "title": "Submit a review",
+              "href": "/cloud/reviews/submit"
+            },
+            {
+              "title": "Limitations",
+              "href": "/cloud/reviews/limitations"
+            }
+          ]
         },
         {
           "title": "Product Tour",
