@@ -28,7 +28,7 @@ If a visual pull-request misses builds, Widgetbook Cloud will show a warning in 
 Use the instructions about [uploading builds](/cloud/builds/upload#upload-build-using-cicd) to ensure that all necessary builds are available.
 
 <Warning>
-Caution for uploading the head build of a visual pull-request:
+**Caution**:
 Some Git providers like GitHub run their CI/CD pipeline on merge commit `m` when the pipeline is triggered by a pull request.
 This will cause Widgetbook Cloud to still miss the head commits `z` for the pull-request and can cause confusion while setting up visual pull-requests.
 </Warning>
