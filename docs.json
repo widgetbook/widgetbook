@@ -428,8 +428,21 @@
           ]
         },
         {
-          "title": "Reviews",
-          "href": "/cloud/reviews"
+          "group": "Reviews",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/reviews/overview"
+            },
+            {
+              "title": "Conduct a review",
+              "href": "/cloud/reviews/conduct"
+            },
+            {
+              "title": "Limitations",
+              "href": "/cloud/reviews/limitations"
+            }
+          ]
         },
         {
           "title": "Product Tour",
