@@ -1,0 +1,35 @@
+# Visual pull-requests
+
+In contrast to code-based pull-requests, visual pull-requests focus on the visual changes in a project. 
+They allow developers to review and discuss changes in the user interface, ensuring that the visual aspects of the application meet the desired standards.
+
+<Image src="/assets/cloud/visual-pull-request/example.png" caption="Widgetbook Cloud - Visual Pull Requests" zoom />
+
+## Problems Teams face
+
+Developers often face the following challenges when it comes to reviewing visual changes in their projects:
+- Traditional code-based pull-requests do not provide a clear view of the visual changes, making it difficult to assess the impact of changes on the user interface and causing unwanted regression.
+- Teams struggle to communicate effectively about visual changes, leading to misunderstandings and misalignment.
+- Providing stakeholders with an application to review visual changes is cumbersome and time-consuming.
+
+## How Widgetbook Cloud solves these problems
+
+Widgetbook Cloud addresses these challenges by providing a dedicated platform for visual pull-requests. Key features include:
+
+- **Visual Diffing**: Automatically generates visual diffs for changes, making it easy to see the impact of code changes on the user interface.
+- **Collaborative Review**: Facilitates discussions around visual changes, allowing team members to provide feedback directly on the visual representation.
+- **Stakeholder Access**: Provides a user-friendly interface for stakeholders to review visual changes without needing to set up complex environments.
+
+By streamlining the process of reviewing visual changes, Widgetbook Cloud helps teams to ship faster without UI regression.
+
+## Code vs visual pull-requests
+
+In a code-based pull-request, teams look for bugs, performance issues, and ensuring code quality. 
+In a visual pull-request, teams look for visual differences between the design and the implementation and preventing regression between versions. 
+It is important to have both types of reviews to ensure that the code is correct and the design is implemented as expected.
+
+|                | Code-based pull-request                                  | Visual pull-request                                                                                           |
+| -------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| **Purpose**    | Find bugs, performance issues, and ensuring code quality | Find visual differences between the design and the implementation and preventing regression between versions. |
+| **Comparison** | **Code changes** between `base` and `head` commits       | **Visual differences** between `base` and `head` [builds](/cloud/builds/overview)                             |
+| **Tool**       | Version Control Systems (e.g. GitHub, GitLab)            | Widgetbook Cloud                                                                                              |

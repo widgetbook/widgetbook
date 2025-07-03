@@ -25,11 +25,11 @@ In a code review, you are looking for bugs, performance issues, and code quality
 ## UI Review Workflow
 
 <Info>
-  **Prerequisite:** Make sure you have finished the setup of Widgetbook Cloud
-  for [GitHub](/cloud/guides/github/upload),
-  [GitLab](/cloud/guides/gitlab/upload), [Azure
-  DevOps](cloud/guides/azure/upload) or
-  [Bitbucket](cloud/guides/bitbucket/upload).
+**Prerequisite:** Make sure you have finished the setup of Widgetbook Cloud for 
+[GitHub](/cloud/guides/github/upload),
+[GitLab](/cloud/guides/gitlab/upload), 
+[Azure DevOps](cloud/guides/azure/upload) or
+[Bitbucket](cloud/guides/bitbucket/upload).
 </Info>
 
 1. Submit a PR with your changes using your version control system (e.g. GitHub, GitLab).
@@ -44,69 +44,3 @@ To give the reviewer more power, you can use the following features:
 
 1. [**Figma Reviews**](/cloud/reviews/figma): Compare the implementation with the Figma design.
 1. [**Multi Snapshot Reviews**](/cloud/reviews/multi-snapshot): Generate snapshots for each use-case in multiple configurations (i.e. themes, locales, devices, etc.); to ensure that the UI is consistent across all configurations.
-
-## Limitations
-
-### Animations
-
-If your use-cases have any animations (e.g. `CircularProgressIndication`), then the visual comparison might not work as expected. This is because the visual comparison algorithm is not able to compare animations.
-
-We suggest using one of the following workarounds:
-
-1. **Adaptive animations**: you might want to still enjoy your animations while running Widgetbook, but you just need to disable them when the use-case is being used in a Widgetbook-Cloud-context. To do so, you can use the following `extension`, to make your use-cases adaptive to the Widgetbook Cloud Reviews and disable the animations during the visual comparison.
-
-   ```dart
-   extension WidgetbookContext on BuildContext {
-     /// The `preview` query parameter is used while taking snapshots of the
-     /// use-case for Widgetbook Cloud Reviews. This getter can be used to
-     /// customize the behavior of the use-case while taking the snapshots,
-     /// it can be used to disable animations for example.
-     bool get isInWidgetbookCloud => WidgetbookState.of(this).previewMode;
-   }
-
-   @UseCase(name: 'Default', type: CircularProgressIndicator)
-   Widget adaptiveAnimationUseCase(BuildContext context) {
-     return CircularProgressIndicator(
-       value: context.isInWidgetbookCloud ? 0.5 : null,
-     );
-   }
-   ```
-
-1. **Starting animations on-demand**: you can use a `boolean` knob to start your animations. This way, you can disable the animations during the visual comparison but you can still see the animations in the Widgetbook.
-
-   ```dart
-   @UseCase(name: 'Default', type: CircularProgressIndicator)
-   Widget onDemandAnimationUseCase(BuildContext context) {
-     return CircularProgressIndicator(
-       value: context.knobs.boolean(label: 'Static') ? 0.5 : null,
-     );
-   }
-   ```
-
-### Random values
-
-If your use-case displays random values (e.g. dates), that can be different across different builds, the visual comparison might not work as expected.
-
-We suggest using one of the following workarounds:
-
-1. Use a **constant value** for the random value.
-
-   ```dart
-   @UseCase(name: 'Default', type: Text)
-   Widget constantValueUseCase(BuildContext context) {
-     return Text(Random().nextInt(10).toString()); // [!code --]
-     return Text('10'); // [!code ++]
-   }
-   ```
-
-1. Use [**Knobs**](/knobs/overview) with a default value.
-
-   ```dart
-   @UseCase(name: 'Default', type: Text)
-   Widget constantValueUseCase(BuildContext context) {
-     return Text(Random().nextInt(10).toString()); // [!code --]
-     return Text( // [!code ++]
-       context.knobs.string(label: 'value', defaultValue: '10'), // [!code ++]
-     ); // [!code ++]
-   }
-   ```
