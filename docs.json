@@ -419,11 +419,11 @@
           "pages": [
             {
               "title": "Overview",
-              "href": "/cloud/visual-pull-requests/overview"
+              "href": "/cloud/visual-pull-request/overview"
             },
             {
               "title": "Create pull-requests",
-              "href": "/cloud/visual-pull-requests/create"
+              "href": "/cloud/visual-pull-request/create"
             }
           ]
         },
