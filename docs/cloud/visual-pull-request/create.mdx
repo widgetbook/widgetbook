@@ -1,6 +1,6 @@
 # Create visual pull-requests
 
-Visual pull-requests in Widgetbook Cloud are automatically created based on code-based pull-requests from your version control system.
+Visual pull-requests in Widgetbook Cloud are automatically created whenever a Widgetbook project is connected to a Git provider's repository based on their code-based pull-requests.
 
 ## Requirements
 
@@ -13,8 +13,8 @@ To use visual pull-requests
 Pull-requests in your Git provider as well as in Widgetbook operate on a base and head commit. 
 The base commit is the commit that the pull-request is based on, and the head commit is the commit that contains the changes in the pull-request.
 
-<Image src="/assets/cloud/visual-pull-request/pr-visualisation-light" theme="light" caption="PR #1 aims to merge head commit z into base commit a by creating merge commit m" />
-<Image src="/assets/cloud/visual-pull-request/pr-visualisation-dark" theme="dark" caption="PR #1 aims to merge head commit z into base commit a by creating merge commit m" />
+<Image src="/assets/cloud/visual-pull-request/pr-visualisation-light.png" theme="light" caption="PR #1 aims to merge head commit z into base commit a by creating merge commit m" />
+<Image src="/assets/cloud/visual-pull-request/pr-visualisation-dark.png" theme="dark" caption="PR #1 aims to merge head commit z into base commit a by creating merge commit m" />
 
 To calculate the visual changes in a pull-request, Widgetbook Cloud needs to have snapshots for both the base and head commits of the pull-request.
 Those snapshots are provided by [uploading builds](/cloud/builds/upload#upload-build-using-cicd) to Widgetbook Cloud.
