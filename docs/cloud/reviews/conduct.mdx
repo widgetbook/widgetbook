@@ -1,4 +1,41 @@
-## Conduct a review
+# Conduct a review
 
-- Approve
-- Request changes
+Widgetbook Cloud provides a platform for conducting visual pull-requests, allowing teams to review and discuss visual changes in their projects.
+
+## Review changes
+
+Use the diffing of the old version on the left and the new version on the right to review changes in your project.
+
+## Publish a review
+
+<Image src="/assets/cloud/reviews/example.png" zoom />
+
+Use the large blue "Review changes" button in the top-right corner to publish your review including a review status. 
+
+The following statuses are available:
+- **Approved**: The changes are approved and can be merged. If integrated with a Git provider, this will also set the commit status to successful so the pull-request can be merged.
+- **Comment**: The changes are neither approved nor rejected, but you want to leave a comment for the author of the pull-request. If integrated with a Git provider, this will set the commit status to pending if not dominated by another status.
+- **Changes requested**: The changes are not approved and need to be changed before they can be merged. If integrated with a Git provider, this will also set the commit status to failed so the pull-request cannot be merged.
+
+## Mark changes as viewed
+
+<Image src="/assets/cloud/reviews/mark-as-viewed.png" zoom />
+
+Use the top-right "mark as viewed" button to mark changes as viewed.
+In case you're iterating on a pull-request, the diff for the changes will be kept as viewed as long as no changes from the current to the new version are made.
+Whenever changes are made, the viewed state will be reset and you will have to re-review the changes again.
+
+The mark as viewed button will helps you keep track of which changes you have already reviewed.
+
+## Visualize changes
+
+<Image src="/assets/cloud/reviews/show-diff.png" zoom />
+
+Use the "Show diff" button in the top-right corner to visualize the changes between the old and new version.
+Changes will be highlighted in a pink color, making it easy to spot differences.
+
+## Add comments
+
+<Image src="/assets/cloud/reviews/add-comment.png" zoom />
+
+Use the comment section of a use-case diff to add comments for the author of the pull-request to provide detailed feedback on the changes.
