@@ -415,6 +415,19 @@
           ]
         },
         {
+          "group": "Visual pull-requests",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/visual-pull-requests/overview"
+            },
+            {
+              "title": "Create pull-requests",
+              "href": "/cloud/visual-pull-requests/create"
+            }
+          ]
+        },
+        {
           "title": "Reviews",
           "href": "/cloud/reviews"
         },
