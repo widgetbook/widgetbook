@@ -1,6 +1,6 @@
 ## 3.8.0
 
-- **FEAT**: Introduce Turbo Builds; a new way to speed up pushing builds to Widgetbook Cloud. ([#1502](https://github.com/widgetbook/widgetbook/pull/1502))
+- **FEAT**: Introduce [Turbo Builds](https://docs.widgetbook.io/cloud/builds/turbo); a new way to speed up pushing builds to Widgetbook Cloud. ([#1502](https://github.com/widgetbook/widgetbook/pull/1502))
 
 ## 3.7.0
 

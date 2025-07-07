@@ -411,6 +411,10 @@
             {
               "title": "Access builds",
               "href": "/cloud/builds/access-from-commit"
+            },
+            {
+              "title": "Turbo Builds",
+              "href": "/cloud/builds/turbo"
             }
           ]
         },
