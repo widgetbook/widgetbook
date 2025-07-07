@@ -1,3 +1,7 @@
+## 3.8.0
+
+- **FEAT**: Introduce Turbo Builds; a new way to speed up pushing builds to Widgetbook Cloud. ([#1502](https://github.com/widgetbook/widgetbook/pull/1502))
+
 ## 3.7.0
 
 - **FEAT**: Support Multi Snapshot for knobs. For more information, check our [docs](https://docs.widgetbook.io/cloud/reviews/multi-snapshot#multi-snapshot-for-knobs). ([#1394](https://github.com/widgetbook/widgetbook/pull/1394))
