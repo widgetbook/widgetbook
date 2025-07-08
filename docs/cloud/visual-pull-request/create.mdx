@@ -1,0 +1,35 @@
+# Create Visual Pull Requests
+
+Visual pull requests in Widgetbook Cloud are automatically created whenever a Widgetbook project is connected to a Git provider's repository and a code-based pull request is opened.
+
+## Requirements
+
+To use visual pull requests:
+- [Connect your Widgetbook Cloud project with your Git provider's repository](/cloud/projects/connect#connect-project)
+- Successfully [upload builds](/cloud/builds/upload#upload-build-using-cicd) for both the base and head commits of the pull request
+
+## How Visual Pull Requests Connect with Builds
+
+Pull requests in your Git provider and in Widgetbook operate on a base and head commit. 
+The base commit is the commit from which the feature branch was created. 
+The head commit contains the most recent changes in the feature branch.
+
+<Image src="/assets/cloud/visual-pull-request/pr-visualisation-light.png" theme="light" caption="PR #1 aims to merge head commit z into base commit a by creating merge commit m" />
+<Image src="/assets/cloud/visual-pull-request/pr-visualisation-dark.png" theme="dark" caption="PR #1 aims to merge head commit z into base commit a by creating merge commit m" />
+
+To calculate the visual changes in a pull request, Widgetbook Cloud needs snapshots for both the base and head commits. 
+These snapshots are provided by [uploading builds](/cloud/builds/upload#upload-build-using-cicd) to Widgetbook Cloud.
+
+## Missing Builds
+
+If a visual pull request is missing builds, Widgetbook Cloud will display a warning in the pull request overview.
+
+<Image src="/assets/cloud/visual-pull-request/missing-build.png" caption="The pull request is missing builds for both the base and head commits." />
+
+Follow the instructions for [uploading builds](/cloud/builds/upload#upload-build-using-cicd) to ensure all necessary builds are available.
+
+<Warning>
+**Caution:**
+Some Git providers, like GitHub, run their CI/CD pipeline on the merge commit `m` when triggered by a pull request.
+This causes Widgetbook Cloud to miss the head commit `z` for the pull request, which may cause confusion during setup.
+</Warning>

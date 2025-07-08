@@ -1,13 +1,14 @@
 # Multi Snapshot Reviews
 
-If you are using [Widgetbook Cloud Review](/cloud/reviews), you can now create multiple snapshots for a single use-case. This feature is useful if you want to test different states of your use-case using different addons or knobs configurations, instead of just using the default configurations.
+If you are using [Widgetbook Cloud Review](/cloud/reviews), you can now create multiple snapshots for a single use case. 
+This feature is useful for testing different states of your use case using various addon or knob configurations, rather than just the default configuration.
 
 <YouTube id="GJGGhUTT7LE?start=2941&end=3077" />
 
 ## Multi Snapshot for Addons
 
-1. Go to the main file of your app, where your Widgetbook's `@App` annotation is defined.
-1. Choose the addons you like to test and include them, e.g. Themes and Languages. Here are the available `AddonConfig` classes:
+1. Open the main file of your app where your Widgetbook's `@App` annotation is defined.
+1. Select the addons you want to test and include them, such as Themes and Languages. The following `AddonConfig` classes are available:
 
    - [`AlignmentAddonConfig`](/addons/alignment-addon#multi-snapshot-support)
    - [`LocalizationAddonConfig`](/addons/localization-addon#multi-snapshot-support)
@@ -18,7 +19,7 @@ If you are using [Widgetbook Cloud Review](/cloud/reviews), you can now create m
    - [`ZoomAddonConfig`](/addons/zoom-addon#multi-snapshot-support)
    - [Custom Addon Config](/addons/custom-addon#multi-snapshot-support)
 
-1. Add the configurations matrix to the `cloudAddonsConfigs` parameter of the `@App` annotation. In this example, we’d like to test German in dark mode but English in light mode, but both of them on an iPhone 12 viewport:
+1. Add the configurations matrix to the `cloudAddonsConfigs` parameter of the `@App` annotation. For example, to test German in dark mode and English in light mode, both on an iPhone 12 viewport:
 
    ```dart
    @App(
@@ -47,11 +48,10 @@ If you are using [Widgetbook Cloud Review](/cloud/reviews), you can now create m
 
 ## Multi Snapshot for Knobs
 
-1. Go to the file where your use-case is defined.
-1. Add the configurations matrix to the `cloudKnobsConfigs` parameter of the `@UseCase` annotation. In this example we want to test two common variants of the use-case:
+1. Open the file where your use case is defined.
+1. Add the configurations matrix to the `cloudKnobsConfigs` parameter of the `@UseCase` annotation. For example, to test two common variants of the use case:
 
 ```dart
-
 @UseCase(
   name: 'Default',
   type: Button,

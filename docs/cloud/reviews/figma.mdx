@@ -1,15 +1,15 @@
 # Figma Reviews
 
-Widgetbook Cloud Review can also help with verifying if the developer meets the **design requirements** by comparing the **Flutter widgets** to their corresponding **Figma designs**.
+Widgetbook Cloud Review helps verify that developers meet **design requirements** by comparing **Flutter widgets** to their corresponding **Figma designs**.
 
 <Image src="/assets/cloud/figma-review.png" zoom />
 
 ### Guide
 
-To have a "View in Figma" button in your reviews, you need to add the Figma URL to your use-cases:
+To display a "View in Figma" button in your reviews, add the Figma URL to your use cases:
 
-1. In your Figma design file, navigate to the component that resembles your Widget.
-1. Copy the link to the component by right-mouse clicking on the component and selecting `Copy/Paste as` > `Copy Link`.
+1. In your Figma design file, navigate to the component that matches your widget.
+1. Copy the link to the component by right-clicking and selecting `Copy/Paste as` > `Copy Link`.
 1. Set the `designLink` property of the `@UseCase` annotation by pasting the copied link.
 
    ```dart
@@ -21,10 +21,10 @@ To have a "View in Figma" button in your reviews, you need to add the Figma URL 
    )
    ```
 
-1. Re-run `build_runner` to update the use-cases metadata.
+1. Re-run `build_runner` to update the use case metadata:
 
    ```bash
    dart run build_runner build -d
    ```
 
-1. Commit your changes and push them to your repository; to create a new build.
+1. Commit your changes and push them to your repository to create a new build.
