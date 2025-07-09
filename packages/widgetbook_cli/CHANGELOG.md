@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Convert `--no-turbo` to a boolean flag. ([#1511](https://github.com/widgetbook/widgetbook/pull/1511))
+
 ## 3.8.0
 
 - **FEAT**: Introduce [Turbo Builds](https://docs.widgetbook.io/cloud/builds/turbo); a new way to speed up pushing builds to Widgetbook Cloud. ([#1502](https://github.com/widgetbook/widgetbook/pull/1502))

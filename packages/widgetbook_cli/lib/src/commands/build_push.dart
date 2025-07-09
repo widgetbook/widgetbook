@@ -70,10 +70,9 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
           this.cloudClient.client.options.baseUrl = url;
         },
       )
-      ..addOption(
+      ..addFlag(
         'no-turbo',
         hide: true,
-        defaultsTo: 'false',
       );
   }
 
@@ -125,7 +124,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       throw MissingOptionException('repository');
     }
 
-    final noTurbo = bool.parse(results['no-turbo'] as String);
+    final noTurbo = results['no-turbo'] as bool;
 
     return BuildPushArgs(
       apiKey: apiKey,
