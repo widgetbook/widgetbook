@@ -502,20 +502,24 @@
           ]
         },
         {
-          "group": "Codemagic",
-          "pages": [
-            {
-              "title": "Upload builds",
-              "href": "/cloud/guides/codemagic/upload"
-            }
-          ]
-        },
-        {
           "group": "Bitbucket",
           "pages": [
             {
               "title": "Upload builds",
               "href": "/cloud/guides/bitbucket/upload"
+            },
+            {
+              "title": "Access builds from Bitbucket",
+              "href": "/cloud/guides/bitbucket/access-from-commit"
+            }
+          ]
+        },
+        {
+          "group": "Codemagic",
+          "pages": [
+            {
+              "title": "Upload builds",
+              "href": "/cloud/guides/codemagic/upload"
             }
           ]
         },
