@@ -128,7 +128,7 @@ Before starting this guide, make sure you have:
         2. Select **GitHub** as your Git provider
         3. If you haven't connected your GitHub account yet, click **Connect GitHub** and follow the authorization process
         4. Search for your forked `groceries-demo` repository 
-        5. Select the repository and click **Create Project**
+        5. Select the repository and click **Import Project**
         6. Wait for the project to be created and initialized
       </TabItem>
       
@@ -137,7 +137,7 @@ Before starting this guide, make sure you have:
         2. Select **GitLab** as your Git provider
         3. If you haven't connected your GitLab account yet, click **Connect GitLab** and follow the authorization process
         4. Search for your `groceries-demo` repository
-        5. Select the repository and click **Create Project**
+        5. Select the repository and click **Import Project**
         6. Wait for the project to be created and initialized
       </TabItem>
       
@@ -146,7 +146,7 @@ Before starting this guide, make sure you have:
         2. Select **Azure DevOps** as your Git provider
         3. If you haven't connected your Azure DevOps account yet, click **Connect Azure DevOps** and follow the authorization process
         4. Search for your `groceries-demo` repository
-        5. Select the repository and click **Create Project**
+        5. Select the repository and click **Import Project**
         6. Wait for the project to be created and initialized
       </TabItem>
       
@@ -155,7 +155,7 @@ Before starting this guide, make sure you have:
         2. Select **Bitbucket** as your Git provider
         3. If you haven't connected your Bitbucket account yet, click **Connect Bitbucket** and follow the authorization process
         4. Search for your `groceries-demo` repository
-        5. Select the repository and click **Create Project**
+        5. Select the repository and click **Import Project**
         6. Wait for the project to be created and initialized
       </TabItem>
     </Tabs>
@@ -185,7 +185,7 @@ Before starting this guide, make sure you have:
         1. Go to your GitHub repository
         2. Navigate to **Settings** → **Secrets and variables** → **Actions**
         3. Click **New repository secret**
-        4. Set the name to `WIDGETBOOK_API_KEY`
+        4. Set the name to `WIDGETBOOK_CLOUD_API_KEY`
         5. Set the value to your API key from Widgetbook Cloud
         6. Click **Add secret**
       </TabItem>
@@ -195,7 +195,7 @@ Before starting this guide, make sure you have:
         2. Navigate to **Settings** → **CI/CD**
         3. Expand the **Variables** section
         4. Click **Add variable**
-        5. Set the key to `WIDGETBOOK_API_KEY`
+        5. Set the key to `WIDGETBOOK_CLOUD_API_KEY`
         6. Set the value to your API key from Widgetbook Cloud
         7. Make sure **Protect variable** is checked if you want to restrict it to protected branches
         8. Click **Add variable**
@@ -206,7 +206,7 @@ Before starting this guide, make sure you have:
         2. Navigate to **Pipelines** → **Library**
         3. Click **+ Variable group**
         4. Give your variable group a name (e.g., "Widgetbook Variables")
-        5. Add a variable with name `WIDGETBOOK_API_KEY` and your API key as the value
+        5. Add a variable with name `WIDGETBOOK_CLOUD_API_KEY` and your API key as the value
         6. Click **Save**
       </TabItem>
       
@@ -214,7 +214,7 @@ Before starting this guide, make sure you have:
         1. Go to your Bitbucket repository
         2. Navigate to **Repository settings** → **Pipelines** → **Repository variables**
         3. Click **Add**
-        4. Set the name to `WIDGETBOOK_API_KEY`
+        4. Set the name to `WIDGETBOOK_CLOUD_API_KEY`
         5. Set the value to your API key from Widgetbook Cloud
         6. Make sure **Secured** is checked
         7. Click **Add**
@@ -235,10 +235,9 @@ Before starting this guide, make sure you have:
       <TabItem value="github">
         1. Go to your GitHub repository
         2. Navigate to **Actions** tab
-        3. Find the most recent workflow run
-        4. Click the **Re-run jobs** button (three dots menu)
-        5. Select **Re-run all jobs**
-        6. Wait for the workflow to complete
+        3. Enable GitHub Actions for the forked repository
+        4. Go to the Widgetbook Cloud Action and run it. 
+        5. Wait for the workflow to complete
       </TabItem>
       
       <TabItem value="gitlab">
@@ -276,25 +275,32 @@ Before starting this guide, make sure you have:
     1. Create a new branch for your changes:
 
     ```bash
-    git checkout -b feature/update-button-color
+    git checkout -b feature/update-border-radius
     ```
 
-    2. Make a small change to a component. For example, open `lib/widgets/button.dart` and change the button color:
+    2. Change the border radius `full` in the `lib/ui/foundation/radius.dart` file to `0`.
 
     ```dart
-    // Change from
-    color: Colors.blue,
-    
-    // To
-    color: Colors.green,
+    class DesignSystemRadius {
+      static const double none = 0;
+      static const double xs = 4;
+      static const double sm = 8;
+      static const double md = 12;
+      static const double lg = 16;
+      static const double xl = 28;
+      static const double xxl = 32;
+      static const double full = 999; // [!code --]
+      static const double full = 0; // [!code ++]
+    }
+
     ```
 
     3. Commit and push your changes:
 
     ```bash
     git add .
-    git commit -m "Update button color to green"
-    git push origin feature/update-button-color
+    git commit -m "Update radius"
+    git push origin feature/update-border-radius
     ```
 
     4. Create a pull request (or merge request in GitLab):
@@ -311,9 +317,10 @@ Before starting this guide, make sure you have:
       <TabItem value="github">
         1. Go to your GitHub repository
         2. You should see a prompt to create a pull request for your recently pushed branch
-        3. Click **Compare & pull request**
-        4. Add a title and description for your PR
-        5. Click **Create pull request**
+        3. Make sure to target your forked repository as the base, not the original repository
+        4. Click **Compare & pull request**
+        5. Add a title and description for your PR
+        6. Click **Create pull request**
       </TabItem>
       
       <TabItem value="gitlab">
@@ -347,9 +354,9 @@ Before starting this guide, make sure you have:
   <Step title="Check the Pull Request in Widgetbook Cloud">
     1. Wait for the CI/CD pipeline to complete for your feature branch
     2. Go to your Widgetbook Cloud project
-    3. Navigate to the **Reviews** section
-    4. You should see a new review for your pull request
-    5. Click on the review to see the visual differences between the base and feature branches
+    3. Navigate to the **Pull Requests** section
+    4. You should see a new pull request
+    5. Click on the pull request to see the visual differences between the base and feature branches
     6. Review the changes and approve or request changes as needed
     
     <Info>
