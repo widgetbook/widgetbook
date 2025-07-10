@@ -11,6 +11,8 @@ Before starting this guide, make sure you have:
 - Access to Widgetbook Cloud
 - Basic knowledge of Git and your chosen Git provider
 
+## Steps
+
 <Steps>
   <Step title="Clone the Demo Repository">
     <Tabs
@@ -22,15 +24,13 @@ Before starting this guide, make sure you have:
       ]}
     >
       <TabItem value="github">
-        <p>Since you're using GitHub, you can fork the repository directly:</p>
+        Since you're using GitHub, you can fork the repository directly:
         
-        <ol>
-          <li>Navigate to <a href="https://github.com/widgetbook/groceries-demo" target="_blank" rel="noopener">https://github.com/widgetbook/groceries-demo</a></li>
-          <li>Click the <strong>Fork</strong> button in the top-right corner</li>
-          <li>Select your personal account as the destination</li>
-          <li>Wait for the forking process to complete</li>
-          <li>Clone your forked repository:</li>
-        </ol>
+        1. Navigate to the [groceries-demo repository](https://github.com/widgetbook/groceries-demo)
+        1. Click the **Fork** button in the top-right corner
+        1. Select your personal account as the destination
+        1. Wait for the forking process to complete
+        1. Clone your forked repository:
         
         ```bash
         git clone https://github.com/YOUR_USERNAME/groceries-demo.git
@@ -43,23 +43,18 @@ Before starting this guide, make sure you have:
       </TabItem>
       
       <TabItem value="gitlab">
-        <p>Since you're using GitLab, you'll need to import the repository:</p>
-        
-        <ol>
-          <li>Create a new empty repository in GitLab</li>
-          <li>Clone the original repository:</li>
-        </ol>
-        
+        Since you're using GitLab, you'll need to import the repository:
+
+        1. Create a new empty repository in GitLab
+        2. Clone the original repository:
+
         ```bash
         git clone https://github.com/widgetbook/groceries-demo.git
         cd groceries-demo
         ```
-        
-        <ol start="3">
-          <li>Change the remote origin to your GitLab repository:</li>
-        </ol>
-        
-        
+
+        3. Change the remote origin to your GitLab repository:
+
         ```bash
         git remote remove origin
         git remote add origin https://gitlab.com/YOUR_USERNAME/groceries-demo.git
@@ -68,22 +63,18 @@ Before starting this guide, make sure you have:
       </TabItem>
       
       <TabItem value="azure">
-        <p>Since you're using Azure DevOps, you'll need to import the repository:</p>
-        
-        <ol>
-          <li>Create a new empty repository in Azure DevOps</li>
-          <li>Clone the original repository:</li>
-        </ol>
-        
+        Since you're using Azure DevOps, you'll need to import the repository:
+
+        1. Create a new empty repository in Azure DevOps
+        2. Clone the original repository:
+
         ```bash
         git clone https://github.com/widgetbook/groceries-demo.git
         cd groceries-demo
         ```
-        
-        <ol start="3">
-          <li>Change the remote origin to your Azure DevOps repository:</li>
-        </ol>
-        
+
+        3. Change the remote origin to your Azure DevOps repository:
+
         ```bash
         git remote remove origin
         git remote add origin https://dev.azure.com/YOUR_ORGANIZATION/YOUR_PROJECT/_git/groceries-demo
@@ -92,22 +83,18 @@ Before starting this guide, make sure you have:
       </TabItem>
       
       <TabItem value="bitbucket">
-        <p>Since you're using Bitbucket, you'll need to import the repository:</p>
-        
-        <ol>
-          <li>Create a new empty repository in Bitbucket</li>
-          <li>Clone the original repository:</li>
-        </ol>
-        
+        Since you're using Bitbucket, you'll need to import the repository:
+
+        1. Create a new empty repository in Bitbucket
+        2. Clone the original repository:
+
         ```bash
         git clone https://github.com/widgetbook/groceries-demo.git
         cd groceries-demo
         ```
-        
-        <ol start="3">
-          <li>Change the remote origin to your Bitbucket repository:</li>
-        </ol>
-        
+
+        3. Change the remote origin to your Bitbucket repository:
+
         ```bash
         git remote remove origin
         git remote add origin https://bitbucket.org/YOUR_USERNAME/groceries-demo.git
@@ -118,13 +105,11 @@ Before starting this guide, make sure you have:
   </Step>
 
   <Step title="Create a Widgetbook Cloud Workspace">
-    <ol>
-      <li>Navigate to <a href="https://app.widgetbook.io/" target="_blank" rel="noopener">Widgetbook Cloud</a></li>
-      <li>Sign in with your account</li>
-      <li>Click <strong>Create Workspace</strong> or navigate to the workspaces section</li>
-      <li>Enter a name for your workspace (e.g., "Demo Workspace")</li>
-      <li>Click <strong>Create</strong> to finalize the workspace creation</li>
-    </ol>
+    1. Navigate to [Widgetbook Cloud](https://app.widgetbook.io/)
+    2. Sign in with your account
+    3. Click **Create Workspace** or navigate to the workspaces section
+    4. Enter a name for your workspace (e.g., "Demo Workspace")
+    5. Click **Create** to finalize the workspace creation
     
     <Info>
       Workspaces help you organize your projects. You can create multiple workspaces for different teams or purposes.
@@ -141,57 +126,47 @@ Before starting this guide, make sure you have:
       ]}
     >
       <TabItem value="github">
-        <ol>
-          <li>In your Widgetbook Cloud workspace, click <strong>Create Project</strong></li>
-          <li>Select <strong>GitHub</strong> as your Git provider</li>
-          <li>If you haven't connected your GitHub account yet, click <strong>Connect GitHub</strong> and follow the authorization process</li>
-          <li>Search for your forked repository: <code>groceries-demo</code></li>
-          <li>Select the repository and click <strong>Create Project</strong></li>
-          <li>Wait for the project to be created and initialized</li>
-        </ol>
+        1. In your Widgetbook Cloud workspace, click **Create Project**
+        2. Select **GitHub** as your Git provider
+        3. If you haven't connected your GitHub account yet, click **Connect GitHub** and follow the authorization process
+        4. Search for your forked repository: `groceries-demo`
+        5. Select the repository and click **Create Project**
+        6. Wait for the project to be created and initialized
       </TabItem>
       
       <TabItem value="gitlab">
-        <ol>
-          <li>In your Widgetbook Cloud workspace, click <strong>Create Project</strong></li>
-          <li>Select <strong>GitLab</strong> as your Git provider</li>
-          <li>If you haven't connected your GitLab account yet, click <strong>Connect GitLab</strong> and follow the authorization process</li>
-          <li>Search for your repository: <code>groceries-demo</code></li>
-          <li>Select the repository and click <strong>Create Project</strong></li>
-          <li>Wait for the project to be created and initialized</li>
-        </ol>
+        1. In your Widgetbook Cloud workspace, click **Create Project**
+        2. Select **GitLab** as your Git provider
+        3. If you haven't connected your GitLab account yet, click **Connect GitLab** and follow the authorization process
+        4. Search for your repository: `groceries-demo`
+        5. Select the repository and click **Create Project**
+        6. Wait for the project to be created and initialized
       </TabItem>
       
       <TabItem value="azure">
-        <ol>
-          <li>In your Widgetbook Cloud workspace, click <strong>Create Project</strong></li>
-          <li>Select <strong>Azure DevOps</strong> as your Git provider</li>
-          <li>If you haven't connected your Azure DevOps account yet, click <strong>Connect Azure DevOps</strong> and follow the authorization process</li>
-          <li>Search for your repository: <code>groceries-demo</code></li>
-          <li>Select the repository and click <strong>Create Project</strong></li>
-          <li>Wait for the project to be created and initialized</li>
-        </ol>
+        1. In your Widgetbook Cloud workspace, click **Create Project**
+        2. Select **Azure DevOps** as your Git provider
+        3. If you haven't connected your Azure DevOps account yet, click **Connect Azure DevOps** and follow the authorization process
+        4. Search for your repository: `groceries-demo`
+        5. Select the repository and click **Create Project**
+        6. Wait for the project to be created and initialized
       </TabItem>
       
       <TabItem value="bitbucket">
-        <ol>
-          <li>In your Widgetbook Cloud workspace, click <strong>Create Project</strong></li>
-          <li>Select <strong>Bitbucket</strong> as your Git provider</li>
-          <li>If you haven't connected your Bitbucket account yet, click <strong>Connect Bitbucket</strong> and follow the authorization process</li>
-          <li>Search for your repository: <code>groceries-demo</code></li>
-          <li>Select the repository and click <strong>Create Project</strong></li>
-          <li>Wait for the project to be created and initialized</li>
-        </ol>
+        1. In your Widgetbook Cloud workspace, click **Create Project**
+        2. Select **Bitbucket** as your Git provider
+        3. If you haven't connected your Bitbucket account yet, click **Connect Bitbucket** and follow the authorization process
+        4. Search for your repository: `groceries-demo`
+        5. Select the repository and click **Create Project**
+        6. Wait for the project to be created and initialized
       </TabItem>
     </Tabs>
   </Step>
 
   <Step title="Get the API Key">
-    <ol>
-      <li>In your newly created Widgetbook Cloud project, navigate to <strong>Settings</strong></li>
-      <li>Find the <strong>API Key</strong> section</li>
-      <li>Copy the API key (it will look something like <code>wb_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code>)</li>
-    </ol>
+    1. In your newly created Widgetbook Cloud project, navigate to **Settings**
+    2. Find the **API Key** section
+    3. Copy the API key (it will look something like `wb_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`)
     
     <Info>
       Keep this API key secure. You'll need it to configure your CI/CD pipeline to upload builds to Widgetbook Cloud.
@@ -208,50 +183,42 @@ Before starting this guide, make sure you have:
       ]}
     >
       <TabItem value="github">
-        <ol>
-          <li>Go to your GitHub repository</li>
-          <li>Navigate to <strong>Settings</strong> → <strong>Secrets and variables</strong> → <strong>Actions</strong></li>
-          <li>Click <strong>New repository secret</strong></li>
-          <li>Set the name to <code>WIDGETBOOK_API_KEY</code></li>
-          <li>Set the value to your API key from Widgetbook Cloud</li>
-          <li>Click <strong>Add secret</strong></li>
-        </ol>
+        1. Go to your GitHub repository
+        2. Navigate to **Settings** → **Secrets and variables** → **Actions**
+        3. Click **New repository secret**
+        4. Set the name to `WIDGETBOOK_API_KEY`
+        5. Set the value to your API key from Widgetbook Cloud
+        6. Click **Add secret**
       </TabItem>
       
       <TabItem value="gitlab">
-        <ol>
-          <li>Go to your GitLab repository</li>
-          <li>Navigate to <strong>Settings</strong> → <strong>CI/CD</strong></li>
-          <li>Expand the <strong>Variables</strong> section</li>
-          <li>Click <strong>Add variable</strong></li>
-          <li>Set the key to <code>WIDGETBOOK_API_KEY</code></li>
-          <li>Set the value to your API key from Widgetbook Cloud</li>
-          <li>Make sure <strong>Protect variable</strong> is checked if you want to restrict it to protected branches</li>
-          <li>Click <strong>Add variable</strong></li>
-        </ol>
+        1. Go to your GitLab repository
+        2. Navigate to **Settings** → **CI/CD**
+        3. Expand the **Variables** section
+        4. Click **Add variable**
+        5. Set the key to `WIDGETBOOK_API_KEY`
+        6. Set the value to your API key from Widgetbook Cloud
+        7. Make sure **Protect variable** is checked if you want to restrict it to protected branches
+        8. Click **Add variable**
       </TabItem>
       
       <TabItem value="azure">
-        <ol>
-          <li>Go to your Azure DevOps project</li>
-          <li>Navigate to <strong>Pipelines</strong> → <strong>Library</strong></li>
-          <li>Click <strong>+ Variable group</strong></li>
-          <li>Give your variable group a name (e.g., "Widgetbook Variables")</li>
-          <li>Add a variable with name <code>WIDGETBOOK_API_KEY</code> and your API key as the value</li>
-          <li>Click <strong>Save</strong></li>
-        </ol>
+        1. Go to your Azure DevOps project
+        2. Navigate to **Pipelines** → **Library**
+        3. Click **+ Variable group**
+        4. Give your variable group a name (e.g., "Widgetbook Variables")
+        5. Add a variable with name `WIDGETBOOK_API_KEY` and your API key as the value
+        6. Click **Save**
       </TabItem>
       
       <TabItem value="bitbucket">
-        <ol>
-          <li>Go to your Bitbucket repository</li>
-          <li>Navigate to <strong>Repository settings</strong> → <strong>Pipelines</strong> → <strong>Repository variables</strong></li>
-          <li>Click <strong>Add</strong></li>
-          <li>Set the name to <code>WIDGETBOOK_API_KEY</code></li>
-          <li>Set the value to your API key from Widgetbook Cloud</li>
-          <li>Make sure <strong>Secured</strong> is checked</li>
-          <li>Click <strong>Add</strong></li>
-        </ol>
+        1. Go to your Bitbucket repository
+        2. Navigate to **Repository settings** → **Pipelines** → **Repository variables**
+        3. Click **Add**
+        4. Set the name to `WIDGETBOOK_API_KEY`
+        5. Set the value to your API key from Widgetbook Cloud
+        6. Make sure **Secured** is checked
+        7. Click **Add**
       </TabItem>
     </Tabs>
   </Step>
@@ -266,45 +233,37 @@ Before starting this guide, make sure you have:
       ]}
     >
       <TabItem value="github">
-        <ol>
-          <li>Go to your GitHub repository</li>
-          <li>Navigate to <strong>Actions</strong> tab</li>
-          <li>Find the most recent workflow run</li>
-          <li>Click the <strong>Re-run jobs</strong> button (three dots menu)</li>
-          <li>Select <strong>Re-run all jobs</strong></li>
-          <li>Wait for the workflow to complete</li>
-        </ol>
+        1. Go to your GitHub repository
+        2. Navigate to **Actions** tab
+        3. Find the most recent workflow run
+        4. Click the **Re-run jobs** button (three dots menu)
+        5. Select **Re-run all jobs**
+        6. Wait for the workflow to complete
       </TabItem>
       
       <TabItem value="gitlab">
-        <ol>
-          <li>Go to your GitLab repository</li>
-          <li>Navigate to <strong>CI/CD</strong> → <strong>Pipelines</strong></li>
-          <li>Find the most recent pipeline</li>
-          <li>Click the <strong>Retry</strong> button (circular arrow icon)</li>
-          <li>Wait for the pipeline to complete</li>
-        </ol>
+        1. Go to your GitLab repository
+        2. Navigate to **CI/CD** → **Pipelines**
+        3. Find the most recent pipeline
+        4. Click the **Retry** button (circular arrow icon)
+        5. Wait for the pipeline to complete
       </TabItem>
       
       <TabItem value="azure">
-        <ol>
-          <li>Go to your Azure DevOps project</li>
-          <li>Navigate to <strong>Pipelines</strong></li>
-          <li>Find the most recent pipeline run</li>
-          <li>Click the <strong>Run pipeline</strong> button</li>
-          <li>Select the branch and click <strong>Run</strong></li>
-          <li>Wait for the pipeline to complete</li>
-        </ol>
+        1. Go to your Azure DevOps project
+        2. Navigate to **Pipelines**
+        3. Find the most recent pipeline run
+        4. Click the **Run pipeline** button
+        5. Select the branch and click **Run**
+        6. Wait for the pipeline to complete
       </TabItem>
       
       <TabItem value="bitbucket">
-        <ol>
-          <li>Go to your Bitbucket repository</li>
-          <li>Navigate to <strong>Pipelines</strong></li>
-          <li>Find the most recent pipeline</li>
-          <li>Click the <strong>Rerun</strong> button</li>
-          <li>Wait for the pipeline to complete</li>
-        </ol>
+        1. Go to your Bitbucket repository
+        2. Navigate to **Pipelines**
+        3. Find the most recent pipeline
+        4. Click the **Rerun** button
+        5. Wait for the pipeline to complete
       </TabItem>
     </Tabs>
     
@@ -314,18 +273,14 @@ Before starting this guide, make sure you have:
   </Step>
 
   <Step title="Create a Component Change and Pull Request">
-    <ol>
-      <li>Create a new branch for your changes:</li>
-    </ol>
-    
+    1. Create a new branch for your changes:
+
     ```bash
     git checkout -b feature/update-button-color
     ```
-    
-    <ol start="2">
-      <li>Make a small change to a component. For example, open <code>lib/widgets/button.dart</code> and change the button color:</li>
-    </ol>
-    
+
+    2. Make a small change to a component. For example, open `lib/widgets/button.dart` and change the button color:
+
     ```dart
     // Change from
     color: Colors.blue,
@@ -333,20 +288,16 @@ Before starting this guide, make sure you have:
     // To
     color: Colors.green,
     ```
-    
-    <ol start="3">
-      <li>Commit and push your changes:</li>
-    </ol>
-    
+
+    3. Commit and push your changes:
+
     ```bash
     git add .
     git commit -m "Update button color to green"
     git push origin feature/update-button-color
     ```
-    
-    <ol start="4">
-      <li>Create a pull request (or merge request in GitLab):</li>
-    </ol>
+
+    4. Create a pull request (or merge request in GitLab):
     
     <Tabs
       values={[
@@ -357,58 +308,48 @@ Before starting this guide, make sure you have:
       ]}
     >
       <TabItem value="github">
-        <ol>
-          <li>Go to your GitHub repository</li>
-          <li>You should see a prompt to create a pull request for your recently pushed branch</li>
-          <li>Click <strong>Compare & pull request</strong></li>
-          <li>Add a title and description for your PR</li>
-          <li>Click <strong>Create pull request</strong></li>
-        </ol>
+        1. Go to your GitHub repository
+        2. You should see a prompt to create a pull request for your recently pushed branch
+        3. Click **Compare & pull request**
+        4. Add a title and description for your PR
+        5. Click **Create pull request**
       </TabItem>
       
       <TabItem value="gitlab">
-        <ol>
-          <li>Go to your GitLab repository</li>
-          <li>You should see a prompt to create a merge request for your recently pushed branch</li>
-          <li>Click <strong>Create merge request</strong></li>
-          <li>Add a title and description for your MR</li>
-          <li>Click <strong>Create merge request</strong></li>
-        </ol>
+        1. Go to your GitLab repository
+        2. You should see a prompt to create a merge request for your recently pushed branch
+        3. Click **Create merge request**
+        4. Add a title and description for your MR
+        5. Click **Create merge request**
       </TabItem>
       
       <TabItem value="azure">
-        <ol>
-          <li>Go to your Azure DevOps project</li>
-          <li>Navigate to <strong>Repos</strong> → <strong>Pull requests</strong></li>
-          <li>Click <strong>New pull request</strong></li>
-          <li>Select your feature branch as the source and main as the target</li>
-          <li>Add a title and description</li>
-          <li>Click <strong>Create</strong></li>
-        </ol>
+        1. Go to your Azure DevOps project
+        2. Navigate to **Repos** → **Pull requests**
+        3. Click **New pull request**
+        4. Select your feature branch as the source and main as the target
+        5. Add a title and description
+        6. Click **Create**
       </TabItem>
       
       <TabItem value="bitbucket">
-        <ol>
-          <li>Go to your Bitbucket repository</li>
-          <li>Navigate to <strong>Pull requests</strong></li>
-          <li>Click <strong>Create pull request</strong></li>
-          <li>Select your feature branch as the source and main as the target</li>
-          <li>Add a title and description</li>
-          <li>Click <strong>Create</strong></li>
-        </ol>
+        1. Go to your Bitbucket repository
+        2. Navigate to **Pull requests**
+        3. Click **Create pull request**
+        4. Select your feature branch as the source and main as the target
+        5. Add a title and description
+        6. Click **Create**
       </TabItem>
     </Tabs>
   </Step>
 
   <Step title="Check the Pull Request in Widgetbook Cloud">
-    <ol>
-      <li>Wait for the CI/CD pipeline to complete for your feature branch</li>
-      <li>Go to your Widgetbook Cloud project</li>
-      <li>Navigate to the <strong>Reviews</strong> section</li>
-      <li>You should see a new review for your pull request</li>
-      <li>Click on the review to see the visual differences between the base and feature branches</li>
-      <li>Review the changes and approve or request changes as needed</li>
-    </ol>
+    1. Wait for the CI/CD pipeline to complete for your feature branch
+    2. Go to your Widgetbook Cloud project
+    3. Navigate to the **Reviews** section
+    4. You should see a new review for your pull request
+    5. Click on the review to see the visual differences between the base and feature branches
+    6. Review the changes and approve or request changes as needed
     
     <Info>
       The review will show you exactly what changed visually between your feature branch and the main branch, making it easy to spot UI regressions or unintended changes.
