@@ -530,6 +530,10 @@
         {
           "title": "Multi Snapshot Reviews",
           "href": "/cloud/reviews/multi-snapshot"
+        },
+        {
+          "title": "Setup with Demo Project",
+          "href": "/cloud/guides/demo-project"
         }
       ]
     },
