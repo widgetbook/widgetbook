@@ -43,43 +43,28 @@ Before starting this guide, make sure you have:
       </TabItem>
       
       <TabItem value="gitlab">
-        Since you're using GitLab, you'll need to import the repository:
+        Since you're using GitLab, you can import the repository directly:
 
-        1. Create a new empty repository in GitLab
-        2. Clone the original repository:
-
-        ```bash
-        git clone https://github.com/widgetbook/groceries-demo.git
-        cd groceries-demo
-        ```
-
-        3. Change the remote origin to your GitLab repository:
-
-        ```bash
-        git remote remove origin
-        git remote add origin https://gitlab.com/YOUR_USERNAME/groceries-demo.git
-        git push -u origin main
-        ```
+        1. Go to your GitLab account and click **New project**
+        2. Select **Import project**
+        3. Choose **Repository by URL** as the import source
+        4. Enter the repository URL: `https://github.com/widgetbook/groceries-demo`
+        5. Set the project name to `groceries-demo`
+        6. Choose the visibility level (public or private)
+        7. Click **Create project**
+        8. Wait for the import to complete
       </TabItem>
       
       <TabItem value="bitbucket">
-        Since you're using Bitbucket, you'll need to import the repository:
+        Since you're using Bitbucket, you can import the repository directly:
 
-        1. Create a new empty repository in Bitbucket
-        2. Clone the original repository:
-
-        ```bash
-        git clone https://github.com/widgetbook/groceries-demo.git
-        cd groceries-demo
-        ```
-
-        3. Change the remote origin to your Bitbucket repository:
-
-        ```bash
-        git remote remove origin
-        git remote add origin https://bitbucket.org/YOUR_USERNAME/groceries-demo.git
-        git push -u origin main
-        ```
+        1. Go to your Bitbucket account and click **Create repository**
+        2. Click **Import repository**
+        3. Enter the repository URL: `https://github.com/widgetbook/groceries-demo`
+        4. Set the repository name to `groceries-demo`
+        5. Choose the repository type (public or private)
+        6. Click **Import repository**
+        7. Wait for the import to complete
       </TabItem>
     </Tabs>
   </Step>
