@@ -138,6 +138,14 @@ class WidgetbookApp extends StatelessWidget {
                       options: List.generate(10, (index) => index),
                     ),
                   ),
+                  KnobEntry<int>(
+                    name: 'SegmentButton<int>',
+                    regular: context.knobs.object.segmented(
+                      label: 'segment',
+                      options: List.generate(4, (index) => index),
+                    ),
+                    nullable: null,
+                  ),
                 ],
               );
             },
