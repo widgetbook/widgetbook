@@ -7,7 +7,7 @@ We'll use the [groceries-demo](https://github.com/widgetbook/groceries-demo) rep
 
 Before starting this guide, make sure you have:
 
-- An account for GitHub, GitLab, Azure DevOps, or Bitbucket
+- An account for GitHub, GitLab, or Bitbucket
 - Access to [Widgetbook Cloud](https://app.widgetbook.io/)
 - Basic knowledge of Git and your chosen Git provider
 
@@ -20,7 +20,6 @@ Before starting this guide, make sure you have:
       values={[
         { label: "GitHub", value: "github" },
         { label: "GitLab", value: "gitlab" },
-        { label: "Azure DevOps", value: "azure" },
         { label: "Bitbucket", value: "bitbucket" },
       ]}
     >
@@ -63,26 +62,6 @@ Before starting this guide, make sure you have:
         ```
       </TabItem>
       
-      <TabItem value="azure">
-        Since you're using Azure DevOps, you'll need to import the repository:
-
-        1. Create a new empty repository in Azure DevOps
-        2. Clone the original repository:
-
-        ```bash
-        git clone https://github.com/widgetbook/groceries-demo.git
-        cd groceries-demo
-        ```
-
-        3. Change the remote origin to your Azure DevOps repository:
-
-        ```bash
-        git remote remove origin
-        git remote add origin https://dev.azure.com/YOUR_ORGANIZATION/YOUR_PROJECT/_git/groceries-demo
-        git push -u origin main
-        ```
-      </TabItem>
-      
       <TabItem value="bitbucket">
         Since you're using Bitbucket, you'll need to import the repository:
 
@@ -119,7 +98,6 @@ Before starting this guide, make sure you have:
       values={[
         { label: "GitHub", value: "github" },
         { label: "GitLab", value: "gitlab" },
-        { label: "Azure DevOps", value: "azure" },
         { label: "Bitbucket", value: "bitbucket" },
       ]}
     >
@@ -136,15 +114,6 @@ Before starting this guide, make sure you have:
         1. In your Widgetbook Cloud workspace, click **Create Project**
         2. Select **GitLab** as your Git provider
         3. If you haven't connected your GitLab account yet, click **Connect GitLab** and follow the authorization process
-        4. Search for your `groceries-demo` repository
-        5. Select the repository and click **Import Project**
-        6. Wait for the project to be created and initialized
-      </TabItem>
-      
-      <TabItem value="azure">
-        1. In your Widgetbook Cloud workspace, click **Create Project**
-        2. Select **Azure DevOps** as your Git provider
-        3. If you haven't connected your Azure DevOps account yet, click **Connect Azure DevOps** and follow the authorization process
         4. Search for your `groceries-demo` repository
         5. Select the repository and click **Import Project**
         6. Wait for the project to be created and initialized
@@ -177,7 +146,6 @@ Before starting this guide, make sure you have:
       values={[
         { label: "GitHub", value: "github" },
         { label: "GitLab", value: "gitlab" },
-        { label: "Azure DevOps", value: "azure" },
         { label: "Bitbucket", value: "bitbucket" },
       ]}
     >
@@ -201,15 +169,6 @@ Before starting this guide, make sure you have:
         8. Click **Add variable**
       </TabItem>
       
-      <TabItem value="azure">
-        1. Go to your Azure DevOps project
-        2. Navigate to **Pipelines** → **Library**
-        3. Click **+ Variable group**
-        4. Give your variable group a name (e.g., "Widgetbook Variables")
-        5. Add a variable with name `WIDGETBOOK_CLOUD_API_KEY` and your API key as the value
-        6. Click **Save**
-      </TabItem>
-      
       <TabItem value="bitbucket">
         1. Go to your Bitbucket repository
         2. Navigate to **Repository settings** → **Pipelines** → **Repository variables**
@@ -228,7 +187,6 @@ Before starting this guide, make sure you have:
       values={[
         { label: "GitHub", value: "github" },
         { label: "GitLab", value: "gitlab" },
-        { label: "Azure DevOps", value: "azure" },
         { label: "Bitbucket", value: "bitbucket" },
       ]}
     >
@@ -246,15 +204,6 @@ Before starting this guide, make sure you have:
         3. Find the most recent pipeline
         4. Click the **Retry** button (circular arrow icon)
         5. Wait for the pipeline to complete
-      </TabItem>
-      
-      <TabItem value="azure">
-        1. Go to your Azure DevOps project
-        2. Navigate to **Pipelines**
-        3. Find the most recent pipeline run
-        4. Click the **Run pipeline** button
-        5. Select the branch and click **Run**
-        6. Wait for the pipeline to complete
       </TabItem>
       
       <TabItem value="bitbucket">
@@ -310,7 +259,6 @@ Before starting this guide, make sure you have:
       values={[
         { label: "GitHub", value: "github" },
         { label: "GitLab", value: "gitlab" },
-        { label: "Azure DevOps", value: "azure" },
         { label: "Bitbucket", value: "bitbucket" },
       ]}
     >
@@ -329,15 +277,6 @@ Before starting this guide, make sure you have:
         3. Click **Create merge request**
         4. Add a title and description for your MR
         5. Click **Create merge request**
-      </TabItem>
-      
-      <TabItem value="azure">
-        1. Go to your Azure DevOps project
-        2. Navigate to **Repos** → **Pull requests**
-        3. Click **New pull request**
-        4. Select your feature branch as the source and main as the target
-        5. Add a title and description
-        6. Click **Create**
       </TabItem>
       
       <TabItem value="bitbucket">
