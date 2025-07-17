@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Prevent "HEAD" as branch name in `cloud build push` command. ([#1515](https://github.com/widgetbook/widgetbook/pull/1515))
+
 ## 3.8.1
 
 - **FIX**: Convert `--no-turbo` to a boolean flag. ([#1511](https://github.com/widgetbook/widgetbook/pull/1511))

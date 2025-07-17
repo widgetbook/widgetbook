@@ -108,6 +108,18 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         context.providerBranch ??
         currentBranch.name;
 
+    if (branch == 'HEAD') {
+      throw CliException(
+        'Branch name cannot be "HEAD". '
+        'To make sure that Visual PRs work correctly, '
+        'please use a specific branch name.\n\n'
+        'For more information, check our docs:\n'
+        '1. https://docs.widgetbook.io/cloud/visual-pull-request/create#how-visual-pull-requests-connect-with-builds\n'
+        '2. https://docs.widgetbook.io/cloud/builds/upload#upload-build-using-cicd',
+        ExitCode.data.code,
+      );
+    }
+
     final commit = results['commit'] as String? ??
         context.providerSha ??
         currentBranch.sha;
