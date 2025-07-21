@@ -1,4 +1,4 @@
-## Unreleased
+## 3.8.2
 
 - **FIX**: Prevent "HEAD" as branch name in `cloud build push` command. ([#1515](https://github.com/widgetbook/widgetbook/pull/1515))
 
