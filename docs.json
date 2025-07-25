@@ -479,12 +479,12 @@
               "href": "/cloud/guides/gitlab/upload"
             },
             {
-              "title": "Builds with self-managed GitLab",
-              "href": "/cloud/guides/gitlab/upload-self-managed"
-            },
-            {
               "title": "Access builds from GitLab",
               "href": "/cloud/guides/gitlab/access-from-commit"
+            },
+            {
+              "title": "Self-managed GitLab",
+              "href": "/cloud/guides/gitlab/self-managed"
             }
           ]
         },
