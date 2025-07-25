@@ -511,6 +511,10 @@
             {
               "title": "Access builds from Bitbucket",
               "href": "/cloud/guides/bitbucket/access-from-commit"
+            },
+            {
+              "title": "Self-hosted Bitbucket",
+              "href": "/cloud/guides/bitbucket/self-hosted"
             }
           ]
         },
