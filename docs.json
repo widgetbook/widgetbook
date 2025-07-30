@@ -419,6 +419,10 @@
           ]
         },
         {
+          "title": "Snapshots",
+          "href": "/cloud/snapshots"
+        },
+        {
           "group": "Visual Pull Requests",
           "pages": [
             {
