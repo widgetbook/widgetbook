@@ -25,6 +25,7 @@ class Widgetbook extends StatefulWidget {
     this.appBuilder = widgetsAppBuilder,
     this.addons,
     this.integrations,
+    this.scrollBehavior
   });
 
   /// A [Widgetbook] with [CupertinoApp] as an [appBuilder].
@@ -35,6 +36,7 @@ class Widgetbook extends StatefulWidget {
     this.appBuilder = cupertinoAppBuilder,
     this.addons,
     this.integrations,
+    this.scrollBehavior
   });
 
   /// A [Widgetbook] with [MaterialApp] as an [appBuilder].
@@ -45,6 +47,7 @@ class Widgetbook extends StatefulWidget {
     this.appBuilder = materialAppBuilder,
     this.addons,
     this.integrations,
+    this.scrollBehavior
   });
 
   /// The initial route for that will be used on first startup.
@@ -70,6 +73,10 @@ class Widgetbook extends StatefulWidget {
   /// integrate with Widgetbook Cloud via [WidgetbookCloudIntegration], but
   /// can also be used to integrate with third-party packages.
   final List<WidgetbookIntegration>? integrations;
+
+  /// The scroll behavior to be applied to the Widgetbook application.
+  /// This parameter allows you to customize the scrolling behavior of the app.
+  final ScrollBehavior? scrollBehavior;
 
   @override
   State<Widgetbook> createState() => _WidgetbookState();
@@ -114,6 +121,7 @@ class _WidgetbookState extends State<Widgetbook> {
         darkTheme: Themes.dark,
         routerConfig: router,
         debugShowCheckedModeBanner: false,
+        scrollBehavior: widget.scrollBehavior,
       ),
     );
   }
