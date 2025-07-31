@@ -10,6 +10,7 @@ import '../list_knob.dart';
 import '../string_knob.dart';
 import 'double_knobs_builder.dart';
 import 'int_knobs_builder.dart';
+import 'object_knobs_builder.dart';
 
 typedef KnobAdded = T? Function<T>(Knob<T?> knob);
 typedef $int = int;
@@ -20,13 +21,15 @@ class KnobsBuilder {
   )   : this.double = DoubleKnobsBuilder(onKnobAdded),
         this.doubleOrNull = DoubleOrNullKnobsBuilder(onKnobAdded),
         this.int = IntKnobsBuilder(onKnobAdded),
-        this.intOrNull = IntOrNullKnobsBuilder(onKnobAdded);
+        this.intOrNull = IntOrNullKnobsBuilder(onKnobAdded),
+        this.object = ObjectKnobsBuilder(onKnobAdded);
 
   final KnobAdded onKnobAdded;
   final DoubleKnobsBuilder double;
   final DoubleOrNullKnobsBuilder doubleOrNull;
   final IntKnobsBuilder int;
   final IntOrNullKnobsBuilder intOrNull;
+  final ObjectKnobsBuilder object;
 
   /// Creates a checkbox that can be toggled on and off
   bool boolean({
@@ -168,6 +171,8 @@ class KnobsBuilder {
       ),
     );
   }
+
+
 
   /// Creates a duration input that can be typed in
   Duration duration({
