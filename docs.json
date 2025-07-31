@@ -419,8 +419,17 @@
           ]
         },
         {
-          "title": "Snapshots",
-          "href": "/cloud/snapshots"
+          "group": "Snapshots",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/snapshots/overview"
+            },
+            {
+              "title": "Multi Snapshot",
+              "href": "/cloud/snapshots/multi-snapshot"
+            }
+          ]
         },
         {
           "group": "Visual Pull Requests",
@@ -534,10 +543,6 @@
         {
           "title": "Figma Reviews",
           "href": "/cloud/reviews/figma"
-        },
-        {
-          "title": "Multi Snapshot Reviews",
-          "href": "/cloud/reviews/multi-snapshot"
         },
         {
           "title": "Setup with Demo Project",

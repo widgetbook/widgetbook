@@ -48,7 +48,7 @@
 
 ## 3.12.0
 
-- **FEAT**: Add the **experimental** _(subject to breaking changes)_ [`ViewportAddon`](https://docs.widgetbook.io/addons/viewport-addon) alongside its [`ViewportAddonConfig`](https://docs.widgetbook.io/cloud/reviews/multi-snapshot#multi-snapshot-for-addons). This new addon will replace the `DeviceFrameAddon` in the future. ([#1318](https://github.com/widgetbook/widgetbook/pull/1318))
+- **FEAT**: Add the **experimental** _(subject to breaking changes)_ [`ViewportAddon`](https://docs.widgetbook.io/addons/viewport-addon) alongside its [`ViewportAddonConfig`](https://docs.widgetbook.io/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons). This new addon will replace the `DeviceFrameAddon` in the future. ([#1318](https://github.com/widgetbook/widgetbook/pull/1318))
 
 ## 3.11.0
 
