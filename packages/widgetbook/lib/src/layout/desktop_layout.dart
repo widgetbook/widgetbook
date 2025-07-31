@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 import 'package:resizable_widget/resizable_widget.dart';
 
 import '../settings/settings.dart';
@@ -6,6 +7,10 @@ import '../state/state.dart';
 import '../widgetbook_theme.dart';
 import 'base_layout.dart';
 
+/// The [DesktopLayout] is a layout for desktop devices that allows
+/// displaying the navigation, addons, knobs, and workbench in a
+/// resizable layout.
+@internal
 class DesktopLayout extends StatelessWidget implements BaseLayout {
   const DesktopLayout({
     super.key,
