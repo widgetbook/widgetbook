@@ -1,7 +1,9 @@
 import 'package:device_frame_plus/device_frame_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:meta/meta.dart';
 
+@internal
 class NoneDevice with DiagnosticableTreeMixin implements DeviceInfo {
   const NoneDevice._();
 
