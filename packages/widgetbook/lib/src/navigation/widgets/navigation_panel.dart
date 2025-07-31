@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../../state/widgetbook_state.dart';
 import '../nodes/nodes.dart';
@@ -6,6 +7,7 @@ import 'navigation_tree_node.dart';
 import 'search_field.dart';
 import 'stats_banner.dart';
 
+@internal
 class NavigationPanel extends StatefulWidget {
   const NavigationPanel({
     super.key,

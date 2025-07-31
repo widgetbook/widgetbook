@@ -7,6 +7,7 @@ import 'widgetbook_use_case.dart';
 
 /// The root of all [WidgetbookNode]s.
 class WidgetbookRoot extends WidgetbookNode {
+  /// Creates a [WidgetbookRoot] node.
   WidgetbookRoot({
     required super.children,
   }) : super(
@@ -29,7 +30,11 @@ class WidgetbookRoot extends WidgetbookNode {
   @internal
   late final Map<String, WidgetbookUseCase> table;
 
+  /// Count of all [WidgetbookUseCase]s in the root node.
   late final int useCasesCount;
+
+  /// Count of all [WidgetbookComponent]s and [WidgetbookLeafComponent]s in
+  /// the root node.
   late final int componentsCount;
 
   @override

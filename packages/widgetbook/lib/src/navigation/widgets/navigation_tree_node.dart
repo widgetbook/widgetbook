@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../nodes/nodes.dart';
 import 'navigation_tree_tile.dart';
 
+@internal
 class NavigationTreeNode extends StatefulWidget {
   const NavigationTreeNode({
     super.key,
