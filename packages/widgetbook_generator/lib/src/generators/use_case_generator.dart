@@ -35,6 +35,7 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     final type = annotation.read('type').typeValue;
     final designLink = annotation.readOrNull('designLink')?.stringValue;
     final path = annotation.readOrNull('path')?.stringValue;
+    final cloudExclude = annotation.read('cloudExclude').boolValue;
     final knobsConfigs = annotation //
         .readOrNull('cloudKnobsConfigs')
         ?.parse(_parseKnobsConfigs);
@@ -66,6 +67,7 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
       name: name,
       importUri: useCaseUri,
       navPath: navPath,
+      cloudExclude: cloudExclude,
       knobsConfigs: knobsConfigs?.toJson(),
       component: ElementMetadata(
         name: componentName,

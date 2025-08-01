@@ -16,6 +16,7 @@ class UseCase {
     this.designLink,
     this.path,
     this.cloudKnobsConfigs,
+    this.cloudExclude = false,
   });
 
   /// The name of the UseCase.
@@ -39,4 +40,8 @@ class UseCase {
 
   /// {@macro cloud_knobs_configs}
   final KnobsConfigs? cloudKnobsConfigs;
+
+  /// Whether to exclude this use-case from being processed by Widgetbook Cloud.
+  /// All use-cases are included by default.
+  final bool cloudExclude;
 }

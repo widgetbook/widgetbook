@@ -44,6 +44,7 @@ class CacheReader {
         .map((list) => list.cast<Map<String, dynamic>>())
         .expand((list) => list) // Flatten JSON List
         .map((item) => UseCaseMetadata.fromJson(item))
+        .whereNot((useCase) => useCase.cloudExclude) // Remove excluded
         .toList();
 
     final addonsConfigs = await cacheFiles

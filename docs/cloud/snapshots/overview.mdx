@@ -43,3 +43,16 @@ Knobs configs = 2 (Button) + 1 (Card) + 1 (Avatar) = 4
 Addons configs = 2 (Dark German and Light English)
 Snapshots = 4 * 2 = 8
 ```
+
+## Exclude Use-cases
+
+If you have some use-cases that you don't want Widgetbook Cloud to process the snapshots for, you can exclude them as follows:
+
+```dart
+@UseCase(
+  name: 'Default',
+  type: UnstableWidget,
+  cloudExclude: true // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) { ... }
+```
