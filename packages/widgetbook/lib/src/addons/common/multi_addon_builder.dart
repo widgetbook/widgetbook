@@ -1,8 +1,11 @@
 import 'package:flutter/widgets.dart';
+import 'package:meta/meta.dart';
 import 'package:nested/nested.dart';
 
 import 'widgetbook_addon.dart';
 
+/// @nodoc
+@internal
 typedef AddonBuilder = Widget Function(
   BuildContext context,
   WidgetbookAddon addon,
@@ -10,6 +13,7 @@ typedef AddonBuilder = Widget Function(
 );
 
 /// Nests [WidgetbookAddon] builders inside each other, using [Nested] widget.
+@internal
 class MultiAddonBuilder extends StatelessWidget {
   MultiAddonBuilder({
     super.key,

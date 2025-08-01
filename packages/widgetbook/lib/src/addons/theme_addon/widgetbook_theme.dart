@@ -1,10 +1,15 @@
+/// A class representing a theme in Widgetbook.
 class WidgetbookTheme<T> {
+  /// Creates a new instance of [WidgetbookTheme].
   const WidgetbookTheme({
     required this.name,
     required this.data,
   });
 
+  /// The name of the theme.
   final String name;
+
+  /// The theme data associated with this theme.
   final T data;
 
   @override

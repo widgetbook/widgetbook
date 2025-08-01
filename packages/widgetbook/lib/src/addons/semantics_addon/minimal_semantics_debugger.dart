@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
+import 'package:meta/meta.dart';
 
 extension on SemanticsNode {
   /// Finds the first child [SemanticsNode] that matches the given [predicate].
@@ -29,6 +30,7 @@ extension on SemanticsNode {
 /// The major difference is that the root semantics node is not
 /// the root node of the semantics tree, but a node that is
 /// identified by the [rootIdentifier].
+@internal
 class MinimalSemanticsDebugger extends StatefulWidget {
   /// Creates a widget that visualizes the semantics for the child.
   ///
@@ -44,15 +46,8 @@ class MinimalSemanticsDebugger extends StatefulWidget {
     ),
   });
 
-  /// The widget below this widget in the tree.
-  ///
-  /// {@macro flutter.widgets.ProxyWidget.child}
   final Widget child;
-
-  /// The [TextStyle] to use when rendering semantics labels.
   final TextStyle labelStyle;
-
-  /// The identifier of the node that will be used as the root node.
   final String rootIdentifier;
 
   @override

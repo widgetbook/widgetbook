@@ -2,7 +2,13 @@
 /// different states, and catalogue all your widgets in a single place.
 library widgetbook;
 
-export 'src/addons/addons.dart' hide NoneViewport;
+export 'src/addons/addons.dart'
+    hide
+        AddonBuilder,
+        DeviceFrameSetting,
+        MultiAddonBuilder,
+        NoneDevice,
+        NoneViewport;
 export 'src/fields/fields.dart';
 export 'src/integrations/integrations.dart';
 export 'src/knobs/knobs.dart'

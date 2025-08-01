@@ -5,8 +5,9 @@ import 'theme_addon.dart';
 /// A [ThemeAddon] for changing the active [CupertinoThemeData] via
 /// [CupertinoTheme].
 ///
-/// {@macro ThemeAddon.initialTheme}
+/// Learn more: https://docs.widgetbook.io/addons/theme-addon#cupertino-theme
 class CupertinoThemeAddon extends ThemeAddon<CupertinoThemeData> {
+  /// Creates a new instance of [CupertinoThemeAddon].
   CupertinoThemeAddon({
     required super.themes,
     super.initialTheme,
