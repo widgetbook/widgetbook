@@ -1,4 +1,4 @@
-## Unreleased
+## 3.9.0
 
 - **FEAT**: Support `@UseCase.cloudExclude` option. ([#1535](https://github.com/widgetbook/widgetbook/pull/1535))
 - **CHORE**: Update license. ([#1529](https://github.com/widgetbook/widgetbook/pull/1529))
