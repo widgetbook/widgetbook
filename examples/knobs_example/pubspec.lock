@@ -322,7 +322,7 @@ packages:
       path: "../../packages/widgetbook_annotation"
       relative: true
     source: path
-    version: "3.5.0"
+    version: "3.6.0"
 sdks:
   dart: ">=3.8.0 <4.0.0"
   flutter: ">=3.32.0"
