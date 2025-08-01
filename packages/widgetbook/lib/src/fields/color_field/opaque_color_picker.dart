@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:meta/meta.dart';
 
 import 'color_space.dart';
 import 'hex_color_picker.dart';
@@ -6,6 +7,7 @@ import 'hsl_color_picker.dart';
 import 'opaque_color.dart';
 import 'rgb_color_picker.dart';
 
+@internal
 abstract class OpaqueColorPicker extends Widget {
   OpaqueColorPicker({
     super.key,

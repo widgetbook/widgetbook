@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
 
 import 'opaque_color.dart';
 import 'opaque_color_picker.dart';
 
+@internal
 class HexColorPicker extends StatelessWidget implements OpaqueColorPicker {
   const HexColorPicker({
     super.key,
