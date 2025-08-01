@@ -323,7 +323,7 @@ packages:
       path: "../../packages/widgetbook"
       relative: true
     source: path
-    version: "3.14.3"
+    version: "3.15.0"
   widgetbook_annotation:
     dependency: "direct overridden"
     description:
