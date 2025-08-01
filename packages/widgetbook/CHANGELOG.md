@@ -3,6 +3,7 @@
 - **REFACTOR**: Deprecate `DeviceFrameAddon` in favor of `ViewportAddon`. ([#1494](https://github.com/widgetbook/widgetbook/pull/1494))
 - **REFACTOR**: Remove `@experimental` annotation from `ViewportAddon`. ([#1493](https://github.com/widgetbook/widgetbook/pull/1493))
 - **REFACTOR**: Improve API docs. ([#1531](https://github.com/widgetbook/widgetbook/pull/1531))
+- **CHORE**: Update license. ([#1529](https://github.com/widgetbook/widgetbook/pull/1529))
 
 ## 3.14.3
 
