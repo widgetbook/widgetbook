@@ -11,6 +11,7 @@ class UseCaseMetadata extends ElementMetadata {
     required super.importUri,
     required this.component,
     required this.navPath,
+    required this.cloudExclude,
     required this.knobsConfigs,
   });
 
@@ -26,6 +27,9 @@ class UseCaseMetadata extends ElementMetadata {
   /// The path this element is placed under in the rendered widgetbook.
   final String navPath;
 
+  /// Whether the [UseCase] should be excluded from cloud builds.
+  final bool cloudExclude;
+
   final Map<String, dynamic>? knobsConfigs;
 
   // ignore: sort_constructors_first
@@ -36,6 +40,7 @@ class UseCaseMetadata extends ElementMetadata {
       name: json['useCaseName'] as String,
       importUri: json['importStatement'] as String,
       navPath: json['navPath'] as String,
+      cloudExclude: json['cloudExclude'] as bool,
       component: ElementMetadata(
         name: json['componentName'] as String,
         importUri: json['componentImportStatement'] as String,
@@ -59,6 +64,7 @@ class UseCaseMetadata extends ElementMetadata {
       'componentName': component.name,
       'componentImportStatement': component.importUri,
       'navPath': navPath,
+      'cloudExclude': cloudExclude,
       'knobsConfigs': knobsConfigs,
     };
   }

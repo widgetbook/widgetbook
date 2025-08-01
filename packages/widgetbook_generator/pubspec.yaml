@@ -24,7 +24,7 @@ dependencies:
   meta: ^1.7.0
   path: ^1.8.0
   source_gen: ">=1.1.0 <3.0.0"
-  widgetbook_annotation: ^3.4.0
+  widgetbook_annotation: ^3.4.0 # TODO: bump to next minor before release
 
 dev_dependencies:
   dart_style: ^2.3.0

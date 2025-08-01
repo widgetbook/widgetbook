@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FEAT**: Add `@UseCase.cloudExclude` option to exclude use-cases from Widgetbook Cloud. ([#1535](https://github.com/widgetbook/widgetbook/pull/1535))
 - **CHORE**: Update license. ([#1529](https://github.com/widgetbook/widgetbook/pull/1529))
 
 ## 3.5.0
