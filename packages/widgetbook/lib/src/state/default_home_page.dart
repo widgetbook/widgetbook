@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../widgetbook_theme.dart';
 
+@internal
 class DefaultHomePage extends StatelessWidget {
   const DefaultHomePage({super.key});
 
