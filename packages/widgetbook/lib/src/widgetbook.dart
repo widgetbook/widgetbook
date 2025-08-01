@@ -19,6 +19,8 @@ import 'themes.dart';
 /// - [Widgetbook.cupertino] if you use [CupertinoApp] for your app.
 /// - [Widgetbook.material] if you use [MaterialApp] for your app.
 class Widgetbook extends StatefulWidget {
+  /// A [Widgetbook] with [WidgetsApp] as an [appBuilder].
+  /// Allows you to use a custom widget as the app builder.
   const Widgetbook({
     super.key,
     this.initialRoute = '/',
