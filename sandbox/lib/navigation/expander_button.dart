@@ -5,7 +5,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 @UseCase(
   name: 'Default',
-  type: ExpanderIcon,
+  component: 'ExpanderIcon',
   cloudKnobsConfigs: {
     'Large Expanded': [
       BooleanKnobConfig('is-expanded', true),

@@ -12,19 +12,32 @@ class UseCase {
   /// used to create the WidgetElement of the Widgetbook
   const UseCase({
     required this.name,
-    required this.type,
+    String? component,
+    @Deprecated('Use the `component: "\$Type"` instead.') this.type,
     this.designLink,
     this.path,
     this.cloudKnobsConfigs,
     this.cloudExclude = false,
-  });
+  })  : assert(
+          type == null || component == null,
+          'Only one of `type` or `component` can be specified',
+        ),
+        assert(
+          type != null || component != null,
+          'Either `type` or `component` must be specified',
+        ),
+        component = component ?? '${type}';
 
   /// The name of the UseCase.
   final String name;
 
+  /// The name of the component that this UseCase belongs to.
+  final String component;
+
   /// The type of the Widget shown in the UseCase.
   /// It is used to generate the WidgetbookComponent of the Widgetbook.
-  final Type type;
+  @Deprecated('Use the `component` field instead')
+  final Type? type;
 
   /// A link to the design for the component or use-case.
   final String? designLink;
