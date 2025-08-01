@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 import 'package:nested/nested.dart';
 
 import '../../widgetbook_theme.dart';
 import 'viewport_data.dart';
 
+@internal
 class Viewport extends StatelessWidget {
   const Viewport({
     super.key,

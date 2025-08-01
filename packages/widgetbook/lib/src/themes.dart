@@ -113,6 +113,7 @@ class Themes {
     );
   }
 
+  /// The default dark theme for Widgetbook.
   static ThemeData dark = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
@@ -137,6 +138,7 @@ class Themes {
     ),
   );
 
+  /// The default light theme for Widgetbook.
   static ThemeData light = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,

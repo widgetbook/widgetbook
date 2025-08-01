@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../../../widgetbook.dart';
 import '../nodes/nodes.dart';
 import 'component_icon.dart';
 import 'use_case_icon.dart';
 
+@internal
 Widget resolveIcon(WidgetbookNode node) {
   if (node is WidgetbookPackage) {
     return const Icon(Icons.inventory, size: 16);

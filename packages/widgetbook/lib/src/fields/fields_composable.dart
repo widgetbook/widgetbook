@@ -5,24 +5,34 @@ import '../state/state.dart';
 import 'field.dart';
 import 'field_codec.dart';
 
-/// Interface for defining APIs for features that
-/// use [fields] as a building block.
+/// A [FieldsComposable] is a collection or a group of [Field]s that can be used
+/// to create a settings panel in Widgetbook. Each field in the group should have
+/// a unique [name] and can be used to configure addons or knobs.
 abstract class FieldsComposable<T> {
+  /// Creates a [FieldsComposable] with the specified configuration.
   const FieldsComposable({
     required this.name,
     this.description,
     this.isNullable = false,
   });
 
+  /// The display name of the composable group.
   final String name;
+
+  /// The description of the composable group.
   final String? description;
+
+  /// Whether this composable group is nullable.
   final bool isNullable;
 
-  // The name of the query group param.
+  /// The name of the query group param.
   String get groupName;
 
+  /// A list of [Field]s that belong to this composable group.
   List<Field> get fields;
 
+  /// Converts the [name] to a slugified version that can be used in query
+  /// parameters.
   String slugify(String name) {
     return name.trim().toLowerCase().replaceAll(RegExp(' '), '-');
   }
@@ -75,7 +85,7 @@ abstract class FieldsComposable<T> {
     return field.valueFrom(group);
   }
 
-  /// Checks if this has been nullified by [toggleNullification].
+  /// Whether the group has been nullified by [toggleNullification].
   bool isNullified(BuildContext context) {
     final state = WidgetbookState.of(context);
     final groupMap = FieldCodec.decodeQueryGroup(
@@ -129,5 +139,6 @@ abstract class FieldsComposable<T> {
     });
   }
 
+  /// Converts this composable group to a JSON representation.
   Map<String, dynamic> toJson();
 }

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../layout/desktop_layout.dart';
 import '../layout/mobile_layout.dart';
 import '../navigation/navigation.dart';
 import '../state/state.dart';
 
+/// The [ResponsiveLayout] adapts the layout based on the screen size.
+/// It uses [MobileLayout] for mobile devices and [DesktopLayout] for
+/// larger screens.
+@internal
 class ResponsiveLayout extends StatelessWidget {
   const ResponsiveLayout({
     super.key,

@@ -1,7 +1,36 @@
 import 'widgetbook_node.dart';
 import 'widgetbook_use_case.dart';
 
+/// A navigation node that represents a component in the widget library.
+///
+/// [WidgetbookComponent] organizes related [WidgetbookUseCase]s under a single
+/// component name. This is typically used to group different states or
+/// configurations of the same widget.
+///
+/// Example:
+/// ```dart
+/// WidgetbookComponent(
+///   name: 'Button',
+///   useCases: [
+///     WidgetbookUseCase(
+///       name: 'Primary',
+///       builder: (context) => ElevatedButton(
+///         onPressed: () {},
+///         child: Text('Primary Button'),
+///       ),
+///     ),
+///     WidgetbookUseCase(
+///       name: 'Secondary',
+///       builder: (context) => OutlinedButton(
+///         onPressed: () {},
+///         child: Text('Secondary Button'),
+///       ),
+///     ),
+///   ],
+/// )
+/// ```
 class WidgetbookComponent extends WidgetbookNode {
+  /// Creates a [WidgetbookComponent] node.
   WidgetbookComponent({
     required super.name,
     required this.useCases,
@@ -10,6 +39,9 @@ class WidgetbookComponent extends WidgetbookNode {
           children: useCases,
         );
 
+  /// The list of use cases that belong to this component.
+  ///
+  /// Each use case represents a different state or configuration of the widget.
   final List<WidgetbookUseCase> useCases;
 
   @override

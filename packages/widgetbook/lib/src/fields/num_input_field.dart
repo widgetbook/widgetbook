@@ -4,7 +4,9 @@ import 'package:flutter/services.dart';
 import 'field.dart';
 import 'field_codec.dart';
 
+/// A base class for [Field]s that represent [num] values using a [TextField].
 class NumInputField<T extends num> extends Field<T> {
+  /// Creates a new instance of [NumInputField].
   NumInputField({
     required super.name,
     super.initialValue,
@@ -20,6 +22,7 @@ class NumInputField<T extends num> extends Field<T> {
           ),
         );
 
+  /// The list of input formatters to apply to the text input.
   final List<TextInputFormatter> formatters;
 
   @override

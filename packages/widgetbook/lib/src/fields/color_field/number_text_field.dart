@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
 
+@internal
 class NumberTextField extends StatelessWidget {
   const NumberTextField({
     super.key,

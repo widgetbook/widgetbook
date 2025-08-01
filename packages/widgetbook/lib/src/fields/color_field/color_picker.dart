@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import 'color_space.dart';
 import 'number_text_field.dart';
 import 'opaque_color.dart';
 import 'opaque_color_picker.dart';
 
+@internal
 class ColorPicker extends StatefulWidget {
   const ColorPicker({
     required this.value,

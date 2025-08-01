@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
+@internal
 class SettingsPanelData {
   SettingsPanelData({
     required this.name,
@@ -10,6 +12,7 @@ class SettingsPanelData {
   final List<Widget> Function(BuildContext context) builder;
 }
 
+@internal
 class SettingsPanel extends StatelessWidget {
   SettingsPanel({
     super.key,

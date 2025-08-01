@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../../../next.dart' as next;
 import '../../widgetbook_theme.dart';
@@ -8,6 +9,7 @@ import '../icons/icons.dart';
 import '../icons/resolve_icon.dart';
 import '../nodes/nodes.dart';
 
+@internal
 class NavigationTreeTile extends StatelessWidget {
   const NavigationTreeTile({
     super.key,

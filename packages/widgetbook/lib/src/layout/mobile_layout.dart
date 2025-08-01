@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../settings/settings.dart';
 import '../state/state.dart';
 import 'base_layout.dart';
 
+/// The [MobileLayout] is a layout for mobile devices that allows
+/// displaying the navigation, addons and knobs in a bottom-navigation layout.
+@internal
 class MobileLayout extends StatelessWidget implements BaseLayout {
   const MobileLayout({
     super.key,

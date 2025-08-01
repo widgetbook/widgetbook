@@ -6,6 +6,7 @@ import 'field_type.dart';
 
 /// [Field] that builds [Switch] for [bool] values.
 class BooleanField extends Field<bool> {
+  /// Creates a new instance of [BooleanField].
   BooleanField({
     required super.name,
     super.initialValue = true,

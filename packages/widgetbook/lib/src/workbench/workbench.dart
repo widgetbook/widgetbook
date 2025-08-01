@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../addons/addons.dart' hide WidgetbookTheme;
 import '../fields/fields.dart';
@@ -7,6 +8,10 @@ import '../widgetbook_theme.dart';
 import 'safe_boundaries.dart';
 import 'use_case_builder.dart';
 
+/// The [Workbench] is the main widget that displays the current use case
+/// in the context of the [WidgetbookState]. It is responsible for building
+/// the use case and applying the necessary addons.
+@internal
 class Workbench extends StatelessWidget {
   const Workbench({super.key});
 

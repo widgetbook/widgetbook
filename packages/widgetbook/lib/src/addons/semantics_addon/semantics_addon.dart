@@ -5,14 +5,23 @@ import '../../fields/fields.dart';
 import '../common/common.dart';
 import 'minimal_semantics_debugger.dart';
 
+/// A [WidgetbookAddon] that provides a minimal semantics debugger.
+///
+/// This addon wraps the widget in a [Semantics] widget with a custom
+/// [MinimalSemanticsDebugger]. It allows you to visualize the semantics
+/// tree of the widget being debugged.
+///
+/// Learn more: https://docs.widgetbook.io/addons/semantics-addon
 @experimental
 class SemanticsAddon extends WidgetbookAddon<bool> {
+  /// Creates a new instance of [SemanticsAddon].
   SemanticsAddon({
     this.enabled = false,
   }) : super(
           name: 'Semantics',
         );
 
+  /// Whether the semantics debugger is enabled.
   final bool enabled;
 
   @override

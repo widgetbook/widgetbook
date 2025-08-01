@@ -5,8 +5,9 @@ import 'field.dart';
 import 'field_type.dart';
 import 'num_input_field.dart';
 
-/// [Field] that builds [TextFormField] for [double] values.
+/// A [Field] that builds [TextFormField] for [double] values.
 class DoubleInputField extends NumInputField<double> {
+  /// Creates a new instance of [DoubleInputField].
   DoubleInputField({
     required super.name,
     super.initialValue = 0,

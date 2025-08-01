@@ -8,12 +8,15 @@ import 'viewport.dart';
 import 'viewport_data.dart';
 import 'viewports/viewports.dart';
 
-// NOTE: this cannot be defined in widgetbook_annotation because it depends on
-// the ViewportData class which is defined in this file.
-// If we add `widgetbook` as a dependency to `widgetbook_annotation`, then the
-// `widgetbook_generator` will also depend on `widgetbook` which causes
-// it to not work, as `widgetbook` has flutter as a dependency.
+/// [AddonConfig] for the [ViewportAddon].
 class ViewportAddonConfig extends AddonConfig<ViewportData> {
+  // NOTE: this cannot be defined in widgetbook_annotation because it depends on
+  // the ViewportData class which is defined in this file.
+  // If we add `widgetbook` as a dependency to `widgetbook_annotation`, then the
+  // `widgetbook_generator` will also depend on `widgetbook` which causes
+  // it to not work, as `widgetbook` has flutter as a dependency.
+
+  /// Creates a configuration for the [ViewportAddon] with the specified [data].
   const ViewportAddonConfig(
     ViewportData data,
   )   : assert(
@@ -31,12 +34,21 @@ class ViewportAddonConfig extends AddonConfig<ViewportData> {
         );
 }
 
+/// A [WidgetbookAddon] that allows switching between different viewports.
+///
+/// The [ViewportAddon] enables users to test their widgets on different screen
+/// sizes, from mobile phones to tablets and desktops. This is essential for
+/// responsive design testing.
+///
+/// Learn more: https://docs.widgetbook.io/addons/viewport-addon
 class ViewportAddon extends WidgetbookAddon<ViewportData> {
+  /// Creates a new instance of [ViewportAddon].
   ViewportAddon(this.viewports)
       : super(
           name: 'Viewport',
         );
 
+  /// The list of available viewport options.
   final List<ViewportData> viewports;
 
   @override

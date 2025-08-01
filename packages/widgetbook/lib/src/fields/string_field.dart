@@ -4,8 +4,9 @@ import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
 
-/// [Field] that builds [TextFormField] for [String] values.
+/// A [Field] that builds [TextFormField] for [String] values.
 class StringField extends Field<String> {
+  /// Creates a new instance of [StringField].
   StringField({
     required super.name,
     super.initialValue = '',
@@ -19,6 +20,7 @@ class StringField extends Field<String> {
           ),
         );
 
+  /// The maximum number of lines for the text field.
   final int? maxLines;
 
   @override

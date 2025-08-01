@@ -1,1 +1,6 @@
 include: ../../analysis_options.yaml
+
+linter:
+  rules:
+    # Documentation
+    public_member_api_docs: true
