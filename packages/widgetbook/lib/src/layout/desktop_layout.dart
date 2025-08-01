@@ -90,6 +90,7 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
   }
 }
 
+@internal
 class ResizableLayoutItem {
   const ResizableLayoutItem({
     required this.percentage,
@@ -103,6 +104,7 @@ class ResizableLayoutItem {
 /// An improved API for [ResizableWidget] that allows passing both percentage
 /// and child in a single object, allowing to easily add or remove items.
 /// Also distributes the remaining space equally among all items.
+@internal
 class ResizableLayout extends StatelessWidget {
   const ResizableLayout({super.key, required this.items});
 
