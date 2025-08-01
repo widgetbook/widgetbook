@@ -5,8 +5,9 @@ import 'field_codec.dart';
 import 'field_type.dart';
 import 'num_slider_field.dart';
 
-/// [Field] that builds [Slider] for [double] values.
+/// A [Field] that builds [Slider] for [double] values.
 class DoubleSliderField extends NumSliderField<double> {
+  /// Creates a new instance of [DoubleSliderField].
   DoubleSliderField({
     required super.name,
     super.initialValue = 0,

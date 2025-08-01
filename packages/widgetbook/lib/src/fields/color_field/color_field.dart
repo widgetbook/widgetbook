@@ -11,6 +11,7 @@ export 'color_space.dart';
 /// [Field] that builds [ColorPicker] for [Color] values using the [ColorSpace]
 /// to determine which format the [Color] is.
 class ColorField extends Field<Color> {
+  /// Creates a new instance of [ColorField].
   ColorField({
     required super.name,
     super.initialValue = defaultColor,
@@ -37,8 +38,10 @@ class ColorField extends Field<Color> {
           ),
         );
 
+  /// The initial color space to use for the color picker.
   final ColorSpace initialColorSpace;
 
+  /// The default color used when no value is provided.
   static const defaultColor = Colors.white;
 
   @override

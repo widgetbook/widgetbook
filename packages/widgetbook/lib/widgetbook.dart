@@ -9,7 +9,7 @@ export 'src/addons/addons.dart'
         MultiAddonBuilder,
         NoneDevice,
         NoneViewport;
-export 'src/fields/fields.dart';
+export 'src/fields/fields.dart' hide DateTimeExtension;
 export 'src/integrations/integrations.dart';
 export 'src/knobs/knobs.dart'
     hide

@@ -4,7 +4,9 @@ import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
 
+/// A [Field] that represents a [Duration] value.
 class DurationField extends Field<Duration> {
+  /// Creates a new instance of [DurationField].
   DurationField({
     required super.name,
     super.initialValue = defaultDuration,
@@ -23,6 +25,7 @@ class DurationField extends Field<Duration> {
           ),
         );
 
+  /// The default duration value used when no initial value is provided.
   static const defaultDuration = Duration.zero;
 
   @override
