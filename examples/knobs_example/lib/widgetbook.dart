@@ -112,7 +112,7 @@ class WidgetbookApp extends StatelessWidget {
                   ),
                   KnobEntry<DateTime>(
                     name: 'DateTime',
-                    builder: (dateTime) => Text(dateTime.toSimpleFormat()),
+                    builder: (dateTime) => Text(dateTime.toIso8601String()),
                     regular: context.knobs.dateTime(
                       label: 'dateTime',
                       // Placing DateTime.now() here will cause the date time
