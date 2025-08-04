@@ -31,11 +31,7 @@ class _ColorPickerState extends State<ColorPicker> {
   @override
   void initState() {
     super.initState();
-    // Color.alpha was deprecated in Flutter 3.27.0, the alternative
-    // api (.a) is not available in Color for our minimum
-    // Flutter version (3.19.0), as they were also introduced in 3.27.0.
-    // ignore: deprecated_member_use
-    alpha = widget.value.alpha;
+    alpha = widget.value.a.toInt();
     colorSpace = widget.colorSpace;
     opaqueColor = OpaqueColor.fromColor(widget.value);
   }

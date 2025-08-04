@@ -1,3 +1,7 @@
+## Unreleased
+
+- **BREAKING**: Set minimum SDK version to 3.7.0. ([#1541](https://github.com/widgetbook/widgetbook/pull/1541))
+
 ## 3.6.0
 
 - **FEAT**: Add `@UseCase.cloudExclude` option to exclude use-cases from Widgetbook Cloud. ([#1535](https://github.com/widgetbook/widgetbook/pull/1535))

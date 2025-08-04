@@ -12,7 +12,7 @@ screenshots:
     path: assets/logo.png
 
 environment:
-  sdk: ">=3.3.0 <4.0.0"
+  sdk: ">=3.7.0 <4.0.0"
 
 dependencies:
   analyzer: ">=6.0.0 <8.0.0"
@@ -24,7 +24,7 @@ dependencies:
   meta: ^1.7.0
   path: ^1.8.0
   source_gen: ">=1.1.0 <3.0.0"
-  widgetbook_annotation: ^3.6.0
+  widgetbook_annotation: ^3.6.0 # TODO: bump to next minor
 
 dev_dependencies:
   dart_style: ^2.3.0

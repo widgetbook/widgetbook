@@ -1,3 +1,7 @@
+## Unreleased
+
+- **BREAKING**: Set minimum SDK version to 3.7.0 & minimum Flutter version to 3.29.0. ([#1541](https://github.com/widgetbook/widgetbook/pull/1541))
+
 ## 3.15.0
 
 - **REFACTOR**: Deprecate `DeviceFrameAddon` in favor of `ViewportAddon`. ([#1494](https://github.com/widgetbook/widgetbook/pull/1494))
