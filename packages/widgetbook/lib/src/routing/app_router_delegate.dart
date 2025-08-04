@@ -43,6 +43,7 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
       data: theme,
       child: Navigator(
         key: navigatorKey,
+        onDidRemovePage: (_) => {},
         pages: [
           MaterialPage(
             child:
