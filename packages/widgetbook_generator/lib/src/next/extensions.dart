@@ -63,7 +63,13 @@ extension DartTypeX on DartType {
     //    - Without nullability : Future<bool>
     //    - Expected            : Future<bool?>
 
-    final displayString = getDisplayString();
+    final displayString = getDisplayString(
+      // The `withNullability` parameter is deprecated after analyzer 6.0.0,
+      // since we support analyzer 5.x (to support Dart <3.0.0), then
+      // the deprecation is ignored.
+      // ignore: deprecated_member_use, avoid_redundant_argument_values
+      withNullability: true,
+    );
 
     return nullabilitySuffix != NullabilitySuffix.none
         ? displayString.substring(0, displayString.length - 1)
@@ -85,11 +91,11 @@ extension DartTypeX on DartType {
   TypeMeta get meta {
     return isEnum
         ? TypeMeta(
-          'EnumArg<$nonNullableName>',
-          refer(nonNullableName).property(
-            (element as EnumElement).fields.first.name,
-          ),
-        )
+            'EnumArg<$nonNullableName>',
+            refer(nonNullableName).property(
+              (element as EnumElement).fields.first.name,
+            ),
+          )
         : typesMeta[nonNullableName]!;
   }
 }
