@@ -57,19 +57,22 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
             child: Builder(
               builder: (context) {
                 final state = WidgetbookState.of(context);
-                final showKnobsPanel = state.canShowPanel(LayoutPanel.knobs) &&
+                
+                final canShowKnobs = state.canShowPanel(LayoutPanel.knobs) &&
                     state.knobs.isNotEmpty;
+
+                final canShowSidePanel = canShowKnobs || showAddonsPanel;
 
                 return Card(
                   child: SettingsPanel(
-                    settings: showKnobsPanel
+                    settings: canShowSidePanel
                         ? [
                             if (state.isNext) ...{
                               SettingsPanelData(
                                 name: 'Args',
                                 builder: argsBuilder,
                               ),
-                            } else ...{
+                            } else if (canShowKnobs) ...{
                               SettingsPanelData(
                                 name: 'Knobs',
                                 builder: knobsBuilder,
