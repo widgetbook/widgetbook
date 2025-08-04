@@ -15,10 +15,11 @@ void main() {
       (tester) async {
         await tester.pumpWidgetWithQueryParams(
           queryParams: {},
-          builder: (_) => NavigationPanel(
-            root: treeRoot,
-            header: const Placeholder(),
-          ),
+          builder:
+              (_) => NavigationPanel(
+                root: treeRoot,
+                header: const Placeholder(),
+              ),
         );
 
         expect(find.byType(Placeholder), findsOneWidget);
@@ -36,9 +37,10 @@ void main() {
       (tester) async {
         await tester.pumpWidgetWithQueryParams(
           queryParams: {},
-          builder: (_) => NavigationPanel(
-            root: treeRoot,
-          ),
+          builder:
+              (_) => NavigationPanel(
+                root: treeRoot,
+              ),
         );
 
         expect(find.byType(TextFormField), findsOneWidget);
@@ -51,9 +53,10 @@ void main() {
       (tester) async {
         await tester.pumpWidgetWithQueryParams(
           queryParams: {},
-          builder: (_) => NavigationPanel(
-            root: treeRoot,
-          ),
+          builder:
+              (_) => NavigationPanel(
+                root: treeRoot,
+              ),
         );
 
         await tester.findAndEnter(
@@ -74,9 +77,10 @@ void main() {
       (tester) async {
         await tester.pumpWidgetWithQueryParams(
           queryParams: {},
-          builder: (_) => NavigationPanel(
-            root: treeRoot,
-          ),
+          builder:
+              (_) => NavigationPanel(
+                root: treeRoot,
+              ),
         );
 
         await tester.findAndEnter(
@@ -101,9 +105,10 @@ void main() {
       (tester) async {
         await tester.pumpWidgetWithQueryParams(
           queryParams: {},
-          builder: (_) => NavigationPanel(
-            root: treeRoot,
-          ),
+          builder:
+              (_) => NavigationPanel(
+                root: treeRoot,
+              ),
         );
 
         await tester.findAndEnter(

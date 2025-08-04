@@ -32,8 +32,8 @@ abstract class Knob<T> extends FieldsComposable<T> {
       'It defaults to [value == null] instead of [false]',
     )
     bool isNull = false,
-  })  : this.initialValue = (initialValue ?? value) as T,
-        super(name: label);
+  }) : this.initialValue = (initialValue ?? value) as T,
+       super(name: label);
 
   /// The default value for this knob.
   ///

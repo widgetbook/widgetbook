@@ -36,8 +36,8 @@ class WidgetbookComponent extends WidgetbookNode {
     required this.useCases,
     super.isInitiallyExpanded,
   }) : super(
-          children: useCases,
-        );
+         children: useCases,
+       );
 
   /// The list of use cases that belong to this component.
   ///

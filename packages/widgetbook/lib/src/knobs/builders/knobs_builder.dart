@@ -25,10 +25,10 @@ class KnobsBuilder {
   /// Creates a [KnobsBuilder] with the provided [onKnobAdded] callback.
   KnobsBuilder(
     this.onKnobAdded,
-  )   : this.double = DoubleKnobsBuilder(onKnobAdded),
-        this.doubleOrNull = DoubleOrNullKnobsBuilder(onKnobAdded),
-        this.int = IntKnobsBuilder(onKnobAdded),
-        this.intOrNull = IntOrNullKnobsBuilder(onKnobAdded);
+  ) : this.double = DoubleKnobsBuilder(onKnobAdded),
+      this.doubleOrNull = DoubleOrNullKnobsBuilder(onKnobAdded),
+      this.int = IntKnobsBuilder(onKnobAdded),
+      this.intOrNull = IntOrNullKnobsBuilder(onKnobAdded);
 
   /// The callback that is used to add a knob.
   /// Used to register the knob in the use-case.

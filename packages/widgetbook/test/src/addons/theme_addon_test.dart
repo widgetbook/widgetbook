@@ -46,10 +46,11 @@ void main() {
 
       final addon = ThemeAddon<AppThemeData>(
         themes: [blueTheme, yellowTheme],
-        themeBuilder: (_, data, child) => AppTheme(
-          data: data,
-          child: child,
-        ),
+        themeBuilder:
+            (_, data, child) => AppTheme(
+              data: data,
+              child: child,
+            ),
       );
 
       test(

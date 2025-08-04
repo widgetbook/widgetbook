@@ -16,12 +16,12 @@ class IntSliderField extends NumSliderField<int> {
     required super.max,
     this.divisions,
   }) : super(
-          type: FieldType.intSlider,
-          codec: FieldCodec<int>(
-            toParam: (value) => value.toString(),
-            toValue: (param) => double.tryParse(param ?? '')?.round(),
-          ),
-        );
+         type: FieldType.intSlider,
+         codec: FieldCodec<int>(
+           toParam: (value) => value.toString(),
+           toValue: (param) => double.tryParse(param ?? '')?.round(),
+         ),
+       );
 
   final int? divisions;
 }

@@ -11,8 +11,8 @@ class WidgetbookLeafComponent extends WidgetbookNode {
     required super.name,
     required this.useCase,
   }) : super(
-          children: [useCase],
-        );
+         children: [useCase],
+       );
 
   /// The [WidgetbookUseCase] that this leaf component represents.
   final WidgetbookUseCase useCase;

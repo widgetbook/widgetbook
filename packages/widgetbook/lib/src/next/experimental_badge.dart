@@ -9,7 +9,8 @@ class ExperimentalBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: 'This feature is only available in the "next" version.\n'
+      message:
+          'This feature is only available in the "next" version.\n'
           'It is still in development and might change in the future.',
       child: Container(
         width: 5.0,

@@ -98,9 +98,10 @@ abstract class Field<T> {
     // Preserve the nullability symbol in the new value if the previous
     // value was null (i.e. had the nullability symbol).
     final rawNewValue = codec.toParam(value);
-    final newValue = isNull(groupMap)
-        ? '${Field.nullabilitySymbol}$rawNewValue'
-        : rawNewValue;
+    final newValue =
+        isNull(groupMap)
+            ? '${Field.nullabilitySymbol}$rawNewValue'
+            : rawNewValue;
 
     state.updateQueryField(
       group: group,

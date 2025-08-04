@@ -14,11 +14,11 @@ class ColorArg extends Arg<Color> {
 
   @override
   List<Field> get fields => [
-        ColorField(
-          name: name,
-          initialValue: value,
-        ),
-      ];
+    ColorField(
+      name: name,
+      initialValue: value,
+    ),
+  ];
 
   @override
   Color valueFromQueryGroup(Map<String, String> group) {

@@ -49,13 +49,12 @@ class WidgetbookApp extends StatelessWidget {
         ),
         next.BuilderAddon(
           name: 'Bounds',
-          builder:
-              (context, child) => Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
-                ),
-                child: child,
-              ),
+          builder: (context, child) => Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.white),
+            ),
+            child: child,
+          ),
         ),
         SemanticsAddon(),
       ],

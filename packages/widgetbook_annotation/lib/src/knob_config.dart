@@ -37,10 +37,10 @@ class NullKnobConfig extends KnobConfig<String> {
   /// const NullKnobConfig('label');
   /// ```
   const NullKnobConfig(String label)
-      : super(
-          label,
-          KnobConfig.nullabilitySymbol,
-        );
+    : super(
+        label,
+        KnobConfig.nullabilitySymbol,
+      );
 }
 
 class IntKnobConfig extends KnobConfig<int> {

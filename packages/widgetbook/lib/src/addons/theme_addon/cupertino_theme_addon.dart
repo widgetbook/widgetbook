@@ -12,17 +12,17 @@ class CupertinoThemeAddon extends ThemeAddon<CupertinoThemeData> {
     required super.themes,
     super.initialTheme,
   }) : super(
-          themeBuilder: (context, theme, child) {
-            return CupertinoTheme(
-              data: theme,
-              child: ColoredBox(
-                color: theme.scaffoldBackgroundColor,
-                child: DefaultTextStyle(
-                  style: theme.textTheme.textStyle,
-                  child: child,
-                ),
-              ),
-            );
-          },
-        );
+         themeBuilder: (context, theme, child) {
+           return CupertinoTheme(
+             data: theme,
+             child: ColoredBox(
+               color: theme.scaffoldBackgroundColor,
+               child: DefaultTextStyle(
+                 style: theme.textTheme.textStyle,
+                 child: child,
+               ),
+             ),
+           );
+         },
+       );
 }

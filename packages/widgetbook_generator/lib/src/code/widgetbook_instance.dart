@@ -14,10 +14,10 @@ class WidgetbookInstance extends InvokeExpression {
     required String type,
     required Map<String, Expression> args,
   }) : super.newOf(
-          referWidgetbook(type),
-          [],
-          args,
-        );
+         referWidgetbook(type),
+         [],
+         args,
+       );
 
   factory WidgetbookInstance.fromNode(TreeNode node) {
     if (node.data is UseCaseMetadata) {
@@ -27,7 +27,8 @@ class WidgetbookInstance extends InvokeExpression {
     }
 
     final children = node.children.values;
-    final isComponentNode = children.isNotEmpty &&
+    final isComponentNode =
+        children.isNotEmpty &&
         children.every(
           (child) => child is TreeNode<UseCaseMetadata>,
         );
@@ -36,11 +37,11 @@ class WidgetbookInstance extends InvokeExpression {
       final componentNode = node as TreeNode<String>;
       return node.children.length == 1
           ? WidgetbookLeafComponentInstance(
-              node: componentNode,
-            )
+            node: componentNode,
+          )
           : WidgetbookComponentInstance(
-              node: componentNode,
-            );
+            node: componentNode,
+          );
     }
 
     final name = (node as TreeNode<String>).data;

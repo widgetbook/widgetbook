@@ -18,14 +18,15 @@ class ListField<T> extends Field<T> {
     this.labelBuilder = defaultLabelBuilder,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-          type: FieldType.list,
-          codec: FieldCodec(
-            toParam: labelBuilder,
-            toValue: (param) => values.firstWhereOrNull(
-              (value) => labelBuilder(value) == param,
-            ),
-          ),
-        );
+         type: FieldType.list,
+         codec: FieldCodec(
+           toParam: labelBuilder,
+           toValue:
+               (param) => values.firstWhereOrNull(
+                 (value) => labelBuilder(value) == param,
+               ),
+         ),
+       );
 
   /// The list of values to display in the dropdown.
   final List<T> values;
@@ -50,14 +51,15 @@ class ListField<T> extends Field<T> {
           updateField(context, group, value);
         }
       },
-      dropdownMenuEntries: values
-          .map(
-            (value) => DropdownMenuEntry(
-              value: value,
-              label: labelBuilder(value),
-            ),
-          )
-          .toList(),
+      dropdownMenuEntries:
+          values
+              .map(
+                (value) => DropdownMenuEntry(
+                  value: value,
+                  label: labelBuilder(value),
+                ),
+              )
+              .toList(),
     );
   }
 

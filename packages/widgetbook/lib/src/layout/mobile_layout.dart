@@ -63,13 +63,13 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
                 case 2:
                   return state.isNext
                       ? MobileSettingsPanel(
-                          name: 'Args',
-                          builder: argsBuilder,
-                        )
+                        name: 'Args',
+                        builder: argsBuilder,
+                      )
                       : MobileSettingsPanel(
-                          name: 'Knobs',
-                          builder: knobsBuilder,
-                        );
+                        name: 'Knobs',
+                        builder: knobsBuilder,
+                      );
                 default:
                   return Container();
               }

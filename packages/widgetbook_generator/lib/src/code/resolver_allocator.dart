@@ -22,11 +22,11 @@ class ResolverAllocator implements Allocator {
 
   @override
   Iterable<Directive> get imports => _allocator.imports.map(
-        (directive) => Directive.import(
-          convertToRelative(directive.url, baseDir),
-          as: directive.as,
-        ),
-      );
+    (directive) => Directive.import(
+      convertToRelative(directive.url, baseDir),
+      as: directive.as,
+    ),
+  );
 
   String convertToRelative(String url, String from) {
     final uri = Uri.parse(url);
@@ -63,8 +63,10 @@ class _NamedAllocator implements Allocator {
     final plainUrl = url.replaceFirst('package:', '').replaceAll('.dart', '');
 
     // If the URL is a barrel export, use the package name as the namespace.
-    if (path.split(plainUrl) case [final String package, final String file]
-        when package == file) {
+    if (path.split(plainUrl) case [
+      final String package,
+      final String file,
+    ] when package == file) {
       return '_$package';
     }
 
@@ -80,10 +82,10 @@ class _NamedAllocator implements Allocator {
 
   @override
   Iterable<Directive> get imports => [
-        for (final MapEntry(key: url, value: namespace) in _imports.entries)
-          Directive.import(
-            url,
-            as: namespace,
-          ),
-      ];
+    for (final MapEntry(key: url, value: namespace) in _imports.entries)
+      Directive.import(
+        url,
+        as: namespace,
+      ),
+  ];
 }

@@ -27,9 +27,9 @@ class WidgetbookUseCase extends WidgetbookNode {
     required this.builder,
     this.designLink,
   }) : super(
-          children: null,
-          isInitiallyExpanded: false,
-        );
+         children: null,
+         isInitiallyExpanded: false,
+       );
 
   /// @nodoc
   @Deprecated(

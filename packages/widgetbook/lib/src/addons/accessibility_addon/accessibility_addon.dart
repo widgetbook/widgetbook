@@ -10,10 +10,11 @@ import '../builder_addon/builder_addon.dart';
 class AccessibilityAddon extends BuilderAddon {
   /// @nodoc
   AccessibilityAddon()
-      : super(
-          name: 'Accessibility',
-          builder: (context, child) => AccessibilityTools(
-            child: child,
-          ),
-        );
+    : super(
+        name: 'Accessibility',
+        builder:
+            (context, child) => AccessibilityTools(
+              child: child,
+            ),
+      );
 }

@@ -19,15 +19,15 @@ class NumberTextField extends StatelessWidget {
     required this.value,
     this.labelText,
     required this.onChanged,
-  })  : maxLength = 3,
-        suffixText = '%',
-        inputFormatters = [
-          FilteringTextInputFormatter.digitsOnly,
-          FilteringTextInputFormatter.allow(
-            RegExp(r'^(0|[1-9][0-9]?|100)$'),
-            replacementString: '$value',
-          ),
-        ];
+  }) : maxLength = 3,
+       suffixText = '%',
+       inputFormatters = [
+         FilteringTextInputFormatter.digitsOnly,
+         FilteringTextInputFormatter.allow(
+           RegExp(r'^(0|[1-9][0-9]?|100)$'),
+           replacementString: '$value',
+         ),
+       ];
 
   final int value;
   final int maxLength;

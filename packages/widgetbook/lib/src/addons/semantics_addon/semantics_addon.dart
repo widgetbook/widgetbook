@@ -18,19 +18,19 @@ class SemanticsAddon extends WidgetbookAddon<bool> {
   SemanticsAddon({
     this.enabled = false,
   }) : super(
-          name: 'Semantics',
-        );
+         name: 'Semantics',
+       );
 
   /// Whether the semantics debugger is enabled.
   final bool enabled;
 
   @override
   List<Field> get fields => [
-        BooleanField(
-          name: 'enabled',
-          initialValue: enabled,
-        ),
-      ];
+    BooleanField(
+      name: 'enabled',
+      initialValue: enabled,
+    ),
+  ];
 
   @override
   bool valueFromQueryGroup(Map<String, String> group) {

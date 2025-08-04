@@ -28,12 +28,12 @@ class DeviceFrameMode extends Mode<DeviceFrameConfig> {
     Orientation orientation = Orientation.portrait,
     bool hasFrame = false,
   }) : super(
-          DeviceFrameConfig(
-            device: device,
-            orientation: orientation,
-            hasFrame: hasFrame,
-          ),
-        );
+         DeviceFrameConfig(
+           device: device,
+           orientation: orientation,
+           hasFrame: hasFrame,
+         ),
+       );
 
   DeviceFrameMode.fromConfig(super.value);
 
@@ -58,13 +58,16 @@ class DeviceFrameMode extends Mode<DeviceFrameConfig> {
             // builder, causing these routes to fill the whole workbench and not
             // just the device frame.
             child: Navigator(
-              onGenerateRoute: (_) => PageRouteBuilder(
-                pageBuilder: (context, _, __) => value.hasFrame
-                    ? child
-                    : SafeArea(
-                        child: child,
-                      ),
-              ),
+              onGenerateRoute:
+                  (_) => PageRouteBuilder(
+                    pageBuilder:
+                        (context, _, __) =>
+                            value.hasFrame
+                                ? child
+                                : SafeArea(
+                                  child: child,
+                                ),
+                  ),
             ),
           ),
         ),
@@ -75,11 +78,11 @@ class DeviceFrameMode extends Mode<DeviceFrameConfig> {
 
 class DeviceFrameAddon extends ModeAddon<DeviceFrameConfig> {
   DeviceFrameAddon(List<DeviceInfo> devices)
-      : this.devices = [NoneDevice.instance, ...devices],
-        super(
-          name: 'Device Frame',
-          modeBuilder: DeviceFrameMode.fromConfig,
-        );
+    : this.devices = [NoneDevice.instance, ...devices],
+      super(
+        name: 'Device Frame',
+        modeBuilder: DeviceFrameMode.fromConfig,
+      );
 
   final List<DeviceInfo> devices;
 
@@ -96,9 +99,10 @@ class DeviceFrameAddon extends ModeAddon<DeviceFrameConfig> {
         name: 'orientation',
         values: Orientation.values,
         initialValue: Orientation.portrait,
-        labelBuilder: (orientation) =>
-            orientation.name.substring(0, 1).toUpperCase() +
-            orientation.name.substring(1),
+        labelBuilder:
+            (orientation) =>
+                orientation.name.substring(0, 1).toUpperCase() +
+                orientation.name.substring(1),
       ),
       ListField<bool>(
         name: 'frame',

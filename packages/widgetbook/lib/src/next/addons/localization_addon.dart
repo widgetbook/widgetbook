@@ -26,11 +26,11 @@ class LocaleAddon extends ModeAddon<Locale> {
   LocaleAddon(
     this.locales, [
     List<LocalizationsDelegate<dynamic>> delegates = const [],
-  ])  : assert(locales.isNotEmpty, 'locales cannot be empty'),
-        super(
-          name: 'Locale',
-          modeBuilder: (locale) => LocaleMode(locale, delegates),
-        );
+  ]) : assert(locales.isNotEmpty, 'locales cannot be empty'),
+       super(
+         name: 'Locale',
+         modeBuilder: (locale) => LocaleMode(locale, delegates),
+       );
 
   final List<Locale> locales;
 

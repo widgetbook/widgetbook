@@ -14,16 +14,16 @@ class MockFieldsComposable extends FieldsComposable<bool> {
 
   @override
   List<Field> get fields => [
-        MockField(
-          name: 'mock_field',
-          type: FieldType.boolean,
-          initialValue: true,
-          codec: FieldCodec(
-            toParam: (value) => value.toString(),
-            toValue: (param) => param == null ? null : param == 'true',
-          ),
-        ),
-      ];
+    MockField(
+      name: 'mock_field',
+      type: FieldType.boolean,
+      initialValue: true,
+      codec: FieldCodec(
+        toParam: (value) => value.toString(),
+        toValue: (param) => param == null ? null : param == 'true',
+      ),
+    ),
+  ];
 
   @override
   String get groupName => 'fields_group';

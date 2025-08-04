@@ -18,21 +18,21 @@ class ColorField extends Field<Color> {
     this.initialColorSpace = ColorSpace.hex,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-          type: FieldType.color,
-          codec: FieldCodec(
-            toParam: (color) => color.toARGB32().toRadixString(16),
-            toValue: (param) {
-              if (param == null) return null;
-              if (param == '0') return Colors.transparent;
-              return Color(
-                int.parse(
-                  param.length == 6 ? '00$param' : param,
-                  radix: 16,
-                ),
-              );
-            },
-          ),
-        );
+         type: FieldType.color,
+         codec: FieldCodec(
+           toParam: (color) => color.toARGB32().toRadixString(16),
+           toValue: (param) {
+             if (param == null) return null;
+             if (param == '0') return Colors.transparent;
+             return Color(
+               int.parse(
+                 param.length == 6 ? '00$param' : param,
+                 radix: 16,
+               ),
+             );
+           },
+         ),
+       );
 
   /// The initial color space to use for the color picker.
   final ColorSpace initialColorSpace;

@@ -11,17 +11,17 @@ class MaterialThemeAddon extends ThemeAddon<ThemeData> {
     required super.themes,
     super.initialTheme,
   }) : super(
-          themeBuilder: (context, theme, child) {
-            return Theme(
-              data: theme,
-              child: ColoredBox(
-                color: theme.scaffoldBackgroundColor,
-                child: DefaultTextStyle(
-                  style: theme.textTheme.bodyMedium!,
-                  child: child,
-                ),
-              ),
-            );
-          },
-        );
+         themeBuilder: (context, theme, child) {
+           return Theme(
+             data: theme,
+             child: ColoredBox(
+               color: theme.scaffoldBackgroundColor,
+               child: DefaultTextStyle(
+                 style: theme.textTheme.bodyMedium!,
+                 child: child,
+               ),
+             ),
+           );
+         },
+       );
 }

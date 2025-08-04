@@ -17,9 +17,9 @@ import '../common/common.dart';
 class TimeDilationAddon extends WidgetbookAddon<double> {
   /// Creates a new instance of [TimeDilationAddon].
   TimeDilationAddon()
-      : super(
-          name: 'Time Dilation',
-        );
+    : super(
+        name: 'Time Dilation',
+      );
 
   /// Predefined time dilation values for animation speed control.
   static const values = <double>[0.25, 0.5, 1, 2, 4, 8, 16];

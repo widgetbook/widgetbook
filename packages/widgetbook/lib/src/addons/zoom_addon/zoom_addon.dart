@@ -14,22 +14,22 @@ class ZoomAddon extends WidgetbookAddon<double> {
   ZoomAddon({
     this.initialZoom = 1.0,
   }) : super(
-          name: 'Zoom',
-        );
+         name: 'Zoom',
+       );
 
   /// Initial zoom level to display when the addon loads.
   final double initialZoom;
 
   @override
   List<Field> get fields => [
-        DoubleSliderField(
-          name: 'zoom',
-          initialValue: initialZoom,
-          min: 0.5,
-          max: 3.0,
-          divisions: 25,
-        ),
-      ];
+    DoubleSliderField(
+      name: 'zoom',
+      initialValue: initialZoom,
+      min: 0.5,
+      max: 3.0,
+      divisions: 25,
+    ),
+  ];
 
   @override
   double valueFromQueryGroup(Map<String, String> group) {

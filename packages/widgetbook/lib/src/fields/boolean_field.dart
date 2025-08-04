@@ -12,12 +12,12 @@ class BooleanField extends Field<bool> {
     super.initialValue = true,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-          type: FieldType.boolean,
-          codec: FieldCodec(
-            toParam: (value) => value.toString(),
-            toValue: (param) => param == null ? null : param == 'true',
-          ),
-        );
+         type: FieldType.boolean,
+         codec: FieldCodec(
+           toParam: (value) => value.toString(),
+           toValue: (param) => param == null ? null : param == 'true',
+         ),
+       );
 
   @override
   Widget toWidget(BuildContext context, String group, bool? value) {

@@ -8,9 +8,9 @@ import '../../helper/helper.dart';
 
 class MockAddon extends WidgetbookAddon<void> {
   MockAddon()
-      : super(
-          name: 'Mock Addon',
-        );
+    : super(
+        name: 'Mock Addon',
+      );
 
   @override
   List<Field> get fields => [];

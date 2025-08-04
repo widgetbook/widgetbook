@@ -16,8 +16,8 @@ class InspectorAddon extends WidgetbookAddon<bool> {
   InspectorAddon({
     this.enabled = false,
   }) : super(
-          name: 'Inspector',
-        );
+         name: 'Inspector',
+       );
 
   /// The default enabled state for the inspector when the addon loads.
   ///
@@ -40,11 +40,11 @@ class InspectorAddon extends WidgetbookAddon<bool> {
   /// Widgetbook interface, allowing quick toggling during development.
   @override
   List<Field> get fields => [
-        BooleanField(
-          name: 'isEnabled',
-          initialValue: enabled,
-        ),
-      ];
+    BooleanField(
+      name: 'isEnabled',
+      initialValue: enabled,
+    ),
+  ];
 
   /// Extracts the inspector enabled state from URL query parameters.
   ///

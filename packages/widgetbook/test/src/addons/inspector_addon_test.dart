@@ -29,8 +29,9 @@ void main() {
       expect(result, isTrue);
     });
 
-    testWidgets('buildUseCase with isEnabled true wraps child with Inspector',
-        (tester) async {
+    testWidgets('buildUseCase with isEnabled true wraps child with Inspector', (
+      tester,
+    ) async {
       await tester.pumpWidgetWithBuilder(
         (context) => addon.buildUseCase(context, const Text('Test'), true),
       );
@@ -40,20 +41,22 @@ void main() {
     });
 
     testWidgets(
-        'buildUseCase with isEnabled true has Inspector with isEnabled true',
-        (tester) async {
-      await tester.pumpWidgetWithBuilder(
-        (context) => addon.buildUseCase(context, const Text('Test'), true),
-      );
+      'buildUseCase with isEnabled true has Inspector with isEnabled true',
+      (tester) async {
+        await tester.pumpWidgetWithBuilder(
+          (context) => addon.buildUseCase(context, const Text('Test'), true),
+        );
 
-      final inspectorFinder = find.byType(Inspector);
-      expect(inspectorFinder, findsOneWidget);
-      final inspector = tester.firstWidget(inspectorFinder) as Inspector;
-      expect(inspector.isEnabled, true);
-    });
+        final inspectorFinder = find.byType(Inspector);
+        expect(inspectorFinder, findsOneWidget);
+        final inspector = tester.firstWidget(inspectorFinder) as Inspector;
+        expect(inspector.isEnabled, true);
+      },
+    );
 
-    testWidgets('buildUseCase with isEnabled false returns child directly',
-        (tester) async {
+    testWidgets('buildUseCase with isEnabled false returns child directly', (
+      tester,
+    ) async {
       await tester.pumpWidgetWithBuilder(
         (context) => addon.buildUseCase(context, const Text('Test'), false),
       );

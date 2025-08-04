@@ -16,12 +16,12 @@ class DoubleSliderField extends NumSliderField<double> {
     this.divisions,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-          type: FieldType.doubleSlider,
-          codec: FieldCodec(
-            toParam: (value) => value.toString(),
-            toValue: (param) => double.tryParse(param ?? ''),
-          ),
-        );
+         type: FieldType.doubleSlider,
+         codec: FieldCodec(
+           toParam: (value) => value.toString(),
+           toValue: (param) => double.tryParse(param ?? ''),
+         ),
+       );
 
   final int? divisions;
 }

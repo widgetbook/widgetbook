@@ -237,12 +237,11 @@ class WidgetbookState extends ChangeNotifier {
   }) {
     final groupMap = FieldCodec.decodeQueryGroup(queryParams[group]);
 
-    final newGroupMap = Map<String, String>.from(groupMap)
-      ..update(
-        field,
-        (_) => value,
-        ifAbsent: () => value,
-      );
+    final newGroupMap = Map<String, String>.from(groupMap)..update(
+      field,
+      (_) => value,
+      ifAbsent: () => value,
+    );
 
     updateQueryParam(
       group,
@@ -286,12 +285,13 @@ class WidgetbookState extends ChangeNotifier {
     query = routeConfig.query;
     previewMode = routeConfig.previewMode;
     queryParams = routeConfig.queryParams;
-    panels = previewMode
-        ? null // Panels are ignored in preview mode
-        : routeConfig.panels
-            ?.map(LayoutPanel.values.byNameOrNull)
-            .nonNulls
-            .toSet();
+    panels =
+        previewMode
+            ? null // Panels are ignored in preview mode
+            : routeConfig.panels
+                ?.map(LayoutPanel.values.byNameOrNull)
+                .nonNulls
+                .toSet();
 
     notifyListeners();
   }

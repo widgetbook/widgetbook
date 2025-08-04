@@ -13,10 +13,10 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
   AppRouterDelegate({
     required this.uri,
     required this.state,
-  })  : _navigatorKey = GlobalKey<NavigatorState>(),
-        _configuration = AppRouteConfig(
-          uri: uri,
-        );
+  }) : _navigatorKey = GlobalKey<NavigatorState>(),
+       _configuration = AppRouteConfig(
+         uri: uri,
+       );
 
   final Uri uri;
   final WidgetbookState state;
@@ -45,12 +45,13 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
         key: navigatorKey,
         pages: [
           MaterialPage(
-            child: _configuration.previewMode
-                ? const Workbench()
-                : ResponsiveLayout(
-                    key: ValueKey(_configuration),
-                    child: const Workbench(),
-                  ),
+            child:
+                _configuration.previewMode
+                    ? const Workbench()
+                    : ResponsiveLayout(
+                      key: ValueKey(_configuration),
+                      child: const Workbench(),
+                    ),
           ),
         ],
       ),

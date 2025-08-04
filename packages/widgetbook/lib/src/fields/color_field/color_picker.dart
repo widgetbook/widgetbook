@@ -74,14 +74,15 @@ class _ColorPickerState extends State<ColorPicker> {
               onSelected: (value) {
                 setState(() => colorSpace = value!);
               },
-              dropdownMenuEntries: ColorSpace.values
-                  .map(
-                    (value) => DropdownMenuEntry(
-                      value: value,
-                      label: value.name.toUpperCase(),
-                    ),
-                  )
-                  .toList(),
+              dropdownMenuEntries:
+                  ColorSpace.values
+                      .map(
+                        (value) => DropdownMenuEntry(
+                          value: value,
+                          label: value.name.toUpperCase(),
+                        ),
+                      )
+                      .toList(),
             ),
             SizedBox(
               width: 80,

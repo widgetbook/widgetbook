@@ -42,17 +42,20 @@ class _NavigationPanelState extends State<NavigationPanel> {
   @override
   void initState() {
     super.initState();
-    selectedNode = widget.initialPath != null
-        ? widget.root.find((child) => child.path == widget.initialPath)
-        : null;
+    selectedNode =
+        widget.initialPath != null
+            ? widget.root.find((child) => child.path == widget.initialPath)
+            : null;
   }
 
   @override
   Widget build(BuildContext context) {
     final query = WidgetbookState.of(context).query ?? '';
-    final filteredRoot = query.isEmpty
-        ? widget.root
-        : widget.root.filter((node) => filterNode(node, query)) ?? widget.root;
+    final filteredRoot =
+        query.isEmpty
+            ? widget.root
+            : widget.root.filter((node) => filterNode(node, query)) ??
+                widget.root;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -77,15 +80,17 @@ class _NavigationPanelState extends State<NavigationPanel> {
                 horizontal: 16,
               ),
               itemCount: filteredRoot.children!.length,
-              itemBuilder: (context, index) => NavigationTreeNode(
-                node: filteredRoot.children![index],
-                selectedNode: selectedNode,
-                onNodeSelected: (node) {
-                  if (!node.isLeaf || node.path == selectedNode?.path) return;
-                  setState(() => selectedNode = node);
-                  widget.onNodeSelected?.call(node);
-                },
-              ),
+              itemBuilder:
+                  (context, index) => NavigationTreeNode(
+                    node: filteredRoot.children![index],
+                    selectedNode: selectedNode,
+                    onNodeSelected: (node) {
+                      if (!node.isLeaf || node.path == selectedNode?.path)
+                        return;
+                      setState(() => selectedNode = node);
+                      widget.onNodeSelected?.call(node);
+                    },
+                  ),
             ),
           ),
         Padding(
