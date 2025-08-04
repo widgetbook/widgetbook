@@ -31,7 +31,7 @@ class _ColorPickerState extends State<ColorPicker> {
   @override
   void initState() {
     super.initState();
-    alpha = widget.value.a.toInt();
+    alpha = (widget.value.a * 255).toInt();
     colorSpace = widget.colorSpace;
     opaqueColor = OpaqueColor.fromColor(widget.value);
   }

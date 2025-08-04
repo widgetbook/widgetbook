@@ -14,7 +14,7 @@ class OpaqueColor {
 
   OpaqueColor.fromColor(
     Color color,
-  ) : value = color.toARGB32();
+  ) : value = color.toARGB32() & 0xffffff;
 
   final int value;
 
