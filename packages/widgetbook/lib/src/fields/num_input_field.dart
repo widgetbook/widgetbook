@@ -14,13 +14,16 @@ class NumInputField<T extends num> extends Field<T> {
     required super.type,
     required this.formatters,
   }) : super(
-          codec: FieldCodec<T>(
-            toParam: (value) => value.toString(),
-            toValue: (param) => (T == int
-                ? int.tryParse(param ?? '')
-                : double.tryParse(param ?? '')) as T?,
-          ),
-        );
+         codec: FieldCodec<T>(
+           toParam: (value) => value.toString(),
+           toValue:
+               (param) =>
+                   (T == int
+                           ? int.tryParse(param ?? '')
+                           : double.tryParse(param ?? ''))
+                       as T?,
+         ),
+       );
 
   /// The list of input formatters to apply to the text input.
   final List<TextInputFormatter> formatters;

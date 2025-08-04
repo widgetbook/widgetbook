@@ -8,14 +8,14 @@ class WidgetbookCategoryInstance extends WidgetbookInstance {
   WidgetbookCategoryInstance({
     required TreeNode<String> node,
   }) : super(
-          type: 'WidgetbookCategory',
-          args: {
-            'name': literalString(_parseCategoryName(node.data)),
-            'children': literalList(
-              node.instances,
-            ),
-          },
-        );
+         type: 'WidgetbookCategory',
+         args: {
+           'name': literalString(_parseCategoryName(node.data)),
+           'children': literalList(
+             node.instances,
+           ),
+         },
+       );
 
   static String _parseCategoryName(String name) {
     if (name.startsWith('[') && name.endsWith(']')) {

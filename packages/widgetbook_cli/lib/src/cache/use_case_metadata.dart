@@ -56,9 +56,12 @@ class UseCaseMetadata {
         // This might be null if users are using widgetbook_generator <= 3.13.0
         cloudExclude: map['cloudExclude'] as bool? ?? false,
         designLink: map['designLink'] as String?,
-        knobsConfigs: map['knobsConfigs'] != null
-            ? Map<String, Map<String, dynamic>>.from(map['knobsConfigs'] as Map)
-            : null,
+        knobsConfigs:
+            map['knobsConfigs'] != null
+                ? Map<String, Map<String, dynamic>>.from(
+                  map['knobsConfigs'] as Map,
+                )
+                : null,
       );
     } catch (e) {
       throw CacheFormatException('use-case', map, e);

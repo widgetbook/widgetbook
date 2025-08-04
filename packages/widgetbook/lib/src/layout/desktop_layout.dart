@@ -35,7 +35,8 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
     const kWorkbenchPercentage = 1 - 2 * kSidePanelPercentage;
 
     final showNavigationPanel = state.canShowPanel(LayoutPanel.navigation);
-    final showSettingsPanel = state.canShowPanel(LayoutPanel.addons) ||
+    final showSettingsPanel =
+        state.canShowPanel(LayoutPanel.addons) ||
         state.canShowPanel(LayoutPanel.knobs);
 
     return ColoredBox(

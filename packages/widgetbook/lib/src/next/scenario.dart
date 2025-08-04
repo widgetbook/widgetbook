@@ -31,14 +31,15 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
     return modes == null || modes!.isEmpty
         ? effectiveStory
         : Nested(
-            children: modes!
-                .map(
-                  (mode) => SingleChildBuilder(
-                    builder: (context, child) => mode.build(context, child!),
-                  ),
-                )
-                .toList(),
-            child: effectiveStory,
-          );
+          children:
+              modes!
+                  .map(
+                    (mode) => SingleChildBuilder(
+                      builder: (context, child) => mode.build(context, child!),
+                    ),
+                  )
+                  .toList(),
+          child: effectiveStory,
+        );
   }
 }

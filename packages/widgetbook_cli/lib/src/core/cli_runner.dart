@@ -14,9 +14,9 @@ class CliRunner extends CommandRunner<int> {
     required this.context,
     Logger? logger,
     PubUpdater? pubUpdater,
-  })  : _logger = logger ?? Logger(),
-        _pubUpdater = pubUpdater ?? PubUpdater(),
-        super(cliName, cliDescription) {
+  }) : _logger = logger ?? Logger(),
+       _pubUpdater = pubUpdater ?? PubUpdater(),
+       super(cliName, cliDescription) {
     argParser.addFlag(
       'version',
       negatable: false,

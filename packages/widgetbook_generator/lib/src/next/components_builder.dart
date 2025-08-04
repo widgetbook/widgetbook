@@ -29,15 +29,16 @@ class ComponentsBuilder implements Builder {
   Future<void> build(BuildStep buildStep) async {
     final glob = Glob('**/*.stories.dart');
     final assets = buildStep.findAssets(glob);
-    final components = await assets
-        .asyncMap((asset) => buildStep.resolver.libraryFor(asset))
-        .map((element) => LibraryReader(element))
-        .map(
-          (library) => library.allElements
-              .whereType<TopLevelVariableElement>()
-              .firstWhere((element) => element.name.endsWith('Component')),
-        )
-        .toList();
+    final components =
+        await assets
+            .asyncMap((asset) => buildStep.resolver.libraryFor(asset))
+            .map((element) => LibraryReader(element))
+            .map(
+              (library) => library.allElements
+                  .whereType<TopLevelVariableElement>()
+                  .firstWhere((element) => element.name.endsWith('Component')),
+            )
+            .toList();
 
     final variable = declareFinal('components');
     final nodesValue = literalList(

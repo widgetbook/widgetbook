@@ -23,10 +23,10 @@ class TextScaleMode extends Mode<double> {
 
 class TextScaleAddon extends ModeAddon<double> {
   TextScaleAddon()
-      : super(
-          name: 'Text Scale',
-          modeBuilder: TextScaleMode.new,
-        );
+    : super(
+        name: 'Text Scale',
+        modeBuilder: TextScaleMode.new,
+      );
 
   @override
   List<Field> get fields {

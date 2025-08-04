@@ -15,10 +15,10 @@ class GridAddon extends WidgetbookAddon<int> {
   /// Creates a new instance of [GridAddon].
   GridAddon([
     this.dimension = 50,
-  ])  : assert(dimension > 0),
-        super(
-          name: 'Grid',
-        );
+  ]) : assert(dimension > 0),
+       super(
+         name: 'Grid',
+       );
 
   /// The spacing between grid lines in pixels.
   final int dimension;

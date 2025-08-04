@@ -13,10 +13,10 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
   AppRouterDelegate({
     required this.uri,
     required this.state,
-  })  : _navigatorKey = GlobalKey<NavigatorState>(),
-        _configuration = AppRouteConfig(
-          uri: uri,
-        );
+  }) : _navigatorKey = GlobalKey<NavigatorState>(),
+       _configuration = AppRouteConfig(
+         uri: uri,
+       );
 
   final Uri uri;
   final WidgetbookState state;
@@ -43,18 +43,16 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
       data: theme,
       child: Navigator(
         key: navigatorKey,
-        // The onPopPage parameter is deprecated in Flutter 3.24.0,
-        // But we cannot migrate it because our minimum version is 3.19.0.
-        // ignore: deprecated_member_use
-        onPopPage: (route, result) => route.didPop(result),
+        onDidRemovePage: (_) => {},
         pages: [
           MaterialPage(
-            child: _configuration.previewMode
-                ? const Workbench()
-                : ResponsiveLayout(
-                    key: ValueKey(_configuration),
-                    child: const Workbench(),
-                  ),
+            child:
+                _configuration.previewMode
+                    ? const Workbench()
+                    : ResponsiveLayout(
+                      key: ValueKey(_configuration),
+                      child: const Workbench(),
+                    ),
           ),
         ],
       ),

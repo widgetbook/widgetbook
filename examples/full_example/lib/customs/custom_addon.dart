@@ -8,8 +8,8 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
   AlignmentAddon({
     this.initialAlignment = Alignment.center,
   }) : super(
-          name: 'Alignment',
-        );
+         name: 'Alignment',
+       );
 
   final Alignment initialAlignment;
 

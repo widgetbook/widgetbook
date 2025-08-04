@@ -11,19 +11,20 @@ class WidgetbookRoot extends WidgetbookNode {
   WidgetbookRoot({
     required super.children,
   }) : super(
-          name: '',
-          isInitiallyExpanded: true,
-        ) {
+         name: '',
+         isInitiallyExpanded: true,
+       ) {
     table = Map.fromEntries(
-      leaves
-          .whereType<WidgetbookUseCase>()
-          .map((node) => MapEntry(node.path, node)),
+      leaves.whereType<WidgetbookUseCase>().map(
+        (node) => MapEntry(node.path, node),
+      ),
     );
 
     useCasesCount = leaves.whereType<WidgetbookUseCase>().length;
-    componentsCount = findAll(
-      (x) => x is WidgetbookComponent || x is WidgetbookLeafComponent,
-    ).length;
+    componentsCount =
+        findAll(
+          (x) => x is WidgetbookComponent || x is WidgetbookLeafComponent,
+        ).length;
   }
 
   /// A table of all [WidgetbookUseCase]s and their paths.

@@ -6,11 +6,12 @@ import 'widgetbook_addon.dart';
 
 /// @nodoc
 @internal
-typedef AddonBuilder = Widget Function(
-  BuildContext context,
-  WidgetbookAddon addon,
-  Widget child,
-);
+typedef AddonBuilder =
+    Widget Function(
+      BuildContext context,
+      WidgetbookAddon addon,
+      Widget child,
+    );
 
 /// Nests [WidgetbookAddon] builders inside each other, using [Nested] widget.
 @internal
@@ -33,17 +34,19 @@ class MultiAddonBuilder extends StatelessWidget {
     }
 
     return Nested(
-      children: addons!
-          .map(
-            (addon) => SingleChildBuilder(
-              builder: (context, child) => builder(
-                context,
-                addon,
-                child!,
-              ),
-            ),
-          )
-          .toList(),
+      children:
+          addons!
+              .map(
+                (addon) => SingleChildBuilder(
+                  builder:
+                      (context, child) => builder(
+                        context,
+                        addon,
+                        child!,
+                      ),
+                ),
+              )
+              .toList(),
       child: child,
     );
   }

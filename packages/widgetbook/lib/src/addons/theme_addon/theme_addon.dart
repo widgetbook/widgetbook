@@ -5,11 +5,12 @@ import '../common/common.dart';
 import 'addon.dart';
 
 /// Function signature for building themed widgets.
-typedef ThemeBuilder<T> = Widget Function(
-  BuildContext context,
-  T theme,
-  Widget child,
-);
+typedef ThemeBuilder<T> =
+    Widget Function(
+      BuildContext context,
+      T theme,
+      Widget child,
+    );
 
 /// A [WidgetbookAddon] for switching between different custom theme
 /// configurations.
@@ -29,17 +30,17 @@ class ThemeAddon<T> extends WidgetbookAddon<WidgetbookTheme<T>> {
     required this.themes,
     this.initialTheme,
     required this.themeBuilder,
-  })  : assert(
-          themes.isNotEmpty,
-          'themes cannot be empty',
-        ),
-        assert(
-          initialTheme == null || themes.contains(initialTheme),
-          'initialTheme must be in themes',
-        ),
-        super(
-          name: 'Theme',
-        );
+  }) : assert(
+         themes.isNotEmpty,
+         'themes cannot be empty',
+       ),
+       assert(
+         initialTheme == null || themes.contains(initialTheme),
+         'initialTheme must be in themes',
+       ),
+       super(
+         name: 'Theme',
+       );
 
   /// Initial theme to display when the addon loads.
   final WidgetbookTheme<T>? initialTheme;

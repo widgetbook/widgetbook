@@ -27,10 +27,10 @@ class CupertinoThemeMode extends Mode<CupertinoThemeData> {
 
 class CupertinoThemeAddon extends ModeAddon<CupertinoThemeData> {
   CupertinoThemeAddon(this.themes)
-      : super(
-          name: 'Cupertino Theme',
-          modeBuilder: CupertinoThemeMode.new,
-        );
+    : super(
+        name: 'Cupertino Theme',
+        modeBuilder: CupertinoThemeMode.new,
+      );
 
   final Map<String, CupertinoThemeData> themes;
 
@@ -41,9 +41,10 @@ class CupertinoThemeAddon extends ModeAddon<CupertinoThemeData> {
         name: 'name',
         values: themes.values.toList(),
         initialValue: themes.values.first,
-        labelBuilder: (theme) => themes.keys.firstWhere(
-          (key) => themes[key] == theme,
-        ),
+        labelBuilder:
+            (theme) => themes.keys.firstWhere(
+              (key) => themes[key] == theme,
+            ),
       ),
     ];
   }

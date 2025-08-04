@@ -13,12 +13,12 @@ class StringField extends Field<String> {
     this.maxLines,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-          type: FieldType.string,
-          codec: FieldCodec(
-            toParam: (value) => value,
-            toValue: (param) => param,
-          ),
-        );
+         type: FieldType.string,
+         codec: FieldCodec(
+           toParam: (value) => value,
+           toValue: (param) => param,
+         ),
+       );
 
   /// The maximum number of lines for the text field.
   final int? maxLines;

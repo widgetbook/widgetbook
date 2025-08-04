@@ -13,11 +13,11 @@ class IntInputField extends NumInputField<int> {
     super.initialValue = 0,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-          type: FieldType.intInput,
-          formatters: [
-            FilteringTextInputFormatter.allow(
-              RegExp(r'^-?\d*'),
-            ),
-          ],
-        );
+         type: FieldType.intInput,
+         formatters: [
+           FilteringTextInputFormatter.allow(
+             RegExp(r'^-?\d*'),
+           ),
+         ],
+       );
 }

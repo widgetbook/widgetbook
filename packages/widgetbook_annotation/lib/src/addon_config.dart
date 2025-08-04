@@ -37,9 +37,9 @@ class LocalizationAddonConfig extends AddonConfig<String> {
   const LocalizationAddonConfig(
     String languageTag,
   ) : super(
-          'locale',
-          'name:$languageTag',
-        );
+        'locale',
+        'name:$languageTag',
+      );
 }
 
 /// [AddonConfig] for the ThemeAddon.
@@ -47,9 +47,9 @@ class ThemeAddonConfig extends AddonConfig<String> {
   const ThemeAddonConfig(
     String themeName,
   ) : super(
-          'theme',
-          'name:$themeName',
-        );
+        'theme',
+        'name:$themeName',
+      );
 }
 
 /// [AddonConfig] for the AlignmentAddon.
@@ -66,25 +66,25 @@ class AlignmentAddonConfig extends AddonConfig<String> {
   /// - 'Bottom Right'
   const AlignmentAddonConfig(
     String alignmentName,
-  )   : assert(
-          // Since we can only use constant values, that means we cannot use
-          // an enum or the [Alignment] class from Flutter. We have to use
-          // strings instead, and we have to make sure that the string is
-          // one of the predefined values.
-          alignmentName == 'Top Left' ||
-              alignmentName == 'Top Center' ||
-              alignmentName == 'Top Right' ||
-              alignmentName == 'Center Left' ||
-              alignmentName == 'Center' ||
-              alignmentName == 'Center Right' ||
-              alignmentName == 'Bottom Left' ||
-              alignmentName == 'Bottom Center' ||
-              alignmentName == 'Bottom Right',
-        ),
-        super(
-          'alignment',
-          'alignment:${alignmentName}',
-        );
+  ) : assert(
+        // Since we can only use constant values, that means we cannot use
+        // an enum or the [Alignment] class from Flutter. We have to use
+        // strings instead, and we have to make sure that the string is
+        // one of the predefined values.
+        alignmentName == 'Top Left' ||
+            alignmentName == 'Top Center' ||
+            alignmentName == 'Top Right' ||
+            alignmentName == 'Center Left' ||
+            alignmentName == 'Center' ||
+            alignmentName == 'Center Right' ||
+            alignmentName == 'Bottom Left' ||
+            alignmentName == 'Bottom Center' ||
+            alignmentName == 'Bottom Right',
+      ),
+      super(
+        'alignment',
+        'alignment:${alignmentName}',
+      );
 }
 
 /// [AddonConfig] for the TextScaleAddon.
@@ -92,9 +92,9 @@ class TextScaleAddonConfig extends AddonConfig<String> {
   const TextScaleAddonConfig(
     double factor,
   ) : super(
-          'text-scale',
-          'factor:$factor',
-        );
+        'text-scale',
+        'factor:$factor',
+      );
 }
 
 /// [AddonConfig] for the ZoomAddon.
@@ -102,17 +102,17 @@ class ZoomAddonConfig extends AddonConfig<String> {
   const ZoomAddonConfig(
     double zoom,
   ) : super(
-          'zoom',
-          'value:$zoom',
-        );
+        'zoom',
+        'value:$zoom',
+      );
 }
 
 /// [AddonConfig] for the SemanticsAddon.
 @experimental
 class SemanticsAddonConfig extends AddonConfig<String> {
   const SemanticsAddonConfig(bool enabled)
-      : super(
-          'semantics',
-          'enabled:$enabled',
-        );
+    : super(
+        'semantics',
+        'enabled:$enabled',
+      );
 }

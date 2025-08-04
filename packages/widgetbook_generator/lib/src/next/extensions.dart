@@ -91,11 +91,11 @@ extension DartTypeX on DartType {
   TypeMeta get meta {
     return isEnum
         ? TypeMeta(
-            'EnumArg<$nonNullableName>',
-            refer(nonNullableName).property(
-              (element as EnumElement).fields.first.name,
-            ),
-          )
+          'EnumArg<$nonNullableName>',
+          refer(nonNullableName).property(
+            (element as EnumElement).fields.first.name,
+          ),
+        )
         : typesMeta[nonNullableName]!;
   }
 }

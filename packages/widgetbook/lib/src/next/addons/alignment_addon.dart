@@ -21,10 +21,10 @@ class AlignmentMode extends Mode<Alignment> {
 
 class AlignmentAddon extends ModeAddon<Alignment> {
   AlignmentAddon([this.alignment = Alignment.center])
-      : super(
-          name: 'Alignment',
-          modeBuilder: AlignmentMode.new,
-        );
+    : super(
+        name: 'Alignment',
+        modeBuilder: AlignmentMode.new,
+      );
 
   final Alignment alignment;
 

@@ -17,6 +17,6 @@ class WidgetbookScope extends InheritedNotifier<WidgetbookState> {
     required WidgetbookState state,
     required super.child,
   }) : super(
-          notifier: state,
-        );
+         notifier: state,
+       );
 }

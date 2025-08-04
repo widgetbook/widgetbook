@@ -31,8 +31,8 @@ class JsonBuilder extends BaseBuilder {
 
   @override
   Map<String, List<String>> get buildExtensions => {
-        '.dart': [generatedExtension],
-      };
+    '.dart': [generatedExtension],
+  };
 
   @override
   Future<void> buildForLibrary(

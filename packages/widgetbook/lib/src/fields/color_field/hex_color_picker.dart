@@ -16,7 +16,8 @@ class HexColorPicker extends StatelessWidget implements OpaqueColorPicker {
   final OpaqueColor value;
   final ValueChanged<OpaqueColor> onChanged;
 
-  String get hexValue => '${value.red.toRadixString(16).padLeft(2, '0')}'
+  String get hexValue =>
+      '${value.red.toRadixString(16).padLeft(2, '0')}'
       '${value.green.toRadixString(16).padLeft(2, '0')}'
       '${value.blue.toRadixString(16).padLeft(2, '0')}';
 

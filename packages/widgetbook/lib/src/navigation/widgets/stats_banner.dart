@@ -40,7 +40,8 @@ class StatsBanner extends StatelessWidget {
             children: [
               _SummaryItem(
                 icon: Icons.info_outline,
-                text: '${_pluralize(componentsCount, 'Component')} • '
+                text:
+                    '${_pluralize(componentsCount, 'Component')} • '
                     '${_pluralize(useCasesCount, 'Use-case')}',
               ),
               const SizedBox(height: 2),
@@ -89,12 +90,11 @@ class _SummaryItem extends StatelessWidget {
             Expanded(
               child: Text(
                 text,
-                style: WidgetbookTheme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(
-                      decoration: isClickable ? TextDecoration.underline : null,
-                    ),
+                style: WidgetbookTheme.of(
+                  context,
+                ).textTheme.bodySmall!.copyWith(
+                  decoration: isClickable ? TextDecoration.underline : null,
+                ),
               ),
             ),
           ],

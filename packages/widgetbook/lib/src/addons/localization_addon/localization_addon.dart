@@ -17,17 +17,17 @@ class LocalizationAddon extends WidgetbookAddon<Locale> {
     required this.locales,
     required this.localizationsDelegates,
     this.initialLocale,
-  })  : assert(
-          locales.isNotEmpty,
-          'locales cannot be empty',
-        ),
-        assert(
-          initialLocale == null || locales.contains(initialLocale),
-          'initialLocale must be in locales',
-        ),
-        super(
-          name: 'Locale',
-        );
+  }) : assert(
+         locales.isNotEmpty,
+         'locales cannot be empty',
+       ),
+       assert(
+         initialLocale == null || locales.contains(initialLocale),
+         'initialLocale must be in locales',
+       ),
+       super(
+         name: 'Locale',
+       );
 
   /// The default locale selection when the addon is first loaded.
   ///

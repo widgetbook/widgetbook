@@ -11,16 +11,18 @@ class ScenarioTypedefBuilder {
 
   TypeDef build() {
     return TypeDef(
-      (b) => b
-        ..name = '${widgetType.nonNullableName}Scenario'
-        ..definition = TypeReference(
-          (b) => b
-            ..symbol = 'Scenario'
-            ..types.addAll([
-              refer(widgetType.nonNullableName),
-              refer('${argsType.nonNullableName}Args'),
-            ]),
-        ),
+      (b) =>
+          b
+            ..name = '${widgetType.nonNullableName}Scenario'
+            ..definition = TypeReference(
+              (b) =>
+                  b
+                    ..symbol = 'Scenario'
+                    ..types.addAll([
+                      refer(widgetType.nonNullableName),
+                      refer('${argsType.nonNullableName}Args'),
+                    ]),
+            ),
     );
   }
 }

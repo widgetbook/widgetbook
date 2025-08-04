@@ -6,14 +6,15 @@ import 'package:flutter/material.dart';
 import '../navigation/nodes/nodes.dart' as v3;
 import 'args/story_args.dart';
 
-typedef SetupBuilder<TArgs> = Widget Function(
-  BuildContext context,
-  Widget story,
-  TArgs args,
-);
+typedef SetupBuilder<TArgs> =
+    Widget Function(
+      BuildContext context,
+      Widget story,
+      TArgs args,
+    );
 
-typedef ArgsBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
-    = TWidget Function(BuildContext context, TArgs args);
+typedef ArgsBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> =
+    TWidget Function(BuildContext context, TArgs args);
 
 @optionalTypeArgs
 abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
@@ -25,8 +26,8 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
     required this.args,
     required this.argsBuilder,
   }) : super(
-          builder: (context) => const SizedBox.shrink(), // TODO: remove
-        );
+         builder: (context) => const SizedBox.shrink(), // TODO: remove
+       );
 
   final TArgs args;
   final SetupBuilder<TArgs> setup;

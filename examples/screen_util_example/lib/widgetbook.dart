@@ -58,7 +58,8 @@ class WidgetbookApp extends StatelessWidget {
               name: 'Default',
               builder: (context) {
                 return const ResponsiveImage(
-                  url: 'https://images.nintendolife.com/bb503ef1f79ff/'
+                  url:
+                      'https://images.nintendolife.com/bb503ef1f79ff/'
                       'ash-and-pikachu.original.jpg',
                 );
               },

@@ -13,11 +13,11 @@ class DoubleInputField extends NumInputField<double> {
     super.initialValue = 0,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-          type: FieldType.doubleInput,
-          formatters: [
-            FilteringTextInputFormatter.allow(
-              RegExp(r'^-?\d*\.?\d*'),
-            ),
-          ],
-        );
+         type: FieldType.doubleInput,
+         formatters: [
+           FilteringTextInputFormatter.allow(
+             RegExp(r'^-?\d*\.?\d*'),
+           ),
+         ],
+       );
 }

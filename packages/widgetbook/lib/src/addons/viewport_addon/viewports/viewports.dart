@@ -13,13 +13,13 @@ import 'windows_viewports.dart';
 @internal
 class NoneViewport extends ViewportData {
   const NoneViewport()
-      : super(
-          name: 'None',
-          width: 0,
-          height: 0,
-          pixelRatio: 0,
-          platform: TargetPlatform.fuchsia,
-        );
+    : super(
+        name: 'None',
+        width: 0,
+        height: 0,
+        pixelRatio: 0,
+        platform: TargetPlatform.fuchsia,
+      );
 }
 
 /// A collection of all predefined viewports across platforms.

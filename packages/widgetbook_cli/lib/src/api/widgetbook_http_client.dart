@@ -13,13 +13,14 @@ const BASE_API_URL = 'https://api.widgetbook.io/';
 class WidgetbookHttpClient {
   WidgetbookHttpClient({
     Dio? client,
-  }) : client = client ??
-            Dio(
-              BaseOptions(
-                baseUrl: BASE_API_URL,
-                contentType: Headers.jsonContentType,
-              ),
-            );
+  }) : client =
+           client ??
+           Dio(
+             BaseOptions(
+               baseUrl: BASE_API_URL,
+               contentType: Headers.jsonContentType,
+             ),
+           );
 
   final Dio client;
 

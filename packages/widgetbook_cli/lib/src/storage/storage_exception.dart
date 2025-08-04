@@ -7,11 +7,11 @@ import 'storage_object.dart';
 
 class StorageUploadException extends CliException {
   StorageUploadException(String filePath, String message)
-      : super(
-          'Something went wrong while uploading [$filePath] to Widgetbook Cloud storage:\n'
-          '$message\n',
-          ExitCode.software.code,
-        );
+    : super(
+        'Something went wrong while uploading [$filePath] to Widgetbook Cloud storage:\n'
+        '$message\n',
+        ExitCode.software.code,
+      );
 
   static StorageUploadException parse(StorageObject object, Object exception) {
     if (exception is! DioException) {

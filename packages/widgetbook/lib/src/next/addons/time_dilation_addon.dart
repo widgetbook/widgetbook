@@ -20,10 +20,10 @@ class TimeDilationMode extends Mode<double> {
 
 class TimeDilationAddon extends ModeAddon<double> {
   TimeDilationAddon()
-      : super(
-          name: 'Time Dilation',
-          modeBuilder: TimeDilationMode.new,
-        );
+    : super(
+        name: 'Time Dilation',
+        modeBuilder: TimeDilationMode.new,
+      );
 
   @override
   List<Field> get fields {

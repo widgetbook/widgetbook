@@ -74,10 +74,11 @@ class StorageClient {
           ),
         )
         .onError(
-          (error, stackTrace) => throw StorageUploadException.parse(
-            object,
-            error!,
-          ),
+          (error, stackTrace) =>
+              throw StorageUploadException.parse(
+                object,
+                error!,
+              ),
         );
   }
 }

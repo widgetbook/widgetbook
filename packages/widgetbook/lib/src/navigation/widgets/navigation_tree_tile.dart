@@ -34,9 +34,10 @@ class NavigationTreeTile extends StatelessWidget {
       height: indentation,
       decoration: BoxDecoration(
         borderRadius: borderRadius,
-        color: isSelected
-            ? WidgetbookTheme.of(context).colorScheme.secondaryContainer
-            : null,
+        color:
+            isSelected
+                ? WidgetbookTheme.of(context).colorScheme.secondaryContainer
+                : null,
       ),
       child: InkWell(
         onTap: onTap,
@@ -48,11 +49,12 @@ class NavigationTreeTile extends StatelessWidget {
             ),
             SizedBox(
               width: indentation,
-              child: node.isLeaf || node is WidgetbookLeafComponent
-                  ? null
-                  : ExpanderIcon(
-                      isExpanded: isExpanded,
-                    ),
+              child:
+                  node.isLeaf || node is WidgetbookLeafComponent
+                      ? null
+                      : ExpanderIcon(
+                        isExpanded: isExpanded,
+                      ),
             ),
             SizedBox(
               width: indentation,

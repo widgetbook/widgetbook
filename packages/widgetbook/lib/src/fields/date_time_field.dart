@@ -28,14 +28,14 @@ class DateTimeField extends Field<DateTime> {
     required this.start,
     required this.end,
   }) : super(
-          type: FieldType.dateTime,
-          codec: FieldCodec<DateTime>(
-            toParam: (value) => value.toSimpleFormat(),
-            toValue: (param) {
-              return param == null ? null : DateTime.tryParse(param);
-            },
-          ),
-        );
+         type: FieldType.dateTime,
+         codec: FieldCodec<DateTime>(
+           toParam: (value) => value.toSimpleFormat(),
+           toValue: (param) {
+             return param == null ? null : DateTime.tryParse(param);
+           },
+         ),
+       );
 
   /// The starting [DateTime] value used for the date and time pickers.
   final DateTime start;

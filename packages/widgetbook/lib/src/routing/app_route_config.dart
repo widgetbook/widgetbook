@@ -24,9 +24,8 @@ class AppRouteConfig {
   /// Returns a modifiable copy of the query parameters
   /// without the reserved keys.
   Map<String, String> get queryParams {
-    return Map<String, String>.from(uri.queryParameters)
-      ..removeWhere(
-        (key, _) => reservedKeys.contains(key),
-      );
+    return Map<String, String>.from(uri.queryParameters)..removeWhere(
+      (key, _) => reservedKeys.contains(key),
+    );
   }
 }

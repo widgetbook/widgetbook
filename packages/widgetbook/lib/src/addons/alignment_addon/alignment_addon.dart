@@ -15,8 +15,8 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
   AlignmentAddon({
     this.initialAlignment = Alignment.center,
   }) : super(
-          name: 'Alignment',
-        );
+         name: 'Alignment',
+       );
 
   /// The default alignment applied when the addon first loads.
   ///

@@ -15,10 +15,11 @@ class StoryGenerator extends Generator {
     LibraryReader library,
     BuildStep buildStep,
   ) async {
-    final storiesVariables = library.allElements
-        .whereType<TopLevelVariableElement>()
-        .where((element) => element.name.startsWith('\$'))
-        .toList();
+    final storiesVariables =
+        library.allElements
+            .whereType<TopLevelVariableElement>()
+            .where((element) => element.name.startsWith('\$'))
+            .toList();
 
     final metaVariable = library.allElements
         .whereType<TopLevelVariableElement>()
@@ -29,15 +30,20 @@ class StoryGenerator extends Generator {
     final argsType = metaType.typeArguments.last;
 
     final genLib = Library(
-      (b) => b
-        ..body.addAll(
-          [
-            ComponentBuilder(widgetType, argsType, storiesVariables).build(),
-            ScenarioTypedefBuilder(widgetType, argsType).build(),
-            StoryClassBuilder(widgetType, argsType).build(),
-            ArgsClassBuilder(widgetType, argsType).build(),
-          ],
-        ),
+      (b) =>
+          b
+            ..body.addAll(
+              [
+                ComponentBuilder(
+                  widgetType,
+                  argsType,
+                  storiesVariables,
+                ).build(),
+                ScenarioTypedefBuilder(widgetType, argsType).build(),
+                StoryClassBuilder(widgetType, argsType).build(),
+                ArgsClassBuilder(widgetType, argsType).build(),
+              ],
+            ),
     );
 
     final emitter = DartEmitter(

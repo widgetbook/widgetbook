@@ -20,12 +20,14 @@ class ComponentBuilder {
         .assign(
           InvokeExpression.newOf(
             TypeReference(
-              (b) => b
-                ..symbol = stories.length == 1 ? 'LeafComponent' : 'Component'
-                ..types.addAll([
-                  refer(widgetType.nonNullableName),
-                  refer('${argsType.nonNullableName}Args'),
-                ]),
+              (b) =>
+                  b
+                    ..symbol =
+                        stories.length == 1 ? 'LeafComponent' : 'Component'
+                    ..types.addAll([
+                      refer(widgetType.nonNullableName),
+                      refer('${argsType.nonNullableName}Args'),
+                    ]),
             ),
             [],
             {

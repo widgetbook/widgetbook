@@ -19,19 +19,19 @@ class ViewportAddonConfig extends AddonConfig<ViewportData> {
   /// Creates a configuration for the [ViewportAddon] with the specified [data].
   const ViewportAddonConfig(
     ViewportData data,
-  )   : assert(
-          data is! NoneViewport,
-          '`NoneViewport` cannot be used in addon config',
-        ),
-        super(
-          'viewport',
-          // It would have been easier to parse the `data` to the string format
-          // that is required by the Cloud (i.e. "id:${data.id},$meta{...}")
-          // but we cannot do this here, because it's a constant class that
-          // is used as an annotation, so the parsing is done in the generator.
-          // For that reason, we have the generic parameter on AddonConfig.
-          data,
-        );
+  ) : assert(
+        data is! NoneViewport,
+        '`NoneViewport` cannot be used in addon config',
+      ),
+      super(
+        'viewport',
+        // It would have been easier to parse the `data` to the string format
+        // that is required by the Cloud (i.e. "id:${data.id},$meta{...}")
+        // but we cannot do this here, because it's a constant class that
+        // is used as an annotation, so the parsing is done in the generator.
+        // For that reason, we have the generic parameter on AddonConfig.
+        data,
+      );
 }
 
 /// A [WidgetbookAddon] that allows switching between different viewports.
@@ -44,22 +44,22 @@ class ViewportAddonConfig extends AddonConfig<ViewportData> {
 class ViewportAddon extends WidgetbookAddon<ViewportData> {
   /// Creates a new instance of [ViewportAddon].
   ViewportAddon(this.viewports)
-      : super(
-          name: 'Viewport',
-        );
+    : super(
+        name: 'Viewport',
+      );
 
   /// The list of available viewport options.
   final List<ViewportData> viewports;
 
   @override
   List<Field> get fields => [
-        ListField<ViewportData>(
-          name: 'name',
-          initialValue: viewports.first,
-          values: viewports,
-          labelBuilder: (viewport) => viewport.name,
-        ),
-      ];
+    ListField<ViewportData>(
+      name: 'name',
+      initialValue: viewports.first,
+      values: viewports,
+      labelBuilder: (viewport) => viewport.name,
+    ),
+  ];
 
   @override
   ViewportData valueFromQueryGroup(Map<String, String> group) {
