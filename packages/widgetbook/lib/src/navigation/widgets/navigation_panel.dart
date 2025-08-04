@@ -85,8 +85,10 @@ class _NavigationPanelState extends State<NavigationPanel> {
                     node: filteredRoot.children![index],
                     selectedNode: selectedNode,
                     onNodeSelected: (node) {
-                      if (!node.isLeaf || node.path == selectedNode?.path)
+                      if (!node.isLeaf || node.path == selectedNode?.path) {
                         return;
+                      }
+
                       setState(() => selectedNode = node);
                       widget.onNodeSelected?.call(node);
                     },

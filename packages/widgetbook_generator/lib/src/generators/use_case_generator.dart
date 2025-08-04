@@ -55,9 +55,8 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     final useCaseUri = resolveElementUri(element);
     final componentUri = resolveElementUri(type.element!);
 
-    final targetNavUri = navPathMode == NavPathMode.component //
-        ? componentUri
-        : useCaseUri;
+    final targetNavUri =
+        navPathMode == NavPathMode.component ? componentUri : useCaseUri;
 
     final navPath = path ?? getNavPath(targetNavUri);
 
@@ -112,38 +111,39 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
 
     return {
       for (final entry in rawMap.entries)
-        entry.key: entry.value.map(
-          (e) {
-            final reader = ConstantReader(e);
+        entry.key:
+            entry.value.map(
+              (e) {
+                final reader = ConstantReader(e);
 
-            // A special type of KnobConfig is the MultiFieldKnobConfig
-            // This allows users to configure more than one field.
-            // Since for first-class knobs we have 1-1 relation between
-            // knob and field (i.e. each knob has only one field),
-            // we need to convert the MultiFieldKnobConfig into
-            // multiple KnobConfig (i.e. multiple fields).
-            if (e.type.toString() == '$MultiFieldKnobConfig') {
-              final fields = reader.read('value').mapValue;
+                // A special type of KnobConfig is the MultiFieldKnobConfig
+                // This allows users to configure more than one field.
+                // Since for first-class knobs we have 1-1 relation between
+                // knob and field (i.e. each knob has only one field),
+                // we need to convert the MultiFieldKnobConfig into
+                // multiple KnobConfig (i.e. multiple fields).
+                if (e.type.toString() == '$MultiFieldKnobConfig') {
+                  final fields = reader.read('value').mapValue;
 
-              return fields.entries.map(
-                // Add each field as a separate KnobConfig
-                (entry) {
-                  return KnobConfig(
-                    entry.key!.toStringValue()!,
-                    entry.value?.toPrimitiveValue(),
-                  );
-                },
-              ).toList();
-            }
+                  return fields.entries.map(
+                    // Add each field as a separate KnobConfig
+                    (entry) {
+                      return KnobConfig(
+                        entry.key!.toStringValue()!,
+                        entry.value?.toPrimitiveValue(),
+                      );
+                    },
+                  ).toList();
+                }
 
-            return [
-              KnobConfig(
-                reader.read('label').stringValue,
-                reader.read('value').literalValue,
-              ),
-            ];
-          },
-        ).flattened,
+                return [
+                  KnobConfig(
+                    reader.read('label').stringValue,
+                    reader.read('value').literalValue,
+                  ),
+                ];
+              },
+            ).flattened,
     };
   }
 }
