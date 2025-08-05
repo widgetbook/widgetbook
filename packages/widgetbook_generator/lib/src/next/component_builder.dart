@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
 
@@ -13,7 +13,7 @@ class ComponentBuilder {
 
   final DartType widgetType;
   final DartType argsType;
-  final List<TopLevelVariableElement> stories;
+  final List<TopLevelVariableElement2> stories;
 
   Code build() {
     return declareFinal('${widgetType.nonNullableName}Component')
@@ -33,10 +33,10 @@ class ComponentBuilder {
             {
               'meta': refer('meta'),
               if (stories.length == 1)
-                'story': refer(stories.first.name)
+                'story': refer(stories.first.displayName)
               else
                 'stories': literalList(
-                  stories.map((story) => refer(story.name)).toList(),
+                  stories.map((story) => refer(story.displayName)).toList(),
                 ),
             },
           ),

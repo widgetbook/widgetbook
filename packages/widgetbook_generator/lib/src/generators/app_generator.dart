@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
@@ -22,13 +22,13 @@ import '../tree/tree.dart';
 class AppGenerator extends GeneratorForAnnotation<App> {
   @override
   Future<String> generateForAnnotatedElement(
-    Element element,
+    Element2 element,
     ConstantReader annotation,
     BuildStep buildStep,
   ) async {
     // The directory containing the `widgetbook.dart` file
     // without the leading `/`
-    final inputPath = element.librarySource!.fullName;
+    final inputPath = element.library2!.firstFragment.source.fullName;
     final inputDir = path.dirname(inputPath).substring(1);
 
     final emitter = DartEmitter(

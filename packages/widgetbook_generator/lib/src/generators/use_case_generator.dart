@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:build/build.dart';
 import 'package:collection/collection.dart';
 import 'package:path/path.dart' as path;
@@ -20,7 +20,7 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
 
   @override
   Future<String> generateForAnnotatedElement(
-    Element element,
+    Element2 element,
     ConstantReader annotation,
     BuildStep buildStep,
   ) async {
@@ -40,20 +40,13 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
         .readOrNull('cloudKnobsConfigs')
         ?.parse(_parseKnobsConfigs);
 
-    final componentName = type
-        .getDisplayString(
-          // The `withNullability` parameter is deprecated after analyzer 6.0.0,
-          // since we support analyzer 5.x (to support Dart <3.0.0), then
-          // the deprecation is ignored.
-          // ignore: deprecated_member_use
-          withNullability: false,
-        )
-        // Generic widgets shouldn't have a "<dynamic>" suffix
-        // if no type parameter is specified.
-        .replaceAll('<dynamic>', '');
+    final componentName = type.getDisplayString()
+    // Generic widgets shouldn't have a "<dynamic>" suffix
+    // if no type parameter is specified.
+    .replaceAll('<dynamic>', '');
 
     final useCaseUri = resolveElementUri(element);
-    final componentUri = resolveElementUri(type.element!);
+    final componentUri = resolveElementUri(type.element3!);
 
     final targetNavUri =
         navPathMode == NavPathMode.component ? componentUri : useCaseUri;
@@ -61,7 +54,7 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     final navPath = path ?? getNavPath(targetNavUri);
 
     final metadata = UseCaseMetadata(
-      functionName: element.name!,
+      functionName: element.firstFragment.name2!,
       designLink: designLink,
       name: name,
       importUri: useCaseUri,
@@ -94,8 +87,10 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
 
   /// Resolves the URI of an [element] by retrieving the URI from
   /// the [element]'s source.
-  String resolveElementUri(Element element) {
-    final source = element.librarySource ?? element.source!;
+  String resolveElementUri(Element2 element) {
+    final source =
+        element.firstFragment.libraryFragment?.source ??
+        element.library2!.firstFragment.source;
     return source.uri.toString();
   }
 
