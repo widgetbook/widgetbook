@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
@@ -14,8 +14,11 @@ class StoryClassBuilder {
   final DartType widgetType;
   final DartType argsType;
 
-  Iterable<ParameterElement> get params {
-    return (argsType.element as ClassElement).constructors.first.parameters;
+  Iterable<FormalParameterElement> get params {
+    return (argsType.element3 as ClassElement2)
+        .constructors2
+        .first
+        .formalParameters;
   }
 
   Class build() {
@@ -109,7 +112,7 @@ class StoryClassBuilder {
                                 ..body =
                                     instantiate(
                                       (param) => refer('args') //
-                                          .property(param.name)
+                                          .property(param.displayName)
                                           .maybeProperty(
                                             'resolve',
                                             nullSafe: param.type.isNullable,
@@ -137,7 +140,7 @@ class StoryClassBuilder {
   }
 
   InvokeExpression instantiate(
-    Expression Function(ParameterElement) assigner,
+    Expression Function(FormalParameterElement) assigner,
   ) {
     return InvokeExpression.newOf(
       refer(widgetType.nonNullableName),
@@ -147,10 +150,10 @@ class StoryClassBuilder {
           .toList(),
       params //
           .where((param) => param.isNamed)
-          .lastBy((param) => param.name)
+          .lastBy((param) => param.displayName)
           .map(
             (_, param) => MapEntry(
-              param.name,
+              param.displayName,
               assigner(param),
             ),
           ),
