@@ -1,9 +1,13 @@
+import 'package:flutter/material.dart';
+
+import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
 import 'num_slider_field.dart';
 
-/// [Field] that builds [Slider] for [int] values.
+/// A [Field] that builds [Slider] for [int] values.
 class IntSliderField extends NumSliderField<int> {
+  /// Creates a new instance of [IntSliderField].
   IntSliderField({
     required super.name,
     super.initialValue = 0,
@@ -12,12 +16,12 @@ class IntSliderField extends NumSliderField<int> {
     required super.max,
     this.divisions,
   }) : super(
-          type: FieldType.intSlider,
-          codec: FieldCodec<int>(
-            toParam: (value) => value.toString(),
-            toValue: (param) => double.tryParse(param ?? '')?.round(),
-          ),
-        );
+         type: FieldType.intSlider,
+         codec: FieldCodec<int>(
+           toParam: (value) => value.toString(),
+           toValue: (param) => double.tryParse(param ?? '')?.round(),
+         ),
+       );
 
   final int? divisions;
 }

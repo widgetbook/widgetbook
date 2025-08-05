@@ -1,9 +1,10 @@
 // ignore_for_file: deprecated_member_use_from_same_package
 
+import 'package:device_frame_plus/device_frame_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/src/addons/device_frame_addon/addon.dart';
 import 'package:widgetbook/src/widgetbook_theme.dart';
-import 'package:widgetbook/widgetbook.dart' hide WidgetbookTheme;
 
 import '../../helper/helper.dart';
 

@@ -1,8 +1,14 @@
 ## Unreleased
 
+- **BREAKING**: Set minimum SDK version to 3.7.0 & minimum Flutter version to 3.29.0. ([#1541](https://github.com/widgetbook/widgetbook/pull/1541))
+- **FEAT**: Add [SegmentButton Knob] to widgetbook. ([#1478](https://github.com/widgetbook/widgetbook/pull/1478) - by [@Sourav-Sonkar](https://github.com/Sourav-Sonkar))
+
+## 3.15.0
+
 - **REFACTOR**: Deprecate `DeviceFrameAddon` in favor of `ViewportAddon`. ([#1494](https://github.com/widgetbook/widgetbook/pull/1494))
 - **REFACTOR**: Remove `@experimental` annotation from `ViewportAddon`. ([#1493](https://github.com/widgetbook/widgetbook/pull/1493))
-- **FEAT**: Add [SegmentButton Knob] to widgetbook. ([#1478](https://github.com/widgetbook/widgetbook/pull/1478) - by [@Sourav-Sonkar](https://github.com/Sourav-Sonkar))
+- **REFACTOR**: Improve API docs. ([#1531](https://github.com/widgetbook/widgetbook/pull/1531))
+- **CHORE**: Update license. ([#1529](https://github.com/widgetbook/widgetbook/pull/1529))
 
 ## 3.14.3
 
@@ -49,7 +55,7 @@
 
 ## 3.12.0
 
-- **FEAT**: Add the **experimental** _(subject to breaking changes)_ [`ViewportAddon`](https://docs.widgetbook.io/addons/viewport-addon) alongside its [`ViewportAddonConfig`](https://docs.widgetbook.io/cloud/reviews/multi-snapshot#multi-snapshot-for-addons). This new addon will replace the `DeviceFrameAddon` in the future. ([#1318](https://github.com/widgetbook/widgetbook/pull/1318))
+- **FEAT**: Add the **experimental** _(subject to breaking changes)_ [`ViewportAddon`](https://docs.widgetbook.io/addons/viewport-addon) alongside its [`ViewportAddonConfig`](https://docs.widgetbook.io/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons). This new addon will replace the `DeviceFrameAddon` in the future. ([#1318](https://github.com/widgetbook/widgetbook/pull/1318))
 
 ## 3.11.0
 

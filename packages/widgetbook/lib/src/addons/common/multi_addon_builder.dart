@@ -1,15 +1,20 @@
 import 'package:flutter/widgets.dart';
+import 'package:meta/meta.dart';
 import 'package:nested/nested.dart';
 
 import 'widgetbook_addon.dart';
 
-typedef AddonBuilder = Widget Function(
-  BuildContext context,
-  WidgetbookAddon addon,
-  Widget child,
-);
+/// @nodoc
+@internal
+typedef AddonBuilder =
+    Widget Function(
+      BuildContext context,
+      WidgetbookAddon addon,
+      Widget child,
+    );
 
 /// Nests [WidgetbookAddon] builders inside each other, using [Nested] widget.
+@internal
 class MultiAddonBuilder extends StatelessWidget {
   MultiAddonBuilder({
     super.key,
@@ -29,17 +34,19 @@ class MultiAddonBuilder extends StatelessWidget {
     }
 
     return Nested(
-      children: addons!
-          .map(
-            (addon) => SingleChildBuilder(
-              builder: (context, child) => builder(
-                context,
-                addon,
-                child!,
-              ),
-            ),
-          )
-          .toList(),
+      children:
+          addons!
+              .map(
+                (addon) => SingleChildBuilder(
+                  builder:
+                      (context, child) => builder(
+                        context,
+                        addon,
+                        child!,
+                      ),
+                ),
+              )
+              .toList(),
       child: child,
     );
   }

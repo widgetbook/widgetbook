@@ -21,7 +21,7 @@ const expectedUsage = [
       '  cloud     Manage your Widgetbook Cloud projects.\n'
       '  upgrade   Upgrade Widgetbook CLI\n'
       '\n'
-      'Run "widgetbook help <command>" for more information about a command.'
+      'Run "widgetbook help <command>" for more information about a command.',
 ];
 
 const latestVersion = '0.0.0';
@@ -35,7 +35,8 @@ final changelogLink = lightCyan.wrap(
   ),
 );
 
-final updateMessage = '\n${lightYellow.wrap('Update available!')} '
+final updateMessage =
+    '\n${lightYellow.wrap('Update available!')} '
     '${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}\n'
     '${lightYellow.wrap('Changelog:')} $changelogLink\n'
     'Run ${cyan.wrap('${cliName} update')} to update';

@@ -37,10 +37,10 @@
   },
   "variables": {
     "versions": {
-      "annotation": "3.5.0",
-      "cli": "3.7.0",
-      "generator": "3.13.0",
-      "widgetbook": "3.14.3"
+      "annotation": "3.6.0",
+      "cli": "3.9.0",
+      "generator": "3.14.0",
+      "widgetbook": "3.15.0"
     }
   },
   "tabs": [
@@ -86,6 +86,10 @@
         {
           "title": "Use-cases",
           "href": "/guides/use-cases"
+        },
+        {
+          "title": "Generate use-cases with LLMs",
+          "href": "/guides/generate-use-cases"
         },
         {
           "title": "Mock Widgets & Screens",
@@ -175,7 +179,7 @@
           "pages": [
             {
               "title": "Overview",
-              "href": "/addons"
+              "href": "/addons/overview"
             },
             {
               "title": "Accessibility Addon",
@@ -407,12 +411,55 @@
             {
               "title": "Access builds",
               "href": "/cloud/builds/access-from-commit"
+            },
+            {
+              "title": "Turbo Builds",
+              "href": "/cloud/builds/turbo"
             }
           ]
         },
         {
-          "title": "Reviews",
-          "href": "/cloud/reviews"
+          "group": "Snapshots",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/snapshots/overview"
+            },
+            {
+              "title": "Multi Snapshot",
+              "href": "/cloud/snapshots/multi-snapshot"
+            }
+          ]
+        },
+        {
+          "group": "Visual Pull Requests",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/visual-pull-request/overview"
+            },
+            {
+              "title": "Create Pull Requests",
+              "href": "/cloud/visual-pull-request/create"
+            }
+          ]
+        },
+        {
+          "group": "Reviews",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/reviews"
+            },
+            {
+              "title": "Submit a review",
+              "href": "/cloud/reviews/submit"
+            },
+            {
+              "title": "Limitations",
+              "href": "/cloud/reviews/limitations"
+            }
+          ]
         },
         {
           "title": "Product Tour",
@@ -445,12 +492,12 @@
               "href": "/cloud/guides/gitlab/upload"
             },
             {
-              "title": "Builds with self-managed GitLab",
-              "href": "/cloud/guides/gitlab/upload-self-managed"
-            },
-            {
               "title": "Access builds from GitLab",
               "href": "/cloud/guides/gitlab/access-from-commit"
+            },
+            {
+              "title": "Self-managed GitLab",
+              "href": "/cloud/guides/gitlab/self-managed"
             }
           ]
         },
@@ -468,6 +515,23 @@
           ]
         },
         {
+          "group": "Bitbucket",
+          "pages": [
+            {
+              "title": "Upload builds",
+              "href": "/cloud/guides/bitbucket/upload"
+            },
+            {
+              "title": "Access builds from Bitbucket",
+              "href": "/cloud/guides/bitbucket/access-from-commit"
+            },
+            {
+              "title": "Self-hosted Bitbucket",
+              "href": "/cloud/guides/bitbucket/self-hosted"
+            }
+          ]
+        },
+        {
           "group": "Codemagic",
           "pages": [
             {
@@ -477,21 +541,12 @@
           ]
         },
         {
-          "group": "Bitbucket",
-          "pages": [
-            {
-              "title": "Upload builds",
-              "href": "/cloud/guides/bitbucket/upload"
-            }
-          ]
-        },
-        {
           "title": "Figma Reviews",
           "href": "/cloud/reviews/figma"
         },
         {
-          "title": "Multi Snapshot Reviews",
-          "href": "/cloud/reviews/multi-snapshot"
+          "title": "Setup with Demo Project",
+          "href": "/cloud/guides/demo-project"
         }
       ]
     },

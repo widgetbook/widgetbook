@@ -1,3 +1,6 @@
+// next version of Widgetbook doesn't have api docs yet
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/widgets.dart';
 
 import '../../fields/fields.dart';
@@ -20,10 +23,10 @@ class TextScaleMode extends Mode<double> {
 
 class TextScaleAddon extends ModeAddon<double> {
   TextScaleAddon()
-      : super(
-          name: 'Text Scale',
-          modeBuilder: TextScaleMode.new,
-        );
+    : super(
+        name: 'Text Scale',
+        modeBuilder: TextScaleMode.new,
+      );
 
   @override
   List<Field> get fields {

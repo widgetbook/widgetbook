@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../layout/desktop_layout.dart';
 import '../layout/mobile_layout.dart';
 import '../navigation/navigation.dart';
 import '../state/state.dart';
 
+/// The [ResponsiveLayout] adapts the layout based on the screen size.
+/// It uses [MobileLayout] for mobile devices and [DesktopLayout] for
+/// larger screens.
+@internal
 class ResponsiveLayout extends StatelessWidget {
   const ResponsiveLayout({
     super.key,
@@ -43,7 +48,9 @@ class ResponsiveLayout extends StatelessWidget {
   List<Widget> buildKnobs(BuildContext context) {
     final state = WidgetbookState.of(context);
 
-    return state.knobs.values //
+    return state
+        .knobs
+        .values //
         .map((knob) => knob.buildFields(context))
         .toList();
   }
@@ -52,7 +59,9 @@ class ResponsiveLayout extends StatelessWidget {
     final state = WidgetbookState.of(context);
     final story = state.story;
 
-    return story?.args.safeList //
+    return story
+            ?.args
+            .safeList //
             .map((e) => e.buildFields(context))
             .toList() ??
         [];
@@ -73,18 +82,18 @@ class ResponsiveLayout extends StatelessWidget {
 
     return isMobile && !isEmbedded
         ? MobileLayout(
-            navigationBuilder: (context) => buildNavigation(context, true),
-            addonsBuilder: buildAddons,
-            knobsBuilder: buildKnobs,
-            argsBuilder: buildArgs,
-            workbench: child,
-          )
+          navigationBuilder: (context) => buildNavigation(context, true),
+          addonsBuilder: buildAddons,
+          knobsBuilder: buildKnobs,
+          argsBuilder: buildArgs,
+          workbench: child,
+        )
         : DesktopLayout(
-            navigationBuilder: (context) => buildNavigation(context, false),
-            addonsBuilder: buildAddons,
-            knobsBuilder: buildKnobs,
-            argsBuilder: buildArgs,
-            workbench: child,
-          );
+          navigationBuilder: (context) => buildNavigation(context, false),
+          addonsBuilder: buildAddons,
+          knobsBuilder: buildKnobs,
+          argsBuilder: buildArgs,
+          workbench: child,
+        );
   }
 }

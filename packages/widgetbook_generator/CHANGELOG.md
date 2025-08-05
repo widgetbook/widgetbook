@@ -1,10 +1,21 @@
+## Unreleased
+
+- **BREAKING**: Set minimum SDK version to 3.7.0. ([#1541](https://github.com/widgetbook/widgetbook/pull/1541))
+- **BREAKING**: Support [new element model API](https://github.com/dart-lang/sdk/blob/main/pkg/analyzer/doc/element_model_migration_guide.md). Use `analyzer` >=7.4.0, `build` >=3.0.0 and `source_gen` >=3.0.0. ([#1544](https://github.com/widgetbook/widgetbook/pull/1544))
+
+## 3.14.0
+
+- **FEAT**: Support `@UseCase.cloudExclude` option. Requires `widgetbook_annotation` >=3.6.0. ([#1535](https://github.com/widgetbook/widgetbook/pull/1535))
+- **REFACTOR**: Change generated imports prefixes to use a deterministic format based on the path. ([#1495](https://github.com/widgetbook/widgetbook/pull/1495) - by [@mrgnhnt96](https://github.com/mrgnhnt96))
+- **CHORE**: Update license. ([#1529](https://github.com/widgetbook/widgetbook/pull/1529))
+
 ## 3.13.0
 
 - **BREAKING**: Use `ViewportData.name` instead of `ViewportData.id`. Requires `widgetbook` >=3.14.0. ([#1454](https://github.com/widgetbook/widgetbook/pull/1454))
 
 ## 3.12.0
 
-- **FEAT**: Support Multi Snapshot for knobs. For more information, check our [docs](https://docs.widgetbook.io/cloud/reviews/multi-snapshot#multi-snapshot-for-knobs). ([#1394](https://github.com/widgetbook/widgetbook/pull/1394))
+- **FEAT**: Support Multi Snapshot for knobs. For more information, check our [docs](https://docs.widgetbook.io/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs). ([#1394](https://github.com/widgetbook/widgetbook/pull/1394))
 
 ## 3.11.0
 
@@ -27,7 +38,7 @@
 
 - **BREAKING**: Set minimum SDK version to 3.0.0. ([#1243](https://github.com/widgetbook/widgetbook/pull/1243))
 - **BREAKING**: Drop `analyzer` 5.x support. ([#1243](https://github.com/widgetbook/widgetbook/pull/1243))
-- **FEAT**: Support Multi Snapshot for addons. For more information, check our [docs](https://docs.widgetbook.io/cloud/reviews/multi-snapshot). ([#1239](https://github.com/widgetbook/widgetbook/pull/1239))
+- **FEAT**: Support Multi Snapshot for addons. For more information, check our [docs](https://docs.widgetbook.io/cloud/snapshots/multi-snapshot). ([#1239](https://github.com/widgetbook/widgetbook/pull/1239))
 - **REFACTOR**: Remove `widgetbook` dependency. ([#1242](https://github.com/widgetbook/widgetbook/pull/1242))
 
 ## 3.8.0

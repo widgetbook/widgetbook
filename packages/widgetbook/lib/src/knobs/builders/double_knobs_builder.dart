@@ -1,14 +1,18 @@
 import '../double_input_knob.dart';
 import '../double_slider_knob.dart';
+import '../knob.dart';
 import 'knobs_builder.dart';
 
+/// A [KnobsBuilder] for double knobs.
 class DoubleKnobsBuilder {
+  /// Creates a [DoubleKnobsBuilder] with the provided [onKnobAdded] callback.
   DoubleKnobsBuilder(this.onKnobAdded);
 
+  /// The callback that is used to add a knob.
   final KnobAdded onKnobAdded;
 
-  /// Creates a slider that can be slid to specific double values. You can use
-  /// the `num.toInt()` function to make this into an integer
+  /// A [Knob] that holds an [double] value with a slider.
+  /// Learn more: https://docs.widgetbook.io/knobs/double/slider
   double slider({
     required String label,
     String? description,
@@ -29,8 +33,8 @@ class DoubleKnobsBuilder {
     )!;
   }
 
-  /// Creates a textfield which users can type double values into. You can use
-  /// the `num?.toInt()` function to turn this into an integer
+  /// A [Knob] that holds an [double] value with an input field.
+  /// Learn more: https://docs.widgetbook.io/knobs/double/input
   double input({
     required String label,
     String? description,
@@ -46,16 +50,19 @@ class DoubleKnobsBuilder {
   }
 }
 
+/// Same as [DoubleKnobsBuilder] but allows the knob to hold a null value.
 class DoubleOrNullKnobsBuilder {
+  /// Creates a [DoubleOrNullKnobsBuilder] with the provided
+  /// [onKnobAdded] callback.
   DoubleOrNullKnobsBuilder(
     KnobAdded onKnobAdded,
   ) : this.onKnobAdded = onKnobAdded;
 
+  /// The callback that is used to add a knob.
   final KnobAdded onKnobAdded;
 
-  /// Creates a slider that can be slid to specific double values. You can use
-  /// the `num?.toInt()` function to make this into an integer.
-  /// Can optionally hold a null value
+  /// A [Knob] that holds an [double] value with a slider that can be null.
+  /// Learn more: https://docs.widgetbook.io/knobs/double/slider
   double? slider({
     required String label,
     String? description,
@@ -76,9 +83,8 @@ class DoubleOrNullKnobsBuilder {
     );
   }
 
-  /// Creates a textfield which users can type double values into. You can use
-  /// the `num?.toInt()` function to turn this into an integer
-  /// Can optionally hold a null value
+  /// A [Knob] that holds an [double] value with an input field that can be null.
+  /// Learn more: https://docs.widgetbook.io/knobs/double/input
   double? input({
     required String label,
     String? description,

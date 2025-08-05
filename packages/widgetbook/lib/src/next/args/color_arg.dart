@@ -1,3 +1,6 @@
+// next version of Widgetbook doesn't have api docs yet
+// ignore_for_file: public_member_api_docs
+
 import 'dart:ui';
 
 import '../../fields/fields.dart';
@@ -11,11 +14,11 @@ class ColorArg extends Arg<Color> {
 
   @override
   List<Field> get fields => [
-        ColorField(
-          name: name,
-          initialValue: value,
-        ),
-      ];
+    ColorField(
+      name: name,
+      initialValue: value,
+    ),
+  ];
 
   @override
   Color valueFromQueryGroup(Map<String, String> group) {

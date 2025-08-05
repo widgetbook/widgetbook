@@ -8,7 +8,8 @@ class ColoredTextBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final defaultColor = color ?? const Color.fromRGBO(224, 224, 224, 1);
-    final colorText = color?.toARGB32().toRadixString(16).toUpperCase() ??
+    final colorText =
+        color?.toARGB32().toRadixString(16).toUpperCase() ??
         'No color selected';
     return Container(
       color: defaultColor,

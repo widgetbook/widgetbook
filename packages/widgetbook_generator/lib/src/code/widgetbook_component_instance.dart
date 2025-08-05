@@ -8,12 +8,12 @@ class WidgetbookComponentInstance extends WidgetbookInstance {
   WidgetbookComponentInstance({
     required TreeNode<String> node,
   }) : super(
-          type: 'WidgetbookComponent',
-          args: {
-            'name': literalString(node.data),
-            'useCases': literalList(
-              node.instances,
-            ),
-          },
-        );
+         type: 'WidgetbookComponent',
+         args: {
+           'name': literalString(node.data),
+           'useCases': literalList(
+             node.instances,
+           ),
+         },
+       );
 }

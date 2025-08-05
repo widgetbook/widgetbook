@@ -10,12 +10,12 @@ class WidgetbookLeafComponentInstance extends WidgetbookInstance {
   WidgetbookLeafComponentInstance({
     required TreeNode<String> node,
   }) : super(
-          type: 'WidgetbookLeafComponent',
-          args: {
-            'name': literalString(node.data),
-            'useCase': WidgetbookUseCaseInstance(
-              useCase: node.children.values.first.data as UseCaseMetadata,
-            ),
-          },
-        );
+         type: 'WidgetbookLeafComponent',
+         args: {
+           'name': literalString(node.data),
+           'useCase': WidgetbookUseCaseInstance(
+             useCase: node.children.values.first.data as UseCaseMetadata,
+           ),
+         },
+       );
 }

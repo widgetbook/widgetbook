@@ -15,11 +15,11 @@ class MockKnob extends Knob<bool?> {
 
   @override
   List<Field> get fields => [
-        BooleanField(
-          name: label,
-          initialValue: initialValue,
-        ),
-      ];
+    BooleanField(
+      name: label,
+      initialValue: initialValue,
+    ),
+  ];
 
   @override
   bool valueFromQueryGroup(Map<String, String> group) {

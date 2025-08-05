@@ -3,12 +3,15 @@ import 'package:flutter/rendering.dart';
 
 import '../viewport_data.dart';
 
+/// A collection of predefined Android viewports.
 abstract class AndroidViewports {
+  /// A list of all Android viewports.
   static const all = [
     ...phones,
     ...tablets,
   ];
 
+  /// A list of all Android phones.
   static const phones = [
     onePlus8Pro,
     samsungGalaxyA50,
@@ -18,12 +21,14 @@ abstract class AndroidViewports {
     sonyXperia1II,
   ];
 
+  /// A list of all Android tablets.
   static const tablets = [
     smallTablet,
     mediumTablet,
     largeTablet,
   ];
 
+  /// Represents a viewport for the OnePlus 8 Pro device.
   static const onePlus8Pro = ViewportData(
     name: 'OnePlus 8 Pro',
     width: 360,
@@ -36,6 +41,7 @@ abstract class AndroidViewports {
     ),
   );
 
+  /// Represents a viewport for the Samsung Galaxy A50 device.
   static const samsungGalaxyA50 = ViewportData(
     name: 'Samsung Galaxy A50',
     width: 412,
@@ -48,6 +54,7 @@ abstract class AndroidViewports {
     ),
   );
 
+  /// Represents a viewport for the Samsung Galaxy Note 20 device.
   static const samsungGalaxyNote20 = ViewportData(
     name: 'Samsung Galaxy Note 20',
     width: 412,
@@ -60,6 +67,7 @@ abstract class AndroidViewports {
     ),
   );
 
+  /// Represents a viewport for the Samsung Galaxy Note 20 Ultra device.
   static const samsungGalaxyNote20Ultra = ViewportData(
     name: 'Samsung Galaxy Note 20 Ultra',
     width: 412,
@@ -72,6 +80,7 @@ abstract class AndroidViewports {
     ),
   );
 
+  /// Represents a viewport for the Samsung Galaxy S20 device.
   static const samsungGalaxyS20 = ViewportData(
     name: 'Samsung Galaxy S20',
     width: 360,
@@ -84,6 +93,7 @@ abstract class AndroidViewports {
     ),
   );
 
+  /// Represents a viewport for the Sony Xperia 1 II device.
   static const sonyXperia1II = ViewportData(
     name: 'Sony Xperia 1 II',
     width: 411,
@@ -95,6 +105,7 @@ abstract class AndroidViewports {
     ),
   );
 
+  /// Represents a viewport for a small Android tablet.
   static const smallTablet = ViewportData(
     name: 'Small Android Tablet',
     width: 800,
@@ -106,6 +117,7 @@ abstract class AndroidViewports {
     ),
   );
 
+  /// Represents a viewport for a medium Android tablet.
   static const mediumTablet = ViewportData(
     name: 'Medium Android Tablet',
     width: 1024,
@@ -117,6 +129,7 @@ abstract class AndroidViewports {
     ),
   );
 
+  /// Represents a viewport for a large Android tablet.
   static const largeTablet = ViewportData(
     name: 'Large Android Tablet',
     width: 1280,

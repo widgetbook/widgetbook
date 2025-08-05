@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 
 import 'cloud_exception.dart';
-import 'models/build_draft_request.dart';
-import 'models/build_draft_response.dart';
-import 'models/build_ready_request.dart';
-import 'models/build_ready_response.dart';
+import 'models/create_build_request.dart';
+import 'models/create_build_response.dart';
+import 'models/submit_build_request.dart';
+import 'models/submit_build_response.dart';
 import 'models/versions_metadata.dart';
 
 const BASE_API_URL = 'https://api.widgetbook.io/';
@@ -13,37 +13,41 @@ const BASE_API_URL = 'https://api.widgetbook.io/';
 class WidgetbookHttpClient {
   WidgetbookHttpClient({
     Dio? client,
-  }) : client = client ??
-            Dio(
-              BaseOptions(
-                baseUrl: BASE_API_URL,
-                contentType: Headers.jsonContentType,
-              ),
-            );
+  }) : client =
+           client ??
+           Dio(
+             BaseOptions(
+               baseUrl: BASE_API_URL,
+               contentType: Headers.jsonContentType,
+             ),
+           );
 
   final Dio client;
 
-  Future<BuildDraftResponse> createBuildDraft(
+  /// Creates a new build that can be either a draft or a turbo build.
+  Future<CreateBuildResponse> createBuild(
     VersionsMetadata? versions,
-    BuildDraftRequest request,
+    CreateBuildRequest request,
   ) async {
     try {
       final response = await client.post<Map<String, dynamic>>(
-        'v2/builds/draft',
+        'v2/builds',
         data: request.toJson(),
         options: Options(
           headers: versions?.toHeaders(),
         ),
       );
 
-      return BuildDraftResponse.fromJson(response.data!);
+      return CreateBuildResponse.fromJson(response.data!);
     } catch (e, stackTrace) {
       throw CloudException.parse(e, stackTrace);
     }
   }
 
-  Future<BuildReadyResponse> submitBuildDraft(
-    BuildReadyRequest request,
+  /// If [createBuild] return s a [CreateDraftBuildResponse],
+  /// this method can be used to submit the build draft.
+  Future<SubmitBuildResponse> submitBuild(
+    SubmitBuildRequest request,
   ) async {
     try {
       final response = await client.post<Map<String, dynamic>>(
@@ -51,7 +55,7 @@ class WidgetbookHttpClient {
         data: request.toJson(),
       );
 
-      return BuildReadyResponse.fromJson(response.data!);
+      return SubmitBuildResponse.fromJson(response.data!);
     } catch (e, stackTrace) {
       throw CloudException.parse(e, stackTrace);
     }

@@ -9,9 +9,9 @@ class CloudCommand extends CliVoidCommand {
   CloudCommand({
     required super.context,
   }) : super(
-          name: 'cloud',
-          description: 'Manage your Widgetbook Cloud projects.',
-        ) {
+         name: 'cloud',
+         description: 'Manage your Widgetbook Cloud projects.',
+       ) {
     addSubcommand(
       CliCommandsGroup(
         name: 'build',

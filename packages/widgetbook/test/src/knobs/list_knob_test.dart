@@ -66,10 +66,12 @@ void main() {
         (tester) async {
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.listOrNull(
-                label: 'Knob',
-                options: ['A', 'B', 'C'],
-              ).toString(),
+              context.knobs
+                  .listOrNull(
+                    label: 'Knob',
+                    options: ['A', 'B', 'C'],
+                  )
+                  .toString(),
             ),
           );
 

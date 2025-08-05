@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../../../next.dart' as next;
 import '../../widgetbook_theme.dart';
@@ -8,6 +9,7 @@ import '../icons/icons.dart';
 import '../icons/resolve_icon.dart';
 import '../nodes/nodes.dart';
 
+@internal
 class NavigationTreeTile extends StatelessWidget {
   const NavigationTreeTile({
     super.key,
@@ -32,9 +34,10 @@ class NavigationTreeTile extends StatelessWidget {
       height: indentation,
       decoration: BoxDecoration(
         borderRadius: borderRadius,
-        color: isSelected
-            ? WidgetbookTheme.of(context).colorScheme.secondaryContainer
-            : null,
+        color:
+            isSelected
+                ? WidgetbookTheme.of(context).colorScheme.secondaryContainer
+                : null,
       ),
       child: InkWell(
         onTap: onTap,
@@ -46,11 +49,12 @@ class NavigationTreeTile extends StatelessWidget {
             ),
             SizedBox(
               width: indentation,
-              child: node.isLeaf || node is WidgetbookLeafComponent
-                  ? null
-                  : ExpanderIcon(
-                      isExpanded: isExpanded,
-                    ),
+              child:
+                  node.isLeaf || node is WidgetbookLeafComponent
+                      ? null
+                      : ExpanderIcon(
+                        isExpanded: isExpanded,
+                      ),
             ),
             SizedBox(
               width: indentation,

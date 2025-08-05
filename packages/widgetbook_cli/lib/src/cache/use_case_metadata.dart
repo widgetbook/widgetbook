@@ -10,6 +10,7 @@ class UseCaseMetadata {
     required this.importStatement,
     required this.componentImportStatement,
     required this.navPath,
+    required this.cloudExclude,
     this.designLink,
     this.knobsConfigs,
   });
@@ -34,6 +35,9 @@ class UseCaseMetadata {
   // This might be null if users are using widgetbook_generator <= 3.2.0
   final String? navPath;
 
+  // Whether to exclude this use-case from the cloud.
+  final bool cloudExclude;
+
   // A link to a component or variant
   final String? designLink;
 
@@ -49,10 +53,15 @@ class UseCaseMetadata {
         importStatement: map['importStatement'] as String,
         componentImportStatement: map['componentImportStatement'] as String,
         navPath: map['navPath'] as String?,
+        // This might be null if users are using widgetbook_generator <= 3.13.0
+        cloudExclude: map['cloudExclude'] as bool? ?? false,
         designLink: map['designLink'] as String?,
-        knobsConfigs: map['knobsConfigs'] != null
-            ? Map<String, Map<String, dynamic>>.from(map['knobsConfigs'] as Map)
-            : null,
+        knobsConfigs:
+            map['knobsConfigs'] != null
+                ? Map<String, Map<String, dynamic>>.from(
+                  map['knobsConfigs'] as Map,
+                )
+                : null,
       );
     } catch (e) {
       throw CacheFormatException('use-case', map, e);

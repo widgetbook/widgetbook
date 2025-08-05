@@ -1,0 +1,58 @@
+# Snapshots
+
+Snapshots is the billing unit of the builds in Widgetbook Cloud. A snapshot is a [addon configuration](/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons) and [knob configuration](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs) for a use-case inside a build. For example:
+
+- A `Button` use-case can have a "dark" and a "light" configuration when using the [Theme addon](/addons/theme-addon).
+- A `Button` use-case can have a "long text" and "short text" configuration when using the [string knob](/knobs/string).
+
+In short, the snapshots is a **matrix** between addons configs and knobs configs for each use-case in a build.
+
+| <Image src="/assets/cloud/snapshots/button-dark-short-text.png" zoom caption="Dark x Short Text"  /> | <Image src="/assets/cloud/snapshots/button-light-short-text.png" zoom caption="Light x Short Text" /> |
+| ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| <Image src="/assets/cloud/snapshots/button-dark-long-text.png" zoom caption="Dark x Long Text" />    | <Image src="/assets/cloud/snapshots/button-light-long-text.png" zoom caption="Light x Long Text" />   |
+
+## Default Configuration
+
+When you create a build, Widgetbook Cloud will automatically create a default configuration for each use-case. This configuration is the one that is shown when the use-case is first opened in Widgetbook. If you want to add more configurations, you can do so by using the [Multi Snapshot feature](/cloud/snapshots/multi-snapshot).
+
+## How are snapshots counted?
+
+To estimate your snapshots count per build, you can use the following formula:
+
+```
+Snapshots = Knobs configs * Addons configs
+```
+
+For example, if your build has:
+
+- 3 use-cases:
+
+  1. `Button` - 2 knobs configs (`short text` and `long text`)
+  2. `Card` - 0 knob config _(default configuration is counted as 1)_
+  3. `Avatar` - 1 knob config (`no image`)
+
+- 2 addons configs:
+
+  1. `Dark German` - Dark theme with German Locale
+  2. `Light English` - Light theme with English Locale
+
+This means that the number of snapshots per build will be as follows:
+
+```
+Knobs configs = 2 (Button) + 1 (Card) + 1 (Avatar) = 4
+Addons configs = 2 (Dark German and Light English)
+Snapshots = 4 * 2 = 8
+```
+
+## Exclude Use-cases
+
+If you have some use-cases that you don't want Widgetbook Cloud to process the snapshots for, you can exclude them as follows:
+
+```dart
+@UseCase(
+  name: 'Default',
+  type: UnstableWidget,
+  cloudExclude: true // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) { ... }
+```

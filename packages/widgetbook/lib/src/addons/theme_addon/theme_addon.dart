@@ -2,43 +2,53 @@ import 'package:flutter/material.dart';
 
 import '../../fields/fields.dart';
 import '../common/common.dart';
-import 'widgetbook_theme.dart';
+import 'addon.dart';
 
-typedef ThemeBuilder<T> = Widget Function(
-  BuildContext context,
-  T theme,
-  Widget child,
-);
+/// Function signature for building themed widgets.
+typedef ThemeBuilder<T> =
+    Widget Function(
+      BuildContext context,
+      T theme,
+      Widget child,
+    );
 
-/// A [WidgetbookAddon] for changing the active custom theme.
+/// A [WidgetbookAddon] for switching between different custom theme
+/// configurations.
 ///
-/// A [themeBuilder] must be provided that returns an [InheritedWidget] or similar
-/// [Widget]s.
+/// [ThemeAddon] allows users to switch between predefined theme configurations
+/// in the Widgetbook interface. This is useful for testing widgets with different
+/// design system themes, custom branding, or any themed configuration.
 ///
-/// {@template ThemeAddon.initialTheme}
-/// The [initialTheme] is the first theme used when the app is started. If
-/// provided, it must be within [themes]. Otherwise, when [initialTheme] is `null`,
-/// the first theme in [themes] is used.
-/// {@endtemplate}
+/// Unlike [MaterialThemeAddon] and [CupertinoThemeAddon] which work with
+/// framework-specific themes, [ThemeAddon] is generic and can work with any
+/// custom theme system.
+///
+/// Learn more: https://docs.widgetbook.io/addons/theme-addon#custom-theme
 class ThemeAddon<T> extends WidgetbookAddon<WidgetbookTheme<T>> {
+  /// Creates a new instance of [ThemeAddon].
   ThemeAddon({
     required this.themes,
     this.initialTheme,
     required this.themeBuilder,
-  })  : assert(
-          themes.isNotEmpty,
-          'themes cannot be empty',
-        ),
-        assert(
-          initialTheme == null || themes.contains(initialTheme),
-          'initialTheme must be in themes',
-        ),
-        super(
-          name: 'Theme',
-        );
+  }) : assert(
+         themes.isNotEmpty,
+         'themes cannot be empty',
+       ),
+       assert(
+         initialTheme == null || themes.contains(initialTheme),
+         'initialTheme must be in themes',
+       ),
+       super(
+         name: 'Theme',
+       );
 
+  /// Initial theme to display when the addon loads.
   final WidgetbookTheme<T>? initialTheme;
+
+  /// A list of available themes.
   final List<WidgetbookTheme<T>> themes;
+
+  /// A function that builds the themed widget.
   final ThemeBuilder<T> themeBuilder;
 
   @override

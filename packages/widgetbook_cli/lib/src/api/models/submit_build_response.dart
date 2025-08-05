@@ -1,5 +1,5 @@
-class BuildReadyResponse {
-  const BuildReadyResponse({
+class SubmitBuildResponse {
+  const SubmitBuildResponse({
     required this.buildId,
     required this.buildUrl,
   });
@@ -8,8 +8,8 @@ class BuildReadyResponse {
   final String buildUrl;
 
   // ignore: sort_constructors_first
-  factory BuildReadyResponse.fromJson(Map<String, dynamic> json) {
-    return BuildReadyResponse(
+  factory SubmitBuildResponse.fromJson(Map<String, dynamic> json) {
+    return SubmitBuildResponse(
       buildId: json['buildId'] as String,
       buildUrl: json['buildUrl'] as String,
     );

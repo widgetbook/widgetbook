@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
@@ -12,7 +12,7 @@ extension ExpressionX on Expression {
   }
 }
 
-extension ParameterElementX on ParameterElement {
+extension FormalParameterElementX on FormalParameterElement {
   bool get requiresArg {
     return !type.isPrimitive && !type.isNullable && !hasDefaultValue;
   }
@@ -63,13 +63,7 @@ extension DartTypeX on DartType {
     //    - Without nullability : Future<bool>
     //    - Expected            : Future<bool?>
 
-    final displayString = getDisplayString(
-      // The `withNullability` parameter is deprecated after analyzer 6.0.0,
-      // since we support analyzer 5.x (to support Dart <3.0.0), then
-      // the deprecation is ignored.
-      // ignore: deprecated_member_use, avoid_redundant_argument_values
-      withNullability: true,
-    );
+    final displayString = getDisplayString();
 
     return nullabilitySuffix != NullabilitySuffix.none
         ? displayString.substring(0, displayString.length - 1)
@@ -85,17 +79,17 @@ extension DartTypeX on DartType {
   }
 
   bool get isEnum {
-    return element is EnumElement;
+    return element3 is EnumElement2;
   }
 
   TypeMeta get meta {
     return isEnum
         ? TypeMeta(
-            'EnumArg<$nonNullableName>',
-            refer(nonNullableName).property(
-              (element as EnumElement).fields.first.name,
-            ),
-          )
+          'EnumArg<$nonNullableName>',
+          refer(nonNullableName).property(
+            (element3 as EnumElement2).fields2.first.name3!,
+          ),
+        )
         : typesMeta[nonNullableName]!;
   }
 }

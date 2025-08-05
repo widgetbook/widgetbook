@@ -9,9 +9,7 @@ class CacheStore {
     required this.useCases,
   });
 
-  const CacheStore.empty()
-      : addonsConfigs = null,
-        useCases = const [];
+  const CacheStore.empty() : addonsConfigs = null, useCases = const [];
 
   final AddonsConfigs? addonsConfigs;
   final List<UseCaseMetadata> useCases;

@@ -1,6 +1,6 @@
 name: widgetbook_annotation
 description: A package featuring the annotations used by widgetbook_generator.
-version: 3.5.0
+version: 3.6.0
 homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=widgetbook_annotation
 repository: https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_annotation
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
@@ -12,7 +12,7 @@ screenshots:
     path: assets/logo.png
 
 environment:
-  sdk: ">=3.3.0 <4.0.0"
+  sdk: ">=3.7.0 <4.0.0"
 
 dependencies:
   meta: ^1.8.0

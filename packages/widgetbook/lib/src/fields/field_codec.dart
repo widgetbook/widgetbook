@@ -1,4 +1,6 @@
+/// A codec for encoding and decoding field values to and from query parameters.
 class FieldCodec<T> {
+  /// Creates a [FieldCodec] with the specified encoding and decoding functions.
   const FieldCodec({
     required this.toParam,
     required this.toValue,

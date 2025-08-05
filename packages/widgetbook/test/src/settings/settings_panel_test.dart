@@ -94,11 +94,12 @@ void main() {
               settings: [
                 SettingsPanelData(
                   name: title,
-                  builder: (_) => const [
-                    Placeholder(),
-                    Placeholder(),
-                    Placeholder(),
-                  ],
+                  builder:
+                      (_) => const [
+                        Placeholder(),
+                        Placeholder(),
+                        Placeholder(),
+                      ],
                 ),
               ],
             ),

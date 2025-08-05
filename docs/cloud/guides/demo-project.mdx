@@ -1,0 +1,324 @@
+# Setup with Demo Project
+
+This guide will walk you through setting up a demo project to test Widgetbook Cloud. 
+We'll use the [groceries-demo](https://github.com/widgetbook/groceries-demo) repository as our example project.
+
+## Prerequisites
+
+Before starting this guide, make sure you have:
+
+- An account for GitHub, GitLab, or Bitbucket
+- Access to [Widgetbook Cloud](https://app.widgetbook.io/)
+- Basic knowledge of Git and your chosen Git provider
+
+## Steps
+
+<Steps>
+  <Step title="Clone the Demo Repository">
+    <Tabs
+      groupId="git-provider"
+      values={[
+        { label: "GitHub", value: "github" },
+        { label: "GitLab", value: "gitlab" },
+        { label: "Bitbucket", value: "bitbucket" },
+      ]}
+    >
+      <TabItem value="github">
+        Since you're using GitHub, you can fork the repository directly:
+        
+        1. Navigate to the [groceries-demo repository](https://github.com/widgetbook/groceries-demo)
+        1. Click the **Fork** button in the top-right corner
+        1. Select your personal account as the destination
+        1. Wait for the forking process to complete
+        1. Clone your forked repository:
+        
+        ```bash
+        git clone https://github.com/YOUR_USERNAME/groceries-demo.git
+        cd groceries-demo
+        ```
+        
+        <Info>
+          Use your personal GitHub account for forking, as business accounts might lack permission to connect repositories to Widgetbook Cloud.
+        </Info>
+      </TabItem>
+      
+      <TabItem value="gitlab">
+        Since you're using GitLab, you can import the repository directly:
+
+        1. Go to your GitLab account and click **New project**
+        2. Select **Import project**
+        3. Choose **Repository by URL** as the import source
+        4. Enter the repository URL: `https://github.com/widgetbook/groceries-demo`
+        5. Set the project name to `groceries-demo`
+        6. Choose the visibility level (public or private)
+        7. Click **Create project**
+        8. Wait for the import to complete
+        9. Clone your imported repository:
+
+        ```bash
+        git clone https://gitlab.com/YOUR_USERNAME/groceries-demo.git
+        cd groceries-demo
+        ```
+
+        <Info>
+          Use your personal GitLab account for the repository import, as business accounts might lack permission to connect repositories to Widgetbook Cloud.
+        </Info>
+      </TabItem>
+      
+      <TabItem value="bitbucket">
+        Since you're using Bitbucket, you can import the repository directly:
+
+        1. Go to your Bitbucket account and click **Create repository**
+        2. Click **Import repository**
+        3. Enter the repository URL: `https://github.com/widgetbook/groceries-demo`
+        4. Set the repository name to `groceries-demo`
+        5. Choose the repository type (public or private)
+        6. Click **Import repository**
+        7. Wait for the import to complete
+        8. Clone your imported repository:
+
+        ```bash
+        git clone https://bitbucket.org/YOUR_USERNAME/groceries-demo.git
+        cd groceries-demo
+        ```
+      </TabItem>
+    </Tabs>
+  </Step>
+
+  <Step title="Create a Widgetbook Cloud Workspace">
+    1. Navigate to [Widgetbook Cloud](https://app.widgetbook.io/)
+    2. Sign in with your account
+    3. Click **Create Workspace** or use an existing workspace
+    4. Enter a name for your workspace (e.g., "Demo Workspace")
+    5. Click **Create** to finalize the workspace creation
+  </Step>
+
+  <Step title="Create a Widgetbook Cloud Project">
+    <Tabs
+      groupId="git-provider"
+      values={[
+        { label: "GitHub", value: "github" },
+        { label: "GitLab", value: "gitlab" },
+        { label: "Bitbucket", value: "bitbucket" },
+      ]}
+    >
+      <TabItem value="github">
+        1. In your Widgetbook Cloud workspace, click **Create Project**
+        2. Select **GitHub** as your Git provider
+        3. If you haven't connected your GitHub account yet, click **Connect GitHub** and follow the authorization process
+        4. Search for your forked `groceries-demo` repository 
+        5. Select the repository and click **Import Project**
+        6. Wait for the project to be created and initialized
+      </TabItem>
+      
+      <TabItem value="gitlab">
+        1. In your Widgetbook Cloud workspace, click **Create Project**
+        2. Select **GitLab** as your Git provider
+        3. If you haven't connected your GitLab account yet, click **Connect GitLab** and follow the authorization process
+        4. Search for your `groceries-demo` repository
+        5. Select the repository and click **Import Project**
+        6. Wait for the project to be created and initialized
+      </TabItem>
+      
+      <TabItem value="bitbucket">
+        1. In your Widgetbook Cloud workspace, click **Create Project**
+        2. Select **Bitbucket** as your Git provider
+        3. If you haven't connected your Bitbucket account yet, click **Connect Bitbucket** and follow the authorization process
+        4. Search for your `groceries-demo` repository
+        5. Select the repository and click **Import Project**
+        6. Wait for the project to be created and initialized
+      </TabItem>
+    </Tabs>
+  </Step>
+
+  <Step title="Get the API Key">
+    1. In your newly created Widgetbook Cloud project, navigate to **Settings**
+    2. Find the **API Key** section
+    3. Copy the API key 
+    
+    <Info>
+      Keep this API key secure. You'll need it to configure your CI/CD pipeline to upload builds to Widgetbook Cloud.
+    </Info>
+  </Step>
+
+  <Step title="Add the API Key to Your Git Provider">
+    <Tabs
+      groupId="git-provider"
+      values={[
+        { label: "GitHub", value: "github" },
+        { label: "GitLab", value: "gitlab" },
+        { label: "Bitbucket", value: "bitbucket" },
+      ]}
+    >
+      <TabItem value="github">
+        1. Go to your GitHub repository
+        2. Navigate to **Settings** → **Secrets and variables** → **Actions**
+        3. Click **New repository secret**
+        4. Set the name to `WIDGETBOOK_CLOUD_API_KEY`
+        5. Set the value to your API key from Widgetbook Cloud
+        6. Click **Add secret**
+      </TabItem>
+      
+      <TabItem value="gitlab">
+        1. Go to your GitLab repository
+        2. Navigate to **Settings** → **CI/CD**
+        3. Expand the **Variables** section
+        4. Click **Add variable**
+        5. Set the key to `WIDGETBOOK_CLOUD_API_KEY`
+        6. Set the value to your API key from Widgetbook Cloud
+        7. Make sure **Protect variable** is checked if you want to restrict it to protected branches
+        8. Click **Add variable**
+      </TabItem>
+      
+      <TabItem value="bitbucket">
+        1. Go to your Bitbucket repository
+        2. Navigate to **Repository settings** → **Pipelines** → **Repository variables**
+        3. Click **Add**
+        4. Set the name to `WIDGETBOOK_CLOUD_API_KEY`
+        5. Set the value to your API key from Widgetbook Cloud
+        6. Make sure **Secured** is checked
+        7. Click **Add**
+      </TabItem>
+    </Tabs>
+  </Step>
+
+  <Step title="Re-run the CI/CD Pipeline">
+    <Tabs
+      groupId="git-provider"
+      values={[
+        { label: "GitHub", value: "github" },
+        { label: "GitLab", value: "gitlab" },
+        { label: "Bitbucket", value: "bitbucket" },
+      ]}
+    >
+      <TabItem value="github">
+        1. Go to your GitHub repository
+        2. Navigate to **Actions** tab
+        3. Enable GitHub Actions for the forked repository
+        4. Go to the Widgetbook Cloud Action and run it. 
+        5. Wait for the workflow to complete
+      </TabItem>
+      
+      <TabItem value="gitlab">
+        1. Go to your GitLab repository
+        2. Navigate to **Build** → **Pipelines**
+        3. Find the most recent pipeline
+        4. Click the **Retry** button (circular arrow icon)
+        5. Wait for the pipeline to complete
+      </TabItem>
+      
+      <TabItem value="bitbucket">
+        1. Go to your Bitbucket repository
+        2. Navigate to **Pipelines**
+        3. Find the most recent pipeline
+        4. Click the **Rerun** button
+        5. Wait for the pipeline to complete
+      </TabItem>
+    </Tabs>
+    
+    <Info>
+      After the pipeline completes successfully, you should see a new build appear in your Widgetbook Cloud project's builds section.
+    </Info>
+  </Step>
+
+  <Step title="Create a Component Change and Pull Request">
+    1. Create a new branch for your changes:
+
+    ```bash
+    git checkout -b feature/update-border-radius
+    ```
+
+    2. Change the border radius `full` in the `lib/ui/foundation/radius.dart` file to `0`.
+
+    ```dart
+    class DesignSystemRadius {
+      static const double none = 0;
+      static const double xs = 4;
+      static const double sm = 8;
+      static const double md = 12;
+      static const double lg = 16;
+      static const double xl = 28;
+      static const double xxl = 32;
+      static const double full = 999; // [!code --]
+      static const double full = 0; // [!code ++]
+    }
+
+    ```
+
+    3. Commit and push your changes:
+
+    ```bash
+    git add .
+    git commit -m "Update radius"
+    git push origin feature/update-border-radius
+    ```
+
+    4. Create a pull request (or merge request in GitLab):
+    
+    <Tabs
+      groupId="git-provider"
+      values={[
+        { label: "GitHub", value: "github" },
+        { label: "GitLab", value: "gitlab" },
+        { label: "Bitbucket", value: "bitbucket" },
+      ]}
+    >
+      <TabItem value="github">
+        1. Go to your GitHub repository
+        2. You should see a prompt to create a pull request for your recently pushed branch
+        3. Make sure to target your forked repository as the base, not the original repository
+        4. Click **Compare & pull request**
+        5. Add a title and description for your PR
+        6. Click **Create pull request**
+      </TabItem>
+      
+      <TabItem value="gitlab">
+        1. Go to your GitLab repository
+        2. You should see a prompt to create a merge request for your recently pushed branch
+        3. Click **Create merge request**
+        4. Add a title and description for your MR
+        5. Click **Create merge request**
+      </TabItem>
+      
+      <TabItem value="bitbucket">
+        1. Go to your Bitbucket repository
+        2. Navigate to **Pull requests**
+        3. Click **Create pull request**
+        4. Select your feature branch as the source and main as the target
+        5. Add a title and description
+        6. Click **Create**
+      </TabItem>
+    </Tabs>
+  </Step>
+
+  <Step title="Check the Pull Request in Widgetbook Cloud">
+    1. Wait for the CI/CD pipeline to complete for your feature branch
+    2. Go to your Widgetbook Cloud project
+    3. Navigate to the **Pull Requests** section
+    4. You should see a new pull request
+    5. Click on the pull request to see the visual differences between the base and feature branches
+    6. Review the changes and approve or request changes as needed
+    
+    <Info>
+      The review will show you exactly what changed visually between your feature branch and the main branch, making it easy to spot UI regressions or unintended changes.
+    </Info>
+  </Step>
+</Steps>
+
+## What's Next?
+
+Congratulations! You've successfully set up a demo project with Widgetbook Cloud. Here are some next steps you can explore:
+
+<CardGroup>
+  <Card title="Learn about Reviews" icon="code-compare" href="/cloud/reviews">
+    Discover how to use Widgetbook Cloud reviews to catch UI regressions before they reach production.
+  </Card>
+  
+  <Card title="Explore Builds" icon="hammer" href="/cloud/builds/overview">
+    Learn more about how Widgetbook Cloud builds work and how to access them.
+  </Card>
+  
+  <Card title="Setup Your Own Project" icon="rocket" href="/cloud/projects/create">
+    Apply what you've learned to set up Widgetbook Cloud with your own Flutter project.
+  </Card>
+</CardGroup>

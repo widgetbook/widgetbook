@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
 
 import 'number_text_field.dart';
 import 'opaque_color.dart';
 import 'opaque_color_picker.dart';
 
+@internal
 class HslColorPicker extends StatefulWidget implements OpaqueColorPicker {
   const HslColorPicker({
     super.key,
@@ -48,12 +50,13 @@ class _HslColorPickerState extends State<HslColorPicker> {
       lightness = newLightness;
     });
 
-    final newColor = HSLColor.fromAHSL(
-      1,
-      newHue.toDouble(),
-      newSaturation / 100,
-      newLightness / 100,
-    ).toColor();
+    final newColor =
+        HSLColor.fromAHSL(
+          1,
+          newHue.toDouble(),
+          newSaturation / 100,
+          newLightness / 100,
+        ).toColor();
 
     widget.onChanged.call(
       OpaqueColor.fromColor(newColor),

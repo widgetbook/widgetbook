@@ -1,3 +1,6 @@
+// next version of Widgetbook doesn't have api docs yet
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/widgets.dart';
 
 import '../../fields/fields.dart';
@@ -18,10 +21,10 @@ class AlignmentMode extends Mode<Alignment> {
 
 class AlignmentAddon extends ModeAddon<Alignment> {
   AlignmentAddon([this.alignment = Alignment.center])
-      : super(
-          name: 'Alignment',
-          modeBuilder: AlignmentMode.new,
-        );
+    : super(
+        name: 'Alignment',
+        modeBuilder: AlignmentMode.new,
+      );
 
   final Alignment alignment;
 

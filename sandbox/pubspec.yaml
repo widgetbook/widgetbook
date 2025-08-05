@@ -10,15 +10,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  widgetbook: ^3.14.3
-  widgetbook_annotation: ^3.5.0
+  widgetbook: ^3.15.0
+  widgetbook_annotation: ^3.6.0
 
 dev_dependencies:
   alchemist: ^0.11.0
-  build_runner: ^2.3.2
+  build_runner: ^2.6.0
   flutter_test:
     sdk: flutter
-  widgetbook_generator: ^3.13.0
+  widgetbook_generator: ^3.14.0
 
 flutter:
   uses-material-design: true

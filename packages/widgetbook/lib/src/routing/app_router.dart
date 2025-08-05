@@ -12,15 +12,15 @@ class AppRouter extends RouterConfig<AppRouteConfig> {
     required Uri uri,
     required WidgetbookState state,
   }) : super(
-          routeInformationParser: AppRouteParser(),
-          routeInformationProvider: PlatformRouteInformationProvider(
-            initialRouteInformation: RouteInformation(
-              uri: uri,
-            ),
-          ),
-          routerDelegate: AppRouterDelegate(
-            uri: uri,
-            state: state,
-          ),
-        );
+         routeInformationParser: AppRouteParser(),
+         routeInformationProvider: PlatformRouteInformationProvider(
+           initialRouteInformation: RouteInformation(
+             uri: uri,
+           ),
+         ),
+         routerDelegate: AppRouterDelegate(
+           uri: uri,
+           state: state,
+         ),
+       );
 }
