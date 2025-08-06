@@ -10,6 +10,7 @@ import '../list_knob.dart';
 import '../string_knob.dart';
 import 'double_knobs_builder.dart';
 import 'int_knobs_builder.dart';
+import 'object_knobs_builder.dart';
 
 /// @nodoc
 typedef $int = int; // Allows us to use `int` as a knob name without conflict.
@@ -28,7 +29,9 @@ class KnobsBuilder {
   ) : this.double = DoubleKnobsBuilder(onKnobAdded),
       this.doubleOrNull = DoubleOrNullKnobsBuilder(onKnobAdded),
       this.int = IntKnobsBuilder(onKnobAdded),
-      this.intOrNull = IntOrNullKnobsBuilder(onKnobAdded);
+      this.intOrNull = IntOrNullKnobsBuilder(onKnobAdded),
+      this.object = ObjectKnobsBuilder(onKnobAdded),
+      this.objectOrNull = ObjectOrNullKnobsBuilder(onKnobAdded);
 
   /// The callback that is used to add a knob.
   /// Used to register the knob in the use-case.
@@ -45,6 +48,12 @@ class KnobsBuilder {
 
   /// A builder for integer knobs that can hold a null value.
   final IntOrNullKnobsBuilder intOrNull;
+
+  /// A builder for generic object knobs.
+  final ObjectKnobsBuilder object;
+
+  /// A builder for generic object knobs that can hold a null value.
+  final ObjectOrNullKnobsBuilder objectOrNull;
 
   /// A [Knob] that holds a [bool] value.
   /// Learn more: https://docs.widgetbook.io/knobs/boolean

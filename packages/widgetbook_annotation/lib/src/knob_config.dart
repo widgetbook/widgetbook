@@ -122,6 +122,17 @@ class ListKnobConfig extends KnobConfig<String> {
   const ListKnobConfig(super.label, super.itemLabel);
 }
 
+class ObjectKnobConfig extends KnobConfig<String> {
+  /// Creates a new [KnobConfig] for `knobs.object`.
+  /// The easiest way to get the [objectLabel] is to check the
+  /// URL query string of a Widgetbook web build.
+  ///
+  /// ```dart
+  /// const ObjectKnobConfig('label', 'selected-item-label');
+  /// ```
+  const ObjectKnobConfig(super.label, super.objectLabel);
+}
+
 class MultiFieldKnobConfig extends KnobConfig<Map<String, dynamic>> {
   /// All first-class knobs provided by Widgetbook are single-field knobs.
   /// This means that they have only one field. For example, the `knobs.int`

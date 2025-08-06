@@ -22,6 +22,7 @@ export 'src/knobs/knobs.dart'
         IntInputKnob,
         IntSliderKnob,
         ListKnob,
+        ObjectSegmentedKnob,
         StringKnob;
 export 'src/navigation/nodes/nodes.dart';
 export 'src/state/state.dart';
