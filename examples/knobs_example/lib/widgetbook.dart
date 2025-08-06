@@ -127,15 +127,17 @@ class WidgetbookApp extends StatelessWidget {
                       end: DateTime(initialDate.year + 1),
                     ),
                   ),
-                  KnobEntry<int>(
-                    name: 'List<int>',
-                    regular: context.knobs.list(
-                      label: 'list',
-                      options: List.generate(10, (index) => index),
+                  KnobEntry<User>(
+                    name: 'Object (dropdown)',
+                    regular: context.knobs.object.dropdown(
+                      label: 'object.dropdown',
+                      labelBuilder: (value) => value.name,
+                      options: List.generate(10, (x) => User('U$x')),
                     ),
-                    nullable: context.knobs.listOrNull(
-                      label: 'listOrNull',
-                      options: List.generate(10, (index) => index),
+                    nullable: context.knobs.objectOrNull.dropdown(
+                      label: 'objectOrNull.dropdown',
+                      labelBuilder: (value) => value.name,
+                      options: List.generate(10, (index) => User('U$index')),
                     ),
                   ),
                   KnobEntry<User>(

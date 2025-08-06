@@ -111,6 +111,7 @@ class DateTimeKnobConfig extends KnobConfig<String> {
   const DateTimeKnobConfig(super.label, super.dateTimeInSimpleFormat);
 }
 
+@Deprecated('Use `ObjectKnobConfig` instead.')
 class ListKnobConfig extends KnobConfig<String> {
   /// Creates a new [KnobConfig] for `knobs.list`.
   /// The easiest way to get the `itemLabel` is to check the URL query string

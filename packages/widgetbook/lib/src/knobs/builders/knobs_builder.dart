@@ -6,7 +6,7 @@ import '../color_knob.dart';
 import '../date_time_knob.dart';
 import '../duration_knob.dart';
 import '../knob.dart';
-import '../list_knob.dart';
+import '../object_dropdown_knob.dart';
 import '../string_knob.dart';
 import 'double_knobs_builder.dart';
 import 'int_knobs_builder.dart';
@@ -159,8 +159,8 @@ class KnobsBuilder {
     );
   }
 
-  /// A [Knob] that holds a generic [T] value.
-  /// Learn more: https://docs.widgetbook.io/knobs/list
+  /// @nodoc
+  @Deprecated('Use `knobs.object.dropdown` instead.')
   T list<T>({
     required String label,
     required List<T> options,
@@ -170,7 +170,7 @@ class KnobsBuilder {
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return onKnobAdded(
-      ListKnob<T>(
+      ObjectDropdownKnob<T>(
         label: label,
         initialValue: initialOption ?? options.first,
         description: description,
@@ -180,8 +180,8 @@ class KnobsBuilder {
     )!;
   }
 
-  /// A [Knob] that holds a generic [T] value and can be null.
-  /// Learn more: https://docs.widgetbook.io/knobs/list
+  /// @nodoc
+  @Deprecated('Use `knobs.objectOrNull.dropdown` instead.')
   T? listOrNull<T>({
     required String label,
     required List<T?> options,
@@ -190,7 +190,7 @@ class KnobsBuilder {
     LabelBuilder<T?>? labelBuilder,
   }) {
     return onKnobAdded(
-      ListKnob<T?>.nullable(
+      ObjectDropdownKnob<T?>.nullable(
         label: label,
         initialValue: initialOption,
         description: description,

@@ -4,8 +4,8 @@ import '../fields/fields.dart';
 import 'knob.dart';
 
 @internal
-class ListKnob<T> extends Knob<T?> {
-  ListKnob({
+class ObjectDropdownKnob<T> extends Knob<T?> {
+  ObjectDropdownKnob({
     required super.label,
     required super.initialValue,
     required this.options,
@@ -13,7 +13,7 @@ class ListKnob<T> extends Knob<T?> {
     this.labelBuilder,
   });
 
-  ListKnob.nullable({
+  ObjectDropdownKnob.nullable({
     required super.label,
     required super.initialValue,
     required this.options,
