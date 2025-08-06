@@ -4,11 +4,29 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@widgetbook.UseCase(name: 'CustomRangeSlider', type: RangeSlider)
+@widgetbook.UseCase(
+  name: 'CustomRangeSlider',
+  type: RangeSlider,
+  cloudKnobsConfigs: {
+    'same range': [
+      MultiFieldKnobConfig({
+        'range.min': 5,
+        'range.max': 5,
+      }),
+    ],
+    'small range': [
+      MultiFieldKnobConfig({
+        'range.min': 4,
+        'range.max': 6,
+      }),
+    ],
+  },
+)
 Widget rangeSlider(BuildContext context) {
   return RangeSlider(
-    values: context.knobs.range(label: 'Range'),
+    values: context.knobs.range(label: 'range'),
     max: 10,
     min: 1,
     onChanged: (_) {},
@@ -24,11 +42,11 @@ class RangeKnob extends Knob<RangeValues> {
   @override
   List<Field> get fields => [
     DoubleInputField(
-      name: 'min-$label',
+      name: '$label.min',
       initialValue: initialValue.start,
     ),
     DoubleInputField(
-      name: 'max-$label',
+      name: '$label.max',
       initialValue: initialValue.end,
     ),
   ];
@@ -36,8 +54,8 @@ class RangeKnob extends Knob<RangeValues> {
   @override
   RangeValues valueFromQueryGroup(Map<String, String> group) {
     return RangeValues(
-      valueOf('min-$label', group)!,
-      valueOf('max-$label', group)!,
+      valueOf('$label.min', group)!,
+      valueOf('$label.max', group)!,
     );
   }
 }
