@@ -37,7 +37,7 @@ class CupertinoThemeAddon extends ModeAddon<CupertinoThemeData> {
   @override
   List<Field> get fields {
     return [
-      ListField<CupertinoThemeData>(
+      ObjectDropdownField<CupertinoThemeData>(
         name: 'name',
         values: themes.values.toList(),
         initialValue: themes.values.first,

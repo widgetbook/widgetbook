@@ -89,13 +89,13 @@ class DeviceFrameAddon extends ModeAddon<DeviceFrameConfig> {
   @override
   List<Field> get fields {
     return [
-      ListField<DeviceInfo>(
+      ObjectDropdownField<DeviceInfo>(
         name: 'name',
         values: devices,
         initialValue: devices.first,
         labelBuilder: (device) => device.name,
       ),
-      ListField<Orientation>(
+      ObjectDropdownField<Orientation>(
         name: 'orientation',
         values: Orientation.values,
         initialValue: Orientation.portrait,
@@ -104,7 +104,7 @@ class DeviceFrameAddon extends ModeAddon<DeviceFrameConfig> {
                 orientation.name.substring(0, 1).toUpperCase() +
                 orientation.name.substring(1),
       ),
-      ListField<bool>(
+      ObjectDropdownField<bool>(
         name: 'frame',
         values: [false, true],
         initialValue: true,

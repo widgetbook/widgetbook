@@ -37,7 +37,7 @@ class LocaleAddon extends ModeAddon<Locale> {
   @override
   List<Field> get fields {
     return [
-      ListField<Locale>(
+      ObjectDropdownField<Locale>(
         name: 'name',
         values: locales,
         initialValue: locales.first,

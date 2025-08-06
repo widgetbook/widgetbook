@@ -27,11 +27,11 @@ class ListKnob<T> extends Knob<T?> {
   @override
   List<Field> get fields {
     return [
-      ListField<T>(
+      ObjectDropdownField<T>(
         name: label,
         values: options,
         initialValue: initialValue,
-        labelBuilder: labelBuilder ?? ListField.defaultLabelBuilder,
+        labelBuilder: labelBuilder ?? ObjectDropdownField.defaultLabelBuilder,
       ),
     ];
   }

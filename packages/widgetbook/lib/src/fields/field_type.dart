@@ -15,9 +15,6 @@ enum FieldType {
   /// For fields that have a [double] value, represented as an input field.
   doubleInput,
 
-  /// For fields that have a [Object] value.
-  list,
-
   /// For fields that have a [String] value.
   string,
 
@@ -32,6 +29,13 @@ enum FieldType {
 
   /// For fields that have a [int] value, represented as an input field.
   intSlider,
+
+  /// @nodoc
+  @Deprecated('Use `objectDropdown` instead.')
+  list,
+
+  /// For fields that have a [Object] value, represented as a dropdown.
+  objectDropdown,
 
   /// For fields that have a [Object] value, represented as a segmented button.
   objectSegmented,

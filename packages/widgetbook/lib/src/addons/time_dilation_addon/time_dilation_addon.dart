@@ -27,7 +27,7 @@ class TimeDilationAddon extends WidgetbookAddon<double> {
   @override
   List<Field> get fields {
     return [
-      ListField<double>(
+      ObjectDropdownField<double>(
         name: 'value',
         values: values,
         initialValue: 1,

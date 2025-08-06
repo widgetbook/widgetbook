@@ -53,7 +53,7 @@ class ViewportAddon extends WidgetbookAddon<ViewportData> {
 
   @override
   List<Field> get fields => [
-    ListField<ViewportData>(
+    ObjectDropdownField<ViewportData>(
       name: 'name',
       initialValue: viewports.first,
       values: viewports,

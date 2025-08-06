@@ -70,7 +70,7 @@ class TextScaleAddon extends WidgetbookAddon<double> {
     // Fallback to old implementation if scales are provided
     if (scales != null) {
       return [
-        ListField<double>(
+        ObjectDropdownField<double>(
           name: 'factor',
           values: scales!,
           initialValue: initialScale ?? scales!.first,

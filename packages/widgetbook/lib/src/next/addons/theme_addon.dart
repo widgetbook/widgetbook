@@ -38,7 +38,7 @@ class ThemeAddon<T> extends ModeAddon<T> {
   @override
   List<Field> get fields {
     return [
-      ListField<T>(
+      ObjectDropdownField<T>(
         name: 'name',
         values: themes.values.toList(),
         initialValue: themes.values.first,

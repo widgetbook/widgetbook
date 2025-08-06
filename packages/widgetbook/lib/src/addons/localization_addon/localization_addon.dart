@@ -50,7 +50,7 @@ class LocalizationAddon extends WidgetbookAddon<Locale> {
   @override
   List<Field> get fields {
     return [
-      ListField<Locale>(
+      ObjectDropdownField<Locale>(
         name: 'name',
         values: locales,
         initialValue: initialLocale ?? locales.first,
