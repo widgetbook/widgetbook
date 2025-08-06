@@ -11,34 +11,33 @@ export 'color_space.dart';
 /// [Field] that builds [ColorPicker] for [Color] values using the [ColorSpace]
 /// to determine which format the [Color] is.
 class ColorField extends Field<Color> {
+  /// Creates a new instance of [ColorField].
   ColorField({
     required super.name,
     super.initialValue = defaultColor,
     this.initialColorSpace = ColorSpace.hex,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-          type: FieldType.color,
-          codec: FieldCodec(
-            // Color.value was deprecated in Flutter 3.27.0, the alternative
-            // apis (.r, .g, .b, .a) are not available in Color for our minimum
-            // Flutter version (3.19.0), as they were also introduced in 3.27.0.
-            // ignore: deprecated_member_use
-            toParam: (color) => color.value.toRadixString(16),
-            toValue: (param) {
-              if (param == null) return null;
-              if (param == '0') return Colors.transparent;
-              return Color(
-                int.parse(
-                  param.length == 6 ? '00$param' : param,
-                  radix: 16,
-                ),
-              );
-            },
-          ),
-        );
+         type: FieldType.color,
+         codec: FieldCodec(
+           toParam: (color) => color.toARGB32().toRadixString(16),
+           toValue: (param) {
+             if (param == null) return null;
+             if (param == '0') return Colors.transparent;
+             return Color(
+               int.parse(
+                 param.length == 6 ? '00$param' : param,
+                 radix: 16,
+               ),
+             );
+           },
+         ),
+       );
 
+  /// The initial color space to use for the color picker.
   final ColorSpace initialColorSpace;
 
+  /// The default color used when no value is provided.
   static const defaultColor = Colors.white;
 
   @override

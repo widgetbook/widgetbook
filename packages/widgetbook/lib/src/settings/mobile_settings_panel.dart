@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
+@internal
 class MobileSettingsPanel extends StatelessWidget {
   const MobileSettingsPanel({
     super.key,

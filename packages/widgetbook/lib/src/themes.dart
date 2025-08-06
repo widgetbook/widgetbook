@@ -24,22 +24,13 @@ class Themes {
     onSurface: Color(0xFFE3E2E6),
     onSurfaceVariant: Color(0xFFC3C6CF),
     outline: Color(0xFF8D9199),
+    outlineVariant: Color(0xFF8D9199),
     onInverseSurface: Color(0xFF1A1C1E),
     inverseSurface: Color(0xFFE3E2E6),
     inversePrimary: Color(0xFF0060A7),
     shadow: Color(0xFF000000),
     surfaceTint: Color(0xFFA1C9FF),
-
-    // The following parameters are deprecated in Flutter 3.22.0,
-    // But we cannot remove them because our minimum version is 3.19.0,
-    // and these parameters are required there.
-
-    // ignore: deprecated_member_use
-    background: Color(0xFF1A1C1E),
-    // ignore: deprecated_member_use
-    onBackground: Color(0xFFE3E2E6),
-    // ignore: deprecated_member_use
-    surfaceVariant: Color(0xFF43474E),
+    surfaceContainerHighest: Color(0xFF43474E),
   );
 
   static const _lightColorScheme = ColorScheme(
@@ -64,23 +55,26 @@ class Themes {
     onSurface: Color(0xFF1A1C1E),
     onSurfaceVariant: Color(0xFF43474E),
     outline: Color(0xFF73777F),
+    outlineVariant: Color(0xFF73777F),
     onInverseSurface: Color(0xFFE3E2E6),
     inverseSurface: Color(0xFF1A1C1E),
     inversePrimary: Color(0xFFA1C9FF),
     shadow: Color(0xFF000000),
     surfaceTint: Color(0xFF0060A7),
-
-    // The following parameters are deprecated in Flutter 3.22.0,
-    // But we cannot remove them because our minimum version is 3.19.0,
-    // and these parameters are required there.
-
-    // ignore: deprecated_member_use
-    background: Color(0xFFFDFCFF),
-    // ignore: deprecated_member_use
-    onBackground: Color(0xFF1A1C1E),
-    // ignore: deprecated_member_use
-    surfaceVariant: Color(0xFFDFE2EB),
+    surfaceContainerHighest: Color(0xFFDFE2EB),
   );
+
+  static SegmentedButtonThemeData _buildSegmentedButtonTheme() {
+    return SegmentedButtonThemeData(
+      style: ButtonStyle(
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.0),
+          ),
+        ),
+      ),
+    );
+  }
 
   static InputDecorationTheme _buildInputTheme(
     ColorScheme colorScheme,
@@ -88,11 +82,11 @@ class Themes {
     return InputDecorationTheme(
       filled: true,
       isDense: true,
-      // By default, this is [ColorScheme.surfaceContainerHighest], but we
-      // need to override it to [ColorScheme.surfaceVariant] due to the minimum
-      // Flutter version being 3.19.0, which does not have the new parameter.
-      // ignore: deprecated_member_use
-      fillColor: colorScheme.surfaceVariant,
+      // Match TextField and DropdownMenu heights
+      contentPadding: const EdgeInsets.symmetric(
+        vertical: 16.0,
+        horizontal: 12.0,
+      ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: colorScheme.primary,
@@ -106,23 +100,17 @@ class Themes {
     );
   }
 
+  /// The default dark theme for Widgetbook.
   static ThemeData dark = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
     fontFamily: 'Poppins',
     colorScheme: _darkColorScheme,
     hoverColor: const Color(0xFFE3E2E6).withAlpha(20),
-    tabBarTheme: TabBarTheme(
-      dividerColor: _darkColorScheme.outline,
-    ),
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
-      // By default, this is [ColorScheme.surfaceContainerHighest], but we
-      // need to override it to [ColorScheme.surfaceVariant] due to the minimum
-      // Flutter version being 3.19.0, which does not have the new parameter.
-      // ignore: deprecated_member_use
-      inactiveTrackColor: _darkColorScheme.surfaceVariant,
     ),
+    segmentedButtonTheme: _buildSegmentedButtonTheme(),
     inputDecorationTheme: _buildInputTheme(_darkColorScheme),
     dropdownMenuTheme: DropdownMenuThemeData(
       inputDecorationTheme: _buildInputTheme(_darkColorScheme),
@@ -133,23 +121,17 @@ class Themes {
     ),
   );
 
+  /// The default light theme for Widgetbook.
   static ThemeData light = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
     fontFamily: 'Poppins',
     colorScheme: _lightColorScheme,
     hoverColor: const Color(0xFF1A1C1E).withAlpha(20),
-    tabBarTheme: TabBarTheme(
-      dividerColor: _darkColorScheme.outline,
-    ),
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
-      // By default, this is [ColorScheme.surfaceContainerHighest], but we
-      // need to override it to [ColorScheme.surfaceVariant] due to the minimum
-      // Flutter version being 3.19.0, which does not have the new parameter.
-      // ignore: deprecated_member_use
-      inactiveTrackColor: _lightColorScheme.surfaceVariant,
     ),
+    segmentedButtonTheme: _buildSegmentedButtonTheme(),
     inputDecorationTheme: _buildInputTheme(_lightColorScheme),
     dropdownMenuTheme: DropdownMenuThemeData(
       inputDecorationTheme: _buildInputTheme(_lightColorScheme),

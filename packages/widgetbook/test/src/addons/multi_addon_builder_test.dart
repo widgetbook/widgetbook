@@ -1,15 +1,16 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nested/nested.dart';
+import 'package:widgetbook/src/addons/common/common.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
 
 class MockAddon extends WidgetbookAddon<void> {
   MockAddon()
-      : super(
-          name: 'Mock Addon',
-        );
+    : super(
+        name: 'Mock Addon',
+      );
 
   @override
   List<Field> get fields => [];

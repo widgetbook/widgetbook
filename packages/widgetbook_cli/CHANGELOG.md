@@ -1,6 +1,36 @@
 ## Unreleased
 
+- **BREAKING**: Set minimum SDK version to 3.7.0. ([#1541](https://github.com/widgetbook/widgetbook/pull/1541))
+
+## 3.9.0
+
+- **FEAT**: Support `@UseCase.cloudExclude` option. ([#1535](https://github.com/widgetbook/widgetbook/pull/1535))
+- **CHORE**: Update license. ([#1529](https://github.com/widgetbook/widgetbook/pull/1529))
+
+## 3.8.2
+
+- **FIX**: Prevent "HEAD" as branch name in `cloud build push` command. ([#1515](https://github.com/widgetbook/widgetbook/pull/1515))
+
+## 3.8.1
+
+- **FIX**: Convert `--no-turbo` to a boolean flag. ([#1511](https://github.com/widgetbook/widgetbook/pull/1511))
+
+## 3.8.0
+
+- **FEAT**: Introduce [Turbo Builds](https://docs.widgetbook.io/cloud/builds/turbo); a new way to speed up pushing builds to Widgetbook Cloud. ([#1502](https://github.com/widgetbook/widgetbook/pull/1502))
+
+## 3.7.0
+
+- **FEAT**: Support Multi Snapshot for knobs. For more information, check our [docs](https://docs.widgetbook.io/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs). ([#1394](https://github.com/widgetbook/widgetbook/pull/1394))
+
+## 3.6.1
+
+- **REFACTOR**: Improve error logging. ([#1386](https://github.com/widgetbook/widgetbook/pull/1386))
+
+## 3.6.0
+
 - **BREAKING**: Set minimum SDK version to 3.3.0. ([#1349](https://github.com/widgetbook/widgetbook/pull/1349))
+- **REFACTOR**: Reduce build drafts payload size by removing `componentDefinitionPath` and `componentImportStatement` props. ([#1368](https://github.com/widgetbook/widgetbook/pull/1368))
 
 ## 3.5.0
 
@@ -22,7 +52,7 @@
 
 ## 3.4.0
 
-- **FEAT**: Support Multi Snapshot for addons. For more information, check our [docs](https://docs.widgetbook.io/cloud/reviews/multi-snapshot). ([#1239](https://github.com/widgetbook/widgetbook/pull/1239))
+- **FEAT**: Support Multi Snapshot for addons. For more information, check our [docs](https://docs.widgetbook.io/cloud/snapshots/multi-snapshot). ([#1239](https://github.com/widgetbook/widgetbook/pull/1239))
 
 ## 3.3.1
 

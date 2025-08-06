@@ -1,0 +1,91 @@
+# Widgetbook Cloud x GitLab
+
+If you want to use Widgetbook Cloud with your existing GitLab repository, here's a step-by-step guide to help you get started.
+
+<Steps>
+  <Step title="Setup Widgetbook Cloud Project">
+    Create a new project in Widgetbook Cloud by importing your GitLab repository.
+    You might need to connect your GitLab account to Widgetbook Cloud to access your repositories.
+  </Step>
+  
+  <Step title="Add API Key as a Variable">
+    Add `WIDGETBOOK_API_KEY` to your [GitLab's CI/CD Variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project). You can find the API key in the Widgetbook Cloud's **project settings page**. Make sure you **uncheck "Protect variable" checkbox**, to allow the variable to be accessible from feature branches.
+  </Step>
+
+  <Step title="Create GitLab CI/CD Pipeline">
+    To upload a [Widgetbook Build](/cloud/builds/overview) for each new commit in your repository, you need to setup up a pipeline in GitLab CI/CD that runs on every push.
+
+    Create a new GitLab [branch pipeline](https://docs.gitlab.com/ci/pipelines/pipeline_types/#branch-pipeline) file in your repository under `.gitlab-ci.yml` with the following content:
+
+    <Warning>
+      Make sure that you are using a branch pipeline (i.e. no `if: $CI_PIPELINE_SOURCE == 'merge_request_event'` rule), and not a merge request pipeline.
+
+      Widgetbook builds should be uploaded for all branches to ensure a build is always available from the base branch (e.g., `main`).
+    </Warning>
+
+    ```yaml
+    image: ghcr.io/cirruslabs/flutter
+
+    stages:
+      - widgetbook
+
+    widgetbook_cloud_hosting:
+      stage: widgetbook
+      script:
+        # Bootstrap App
+        - flutter pub get
+        - flutter gen-l10n
+        # Bootstrap Widgetbook
+        - cd widgetbook
+        - flutter pub get
+        - dart run build_runner build -d
+        - flutter build web
+        # Upload to Widgetbook Cloud
+        - dart pub global activate widgetbook_cli
+        - export PATH="$PATH":"$HOME/.pub-cache/bin"
+        - widgetbook cloud build push --api-key "$WIDGETBOOK_API_KEY"
+    ```
+
+  </Step>
+  
+  <Step title="Create a Merge Request">
+    To test out if everything works properly, create a new branch and push a commit to it, then submit a MR with the new branch.
+    After the build upload finishes, a commit status will be added to your MR once the [Widgetbook Review](/cloud/reviews) is ready.
+  </Step>
+</Steps>
+
+## Troubleshooting
+
+To make sure that your Widgetbook Cloud setup works properly, you can check that your repository has a Webhook configured _(under Project Settings > Webhooks)_ to notify Widgetbook Cloud about new MRs.
+
+## GitLab Merged Result Pipelines
+
+If you are using [GitLab Merged Result Pipelines](https://docs.gitlab.com/ee/ci/pipelines/merged_results_pipelines.html), that means your pipeline runs on a commit that is not in your MR branch (i.e. the merged result commit). In this case, the commit status from Widgetbook Cloud needs to be added to that "merged result" commit, to be visible in the MR, and block the merge if the Widgetbook Review fails.
+
+<Warning>
+  Since your builds will be uploaded from a **merged result commit**, that means
+  you need to keep your MR's **base build** up-to-date, by merging the base
+  branch into your MR branch _(rebasing also works)_ before you review the
+  changes on Widgetbook Cloud.
+</Warning>
+
+To achieve this, replace the `cloud build push` command as follows:
+
+```yaml
+widgetbook:
+  script:
+    - # Previous scripts...
+    - widgetbook cloud build push --api-key "$WIDGETBOOK_API_KEY" // [!code --]
+    - | // [!code ++]
+      if [ "$CI_PIPELINE_SOURCE" == "merge_request_event" ]; then // [!code ++]
+        # Upload a merged result build // [!code ++]
+        widgetbook cloud build push \ // [!code ++]
+          --api-key "$WIDGETBOOK_API_KEY" \ // [!code ++]
+          --commit "$CI_MERGE_REQUEST_SOURCE_BRANCH_SHA" \ // [!code ++]
+          --branch "$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME" \ // [!code ++]
+          --merged-result-commit "$CI_COMMIT_SHA" // [!code ++]
+      else // [!code ++]
+        # Upload a regular build // [!code ++]
+        widgetbook cloud build push --api-key "$WIDGETBOOK_API_KEY"  // [!code ++]
+      fi // [!code ++]
+```

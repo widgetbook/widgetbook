@@ -1,3 +1,6 @@
+// next version of Widgetbook doesn't have api docs yet
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/widgets.dart';
 
 import '../../fields/fields.dart';
@@ -23,18 +26,18 @@ class LocaleAddon extends ModeAddon<Locale> {
   LocaleAddon(
     this.locales, [
     List<LocalizationsDelegate<dynamic>> delegates = const [],
-  ])  : assert(locales.isNotEmpty, 'locales cannot be empty'),
-        super(
-          name: 'Locale',
-          modeBuilder: (locale) => LocaleMode(locale, delegates),
-        );
+  ]) : assert(locales.isNotEmpty, 'locales cannot be empty'),
+       super(
+         name: 'Locale',
+         modeBuilder: (locale) => LocaleMode(locale, delegates),
+       );
 
   final List<Locale> locales;
 
   @override
   List<Field> get fields {
     return [
-      ListField<Locale>(
+      ObjectDropdownField<Locale>(
         name: 'name',
         values: locales,
         initialValue: locales.first,

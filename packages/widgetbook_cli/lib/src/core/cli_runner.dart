@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
@@ -9,7 +7,7 @@ import '../../metadata.dart';
 import '../commands/cloud.dart';
 import '../commands/coverage_command/coverage_command.dart';
 import '../commands/upgrade.dart';
-import '../utils/utils.dart';
+import 'cli_exception.dart';
 import 'context.dart';
 
 class CliRunner extends CommandRunner<int> {
@@ -17,9 +15,9 @@ class CliRunner extends CommandRunner<int> {
     required this.context,
     Logger? logger,
     PubUpdater? pubUpdater,
-  })  : _logger = logger ?? Logger(),
-        _pubUpdater = pubUpdater ?? PubUpdater(),
-        super(cliName, cliDescription) {
+  }) : _logger = logger ?? Logger(),
+       _pubUpdater = pubUpdater ?? PubUpdater(),
+       super(cliName, cliDescription) {
     argParser.addFlag(
       'version',
       negatable: false,
@@ -68,41 +66,13 @@ class CliRunner extends CommandRunner<int> {
         ..info('')
         ..info(e.usage);
       return ExitCode.usage.code;
-    } on ProcessException catch (error) {
+    } on CliException catch (error) {
       _logger.err(error.message);
-      return ExitCode.unavailable.code;
-    } on GitDirectoryNotFound catch (error) {
-      _logger.err(error.message);
-      return ExitCode.data.code;
-    } on DirectoryNotFoundException catch (error) {
-      _logger.err(error.message);
-      return ExitCode.usage.code;
-    } on ExitedByUser catch (error) {
-      _logger.info(error.message);
-      return ExitCode.success.code;
-    } on FileNotFoundException catch (error) {
-      _logger.err(error.message);
-      return ExitCode.usage.code;
-    } on ReviewNotFoundException catch (error) {
-      _logger.warn(error.message);
-      return ExitCode.success.code;
-    } on WidgetbookApiException catch (error) {
-      _logger.err(error.message);
-      return ExitCode.software.code;
-    } on UnableToCreateZipFileException catch (error) {
-      _logger.err(error.message);
-      return ExitCode.ioError.code;
-    } on FolderNotFoundException catch (error) {
-      _logger.err(error.message);
-      return ExitCode.data.code;
-    } on InvalidFlutterPackageException catch (error) {
-      _logger.err(error.message);
-      return ExitCode.data.code;
-    } on InvalidWidgetbookPackageException catch (error) {
-      _logger.err(error.message);
-      return ExitCode.data.code;
-    } catch (error) {
-      _logger.err(error.toString());
+      return error.exitCode;
+    } catch (error, stackTrace) {
+      _logger
+        ..err(error.toString())
+        ..detail('$stackTrace');
       return ExitCode.software.code;
     }
   }

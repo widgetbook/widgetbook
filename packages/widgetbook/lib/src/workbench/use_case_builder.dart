@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../state/state.dart';
 
+/// The [UseCaseBuilder] is a widget that builds the use case in the context
+/// of the [WidgetbookState]. It is responsible for locking the knobs
+/// after the use case has been built.
+@internal
 class UseCaseBuilder extends StatefulWidget {
   const UseCaseBuilder({
     super.key,

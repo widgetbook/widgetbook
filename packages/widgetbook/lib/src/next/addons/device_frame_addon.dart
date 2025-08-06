@@ -1,8 +1,12 @@
-import 'package:device_frame/device_frame.dart';
+// next version of Widgetbook doesn't have api docs yet
+// ignore_for_file: public_member_api_docs
+
+import 'package:device_frame_plus/device_frame_plus.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../addons/device_frame_addon/none_device.dart';
 import '../../fields/fields.dart';
+import '../../widgetbook_theme.dart';
 import 'base/mode.dart';
 import 'base/mode_addon.dart';
 
@@ -24,12 +28,12 @@ class DeviceFrameMode extends Mode<DeviceFrameConfig> {
     Orientation orientation = Orientation.portrait,
     bool hasFrame = false,
   }) : super(
-          DeviceFrameConfig(
-            device: device,
-            orientation: orientation,
-            hasFrame: hasFrame,
-          ),
-        );
+         DeviceFrameConfig(
+           device: device,
+           orientation: orientation,
+           hasFrame: hasFrame,
+         ),
+       );
 
   DeviceFrameMode.fromConfig(super.value);
 
@@ -46,18 +50,24 @@ class DeviceFrameMode extends Mode<DeviceFrameConfig> {
           orientation: value.orientation,
           device: value.device,
           isFrameVisible: value.hasFrame,
-          // A navigator below the device frame is necessary to make
-          // the popup routes (e.g. dialogs and bottom sheets) work within
-          // the device frame, otherwise they would use the navigator from
-          // the app builder, causing these routes to fill the whole
-          // workbench and not just the device frame.
-          screen: Navigator(
-            onGenerateRoute: (_) => PageRouteBuilder(
-              pageBuilder: (context, _, __) => value.hasFrame
-                  ? child
-                  : SafeArea(
-                      child: child,
-                    ),
+          screen: ColoredBox(
+            color: WidgetbookTheme.of(context).scaffoldBackgroundColor,
+            // A navigator below the device frame is necessary to make the popup
+            // routes (e.g. dialogs and bottom sheets) work within the device
+            // frame, otherwise they would use the navigator from the app
+            // builder, causing these routes to fill the whole workbench and not
+            // just the device frame.
+            child: Navigator(
+              onGenerateRoute:
+                  (_) => PageRouteBuilder(
+                    pageBuilder:
+                        (context, _, __) =>
+                            value.hasFrame
+                                ? child
+                                : SafeArea(
+                                  child: child,
+                                ),
+                  ),
             ),
           ),
         ),
@@ -68,32 +78,33 @@ class DeviceFrameMode extends Mode<DeviceFrameConfig> {
 
 class DeviceFrameAddon extends ModeAddon<DeviceFrameConfig> {
   DeviceFrameAddon(List<DeviceInfo> devices)
-      : this.devices = [NoneDevice.instance, ...devices],
-        super(
-          name: 'Device Frame',
-          modeBuilder: DeviceFrameMode.fromConfig,
-        );
+    : this.devices = [NoneDevice.instance, ...devices],
+      super(
+        name: 'Device Frame',
+        modeBuilder: DeviceFrameMode.fromConfig,
+      );
 
   final List<DeviceInfo> devices;
 
   @override
   List<Field> get fields {
     return [
-      ListField<DeviceInfo>(
+      ObjectDropdownField<DeviceInfo>(
         name: 'name',
         values: devices,
         initialValue: devices.first,
         labelBuilder: (device) => device.name,
       ),
-      ListField<Orientation>(
+      ObjectDropdownField<Orientation>(
         name: 'orientation',
         values: Orientation.values,
         initialValue: Orientation.portrait,
-        labelBuilder: (orientation) =>
-            orientation.name.substring(0, 1).toUpperCase() +
-            orientation.name.substring(1),
+        labelBuilder:
+            (orientation) =>
+                orientation.name.substring(0, 1).toUpperCase() +
+                orientation.name.substring(1),
       ),
-      ListField<bool>(
+      ObjectDropdownField<bool>(
         name: 'frame',
         values: [false, true],
         initialValue: true,

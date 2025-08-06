@@ -1,0 +1,43 @@
+# Widgetbook Cloud x Self-managed GitLab
+
+<Info>
+  This guide works for both **GitLab self-managed** and **GitLab Dedicated**.
+</Info>
+
+If you want to use Widgetbook Cloud with your self-managed GitLab instance (e.g. `gitlab.acme.dev`), here's a pre-requisite guide to help you get started, then you can follow our normal [Gitlab setup guide](/cloud/guides/gitlab/upload).
+
+<Steps>
+  <Step title="Create OAuth Application">
+    Create a new OAuth Application in your GitLab instance to authenticate your
+    users with Widgetbook Cloud.
+
+    Go to **"Group Settings"** > **"Applications"** > **"Add new application"**.
+    Then fill the form with the following information and click **"Save application"**.
+
+    | Field          | Value                                |
+    | -------------- | ------------------------------------ |
+    | Name           | Widgetbook                           |
+    | Redirect URI   | `https://clerk.widgetbook.io/v1/oauth_callback` |
+    | Confidential   | ✅                                   |
+    | Scopes         | `api` - `read_user` - `openid` - `profile` - `email` |
+
+  </Step>
+  <Step title="Send us the Information">
+    Send the following information to [engineering@widgetbook.io](mailto:engineering@widgetbook.io):
+
+    <Warning>
+      (*) Do not send the **Application Secret** as plain text as it is **sensitive information**.
+      Instead, use a one-time shared link from your password or secret manager service (e.g. [1Password](https://support.1password.com/share-items/))
+    </Warning>
+
+    | Item                   | Reason                |
+    | ---------------------- | --------------------- |
+    | Company Name (e.g. Acme) | Displayed in the user profile page for integration. |
+    | Company Logo (1:1 PNG) | Displayed in the user profile page for integration. |
+    | Company Email Domain (e.g. acme.com) | Users who have a Widgetbook Cloud account with an email having this domain, will be able to see the integration is the user profile page. |
+    | Company GitLab Domain (e.g. gitlab.acme.com) | To send GitLab API requests to. |
+    | Application (from previous step) | For OAuth Integration |
+    | (*) Application Secret (from previous step) | For OAuth Integration |
+
+  </Step>
+</Steps>

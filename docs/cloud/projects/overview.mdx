@@ -1,0 +1,66 @@
+# Projects
+
+Projects are the central hub for your Widgetbook builds, pull requests, and reviews.
+
+<Image src="/assets/cloud/projects/list.png" zoom />
+
+## Overview
+
+A workspace is organized into different projects. 
+It's up to you how you choose to divide your projects.
+
+Consider grouping projects by:
+- Design systems (Flutter packages)
+- Applications (Flutter apps)
+- Repositories
+
+<Info>
+If you're unsure how to divide your repository into Widgetbook projects, start with a single project. 
+It's easy to add and migrate to a more refined project structure later.
+</Info>
+
+## Your projects
+
+<Image src="/assets/cloud/projects/overview.png" zoom />
+
+Your projects are displayed on the [workspace dashboard](https://app.widgetbook.io).
+
+Each project includes the following tabs to help organize your data in Widgetbook Cloud:
+
+- **[Builds](/cloud/builds/overview)**: A list of builds, each representing a commit of a Widgetbook version.
+- **[Pull requests](/cloud/reviews)**: A list of synchronized pull requests from your Git repository, reflecting UI changes.
+- **Settings**: Access and manage project configurations.
+
+## Project settings
+
+<Warning>Only workspace owners can access project settings.</Warning>
+
+To access the settings, select a project within the current workspace and click `Settings`. 
+The following settings categories and operations are available:
+
+General
+- Change the project name
+- Fetch and regenerate the API key
+- Specify the project's default branch
+- Delete the project
+
+Git
+- Manage the connection to your Git repository
+
+### Delete workspace
+
+Deleting a project removes build, pull request, and review data. 
+The owner can delete the project under `Settings > General > Delete project`.
+This action is not reversible.
+
+## FAQ
+
+<Accordion title="How can I make my workspace or project public?">
+As of now, it is not possible to make a workspace or project public. However, we are planning to add this feature soon.
+</Accordion>
+<Accordion title="I do not see my repository. What can I do?">
+If you do not see your repository in the list of available repositories, ensure the following:
+1. Your user has the necessary permissions to access the repository. 
+1. If you're using GitHub, make sure you have granted the GitHub app the necessary permissions to access your repositories. For more information, refer to the [GitHub documentation](https://docs.github.com/en/apps/using-github-apps/reviewing-and-modifying-installed-github-apps#modifying-repository-access).
+1. Due to technical reasons, Widgetbook Cloud only shows the 5 most recently accessed repositories. If you want to connect a repository that is not listed, you can use the search input box to filter the shown repositories. Make sure the repository is properly spelled. The search is case-sensitive!
+</Accordion>

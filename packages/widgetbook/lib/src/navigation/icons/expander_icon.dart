@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
+@internal
 class ExpanderIcon extends StatelessWidget {
   const ExpanderIcon({
     super.key,

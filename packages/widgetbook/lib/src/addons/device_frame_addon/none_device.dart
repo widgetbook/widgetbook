@@ -1,7 +1,10 @@
-import 'package:device_frame/device_frame.dart';
+import 'package:device_frame_plus/device_frame_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:meta/meta.dart';
 
-class NoneDevice implements DeviceInfo {
+@internal
+class NoneDevice with DiagnosticableTreeMixin implements DeviceInfo {
   const NoneDevice._();
 
   static const NoneDevice instance = NoneDevice._();
@@ -31,8 +34,20 @@ class NoneDevice implements DeviceInfo {
   Path get screenPath => throw UnimplementedError();
 
   @override
-  $DeviceInfoCopyWith<DeviceInfo> get copyWith => throw UnimplementedError();
+  CustomPainter get framePainter => throw UnimplementedError();
 
   @override
-  CustomPainter get framePainter => throw UnimplementedError();
+  DeviceInfo copyWith({
+    DeviceIdentifier? identifier,
+    String? name,
+    EdgeInsets? rotatedSafeAreas,
+    EdgeInsets? safeAreas,
+    Path? screenPath,
+    double? pixelRatio,
+    CustomPainter? framePainter,
+    Size? frameSize,
+    Size? screenSize,
+  }) {
+    return instance;
+  }
 }

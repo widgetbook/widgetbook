@@ -134,3 +134,57 @@ Widget build(BuildContext context) {
   );
 }
 ```
+
+## Home Widget
+
+The home widget is a widget that is shown on startup when no use-case is selected.
+This widget does not inherit from the `appBuilder` or the `addons`;
+Meaning that if `Theme.of(context)` is called inside this widget, then it will use Widgetbook's `lightTheme` or `darkTheme`,
+and not the `Theme` from the `appBuilder` or the `ThemeAddon`.
+
+```dart
+@override
+Widget build(BuildContext context) {
+  return Widgetbook(
+    home: const MyCustomHomeWidget(),
+    // ...
+  );
+}
+```
+
+## Header Widget
+
+You can add a custom header to the navigation panel by providing a `header` parameter to the `Widgetbook` constructor.
+This can be used for branding or additional information.
+
+```dart
+@override
+Widget build(BuildContext context) {
+  return Widgetbook(
+    header: const MyCustomHeaderWidget(),
+    // ...
+  );
+}
+```
+
+## Widgetbook's UI
+
+If you want to change some Widgetbook's UI colors, or want to enforce a specific theme mode, you can do so using these parameters:
+
+| Parameter    | Description                                                                                                                       |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| `lightTheme` | [`ThemeData`](https://api.flutter.dev/flutter/material/ThemeData-class.html) that is used when `themeMode` is `ThemeMode.light` |
+| `darkTheme`  | [`ThemeData`](https://api.flutter.dev/flutter/material/ThemeData-class.html) that is used when `themeMode` is `ThemeMode.dark`. |
+| `themeMode`  | Controls which [`ThemeMode`](https://api.flutter.dev/flutter/material/ThemeMode.html) to use. Defaults to `ThemeMode.system`.     |
+
+```dart
+@override
+Widget build(BuildContext context) {
+  return Widgetbook(
+    lightTheme: ThemeData.light(), // Custom light theme
+    darkTheme: ThemeData.dark(),   // Custom dark theme
+    themeMode: ThemeMode.light,    // Forcing light mode
+    // ...
+  );
+}
+```

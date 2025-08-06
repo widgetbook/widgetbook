@@ -19,14 +19,12 @@ class TypesTable extends StatelessWidget {
     this.color = Colors.red, // Default
     required this.duration,
     required this.status,
-
     // Object Params
     required this.person, // Nullable-Required
     this.margin = const EdgeInsets.all(16), // Nullable-Default
     this.padding, // Nullable
     required this.child, // Required
     this.decoration = const BoxDecoration(), // Default
-
     // Generics/Function Params
     this.future,
     this.onChanged,

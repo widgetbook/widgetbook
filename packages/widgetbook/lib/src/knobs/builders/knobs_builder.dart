@@ -6,29 +6,57 @@ import '../color_knob.dart';
 import '../date_time_knob.dart';
 import '../duration_knob.dart';
 import '../knob.dart';
-import '../list_knob.dart';
+import '../object_dropdown_knob.dart';
 import '../string_knob.dart';
 import 'double_knobs_builder.dart';
 import 'int_knobs_builder.dart';
+import 'object_knobs_builder.dart';
 
+/// @nodoc
+typedef $int = int; // Allows us to use `int` as a knob name without conflict.
+
+/// @nodoc
 typedef KnobAdded = T? Function<T>(Knob<T?> knob);
-typedef $int = int;
 
+/// The builder is used to create and register a variety of knobs that can be
+/// used in your use-cases.
+///
+/// This builder is provided to `context` in the use-case functions.
 class KnobsBuilder {
+  /// Creates a [KnobsBuilder] with the provided [onKnobAdded] callback.
   KnobsBuilder(
     this.onKnobAdded,
-  )   : this.double = DoubleKnobsBuilder(onKnobAdded),
-        this.doubleOrNull = DoubleOrNullKnobsBuilder(onKnobAdded),
-        this.int = IntKnobsBuilder(onKnobAdded),
-        this.intOrNull = IntOrNullKnobsBuilder(onKnobAdded);
+  ) : this.double = DoubleKnobsBuilder(onKnobAdded),
+      this.doubleOrNull = DoubleOrNullKnobsBuilder(onKnobAdded),
+      this.int = IntKnobsBuilder(onKnobAdded),
+      this.intOrNull = IntOrNullKnobsBuilder(onKnobAdded),
+      this.object = ObjectKnobsBuilder(onKnobAdded),
+      this.objectOrNull = ObjectOrNullKnobsBuilder(onKnobAdded);
 
+  /// The callback that is used to add a knob.
+  /// Used to register the knob in the use-case.
   final KnobAdded onKnobAdded;
+
+  /// A builder for double knobs.
   final DoubleKnobsBuilder double;
+
+  /// A builder for double knobs that can hold a null value.
   final DoubleOrNullKnobsBuilder doubleOrNull;
+
+  /// A builder for integer knobs.
   final IntKnobsBuilder int;
+
+  /// A builder for integer knobs that can hold a null value.
   final IntOrNullKnobsBuilder intOrNull;
 
-  /// Creates a checkbox that can be toggled on and off
+  /// A builder for generic object knobs.
+  final ObjectKnobsBuilder object;
+
+  /// A builder for generic object knobs that can hold a null value.
+  final ObjectOrNullKnobsBuilder objectOrNull;
+
+  /// A [Knob] that holds a [bool] value.
+  /// Learn more: https://docs.widgetbook.io/knobs/boolean
   bool boolean({
     required String label,
     String? description,
@@ -43,8 +71,8 @@ class KnobsBuilder {
     )!;
   }
 
-  /// Creates a checkbox that can be toggled on and off and optionally hold a
-  /// null value
+  /// A [Knob] that holds a [bool] value and can be null.
+  /// Learn more: https://docs.widgetbook.io/knobs/boolean
   bool? booleanOrNull({
     required String label,
     String? description,
@@ -59,7 +87,8 @@ class KnobsBuilder {
     );
   }
 
-  /// Creates a color picker that can be used to select a color.
+  /// A [Knob] that holds a [Color] value.
+  /// Learn more: https://docs.widgetbook.io/knobs/color
   Color color({
     required String label,
     Color initialValue = Colors.white,
@@ -76,7 +105,8 @@ class KnobsBuilder {
     )!;
   }
 
-  /// Creates a color picker that can be used to select a color.
+  /// A [Knob] that holds a [Color] value and can be null.
+  /// Learn more: https://docs.widgetbook.io/knobs/color
   Color? colorOrNull({
     required String label,
     Color? initialValue,
@@ -93,7 +123,8 @@ class KnobsBuilder {
     );
   }
 
-  /// Creates a textfield that can be typed in
+  /// A [Knob] that holds a [String] value.
+  /// Learn more: https://docs.widgetbook.io/knobs/string
   String string({
     required String label,
     String? description,
@@ -110,8 +141,8 @@ class KnobsBuilder {
     )!;
   }
 
-  /// Creates a textfield that can be typed in and optionally hold a
-  /// null value
+  /// A [Knob] that holds a [String] value and can be null.
+  /// Learn more: https://docs.widgetbook.io/knobs/string
   String? stringOrNull({
     required String label,
     String? description,
@@ -128,8 +159,8 @@ class KnobsBuilder {
     );
   }
 
-  /// Allow the users to select from a list of options in a drop down box.
-  /// Must contain at least one value.
+  /// @nodoc
+  @Deprecated('Use `knobs.object.dropdown` instead.')
   T list<T>({
     required String label,
     required List<T> options,
@@ -139,7 +170,7 @@ class KnobsBuilder {
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return onKnobAdded(
-      ListKnob<T>(
+      ObjectDropdownKnob<T>(
         label: label,
         initialValue: initialOption ?? options.first,
         description: description,
@@ -149,8 +180,8 @@ class KnobsBuilder {
     )!;
   }
 
-  /// Allow the users to select from a list of options in a drop down box that
-  /// might contain a null value.
+  /// @nodoc
+  @Deprecated('Use `knobs.objectOrNull.dropdown` instead.')
   T? listOrNull<T>({
     required String label,
     required List<T?> options,
@@ -159,7 +190,7 @@ class KnobsBuilder {
     LabelBuilder<T?>? labelBuilder,
   }) {
     return onKnobAdded(
-      ListKnob<T?>.nullable(
+      ObjectDropdownKnob<T?>.nullable(
         label: label,
         initialValue: initialOption,
         description: description,
@@ -169,7 +200,8 @@ class KnobsBuilder {
     );
   }
 
-  /// Creates a duration input that can be typed in
+  /// A [Knob] that holds a [Duration] value.
+  /// Learn more: https://docs.widgetbook.io/knobs/duration
   Duration duration({
     required String label,
     Duration initialValue = Duration.zero,
@@ -184,8 +216,8 @@ class KnobsBuilder {
     )!;
   }
 
-  /// Creates a duration input that can be adjusted and optionally hold a
-  /// null value
+  /// A [Knob] that holds a [Duration] value and can be null.
+  /// Learn more: https://docs.widgetbook.io/knobs/duration
   Duration? durationOrNull({
     required String label,
     Duration? initialValue,
@@ -200,7 +232,8 @@ class KnobsBuilder {
     );
   }
 
-  /// Creates a text field that can be used to select a date and time
+  /// A [Knob] that holds a [DateTime] value.
+  /// Learn more: https://docs.widgetbook.io/knobs/datetime
   DateTime dateTime({
     required String label,
     required DateTime initialValue,
@@ -219,8 +252,8 @@ class KnobsBuilder {
     )!;
   }
 
-  /// Creates a text field that can be used to select a date and time and can
-  /// be initially empty
+  /// A [Knob] that holds a [DateTime] value and can be null.
+  /// Learn more: https://docs.widgetbook.io/knobs/datetime
   DateTime? dateTimeOrNull({
     required String label,
     DateTime? initialValue,

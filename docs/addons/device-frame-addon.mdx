@@ -1,73 +1,61 @@
 # Device Frame Addon
 
-The Device Frame Addon is an invaluable tool that lets you preview your use-cases on
-various device frames. These frames provide a realistic environment by introducing
-constraints for width and height, resembling actual devices. They override `MediaQuery`
-parameters to ensure your component behaves as expected across different devices.
+<Warning>
+  This addon will be **deprecated** in v3.15. Please use the
+  [`ViewportAddon`](/addons/viewport-addon) instead.
+</Warning>
 
-|                                   iPhone 13                                   |                                   iPad Mini                                   |
-| :---------------------------------------------------------------------------: | :---------------------------------------------------------------------------: |
-| <Image zoom src="/assets/addons/frames/devices/iPhone-13.png" height="400" /> | <Image zoom src="/assets/addons/frames/devices/iPad-mini.png" height="400" /> |
+The `DeviceFrameAddon` is a powerful tool that allows you to preview your use-cases
+in a variety of [device frames](https://pub.dev/packages/device_frame). This is particularly useful for ensuring that your
+components look great on different screen sizes and orientations. The addon provides a
+set of predefined devices.
 
-## Available Devices frames
+<Tabs
+  values={[
+    { label: "iPhone 13", value: "iphone" },
+    { label: "No Device", value: "none" },
+  ]}
+>
+  <TabItem value="iphone">
+    <iframe
+      src="https://demo.widgetbook.io/#/?path=features/basket/basketscreen/default&preview"
+      width="100%"
+      height="720px"
+    />
+  </TabItem>
+  <TabItem value="none">
+    <iframe
+      src="https://demo.widgetbook.io/#/?path=features/basket/basketscreen/default&device={name:None}&preview"
+      width="100%"
+      height="720px"
+    />
+  </TabItem>
+</Tabs>
 
-| Frame              | Has Devices | Description                                                                        |
-| ------------------ | ----------- | ---------------------------------------------------------------------------------- |
-| DefaultDeviceFrame | ✅          | A frame based on the [device_frame package](https://pub.dev/packages/device_frame) |
-| WidgetbookFrame    | ✅          | A minimal, borderless frame                                                        |
-| NoFrame            | ➖          | A device-less frame that resized whenever the Widgetbook window is changed         |
+## Usage
 
-## Setup
+```dart title=widgetbook/lib/main.dart
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
 
-Setting up the Device Frame Addon in your Widgetbook is straightforward. Let's walk
-through the steps:
-
-### Step 1:
-
-The first step is identifying which devices you want to preview your components. You can
-select from a predefined list of devices. Here's an example with a selection of iPhone
-models:
-
-```dart
-devices: [
-    Devices.ios.iPhoneSE,
-    Devices.ios.iPhone13,
-],
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        DeviceFrameAddon( // [!code highlight]
+          devices: [ // [!code highlight]
+            Devices.ios.iPhoneSE, // [!code highlight]
+            Devices.ios.iPhone13, // [!code highlight]
+          ], // [!code highlight]
+        ), // [!code highlight]
+      ],
+    );
+  }
+}
 ```
 
-### Step 2 (Optional):
-
-As an optional step, you can define a default device to be displayed when the Widgetbook
-app launches. If you do not specify an `initialDevice`, the first device in your list is
-selected by default. In this example, we're setting the iPhone 13 as the default device:
-
-```dart
-initialDevice: Devices.ios.iPhone13,
-```
-
-### Step 3:
-
-Construct the Device Frame Addon with your devices and `initialDevice` defined, you can
-now create the Device Frame Addon using the DeviceFrameAddon class. This class takes in
-your device list and, optionally, the initialDevice:
-
-This setup will launch your Widgetbook app with the iPhone 13 screen constraints by
-default, enabling you to swiftly check your widgets' responsiveness and visual consistency
-on this device. You can then quickly switch to the other defined devices to compare
-results. Please note that the actual appearance of the preview may vary depending on the
-specific features and constraints of the chosen device models.
-
-```dart
-DeviceFrameAddon(
-    devices: [
-        Devices.ios.iPhoneSE,
-        Devices.ios.iPhone13,
-    ],
-    initialDevice: Devices.ios.iPhone13,
-),
-```
-
-## Custom devices
+<Info>
 
 You can define your own [custom device](https://pub.dev/packages/device_frame#creating-a-custom-generic-device) by using the `DeviceInfo` class:
 
@@ -79,3 +67,13 @@ DeviceInfo.genericPhone(
   screenSize: const Size(412, 732),
 )
 ```
+
+</Info>
+
+## Order
+
+Since the [order of addons](/addons#order-of-addons) matters. The `DeviceFrameAddon` should be used **before all other addons**.
+
+## Multi-snapshot Support
+
+The `DeviceFrameAddon` is not supported in the [Multi Snapshot Reviews](/cloud/snapshots/multi-snapshot) yet. However, you can use the [`ViewportAddon`](/addons/viewport-addon) to achieve a similar effect.

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
 
+@internal
 extension DateTimeExtension on DateTime {
   /// Converts the [DateTime] to a string object supported by the field
   String toSimpleFormat() {
@@ -15,7 +17,10 @@ extension DateTimeExtension on DateTime {
   }
 }
 
+/// A [Field] that builds a [TextFormField] for [DateTime] values,
+/// allowing users to select a date and time using a date and time picker.
 class DateTimeField extends Field<DateTime> {
+  /// Creates a new instance of [DateTimeField].
   DateTimeField({
     required super.name,
     required super.initialValue,
@@ -23,14 +28,14 @@ class DateTimeField extends Field<DateTime> {
     required this.start,
     required this.end,
   }) : super(
-          type: FieldType.dateTime,
-          codec: FieldCodec<DateTime>(
-            toParam: (value) => value.toSimpleFormat(),
-            toValue: (param) {
-              return param == null ? null : DateTime.tryParse(param);
-            },
-          ),
-        );
+         type: FieldType.dateTime,
+         codec: FieldCodec<DateTime>(
+           toParam: (value) => value.toSimpleFormat(),
+           toValue: (param) {
+             return param == null ? null : DateTime.tryParse(param);
+           },
+         ),
+       );
 
   /// The starting [DateTime] value used for the date and time pickers.
   final DateTime start;
@@ -41,9 +46,15 @@ class DateTimeField extends Field<DateTime> {
   @override
   Widget toWidget(BuildContext context, String group, DateTime? value) {
     return TextFormField(
+      // The "value" used in the key ensures that the TextFormField is rebuilt
+      // when the value is changed via the DateTime picker. Without this
+      // unique key, the TextFormField will only react to value changes
+      // triggered by the user typing in the field.
+      key: ValueKey('$group-$name-$value'),
       initialValue: (value ?? initialValue)?.toSimpleFormat(),
       keyboardType: TextInputType.datetime,
       decoration: InputDecoration(
+        hintText: 'Enter a DateTime',
         suffixIcon: IconButton(
           icon: const Icon(Icons.calendar_today_rounded),
           onPressed: () async {
@@ -54,19 +65,16 @@ class DateTimeField extends Field<DateTime> {
 
             if (dateTime == null) return;
 
-            updateField(
-              context,
-              group,
-              dateTime,
-            );
+            updateField(context, group, dateTime);
           },
         ),
       ),
-      onChanged: (value) => updateField(
-        context,
-        group,
-        codec.toValue(value) ?? initialValue ?? DateTime.now(),
-      ),
+      onChanged: (value) {
+        final dateTime = codec.toValue(value);
+        if (dateTime == null) return;
+
+        updateField(context, group, dateTime);
+      },
     );
   }
 

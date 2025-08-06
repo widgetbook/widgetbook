@@ -8,7 +8,7 @@
 PRODUCT_NAME = full_example
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = io.widgetbook.fullexample.fullExample
+PRODUCT_BUNDLE_IDENTIFIER = com.example.fullExample
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 io.widgetbook.fullexample. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2025 com.example. All rights reserved.

@@ -9,9 +9,9 @@ ensure a smooth and fruitful collaboration.
 
 - [Ways to Contribute](https://docs.widgetbook.io/contribution/ways-to-contribute)
 - [Getting Started](https://docs.widgetbook.io/contribution/get-started)
-- [Contribution Workflow](https://docs.widgetbook.io/contribution/contribution-workflow)
+- [Contribution Workflow](https://docs.widgetbook.io/contribution/workflow)
 - [Adding an Example](https://docs.widgetbook.io/contribution/adding-example)
-- [PR Title Conventions](https://docs.widgetbook.io/contribution//pr-conventions)
+- [PR Title Conventions](https://docs.widgetbook.io/contribution/pr-conventions)
 - [Code Reviews](https://docs.widgetbook.io/contribution/code-reviews)
 - [Community](https://docs.widgetbook.io/contribution/code-reviews#community)
 - [Licensing](https://docs.widgetbook.io/contribution/code-reviews#licensing)

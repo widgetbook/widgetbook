@@ -1,52 +1,62 @@
-import 'package:device_frame/device_frame.dart';
+import 'package:device_frame_plus/device_frame_plus.dart';
 import 'package:flutter/material.dart';
 
 import '../../fields/fields.dart';
+import '../../widgetbook_theme.dart';
 import '../common/common.dart';
 import 'device_frame_setting.dart';
 import 'none_device.dart';
 
-/// A [WidgetbookAddon] for changing the active device/frame. It's based on
-/// the [`device_frame`](https://pub.dev/packages/device_frame) package.
+/// @nodoc
+@Deprecated(
+  'The [DeviceFrameAddon] is deprecated and will be removed in a future version. '
+  'Please use the [ViewportAddon] instead. '
+  'More info: https://docs.widgetbook.io/addons/viewport-addon',
+)
 class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
+  /// @nodoc
   DeviceFrameAddon({
     required List<DeviceInfo> devices,
     this.initialDevice = NoneDevice.instance,
-  })  : assert(
-          devices.isNotEmpty,
-          'devices cannot be empty',
-        ),
-        assert(
-          initialDevice == NoneDevice.instance ||
-              devices.contains(initialDevice),
-          'initialDevice must be in devices',
-        ),
-        this.devices = [NoneDevice.instance, ...devices],
-        super(
-          name: 'Device',
-        );
+  }) : assert(
+         devices.isNotEmpty,
+         'devices cannot be empty',
+       ),
+       assert(
+         initialDevice == NoneDevice.instance ||
+             devices.contains(initialDevice),
+         'initialDevice must be in devices',
+       ),
+       this.devices = [NoneDevice.instance, ...devices],
+       super(
+         name: 'Device',
+       );
 
+  /// @nodoc
   final DeviceInfo initialDevice;
+
+  /// @nodoc
   final List<DeviceInfo> devices;
 
   @override
   List<Field> get fields {
     return [
-      ListField<DeviceInfo>(
+      ObjectDropdownField<DeviceInfo>(
         name: 'name',
         values: devices,
         initialValue: initialDevice,
         labelBuilder: (device) => device.name,
       ),
-      ListField<Orientation>(
+      ObjectDropdownField<Orientation>(
         name: 'orientation',
         values: Orientation.values,
         initialValue: Orientation.portrait,
-        labelBuilder: (orientation) =>
-            orientation.name.substring(0, 1).toUpperCase() +
-            orientation.name.substring(1),
+        labelBuilder:
+            (orientation) =>
+                orientation.name.substring(0, 1).toUpperCase() +
+                orientation.name.substring(1),
       ),
-      ListField<bool>(
+      ObjectDropdownField<bool>(
         name: 'frame',
         values: [false, true],
         initialValue: true,
@@ -81,18 +91,24 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
           orientation: setting.orientation,
           device: setting.device,
           isFrameVisible: setting.hasFrame,
-          // A navigator below the device frame is necessary to make
-          // the popup routes (e.g. dialogs and bottom sheets) work within
-          // the device frame, otherwise they would use the navigator from
-          // the app builder, causing these routes to fill the whole
-          // workbench and not just the device frame.
-          screen: Navigator(
-            onGenerateRoute: (_) => PageRouteBuilder(
-              pageBuilder: (context, _, __) => setting.hasFrame
-                  ? child
-                  : SafeArea(
-                      child: child,
-                    ),
+          screen: ColoredBox(
+            color: WidgetbookTheme.of(context).scaffoldBackgroundColor,
+            child: Navigator(
+              // A navigator below the device frame is necessary to make the
+              // popup routes (e.g. dialogs and bottom sheets) work within the
+              // device frame, otherwise they would use the navigator from the
+              // app builder, causing these routes to fill the whole workbench
+              // and not just the device frame.
+              onGenerateRoute:
+                  (_) => PageRouteBuilder(
+                    pageBuilder:
+                        (context, _, __) =>
+                            setting.hasFrame
+                                ? child
+                                : SafeArea(
+                                  child: child,
+                                ),
+                  ),
             ),
           ),
         ),

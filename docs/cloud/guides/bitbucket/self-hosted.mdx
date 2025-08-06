@@ -1,0 +1,39 @@
+# Widgetbook Cloud x Self-hosted Bitbucket
+
+If you want to use Widgetbook Cloud with your self-hosted Bitbucket instance (e.g. `bitbucket.acme.com`), here's a pre-requisite guide to help you get started, then you can follow our normal [Bitbucket setup guide](/cloud/guides/bitbucket/upload).
+
+<Steps>
+  <Step title="Create OAuth Consumer">
+    Create a new OAuth Consumer in your Bitbucket instance to authenticate your
+    users with Widgetbook Cloud.
+
+    Go to **"Workspace Settings"** > **"OAuth consumers"** > **"Add consumer"**.
+    Then fill the form with the following information and click **"Save"**.
+
+    | Field           | Value                                |
+    | --------------- | ------------------------------------ |
+    | Name            | Widgetbook |
+    | Callback URL    | `https://clerk.widgetbook.io/v1/oauth_callback` |
+    | URL             | `https://www.widgetbook.io/` |
+    | Permissions (5) | `Account (Email, Read)` - `Repositories (Read)` - `Pull Requests (Read)` - `Webhooks (Read and Write)` |
+
+  </Step>
+  <Step title="Send us the Information">
+    Send the following information to [engineering@widgetbook.io](mailto:engineering@widgetbook.io):
+
+    <Warning>
+      (*) Do not send the **Consumer Secret** as plain text as it is **sensitive information**.
+      Instead, use a one-time shared link from your password or secret manager service (e.g. [1Password](https://support.1password.com/share-items/))
+    </Warning>
+
+    | Item                   | Reason                |
+    | ---------------------- | --------------------- |
+    | Company Name (e.g. Acme) | Displayed in the user profile page for integration. |
+    | Company Logo (1:1 PNG) | Displayed in the user profile page for integration. |
+    | Company Email Domain (e.g. acme.com) | Users who have a Widgetbook Cloud account with an email having this domain, will be able to see the integration is the user profile page. |
+    | Company Bitbucket Domain (e.g. bitbucket.acme.com) | To send Bitbucket API requests to. |
+    | Consumer Key (from previous step) | For OAuth Integration |
+    | (*) Consumer Secret (from previous step) | For OAuth Integration |
+
+  </Step>
+</Steps>

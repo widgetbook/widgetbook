@@ -37,8 +37,9 @@ class TreeNode<T> {
     final key = resolveKey(data);
 
     return children.putIfAbsent(
-      key,
-      () => TreeNode<TData>(data),
-    ) as TreeNode<TData>;
+          key,
+          () => TreeNode<TData>(data),
+        )
+        as TreeNode<TData>;
   }
 }

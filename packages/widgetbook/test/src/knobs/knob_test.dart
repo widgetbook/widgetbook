@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/settings/nullable_setting.dart';
+import 'package:widgetbook/src/settings/settings.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
@@ -8,13 +8,18 @@ import '../../helper/helper.dart';
 class MockKnob extends Knob<bool?> {
   MockKnob({
     required super.label,
-    super.value = true,
+    super.initialValue = true,
     super.description,
     super.isNullable = false,
   });
 
   @override
-  List<Field> get fields => [];
+  List<Field> get fields => [
+    BooleanField(
+      name: label,
+      initialValue: initialValue,
+    ),
+  ];
 
   @override
   bool valueFromQueryGroup(Map<String, String> group) {
@@ -27,7 +32,8 @@ void main() {
     '$Knob',
     () {
       testWidgets(
-        'then it should build a [$NullableSetting]',
+        'given a non-nullable knob,'
+        'then it should build a [$Setting]',
         (tester) async {
           final knob = MockKnob(
             label: 'Mock Knob',
@@ -39,7 +45,7 @@ void main() {
           );
 
           expect(
-            find.byType(NullableSetting),
+            find.byType(Setting),
             findsOneWidget,
           );
         },
@@ -67,7 +73,7 @@ void main() {
           final knob = MockKnob(
             label: 'Mock Knob',
             isNullable: true,
-            value: null,
+            initialValue: null,
           );
 
           await tester.pumpKnob(
@@ -92,7 +98,7 @@ void main() {
           final knob = MockKnob(
             label: 'Mock Knob',
             isNullable: true,
-            value: false,
+            initialValue: false,
           );
 
           await tester.pumpKnob(

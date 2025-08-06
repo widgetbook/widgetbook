@@ -112,7 +112,7 @@ class WidgetbookApp extends StatelessWidget {
                   ),
                   KnobEntry<DateTime>(
                     name: 'DateTime',
-                    builder: (dateTime) => Text(dateTime.toSimpleFormat()),
+                    builder: (dateTime) => Text(dateTime.toIso8601String()),
                     regular: context.knobs.dateTime(
                       label: 'dateTime',
                       // Placing DateTime.now() here will cause the date time
@@ -127,15 +127,30 @@ class WidgetbookApp extends StatelessWidget {
                       end: DateTime(initialDate.year + 1),
                     ),
                   ),
-                  KnobEntry<int>(
-                    name: 'List<int>',
-                    regular: context.knobs.list(
-                      label: 'list',
-                      options: List.generate(10, (index) => index),
+                  KnobEntry<User>(
+                    name: 'Object (dropdown)',
+                    regular: context.knobs.object.dropdown(
+                      label: 'object.dropdown',
+                      labelBuilder: (value) => value.name,
+                      options: List.generate(10, (x) => User('U$x')),
                     ),
-                    nullable: context.knobs.listOrNull(
-                      label: 'listOrNull',
-                      options: List.generate(10, (index) => index),
+                    nullable: context.knobs.objectOrNull.dropdown(
+                      label: 'objectOrNull.dropdown',
+                      labelBuilder: (value) => value.name,
+                      options: List.generate(10, (index) => User('U$index')),
+                    ),
+                  ),
+                  KnobEntry<User>(
+                    name: 'Object (segmented)',
+                    regular: context.knobs.object.segmented(
+                      label: 'object.segmented',
+                      labelBuilder: (value) => value.name,
+                      options: List.generate(3, (x) => User('U$x')),
+                    ),
+                    nullable: context.knobs.objectOrNull.segmented(
+                      label: 'objectOrNull.segmented',
+                      labelBuilder: (value) => value.name,
+                      options: List.generate(3, (x) => User('U$x')),
                     ),
                   ),
                 ],
@@ -146,4 +161,13 @@ class WidgetbookApp extends StatelessWidget {
       ],
     );
   }
+}
+
+class User {
+  User(this.name);
+
+  final String name;
+
+  @override
+  String toString() => 'User{name: $name}';
 }

@@ -7,6 +7,9 @@ analyzer:
     - "**/*.g.dart"
     - "**/*.book.dart"
 
+formatter:
+  trailing_commas: preserve
+
 linter:
   rules:
     # Constructors

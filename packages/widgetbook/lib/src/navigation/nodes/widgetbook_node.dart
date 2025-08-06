@@ -11,6 +11,7 @@ import 'nodes.dart';
 /// 6. [WidgetbookLeafComponent]
 /// 7. [WidgetbookUseCase]
 abstract class WidgetbookNode {
+  /// Creates a [WidgetbookNode].
   WidgetbookNode({
     required this.name,
     required this.children,
@@ -21,13 +22,25 @@ abstract class WidgetbookNode {
     );
   }
 
+  /// The name of the node.
   final String name;
+
+  /// Whether the node is expanded by default.
   final bool isInitiallyExpanded;
+
+  /// The children of the node.
   final List<WidgetbookNode>? children;
+
+  /// The parent of the node.
+  /// This is set after the node is added to a parent node.
   WidgetbookNode? parent;
 
+  /// Whether this node is the root node.
+  /// The root node does not have a parent.
   bool get isRoot => parent == null;
 
+  /// Whether this node is a leaf node.
+  /// A leaf node has no children.
   bool get isLeaf => children == null || children!.isEmpty;
 
   /// Gets the path from root to this node without leading slash
@@ -66,7 +79,7 @@ abstract class WidgetbookNode {
     }
   }
 
-  // Gets the number of nodes in the sub-tree of this node.
+  /// Gets the number of nodes in the sub-tree of this node.
   int get count {
     if (isLeaf) {
       return 1;
@@ -89,16 +102,17 @@ abstract class WidgetbookNode {
     if (predicate(this)) {
       return this;
     } else {
-      final filteredChildren = children
-          ?.map((child) => child.filter(predicate))
-          .whereType<WidgetbookNode>()
-          .toList();
+      final filteredChildren =
+          children
+              ?.map((child) => child.filter(predicate))
+              .whereType<WidgetbookNode>()
+              .toList();
 
       return filteredChildren == null || filteredChildren.isEmpty
           ? null
           : copyWith(
-              children: filteredChildren,
-            );
+            children: filteredChildren,
+          );
     }
   }
 
@@ -115,6 +129,17 @@ abstract class WidgetbookNode {
             (child) => child != null,
             orElse: () => null,
           );
+    }
+  }
+
+  /// Returns an [Iterable] of all nodes that match the [predicate].
+  Iterable<WidgetbookNode> findAll(
+    bool Function(WidgetbookNode node) predicate,
+  ) {
+    if (predicate(this)) {
+      return [this];
+    } else {
+      return children?.expand((child) => child.findAll(predicate)) ?? [];
     }
   }
 

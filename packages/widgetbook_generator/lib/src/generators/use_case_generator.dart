@@ -1,42 +1,26 @@
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:build/build.dart';
+import 'package:collection/collection.dart';
 import 'package:path/path.dart' as path;
 import 'package:source_gen/source_gen.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
-import 'package:yaml/yaml.dart';
 
 import '../models/element_metadata.dart';
 import '../models/nav_path_mode.dart';
 import '../models/use_case_metadata.dart';
 import '../util/constant_reader.dart';
+import '../util/dart_object.dart';
 
 class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
   UseCaseGenerator(this.navPathMode);
-
-  final packagesMapResource = Resource<YamlMap?>(
-    () async {
-      try {
-        final lockFile = await File('pubspec.lock').readAsString();
-        final yaml = loadYaml(lockFile) as YamlMap;
-
-        return yaml['packages'] as YamlMap;
-      } catch (_) {
-        // The pubspec.lock can be missing in certain cases,
-        // For example when using the dart workspaces.
-        // See: https://github.com/widgetbook/widgetbook/issues/1326
-        return null;
-      }
-    },
-  );
 
   final NavPathMode navPathMode;
 
   @override
   Future<String> generateForAnnotatedElement(
-    Element element,
+    Element2 element,
     ConstantReader annotation,
     BuildStep buildStep,
   ) async {
@@ -51,42 +35,35 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     final type = annotation.read('type').typeValue;
     final designLink = annotation.readOrNull('designLink')?.stringValue;
     final path = annotation.readOrNull('path')?.stringValue;
+    final cloudExclude = annotation.read('cloudExclude').boolValue;
+    final knobsConfigs = annotation //
+        .readOrNull('cloudKnobsConfigs')
+        ?.parse(_parseKnobsConfigs);
 
-    final componentName = type
-        .getDisplayString(
-          // The `withNullability` parameter is deprecated after analyzer 6.0.0,
-          // since we support analyzer 5.x (to support Dart <3.0.0), then
-          // the deprecation is ignored.
-          // ignore: deprecated_member_use
-          withNullability: false,
-        )
-        // Generic widgets shouldn't have a "<dynamic>" suffix
-        // if no type parameter is specified.
-        .replaceAll('<dynamic>', '');
+    final componentName = type.getDisplayString()
+    // Generic widgets shouldn't have a "<dynamic>" suffix
+    // if no type parameter is specified.
+    .replaceAll('<dynamic>', '');
 
     final useCaseUri = resolveElementUri(element);
-    final componentUri = resolveElementUri(type.element!);
+    final componentUri = resolveElementUri(type.element3!);
 
-    final useCasePath = await resolveElementPath(element, buildStep);
-    final componentPath = await resolveElementPath(type.element!, buildStep);
-
-    final targetNavUri = navPathMode == NavPathMode.component //
-        ? componentUri
-        : useCaseUri;
+    final targetNavUri =
+        navPathMode == NavPathMode.component ? componentUri : useCaseUri;
 
     final navPath = path ?? getNavPath(targetNavUri);
 
     final metadata = UseCaseMetadata(
-      functionName: element.name!,
+      functionName: element.firstFragment.name2!,
       designLink: designLink,
       name: name,
       importUri: useCaseUri,
-      filePath: useCasePath,
       navPath: navPath,
+      cloudExclude: cloudExclude,
+      knobsConfigs: knobsConfigs?.toJson(),
       component: ElementMetadata(
         name: componentName,
         importUri: componentUri,
-        filePath: componentPath,
       ),
     );
 
@@ -110,60 +87,58 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
 
   /// Resolves the URI of an [element] by retrieving the URI from
   /// the [element]'s source.
-  String resolveElementUri(Element element) {
-    final source = element.librarySource ?? element.source!;
+  String resolveElementUri(Element2 element) {
+    final source =
+        element.firstFragment.libraryFragment?.source ??
+        element.library2!.firstFragment.source;
     return source.uri.toString();
   }
 
-  /// Resolves the path of a local package by retrieving the path from
-  /// the `pubspec.lock` file in case its name might not match its path.
-  ///
-  /// Example:
-  /// A package with the name "shared_package" could be located in
-  /// a folder named "shared". The path of the [element] would be
-  /// `/shared_package/lib/...` which is not an actual path and should
-  /// be resolved into `/shared/lib/...`.
-  ///
-  /// See also:
-  /// - [#791](https://github.com/widgetbook/widgetbook/issues/791)
-  Future<String> resolveElementPath(
-    Element element,
-    BuildStep buildStep,
-  ) async {
-    final elementPath = element.librarySource!.fullName;
-    final elementPackage = element.librarySource!.uri.pathSegments[0];
-    final inputPackage = buildStep.inputId.package;
-
-    // If the element is in the same package as the `pubspec.lock` file,
-    // then we cannot use the `pubspec.lock` file to resolve the path.
-    // In this case, we can simply replace the package name with the
-    // current directory name.
-    if (elementPackage == inputPackage) {
-      final currentDir = Directory.current.path;
-      final dirName = path.basename(currentDir);
-
-      return elementPath.replaceFirst(
-        RegExp(elementPackage),
-        dirName,
-      );
-    }
-
-    final resource = await buildStep.fetchResource(packagesMapResource);
-    if (resource == null) return elementPath;
-
-    final packageData = resource[elementPackage] as YamlMap;
-    final isLocalPackage = packageData['source'] == 'path';
-    if (!isLocalPackage) return elementPath;
-
-    final packagePath = packageData['description']['path'] as String;
-    final normalizedPackagePath = packagePath.replaceAll(
-      RegExp(r'(\.)?\.\/'), // Match "./" and "../"
-      '',
+  KnobsConfigs _parseKnobsConfigs(
+    ConstantReader reader,
+  ) {
+    final rawMap = reader.mapValue.map(
+      (key, value) => MapEntry(
+        key!.toStringValue()!,
+        value!.toListValue()!,
+      ),
     );
 
-    return elementPath.replaceFirst(
-      RegExp(elementPackage),
-      normalizedPackagePath,
-    );
+    return {
+      for (final entry in rawMap.entries)
+        entry.key:
+            entry.value.map(
+              (e) {
+                final reader = ConstantReader(e);
+
+                // A special type of KnobConfig is the MultiFieldKnobConfig
+                // This allows users to configure more than one field.
+                // Since for first-class knobs we have 1-1 relation between
+                // knob and field (i.e. each knob has only one field),
+                // we need to convert the MultiFieldKnobConfig into
+                // multiple KnobConfig (i.e. multiple fields).
+                if (e.type.toString() == '$MultiFieldKnobConfig') {
+                  final fields = reader.read('value').mapValue;
+
+                  return fields.entries.map(
+                    // Add each field as a separate KnobConfig
+                    (entry) {
+                      return KnobConfig(
+                        entry.key!.toStringValue()!,
+                        entry.value?.toPrimitiveValue(),
+                      );
+                    },
+                  ).toList();
+                }
+
+                return [
+                  KnobConfig(
+                    reader.read('label').stringValue,
+                    reader.read('value').literalValue,
+                  ),
+                ];
+              },
+            ).flattened,
+    };
   }
 }

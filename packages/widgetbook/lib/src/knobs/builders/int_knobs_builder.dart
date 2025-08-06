@@ -1,13 +1,18 @@
 import '../int_input_knob.dart';
 import '../int_slider_knob.dart';
+import '../knob.dart';
 import 'knobs_builder.dart';
 
+/// A [KnobsBuilder] for integer knobs.
 class IntKnobsBuilder {
+  /// Creates a [IntKnobsBuilder] with the provided [onKnobAdded] callback.
   IntKnobsBuilder(this.onKnobAdded);
 
+  /// The callback that is used to add a knob.
   final KnobAdded onKnobAdded;
 
-  /// Creates a textfield which users can type integer values into.
+  /// A [Knob] that holds an [int] value with an input field.
+  /// Learn more: https://docs.widgetbook.io/knobs/integer/input
   int input({
     required String label,
     String? description,
@@ -22,7 +27,8 @@ class IntKnobsBuilder {
     )!;
   }
 
-  /// Creates a slider that can be slid to specific int values.
+  /// A [Knob] that holds an [int] value with a slider.
+  /// Learn more: https://docs.widgetbook.io/knobs/integer/slider
   int slider({
     required String label,
     String? description,
@@ -44,15 +50,18 @@ class IntKnobsBuilder {
   }
 }
 
+/// Same as [IntKnobsBuilder] but allows the knob to hold a null value.
 class IntOrNullKnobsBuilder {
+  /// Creates a [IntOrNullKnobsBuilder] with the provided [onKnobAdded] callback.
   IntOrNullKnobsBuilder(
     KnobAdded onKnobAdded,
   ) : this.onKnobAdded = onKnobAdded;
 
+  /// The callback that is used to add a knob.
   final KnobAdded onKnobAdded;
 
-  /// Creates a textfield which users can type integer values into.
-  /// Can optionally hold a null value.
+  /// A [Knob] that holds an [int] value with an input field that can be null.
+  /// Learn more: https://docs.widgetbook.io/knobs/integer/input
   int? input({
     required String label,
     String? description,
@@ -67,8 +76,8 @@ class IntOrNullKnobsBuilder {
     );
   }
 
-  /// Creates a slider that can be slid to specific double values.
-  /// Can optionally hold a null value
+  /// A [Knob] that holds an [int] value with a slider that can be null.
+  /// Learn more: https://docs.widgetbook.io/knobs/integer/slider
   int? slider({
     required String label,
     String? description,

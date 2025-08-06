@@ -5,6 +5,8 @@ import 'package:widgetbook/widgetbook.dart';
 import 'field_test.dart';
 
 class MockFieldsComposable extends FieldsComposable<bool> {
+  MockFieldsComposable() : super(name: '$MockFieldsComposable');
+
   @override
   Widget buildFields(BuildContext context) {
     return Container();
@@ -12,16 +14,16 @@ class MockFieldsComposable extends FieldsComposable<bool> {
 
   @override
   List<Field> get fields => [
-        MockField(
-          name: 'mock_field',
-          type: FieldType.boolean,
-          initialValue: true,
-          codec: FieldCodec(
-            toParam: (value) => value.toString(),
-            toValue: (param) => param == null ? null : param == 'true',
-          ),
-        ),
-      ];
+    MockField(
+      name: 'mock_field',
+      type: FieldType.boolean,
+      initialValue: true,
+      codec: FieldCodec(
+        toParam: (value) => value.toString(),
+        toValue: (param) => param == null ? null : param == 'true',
+      ),
+    ),
+  ];
 
   @override
   String get groupName => 'fields_group';

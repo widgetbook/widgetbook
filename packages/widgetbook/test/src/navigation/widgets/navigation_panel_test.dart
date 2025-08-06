@@ -10,14 +10,53 @@ void main() {
     const query = '1';
 
     testWidgets(
+      'given a header is provided to NavigationPanel, '
+      'then it is displayed above the search field',
+      (tester) async {
+        await tester.pumpWidgetWithQueryParams(
+          queryParams: {},
+          builder:
+              (_) => NavigationPanel(
+                root: treeRoot,
+                header: const Placeholder(),
+              ),
+        );
+
+        expect(find.byType(Placeholder), findsOneWidget);
+
+        final headerDy = tester.getTopLeft(find.byType(Placeholder)).dy;
+        final searchDy = tester.getTopLeft(find.byType(TextFormField)).dy;
+
+        expect(headerDy < searchDy, isTrue);
+      },
+    );
+
+    testWidgets(
+      'given header is not provided to NavigationPanel, '
+      'then only the search field is displayed at the top',
+      (tester) async {
+        await tester.pumpWidgetWithQueryParams(
+          queryParams: {},
+          builder:
+              (_) => NavigationPanel(
+                root: treeRoot,
+              ),
+        );
+
+        expect(find.byType(TextFormField), findsOneWidget);
+      },
+    );
+
+    testWidgets(
       'when search for query, '
       'then only matching nodes are shown',
       (tester) async {
         await tester.pumpWidgetWithQueryParams(
           queryParams: {},
-          builder: (_) => NavigationPanel(
-            root: treeRoot,
-          ),
+          builder:
+              (_) => NavigationPanel(
+                root: treeRoot,
+              ),
         );
 
         await tester.findAndEnter(
@@ -38,9 +77,10 @@ void main() {
       (tester) async {
         await tester.pumpWidgetWithQueryParams(
           queryParams: {},
-          builder: (_) => NavigationPanel(
-            root: treeRoot,
-          ),
+          builder:
+              (_) => NavigationPanel(
+                root: treeRoot,
+              ),
         );
 
         await tester.findAndEnter(
@@ -65,9 +105,10 @@ void main() {
       (tester) async {
         await tester.pumpWidgetWithQueryParams(
           queryParams: {},
-          builder: (_) => NavigationPanel(
-            root: treeRoot,
-          ),
+          builder:
+              (_) => NavigationPanel(
+                root: treeRoot,
+              ),
         );
 
         await tester.findAndEnter(

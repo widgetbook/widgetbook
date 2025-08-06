@@ -1,6 +1,6 @@
 name: widgetbook_generator
 description: A package to automate setup and maintenance of the widgetbook package by using code generation.
-version: 3.9.1
+version: 3.14.0
 homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=widgetbook_generator
 repository: https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_generator
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
@@ -8,25 +8,24 @@ documentation: https://docs.widgetbook.io
 topics: [widgetbook, storybook, ui, codegen, build-runner]
 
 screenshots:
-  - description: 'Widgetbook Logo'
+  - description: Widgetbook Logo
     path: assets/logo.png
 
 environment:
-  sdk: ">=3.3.0 <4.0.0"
+  sdk: ">=3.7.0 <4.0.0"
 
 dependencies:
-  analyzer: ^6.0.0
-  build: ^2.1.0
+  analyzer: ^7.4.0
+  build: ^3.0.0
   code_builder: ^4.5.0
   collection: ^1.15.0
   crypto: ^3.0.0
-  dart_style: ^2.3.0
   glob: ^2.0.2
   meta: ^1.7.0
   path: ^1.8.0
-  source_gen: ^1.1.0
-  widgetbook_annotation: ^3.2.0
-  yaml: ^3.1.1
+  source_gen: ^3.0.0
+  widgetbook_annotation: ^3.6.0 # TODO: bump to next minor
 
 dev_dependencies:
+  dart_style: ^3.0.0
   test: ^1.21.0

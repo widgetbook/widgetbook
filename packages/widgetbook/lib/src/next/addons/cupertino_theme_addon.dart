@@ -1,3 +1,6 @@
+// next version of Widgetbook doesn't have api docs yet
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/cupertino.dart';
 
 import '../../fields/fields.dart';
@@ -24,23 +27,24 @@ class CupertinoThemeMode extends Mode<CupertinoThemeData> {
 
 class CupertinoThemeAddon extends ModeAddon<CupertinoThemeData> {
   CupertinoThemeAddon(this.themes)
-      : super(
-          name: 'Cupertino Theme',
-          modeBuilder: CupertinoThemeMode.new,
-        );
+    : super(
+        name: 'Cupertino Theme',
+        modeBuilder: CupertinoThemeMode.new,
+      );
 
   final Map<String, CupertinoThemeData> themes;
 
   @override
   List<Field> get fields {
     return [
-      ListField<CupertinoThemeData>(
+      ObjectDropdownField<CupertinoThemeData>(
         name: 'name',
         values: themes.values.toList(),
         initialValue: themes.values.first,
-        labelBuilder: (theme) => themes.keys.firstWhere(
-          (key) => themes[key] == theme,
-        ),
+        labelBuilder:
+            (theme) => themes.keys.firstWhere(
+              (key) => themes[key] == theme,
+            ),
       ),
     ];
   }

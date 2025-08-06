@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../nodes/nodes.dart';
 import 'navigation_tree_tile.dart';
 
+@internal
 class NavigationTreeNode extends StatefulWidget {
   const NavigationTreeNode({
     super.key,
@@ -38,9 +40,10 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
     // Redirect interactions to the use-case of the leaf component,
     // so that when it's clicked, the route is updated to the use-case
     // of the leaf component, and not the leaf component itself.
-    final targetNode = widget.node is WidgetbookLeafComponent
-        ? (widget.node as WidgetbookLeafComponent).useCase
-        : widget.node;
+    final targetNode =
+        widget.node is WidgetbookLeafComponent
+            ? (widget.node as WidgetbookLeafComponent).useCase
+            : widget.node;
 
     return Column(
       children: [
@@ -69,11 +72,12 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: widget.node.children!.length,
                   shrinkWrap: true,
-                  itemBuilder: (context, index) => NavigationTreeNode(
-                    node: widget.node.children![index],
-                    selectedNode: widget.selectedNode,
-                    onNodeSelected: widget.onNodeSelected,
-                  ),
+                  itemBuilder:
+                      (context, index) => NavigationTreeNode(
+                        node: widget.node.children![index],
+                        selectedNode: widget.selectedNode,
+                        onNodeSelected: widget.onNodeSelected,
+                      ),
                 ),
               ),
             ),

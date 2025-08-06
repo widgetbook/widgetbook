@@ -9,51 +9,105 @@ There are 3 different variants of the Theme Addon, which depend on the theme dat
 | `CupertinoThemeAddon` | `CupertinoThemeData` | `CupertinoTheme` |
 | `ThemeAddon`          | Custom               | Custom           |
 
-## Material Theme
+<Tabs
+  values={[
+    { label: "Dark Theme", value: "dark" },
+    { label: "Light Theme", value: "light" },
+  ]}
+>
+  <TabItem value="dark">
+    <iframe
+      src="https://demo.widgetbook.io/#/?path=features/basket/basketscreen/default&device={name:None}&locale={name:en}&theme={name:Dark}&preview"
+      width="100%"
+      height="720px"
+    />
+  </TabItem>
+  <TabItem value="light">
+    <iframe
+      src="https://demo.widgetbook.io/#/?path=features/basket/basketscreen/default&device={name:None}&locale={name:en}&theme={name:Light}&preview"
+      width="100%"
+      height="720px"
+    />
+  </TabItem>
+</Tabs>
+
+## Usage
+
+### Material Theme
 
 If your app is built using `MaterialApp`, then you are probably using `ThemeData` to define your themes. Then `MaterialThemeAddon` is the right choice for you.
 
-```dart
-MaterialThemeAddon(
-  themes: [
-    WidgetbookTheme(
-      name: 'Light',
-      data: yourMaterialLightTheme,
-    ),
-    WidgetbookTheme(
-      name: 'Dark',
-      data: yourMaterialDarkTheme,
-    ),
-  ],
-)
+```dart title=widgetbook/lib/main.dart
+import 'package:my_app/themes.dart'; // For AppThemes
+import 'package:widgetbook/widgetbook.dart';
+
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook.material(
+      // ...
+      addons: [
+        MaterialThemeAddon( // [!code highlight]
+          themes: [ // [!code highlight]
+            WidgetbookTheme( // [!code highlight]
+              name: 'Light', // [!code highlight]
+              data: AppThemes.light(), // [!code highlight]
+            ), // [!code highlight]
+            WidgetbookTheme( // [!code highlight]
+              name: 'Dark', // [!code highlight]
+              data: AppThemes.dark(), // [!code highlight]
+            ), // [!code highlight]
+          ], // [!code highlight]
+        ), // [!code highlight]
+      ],
+    );
+  }
+}
 ```
 
-## Cupertino Theme
+### Cupertino Theme
 
 If your app is built using `CupertinoApp`, then you are probably using `CupertinoThemeData` to define your themes. Then `CupertinoThemeAddon` is the right choice for you.
 
-```dart
-CupertinoThemeAddon(
-  themes: [
-    WidgetbookTheme(
-      name: 'Light',
-      data: yourCupertinoLightTheme,
-    ),
-    WidgetbookTheme(
-      name: 'Dark',
-      data: yourCupertinoDarkTheme,
-    ),
-  ],
-)
+```dart title=widgetbook/lib/main.dart
+import 'package:my_app/themes.dart'; // For AppThemes
+import 'package:widgetbook/widgetbook.dart';
+
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook.cupertino(
+      // ...
+      addons: [
+        CupertinoThemeAddon( // [!code highlight]
+          themes: [ // [!code highlight]
+            WidgetbookTheme( // [!code highlight]
+              name: 'Light', // [!code highlight]
+              data: AppThemes.light(), // [!code highlight]
+            ), // [!code highlight]
+            WidgetbookTheme( // [!code highlight]
+              name: 'Dark', // [!code highlight]
+              data: AppThemes.dark(), // [!code highlight]
+            ), // [!code highlight]
+          ], // [!code highlight]
+        ), // [!code highlight]
+      ],
+    );
+  }
+}
 ```
 
-## Custom Theme
+### Custom Theme
 
 If you have a custom theme data and widget or you have a custom logic to build your theme, then `ThemeAddon` is the right choice for you.
 
-Assuming you have the following custom theme:
+<Accordion title="App Custom Theme">
 
-```dart
+```dart title='lib/theme.dart'
 // Custom theme data
 class AppThemeData {
   AppThemeData(this.color);
@@ -86,24 +140,86 @@ class AppTheme extends InheritedWidget {
 }
 ```
 
-Then you can use a `ThemeAddon` to inject that theme into your use-cases as follows:
+</Accordion>
 
-```dart
-// 1. Define your custom themes somewhere in your app
-final blueTheme = AppThemeData(Colors.blue);
-final yellowTheme = AppThemeData(Colors.yellow);
+```dart title=widgetbook/lib/main.dart
+import 'dart:ui';
+import 'package:my_app/theme.dart'; // For AppTheme
+import 'package:my_app/themes.dart'; // For AppThemes
+import 'package:widgetbook/widgetbook.dart';
 
-// 2. Add ThemeAddon in your Widgetbook addons
-ThemeAddon<AppThemeData>(
-  themes: [
-    blueTheme,
-    yellowTheme,
-  ],
-  themeBuilder: (context, theme, child) {
-    return AppTheme(
-      data: theme,
-      child: child,
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        ThemeAddon<AppThemeData>( // [!code highlight]
+          themes: [ // [!code highlight]
+            WidgetbookTheme( // [!code highlight]
+              name: 'Light', // [!code highlight]
+              data: AppThemes.light(), // [!code highlight]
+            ), // [!code highlight]
+            WidgetbookTheme( // [!code highlight]
+              name: 'Dark', // [!code highlight]
+              data: AppThemes.dark(), // [!code highlight]
+              ), // [!code highlight]
+            ), // [!code highlight]
+          ], // [!code highlight]
+          themeBuilder: (context, theme, child) { // [!code highlight]
+            // Wrap use cases with the custom theme's InheritedWidget // [!code highlight]
+            return AppTheme( // [!code highlight]
+              data: theme, // [!code highlight]
+              child: child, // [!code highlight]
+            ); // [!code highlight]
+          }, // [!code highlight]
+        ), // [!code highlight]
+      ],
     );
-   }
+  }
+}
+```
+
+## Order
+
+Since the [order of addons](/addons#order-of-addons) matters, here are some guidelines to follow when using the `ThemeAddon`:
+
+Addons that should come before the `ThemeAddon`:
+
+- `ViewportAddon`
+- `DeviceFrameAddon`
+
+## Multi-snapshot Support
+
+The `ThemeAddon`s are supported in the [Multi Snapshot Reviews](/cloud/snapshots/multi-snapshot) via the `ThemeAddonConfig`. Here's how to configure it:
+
+```dart title=widgetbook/lib/main.dart
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@App(
+  cloudAddonsConfigs: {
+    'Light': [
+      ThemeAddonConfig('Light'), // [!code highlight]
+    ],
+    'Dark': [
+      ThemeAddonConfig('Dark'), // [!code highlight]
+    ],
+  },
 )
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        // Your theme addon of choice here... // [!code highlight]
+      ],
+    );
+  }
+}
 ```

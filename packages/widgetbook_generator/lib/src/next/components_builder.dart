@@ -1,7 +1,6 @@
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
-import 'package:dart_style/dart_style.dart';
 import 'package:glob/glob.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -30,23 +29,29 @@ class ComponentsBuilder implements Builder {
   Future<void> build(BuildStep buildStep) async {
     final glob = Glob('**/*.stories.dart');
     final assets = buildStep.findAssets(glob);
-    final components = await assets
-        .asyncMap((asset) => buildStep.resolver.libraryFor(asset))
-        .map((element) => LibraryReader(element))
-        .map(
-          (library) => library.allElements
-              .whereType<TopLevelVariableElement>()
-              .firstWhere((element) => element.name.endsWith('Component')),
-        )
-        .toList();
+    final components =
+        await assets
+            .asyncMap((asset) => buildStep.resolver.libraryFor(asset))
+            .map((element) => LibraryReader(element))
+            .map(
+              (library) => library.allElements
+                  .whereType<TopLevelVariableElement2>()
+                  .firstWhere(
+                    (element) => element.displayName.endsWith('Component'),
+                  ),
+            )
+            .toList();
 
     final variable = declareFinal('components');
     final nodesValue = literalList(
       components
           .map(
             (e) => refer(
-              e.name,
-              e.librarySource?.uri.toString().replaceAll('.book.dart', '.dart'),
+              e.displayName,
+              e.firstFragment.libraryFragment.source.uri.toString().replaceAll(
+                '.book.dart',
+                '.dart',
+              ),
             ),
           )
           .toList(),
@@ -61,7 +66,6 @@ class ComponentsBuilder implements Builder {
       },
     );
 
-    final formatter = DartFormatter();
     final emitter = DartEmitter(
       allocator: Allocator.simplePrefixing(),
     );
@@ -72,8 +76,6 @@ class ComponentsBuilder implements Builder {
       ${outputLibrary.accept(emitter)}
     ''';
 
-    final formattedContent = formatter.format(content);
-
-    buildStep.writeAsString(outputAsset, formattedContent);
+    buildStep.writeAsString(outputAsset, content);
   }
 }

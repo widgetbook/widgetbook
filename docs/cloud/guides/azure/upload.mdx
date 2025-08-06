@@ -1,0 +1,93 @@
+# Widgetbook Cloud x Azure
+
+If you want to use Widgetbook Cloud with your existing Azure DevOps project, here's a step-by-step guide to help you get started.
+
+<Steps>
+  <Step title="Setup Widgetbook Cloud Project">
+    Create a new project in Widgetbook Cloud by importing your Azure repository.
+  </Step>
+  
+  <Step title="Add API Key as a Secret">
+    Add `WIDGETBOOK_API_KEY` to your [Azure DevOps project's secrets](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables). You can find the API key in the Widgetbook Cloud's **project settings page**.
+  </Step>
+
+  <Step title="Create Azure DevOps Pipeline">
+    To upload a [Widgetbook Build](/cloud/builds/overview) for each new commit in your repository, you need to setup up a workflow in Azure DevOps Pipelines that runs on every push.
+
+    Add the following workflow to your `azure-pipeline.yaml` file.
+
+    ```yaml
+    trigger:
+      branches:
+        include:
+          - "*"
+
+    pr:
+      branches:
+        include:
+          - "*"
+
+    stages:
+      - stage: WidgetbookHostingStage
+        displayName: Hosting
+        jobs:
+          - job: HostingJob
+            displayName: Hosting
+            pool:
+              vmImage: "ubuntu-latest"
+            steps:
+              - task: FlutterInstall@0
+                displayName: "Install Flutter SDK"
+                inputs:
+                  mode: "auto"
+                  channel: "stable"
+                  version: "latest"
+
+              - task: Bash@3
+                displayName: "Bootstrap App"
+                inputs:
+                  targetType: "inline"
+                  script: |
+                    $(FlutterToolPath)/flutter pub get
+                    # Add any other steps needed to make your
+                    # app widgets available for Widgetbook
+
+              - task: Bash@3
+                displayName: "Build Widgetbook"
+                inputs:
+                  workingDirectory: "widgetbook"
+                  targetType: "inline"
+                  script: |
+                    $(FlutterToolPath)/flutter pub get
+                    $(DartToolPath)/dart run build_runner build -d
+                    $(FlutterToolPath)/flutter build web -t lib/main.dart
+
+              - task: Bash@3
+                displayName: "Install Widgetbook CLI"
+                inputs:
+                  targetType: "inline"
+                  script: |
+                    $(DartToolPath)/dart pub global activate widgetbook_cli
+
+              - task: Bash@3
+                displayName: "Push Widgetbook Build"
+                inputs:
+                  workingDirectory: "widgetbook"
+                  targetType: "inline"
+                  script: |
+                    $HOME/.pub-cache/bin/widgetbook cloud build push --api-key $(WIDGETBOOK_API_KEY)
+    ```
+
+  </Step>
+
+  <Step title="Create a Pull Request">
+    To test out if everything works properly, create a new branch and push a commit to it, then submit a PR with the new branch.
+    After the build upload finishes, a commit status will be added to your PR once the [Widgetbook Review](/cloud/reviews) is ready.
+
+  </Step>
+
+</Steps>
+
+## Troubleshooting
+
+To make sure that your Widgetbook Cloud setup works properly, you can check that your repository has a Webhook configured _(under Project Settings > Service Hooks)_ to notify Widgetbook Cloud about new PRs.

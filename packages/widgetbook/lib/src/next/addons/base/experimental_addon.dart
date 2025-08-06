@@ -13,16 +13,17 @@ mixin ExperimentalAddon<T> on Addon<T> {
       trailing: const ExperimentalBadge(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: fields
-            .map(
-              (field) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 4.0,
-                ),
-                child: field.build(context, groupName),
-              ),
-            )
-            .toList(),
+        children:
+            fields
+                .map(
+                  (field) => Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4.0,
+                    ),
+                    child: field.build(context, groupName),
+                  ),
+                )
+                .toList(),
       ),
     );
   }

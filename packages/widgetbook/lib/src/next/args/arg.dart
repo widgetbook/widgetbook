@@ -1,3 +1,6 @@
+// next version of Widgetbook doesn't have api docs yet
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/widgets.dart';
 
 import '../../fields/fields.dart';
@@ -11,12 +14,11 @@ abstract class Arg<T> extends FieldsComposable<T> {
   const Arg(
     T value, {
     String? name,
-  })  : $value = value,
-        $name = name;
+  }) : $value = value,
+       $name = name,
+       super(name: name ?? '');
 
-  const Arg.empty()
-      : $value = null,
-        $name = null;
+  const Arg.empty() : $value = null, $name = null, super(name: '');
 
   final T? $value;
   final String? $name;
@@ -62,16 +64,17 @@ abstract class Arg<T> extends FieldsComposable<T> {
       trailing: const ExperimentalBadge(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: fields
-            .map(
-              (field) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 4.0,
-                ),
-                child: field.build(context, groupName),
-              ),
-            )
-            .toList(),
+        children:
+            fields
+                .map(
+                  (field) => Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4.0,
+                    ),
+                    child: field.build(context, groupName),
+                  ),
+                )
+                .toList(),
       ),
     );
   }

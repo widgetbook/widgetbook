@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 
-import 'theme_addon.dart';
+import 'addon.dart';
 
 /// A [ThemeAddon] for changing the active [ThemeData] via [Theme].
 ///
-/// {@macro ThemeAddon.initialTheme}
+/// Learn more: https://docs.widgetbook.io/addons/theme-addon#material-theme
 class MaterialThemeAddon extends ThemeAddon<ThemeData> {
+  /// Creates a new instance of [MaterialThemeAddon].
   MaterialThemeAddon({
     required super.themes,
     super.initialTheme,
   }) : super(
-          themeBuilder: (context, theme, child) {
-            return Theme(
-              data: theme,
-              child: ColoredBox(
-                color: theme.scaffoldBackgroundColor,
-                child: DefaultTextStyle(
-                  style: theme.textTheme.bodyMedium!,
-                  child: child,
-                ),
-              ),
-            );
-          },
-        );
+         themeBuilder: (context, theme, child) {
+           return Theme(
+             data: theme,
+             child: ColoredBox(
+               color: theme.scaffoldBackgroundColor,
+               child: DefaultTextStyle(
+                 style: theme.textTheme.bodyMedium!,
+                 child: child,
+               ),
+             ),
+           );
+         },
+       );
 }

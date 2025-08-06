@@ -1,0 +1,98 @@
+# Duration Knob
+
+The Duration knob renders a text field in the Widgetbook UI where you can dynamically enter a string value to specify a Duration is milliseconds for a widget property. 
+
+## Variants
+
+The String knob has two variants:
+- `context.knobs.duration()`: This variant allows you to enter a Duration value. It does not accept `null` values.
+- `context.knobs.durationOrNull()`: This variant allows you to enter a Duration value or `null`. It is useful when the property can be optional.
+
+## Properties
+
+Besides the knob's [base properties](/knobs/overview#properties), the Duration knob does not feature any additional properties.
+
+## `context.knobs.duration()`
+
+### Example
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/duration-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use a Duration knob, call the `context.knobs.duration()` method.
+
+```dart title="Example: Duration Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    duration: context.knobs.duration(label: 'duration') // [!code highlight]
+  );
+}
+```
+
+## `context.knobs.durationOrNull()` 
+
+### Example
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/duration-nullable-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use the nullable Duration knob, call the `context.knobs.durationOrNull()` method.
+
+```dart title="Example: Nullable Duration Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    duration: context.knobs.durationOrNull(label: 'duration'), // [!code highlight]
+  );
+}
+```
+
+## Multi-snapshot Support
+
+Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons).
+
+### Regular String Knob
+
+```dart title="Example: DurationKnobConfig"
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'duration': [DurationKnobConfig('duration', 2000)], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    duration: context.knobs.duration(label: 'duration')
+  );
+}
+```
+
+### Nullable Duration Knob
+
+```dart title="Example: NullKnobConfig"
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'Without duration': [NullKnobConfig('duration')], // [!code highlight]
+    'With duration': [DurationKnobConfig('duration', 2000)], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    duration: context.knobs.durationOrNull(label: 'duration')
+  );
+}
+```

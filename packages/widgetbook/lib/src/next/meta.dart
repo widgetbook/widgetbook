@@ -1,3 +1,6 @@
+// next version of Widgetbook doesn't have api docs yet
+// ignore_for_file: public_member_api_docs
+
 import 'args/story_args.dart';
 
 class Meta<T> {

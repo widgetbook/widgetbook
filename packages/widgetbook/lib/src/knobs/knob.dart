@@ -1,95 +1,78 @@
 import 'package:flutter/widgets.dart';
 
+import '../addons/addons.dart';
 import '../fields/fields.dart';
 import '../navigation/navigation.dart';
-import '../settings/settings.dart';
-import '../state/state.dart';
 
-/// Allows [WidgetbookUseCase]s to have dynamically adjustable parameters.
+/// Base class for interactive controls that allow dynamic parameter adjustment.
+///
+/// [Knob]s provide interactive controls within [WidgetbookUseCase]s that allow
+/// users to dynamically adjust widget parameters at runtime. Unlike [WidgetbookAddon]s
+/// which affect all use cases globally, knobs are specific to individual use cases
+/// and help test different states and configurations of widgets.
+///
+/// Knobs appear in the settings panel when a use case is selected and their
+/// values are synchronized with URL query parameters, making configurations
+/// shareable and persistent.
+///
+/// Learn more:
+/// * https://docs.widgetbook.io/knobs/overview
+/// * https://docs.widgetbook.io/knobs/custom-knob
 @optionalTypeArgs
 abstract class Knob<T> extends FieldsComposable<T> {
+  /// Creates a new [Knob] with the specified configuration.
   Knob({
-    required this.label,
-    this.description,
+    required String label,
+    super.description,
     @Deprecated('Use initialValue instead.') T? value,
     T? initialValue,
-    this.isNullable = false,
+    super.isNullable,
     @Deprecated(
       'This parameter is not used anymore. '
       'It defaults to [value == null] instead of [false]',
     )
-    this.isNull = false,
-  }) : this.initialValue = (initialValue ?? value) as T {
-    this.isNull = this.initialValue == null;
-  }
+    bool isNull = false,
+  }) : this.initialValue = (initialValue ?? value) as T,
+       super(name: label);
 
-  /// The label that's put above a knob.
-  final String label;
-
-  /// The Description of what the user can put on the knob.
-  final String? description;
-
-  /// The initial value the knob is set to.
+  /// The default value for this knob.
+  ///
+  /// This value is used when the knob is first displayed or when no value
+  /// has been set by the user.
   final T initialValue;
 
-  final bool isNullable;
+  /// The display label for this knob.
+  ///
+  /// This is an alias for [name] to maintain compatibility with older APIs.
+  /// The label appears in the settings panel next to the knob's input control.
+  String get label => name;
 
+  /// @nodoc
   @Deprecated(
     'Knobs are stateless. '
     'They know about their value from [valueFromQueryGroup]. '
     'You can use [initialValue] if you want to set a default value. ',
   )
-  T? value;
-
-  bool isNull;
+  T? get value => null; // A workaround to avoid breaking changes
 
   @override
   String get groupName => 'knobs';
 
   @override
-  Widget buildFields(BuildContext context) {
-    return NullableSetting(
-      name: label,
-      description: description,
-      isNull: isNull,
-      isNullable: isNullable,
-      onChangedNullable: (isEnabled) {
-        WidgetbookState.of(context).knobs.updateNullability(
-              label,
-              !isEnabled,
-            );
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: fields
-            .map(
-              (field) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 4.0,
-                ),
-                child: field.build(context, groupName),
-              ),
-            )
-            .toList(),
-      ),
-    );
-  }
-
-  @override
   bool operator ==(Object other) {
     return other is Knob<T> &&
         other.initialValue == initialValue &&
-        other.label == label &&
+        other.name == name &&
         other.description == description;
   }
 
   @override
-  int get hashCode => label.hashCode;
+  int get hashCode => name.hashCode;
 
   @override
   Map<String, dynamic> toJson() {
     return {
-      'name': label,
+      'name': name,
       'group': groupName,
       'nullable': isNullable,
       'fields': fields.map((field) => field.toFullJson()).toList(),

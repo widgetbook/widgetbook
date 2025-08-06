@@ -1,0 +1,100 @@
+# Integer Knob
+
+The integer slider knob renders a slider in the Widgetbook UI where you can dynamically enter an integer value for a widget property. 
+This is particularly useful for properties that require an integer input, such as shown in a notification badge.
+
+## Variants
+
+The double slider knob has two variants:
+- `context.knobs.int.slider()`: This variant allows you to enter an integer value via a slider. It does not accept `null` values.
+- `context.knobs.intOrNull.slider()`: This variant allows you to enter an integer value via a slider or set the value to `null`. It is useful when the property can be optional.
+
+<Info>Widgetbook also offers support for input-based integer knobs which are documented on the [Integer Input Knob page](/knobs/integer/input).</Info>
+
+## Properties
+
+In addition to the knob's [base properties](/knobs/overview#properties), the integer slider knob includes the following properties:
+
+<Accordion title="context.knobs.int.slider()" defaultOpen>
+  <Property name="min" type="int" optional>
+    The minimum value the slider can select. This defines the start of the slider's range. 
+    Defaults to `0`.
+  </Property>
+
+  ---
+
+  <Property name="max" type="int" optional>
+    The maximum value the slider can select. This defines the end of the slider's range. 
+    Defaults to `20`.
+  </Property>
+
+  ---
+
+  <Property name="divisions" type="int" optional>
+    Sets how many evenly spaced discrete values are available between `min` and `max`. 
+    When set, the slider snaps to these fixed intervals. For example, with `min: 0`, `max: 10`, and `divisions: 5`, the selectable values will be: `0`, `2`, `4`, `6`, `8`, `10`. 
+    Defaults to `null`, which allows continuous values.
+  </Property>
+</Accordion>
+
+## `context.knobs.int.slider()`
+
+### Example
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/int-slider-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use the integer input knob, call the `context.knobs.int.slider()` method.
+
+```dart title="Example: Double Slider Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    count: context.knobs.int.slider( // [!code highlight]
+      label: 'count', // [!code highlight]
+      min: 0, // [!code highlight]
+      max: 100, // [!code highlight]
+      divisions: 20, // [!code highlight]
+      initialValue: 100, // [!code highlight]
+    ), // [!code highlight]
+  );
+}
+```
+
+## `context.knobs.intOrNull.slider()` 
+
+### Example
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/int-slider-nullable-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use the nullable double input knob, call the `context.knobs.doubleOrNull.input()` method.
+
+```dart title="Example: Nullable Double Slider Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    count: context.knobs.intOrNull.slider( // [!code highlight]
+      label: 'count', // [!code highlight]
+      min: 0, // [!code highlight] 
+      max: 100, // [!code highlight]
+      divisions: 20, // [!code highlight]
+    ), // [!code highlight]
+  );
+}
+```
+
+## Multi-snapshot Support
+
+Multi-snapshot support for Widgetbook Cloud allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons).
+Please refer to the [Multi-snapshot Support page](/knobs/integer/overview#multi-snapshot-support) for more information about `IntegerKnobConfig`.

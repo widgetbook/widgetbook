@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:pool/pool.dart';
 import 'package:retry/retry.dart';
 
+import 'storage_exception.dart';
 import 'storage_object.dart';
 
 /// HTTP client to connect to the Widgetbook Cloud Storage
@@ -55,19 +56,29 @@ class StorageClient {
       object.key,
     );
 
-    return client.post(
-      url,
-      data: FormData.fromMap({
-        ...fields,
-        'key': fileKey,
-        'Content-Type': object.mimeType,
-        'file': MultipartFile.fromStream(
-          () => object.reader(),
-          object.size,
-          filename: fileKey,
-          contentType: DioMediaType.parse(object.mimeType),
-        ),
-      }),
-    );
+    return client
+        .post<void>(
+          url,
+          data: FormData.fromMap(
+            {
+              ...fields,
+              'key': fileKey,
+              'Content-Type': object.mimeType,
+              'file': MultipartFile.fromStream(
+                () => object.reader(),
+                object.size,
+                filename: fileKey,
+                contentType: DioMediaType.parse(object.mimeType),
+              ),
+            },
+          ),
+        )
+        .onError(
+          (error, stackTrace) =>
+              throw StorageUploadException.parse(
+                object,
+                error!,
+              ),
+        );
   }
 }

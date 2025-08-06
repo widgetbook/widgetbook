@@ -8,15 +8,15 @@ class WidgetbookUseCaseInstance extends WidgetbookInstance {
   WidgetbookUseCaseInstance({
     required UseCaseMetadata useCase,
   }) : super(
-          type: 'WidgetbookUseCase',
-          args: {
-            'name': literalString(useCase.name),
-            'builder': refer(
-              useCase.functionName,
-              useCase.importUri,
-            ),
-            if (useCase.designLink != null)
-              'designLink': literalString(useCase.designLink!),
-          },
-        );
+         type: 'WidgetbookUseCase',
+         args: {
+           'name': literalString(useCase.name),
+           'builder': refer(
+             useCase.functionName,
+             useCase.importUri,
+           ),
+           if (useCase.designLink != null)
+             'designLink': literalString(useCase.designLink!),
+         },
+       );
 }

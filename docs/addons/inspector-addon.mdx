@@ -1,17 +1,30 @@
 # Inspector Addon
 
-The Inspector Addon is a Widgetbook utility designed to provide inspection 
-capabilities for widgets. It allows developers to inspect various properties of a widget, 
-such as colors, sizes, and padding, directly within the Widgetbook's Workbench.
+The `InspectorAddon`, _built on the ['inspector'](https://pub.dev/packages/inspector) package_, enhances Widgetbook by enabling widget property inspection, such as colors, sizes, and padding, directly in the Workbench.
 
-## Setup
-Here's how to configure it:
+## Usage
 
-<Warning>
-  If `InspectorAddon` is used alongside other addons, ensure it's defined appropriately in the addons list. 
-  For instance, if used with the [`DeviceFrameAddon`](/addons/device-frame-addon), 
-  ensure the order is correct based on your needs.
-</Warning>
-```dart
-InspectorAddon(enabled: true),
+```dart title=widgetbook/lib/main.dart
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        InspectorAddon(), // [!code highlight]
+      ],
+    );
+  }
+}
 ```
+
+## Order
+
+Since the [order of addons](/addons#order-of-addons) matters, here are some guidelines to follow when using the `InspectorAddon`:
+
+Addons that should come before the `InspectorAddon`:
+
+- `ViewportAddon`
+- `DeviceFrameAddon`

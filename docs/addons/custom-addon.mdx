@@ -1,176 +1,202 @@
 # Custom Addon
 
-Custom addons in Widgetbook offer the flexibility to tailor your development environment
-according to the unique needs of your project. We will explore two examples, simple and
-advanced, demonstrating the process of creating custom addons.
+If the built-in addons do not meet your needs, you can create your own custom Addons. This
+allows you to extend the functionality of Widgetbook and tailor it to your specific requirements.
 
-## Setup
+## Guide
 
-To create a custom Addons, follow these steps:
+In this guide, we will be creating a "border addon" that allows you to put a border around your use-case.
 
-- Define a model for your custom Addon. This model will hold the data and behavior of your
-  Addon.
-- Create a new class that extends the WidgetbookAddon class with a generic parameter
-  corresponding to your defined model.
+### 0. Base structure
 
-## Writing a custom Alignment Addon
+Start by creating a new file in your widgetbook project (e.g. `border_addon.dart`).
 
-Here's an example demonstrating how to create a simple Alignment Addon:
-
-```dart
-import 'package:flutter/material.dart';
+```dart title=widgetbook/lib/addons/border_addon.dart
+import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-class AlignmentAddon extends WidgetbookAddon<Alignment> {
-  final Alignment initialAlignment;
+class BorderSetting {
+  const BorderSetting({
+    required this.width,
+    required this.color,
+  });
 
-  AlignmentAddon({
-    this.initialAlignment = Alignment.center,
-  }) : super(name: 'Alignment');
+  final int width;
+  final Color color;
+}
+
+class BorderAddon extends WidgetbookAddon<BorderSetting> {
+  BorderAddon() : super(name: 'Border');
+
+  @override
+  List<Field> get fields {
+    // TODO
+  }
+
+  @override
+  BorderSetting valueFromQueryGroup(Map<String, String> group) {
+    // TODO
+  }
 
   @override
   Widget buildUseCase(
     BuildContext context,
     Widget child,
-    Alignment setting,
+    BorderSetting setting,
   ) {
-    // customize how the use case is built using your custom Addon
-    return Align(
-      alignment: setting,
-      child: child,
-    );
-  }
-
-  @override
-  List<Field<Alignment>> get fields {
-    return [
-      ListField<Alignment>(
-        name: 'alignment',
-        initialValue: initialAlignment,
-        values: [
-          Alignment.topLeft,
-          Alignment.topCenter,
-          Alignment.topRight,
-          Alignment.centerLeft,
-          Alignment.center,
-          Alignment.centerRight,
-          Alignment.bottomLeft,
-          Alignment.bottomCenter,
-          Alignment.bottomRight,
-        ],
-      )
-    ];
-  }
-
-  @override
-  Alignment valueFromQueryGroup(Map<String, String> group) {
-    return valueOf<Alignment>('alignment', group)!;
+    // TODO
   }
 }
 ```
 
-In this example, we create a `AlignmentAddon` that manages a `Alignment` value. The
-`initialSetting` is the initial state of the `Alignment` value. The fields list contains a
-single `ListField` which represents the `Alignment` value managed by the addon in the
-Widgetbook UI
+Now let's start by implementing each of the class members step by step.
 
-<Image src="/assets/addons/custom-addon.png" zoom />
+### 1. `fields` getter
 
-<Info>
-  See [source
-  code](https://github.com/widgetbook/widgetbook/blob/main/examples/full_example/lib/customs/custom_addon.dart)
-</Info>
+This is a list of [fields](/guides/fields) that describe how the addon addon will be represented in both:
 
-Let's break down the code to understand better.
+- The Widgetbook UI – the "Addons" panel.
+- The URL query parameters.
+
+In this case we just need **two fields** to represent the `BorderSetting`:
+
+1. `IntSliderField` - to pick an integer value for `BorderSetting.width`.
+1. `ColorField` - to pick a color value for `BorderSetting.color`.
 
 ```dart
-class AlignmentAddon extends WidgetbookAddon<Alignment> {
+@override
+List<Field> get fields {
+  return [
+    IntSliderField(
+      name: 'width',
+      initialValue: 1,
+      min: 1,
+      max: 10,
+    ),
+    ColorField(
+      name: 'color',
+      initialValue: const Color(0xFF000000),
+    ),
+  ];
+}
 ```
 
-We create a new class called `AlignmentAddon`, which extends `WidgetbookAddon`. The
-`Alignment` generic indicates that this addon will handle a `Alignment` value.
+### 2. `valueFromQueryGroup` method
+
+This method is responsible for parsing the query parameters back to the addon setting (i.e. `BorderSetting`). This can be done by using the `valueOf` helper method to extract the values from the query group by giving it **the field's name**.
 
 ```dart
-class AlignmentAddon extends WidgetbookAddon<Alignment> {
-  final Alignment initialAlignment;
+@override
+BorderSetting valueFromQueryGroup(Map<String, String> group) {
+  final width = valueOf<int>('width', group)!;
+  final color = valueOf<Color>('color', group)!;
 
-  AlignmentAddon({
-    this.initialAlignment = Alignment.center,
-  }) : super(name: 'Alignment');
+  return BorderSetting(
+    width: width,
+    color: color,
+  );
+}
 ```
 
-The constructor for `AlignmentAddon` takes a parameter. `initialAlignment` is `Alignment`
-with default value, if provided, will be used as the initial value of the addon.
+### 3. `buildUseCase` method
 
-We define one final fields in the class, `alignment`, to hold the values passed in from
-the constructor. You may add more fields if necessitates.
+This method is responsible for building the use-case widget with the addon applied. In this case, we will wrap the child widget with a `Container` that has a border with the given width and color.
 
 ```dart
+@override
+Widget buildUseCase(
+  BuildContext context,
+  Widget child,
+  BorderSetting setting,
+) {
+  return Container(
+    decoration: BoxDecoration(
+      border: Border.all(
+        color: setting.color,
+        width: setting.width.toDouble(),
+      ),
+    ),
+    child: child,
+  );
+}
+```
+
+### 4. Using the Addon
+
+Now that we have implemented the `BorderAddon`, we can use it in our Widgetbook project. To do this, we need to add it to the `addons` list in the `Widgetbook` widget.
+
+```dart title=widgetbook/lib/main.dart
+import 'package:flutter/widgets.dart';
+import 'package:widgetbook/widgetbook.dart';
+
+import 'addons/border_addon.dart';  // [!code highlight]
+
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
   @override
-  Widget buildUseCase(
-    BuildContext context,
-    Widget child,
-    Alignment setting,
-  ) {
-    return Align(
-      alignment: setting,
-      child: child,
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [BorderAddon()], // [!code highlight]
     );
   }
+}
 ```
 
-The `buildUseCase` method is where we specify how the addon will affect the widget tree.
-It's an abstract method from the `WidgetbookAddon` class that we need to implement. It
-takes three parameters: a `BuildContext`, a Widget that is the child of this addon, and a
-`Alignment` that is the current setting of the addon. For now, we wrap the child widget
-with an `Align` widget that uses the setting parameter (which is the current `Alignment`
-setting for this addon) as its alignment value.
+## Multi-snapshot Support
 
-```dart
-    @override
-  List<Field<Alignment>> get fields {
-    return [
-      ListField<Alignment>(
-        name: 'alignment',
-        initialValue: initialAlignment,
-        values: [
-          Alignment.topLeft,
-          Alignment.topCenter,
-          Alignment.topRight,
-          Alignment.centerLeft,
-          Alignment.center,
-          Alignment.centerRight,
-          Alignment.bottomLeft,
-          Alignment.bottomCenter,
-          Alignment.bottomRight,
-        ],
-      )
-    ];
-  }
+Custom addons can be used with [Multi Snapshot Reviews](/cloud/snapshots/multi-snapshot) by implementing the `AddonConfig` interface.
 
+<Info>
+  We are using `String colorHex` instead of `Color color` in the `AddonConfig`
+  because we cannot convert color to hex in a constant constructor. And the
+  constructor needs to be constant to be used in the `cloudAddonsConfigs` map.
+</Info>
+
+```dart title=widgetbook/lib/addons/border_addon.dart
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+class BorderAddonConfig extends AddonConfig {
+  const BorderAddonConfig(this.width, this.colorHex)
+      : super(
+          'border', // addon's name in kebab-case
+          'width:$width,color:$colorHex', // comma-separated fields' names/values
+        );
+
+  final int width;
+  final String colorHex;
+}
 ```
 
-The fields getter is where we specify the fields that will represent the addon in the
-Widgetbook UI. Each field corresponds to an input field in the UI. In this case, we have a
-single `ListField` with an initial value of `initialAlignment` and values of possible
-alignments for `Align` widget.
+```dart title=widgetbook/lib/main.dart
+import 'package:flutter/widgets.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-```dart
+import 'addons/border_addon.dart'; // [!code highlight]
+
+@App(
+  cloudAddonsConfigs: {
+    'border black (2)': [
+      BorderAddonConfig(2, 'ff000000'), // [!code highlight]
+    ],
+    'border white (4)': [
+      BorderAddonConfig(4, 'ffffffff'), // [!code highlight]
+    ],
+  },
+)
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
   @override
-  Alignment valueFromQueryGroup(Map<String, String> group) {
-    return valueOf<Alignment>('alignment', group) ?? initialAlignment;
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        BorderAddon(), // [!code highlight]
+      ],
+    );
   }
+}
 ```
-
-Lastly, the `valueFromQueryGroup` method is overridden. This method is responsible for
-generating a new `Alignment` setting for the addon from the URL's query parameters. It
-uses the helper method `valueOf` to extract the `Alignment` value associated with the
-'alignment' key from the group map. If the value is not found (i.e., it's null), it falls
-back to the `initialAlignment`.
-
-Congratulation! you have managed to created your first custom Addon that wraps `Align`
-widget. So now, nothing cannot stop you to write what your project need.
-
-## Field Types in Widgetbook
-
-For more detailed information, visit the [Fields page](/guides/fields).

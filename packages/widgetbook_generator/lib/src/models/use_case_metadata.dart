@@ -9,9 +9,10 @@ class UseCaseMetadata extends ElementMetadata {
     required this.designLink,
     required super.name,
     required super.importUri,
-    required super.filePath,
     required this.component,
     required this.navPath,
+    required this.cloudExclude,
+    required this.knobsConfigs,
   });
 
   /// The name of the [UseCase]-annotated function.
@@ -26,6 +27,11 @@ class UseCaseMetadata extends ElementMetadata {
   /// The path this element is placed under in the rendered widgetbook.
   final String navPath;
 
+  /// Whether the [UseCase] should be excluded from cloud builds.
+  final bool cloudExclude;
+
+  final Map<String, dynamic>? knobsConfigs;
+
   // ignore: sort_constructors_first
   factory UseCaseMetadata.fromJson(Map<String, dynamic> json) {
     return UseCaseMetadata(
@@ -33,13 +39,18 @@ class UseCaseMetadata extends ElementMetadata {
       designLink: json['designLink'] as String?,
       name: json['useCaseName'] as String,
       importUri: json['importStatement'] as String,
-      filePath: json['useCaseDefinitionPath'] as String,
       navPath: json['navPath'] as String,
+      cloudExclude: json['cloudExclude'] as bool,
       component: ElementMetadata(
         name: json['componentName'] as String,
         importUri: json['componentImportStatement'] as String,
-        filePath: json['componentDefinitionPath'] as String,
       ),
+      knobsConfigs:
+          json['knobsConfigs'] != null
+              ? Map<String, Map<String, dynamic>>.from(
+                json['knobsConfigs'] as Map,
+              )
+              : null,
     );
   }
 
@@ -53,11 +64,11 @@ class UseCaseMetadata extends ElementMetadata {
       'designLink': designLink,
       'useCaseName': name,
       'importStatement': importUri,
-      'useCaseDefinitionPath': filePath,
       'componentName': component.name,
       'componentImportStatement': component.importUri,
-      'componentDefinitionPath': component.filePath,
       'navPath': navPath,
+      'cloudExclude': cloudExclude,
+      'knobsConfigs': knobsConfigs,
     };
   }
 }

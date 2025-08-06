@@ -1,3 +1,6 @@
+// next version of Widgetbook doesn't have api docs yet
+// ignore_for_file: public_member_api_docs
+
 import '../../fields/fields.dart';
 import 'arg.dart';
 
@@ -9,11 +12,11 @@ class BoolArg extends Arg<bool> {
 
   @override
   List<Field> get fields => [
-        BooleanField(
-          name: name,
-          initialValue: value,
-        ),
-      ];
+    BooleanField(
+      name: name,
+      initialValue: value,
+    ),
+  ];
 
   @override
   bool valueFromQueryGroup(Map<String, String> group) {

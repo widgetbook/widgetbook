@@ -1,3 +1,6 @@
+// next version of Widgetbook doesn't have api docs yet
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/widgets.dart';
 import 'package:nested/nested.dart';
 
@@ -28,14 +31,15 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
     return modes == null || modes!.isEmpty
         ? effectiveStory
         : Nested(
-            children: modes!
-                .map(
-                  (mode) => SingleChildBuilder(
-                    builder: (context, child) => mode.build(context, child!),
-                  ),
-                )
-                .toList(),
-            child: effectiveStory,
-          );
+          children:
+              modes!
+                  .map(
+                    (mode) => SingleChildBuilder(
+                      builder: (context, child) => mode.build(context, child!),
+                    ),
+                  )
+                  .toList(),
+          child: effectiveStory,
+        );
   }
 }

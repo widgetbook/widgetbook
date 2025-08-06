@@ -1,6 +1,6 @@
 name: widgetbook_cli
 description: CLI that can publish Widgetbook builds and reviews to Widgetbook Cloud.
-version: 3.5.0
+version: 3.9.0
 homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=widgetbook_cli
 repository: https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_cli
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
@@ -8,36 +8,35 @@ documentation: https://docs.widgetbook.io
 topics: [widgetbook, storybook, ui, tool, cli]
 
 screenshots:
-  - description: "Widgetbook Logo"
+  - description: Widgetbook Logo
     path: assets/logo.png
 
 environment:
-  sdk: ">=3.3.0 <4.0.0"
+  sdk: ">=3.7.0 <4.0.0"
 
 dependencies:
   analyzer: ^6.8.0
-  archive: ^3.3.0
-  args: ^2.3.0
+  args: ^2.6.0
   ci: ^0.1.0
-  collection: ^1.15.0
-  dio: ^5.6.0
+  collection: ^1.18.0
+  crypto: ^3.0.0
+  dio: ^5.7.0
   file: ^7.0.0
-  mason_logger: ^0.2.5
-  meta: ^1.8.0
-  mime: ^1.0.4
-  path: ^1.8.2
-  platform: ^3.0.0
+  mason_logger: ">=0.2.16 <1.0.0"
+  meta: ^1.16.0
+  mime: ^2.0.0
+  path: ^1.9.0
+  platform: ^3.1.0
   pool: ^1.5.1
-  process: ^5.0.0
-  pub_updater: ^0.4.0
+  process: ^5.0.3
+  pub_updater: ">=0.4.0 <1.0.0"
   retry: ^3.1.2
+  xml: ^6.5.0
   yaml: ^3.1.2
 
 dev_dependencies:
   mocktail: ^1.0.0
-  test: ^1.12.1
+  test: ^1.25.7
 
 executables:
-  widgetbook: cli_production
-  widgetbook_staging: cli_staging
-  widgetbook_debug: cli_debug
+  widgetbook:

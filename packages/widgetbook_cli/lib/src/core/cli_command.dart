@@ -1,13 +1,10 @@
 import 'dart:async';
 
-import 'package:analyzer/file_system/file_system.dart';
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 import '../../widgetbook_cli.dart';
-import 'cli_runner.dart';
-import 'context.dart';
 
 /// A [Context]-aware [Command] for [CliRunner].
 abstract class CliCommand<TArgs> extends Command<int> {
@@ -49,7 +46,7 @@ abstract class CliCommand<TArgs> extends Command<int> {
           e is InvalidFlutterPackageException ||
           e is InvalidInputException ||
           e is FileNotFoundException) {
-        logger.err((e as WidgetbookException).message);
+        logger.err((e as CliException).message);
         return -1;
       }
 

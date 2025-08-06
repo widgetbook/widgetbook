@@ -1,14 +1,18 @@
+import 'cache_exception.dart';
+
+typedef KnobsConfigs = Map<String, Map<String, dynamic>>;
+
 class UseCaseMetadata {
   const UseCaseMetadata({
     required this.name,
     required this.useCaseName,
     required this.componentName,
     required this.importStatement,
-    required this.navPath,
     required this.componentImportStatement,
-    required this.componentDefinitionPath,
-    required this.useCaseDefinitionPath,
+    required this.navPath,
+    required this.cloudExclude,
     this.designLink,
+    this.knobsConfigs,
   });
 
   // Name of the builder function defining the use-case
@@ -24,46 +28,56 @@ class UseCaseMetadata {
   // Import statement of the use-case definition
   final String importStatement;
 
+  // Import statement of the component
+  final String componentImportStatement;
+
   // Path to the element in Widgetbook
   // This might be null if users are using widgetbook_generator <= 3.2.0
   final String? navPath;
 
-  // Import statement of the component
-  final String componentImportStatement;
-
-  // The path to the file containing the component
-  final String componentDefinitionPath;
-
-  // The path to the file containing the use-case definition
-  final String useCaseDefinitionPath;
+  // Whether to exclude this use-case from the cloud.
+  final bool cloudExclude;
 
   // A link to a component or variant
   final String? designLink;
 
+  final KnobsConfigs? knobsConfigs;
+
   // ignore: sort_constructors_first
   factory UseCaseMetadata.fromJson(Map<String, dynamic> map) {
-    return UseCaseMetadata(
-      name: map['name'] as String,
-      useCaseName: map['useCaseName'] as String,
-      componentName: map['componentName'] as String,
-      importStatement: map['importStatement'] as String,
-      navPath: map['navPath'] as String?,
-      componentImportStatement: map['componentImportStatement'] as String,
-      componentDefinitionPath: map['componentDefinitionPath'] as String,
-      useCaseDefinitionPath: map['useCaseDefinitionPath'] as String,
-      designLink:
-          map['designLink'] != null ? map['designLink'] as String : null,
-    );
+    try {
+      return UseCaseMetadata(
+        name: map['name'] as String,
+        useCaseName: map['useCaseName'] as String,
+        componentName: map['componentName'] as String,
+        importStatement: map['importStatement'] as String,
+        componentImportStatement: map['componentImportStatement'] as String,
+        navPath: map['navPath'] as String?,
+        // This might be null if users are using widgetbook_generator <= 3.13.0
+        cloudExclude: map['cloudExclude'] as bool? ?? false,
+        designLink: map['designLink'] as String?,
+        knobsConfigs:
+            map['knobsConfigs'] != null
+                ? Map<String, Map<String, dynamic>>.from(
+                  map['knobsConfigs'] as Map,
+                )
+                : null,
+      );
+    } catch (e) {
+      throw CacheFormatException('use-case', map, e);
+    }
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toCloudUseCase() {
+    // Not all properties are needed by the Cloud, so we only serialize the
+    // required ones. This insures that the payload size is as small as possible
+    // when there are many use-cases.
     return {
       'name': useCaseName,
       'componentName': componentName,
       'navPath': navPath,
-      'componentDefinitionPath': componentDefinitionPath,
-      'componentImportStatement': componentImportStatement,
       'designLink': designLink,
+      'knobsConfigs': knobsConfigs,
     };
   }
 }

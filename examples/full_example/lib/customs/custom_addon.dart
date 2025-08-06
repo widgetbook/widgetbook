@@ -8,15 +8,15 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
   AlignmentAddon({
     this.initialAlignment = Alignment.center,
   }) : super(
-          name: 'Alignment',
-        );
+         name: 'Alignment',
+       );
 
   final Alignment initialAlignment;
 
   @override
   List<Field<Alignment>> get fields {
     return [
-      ListField<Alignment>(
+      ObjectDropdownField<Alignment>(
         name: 'alignment',
         initialValue: initialAlignment,
         values: [

@@ -1,7 +1,8 @@
 {
   "$schema": "https://docs.page/schema.json",
-  "name": "Widgetbook",
+  "name": "Widgetbook Docs",
   "description": "Build your Design System's widgets in isolation.",
+  "favicon": "/assets/logos/logo-dark.png",
   "theme": {
     "primary": "#0060A7"
   },
@@ -36,10 +37,10 @@
   },
   "variables": {
     "versions": {
-      "annotation": "3.2.0",
-      "cli": "3.5.0",
-      "generator": "3.9.1",
-      "widgetbook": "3.10.2"
+      "annotation": "3.6.0",
+      "cli": "3.9.0",
+      "generator": "3.14.0",
+      "widgetbook": "3.15.0"
     }
   },
   "tabs": [
@@ -87,6 +88,10 @@
           "href": "/guides/use-cases"
         },
         {
+          "title": "Generate use-cases with LLMs",
+          "href": "/guides/generate-use-cases"
+        },
+        {
           "title": "Mock Widgets & Screens",
           "href": "/guides/mocking"
         },
@@ -103,7 +108,78 @@
           "pages": [
             {
               "title": "Overview",
-              "href": "/knobs"
+              "href": "/knobs/overview"
+            },
+            {
+              "title": "Boolean",
+              "href": "/knobs/boolean"
+            },
+            {
+              "group": "Double",
+              "pages": [
+                {
+                  "title": "Overview",
+                  "href": "/knobs/double/overview"
+                },
+                {
+                  "title": "Input",
+                  "href": "/knobs/double/input"
+                },
+                {
+                  "title": "Slider",
+                  "href": "/knobs/double/slider"
+                }
+              ]
+            },
+            {
+              "group": "Integer",
+              "pages": [
+                {
+                  "title": "Overview",
+                  "href": "/knobs/integer/overview"
+                },
+                {
+                  "title": "Input",
+                  "href": "/knobs/integer/input"
+                },
+                {
+                  "title": "Slider",
+                  "href": "/knobs/integer/slider"
+                }
+              ]
+            },
+            {
+              "group": "Object",
+              "pages": [
+                {
+                  "title": "Overview",
+                  "href": "/knobs/object/overview"
+                },
+                {
+                  "title": "Segmented",
+                  "href": "/knobs/object/segmented"
+                },
+                {
+                  "title": "Dropdown",
+                  "href": "/knobs/object/dropdown"
+                }
+              ]
+            },
+            {
+              "title": "String",
+              "href": "/knobs/string"
+            },
+            {
+              "title": "DateTime",
+              "href": "/knobs/datetime"
+            },
+            {
+              "title": "Duration",
+              "href": "/knobs/duration"
+            },
+            {
+              "title": "Color",
+              "href": "/knobs/color"
             },
             {
               "title": "Custom Knob",
@@ -116,7 +192,7 @@
           "pages": [
             {
               "title": "Overview",
-              "href": "/addons"
+              "href": "/addons/overview"
             },
             {
               "title": "Accessibility Addon",
@@ -163,6 +239,14 @@
               "href": "/addons/zoom-addon"
             },
             {
+              "title": "Semantics Addon 🧪",
+              "href": "/addons/semantics-addon"
+            },
+            {
+              "title": "Viewport Addon",
+              "href": "/addons/viewport-addon"
+            },
+            {
               "title": "Custom Addon",
               "href": "/addons/custom-addon"
             }
@@ -183,12 +267,12 @@
           "href": "/guides/assets"
         },
         {
-          "title": "Localizations",
-          "href": "/guides/l10n"
-        },
-        {
           "title": "Fields",
           "href": "/guides/fields"
+        },
+        {
+          "title": "Embedding",
+          "href": "/guides/embedding"
         },
         {
           "group": "Migration",
@@ -306,12 +390,89 @@
           "href": "/cloud"
         },
         {
-          "title": "Builds",
-          "href": "/cloud/builds"
+          "title": "Workspaces",
+          "href": "/cloud/workspaces"
         },
         {
-          "title": "Reviews",
-          "href": "/cloud/reviews"
+          "group": "Projects",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/projects/overview"
+            },
+            {
+              "title": "Create project",
+              "href": "/cloud/projects/create"
+            },
+            {
+              "title": "Connect & disconnect projects",
+              "href": "/cloud/projects/connect"
+            }
+          ]
+        },
+        {
+          "group": "Builds",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/builds/overview"
+            },
+            {
+              "title": "Upload builds",
+              "href": "/cloud/builds/upload"
+            },
+            {
+              "title": "Access builds",
+              "href": "/cloud/builds/access-from-commit"
+            },
+            {
+              "title": "Turbo Builds",
+              "href": "/cloud/builds/turbo"
+            }
+          ]
+        },
+        {
+          "group": "Snapshots",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/snapshots/overview"
+            },
+            {
+              "title": "Multi Snapshot",
+              "href": "/cloud/snapshots/multi-snapshot"
+            }
+          ]
+        },
+        {
+          "group": "Visual Pull Requests",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/visual-pull-request/overview"
+            },
+            {
+              "title": "Create Pull Requests",
+              "href": "/cloud/visual-pull-request/create"
+            }
+          ]
+        },
+        {
+          "group": "Reviews",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/reviews"
+            },
+            {
+              "title": "Submit a review",
+              "href": "/cloud/reviews/submit"
+            },
+            {
+              "title": "Limitations",
+              "href": "/cloud/reviews/limitations"
+            }
+          ]
         },
         {
           "title": "Product Tour",
@@ -324,31 +485,75 @@
       "group": "Guides",
       "pages": [
         {
-          "group": "Setup",
+          "group": "GitHub",
           "pages": [
             {
-              "title": "GitHub",
-              "href": "/cloud/setup/github"
+              "title": "Upload builds",
+              "href": "/cloud/guides/github/upload"
             },
             {
-              "title": "GitLab",
-              "href": "/cloud/setup/gitlab"
+              "title": "Enforce reviews",
+              "href": "/cloud/guides/github/enforce-reviews"
             },
             {
-              "title": "Bitbucket",
-              "href": "/cloud/setup/bitbucket"
+              "title": "Access builds from GitHub",
+              "href": "/cloud/guides/github/access-from-commit"
+            }
+          ]
+        },
+        {
+          "group": "GitLab",
+          "pages": [
+            {
+              "title": "Upload builds",
+              "href": "/cloud/guides/gitlab/upload"
             },
             {
-              "title": "Azure DevOps",
-              "href": "/cloud/setup/azure"
+              "title": "Access builds from GitLab",
+              "href": "/cloud/guides/gitlab/access-from-commit"
             },
             {
               "title": "Self-managed GitLab",
-              "href": "/cloud/setup/self-managed-gitlab"
+              "href": "/cloud/guides/gitlab/self-managed"
+            }
+          ]
+        },
+        {
+          "group": "Azure DevOps",
+          "pages": [
+            {
+              "title": "Upload builds",
+              "href": "/cloud/guides/azure/upload"
             },
             {
-              "title": "Codemagic",
-              "href": "/cloud/setup/codemagic"
+              "title": "Access builds from Azure",
+              "href": "/cloud/guides/azure/access-from-commit"
+            }
+          ]
+        },
+        {
+          "group": "Bitbucket",
+          "pages": [
+            {
+              "title": "Upload builds",
+              "href": "/cloud/guides/bitbucket/upload"
+            },
+            {
+              "title": "Access builds from Bitbucket",
+              "href": "/cloud/guides/bitbucket/access-from-commit"
+            },
+            {
+              "title": "Self-hosted Bitbucket",
+              "href": "/cloud/guides/bitbucket/self-hosted"
+            }
+          ]
+        },
+        {
+          "group": "Codemagic",
+          "pages": [
+            {
+              "title": "Upload builds",
+              "href": "/cloud/guides/codemagic/upload"
             }
           ]
         },
@@ -357,8 +562,8 @@
           "href": "/cloud/reviews/figma"
         },
         {
-          "title": "Multi Snapshot Reviews",
-          "href": "/cloud/reviews/multi-snapshot"
+          "title": "Setup with Demo Project",
+          "href": "/cloud/guides/demo-project"
         }
       ]
     },

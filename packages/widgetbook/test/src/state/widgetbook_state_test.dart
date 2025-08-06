@@ -158,13 +158,25 @@ void main() {
             ),
           );
 
-          state.knobs
-            ..register(knob, state.queryParams)
-            ..updateNullability(knob.label, true);
+          final groupMap = FieldCodec.decodeQueryGroup(
+            state.queryParams['knobs'],
+          );
+
+          state.knobs.register(knob, groupMap);
+
+          state.updateQueryField(
+            group: 'knobs',
+            field: knob.label,
+            value: '${Field.nullabilitySymbol}any_value',
+          );
+
+          final updateGroupMap = FieldCodec.decodeQueryGroup(
+            state.queryParams['knobs'],
+          );
 
           final result = state.knobs.register(
             knob,
-            state.queryParams,
+            updateGroupMap,
           );
 
           expect(result, isNull);
@@ -240,6 +252,31 @@ void main() {
           )..updateQuery('');
 
           expect(state.queryParams, <String, String>{});
+        },
+      );
+
+      test(
+        'given a state, '
+        'when it is disposed, '
+        'its knobs registry is disposed too ',
+        () {
+          final state = WidgetbookState(
+            root: WidgetbookRoot(
+              children: const [],
+            ),
+          );
+          state.dispose();
+
+          expect(
+            () => state.knobs.dispose(),
+            throwsA(
+              isFlutterError.having(
+                (error) => error.message,
+                'message',
+                contains('A KnobsRegistry was used after being disposed'),
+              ),
+            ),
+          );
         },
       );
     },

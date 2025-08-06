@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import 'color_space.dart';
 import 'number_text_field.dart';
 import 'opaque_color.dart';
 import 'opaque_color_picker.dart';
 
+@internal
 class ColorPicker extends StatefulWidget {
   const ColorPicker({
     required this.value,
@@ -29,11 +31,7 @@ class _ColorPickerState extends State<ColorPicker> {
   @override
   void initState() {
     super.initState();
-    // Color.alpha was deprecated in Flutter 3.27.0, the alternative
-    // api (.a) is not available in Color for our minimum
-    // Flutter version (3.19.0), as they were also introduced in 3.27.0.
-    // ignore: deprecated_member_use
-    alpha = widget.value.alpha;
+    alpha = (widget.value.a * 255).toInt();
     colorSpace = widget.colorSpace;
     opaqueColor = OpaqueColor.fromColor(widget.value);
   }
@@ -76,14 +74,15 @@ class _ColorPickerState extends State<ColorPicker> {
               onSelected: (value) {
                 setState(() => colorSpace = value!);
               },
-              dropdownMenuEntries: ColorSpace.values
-                  .map(
-                    (value) => DropdownMenuEntry(
-                      value: value,
-                      label: value.name.toUpperCase(),
-                    ),
-                  )
-                  .toList(),
+              dropdownMenuEntries:
+                  ColorSpace.values
+                      .map(
+                        (value) => DropdownMenuEntry(
+                          value: value,
+                          label: value.name.toUpperCase(),
+                        ),
+                      )
+                      .toList(),
             ),
             SizedBox(
               width: 80,

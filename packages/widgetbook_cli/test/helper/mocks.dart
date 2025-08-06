@@ -10,17 +10,6 @@ import 'package:process/process.dart';
 import 'package:pub_updater/pub_updater.dart';
 import 'package:widgetbook_cli/widgetbook_cli.dart';
 
-class FakeEnvironment extends Fake implements Environment {
-  @override
-  final String name = 'test';
-
-  @override
-  final String apiUrl = '';
-
-  @override
-  final String appUrl = '';
-}
-
 class MockLogger extends Mock implements Logger {}
 
 class MockPubUpdater extends Mock implements PubUpdater {}

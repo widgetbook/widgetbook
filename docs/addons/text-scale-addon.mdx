@@ -1,23 +1,85 @@
 # Text Scale Addon
 
-The Text Scale Addon is a Widgetbook utility designed for modifying the active text scale
-factor using MediaQuery. This enables users to manipulate the
-`MediaQuery.textScaler` value and observe its impact on rendering use-cases.
-Visualizing changes in text scale can prove valuable for developers, as it allows them to
-understand how layout adjustments correspond to variations in text scale and,
-consequently, text size.
+The `TextScaleAddon` allows developers to adjust the `MediaQuery.textScaler` value to visualize how text scale changes impact layout and rendering.
 
-Here's how the UI would vary with text scales of 1.00 and 1.25:
+<Tabs
+  values={[
+    { label: "x1.5", value: "1.5" },
+    { label: "x1", value: "1" },
+  ]}
+>
+  <TabItem value="1.5">
+    <iframe
+      src="https://demo.widgetbook.io/#/?path=features/basket/basketscreen/default&text-scale={factor:1.5}&device={name:None}&preview"
+      width="100%"
+      height="560px"
+    />
+  </TabItem>
+  <TabItem value="1">
+    <iframe
+      src="https://demo.widgetbook.io/#/?path=features/basket/basketscreen/default&text-scale={factor:1}&device={name:None}&preview"
+      width="100%"
+      height="560px"
+    />
+  </TabItem>
+</Tabs>
 
-|                              Texts scale of 1.00                              |                                Text scale of 1.25                                |
-| :---------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
-| <Image zoom src="/assets/addons/text-scales/text-scale-1.png" height="650" /> | <Image zoom src="/assets/addons/text-scales/text-scale-1.25.png" height="650" /> |
+## Usage
 
-## Setup
+```dart title=widgetbook/lib/main.dart
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
 
-The `TextScaleAddon` invocation declares an instance of the Text Scale Addon for
-Widgetbook.
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        TextScaleAddon(), // [!code highlight]
+      ],
+    );
+  }
+}
+```
 
-```dart
-TextScaleAddon()
+## Order
+
+Since the [order of addons](/addons#order-of-addons) matters, here are some guidelines to follow when using the `TextScaleAddon`:
+
+Addons that should come before the `TextScaleAddon`:
+
+- `ViewportAddon`
+- `DeviceFrameAddon`
+
+## Multi-snapshot Support
+
+The `TextScaleAddon` is supported in the [Multi Snapshot Reviews](/cloud/snapshots/multi-snapshot) via the `TextScaleAddonConfig`. Here's how to configure it:
+
+```dart title=widgetbook/lib/main.dart
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@App(
+  cloudAddonsConfigs: {
+    'x1': [
+      TextScaleAddonConfig(1), // [!code highlight]
+    ],
+    'x1.5': [
+      TextScaleAddonConfig(1.5), // [!code highlight]
+    ],
+  },
+)
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        TextScaleAddon(), // [!code highlight]
+      ],
+    );
+  }
+}
 ```

@@ -73,6 +73,19 @@ void main() {
         expect(widget.initialValue, equals(tenSecondsInMilliseconds));
       },
     );
+
+    testWidgets(
+      'given a field, '
+      'then [toWidget] builds the hintText value',
+      (tester) async {
+        final widget = await tester.pumpField<Duration, TextField>(
+          field,
+          null,
+        );
+
+        expect(widget.decoration?.hintText, equals('Enter a duration'));
+      },
+    );
   });
 
   group('Duration Codec', () {

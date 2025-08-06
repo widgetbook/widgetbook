@@ -4,59 +4,40 @@ import 'package:flutter/material.dart';
 import '../../fields/fields.dart';
 import '../../knobs/knobs.dart';
 import '../../navigation/navigation.dart';
-import '../../settings/settings.dart';
-import '../addons.dart';
 
-/// [WidgetbookAddon]s are like global [Knob]s, they change the state for all
-/// [WidgetbookUseCase]s. For example, you can manipulate the theme for all
-/// [WidgetbookUseCase]s, instead of doing it one-by-one using [Knob]s.
+/// Base class for all Widgetbook addons.
 ///
-/// See also:
+/// [WidgetbookAddon]s are global configuration tools that affect all
+/// [WidgetbookUseCase]s in your Widgetbook. Unlike [Knob]s, which operate
+/// at the individual use case level, addons provide cross-cutting functionality
+/// such as theming, localization, viewport simulation, and more.
 ///
-/// * [ThemeAddon], changes the active custom theme.
-/// * [MaterialThemeAddon], changes the active [ThemeData].
-/// * [CupertinoThemeAddon], changes the active [CupertinoThemeData].
-/// * [TextScaleAddon], changes the active text scale.
-/// * [LocalizationAddon], changes the active [Locale].
-/// * [DeviceFrameAddon], an [WidgetbookAddon] to change the active frame that
-///   allows to view the [WidgetbookUseCase] on different screens.
+/// Learn more:
+/// * https://docs.widgetbook.io/addons/overview
+/// * https://docs.widgetbook.io/addons/custom-addon
 @optionalTypeArgs
 abstract class WidgetbookAddon<T> extends FieldsComposable<T> {
+  /// Creates a [WidgetbookAddon] with the given [name].
   WidgetbookAddon({
-    required this.name,
+    required super.name,
     @Deprecated('Use local field instead') this.initialSetting,
   });
 
-  final String name;
-
+  /// @nodoc
   @Deprecated('Use local field instead')
   final T? initialSetting;
 
   @override
   String get groupName => slugify(name);
 
-  @override
-  Widget buildFields(BuildContext context) {
-    return Setting(
-      name: name,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: fields
-            .map(
-              (field) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 4.0,
-                ),
-                child: field.build(context, groupName),
-              ),
-            )
-            .toList(),
-      ),
-    );
-  }
-
-  /// Wraps use cases with a custom widget depending on the addon [setting]
-  /// that is obtained from [valueFromQueryGroup].
+  /// Builds the wrapper widget for use cases based on the current [setting].
+  ///
+  /// This method is called for every use case and allows the addon to wrap
+  /// the use case widget with additional functionality. The [setting] parameter
+  /// contains the current value selected by the user in the addon's UI.
+  ///
+  /// By default, this method returns the [child] widget unchanged. Override
+  /// this method to implement the addon's functionality.
   Widget buildUseCase(
     BuildContext context,
     Widget child,
