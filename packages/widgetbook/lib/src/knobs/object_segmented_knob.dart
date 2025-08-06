@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 
 import '../fields/fields.dart';
-import '../fields/object_segmented_field.dart';
 import 'knob.dart';
 
 @internal
