@@ -6,10 +6,10 @@ import '../../helper/helper.dart';
 
 void main() {
   group(
-    '$ListField',
+    '$ObjectDropdownField',
     () {
-      final field = ListField<int>(
-        name: 'list_field',
+      final field = ObjectDropdownField<int>(
+        name: 'object_dropdown_field',
         initialValue: 1,
         values: [1, 2, 3],
       );

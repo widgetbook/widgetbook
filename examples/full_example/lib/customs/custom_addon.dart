@@ -16,7 +16,7 @@ class AlignmentAddon extends WidgetbookAddon<Alignment> {
   @override
   List<Field<Alignment>> get fields {
     return [
-      ListField<Alignment>(
+      ObjectDropdownField<Alignment>(
         name: 'alignment',
         initialValue: initialAlignment,
         values: [

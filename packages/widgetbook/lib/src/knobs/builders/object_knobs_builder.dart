@@ -1,4 +1,4 @@
-import '../../fields/list_field.dart';
+import '../../fields/object_dropdown_field.dart';
 import '../knob.dart';
 import '../object_segmented_knob.dart';
 

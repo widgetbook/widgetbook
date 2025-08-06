@@ -54,7 +54,7 @@ class ThemeAddon<T> extends WidgetbookAddon<WidgetbookTheme<T>> {
   @override
   List<Field> get fields {
     return [
-      ListField<WidgetbookTheme<T>>(
+      ObjectDropdownField<WidgetbookTheme<T>>(
         name: 'name',
         values: themes,
         initialValue: initialTheme ?? themes.first,

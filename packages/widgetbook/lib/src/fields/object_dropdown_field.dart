@@ -8,17 +8,22 @@ import 'field_type.dart';
 /// @nodoc
 typedef LabelBuilder<T> = String Function(T value);
 
+// For backward compatibility, a type alias is used to maintain the old name.
+/// @nodoc
+@Deprecated('ListField is deprecated, use ObjectDropdownField instead.')
+typedef ListField<T> = ObjectDropdownField<T>;
+
 /// A [Field] that builds [DropdownMenu]<[T]> for [Object] values.
-class ListField<T> extends Field<T> {
-  /// Creates a new instance of [ListField].
-  ListField({
+class ObjectDropdownField<T> extends Field<T> {
+  /// Creates a new instance of [ObjectDropdownField].
+  ObjectDropdownField({
     required super.name,
     required this.values,
     required super.initialValue,
     this.labelBuilder = defaultLabelBuilder,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-         type: FieldType.list,
+         type: FieldType.objectDropdown,
          codec: FieldCodec(
            toParam: labelBuilder,
            toValue:

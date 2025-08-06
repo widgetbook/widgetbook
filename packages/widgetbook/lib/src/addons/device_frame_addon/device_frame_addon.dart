@@ -41,13 +41,13 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
   @override
   List<Field> get fields {
     return [
-      ListField<DeviceInfo>(
+      ObjectDropdownField<DeviceInfo>(
         name: 'name',
         values: devices,
         initialValue: initialDevice,
         labelBuilder: (device) => device.name,
       ),
-      ListField<Orientation>(
+      ObjectDropdownField<Orientation>(
         name: 'orientation',
         values: Orientation.values,
         initialValue: Orientation.portrait,
@@ -56,7 +56,7 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
                 orientation.name.substring(0, 1).toUpperCase() +
                 orientation.name.substring(1),
       ),
-      ListField<bool>(
+      ObjectDropdownField<bool>(
         name: 'frame',
         values: [false, true],
         initialValue: true,

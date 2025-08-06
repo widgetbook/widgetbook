@@ -37,7 +37,7 @@ class MaterialThemeAddon extends ModeAddon<ThemeData> {
   @override
   List<Field> get fields {
     return [
-      ListField<ThemeData>(
+      ObjectDropdownField<ThemeData>(
         name: 'name',
         values: themes.values.toList(),
         initialValue: themes.values.first,
