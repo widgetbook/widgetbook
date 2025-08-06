@@ -205,12 +205,27 @@ Widget buildObjectSegmentedKnob(BuildContext context) {
   return OnlineStatusBadge(
     status: context.knobs.object.segmented<OnlineStatusType>(
       label: 'status',
+      labelBuilder: (value) => value.name,
       options: [
         OnlineStatusType.online,
         OnlineStatusType.offline,
         OnlineStatusType.busy,
       ],
+    ),
+  );
+}
+
+@UseCase(type: KnobPreview, name: 'Object Segmented Nullable Knob')
+Widget buildObjectNullableSegmentedKnob(BuildContext context) {
+  return OnlineStatusBadge(
+    status: context.knobs.objectOrNull.segmented<OnlineStatusType>(
+      label: 'status',
       labelBuilder: (value) => value.name,
+      options: [
+        OnlineStatusType.online,
+        OnlineStatusType.offline,
+        OnlineStatusType.busy,
+      ],
     ),
   );
 }

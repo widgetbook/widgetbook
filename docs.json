@@ -149,6 +149,19 @@
               ]
             },
             {
+              "group": "Object",
+              "pages": [
+                {
+                  "title": "Overview",
+                  "href": "/knobs/object/overview"
+                },
+                {
+                  "title": "Segmented",
+                  "href": "/knobs/object/segmented"
+                }
+              ]
+            },
+            {
               "title": "List",
               "href": "/knobs/list"
             },

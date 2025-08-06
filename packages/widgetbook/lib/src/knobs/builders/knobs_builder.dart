@@ -30,7 +30,8 @@ class KnobsBuilder {
       this.doubleOrNull = DoubleOrNullKnobsBuilder(onKnobAdded),
       this.int = IntKnobsBuilder(onKnobAdded),
       this.intOrNull = IntOrNullKnobsBuilder(onKnobAdded),
-      this.object = ObjectKnobsBuilder(onKnobAdded);
+      this.object = ObjectKnobsBuilder(onKnobAdded),
+      this.objectOrNull = ObjectOrNullKnobsBuilder(onKnobAdded);
 
   /// The callback that is used to add a knob.
   /// Used to register the knob in the use-case.
@@ -50,6 +51,9 @@ class KnobsBuilder {
 
   /// A builder for generic object knobs.
   final ObjectKnobsBuilder object;
+
+  /// A builder for generic object knobs that can hold a null value.
+  final ObjectOrNullKnobsBuilder objectOrNull;
 
   /// A [Knob] that holds a [bool] value.
   /// Learn more: https://docs.widgetbook.io/knobs/boolean

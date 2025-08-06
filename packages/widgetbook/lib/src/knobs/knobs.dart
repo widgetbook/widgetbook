@@ -1,7 +1,9 @@
 export 'boolean_knob.dart';
 export 'builders/double_knobs_builder.dart';
+export 'builders/int_knobs_builder.dart';
 export 'builders/knobs_builder.dart';
 export 'builders/knobs_extension.dart';
+export 'builders/object_knobs_builder.dart';
 export 'color_knob.dart';
 export 'date_time_knob.dart';
 export 'double_input_knob.dart';

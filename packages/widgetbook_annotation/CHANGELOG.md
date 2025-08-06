@@ -1,7 +1,7 @@
 ## Unreleased
 
 - **BREAKING**: Set minimum SDK version to 3.7.0. ([#1541](https://github.com/widgetbook/widgetbook/pull/1541))
-- **FEAT**: Add `SegmentButtonKnobConfig` to support segment buttons in `KnobConfig`s. ([#1478](https://github.com/widgetbook/widgetbook/pull/1478) - by [@Sourav-Sonkar](https://github.com/Sourav-Sonkar))
+- **FEAT**: Add `ObjectKnobConfig` to support the new `knobs.object` variants. ([#1478](https://github.com/widgetbook/widgetbook/pull/1478) - by [@Sourav-Sonkar](https://github.com/Sourav-Sonkar))
 
 ## 3.6.0
 

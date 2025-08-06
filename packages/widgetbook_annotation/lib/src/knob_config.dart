@@ -122,15 +122,15 @@ class ListKnobConfig extends KnobConfig<String> {
   const ListKnobConfig(super.label, super.itemLabel);
 }
 
-class ObjectSegmentedKnobConfig extends KnobConfig<String> {
-  /// Creates a new [KnobConfig] for `knobs.segmentButton`.
-  /// The easiest way to get the `itemLabel` is to check the URL query string
-  /// of a Widgetbook web build.
+class ObjectKnobConfig extends KnobConfig<String> {
+  /// Creates a new [KnobConfig] for `knobs.object`.
+  /// The easiest way to get the [objectLabel] is to check the
+  /// URL query string of a Widgetbook web build.
   ///
   /// ```dart
-  /// const ObjectSegmentedKnobConfig('label', 'selected-item-label');
+  /// const ObjectKnobConfig('label', 'selected-item-label');
   /// ```
-  const ObjectSegmentedKnobConfig(super.label, super.itemLabel);
+  const ObjectKnobConfig(super.label, super.objectLabel);
 }
 
 class MultiFieldKnobConfig extends KnobConfig<Map<String, dynamic>> {

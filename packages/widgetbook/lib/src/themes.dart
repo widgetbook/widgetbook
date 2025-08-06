@@ -64,6 +64,18 @@ class Themes {
     surfaceContainerHighest: Color(0xFFDFE2EB),
   );
 
+  static SegmentedButtonThemeData _buildSegmentedButtonTheme() {
+    return SegmentedButtonThemeData(
+      style: ButtonStyle(
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.0),
+          ),
+        ),
+      ),
+    );
+  }
+
   static InputDecorationTheme _buildInputTheme(
     ColorScheme colorScheme,
   ) {
@@ -98,6 +110,7 @@ class Themes {
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
     ),
+    segmentedButtonTheme: _buildSegmentedButtonTheme(),
     inputDecorationTheme: _buildInputTheme(_darkColorScheme),
     dropdownMenuTheme: DropdownMenuThemeData(
       inputDecorationTheme: _buildInputTheme(_darkColorScheme),
@@ -118,6 +131,7 @@ class Themes {
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
     ),
+    segmentedButtonTheme: _buildSegmentedButtonTheme(),
     inputDecorationTheme: _buildInputTheme(_lightColorScheme),
     dropdownMenuTheme: DropdownMenuThemeData(
       inputDecorationTheme: _buildInputTheme(_lightColorScheme),

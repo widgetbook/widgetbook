@@ -1,10 +1,9 @@
 import 'package:meta/meta.dart';
 
 import '../fields/fields.dart';
-import '../fields/segment_button_field.dart';
+import '../fields/object_segmented_field.dart';
 import 'knob.dart';
 
-/// A segmented knob for selecting an object value from a list of options.
 @internal
 class ObjectSegmentedKnob<T> extends Knob<T?> {
   ObjectSegmentedKnob({
@@ -15,17 +14,25 @@ class ObjectSegmentedKnob<T> extends Knob<T?> {
     this.labelBuilder,
   });
 
+  ObjectSegmentedKnob.nullable({
+    required super.label,
+    required super.initialValue,
+    required this.options,
+    super.description,
+    this.labelBuilder,
+  }) : super(isNullable: true);
+
   final List<T> options;
   final LabelBuilder<T>? labelBuilder;
 
   @override
   List<Field> get fields {
     return [
-      SegmentButton<T>(
+      ObjectSegmentedField<T>(
         name: label,
         values: options,
         initialValue: initialValue,
-        labelBuilder: labelBuilder ?? ListField.defaultLabelBuilder,
+        labelBuilder: labelBuilder ?? ObjectSegmentedField.defaultLabelBuilder,
       ),
     ];
   }

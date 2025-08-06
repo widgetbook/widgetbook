@@ -32,5 +32,7 @@ enum FieldType {
 
   /// For fields that have a [int] value, represented as an input field.
   intSlider,
-  segmentButton,
+
+  /// For fields that have a [Object] value, represented as a segmented button.
+  objectSegmented,
 }

@@ -138,13 +138,18 @@ class WidgetbookApp extends StatelessWidget {
                       options: List.generate(10, (index) => index),
                     ),
                   ),
-                  KnobEntry<int>(
-                    name: 'SegmentButton<int>',
+                  KnobEntry<User>(
+                    name: 'Object (segmented)',
                     regular: context.knobs.object.segmented(
-                      label: 'segment',
-                      options: List.generate(4, (index) => index),
+                      label: 'object.segmented',
+                      labelBuilder: (value) => value.name,
+                      options: List.generate(3, (x) => User('U$x')),
                     ),
-                    nullable: null,
+                    nullable: context.knobs.objectOrNull.segmented(
+                      label: 'objectOrNull.segmented',
+                      labelBuilder: (value) => value.name,
+                      options: List.generate(3, (x) => User('U$x')),
+                    ),
                   ),
                 ],
               );
@@ -154,4 +159,13 @@ class WidgetbookApp extends StatelessWidget {
       ],
     );
   }
+}
+
+class User {
+  User(this.name);
+
+  final String name;
+
+  @override
+  String toString() => 'User{name: $name}';
 }
