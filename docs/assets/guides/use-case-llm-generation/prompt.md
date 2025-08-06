@@ -86,7 +86,7 @@ context.knobs.doubleOrNull.slider(label: 'optionalOpacity', initialValue: null, 
 
 ```dart
 // Dropdown lists
-context.knobs.list<TextAlign>(
+context.knobs.object.dropdown<TextAlign>(
   label: 'textAlign',
   initialOption: TextAlign.center,
   options: [TextAlign.left, TextAlign.center, TextAlign.right],

@@ -6,7 +6,7 @@ import '../../helper/helper.dart';
 
 void main() {
   group(
-    '$ListKnob',
+    '$ObjectDropdownKnob',
     () {
       testWidgets(
         'given an initial value, '
@@ -16,7 +16,7 @@ void main() {
 
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.list(
+              context.knobs.object.dropdown(
                 label: 'Knob',
                 options: ['A', 'B', 'C'],
                 initialOption: value,
@@ -37,7 +37,7 @@ void main() {
         (tester) async {
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.list(
+              context.knobs.object.dropdown(
                 label: 'Knob',
                 options: ['A', 'B', 'C'],
               ),
@@ -58,7 +58,7 @@ void main() {
   );
 
   group(
-    '$ListKnob.nullable',
+    '$ObjectDropdownKnob.nullable',
     () {
       testWidgets(
         'when no initial value is provided, '
@@ -66,8 +66,8 @@ void main() {
         (tester) async {
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs
-                  .listOrNull(
+              context.knobs.objectOrNull
+                  .dropdown(
                     label: 'Knob',
                     options: ['A', 'B', 'C'],
                   )
@@ -75,8 +75,8 @@ void main() {
             ),
           );
 
-          final menu = tester.widget<DropdownMenu<String?>>(
-            find.byType(DropdownMenu<String?>),
+          final menu = tester.widget<DropdownMenu<String>>(
+            find.byType(DropdownMenu<String>),
           );
 
           // DropdownMenu has no initialSelection as
@@ -98,8 +98,8 @@ void main() {
         (tester) async {
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs
-                  .listOrNull(
+              context.knobs.objectOrNull
+                  .dropdown(
                     label: 'Knob',
                     options: ['A', 'B', 'C'],
                     initialOption: 'A',
@@ -109,7 +109,7 @@ void main() {
           );
 
           const value = 'C';
-          await tester.findAndTap(find.byType(DropdownMenu<String?>));
+          await tester.findAndTap(find.byType(DropdownMenu<String>));
           await tester.findAndTap(find.text(value).last);
 
           expect(
@@ -125,8 +125,8 @@ void main() {
         (tester) async {
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs
-                  .listOrNull(
+              context.knobs.objectOrNull
+                  .dropdown(
                     label: 'Knob',
                     options: ['A', 'B', 'C'],
                     initialOption: 'A',
@@ -136,7 +136,7 @@ void main() {
           );
 
           const value = 'C';
-          await tester.findAndTap(find.byType(DropdownMenu<String?>));
+          await tester.findAndTap(find.byType(DropdownMenu<String>));
           await tester.findAndTap(find.text(value).last);
           expect(
             find.textWidget(value),

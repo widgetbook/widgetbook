@@ -158,12 +158,12 @@
                 {
                   "title": "Segmented",
                   "href": "/knobs/object/segmented"
+                },
+                {
+                  "title": "Dropdown",
+                  "href": "/knobs/object/dropdown"
                 }
               ]
-            },
-            {
-              "title": "List",
-              "href": "/knobs/list"
             },
             {
               "title": "String",
@@ -494,7 +494,7 @@
             {
               "title": "Enforce reviews",
               "href": "/cloud/guides/github/enforce-reviews"
-            }, 
+            },
             {
               "title": "Access builds from GitHub",
               "href": "/cloud/guides/github/access-from-commit"
