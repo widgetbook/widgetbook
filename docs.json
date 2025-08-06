@@ -479,6 +479,10 @@
               "href": "/cloud/guides/github/upload"
             },
             {
+              "title": "Enforce reviews",
+              "href": "/cloud/guides/github/enforce-reviews"
+            }, 
+            {
               "title": "Access builds from GitHub",
               "href": "/cloud/guides/github/access-from-commit"
             }
