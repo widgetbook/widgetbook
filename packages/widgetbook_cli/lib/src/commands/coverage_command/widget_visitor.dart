@@ -3,7 +3,7 @@ part of 'coverage_command.dart';
 class WidgetVisitor extends GeneralizingAstVisitor<void> {
   WidgetVisitor();
 
-  final List<String> widgets = <String>[];
+  final Set<String> widgets = <String>{};
 
   @override
   void visitClassDeclaration(ClassDeclaration node) {
@@ -18,7 +18,8 @@ class WidgetVisitor extends GeneralizingAstVisitor<void> {
     if (node.declaredElement == null) return;
     if (!_isWidgetClass(node.declaredElement!)) return;
 
-    widgets.add(node.name.toString());
+    final widget = node.name.toString();
+    widgets.add(widget);
 
     super.visitClassDeclaration(node);
   }

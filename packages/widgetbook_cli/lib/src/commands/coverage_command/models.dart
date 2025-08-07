@@ -19,7 +19,7 @@ class SenderPortData {
   });
 
   final bool isFinished;
-  final List<String> result;
+  final Set<String> result;
 }
 
 /// Typed data object used to send data to the isolate from the main thread

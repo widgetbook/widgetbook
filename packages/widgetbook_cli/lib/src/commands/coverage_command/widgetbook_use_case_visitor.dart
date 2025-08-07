@@ -1,9 +1,9 @@
 part of 'coverage_command.dart';
 
-class WidgetbookUsecaseVisitor extends GeneralizingAstVisitor<void> {
-  WidgetbookUsecaseVisitor();
+class UseCaseVisitor extends GeneralizingAstVisitor<void> {
+  UseCaseVisitor();
 
-  final List<String> usecases = <String>[];
+  final Set<String> components = <String>{};
 
   @override
   void visitAnnotation(Annotation node) {
@@ -15,12 +15,14 @@ class WidgetbookUsecaseVisitor extends GeneralizingAstVisitor<void> {
     var arguments = node.arguments?.arguments;
     if (arguments == null) return;
 
-    for (var argument in arguments) {
-      // Extract the named 'type' argument value from the annotation
-      // and add it to the usecases list
-      if (argument is NamedExpression && argument.name.label.name == 'type') {
-        usecases.add(argument.expression.toString());
-      }
+    final componentArgument = arguments
+        .whereType<NamedExpression>()
+        .firstWhereOrNull((arg) => arg.name.label.name == 'type');
+
+    final component = componentArgument?.expression.toString();
+
+    if (component != null) {
+      components.add(component);
     }
 
     super.visitAnnotation(node);

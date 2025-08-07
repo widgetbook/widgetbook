@@ -2,15 +2,15 @@ part of 'coverage_command.dart';
 
 /// Spawns an isolate to resolve the widgetbook usecases in a flutter project
 /// and returns the list of widgets found
-Future<List<String>> _getProjectWidgetbookUseCases(
+Future<Set<String>> _getComponents(
   PathData pathData,
   Logger logger,
 ) async {
-  final progress = logger.progress('Resolving use-cases...');
+  final progress = logger.progress('Resolving components...');
 
   final widgetbookReceivePort = ReceivePort();
   final widgetbookIsolateTask = await Isolate.spawn(
-    _resolveWidgetbookUsecases,
+    _resolveComponents,
     InitialIsolateData(
       sendPort: widgetbookReceivePort.sendPort,
       filePaths: pathData.filePaths,
@@ -18,40 +18,41 @@ Future<List<String>> _getProjectWidgetbookUseCases(
     ),
   );
 
-  var usecases = <String>[];
+  var components = <String>{};
+
   await for (final data in widgetbookReceivePort) {
     if (data is! SenderPortData) continue;
 
     if (data.isFinished) {
       widgetbookIsolateTask.kill();
       progress.complete();
-      usecases = [...data.result];
+      components = data.result;
       break;
     }
 
     progress.update(
-      'Found ${data.result.length} use-cases',
+      'Found ${data.result.length} components',
     );
   }
 
-  return usecases;
+  return components;
 }
 
 /// Resolves the usecases in a widgetbook project,
 /// ran in a separate isolate as it is a heavy operation
-Future<void> _resolveWidgetbookUsecases(InitialIsolateData data) async {
-  final usecaseVisitor = WidgetbookUsecaseVisitor();
+Future<void> _resolveComponents(InitialIsolateData data) async {
+  final useCaseVisitor = UseCaseVisitor();
 
   for (final filePath in data.filePaths) {
     final result = parseFile(
       path: filePath,
       featureSet: FeatureSet.latestLanguageVersion(),
     );
-    result.unit.visitChildren(usecaseVisitor);
+    result.unit.visitChildren(useCaseVisitor);
 
     data.sendPort.send(
       SenderPortData(
-        result: usecaseVisitor.usecases,
+        result: useCaseVisitor.components,
       ),
     );
   }
@@ -59,7 +60,7 @@ Future<void> _resolveWidgetbookUsecases(InitialIsolateData data) async {
   data.sendPort.send(
     SenderPortData(
       isFinished: true,
-      result: usecaseVisitor.usecases,
+      result: useCaseVisitor.components,
     ),
   );
 }

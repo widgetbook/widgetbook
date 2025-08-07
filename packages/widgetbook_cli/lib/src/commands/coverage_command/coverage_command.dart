@@ -10,13 +10,14 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:args/args.dart';
+import 'package:collection/collection.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
 import '../../core/core.dart';
 import 'coverage_args.dart';
 
-part 'get_project_widgetbook_usecases.dart';
-part 'get_project_widgets.dart';
+part 'get_components.dart';
+part 'get_widgets.dart';
 part 'models.dart';
 part 'widget_visitor.dart';
 part 'widgetbook_use_case_visitor.dart';
@@ -91,16 +92,15 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     final widgetbookPaths = _getFilePaths(args.widgetbookDir);
     pathsProgress.complete();
 
-    /* ------------------------ get widgets and usecases ------------------------ */
-    final futures = await Future.wait([
-      _getProjectWidgets(
+    final [widgets, components] = await Future.wait([
+      _getWidgets(
         PathData(
           filePaths: widgetPaths,
           projectRootPath: args.packageDir,
         ),
         logger,
       ),
-      _getProjectWidgetbookUseCases(
+      _getComponents(
         PathData(
           filePaths: widgetbookPaths,
           projectRootPath: args.widgetbookDir,
@@ -109,49 +109,21 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
       ),
     ]);
 
-    final widgets = futures.first;
-    final usecases = futures.last;
-    /* ------------------------ get widgets and usecases ------------------------ */
+    // We exclude private widgets (those starting with '_') from the coverage
+    // calculation as they are not meant to be used outside their library.
+    final privateWidgets = widgets.where((x) => x.startsWith('_')).toSet();
+    final publicWidgets = widgets.difference(privateWidgets);
+    final uncoveredWidgets = publicWidgets.difference(components);
+    final coveredWidgets = publicWidgets.difference(uncoveredWidgets);
 
-    /* ---------------------- compare widgets and usecases ---------------------- */
-    final coveredWidgets = <String>[];
-    final uncoveredWidgets = <String>[];
-    final privateWidgets = <String>[];
-
-    // get covered widgets
-    for (var usecase in usecases) {
-      if (widgets.contains(usecase)) {
-        coveredWidgets.add(usecase);
-      }
-    }
-
-    //get uncovered widgets
-    for (var widget in widgets) {
-      if (!usecases.contains(widget) && !widget.startsWith('_')) {
-        uncoveredWidgets.add(widget);
-      }
-    }
-
-    // get private widgets
-    privateWidgets.addAll(
-      widgets.where(
-        (widget) => widget.startsWith('_'),
-      ),
-    );
-
-    /* ---------------------- compare widgets and usecases ---------------------- */
-
-    logger.info('\n');
-    coveredWidgets.forEach((widget) => logger.success('✅ ${widget}'));
-    uncoveredWidgets.forEach((widget) => logger.err('❌ ${widget}'));
-    logger.info('\n');
-
-    final coverage =
-        (coveredWidgets.length /
-            (coveredWidgets.length + uncoveredWidgets.length)) *
-        100;
-
+    final coverage = (coveredWidgets.length / (publicWidgets.length)) * 100;
     final isSatisfied = coverage >= args.minCoverage;
+
+    logger.info('\n');
+    coveredWidgets.forEach((widget) => logger.success('✅ $widget'));
+    uncoveredWidgets.forEach((widget) => logger.err('❌ $widget'));
+    privateWidgets.forEach((widget) => logger.info('🔒 $widget'));
+    logger.info('\n');
 
     logger.info('Total     : ${widgets.length}');
     logger.info('Covered   : ${coveredWidgets.length}');

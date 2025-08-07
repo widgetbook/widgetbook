@@ -2,7 +2,7 @@ part of 'coverage_command.dart';
 
 /// Spawns an isolate to resolve the widgets in a flutter project
 /// and returns the list of widgets found.
-Future<List<String>> _getProjectWidgets(
+Future<Set<String>> _getWidgets(
   PathData pathData,
   Logger logger,
 ) async {
@@ -10,7 +10,7 @@ Future<List<String>> _getProjectWidgets(
 
   final widgetReceivePort = ReceivePort();
   final widgetIsolateTask = await Isolate.spawn(
-    _resolveFlutterProjectWidgets,
+    _resolveWidgets,
     InitialIsolateData(
       sendPort: widgetReceivePort.sendPort,
       filePaths: pathData.filePaths,
@@ -18,12 +18,12 @@ Future<List<String>> _getProjectWidgets(
     ),
   );
 
-  var widgets = <String>[];
+  var widgets = <String>{};
 
   await for (final data in widgetReceivePort) {
     if (data is! SenderPortData) continue;
     if (data.isFinished) {
-      widgets = [...data.result];
+      widgets = data.result;
       widgetIsolateTask.kill();
       progress.complete();
       break;
@@ -37,7 +37,7 @@ Future<List<String>> _getProjectWidgets(
 
 /// Resolves the widgets in a flutter project,
 /// run in a seperate isolate as it is a heavy operation
-Future<void> _resolveFlutterProjectWidgets(InitialIsolateData data) async {
+Future<void> _resolveWidgets(InitialIsolateData data) async {
   final widgetVisitor = WidgetVisitor();
 
   final analyzerContextCollection = AnalysisContextCollection(
