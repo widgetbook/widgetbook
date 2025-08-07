@@ -76,6 +76,13 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
 
   @override
   FutureOr<int> runWith(Context context, CoverageArgs args) async {
+    logger.warn(
+      'Experimental command 🧪 \n'
+      'Breaking changes are possible without prior notice.\n'
+      'Please report any bugs or issues you encounter:\n'
+      'https://github.com/widgetbook/widgetbook/issues\n',
+    );
+
     // We run both these functions in parallel and in isolates because they
     // are both heavy and blocking operations that can block the loader from
     // the [logger.progress]
