@@ -2,25 +2,13 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
-import 'package:analyzer/dart/analysis/features.dart';
-import 'package:analyzer/dart/analysis/results.dart';
-import 'package:analyzer/dart/analysis/utilities.dart';
-import 'package:analyzer/dart/ast/ast.dart';
-import 'package:analyzer/dart/ast/visitor.dart';
-import 'package:analyzer/dart/element/element.dart';
 import 'package:args/args.dart';
-import 'package:collection/collection.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
-import '../../core/core.dart';
-import 'coverage_args.dart';
 
-part 'get_components.dart';
-part 'get_widgets.dart';
-part 'models.dart';
-part 'widget_visitor.dart';
-part 'widgetbook_use_case_visitor.dart';
+import '../analyzer/analyzer.dart';
+import '../core/core.dart';
+import 'coverage_args.dart';
 
 class CoverageCommand extends CliCommand<CoverageArgs> {
   CoverageCommand({
@@ -28,7 +16,8 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
   }) : super(
          name: 'coverage',
          description:
-             'A command that checks for widgetbook coverage in a package.',
+             'Checks the percentage of package widgets that are covered '
+             'by at least one use-case in Widgetbook.',
        ) {
     argParser
       ..addOption(
@@ -87,26 +76,12 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
 
   @override
   FutureOr<int> runWith(Context context, CoverageArgs args) async {
-    final pathsProgress = logger.progress('Discovering paths');
-    final widgetPaths = _getFilePaths(args.packageDir);
-    final widgetbookPaths = _getFilePaths(args.widgetbookDir);
-    pathsProgress.complete();
-
+    // We run both these functions in parallel and in isolates because they
+    // are both heavy and blocking operations that can block the loader from
+    // the [logger.progress]
     final [widgets, components] = await Future.wait([
-      _getWidgets(
-        PathData(
-          filePaths: widgetPaths,
-          projectRootPath: args.packageDir,
-        ),
-        logger,
-      ),
-      _getComponents(
-        PathData(
-          filePaths: widgetbookPaths,
-          projectRootPath: args.widgetbookDir,
-        ),
-        logger,
-      ),
+      _getWidgets(args.packageDir, logger),
+      _getComponents(args.widgetbookDir, logger),
     ]);
 
     // We exclude private widgets (those starting with '_') from the coverage
@@ -136,22 +111,37 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     return isSatisfied ? ExitCode.success.code : -8;
   }
 
-  /// gets all the absolute file paths in a directory path.
-  List<String> _getFilePaths(String directoryPath) {
-    final dartFiles =
-        Directory(directoryPath)
-            .listSync(recursive: true)
-            .whereType<File>()
-            .where((file) => file.path.endsWith('.dart'))
-            .map((file) => file.absolute.path)
-            .toList();
+  Future<Set<String>> _getComponents(
+    String widgetbookDir,
+    Logger logger,
+  ) async {
+    final progress = logger.progress('Resolving components in $widgetbookDir');
 
-    if (dartFiles.isEmpty) {
-      throw FileNotFoundException(
-        message:
-            'Dart files not found for --widgets_target option $directoryPath',
-      );
-    }
-    return dartFiles;
+    final components = await Isolate.run(() {
+      final analyzer = ShallowAnalyzer(widgetbookDir);
+      return analyzer.collect(ComponentCollector());
+    });
+
+    progress.complete(
+      'Found ${components.length} components in $widgetbookDir',
+    );
+
+    return components;
+  }
+
+  Future<Set<String>> _getWidgets(
+    String packageDir,
+    Logger logger,
+  ) async {
+    final progress = logger.progress('Resolving widgets in $packageDir');
+
+    final widgets = await Isolate.run(() async {
+      final analyzer = DeepAnalyzer(packageDir);
+      return analyzer.collect(WidgetCollector());
+    });
+
+    progress.complete('Found ${widgets.length} widgets in $packageDir');
+
+    return widgets;
   }
 }

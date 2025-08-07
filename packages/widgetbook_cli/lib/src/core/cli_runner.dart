@@ -5,7 +5,7 @@ import 'package:pub_updater/pub_updater.dart';
 
 import '../../metadata.dart';
 import '../commands/cloud.dart';
-import '../commands/coverage_command/coverage_command.dart';
+import '../commands/coverage.dart';
 import '../commands/upgrade.dart';
 import 'cli_exception.dart';
 import 'context.dart';
