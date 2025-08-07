@@ -21,13 +21,13 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
        ) {
     argParser
       ..addOption(
-        'package-directory',
+        'package',
         defaultsTo: '.',
-        help: 'Path for the app or the design system package.',
+        help: 'Directory of the app or the design system package',
       )
       ..addOption(
-        'widgetbook-directory',
-        help: 'Path for the widgetbook app',
+        'widgetbook',
+        help: 'Directory of the widgetbook app',
         defaultsTo: './widgetbook',
       )
       ..addOption(
@@ -40,7 +40,7 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
 
   @override
   FutureOr<CoverageArgs> parseResults(Context context, ArgResults results) {
-    final packageDir = results['package-directory'] as String;
+    final packageDir = results['package'] as String;
     final packagePubspec = File('${packageDir}/pubspec.yaml');
     if (!packagePubspec.existsSync()) {
       throw CliException(
@@ -49,7 +49,7 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
       );
     }
 
-    final widgetbookDir = results['widgetbook-directory'] as String;
+    final widgetbookDir = results['widgetbook'] as String;
     final widgetbookPubspec = File('${widgetbookDir}/pubspec.yaml');
     if (!widgetbookPubspec.existsSync()) {
       throw CliException(
