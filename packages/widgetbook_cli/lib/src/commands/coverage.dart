@@ -87,8 +87,8 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     // are both heavy and blocking operations that can block the loader from
     // the [logger.progress]
     final [widgets, components] = await Future.wait([
-      _getWidgets(args.packageDir, logger),
-      _getComponents(args.widgetbookDir, logger),
+      _getWidgets(p.join(args.packageDir, 'lib'), logger),
+      _getComponents(p.join(args.widgetbookDir, 'lib'), logger),
     ]);
 
     // We exclude private widgets (those starting with '_') from the coverage
