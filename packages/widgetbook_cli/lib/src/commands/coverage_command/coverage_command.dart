@@ -11,9 +11,9 @@ import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:args/args.dart';
 import 'package:mason_logger/mason_logger.dart';
-import '../../../widgetbook_cli.dart';
+import 'package:path/path.dart' as p;
+import '../../core/core.dart';
 import 'coverage_args.dart';
-import 'user_input_validity_checker.dart';
 
 part 'get_project_widgetbook_usecases.dart';
 part 'get_project_widgets.dart';
@@ -31,61 +31,64 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
        ) {
     argParser
       ..addOption(
-        'package',
-        help: 'Target path of the Flutter package.',
-        mandatory: true,
+        'package-directory',
+        defaultsTo: '.',
+        help: 'Path for the app or the design system package.',
       )
       ..addOption(
-        'widgetbook',
-        help: 'Target path of the widgetbook package.',
-        mandatory: true,
+        'widgetbook-directory',
+        help: 'Path for the widgetbook app',
+        defaultsTo: './widgetbook',
       )
       ..addOption(
         'min-coverage',
-        help:
-            'Minimum coverage percentage required, integer value from (0-100).',
-        defaultsTo: '50',
+        help: 'Minimum coverage percentage required',
+        defaultsTo: '90',
+        valueHelp: '0-100',
       );
   }
 
-  final UserInputValidityChecker _userInputValidityChecker =
-      UserInputValidityChecker();
-
   @override
   FutureOr<CoverageArgs> parseResults(Context context, ArgResults results) {
-    final package = _getOptionPath('package', results);
-    final widgetbook = _getOptionPath('widgetbook', results);
-    final minCoverage = _getMinCoverageInput(results);
-
-    if (!_isValidDirectoryInputs(package, widgetbook)) {
-      throw FolderNotFoundException();
+    final packageDir = results['package-directory'] as String;
+    final packagePubspec = File('${packageDir}/pubspec.yaml');
+    if (!packagePubspec.existsSync()) {
+      throw CliException(
+        'No pubspec.yaml found in the package directory: $packageDir',
+        ExitCode.data.code,
+      );
     }
 
-    if (!_userInputValidityChecker.isPackage(
-          package,
-        ) ||
-        !_userInputValidityChecker.isValidWidgetbook(
-          widgetbook,
-          package,
-        )) {
-      throw FolderNotFoundException();
+    final widgetbookDir = results['widgetbook-directory'] as String;
+    final widgetbookPubspec = File('${widgetbookDir}/pubspec.yaml');
+    if (!widgetbookPubspec.existsSync()) {
+      throw CliException(
+        'No pubspec.yaml found in the widgetbook directory: $widgetbookDir',
+        ExitCode.data.code,
+      );
+    }
+
+    final minCoverage = int.tryParse(results['min-coverage'] as String);
+    if (minCoverage == null || minCoverage < 0 || minCoverage > 100) {
+      throw CliException(
+        'Invalid min-coverage value. Must be between 0 and 100.',
+        ExitCode.data.code,
+      );
     }
 
     return CoverageArgs(
-      package: package,
-      widgetbook: widgetbook,
+      // Use absolute paths as needed by the analysis context
+      packageDir: p.canonicalize(packageDir),
+      widgetbookDir: p.canonicalize(widgetbookDir),
       minCoverage: minCoverage,
     );
   }
 
   @override
   FutureOr<int> runWith(Context context, CoverageArgs args) async {
-    final package = args.package;
-    final widgetbook = args.widgetbook;
-
     final pathsProgress = logger.progress('Discovering paths');
-    final widgetPaths = _getFilePaths(package);
-    final widgetbookPaths = _getFilePaths(widgetbook);
+    final widgetPaths = _getFilePaths(args.packageDir);
+    final widgetbookPaths = _getFilePaths(args.widgetbookDir);
     pathsProgress.complete();
 
     /* ------------------------ get widgets and usecases ------------------------ */
@@ -93,14 +96,14 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
       _getProjectWidgets(
         PathData(
           filePaths: widgetPaths,
-          projectRootPath: package,
+          projectRootPath: args.packageDir,
         ),
         logger,
       ),
       _getProjectWidgetbookUseCases(
         PathData(
           filePaths: widgetbookPaths,
-          projectRootPath: widgetbook,
+          projectRootPath: args.widgetbookDir,
         ),
         logger,
       ),
@@ -161,21 +164,6 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     return isSatisfied ? ExitCode.success.code : -8;
   }
 
-  String _getOptionPath(String option, ArgResults results) {
-    final path = results[option] as String?;
-
-    if (path == null) {
-      throw FolderNotFoundException(
-        message:
-            '$option path not found, please provide a valid $option path using the "--$option" option.',
-      );
-    }
-
-    if (path == '.') return Directory.current.path;
-    if (path == '..') return Directory.current.parent.path;
-    return Directory(path).absolute.path;
-  }
-
   /// gets all the absolute file paths in a directory path.
   List<String> _getFilePaths(String directoryPath) {
     final dartFiles =
@@ -194,35 +182,4 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     }
     return dartFiles;
   }
-
-  /// if not an integer it will throw and if not between 0 and 100 it will throw.
-  /// Else it will return the integer value.
-  int _getMinCoverageInput(ArgResults results) {
-    try {
-      final minCoverage = int.parse(results['min-coverage'] as String);
-      if (minCoverage < 0 || minCoverage > 100) {
-        throw Exception();
-      }
-
-      return minCoverage;
-    } catch (e) {
-      throw InvalidInputException(
-        message:
-            'Invalid min-coverage value, please provide a valid integer value between 0 and 100.',
-      );
-    }
-  }
-
-  bool _isValidDirectoryInputs(
-    String package,
-    String widgetbook,
-  ) =>
-      _userInputValidityChecker.isValidDirectory(
-        package,
-        option: 'package',
-      ) &&
-      _userInputValidityChecker.isValidDirectory(
-        widgetbook,
-        option: 'widgetbook',
-      );
 }
