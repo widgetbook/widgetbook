@@ -32,30 +32,10 @@ abstract class CliCommand<TArgs> extends Command<int> {
 
   @override
   FutureOr<int>? run() async {
-    try {
-      final results = argResults!;
-      final args = await parseResults(context, results);
+    final results = argResults!;
+    final args = await parseResults(context, results);
 
-      return runWith(context, args);
-    } catch (e, stackTrace) {
-      // could be done differently but this if statement is added to
-      // make sure the error messages are displayed correctly for
-      // the coverage command.
-      if (e is FolderNotFoundException ||
-          e is InvalidWidgetbookPackageException ||
-          e is InvalidFlutterPackageException ||
-          e is InvalidInputException ||
-          e is FileNotFoundException) {
-        logger.err((e as CliException).message);
-        return -1;
-      }
-
-      logger.err('Something wrong happened');
-      logger.err(e.toString());
-      logger.err(stackTrace.toString());
-
-      return -1;
-    }
+    return runWith(context, args);
   }
 }
 
