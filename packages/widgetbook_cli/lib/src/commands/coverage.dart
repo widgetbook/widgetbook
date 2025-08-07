@@ -91,26 +91,20 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
       _getComponents(p.join(args.widgetbookDir, 'lib'), logger),
     ]);
 
-    // We exclude private widgets (those starting with '_') from the coverage
-    // calculation as they are not meant to be used outside their library.
-    final privateWidgets = widgets.where((x) => x.startsWith('_')).toSet();
-    final publicWidgets = widgets.difference(privateWidgets);
-    final uncoveredWidgets = publicWidgets.difference(components);
-    final coveredWidgets = publicWidgets.difference(uncoveredWidgets);
+    final uncoveredWidgets = widgets.difference(components);
+    final coveredWidgets = widgets.difference(uncoveredWidgets);
 
-    final coverage = (coveredWidgets.length / (publicWidgets.length)) * 100;
+    final coverage = (coveredWidgets.length / (widgets.length)) * 100;
     final isSatisfied = coverage >= args.minCoverage;
 
     logger.info('\n');
     coveredWidgets.forEach((widget) => logger.success('✅ $widget'));
     uncoveredWidgets.forEach((widget) => logger.err('❌ $widget'));
-    privateWidgets.forEach((widget) => logger.info('🔒 $widget'));
     logger.info('\n');
 
     logger.info('Total     : ${widgets.length}');
     logger.info('Covered   : ${coveredWidgets.length}');
     logger.info('Uncovered : ${uncoveredWidgets.length}');
-    logger.info('Private   : ${privateWidgets.length}');
     logger.info(
       'Coverage  : ${coverage.toStringAsFixed(2)}% ${isSatisfied ? '✅' : '❌'}',
     );

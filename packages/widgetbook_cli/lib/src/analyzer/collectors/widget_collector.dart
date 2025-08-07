@@ -7,6 +7,14 @@ import 'collector_ast_visitor.dart';
 class WidgetCollector extends CollectorAstVisitor<String, ClassDeclaration> {
   @override
   bool shouldCollect(ClassDeclaration node) {
+    // Skip private classes
+    if (node.name.toString().startsWith('_')) return false;
+
+    // Skip classes that have the ignore comment
+    final firstToken = node.firstTokenAfterCommentAndMetadata;
+    final comment = firstToken.precedingComments?.lexeme;
+    if (comment == '// widgetbook: ignore') return false;
+
     return node.declaredElement?.isWidget == true;
   }
 
