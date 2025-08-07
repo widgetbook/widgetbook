@@ -77,7 +77,7 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
   @override
   FutureOr<int> runWith(Context context, CoverageArgs args) async {
     logger.warn(
-      'Experimental command 🧪 \n'
+      'Experimental command 🧪\n'
       'Breaking changes are possible without prior notice.\n'
       'Please report any bugs or issues you encounter:\n'
       'https://github.com/widgetbook/widgetbook/issues\n',
@@ -97,16 +97,15 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     final coverage = (coveredWidgets.length / (widgets.length)) * 100;
     final isSatisfied = coverage >= args.minCoverage;
 
-    logger.info('\n');
+    logger.info('\nCovered Widgets (${coveredWidgets.length})');
     coveredWidgets.forEach((widget) => logger.success('✅ $widget'));
-    uncoveredWidgets.forEach((widget) => logger.err('❌ $widget'));
-    logger.info('\n');
 
-    logger.info('Total     : ${widgets.length}');
-    logger.info('Covered   : ${coveredWidgets.length}');
-    logger.info('Uncovered : ${uncoveredWidgets.length}');
+    logger.info('\nUncovered Widgets (${uncoveredWidgets.length})');
+    uncoveredWidgets.forEach((widget) => logger.err('❌ $widget'));
+
     logger.info(
-      'Coverage  : ${coverage.toStringAsFixed(2)}% ${isSatisfied ? '✅' : '❌'}',
+      '\n${isSatisfied ? '✅' : '❌'} '
+      'Coverage (${coverage.toStringAsFixed(2)}%)',
     );
 
     return isSatisfied ? ExitCode.success.code : -8;
