@@ -26,8 +26,9 @@ Future<List<String>> _getProjectWidgetbookUseCases(
     if (data.isFinished) {
       widgetbookIsolateTask.kill();
       stdout.write('\r');
-      timerLogger
-          .stop('Total Widgetbook usecases found: ${data.result.length}');
+      timerLogger.stop(
+        'Total Widgetbook usecases found: ${data.result.length}',
+      );
       usecases = [...data.result];
       break;
     }

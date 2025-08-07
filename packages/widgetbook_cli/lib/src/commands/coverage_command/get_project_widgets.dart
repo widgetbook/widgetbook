@@ -49,14 +49,16 @@ Future<void> _resolveFlutterProjectWidgets(InitialIsolateData data) async {
     //excludedPaths
   );
 
-  final analyzerContext = analyzerContextCollection
-      .contextFor(Directory(data.projectRootPath).absolute.path);
+  final analyzerContext = analyzerContextCollection.contextFor(
+    Directory(data.projectRootPath).absolute.path,
+  );
 
   final analyzedFilesPath = analyzerContext.contextRoot.analyzedFiles();
 
   for (final filePath in analyzedFilesPath) {
-    final result =
-        await analyzerContext.currentSession.getResolvedUnit(filePath);
+    final result = await analyzerContext.currentSession.getResolvedUnit(
+      filePath,
+    );
     if (result is! ResolvedUnitResult) continue;
 
     result.unit.visitChildren(widgetVisitor);

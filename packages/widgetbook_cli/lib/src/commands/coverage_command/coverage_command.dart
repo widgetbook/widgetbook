@@ -28,12 +28,12 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
   CoverageCommand({
     required Logger logger,
     required super.context,
-  })  : _logger = logger,
-        super(
-          name: 'coverage',
-          description:
-              'A command that checks for widgetbook coverage in a package.',
-        ) {
+  }) : _logger = logger,
+       super(
+         name: 'coverage',
+         description:
+             'A command that checks for widgetbook coverage in a package.',
+       ) {
     argParser
       ..addOption(
         'package',
@@ -122,11 +122,13 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     /* ------------- get file paths to be evaluated by the analyzer ------------- */
     _timeLogger.start('Loading widget and widgetbook target file paths...');
     final widgetPaths = _getFilePaths(widgetsTarget);
-    final widgetbookPaths = widgetsTarget == widgetbookUsecasesTarget
-        ? widgetPaths
-        : _getFilePaths(widgetbookUsecasesTarget);
-    _timeLogger
-        .stop('Finished loading widget and widgetbook target file paths.');
+    final widgetbookPaths =
+        widgetsTarget == widgetbookUsecasesTarget
+            ? widgetPaths
+            : _getFilePaths(widgetbookUsecasesTarget);
+    _timeLogger.stop(
+      'Finished loading widget and widgetbook target file paths.',
+    );
     /* ------------- get file paths to be evaluated by the analyzer ------------ */
 
     /* ------------------------ get widgets and usecases ------------------------ */
@@ -193,7 +195,8 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     /* ------------------------------ print results ----------------------------- */
 
     /* ---------------------- calculate coverage percentage --------------------- */
-    final coveredWidgetsPercentage = (coveredWidgets.length /
+    final coveredWidgetsPercentage =
+        (coveredWidgets.length /
             (coveredWidgets.length + uncoveredWidgets.length)) *
         100;
 
@@ -227,12 +230,13 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
 
   /// gets all the absolute file paths in a directory path.
   List<String> _getFilePaths(String directoryPath) {
-    final dartFiles = Directory(directoryPath)
-        .listSync(recursive: true)
-        .whereType<File>()
-        .where((file) => file.path.endsWith('.dart'))
-        .map((file) => file.absolute.path)
-        .toList();
+    final dartFiles =
+        Directory(directoryPath)
+            .listSync(recursive: true)
+            .whereType<File>()
+            .where((file) => file.path.endsWith('.dart'))
+            .map((file) => file.absolute.path)
+            .toList();
 
     if (dartFiles.isEmpty) {
       throw FileNotFoundException(
