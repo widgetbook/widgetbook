@@ -18,16 +18,13 @@ import 'user_input_validity_checker.dart';
 part 'get_project_widgetbook_usecases.dart';
 part 'get_project_widgets.dart';
 part 'models.dart';
-part 'time_logger.dart';
 part 'widget_visitor.dart';
 part 'widgetbook_use_case_visitor.dart';
 
 class CoverageCommand extends CliCommand<CoverageArgs> {
   CoverageCommand({
-    required Logger logger,
     required super.context,
-  }) : _logger = logger,
-       super(
+  }) : super(
          name: 'coverage',
          description:
              'A command that checks for widgetbook coverage in a package.',
@@ -51,8 +48,6 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
       );
   }
 
-  final Logger _logger;
-  late final TimeLogger _timeLogger = TimeLogger(_logger);
   final UserInputValidityChecker _userInputValidityChecker =
       UserInputValidityChecker();
 
@@ -62,8 +57,6 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     final widgetbook = _getOptionPath('widgetbook', results);
     final minCoverage = _getMinCoverageInput(results);
 
-    /* ---------------------- validity checks of the input ---------------------- */
-    _timeLogger.start('Validating input directories...');
     if (!_isValidDirectoryInputs(package, widgetbook)) {
       throw FolderNotFoundException();
     }
@@ -77,8 +70,6 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
         )) {
       throw FolderNotFoundException();
     }
-    _timeLogger.stop('Finished validating input directories.');
-    /* ---------------------- validity checks of the input ---------------------- */
 
     return CoverageArgs(
       package: package,
@@ -92,15 +83,10 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     final package = args.package;
     final widgetbook = args.widgetbook;
 
-    /* ------------- get file paths to be evaluated by the analyzer ------------- */
-    _timeLogger.start('Loading widget and widgetbook target file paths...');
+    final pathsProgress = logger.progress('Discovering paths');
     final widgetPaths = _getFilePaths(package);
     final widgetbookPaths = _getFilePaths(widgetbook);
-
-    _timeLogger.stop(
-      'Finished loading widget and widgetbook target file paths.',
-    );
-    /* ------------- get file paths to be evaluated by the analyzer ------------ */
+    pathsProgress.complete();
 
     /* ------------------------ get widgets and usecases ------------------------ */
     final futures = await Future.wait([
@@ -109,14 +95,14 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
           filePaths: widgetPaths,
           projectRootPath: package,
         ),
-        _logger,
+        logger,
       ),
       _getProjectWidgetbookUseCases(
         PathData(
           filePaths: widgetbookPaths,
           projectRootPath: widgetbook,
         ),
-        _logger,
+        logger,
       ),
     ]);
 
@@ -152,36 +138,27 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
 
     /* ---------------------- compare widgets and usecases ---------------------- */
 
-    /* ------------------------------ print results ----------------------------- */
-    _logger.info('Covered widgets: ${coveredWidgets.length}');
-    _logger.info('Uncovered widgets: ${uncoveredWidgets.length}');
-    _logger.info('Private widgets: ${privateWidgets.length}');
-    _logger.info('Widget Name'.padRight(50) + ' | Coverage Status');
-    coveredWidgets.forEach((widget) {
-      _logger.info('${widget.padRight(50)} | ✅ Covered');
-    });
-    uncoveredWidgets.forEach((widget) {
-      _logger.info('${widget.padRight(50)} | ❌ Uncovered');
-    });
-    /* ------------------------------ print results ----------------------------- */
+    logger.info('\n');
+    coveredWidgets.forEach((widget) => logger.success('✅ ${widget}'));
+    uncoveredWidgets.forEach((widget) => logger.err('❌ ${widget}'));
+    logger.info('\n');
 
-    /* ---------------------- calculate coverage percentage --------------------- */
-    final coveredWidgetsPercentage =
+    final coverage =
         (coveredWidgets.length /
             (coveredWidgets.length + uncoveredWidgets.length)) *
         100;
 
-    if (coveredWidgetsPercentage < args.minCoverage) {
-      throw '❌ Insufficient coverage of $coveredWidgetsPercentage% found, '
-          'minimum coverage of ${args.minCoverage}% required!';
-    } else {
-      _logger.info(
-        '✅ Minimum coverage of ${args.minCoverage}% is satisfied with $coveredWidgetsPercentage% coverage!',
-      );
-    }
-    /* ---------------------- calculate coverage percentage --------------------- */
+    final isSatisfied = coverage >= args.minCoverage;
 
-    return ExitCode.success.code;
+    logger.info('Total     : ${widgets.length}');
+    logger.info('Covered   : ${coveredWidgets.length}');
+    logger.info('Uncovered : ${uncoveredWidgets.length}');
+    logger.info('Private   : ${privateWidgets.length}');
+    logger.info(
+      'Coverage  : ${coverage.toStringAsFixed(2)}% ${isSatisfied ? '✅' : '❌'}',
+    );
+
+    return isSatisfied ? ExitCode.success.code : -8;
   }
 
   String _getOptionPath(String option, ArgResults results) {

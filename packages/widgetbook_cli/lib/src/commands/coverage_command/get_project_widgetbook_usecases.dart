@@ -6,9 +6,8 @@ Future<List<String>> _getProjectWidgetbookUseCases(
   PathData pathData,
   Logger logger,
 ) async {
-  final timerLogger = TimeLogger(logger);
+  final progress = logger.progress('Resolving use-cases...');
 
-  timerLogger.start('Resolving Widgetbook usecases...');
   final widgetbookReceivePort = ReceivePort();
   final widgetbookIsolateTask = await Isolate.spawn(
     _resolveWidgetbookUsecases,
@@ -25,19 +24,14 @@ Future<List<String>> _getProjectWidgetbookUseCases(
 
     if (data.isFinished) {
       widgetbookIsolateTask.kill();
-      stdout.write('\r');
-      timerLogger.stop(
-        'Total Widgetbook usecases found: ${data.result.length}',
-      );
+      progress.complete();
       usecases = [...data.result];
       break;
     }
 
-    if (data is List<String>) {
-      stdout.write(
-        '\rWidgetbook usecases found: ${data.result.length}'.padRight(30),
-      );
-    }
+    progress.update(
+      'Found ${data.result.length} use-cases',
+    );
   }
 
   return usecases;

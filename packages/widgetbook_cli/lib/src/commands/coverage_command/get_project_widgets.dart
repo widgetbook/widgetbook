@@ -6,8 +6,7 @@ Future<List<String>> _getProjectWidgets(
   PathData pathData,
   Logger logger,
 ) async {
-  final timerLogger = TimeLogger(logger);
-  timerLogger.start('Resolving widgets...');
+  final progress = logger.progress('Resolving widgets');
 
   final widgetReceivePort = ReceivePort();
   final widgetIsolateTask = await Isolate.spawn(
@@ -26,11 +25,11 @@ Future<List<String>> _getProjectWidgets(
     if (data.isFinished) {
       widgets = [...data.result];
       widgetIsolateTask.kill();
-      stdout.write('\r');
-      timerLogger.stop('Total widgets found: ${widgets.length}');
+      progress.complete();
       break;
     }
-    stdout.write('\rWidgets found: ${data.result.length}'.padRight(30));
+
+    progress.update('Found ${data.result.length} widgets');
   }
 
   return widgets;
