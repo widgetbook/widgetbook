@@ -8,11 +8,7 @@ class UserInputValidityChecker {
   /// Checks if the [package] directory is a Flutter project root directory.
   /// By checking for the presence of a pubspec.yaml file
   /// and Flutter dependency in the pubspec.yaml file.
-
-  bool isPackage(
-    String package, {
-    String? widgetsTarget,
-  }) {
+  bool isPackage(String package) {
     final pubspecFile = File('$package/pubspec.yaml').absolute;
 
     // Check if pubspec.yaml exists
@@ -34,13 +30,6 @@ class UserInputValidityChecker {
       );
     }
 
-    if (!(widgetsTarget?.contains(package) ?? true)) {
-      throw InvalidFlutterPackageException(
-        message:
-            'The package and widgets_target options should point to the same project. The package project is $package and the widgets_target project is $widgetsTarget.',
-      );
-    }
-
     return true;
   }
 
@@ -50,11 +39,7 @@ class UserInputValidityChecker {
   /// If the [widgetbook] is different from the [package],
   /// it checks if the widgetbook project imports the flutter project in the
   /// [package] directory.
-  bool isValidWidgetbook(
-    String widgetbook,
-    String package, {
-    String? widgetbookUsecasesTarget,
-  }) {
+  bool isValidWidgetbook(String widgetbook, String package) {
     final packageName = File('$package/pubspec.yaml')
         .readAsStringSync()
         .split('\n')
@@ -94,13 +79,6 @@ class UserInputValidityChecker {
               'The widgetbook project for --widgetbook option $widgetbook does not depend on the Flutter project $packageName. Widgetbook project should depend on the Flutter project.',
         );
       }
-    }
-
-    if (!(widgetbookUsecasesTarget?.contains(widgetbook) ?? true)) {
-      throw InvalidWidgetbookPackageException(
-        message:
-            'The widgetbook and widgetbook_usecases_target options should point to the same project. The widgetbook project is $widgetbook and the widgetbook_usecases_target project is $widgetbookUsecasesTarget.',
-      );
     }
 
     return true;

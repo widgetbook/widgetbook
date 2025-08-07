@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
@@ -46,16 +44,6 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
         mandatory: true,
       )
       ..addOption(
-        'widgets-target',
-        help:
-            'Target path for the root widgets folder.\n(defaults to <package>/lib)',
-      )
-      ..addOption(
-        'widgetbook-usecases-target',
-        help:
-            'Target path for the root usecases folder.\n(defaults to <widgetbook>/lib)',
-      )
-      ..addOption(
         'min-coverage',
         help:
             'Minimum coverage percentage required, integer value from (0-100).',
@@ -72,31 +60,20 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
   FutureOr<CoverageArgs> parseResults(Context context, ArgResults results) {
     final package = _getOptionPath('package', results);
     final widgetbook = _getOptionPath('widgetbook', results);
-    final widgetsTarget =
-        results['widgets-target'] as String? ?? '$package/lib';
-    final widgetbookUsecasesTarget =
-        results['widgetbook-usecases-target'] as String? ?? '$widgetbook/lib';
     final minCoverage = _getMinCoverageInput(results);
 
     /* ---------------------- validity checks of the input ---------------------- */
     _timeLogger.start('Validating input directories...');
-    if (!_isValidDirectoryInputs(
-      package,
-      widgetbook,
-      widgetsTarget,
-      widgetbookUsecasesTarget,
-    )) {
+    if (!_isValidDirectoryInputs(package, widgetbook)) {
       throw FolderNotFoundException();
     }
 
     if (!_userInputValidityChecker.isPackage(
           package,
-          widgetsTarget: widgetsTarget,
         ) ||
         !_userInputValidityChecker.isValidWidgetbook(
           widgetbook,
           package,
-          widgetbookUsecasesTarget: widgetbookUsecasesTarget,
         )) {
       throw FolderNotFoundException();
     }
@@ -106,8 +83,6 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     return CoverageArgs(
       package: package,
       widgetbook: widgetbook,
-      widgetsTarget: widgetsTarget,
-      widgetbookUsecasesTarget: widgetbookUsecasesTarget,
       minCoverage: minCoverage,
     );
   }
@@ -116,16 +91,12 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
   FutureOr<int> runWith(Context context, CoverageArgs args) async {
     final package = args.package;
     final widgetbook = args.widgetbook;
-    final widgetsTarget = args.widgetsTarget;
-    final widgetbookUsecasesTarget = args.widgetbookUsecasesTarget;
 
     /* ------------- get file paths to be evaluated by the analyzer ------------- */
     _timeLogger.start('Loading widget and widgetbook target file paths...');
-    final widgetPaths = _getFilePaths(widgetsTarget);
-    final widgetbookPaths =
-        widgetsTarget == widgetbookUsecasesTarget
-            ? widgetPaths
-            : _getFilePaths(widgetbookUsecasesTarget);
+    final widgetPaths = _getFilePaths(package);
+    final widgetbookPaths = _getFilePaths(widgetbook);
+
     _timeLogger.stop(
       'Finished loading widget and widgetbook target file paths.',
     );
@@ -268,8 +239,6 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
   bool _isValidDirectoryInputs(
     String package,
     String widgetbook,
-    String widgetsTarget,
-    String widgetbookUsecasesTarget,
   ) =>
       _userInputValidityChecker.isValidDirectory(
         package,
@@ -278,13 +247,5 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
       _userInputValidityChecker.isValidDirectory(
         widgetbook,
         option: 'widgetbook',
-      ) &&
-      _userInputValidityChecker.isValidDirectory(
-        widgetsTarget,
-        option: 'widgets_target',
-      ) &&
-      _userInputValidityChecker.isValidDirectory(
-        widgetbookUsecasesTarget,
-        option: 'widgetbook_usecases_target',
       );
 }
