@@ -1,4 +1,4 @@
-## Unreleased
+## 3.16.0
 
 - **BREAKING**: Set minimum SDK version to 3.7.0 & minimum Flutter version to 3.29.0. ([#1541](https://github.com/widgetbook/widgetbook/pull/1541))
 - **FEAT**: Add [`object.segmented`](https://docs.widgetbook.io/knobs/object/segmented) knob. ([#1478](https://github.com/widgetbook/widgetbook/pull/1478) - by [@Sourav-Sonkar](https://github.com/Sourav-Sonkar))
