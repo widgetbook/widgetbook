@@ -5,6 +5,7 @@ import 'package:pub_updater/pub_updater.dart';
 
 import '../../metadata.dart';
 import '../commands/cloud.dart';
+import '../commands/coverage.dart';
 import '../commands/upgrade.dart';
 import 'cli_exception.dart';
 import 'context.dart';
@@ -33,6 +34,12 @@ class CliRunner extends CommandRunner<int> {
 
     addCommand(
       CloudCommand(
+        context: context,
+      ),
+    );
+
+    addCommand(
+      CoverageCommand(
         context: context,
       ),
     );

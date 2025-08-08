@@ -4,8 +4,7 @@ import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 
-import 'cli_runner.dart';
-import 'context.dart';
+import '../../widgetbook_cli.dart';
 
 /// A [Context]-aware [Command] for [CliRunner].
 abstract class CliCommand<TArgs> extends Command<int> {

@@ -604,6 +604,10 @@
             {
               "title": "cloud build push",
               "href": "/cli/commands/cloud-build-push"
+            },
+            {
+              "title": "coverage",
+              "href": "/cli/commands/coverage"
             }
           ]
         }
