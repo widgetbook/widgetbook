@@ -15,7 +15,7 @@ class WidgetCollector extends CollectorAstVisitor<String, ClassDeclaration> {
     final comment = firstToken.precedingComments?.lexeme;
     if (comment == '// widgetbook: ignore') return false;
 
-    return node.declaredElement?.isWidget == true;
+    return node.declaredFragment?.element.isWidget == true;
   }
 
   @override
