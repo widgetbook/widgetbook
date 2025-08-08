@@ -4,7 +4,6 @@ import 'dart:isolate';
 
 import 'package:args/args.dart';
 import 'package:mason_logger/mason_logger.dart';
-import 'package:path/path.dart' as p;
 
 import '../analyzer/analyzer.dart';
 import '../core/core.dart';
@@ -22,7 +21,7 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     argParser
       ..addOption(
         'package',
-        defaultsTo: '.',
+        defaultsTo: './',
         help: 'Directory of the app or the design system package',
       )
       ..addOption(
@@ -67,9 +66,8 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     }
 
     return CoverageArgs(
-      // Use absolute paths as needed by the analysis context
-      packageDir: p.canonicalize(packageDir),
-      widgetbookDir: p.canonicalize(widgetbookDir),
+      packageDir: packageDir,
+      widgetbookDir: widgetbookDir,
       minCoverage: minCoverage,
     );
   }
@@ -87,8 +85,8 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     // are both heavy and blocking operations that can block the loader from
     // the [logger.progress]
     final [widgets, components] = await Future.wait([
-      _getWidgets(p.join(args.packageDir, 'lib')),
-      _getComponents(p.join(args.widgetbookDir, 'lib')),
+      _getWidgets(args.packageDir),
+      _getComponents(args.widgetbookDir),
     ]);
 
     final uncoveredWidgets = widgets.difference(components);
@@ -112,7 +110,7 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
   }
 
   Future<Set<String>> _getComponents(String widgetbookDir) async {
-    final progress = logger.progress('Resolving components in $widgetbookDir');
+    final progress = logger.progress('Resolving components');
 
     final components = await Isolate.run(() {
       final analyzer = ShallowAnalyzer(widgetbookDir);
@@ -120,21 +118,21 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     });
 
     progress.complete(
-      'Found ${components.length} components in $widgetbookDir',
+      'Found ${components.length} components',
     );
 
     return components;
   }
 
   Future<Set<String>> _getWidgets(String packageDir) async {
-    final progress = logger.progress('Resolving widgets in $packageDir');
+    final progress = logger.progress('Resolving widgets');
 
     final widgets = await Isolate.run(() async {
       final analyzer = DeepAnalyzer(packageDir);
       return analyzer.collect(WidgetCollector());
     });
 
-    progress.complete('Found ${widgets.length} widgets in $packageDir');
+    progress.complete('Found ${widgets.length} widgets');
 
     return widgets;
   }

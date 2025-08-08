@@ -18,10 +18,11 @@ class DeepAnalyzer extends BaseAnalyzer {
     CollectorAstVisitor<TData, TNode> collector,
   ) async {
     final collection = AnalysisContextCollection(
-      includedPaths: [rootPath],
+      // Only absolute normalized paths are supported
+      includedPaths: [absoluteLibPath],
     );
 
-    final context = collection.contextFor(rootPath);
+    final context = collection.contextFor(absoluteLibPath);
     final session = context.currentSession;
 
     final allFiles = context.contextRoot.analyzedFiles();
