@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **BREAKING**: Set minimum SDK version to 3.7.0. ([#1541](https://github.com/widgetbook/widgetbook/pull/1541))
+- **FEAT**: Add [experimental `coverage` command](https://docs.widgetbook.io/cli/commands/coverage) to check how many of your widgets are covered by Widgetbook use-cases. ([#1304](https://github.com/widgetbook/widgetbook/pull/1304) - by [@Moelfarri](https://github.com/Moelfarri))
 
 ## 3.9.0
 
