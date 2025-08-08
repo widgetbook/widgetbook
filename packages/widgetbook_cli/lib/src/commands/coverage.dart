@@ -87,8 +87,8 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     // are both heavy and blocking operations that can block the loader from
     // the [logger.progress]
     final [widgets, components] = await Future.wait([
-      _getWidgets(p.join(args.packageDir, 'lib'), logger),
-      _getComponents(p.join(args.widgetbookDir, 'lib'), logger),
+      _getWidgets(p.join(args.packageDir, 'lib')),
+      _getComponents(p.join(args.widgetbookDir, 'lib')),
     ]);
 
     final uncoveredWidgets = widgets.difference(components);
@@ -111,10 +111,7 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     return isSatisfied ? ExitCode.success.code : -8;
   }
 
-  Future<Set<String>> _getComponents(
-    String widgetbookDir,
-    Logger logger,
-  ) async {
+  Future<Set<String>> _getComponents(String widgetbookDir) async {
     final progress = logger.progress('Resolving components in $widgetbookDir');
 
     final components = await Isolate.run(() {
@@ -129,10 +126,7 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     return components;
   }
 
-  Future<Set<String>> _getWidgets(
-    String packageDir,
-    Logger logger,
-  ) async {
+  Future<Set<String>> _getWidgets(String packageDir) async {
     final progress = logger.progress('Resolving widgets in $packageDir');
 
     final widgets = await Isolate.run(() async {
