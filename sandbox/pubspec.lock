@@ -658,7 +658,7 @@ packages:
       path: "../packages/widgetbook_annotation"
       relative: true
     source: path
-    version: "3.6.0"
+    version: "3.7.0"
   widgetbook_generator:
     dependency: "direct dev"
     description:
