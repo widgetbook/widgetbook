@@ -21,8 +21,8 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
     argParser
       ..addOption(
         'package',
-        defaultsTo: './',
         help: 'Directory of the app or the design system package',
+        defaultsTo: './',
       )
       ..addOption(
         'widgetbook',
