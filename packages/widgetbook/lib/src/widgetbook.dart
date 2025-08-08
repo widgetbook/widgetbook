@@ -33,6 +33,7 @@ class Widgetbook extends StatefulWidget {
     this.themeMode,
     this.home = const DefaultHomePage(),
     this.header,
+    this.scrollBehavior,
   });
 
   /// A [Widgetbook] with [CupertinoApp] as an [appBuilder].
@@ -48,6 +49,7 @@ class Widgetbook extends StatefulWidget {
     this.themeMode,
     this.home = const DefaultHomePage(),
     this.header,
+    this.scrollBehavior,
   });
 
   /// A [Widgetbook] with [MaterialApp] as an [appBuilder].
@@ -63,6 +65,7 @@ class Widgetbook extends StatefulWidget {
     this.themeMode,
     this.home = const DefaultHomePage(),
     this.header,
+    this.scrollBehavior,
   });
 
   /// The initial route for that will be used on first startup.
@@ -114,6 +117,10 @@ class Widgetbook extends StatefulWidget {
   /// This can be used for branding or additional information.
   final Widget? header;
 
+  /// The scroll behavior to be applied to the Widgetbook application.
+  /// This parameter allows you to customize the scrolling behavior of the app.
+  final ScrollBehavior? scrollBehavior;
+
   @override
   State<Widgetbook> createState() => _WidgetbookState();
 }
@@ -164,6 +171,7 @@ class _WidgetbookState extends State<Widgetbook> {
         darkTheme: widget.darkTheme ?? Themes.dark,
         routerConfig: router,
         debugShowCheckedModeBanner: false,
+        scrollBehavior: widget.scrollBehavior,
       ),
     );
   }
