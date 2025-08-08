@@ -1,4 +1,4 @@
-## Unreleased
+## 3.15.0
 
 - **BREAKING**: Set minimum SDK version to 3.7.0. ([#1541](https://github.com/widgetbook/widgetbook/pull/1541))
 - **BREAKING**: Support [new element model API](https://github.com/dart-lang/sdk/blob/main/pkg/analyzer/doc/element_model_migration_guide.md). Use `analyzer` >=7.4.0, `build` >=3.0.0 and `source_gen` >=3.0.0. ([#1544](https://github.com/widgetbook/widgetbook/pull/1544))
