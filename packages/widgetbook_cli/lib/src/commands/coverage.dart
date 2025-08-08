@@ -32,7 +32,7 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
       ..addOption(
         'min-coverage',
         help: 'Minimum coverage percentage required',
-        defaultsTo: '90',
+        defaultsTo: '100',
         valueHelp: '0-100',
       );
   }
