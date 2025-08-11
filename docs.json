@@ -63,11 +63,15 @@
   "sidebar": [
     {
       "tab": "docs",
-      "group": "Introduction",
+      "group": "Getting Started",
       "pages": [
         {
-          "title": "Overview",
+          "title": "Why Widgetbook?",
           "href": "/index"
+        },
+        {
+          "title": "Setup & Install",
+          "href": "/guides/quick-start"
         },
         {
           "title": "Demo",
@@ -76,28 +80,12 @@
       ]
     },
     {
-      "group": "Guides",
+      "group": "Use-Cases",
       "tab": "docs",
       "pages": [
         {
-          "title": "Quick Start",
-          "href": "/guides/quick-start"
-        },
-        {
-          "title": "Use-cases",
+          "title": "What are use-cases?",
           "href": "/guides/use-cases"
-        },
-        {
-          "title": "Generate use-cases with LLMs",
-          "href": "/guides/generate-use-cases"
-        },
-        {
-          "title": "Mock Widgets & Screens",
-          "href": "/guides/mocking"
-        },
-        {
-          "title": "Customization",
-          "href": "/guides/customization"
         },
         {
           "title": "Annotations",
@@ -188,6 +176,29 @@
           ]
         },
         {
+          "title": "Mock Widgets & Screens",
+          "href": "/guides/mocking"
+        },
+        {
+          "group": "Use-case Generation",
+          "pages": [
+            {
+              "title": "Generate use-cases with LLMs",
+              "href": "/guides/generate-use-cases"
+            },
+            {
+              "title": "Entries Generator VSC Extension",
+              "href": "https://marketplace.visualstudio.com/items?itemName=LeanCode.widgetbook-generator"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Essentials",
+      "tab": "docs",
+      "pages": [
+        {
           "group": "Addons",
           "pages": [
             {
@@ -251,32 +262,62 @@
               "href": "/addons/custom-addon"
             }
           ]
-        }
-      ]
-    },
-    {
-      "tab": "docs",
-      "group": "Advanced",
-      "pages": [
+        },
         {
-          "title": "Monorepo",
+          "title": "Usage with Monorepo",
           "href": "/guides/monorepo"
-        },
-        {
-          "title": "Assets",
-          "href": "/guides/assets"
-        },
-        {
-          "title": "Fields",
-          "href": "/guides/fields"
         },
         {
           "title": "Embedding",
           "href": "/guides/embedding"
         },
         {
-          "title": "Entries Generator VSC Extension",
-          "href": "https://marketplace.visualstudio.com/items?itemName=LeanCode.widgetbook-generator"
+          "title": "Assets",
+          "href": "/guides/assets"
+        }
+      ]
+    },
+    {
+      "group": "Configure",
+      "tab": "docs",
+      "pages": [
+        {
+          "title": "Root Widget",
+          "href": "/configure/root-widget"
+        },
+        {
+          "title": "Use Case Navigation Path",
+          "href": "/configure/use-case-nav-path"
+        },
+        {
+          "title": "Initial Route",
+          "href": "/configure/initial-route"
+        },
+        {
+          "title": "Home Widget",
+          "href": "/configure/home-widget"
+        },
+        {
+          "title": "Header Widget",
+          "href": "/configure/header-widget"
+        },
+        {
+          "title": "Widgetbook Theme",
+          "href": "/configure/widgetbook-theme"
+        },
+        {
+          "title": "Telemetry",
+          "href": "/telemetry"
+        }        
+      ]
+    },
+    {
+      "tab": "docs",
+      "group": "API",
+      "pages": [
+        {
+          "title": "Fields",
+          "href": "/guides/fields"
         }
       ]
     },
@@ -338,10 +379,6 @@
               "href": "/contribution/quick-guide"
             }
           ]
-        },
-        {
-          "title": "Telemetry",
-          "href": "/telemetry"
         }
       ]
     },

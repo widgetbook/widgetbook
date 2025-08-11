@@ -1,0 +1,68 @@
+# Use-cases Navigation Path
+
+By default, use-cases have a navigation path in Widgetbook that is based on where their component file is located.
+There are multiple ways to customize the navigation path either globally or locally.
+
+<Info>
+  The component name (e.g. `Button`) and the use-case name (e.g. `Primary`) are
+  concatenated at the end of the path.
+
+```
+[ Nav Path ] / [ Component Name ] / [ Use-case Name ]
+```
+
+</Info>
+
+## Using `nav_path_mode` option
+
+You can **globally** change the behavior of the navigation path generation for all use-cases by providing a `nav_path_mode` option in `build.yaml` as follows:
+
+| Option Value          | Navigation Path Based on                                           |
+| --------------------- | ------------------------------------------------------------------ |
+| `component` (default) | The component _(i.e. Widget)_ file.                                |
+| `use-case`            | The use-case file _(i.e. where the `@UseCase` annotation is used)_ |
+
+```yaml title="build.yaml"
+targets:
+  $default:
+    builders:
+      widgetbook_generator:use_case_builder:
+        options:
+          nav_path_mode: use-case
+```
+
+## Using `@UseCase.path` parameter
+
+To provide a custom navigation path for a **single** use-case, you can use the `path` parameter in the `@UseCase` annotation.
+
+```dart
+import 'package:your_app/widgets/button.dart';
+
+// Navigation path: `widgets/Button/Primary`
+@widgetbook.UseCase(
+  name: 'Primary',
+  type: Button
+)
+Widget buildPrimaryButton() {
+  return Button();
+}
+```
+
+<Info>
+  If you wrap a folder name in **square brackets**, it will be treated as a
+  **category** in the navigation path.
+</Info>
+
+```dart
+import 'package:your_app/components/button.dart';
+
+// Navigation path: `[Interactions]/buttons/Button/Primary`
+@widgetbook.UseCase(
+  name: 'Primary',
+  type: Button,
+  path: '[Interactions]/buttons',
+)
+Widget buildPrimaryButton() {
+  return Button();
+}
+```
