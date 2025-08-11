@@ -275,28 +275,6 @@
           "href": "/guides/embedding"
         },
         {
-          "group": "Migration",
-          "pages": [
-            {
-              "title": "2.4.0 to 3.0.0",
-              "href": "/migration/2.4.0-to-3.0.0"
-            },
-            {
-              "title": "3.0.0 beta to rc",
-              "href": "/migration/3.0.0-beta-to-rc"
-            }
-          ]
-        },
-        {
-          "group": "Next",
-          "pages": [
-            {
-              "title": "SAM Architecture",
-              "href": "/next/sam"
-            }
-          ]
-        },
-        {
           "title": "Entries Generator VSC Extension",
           "href": "https://marketplace.visualstudio.com/items?itemName=LeanCode.widgetbook-generator"
         }
