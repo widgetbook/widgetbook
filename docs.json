@@ -573,11 +573,23 @@
     },
     {
       "tab": "cloud",
-      "group": "Security",
+      "group": "Account",
       "pages": [
         {
-          "title": "Overview",
-          "href": "/cloud/security/overview"
+          "title": "Billing",
+          "href": "/cloud/account/billing"
+        },
+        {
+          "title": "Privacy Policy",
+          "href": "/cloud/account/privacy-policy"
+        },
+        {
+          "title": "Terms of Service",
+          "href": "/cloud/account/terms-of-service"
+        },
+        {
+          "title": "Security",
+          "href": "/cloud/account/security"
         }
       ]
     },
