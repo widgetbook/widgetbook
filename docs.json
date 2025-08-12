@@ -199,6 +199,24 @@
       "tab": "docs",
       "pages": [
         {
+          "title": "Usage with Monorepo",
+          "href": "/essentials/monorepo"
+        },
+        {
+          "title": "Embedding",
+          "href": "/essentials/embedding"
+        },
+        {
+          "title": "Assets",
+          "href": "/essentials/assets"
+        }
+      ]
+    },
+    {
+      "group": "Configure",
+      "tab": "docs",
+      "pages": [
+        {
           "group": "Addons",
           "pages": [
             {
@@ -263,24 +281,6 @@
             }
           ]
         },
-        {
-          "title": "Usage with Monorepo",
-          "href": "/essentials/monorepo"
-        },
-        {
-          "title": "Embedding",
-          "href": "/essentials/embedding"
-        },
-        {
-          "title": "Assets",
-          "href": "/essentials/assets"
-        }
-      ]
-    },
-    {
-      "group": "Configure",
-      "tab": "docs",
-      "pages": [
         {
           "title": "Root Widget",
           "href": "/configure/root-widget"
