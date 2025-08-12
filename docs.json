@@ -265,7 +265,7 @@
         },
         {
           "title": "Usage with Monorepo",
-          "href": "/guides/monorepo"
+          "href": "/essentials/monorepo"
         },
         {
           "title": "Embedding",
