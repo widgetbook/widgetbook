@@ -31,7 +31,7 @@
 ## 3.14.0
 
 - **FEAT**: Add [`header` parameter](https://docs.widgetbook.io/guides/customization#header-widget) to Widgetbook to allow adding a custom header to the navigation sidebar. ([#1443](https://github.com/widgetbook/widgetbook/pull/1443) - by [@Sourav-Sonkar](https://github.com/Sourav-Sonkar))
-- **FEAT**: Add [`panels` query param](https://docs.widgetbook.io/guides/embedding#customizing-panels) to show/hide panels when embedding Widgetbook. ([#1439](https://github.com/widgetbook/widgetbook/pull/1439))
+- **FEAT**: Add [`panels` query param](https://docs.widgetbook.io/essentials/embedding#customizing-panels) to show/hide panels when embedding Widgetbook. ([#1439](https://github.com/widgetbook/widgetbook/pull/1439))
 - **FEAT**: Rework nullable knobs to allow them to be expressed in the URL. To indicate that a knob is null it can be expressed as `??` (e.g. `/?path=my-use-case&knobs={my_knob:??}`). ([#1450](https://github.com/widgetbook/widgetbook/pull/1450))
 - **FEAT**: Add `safeAreas` to viewports. ([#1452](https://github.com/widgetbook/widgetbook/pull/1452))
 - **REFACTOR**: Remove `ViewportData.id` in favor of `ViewportData.name`. ([#1454](https://github.com/widgetbook/widgetbook/pull/1454))

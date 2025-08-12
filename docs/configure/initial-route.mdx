@@ -1,0 +1,19 @@
+# Initial Route
+
+Initial routes can be used to pick the home page that is used on first launch by providing a `initialRoute` parameter to the `Widgetbook` constructor.
+
+<Info>
+  To easily get the exact route for a use-case, run your Widgetbook project on
+  web, and copy the value of the URL, then paste it as the value of the
+  `initialRoute` parameter.
+</Info>
+
+```dart
+@override
+Widget build(BuildContext context) {
+  return Widgetbook(
+    initialRoute: '?path=introduction/home-use-case',
+    // ...
+  );
+}
+```
