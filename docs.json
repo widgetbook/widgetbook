@@ -303,10 +303,6 @@
           "href": "/resources"
         },
         {
-          "title": "Telemetry",
-          "href": "/telemetry"
-        },
-        {
           "group": "Contribution",
           "pages": [
             {
@@ -342,6 +338,10 @@
               "href": "/contribution/quick-guide"
             }
           ]
+        },
+        {
+          "title": "Telemetry",
+          "href": "/telemetry"
         }
       ]
     },
