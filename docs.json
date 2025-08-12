@@ -209,6 +209,10 @@
         {
           "title": "Assets",
           "href": "/essentials/assets"
+        },
+        {
+          "title": "Fields",
+          "href": "/essentials/fields"
         }
       ]
     },
@@ -309,16 +313,6 @@
           "title": "Telemetry",
           "href": "/telemetry"
         }        
-      ]
-    },
-    {
-      "tab": "docs",
-      "group": "API",
-      "pages": [
-        {
-          "title": "Fields",
-          "href": "/api/fields"
-        }
       ]
     },
     {
