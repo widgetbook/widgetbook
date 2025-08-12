@@ -282,20 +282,6 @@
     },
     {
       "tab": "docs",
-      "group": "Help",
-      "pages": [
-        {
-          "title": "Book a Call",
-          "href": "https://meetings-eu1.hubspot.com/lucas-josefiak"
-        },
-        {
-          "title": "Discord Support",
-          "href": "https://discord.com/channels/879618555560218625/1141754969331085313"
-        }
-      ]
-    },
-    {
-      "tab": "docs",
       "group": "Glossary",
       "pages": [
         {
@@ -315,10 +301,6 @@
         {
           "title": "Resources",
           "href": "/resources"
-        },
-        {
-          "title": "Telemetry",
-          "href": "/telemetry"
         },
         {
           "group": "Contribution",
@@ -356,6 +338,10 @@
               "href": "/contribution/quick-guide"
             }
           ]
+        },
+        {
+          "title": "Telemetry",
+          "href": "/telemetry"
         }
       ]
     },
