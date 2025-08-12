@@ -184,7 +184,7 @@
           "pages": [
             {
               "title": "Generate use-cases with LLMs",
-              "href": "/guides/generate-use-cases"
+              "href": "/use-cases/generate-with-llm"
             },
             {
               "title": "Entries Generator VSC Extension",
