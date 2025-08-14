@@ -213,6 +213,10 @@
         {
           "title": "Fields",
           "href": "/essentials/fields"
+        },
+        {
+          "title": "MCP Server",
+          "href": "/essentials/mcp-server"
         }
       ]
     },
