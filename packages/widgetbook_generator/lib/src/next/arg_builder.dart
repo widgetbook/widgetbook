@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use analyzer(<8.0.0)
+
 import 'package:analyzer/dart/element/element2.dart';
 import 'package:code_builder/code_builder.dart';
 

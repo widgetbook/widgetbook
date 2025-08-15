@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **REFACTOR**: Allow `analyzer` 8.x. ([#1566](https://github.com/widgetbook/widgetbook/pull/1566))
 - **REFACTOR**: Update `source_gen` to 3.1.0; to use `TypeChecker.typeNamed` instead of `TypeChecker.fromRuntime`. ([#1564](https://github.com/widgetbook/widgetbook/pull/1564))
 
 ## 3.15.0

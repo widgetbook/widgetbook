@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use analyzer(<8.0.0)
+
 import 'dart:convert';
 
 import 'package:analyzer/dart/element/element2.dart';
