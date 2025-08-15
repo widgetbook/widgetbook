@@ -1,3 +1,7 @@
+## Unreleased
+
+- **REFACTOR**: Update `source_gen` to 3.1.0; to use `TypeChecker.typeNamed` instead of `TypeChecker.fromRuntime`. ([#1564](https://github.com/widgetbook/widgetbook/pull/1564))
+
 ## 3.15.0
 
 - **BREAKING**: Set minimum SDK version to 3.7.0. ([#1541](https://github.com/widgetbook/widgetbook/pull/1541))
