@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
+// ignore: unnecessary_import flutter(<3.35.0)
 import 'package:meta/meta.dart';
 
 extension on SemanticsNode {
@@ -184,12 +185,17 @@ class _SemanticsDebuggerPainter extends CustomPainter {
     final annotations = <String>[];
 
     var wantsTap = false;
+
+    // ignore: deprecated_member_use flutter(<3.35.0)
     if (data.hasFlag(SemanticsFlag.hasCheckedState)) {
       annotations.add(
+        // ignore: deprecated_member_use flutter(<3.35.0)
         data.hasFlag(SemanticsFlag.isChecked) ? 'checked' : 'unchecked',
       );
       wantsTap = true;
     }
+
+    // ignore: deprecated_member_use flutter(<3.35.0)
     if (data.hasFlag(SemanticsFlag.isTextField)) {
       annotations.add('textfield');
       wantsTap = true;

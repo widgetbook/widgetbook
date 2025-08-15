@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+// ignore: unnecessary_import flutter(<3.35.0)
 import 'package:meta/meta.dart';
 
 import '../viewport_data.dart';
