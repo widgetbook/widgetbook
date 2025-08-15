@@ -1,6 +1,7 @@
 import 'package:device_frame_plus/device_frame_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+// ignore: unnecessary_import flutter(<3.35)
 import 'package:meta/meta.dart';
 
 @internal
