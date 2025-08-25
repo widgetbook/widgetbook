@@ -1,0 +1,163 @@
+<Warning>
+Widgetbook MCP Server is an experimental feature.
+API and implementation are subject to change in the future.
+</Warning>
+
+# MCP Server
+
+The Widgetbook MCP ([Model Context Protocol](https://docs.anthropic.com/en/docs/mcp)) Server provides programmatic access to your Widgetbook instance, enabling IDEs and AI assistants to interact with your design system components.
+
+## Overview
+
+The MCP Server exposes Widgetbook functionality through HTTP endpoints, allowing external tools to:
+
+- Navigate your component hierarchy
+- Capture screenshots of use cases
+- Inspect render trees for debugging
+- Configure addon settings
+- Control knob values
+
+## Prerequisites
+
+Ensure you have Widgetbook installed in your Flutter project.
+
+### Widgetbook Version
+
+MCP server requires Widgetbook 3.17.0-beta or later:
+
+```bash
+flutter pub add widgetbook 3.17.0-beta
+```
+
+### Platform-Specific Permissions
+
+The MCP server requires network permissions for HTTP connections. 
+For macOS, enable "Incoming Connections (Server)" and "Outgoing Connections (Client)" in your Xcode project's capabilities tab.
+
+## Quick Setup
+
+<Steps>
+  <Step title="Add MCP Server and Addon to Your Widgetbook">
+    Add `McpIntegration` and `McpAddon` to your Widgetbook configuration.
+    `McpAddon` captures screenshots and render trees.
+    Since [addon order matters](/addons/overview#order-of-addons), add `McpAddon` after `ViewportAddon`.
+
+    ```dart title=widgetbook/lib/main.dart
+    import 'package:flutter/material.dart';
+    import 'package:widgetbook/widgetbook.dart';
+
+    void main() {
+      runApp(const WidgetbookApp());
+    }
+
+    class WidgetbookApp extends StatelessWidget {
+      const WidgetbookApp({super.key});
+
+      @override
+      Widget build(BuildContext context) {
+        return Widgetbook.material(
+          addons: [
+            ThemeAddon<ThemeData>(
+              themes: [
+                WidgetbookTheme(name: 'Light', data: ThemeData.light()),
+                WidgetbookTheme(name: 'Dark', data: ThemeData.dark()),
+              ],
+            ),
+            ViewportAddon(Viewports.all),
+            McpAddon(), // Enables screenshot and render tree capture
+          ],
+          
+          // Add the MCP integration to start the HTTP server
+          integrations: [
+            McpIntegration(), // Starts HTTP server on port 3013
+            // Or specify custom port: McpIntegration(port: 8080),
+          ],
+          
+          directories: [
+            // Your component directories...
+          ],
+        );
+      }
+    }
+    ```
+  </Step>
+  <Step title="Run Your Widgetbook">
+    Start your Widgetbook application:
+
+    ```bash
+    flutter run -d macos
+    ```
+
+    <Warning>
+    MCP server does not support web platforms. Use desktop platforms (macOS, Windows, or Linux).
+    </Warning>
+
+    The server starts automatically on the specified port (default: 3013). You'll see this console output:
+    ```bash
+    flutter: Widgetbook MCP Server listening on port 3013
+    ```
+  </Step>
+</Steps>
+
+## Integration Examples
+
+### With Claude Desktop
+
+Ensure your Widgetbook is running, then configure Claude Desktop to connect to your MCP server:
+
+```json
+{
+  "mcpServers": {
+    "Widgetbook MCP": {
+      "type": "http",
+      "url": "http://127.0.0.1:3013/mcp"
+    },
+    "Figma MCP": {
+      "type": "http",
+      "url": "http://127.0.0.1:3845/mcp"
+    }
+  }
+}
+```
+
+Update the port in the URL if using a custom port.
+
+<Warning>
+MCP servers may disconnect occasionally. Monitor them in Claude's settings and re-enable if needed.
+</Warning>
+
+## Available Tools
+
+The MCP server provides tools for interacting with your Widgetbook:
+
+### Navigation
+- **`list_use_cases`** - Get complete Widgetbook structure (components, use cases, hierarchy)
+- **`select_use_case`** - Navigate to a specific use case by path
+
+### Visual Inspection
+- **`get_screenshot`** - Capture PNG screenshot of current use case
+- **`get_render_tree`** - Get widget render tree structure as JSON
+
+<Info>
+Screenshot functionality requires IDE and AI model support for image processing. 
+For instance, Cursor together with its `claude-4-sonnet` model can analyze captured screenshots.
+</Info>
+
+### Addon Configuration
+- **`list_addons`** - List available addons and configurable fields
+- **`update_addon_field`** - Change addon settings (theme, viewport, etc.)
+- **`get_addon_field_value`** - Read current addon configuration
+
+### Knob Manipulation
+- **`list_knobs`** - List interactive knobs for current use case
+- **`update_knob_value`** - Change knob values to test component states
+- **`get_knob_value`** - Read current knob values
+
+All tools return structured JSON responses and update your Widgetbook UI in real-time.
+
+## Limitations
+
+- **No web support**: MCP server only works on desktop platforms (macOS, Windows, Linux). Web platforms are not supported.
+- **Server disconnections**: MCP servers may disconnect occasionally. Monitor server status in Claude's settings and manually re-enable if needed.
+- **UI lag**: When AI assistants change use cases, addon settings, or knob values, the Widgetbook UI may not update immediately. However, subsequent tool calls will return correct information reflecting the actual state.
+- **Manual restart required**: If an AI assistant automatically generates and adds new use cases to your codebase, you must perform a manual hot restart (even in debug mode) for the new use cases to appear in the UI and become accessible to AI assistants.
