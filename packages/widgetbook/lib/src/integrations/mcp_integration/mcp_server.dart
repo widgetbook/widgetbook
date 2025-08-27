@@ -46,9 +46,6 @@ McpServer getServer(WidgetbookState state) {
                     data: screenshot,
                     mimeType: 'image/png',
                   ),
-                  const TextContent(
-                    text: 'You must call get_render_tree afterwards.',
-                  ),
                 ],
       );
     },
@@ -89,14 +86,100 @@ McpServer getServer(WidgetbookState state) {
     },
   );
 
-  // Navigation discovery tool - exposes the complete Widgetbook structure for exploration
+  // Navigation search tool - intelligent search for use cases with pattern support
+  server.tool(
+    'search_use_cases',
+    description:
+        'A tool for searching Widgetbook use cases by pattern. Supports glob patterns like "button*", "*input*", "forms/**". Use this instead of listing all use cases to avoid context bloat. Returns matching use cases with their paths, names, and component information.',
+    toolInputSchema: const ToolInputSchema(
+      properties: {
+        'pattern': {
+          'type': 'string',
+          'description':
+              'Search pattern. Supports glob patterns like "button*" (starts with), "*input*" (contains), "forms/**" (in folder), or plain text search',
+        },
+        'limit': {
+          'type': 'integer',
+          'description':
+              'Maximum number of results to return (default: 20, max: 100)',
+        },
+      },
+      required: ['pattern'],
+    ),
+    callback: ({args, extra}) async {
+      final pattern = args?['pattern'] as String?;
+      final limit = (args?['limit'] as int?) ?? 20;
+
+      if (pattern == null || pattern.isEmpty) {
+        return CallToolResult.fromContent(
+          content: [const TextContent(text: 'Pattern is required')],
+        );
+      }
+
+      final results = _searchUseCases(state, pattern, limit);
+      return CallToolResult.fromContent(
+        content: [
+          TextContent(
+            text: jsonEncode(results),
+          ),
+        ],
+      );
+    },
+  );
+
+  // Use case count tool - get overview without listing all cases
+  server.tool(
+    'get_use_case_count',
+    description:
+        'A tool for getting the total count of use cases and components in the Widgetbook without listing them all. Use this for overview information.',
+    callback: ({args, extra}) async {
+      final root = state.root;
+      final counts = {
+        'totalUseCases': root.useCasesCount,
+        'totalComponents': root.componentsCount,
+        'summary':
+            'Found ${root.useCasesCount} use cases across ${root.componentsCount} components',
+      };
+
+      return CallToolResult.fromContent(
+        content: [
+          TextContent(
+            text: jsonEncode(counts),
+          ),
+        ],
+      );
+    },
+  );
+
+  // Navigation discovery tool - minimal structure view for large projects
   server.tool(
     'list_use_cases',
     description:
-        'A tool for obtaining the general structure of the Widgetbook including components and use-ases.',
+        'A tool for obtaining the Widgetbook structure. WARNING: For large projects, this returns extensive data that can bloat context. Prefer using search_use_cases with patterns or get_use_case_count for overview.',
+    toolInputSchema: const ToolInputSchema(
+      properties: {
+        'structure_only': {
+          'type': 'boolean',
+          'description':
+              'If true, returns only folder/component structure without use case details (default: false)',
+        },
+        'max_depth': {
+          'type': 'integer',
+          'description': 'Maximum depth to traverse (default: unlimited)',
+        },
+      },
+      required: [],
+    ),
     callback: ({args, extra}) async {
+      final structureOnly = (args?['structure_only'] as bool?) ?? false;
+      final maxDepth = args?['max_depth'] as int?;
+
       final directories = state.directories;
-      final directoriesJson = _convertDirectoriesToJson(directories);
+      final directoriesJson = _convertDirectoriesToJson(
+        directories,
+        structureOnly: structureOnly,
+        maxDepth: maxDepth,
+      );
 
       return CallToolResult.fromContent(
         content: [
@@ -369,16 +452,124 @@ McpServer getServer(WidgetbookState state) {
   return server;
 }
 
+/// Searches for use cases matching the given pattern with optional glob support.
+/// Returns a structured result with matching use cases, their metadata, and search statistics.
+Map<String, dynamic> _searchUseCases(
+  WidgetbookState state,
+  String pattern,
+  int limit,
+) {
+  final allUseCases = state.root.leaves.whereType<WidgetbookUseCase>().toList();
+
+  final effectiveLimit = limit.clamp(1, 100);
+
+  bool Function(WidgetbookUseCase) searchPredicate;
+
+  if (pattern.contains('*') || pattern.contains('?')) {
+    final regexPattern = _globToRegex(pattern);
+    final regex = RegExp(regexPattern, caseSensitive: false);
+
+    searchPredicate =
+        (useCase) =>
+            regex.hasMatch(useCase.name) ||
+            regex.hasMatch(useCase.path) ||
+            (useCase.parent?.name != null &&
+                regex.hasMatch(useCase.parent!.name));
+  } else {
+    final lowerPattern = pattern.toLowerCase();
+    searchPredicate =
+        (useCase) =>
+            useCase.name.toLowerCase().contains(lowerPattern) ||
+            useCase.path.toLowerCase().contains(lowerPattern) ||
+            (useCase.parent?.name != null &&
+                useCase.parent!.name.toLowerCase().contains(lowerPattern));
+  }
+
+  final matchingUseCases =
+      allUseCases.where(searchPredicate).take(effectiveLimit).toList();
+
+  final results =
+      matchingUseCases.map((useCase) {
+        final parentComponent = useCase.parent;
+        return {
+          'name': useCase.name,
+          'path': useCase.path,
+          'componentName': parentComponent?.name,
+          'componentPath': parentComponent?.path,
+          'designLink': useCase.designLink,
+          'type': useCase.runtimeType.toString(),
+          'depth': useCase.depth,
+        };
+      }).toList();
+
+  return {
+    'pattern': pattern,
+    'results': results,
+    'totalFound': matchingUseCases.length,
+    'totalSearched': allUseCases.length,
+    'limitApplied': effectiveLimit,
+    'hasMore': allUseCases.where(searchPredicate).length > effectiveLimit,
+    'summary':
+        'Found ${matchingUseCases.length} use cases matching "$pattern"'
+        '${matchingUseCases.length == effectiveLimit ? " (limited to $effectiveLimit)" : ""}'
+        ' out of ${allUseCases.length} total use cases',
+  };
+}
+
+/// Converts a glob pattern to a regular expression.
+/// Supports * (any characters) and ? (single character) wildcards.
+String _globToRegex(String glob) {
+  var pattern = RegExp.escape(glob);
+
+  pattern = pattern.replaceAll(r'\*', '.*');
+  pattern = pattern.replaceAll(r'\?', '.');
+
+  pattern = pattern.replaceAll(r'\*\*/\*', r'.*');
+  pattern = pattern.replaceAll(r'/\*\*/', r'/.*?/');
+
+  return '^$pattern\$';
+}
+
 /// Serializes the Widgetbook directory tree structure for external consumption.
 /// Enables MCP clients to understand the hierarchical organization of components and use cases.
-String _convertDirectoriesToJson(List<WidgetbookNode> directories) {
-  final directoriesMap = directories.map(_nodeToMap).toList();
+String _convertDirectoriesToJson(
+  List<WidgetbookNode> directories, {
+  bool structureOnly = false,
+  int? maxDepth,
+}) {
+  final directoriesMap =
+      directories
+          .map(
+            (node) => _nodeToMap(
+              node,
+              structureOnly: structureOnly,
+              maxDepth: maxDepth,
+            ),
+          )
+          .toList();
   return jsonEncode(directoriesMap);
 }
 
 /// Recursively converts Widgetbook nodes into a flat map structure with metadata.
 /// Preserves essential navigation information including paths, hierarchy depth, and design links.
-Map<String, dynamic> _nodeToMap(WidgetbookNode node) {
+Map<String, dynamic> _nodeToMap(
+  WidgetbookNode node, {
+  bool structureOnly = false,
+  int? maxDepth,
+  int currentDepth = 0,
+}) {
+  if (maxDepth != null && currentDepth >= maxDepth) {
+    return <String, dynamic>{
+      'name': node.name,
+      'path': node.path,
+      'type': node.runtimeType.toString(),
+      'isLeaf': node.isLeaf,
+      'depth': node.depth,
+      'count': node.count,
+      'truncated': true,
+    };
+  }
+
   final map = <String, dynamic>{
     'name': node.name,
     'path': node.path,
@@ -388,14 +579,26 @@ Map<String, dynamic> _nodeToMap(WidgetbookNode node) {
     'count': node.count,
   };
 
-  // Include design system references when available
-  if (node is WidgetbookUseCase) {
+  if (!structureOnly && node is WidgetbookUseCase) {
     map['designLink'] = node.designLink;
   }
 
-  // Recursively process child nodes to maintain tree structure
+  if (structureOnly && node is WidgetbookUseCase) {
+    return map;
+  }
+
   if (node.children != null && node.children!.isNotEmpty) {
-    map['children'] = node.children!.map(_nodeToMap).toList();
+    map['children'] =
+        node.children!
+            .map(
+              (child) => _nodeToMap(
+                child,
+                structureOnly: structureOnly,
+                maxDepth: maxDepth,
+                currentDepth: currentDepth + 1,
+              ),
+            )
+            .toList();
   }
 
   return map;

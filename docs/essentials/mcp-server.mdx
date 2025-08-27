@@ -131,7 +131,9 @@ MCP servers may disconnect occasionally. Monitor them in Claude's settings and r
 The MCP server provides tools for interacting with your Widgetbook:
 
 ### Navigation
-- **`list_use_cases`** - Get complete Widgetbook structure (components, use cases, hierarchy)
+- **`search_use_cases`** - Search for use cases using patterns (supports glob patterns like `button*`, `*input*`, `forms/**`)
+- **`get_use_case_count`** - Get overview statistics (total use cases and components) without listing everything
+- **`list_use_cases`** - Get complete Widgetbook structure (⚠️ WARNING: For large projects, prefer search_use_cases to avoid context bloat)
 - **`select_use_case`** - Navigate to a specific use case by path
 
 ### Visual Inspection
