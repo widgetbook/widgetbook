@@ -33,12 +33,23 @@ McpServer getServer(WidgetbookState state) {
       final screenshot = await screenshotAddon.captureScreenshot();
 
       return CallToolResult.fromContent(
-        content: [
-          ImageContent(
-            data: screenshot ?? '',
-            mimeType: 'image/png',
-          ),
-        ],
+        content:
+            screenshot == null
+                ? [
+                  const TextContent(
+                    text:
+                        'No screenshot available. Make sure a use case is selected.',
+                  ),
+                ]
+                : [
+                  ImageContent(
+                    data: screenshot,
+                    mimeType: 'image/png',
+                  ),
+                  const TextContent(
+                    text: 'You must call get_render_tree afterwards.',
+                  ),
+                ],
       );
     },
   );
