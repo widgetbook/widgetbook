@@ -165,3 +165,12 @@ All tools return structured JSON responses and update your Widgetbook UI in real
 - **Server disconnections**: MCP servers may disconnect occasionally. Monitor server status in Claude's settings and manually re-enable if needed.
 - **UI lag**: When AI assistants change use cases, addon settings, or knob values, the Widgetbook UI may not update immediately. However, subsequent tool calls will return correct information reflecting the actual state.
 - **Manual restart required**: If an AI assistant automatically generates and adds new use cases to your codebase, you must perform a manual hot restart (even in debug mode) for the new use cases to appear in the UI and become accessible to AI assistants.
+
+## Best Practice Rules
+
+AI-first IDEs like Cursor allow developers to define [rules](https://docs.cursor.com/en/context/rules), which provide system-level instructions to Agent and Inline Edit. Think of them as persistent context, preferences, or workflows for your projects.
+
+You can find the recommended rules in these files: 
+- [`widgetbook.md`](https://github.com/widgetbook/widgetbook/tree/main/docs/assets/guides/widgetbook.md)
+- [`components.md`](https://github.com/widgetbook/widgetbook/tree/main/docs/assets/guides/components.md)
+- [`figma-mcp.md`](https://github.com/widgetbook/widgetbook/tree/main/docs/assets/guides/figma-mcp.md)
