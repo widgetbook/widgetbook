@@ -23,13 +23,13 @@ class Component<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
 }
 
 class LeafComponent<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
-    extends v3.WidgetbookLeafComponent {
+    extends v3.WidgetbookComponent {
   LeafComponent({
     required this.meta,
     required this.story,
   }) : super(
          name: meta.name,
-         useCase: story,
+         useCases: [story],
        );
 
   final Meta<TWidget> meta;

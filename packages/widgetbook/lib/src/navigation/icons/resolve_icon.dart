@@ -14,7 +14,7 @@ Widget resolveIcon(WidgetbookNode node) {
     return const Icon(Icons.auto_awesome_mosaic, size: 16);
   } else if (node is WidgetbookFolder) {
     return const Icon(Icons.folder, size: 16);
-  } else if (node is WidgetbookComponent || node is WidgetbookLeafComponent) {
+  } else if (node is WidgetbookComponent) {
     return const ComponentIcon();
   } else if (node is WidgetbookUseCase) {
     return const UseCaseIcon();

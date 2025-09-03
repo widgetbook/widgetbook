@@ -41,7 +41,7 @@ void main() {
             NavigationTreeTile(
               node: WidgetbookComponent(
                 name: 'Component',
-                useCases: [node],
+                useCases: [node, node],
               ),
             ),
           );
@@ -71,14 +71,14 @@ void main() {
       );
 
       testWidgets(
-        'when node is $WidgetbookLeafComponent, '
+        'when node is $WidgetbookComponent with single child, '
         'then $ExpanderIcon is not rendered',
         (tester) async {
           await tester.pumpWidgetWithMaterialApp(
             NavigationTreeTile(
-              node: WidgetbookLeafComponent(
+              node: WidgetbookComponent(
                 name: 'Leaf',
-                useCase: node,
+                useCases: [node],
               ),
             ),
           );

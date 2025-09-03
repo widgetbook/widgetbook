@@ -29,6 +29,8 @@ class NavigationTreeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(indentation);
+    final isLeafComponent =
+        node is WidgetbookComponent && node.children?.length == 1;
 
     return Container(
       height: indentation,
@@ -50,7 +52,7 @@ class NavigationTreeTile extends StatelessWidget {
             SizedBox(
               width: indentation,
               child:
-                  node.isLeaf || node is WidgetbookLeafComponent
+                  node.isLeaf || isLeafComponent
                       ? null
                       : ExpanderIcon(
                         isExpanded: isExpanded,

@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 
 import 'widgetbook_component.dart';
-import 'widgetbook_leaf_component.dart';
 import 'widgetbook_node.dart';
 import 'widgetbook_use_case.dart';
 
@@ -21,10 +20,7 @@ class WidgetbookRoot extends WidgetbookNode {
     );
 
     useCasesCount = leaves.whereType<WidgetbookUseCase>().length;
-    componentsCount =
-        findAll(
-          (x) => x is WidgetbookComponent || x is WidgetbookLeafComponent,
-        ).length;
+    componentsCount = findAll((x) => x is WidgetbookComponent).length;
   }
 
   /// A table of all [WidgetbookUseCase]s and their paths.
@@ -34,8 +30,7 @@ class WidgetbookRoot extends WidgetbookNode {
   /// Count of all [WidgetbookUseCase]s in the root node.
   late final int useCasesCount;
 
-  /// Count of all [WidgetbookComponent]s and [WidgetbookLeafComponent]s in
-  /// the root node.
+  /// Count of all [WidgetbookComponent]s in the root node.
   late final int componentsCount;
 
   @override
