@@ -6,7 +6,6 @@ import 'refer.dart';
 import 'widgetbook_category_instance.dart';
 import 'widgetbook_component_instance.dart';
 import 'widgetbook_folder_instance.dart';
-import 'widgetbook_leaf_component_instance.dart';
 import 'widgetbook_use_case_instance.dart';
 
 class WidgetbookInstance extends InvokeExpression {
@@ -35,13 +34,9 @@ class WidgetbookInstance extends InvokeExpression {
 
     if (isComponentNode) {
       final componentNode = node as TreeNode<String>;
-      return node.children.length == 1
-          ? WidgetbookLeafComponentInstance(
-            node: componentNode,
-          )
-          : WidgetbookComponentInstance(
-            node: componentNode,
-          );
+      return WidgetbookComponentInstance(
+        node: componentNode,
+      );
     }
 
     final name = (node as TreeNode<String>).data;

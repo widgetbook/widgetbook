@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FIX**: Support Flutter 3.35.0. ([#1565](https://github.com/widgetbook/widgetbook/pull/1565))
+- **REFACTOR**: Deprecate `WidgetbookLeafComponent` in favor of `WidgetbookComponent` which will now have similar behavior when it has a single use-case. ([#1573](https://github.com/widgetbook/widgetbook/pull/1573))
 
 ## 3.16.0
 

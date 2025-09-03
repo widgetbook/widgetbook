@@ -7,6 +7,10 @@ import 'widgetbook_use_case.dart';
 /// component name. This is typically used to group different states or
 /// configurations of the same widget.
 ///
+/// When this has a single use-case (i.e. also known as leaf component),
+/// this is represented as a "component" in the navigation tree but acts like
+/// a "use-case".
+///
 /// Example:
 /// ```dart
 /// WidgetbookComponent(

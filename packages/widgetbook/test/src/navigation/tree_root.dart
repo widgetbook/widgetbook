@@ -7,10 +7,11 @@ final treeRoot = WidgetbookRoot(
       name: 'Folder 1',
       children: [
         WidgetbookComponent(
+          // Leaf component
           name: 'Component 1',
           useCases: [
             WidgetbookUseCase(
-              name: 'Use Case 1',
+              name: 'Use-case 1',
               builder: (_) => Container(),
             ),
           ],
@@ -24,7 +25,11 @@ final treeRoot = WidgetbookRoot(
           name: 'Component 2',
           useCases: [
             WidgetbookUseCase(
-              name: 'Use Case 2',
+              name: 'Use-case 2a',
+              builder: (_) => Container(),
+            ),
+            WidgetbookUseCase(
+              name: 'Use-case 2b',
               builder: (_) => Container(),
             ),
           ],

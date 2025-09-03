@@ -18,21 +18,6 @@ void main() {
       );
     });
 
-    test('fromNode (Component) - leaf', () {
-      final actual = WidgetbookInstance.fromNode(
-        TreeNode<String>('Component', {
-          'Default': TreeNode<UseCaseMetadata>(
-            MockUseCaseMetadata(),
-          ),
-        }),
-      );
-
-      expect(
-        actual.runtimeType,
-        WidgetbookLeafComponentInstance,
-      );
-    });
-
     test('fromNode (Component)', () {
       final actual = WidgetbookInstance.fromNode(
         TreeNode<String>('Component', {

@@ -1,3 +1,7 @@
+## Unreleased
+
+- **REFACTOR**: Generate `WidgetbookComponent`, instead of `WidgetbookLeafComponent`, for components with a single use-case. ([#1573](https://github.com/widgetbook/widgetbook/pull/1573))
+
 ## 3.16.0
 
 - **REFACTOR**: Allow `analyzer` 8.x. ([#1566](https://github.com/widgetbook/widgetbook/pull/1566))
