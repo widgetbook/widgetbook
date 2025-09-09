@@ -312,7 +312,7 @@
         {
           "title": "Telemetry",
           "href": "/telemetry"
-        }        
+        }
       ]
     },
     {
@@ -326,6 +326,15 @@
         {
           "title": "Golden Tests",
           "href": "/glossary/golden-tests"
+        }
+      ]
+    },
+    {
+      "group": "Next",
+      "pages": [
+        {
+          "title": "SAM Architecture",
+          "href": "/next/sam"
         }
       ]
     },
