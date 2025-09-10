@@ -36,7 +36,7 @@ class KnobsRegistry extends ChangeNotifier with MapMixin<String, Knob> {
     Knob<T?> knob,
     Map<String, String> queryGroup,
   ) {
-    _registry.putIfAbsent(knob.label, () => knob);
+    _registry[knob.label] = knob;
 
     return knob.valueFromQueryGroup(queryGroup);
   }
