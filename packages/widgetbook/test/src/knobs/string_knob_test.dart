@@ -30,6 +30,25 @@ void main() {
       );
 
       testWidgets(
+        'given an initial value, '
+        'then the value should be displayed',
+        (tester) async {
+          const value = 'Widgetbook';
+
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs.string(
+                label: 'Knob',
+                initialValue: value,
+              ),
+            ),
+          );
+
+          expect(find.textWidget(value), findsOneWidget);
+        },
+      );
+
+      testWidgets(
         'when field is updated, '
         'then the value should be updated',
         (tester) async {

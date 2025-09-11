@@ -17,7 +17,11 @@ void main() {
         type: FieldType.doubleSlider,
         codec: FieldCodec(
           toParam: (value) => value.toString(),
-          toValue: (param) => double.tryParse(param ?? ''),
+          toValue: (param) {
+            if (param == null) return null;
+            if (param.isEmpty) return 5.0;
+            return double.tryParse(param);
+          },
         ),
       );
 
@@ -38,6 +42,16 @@ void main() {
         () {
           final result = field.codec.toValue('7.0');
           expect(result, equals(7.0));
+        },
+      );
+
+      test(
+        'given an empty string param, '
+        'when [codec.toValue] is called, '
+        'then it returns the actual default value',
+        () {
+          final result = field.codec.toValue('');
+          expect(result, equals(5.0));
         },
       );
 

@@ -23,7 +23,9 @@ class ColorField extends Field<Color> {
            toParam: (color) => color.toARGB32().toRadixString(16),
            toValue: (param) {
              if (param == null) return null;
-             if (param.isEmpty || param == '0') return Colors.transparent;
+             if (param.isEmpty || param == '0') {
+               return initialValue ?? defaultColor;
+             }
              return Color(
                int.parse(
                  param.length == 6 ? '00$param' : param,

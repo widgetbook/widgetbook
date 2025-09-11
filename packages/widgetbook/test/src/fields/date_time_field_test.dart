@@ -11,8 +11,8 @@ void main() {
     final field = DateTimeField(
       name: 'date_time_field',
       initialValue: now,
-      start: now.subtract(const Duration(days: 365)),
-      end: now.add(const Duration(days: 365)),
+      start: now..subtract(const Duration(days: 365)),
+      end: now..add(const Duration(days: 365)),
     );
 
     test(
@@ -44,6 +44,16 @@ void main() {
           field.start.minute,
         );
         expect(result, equals(dateTime));
+      },
+    );
+
+    test(
+      'given an empty string param, '
+      'when [codec.toValue] is called, '
+      'then it returns the actual default value',
+      () {
+        final result = field.codec.toValue('');
+        expect(result.toString(), equals(field.start.toString()));
       },
     );
 

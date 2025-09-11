@@ -18,7 +18,7 @@ class ObjectSegmentedField<T> extends Field<T> {
            toParam: labelBuilder,
            toValue: (param) {
              if (param != null && param.isEmpty && values.isNotEmpty) {
-               return values.first;
+               return initialValue ?? values.first;
              }
              return values.firstWhereOrNull(
                (value) => labelBuilder(value) == param,

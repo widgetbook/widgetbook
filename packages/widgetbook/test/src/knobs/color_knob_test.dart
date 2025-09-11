@@ -18,7 +18,6 @@ void main() {
         'when field is updated, '
         'then the value should be updated',
         (tester) async {
-          const transparent = Color(0x00000000);
           const key = Key('testContainer');
 
           await tester.pumpKnob(
@@ -33,7 +32,7 @@ void main() {
           expect(tester.widget<Container>(find.byKey(key)).color, isNull);
 
           await tester.findAndTap(find.byType(Checkbox));
-          expect(tester.widget<Container>(find.byKey(key)).color, transparent);
+          expect(tester.widget<Container>(find.byKey(key)).color, Colors.white);
 
           await tester.findAndTap(find.byType(Checkbox));
           expect(tester.widget<Container>(find.byKey(key)).color, isNull);
