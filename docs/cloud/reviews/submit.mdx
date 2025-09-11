@@ -1,0 +1,43 @@
+# Submit a Review
+
+Widgetbook Cloud provides a platform for submitting reviews based on visual diffs, enabling teams to review and discuss visual changes in their projects.
+
+## Review Changes
+
+<Image src="/assets/cloud/visual-pull-request/example.png" zoom />
+
+Use the diff view, with the old version on the left and the new version on the right, to review changes in your project.
+
+## Publish a Review
+
+<Image src="/assets/cloud/reviews/example.png" zoom />
+
+Click the large blue "Review changes" button in the top-right corner to publish your review and set a review status.
+
+The available statuses are:
+- **Approved**: The changes are approved and can be merged. If integrated with a Git provider, this sets the commit status to successful, allowing the pull request to be merged.
+- **Comment**: The changes are neither approved nor rejected, but you want to leave feedback for the author. If integrated with a Git provider, Widgetbook Cloud sets the commit status to pending, unless overridden by another status.
+- **Changes requested**: The changes are not approved and must be revised before merging. If integrated with a Git provider, this sets the commit status to failed, preventing the pull request from being merged.
+
+## Mark Changes as Viewed
+
+<Image src="/assets/cloud/reviews/mark-as-viewed.png" zoom />
+
+Click the "mark as viewed" button in the top-right of a use case diff to mark changes as reviewed.
+If you are iterating on a pull request, the diff will remain marked as viewed as long as no new changes are introduced. 
+When changes occur, the viewed state resets and you must review the changes again.
+
+This feature helps reviewers track which changes have already been reviewed, improving iteration speed and reducing confusion.
+
+## Visualize Changes
+
+<Image src="/assets/cloud/reviews/show-diff.png" zoom />
+
+Click the "Show diff" button in the top-right corner to visualize the differences between the old and new versions.
+Changes are highlighted in pink, making it easy to spot even small differences.
+
+## Add Comments
+
+<Image src="/assets/cloud/reviews/add-comment.png" zoom />
+
+Use the comment section of a use case diff to provide detailed feedback to the author of the pull request.

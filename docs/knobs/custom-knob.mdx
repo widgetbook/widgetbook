@@ -1,76 +1,83 @@
-# Custom Knobs in Widgetbook
+# Custom Knob
 
-Widgetbook provides a versatile range of built-in knobs that help tailor widget behaviors
-on the fly.
+If the built-in knobs do not meet your needs, you can create your own custom Knobs. This
+allows you to extend the functionality of Widgetbook and tailor it to your specific requirements.
 
-However, sometimes developers may need to create a custom knob to meet specific
-requirements not addressed by the pre-existing knobs.
+## Guide
 
-This document will look at how to create a custom knob in Widgetbook, using a
-`RangeSlider` as an example. This widget allows you to select a range from a series of
-values.
+In this guide, we will be creating a "range knob" that allows you to select a range of values using a `RangeSlider`.
 
-## Creating a Custom Knob
+### 0. Base structure
 
-To create a custom knob, you must extend the `Knob` class from the `widgetbook` package.
-This class has a `label` and `initialValue` property. The `label` uniquely
-identifies the Knob, and the `initialValue` holds the initial value of the Knob.
+Start by creating a new file in your widgetbook project (e.g. `range_knob.dart`).
 
-For our `RangeSlider`, we create a `RangeKnob` class that extends `Knob<RangeValues>`.
-`RangeValues` is a class in Flutter that holds two double values - start and end,
-representing the range.
+```dart title=widgetbook/lib/knobs/range_knob.dart
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
 
-```dart
 class RangeKnob extends Knob<RangeValues> {
   RangeKnob({
     required super.label,
     required super.initialValue,
   });
-  //...
+
+  @override
+  List<Field> get fields {
+    // TODO
+  }
+
+  @override
+  RangeValues valueFromQueryGroup(Map<String, String> group) {
+    // TODO
+  }
 }
 ```
 
-### Overriding Properties
+Now let's start by implementing each of the class members step by step.
 
-The Knob class has several properties that can be overridden:
+### 1. `fields` getter
 
-- `fields`: This property should return a list of `Field` objects that represent the
-  different parts of the knob. For our `RangeKnob`, we return two `DoubleInputField`
-  objects representing the `start` and `end` values of the range.
+This is a list of [fields](/essentials/fields) that describe how the knob will be represented in both:
+
+* The Widgetbook UI – the "Knobs" panel.
+* The URL query parameters.
+
+In this case we need **two fields** to represent the `RangeValues`:
+
+1. `DoubleInputField` - to pick a double value for the start of the range.
+2. `DoubleInputField` - to pick a double value for the end of the range.
 
 ```dart
 @override
 List<Field> get fields => [
   DoubleInputField(
-    name: 'min-$label',
+    name: '$label.min',
     initialValue: initialValue.start,
   ),
   DoubleInputField(
-    name: 'max-$label',
+    name: '$label.max',
     initialValue: initialValue.end,
   ),
 ];
-
 ```
 
-- `valueFromQueryGroup`: This property is used to parse the value of the knob from a query
-  string.
+### 2. `valueFromQueryGroup` method
+
+This method is responsible for parsing the query parameters back to the knob value (i.e. `RangeValues`). This can be done by using the `valueOf` helper method to extract the values from the query group by giving it **the field's name**.
 
 ```dart
 @override
-  RangeValues valueFromQueryGroup(Map<String, String> group) {
-    return RangeValues(
-      valueOf('min-$label', group)!,
-      valueOf('max-$label', group)!,
-    );
-  }
+RangeValues valueFromQueryGroup(Map<String, String> group) {
+  final start = valueOf<double>('$label.min', group)!;
+  final end = valueOf<double>('$label.max', group)!;
+
+  return RangeValues(start, end);
+}
 ```
 
-## Using the Custom Knob
+### 3. Registering the Knob
 
-Now our custom knob, `RangeKnob`, is ready to be used. To use this knob, we create an
-extension on `KnobsBuilder`. This extension includes a `range` method that adds our
-`RangeKnob` to the `KnobsBuilder`.
+To use the custom knob, we need to create an extension on `KnobsBuilder`. This extension includes a `range` method that adds our `RangeKnob` to the builder.
 
 ```dart
 extension RangeKnobBuilder on KnobsBuilder {
@@ -87,24 +94,19 @@ extension RangeKnobBuilder on KnobsBuilder {
 }
 ```
 
-This `range` method can now be used inside the widget to apply the custom knob:
+### 4. Using the Knob
 
-<Tabs
-  groupId="approach"
-  values={[
-    { label: 'Generator', value: 'generator' },
-    { label: 'Manual', value: 'manual' },
-  ]}
->
-<TabItem value="generator">
+Now that we have implemented the `RangeKnob`, we can use it in our use cases. Here's an example of how to use it with a `RangeSlider` widget:
 
-```dart
+```dart title=widgetbook/lib/widgets/range_slider_use_case.dart
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@widgetbook.UseCase(name: 'CustomRangeSlider', type: RangeSlider)
-Widget rangeSlider(BuildContext context) {
+import '../knobs/range_knob.dart';
+
+@UseCase(name: 'CustomRangeSlider', type: RangeSlider)
+Widget buildRangeSliderUseCase(BuildContext context) {
   return RangeSlider(
     values: context.knobs.range(label: 'Range'),
     max: 10,
@@ -114,49 +116,66 @@ Widget rangeSlider(BuildContext context) {
 }
 ```
 
-</TabItem>
-<TabItem value="manual">
+## Multi-snapshot Support
 
-```dart
-WidgetbookFolder(
-    name: 'knobs',
-    children: [
-    WidgetbookComponent(
-        name: 'RangeSlider',
-        useCases: [
-        WidgetbookUseCase(
-            name: 'CustomRangeSlider',
-            builder: (context) => rangeSlider(context),
-         ),
-        ],
-    ),
-    ],
-),
+Custom knobs can be used with [Multi Snapshot Reviews](/cloud/snapshots/multi-snapshot). The configuration varies based on the number of fields in your custom knob.
+
+### Single-field Knobs
+
+If your custom knob is a single-field knob, you can use  [`KnobConfig`](https://pub.dev/documentation/widgetbook_annotation/latest/widgetbook_annotation/KnobConfig-class.html) to configure it for multi-snapshot support. Here's an example:
+
+```dart title=widgetbook/lib/widgets/custom_widget.dart
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(
+  name: 'Default',
+  type: MyWidget,
+  cloudKnobsConfigs: { // [!code highlight]
+    'custom': [KnobConfig('foo', 'value')], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    foo: context.knobs.myKnob(label: 'foo'), // [!code highlight]
+  );
+}
 ```
 
-</TabItem>
-</Tabs>
+### Multi-field Knobs
 
-And that's it! We have successfully created and used a custom knob in Widgetbook. This
-knob can now be used to adjust the `RangeValues` in the `RangeSlider` widget directly from
-the Widgetbook UI.
+If your knobs has more than one field, _similar to the `RangeKnob` defined above_, you can use [`MultiFieldKnobConfig`](https://pub.dev/documentation/widgetbook_annotation/latest/widgetbook_annotation/MultiFieldKnobConfig-class.html) to configure it for multi-snapshot support. Here's how you can do it:
 
-<Image src="/assets/knobs/rangeslider-knob.png" zoom />
+```dart title=widgetbook/lib/widgets/range_slider_use_case.dart
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-<Info>
-  See [source
-  code](https://github.com/widgetbook/widgetbook/tree/main/examples/full_example/lib/customs/custom_knob.dart)
-</Info>
+import '../knobs/range_knob.dart';
 
-## Limitations
-
-It's important to note that you cannot create a custom `Field`, hence the use of two
-`DoubleInputFields` for the `RangeSlider`. This limitation is due to the `FieldType` enum,
-which should also be handled on the Cloud for Widgetbook Cloud users.
-
-However, users can submit a request to create fields, and they will be managed and added
-by the Widgetbook team.
-
-## Field Types in Widgetbook
-
-For more detailed information, visit the [Field Types page](/field-types).
+@widgetbook.UseCase(
+  name: 'CustomRangeSlider',
+  type: RangeSlider,
+  cloudKnobsConfigs: { // [!code highlight]
+    'same range': [ // [!code highlight]
+      MultiFieldKnobConfig({ // [!code highlight]
+        'range.min': 5, // [!code highlight]
+        'range.max': 5, // [!code highlight]
+      }), // [!code highlight]
+    ], // [!code highlight]
+    'small range': [ // [!code highlight]
+      MultiFieldKnobConfig({ // [!code highlight]
+        'range.min': 4, // [!code highlight]
+        'range.max': 6, // [!code highlight]
+      }), // [!code highlight]
+    ], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildRangeSliderUseCase(BuildContext context) {
+  return RangeSlider(
+    values: context.knobs.range(label: 'range'), // [!code highlight]
+    max: 10,
+    min: 0,
+    onChanged: (_) {},
+  );
+}
+```

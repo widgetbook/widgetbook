@@ -37,6 +37,24 @@ void main() {
           expect(result, equals(decodedGroup));
         },
       );
+
+      test(
+        'given a query group reserved characters, '
+        'when [encodeQueryGroup] and [decodeQueryGroup] are successively called, '
+        'then the decoded result is the same as before encoding',
+        () {
+          final group = {
+            'Comma Field': 'Hello, World!',
+            'Colon Field': '2022-01-01 00:00',
+            'Special:Key': 'Special%Value',
+          };
+
+          final encodedGroup = FieldCodec.encodeQueryGroup(group);
+          final decodedGroup = FieldCodec.decodeQueryGroup(encodedGroup);
+
+          expect(decodedGroup, equals(group));
+        },
+      );
     },
   );
 }

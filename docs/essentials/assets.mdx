@@ -1,0 +1,54 @@
+# Assets
+
+<Info>
+  If you have a separate package for your design system with its assets, you can
+  skip this guide, because the assets are already included in a separate
+  package.
+</Info>
+
+If your app have assets, and you want to display them in Widgetbook, you need to set the `package` parameter in the `Image.asset` constructor.
+But doing so will make the image not display in your app. To fix this, you need to convert your assets folder into a package as follows.
+
+1. Add a `pubspec.yaml` file in the root of your `assets` folder
+
+   <Info> No `dependencies` are needed</Info>
+
+   ```yaml
+   name: assets
+   description: >
+     Holds the assets for the app. The assets are included in a
+     separate package, to be able to share it with Widgetbook app.
+
+   version: 0.0.0
+   publish_to: none
+
+   environment:
+     sdk: ">=3.1.0 <4.0.0"
+
+   flutter:
+     assets:
+       - .
+   ```
+
+1. Add the `assets` package to your app and widgetbook `pubspec.yaml` files
+
+   ```yaml title="pubspec.yaml"
+   dependencies:
+     assets:
+       path: assets
+   ```
+
+   ```yaml title="widgetbook/pubspec.yaml"
+   dependencies:
+     assets:
+       path: ../assets
+   ```
+
+1. Use the `package` parameter in the `Image.asset` constructor whenever you want to display an image asset in your app
+
+   ```dart
+   Image.asset(
+     'assets/image.png',
+     package: 'assets',
+   )
+   ```

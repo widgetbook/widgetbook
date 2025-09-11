@@ -25,12 +25,13 @@ class ComponentBuilder {
           .assign(
             InvokeExpression.newOf(
               TypeReference(
-                (b) => b
-                  ..symbol = 'Component'
-                  ..types.addAll([
-                    refer(widgetType.nonGenericName),
-                    refer('${argsType.nonGenericName}Args'),
-                  ]),
+                (b) =>
+                    b
+                      ..symbol = 'Component'
+                      ..types.addAll([
+                        refer(widgetType.nonGenericName),
+                        refer('${argsType.nonGenericName}Args'),
+                      ]),
               ),
               [],
               {
@@ -41,12 +42,15 @@ class ComponentBuilder {
                 'stories': literalList(
                   stories
                       .map(
-                        (story) => refer(story.name).property('init').call(
-                          [],
-                          {
-                            'name': literalString(story.name.substring(1)),
-                          },
-                        ),
+                        (story) =>
+                            refer(story.displayName).property('init').call(
+                              [],
+                              {
+                                'name': literalString(
+                                  story.displayName.substring(1),
+                                ),
+                              },
+                            ),
                       )
                       .toList(),
                 ),

@@ -18,10 +18,11 @@ const expectedUsage = [
       '    --version    Print the current version.\n'
       '\n'
       'Available commands:\n'
-      '  publish   Publish a new build\n'
-      '  upgrade   Upgrade Widgetbook CLI\n'
+      '  cloud      Manage your Widgetbook Cloud projects.\n'
+      '  coverage   Checks the percentage of package widgets that are covered by at least one use-case in Widgetbook.\n'
+      '  upgrade    Upgrade Widgetbook CLI\n'
       '\n'
-      'Run "widgetbook help <command>" for more information about a command.'
+      'Run "widgetbook help <command>" for more information about a command.',
 ];
 
 const latestVersion = '0.0.0';
@@ -35,7 +36,8 @@ final changelogLink = lightCyan.wrap(
   ),
 );
 
-final updateMessage = '\n${lightYellow.wrap('Update available!')} '
+final updateMessage =
+    '\n${lightYellow.wrap('Update available!')} '
     '${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}\n'
     '${lightYellow.wrap('Changelog:')} $changelogLink\n'
     'Run ${cyan.wrap('${cliName} update')} to update';
@@ -60,8 +62,6 @@ void main() {
       when(
         () => pubUpdater.getLatestVersion(any()),
       ).thenAnswer((_) async => packageVersion);
-
-      when(() => globalContext.environment).thenReturn(FakeEnvironment());
 
       cliRunner = CliRunner(
         context: globalContext,

@@ -4,8 +4,8 @@ publish_to: none
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.10.0"
+  sdk: ^3.9.0
+  flutter: ^3.35.0
 
 dependencies:
   flutter:
@@ -13,8 +13,8 @@ dependencies:
   widgetbook: ^4.0.0-alpha.2
 
 dev_dependencies:
-  alchemist: ^0.7.0
-  build_runner: ^2.4.7
+  alchemist: ^0.12.1
+  build_runner: ^2.6.0
   flutter_test:
     sdk: flutter
   widgetbook_generator: ^4.0.0-alpha.2

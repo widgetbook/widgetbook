@@ -27,23 +27,24 @@ class CupertinoThemeMode extends Mode<CupertinoThemeData> {
 /// [CupertinoTheme].
 class CupertinoThemeAddon extends ModeAddon<CupertinoThemeData> {
   CupertinoThemeAddon(this.themes)
-      : super(
-          name: 'Cupertino Theme',
-          modeBuilder: CupertinoThemeMode.new,
-        );
+    : super(
+        name: 'Cupertino Theme',
+        modeBuilder: CupertinoThemeMode.new,
+      );
 
   final Map<String, CupertinoThemeData> themes;
 
   @override
   List<Field> get fields {
     return [
-      ListField<CupertinoThemeData>(
+      ObjectDropdownField<CupertinoThemeData>(
         name: 'name',
         values: themes.values.toList(),
         initialValue: themes.values.first,
-        labelBuilder: (theme) => themes.keys.firstWhere(
-          (key) => themes[key] == theme,
-        ),
+        labelBuilder:
+            (theme) => themes.keys.firstWhere(
+              (key) => themes[key] == theme,
+            ),
       ),
     ];
   }

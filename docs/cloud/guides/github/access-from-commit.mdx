@@ -1,0 +1,45 @@
+# Access builds from GitHub commit statuses
+
+Widgetbook Cloud links builds to [GitHub commit statuses](https://docs.github.com/en/rest/commits/statuses#about-commit-statuses) so accessing Widgetbook builds integrates seamlessly with your GitHub workflow.
+
+<Image src="/assets/cloud/builds/github-link.png" caption="Widgetbook builds are accessed via commit statuses" zoom />
+
+## Prerequisites
+
+Linking builds to GitHub commit statuses requires API access to your GitHub repository.
+By [connecting a Widgetbook project to a GitHub repository](/cloud/projects/connect#connect-project) you allow Widgetbook Cloud to write commit statuses of your repository and add Widgetbook build links to commits.
+Once you've connected your project, build linking via commit statuses is automatically enabled.
+
+<Warning>
+Commit statuses are only created for new builds after the project is connected to a GitHub repository.
+If you've uploaded builds before connecting the project, commit statuses are not created for these builds.
+</Warning>
+
+## How it works
+
+<Steps>
+  <Step title="Upload a build">
+    Upload a build as described in the [upload build guide](/cloud/guides/github/upload).
+  </Step>
+  <Step title="Navigate to your repository">
+    While the build processes or after the build finished successfully, navigate to your GitHub repository.
+
+    <Image src="/assets/guides/github/github-repository.png" />
+  </Step>
+  <Step title="Locate the commit status">
+    Locate the commit status indicator for the commit.
+    The commit status indicator is a green checkmark, a yellow dot, or a red cross next to the commit message.
+
+    <Image src="/assets/guides/github/commit-status.png" />
+  </Step>
+  <Step title="Build commit status">
+    Locate the commit status called _Widgetbook Build_ in the checks list and press the Details button.
+
+    <Image src="/assets/guides/github/check-list.png" />
+  </Step>
+  <Step title="Inspect the build">
+    Once you clicked the Details button, you are redirected to the build details page in Widgetbook Cloud.
+
+    <Image src="/assets/guides/github/build-detail.png" />
+  </Step>
+</Steps>

@@ -1,0 +1,112 @@
+# Color Knob
+
+The color knob renders a combination of a color preview and input fields in the Widgetbook UI where you can dynamically enter a color value for a widget property. 
+
+## Variants
+
+The String knob has two variants:
+- `context.knobs.color()`: This variant allows you to enter a color value as a string and color space combination. It does not accept `null` values.
+- `context.knobs.colorOrNull()`: This variant allows you to enter a color value as a string and color space combination or set the value to `null`. It is useful when the property can be optional.
+
+## Properties
+
+In addition to the knob's [base properties](/knobs/overview#properties), the String knob includes the following:
+
+<Accordion title="context.knobs.color()" defaultOpen>
+  <Property name="initialColorSpace" type="ColorSpace" optional>
+    The initial color space to use when displaying the color. Defaults to `ColorSpace.hex`. 
+  </Property>
+</Accordion>
+
+## `context.knobs.color()`
+
+### Example
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/color-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use a color knob, call the `context.knobs.color()` method.
+
+```dart title="Example: Color Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    color: context.knobs.color(label: 'color', initialValue: Colors.red), // [!code highlight]
+  );
+}
+```
+
+## `context.knobs.colorOrNull()` 
+
+### Example
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/color-nullable-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use the nullable color knob, call the `context.knobs.colorOrNull()` method.
+
+```dart title="Example: Nullable Color Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    color: context.knobs.colorOrNull(label: 'color') // [!code highlight]
+  );
+}
+```
+
+## Multi-snapshot Support
+
+Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons).
+
+### Regular Color Knob
+
+```dart title="Example: ColorKnobConfig"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'Red': [ColorKnobConfig('color', 'FFF44336')], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    color: context.knobs.color(label: 'color', initialValue: Colors.red),
+  );
+}
+```
+
+### Nullable Color Knob
+
+```dart title="Example: NullKnobConfig"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'No color': [NullKnobConfig('color')], // [!code highlight]
+    'Red': [ColorKnobConfig('color', 'FFF44336')], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    color: context.knobs.colorOrNull(label: 'color'),
+  );
+}
+```

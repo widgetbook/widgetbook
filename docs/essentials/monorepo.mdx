@@ -1,0 +1,103 @@
+# Widgetbook in a Monorepo
+
+Widgetbook can be used in a monorepo setup. This guide will show you how to set up Widgetbook in a monorepo.
+
+## Guide
+
+### Single Widgetbook
+
+The single Widgetbook approach is the simplest way to set up Widgetbook in a monorepo. You can create a single Widgetbook app that catalogs all the components from all the packages in the monorepo.
+
+```
+monorepo/
+├── my_app/
+├── packages/
+│   └── my_design_system/
+└── widgetbook/
+```
+
+```yaml title="widgetbook/pubspec.yaml"
+name: widgetbook_workspace
+
+dependencies:
+  widgetbook_annotation: ^{{ versions.annotation }}
+  widgetbook: ^{{ versions.widgetbook }}
+  my_design_system:
+    path: ../packages/my_design_system
+  my_app:
+    path: ../my_app
+
+dev_dependencies:
+  build_runner:
+  widgetbook_generator: ^{{ versions.generator }}
+```
+
+#### Melos
+
+If you run into dependency issues when using [Melos](https://melos.invertase.dev/) you might need to change how you bootstrap the dependencies.
+
+```yaml title="widgetbook/pubspec.yaml"
+name: widgetbook_workspace
+
+dependencies:
+  widgetbook_annotation: ^{{ versions.annotation }}
+  widgetbook: ^{{ versions.widgetbook }}
+  my_design_system: ^1.0.0
+  my_app: ^1.0.0
+
+dev_dependencies:
+  build_runner:
+  widgetbook_generator: ^{{ versions.generator }}
+```
+
+```yaml title="melos.yaml"
+name: my_project
+
+packages:
+  - apps/**
+  - packages/**
+  - widgetbook/ // [!code ++]
+```
+
+Then run `melos bootstrap` to configure the dependencies.
+
+### Per-package Widgetbook
+
+The per-package Widgetbook approach is more complex but allows for more flexibility. You can create multiple Widgetbook apps, each cataloging the components from a single package in the monorepo.
+
+```
+monorepo/
+├── my_app/
+│   └── widgetbook/
+└── packages/
+    └── my_design_system/
+        └── widgetbook/
+```
+
+```yaml title="my_app/widgetbook/pubspec.yaml"
+name: my_app_widgetbook_workspace
+
+dependencies:
+  widgetbook_annotation: ^{{ versions.annotation }}
+  widgetbook: ^{{ versions.widgetbook }}
+  my_app:
+    path: ../
+
+dev_dependencies:
+  build_runner:
+  widgetbook_generator: ^{{ versions.generator }}
+```
+
+```yaml title="packages/my_design_system/widgetbook/pubspec.yaml"
+name: my_design_system_widgetbook_workspace
+
+dependencies:
+  widgetbook_annotation: ^{{ versions.annotation }}
+  widgetbook: ^{{ versions.widgetbook }}
+  my_design_system:
+    path: ../
+
+dev_dependencies:
+  build_runner:
+  widgetbook_generator: ^{{ versions.generator }}
+```

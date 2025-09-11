@@ -15,17 +15,9 @@ class WidgetbookApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook.material(
       components: components,
-      integrations: [
-        WidgetbookCloudIntegration(),
-      ],
       addons: [
-        AccessibilityAddon(),
         TimeDilationAddon(),
-        DeviceFrameAddon([
-          Devices.ios.iPhoneSE,
-          Devices.ios.iPhone12,
-          Devices.ios.iPhone13,
-        ]),
+        ViewportAddon(Viewports.all),
         MaterialThemeAddon({
           'Dark': Themes.dark,
           'Light': Themes.light,
@@ -44,13 +36,12 @@ class WidgetbookApp extends StatelessWidget {
           name: 'Bounds',
           builder: (context, child) => Container(
             decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.white,
-              ),
+              border: Border.all(color: Colors.white),
             ),
             child: child,
           ),
         ),
+        SemanticsAddon(),
       ],
     );
   }

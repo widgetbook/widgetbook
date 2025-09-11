@@ -1,0 +1,79 @@
+# What are use-cases?
+
+A Use-case is a specific state or variant of a design component _(or a Flutter widget)_. It is a way to showcase a component in different scenarios.
+
+## Use-cases for Components
+
+Your design system will usually have multiple components, and each component will have multiple use-cases. For example, a button component might have use-cases for different states like `Primary`, `Secondary`, `Disabled` etc.
+
+```dart title="components/lib/button.dart"
+import 'package:flutter/material.dart';
+
+enum ButtonState {
+  primary,
+  secondary,
+  disabled,
+}
+
+class Button extends StatelessWidget {
+  final String text;
+  final ButtonState state;
+
+  const Button({
+    super.key,
+    required this.text,
+    required this.state,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // Implementation of the button based on state
+  }
+}
+```
+
+```dart title="widgetbook/lib/button.dart"
+import 'package:flutter/material.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+import 'package:components/button.dart';
+
+@UseCase(name: 'Primary', type: Button)
+Widget primaryButton(BuildContext context) {
+  return Button(
+    text: 'Primary',
+    state: ButtonState.primary,
+  );
+}
+
+@UseCase(name: 'Secondary', type: Button)
+Widget secondaryButton(BuildContext context) {
+  return Button(
+    text: 'Secondary',
+    state: ButtonState.secondary,
+  );
+}
+
+@UseCase(name: 'Disabled', type: Button)
+Widget disabledButton(BuildContext context) {
+  return Button(
+    text: 'Disabled',
+    state: ButtonState.disabled,
+  );
+}
+```
+
+<Info>
+  In the previous code, instead of passing `text` as a constant value, you can
+  use a [knob](/knobs/overview) to change the text value in the Widgetbook UI, and see
+  how your button behaves with extra-long text, or with an empty text.
+</Info>
+
+## Use-cases for Screens
+
+A screen is a composition of multiple components but as you move up the component hierarchy toward the screen level, you deal with more complexity. That's why it is **recommended** to catalog your screens in Widgetbook to be able to test them in isolation.
+
+There are two common patterns for building screens:
+
+1. **Pure Screens**: Screens that are fully presentational and don't depend on external data or services. You can create a use-case for them like any other component.
+2. **Contained Screens**: Screens that depend on external data or services. Check out our [mocking guide](/use-cases/mocking) to know how to handle such screens.

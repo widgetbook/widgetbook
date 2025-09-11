@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 
 import '../core/core.dart';
 import 'tree_node.dart';
 
+@internal
 class Tree {
   static TreeNode<Null> build(List<Component> components) {
     final root = TreeNode<Null>('');

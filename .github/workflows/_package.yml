@@ -11,6 +11,11 @@ on:
         type: string
 
 jobs:
+  # Although pana is now checking for pub downgrade, but the check
+  # does not validate the backwards compatibility of Flutter itself,
+  # but only the compatibility of the dependencies.
+  # This job installs the minimum Flutter version and checks if the
+  # dependencies are compatible with it.
   check-min-version:
     runs-on: ubuntu-latest
     defaults:
@@ -28,7 +33,10 @@ jobs:
           cache: true
 
       - name: Check Dependencies Compatibility
-        run: flutter pub downgrade
+        run: dart pub downgrade
+
+      - name: Check Analysis issues
+        run: dart analyze lib
 
   test:
     runs-on: ubuntu-latest
@@ -47,7 +55,7 @@ jobs:
           cache: true
 
       - name: Install Melos
-        run: flutter pub global activate melos
+        run: dart pub global activate melos
 
       - name: Bootstrap Package
         run: |
@@ -55,7 +63,12 @@ jobs:
           melos bootstrap --scope=$PACKAGE_NAME --include-dependencies
 
       - name: Run Tests
-        run: flutter test --coverage
+        run: |
+          if grep -q "sdk: flutter" pubspec.yaml; then
+            flutter test
+          else
+            dart test
+          fi
 
   lint:
     runs-on: ubuntu-latest
@@ -74,7 +87,7 @@ jobs:
           cache: true
 
       - name: Install Melos
-        run: flutter pub global activate melos
+        run: dart pub global activate melos
 
       - name: Bootstrap Package
         run: |
@@ -148,7 +161,7 @@ jobs:
           channel: stable
 
       - name: Install Melos
-        run: flutter pub global activate melos
+        run: dart pub global activate melos
 
       - name: Bootstrap Package
         run: |

@@ -1,0 +1,110 @@
+# String Knob
+
+The String knob renders a text field in the Widgetbook UI where you can dynamically enter a string value for a widget property. 
+This is particularly useful for properties that require a string input, such as a name or description.
+
+## Variants
+
+The String knob has two variants:
+- `context.knobs.string()`: This variant allows you to enter a string value. It does not accept `null` values.
+- `context.knobs.stringOrNull()`: This variant allows you to enter a string value or `null`. It is useful when the property can be optional.
+
+## Properties
+
+In addition to the knob's [base properties](/knobs/overview#properties), the String knob includes the following:
+
+<Accordion title="context.knobs.string()" defaultOpen>
+  <Property name="maxLines" type="int" optional>
+    The number of lines the text field can display. Defaults to 1.
+  </Property>
+</Accordion>
+
+## `context.knobs.string()`
+
+### Example
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/string-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use a String knob, call the `context.knobs.string()` method.
+
+```dart title="Example: String Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    name: context.knobs.string(label: 'Name', initialValue: 'John Doe'), // [!code highlight]
+  );
+}
+```
+
+## `context.knobs.stringOrNull()` 
+
+### Example
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/string-nullable-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use the nullable String knob, call the `context.knobs.stringOrNull()` method.
+
+```dart title="Example: Nullable String Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    name: context.knobs.stringOrNull(label: 'name', initialValue: 'John Doe'), // [!code highlight]
+  );
+}
+```
+
+## Multi-snapshot Support
+
+Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons).
+
+### Regular String Knob
+
+```dart title="Example: StringKnobConfig"
+import 'package:widgetbook/widgetbook.dart';
+
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { /// [!code highlight]
+    'short name': [StringKnobConfig('name', 'John Doe')], // [!code highlight]
+    'long name': [StringKnobConfig('name', 'Maximilian Mustermann')], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    name: context.knobs.string(label: 'name', initialValue: 'John Doe'),
+  );
+}
+```
+
+### Nullable String Knob
+
+```dart title="Example: NullKnobConfig"
+import 'package:widgetbook/widgetbook.dart';
+
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { /// [!code highlight]
+    'no name': [NullKnobConfig('name')], // [!code highlight]
+    'with name': [StringKnobConfig('name', 'John Doe')], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    name: context.knobs.stringOrNull(label: 'name'),
+  );
+}
+```

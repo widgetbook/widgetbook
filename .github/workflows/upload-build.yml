@@ -1,4 +1,4 @@
-name: Upload Build
+name: Push Build to Widgetbook Cloud
 
 on:
   push:
@@ -6,8 +6,36 @@ on:
       - main
 
 jobs:
-  _:
-    uses: ./.github/workflows/_upload.yml
-    secrets: inherit
-    with:
-      mode: build
+  push-build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: sandbox
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install Melos
+        run: flutter pub global activate melos
+
+      - name: Get packages
+        run: melos bootstrap --scope=sandbox --include-dependencies
+
+      - name: Run build runner
+        run: dart run build_runner build -d
+
+      - name: Build Website
+        run: flutter build web -t lib/widgetbook.dart
+
+      - name: Install Widgetbook CLI
+        run: dart pub global activate --source path ../packages/widgetbook_cli
+
+      - name: Push Build
+        run: widgetbook cloud build push --api-key ${{ secrets.WIDGETBOOK_CLOUD_API_KEY }} 

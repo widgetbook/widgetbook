@@ -12,6 +12,59 @@
 - **BREAKING**: Remove `experimental_` prefix from builders, and change them to be opt-out instead of opt-in. ([#1108](https://github.com/widgetbook/widgetbook/pull/1108))
 - **FEAT**: Generate `Story.name` based on the variable name. ([#1113](https://github.com/widgetbook/widgetbook/pull/1113))
 
+## 3.16.0
+
+- **REFACTOR**: Allow `analyzer` 8.x. ([#1566](https://github.com/widgetbook/widgetbook/pull/1566))
+- **REFACTOR**: Update `source_gen` to 3.1.0; to use `TypeChecker.typeNamed` instead of `TypeChecker.fromRuntime`. ([#1564](https://github.com/widgetbook/widgetbook/pull/1564))
+
+## 3.15.0
+
+- **BREAKING**: Set minimum SDK version to 3.7.0. ([#1541](https://github.com/widgetbook/widgetbook/pull/1541))
+- **BREAKING**: Support [new element model API](https://github.com/dart-lang/sdk/blob/main/pkg/analyzer/doc/element_model_migration_guide.md). Use `analyzer` >=7.4.0, `build` >=3.0.0 and `source_gen` >=3.0.0. ([#1544](https://github.com/widgetbook/widgetbook/pull/1544))
+
+## 3.14.0
+
+- **FEAT**: Support `@UseCase.cloudExclude` option. Requires `widgetbook_annotation` >=3.6.0. ([#1535](https://github.com/widgetbook/widgetbook/pull/1535))
+- **REFACTOR**: Change generated imports prefixes to use a deterministic format based on the path. ([#1495](https://github.com/widgetbook/widgetbook/pull/1495) - by [@mrgnhnt96](https://github.com/mrgnhnt96))
+- **CHORE**: Update license. ([#1529](https://github.com/widgetbook/widgetbook/pull/1529))
+
+## 3.13.0
+
+- **BREAKING**: Use `ViewportData.name` instead of `ViewportData.id`. Requires `widgetbook` >=3.14.0. ([#1454](https://github.com/widgetbook/widgetbook/pull/1454))
+
+## 3.12.0
+
+- **FEAT**: Support Multi Snapshot for knobs. For more information, check our [docs](https://docs.widgetbook.io/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs). ([#1394](https://github.com/widgetbook/widgetbook/pull/1394))
+
+## 3.11.0
+
+- **FEAT**: Support the **experimental** [`ViewportAddon`](https://docs.widgetbook.io/addons/viewport-addon). ([#1318](https://github.com/widgetbook/widgetbook/pull/1318))
+
+## 3.10.0
+
+- **BREAKING**: Set minimum SDK version to 3.3.0. ([#1349](https://github.com/widgetbook/widgetbook/pull/1349))
+- **BREAKING**: Remove `components.book.dart` formatting. If you are using the [SAM architecture](https://docs.widgetbook.io/next/sam), upgrade to `4.0.0-alpha.2` or later versions, instead of using the `experimental_components_builder`. ([#1366](https://github.com/widgetbook/widgetbook/pull/1366))
+- **REFACTOR**: Remove direct dependency on [`dart_style`](https://pub.dev/packages/dart_style). ([#1363](https://github.com/widgetbook/widgetbook/pull/1363))
+- **REFACTOR**: Allow `analyzer` 7.x. ([#1351](https://github.com/widgetbook/widgetbook/pull/1351))
+- **REFACTOR**: Remove unused `useCaseDefinitionPath` and `componentDefinitionPath` from generated use-case metadata. ([#1370](https://github.com/widgetbook/widgetbook/pull/1370))
+
+## 3.9.1
+
+- **FIX**: Escape path resolution if `pubspec.lock` is not found. This bug was affecting running the generator in [Pub Workspaces](https://dart.dev/tools/pub/workspaces). ([#1327](https://github.com/widgetbook/widgetbook/pull/1327))
+- **REFACTOR**: Send an owner URL for [telemetry](https://docs.widgetbook.io/telemetry). ([#1324](https://github.com/widgetbook/widgetbook/pull/1324))
+
+## 3.9.0
+
+- **BREAKING**: Set minimum SDK version to 3.0.0. ([#1243](https://github.com/widgetbook/widgetbook/pull/1243))
+- **BREAKING**: Drop `analyzer` 5.x support. ([#1243](https://github.com/widgetbook/widgetbook/pull/1243))
+- **FEAT**: Support Multi Snapshot for addons. For more information, check our [docs](https://docs.widgetbook.io/cloud/snapshots/multi-snapshot). ([#1239](https://github.com/widgetbook/widgetbook/pull/1239))
+- **REFACTOR**: Remove `widgetbook` dependency. ([#1242](https://github.com/widgetbook/widgetbook/pull/1242))
+
+## 3.8.0
+
+- **FEAT**: Add new builder option named `nav_path_mode`, that allows using the navigation path of the use-case instead of the component. For more info, check out the [customization docs](https://docs.widgetbook.io/guides/customization#using-nav_path_mode-option). ([#1188](https://github.com/widgetbook/widgetbook/pull/1188))
+- **REFACTOR**: Send a unique project identifier for [telemetry](https://docs.widgetbook.io/telemetry). ([#1189](https://github.com/widgetbook/widgetbook/pull/1189))
+
 ## 3.7.0
 
 - **EXPERIMENTAL**: Preserve nullability of generic/function parameters. ([#1092](https://github.com/widgetbook/widgetbook/pull/1092))

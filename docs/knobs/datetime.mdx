@@ -1,0 +1,125 @@
+# DateTime Knob
+
+The DateTime knob renders a DateTime indicator field in the Widgetbook UI where you can enter a DateTime value via a date selector for a widget property. 
+
+## Variants
+
+The String knob has two variants:
+- `context.knobs.dateTime()`: This variant allows you to enter a DateTime via a date and time picker. It does not accept `null` values.
+- `context.knobs.dateTimeOrNull()`: This variant allows you to enter a DateTime via a date and time picker or `null`. It is useful when the property can be optional.
+
+## Properties
+
+In addition to the knob's [base properties](/knobs/overview#properties), the String knob includes the following:
+
+<Accordion title="context.knobs.dateTime()" defaultOpen>
+  <Property name="start" type="DateTime" required>
+    The start time of the DateTime picker. This defines the earliest date that can be selected.
+  </Property>
+  <Property name="end" type="DateTime" required>
+    The end time of the DateTime picker. This defines the latest date that can be selected.
+  </Property>
+</Accordion>
+
+## `context.knobs.dateTime()`
+
+### Example
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/datetime-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use the DateTime knob, call the `context.knobs.dateTime()` method.
+
+```dart title="Example: DateTime Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    dateTime: context.knobs.dateTime( // [!code highlight]
+      label: 'dateTime', // [!code highlight]
+      initialValue: DateTime.now(), // [!code highlight]
+      start: DateTime.now().subtract(const Duration(days: 30)), // [!code highlight]
+      end: DateTime.now().add(const Duration(days: 30)), // [!code highlight]
+    ), // [!code highlight]
+  );
+}
+```
+
+## `context.knobs.dateTimeOrNull()` 
+
+### Example
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/datetime-nullable-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use the nullable DateTime knob, call the `context.knobs.dateTimeOrNull()` method.
+
+```dart title="Example: Nullable DateTime Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    dateTime: context.knobs.dateTimeOrNull( // [!code highlight]
+      label: 'dateTime', // [!code highlight]
+      start: DateTime.now().subtract(const Duration(days: 30)), // [!code highlight]
+      end: DateTime.now().add(const Duration(days: 30)), // [!code highlight]
+    ), // [!code highlight]
+  );
+}
+```
+
+## Multi-snapshot Support
+
+Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons).
+
+### Regular DateTime Knob
+
+```dart title="Example: DateTimeKnobConfig"
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'dateTime': [DateTimeKnobConfig('dateTime', '2020-01-31 16:10')], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    dateTime: context.knobs.dateTime(
+      label: 'dateTime',
+      initialValue: DateTime.now(),
+      start: DateTime.now().subtract(const Duration(days: 30)),
+      end: DateTime.now().add(const Duration(days: 30)),
+    ),
+  );
+}
+```
+
+### Nullable DateTime Knob
+
+```dart title="Example: NullKnobConfig"
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'Without date': [NullKnobConfig('dateTime')], // [!code highlight]
+    'With date': [DateTimeKnobConfig('dateTime', '2020-01-31 16:10')], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    dateTime: context.knobs.dateTimeOrNull(
+      label: 'dateTime',
+      start: DateTime.now().subtract(const Duration(days: 30)),
+      end: DateTime.now().add(const Duration(days: 30)),
+    ),
+  );
+}
+```

@@ -1,0 +1,75 @@
+# Security Overview
+
+At Widgetbook, security and privacy are at the core of our platform. We are committed to safeguarding your data while ensuring a seamless experience for developing and cataloging your Flutter components.
+
+## Data Handling and Privacy
+
+### Mocked Data Usage
+
+We strongly encourage developers to use [mocked data](/use-cases/mocking) instead of real user data when using Widgetbook. This ensures that **no sensitive or personal information is stored or displayed** in Widgetbook or Widgetbook Cloud, including builds, reviews, and snapshots.
+
+### Source Code Protection
+
+Widgetbook Cloud **does not store source code**. Builds are compiled on your local machine or CI/CD and uploaded as a **binary artifact** to our servers, ensuring that the original source code remains under your full control. 
+
+We store only minimal Git metadata necessary for collaboration and traceability:
+- Git commit hash and message
+- Git branch name
+- Git pull request title and number
+
+### Data Retention Policies
+
+- Builds, Reviews, and Use-Cases are retained for **90 days** and automatically deleted afterward.
+- Security logs, including audit and access logs, are retained for **up to one year** for internal security monitoring.
+
+## GDPR Compliance
+
+Widgetbook and Widgetbook Cloud are fully **GDPR-compliant**. We ensure:
+- Transparent and lawful processing of personal data.
+- Mechanisms for users to access, rectify, and delete their data.
+- Adherence to data minimization principles by storing only necessary information.
+
+For further details, refer to our [Privacy Policy](https://www.widgetbook.io/privacy-policy).
+
+## Secure Cloud Infrastructure  
+
+Widgetbook’s infrastructure is hosted within **AWS’s secure data centers**, ensuring high availability, robust security, and compliance with industry standards. 
+AWS continuously assesses risks, implements stringent security measures, and undergoes regular audits to maintain the highest security standards. 
+For more details, refer to [AWS Compliance Programs](https://aws.amazon.com/compliance/).
+
+Our reliance on **AWS’s globally distributed infrastructure** allows us to deliver a **resilient, high-performance platform**, with built-in redundancy and failover mechanisms to safeguard your data. 
+Additionally, AWS data centers are designed to meet **strict regulatory and security requirements**, ensuring the confidentiality, integrity, and availability of your data at all times.
+
+## Security Measures
+
+### Encryption
+
+We use industry-standard encryption to protect data at all stages:
+
+- **Data in Transit**: All communication between your devices and Widgetbook servers is secured using **TLS 1.2/1.3** encryption.
+- **Data at Rest**: Sensitive data is encrypted using **AES-256** and other industry best practices provided by our cloud providers.
+
+### Access Controls
+
+To prevent unauthorized access, Widgetbook enforces strict access control mechanisms:
+
+- **Authentication**: Secure authentication via OAuth and third-party identity providers.
+- **Role-Based Access Control (RBAC)**: Permissions are assigned based on roles (e.g., administrator, member) to ensure least-privilege access.
+
+## Third-Party Risk Management
+
+Widgetbook relies on trusted cloud service providers:
+- **AWS** for hosting and infrastructure security (see [AWS Security](https://aws.amazon.com/security/)).
+- **Neon** for database management (see [Neon Security](https://neon.tech/docs/security/security-overview)).
+- **Clerk** for authentication services (see [Clerk Security](https://clerk.com/docs/security/overview)).
+
+We conduct **regular risk assessments** to ensure these providers maintain compliance with security best practices.
+
+## User Responsibilities
+
+While we ensure a **secure infrastructure**, we encourage users to follow best security practices:
+- **Use strong, unique passwords** and protect access credentials.
+- **Avoid uploading sensitive data** unless necessary.
+- **Review permissions** regularly to maintain proper access control.
+
+For any security concerns or responsible disclosures, please reach out to [contact@widgetbook.io](mailto:contact@widgetbook.io).

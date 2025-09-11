@@ -18,6 +18,14 @@ class Reference {
   final String sha;
   final String fullName;
 
+  /// Returns the [fullName] without the `refs/*/` prefix.
+  static String nameOf(String fullName) {
+    return fullName.replaceFirst(
+      RegExp(r'^refs/.+?/'),
+      '',
+    );
+  }
+
   bool get isHEAD => fullName == 'HEAD';
   bool get isTag => fullName.startsWith('refs/tags/');
   bool get isHead => fullName.startsWith('refs/heads/');
@@ -25,12 +33,7 @@ class Reference {
   bool get isBranch => isHead || isRemote;
 
   /// The [fullName] without the `refs/*/` prefix.
-  String get name {
-    return fullName.replaceFirst(
-      RegExp(r'^refs/.+?/'),
-      '',
-    );
-  }
+  String get name => nameOf(fullName);
 
   @override
   bool operator ==(covariant Reference other) {

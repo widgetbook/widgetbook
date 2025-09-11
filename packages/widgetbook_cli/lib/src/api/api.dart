@@ -1,7 +1,6 @@
-export 'models/build_request.dart';
-export 'models/build_response.dart';
-export 'models/review_request.dart';
-export 'models/review_response.dart';
-export 'models/upload_task.dart';
+export 'models/create_build_request.dart';
+export 'models/create_build_response.dart';
+export 'models/submit_build_request.dart';
+export 'models/submit_build_response.dart';
 export 'models/versions_metadata.dart';
 export 'widgetbook_http_client.dart';

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 import 'package:resizable_widget/resizable_widget.dart';
 
 import '../settings/settings_list.dart';
 import 'base_layout.dart';
 
+@internal
 class DesktopLayout extends StatelessWidget implements BaseLayout {
   const DesktopLayout({
     super.key,
@@ -27,40 +29,36 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
         percentages: [0.2, 0.6, 0.2],
         separatorColor: Colors.white24,
         children: [
-          ExcludeSemantics(
-            child: Card(
-              child: navigationBuilder(context),
-            ),
+          Card(
+            child: navigationBuilder(context),
           ),
           workbench,
-          ExcludeSemantics(
-            child: Card(
-              child: DefaultTabController(
-                length: 2,
-                child: Column(
-                  children: [
-                    const TabBar(
-                      tabs: [
-                        Tab(text: 'Addons'),
-                        Tab(text: 'Args'),
+          Card(
+            child: DefaultTabController(
+              length: 2,
+              child: Column(
+                children: [
+                  const TabBar(
+                    tabs: [
+                      Tab(text: 'Addons'),
+                      Tab(text: 'Args'),
+                    ],
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      children: [
+                        SettingsList(
+                          name: 'Addons',
+                          builder: addonsBuilder,
+                        ),
+                        SettingsList(
+                          name: 'Args',
+                          builder: argsBuilder,
+                        ),
                       ],
                     ),
-                    Expanded(
-                      child: TabBarView(
-                        children: [
-                          SettingsList(
-                            name: 'Addons',
-                            builder: addonsBuilder,
-                          ),
-                          SettingsList(
-                            name: 'Args',
-                            builder: argsBuilder,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

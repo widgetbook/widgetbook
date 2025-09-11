@@ -20,18 +20,17 @@ class Themes {
     errorContainer: Color(0xFF93000A),
     onError: Color(0xFF690005),
     onErrorContainer: Color(0xFFFFDAD6),
-    background: Color(0xFF1A1C1E),
-    onBackground: Color(0xFFE3E2E6),
     surface: Color(0xFF1A1C1E),
     onSurface: Color(0xFFE3E2E6),
-    surfaceVariant: Color(0xFF43474E),
     onSurfaceVariant: Color(0xFFC3C6CF),
     outline: Color(0xFF8D9199),
+    outlineVariant: Color(0xFF8D9199),
     onInverseSurface: Color(0xFF1A1C1E),
     inverseSurface: Color(0xFFE3E2E6),
     inversePrimary: Color(0xFF0060A7),
     shadow: Color(0xFF000000),
     surfaceTint: Color(0xFFA1C9FF),
+    surfaceContainerHighest: Color(0xFF43474E),
   );
 
   static const _lightColorScheme = ColorScheme(
@@ -52,47 +51,69 @@ class Themes {
     onError: Color(0xFFFFFFFF),
     errorContainer: Color(0xFFFFDAD6),
     onErrorContainer: Color(0xFF410002),
-    background: Color(0xFFFDFCFF),
-    onBackground: Color(0xFF1A1C1E),
     surface: Color(0xFFFDFCFF),
     onSurface: Color(0xFF1A1C1E),
-    surfaceVariant: Color(0xFFDFE2EB),
     onSurfaceVariant: Color(0xFF43474E),
     outline: Color(0xFF73777F),
+    outlineVariant: Color(0xFF73777F),
     onInverseSurface: Color(0xFFE3E2E6),
     inverseSurface: Color(0xFF1A1C1E),
     inversePrimary: Color(0xFFA1C9FF),
     shadow: Color(0xFF000000),
     surfaceTint: Color(0xFF0060A7),
+    surfaceContainerHighest: Color(0xFFDFE2EB),
   );
 
-  static final _inputDecorationTheme = InputDecorationTheme(
-    filled: true,
-    isDense: true,
-    focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(
-        color: _darkColorScheme.primary,
+  static SegmentedButtonThemeData _buildSegmentedButtonTheme() {
+    return SegmentedButtonThemeData(
+      style: ButtonStyle(
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.0),
+          ),
+        ),
       ),
-    ),
-    enabledBorder: const OutlineInputBorder(
-      borderSide: BorderSide(
-        color: Colors.transparent,
-      ),
-    ),
-  );
+    );
+  }
 
+  static InputDecorationTheme _buildInputTheme(
+    ColorScheme colorScheme,
+  ) {
+    return InputDecorationTheme(
+      filled: true,
+      isDense: true,
+      // Match TextField and DropdownMenu heights
+      contentPadding: const EdgeInsets.symmetric(
+        vertical: 16.0,
+        horizontal: 12.0,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: colorScheme.primary,
+        ),
+      ),
+      enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.transparent,
+        ),
+      ),
+    );
+  }
+
+  /// The default dark theme for Widgetbook.
   static ThemeData dark = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
     fontFamily: 'Poppins',
     colorScheme: _darkColorScheme,
-    hoverColor: const Color(0xFFE3E2E6).withOpacity(0.08),
+    hoverColor: const Color(0xFFE3E2E6).withAlpha(20),
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
     ),
-    inputDecorationTheme: _inputDecorationTheme,
+    segmentedButtonTheme: _buildSegmentedButtonTheme(),
+    inputDecorationTheme: _buildInputTheme(_darkColorScheme),
     dropdownMenuTheme: DropdownMenuThemeData(
-      inputDecorationTheme: _inputDecorationTheme,
+      inputDecorationTheme: _buildInputTheme(_darkColorScheme),
     ),
     expansionTileTheme: const ExpansionTileThemeData(
       collapsedShape: RoundedRectangleBorder(),
@@ -100,18 +121,20 @@ class Themes {
     ),
   );
 
+  /// The default light theme for Widgetbook.
   static ThemeData light = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
     fontFamily: 'Poppins',
     colorScheme: _lightColorScheme,
-    hoverColor: const Color(0xFF1A1C1E).withOpacity(0.08),
+    hoverColor: const Color(0xFF1A1C1E).withAlpha(20),
     sliderTheme: SliderThemeData(
       overlayShape: SliderComponentShape.noThumb,
     ),
-    inputDecorationTheme: _inputDecorationTheme,
+    segmentedButtonTheme: _buildSegmentedButtonTheme(),
+    inputDecorationTheme: _buildInputTheme(_lightColorScheme),
     dropdownMenuTheme: DropdownMenuThemeData(
-      inputDecorationTheme: _inputDecorationTheme,
+      inputDecorationTheme: _buildInputTheme(_lightColorScheme),
     ),
     expansionTileTheme: const ExpansionTileThemeData(
       collapsedShape: RoundedRectangleBorder(),

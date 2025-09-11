@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 import '../fields/fields.dart';
-import '../settings/setting.dart';
 import '../state/state.dart';
 import 'arg.dart';
 import 'story.dart';
@@ -11,15 +10,15 @@ import 'story.dart';
 /// [Story]s, instead of doing it one-by-one using [Arg]s.
 @optionalTypeArgs
 abstract class Addon<T> extends FieldsComposable<T> {
+  /// Creates an [Addon] with the given [name].
   Addon({
-    required this.name,
+    required super.name,
   });
-
-  final String name;
 
   @override
   String get groupName => slugify(name);
 
+  /// Builds the widget for the addon.
   Widget build(BuildContext context, Widget child) {
     final state = WidgetbookState.of(context);
     final groupMap = FieldCodec.decodeQueryGroup(
@@ -35,28 +34,14 @@ abstract class Addon<T> extends FieldsComposable<T> {
     );
   }
 
-  @override
-  Widget buildFields(BuildContext context) {
-    return Setting(
-      name: name,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: fields
-            .map(
-              (field) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 4.0,
-                ),
-                child: field.build(context, groupName),
-              ),
-            )
-            .toList(),
-      ),
-    );
-  }
-
-  /// Wraps use cases with a custom widget depending on the addon [setting]
-  /// that is obtained from [valueFromQueryGroup].
+  /// Builds the wrapper widget for use cases based on the current [setting].
+  ///
+  /// This method is called for every use case and allows the addon to wrap
+  /// the use case widget with additional functionality. The [setting] parameter
+  /// contains the current value selected by the user in the addon's UI.
+  ///
+  /// By default, this method returns the [child] widget unchanged. Override
+  /// this method to implement the addon's functionality.
   Widget buildUseCase(
     BuildContext context,
     Widget child,

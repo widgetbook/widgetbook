@@ -45,15 +45,15 @@ class PersonArg extends Arg<Person> {
 
   @override
   List<Field> get fields => [
-        StringField(
-          name: '$name.name',
-          initialValue: value.name,
-        ),
-        IntInputField(
-          name: '$name.age',
-          initialValue: value.age,
-        ),
-      ];
+    StringField(
+      name: '$name.name',
+      initialValue: value.name,
+    ),
+    IntInputField(
+      name: '$name.age',
+      initialValue: value.age,
+    ),
+  ];
 
   @override
   Person valueFromQueryGroup(Map<String, String> group) {

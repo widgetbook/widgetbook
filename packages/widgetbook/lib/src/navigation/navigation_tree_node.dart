@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../core/core.dart';
@@ -7,6 +8,7 @@ import 'category_tree_tile.dart';
 import 'folder_tree_tile.dart';
 import 'tree_node.dart';
 
+@internal
 class NavigationTreeNode extends StatefulWidget {
   const NavigationTreeNode({
     super.key,
@@ -32,7 +34,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
     final isCategory = node.isCategory;
     final isTerminal = switch (node) {
       TreeNode<Story>() => true,
-      TreeNode<Component>() => node.children.length == 1,
+      TreeNode<Component>() => node.children.length == 1, // Leaf component
       _ => false,
     };
 
@@ -76,11 +78,12 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: node.children.length,
               shrinkWrap: true,
-              itemBuilder: (context, index) => NavigationTreeNode(
-                depth: isCategory ? widget.depth : widget.depth + 1,
-                node: node.children[index],
-                onStoryTap: widget.onStoryTap,
-              ),
+              itemBuilder:
+                  (context, index) => NavigationTreeNode(
+                    depth: isCategory ? widget.depth : widget.depth + 1,
+                    node: node.children[index],
+                    onStoryTap: widget.onStoryTap,
+                  ),
             ),
           ),
       ],

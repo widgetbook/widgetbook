@@ -1,0 +1,88 @@
+
+# Viewport Addon
+
+The Viewport Addon is an invaluable tool that lets you preview your use-cases on various viewports. These viewports simulate a realistic environment by:
+
+1. Setting width and height boundaries to your use-case.
+1. Overriding `MediaQuery`'s `devicePixelRatio` to ensure your component behaves as as expected on different devices.
+1. Overriding `ThemeData.platform` to simulate different platforms.
+
+## Usage
+
+```dart title=widgetbook/lib/main.dart
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        ViewportAddon([ // [!code highlight]
+          Viewports.none, // [!code highlight]
+          IosViewports.iPhone13, // [!code highlight]
+          AndroidViewports.samsungGalaxyNote20, // [!code highlight]
+          MacosViewports.macbookPro, // [!code highlight]
+          WindowsViewports.desktop, // [!code highlight]
+          LinuxViewports.desktop, // [!code highlight]
+        ]), // [!code highlight]
+      ],
+    );
+  }
+}
+```
+
+<Info>
+  You can use `.all` getter to add all available viewports to the addon:
+
+    ```dart
+    ViewportAddon(Viewports.all) // All platforms
+    ViewportAddon(IosViewports.all) // Specific platform
+    ```
+
+</Info>
+
+## Order
+
+Since the [order of addons](/addons/overview#order-of-addons) matters. The `ViewportAddon` should be used **before all other addons**.
+
+## Multi-snapshot Support
+
+The `ViewportAddon` is supported in the [Multi Snapshot Reviews](/cloud/snapshots/multi-snapshot) via the `ViewportAddonConfig`. Here's how to configure it:
+
+<Info>
+  Unlike other `AddonConfig`s, the `ViewportAddonConfig` is defined in
+  `widgetbook` package, and not in `widgetbook_annotation` package.
+</Info>
+
+```dart title=widgetbook/lib/main.dart
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@App(
+  cloudAddonsConfigs: {
+    'iPhone 13': [
+      ViewportAddonConfig(IosViewports.iPhone13), // [!code highlight]
+    ],
+    'iPhone 12': [
+      ViewportAddonConfig(IosViewports.iPhone12), // [!code highlight]
+    ],
+  },
+)
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        ViewportAddon([ // [!code highlight]
+          IosViewports.iPhone13, // [!code highlight]
+          IosViewports.iPhone12, // [!code highlight]
+        ]), // [!code highlight]
+      ],
+    );
+  }
+}
+```

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook/src/fields/fields.dart';
 
 import '../../helper/helper.dart';
 
@@ -84,6 +84,19 @@ void main() {
         );
 
         expect(widget.initialValue, equals(field.end.toSimpleFormat()));
+      },
+    );
+
+    testWidgets(
+      'given a field, '
+      'then [toWidget] builds the hintText value',
+      (tester) async {
+        final widget = await tester.pumpField<DateTime, TextField>(
+          field,
+          null,
+        );
+
+        expect(widget.decoration?.hintText, equals('Enter a DateTime'));
       },
     );
   });

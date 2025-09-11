@@ -21,13 +21,14 @@ class AddonsBuilder extends StatelessWidget {
     }
 
     return Nested(
-      children: addons!
-          .map(
-            (addon) => SingleChildBuilder(
-              builder: (context, child) => addon.build(context, child!),
-            ),
-          )
-          .toList(),
+      children:
+          addons!
+              .map(
+                (addon) => SingleChildBuilder(
+                  builder: (context, child) => addon.build(context, child!),
+                ),
+              )
+              .toList(),
       child: child,
     );
   }

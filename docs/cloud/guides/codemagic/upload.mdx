@@ -1,0 +1,54 @@
+# Widgetbook Cloud x Codemagic
+
+Codemagic is just a CI/CD platform, which means it needs to be accompanied by a version control system (i.e. [GitHub](/cloud/guides/github/upload), [GitLab](/cloud/guides/gitlab/upload), [Azure](/cloud/guides/azure/upload) or [Bitbucket](/cloud/guides/bitbucket/upload)). In this guide, we will just be showing the workflow setup, but you need to check other version control system guides to make the [Widgetbook Cloud Reviews](/cloud/reviews) work.
+
+<Steps>
+  <Step title="Add API Key as a Secret">
+    Add `WIDGETBOOK_API_KEY` under `widgetbook_credentials` group in your
+    [Codemagic project's environment
+    variables](https://docs.codemagic.io/yaml-basic-configuration/configuring-environment-variables/#configuring-environment-variables).
+    You can find the API key in the Widgetbook Cloud's **project settings page**.
+  </Step>
+
+  <Step title="Setup Workflow">
+    To upload a [Widgetbook Build](/cloud/builds/overview) for each new commit in your repository, add the following workflow to your Codemagic `codemagic.yaml` file
+
+    ```yaml
+    workflows:
+      widgetbook-cloud-hosting:
+        name: Widgetbook Cloud Hosting
+
+        triggering:
+          events:
+            - push
+
+        environment:
+          flutter: stable
+          groups:
+            - widgetbook_credentials
+
+        scripts:
+          - name: Bootstrap App
+            script: |
+              flutter pub get
+              # Add any other steps needed to make your
+              # app widgets available for Widgetbook
+
+          - name: Build Widgetbook
+            working_directory: widgetbook
+            script: |
+              flutter pub get
+              dart run build_runner build -d
+              flutter build web -t lib/main.dart
+
+          - name: Install Widgetbook CLI
+            script: dart pub global activate widgetbook_cli
+
+          - name: Push Widgetbook Build
+            working_directory: widgetbook
+            script: widgetbook cloud build push --api-key $WIDGETBOOK_API_KEY
+    ```
+
+  </Step>
+
+</Steps>

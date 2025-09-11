@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 /// Same as [Color] but without alpha channel.
+@internal
 class OpaqueColor {
   OpaqueColor(this.value) : assert(value >= 0 && value <= 0xffffff);
 
@@ -12,7 +14,7 @@ class OpaqueColor {
 
   OpaqueColor.fromColor(
     Color color,
-  ) : value = color.value & 0xffffff;
+  ) : value = color.toARGB32() & 0xffffff;
 
   final int value;
 

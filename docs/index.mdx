@@ -1,36 +1,67 @@
 # Overview
 
-Discover Widgetbook, a powerful Flutter package inspired by Storybook.js that simplifies the process of cataloging widgets, testing them across various devices and themes, and sharing them effortlessly with designers and clients.
+Widgetbook is a sandbox for building **widgets and screens in isolation**. 
+It helps you develop and share hard-to-reach states and edge cases without needing to run your whole app. 
+Widgetbook is [open-source](https://github.com/widgetbook/widgetbook) and **free** to use.
 
-<Image src="/assets/screenshots/widgetbook.png" zoom />
+<YouTube id="sGRetvJ-zZI" />
 
-## Experience Widgetbook in Action
+## The Problem
 
-Explore the capabilities of Widgetbook with our example app by visiting our [demo page](https://demo.widgetbook.io).
+While developing widgets or screens, you have probably faced one of the following problems:
 
-## Features
+- **Hard-to-reach states:** You need to test a widget in a specific state (e.g. error, loading, etc.) but it is hard to reach that state in your app.
+- **Time consuming:** You need to run your whole app to test a single widget or screen, and even spend more time to test in different configurations (e.g. dark mode, different locales, etc.).
+- **API/Datasource dependencies:** You need to mock data or APIs to test your screens, which is time-consuming and error-prone, and it is even not always possible to do that.
+- **Collaboration:** You need to share your widgets with your design team or other developers, but it is hard to do that without a proper documentation or cataloging system.
 
-- 💙 Tailored for Flutter: Designed specifically for the Flutter framework, Widgetbook offers an intuitive and seamless experience.
-- 🦄 Open Source: Accessible to everyone, Widgetbook invites you to contribute and benefit from its ongoing development.
-- 🍭 Feature-Packed: Test your widgets on a wide range of devices, themes, locales, text scales, and more, ensuring adaptability and responsiveness.
-- ⚙️ Customizable: Effortlessly adjust Widgetbook's settings to suit your unique requirements.
-- 🔧 Actively Maintained: Developed by a fast-growing Flutter startup in Germany, Widgetbook stays up-to-date with best practices in the Flutter ecosystem.
-- 👩🏼‍💻 Dedicated Support: Connect with other developers and receive assistance through our [Discord](https://discord.com/invite/zT4AMStAJA) community.
+## The Solution: Widgetbook
 
-But that's not all! Widgetbook offers even more features:
+With Widgetbook you can **build UI in isolation** without depending on any external data source or API. This allows you to:
 
-- 📙 Efficient Widget Cataloging: Catalog existing widgets to prevent duplication and save time and resources.
-- 📦 Isolated Development: Focus on design and functionality by developing widgets without worrying about business logic.
-- 🎛 Knobs: Customize how your team interacts with widgets by defining adjustable knobs.
-- ⚡️ Hot Reload: Quickly identify and resolve bugs with hot reloading capabilities.
-- ✨ Comprehensive Documentation: Access easy-to-read, ever-improving documentation for all your development needs. Read the docs! ➡️
+- **Easily test your widgets** in different **states** (e.g. error, loading, etc.) via [Knobs](/knobs/overview), and **configurations** (e.g. dark mode, different locales, etc.) via [Addons](/addons/overview).
+- **Mock your data** so you can test your widgets without the need to run your whole app (learn more about [Mocking](/use-cases/mocking)).
+- **Catalog your widgets and screens** in a single place, so you can easily share them with all your team members (e.g. developers, designers, product managers, QA testers).
 
-# Widgetbook Cloud: A Collaborative Platform for Streamlined Reviews
+<YouTube id="5cNUX7eDZWE" />
 
-To further enhance the review process for professional teams, we've developed Widgetbook Cloud:
+## Customer Showcases
 
-- 🌍 Share Widgets: Effortlessly share your widgets with designers, product owners, clients, and more.
-- 📃 Simplified Reviews: Utilize our guided process to streamline reviews.
-- ⛓ Figma Integration: Seamlessly connect your widgets to their design counterparts in Figma.
+### Salto Systems
 
-[🔗 Visit Widgetbook Cloud documentation](/widgetbook-cloud/overview)
+Salto Systems is a company that specializes in smart locks and access control systems. They use Widgetbook to build their widgets in isolation, which allows them to speed up their development process.
+
+<Card
+  icon="medium fa-brands"
+  title="How Salto prevents UI problems while saving 50% of their time"
+  href="https://medium.com/widgetbook/how-salto-prevents-ui-problems-while-saving-50-of-their-time-with-widgetbook-53194f79ee96"
+>
+  > We build new features by starting with Widgetbook, allowing us to
+  immediately develop the UI in isolation and see how new components behave.
+  Building in isolation is especially helpful for larger components and screens
+  that handle various data states — like loading, loaded, or error. Before
+  Widgetbook, testing error states was time-consuming because they’re naturally
+  hard to reproduce; the data often comes from sources we can’t easily control.
+  But with Widgetbook’s isolation-first approach, we can inject mocked data and
+  test all component states. Once a component is ready, other developers can
+  easily explore its different variations. — Arthur Schenk, Mobile Team Lead at
+  Salto
+</Card>
+
+### Lotum
+
+Lotum speeds up their app development by building their widgets in isolation with Widgetbook.
+
+<YouTube id="0xV-OzfY2zg" />
+
+### 1KOMMA5°
+
+1KOMMA5° creates an in-house design system which is used across 6 different projects.
+
+<YouTube id="4xWseFS5Z38" />
+
+### LeanCode
+
+LeanCode is a software agency which creates a design system template that they share with every new client for the project start.
+
+<YouTube id="rmQktvnyfPg" />

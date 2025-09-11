@@ -1,13 +1,16 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../core/core.dart';
+import '../widgetbook_theme.dart';
 import 'icons/component_icon.dart';
 import 'icons/expander_icon.dart';
 import 'icons/story_icon.dart';
 import 'tree_node.dart';
 
+@internal
 class FolderTreeTile extends StatelessWidget {
   const FolderTreeTile({
     super.key,
@@ -36,9 +39,10 @@ class FolderTreeTile extends StatelessWidget {
       height: indentation,
       decoration: BoxDecoration(
         borderRadius: borderRadius,
-        color: isSelected
-            ? Theme.of(context).colorScheme.secondaryContainer
-            : null,
+        color:
+            isSelected
+                ? WidgetbookTheme.of(context).colorScheme.secondaryContainer
+                : null,
       ),
       child: InkWell(
         onTap: onTap,
@@ -50,11 +54,12 @@ class FolderTreeTile extends StatelessWidget {
             ),
             SizedBox(
               width: indentation,
-              child: isTerminal
-                  ? null
-                  : ExpanderIcon(
-                      isExpanded: isExpanded,
-                    ),
+              child:
+                  isTerminal
+                      ? null
+                      : ExpanderIcon(
+                        isExpanded: isExpanded,
+                      ),
             ),
             SizedBox(
               width: indentation,

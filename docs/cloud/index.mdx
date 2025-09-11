@@ -1,0 +1,77 @@
+# Overview
+
+Widgetbook Cloud is a managed hosting solution for Widgetbook that allows you to run golden tests on every commit so that you can catch UI regressions before they reach production.
+
+<Info>
+  Get [free demo](https://meetings-eu1.hubspot.com/lucas-josefiak) or [direct
+  access](https://app.widgetbook.io/) to Widgetbook Cloud.
+</Info>
+
+<YouTube id="l3tj9VvkjLs" />
+
+## The Problem
+
+After submitting a PR for review, both you and the reviewer have no idea which **UI changes** were made. The reviewer has to do the following to make sure that everything works as excepted:
+
+1. Check out the PR locally.
+2. Run the app in the simulator or on desktop.
+3. Execute the required flow (e.g. authentication) to reach the desired screen to review.
+4. Test out the screen in different states (e.g. empty, error, loading, etc.) or different configurations (e.g. dark mode, different locales, etc.).
+
+That process is time-consuming that most reviewers skip it, and just settle down for only reviewing the code. By skipping the UI review process, the risk of introducing UI regressions increases significantly.
+
+<Image
+  src="/assets/cloud/code-review.png"
+  zoom
+  caption="Code review doesn't show how the changes look like"
+/>
+
+## The Solution: Widgetbook Cloud
+
+Widgetbook Cloud can help you doing **UI Reviews in your browser** without the need to check out the PR locally or the need to write any code to test the UI. You can easily see all the changes made in the PR and test them in different states or configurations.
+
+<CardGroup>
+  <Card title="Builds" icon="hammer" href="/cloud/builds/overview">
+    Host a Widgetbook build for each commit without all the hassle of self-hosting. Simple and optimized for Widgetbook.
+  </Card>
+
+  <Card title="Reviews" icon="code-compare" href="/cloud/reviews">
+    Review UI changes and detect UI regressions before you merge PRs into your main branch.
+  </Card>
+</CardGroup>
+
+<Image
+  src="/assets/cloud/ui-review.png"
+  zoom
+  caption="UI review gives your review workflow superpowers"
+/>
+
+## Customer Showcases
+
+### Salto Systems
+
+Salto Systems is a company that specializes in smart locks and access control systems. They use Widgetbook Cloud to simplify their UI reviews and speed up their development process.
+
+<Card
+  icon="medium fa-brands"
+  title="How Salto prevents UI problems while saving 50% of their time"
+  href="https://medium.com/widgetbook/how-salto-prevents-ui-problems-while-saving-50-of-their-time-with-widgetbook-53194f79ee96"
+>
+  > Widgetbook is integrated and running in our build CI pipelines. So, every
+  merge request triggers Widgetbook Builds to run the snapshot tests. If we made
+  changes in code, Widgetbook shows which components stayed the same and which
+  components had visual adjustments making it trivial to review visual changes
+  and get the code merged. — Arthur Schenk, Mobile Team Lead at Salto
+</Card>
+
+### 1KOMMA5°
+
+1KOMMA5° creates an in-house design system which is used across 6 different projects.
+
+<YouTube id="4xWseFS5Z38" />
+
+### LeanCode
+
+LeanCode is a software agency which creates a design system template that they share with every new client for the project start.
+
+<YouTube id="rmQktvnyfPg" />

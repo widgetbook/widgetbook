@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../settings/settings.dart';
 import 'base_layout.dart';
 
+@internal
 class MobileLayout extends StatelessWidget implements BaseLayout {
   const MobileLayout({
     super.key,
@@ -23,46 +25,39 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
       body: SafeArea(
         child: workbench,
       ),
-      bottomNavigationBar: ExcludeSemantics(
-        child: BottomNavigationBar(
-          items: [
-            const BottomNavigationBarItem(
-              label: 'Navigation',
-              icon: Icon(Icons.list_outlined),
-            ),
-            const BottomNavigationBarItem(
-              label: 'Addons',
-              icon: Icon(Icons.dashboard_customize_outlined),
-            ),
-            const BottomNavigationBarItem(
-              label: 'Args',
-              icon: Icon(Icons.tune_outlined),
-            ),
-          ],
-          onTap: (index) {
-            showModalBottomSheet<void>(
-              context: context,
-              builder: (context) => switch (index) {
-                0 => ExcludeSemantics(
-                    child: navigationBuilder(context),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          const BottomNavigationBarItem(
+            label: 'Navigation',
+            icon: Icon(Icons.list_outlined),
+          ),
+          const BottomNavigationBarItem(
+            label: 'Addons',
+            icon: Icon(Icons.dashboard_customize_outlined),
+          ),
+          const BottomNavigationBarItem(
+            label: 'Args',
+            icon: Icon(Icons.tune_outlined),
+          ),
+        ],
+        onTap: (index) {
+          showModalBottomSheet<void>(
+            context: context,
+            builder:
+                (context) => switch (index) {
+                  0 => navigationBuilder(context),
+                  1 => SettingsList(
+                    name: 'Addons',
+                    builder: addonsBuilder,
                   ),
-                1 => ExcludeSemantics(
-                    child: SettingsList(
-                      name: 'Addons',
-                      builder: addonsBuilder,
-                    ),
+                  2 => SettingsList(
+                    name: 'Args',
+                    builder: argsBuilder,
                   ),
-                2 => ExcludeSemantics(
-                    child: SettingsList(
-                      name: 'Args',
-                      builder: argsBuilder,
-                    ),
-                  ),
-                _ => Container(),
-              },
-            );
-          },
-        ),
+                  _ => Container(),
+                },
+          );
+        },
       ),
     );
   }

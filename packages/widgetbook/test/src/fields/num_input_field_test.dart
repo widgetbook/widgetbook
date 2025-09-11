@@ -62,6 +62,19 @@ void main() {
           expect(widget.initialValue, equals('7.0'));
         },
       );
+
+      testWidgets(
+        'given a field, '
+        'then [toWidget] builds the hintText value',
+        (tester) async {
+          final widget = await tester.pumpField<double, TextField>(
+            field,
+            null,
+          );
+
+          expect(widget.decoration?.hintText, equals('Enter a number'));
+        },
+      );
     },
   );
 

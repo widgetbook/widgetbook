@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'story_args.dart';
 
-typedef SetupBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
-    = Widget Function(
-  BuildContext context,
-  TWidget widget,
-  TArgs args,
-);
+typedef SetupBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> =
+    Widget Function(
+      BuildContext context,
+      TWidget widget,
+      TArgs args,
+    );
 
-typedef ArgsBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
-    = TWidget Function(BuildContext context, TArgs args);
+typedef ArgsBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> =
+    TWidget Function(BuildContext context, TArgs args);
 
 @optionalTypeArgs
 abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {

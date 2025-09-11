@@ -1,0 +1,18 @@
+# Turbo Builds ⚡
+
+Turbo Builds is a feature that can **save you a lot of time** when pushing builds to Widgetbook Cloud. It works by creating a unique hash for each build depending on it's contents. So if you changed build-irrelevant files (e.g. test files, README, CI/CD configs, etc.) the build will be **instantly** available in Widgetbook Cloud without having to wait for the build to process.
+
+## Caveats
+
+Turbo Builds might misbehave in some cases like:
+
+1. If you use external URLs (e.g. image sources) in your build, and the content of those URLs change but the URL remains the same.
+1. You use any network requests that might change the use-case behavior.
+
+## Disable Turbo Builds
+
+If you would like to disable Turbo Builds, you can do so by specifying the `--no-turbo` flag when running the `widgetbook cloud build push` command:
+
+```bash
+widgetbook cloud build push --no-turbo --api-key <API_KEY>
+```

@@ -1,0 +1,79 @@
+# Integer Knob
+
+The integer knob renders a text field or slider in the Widgetbook UI where you can dynamically enter an integer value for a widget property. 
+This is particularly useful for properties that require an integer input, such as a number for a notification badge.
+
+## Variants and Usage
+
+The integer knob has two variants with each a regular and a nullable type:
+- [Integer Input Knob](/knobs/integer/input)
+- [Integer Slider Knob](/knobs/integer/slider)
+
+For the usage please refer to the respective pages.
+
+## Example Input
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/int-input-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+## Example Slider
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/int-slider-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+## Multi-snapshot Support
+
+Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons).
+
+<Info>The blow information shows the `IntegerKnobConfig` for the [Integer Input Knob](/knobs/integer/input), but the `IntegerKnobConfig` can be applied to the [Integer Slider Knob](/knobs/integer/slider) as well.</Info>
+
+### Regular integer knob
+
+```dart title="Example: IntegerKnobConfig"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'No notifications': [IntKnobConfig('count', 0)], // [!code highlight]
+    '3 notifications': [IntKnobConfig('count', 3)], // [!code highlight]
+    '99+ notifications': [IntKnobConfig('count', 3)], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    count: context.knobs.intOrNull.input(label: 'count'),
+  );
+}
+```
+
+### Nullable integer knob
+
+```dart title="Example: NullKnobConfig"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'Without count': [NullKnobConfig('value')], // [!code highlight]
+    'With count': [IntKnobConfig('value', 1)], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    count: context.knobs.doubleOrNull.input(label: 'count'),
+  );
+}
+```

@@ -1,0 +1,62 @@
+# Upload builds with GitHub Actions 
+
+If you want to use Widgetbook Cloud with your existing GitHub repository, here's a step-by-step guide to help you get started.
+
+<Steps>
+  <Step title="Setup Widgetbook Cloud Project">
+    Create a new project in Widgetbook Cloud by importing your GitHub repository.
+    You might need to connect your GitHub account to Widgetbook Cloud to access your repositories.
+  </Step>
+  
+  <Step title="Add API Key as a Secret">
+    Add `WIDGETBOOK_API_KEY` to your [GitHub repository's secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository). You can find the API key in the Widgetbook Cloud's **project settings page**.
+  </Step>
+
+  <Step title="Create GitHub Actions Workflow">
+    To upload a [Widgetbook Build](/cloud/builds/overview) for each new commit in your repository, you need to setup up a workflow in GitHub Actions that runs on every push.
+
+    ```yaml
+    name: Widgetbook Cloud Hosting
+    on: push
+
+    jobs:
+      widgetbook-cloud-hosting:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v3
+
+          - name: Setup flutter
+            uses: subosito/flutter-action@v2
+            with:
+                channel: stable
+
+          - name: Bootstrap App
+            run: |
+                flutter pub get
+                # Add any other steps needed to make your
+                # app widgets available for Widgetbook
+
+          - name: Build Widgetbook
+            working-directory: widgetbook
+            run: |
+                flutter pub get
+                dart run build_runner build -d
+                flutter build web -t lib/main.dart
+
+          - name: Install Widgetbook CLI
+            run: dart pub global activate widgetbook_cli
+
+          - name: Push Widgetbook Build
+            working-directory: widgetbook
+            run: widgetbook cloud build push --api-key ${{ secrets.WIDGETBOOK_API_KEY }}
+    ```
+
+  </Step>
+
+  <Step title="Create a Pull Request">
+    To test out if everything works properly, create a new branch and push a commit to it, then submit a PR with the new branch.
+    After the build upload finishes, a commit status will be added to your PR once the [Widgetbook Review](/cloud/reviews) is ready.
+  </Step>
+
+</Steps>
