@@ -15,15 +15,15 @@ environment:
   sdk: ">=3.7.0 <4.0.0"
 
 dependencies:
-  analyzer: ">=7.4.0 <9.0.0"
-  build: ^3.0.0
+  analyzer: ^8.0.0
+  build: ^4.0.0
   code_builder: ^4.5.0
   collection: ^1.15.0
   crypto: ^3.0.0
   glob: ^2.0.2
   meta: ^1.7.0
   path: ^1.8.0
-  source_gen: ^3.1.0
+  source_gen: ^4.0.0
   widgetbook_annotation: ^3.7.0
 
 dev_dependencies:

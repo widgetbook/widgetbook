@@ -1,8 +1,6 @@
-// ignore_for_file: deprecated_member_use analyzer(<8.0.0)
-
 import 'dart:convert';
 
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:collection/collection.dart';
 import 'package:path/path.dart' as path;
@@ -22,7 +20,7 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
 
   @override
   Future<String> generateForAnnotatedElement(
-    Element2 element,
+    Element element,
     ConstantReader annotation,
     BuildStep buildStep,
   ) async {
@@ -48,7 +46,7 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     .replaceAll('<dynamic>', '');
 
     final useCaseUri = resolveElementUri(element);
-    final componentUri = resolveElementUri(type.element3!);
+    final componentUri = resolveElementUri(type.element!);
 
     final targetNavUri =
         navPathMode == NavPathMode.component ? componentUri : useCaseUri;
@@ -56,7 +54,7 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     final navPath = path ?? getNavPath(targetNavUri);
 
     final metadata = UseCaseMetadata(
-      functionName: element.firstFragment.name2!,
+      functionName: element.firstFragment.name!,
       designLink: designLink,
       name: name,
       importUri: useCaseUri,
@@ -89,10 +87,10 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
 
   /// Resolves the URI of an [element] by retrieving the URI from
   /// the [element]'s source.
-  String resolveElementUri(Element2 element) {
+  String resolveElementUri(Element element) {
     final source =
         element.firstFragment.libraryFragment?.source ??
-        element.library2!.firstFragment.source;
+        element.library!.firstFragment.source;
     return source.uri.toString();
   }
 
