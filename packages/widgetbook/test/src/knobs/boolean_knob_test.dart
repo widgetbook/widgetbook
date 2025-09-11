@@ -54,7 +54,7 @@ void main() {
           expect(find.text('true'), findsNothing);
 
           await tester.findAndTap(find.byType(Checkbox));
-          expect(find.text('false'), findsOneWidget);
+          expect(find.text('true'), findsOneWidget);
 
           await tester.findAndTap(find.byType(Checkbox));
           expect(find.text('null'), findsOneWidget);

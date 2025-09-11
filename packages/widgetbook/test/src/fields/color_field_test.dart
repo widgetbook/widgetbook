@@ -48,7 +48,7 @@ void main() {
         'then it returns the actual default value',
         () {
           final result = field.codec.toValue('');
-          expect(result, equals(blue));
+          expect(result, equals(field.defaultValue));
         },
       );
 

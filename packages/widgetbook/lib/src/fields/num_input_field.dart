@@ -13,13 +13,16 @@ class NumInputField<T extends num> extends Field<T> {
     @Deprecated('Fields should not be aware of their context') super.onChanged,
     required super.type,
     required this.formatters,
+    T? defaultValue,
   }) : super(
+         defaultValue:
+             defaultValue ?? initialValue ?? (T == int ? 0 : 0.0) as T,
          codec: FieldCodec<T>(
            toParam: (value) => value.toString(),
            toValue: (param) {
              if (param == null) return null;
              if (param.isEmpty) {
-               return initialValue ?? (T == int ? 0 : 0.0) as T;
+               return initialValue ?? defaultValue ?? (T == int ? 0 : 0.0) as T;
              }
 
              return (T == int ? int.tryParse(param) : double.tryParse(param))

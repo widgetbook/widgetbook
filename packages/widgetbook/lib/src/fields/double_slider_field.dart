@@ -14,8 +14,10 @@ class DoubleSliderField extends NumSliderField<double> {
     required super.min,
     required super.max,
     this.divisions,
+    double? defaultValue,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
+         defaultValue: defaultValue ?? initialValue ?? min,
          type: FieldType.doubleSlider,
          codec: FieldCodec(
            toParam: (value) => value.toString(),

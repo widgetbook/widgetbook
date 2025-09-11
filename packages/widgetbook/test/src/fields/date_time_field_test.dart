@@ -53,7 +53,7 @@ void main() {
       'then it returns the actual default value',
       () {
         final result = field.codec.toValue('');
-        expect(result.toString(), equals(field.initialValue.toString()));
+        expect(result, equals(field.defaultValue));
       },
     );
 

@@ -11,8 +11,10 @@ class DoubleInputField extends NumInputField<double> {
   DoubleInputField({
     required super.name,
     super.initialValue = 0,
+    double? defaultValue,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
+         defaultValue: defaultValue ?? initialValue ?? 0,
          type: FieldType.doubleInput,
          formatters: [
            FilteringTextInputFormatter.allow(

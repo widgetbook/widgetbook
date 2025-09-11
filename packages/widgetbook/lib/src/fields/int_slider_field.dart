@@ -15,13 +15,15 @@ class IntSliderField extends NumSliderField<int> {
     required super.min,
     required super.max,
     this.divisions,
+    int? defaultValue,
   }) : super(
+         defaultValue: defaultValue ?? initialValue ?? 0,
          type: FieldType.intSlider,
          codec: FieldCodec<int>(
            toParam: (value) => value.toString(),
            toValue: (param) {
              if (param == null) return null;
-             if (param.isEmpty) return initialValue ?? min;
+             if (param.isEmpty) return initialValue ?? defaultValue ?? 0;
              return double.tryParse(param)?.round();
            },
          ),

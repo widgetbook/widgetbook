@@ -31,6 +31,7 @@ abstract class Field<T> {
     required this.name,
     required this.type,
     required this.initialValue,
+    required this.defaultValue,
     required this.codec,
     @Deprecated('Fields should not be aware of their context') this.onChanged,
   });
@@ -53,8 +54,16 @@ abstract class Field<T> {
   /// query parameters don't contain a value for this field.
   final T? initialValue;
 
+  /// The default value when the field has a null initialValue.
+  ///
+  /// This is useful for fields that are nullable and are toggled to non-null.
+  final T defaultValue;
+
   /// Handles encoding and decoding field values to/from strings.
   final FieldCodec<T> codec;
+
+  /// Converts the [defaultValue] to a string using the [codec].
+  String get defaultValueStringified => codec.toParam(defaultValue);
 
   /// @nodoc
   @Deprecated('Fields should not be aware of their context')

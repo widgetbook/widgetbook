@@ -11,8 +11,10 @@ class IntInputField extends NumInputField<int> {
   IntInputField({
     required super.name,
     super.initialValue = 0,
+    int? defaultValue,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
+         defaultValue: defaultValue ?? initialValue ?? 0,
          type: FieldType.intInput,
          formatters: [
            FilteringTextInputFormatter.allow(

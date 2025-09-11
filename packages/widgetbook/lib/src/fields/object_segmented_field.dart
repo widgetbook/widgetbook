@@ -10,15 +10,17 @@ class ObjectSegmentedField<T> extends Field<T> {
     required super.name,
     required this.values,
     required super.initialValue,
+    T? defaultValue,
     this.labelBuilder = defaultLabelBuilder,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
+         defaultValue: defaultValue ?? initialValue ?? values.first,
          type: FieldType.objectSegmented,
          codec: FieldCodec(
            toParam: labelBuilder,
            toValue: (param) {
              if (param != null && param.isEmpty && values.isNotEmpty) {
-               return initialValue ?? values.first;
+               return initialValue ?? initialValue ?? values.first;
              }
              return values.firstWhereOrNull(
                (value) => labelBuilder(value) == param,

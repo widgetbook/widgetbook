@@ -10,14 +10,18 @@ class DurationField extends Field<Duration> {
   DurationField({
     required super.name,
     super.initialValue = defaultDuration,
+    Duration? defaultValue,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
+         defaultValue: defaultValue ?? initialValue ?? defaultDuration,
          type: FieldType.duration,
          codec: FieldCodec(
            toParam: (value) => value.inMilliseconds.toString(),
            toValue: (param) {
              if (param == null) return null;
-             if (param.isEmpty) return initialValue ?? defaultDuration;
+             if (param.isEmpty) {
+               return initialValue ?? defaultValue ?? defaultDuration;
+             }
              return Duration(milliseconds: int.tryParse(param) ?? 0);
            },
          ),
@@ -33,7 +37,7 @@ class DurationField extends Field<Duration> {
     Duration? value,
   ) {
     return TextFormField(
-      initialValue: codec.toParam(value ?? initialValue ?? defaultDuration),
+      initialValue: codec.toParam(value ?? initialValue ?? defaultValue),
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
         hintText: 'Enter a duration',
