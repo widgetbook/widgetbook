@@ -130,9 +130,8 @@ abstract class FieldsComposable<T> {
 
     fields.forEach((field) {
       final value = groupMap[field.name];
-      if (value == null) return;
 
-      final rawValue = value.replaceFirst(Field.nullabilitySymbol, '');
+      final rawValue = value?.replaceFirst(Field.nullabilitySymbol, '') ?? '';
       final nullishValue = '${Field.nullabilitySymbol}$rawValue';
 
       state.updateQueryField(

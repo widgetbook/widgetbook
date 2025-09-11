@@ -15,14 +15,18 @@ class BooleanField extends Field<bool> {
          type: FieldType.boolean,
          codec: FieldCodec(
            toParam: (value) => value.toString(),
-           toValue: (param) => param == null ? null : param == 'true',
+           toValue: (param) {
+             if (param == null) return null;
+             if (param.isEmpty) return initialValue ?? false;
+             return param == 'true';
+           },
          ),
        );
 
   @override
   Widget toWidget(BuildContext context, String group, bool? value) {
     return Switch(
-      value: value ?? initialValue ?? true,
+      value: value ?? initialValue ?? false,
       onChanged: (value) => updateField(context, group, value),
     );
   }

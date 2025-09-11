@@ -16,11 +16,9 @@ class DurationField extends Field<Duration> {
          codec: FieldCodec(
            toParam: (value) => value.inMilliseconds.toString(),
            toValue: (param) {
-             return param == null
-                 ? null
-                 : Duration(
-                   milliseconds: int.tryParse(param) ?? 0,
-                 );
+             if (param == null) return null;
+             if (param.isEmpty) return initialValue ?? defaultDuration;
+             return Duration(milliseconds: int.tryParse(param) ?? 0);
            },
          ),
        );
@@ -29,11 +27,7 @@ class DurationField extends Field<Duration> {
   static const defaultDuration = Duration.zero;
 
   @override
-  Widget toWidget(
-    BuildContext context,
-    String group,
-    Duration? value,
-  ) {
+  Widget toWidget(BuildContext context, String group, Duration? value) {
     return TextFormField(
       initialValue: codec.toParam(value ?? initialValue ?? defaultDuration),
       keyboardType: TextInputType.number,

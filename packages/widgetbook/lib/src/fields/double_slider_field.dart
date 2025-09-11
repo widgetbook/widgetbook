@@ -19,7 +19,11 @@ class DoubleSliderField extends NumSliderField<double> {
          type: FieldType.doubleSlider,
          codec: FieldCodec(
            toParam: (value) => value.toString(),
-           toValue: (param) => double.tryParse(param ?? ''),
+           toValue: (param) {
+             if (param == null) return null;
+             if (param.isEmpty) return initialValue ?? min;
+             return double.tryParse(param);
+           },
          ),
        );
 

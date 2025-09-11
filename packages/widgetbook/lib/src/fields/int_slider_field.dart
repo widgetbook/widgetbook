@@ -19,7 +19,11 @@ class IntSliderField extends NumSliderField<int> {
          type: FieldType.intSlider,
          codec: FieldCodec<int>(
            toParam: (value) => value.toString(),
-           toValue: (param) => double.tryParse(param ?? '')?.round(),
+           toValue: (param) {
+             if (param == null) return null;
+             if (param.isEmpty) return initialValue ?? min;
+             return double.tryParse(param)?.round();
+           },
          ),
        );
 

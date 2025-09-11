@@ -26,10 +26,14 @@ class ObjectDropdownField<T> extends Field<T> {
          type: FieldType.objectDropdown,
          codec: FieldCodec(
            toParam: labelBuilder,
-           toValue:
-               (param) => values.firstWhereOrNull(
-                 (value) => labelBuilder(value) == param,
-               ),
+           toValue: (param) {
+             if (param != null && param.isEmpty && values.isNotEmpty) {
+               return values.first;
+             }
+             return values.firstWhereOrNull(
+               (value) => labelBuilder(value) == param,
+             );
+           },
          ),
        );
 
@@ -59,10 +63,8 @@ class ObjectDropdownField<T> extends Field<T> {
       dropdownMenuEntries:
           values
               .map(
-                (value) => DropdownMenuEntry(
-                  value: value,
-                  label: labelBuilder(value),
-                ),
+                (value) =>
+                    DropdownMenuEntry(value: value, label: labelBuilder(value)),
               )
               .toList(),
     );
@@ -70,8 +72,6 @@ class ObjectDropdownField<T> extends Field<T> {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'values': values.map((codec.toParam)).toList(),
-    };
+    return {'values': values.map((codec.toParam)).toList()};
   }
 }

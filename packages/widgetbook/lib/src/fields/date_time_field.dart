@@ -32,7 +32,9 @@ class DateTimeField extends Field<DateTime> {
          codec: FieldCodec<DateTime>(
            toParam: (value) => value.toSimpleFormat(),
            toValue: (param) {
-             return param == null ? null : DateTime.tryParse(param);
+             if (param == null) return null;
+             if (param.isEmpty) return initialValue ?? start;
+             return DateTime.tryParse(param);
            },
          ),
        );
@@ -99,20 +101,11 @@ class DateTimeField extends Field<DateTime> {
     );
     if (time == null) return null;
 
-    return DateTime(
-      date.year,
-      date.month,
-      date.day,
-      time.hour,
-      time.minute,
-    );
+    return DateTime(date.year, date.month, date.day, time.hour, time.minute);
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'start': codec.toParam(start),
-      'end': codec.toParam(end),
-    };
+    return {'start': codec.toParam(start), 'end': codec.toParam(end)};
   }
 }

@@ -16,12 +16,15 @@ class NumInputField<T extends num> extends Field<T> {
   }) : super(
          codec: FieldCodec<T>(
            toParam: (value) => value.toString(),
-           toValue:
-               (param) =>
-                   (T == int
-                           ? int.tryParse(param ?? '')
-                           : double.tryParse(param ?? ''))
-                       as T?,
+           toValue: (param) {
+             if (param == null) return null;
+             if (param.isEmpty) {
+               return initialValue ?? (T == int ? 0 : 0.0) as T;
+             }
+
+             return (T == int ? int.tryParse(param) : double.tryParse(param))
+                 as T?;
+           },
          ),
        );
 
@@ -36,9 +39,7 @@ class NumInputField<T extends num> extends Field<T> {
       initialValue: codec.toParam(value ?? initialValue ?? defaultValue),
       keyboardType: TextInputType.number,
       inputFormatters: formatters,
-      decoration: const InputDecoration(
-        hintText: 'Enter a number',
-      ),
+      decoration: const InputDecoration(hintText: 'Enter a number'),
       onChanged: (value) {
         final number = codec.toValue(value);
         if (number == null) return;
