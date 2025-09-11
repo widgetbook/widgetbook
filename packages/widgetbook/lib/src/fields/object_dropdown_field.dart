@@ -63,8 +63,10 @@ class ObjectDropdownField<T> extends Field<T> {
       dropdownMenuEntries:
           values
               .map(
-                (value) =>
-                    DropdownMenuEntry(value: value, label: labelBuilder(value)),
+                (value) => DropdownMenuEntry(
+                  value: value,
+                  label: labelBuilder(value),
+                ),
               )
               .toList(),
     );
@@ -72,6 +74,8 @@ class ObjectDropdownField<T> extends Field<T> {
 
   @override
   Map<String, dynamic> toJson() {
-    return {'values': values.map((codec.toParam)).toList()};
+    return {
+      'values': values.map((codec.toParam)).toList(),
+    };
   }
 }

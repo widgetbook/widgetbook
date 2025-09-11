@@ -62,6 +62,8 @@ class ObjectSegmentedField<T> extends Field<T> {
 
   @override
   Map<String, dynamic> toJson() {
-    return {'values': values.map((codec.toParam)).toList()};
+    return {
+      'values': values.map((codec.toParam)).toList(),
+    };
   }
 }
