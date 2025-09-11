@@ -1,0 +1,6 @@
+# Remove non-web platforms from examples for simplicity
+macos/
+windows/
+linux/
+ios/
+android/
