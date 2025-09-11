@@ -9,6 +9,32 @@ void main() {
     '$ObjectDropdownKnob',
     () {
       testWidgets(
+        'given no initial value, '
+        'when field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs.objectOrNull
+                  .dropdown(
+                    label: 'Knob',
+                    options: ['A', 'B', 'C'],
+                  )
+                  .toString(),
+            ),
+          );
+
+          expect(find.textWidget('A'), findsNothing);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.textWidget('A'), findsOneWidget);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.textWidget('A'), findsNothing);
+        },
+      );
+
+      testWidgets(
         'given an initial value, '
         'then the value should be displayed',
         (tester) async {

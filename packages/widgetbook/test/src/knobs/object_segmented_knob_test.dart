@@ -18,6 +18,32 @@ void main() {
     '$ObjectSegmentedKnob',
     () {
       testWidgets(
+        'given no initial value, '
+        'when field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs.objectOrNull
+                  .segmented(
+                    label: 'Knob',
+                    options: ['A', 'B', 'C'],
+                  )
+                  .toString(),
+            ),
+          );
+
+          expect(findSegmentedWithSelected({'A'}), findsNothing);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(findSegmentedWithSelected({'A'}), findsOneWidget);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(findSegmentedWithSelected({'A'}), findsNothing);
+        },
+      );
+
+      testWidgets(
         'given an initial value, '
         'then the value should be selected',
         (tester) async {

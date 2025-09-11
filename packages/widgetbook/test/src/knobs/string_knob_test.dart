@@ -9,21 +9,23 @@ void main() {
     '$StringKnob',
     () {
       testWidgets(
-        'given an initial value, '
-        'then the value should be displayed',
+        'given no initial value, '
+        'when field is updated, '
+        'then the value should be updated',
         (tester) async {
-          const value = 'Widgetbook';
-
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.string(
-                label: 'Knob',
-                initialValue: value,
-              ),
+              context.knobs.stringOrNull(label: 'Knob').toString(),
             ),
           );
 
-          expect(find.textWidget(value), findsOneWidget);
+          expect(find.textWidget(''), findsNothing);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.textWidget(''), findsOneWidget);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.textWidget(''), findsNothing);
         },
       );
 
