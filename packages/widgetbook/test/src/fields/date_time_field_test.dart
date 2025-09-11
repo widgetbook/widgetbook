@@ -11,8 +11,8 @@ void main() {
     final field = DateTimeField(
       name: 'date_time_field',
       initialValue: now,
-      start: now..subtract(const Duration(days: 365)),
-      end: now..add(const Duration(days: 365)),
+      start: now.subtract(const Duration(days: 365)),
+      end: now.add(const Duration(days: 365)),
     );
 
     test(
@@ -53,7 +53,7 @@ void main() {
       'then it returns the actual default value',
       () {
         final result = field.codec.toValue('');
-        expect(result.toString(), equals(field.start.toString()));
+        expect(result.toString(), equals(field.initialValue.toString()));
       },
     );
 
