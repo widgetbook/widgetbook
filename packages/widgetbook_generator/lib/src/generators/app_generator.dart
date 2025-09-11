@@ -1,8 +1,6 @@
-// ignore_for_file: deprecated_member_use analyzer(<8.0.0)
-
 import 'dart:convert';
 
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
@@ -24,13 +22,13 @@ import '../tree/tree.dart';
 class AppGenerator extends GeneratorForAnnotation<App> {
   @override
   Future<String> generateForAnnotatedElement(
-    Element2 element,
+    Element element,
     ConstantReader annotation,
     BuildStep buildStep,
   ) async {
     // The directory containing the `widgetbook.dart` file
     // without the leading `/`
-    final inputPath = element.library2!.firstFragment.source.fullName;
+    final inputPath = element.library!.firstFragment.source.fullName;
     final inputDir = path.dirname(inputPath).substring(1);
 
     final emitter = DartEmitter(

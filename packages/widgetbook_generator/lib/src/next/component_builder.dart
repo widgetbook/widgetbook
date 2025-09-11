@@ -1,6 +1,4 @@
-// ignore_for_file: deprecated_member_use analyzer(<8.0.0)
-
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
 
@@ -15,7 +13,7 @@ class ComponentBuilder {
 
   final DartType widgetType;
   final DartType argsType;
-  final List<TopLevelVariableElement2> stories;
+  final List<TopLevelVariableElement> stories;
 
   Code build() {
     return declareFinal('${widgetType.nonNullableName}Component')

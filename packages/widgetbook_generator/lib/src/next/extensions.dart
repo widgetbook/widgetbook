@@ -1,6 +1,4 @@
-// ignore_for_file: deprecated_member_use analyzer(<8.0.0)
-
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
@@ -81,7 +79,7 @@ extension DartTypeX on DartType {
   }
 
   bool get isEnum {
-    return element3 is EnumElement2;
+    return element is EnumElement;
   }
 
   TypeMeta get meta {
@@ -89,7 +87,7 @@ extension DartTypeX on DartType {
         ? TypeMeta(
           'EnumArg<$nonNullableName>',
           refer(nonNullableName).property(
-            (element3 as EnumElement2).fields2.first.name3!,
+            (element as EnumElement).fields.first.name!,
           ),
         )
         : typesMeta[nonNullableName]!;

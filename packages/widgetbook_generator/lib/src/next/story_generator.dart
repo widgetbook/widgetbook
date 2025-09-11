@@ -1,6 +1,4 @@
-// ignore_for_file: deprecated_member_use analyzer(<8.0.0)
-
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
@@ -19,12 +17,12 @@ class StoryGenerator extends Generator {
   ) async {
     final storiesVariables =
         library.allElements
-            .whereType<TopLevelVariableElement2>()
+            .whereType<TopLevelVariableElement>()
             .where((element) => element.displayName.startsWith('\$'))
             .toList();
 
     final metaVariable = library.allElements
-        .whereType<TopLevelVariableElement2>()
+        .whereType<TopLevelVariableElement>()
         .firstWhere((element) => element.displayName == 'meta');
 
     final metaType = metaVariable.type as InterfaceType;
