@@ -99,7 +99,7 @@ abstract class Field<T> {
     // value was null (i.e. had the nullability symbol).
     final rawNewValue = codec.toParam(value);
     final newValue =
-        isNull(groupMap)
+        value == null && isNull(groupMap)
             ? '${Field.nullabilitySymbol}$rawNewValue'
             : rawNewValue;
 
