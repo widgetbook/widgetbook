@@ -35,16 +35,6 @@ void main() {
       );
 
       test(
-        'given an empty string param, '
-        'when [codec.toValue] is called, '
-        'then it returns the actual default value',
-        () {
-          final result = field.codec.toValue('');
-          expect(result, equals(field.defaultValue));
-        },
-      );
-
-      test(
         'given a string param that does not exist in values, '
         'when [codec.toValue] is called, '
         'then it returns null',

@@ -37,16 +37,6 @@ void main() {
       },
     );
 
-    test(
-      'given an empty string param, '
-      'when [codec.toValue] is called, '
-      'then it returns the actual default value',
-      () {
-        final result = field.codec.toValue('');
-        expect(result, equals(field.defaultValue));
-      },
-    );
-
     testWidgets(
       'given a state that has no field value, '
       'then [toWidget] builds the initial value',

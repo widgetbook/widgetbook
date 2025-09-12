@@ -129,20 +129,23 @@ abstract class FieldsComposable<T> {
     );
 
     fields.forEach((field) {
-      final value = groupMap[field.name];
-
-      // For first interactions
-      if (value == null) {
+      // If the field is not present in the `groupMap`, we set it to its
+      // initial value or default value.
+      //
+      // This is used when user first interacts with a nullable field.
+      if (!groupMap.containsKey(field.name)) {
+        final value =
+            field.initialValueStringified ?? field.defaultValueStringified;
         state.updateQueryField(
           group: groupName,
           field: field.name,
-          value:
-              nullify
-                  ? '${Field.nullabilitySymbol}${field.defaultValueStringified}'
-                  : field.defaultValueStringified,
+          value: nullify ? '${Field.nullabilitySymbol}${value}' : value,
         );
         return;
       }
+
+      final value = groupMap[field.name];
+      if (value == null) return;
 
       final rawValue = value.replaceFirst(Field.nullabilitySymbol, '');
       final nullishValue = '${Field.nullabilitySymbol}$rawValue';

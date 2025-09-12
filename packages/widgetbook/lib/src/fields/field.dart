@@ -65,6 +65,10 @@ abstract class Field<T> {
   /// Converts the [defaultValue] to a string using the [codec].
   String get defaultValueStringified => codec.toParam(defaultValue);
 
+  /// Converts the [initialValue] to a string using the [codec].
+  String? get initialValueStringified =>
+      initialValue == null ? null : codec.toParam(initialValue!);
+
   /// @nodoc
   @Deprecated('Fields should not be aware of their context')
   final void Function(BuildContext context, T? value)? onChanged;
@@ -108,7 +112,7 @@ abstract class Field<T> {
     // value was null (i.e. had the nullability symbol).
     final rawNewValue = codec.toParam(value);
     final newValue =
-        value == null && isNull(groupMap)
+        isNull(groupMap)
             ? '${Field.nullabilitySymbol}$rawNewValue'
             : rawNewValue;
 

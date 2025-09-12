@@ -27,16 +27,13 @@ class DateTimeField extends Field<DateTime> {
     @Deprecated('Fields should not be aware of their context') super.onChanged,
     required this.start,
     required this.end,
-    DateTime? defaultValue,
   }) : super(
-         defaultValue: defaultValue ?? initialValue ?? start,
+         defaultValue: start,
          type: FieldType.dateTime,
          codec: FieldCodec<DateTime>(
            toParam: (value) => value.toSimpleFormat(),
            toValue: (param) {
-             if (param == null) return null;
-             if (param.isEmpty) return initialValue;
-             return DateTime.tryParse(param);
+             return param == null ? null : DateTime.tryParse(param);
            },
          ),
        );

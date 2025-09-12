@@ -15,19 +15,16 @@ class ColorField extends Field<Color> {
   ColorField({
     required super.name,
     super.initialValue = defaultColor,
-    Color? defaultValue,
     this.initialColorSpace = ColorSpace.hex,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-         defaultValue: defaultValue ?? initialValue ?? defaultColor,
+         defaultValue: defaultColor,
          type: FieldType.color,
          codec: FieldCodec(
            toParam: (color) => color.toARGB32().toRadixString(16),
            toValue: (param) {
              if (param == null) return null;
-             if (param.isEmpty || param == '0') {
-               return initialValue ?? defaultValue ?? defaultColor;
-             }
+             if (param == '0') return Colors.transparent;
              return Color(
                int.parse(
                  param.length == 6 ? '00$param' : param,
@@ -48,7 +45,7 @@ class ColorField extends Field<Color> {
   Widget toWidget(BuildContext context, String group, Color? value) {
     return ColorPicker(
       colorSpace: initialColorSpace,
-      value: value ?? initialValue ?? defaultValue,
+      value: value ?? defaultColor,
       onChanged: (value) {
         updateField(
           context,

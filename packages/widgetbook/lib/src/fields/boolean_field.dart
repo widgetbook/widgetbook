@@ -10,25 +10,20 @@ class BooleanField extends Field<bool> {
   BooleanField({
     required super.name,
     super.initialValue = true,
-    bool? defaultValue,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-         defaultValue: defaultValue ?? initialValue ?? true,
+         defaultValue: true,
          type: FieldType.boolean,
          codec: FieldCodec(
            toParam: (value) => value.toString(),
-           toValue: (param) {
-             if (param == null) return null;
-             if (param.isEmpty) return initialValue ?? defaultValue ?? true;
-             return param == 'true';
-           },
+           toValue: (param) => param == null ? null : param == 'true',
          ),
        );
 
   @override
   Widget toWidget(BuildContext context, String group, bool? value) {
     return Switch(
-      value: value ?? initialValue ?? defaultValue,
+      value: value ?? initialValue ?? true,
       onChanged: (value) => updateField(context, group, value),
     );
   }

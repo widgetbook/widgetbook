@@ -10,20 +10,14 @@ class StringField extends Field<String> {
   StringField({
     required super.name,
     super.initialValue = '',
-    String? defaultValue,
     this.maxLines,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-         defaultValue: defaultValue ?? initialValue ?? '',
+         defaultValue: '',
          type: FieldType.string,
          codec: FieldCodec(
            toParam: (value) => value,
-           toValue: (param) {
-             if (param != null && param.isEmpty) {
-               return initialValue ?? defaultValue ?? '';
-             }
-             return param;
-           },
+           toValue: (param) => param,
          ),
        );
 

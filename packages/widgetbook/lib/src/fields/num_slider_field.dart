@@ -9,7 +9,6 @@ class NumSliderField<T extends num> extends Field<T> {
     required super.name,
     this.divisions,
     super.initialValue,
-    T? defaultValue,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
     required this.min,
     required this.max,
@@ -18,7 +17,7 @@ class NumSliderField<T extends num> extends Field<T> {
   }) : assert(
          initialValue == null || (initialValue >= min && initialValue <= max),
        ),
-       super(defaultValue: defaultValue ?? initialValue ?? min);
+       super(defaultValue: min);
 
   /// The minimum value of the slider.
   final T min;
