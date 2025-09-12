@@ -12,6 +12,7 @@ class DurationField extends Field<Duration> {
     super.initialValue = defaultDuration,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
+         defaultValue: defaultDuration,
          type: FieldType.duration,
          codec: FieldCodec(
            toParam: (value) => value.inMilliseconds.toString(),

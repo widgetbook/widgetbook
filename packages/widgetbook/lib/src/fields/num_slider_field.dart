@@ -16,7 +16,8 @@ class NumSliderField<T extends num> extends Field<T> {
     required super.type,
   }) : assert(
          initialValue == null || (initialValue >= min && initialValue <= max),
-       );
+       ),
+       super(defaultValue: min);
 
   /// The minimum value of the slider.
   final T min;

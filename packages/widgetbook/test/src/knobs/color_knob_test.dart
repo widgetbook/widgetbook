@@ -14,6 +14,32 @@ void main() {
     '$ColorKnob',
     () {
       testWidgets(
+        'given no initial value, '
+        'when field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          const key = Key('testContainer');
+
+          await tester.pumpKnob(
+            (context) => Container(
+              key: key,
+              color: context.knobs.colorOrNull(
+                label: 'Knob',
+              ),
+            ),
+          );
+
+          expect(tester.widget<Container>(find.byKey(key)).color, isNull);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(tester.widget<Container>(find.byKey(key)).color, Colors.white);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(tester.widget<Container>(find.byKey(key)).color, isNull);
+        },
+      );
+
+      testWidgets(
         'given the $ColorSpace is hex, '
         'when the field is updated, '
         'then the value should be updated',
