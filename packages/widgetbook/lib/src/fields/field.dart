@@ -67,7 +67,7 @@ abstract class Field<T> {
 
   /// Converts the [initialValue] to a string using the [codec].
   String? get initialValueStringified =>
-      initialValue == null ? null : codec.toParam(initialValue!);
+      initialValue == null ? null : codec.toParam(initialValue! as T);
 
   /// @nodoc
   @Deprecated('Fields should not be aware of their context')
