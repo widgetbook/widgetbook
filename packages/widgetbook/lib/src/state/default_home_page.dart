@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../widgetbook_theme.dart';
 
+@internal
 class DefaultHomePage extends StatelessWidget {
   const DefaultHomePage({super.key});
 
@@ -116,15 +118,13 @@ class _Card extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   description,
-                  style: WidgetbookTheme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(
-                        color: WidgetbookTheme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withAlpha(120),
-                      ),
+                  style: WidgetbookTheme.of(
+                    context,
+                  ).textTheme.bodyMedium!.copyWith(
+                    color: WidgetbookTheme.of(
+                      context,
+                    ).colorScheme.onSurface.withAlpha(120),
+                  ),
                 ),
               ],
             ),

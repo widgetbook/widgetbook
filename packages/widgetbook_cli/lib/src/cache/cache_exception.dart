@@ -14,9 +14,9 @@ class CacheFormatException extends CliException {
     Map<String, dynamic> json,
     Object originalError,
   ) : super(
-          'Failed to parse $name cache:\n'
-          '${prettifyJson(json)}\n\n'
-          'Reason: $originalError',
-          ExitCode.data.code,
-        );
+        'Failed to parse $name cache:\n'
+        '${prettifyJson(json)}\n\n'
+        'Reason: $originalError',
+        ExitCode.data.code,
+      );
 }

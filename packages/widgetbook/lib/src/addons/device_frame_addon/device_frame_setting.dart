@@ -1,6 +1,8 @@
 import 'package:device_frame_plus/device_frame_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
+@internal
 class DeviceFrameSetting {
   DeviceFrameSetting({
     required this.device,

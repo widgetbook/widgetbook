@@ -8,4 +8,4 @@ const cliDescription = 'Widgetbook CLI';
 const packageName = 'widgetbook_cli';
 
 /// The version as in pubspec.yaml
-const packageVersion = '3.8.2';
+const packageVersion = '3.10.0';

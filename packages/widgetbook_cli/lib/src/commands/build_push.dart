@@ -24,12 +24,12 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     this.buildHasher = const BuildHasher(),
     WidgetbookHttpClient? cloudClient,
     StorageClient? storageClient,
-  })  : cloudClient = cloudClient ?? WidgetbookHttpClient(),
-        storageClient = storageClient ?? StorageClient(),
-        super(
-          name: 'push',
-          description: 'Pushes a new build to Widgetbook Cloud',
-        ) {
+  }) : cloudClient = cloudClient ?? WidgetbookHttpClient(),
+       storageClient = storageClient ?? StorageClient(),
+       super(
+         name: 'push',
+         description: 'Pushes a new build to Widgetbook Cloud',
+       ) {
     argParser
       ..addOption(
         'api-key',
@@ -55,7 +55,8 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       )
       ..addOption(
         'merged-result-commit',
-        help: 'For GitLab Merged Results, '
+        help:
+            'For GitLab Merged Results, '
             'this commit will be used for commit status.',
       )
       ..addOption(
@@ -104,7 +105,8 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     final currentBranch = await repository.currentBranch;
 
-    final branch = results['branch'] as String? ??
+    final branch =
+        results['branch'] as String? ??
         context.providerBranch ??
         currentBranch.name;
 
@@ -120,7 +122,8 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       );
     }
 
-    final commit = results['commit'] as String? ??
+    final commit =
+        results['commit'] as String? ??
         context.providerSha ??
         currentBranch.sha;
 
@@ -197,16 +200,18 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     // If `-no-turbo` is passed, we skip the hashing step
     // as it is not needed for non-turbo builds.
-    final hash = args.noTurbo
-        ? null
-        : await buildHasher.convert(
-            buildDir,
-            cache,
-          );
+    final hash =
+        args.noTurbo
+            ? null
+            : await buildHasher.convert(
+              buildDir,
+              cache,
+            );
 
-    final files = buildDir //
-        .listSync(recursive: true)
-        .whereType<File>();
+    final files =
+        buildDir //
+            .listSync(recursive: true)
+            .whereType<File>();
 
     final dirSize = files.fold<int>(
       0,
@@ -272,9 +277,10 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         return StorageObject(
           key: key,
           size: modifiedContent.length,
-          reader: () => Stream.value(
-            modifiedContent.codeUnits,
-          ),
+          reader:
+              () => Stream.value(
+                modifiedContent.codeUnits,
+              ),
         );
       },
     );

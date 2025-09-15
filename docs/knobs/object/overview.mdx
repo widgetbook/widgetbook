@@ -1,0 +1,95 @@
+# Object Knob
+
+The object knob renders a segmented button or a dropdown menu in the Widgetbook UI where you can dynamically select an object value for a widget property.
+This is particularly useful for properties that require an object input, such as a configuration object for a widget, or an enum value.
+
+## Variants and Usage
+
+The object knob has one variant with each a regular and a nullable type:
+
+- [Object Segmented Knob](/knobs/object/segmented)
+- [Object Dropdown Knob](/knobs/object/dropdown)
+
+For the usage please refer to the respective pages.
+
+## Example Segmented
+
+<iframe
+  src="https://preview.widgetbook.io/#/?path=knobpreview/object-segmented-knob&panels=knobs"
+  width="100%"
+  height="240px"
+/>
+
+## Example Dropdown
+
+<iframe
+  src="https://preview.widgetbook.io/#/?path=knobpreview/object-dropdown-knob&panels=knobs"
+  width="100%"
+  height="240px"
+/>
+
+## Multi-snapshot Support
+
+Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons).
+
+<Info>
+  The blow information shows the `ObjectKnobConfig` for the [Object Segmented
+  Knob](/knobs/object/segmented), but the `ObjectKnobConfig` can be applied to the [Object Dropdown Knob](/knobs/object/dropdown) as well.
+</Info>
+
+### Regular object knob
+
+```dart title="Example: ObjectKnobConfig"
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'online': [ObjectKnobConfig('status', 'online')], // [!code highlight]
+    'offline': [ObjectKnobConfig('status', 'offline')], // [!code highlight]
+    'busy': [ObjectKnobConfig('status', 'busy')], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    status: context.knobs.object.segmented<OnlineStatusType>(
+      label: 'status',
+      labelBuilder: (value) => value.name,
+      options: [
+        OnlineStatusType.online,
+        OnlineStatusType.offline,
+        OnlineStatusType.busy,
+      ],
+    ),
+  );
+}
+
+enum OnlineStatusType { online, offline, busy }
+```
+
+### Nullable object Knob
+
+```dart title="Example: NullKnobConfig"
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'no status': [NullKnobConfig('status')], // [!code highlight]
+    'online': [ObjectKnobConfig('status', 'online')], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    status: context.knobs.objectOrNull.segmented<OnlineStatusType>(
+      label: 'status',
+      labelBuilder: (value) => value.name,
+      options: [
+        OnlineStatusType.online,
+        OnlineStatusType.offline,
+        OnlineStatusType.busy,
+      ],
+    ),
+  );
+}
+
+enum OnlineStatusType { online, offline, busy }
+```

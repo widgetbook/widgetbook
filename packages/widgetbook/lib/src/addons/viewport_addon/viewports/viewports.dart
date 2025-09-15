@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+// ignore: unnecessary_import flutter(<3.35.0)
 import 'package:meta/meta.dart';
 
 import '../viewport_data.dart';
@@ -13,18 +14,22 @@ import 'windows_viewports.dart';
 @internal
 class NoneViewport extends ViewportData {
   const NoneViewport()
-      : super(
-          name: 'None',
-          width: 0,
-          height: 0,
-          pixelRatio: 0,
-          platform: TargetPlatform.fuchsia,
-        );
+    : super(
+        name: 'None',
+        width: 0,
+        height: 0,
+        pixelRatio: 0,
+        platform: TargetPlatform.fuchsia,
+      );
 }
 
+/// A collection of all predefined viewports across platforms.
 abstract class Viewports {
+  /// Represents no viewport.
   static const none = NoneViewport();
 
+  /// A list of all predefined viewports across platforms.
+  /// This includes iOS, Android, macOS, Windows, and Linux viewports.
   static const all = [
     none,
     ...IosViewports.all,

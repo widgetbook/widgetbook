@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'field.dart';
 
+/// A base class for [Field]s that represent [num] values using a slider.
 class NumSliderField<T extends num> extends Field<T> {
+  /// Creates a new instance of [NumSliderField].
   NumSliderField({
     required super.name,
     this.divisions,
@@ -13,11 +15,17 @@ class NumSliderField<T extends num> extends Field<T> {
     required super.codec,
     required super.type,
   }) : assert(
-          initialValue == null || (initialValue >= min && initialValue <= max),
-        );
+         initialValue == null || (initialValue >= min && initialValue <= max),
+       ),
+       super(defaultValue: min);
 
+  /// The minimum value of the slider.
   final T min;
+
+  /// The maximum value of the slider.
   final T max;
+
+  /// The number of discrete divisions in the slider.
   final int? divisions;
 
   @override

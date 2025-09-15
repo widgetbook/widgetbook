@@ -28,7 +28,7 @@ class AppGenerator extends GeneratorForAnnotation<App> {
   ) async {
     // The directory containing the `widgetbook.dart` file
     // without the leading `/`
-    final inputPath = element.librarySource!.fullName;
+    final inputPath = element.library!.firstFragment.source.fullName;
     final inputDir = path.dirname(inputPath).substring(1);
 
     final emitter = DartEmitter(
@@ -47,14 +47,16 @@ class AppGenerator extends GeneratorForAnnotation<App> {
     BuildStep buildStep,
   ) async {
     final glob = Glob('**.usecase.widgetbook.json');
-    final assets = await buildStep
-        .findAssets(glob)
-        .asyncMap((asset) => buildStep.readAsString(asset))
-        .map((json) => jsonDecode(json) as List)
-        .map((list) => list.cast<Map<String, dynamic>>())
-        .toList();
+    final assets =
+        await buildStep
+            .findAssets(glob)
+            .asyncMap((asset) => buildStep.readAsString(asset))
+            .map((json) => jsonDecode(json) as List)
+            .map((list) => list.cast<Map<String, dynamic>>())
+            .toList();
 
-    return assets.flattened //
+    return assets
+        .flattened //
         .map(UseCaseMetadata.fromJson)
         .toList();
   }

@@ -1,0 +1,101 @@
+# Object Dropdown Knob
+
+The object knob allows you to dynamically enter an object value for a widget property in the Widgetbook UI.
+This is particularly useful for properties that require an object input, such as a user profile or an enum value.
+
+## Variants
+
+The object knob has two variants:
+
+- `context.knobs.object.dropdown()`: This variant allows you to enter an object value via a dropdown menu. It does not accept `null` values.
+- `context.knobs.objectOrNull.dropdown()`: This variant allows you to enter an object value via a dropdown menu or set the value to `null`. It is useful when the property can be optional.
+
+<Info>
+  Widgetbook also offers support for segmented button object knobs which are
+  documented on the [Object Segmented Knob page](/knobs/object/segmented).
+</Info>
+
+## Properties
+
+In addition to the knob's [base properties](/knobs/overview#properties), the object dropdown knob includes the following:
+
+<Accordion title="context.knobs.object.dropdown()" defaultOpen>
+  <Property name="options" type="T" required>
+    The options shown in the dropdown menu. The type of the options must be the same as the type of the property.
+  </Property>
+
+  <Property name="labelBuilder" type="LabelBuilder<T>" optional>
+    A function to format the options for display in the dropdown menu.
+  </Property>
+</Accordion>
+
+## `context.knobs.object.dropdown()`
+
+### Example
+
+<iframe
+  src="https://preview.widgetbook.io/#/?path=knobpreview/object-dropdown-knob&panels=knobs"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use the object dropdown knob, call the `context.knobs.object.dropdown()` method.
+
+```dart title="Example: Object Dropdown Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    status: context.knobs.object.dropdown( // [!code highlight]
+      label: 'status', // [!code highlight]
+      labelBuilder: (value) => value!.name, // [!code highlight]
+      options: [ // [!code highlight]
+        OnlineStatusType.online, // [!code highlight]
+        OnlineStatusType.offline, // [!code highlight]
+        OnlineStatusType.busy, // [!code highlight]
+      ], // [!code highlight]
+    ), // [!code highlight]
+  );
+}
+
+enum OnlineStatusType { online, offline, busy }
+```
+
+## `context.knobs.objectOrNull.dropdown()`
+
+### Example
+
+<iframe
+  src="https://preview.widgetbook.io/#/?path=knobpreview/object-dropdown-nullable-knob&panels=knobs"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use the nullable object dropdown knob, call the `context.knobs.objectOrNull.dropdown()` method.
+
+```dart title="Example: Nullable Object Dropdown Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    status: context.knobs.objectOrNull.dropdown(
+      label: 'status',
+      labelBuilder: (value) => value!.name,
+      options: [
+        OnlineStatusType.online,
+        OnlineStatusType.offline,
+        OnlineStatusType.busy,
+      ],
+    ),
+  );
+}
+
+enum OnlineStatusType { online, offline, busy }
+```
+
+## Multi-snapshot Support
+
+Multi-snapshot support for Widgetbook Cloud allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons).
+Please refer to the [ObjectKnobConfig page](/knobs/object/overview#multi-snapshot-support) for more information.

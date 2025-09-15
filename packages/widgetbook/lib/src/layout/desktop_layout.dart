@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 import 'package:resizable_widget/resizable_widget.dart';
 
 import '../settings/settings.dart';
@@ -6,6 +7,10 @@ import '../state/state.dart';
 import '../widgetbook_theme.dart';
 import 'base_layout.dart';
 
+/// The [DesktopLayout] is a layout for desktop devices that allows
+/// displaying the navigation, addons, knobs, and workbench in a
+/// resizable layout.
+@internal
 class DesktopLayout extends StatelessWidget implements BaseLayout {
   const DesktopLayout({
     super.key,
@@ -30,7 +35,8 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
     const kWorkbenchPercentage = 1 - 2 * kSidePanelPercentage;
 
     final showNavigationPanel = state.canShowPanel(LayoutPanel.navigation);
-    final showSettingsPanel = state.canShowPanel(LayoutPanel.addons) ||
+    final showSettingsPanel =
+        state.canShowPanel(LayoutPanel.addons) ||
         state.canShowPanel(LayoutPanel.knobs);
 
     return ColoredBox(
@@ -85,6 +91,7 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
   }
 }
 
+@internal
 class ResizableLayoutItem {
   const ResizableLayoutItem({
     required this.percentage,
@@ -98,6 +105,7 @@ class ResizableLayoutItem {
 /// An improved API for [ResizableWidget] that allows passing both percentage
 /// and child in a single object, allowing to easily add or remove items.
 /// Also distributes the remaining space equally among all items.
+@internal
 class ResizableLayout extends StatelessWidget {
   const ResizableLayout({super.key, required this.items});
 

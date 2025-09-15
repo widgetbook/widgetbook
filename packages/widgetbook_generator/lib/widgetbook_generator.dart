@@ -4,7 +4,6 @@ export 'src/code/widgetbook_category_instance.dart';
 export 'src/code/widgetbook_component_instance.dart';
 export 'src/code/widgetbook_folder_instance.dart';
 export 'src/code/widgetbook_instance.dart';
-export 'src/code/widgetbook_leaf_component_instance.dart';
 export 'src/code/widgetbook_use_case_instance.dart';
 export 'src/models/element_metadata.dart';
 export 'src/models/use_case_metadata.dart';

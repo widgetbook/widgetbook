@@ -37,10 +37,10 @@ class NullKnobConfig extends KnobConfig<String> {
   /// const NullKnobConfig('label');
   /// ```
   const NullKnobConfig(String label)
-      : super(
-          label,
-          KnobConfig.nullabilitySymbol,
-        );
+    : super(
+        label,
+        KnobConfig.nullabilitySymbol,
+      );
 }
 
 class IntKnobConfig extends KnobConfig<int> {
@@ -111,6 +111,7 @@ class DateTimeKnobConfig extends KnobConfig<String> {
   const DateTimeKnobConfig(super.label, super.dateTimeInSimpleFormat);
 }
 
+@Deprecated('Use `ObjectKnobConfig` instead.')
 class ListKnobConfig extends KnobConfig<String> {
   /// Creates a new [KnobConfig] for `knobs.list`.
   /// The easiest way to get the `itemLabel` is to check the URL query string
@@ -120,6 +121,17 @@ class ListKnobConfig extends KnobConfig<String> {
   /// const ListKnobConfig('label', 'selected-item-label');
   /// ```
   const ListKnobConfig(super.label, super.itemLabel);
+}
+
+class ObjectKnobConfig extends KnobConfig<String> {
+  /// Creates a new [KnobConfig] for `knobs.object`.
+  /// The easiest way to get the [objectLabel] is to check the
+  /// URL query string of a Widgetbook web build.
+  ///
+  /// ```dart
+  /// const ObjectKnobConfig('label', 'selected-item-label');
+  /// ```
+  const ObjectKnobConfig(super.label, super.objectLabel);
 }
 
 class MultiFieldKnobConfig extends KnobConfig<Map<String, dynamic>> {

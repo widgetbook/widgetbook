@@ -4,8 +4,7 @@ import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 
-import 'cli_runner.dart';
-import 'context.dart';
+import '../../widgetbook_cli.dart';
 
 /// A [Context]-aware [Command] for [CliRunner].
 abstract class CliCommand<TArgs> extends Command<int> {
@@ -33,18 +32,10 @@ abstract class CliCommand<TArgs> extends Command<int> {
 
   @override
   FutureOr<int>? run() async {
-    try {
-      final results = argResults!;
-      final args = await parseResults(context, results);
+    final results = argResults!;
+    final args = await parseResults(context, results);
 
-      return runWith(context, args);
-    } catch (e, stackTrace) {
-      logger.err('Something wrong happened');
-      logger.err(e.toString());
-      logger.err(stackTrace.toString());
-
-      return -1;
-    }
+    return runWith(context, args);
   }
 }
 

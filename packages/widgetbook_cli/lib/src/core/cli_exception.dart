@@ -12,11 +12,11 @@ class CliException implements Exception {
 
 class MissingOptionException extends CliException {
   MissingOptionException(this.option)
-      : super(
-          'The option $option is required but was neither '
-          'provided nor resolved from the default values.',
-          ExitCode.data.code,
-        );
+    : super(
+        'The option $option is required but was neither '
+        'provided nor resolved from the default values.',
+        ExitCode.data.code,
+      );
 
   final String option;
 }

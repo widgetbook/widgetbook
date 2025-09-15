@@ -1,3 +1,6 @@
+// next version of Widgetbook doesn't have api docs yet
+// ignore_for_file: public_member_api_docs
+
 import '../../fields/fields.dart';
 import 'arg.dart';
 
@@ -9,11 +12,11 @@ class DoubleArg extends Arg<double> {
 
   @override
   List<Field> get fields => [
-        DoubleInputField(
-          name: name,
-          initialValue: value,
-        ),
-      ];
+    DoubleInputField(
+      name: name,
+      initialValue: value,
+    ),
+  ];
 
   @override
   double valueFromQueryGroup(Map<String, String> group) {

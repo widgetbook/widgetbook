@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
 
 import 'opaque_color.dart';
 import 'opaque_color_picker.dart';
 
+@internal
 class HexColorPicker extends StatelessWidget implements OpaqueColorPicker {
   const HexColorPicker({
     super.key,
@@ -14,7 +16,8 @@ class HexColorPicker extends StatelessWidget implements OpaqueColorPicker {
   final OpaqueColor value;
   final ValueChanged<OpaqueColor> onChanged;
 
-  String get hexValue => '${value.red.toRadixString(16).padLeft(2, '0')}'
+  String get hexValue =>
+      '${value.red.toRadixString(16).padLeft(2, '0')}'
       '${value.green.toRadixString(16).padLeft(2, '0')}'
       '${value.blue.toRadixString(16).padLeft(2, '0')}';
 

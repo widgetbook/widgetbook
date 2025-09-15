@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
+@internal
 class ComponentIcon extends StatelessWidget {
   const ComponentIcon({
     super.key,

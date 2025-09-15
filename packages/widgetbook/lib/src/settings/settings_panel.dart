@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
+@internal
 class SettingsPanelData {
   SettingsPanelData({
     required this.name,
@@ -10,6 +12,7 @@ class SettingsPanelData {
   final List<Widget> Function(BuildContext context) builder;
 }
 
+@internal
 class SettingsPanel extends StatelessWidget {
   SettingsPanel({
     super.key,
@@ -30,42 +33,44 @@ class SettingsPanel extends StatelessWidget {
           // show the TabBar.
           if (settings.length > 1)
             TabBar(
-              tabs: settings
-                  .map(
-                    (setting) => Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 16,
-                        horizontal: 8,
-                      ),
-                      child: Text(
-                        setting.name,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  )
-                  .toList(),
+              tabs:
+                  settings
+                      .map(
+                        (setting) => Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 16,
+                            horizontal: 8,
+                          ),
+                          child: Text(
+                            setting.name,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      )
+                      .toList(),
             ),
           Expanded(
             child: TabBarView(
-              children: settings.map(
-                (setting) {
-                  final children = setting.builder(context);
+              children:
+                  settings.map(
+                    (setting) {
+                      final children = setting.builder(context);
 
-                  return children.isEmpty
-                      ? Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Text('No ${setting.name} available'),
-                          ),
-                        )
-                      : SingleChildScrollView(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Column(
-                            children: children,
-                          ),
-                        );
-                },
-              ).toList(),
+                      return children.isEmpty
+                          ? Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Text('No ${setting.name} available'),
+                            ),
+                          )
+                          : SingleChildScrollView(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            child: Column(
+                              children: children,
+                            ),
+                          );
+                    },
+                  ).toList(),
             ),
           ),
         ],

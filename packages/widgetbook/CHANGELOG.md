@@ -1,7 +1,25 @@
 ## Unreleased
 
+- **FIX**: Support Flutter 3.35.0. ([#1565](https://github.com/widgetbook/widgetbook/pull/1565))
+- **REFACTOR**: Deprecate `WidgetbookLeafComponent` in favor of `WidgetbookComponent` which will now have similar behavior when it has a single use-case. ([#1573](https://github.com/widgetbook/widgetbook/pull/1573))
+- **FIX**: Allow knobs to be re-registered. This makes it possible for a knob to mutate other knobs. ([#1578](https://github.com/widgetbook/widgetbook/pull/1578) - by [@EArminjon](https://github.com/EArminjon))
+- **FIX**: Allow nullable knobs first interaction, by introducing a `Field.defaultValue`, that will be used for setting the value when initial value is `null`. ([#1581](https://github.com/widgetbook/widgetbook/pull/1581) - by [@EArminjon](https://github.com/EArminjon))
+- **FIX**: Re-enable nullified knobs on change. ([#1586](https://github.com/widgetbook/widgetbook/pull/1586) - by [@EArminjon](https://github.com/EArminjon))
+
+
+## 3.16.0
+
+- **BREAKING**: Set minimum SDK version to 3.7.0 & minimum Flutter version to 3.29.0. ([#1541](https://github.com/widgetbook/widgetbook/pull/1541))
+- **FEAT**: Add [`object.segmented`](https://docs.widgetbook.io/knobs/object/segmented) knob. ([#1478](https://github.com/widgetbook/widgetbook/pull/1478) - by [@Sourav-Sonkar](https://github.com/Sourav-Sonkar))
+- **REFACTOR**: Deprecate `ListField` in favor of `ObjectDropdownField`. ([#1541](https://github.com/widgetbook/widgetbook/pull/1541))
+- **REFACTOR**: Deprecate `knobs.list` in favor of [`object.dropdown`](https://docs.widgetbook.io/knobs/object/dropdown). ([#1547](https://github.com/widgetbook/widgetbook/pull/1547))
+
+## 3.15.0
+
 - **REFACTOR**: Deprecate `DeviceFrameAddon` in favor of `ViewportAddon`. ([#1494](https://github.com/widgetbook/widgetbook/pull/1494))
 - **REFACTOR**: Remove `@experimental` annotation from `ViewportAddon`. ([#1493](https://github.com/widgetbook/widgetbook/pull/1493))
+- **REFACTOR**: Improve API docs. ([#1531](https://github.com/widgetbook/widgetbook/pull/1531))
+- **CHORE**: Update license. ([#1529](https://github.com/widgetbook/widgetbook/pull/1529))
 
 ## 3.14.3
 
@@ -22,7 +40,7 @@
 ## 3.14.0
 
 - **FEAT**: Add [`header` parameter](https://docs.widgetbook.io/guides/customization#header-widget) to Widgetbook to allow adding a custom header to the navigation sidebar. ([#1443](https://github.com/widgetbook/widgetbook/pull/1443) - by [@Sourav-Sonkar](https://github.com/Sourav-Sonkar))
-- **FEAT**: Add [`panels` query param](https://docs.widgetbook.io/guides/embedding#customizing-panels) to show/hide panels when embedding Widgetbook. ([#1439](https://github.com/widgetbook/widgetbook/pull/1439))
+- **FEAT**: Add [`panels` query param](https://docs.widgetbook.io/essentials/embedding#customizing-panels) to show/hide panels when embedding Widgetbook. ([#1439](https://github.com/widgetbook/widgetbook/pull/1439))
 - **FEAT**: Rework nullable knobs to allow them to be expressed in the URL. To indicate that a knob is null it can be expressed as `??` (e.g. `/?path=my-use-case&knobs={my_knob:??}`). ([#1450](https://github.com/widgetbook/widgetbook/pull/1450))
 - **FEAT**: Add `safeAreas` to viewports. ([#1452](https://github.com/widgetbook/widgetbook/pull/1452))
 - **REFACTOR**: Remove `ViewportData.id` in favor of `ViewportData.name`. ([#1454](https://github.com/widgetbook/widgetbook/pull/1454))
@@ -48,7 +66,7 @@
 
 ## 3.12.0
 
-- **FEAT**: Add the **experimental** _(subject to breaking changes)_ [`ViewportAddon`](https://docs.widgetbook.io/addons/viewport-addon) alongside its [`ViewportAddonConfig`](https://docs.widgetbook.io/cloud/reviews/multi-snapshot#multi-snapshot-for-addons). This new addon will replace the `DeviceFrameAddon` in the future. ([#1318](https://github.com/widgetbook/widgetbook/pull/1318))
+- **FEAT**: Add the **experimental** _(subject to breaking changes)_ [`ViewportAddon`](https://docs.widgetbook.io/addons/viewport-addon) alongside its [`ViewportAddonConfig`](https://docs.widgetbook.io/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons). This new addon will replace the `DeviceFrameAddon` in the future. ([#1318](https://github.com/widgetbook/widgetbook/pull/1318))
 
 ## 3.11.0
 

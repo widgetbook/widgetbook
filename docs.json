@@ -37,10 +37,10 @@
   },
   "variables": {
     "versions": {
-      "annotation": "3.5.0",
-      "cli": "3.8.2",
-      "generator": "3.13.0",
-      "widgetbook": "3.14.3"
+      "annotation": "3.7.0",
+      "cli": "3.10.0",
+      "generator": "3.16.0",
+      "widgetbook": "3.16.0"
     }
   },
   "tabs": [
@@ -63,11 +63,15 @@
   "sidebar": [
     {
       "tab": "docs",
-      "group": "Introduction",
+      "group": "Getting Started",
       "pages": [
         {
-          "title": "Overview",
+          "title": "Why Widgetbook?",
           "href": "/index"
+        },
+        {
+          "title": "Setup & Install",
+          "href": "/quick-start"
         },
         {
           "title": "Demo",
@@ -76,32 +80,16 @@
       ]
     },
     {
-      "group": "Guides",
+      "group": "Use-Cases",
       "tab": "docs",
       "pages": [
         {
-          "title": "Quick Start",
-          "href": "/guides/quick-start"
-        },
-        {
-          "title": "Use-cases",
-          "href": "/guides/use-cases"
-        },
-        {
-          "title": "Generate use-cases with LLMs",
-          "href": "/guides/generate-use-cases"
-        },
-        {
-          "title": "Mock Widgets & Screens",
-          "href": "/guides/mocking"
-        },
-        {
-          "title": "Customization",
-          "href": "/guides/customization"
+          "title": "What are use-cases?",
+          "href": "/use-cases/overview"
         },
         {
           "title": "Annotations",
-          "href": "/guides/annotations"
+          "href": "/use-cases/annotations"
         },
         {
           "group": "Knobs",
@@ -149,8 +137,21 @@
               ]
             },
             {
-              "title": "List",
-              "href": "/knobs/list"
+              "group": "Object",
+              "pages": [
+                {
+                  "title": "Overview",
+                  "href": "/knobs/object/overview"
+                },
+                {
+                  "title": "Segmented",
+                  "href": "/knobs/object/segmented"
+                },
+                {
+                  "title": "Dropdown",
+                  "href": "/knobs/object/dropdown"
+                }
+              ]
             },
             {
               "title": "String",
@@ -175,11 +176,56 @@
           ]
         },
         {
+          "title": "Mock Widgets & Screens",
+          "href": "/use-cases/mocking"
+        },
+        {
+          "group": "Use-case Generation",
+          "pages": [
+            {
+              "title": "Generate use-cases with LLMs",
+              "href": "/use-cases/generate-with-llm"
+            },
+            {
+              "title": "Entries Generator VSC Extension",
+              "href": "https://marketplace.visualstudio.com/items?itemName=LeanCode.widgetbook-generator"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Essentials",
+      "tab": "docs",
+      "pages": [
+        {
+          "title": "Usage with Monorepo",
+          "href": "/essentials/monorepo"
+        },
+        {
+          "title": "Embedding",
+          "href": "/essentials/embedding"
+        },
+        {
+          "title": "Assets",
+          "href": "/essentials/assets"
+        },
+        {
+          "title": "Fields",
+          "href": "/essentials/fields"
+        }
+      ]
+    },
+    {
+      "group": "Configure",
+      "tab": "docs",
+      "pages": [
+        {
           "group": "Addons",
           "pages": [
             {
               "title": "Overview",
-              "href": "/addons"
+              "href": "/addons/overview"
             },
             {
               "title": "Accessibility Addon",
@@ -238,68 +284,34 @@
               "href": "/addons/custom-addon"
             }
           ]
-        }
-      ]
-    },
-    {
-      "tab": "docs",
-      "group": "Advanced",
-      "pages": [
-        {
-          "title": "Monorepo",
-          "href": "/guides/monorepo"
         },
         {
-          "title": "Assets",
-          "href": "/guides/assets"
+          "title": "Root Widget",
+          "href": "/configure/root-widget"
         },
         {
-          "title": "Fields",
-          "href": "/guides/fields"
+          "title": "Use Case Navigation Path",
+          "href": "/configure/use-case-nav-path"
         },
         {
-          "title": "Embedding",
-          "href": "/guides/embedding"
+          "title": "Initial Route",
+          "href": "/configure/initial-route"
         },
         {
-          "group": "Migration",
-          "pages": [
-            {
-              "title": "2.4.0 to 3.0.0",
-              "href": "/migration/2.4.0-to-3.0.0"
-            },
-            {
-              "title": "3.0.0 beta to rc",
-              "href": "/migration/3.0.0-beta-to-rc"
-            }
-          ]
+          "title": "Home Widget",
+          "href": "/configure/home-widget"
         },
         {
-          "group": "Next",
-          "pages": [
-            {
-              "title": "SAM Architecture",
-              "href": "/next/sam"
-            }
-          ]
+          "title": "Header Widget",
+          "href": "/configure/header-widget"
         },
         {
-          "title": "Entries Generator VSC Extension",
-          "href": "https://marketplace.visualstudio.com/items?itemName=LeanCode.widgetbook-generator"
-        }
-      ]
-    },
-    {
-      "tab": "docs",
-      "group": "Help",
-      "pages": [
-        {
-          "title": "Book a Call",
-          "href": "https://meetings-eu1.hubspot.com/lucas-josefiak"
+          "title": "Widgetbook Theme",
+          "href": "/configure/widgetbook-theme"
         },
         {
-          "title": "Discord Support",
-          "href": "https://discord.com/channels/879618555560218625/1141754969331085313"
+          "title": "Telemetry",
+          "href": "/telemetry"
         }
       ]
     },
@@ -318,16 +330,21 @@
       ]
     },
     {
+      "group": "Next",
+      "pages": [
+        {
+          "title": "SAM Architecture",
+          "href": "/next/sam"
+        }
+      ]
+    },
+    {
       "tab": "docs",
       "group": "Misc",
       "pages": [
         {
           "title": "Resources",
           "href": "/resources"
-        },
-        {
-          "title": "Telemetry",
-          "href": "/telemetry"
         },
         {
           "group": "Contribution",
@@ -419,8 +436,17 @@
           ]
         },
         {
-          "title": "Snapshots",
-          "href": "/cloud/snapshots"
+          "group": "Snapshots",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/snapshots/overview"
+            },
+            {
+              "title": "Multi Snapshot",
+              "href": "/cloud/snapshots/multi-snapshot"
+            }
+          ]
         },
         {
           "group": "Visual Pull Requests",
@@ -447,6 +473,10 @@
               "href": "/cloud/reviews/submit"
             },
             {
+              "title": "Request a reviewer",
+              "href": "/cloud/reviews/request-reviewer"
+            },
+            {
               "title": "Limitations",
               "href": "/cloud/reviews/limitations"
             }
@@ -468,6 +498,10 @@
             {
               "title": "Upload builds",
               "href": "/cloud/guides/github/upload"
+            },
+            {
+              "title": "Enforce reviews",
+              "href": "/cloud/guides/github/enforce-reviews"
             },
             {
               "title": "Access builds from GitHub",
@@ -536,10 +570,6 @@
           "href": "/cloud/reviews/figma"
         },
         {
-          "title": "Multi Snapshot Reviews",
-          "href": "/cloud/reviews/multi-snapshot"
-        },
-        {
           "title": "Setup with Demo Project",
           "href": "/cloud/guides/demo-project"
         }
@@ -547,11 +577,23 @@
     },
     {
       "tab": "cloud",
-      "group": "Security",
+      "group": "Account",
       "pages": [
         {
-          "title": "Overview",
-          "href": "/cloud/security/overview"
+          "title": "Billing",
+          "href": "/cloud/account/billing"
+        },
+        {
+          "title": "Privacy Policy",
+          "href": "/cloud/account/privacy-policy"
+        },
+        {
+          "title": "Terms of Service",
+          "href": "/cloud/account/terms-of-service"
+        },
+        {
+          "title": "Security",
+          "href": "/cloud/account/security"
         }
       ]
     },
@@ -582,6 +624,10 @@
             {
               "title": "cloud build push",
               "href": "/cli/commands/cloud-build-push"
+            },
+            {
+              "title": "coverage",
+              "href": "/cli/commands/coverage"
             }
           ]
         }

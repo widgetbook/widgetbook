@@ -1,3 +1,13 @@
+## 3.10.0
+
+- **BREAKING**: Set minimum SDK version to 3.7.0. ([#1541](https://github.com/widgetbook/widgetbook/pull/1541))
+- **FEAT**: Add [experimental `coverage` command](https://docs.widgetbook.io/cli/commands/coverage) to check how many of your widgets are covered by Widgetbook use-cases. ([#1304](https://github.com/widgetbook/widgetbook/pull/1304) - by [@Moelfarri](https://github.com/Moelfarri))
+
+## 3.9.0
+
+- **FEAT**: Support `@UseCase.cloudExclude` option. ([#1535](https://github.com/widgetbook/widgetbook/pull/1535))
+- **CHORE**: Update license. ([#1529](https://github.com/widgetbook/widgetbook/pull/1529))
+
 ## 3.8.2
 
 - **FIX**: Prevent "HEAD" as branch name in `cloud build push` command. ([#1515](https://github.com/widgetbook/widgetbook/pull/1515))
@@ -12,7 +22,7 @@
 
 ## 3.7.0
 
-- **FEAT**: Support Multi Snapshot for knobs. For more information, check our [docs](https://docs.widgetbook.io/cloud/reviews/multi-snapshot#multi-snapshot-for-knobs). ([#1394](https://github.com/widgetbook/widgetbook/pull/1394))
+- **FEAT**: Support Multi Snapshot for knobs. For more information, check our [docs](https://docs.widgetbook.io/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs). ([#1394](https://github.com/widgetbook/widgetbook/pull/1394))
 
 ## 3.6.1
 
@@ -43,7 +53,7 @@
 
 ## 3.4.0
 
-- **FEAT**: Support Multi Snapshot for addons. For more information, check our [docs](https://docs.widgetbook.io/cloud/reviews/multi-snapshot). ([#1239](https://github.com/widgetbook/widgetbook/pull/1239))
+- **FEAT**: Support Multi Snapshot for addons. For more information, check our [docs](https://docs.widgetbook.io/cloud/snapshots/multi-snapshot). ([#1239](https://github.com/widgetbook/widgetbook/pull/1239))
 
 ## 3.3.1
 

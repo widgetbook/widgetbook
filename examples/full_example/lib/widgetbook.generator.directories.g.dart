@@ -79,25 +79,29 @@ final directories = <_widgetbook.WidgetbookNode>[
           ),
         ],
       ),
-      _widgetbook.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'SteppedCounter',
-        useCase: _widgetbook.WidgetbookUseCase(
-          name: 'Default',
-          builder:
-              _full_example_components_stepped_counter.steppedCounterUseCase,
-        ),
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Default',
+            builder:
+                _full_example_components_stepped_counter.steppedCounterUseCase,
+          ),
+        ],
       ),
     ],
   ),
   _widgetbook.WidgetbookFolder(
     name: 'material',
     children: [
-      _widgetbook.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'RangeSlider',
-        useCase: _widgetbook.WidgetbookUseCase(
-          name: 'CustomRangeSlider',
-          builder: _full_example_customs_custom_knob.rangeSlider,
-        ),
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'CustomRangeSlider',
+            builder: _full_example_customs_custom_knob.rangeSlider,
+          ),
+        ],
       ),
     ],
   ),

@@ -8,12 +8,12 @@ class WidgetbookFolderInstance extends WidgetbookInstance {
   WidgetbookFolderInstance({
     required TreeNode<String> node,
   }) : super(
-          type: 'WidgetbookFolder',
-          args: {
-            'name': literalString(node.data),
-            'children': literalList(
-              node.instances,
-            ),
-          },
-        );
+         type: 'WidgetbookFolder',
+         args: {
+           'name': literalString(node.data),
+           'children': literalList(
+             node.instances,
+           ),
+         },
+       );
 }

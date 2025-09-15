@@ -1,0 +1,78 @@
+## Enforcing reviews
+
+Depending on your goals and workflow, you may want to enforce reviews for all changes in your project, requiring an accepted Widgetbook review for each pull request with changes.
+
+When Widgetbook Cloud reviews are enabled for your project, Widgetbook Cloud automatically creates a review for your PR and posts the URL in your GitHub PR as a commit status. 
+If changes are requested, the commit status reflects the Widgetbook review status on your PR.
+However, GitHub's default configuration allows PRs to be merged even if status checks are not passing or still pending.
+
+<Image 
+  caption="Example of a pending review not blocking the merge of the PR." 
+  src="/assets/cloud/setup/github/unblocked-review.png" 
+/>
+
+To enforce reviews for all changes in your project, you can set up a branch protection rule in your GitHub repository. 
+This prevents PRs from being merged until the Widgetbook review is accepted.
+
+<Steps>
+  <Step title="Open the rulesets settings page">
+    Navigate to the repository settings in GitHub.
+    In the navigation, click on *Rules* to open the accordion. 
+    Then click on *Rulesets* to open the rulesets page.
+
+    <Image src="/assets/cloud/setup/github/rulesets-page.png" />
+  </Step>
+  <Step title="Create a new ruleset">
+    Click on *New ruleset* and create a new branch ruleset.
+  </Step>
+  <Step title="Set name">
+    Set a name for the new ruleset. 
+    For instance, set it to `Widgetbook Review`.
+  </Step>
+  <Step title="Activate rule">
+    Set the enforcement status to `Active`.
+
+    <Image src="/assets/cloud/setup/github/enable-ruleset.png" />
+  </Step>
+  <Step title="Create new target">
+    Scroll down to the *Targets* section and click on *Create target*.
+    Select the branch you want to protect.
+    We recommend choosing *Include default branch*, but depending on your workflow you may want to choose one or multiple branches.
+
+    <Image src="/assets/cloud/setup/github/create-new-target.png" />
+  </Step>
+  <Step title="Require status checks to pass">
+    Scroll down to the rules section.
+    Disable the pre-selected rules. 
+    Once everything is deselected, enable the rule *Require status checks to pass*. 
+
+    <Image src="/assets/cloud/setup/github/enable-status-checks.png" />
+  </Step>
+  <Step title="Add Widgetbook status check">
+    To make the Widgetbook Review commit status required, click the *Add checks* button.
+    In the search box, copy the name of the Widgetbook review status check, which is formatted as `Widgetbook Review (<widgetbook-project-name>)`.
+    If you already have a pull request with a Widgetbook Review commit status, you can also obtain the name from the status checks section in the PR.
+
+    <Image src="/assets/cloud/setup/github/review-commit-status.png" />
+
+    In the example above, the status check is named `Widgetbook Review (widgetbook-explained)`.
+
+    In the search box, select the item that is shown.
+    <Image src="/assets/cloud/setup/github/create-new-check.png" />
+
+    Once the dropdown menu is deselected, the check will be added.
+  </Step>
+  <Step title="Add a check source">
+    If no source is configured, select the *Widgetbook* app as the source.
+
+    <Image src="/assets/cloud/setup/github/edit-check-source.png" />
+  </Step>
+  <Step title="Create the branch ruleset">
+    At the bottom of the page, click the *Create* button. 
+  </Step>
+  <Step title="Verify ruleset">
+    Navigate to a PR to verify that the Widgetbook Review status check is now required to merge the PR.
+
+    <Image src="/assets/cloud/setup/github/result.png" />
+  </Step>
+</Steps>

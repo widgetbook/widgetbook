@@ -1,3 +1,6 @@
+// next version of Widgetbook doesn't have api docs yet
+// ignore_for_file: public_member_api_docs
+
 import '../../../next.dart';
 import '../../fields/fields.dart';
 
@@ -15,11 +18,11 @@ class SingleArg<T> extends Arg<T> {
   @override
   List<Field> get fields {
     return [
-      ListField<T>(
+      ObjectDropdownField<T>(
         name: name,
         values: values,
         initialValue: value,
-        labelBuilder: labelBuilder ?? ListField.defaultLabelBuilder,
+        labelBuilder: labelBuilder ?? ObjectDropdownField.defaultLabelBuilder,
       ),
     ];
   }

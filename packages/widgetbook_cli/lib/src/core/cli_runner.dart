@@ -5,6 +5,7 @@ import 'package:pub_updater/pub_updater.dart';
 
 import '../../metadata.dart';
 import '../commands/cloud.dart';
+import '../commands/coverage.dart';
 import '../commands/upgrade.dart';
 import 'cli_exception.dart';
 import 'context.dart';
@@ -14,9 +15,9 @@ class CliRunner extends CommandRunner<int> {
     required this.context,
     Logger? logger,
     PubUpdater? pubUpdater,
-  })  : _logger = logger ?? Logger(),
-        _pubUpdater = pubUpdater ?? PubUpdater(),
-        super(cliName, cliDescription) {
+  }) : _logger = logger ?? Logger(),
+       _pubUpdater = pubUpdater ?? PubUpdater(),
+       super(cliName, cliDescription) {
     argParser.addFlag(
       'version',
       negatable: false,
@@ -33,6 +34,12 @@ class CliRunner extends CommandRunner<int> {
 
     addCommand(
       CloudCommand(
+        context: context,
+      ),
+    );
+
+    addCommand(
+      CoverageCommand(
         context: context,
       ),
     );

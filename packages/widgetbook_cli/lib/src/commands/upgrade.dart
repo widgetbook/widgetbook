@@ -13,9 +13,9 @@ class UpgradeCommand extends CliVoidCommand {
     required this.pubUpdater,
     super.logger,
   }) : super(
-          name: 'upgrade',
-          description: 'Upgrade Widgetbook CLI',
-        );
+         name: 'upgrade',
+         description: 'Upgrade Widgetbook CLI',
+       );
 
   final PubUpdater pubUpdater;
 

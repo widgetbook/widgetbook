@@ -5,24 +5,34 @@ import '../state/state.dart';
 import 'field.dart';
 import 'field_codec.dart';
 
-/// Interface for defining APIs for features that
-/// use [fields] as a building block.
+/// A [FieldsComposable] is a collection or a group of [Field]s that can be used
+/// to create a settings panel in Widgetbook. Each field in the group should have
+/// a unique [name] and can be used to configure addons or knobs.
 abstract class FieldsComposable<T> {
+  /// Creates a [FieldsComposable] with the specified configuration.
   const FieldsComposable({
     required this.name,
     this.description,
     this.isNullable = false,
   });
 
+  /// The display name of the composable group.
   final String name;
+
+  /// The description of the composable group.
   final String? description;
+
+  /// Whether this composable group is nullable.
   final bool isNullable;
 
-  // The name of the query group param.
+  /// The name of the query group param.
   String get groupName;
 
+  /// A list of [Field]s that belong to this composable group.
   List<Field> get fields;
 
+  /// Converts the [name] to a slugified version that can be used in query
+  /// parameters.
   String slugify(String name) {
     return name.trim().toLowerCase().replaceAll(RegExp(' '), '-');
   }
@@ -35,47 +45,51 @@ abstract class FieldsComposable<T> {
   Widget buildFields(BuildContext context) {
     final child = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: fields
-          .map(
-            (field) => Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 4.0,
-              ),
-              child: field.build(context, groupName),
-            ),
-          )
-          .toList(),
+      children:
+          fields
+              .map(
+                (field) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 4.0,
+                  ),
+                  child: field.build(context, groupName),
+                ),
+              )
+              .toList(),
     );
 
     return !isNullable
         ? Setting(
-            name: name,
-            description: description,
-            child: child,
-          )
+          name: name,
+          description: description,
+          child: child,
+        )
         : NullableSetting(
-            name: name,
-            description: description,
-            isNullified: isNullified(context),
-            onNullified: (isNullified) => toggleNullification(
-              context,
-              nullify: isNullified,
-            ),
-            child: child,
-          );
+          name: name,
+          description: description,
+          isNullified: isNullified(context),
+          onNullified:
+              (isNullified) => toggleNullification(
+                context,
+                nullify: isNullified,
+              ),
+          child: child,
+        );
   }
 
   /// Decodes the value of the [Field] with [name] from the query [group]
   /// using the [FieldCodec.toValue] from [Field.codec].
   TField? valueOf<TField>(String name, Map<String, String> group) {
-    final field = fields.firstWhere(
-      (field) => field.name == name,
-    ) as Field<TField>;
+    final field =
+        fields.firstWhere(
+              (field) => field.name == name,
+            )
+            as Field<TField>;
 
     return field.valueFrom(group);
   }
 
-  /// Checks if this has been nullified by [toggleNullification].
+  /// Whether the group has been nullified by [toggleNullification].
   bool isNullified(BuildContext context) {
     final state = WidgetbookState.of(context);
     final groupMap = FieldCodec.decodeQueryGroup(
@@ -115,6 +129,21 @@ abstract class FieldsComposable<T> {
     );
 
     fields.forEach((field) {
+      // If the field is not present in the `groupMap`, we set it to its
+      // initial value or default value.
+      //
+      // This is used when user first interacts with a nullable field.
+      if (!groupMap.containsKey(field.name)) {
+        final value =
+            field.initialValueStringified ?? field.defaultValueStringified;
+        state.updateQueryField(
+          group: groupName,
+          field: field.name,
+          value: nullify ? '${Field.nullabilitySymbol}${value}' : value,
+        );
+        return;
+      }
+
       final value = groupMap[field.name];
       if (value == null) return;
 
@@ -129,5 +158,6 @@ abstract class FieldsComposable<T> {
     });
   }
 
+  /// Converts this composable group to a JSON representation.
   Map<String, dynamic> toJson();
 }

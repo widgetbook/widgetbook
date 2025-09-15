@@ -77,7 +77,7 @@ void main() {
         () {
           final result = treeRoot.leaves;
 
-          expect(result.length, 2);
+          expect(result.length, 3);
         },
       );
 
@@ -92,10 +92,10 @@ void main() {
       );
 
       test(
-        'given a leaf node, '
+        'given a root node, '
         'then the count is correct',
         () {
-          expect(treeRoot.count, 7);
+          expect(treeRoot.count, 8);
         },
       );
     },

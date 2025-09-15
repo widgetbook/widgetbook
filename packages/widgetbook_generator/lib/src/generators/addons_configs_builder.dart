@@ -9,8 +9,11 @@ import '../util/constant_reader.dart';
 import 'base_builder.dart';
 
 class AddonsConfigsBuilder extends BaseBuilder {
-  static const checker = TypeChecker.fromRuntime(App);
   static const extension = '.config.widgetbook.json';
+  static const checker = TypeChecker.typeNamed(
+    App,
+    inPackage: 'widgetbook_annotation',
+  );
 
   @override
   final buildExtensions = const {

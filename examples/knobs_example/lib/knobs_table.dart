@@ -27,43 +27,45 @@ class KnobsTable extends StatelessWidget {
             decoration: const BoxDecoration(
               color: Colors.lightBlue,
             ),
-            children: [
-              const Text(
-                'Type',
-                style: headerStyle,
-              ),
-              const Text(
-                'Regular',
-                style: headerStyle,
-              ),
-              const Text(
-                'Nullable',
-                style: headerStyle,
-              ),
-            ]
-                .map(
-                  (cell) => Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: cell,
-                  ),
-                )
-                .toList(),
+            children:
+                [
+                      const Text(
+                        'Type',
+                        style: headerStyle,
+                      ),
+                      const Text(
+                        'Regular',
+                        style: headerStyle,
+                      ),
+                      const Text(
+                        'Nullable',
+                        style: headerStyle,
+                      ),
+                    ]
+                    .map(
+                      (cell) => Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: cell,
+                      ),
+                    )
+                    .toList(),
           ),
           ...entries
               .map(
                 (entry) => TableRow(
-                  children: [
-                    Text(entry.name),
-                    entry.toRegularWidget(),
-                    entry.toNullableWidget(),
-                  ]
-                      .map(
-                        (cell) => Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: cell,
-                        ),
-                      )
-                      .toList(),
+                  children:
+                      [
+                            Text(entry.name),
+                            entry.toRegularWidget(),
+                            entry.toNullableWidget(),
+                          ]
+                          .map(
+                            (cell) => Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: cell,
+                            ),
+                          )
+                          .toList(),
                 ),
               )
               .toList(),

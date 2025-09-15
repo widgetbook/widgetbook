@@ -21,12 +21,12 @@ class UsageReport {
 
     heatMap = components.values.fold(
       {},
-      (map, length) => map
-        ..update(
-          length,
-          (occurrence) => occurrence + 1,
-          ifAbsent: () => 1,
-        ),
+      (map, length) =>
+          map..update(
+            length,
+            (occurrence) => occurrence + 1,
+            ifAbsent: () => 1,
+          ),
     );
   }
 
@@ -53,16 +53,17 @@ class UsageReport {
   late final Map<int, int> heatMap;
 
   int get componentsCount => heatMap.values.reduce(
-        (total, count) => total + count,
-      );
+    (total, count) => total + count,
+  );
 
   int get useCasesCount => heatMap.entries.fold(
-        0,
-        (total, entry) => total + entry.key * entry.value,
-      );
+    0,
+    (total, entry) => total + entry.key * entry.value,
+  );
 
   /// Unique ID to identify the report
-  String get id => '$projectId'
+  String get id =>
+      '$projectId'
       '-C$componentsCount'
       '-U$useCasesCount'
       '-P${packages.length}'

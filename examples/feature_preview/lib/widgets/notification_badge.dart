@@ -7,8 +7,9 @@ class NotificationBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final label =
-        count == null ? null : Text(count! < 100 ? count.toString() : '99+');
+    final label = count == null
+        ? null
+        : Text(count! < 100 ? count.toString() : '99+');
     return Badge(
       label: label,
       isLabelVisible: count != null && count! > 0,

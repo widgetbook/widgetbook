@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
+// ignore: unnecessary_import flutter(<3.35.0)
+import 'package:meta/meta.dart';
 
 extension on SemanticsNode {
   /// Finds the first child [SemanticsNode] that matches the given [predicate].
@@ -29,6 +31,7 @@ extension on SemanticsNode {
 /// The major difference is that the root semantics node is not
 /// the root node of the semantics tree, but a node that is
 /// identified by the [rootIdentifier].
+@internal
 class MinimalSemanticsDebugger extends StatefulWidget {
   /// Creates a widget that visualizes the semantics for the child.
   ///
@@ -44,15 +47,8 @@ class MinimalSemanticsDebugger extends StatefulWidget {
     ),
   });
 
-  /// The widget below this widget in the tree.
-  ///
-  /// {@macro flutter.widgets.ProxyWidget.child}
   final Widget child;
-
-  /// The [TextStyle] to use when rendering semantics labels.
   final TextStyle labelStyle;
-
-  /// The identifier of the node that will be used as the root node.
   final String rootIdentifier;
 
   @override
@@ -189,12 +185,17 @@ class _SemanticsDebuggerPainter extends CustomPainter {
     final annotations = <String>[];
 
     var wantsTap = false;
+
+    // ignore: deprecated_member_use flutter(<3.35.0)
     if (data.hasFlag(SemanticsFlag.hasCheckedState)) {
       annotations.add(
+        // ignore: deprecated_member_use flutter(<3.35.0)
         data.hasFlag(SemanticsFlag.isChecked) ? 'checked' : 'unchecked',
       );
       wantsTap = true;
     }
+
+    // ignore: deprecated_member_use flutter(<3.35.0)
     if (data.hasFlag(SemanticsFlag.isTextField)) {
       annotations.add('textfield');
       wantsTap = true;
@@ -214,12 +215,14 @@ class _SemanticsDebuggerPainter extends CustomPainter {
       annotations.add('long-pressable');
     }
 
-    final isScrollable = data.hasAction(SemanticsAction.scrollLeft) ||
+    final isScrollable =
+        data.hasAction(SemanticsAction.scrollLeft) ||
         data.hasAction(SemanticsAction.scrollRight) ||
         data.hasAction(SemanticsAction.scrollUp) ||
         data.hasAction(SemanticsAction.scrollDown);
 
-    final isAdjustable = data.hasAction(SemanticsAction.increase) ||
+    final isAdjustable =
+        data.hasAction(SemanticsAction.increase) ||
         data.hasAction(SemanticsAction.decrease);
 
     if (isScrollable) {
@@ -236,7 +239,7 @@ class _SemanticsDebuggerPainter extends CustomPainter {
     // string.
     final shouldIgnoreDuplicatedLabel =
         defaultTargetPlatform == TargetPlatform.android &&
-            data.attributedLabel.string == data.tooltip;
+        data.attributedLabel.string == data.tooltip;
     final tooltipAndLabel = <String>[
       if (data.tooltip.isNotEmpty) data.tooltip,
       if (data.attributedLabel.string.isNotEmpty &&
@@ -274,12 +277,14 @@ class _SemanticsDebuggerPainter extends CustomPainter {
     final rect = node.rect;
     canvas.save();
     canvas.clipRect(rect);
-    final textPainter = TextPainter()
-      ..text = TextSpan(style: labelStyle, text: message)
-      ..textDirection = TextDirection
-          .ltr // _getMessage always returns LTR text, even if node.label is RTL
-      ..textAlign = TextAlign.center
-      ..layout(maxWidth: rect.width);
+    final textPainter =
+        TextPainter()
+          ..text = TextSpan(style: labelStyle, text: message)
+          ..textDirection =
+              TextDirection
+                  .ltr // _getMessage always returns LTR text, even if node.label is RTL
+          ..textAlign = TextAlign.center
+          ..layout(maxWidth: rect.width);
 
     textPainter.paint(
       canvas,
@@ -318,19 +323,22 @@ class _SemanticsDebuggerPainter extends CustomPainter {
       final lineColor = _colorForNode(indexInParent, level);
       final innerRect = rect.deflate(rank * 1.0);
       if (innerRect.isEmpty) {
-        final fill = Paint()
-          ..color = lineColor
-          ..style = PaintingStyle.fill;
+        final fill =
+            Paint()
+              ..color = lineColor
+              ..style = PaintingStyle.fill;
         canvas.drawRect(rect, fill);
       } else {
-        final fill = Paint()
-          ..color = const Color(0xFFFFFFFF)
-          ..style = PaintingStyle.fill;
+        final fill =
+            Paint()
+              ..color = const Color(0xFFFFFFFF)
+              ..style = PaintingStyle.fill;
         canvas.drawRect(rect, fill);
-        final line = Paint()
-          ..strokeWidth = rank * 2.0
-          ..color = lineColor
-          ..style = PaintingStyle.stroke;
+        final line =
+            Paint()
+              ..strokeWidth = rank * 2.0
+              ..color = lineColor
+              ..style = PaintingStyle.stroke;
         canvas.drawRect(innerRect, line);
       }
       _paintMessage(canvas, node);

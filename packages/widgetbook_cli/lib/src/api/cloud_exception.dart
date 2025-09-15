@@ -6,11 +6,11 @@ import '../core/core.dart';
 
 class CloudException extends CliException {
   CloudException(String message)
-      : super(
-          'Something went wrong while communicating with the Widgetbook Cloud:\n'
-          '$message\n',
-          ExitCode.software.code,
-        );
+    : super(
+        'Something went wrong while communicating with the Widgetbook Cloud:\n'
+        '$message\n',
+        ExitCode.software.code,
+      );
 
   static CloudException parse(Object exception, StackTrace stackTrace) {
     if (exception is! DioException) {

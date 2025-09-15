@@ -10,6 +10,14 @@ void main() {
   group(
     '$NavigationTreeNode',
     () {
+      final leafComponentsCount =
+          treeRoot
+              .findAll(
+                (node) =>
+                    node is WidgetbookComponent && node.useCases.length == 1,
+              )
+              .length;
+
       testWidgets(
         'given a root node, '
         'then the correct number of list views are created',
@@ -22,27 +30,32 @@ void main() {
 
           expect(
             find.byType(ListView),
-            findsNWidgets(treeRoot.count - treeRoot.leaves.length),
+            findsNWidgets(
+              // Leaf components don't have a list view rendered for them
+              treeRoot.count - treeRoot.leaves.length - leafComponentsCount,
+            ),
           );
         },
       );
 
       testWidgets(
-        'given a $WidgetbookLeafComponent node, '
+        'given a $WidgetbookComponent node with single use-case, '
         'when its use-case is selected, '
         'then the node is selected',
         (tester) async {
-          final leaf = WidgetbookLeafComponent(
+          final leaf = WidgetbookComponent(
             name: 'Leaf',
-            useCase: WidgetbookUseCase(
-              name: 'UseCase',
-              builder: (context) => Container(),
-            ),
+            useCases: [
+              WidgetbookUseCase(
+                name: 'UseCase',
+                builder: (context) => Container(),
+              ),
+            ],
           );
 
           await tester.pumpWidgetWithMaterialApp(
             NavigationTreeNode(
-              selectedNode: leaf.useCase,
+              selectedNode: leaf.useCases.first,
               node: leaf,
             ),
           );
@@ -83,7 +96,7 @@ void main() {
       );
 
       testWidgets(
-        'when a $WidgetbookLeafComponent is tapped, '
+        'when a $WidgetbookComponent with a single child is tapped, '
         'then the onNodeSelected callback is called with the child use-case',
         (tester) async {
           final useCase = WidgetbookUseCase(
@@ -95,9 +108,9 @@ void main() {
 
           await tester.pumpWidgetWithMaterialApp(
             NavigationTreeNode(
-              node: WidgetbookLeafComponent(
+              node: WidgetbookComponent(
                 name: 'Leaf',
-                useCase: useCase,
+                useCases: [useCase],
               ),
               onNodeSelected: onValueChanged.call,
             ),

@@ -169,33 +169,62 @@ Widget buildNullableColorKnob(BuildContext context) {
   return ColoredTextBox(color: context.knobs.colorOrNull(label: 'color'));
 }
 
-@UseCase(type: KnobPreview, name: 'List Knob')
-@UseCase(type: OnlineStatusBadge, name: 'List Knob')
-Widget buildListKnob(BuildContext context) {
+@UseCase(type: KnobPreview, name: 'Object Dropdown Knob')
+Widget buildObjectDropdownKnob(BuildContext context) {
   return OnlineStatusBadge(
-    status: context.knobs.list(
+    status: context.knobs.object.dropdown<OnlineStatusType>(
       label: 'status',
+      labelBuilder: (value) => value.name,
       options: [
         OnlineStatusType.online,
         OnlineStatusType.offline,
         OnlineStatusType.busy,
       ],
-      labelBuilder: (value) => value!.name,
     ),
   );
 }
 
-@UseCase(type: KnobPreview, name: 'List Nullable Knob')
-Widget buildNullableListKnob(BuildContext context) {
+@UseCase(type: KnobPreview, name: 'Object Dropdown Nullable Knob')
+Widget buildObjectNullableDropdownKnob(BuildContext context) {
   return OnlineStatusBadge(
-    status: context.knobs.listOrNull(
+    status: context.knobs.objectOrNull.dropdown<OnlineStatusType>(
       label: 'status',
+      labelBuilder: (value) => value.name,
       options: [
         OnlineStatusType.online,
         OnlineStatusType.offline,
         OnlineStatusType.busy,
       ],
-      labelBuilder: (value) => value!.name,
+    ),
+  );
+}
+
+@UseCase(type: KnobPreview, name: 'Object Segmented Knob')
+Widget buildObjectSegmentedKnob(BuildContext context) {
+  return OnlineStatusBadge(
+    status: context.knobs.object.segmented<OnlineStatusType>(
+      label: 'status',
+      labelBuilder: (value) => value.name,
+      options: [
+        OnlineStatusType.online,
+        OnlineStatusType.offline,
+        OnlineStatusType.busy,
+      ],
+    ),
+  );
+}
+
+@UseCase(type: KnobPreview, name: 'Object Segmented Nullable Knob')
+Widget buildObjectNullableSegmentedKnob(BuildContext context) {
+  return OnlineStatusBadge(
+    status: context.knobs.objectOrNull.segmented<OnlineStatusType>(
+      label: 'status',
+      labelBuilder: (value) => value.name,
+      options: [
+        OnlineStatusType.online,
+        OnlineStatusType.offline,
+        OnlineStatusType.busy,
+      ],
     ),
   );
 }

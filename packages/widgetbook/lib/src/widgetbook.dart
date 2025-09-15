@@ -19,6 +19,8 @@ import 'themes.dart';
 /// - [Widgetbook.cupertino] if you use [CupertinoApp] for your app.
 /// - [Widgetbook.material] if you use [MaterialApp] for your app.
 class Widgetbook extends StatefulWidget {
+  /// A [Widgetbook] with [WidgetsApp] as an [appBuilder].
+  /// Allows you to use a custom widget as the app builder.
   const Widgetbook({
     super.key,
     this.initialRoute = '/',
@@ -147,9 +149,10 @@ class _WidgetbookState extends State<Widgetbook> {
       // Do not use the initial route if there is an existing URL fragment.
       // That means that the user has navigated to a different route then
       // they restarted the app, so we should not override that.
-      uri: Uri.base.fragment.isNotEmpty
-          ? Uri.parse(Uri.base.fragment)
-          : Uri.parse(widget.initialRoute),
+      uri:
+          Uri.base.fragment.isNotEmpty
+              ? Uri.parse(Uri.base.fragment)
+              : Uri.parse(widget.initialRoute),
     );
 
     widget.integrations?.forEach(

@@ -20,21 +20,23 @@ class ComponentBuilder {
         .assign(
           InvokeExpression.newOf(
             TypeReference(
-              (b) => b
-                ..symbol = stories.length == 1 ? 'LeafComponent' : 'Component'
-                ..types.addAll([
-                  refer(widgetType.nonNullableName),
-                  refer('${argsType.nonNullableName}Args'),
-                ]),
+              (b) =>
+                  b
+                    ..symbol =
+                        stories.length == 1 ? 'LeafComponent' : 'Component'
+                    ..types.addAll([
+                      refer(widgetType.nonNullableName),
+                      refer('${argsType.nonNullableName}Args'),
+                    ]),
             ),
             [],
             {
               'meta': refer('meta'),
               if (stories.length == 1)
-                'story': refer(stories.first.name)
+                'story': refer(stories.first.displayName)
               else
                 'stories': literalList(
-                  stories.map((story) => refer(story.name)).toList(),
+                  stories.map((story) => refer(story.displayName)).toList(),
                 ),
             },
           ),
