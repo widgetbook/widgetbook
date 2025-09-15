@@ -127,30 +127,31 @@ void main() {
         },
       );
 
-      testWidgets('given a nullable field value, '
-          'when updateField is called, '
-          'then it updates the query params with the new non nullable value', (
-        tester,
-      ) async {
-        const group = 'mock_group';
+      testWidgets(
+        'given a nullable field value, '
+        'when updateField is called, '
+        'then it updates the query params with the new non nullable value',
+        (tester) async {
+          const group = 'mock_group';
 
-        final state = await tester.pumpWidgetWithQueryParams(
-          queryParams: {
-            group: '{${field.name}:${Field.nullabilitySymbol}false}',
-          },
-          builder: (context) => Container(),
-        );
+          final state = await tester.pumpWidgetWithQueryParams(
+            queryParams: {
+              group: '{${field.name}:${Field.nullabilitySymbol}false}',
+            },
+            builder: (context) => Container(),
+          );
 
-        final context = tester.element(find.byType(Container));
+          final context = tester.element(find.byType(Container));
 
-        field.updateField(context, group, true);
+          field.updateField(context, group, true);
 
-        final result = field.valueFrom(
-          FieldCodec.decodeQueryGroup(state.queryParams[group]),
-        );
+          final result = field.valueFrom(
+            FieldCodec.decodeQueryGroup(state.queryParams[group]),
+          );
 
-        expect(result, equals(true));
-      });
+          expect(result, equals(true));
+        },
+      );
 
       test(
         'when toFullJson is called, '
