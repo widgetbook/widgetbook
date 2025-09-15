@@ -310,6 +310,10 @@
           "href": "/configure/widgetbook-theme"
         },
         {
+          "title": "Scroll Behavior",
+          "href": "/configure/scroll-behavior"
+        },
+        {
           "title": "Telemetry",
           "href": "/telemetry"
         }

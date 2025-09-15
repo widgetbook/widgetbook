@@ -117,8 +117,14 @@ class Widgetbook extends StatefulWidget {
   /// This can be used for branding or additional information.
   final Widget? header;
 
-  /// The scroll behavior to be applied to the Widgetbook application.
-  /// This parameter allows you to customize the scrolling behavior of the app.
+  /// The [ScrollBehavior] to be applied to the Widgetbook application itself.
+  ///
+  /// This allows users to override the behavior of scrolling on both desktop
+  /// and web, where dragging by mouse is disabled by default.
+  ///
+  /// When null, defaults to [MaterialScrollBehavior].
+  ///
+  /// See also: https://docs.flutter.dev/release/breaking-changes/default-scroll-behavior-drag
   final ScrollBehavior? scrollBehavior;
 
   @override
