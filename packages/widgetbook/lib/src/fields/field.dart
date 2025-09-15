@@ -106,20 +106,12 @@ abstract class Field<T> {
   /// with the URL query parameters.
   void updateField(BuildContext context, String group, T value) {
     final state = WidgetbookState.of(context);
-    final groupMap = FieldCodec.decodeQueryGroup(state.queryParams[group]);
-
-    // Preserve the nullability symbol in the new value if the previous
-    // value was null (i.e. had the nullability symbol).
-    final rawNewValue = codec.toParam(value);
-    final newValue =
-        isNull(groupMap)
-            ? '${Field.nullabilitySymbol}$rawNewValue'
-            : rawNewValue;
+    final stringifiedValue = codec.toParam(value);
 
     state.updateQueryField(
       group: group,
       field: name,
-      value: newValue,
+      value: stringifiedValue,
     );
   }
 
