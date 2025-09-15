@@ -1,4 +1,4 @@
-## Unreleased
+## 3.17.0
 
 - **BREAKING**: Require `analyzer` >=8.0.0, `build` >=4.0.0 and `source_gen` >=4.0.0. ([#1584](https://github.com/widgetbook/widgetbook/pull/1584))
 - **REFACTOR**: Generate `WidgetbookComponent`, instead of `WidgetbookLeafComponent`, for components with a single use-case. ([#1573](https://github.com/widgetbook/widgetbook/pull/1573))
