@@ -23,6 +23,7 @@ class ObjectDropdownField<T> extends Field<T> {
     this.labelBuilder = defaultLabelBuilder,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
+         defaultValue: values.first,
          type: FieldType.objectDropdown,
          codec: FieldCodec(
            toParam: labelBuilder,

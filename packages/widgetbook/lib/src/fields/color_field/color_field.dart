@@ -18,6 +18,7 @@ class ColorField extends Field<Color> {
     this.initialColorSpace = ColorSpace.hex,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
+         defaultValue: defaultColor,
          type: FieldType.color,
          codec: FieldCodec(
            toParam: (color) => color.toARGB32().toRadixString(16),

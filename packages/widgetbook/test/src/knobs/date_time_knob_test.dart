@@ -10,6 +10,37 @@ void main() {
     '${DateTimeKnob}',
     () {
       testWidgets(
+        'given no initial value, '
+        'when field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          final now = DateTime.now();
+          final nextYear = DateTime(now.year + 1);
+
+          await tester.pumpKnob(
+            (context) => Text(
+              (context.knobs
+                      .dateTimeOrNull(
+                        label: 'DateTimeKnob',
+                        start: now,
+                        end: nextYear,
+                      )
+                      ?.toSimpleFormat())
+                  .toString(),
+            ),
+          );
+
+          expect(find.textWidget(now.toSimpleFormat()), findsNothing);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.textWidget(now.toSimpleFormat()), findsOneWidget);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.textWidget(now.toSimpleFormat()), findsNothing);
+        },
+      );
+
+      testWidgets(
         'given an initial value, '
         'then the value should be displayed',
         (tester) async {

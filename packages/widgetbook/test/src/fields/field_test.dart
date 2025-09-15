@@ -10,6 +10,7 @@ class MockField extends Field<bool> {
     required super.name,
     required super.type,
     required super.initialValue,
+    required super.defaultValue,
     required super.codec,
   });
 
@@ -51,6 +52,7 @@ void main() {
         name: 'mock_field',
         type: FieldType.boolean,
         initialValue: true,
+        defaultValue: true,
         codec: FieldCodec(
           toParam: (value) => value.toString(),
           toValue: (param) => param == null ? null : param == 'true',

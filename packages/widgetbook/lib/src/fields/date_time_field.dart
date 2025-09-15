@@ -28,6 +28,7 @@ class DateTimeField extends Field<DateTime> {
     required this.start,
     required this.end,
   }) : super(
+         defaultValue: start,
          type: FieldType.dateTime,
          codec: FieldCodec<DateTime>(
            toParam: (value) => value.toSimpleFormat(),

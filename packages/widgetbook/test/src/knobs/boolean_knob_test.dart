@@ -36,6 +36,32 @@ void main() {
     '$BooleanKnob.nullable',
     () {
       testWidgets(
+        'given no initial value, '
+        'when field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs
+                  .booleanOrNull(
+                    label: 'Knob',
+                  )
+                  .toString(),
+            ),
+          );
+
+          expect(find.text('false'), findsNothing);
+          expect(find.text('true'), findsNothing);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.text('true'), findsOneWidget);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.text('null'), findsOneWidget);
+        },
+      );
+
+      testWidgets(
         'when field is updated, '
         'then the value should be updated',
         (tester) async {

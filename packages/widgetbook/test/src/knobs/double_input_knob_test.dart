@@ -9,6 +9,27 @@ void main() {
     '$DoubleInputKnob',
     () {
       testWidgets(
+        'given no initial value, '
+        'when field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs.doubleOrNull.input(label: 'Knob').toString(),
+            ),
+          );
+
+          expect(find.textWidget('0.0'), findsNothing);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.textWidget('0.0'), findsOneWidget);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.textWidget('0.0'), findsNothing);
+        },
+      );
+
+      testWidgets(
         'given an initial value, '
         'then the value should be displayed',
         (tester) async {

@@ -9,6 +9,27 @@ void main() {
     '$StringKnob',
     () {
       testWidgets(
+        'given no initial value, '
+        'when field is updated, '
+        'then the value should be updated',
+        (tester) async {
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs.stringOrNull(label: 'Knob').toString(),
+            ),
+          );
+
+          expect(find.textWidget(''), findsNothing);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.textWidget(''), findsOneWidget);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(find.textWidget(''), findsNothing);
+        },
+      );
+
+      testWidgets(
         'given an initial value, '
         'then the value should be displayed',
         (tester) async {
