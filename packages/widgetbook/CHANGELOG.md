@@ -1,4 +1,4 @@
-## Unreleased
+## 3.17.0
 
 - **FEAT**: Expose Widgetbook's own [scroll behavior](https://docs.widgetbook.io/configure/scroll-behavior) to allow customizing it. ([#1524](https://github.com/widgetbook/widgetbook/pull/1524) - by [@EArminjon](https://github.com/EArminjon))
 - **FIX**: Support Flutter 3.35.0. ([#1565](https://github.com/widgetbook/widgetbook/pull/1565))
@@ -6,7 +6,6 @@
 - **FIX**: Allow knobs to be re-registered. This makes it possible for a knob to mutate other knobs. ([#1578](https://github.com/widgetbook/widgetbook/pull/1578) - by [@EArminjon](https://github.com/EArminjon))
 - **FIX**: Allow nullable knobs first interaction, by introducing a `Field.defaultValue`, that will be used for setting the value when initial value is `null`. ([#1581](https://github.com/widgetbook/widgetbook/pull/1581) - by [@EArminjon](https://github.com/EArminjon))
 - **FIX**: Re-enable nullified knobs on change. ([#1586](https://github.com/widgetbook/widgetbook/pull/1586) - by [@EArminjon](https://github.com/EArminjon))
-
 
 ## 3.16.0
 
