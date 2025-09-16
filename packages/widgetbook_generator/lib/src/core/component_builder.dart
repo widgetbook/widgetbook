@@ -37,7 +37,10 @@ class ComponentBuilder {
               {
                 'meta': refer('meta').property('init').call(
                   [],
-                  {'path': literalString(navPath)},
+                  {
+                    'name': literalString(widgetType.nonGenericName),
+                    'path': literalString(navPath),
+                  },
                 ),
                 'stories': literalList(
                   stories

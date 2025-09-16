@@ -4,22 +4,24 @@ class Meta<T> {
   const Meta({
     String? name,
     String? path,
-  }) : name = name ?? '$T',
+  }) : $name = name,
        $path = path;
 
-  final String name;
+  final String? $name;
   final String? $path;
 
+  String get name => $name!;
   String? get path => $path;
 
   /// Creates a copy of this using the provided [path] for late initialization.
+  /// If [$name] was already set, it should have precedence over [name].
   /// If [$path] was already set, it should have precedence over [path].
   Meta<T> init({
+    required String name,
     required String path,
   }) {
-    final genericRegex = RegExp(r'<.*>');
     return Meta<T>(
-      name: name.replaceAll(genericRegex, ''),
+      name: $name ?? name,
       path: $path ?? path,
     );
   }

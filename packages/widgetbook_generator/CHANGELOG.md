@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Add component's fallback name to metadata. ([#1593](https://github.com/widgetbook/widgetbook/pull/1593))
+
 ## 4.0.0-alpha.2
 
 - **FEAT**: Support default `setup` & `argsBuilder` via top-level definitions of `$setup` & `$argsBuilder`. ([#1130](https://github.com/widgetbook/widgetbook/pull/1130), [#1133](https://github.com/widgetbook/widgetbook/pull/1133))
