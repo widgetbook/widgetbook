@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -65,7 +64,7 @@ void main() {
             integrations: [integration],
             components: [
               Component(
-                meta: Meta<Placeholder>(),
+                meta: const Meta(name: 'Placeholder'),
                 stories: [story],
               ),
             ],
