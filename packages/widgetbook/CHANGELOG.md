@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Preserve component's unminified name in release builds. ([#1593](https://github.com/widgetbook/widgetbook/pull/1593))
+
 ## 4.0.0-alpha.2
 
 - **BREAKING**: Add `TWidget` type param to `SetupBuilder`. ([#1134](https://github.com/widgetbook/widgetbook/pull/1134))
