@@ -31,8 +31,8 @@ class CategoryTreeTile extends StatelessWidget {
                   child: Text(
                     name.toUpperCase(),
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 const Icon(

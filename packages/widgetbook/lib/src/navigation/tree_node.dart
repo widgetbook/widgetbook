@@ -39,15 +39,17 @@ class TreeNode<T> {
 
   /// Gets the path from root to this node without leading slash
   /// Example: root/child/grandchild
-  String get path => isRoot //
-      ? name
-      : p.join(parent!.path, name).replaceAll(' ', '-');
+  String get path =>
+      isRoot //
+          ? name
+          : p.join(parent!.path, name).replaceAll(' ', '-');
 
   TreeNode<TChild> add<TChild>(TreeNode<TChild> node) {
     return _children.putIfAbsent(
-      node.name,
-      () => node,
-    ) as TreeNode<TChild>;
+          node.name,
+          () => node,
+        )
+        as TreeNode<TChild>;
   }
 
   void addAll(Iterable<TreeNode> nodes) {
@@ -70,8 +72,8 @@ class TreeNode<T> {
         parent,
         data,
       )..addAll(
-          children.where(predicate),
-        );
+        children.where(predicate),
+      );
     }
   }
 }

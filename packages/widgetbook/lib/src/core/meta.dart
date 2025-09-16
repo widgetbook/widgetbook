@@ -4,8 +4,8 @@ class Meta<T> {
   const Meta({
     String? name,
     String? path,
-  })  : name = name ?? '$T',
-        $path = path;
+  }) : name = name ?? '$T',
+       $path = path;
 
   final String name;
   final String? $path;
