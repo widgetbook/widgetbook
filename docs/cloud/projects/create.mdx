@@ -1,0 +1,51 @@
+# Create project
+
+To create a new project, click the `Create project` button on the workspace page. 
+You will be prompted to create a project from a Git repository. 
+Alternatively, you can [create a project manually](/cloud/projects/create#create-project-manually).
+
+## Create project from Git repository
+
+<Warning>
+  The user creating the project must have **admin rights** to the git repository
+  (i.e. has access to repository settings).
+</Warning>
+
+<Image src="/assets/cloud/projects/create-from-git.png" zoom />
+
+Creating a project from a Git repository is the most common and recommended method. 
+A connected project automatically synchronizes builds with their commit status and links reviews with their associated pull requests, enhancing Widgetbook Cloud's integration into your workflow.
+
+We support the following Git providers:
+- GitHub
+- GitLab
+- Bitbucket
+- Azure
+
+To create a project from a Git repository, connect your Git provider account and select the repository you'd like to use for the project. 
+
+The project name is automatically set based on the repository name. 
+For example, if your repository is called `acme-app`, the project will also be named `acme-app`. 
+You can rename the project in the settings without affecting project synchronization.
+
+<Info>If the repository does not show up, use the search input box to filter the shown repositories.</Info>
+
+### Monorepo
+
+If you want to create multiple projects (e.g., for a design system and several apps) from a monorepo, ensure that all projects are created from the same repository. 
+Widgetbook Cloud supports mapping multiple projects to a single repository.
+
+## Create project manually
+
+<Warning>
+Manually created projects do not support pull request synchronization and Widgetbook Cloud reviews — a feature highly appreciated by our customers.
+</Warning>
+
+If you're unable to connect your Git repository (e.g., due to permission issues or other reasons), creating a project manually is a good alternative to get started. 
+You can always [connect your project to a repository](/cloud/projects/connect#connect-project) later on.
+
+To create a project manually, click the `Create a new project yourself` link above the Git provider selector and enter the project name.
+
+## FAQ
+
+Not finding what you're looking for? Check out our [Project-related FAQ](/cloud/projects/overview#faq).

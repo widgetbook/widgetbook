@@ -1,18 +1,35 @@
 # Grid Addon
 
-The Grid Addon is a Widgetbook utility designed for adding a pixel grid
-use-case being previewed within the Workbench.
+A utility addon that helps you show grid guidelines behind your use-cases. This is useful for
+designers and developers to ensure that their components are aligned correctly and follow the design guidelines.
 
-## Setup
+## Usage
 
-Here's how to configure it:
+```dart title=widgetbook/lib/main.dart
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
 
-<Warning>
-  In case `GridAddon` is used with other addons, then it must be defined before
-  the [`AlignmentAddon`](/addons/alignment-addon) and after the
-  [`DeviceFrameAddon`](/addons/device-frame-addon)
-</Warning>
-
-```dart
-GridAddon(10),
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        GridAddon(10), // [!code highlight]
+      ],
+    );
+  }
+}
 ```
+
+## Order
+
+Since the [order of addons](/addons/overview#order-of-addons) matters, here are some guidelines to follow when using the `GridAddon`:
+
+Addons that should come before the `GridAddon`:
+
+- `ViewportAddon`
+- `DeviceFrameAddon`
+
+Addons that should come after the `GridAddon`:
+
+- `AlignmentAddon`

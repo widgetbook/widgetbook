@@ -15,14 +15,15 @@ class StoryGenerator extends Generator {
     LibraryReader library,
     BuildStep buildStep,
   ) async {
-    final storiesVariables = library.allElements
-        .whereType<TopLevelVariableElement>()
-        .where((element) => element.name.startsWith('\$'))
-        .toList();
+    final storiesVariables =
+        library.allElements
+            .whereType<TopLevelVariableElement>()
+            .where((element) => element.displayName.startsWith('\$'))
+            .toList();
 
     final metaVariable = library.allElements
         .whereType<TopLevelVariableElement>()
-        .firstWhere((element) => element.name == 'meta');
+        .firstWhere((element) => element.displayName == 'meta');
 
     final metaType = metaVariable.type as InterfaceType;
     final widgetType = metaType.typeArguments.first;
@@ -30,29 +31,38 @@ class StoryGenerator extends Generator {
     final path = buildStep.inputId.path;
 
     final hasSetup = library.allElements
-        .whereType<FunctionElement>()
-        .any((element) => element.name == '\$setup');
+        .whereType<TopLevelFunctionElement>()
+        .any(
+          (element) => element.name == '\$setup',
+        );
 
     final hasArgsBuilder = library.allElements
-        .whereType<FunctionElement>()
-        .any((element) => element.name == '\$argsBuilder');
+        .whereType<TopLevelFunctionElement>()
+        .any(
+          (element) => element.name == '\$argsBuilder',
+        );
 
     final genLib = Library(
-      (b) => b
-        ..body.addAll(
-          [
-            ComponentBuilder(widgetType, argsType, storiesVariables, path)
-                .build(),
-            ScenarioTypedefBuilder(widgetType, argsType).build(),
-            StoryClassBuilder(
-              widgetType,
-              argsType,
-              hasSetup,
-              hasArgsBuilder,
-            ).build(),
-            ArgsClassBuilder(widgetType, argsType).build(),
-          ],
-        ),
+      (b) =>
+          b
+            ..body.addAll(
+              [
+                ComponentBuilder(
+                  widgetType,
+                  argsType,
+                  storiesVariables,
+                  path,
+                ).build(),
+                ScenarioTypedefBuilder(widgetType, argsType).build(),
+                StoryClassBuilder(
+                  widgetType,
+                  argsType,
+                  hasSetup,
+                  hasArgsBuilder,
+                ).build(),
+                ArgsClassBuilder(widgetType, argsType).build(),
+              ],
+            ),
     );
 
     final emitter = DartEmitter(

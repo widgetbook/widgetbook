@@ -5,18 +5,19 @@ import 'field.dart';
 import 'field_type.dart';
 import 'num_input_field.dart';
 
-/// [Field] that builds [TextFormField] for [double] values.
+/// A [Field] that builds [TextFormField] for [double] values.
 class DoubleInputField extends NumInputField<double> {
+  /// Creates a new instance of [DoubleInputField].
   DoubleInputField({
     required super.name,
     super.initialValue = 0,
-    @deprecated super.onChanged,
+    @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-          type: FieldType.doubleInput,
-          formatters: [
-            FilteringTextInputFormatter.allow(
-              RegExp(r'^-?\d*\.?\d*'),
-            ),
-          ],
-        );
+         type: FieldType.doubleInput,
+         formatters: [
+           FilteringTextInputFormatter.allow(
+             RegExp(r'^-?\d*\.?\d*'),
+           ),
+         ],
+       );
 }

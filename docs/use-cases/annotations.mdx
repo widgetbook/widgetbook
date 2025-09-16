@@ -1,0 +1,41 @@
+# Annotations
+
+When importing annotations from `widgetbook_annotation`, we recommend using the `widgetbook` alias to make the code more readable.
+
+```dart
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+```
+
+## @App
+
+This annotation controls where the generated directories file should be located. It is used to specify the path to the generated files.
+The following snippet generates a file at `lib/main.directories.g.dart` because the annotated class is located in `lib/main.dart`.
+
+```dart
+@widgetbook.App()
+class WidgetbookApp extends StatelessWidget { ... }
+```
+
+## @UseCase
+
+This annotation is used to add a **use-case** for a **component**. The following parameters are available:
+
+| Parameter    | Required | Description                                                                                                                                                                                                                                                 |
+| ------------ | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`       | ✅       | The name of the use-case.                                                                                                                                                                                                                                   |
+| `type`       | ✅       | The `type` property is used by the generator to create the component entry within the navigation. You should specify the type of the cataloged component (e.g. `CoolButton`) instead of the one that might be returned by the builder method (e.g.`Center`) |
+| `path`       | -        | A custom path for the use-case. Folders are delimited using slashes, path segments may be made into a category by enclosing it in square brackets. <br /> For example: `[Interactions]/buttons` will produce: `Interactions (category) -> buttons (folder)` |
+| `designLink` | -        | A link to the figma design of the use-case to be used with [Widgetbook Cloud Reviews](/cloud/reviews#figma-x-flutter-comparison).                                                                                                                                 |
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+// Import the widget from your app
+import 'package:your_app/cool_button.dart';
+
+@widgetbook.UseCase(name: 'Default', type: CoolButton)
+Widget buildCoolButtonUseCase(BuildContext context) {
+  return CoolButton();
+}
+```

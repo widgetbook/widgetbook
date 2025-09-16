@@ -1,0 +1,9 @@
+include: ../../analysis_options.yaml
+
+formatter:
+  trailing_commas: preserve
+
+linter:
+  rules:
+    # API docs disabled for now until beta version
+    public_member_api_docs: false

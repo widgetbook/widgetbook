@@ -1,0 +1,48 @@
+# Widgetbook Cloud Reviews
+
+> We are already saving 20% of our time.
+> – [1KOMMA5°](https://1komma5grad.com/de) _([source](https://youtu.be/Du5yVtnmNzg?t=1759))_
+
+Widgetbook Cloud Reviews not only help you introduce **UI Reviews** into your workflow, but also enable you to **automatically detect UI regressions** with zero configuration (i.e., without writing any golden tests). It provides a structured review process to ensure that all **UI changes are intentional** and match design expectations.
+
+<Image theme="light" src="/assets/cloud/review.light.png" />
+<Image theme="dark" src="/assets/cloud/review.dark.png" />
+
+## Tutorial Video
+
+<YouTube id="CalXXyThDi4" />
+
+## Code Review vs. UI Review
+
+In a code review, you look for bugs, performance issues, and code quality. 
+In a UI review, you look for visual differences between the design and the implementation. 
+Both types of reviews are important to ensure the code is correct and the design is implemented as expected.
+
+|                | Code Review                                        | UI Review                                                                         |
+| -------------- | -------------------------------------------------- | --------------------------------------------------------------------------------- |
+| **Purpose**    | To find bugs, performance issues, and code quality | To find visual differences between the design and the implementation              |
+| **Comparison** | **Code changes** between `base` and `head` commits | **Visual differences** between `base` and `head` [builds](/cloud/builds/overview) |
+| **Tool**       | Version Control Systems (e.g. GitHub, GitLab)      | Widgetbook Cloud                                                                  |
+
+## UI Review Workflow
+
+<Info>
+**Prerequisite:** Make sure you have completed the setup of Widgetbook Cloud for 
+[GitHub](/cloud/guides/github/upload),
+[GitLab](/cloud/guides/gitlab/upload), 
+[Azure DevOps](cloud/guides/azure/upload), or
+[Bitbucket](cloud/guides/bitbucket/upload).
+</Info>
+
+1. Submit a pull request (PR) with your changes using your version control system (e.g., GitHub, GitLab).
+1. Widgetbook Cloud will **automatically** create a review for your PR and post the URL in your git PR as a **commit status**.
+1. Reviewers should review the visual differences (if any) and either **approve** the changes or **request changes**.
+1. The review status will be **reflected** in the commit status of your git PR.
+1. If changes are requested, the commit status will **block your PR from being merged** until the requested changes are applied. (You can disable this behavior in your project settings.)
+
+## Empower UI Reviews
+
+To give reviewers more power, you can use the following features:
+
+1. [**Figma Reviews**](/cloud/reviews/figma): Compare the implementation with the Figma design.
+1. [**Multi Snapshot Reviews**](/cloud/snapshots/multi-snapshot): Generate snapshots for each use case in multiple configurations (e.g., themes, locales, devices) to ensure UI consistency across all configurations.

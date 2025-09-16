@@ -26,23 +26,24 @@ class MaterialThemeMode extends Mode<ThemeData> {
 /// An [Addon] for changing the active [ThemeData] via [Theme].
 class MaterialThemeAddon extends ModeAddon<ThemeData> {
   MaterialThemeAddon(this.themes)
-      : super(
-          name: 'Material Theme',
-          modeBuilder: MaterialThemeMode.new,
-        );
+    : super(
+        name: 'Material Theme',
+        modeBuilder: MaterialThemeMode.new,
+      );
 
   final Map<String, ThemeData> themes;
 
   @override
   List<Field> get fields {
     return [
-      ListField<ThemeData>(
+      ObjectDropdownField<ThemeData>(
         name: 'name',
         values: themes.values.toList(),
         initialValue: themes.values.first,
-        labelBuilder: (theme) => themes.keys.firstWhere(
-          (key) => themes[key] == theme,
-        ),
+        labelBuilder:
+            (theme) => themes.keys.firstWhere(
+              (key) => themes[key] == theme,
+            ),
       ),
     ];
   }

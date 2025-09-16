@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart'; // @docImport
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
@@ -7,12 +8,55 @@ import '../fields/fields.dart';
 import '../integrations/widgetbook_integration.dart';
 import '../navigation/navigation.dart';
 import '../routing/routing.dart';
+import '../utils.dart';
 import 'default_app_builders.dart';
+import 'default_home_page.dart';
 import 'widgetbook_scope.dart';
 
+/// Function signature for building the app wrapper around use cases.
+///
+/// The [AppBuilder] receives a [BuildContext] and the child widget (use case)
+/// and should return a widget that wraps the child with the appropriate
+/// app-level widgets like [MaterialApp], [CupertinoApp], or [WidgetsApp].
 typedef AppBuilder = Widget Function(BuildContext context, Widget child);
 
+/// Represents the main sections of the Widgetbook layout.
+///
+/// These panels can be shown or hidden individually to customize the
+/// Widgetbook interface layout.
+enum LayoutPanel {
+  /// The navigation panel showing the widget directory structure.
+  ///
+  /// Contains the tree view of folders, components, and use cases.
+  navigation,
+
+  /// The addons panel showing global addon controls.
+  ///
+  /// Contains settings for viewport, theme, localization, and other addons.
+  addons,
+
+  /// The args panel showing story-specific controls.
+  ///
+  /// Contains interactive controls for the currently selected story.
+  args,
+}
+
+/// Central state management for the Widgetbook application.
+///
+/// [WidgetbookState] maintains the current navigation state, query parameters,
+/// addon configurations, knob values, and other stateful information used
+/// throughout the Widgetbook application. It serves as the single source of
+/// truth for the application's state.
+///
+/// The state is accessible throughout the widget tree using:
+/// ```dart
+/// final state = WidgetbookState.of(context);
+/// ```
+///
+/// The state automatically notifies listeners when changes occur, enabling
+/// reactive updates throughout the UI.
 class WidgetbookState extends ChangeNotifier {
+  /// Creates a new instance of [WidgetbookState].
   WidgetbookState({
     this.path,
     this.query,
@@ -21,13 +65,26 @@ class WidgetbookState extends ChangeNotifier {
     this.appBuilder = widgetsAppBuilder,
     this.addons,
     this.integrations,
+    this.home = const DefaultHomePage(),
+    this.panels = null,
+    this.header,
     this.components = const [],
-  })  : this.root = Tree.build(components),
-        this.index = Tree.index(components);
+  }) : this.root = Tree.build(components),
+       this.index = Tree.index(components);
 
+  /// The current path in the Widgetbook.
   String? path;
+
+  /// The current query (i.e. search) string, if any.
   String? query;
+
+  /// Whether the Widgetbook is in preview mode.
+  ///
+  /// Preview mode is when only the workbench panels is shown, and all
+  /// [LayoutPanel]s are hidden.
   bool previewMode;
+
+  /// The query parameters that are used to filter the use-cases.
   Map<String, String> queryParams;
 
   final AppBuilder appBuilder;
@@ -38,6 +95,25 @@ class WidgetbookState extends ChangeNotifier {
   final TreeNode<Null> root;
   final Map<String, Story> index;
 
+  /// Determines which panels are shown.
+  ///
+  /// - If `null`, all panels are shown.
+  /// - If empty, no panels are shown (similar to [previewMode]).
+  /// - If [previewMode] is `true`, the [panels] are ignored.
+  ///
+  /// NOTE: this forces the desktop mode, even if the screen size is small.
+  Set<LayoutPanel>? panels;
+
+  /// The home widget is a widget that is shown on startup when no use-case is
+  /// selected. This widget does not inherit from the [appBuilder] or the
+  /// [addons]; meaning that if `Theme.of(context)` is called inside this
+  final Widget home;
+
+  /// An optional widget to display at the top of the navigation panel.
+  /// This can be used for branding or additional information.
+  final Widget? header;
+
+  /// The currently selected story, if any.
   Story? get story => path == null ? null : index[path!];
 
   /// Same as [addons] but without the ones that have no fields.
@@ -51,6 +127,8 @@ class WidgetbookState extends ChangeNotifier {
     final queryParameters = {
       if (path != null) 'path': path,
       if (query?.isNotEmpty ?? false) 'q': query,
+      if (panels?.isNotEmpty ?? false)
+        'panels': panels?.map((x) => x.name).join(','),
       ...queryParams,
     };
 
@@ -60,11 +138,19 @@ class WidgetbookState extends ChangeNotifier {
     );
   }
 
+  /// Gets the current state using [context], if any.
+  /// If there is no state in scope, then this function will return null.
+  static WidgetbookState? maybeOf(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<WidgetbookScope>()
+        ?.notifier;
+  }
+
   /// Gets the current state using [context].
   static WidgetbookState of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<WidgetbookScope>()!
-        .notifier!;
+    final state = WidgetbookState.maybeOf(context);
+    assert(state != null, 'No Widgetbook found in the context.');
+    return state!;
   }
 
   @internal
@@ -72,9 +158,11 @@ class WidgetbookState extends ChangeNotifier {
   void notifyListeners() {
     super.notifyListeners();
 
-    // Do not sync route in preview mode, since the widget state is already
-    // controlled by using the URL.
-    if (!previewMode) {
+    // Do not sync route if the panels are not showing up,
+    // since the widget state is already controlled by using the URL.
+    if (canShowPanel(LayoutPanel.navigation) ||
+        canShowPanel(LayoutPanel.addons) ||
+        canShowPanel(LayoutPanel.args)) {
       _syncRouteInformation();
     }
 
@@ -83,12 +171,17 @@ class WidgetbookState extends ChangeNotifier {
     );
   }
 
+  /// Whether the given [panel] can be shown based on the current state.
+  bool canShowPanel(LayoutPanel panel) {
+    if (previewMode) return false;
+    if (panels == null) return true;
+    return panels!.contains(panel);
+  }
+
   /// Syncs this with the router's location using [SystemNavigator].
   void _syncRouteInformation() {
     SystemNavigator.routeInformationUpdated(
-      // Not backwards compatible with Flutter < 3.13.0
-      // ignore: deprecated_member_use
-      location: uri.toString(),
+      uri: uri,
     );
   }
 
@@ -113,12 +206,11 @@ class WidgetbookState extends ChangeNotifier {
   }) {
     final groupMap = FieldCodec.decodeQueryGroup(queryParams[group]);
 
-    final newGroupMap = Map<String, String>.from(groupMap)
-      ..update(
-        field,
-        (_) => value,
-        ifAbsent: () => value,
-      );
+    final newGroupMap = Map<String, String>.from(groupMap)..update(
+      field,
+      (_) => value,
+      ifAbsent: () => value,
+    );
 
     updateQueryParam(
       group,
@@ -159,6 +251,14 @@ class WidgetbookState extends ChangeNotifier {
     query = routeConfig.query;
     previewMode = routeConfig.previewMode;
     queryParams = routeConfig.queryParams;
+    panels =
+        previewMode
+            ? null // Panels are ignored in preview mode
+            : routeConfig.panels
+                ?.map(LayoutPanel.values.byNameOrNull)
+                .nonNulls
+                .toSet();
+
     notifyListeners();
   }
 }

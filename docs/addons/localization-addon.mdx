@@ -1,66 +1,125 @@
 # Localization Addon
 
-The Localization Addon in Widgetbook lets developers preview how widgets behave under
+The `LocalizationAddon` in Widgetbook lets developers preview how widgets behave under
 different localization settings. This becomes essential when developing applications for a
 global audience, accommodating differences in language, text direction, and regional
 conventions.
 
-|                                                           English locale                                                            |                                                           Arabic locale                                                           |
-| :---------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------: |
-| <Image zoom src="/assets/addons/localization/english-locale.png" caption="English locale with left to right layout" height="650" /> | <Image zoom src="/assets/addons/localization/arabic-locale.png" caption="Arabic locale with right to left layout" height="650" /> |
+<Tabs
+  values={[
+    { label: "German", value: "de" },
+    { label: "English", value: "en" },
+  ]}
+>
+  <TabItem value="de">
+    <iframe
+      src="https://demo.widgetbook.io/#/?path=features/basket/basketscreen/default&device={name:None}&locale={name:de}&preview"
+      width="100%"
+      height="560px"
+    />
+  </TabItem>
+  <TabItem value="en">
+    <iframe
+      src="https://demo.widgetbook.io/#/?path=features/basket/basketscreen/default&device={name:None}&locale={name:en}&preview"
+      width="100%"
+      height="560px"
+    />
+  </TabItem>
+</Tabs>
 
-## Setup
+## Usage
 
-Here's how to configure it:
+<Info>
+  This guide assumes that you are using the
+  [`flutter_localizations`](https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization#introduction-to-localizations-in-flutter)
+  package. If you are not using it, you can skip steps 1-3.
+</Info>
 
-### Step 1:
+You need to export the `supportedLocales` and `localizationsDelegates` from your app, so that you can use them in Widgetbook. You can do so as follows:
 
-Define `Locales` The first step in setting up the Localization Addon is to specify the
-Locale you want to support. In our case, we have chosen to use 'en-US' (English - United
-States).
+1. Change the `l10n.yaml` file by setting the [`synthetic-package`](https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization#configuring-the-l10n-yaml-file:~:text=won%27t%20be%20generated.-,synthetic%2Dpackage,-Determines%20whether%20the) option to `false`:
 
-```dart
-const Locale('en', 'US'),
-```
+   ```yaml title='l10n.yaml'
+   arb-dir: lib/l10n
+   template-arb-file: app_en.arb
+   output-localization-file: app_localizations.dart
+   synthetic-package: false  // [!code highlight]
+   ```
 
-If your application supports more locales, you can add more Locale objects to the list.
+1. Update your `.gitignore` file to include the generated localization files:
 
-### Step 2:
+   ```gitignore title='.gitignore'
+   # Generated localization files
+   lib/l10n/*.dart
+   ```
 
-Next, you will need to define the `LocalizationDelegates` that are available. These
-delegates are used to fetch locale-specific strings and other values.
+1. Generate the localization files by running the following command:
 
-```dart
-localizationsDelegates: [
-    DefaultWidgetsLocalizations.delegate,
-    DefaultMaterialLocalizations.delegate,
-],
-```
+   ```bash
+   flutter gen-l10n
+   ```
 
-In this example, we have used two localization delegates provided by Flutter -
-`DefaultWidgetsLocalizations.delegate` and `DefaultMaterialLocalizations.delegate`.
+1. Add the addon to your Widgetbook app:
 
-### Step 3:
+   ```dart title=widgetbook/lib/main.dart
+   import 'package:my_app/l10n/app_localizations.dart';  // [!code highlight]
+   import 'package:widgetbook/widgetbook.dart';
 
-The final step is to construct the Localization Addon using the `LocalizationAddon` class.
-This class takes in the locales and `localizationsDelegates` you specified earlier.
+   class WidgetbookApp extends StatelessWidget {
+     const WidgetbookApp({super.key});
 
-```dart
-LocalizationAddon(
-    locales: [
-        const Locale('en', 'US'),
+     @override
+     Widget build(BuildContext context) {
+       return Widgetbook(
+         // ...
+         addons: [
+           LocalizationAddon( // [!code highlight]
+             locales: AppLocalizations.supportedLocales, // [!code highlight]
+             localizationsDelegates: AppLocalizations.localizationsDelegates, // [!code highlight]
+           ), // [!code highlight]
+         ],
+       );
+     }
+   }
+   ```
+
+## Order
+
+The order of this addon doesn't matter, you can place it anywhere in the list of addons.
+
+## Multi-snapshot Support
+
+The `LocalizationAddon` is supported in the [Multi Snapshot Reviews](/cloud/snapshots/multi-snapshot) via the `LocalizationAddonConfig`. Here's how to configure it:
+
+```dart title=widgetbook/lib/main.dart
+import 'package:my_app/l10n/app_localizations.dart';  // [!code highlight]
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@App(
+  cloudAddonsConfigs: {
+    'German': [
+      LocalizationAddonConfig('de'), // [!code highlight]
     ],
-    localizationsDelegates: [
-        DefaultWidgetsLocalizations.delegate,
-        DefaultMaterialLocalizations.delegate,
+    'English': [
+      LocalizationAddonConfig('en'), // [!code highlight]
     ],
-    initialLocale: const Locale('en', 'US')
-),
+  },
+)
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        LocalizationAddon( // [!code highlight]
+          locales: AppLocalizations.supportedLocales, // [!code highlight]
+          localizationsDelegates: AppLocalizations.localizationsDelegates, // [!code highlight]
+        ), // [!code highlight]
+      ],
+    );
+  }
+}
 ```
-
-**Optional:** the `initialLocale` is optional is always read the first value of locales if
-it is not defined.
-
-This setup lets you preview widgets as they appear with the 'en-US' locale. The
-Localization Addon is an excellent tool for ensuring that your application provides an
-appropriate user experience across various locales.

@@ -1,0 +1,67 @@
+# Double Knob
+
+The double input knob renders a text field in the Widgetbook UI where you can dynamically enter a double value for a widget property. 
+This is particularly useful for properties that require a double input, such as a percentage or currency.
+
+## Variants
+
+The double input knob has two variants:
+- `context.knobs.double.input()`: This variant allows you to enter a double value via a text field. It does not accept `null` values.
+- `context.knobs.doubleOrNull.input()`: This variant allows you to enter a double value via a text field or set the value to `null`. It is useful when the property can be optional.
+
+<Info>Widgetbook also offers support for slider-based double knobs which are documented on the [Double Slider Knob page](/knobs/double/slider).</Info>
+
+## Properties
+
+Besides the knob's [base properties](/knobs/overview#properties), the double input knob does not feature any additional properties.
+
+## `context.knobs.double.input()`
+
+### Example
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/double-input-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use the double input knob, call the `context.knobs.double.input()` method.
+
+```dart title="Example: Double Input Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    value: context.knobs.double.input(label: 'value', initialValue: 0.2), // [!code highlight]
+  );
+}
+```
+
+## `context.knobs.doubleOrNull.input()` 
+
+### Example
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/double-input-nullable-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use the nullable double input knob, call the `context.knobs.doubleOrNull.input()` method.
+
+```dart title="Example: Nullable Double Input Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    value: context.knobs.doubleOrNull.input(label: 'value'),
+  );
+}
+```
+
+## Multi-snapshot Support
+
+Multi-snapshot support for Widgetbook Cloud allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons).
+Please refer to the [DoubleKnobConfig page](/knobs/double/overview#multi-snapshot-support) for more information.

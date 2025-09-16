@@ -6,17 +6,19 @@ import 'field_type.dart';
 
 /// [Field] that builds [Switch] for [bool] values.
 class BooleanField extends Field<bool> {
+  /// Creates a new instance of [BooleanField].
   BooleanField({
     required super.name,
     super.initialValue = true,
-    @deprecated super.onChanged,
+    @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-          type: FieldType.boolean,
-          codec: FieldCodec(
-            toParam: (value) => value.toString(),
-            toValue: (param) => param == null ? null : param == 'true',
-          ),
-        );
+         defaultValue: true,
+         type: FieldType.boolean,
+         codec: FieldCodec(
+           toParam: (value) => value.toString(),
+           toValue: (param) => param == null ? null : param == 'true',
+         ),
+       );
 
   @override
   Widget toWidget(BuildContext context, String group, bool? value) {

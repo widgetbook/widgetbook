@@ -1,0 +1,78 @@
+# Object Knob
+
+The object knob allows you to select from a list of objects using different UI controls. This is useful for properties that require a dynamic input with different states or objects of a specific type, such as enums or custom classes.
+
+## Variants and Usage
+
+The object knob currently has the following variant:
+
+- [Object Segmented Knob](#contextknobsobjectsegmented)
+
+## Example: Object Segmented Knob
+
+<iframe
+  src="https://preview.widgetbook.io/#/?path=knobpreview/object-segmented-knob&panels=knobs"
+  width="100%"
+  height="240px"
+/>
+
+## `context.knobs.object.segmented()`
+
+### Usage
+
+To use the object segmented knob, call the `context.knobs.object.segmented()` method.
+
+```dart title="Example: Object Segmented Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    status: context.knobs.object.segmented(
+      label: 'status',
+      options: [
+        OnlineStatusType.online,
+        OnlineStatusType.offline,
+        OnlineStatusType.busy,
+      ],
+      labelBuilder: (OnlineStatusType value) => value.name,
+    ),
+  );
+}
+
+enum OnlineStatusType { online, offline, busy }
+```
+
+## Properties
+
+Besides the knob's [base properties](/knobs/overview#properties), the object segmented knob features:
+
+- `options`: The list of objects to select from.
+- `labelBuilder`: A function to convert an object to a display string.
+
+## Multi-snapshot Support
+
+Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs).
+
+```dart title="Example: ObjectSegmentedKnobConfig"
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: {
+    'online': [ObjectSegmentedKnobConfig('status', 'online')],
+    'offline': [ObjectSegmentedKnobConfig('status', 'offline')],
+    'busy': [ObjectSegmentedKnobConfig('status', 'busy')],
+  },
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    status: context.knobs.object.segmented(
+      label: 'status',
+      options: [
+        OnlineStatusType.online,
+        OnlineStatusType.offline,
+        OnlineStatusType.busy,
+      ],
+      labelBuilder: (OnlineStatusType value) => value.name,
+    ),
+  );
+}
+```

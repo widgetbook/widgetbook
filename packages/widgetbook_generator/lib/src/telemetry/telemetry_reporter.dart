@@ -30,8 +30,8 @@ class TelemetryReporter extends Builder {
 
   @override
   Map<String, List<String>> get buildExtensions => {
-        'components.book.dart': ['.track'],
-      };
+    'components.book.dart': ['.track'],
+  };
 
   /// Get a tracking ID based on git's config.
   /// No sensitive data is collected during the process,
@@ -46,6 +46,48 @@ class TelemetryReporter extends Builder {
       final bytes = utf8.encode(gitUser);
       final digest = sha1.convert(bytes);
       return digest.toString();
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Get an ID for the project based on the SHA of the first
+  /// commit in the repository.
+  Future<String?> getProjectId() async {
+    try {
+      final result = await Process.run(
+        'git',
+        ['rev-list', '--max-parents=0', 'HEAD'],
+      );
+
+      final sha = result.stdout.toString().trim();
+
+      return sha.isEmpty ? null : sha;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Get an owner URL based on the remote origin URL.
+  Future<String?> getOwnerUrl() async {
+    try {
+      final result = await Process.run('git', ['config', 'remote.origin.url']);
+      final remoteUrl = result.stdout.toString().trim();
+
+      if (remoteUrl.isEmpty) return null;
+
+      // Convert SSH to HTTPs, e.g. git@github.com:owner/repo.git
+      // will be converted to https://github.com/owner/repo.git
+      final isSSH = remoteUrl.startsWith('git@');
+      final httpUrl =
+          isSSH
+              ? remoteUrl.replaceAll(':', '/').replaceFirst('git@', 'https://')
+              : remoteUrl;
+
+      // Remove the repo name as it may contain sensitive information.
+      final ownerUrl = httpUrl.substring(0, httpUrl.lastIndexOf('/'));
+
+      return ownerUrl;
     } catch (_) {
       return null;
     }
@@ -87,8 +129,15 @@ class TelemetryReporter extends Builder {
       final isCI = ciKeys.any(Platform.environment.containsKey);
       if (isCI) return;
 
+      // Owner URL can be null if the repository has no remote,
+      // Or a remote that's not named `origin`.
+      final ownerUrl = await getOwnerUrl();
+
       final trackingId = await getTrackingId();
       if (trackingId == null) return;
+
+      final projectId = await getProjectId();
+      if (projectId == null) return;
 
       final lockFile = File('.dart_tool/widgetbook/telemetry.lock');
       final firstRun = !lockFile.existsSync();
@@ -102,8 +151,10 @@ class TelemetryReporter extends Builder {
 
       final report = UsageReport.from(
         trackingId: trackingId,
+        projectId: projectId,
         project: buildStep.inputId.package,
         version: packageVersion,
+        ownerUrl: ownerUrl,
       );
 
       await sendUsageReport(report);

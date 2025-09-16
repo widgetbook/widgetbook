@@ -4,13 +4,16 @@ publish_to: none
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.10.0"
+  sdk: ^3.9.0
+  flutter: ^3.35.0
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_screenutil: ^5.9.0
+  # flutter_screenutil >= 5.9.2 doesn't work with widgetbook as
+  # they are using `View.of` instead of `MediaQuery.of`
+  # https://github.com/OpenFlutter/flutter_screenutil/commit/f7c551acd4cc82460c3a29ec5a7262d6ec678746
+  flutter_screenutil: 5.9.1
   widgetbook: ^4.0.0-alpha.2
 
 dev_dependencies:

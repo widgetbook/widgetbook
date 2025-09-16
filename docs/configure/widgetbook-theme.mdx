@@ -1,0 +1,21 @@
+# Widgetbook's UI Theme
+
+If you want to change some Widgetbook's UI colors, or want to enforce a specific theme mode, you can do so using these parameters:
+
+| Parameter    | Description                                                                                                                       |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| `lightTheme` | [`ThemeData`](https://api.flutter.dev/flutter/material/ThemeData-class.html) that is used when `themeMode` is `ThemeMode.light` |
+| `darkTheme`  | [`ThemeData`](https://api.flutter.dev/flutter/material/ThemeData-class.html) that is used when `themeMode` is `ThemeMode.dark`. |
+| `themeMode`  | Controls which [`ThemeMode`](https://api.flutter.dev/flutter/material/ThemeMode.html) to use. Defaults to `ThemeMode.system`.     |
+
+```dart
+@override
+Widget build(BuildContext context) {
+  return Widgetbook(
+    lightTheme: ThemeData.light(), // Custom light theme
+    darkTheme: ThemeData.dark(),   // Custom dark theme
+    themeMode: ThemeMode.light,    // Forcing light mode
+    // ...
+  );
+}
+```

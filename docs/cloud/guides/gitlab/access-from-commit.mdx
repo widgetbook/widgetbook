@@ -1,0 +1,19 @@
+# Access builds from GitLab commit statuses
+
+Widgetbook Cloud links builds to [GitLab commit statuses](https://docs.gitlab.com/api/commits/#commit-status) so accessing Widgetbook builds integrates seamlessly with your GitLab workflow.
+
+## Prerequisites
+
+Linking builds to GitLab commit statuses requires API access to your GitLab repository.
+By [connecting a Widgetbook project to a GitLab repository](/cloud/projects/connect#connect-project) you allow Widgetbook Cloud to write commit statuses of your repository and add Widgetbook build links to commits.
+Once you've connected your project, build linking via commit statuses is automatically enabled.
+
+<Warning>
+Commit statuses are only created for new builds after the project is connected to a GitLab repository.
+If you've uploaded builds before connecting the project, commit statuses are not created for these builds.
+</Warning>
+
+## How it works
+
+Widgetbook Cloud adds a commit status to the commit of the uploaded build.
+The commit status is a link to the build details page in Widgetbook Cloud and is accessed by clicking the "Widgetbook Build" stage in the GitLab pipelines view.

@@ -1,0 +1,59 @@
+# Widgetbook Cloud x Bitbucket
+
+If you want to use Widgetbook Cloud with your existing Bitbucket repository, here's a step-by-step guide to help you get started.
+
+<Steps>
+  <Step title="Setup Widgetbook Cloud Project">
+    Create a new project in Widgetbook Cloud by importing your Bitbucket repository.
+    You might need to connect your Bitbucket account to Widgetbook Cloud to access your repositories.
+  </Step>
+  
+  <Step title="Add API Key as a Variable">
+    Add `WIDGETBOOK_API_KEY` to your [Bitbucket's Pipeline Variables](https://support.atlassian.com/bitbucket-cloud/docs/variables-and-secrets/#User-defined-variables).
+  </Step>
+
+  <Step title="Create Bitbucket Pipeline">
+    To upload a [Widgetbook Build](/cloud/builds/overview) for each new commit in your repository, you need to setup up a pipeline in Bitbucket that runs on every push.
+
+    Create a new Bitbucket pipeline file in your repository under `bitbucket-pipelines.yml` with the following content:
+
+    ```yaml
+    image: ghcr.io/cirruslabs/flutter
+
+    pipelines:
+      default:
+        - step:
+            name: Build Widgetbook
+            script:
+              # Bootstrap App
+              - flutter pub get
+              - flutter gen-l10n
+              # Bootstrap Widgetbook
+              - cd widgetbook
+              - flutter pub get
+              - dart run build_runner build -d
+              - flutter build web
+            artifacts:
+              - widgetbook/build/web/**
+              - widgetbook/.dart_tool/build/generated/**
+
+        - step:
+            name: Deploy Widgetbook
+            script:
+              - dart pub global activate widgetbook_cli
+              - export PATH="$PATH":"$HOME/.pub-cache/bin"
+              - cd widgetbook
+              - widgetbook cloud build push --api-key "$WIDGETBOOK_API_KEY"
+    ```
+
+  </Step>
+  
+  <Step title="Create a Merge Request">
+    To test out if everything works properly, create a new branch and push a commit to it, then submit a PR with the new branch.
+    After the build upload finishes, a commit status will be added to your PR once the [Widgetbook Review](/cloud/reviews) is ready.
+  </Step>
+</Steps>
+
+## Troubleshooting
+
+To make sure that your Widgetbook Cloud setup works properly, you can check that your repository has a "Widgetbook Cloud" Webhook configured _(under Repository Settings > Webhooks)_ to notify Widgetbook Cloud about new PRs.

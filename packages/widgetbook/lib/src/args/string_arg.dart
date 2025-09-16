@@ -9,11 +9,11 @@ class StringArg extends Arg<String> {
 
   @override
   List<Field> get fields => [
-        StringField(
-          name: name,
-          initialValue: value,
-        ),
-      ];
+    StringField(
+      name: name,
+      initialValue: value,
+    ),
+  ];
 
   @override
   String valueFromQueryGroup(Map<String, String> group) {

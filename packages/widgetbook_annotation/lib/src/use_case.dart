@@ -1,3 +1,5 @@
+import 'knobs_configs.dart';
+
 /// Annotates a builder function which is used to create the WidgetbookComponent
 /// and [UseCase] for the Widgetbook
 class UseCase {
@@ -13,6 +15,8 @@ class UseCase {
     required this.type,
     this.designLink,
     this.path,
+    this.cloudKnobsConfigs,
+    this.cloudExclude = false,
   });
 
   /// The name of the UseCase.
@@ -33,4 +37,11 @@ class UseCase {
   /// For example: `[Interactions]/buttons`
   /// will produce: Interactions (category) -> buttons (folder)
   final String? path;
+
+  /// {@macro cloud_knobs_configs}
+  final KnobsConfigs? cloudKnobsConfigs;
+
+  /// Whether to exclude this use-case from being processed by Widgetbook Cloud.
+  /// All use-cases are included by default.
+  final bool cloudExclude;
 }

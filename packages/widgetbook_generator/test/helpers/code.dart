@@ -4,7 +4,9 @@ import 'package:test/test.dart';
 
 /// Formats output with dart formatter.
 void useDartFormatter() {
-  final DartFormatter _formatter = DartFormatter();
+  final _formatter = DartFormatter(
+    languageVersion: DartFormatter.latestShortStyleLanguageVersion,
+  );
 
   EqualsDart.format = (source) {
     try {

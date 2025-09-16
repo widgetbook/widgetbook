@@ -1,0 +1,25 @@
+# `cloud build push`
+
+Pushes a [Widgetbook build](/cloud/builds/overview) to Widgetbook Cloud.
+
+## Usage
+
+```bash
+widgetbook cloud build push --api-key <API_KEY>
+```
+
+## Arguments
+
+The CLI accepts the following arguments.
+
+| Argument       | Mandatory | Default\*                     | Description                                                      |
+| -------------- | --------- | ----------------------------- | ---------------------------------------------------------------- |
+| `--path`       | ➖        | `./`                          | The path to your project.                                        |
+| `--api-key`    | ✅        | -                             | The project specific API key for Widgetbook Cloud.               |
+| `--branch`     | ➖        | Current git branch            | The name of the branch for which the Widgetbook is uploaded.     |
+| `--commit`     | ➖        | HEAD commit of current branch | The SHA hash of the commit for which the Widgetbook is uploaded. |
+| `--repository` | ➖        | Repository top-level name     | The name of the repository for which the Widgetbook is uploaded. |
+| `--actor`      | ➖        | Git config `user.name`        | The username of the actor which triggered the build.             |
+
+_\* These defaults are used when the CLI is used locally.
+If the CLI is used in a CI/CD environment, the defaults have different respective values._

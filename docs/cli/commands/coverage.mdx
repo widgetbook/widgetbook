@@ -1,0 +1,33 @@
+# `coverage`
+
+<Warning>
+  This command is currently **experimental**, so any breaking changes can be
+  introduced at any minor version.
+</Warning>
+
+Checks the percentage of package widgets that are covered by at least one use-case in Widgetbook.
+
+## Usage
+
+```bash
+widgetbook coverage
+```
+
+## Arguments
+
+The CLI accepts the following arguments.
+
+| Argument         | Mandatory | Default\*      | Description                                       |
+| ---------------- | --------- | -------------- | ------------------------------------------------- |
+| `--package`      | ➖        | `./`           | Directory of the app or the design system package |
+| `--widgetbook`   | ➖        | `./widgetbook` | Directory of the widgetbook app                   |
+| `--min-coverage` | ➖        | `100`          | Minimum coverage percentage required              |
+
+## Ignoring Widgets
+
+Some widgets are not meant to be cataloged in Widgetbook (e.g. `App` widget). You can ignore these widgets by adding the following comment above the widget definition:
+
+```dart
+// widgetbook: ignore
+class App extends StatelessWidget { ... }
+```

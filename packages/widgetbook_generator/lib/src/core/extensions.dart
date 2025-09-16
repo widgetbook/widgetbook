@@ -12,7 +12,7 @@ extension ExpressionX on Expression {
   }
 }
 
-extension ParameterElementX on ParameterElement {
+extension FormalParameterElementX on FormalParameterElement {
   bool get requiresArg {
     return !type.isPrimitive && !type.isNullable && !hasDefaultValue;
   }
@@ -60,17 +60,19 @@ extension DartTypeX on DartType {
   }) {
     if (this is! ParameterizedType) return [];
 
-    return element!.children //
-        .whereType<TypeParameterElement>()
-        .map(
-          (typeElement) => TypeReference(
-            (b) => b
+    final typeElement = this.element as TypeParameterizedElement;
+
+    return typeElement.typeParameters.map(
+      (typeElement) => TypeReference(
+        (b) =>
+            b
               ..symbol = typeElement.name
-              ..bound = withBounds && typeElement.bound != null
-                  ? refer(typeElement.bound!.nonGenericName)
-                  : null,
-          ),
-        );
+              ..bound =
+                  withBounds && typeElement.bound != null
+                      ? refer(typeElement.bound!.nonGenericName)
+                      : null,
+      ),
+    );
   }
 
   TypeReference getRef({
@@ -79,12 +81,14 @@ extension DartTypeX on DartType {
     Set<Reference>? types,
   }) {
     return TypeReference(
-      (b) => b
-        ..isNullable = isNullable
-        ..symbol = suffix == null ? nonGenericName : '$nonGenericName$suffix'
-        ..types.addAll(
-          types ?? getTypeParams(withBounds: false),
-        ),
+      (b) =>
+          b
+            ..isNullable = isNullable
+            ..symbol =
+                suffix == null ? nonGenericName : '$nonGenericName$suffix'
+            ..types.addAll(
+              types ?? getTypeParams(withBounds: false),
+            ),
     );
   }
 
@@ -102,9 +106,7 @@ extension DartTypeX on DartType {
     //    - Without nullability : Future<bool>
     //    - Expected            : Future<bool?>
 
-    final displayString = getDisplayString(
-      withNullability: true,
-    );
+    final displayString = getDisplayString();
 
     return nullabilitySuffix != NullabilitySuffix.none
         ? displayString.substring(0, displayString.length - 1)
@@ -126,11 +128,11 @@ extension DartTypeX on DartType {
   TypeMeta get meta {
     return isEnum
         ? TypeMeta(
-            'EnumArg<$nonNullableName>',
-            refer(nonNullableName).property(
-              (element as EnumElement).fields.first.name,
-            ),
-          )
+          'EnumArg<$nonNullableName>',
+          refer(nonNullableName).property(
+            (element as EnumElement).fields.first.name!,
+          ),
+        )
         : typesMeta[nonNullableName]!;
   }
 }

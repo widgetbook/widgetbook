@@ -10,6 +10,7 @@ class MockField extends Field<bool> {
     required super.name,
     required super.type,
     required super.initialValue,
+    required super.defaultValue,
     required super.codec,
   });
 
@@ -51,6 +52,7 @@ void main() {
         name: 'mock_field',
         type: FieldType.boolean,
         initialValue: true,
+        defaultValue: true,
         codec: FieldCodec(
           toParam: (value) => value.toString(),
           toValue: (param) => param == null ? null : param == 'true',
@@ -121,6 +123,32 @@ void main() {
             FieldCodec.decodeQueryGroup(
               state.queryParams[group],
             ),
+          );
+
+          expect(result, equals(true));
+        },
+      );
+
+      testWidgets(
+        'given a nullable field value, '
+        'when updateField is called, '
+        'then it updates the query params with the new non nullable value',
+        (tester) async {
+          const group = 'mock_group';
+
+          final state = await tester.pumpWidgetWithQueryParams(
+            queryParams: {
+              group: '{${field.name}:${Field.nullabilitySymbol}false}',
+            },
+            builder: (context) => Container(),
+          );
+
+          final context = tester.element(find.byType(Container));
+
+          field.updateField(context, group, true);
+
+          final result = field.valueFrom(
+            FieldCodec.decodeQueryGroup(state.queryParams[group]),
           );
 
           expect(result, equals(true));

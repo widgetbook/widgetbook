@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 import '../fields/fields.dart';
-import '../settings/setting.dart';
 import '../state/state.dart';
 import 'arg.dart';
 import 'story.dart';
@@ -12,10 +11,8 @@ import 'story.dart';
 @optionalTypeArgs
 abstract class Addon<T> extends FieldsComposable<T> {
   Addon({
-    required this.name,
+    required super.name,
   });
-
-  final String name;
 
   @override
   String get groupName => slugify(name);
@@ -32,26 +29,6 @@ abstract class Addon<T> extends FieldsComposable<T> {
       context,
       child,
       newSetting,
-    );
-  }
-
-  @override
-  Widget buildFields(BuildContext context) {
-    return Setting(
-      name: name,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: fields
-            .map(
-              (field) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 4.0,
-                ),
-                child: field.build(context, groupName),
-              ),
-            )
-            .toList(),
-      ),
     );
   }
 

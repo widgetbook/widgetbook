@@ -1,0 +1,79 @@
+# Double Knob
+
+The double knob renders a text field or slider in the Widgetbook UI where you can dynamically enter a double value for a widget property. 
+This is particularly useful for properties that require a double input, such as a percentage or currency.
+
+## Variants and Usage
+
+The double knob has two variants with each a regular and a nullable type:
+- [Double Input Knob](/knobs/double/input)
+- [Double Slider Knob](/knobs/double/slider)
+
+For the usage please refer to the respective pages.
+
+## Example Input
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/double-input-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+## Example Slider
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/double-slider-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+## Multi-snapshot Support
+
+Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons).
+
+<Info>The blow information shows the `DoubleKnobConfig` for the [Double Input Knob](/knobs/double/input), but the `DoubleKnobConfig` can be applied to the [Double Slider Knob](/knobs/double/slider) as well.</Info>
+
+### Regular double Knob
+
+```dart title="Example: DoubleKnobConfig"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    '0%': [DoubleKnobConfig('value', 0)], // [!code highlight]
+    '50%': [DoubleKnobConfig('value', 0.5)], // [!code highlight]
+    '100%': [DoubleKnobConfig('value', 1)], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    value: context.knobs.double.input(label: 'value', initialValue: 0.2),
+  );
+}
+```
+
+### Nullable double knob
+
+```dart title="Example: NullKnobConfig"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'Without value': [NullKnobConfig('value')], // [!code highlight]
+    'With value': [DoubleKnobConfig('value', 1)], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    value: context.knobs.doubleOrNull.input(label: 'value'),
+  );
+}
+```

@@ -20,10 +20,10 @@ class ZoomMode extends Mode<double> {
 /// An [Addon] for zoom/scaling.
 class ZoomAddon extends ModeAddon<double> {
   ZoomAddon()
-      : super(
-          name: 'Zoom',
-          modeBuilder: ZoomMode.new,
-        );
+    : super(
+        name: 'Zoom',
+        modeBuilder: ZoomMode.new,
+      );
 
   @override
   List<Field> get fields {

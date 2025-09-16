@@ -4,23 +4,24 @@ import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
 
-/// [Field] that builds [TextFormField] for [String] values.
+/// A [Field] that builds [TextFormField] for [String] values.
 class StringField extends Field<String> {
+  /// Creates a new instance of [StringField].
   StringField({
     required super.name,
     super.initialValue = '',
     this.maxLines,
-    @deprecated super.onChanged,
+    @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-          type: FieldType.string,
-          codec: FieldCodec(
-            toParam: (value) => Uri.encodeComponent(value),
-            toValue: (param) => param != null
-                ? Uri.decodeComponent(param) //
-                : null,
-          ),
-        );
+         defaultValue: '',
+         type: FieldType.string,
+         codec: FieldCodec(
+           toParam: (value) => value,
+           toValue: (param) => param,
+         ),
+       );
 
+  /// The maximum number of lines for the text field.
   final int? maxLines;
 
   @override
@@ -28,6 +29,9 @@ class StringField extends Field<String> {
     return TextFormField(
       maxLines: maxLines,
       initialValue: value ?? initialValue,
+      decoration: const InputDecoration(
+        hintText: 'Enter a value',
+      ),
       onChanged: (value) => updateField(context, group, value),
     );
   }

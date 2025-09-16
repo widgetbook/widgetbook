@@ -1,0 +1,29 @@
+# Overview
+
+With _Widgetbook Builds_ developers can host a Widgetbook for each Git commit and make the specific Widgetbook easily accessible for the whole team on Widgetbook Cloud.
+When setup with CI/CD, you consistantly upload builds for each commit, pull-request and branch and make those builds accessible from your favorite Git provider.
+
+<Image src="/assets/cloud/projects/overview.png" caption="List of builds with their corresponding commit SHA and branch" zoom />
+
+## Versioning Widgetbook
+
+Making adjustments to your Flutter frontend code means creating new versions of:
+- your components  
+- your app  
+- your Widgetbook  
+These updates are made by submitting new commits.
+
+Developers often need to share specific versions with their team — including developers, designers, QA testers, and product managers.
+
+Widgetbook Cloud supports **versioning with builds** by:
+- Uploading the Widgetbook build for every commit  
+- Hosting builds for each branch
+
+## Status
+
+Widgetbook Cloud expects that builds are immutable, therefore only one build with a specific commit SHA can exist for each project.
+In the lifecycle of a build, a build transitions through the following statuses:
+- **Draft:** The upload of a new build has been requested and is in the process of uploading.
+- **In progress:** The build uploaded and we're processing the snapshots.
+- **Successful:** The build successfully uploaded and all snapshots are processed.
+- **Failed:** The build failed to upload or process snapshots.

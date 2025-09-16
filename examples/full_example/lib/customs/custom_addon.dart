@@ -15,10 +15,10 @@ class AlignMode extends Mode<Alignment> {
 
 class AlignAddon extends ModeAddon<Alignment> {
   AlignAddon([this.alignment = Alignment.center])
-      : super(
-          name: 'Alignment',
-          modeBuilder: AlignmentMode.new,
-        );
+    : super(
+        name: 'Alignment',
+        modeBuilder: AlignmentMode.new,
+      );
 
   final Alignment alignment;
 
@@ -37,7 +37,7 @@ class AlignAddon extends ModeAddon<Alignment> {
   @override
   List<Field> get fields {
     return [
-      ListField<Alignment>(
+      ObjectDropdownField<Alignment>(
         name: 'alignment',
         initialValue: alignment,
         values: alignments.keys.toList(),

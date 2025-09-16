@@ -18,7 +18,6 @@ void main() {
 
   group('$ContextManager', () {
     final repository = MockRepository();
-    final environment = FakeEnvironment();
 
     test('Local', () async {
       ciManager.mock();
@@ -26,12 +25,11 @@ void main() {
       when(() => repository.user).thenAnswer((_) async => userName);
 
       expectLater(
-        contextManager.load(repository, environment),
+        contextManager.load(repository),
         completion(
           Context(
             name: 'Local',
             repository: repository,
-            environment: environment,
             user: userName,
             project: repoName,
           ),
@@ -42,17 +40,16 @@ void main() {
     test('Azure', () {
       ciManager.mock(isAzure: true);
       when(() => platform.environment).thenReturn({
-        'Agent.Name': userName,
-        'Build.Repository.Name': repoName,
+        'BUILD_SOURCEVERSIONAUTHOR': userName,
+        'BUILD_REPOSITORY_NAME': repoName,
       });
 
       expectLater(
-        contextManager.load(repository, environment),
+        contextManager.load(repository),
         completion(
           Context(
             name: 'Azure',
             repository: repository,
-            environment: environment,
             user: userName,
             project: repoName,
           ),
@@ -68,12 +65,11 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(repository, environment),
+        contextManager.load(repository),
         completion(
           Context(
             name: 'Bitbucket',
             repository: repository,
-            environment: environment,
             user: userName,
             project: repoName,
           ),
@@ -89,12 +85,11 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(repository, environment),
+        contextManager.load(repository),
         completion(
           Context(
             name: 'Codemagic',
             repository: repository,
-            environment: environment,
             user: 'Codemagic',
             project: repoName,
             providerSha: userName,
@@ -112,12 +107,11 @@ void main() {
       });
 
       expectLater(
-        contextManager.load(repository, environment),
+        contextManager.load(repository),
         completion(
           Context(
             name: 'GitHub',
             repository: repository,
-            environment: environment,
             user: userName,
             project: repoName,
             providerSha: sha,
@@ -129,19 +123,22 @@ void main() {
     test('GitLab', () {
       ciManager.mock(isGitLab: true);
       when(() => platform.environment).thenReturn({
-        'GITLAB_USER_NAME': userName,
-        'CI_PROJECT_NAME': repoName,
+        'GITLAB_USER_LOGIN': userName,
+        'CI_PROJECT_PATH': repoName,
+        'CI_COMMIT_BRANCH': 'main',
+        'CI_COMMIT_SHA': sha,
       });
 
       expectLater(
-        contextManager.load(repository, environment),
+        contextManager.load(repository),
         completion(
           Context(
             name: 'GitLab',
             repository: repository,
-            environment: environment,
             user: userName,
             project: repoName,
+            providerBranch: 'main',
+            providerSha: sha,
           ),
         ),
       );

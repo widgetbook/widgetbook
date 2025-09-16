@@ -1,39 +1,116 @@
 # Builder Addon
 
-The Builder Addon is utility to wrap all use-cases with a certain widget.
+The `BuilderAddon` is utility that can help you:
 
-## Setup
-
-Here's how to configure it:
-
-```dart
-BuilderAddon(
-    name: 'Red',
-    builder: (context, child) => ColoredBox(
-        color: Colors.red,
-        child: child,
-    ),
-)
-```
+1. Wrap all use-cases with a custom widget.
+2. Create a [custom addon](/addons/custom-addon) with less boilerplate, but the addon will have no "controls" shown in the addons panel.
 
 ## Usage
 
-This can be used to quickly setup a custom addon with much less boilerplate.
-For example, here's an addon for [`flutter_screenutil`](https://pub.dev/packages/flutter_screenutil) package:
+```dart title=widgetbook/lib/main.dart
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
 
-```dart
-BuilderAddon(
-    name: 'ScreenUtil',
-    builder: (context, child) {
-        return ScreenUtilInit(
-            designSize: const Size(375, 812),
-            minTextAdapt: true,
-            splitScreenMode: true,
-            // This is needed to use the workbench [MediaQuery]
-            useInheritedMediaQuery: true,
-            builder: (context, child) => child!,
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      directories: directories,
+      addons: [
+        BuilderAddon( // [!code highlight]
+          name: 'Red', // [!code highlight]
+          builder: (context, child) => ColoredBox( // [!code highlight]
+            color: Colors.red, // [!code highlight]
+            child: child, // [!code highlight]
+          ), // [!code highlight]
+        ), // [!code highlight]
+      ],
+    );
+  }
+}
+```
+
+## Third-party Examples
+
+### flutter_screenutil
+
+If you are using [`flutter_screenutil`](https://pub.dev/packages/flutter_screenutil) package, you can use the `BuilderAddon` to wrap your use-cases with `ScreenUtilInit` widget.
+
+<Warning>
+  [`flutter_screenutil`](https://pub.dev/packages/flutter_screenutil) >= 5.9.2
+  doesn't work with Widgetbook as they started using `View.of` instead of
+  `MediaQuery.of` in
+  [`f7c551a`](https://github.com/OpenFlutter/flutter_screenutil/commit/f7c551acd4cc82460c3a29ec5a7262d6ec678746)
+</Warning>
+
+```yaml title=widgetbook/pubspec.yaml
+dependencies:
+  flutter_screenutil: 5.9.1
+  widgetbook: ^{{ versions.widgetbook }}
+```
+
+```dart title=widgetbook/lib/main.dart
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:widgetbook/widgetbook.dart';
+
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      directories: directories,
+      addons: [
+        BuilderAddon(
+          name: 'ScreenUtil',
+          builder: (context, child) {
+            return ScreenUtilInit(
+              designSize: const Size(375, 812),
+              minTextAdapt: true,
+              splitScreenMode: true,
+              // This is needed to use the workbench [MediaQuery]
+              useInheritedMediaQuery: true,
+              builder: (context, child) => child!,
+              child: child,
+            );
+          },
+        )
+      ],
+    );
+  }
+}
+```
+
+### accessibility_tools
+
+An alternative to the deprecated `AccessibilityAddon` is to use the
+[`accessibility_tools`](https://pub.dev/packages/accessibility_tools) package with the `BuilderAddon` as follows:
+
+```yaml title=widgetbook/pubspec.yaml
+dependencies:
+  accessibility_tools: ^2.0.0
+  widgetbook: ^{{ versions.widgetbook }}
+```
+
+```dart title=widgetbook/lib/main.dart
+import 'package:accessibility_tools/accessibility_tools.dart';
+import 'package:widgetbook/widgetbook.dart';
+
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      directories: directories,
+      addons: [
+        BuilderAddon(
+          name: 'Accessibility',
+          builder: (context, child) => AccessibilityTools(
             child: child,
-        );
-    },
-)
+          ),
+        ),
+      ],
+    );
+  }
+}
 ```

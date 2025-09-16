@@ -19,26 +19,28 @@ class TimeDilationMode extends Mode<double> {
 
 class TimeDilationAddon extends ModeAddon<double> {
   TimeDilationAddon()
-      : super(
-          name: 'Time Dilation',
-          modeBuilder: TimeDilationMode.new,
-        );
+    : super(
+        name: 'Time Dilation',
+        modeBuilder: TimeDilationMode.new,
+      );
+
+  /// Predefined time dilation values for animation speed control.
+  static const values = <double>[0.25, 0.5, 1, 2, 4, 8, 16];
 
   @override
   List<Field> get fields {
     return [
-      DoubleSliderField(
-        name: 'factor',
+      ObjectDropdownField<double>(
+        name: 'value',
+        values: values,
         initialValue: 1,
-        min: 0.25,
-        max: 16,
-        divisions: 16 * 4 - 1,
+        labelBuilder: (scale) => scale.toStringAsFixed(2),
       ),
     ];
   }
 
   @override
   double valueFromQueryGroup(Map<String, String> group) {
-    return valueOf('factor', group)!;
+    return valueOf('value', group)!;
   }
 }

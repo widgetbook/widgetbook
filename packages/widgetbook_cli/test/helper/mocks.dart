@@ -10,17 +10,6 @@ import 'package:process/process.dart';
 import 'package:pub_updater/pub_updater.dart';
 import 'package:widgetbook_cli/widgetbook_cli.dart';
 
-class FakeEnvironment extends Fake implements Environment {
-  @override
-  final String name = 'test';
-
-  @override
-  final String apiUrl = '';
-
-  @override
-  final String appUrl = '';
-}
-
 class MockLogger extends Mock implements Logger {}
 
 class MockPubUpdater extends Mock implements PubUpdater {}
@@ -37,13 +26,9 @@ class MockWidgetbookHttpClient extends Mock implements WidgetbookHttpClient {}
 
 class MockFileSystem extends Mock implements FileSystem {}
 
-class MockPublishArgs extends Mock implements PublishArgs {}
-
 class MockFile extends Mock implements File {}
 
 class MockDirectory extends Mock implements Directory {}
-
-class MockZipEncoder extends Mock implements ZipEncoder {}
 
 class MockArgResults extends Mock implements ArgResults {}
 
@@ -67,7 +52,7 @@ class MockCiManager extends Mock implements CiManager {
 
 class MockPlatform extends Mock implements Platform {}
 
-class MockUseCaseReader extends Mock implements UseCaseReader {}
+class MockCacheReader extends Mock implements CacheReader {}
 
 class MockStdin extends Mock implements Stdin {}
 

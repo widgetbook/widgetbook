@@ -9,11 +9,11 @@ class DoubleArg extends Arg<double> {
 
   @override
   List<Field> get fields => [
-        DoubleInputField(
-          name: name,
-          initialValue: value,
-        ),
-      ];
+    DoubleInputField(
+      name: name,
+      initialValue: value,
+    ),
+  ];
 
   @override
   double valueFromQueryGroup(Map<String, String> group) {

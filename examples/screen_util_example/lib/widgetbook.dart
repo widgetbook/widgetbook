@@ -17,14 +17,16 @@ class WidgetbookApp extends StatelessWidget {
       components: components,
       addons: [
         TextScaleAddon(),
-        DeviceFrameAddon([
-          Devices.ios.iPhoneSE,
-          Devices.ios.iPhone12,
-          Devices.ios.iPhone13,
+        ViewportAddon([
+          IosViewports.iPhoneSE,
+          IosViewports.iPhone12,
+          IosViewports.iPhone13,
         ]),
         BuilderAddon(
           name: 'ScreenUtil',
           builder: (context, child) {
+            // flutter_screenutil must be version 3.9.1 or lower
+            // to work properly with Widgetbook
             return ScreenUtilInit(
               designSize: const Size(375, 812),
               minTextAdapt: true,

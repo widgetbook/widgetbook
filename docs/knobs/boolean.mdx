@@ -1,0 +1,124 @@
+# Boolean Knob
+
+The boolean knob renders a toggle switch in the Widgetbook UI where you can dynamically toggle a bool value for a widget property. 
+
+## Variants
+
+The boolean knob has two variants:
+- `context.knobs.boolean()`: This variant allows you to toggle a bool value. It does not accept `null` values.
+- `context.knobs.booleanOrNull()`: This variant allows you to toggle a bool value or `null`. It is useful when the property can be optional.
+
+## `context.knobs.boolean()`
+### Properties
+
+Besides the knob's [base properties](/knobs/overview#properties), the boolean knob does not feature any additional properties.
+
+### Example
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/bool-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use a boolean knob, call the `context.knobs.boolean()` method.
+
+```dart title="Example: Boolean Knob"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(type: Checkbox, name: 'Duo state')
+Widget buildCheckboxUseCase(BuildContext context) {
+  return Checkbox(
+    value: context.knobs.boolean(label: 'value'), // [!code highlight]
+    onChanged: (value) {},
+  );
+}
+```
+
+## `context.knobs.booleanOrNull()` 
+
+### Properties
+
+Besides the knob's [base properties](/knobs/overview#properties), the nullable boolean knob does not feature any additional properties.
+
+### Example
+
+<iframe 
+  src="https://preview.widgetbook.io/#/?path=knobpreview/bool-nullable-knob&panels=knobs" 
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use the nullable boolean knob, call the `context.knobs.booleanOrNull()` method.
+
+```dart title="Example: Nullable Boolean Knob"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(type: Checkbox, name: 'Tristate')
+Widget buildCheckboxUseCase(BuildContext context) {
+  return Checkbox(
+    value: context.knobs.booleanOrNull(label: 'value'), // [!code highlight]
+    tristate: true,
+    onChanged: (value) {},
+  );
+}
+```
+
+## Multi-snapshot Support
+
+Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons).
+
+### Regular Boolean Knob
+
+```dart title="Example: BooleanKnobConfig"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(
+  type: Checkbox,
+  name: 'Duo state',
+  cloudKnobsConfigs: { // [!code highlight]
+    'Checked': [BooleanKnobConfig('value', true)], // [!code highlight]
+    'Unchecked': [BooleanKnobConfig('value', false)], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildCheckboxUseCase(BuildContext context) {
+  return Checkbox(
+    value: context.knobs.boolean(label: 'value'),
+    onChanged: (value) {},
+  );
+}
+```
+
+### Nullable Bool Knob
+
+```dart title="Example: NullKnobConfig"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@UseCase(
+  type: Checkbox,
+  name: 'Tristate',
+  cloudKnobsConfigs: { // [!code highlight]
+    'Mixed': [NullKnobConfig('value')], // [!code highlight]
+    'Checked': [BooleanKnobConfig('value', true)], // [!code highlight]
+    'Unchecked': [BooleanKnobConfig('value', false)], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildCheckboxUseCase(BuildContext context) {
+  return Checkbox(
+    value: context.knobs.booleanOrNull(label: 'value'),
+    onChanged: (value) {},
+  );
+}
+```

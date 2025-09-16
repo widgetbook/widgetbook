@@ -1,0 +1,66 @@
+# Limitations
+
+## Animations
+
+If your use cases include animations (e.g., `CircularProgressIndicator`), visual comparison may not work as expected. 
+The visual comparison algorithm cannot accurately compare animations.
+
+We suggest the following workarounds:
+
+1. **Adaptive animations**: you might want to still enjoy your animations while running Widgetbook, but you just need to disable them when the use-case is being used in a Widgetbook-Cloud-context. To do so, you can use the following `extension`, to make your use-cases adaptive to the Widgetbook Cloud Reviews and disable the animations during the visual comparison.
+
+   ```dart
+   extension WidgetbookContext on BuildContext {
+     /// The `preview` query parameter is used while taking snapshots of the
+     /// use-case for Widgetbook Cloud Reviews. This getter can be used to
+     /// customize the behavior of the use-case while taking the snapshots,
+     /// for example, to disable animations.
+     bool get isInWidgetbookCloud => WidgetbookState.of(this).previewMode;
+   }
+
+   @UseCase(name: 'Default', type: CircularProgressIndicator)
+   Widget adaptiveAnimationUseCase(BuildContext context) {
+     return CircularProgressIndicator(
+       value: context.isInWidgetbookCloud ? 0.5 : null,
+     );
+   }
+   ```
+
+2. **Start animations on demand**: Use a `boolean` knob to control your animations. This allows you to disable animations during visual comparison but still see them in Widgetbook.
+
+   ```dart
+   @UseCase(name: 'Default', type: CircularProgressIndicator)
+   Widget onDemandAnimationUseCase(BuildContext context) {
+     return CircularProgressIndicator(
+       value: context.knobs.boolean(label: 'Static') ? 0.5 : null,
+     );
+   }
+   ```
+
+## Random Values
+
+If your use case displays random values (e.g., dates) that differ across builds, visual comparison may produce noisy diffs.
+
+We suggest the following workarounds:
+
+1. Use a **constant value** instead of a random value.
+
+   ```dart
+   @UseCase(name: 'Default', type: Text)
+   Widget constantValueUseCase(BuildContext context) {
+     return Text(Random().nextInt(10).toString()); // [!code --]
+     return Text('10'); // [!code ++]
+   }
+   ```
+
+2. Use [**Knobs**](/knobs/overview) with a default value.
+
+   ```dart
+   @UseCase(name: 'Default', type: Text)
+   Widget constantValueUseCase(BuildContext context) {
+     return Text(Random().nextInt(10).toString()); // [!code --]
+     return Text( // [!code ++]
+       context.knobs.string(label: 'value', defaultValue: '10'), // [!code ++]
+     ); // [!code ++]
+   }
+   ```

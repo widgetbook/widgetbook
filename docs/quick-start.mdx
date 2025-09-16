@@ -1,0 +1,147 @@
+# Quick Start
+
+## Bootstrap
+
+<Info>
+  If you are using Widgetbook in a monorepo, check the
+  [Monorepo](/essentials/monorepo) guide.
+</Info>
+
+The first step to start using Widgetbook is to create a new separate Flutter app for your widget catalog.
+
+1. Create a new Flutter project inside your app's directory:
+
+   ```bash
+   ## All platforms
+   flutter create widgetbook --empty
+
+   ## Certain platforms
+   flutter create widgetbook --empty --platforms=web,macos
+   ```
+
+1. To avoid naming conflict with the [Widgetbook pub package](https://pub.dev/packages/widgetbook), change the project `name` to `widgetbook_workspace` inside the `widgetbook/pubspec.yaml` file:
+
+   ```diff
+   - name: widgetbook
+   + name: widgetbook_workspace
+   ```
+
+1. Add the following dependencies to your `widgetbook` project:
+
+   ```bash
+   flutter pub add widgetbook widgetbook_annotation dev:widgetbook_generator dev:build_runner
+   ```
+
+1. Add your app as a path dependency to the `widgetbook/pubspec.yaml` file:
+
+   ```yaml
+   dependencies:
+     your_app:
+       path: ../
+   ```
+
+After finishing the setup, the folder structure should look something like this:
+
+```tree
+your_app/
+├── pubspec.yaml
+├── lib/
+├── ...
+└── widgetbook/
+    ├── pubspec.yaml
+    ├── lib/
+    └── ...
+```
+
+And the `widgetbook/pubspec.yaml` file should look like this:
+
+```yaml
+name: widgetbook_workspace
+# ...
+
+dependencies:
+  widgetbook_annotation: ^{{ versions.annotation }}
+  widgetbook: ^{{ versions.widgetbook }}
+  your_app:
+    path: ../
+
+dev_dependencies:
+  build_runner:
+  widgetbook_generator: ^{{ versions.generator }}
+```
+
+## Your First Use-case
+
+In this section, you will create a simple use-case and show it inside your Widgetbook app.
+
+1. Choose a widget from `your_app` that you want to catalog. **For this example, we will use the imaginary `CoolButton` widget**.
+
+1. Create a file inside your `widgetbook` app at `widgetbook/lib/cool_button.dart`
+
+   <Info>
+     If your widget needs some parameters, you can pass some constants for now
+     for simplicity. Later you can check how to use [Knobs](/knobs/overview).
+   </Info>
+
+   ```dart
+   import 'package:flutter/material.dart';
+   import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+   // Import the widget from your app
+   import 'package:your_app/cool_button.dart';
+
+   @widgetbook.UseCase(name: 'Default', type: CoolButton)
+   Widget buildCoolButtonUseCase(BuildContext context) {
+     return CoolButton();
+   }
+   ```
+
+1. Create a file inside your `widgetbook` app at `lib/main.dart`
+
+   ```dart
+   import 'package:flutter/material.dart';
+   import 'package:widgetbook/widgetbook.dart';
+   import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+   // This file does not exist yet,
+   // it will be generated in the next step
+   import 'main.directories.g.dart';
+
+   void main() {
+     runApp(const WidgetbookApp());
+   }
+
+   @widgetbook.App()
+   class WidgetbookApp extends StatelessWidget {
+     const WidgetbookApp({super.key});
+
+     @override
+     Widget build(BuildContext context) {
+       return Widgetbook.material(
+         // The [directories] variable does not exist yet,
+         // it will be generated in the next step
+         directories: directories,
+       );
+     }
+   }
+   ```
+
+1. Run the following command to generate the `main.directories.g.dart` file that has the `directories` variable:
+
+   ```bash
+   dart run build_runner build -d
+   ```
+
+1. Now you can run your Widgetbook app and see your use-case in action:
+
+   ```bash
+   flutter run
+   ```
+
+1. Add some [Addons](/addons/overview) to your Widgetbook app to customize the appearance of your use-case.
+
+## Migrating Existing Widgets
+
+If you already have a number of widgets developed in your design system, it may be time consuming to create use-cases for all of them manually.
+
+Our friends at LeanCode developed a VS Code extension - [Widgetbook Entries Generator](https://marketplace.visualstudio.com/items?itemName=LeanCode.widgetbook-generator) - to help with the process, along with an article describing this case and its usage: [How We Boosted Moving Flutter Widgets to Widgetbook](https://leancode.co/blog/moving-flutter-widgets-to-widgetbook?utm_source=widgetbook&utm_medium=docspage).

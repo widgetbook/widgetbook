@@ -18,8 +18,11 @@ class StoryClassBuilder {
   final bool hasSetup;
   final bool hasArgsBuilder;
 
-  Iterable<ParameterElement> get params {
-    return (argsType.element as ClassElement).constructors.first.parameters;
+  Iterable<FormalParameterElement> get params {
+    return (argsType.element as ClassElement)
+        .constructors
+        .first
+        .formalParameters;
   }
 
   Set<Reference> getTypeParams({bool withBounds = true}) {
@@ -53,147 +56,175 @@ class StoryClassBuilder {
     );
 
     return Class(
-      (b) => b
-        ..name = storyClassRef.symbol
-        ..types.addAll(getTypeParams())
-        ..extend = TypeReference(
-          (b) => b
-            ..symbol = 'Story'
-            ..types.addAll([widgetClassRef, argsClassRef]),
-        )
-        ..constructors.add(
-          Constructor(
-            (b) {
-              b.optionalParameters.addAll([
-                Parameter(
-                  (b) => b
-                    ..name = 'name'
-                    ..named = true
-                    ..toSuper = true,
-                ),
-                Parameter(
-                  (b) => b
-                    ..name = 'setup'
-                    ..named = true
-                    ..toSuper = !hasArgsBuilder
-                    ..type = !hasArgsBuilder
-                        ? null
-                        : TypeReference(
-                            (b) => b
-                              ..symbol = 'SetupBuilder'
-                              ..isNullable = true
-                              ..types.addAll([widgetClassRef, argsClassRef]),
-                          ),
-                ),
-                Parameter(
-                  (b) => b
-                    ..name = 'args'
-                    ..named = true
-                    ..toSuper = hasRequiredArgs
-                    ..required = hasRequiredArgs
-                    ..type = hasRequiredArgs ? null : nullableArgsClassRef,
-                ),
-                Parameter(
-                  (b) => b
-                    ..name = 'argsBuilder'
-                    ..named = true
-                    ..toSuper = isCustomArgs && !hasArgsBuilder
-                    ..required = isCustomArgs && !hasArgsBuilder
-                    ..type = isCustomArgs && !hasArgsBuilder
-                        ? null
-                        : TypeReference(
-                            (b) => b
-                              ..symbol = 'ArgsBuilder'
-                              ..isNullable = true
-                              ..types.addAll([widgetClassRef, argsClassRef]),
-                          ),
-                ),
-              ]);
-
-              final superInitializers = {
-                if (!hasRequiredArgs)
-                  'args': refer('args').ifNullThen(
-                    InvokeExpression.newOf(
-                      argsClassRef,
-                      [],
+      (b) =>
+          b
+            ..name = storyClassRef.symbol
+            ..types.addAll(getTypeParams())
+            ..extend = TypeReference(
+              (b) =>
+                  b
+                    ..symbol = 'Story'
+                    ..types.addAll([widgetClassRef, argsClassRef]),
+            )
+            ..constructors.add(
+              Constructor(
+                (b) {
+                  b.optionalParameters.addAll([
+                    Parameter(
+                      (b) =>
+                          b
+                            ..name = 'name'
+                            ..named = true
+                            ..toSuper = true,
                     ),
-                  ),
-                if (!isCustomArgs && !hasArgsBuilder)
-                  'argsBuilder': refer('argsBuilder').ifNullThen(
-                    Method(
-                      (b) => b
-                        ..lambda = true
-                        ..requiredParameters.addAll([
-                          Parameter((b) => b.name = 'context'),
-                          Parameter((b) => b.name = 'args'),
-                        ])
-                        ..body = instantiate(
-                          (param) => refer('args') //
-                              .property(param.name)
-                              .maybeProperty(
-                                'resolve',
-                                nullSafe: param.type.isNullable,
-                              )
-                              .call([refer('context')]),
-                        ).code,
-                    ).closure,
-                  ),
-                if (hasArgsBuilder)
-                  'argsBuilder': refer('argsBuilder').ifNullThen(
-                    refer('\$argsBuilder'),
-                  ),
-                if (hasSetup)
-                  'setup': refer('setup').ifNullThen(
-                    refer('\$setup'),
-                  ),
-              };
+                    Parameter(
+                      (b) =>
+                          b
+                            ..name = 'setup'
+                            ..named = true
+                            ..toSuper = !hasArgsBuilder
+                            ..type =
+                                !hasArgsBuilder
+                                    ? null
+                                    : TypeReference(
+                                      (b) =>
+                                          b
+                                            ..symbol = 'SetupBuilder'
+                                            ..isNullable = true
+                                            ..types.addAll([
+                                              widgetClassRef,
+                                              argsClassRef,
+                                            ]),
+                                    ),
+                    ),
+                    Parameter(
+                      (b) =>
+                          b
+                            ..name = 'args'
+                            ..named = true
+                            ..toSuper = hasRequiredArgs
+                            ..required = hasRequiredArgs
+                            ..type =
+                                hasRequiredArgs ? null : nullableArgsClassRef,
+                    ),
+                    Parameter(
+                      (b) =>
+                          b
+                            ..name = 'argsBuilder'
+                            ..named = true
+                            ..toSuper = isCustomArgs && !hasArgsBuilder
+                            ..required = isCustomArgs && !hasArgsBuilder
+                            ..type =
+                                isCustomArgs && !hasArgsBuilder
+                                    ? null
+                                    : TypeReference(
+                                      (b) =>
+                                          b
+                                            ..symbol = 'ArgsBuilder'
+                                            ..isNullable = true
+                                            ..types.addAll([
+                                              widgetClassRef,
+                                              argsClassRef,
+                                            ]),
+                                    ),
+                    ),
+                  ]);
 
-              if (superInitializers.isNotEmpty) {
-                b.initializers.add(
-                  refer('super').call(
-                    [],
-                    superInitializers,
-                  ).code,
-                );
-              }
-            },
-          ),
-        )
-        ..methods.add(
-          Method(
-            (b) => b
-              ..name = 'init'
-              ..annotations.add(refer('override'))
-              ..optionalParameters.add(
-                Parameter(
-                  (b) => b
-                    ..name = 'name'
-                    ..named = true
-                    ..required = true
-                    ..type = refer('String'),
-                ),
-              )
-              ..returns = storyClassRef
-              ..lambda = true
-              ..body = InvokeExpression.newOf(
-                storyClassRef,
-                [],
-                {
-                  'name': refer('this').property('\$name').ifNullThen(
-                        refer('name'),
+                  final superInitializers = {
+                    if (!hasRequiredArgs)
+                      'args': refer('args').ifNullThen(
+                        InvokeExpression.newOf(
+                          argsClassRef,
+                          [],
+                        ),
                       ),
-                  'setup': refer('this').property('setup'),
-                  'args': refer('this').property('args'),
-                  'argsBuilder': refer('this').property('argsBuilder'),
+                    if (!isCustomArgs && !hasArgsBuilder)
+                      'argsBuilder': refer('argsBuilder').ifNullThen(
+                        Method(
+                          (b) =>
+                              b
+                                ..lambda = true
+                                ..requiredParameters.addAll([
+                                  Parameter((b) => b.name = 'context'),
+                                  Parameter((b) => b.name = 'args'),
+                                ])
+                                ..body =
+                                    instantiate(
+                                      (param) => refer('args') //
+                                          .property(param.displayName)
+                                          .maybeProperty(
+                                            'resolve',
+                                            nullSafe: param.type.isNullable,
+                                          )
+                                          .call([refer('context')]),
+                                    ).code,
+                        ).closure,
+                      ),
+                    if (hasArgsBuilder)
+                      'argsBuilder': refer('argsBuilder').ifNullThen(
+                        refer('\$argsBuilder'),
+                      ),
+                    if (hasSetup)
+                      'setup': refer('setup').ifNullThen(
+                        refer('\$setup'),
+                      ),
+                  };
+
+                  if (superInitializers.isNotEmpty) {
+                    b.initializers.add(
+                      refer('super')
+                          .call(
+                            [],
+                            superInitializers,
+                          )
+                          .code,
+                    );
+                  }
                 },
-              ).code,
-          ),
-        ),
+              ),
+            )
+            ..methods.add(
+              Method(
+                (b) =>
+                    b
+                      ..name = 'init'
+                      ..annotations.add(refer('override'))
+                      ..optionalParameters.add(
+                        Parameter(
+                          (b) =>
+                              b
+                                ..name = 'name'
+                                ..named = true
+                                ..required = true
+                                ..type = refer('String'),
+                        ),
+                      )
+                      ..returns = storyClassRef
+                      ..lambda = true
+                      ..body =
+                          InvokeExpression.newOf(
+                            storyClassRef,
+                            [],
+                            {
+                              'name': refer('this')
+                                  .property('\$name')
+                                  .ifNullThen(
+                                    refer('name'),
+                                  ),
+                              'setup': refer('this').property('setup'),
+                              'args': refer('this').property('args'),
+                              'argsBuilder': refer(
+                                'this',
+                              ).property('argsBuilder'),
+                            },
+                          ).code,
+              ),
+            ),
     );
   }
 
   InvokeExpression instantiate(
-    Expression Function(ParameterElement) assigner,
+    Expression Function(FormalParameterElement) assigner,
   ) {
     return InvokeExpression.newOf(
       widgetType.getRef(),
@@ -203,10 +234,10 @@ class StoryClassBuilder {
           .toList(),
       params //
           .where((param) => param.isNamed)
-          .lastBy((param) => param.name)
+          .lastBy((param) => param.displayName)
           .map(
             (_, param) => MapEntry(
-              param.name,
+              param.displayName,
               assigner(param),
             ),
           ),

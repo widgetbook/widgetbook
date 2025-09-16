@@ -15,16 +15,16 @@ void main() {
         'given an initial route, '
         'then the current configuration has the exact location',
         () {
-          const initialLocation = '/?path=use-case';
+          final uri = Uri.parse('/?path=use-case');
 
           final delegate = AppRouterDelegate(
-            initialRoute: initialLocation,
+            uri: uri,
             state: MockWidgetbookState(),
           );
 
           expect(
-            delegate.currentConfiguration!.uri.toString(),
-            initialLocation,
+            delegate.currentConfiguration!.uri,
+            uri,
           );
         },
       );
@@ -40,6 +40,7 @@ void main() {
           );
 
           final delegate = AppRouterDelegate(
+            uri: Uri.parse('/'),
             state: state,
           );
 
@@ -60,15 +61,16 @@ void main() {
           );
 
           final delegate = AppRouterDelegate(
-            initialRoute: '/?preview',
+            uri: Uri.parse('/?preview'),
             state: state,
           );
 
           await tester.pumpWidgetWithState(
             state: state,
-            builder: (_) => MaterialApp.router(
-              routerDelegate: delegate,
-            ),
+            builder:
+                (_) => MaterialApp.router(
+                  routerDelegate: delegate,
+                ),
           );
 
           expect(

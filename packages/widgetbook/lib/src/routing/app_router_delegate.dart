@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 
 import '../layout/responsive_layout.dart';
 import '../state/state.dart';
+import '../widgetbook_theme.dart';
 import '../workbench/workbench.dart';
 import 'app_route_config.dart';
 
@@ -10,14 +11,14 @@ import 'app_route_config.dart';
 class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRouteConfig> {
   AppRouterDelegate({
-    this.initialRoute = '/',
+    required this.uri,
     required this.state,
-  })  : _navigatorKey = GlobalKey<NavigatorState>(),
-        _configuration = AppRouteConfig(
-          uri: Uri.parse(initialRoute),
-        );
+  }) : _navigatorKey = GlobalKey<NavigatorState>(),
+       _configuration = AppRouteConfig(
+         uri: uri,
+       );
 
-  final String initialRoute;
+  final Uri uri;
   final WidgetbookState state;
   final GlobalKey<NavigatorState> _navigatorKey;
   AppRouteConfig _configuration;
@@ -37,19 +38,24 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
 
   @override
   Widget build(BuildContext context) {
-    return Navigator(
-      key: navigatorKey,
-      onPopPage: (route, result) => route.didPop(result),
-      pages: [
-        MaterialPage(
-          child: _configuration.previewMode
-              ? const Workbench()
-              : ResponsiveLayout(
-                  key: ValueKey(_configuration),
-                  child: const Workbench(),
-                ),
-        ),
-      ],
+    final theme = Theme.of(context);
+    return WidgetbookTheme(
+      data: theme,
+      child: Navigator(
+        key: navigatorKey,
+        onDidRemovePage: (_) => {},
+        pages: [
+          MaterialPage(
+            child:
+                _configuration.previewMode
+                    ? const Workbench()
+                    : ResponsiveLayout(
+                      key: ValueKey(_configuration),
+                      child: const Workbench(),
+                    ),
+          ),
+        ],
+      ),
     );
   }
 }

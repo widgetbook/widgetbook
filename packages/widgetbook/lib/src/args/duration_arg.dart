@@ -9,11 +9,11 @@ class DurationArg extends Arg<Duration> {
 
   @override
   List<Field> get fields => [
-        DurationField(
-          name: name,
-          initialValue: value,
-        ),
-      ];
+    DurationField(
+      name: name,
+      initialValue: value,
+    ),
+  ];
 
   @override
   Duration valueFromQueryGroup(Map<String, String> group) {

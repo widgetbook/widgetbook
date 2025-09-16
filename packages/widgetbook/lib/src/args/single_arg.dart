@@ -15,11 +15,11 @@ class SingleArg<T> extends Arg<T> {
   @override
   List<Field> get fields {
     return [
-      ListField<T>(
+      ObjectDropdownField<T>(
         name: name,
         values: values,
         initialValue: value,
-        labelBuilder: labelBuilder ?? ListField.defaultLabelBuilder,
+        labelBuilder: labelBuilder ?? ObjectDropdownField.defaultLabelBuilder,
       ),
     ];
   }

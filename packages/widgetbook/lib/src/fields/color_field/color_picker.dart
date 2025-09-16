@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import 'color_space.dart';
 import 'number_text_field.dart';
 import 'opaque_color.dart';
 import 'opaque_color_picker.dart';
 
+@internal
 class ColorPicker extends StatefulWidget {
   const ColorPicker({
     required this.value,
@@ -22,26 +24,26 @@ class ColorPicker extends StatefulWidget {
 }
 
 class _ColorPickerState extends State<ColorPicker> {
-  late int opacity;
+  late int alpha;
   late ColorSpace colorSpace;
   late OpaqueColor opaqueColor;
 
   @override
   void initState() {
     super.initState();
-    opacity = widget.value.alpha ~/ 2.55;
+    alpha = (widget.value.a * 255).toInt();
     colorSpace = widget.colorSpace;
     opaqueColor = OpaqueColor.fromColor(widget.value);
   }
 
-  void onChange(int newOpacity, OpaqueColor newColor) {
+  void onChange(int newAlpha, OpaqueColor newColor) {
     setState(() {
-      opacity = newOpacity;
+      alpha = newAlpha;
       opaqueColor = newColor;
     });
 
     widget.onChanged.call(
-      newColor.toColor().withOpacity(newOpacity / 100),
+      newColor.toColor().withAlpha(newAlpha),
     );
   }
 
@@ -58,7 +60,7 @@ class _ColorPickerState extends State<ColorPicker> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.18),
+                color: Colors.white.withAlpha(46),
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Icon(
@@ -72,22 +74,24 @@ class _ColorPickerState extends State<ColorPicker> {
               onSelected: (value) {
                 setState(() => colorSpace = value!);
               },
-              dropdownMenuEntries: ColorSpace.values
-                  .map(
-                    (value) => DropdownMenuEntry(
-                      value: value,
-                      label: value.name.toUpperCase(),
-                    ),
-                  )
-                  .toList(),
+              dropdownMenuEntries:
+                  ColorSpace.values
+                      .map(
+                        (value) => DropdownMenuEntry(
+                          value: value,
+                          label: value.name.toUpperCase(),
+                        ),
+                      )
+                      .toList(),
             ),
             SizedBox(
               width: 80,
               child: NumberTextField.percentage(
-                value: opacity,
+                value: alpha ~/ 255 * 100,
                 onChanged: (value) {
-                  setState(() => this.opacity = value);
-                  onChange(value, opaqueColor);
+                  final newValue = (value / 100 * 255).round();
+                  setState(() => this.alpha = newValue);
+                  onChange(newValue, opaqueColor);
                 },
               ),
             ),
@@ -101,7 +105,7 @@ class _ColorPickerState extends State<ColorPicker> {
           value: opaqueColor,
           onChanged: (value) {
             setState(() => this.opaqueColor = value);
-            onChange(opacity, value);
+            onChange(alpha, value);
           },
         ),
       ],
