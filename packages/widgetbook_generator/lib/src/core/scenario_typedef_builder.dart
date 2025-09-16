@@ -31,17 +31,19 @@ class ScenarioTypedefBuilder {
     );
 
     return TypeDef(
-      (b) => b
-        ..name = scenarioTypeRef.symbol
-        ..types.addAll(getTypeParams())
-        ..definition = TypeReference(
-          (b) => b
-            ..symbol = 'Scenario'
-            ..types.addAll([
-              widgetTypeRef,
-              argsTypeRef,
-            ]),
-        ),
+      (b) =>
+          b
+            ..name = scenarioTypeRef.symbol
+            ..types.addAll(getTypeParams())
+            ..definition = TypeReference(
+              (b) =>
+                  b
+                    ..symbol = 'Scenario'
+                    ..types.addAll([
+                      widgetTypeRef,
+                      argsTypeRef,
+                    ]),
+            ),
     );
   }
 }

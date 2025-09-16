@@ -9,15 +9,15 @@ class RangeArg extends Arg<RangeValues> {
 
   @override
   List<Field> get fields => [
-        DoubleInputField(
-          name: 'min-$name',
-          initialValue: value.start,
-        ),
-        DoubleInputField(
-          name: 'max-$name',
-          initialValue: value.end,
-        ),
-      ];
+    DoubleInputField(
+      name: 'min-$name',
+      initialValue: value.start,
+    ),
+    DoubleInputField(
+      name: 'max-$name',
+      initialValue: value.end,
+    ),
+  ];
 
   @override
   RangeValues valueFromQueryGroup(Map<String, String> group) {
