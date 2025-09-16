@@ -38,7 +38,10 @@ class NumSliderField<T extends num> extends Field<T> {
         Expanded(
           flex: 8,
           child: Slider(
-            value: (value ?? initialValue)?.toDouble() ?? 0,
+            value: ((value ?? initialValue)?.toDouble() ?? 0).clamp(
+              min.toDouble(),
+              max.toDouble(),
+            ),
             min: min.toDouble(),
             max: max.toDouble(),
             label: codec.toParam(value ?? initialValue ?? defaultValue),
