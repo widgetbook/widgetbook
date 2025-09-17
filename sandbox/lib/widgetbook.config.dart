@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/themes.dart';
+import 'package:widgetbook/src/theme/theme.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import 'components.book.dart';
