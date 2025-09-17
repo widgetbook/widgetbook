@@ -3,6 +3,7 @@ export 'arg.dart';
 export 'component.dart';
 export 'config.dart';
 export 'const_arg.dart';
+export 'integration.dart';
 export 'meta.dart';
 export 'mode.dart';
 export 'mode_addon.dart';
