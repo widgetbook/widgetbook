@@ -5,7 +5,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
 
-class MockIntegration extends Mock implements WidgetbookIntegration {}
+class MockIntegration extends Mock implements Integration {}
 
 void main() {
   setUpAll(() {
@@ -13,7 +13,7 @@ void main() {
   });
 
   group(
-    '$WidgetbookIntegration',
+    '$Integration',
     () {
       testWidgets(
         'given an integration, '

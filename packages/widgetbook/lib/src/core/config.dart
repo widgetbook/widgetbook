@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../integrations/integrations.dart';
 import '../state/default_home_page.dart';
 import 'core.dart';
 
@@ -64,7 +63,7 @@ class Config {
   final List<Addon>? addons;
 
   /// The list of integrations for your [Widget] library.
-  final List<WidgetbookIntegration>? integrations;
+  final List<Integration>? integrations;
 
   /// The custom theme for the Widgetbook interface when using light mode.
   ///

@@ -5,7 +5,6 @@ import 'package:meta/meta.dart';
 
 import '../core/core.dart';
 import '../fields/fields.dart';
-import '../integrations/widgetbook_integration.dart';
 import '../navigation/navigation.dart';
 import '../routing/routing.dart';
 import '../utils.dart';
@@ -81,7 +80,7 @@ class WidgetbookState extends ChangeNotifier {
 
   final AppBuilder appBuilder;
   final List<Addon>? addons;
-  final List<WidgetbookIntegration>? integrations;
+  final List<Integration>? integrations;
 
   final List<Component> components;
   final TreeNode<Null> root;

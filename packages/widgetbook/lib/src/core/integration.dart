@@ -1,10 +1,10 @@
-import '../core/core.dart';
 import '../state/state.dart';
+import 'core.dart';
 
 /// Integrations are like lifecycle hooks that notifies implementer
 /// about [WidgetbookState] changes.
-abstract class WidgetbookIntegration {
-  /// Gets called on first launch of [Widgetbook] with the initial [state].
+abstract class Integration {
+  /// Gets called on first launch with the initial [state].
   void onInit(WidgetbookState state) {}
 
   /// Gets called when story changes.
