@@ -46,8 +46,13 @@ abstract class Arg<T> extends FieldsComposable<T> {
   @override
   String get groupName => 'args';
 
+  /// Resolves the value of this argument based on the current context.
+  /// If there is no [WidgetbookState] in the widget tree, it returns the
+  /// default [value].
   T resolve(BuildContext context) {
-    final state = WidgetbookState.of(context);
+    final state = WidgetbookState.maybeOf(context);
+    if (state == null) return value;
+
     final queryGroup = FieldCodec.decodeQueryGroup(state.queryParams['args']);
     return valueFromQueryGroup(queryGroup);
   }
