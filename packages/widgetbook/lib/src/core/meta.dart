@@ -1,6 +1,8 @@
+import 'package:flutter/widgets.dart';
+
 import 'story_args.dart';
 
-class Meta<T> {
+class Meta<TWidget extends Widget> {
   const Meta({
     String? name,
     String? path,
@@ -28,7 +30,7 @@ class Meta<T> {
 }
 
 /// Same as [Meta] but for custom [StoryArgs].
-class MetaWithArgs<TWidget, TArgs> extends Meta<TWidget> {
+class MetaWithArgs<TWidget extends Widget, TArgs> extends Meta<TWidget> {
   const MetaWithArgs({
     super.name,
     super.path,
