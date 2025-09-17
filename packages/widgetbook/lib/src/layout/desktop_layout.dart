@@ -4,7 +4,7 @@ import 'package:resizable_widget/resizable_widget.dart';
 
 import '../settings/settings_list.dart';
 import '../state/state.dart';
-import '../widgetbook_theme.dart';
+import '../theme/theme.dart';
 import 'base_layout.dart';
 
 /// The [DesktopLayout] is a layout for desktop devices that allows

@@ -1,10 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+// ignore: unnecessary_import flutter(<3.35.0)
+import 'package:meta/meta.dart';
 
 import 'core/config.dart';
 import 'routing/routing.dart';
 import 'state/state.dart';
-import 'themes.dart';
+import 'theme/themes.dart';
 
 @internal
 class WidgetbookApp extends StatefulWidget {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 import '../core/core.dart';
-import '../widgetbook_theme.dart';
+import '../theme/theme.dart';
 import 'icons/component_icon.dart';
 import 'icons/expander_icon.dart';
 import 'icons/story_icon.dart';

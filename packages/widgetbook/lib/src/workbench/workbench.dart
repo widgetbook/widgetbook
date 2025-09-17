@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 import '../state/state.dart';
-import '../widgetbook_theme.dart';
+import '../theme/theme.dart';
 import 'addons_builder.dart';
 import 'safe_boundaries.dart';
 

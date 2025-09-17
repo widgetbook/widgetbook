@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/state/state.dart';
-import 'package:widgetbook/src/themes.dart';
-import 'package:widgetbook/src/widgetbook_theme.dart';
+import 'package:widgetbook/src/theme/theme.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 extension TesterExtension on WidgetTester {
