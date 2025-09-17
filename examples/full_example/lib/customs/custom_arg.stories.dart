@@ -5,7 +5,7 @@ import 'custom_arg.dart';
 
 part 'custom_arg.stories.book.dart';
 
-final meta = Meta<RangeSlider>();
+const meta = Meta<RangeSlider>();
 
 final $Default = RangeSliderStory(
   name: 'Default',

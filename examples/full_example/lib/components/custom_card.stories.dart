@@ -6,7 +6,7 @@ import 'custom_card.dart';
 
 part 'custom_card.stories.book.dart';
 
-final meta = Meta<CustomCard>();
+const meta = Meta<CustomCard>();
 
 final $Default = CustomCardStory(
   name: 'Default',

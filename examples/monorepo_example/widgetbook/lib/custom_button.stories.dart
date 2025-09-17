@@ -5,7 +5,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 part 'custom_button.stories.book.dart';
 
-final meta = Meta<CustomButton>();
+const meta = Meta<CustomButton>();
 
 final $Green = CustomButtonStory(
   name: 'Default',

@@ -6,7 +6,7 @@ import 'generic_text.dart';
 part 'generic_text.stories.book.dart';
 
 // ignore: strict_raw_type
-final meta = Meta<GenericText>();
+const meta = Meta<GenericText>();
 
 final $IntStory = GenericTextStory<int>(
   args: GenericTextArgs.fixed(

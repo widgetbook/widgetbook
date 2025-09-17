@@ -5,7 +5,7 @@ import 'custom_theme.dart';
 
 part 'custom_theme.stories.book.dart';
 
-final meta = Meta<AwesomeWidget>();
+const meta = Meta<AwesomeWidget>();
 
 final $Default = AwesomeWidgetStory(
   name: 'Default',
