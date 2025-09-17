@@ -161,14 +161,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
-  device_frame_plus:
-    dependency: transitive
-    description:
-      name: device_frame_plus
-      sha256: ccc94abccd4d9f0a9f19ef239001b3a59896e678ad42601371d7065889f2bf78
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.5.0"
   equatable:
     dependency: transitive
     description:

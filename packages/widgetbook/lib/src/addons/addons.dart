@@ -1,7 +1,6 @@
 export 'alignment_addon.dart';
 export 'builder_addon.dart';
 export 'cupertino_theme_addon.dart';
-export 'device_frame_addon.dart';
 export 'grid_addon.dart';
 export 'inspector_addon.dart';
 export 'localization_addon.dart';
