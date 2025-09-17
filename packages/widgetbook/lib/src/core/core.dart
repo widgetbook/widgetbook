@@ -1,6 +1,7 @@
 export 'addon.dart';
 export 'arg.dart';
 export 'component.dart';
+export 'config.dart';
 export 'const_arg.dart';
 export 'meta.dart';
 export 'mode.dart';

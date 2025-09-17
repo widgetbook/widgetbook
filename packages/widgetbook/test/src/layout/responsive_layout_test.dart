@@ -5,7 +5,7 @@ import 'package:widgetbook/src/layout/mobile_layout.dart';
 import 'package:widgetbook/src/layout/responsive_layout.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook/src/settings/settings.dart';
-import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook/src/widgetbook_app.dart';
 
 void main() {
   group(
@@ -19,7 +19,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(),
+            const WidgetbookApp(),
           );
 
           expect(find.byType(MobileLayout), findsOneWidget);
@@ -37,7 +37,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(),
+            const WidgetbookApp(),
           );
 
           expect(find.byType(MobileLayout), findsNothing);
@@ -56,7 +56,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(),
+            const WidgetbookApp(),
           );
 
           await tester.tap(find.byIcon(Icons.list_outlined));
@@ -80,7 +80,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(),
+            const WidgetbookApp(),
           );
 
           await tester.tap(find.byIcon(Icons.dashboard_customize_outlined));
@@ -104,7 +104,7 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(),
+            const WidgetbookApp(),
           );
 
           await tester.tap(find.byIcon(Icons.tune_outlined));
