@@ -1,4 +1,3 @@
-export 'accessibility_addon.dart';
 export 'alignment_addon.dart';
 export 'builder_addon.dart';
 export 'cupertino_theme_addon.dart';
