@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:widgetbook/src/widgetbook_app.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
@@ -21,8 +22,10 @@ void main() {
         (tester) async {
           final integration = MockIntegration();
           await tester.pumpWidgetWithMaterialApp(
-            Widgetbook.material(
-              integrations: [integration],
+            WidgetbookApp(
+              config: Config(
+                integrations: [integration],
+              ),
             ),
           );
 

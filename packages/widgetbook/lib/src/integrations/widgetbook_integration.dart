@@ -1,6 +1,5 @@
 import '../core/core.dart';
 import '../state/state.dart';
-import '../widgetbook.dart';
 
 /// Integrations are like lifecycle hooks that notifies implementer
 /// about [WidgetbookState] changes.

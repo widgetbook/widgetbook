@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
 import 'package:widgetbook/src/state/default_home_page.dart';
+import 'package:widgetbook/src/widgetbook_app.dart';
 import 'package:widgetbook/src/widgetbook_theme.dart';
 import 'package:widgetbook/src/workbench/workbench.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -18,8 +19,10 @@ void main() {
         tester.view.devicePixelRatio = 1.0;
 
         await tester.pumpWidget(
-          const Widgetbook.material(
-            header: Placeholder(),
+          const WidgetbookApp(
+            config: Config(
+              header: Placeholder(),
+            ),
           ),
         );
 
@@ -40,8 +43,10 @@ void main() {
         tester.view.devicePixelRatio = 1.0;
 
         await tester.pumpWidget(
-          const Widgetbook.material(
-            header: Placeholder(),
+          const WidgetbookApp(
+            config: Config(
+              header: Placeholder(),
+            ),
           ),
         );
 
@@ -59,7 +64,7 @@ void main() {
       'then the widgetbook theme is accessible',
       (tester) async {
         await tester.pumpWidget(
-          const Widgetbook.material(),
+          const WidgetbookApp(),
         );
 
         expect(

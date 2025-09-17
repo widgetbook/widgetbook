@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/layout/desktop_layout.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
+import 'package:widgetbook/src/widgetbook_app.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 void main() {
@@ -16,8 +17,10 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(
-              initialRoute: '?panels=',
+            const WidgetbookApp(
+              config: Config(
+                initialRoute: '?panels=',
+              ),
             ),
           );
 
@@ -38,8 +41,10 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(
-              initialRoute: '?panels=addons,args',
+            const WidgetbookApp(
+              config: Config(
+                initialRoute: '?panels=addons,args',
+              ),
             ),
           );
 
@@ -59,8 +64,10 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(
-              initialRoute: '?panels=navigation',
+            const WidgetbookApp(
+              config: Config(
+                initialRoute: '?panels=navigation',
+              ),
             ),
           );
 
@@ -80,8 +87,10 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(
-              initialRoute: '?panels=args',
+            const WidgetbookApp(
+              config: Config(
+                initialRoute: '?panels=args',
+              ),
             ),
           );
 
@@ -101,8 +110,10 @@ void main() {
           tester.view.devicePixelRatio = 1.0;
 
           await tester.pumpWidget(
-            const Widgetbook.material(
-              initialRoute: '?panels=addons',
+            const WidgetbookApp(
+              config: Config(
+                initialRoute: '?panels=addons',
+              ),
             ),
           );
 

@@ -9,16 +9,8 @@ import '../integrations/widgetbook_integration.dart';
 import '../navigation/navigation.dart';
 import '../routing/routing.dart';
 import '../utils.dart';
-import 'default_app_builders.dart';
 import 'default_home_page.dart';
 import 'widgetbook_scope.dart';
-
-/// Function signature for building the app wrapper around use cases.
-///
-/// The [AppBuilder] receives a [BuildContext] and the child widget (use case)
-/// and should return a widget that wraps the child with the appropriate
-/// app-level widgets like [MaterialApp], [CupertinoApp], or [WidgetsApp].
-typedef AppBuilder = Widget Function(BuildContext context, Widget child);
 
 /// Represents the main sections of the Widgetbook layout.
 ///
