@@ -2,7 +2,6 @@ export 'alignment_addon.dart';
 export 'builder_addon.dart';
 export 'cupertino_theme_addon.dart';
 export 'grid_addon.dart';
-export 'inspector_addon.dart';
 export 'localization_addon.dart';
 export 'material_theme_addon.dart';
 export 'semantics_addon/addon.dart';

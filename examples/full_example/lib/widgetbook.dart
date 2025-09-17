@@ -11,7 +11,6 @@ void main() {
       components: components,
       addons: [
         ViewportAddon(Viewports.all),
-        InspectorAddon(),
         GridAddon(100),
         AlignAddon(),
         ZoomAddon(),
