@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // ignore: unnecessary_import flutter(<3.35.0)
 import 'package:meta/meta.dart';

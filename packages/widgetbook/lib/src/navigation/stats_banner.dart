@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../widgetbook_theme.dart';
+import '../theme/theme.dart';
 
 /// A banner widget that displays statistics about the components and use-cases
 /// in the Widgetbook.

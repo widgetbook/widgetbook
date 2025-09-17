@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-import '../widgetbook_theme.dart';
+import '../theme/theme.dart';
 
 /// A widget that represents a configuration option in Widgetbook.
 /// It's used for both addons and knobs to provide a consistent UI for settings.

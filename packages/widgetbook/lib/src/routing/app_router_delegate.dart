@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 import '../layout/responsive_layout.dart';
 import '../state/state.dart';
-import '../widgetbook_theme.dart';
+import '../theme/theme.dart';
 import '../workbench/workbench.dart';
 import 'app_route_config.dart';
 
