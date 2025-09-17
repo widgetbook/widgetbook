@@ -4,7 +4,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 part 'nullable_setting.stories.book.dart';
 
-final meta = Meta<NullableSetting>(
+const meta = Meta<NullableSetting>(
   path: 'widgetbook/settings',
 );
 

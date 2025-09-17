@@ -5,7 +5,7 @@ import 'label_badge.dart';
 
 part 'label_badge.stories.book.dart';
 
-final meta = MetaWithArgs<LabelBadge, NumericBadgeInput>();
+const meta = MetaWithArgs<LabelBadge, NumericBadgeInput>();
 
 // This will be used as the default `setup`
 Widget $setup(

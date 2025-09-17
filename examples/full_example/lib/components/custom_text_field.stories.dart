@@ -5,7 +5,7 @@ import 'custom_text_field.dart';
 
 part 'custom_text_field.stories.book.dart';
 
-final meta = Meta<CustomTextField>();
+const meta = Meta<CustomTextField>();
 
 final $Default = CustomTextFieldStory(
   name: 'Default',

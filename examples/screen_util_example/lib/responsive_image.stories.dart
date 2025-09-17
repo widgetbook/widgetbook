@@ -5,7 +5,7 @@ import 'responsive_image.dart';
 
 part 'responsive_image.stories.book.dart';
 
-final meta = Meta<ResponsiveImage>();
+const meta = Meta<ResponsiveImage>();
 
 final $Default = ResponsiveImageStory(
   name: 'Default',
