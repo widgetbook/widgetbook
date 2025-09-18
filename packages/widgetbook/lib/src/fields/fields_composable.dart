@@ -157,7 +157,4 @@ abstract class FieldsComposable<T> {
       );
     });
   }
-
-  /// Converts this composable group to a JSON representation.
-  Map<String, dynamic> toJson();
 }

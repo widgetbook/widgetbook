@@ -35,11 +35,4 @@ class StringField extends Field<String> {
       onChanged: (value) => updateField(context, group, value),
     );
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'maxLines': maxLines,
-    };
-  }
 }

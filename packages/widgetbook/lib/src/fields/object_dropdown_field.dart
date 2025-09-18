@@ -68,11 +68,4 @@ class ObjectDropdownField<T> extends Field<T> {
               .toList(),
     );
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'values': values.map((codec.toParam)).toList(),
-    };
-  }
 }

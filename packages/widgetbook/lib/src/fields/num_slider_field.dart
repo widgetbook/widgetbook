@@ -62,13 +62,4 @@ class NumSliderField<T extends num> extends Field<T> {
       ],
     );
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'min': min,
-      'max': max,
-      'divisions': divisions,
-    };
-  }
 }

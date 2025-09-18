@@ -11,9 +11,8 @@ import 'field_type.dart';
 /// can be serialized to JSON and synchronized with URL query parameters,
 /// making the state shareable and persistent.
 ///
-/// Fields are converted to:
-/// 1. [Widget] through [toWidget] - used to display the input control in the settings panel
-/// 2. [Map] through [toJson] - used to serialize the field configuration
+/// Fields are converted to [Widget] through [toWidget]; used to display the
+/// input control in the settings panel
 ///
 /// Fields sync their changes with [WidgetbookState], which keeps them
 /// synchronized with URL query parameters. A [Field] is encoded into query
@@ -114,20 +113,4 @@ abstract class Field<T> {
       value: stringifiedValue,
     );
   }
-
-  /// Same as [toJson] put prepends some metadata like [name], [type] and value.
-  Map<String, dynamic> toFullJson() {
-    final _value = initialValue; // local variable promotion
-
-    return {
-      'name': name,
-      'type': type.name,
-      'value': _value == null ? null : codec.toParam(_value),
-      ...toJson(),
-    };
-  }
-
-  /// Converts this into JSON representation share information about the
-  /// available fields. Mostly used to support [Field]s on Widgetbook Cloud.
-  Map<String, dynamic> toJson() => {};
 }

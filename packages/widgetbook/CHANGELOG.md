@@ -7,6 +7,7 @@
 - **REFACTOR**: Remove deprecated `AccessibilityAddon`. ([#1600](https://github.com/widgetbook/widgetbook/pull/1600))
 - **REFACTOR**: Remove deprecated `DeviceFrameAddon`. Use `ViewportAddon` instead. ([#1601](https://github.com/widgetbook/widgetbook/pull/1601))
 - **REFACTOR**: Remove `InspectorAddon`. ([#1602](https://github.com/widgetbook/widgetbook/pull/1602))
+- **REFACTOR**: Remove `Field.toJson` & `Field.toFullJson`. ([#1607](https://github.com/widgetbook/widgetbook/pull/1607))
 - **FIX**: Preserve component's unminified name in release builds. ([#1593](https://github.com/widgetbook/widgetbook/pull/1593))
 
 ## 4.0.0-alpha.2
