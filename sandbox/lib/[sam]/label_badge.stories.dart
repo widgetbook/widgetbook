@@ -34,6 +34,15 @@ final $Primary = LabelBadgeStory(
   args: NumericBadgeInputArgs(
     number: const IntArg(1),
   ),
+  scenarios: [
+    LabelBadgeScenario(
+      name: 'Dark - 3',
+      modes: [MaterialThemeMode(ThemeData.dark())],
+      args: NumericBadgeInputArgs(
+        number: const IntArg(3),
+      ),
+    ),
+  ],
 );
 
 final $Secondary = LabelBadgeStory(

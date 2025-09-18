@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FEAT**: Add `scenarios` parameter to `Story`. ([#1605](https://github.com/widgetbook/widgetbook/pull/1605))
 - **FIX**: Add component's fallback name to metadata. ([#1593](https://github.com/widgetbook/widgetbook/pull/1593))
 
 ## 4.0.0-alpha.2

@@ -128,6 +128,13 @@ class StoryClassBuilder {
                                             ]),
                                     ),
                     ),
+                    Parameter(
+                      (b) =>
+                          b
+                            ..name = 'scenarios'
+                            ..named = true
+                            ..toSuper = true,
+                    ),
                   ]);
 
                   final superInitializers = {
@@ -206,16 +213,13 @@ class StoryClassBuilder {
                             storyClassRef,
                             [],
                             {
-                              'name': refer('this')
-                                  .property('\$name')
-                                  .ifNullThen(
-                                    refer('name'),
-                                  ),
-                              'setup': refer('this').property('setup'),
-                              'args': refer('this').property('args'),
-                              'argsBuilder': refer(
-                                'this',
-                              ).property('argsBuilder'),
+                              'name': refer('\$name').ifNullThen(
+                                refer('name'),
+                              ),
+                              'setup': refer('setup'),
+                              'args': refer('args'),
+                              'argsBuilder': refer('argsBuilder'),
+                              'scenarios': refer('scenarios'),
                             },
                           ).code,
               ),
