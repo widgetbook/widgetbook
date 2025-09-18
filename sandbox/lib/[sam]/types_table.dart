@@ -60,63 +60,68 @@ class TypesTable extends StatelessWidget {
             padding: const EdgeInsets.all(32),
             child: child,
           ),
-          Table(
-            children: [
-              const TableRow(
-                children: [
-                  Text('Type'),
-                  Text('Value'),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text('$bool'),
-                  Text('$boolean'),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text('$int'),
-                  Text('$integer'),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text('$double'),
-                  Text('$decimal'),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text('$String'),
-                  Text(string),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text('$Color'),
-                  Text('$color'),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text('$Duration'),
-                  Text('$duration'),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text('$Person'),
-                  Text(person?.toString() ?? '-'),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text('$Status'),
-                  Text('${status.name}'),
-                ],
-              ),
-            ],
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+              minWidth: 600,
+            ),
+            child: Table(
+              children: [
+                const TableRow(
+                  children: [
+                    Text('Type'),
+                    Text('Value'),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    Text('$bool'),
+                    Text('$boolean'),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    Text('$int'),
+                    Text('$integer'),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    Text('$double'),
+                    Text('$decimal'),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    Text('$String'),
+                    Text(string),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    Text('$Color'),
+                    Text('$color'),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    Text('$Duration'),
+                    Text('$duration'),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    Text('$Person'),
+                    Text(person?.toString() ?? '-'),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    Text('$Status'),
+                    Text('${status.name}'),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),

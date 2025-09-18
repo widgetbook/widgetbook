@@ -35,6 +35,26 @@ final $Default = TypesTableStory(
       (context) => const FlutterLogo(),
     ),
   ),
+
+  scenarios: [
+    const TypesTableScenario(
+      name: 'Default',
+    ),
+    TypesTableScenario(
+      name: 'Placeholder Child',
+      args: TypesTableArgs.fixed(
+        child: const Placeholder(),
+      ),
+    ),
+    TypesTableScenario(
+      name: 'Dark',
+      modes: [MaterialThemeMode(ThemeData.dark())],
+    ),
+    TypesTableScenario(
+      name: 'Light',
+      modes: [MaterialThemeMode(ThemeData.light())],
+    ),
+  ],
 );
 
 class PersonArg extends Arg<Person> {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nested/nested.dart';
 
+import 'scenario.dart';
 import 'story_args.dart';
 
 typedef SetupBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> =
@@ -20,6 +22,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     this.setup = defaultSetup,
     required this.args,
     required this.argsBuilder,
+    this.scenarios = const [],
   }) : $name = name;
 
   final String? $name;
@@ -27,6 +30,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   final TArgs args;
   final SetupBuilder<TWidget, TArgs> setup;
   final ArgsBuilder<TWidget, TArgs> argsBuilder;
+  final List<Scenario<TWidget, TArgs>> scenarios;
 
   static Widget defaultSetup(
     BuildContext context,
@@ -45,6 +49,28 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     final widget = argsBuilder(context, args);
     final story = setup(context, widget, args);
     return story;
+  }
+
+  Widget buildWithScenario(
+    BuildContext context,
+    Scenario<TWidget, TArgs> scenario,
+  ) {
+    final effectiveArgs = scenario.args ?? args;
+    final effectiveStory = buildWithArgs(context, effectiveArgs);
+
+    return scenario.modes == null || scenario.modes!.isEmpty
+        ? effectiveStory
+        : Nested(
+          children:
+              scenario.modes!
+                  .map(
+                    (mode) => SingleChildBuilder(
+                      builder: (context, child) => mode.build(context, child!),
+                    ),
+                  )
+                  .toList(),
+          child: effectiveStory,
+        );
   }
 
   String get name {
