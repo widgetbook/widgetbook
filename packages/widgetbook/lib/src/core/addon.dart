@@ -41,13 +41,4 @@ abstract class Addon<T> extends FieldsComposable<T> {
   ) {
     return child;
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'group': groupName,
-      'fields': fields.map((field) => field.toFullJson()).toList(),
-    };
-  }
 }

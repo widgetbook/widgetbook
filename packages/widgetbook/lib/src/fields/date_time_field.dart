@@ -108,12 +108,4 @@ class DateTimeField extends Field<DateTime> {
       time.minute,
     );
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'start': codec.toParam(start),
-      'end': codec.toParam(end),
-    };
-  }
 }

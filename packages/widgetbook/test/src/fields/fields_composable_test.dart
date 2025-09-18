@@ -30,9 +30,6 @@ class MockFieldsComposable extends FieldsComposable<bool> {
   String get groupName => 'fields_group';
 
   @override
-  Map<String, dynamic> toJson() => {groupName: fields.length};
-
-  @override
   bool valueFromQueryGroup(Map<String, String> group) {
     return valueOf('mock_field', group)!;
   }

@@ -56,13 +56,4 @@ abstract class Arg<T> extends FieldsComposable<T> {
     final queryGroup = FieldCodec.decodeQueryGroup(state.queryParams['args']);
     return valueFromQueryGroup(queryGroup);
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'group': groupName,
-      'fields': fields.map((field) => field.toFullJson()).toList(),
-    };
-  }
 }

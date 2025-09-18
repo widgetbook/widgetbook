@@ -15,7 +15,6 @@ class MockField extends Field<bool> {
   });
 
   final Fn3Mock<Widget, BuildContext, String, bool?> toWidgetMock = Fn3Mock();
-  final FnMock<Map<String, dynamic>> toJsonMock = FnMock();
 
   @override
   Widget toWidget(
@@ -28,15 +27,6 @@ class MockField extends Field<bool> {
     ).thenReturn(Container());
 
     return toWidgetMock.call(context, group, value);
-  }
-
-  @override
-  Map<String, dynamic> toJson() {
-    when(
-      () => toJsonMock.call(),
-    ).thenReturn({});
-
-    return toJsonMock.call();
   }
 }
 
@@ -152,18 +142,6 @@ void main() {
           );
 
           expect(result, equals(true));
-        },
-      );
-
-      test(
-        'when toFullJson is called, '
-        'then toJson is called',
-        () {
-          field.toFullJson();
-
-          verify(
-            () => field.toJsonMock.call(),
-          ).called(1);
         },
       );
     },
