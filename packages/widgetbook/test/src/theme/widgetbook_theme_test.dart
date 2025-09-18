@@ -12,6 +12,9 @@ void main() {
       'given the $WidgetbookApp, '
       'then the $WidgetbookTheme is accessible',
       (tester) async {
+        tester.view.physicalSize = const Size(1200, 800);
+        tester.view.devicePixelRatio = 1.0;
+
         await tester.pumpWidget(
           const WidgetbookApp(),
         );
@@ -35,6 +38,8 @@ void main() {
           WidgetbookTheme.maybeOf(tester.element(find.byType(TabBarView))),
           isA<ThemeData>(),
         );
+
+        addTearDown(tester.view.resetPhysicalSize);
       },
     );
   });
