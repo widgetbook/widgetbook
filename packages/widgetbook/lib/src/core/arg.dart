@@ -56,4 +56,8 @@ abstract class Arg<T> extends FieldsComposable<T> {
     final queryGroup = FieldCodec.decodeQueryGroup(state.queryParams['args']);
     return valueFromQueryGroup(queryGroup);
   }
+
+  Map<String, String> toQueryGroup() {
+    return $value == null ? {} : valueToQueryGroup(value);
+  }
 }

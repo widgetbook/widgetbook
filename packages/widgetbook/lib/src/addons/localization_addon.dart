@@ -1,37 +1,25 @@
 import 'package:flutter/widgets.dart';
 
-import '../core/addon.dart';
-import '../core/mode.dart';
-import '../core/mode_addon.dart';
+import '../core/core.dart';
 import '../fields/fields.dart';
 
 class LocaleMode extends Mode<Locale> {
-  LocaleMode(super.value, this.delegates);
-
-  final List<LocalizationsDelegate<dynamic>> delegates;
-
-  @override
-  Widget build(BuildContext context, Widget child) {
-    return Localizations(
-      locale: value,
-      delegates: delegates,
-      child: child,
-    );
-  }
+  LocaleMode(
+    Locale value, [
+    List<LocalizationsDelegate<dynamic>> delegates = const [],
+  ]) : super(value, LocaleAddon([value], delegates));
 }
 
 /// An [Addon] for changing the active [Locale] via [Localizations].
-class LocaleAddon extends ModeAddon<Locale> {
+class LocaleAddon extends Addon<Locale> {
   LocaleAddon(
     this.locales, [
-    List<LocalizationsDelegate<dynamic>> delegates = const [],
+    this.delegates = const [],
   ]) : assert(locales.isNotEmpty, 'locales cannot be empty'),
-       super(
-         name: 'Locale',
-         modeBuilder: (locale) => LocaleMode(locale, delegates),
-       );
+       super(name: 'Locale');
 
   final List<Locale> locales;
+  final List<LocalizationsDelegate<dynamic>> delegates;
 
   @override
   List<Field> get fields {
@@ -48,5 +36,19 @@ class LocaleAddon extends ModeAddon<Locale> {
   @override
   Locale valueFromQueryGroup(Map<String, String> group) {
     return valueOf<Locale>('name', group)!;
+  }
+
+  @override
+  Map<String, String> valueToQueryGroup(Locale value) {
+    return {'name': paramOf('name', value)};
+  }
+
+  @override
+  Widget buildUseCase(BuildContext context, Widget child, Locale setting) {
+    return Localizations(
+      locale: setting,
+      delegates: delegates,
+      child: child,
+    );
   }
 }

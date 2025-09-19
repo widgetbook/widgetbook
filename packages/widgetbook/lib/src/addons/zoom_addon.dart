@@ -1,29 +1,15 @@
 import 'package:flutter/widgets.dart';
 
-import '../core/addon.dart';
-import '../core/mode.dart';
-import '../core/mode_addon.dart';
+import '../core/core.dart';
 import '../fields/fields.dart';
 
 class ZoomMode extends Mode<double> {
-  ZoomMode(super.value);
-
-  @override
-  Widget build(BuildContext context, Widget child) {
-    return Transform.scale(
-      scale: value,
-      child: child,
-    );
-  }
+  ZoomMode(double value) : super(value, ZoomAddon());
 }
 
 /// An [Addon] for zoom/scaling.
-class ZoomAddon extends ModeAddon<double> {
-  ZoomAddon()
-    : super(
-        name: 'Zoom',
-        modeBuilder: ZoomMode.new,
-      );
+class ZoomAddon extends Addon<double> {
+  ZoomAddon() : super(name: 'Zoom');
 
   @override
   List<Field> get fields {
@@ -41,5 +27,18 @@ class ZoomAddon extends ModeAddon<double> {
   @override
   double valueFromQueryGroup(Map<String, String> group) {
     return valueOf('ratio', group)!;
+  }
+
+  @override
+  Map<String, String> valueToQueryGroup(double value) {
+    return {'ratio': paramOf('ratio', value)};
+  }
+
+  @override
+  Widget buildUseCase(BuildContext context, Widget child, double setting) {
+    return Transform.scale(
+      scale: setting,
+      child: child,
+    );
   }
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/widgets.dart' hide Viewport;
 
-import '../../core/addon.dart';
-import '../../core/mode.dart';
-import '../../core/mode_addon.dart';
+import '../../core/core.dart';
 import '../../fields/fields.dart';
 import '../../state/state.dart';
 import 'viewport.dart';
@@ -10,32 +8,12 @@ import 'viewport_data.dart';
 import 'viewports/viewports.dart';
 
 class ViewportMode extends Mode<ViewportData> {
-  ViewportMode(super.value);
-
-  @override
-  Widget build(BuildContext context, Widget child) {
-    if (value is NoneViewport) return child;
-
-    // Enable frameless mode if the preview mode is enabled
-    final frameless = WidgetbookState.of(context).previewMode;
-
-    return Center(
-      child: Viewport(
-        data: value,
-        frameless: frameless,
-        child: child,
-      ),
-    );
-  }
+  ViewportMode(ViewportData value) : super(value, ViewportAddon([value]));
 }
 
 /// An [Addon] that allows switching between different viewports.
-class ViewportAddon extends ModeAddon<ViewportData> {
-  ViewportAddon(this.viewports)
-    : super(
-        name: 'Viewport',
-        modeBuilder: ViewportMode.new,
-      );
+class ViewportAddon extends Addon<ViewportData> {
+  ViewportAddon(this.viewports) : super(name: 'Viewport');
 
   final List<ViewportData> viewports;
 
@@ -54,5 +32,30 @@ class ViewportAddon extends ModeAddon<ViewportData> {
   @override
   ViewportData valueFromQueryGroup(Map<String, String> group) {
     return valueOf<ViewportData>('name', group)!;
+  }
+
+  @override
+  Map<String, String> valueToQueryGroup(ViewportData value) {
+    return {'name': paramOf('name', value)};
+  }
+
+  @override
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    ViewportData setting,
+  ) {
+    if (setting is NoneViewport) return child;
+
+    // Enable frameless mode if the preview mode is enabled
+    final frameless = WidgetbookState.of(context).previewMode;
+
+    return Center(
+      child: Viewport(
+        data: setting,
+        frameless: frameless,
+        child: child,
+      ),
+    );
   }
 }

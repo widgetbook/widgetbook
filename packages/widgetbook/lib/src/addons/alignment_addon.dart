@@ -1,29 +1,16 @@
 import 'package:flutter/widgets.dart';
 
-import '../core/addon.dart';
-import '../core/mode.dart';
-import '../core/mode_addon.dart';
+import '../core/core.dart';
 import '../fields/fields.dart';
 
 class AlignmentMode extends Mode<Alignment> {
-  AlignmentMode(super.value);
-
-  @override
-  Widget build(BuildContext context, Widget child) {
-    return Align(
-      alignment: value,
-      child: child,
-    );
-  }
+  AlignmentMode(Alignment value) : super(value, AlignmentAddon(value));
 }
 
 /// An [Addon] for wrapping use-cases with [Align] widget.
-class AlignmentAddon extends ModeAddon<Alignment> {
+class AlignmentAddon extends Addon<Alignment> {
   AlignmentAddon([this.alignment = Alignment.center])
-    : super(
-        name: 'Alignment',
-        modeBuilder: AlignmentMode.new,
-      );
+    : super(name: 'Alignment');
 
   final Alignment alignment;
 
@@ -54,5 +41,22 @@ class AlignmentAddon extends ModeAddon<Alignment> {
   @override
   Alignment valueFromQueryGroup(Map<String, String> group) {
     return valueOf('alignment', group)!;
+  }
+
+  @override
+  Map<String, String> valueToQueryGroup(Alignment value) {
+    return {'alignment': paramOf('alignment', value)};
+  }
+
+  @override
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    Alignment setting,
+  ) {
+    return Align(
+      alignment: setting,
+      child: child,
+    );
   }
 }

@@ -2,22 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 class AlignMode extends Mode<Alignment> {
-  AlignMode(super.value);
-
-  @override
-  Widget build(BuildContext context, Widget child) {
-    return Align(
-      alignment: value,
-      child: child,
-    );
-  }
+  AlignMode(Alignment value) : super(value, AlignmentAddon(value));
 }
 
-class AlignAddon extends ModeAddon<Alignment> {
+/// An [Addon] for wrapping use-cases with [Align] widget.
+class AlignAddon extends Addon<Alignment> {
   AlignAddon([this.alignment = Alignment.center])
     : super(
         name: 'Alignment',
-        modeBuilder: AlignmentMode.new,
       );
 
   final Alignment alignment;
@@ -49,5 +41,22 @@ class AlignAddon extends ModeAddon<Alignment> {
   @override
   Alignment valueFromQueryGroup(Map<String, String> group) {
     return valueOf('alignment', group)!;
+  }
+
+  @override
+  Map<String, String> valueToQueryGroup(Alignment value) {
+    return {'alignment': paramOf('alignment', value)};
+  }
+
+  @override
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    Alignment setting,
+  ) {
+    return Align(
+      alignment: setting,
+      child: child,
+    );
   }
 }

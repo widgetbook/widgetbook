@@ -48,11 +48,11 @@ final $Default = TypesTableStory(
     ),
     TypesTableScenario(
       name: 'Dark',
-      modes: [MaterialThemeMode(ThemeData.dark())],
+      modes: [MaterialThemeMode('Dark', ThemeData.dark())],
     ),
     TypesTableScenario(
       name: 'Light',
-      modes: [MaterialThemeMode(ThemeData.light())],
+      modes: [MaterialThemeMode('Light', ThemeData.light())],
     ),
   ],
 );
@@ -81,6 +81,14 @@ class PersonArg extends Arg<Person> {
       name: valueOf('$name.name', group)!,
       age: valueOf('$name.age', group)!,
     );
+  }
+
+  @override
+  Map<String, String> valueToQueryGroup(Person value) {
+    return {
+      '$name.name': paramOf('$name.name', value.name),
+      '$name.age': paramOf('$name.age', value.age),
+    };
   }
 
   @override

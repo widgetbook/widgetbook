@@ -1,32 +1,16 @@
 import 'package:flutter/widgets.dart';
 
-import '../core/addon.dart';
-import '../core/mode.dart';
-import '../core/mode_addon.dart';
+import '../core/core.dart';
 import '../fields/fields.dart';
 
 /// An [Addon] for changing the active [MediaQueryData.textScaler]
 /// via [MediaQuery].
 class TextScaleMode extends Mode<double> {
-  TextScaleMode(super.value);
-
-  @override
-  Widget build(BuildContext context, Widget child) {
-    return MediaQuery(
-      data: MediaQuery.of(context).copyWith(
-        textScaler: TextScaler.linear(value),
-      ),
-      child: child,
-    );
-  }
+  TextScaleMode(double value) : super(value, TextScaleAddon());
 }
 
-class TextScaleAddon extends ModeAddon<double> {
-  TextScaleAddon()
-    : super(
-        name: 'Text Scale',
-        modeBuilder: TextScaleMode.new,
-      );
+class TextScaleAddon extends Addon<double> {
+  TextScaleAddon() : super(name: 'Text Scale');
 
   @override
   List<Field> get fields {
@@ -44,5 +28,20 @@ class TextScaleAddon extends ModeAddon<double> {
   @override
   double valueFromQueryGroup(Map<String, String> group) {
     return valueOf('factor', group)!;
+  }
+
+  @override
+  Map<String, String> valueToQueryGroup(double value) {
+    return {'factor': paramOf('factor', value)};
+  }
+
+  @override
+  Widget buildUseCase(BuildContext context, Widget child, double setting) {
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(
+        textScaler: TextScaler.linear(setting),
+      ),
+      child: child,
+    );
   }
 }

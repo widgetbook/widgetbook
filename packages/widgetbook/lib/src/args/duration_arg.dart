@@ -21,6 +21,11 @@ class DurationArg extends Arg<Duration> {
   }
 
   @override
+  Map<String, String> valueToQueryGroup(Duration value) {
+    return {name: paramOf(name, value)};
+  }
+
+  @override
   DurationArg init({
     required String name,
   }) {

@@ -28,6 +28,14 @@ class RangeArg extends Arg<RangeValues> {
   }
 
   @override
+  Map<String, String> valueToQueryGroup(RangeValues value) {
+    return {
+      'min-$name': paramOf('min-$name', value),
+      'max-$name': paramOf('max-$name', value),
+    };
+  }
+
+  @override
   RangeArg init({
     required String name,
   }) {
