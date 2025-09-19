@@ -23,6 +23,11 @@ class ColorArg extends Arg<Color> {
   }
 
   @override
+  Map<String, String> valueToQueryGroup(Color value) {
+    return {name: paramOf(name, value)};
+  }
+
+  @override
   ColorArg init({
     required String name,
   }) {

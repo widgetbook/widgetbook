@@ -40,6 +40,9 @@ abstract class FieldsComposable<T> {
   /// Converts a query group to a value of type [T].
   T valueFromQueryGroup(Map<String, String> group);
 
+  /// Converts a value of type [T] to a query group.
+  Map<String, String> valueToQueryGroup(T value);
+
   /// Converts the [fields] into a [Widget] that will be rendered in the
   /// settings side panel.
   Widget buildFields(BuildContext context) {
@@ -87,6 +90,17 @@ abstract class FieldsComposable<T> {
             as Field<TField>;
 
     return field.valueFrom(group);
+  }
+
+  /// Encodes the value of the [Field] with [name] to a query parameter.
+  String paramOf<TField>(String name, TField value) {
+    final field =
+        fields.firstWhere(
+              (field) => field.name == name,
+            )
+            as Field<TField>;
+
+    return field.codec.toParam(value);
   }
 
   /// Whether the group has been nullified by [toggleNullification].

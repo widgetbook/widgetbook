@@ -21,6 +21,11 @@ class BoolArg extends Arg<bool> {
   }
 
   @override
+  Map<String, String> valueToQueryGroup(bool value) {
+    return {name: paramOf(name, value)};
+  }
+
+  @override
   BoolArg init({
     required String name,
   }) {

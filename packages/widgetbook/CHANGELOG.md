@@ -1,5 +1,7 @@
 ## Unreleased
 
+- **BREAKING**: Add `valueToQueryGroup` to `Addon` and `Arg`; to allow serializing their values to URL query parameters. ([#1608](https://github.com/widgetbook/widgetbook/pull/1608))
+- **BREAKING**: Add `addon` field to `Mode` to use it for serialization. ([#1608](https://github.com/widgetbook/widgetbook/pull/1608))
 - **FEAT**: Add `scenarios` parameter to `Story`. ([#1605](https://github.com/widgetbook/widgetbook/pull/1605))
 - **FEAT**: Introduce a new way to run Widgetbook via `runWidgetbook` that takes a `Config` object. ([#1597](https://github.com/widgetbook/widgetbook/pull/1597))
 - **REFACTOR**: Remove deprecated `WidgetbookCloudIntegration`. ([#1598](https://github.com/widgetbook/widgetbook/pull/1598))

@@ -6,7 +6,6 @@ export 'const_arg.dart';
 export 'integration.dart';
 export 'meta.dart';
 export 'mode.dart';
-export 'mode_addon.dart';
 export 'scenario.dart';
 export 'story.dart';
 export 'story_args.dart';

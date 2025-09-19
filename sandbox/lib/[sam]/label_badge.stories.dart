@@ -37,7 +37,7 @@ final $Primary = LabelBadgeStory(
   scenarios: [
     LabelBadgeScenario(
       name: 'Dark - 3',
-      modes: [MaterialThemeMode(ThemeData.dark())],
+      modes: [MaterialThemeMode('Dark', ThemeData.dark())],
       args: NumericBadgeInputArgs(
         number: const IntArg(3),
       ),

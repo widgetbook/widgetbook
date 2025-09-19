@@ -1,8 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../core/addon.dart';
-import '../core/mode.dart';
-import '../core/mode_addon.dart';
+import '../core/core.dart';
 import '../fields/fields.dart';
 
 typedef ThemeBuilder<T> =
@@ -13,23 +11,16 @@ typedef ThemeBuilder<T> =
     );
 
 class ThemeMode<T> extends Mode<T> {
-  ThemeMode(super.value, this.builder);
-
-  final ThemeBuilder<T> builder;
-
-  @override
-  Widget build(BuildContext context, Widget child) {
-    return builder(context, value, child);
-  }
+  ThemeMode(String name, T value, ThemeBuilder<T> builder)
+    : super(value, ThemeAddon<T>({name: value}, builder));
 }
 
 /// An [Addon] for changing the active custom theme. A [builder] must be
 /// provided that returns an [InheritedWidget] or similar [Widget]s.
-class ThemeAddon<T> extends ModeAddon<T> {
+class ThemeAddon<T> extends Addon<T> {
   ThemeAddon(this.themes, this.builder)
     : super(
         name: 'Theme',
-        modeBuilder: (theme) => ThemeMode(theme, builder),
       );
 
   final Map<String, T> themes;
@@ -53,5 +44,15 @@ class ThemeAddon<T> extends ModeAddon<T> {
   @override
   T valueFromQueryGroup(Map<String, String> group) {
     return valueOf<T>('name', group)!;
+  }
+
+  @override
+  Map<String, String> valueToQueryGroup(T value) {
+    return {'name': paramOf('name', value)};
+  }
+
+  @override
+  Widget buildUseCase(BuildContext context, Widget child, T setting) {
+    return builder(context, setting, child);
   }
 }

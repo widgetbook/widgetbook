@@ -8,6 +8,12 @@ void main() {
     for (final story in component.stories) {
       for (final scenario in story.scenarios) {
         final name = '${component.name}/${story.$name}/${scenario.name}';
+        final effectiveArgs = scenario.args ?? story.args;
+
+        print('Scenario: $name');
+        print('Modes: ${scenario.modes?.map((mode) => mode.toQueryGroup())}');
+        print('Args: ${effectiveArgs.list.map((arg) => arg?.toQueryGroup())}');
+        print('--------------');
 
         goldenTest(
           name,

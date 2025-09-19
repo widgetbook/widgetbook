@@ -30,6 +30,11 @@ class SingleArg<T> extends Arg<T> {
   }
 
   @override
+  Map<String, String> valueToQueryGroup(T value) {
+    return {name: paramOf(name, value)};
+  }
+
+  @override
   SingleArg<T> init({
     required String name,
   }) {

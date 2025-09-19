@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../core/addon.dart';
+import '../core/core.dart';
 import '../fields/fields.dart';
 
 typedef ChildBuilder = Widget Function(BuildContext context, Widget child);
@@ -19,6 +19,9 @@ class BuilderAddon extends Addon<void> {
 
   @override
   void valueFromQueryGroup(Map<String, String> group) {}
+
+  @override
+  Map<String, String> valueToQueryGroup(void value) => {};
 
   @override
   Widget buildUseCase(

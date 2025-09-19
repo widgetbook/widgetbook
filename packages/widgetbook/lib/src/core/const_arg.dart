@@ -13,4 +13,6 @@ class ConstArg<T> extends Arg<T> {
 
   @override
   T valueFromQueryGroup(Map<String, String> group) => value;
+
+  Map<String, String> valueToQueryGroup(T value) => {};
 }

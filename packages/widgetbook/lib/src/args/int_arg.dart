@@ -21,6 +21,11 @@ class IntArg extends Arg<int> {
   }
 
   @override
+  Map<String, String> valueToQueryGroup(int value) {
+    return {name: paramOf(name, value)};
+  }
+
+  @override
   IntArg init({
     required String name,
   }) {

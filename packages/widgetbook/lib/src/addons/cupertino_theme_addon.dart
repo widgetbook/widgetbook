@@ -1,36 +1,17 @@
 import 'package:flutter/cupertino.dart';
 
-import '../core/addon.dart';
-import '../core/mode.dart';
-import '../core/mode_addon.dart';
+import '../core/core.dart';
 import '../fields/fields.dart';
 
 class CupertinoThemeMode extends Mode<CupertinoThemeData> {
-  CupertinoThemeMode(super.value);
-
-  @override
-  Widget build(BuildContext context, Widget child) {
-    return CupertinoTheme(
-      data: value,
-      child: ColoredBox(
-        color: value.scaffoldBackgroundColor,
-        child: DefaultTextStyle(
-          style: value.textTheme.textStyle,
-          child: child,
-        ),
-      ),
-    );
-  }
+  CupertinoThemeMode(String name, CupertinoThemeData value)
+    : super(value, CupertinoThemeAddon({name: value}));
 }
 
 /// An [Addon] for changing the active [CupertinoThemeData] via
 /// [CupertinoTheme].
-class CupertinoThemeAddon extends ModeAddon<CupertinoThemeData> {
-  CupertinoThemeAddon(this.themes)
-    : super(
-        name: 'Cupertino Theme',
-        modeBuilder: CupertinoThemeMode.new,
-      );
+class CupertinoThemeAddon extends Addon<CupertinoThemeData> {
+  CupertinoThemeAddon(this.themes) : super(name: 'Cupertino Theme');
 
   final Map<String, CupertinoThemeData> themes;
 
@@ -52,5 +33,28 @@ class CupertinoThemeAddon extends ModeAddon<CupertinoThemeData> {
   @override
   CupertinoThemeData valueFromQueryGroup(Map<String, String> group) {
     return valueOf('name', group)!;
+  }
+
+  @override
+  Map<String, String> valueToQueryGroup(CupertinoThemeData value) {
+    return {'name': paramOf('name', value)};
+  }
+
+  @override
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    CupertinoThemeData setting,
+  ) {
+    return CupertinoTheme(
+      data: setting,
+      child: ColoredBox(
+        color: setting.scaffoldBackgroundColor,
+        child: DefaultTextStyle(
+          style: setting.textTheme.textStyle,
+          child: child,
+        ),
+      ),
+    );
   }
 }

@@ -21,6 +21,11 @@ class DoubleArg extends Arg<double> {
   }
 
   @override
+  Map<String, String> valueToQueryGroup(double value) {
+    return {name: paramOf(name, value)};
+  }
+
+  @override
   DoubleArg init({
     required String name,
   }) {

@@ -21,6 +21,11 @@ class StringArg extends Arg<String> {
   }
 
   @override
+  Map<String, String> valueToQueryGroup(String value) {
+    return {name: paramOf(name, value)};
+  }
+
+  @override
   StringArg init({
     required String name,
   }) {
