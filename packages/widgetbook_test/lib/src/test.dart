@@ -22,35 +22,28 @@ Future<void> testWidgetbook(Config config) async {
 }
 
 void testComponent(Config config, Component component) {
-  group('${component.name}', () {
-    for (final story in component.stories) {
-      testStory(config, story);
-    }
-  });
+  for (final story in component.stories) {
+    testStory(config, component, story);
+  }
 }
 
-void testStory(Config config, Story story) {
-  group(story.name, () {
-    for (final definition in config.scenarios) {
-      final definedScenario = story.generateScenarioFrom(definition);
-      testScenario(config, definedScenario);
-    }
-
-    for (final scenario in story.scenarios) {
-      testScenario(config, scenario);
-    }
-  });
+void testStory(Config config, Component component, Story story) {
+  for (final scenario in story.scenarios) {
+    testScenario(config, component, story, scenario);
+  }
 }
 
 void testScenario(
   Config config,
+  Component component,
+  Story story,
   Scenario scenario,
 ) {
   final defaultViewport = Viewports.none;
   final targetViewport = scenario.viewport ?? defaultViewport;
 
   testWidgets(
-    scenario.name,
+    '${component.name}/${story.name}/${scenario.name}',
     (tester) async {
       tester.view.physicalConstraints = targetViewport.viewConstraints;
       tester.view.devicePixelRatio = targetViewport.pixelRatio;
@@ -62,8 +55,6 @@ void testScenario(
           builder: (context) => scenario.buildWithConfig(context, config),
         ),
       );
-
-      await scenario.execute(tester);
 
       final element = tester.element(find.byKey(key));
       final imageFuture = captureImage(element, 1);
@@ -78,6 +69,8 @@ void testScenario(
 
         final jsonEncoder = const JsonEncoder.withIndent('  ');
         final metadata = ScenarioMetadata(
+          component: component,
+          story: story,
           scenario: scenario,
           imageBytes: imageBytes,
           imageWidth: image.width,

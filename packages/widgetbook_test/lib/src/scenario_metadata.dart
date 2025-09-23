@@ -8,6 +8,8 @@ import 'test.dart';
 
 class ScenarioMetadata {
   const ScenarioMetadata({
+    required this.component,
+    required this.story,
     required this.scenario,
     required this.imageBytes,
     required this.imageWidth,
@@ -15,14 +17,13 @@ class ScenarioMetadata {
     required this.pixelRatio,
   });
 
+  final Component component;
+  final Story story;
   final Scenario scenario;
   final Uint8List imageBytes;
   final int imageWidth;
   final int imageHeight;
   final double pixelRatio;
-
-  Component get component => scenario.story.component;
-  Story get story => scenario.story;
 
   File get imageFile => File(baseFilename('png'));
   File get jsonFile => File(baseFilename('json'));
@@ -30,15 +31,15 @@ class ScenarioMetadata {
     '${outputDir}/${component.name}/${story.name}/',
   );
 
+  String baseFilename(String extension) {
+    return '${directory.path}${scenario.name}.$extension';
+  }
+
   String get hash {
     final bytes = imageBytes;
     final buffer = bytes.buffer;
     final digest = sha256.convert(buffer.asUint8List());
     return digest.toString();
-  }
-
-  String baseFilename(String extension) {
-    return '${directory.path}${scenario.name}.$extension';
   }
 
   Map<String, dynamic> toJson() {
