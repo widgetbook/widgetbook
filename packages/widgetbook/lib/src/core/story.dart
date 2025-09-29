@@ -17,14 +17,18 @@ typedef ArgsBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> =
 
 @optionalTypeArgs
 abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
-  const Story({
+  Story({
     String? name,
     this.designLink,
     this.setup = defaultSetup,
     required this.args,
     required this.argsBuilder,
     this.scenarios = const [],
-  }) : $name = name;
+  }) : $name = name {
+    scenarios.forEach((scenario) {
+      scenario.story = this;
+    });
+  }
 
   final String? $name;
   final String? designLink;
