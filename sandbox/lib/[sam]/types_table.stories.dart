@@ -37,7 +37,7 @@ final $Default = TypesTableStory(
   ),
 
   scenarios: [
-    const TypesTableScenario(
+    TypesTableScenario(
       name: 'Default',
     ),
     TypesTableScenario(

@@ -244,7 +244,30 @@ class StoryClassBuilder {
                               'setup': refer('setup'),
                               'args': refer('args'),
                               'argsBuilder': refer('argsBuilder'),
-                              'scenarios': refer('scenarios'),
+                              // We need to call `copyWith` on each scenario
+                              // to ensure the back-reference gets uninitialized
+                              // again in the scenarios instances, as it will
+                              // get re-initialized in the new story instance.
+                              'scenarios': refer('scenarios')
+                                  .property('map')
+                                  .call([
+                                    Method(
+                                      (b) =>
+                                          b
+                                            ..requiredParameters.add(
+                                              Parameter(
+                                                (b) => b.name = 'scenario',
+                                              ),
+                                            )
+                                            ..body =
+                                                refer('scenario')
+                                                    .property('copyWith')
+                                                    .call([])
+                                                    .code,
+                                    ).closure,
+                                  ])
+                                  .property('toList')
+                                  .call([]),
                             },
                           ).code,
               ),
