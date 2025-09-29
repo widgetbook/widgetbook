@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 
+import 'component.dart';
 import 'scenario.dart';
 import 'story_args.dart';
 
@@ -31,6 +32,11 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   final SetupBuilder<TWidget, TArgs> setup;
   final ArgsBuilder<TWidget, TArgs> argsBuilder;
   final List<Scenario<TWidget, TArgs>> scenarios;
+
+  // We cannot initialize the Story's component in the component's constructor
+  // because of generic types, as the component variable has `dynamic` types.
+  // So we provide a getter that casts the generated component to the correct type.
+  Component<TWidget, TArgs> get component;
 
   static Widget defaultSetup(
     BuildContext context,
