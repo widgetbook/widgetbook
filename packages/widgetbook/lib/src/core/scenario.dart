@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/widgets.dart';
 import 'package:nested/nested.dart';
 
@@ -10,12 +12,20 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     required this.name,
     this.modes,
     TArgs? args,
+    this.constraints = const ViewConstraints(),
   }) : _args = args;
 
   final String name;
   // ignore: strict_raw_type
   final List<Mode>? modes;
   final TArgs? _args;
+
+  /// The constraints is helpful to limit the size for widgets that expand
+  /// to the maximum size available.
+  ///
+  /// Defaults to [ViewConstraints] to allow unconstrained widgets,
+  /// and render the [Story] as small as possible.
+  final ViewConstraints constraints;
 
   /// A late back-reference to the story this scenario belongs to.
   /// It is initialized in the [Story] constructor.
@@ -46,11 +56,13 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     // ignore: strict_raw_type
     List<Mode>? modes,
     TArgs? args,
+    ViewConstraints? constraints,
   }) {
     return Scenario<TWidget, TArgs>(
       name: name ?? this.name,
       modes: modes ?? this.modes,
       args: args ?? this.args,
+      constraints: constraints ?? this.constraints,
     );
   }
 }
