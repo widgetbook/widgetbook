@@ -4,6 +4,7 @@
 - **BREAKING**: Add `addon` field to `Mode` to use it for serialization. ([#1608](https://github.com/widgetbook/widgetbook/pull/1608))
 - **FEAT**: Add `scenarios` parameter to `Story`. ([#1605](https://github.com/widgetbook/widgetbook/pull/1605))
 - **FEAT**: Add `constraints` field to `Scenario`; to allow specifying max width/height while capturing image. ([#1619](https://github.com/widgetbook/widgetbook/pull/1619))
+- **FEAT**: Add `scenariosConstraints` field to `Story`; to allow specifying default constraints for all scenarios in the story. ([#1620](https://github.com/widgetbook/widgetbook/pull/1620))
 - **FEAT**: Add `story` field to `Scenario`. ([#1615](https://github.com/widgetbook/widgetbook/pull/1615))
 - **FEAT**: Add `component` field to `Story`. ([#1616](https://github.com/widgetbook/widgetbook/pull/1616))
 - **FEAT**: Introduce a new way to run Widgetbook via `runWidgetbook` that takes a `Config` object. ([#1597](https://github.com/widgetbook/widgetbook/pull/1597))

@@ -12,7 +12,7 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     required this.name,
     this.modes,
     TArgs? args,
-    this.constraints = const ViewConstraints(),
+    this.constraints,
   }) : _args = args;
 
   final String name;
@@ -22,10 +22,8 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
 
   /// The constraints is helpful to limit the size for widgets that expand
   /// to the maximum size available.
-  ///
-  /// Defaults to [ViewConstraints] to allow unconstrained widgets,
-  /// and render the [Story] as small as possible.
-  final ViewConstraints constraints;
+  /// If not specified, the value from [Story.scenariosConstraints] is used.
+  final ViewConstraints? constraints;
 
   /// A late back-reference to the story this scenario belongs to.
   /// It is initialized in the [Story] constructor.

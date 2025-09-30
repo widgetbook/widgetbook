@@ -44,7 +44,8 @@ void testScenario(
   testWidgets(
     scenario.name,
     (tester) async {
-      tester.view.physicalConstraints = scenario.constraints;
+      tester.view.physicalConstraints =
+          scenario.constraints ?? scenario.story.scenariosConstraints;
 
       final key = UniqueKey();
       await tester.pumpWidget(

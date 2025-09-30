@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FEAT**: Add `scenarios` parameter to `Story`. ([#1605](https://github.com/widgetbook/widgetbook/pull/1605))
+- **FEAT**: Add `scenariosConstraints` parameter to `Story`. ([#1620](https://github.com/widgetbook/widgetbook/pull/1620))
 - **FEAT**: Generate `story` field in `Scenario`. ([#1615](https://github.com/widgetbook/widgetbook/pull/1615))
 - **FIX**: Add component's fallback name to metadata. ([#1593](https://github.com/widgetbook/widgetbook/pull/1593))
 

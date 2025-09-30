@@ -135,6 +135,13 @@ class StoryClassBuilder {
                             ..named = true
                             ..toSuper = true,
                     ),
+                    Parameter(
+                      (b) =>
+                          b
+                            ..name = 'scenariosConstraints'
+                            ..named = true
+                            ..toSuper = true,
+                    ),
                   ]);
 
                   final superInitializers = {
@@ -219,6 +226,9 @@ class StoryClassBuilder {
                               'setup': refer('setup'),
                               'args': refer('args'),
                               'argsBuilder': refer('argsBuilder'),
+                              'scenariosConstraints': refer(
+                                'scenariosConstraints',
+                              ),
                               // We need to call `copyWith` on each scenario
                               // to ensure the back-reference gets uninitialized
                               // again in the scenarios instances, as it will
