@@ -11,51 +11,67 @@ void main() {
     'root',
   );
 
-  test('given a flag SemanticsFlag.isSelected = true and a tap callback, '
-      'then [getMessage] can parse the value', () {
-    final node =
-        SemanticsNode()..updateWith(
-          config:
-              SemanticsConfiguration()
-                ..isSelected = true
-                ..onTap = () {},
-        );
+  group('$MinimalSemanticsDebugger', () {
+    test(
+      'given a flag SemanticsFlag.isSelected = true and a tap callback, '
+      'then [getMessage] can parse the value',
+      () {
+        final node = SemanticsNode();
+        final config = SemanticsConfiguration();
 
-    final msg = painter.getMessage(node);
-    expect(msg, 'selected');
-  });
+        config.isSelected = true;
+        config.onTap = () {};
+        node.updateWith(config: config);
 
-  test('given a flag SemanticsFlag.isSelected = true without a tap callback, '
-      'then [getMessage] can parse the value', () {
-    final node =
-        SemanticsNode()
-          ..updateWith(config: SemanticsConfiguration()..isSelected = true);
+        final message = painter.getMessage(node);
+        expect(message, 'selected');
+      },
+    );
 
-    final msg = painter.getMessage(node);
-    expect(msg, 'selected; disabled');
-  });
+    test(
+      'given a flag SemanticsFlag.isSelected = true without a tap callback, '
+      'then [getMessage] can parse the value',
+      () {
+        final node = SemanticsNode();
+        final config = SemanticsConfiguration();
 
-  test('given a flag SemanticsFlag.isSelected = false and a tap callback, '
-      'then [getMessage] can parse the value', () {
-    final node =
-        SemanticsNode()..updateWith(
-          config:
-              SemanticsConfiguration()
-                ..isSelected = false
-                ..onTap = () {},
-        );
+        config.isSelected = true;
+        node.updateWith(config: config);
 
-    final msg = painter.getMessage(node);
-    expect(msg, 'unselected');
-  });
+        final message = painter.getMessage(node);
+        expect(message, 'selected; disabled');
+      },
+    );
 
-  test('given a flag SemanticsFlag.isSelected = false without a tap callback, '
-      'then [getMessage] can parse the value', () {
-    final node =
-        SemanticsNode()
-          ..updateWith(config: SemanticsConfiguration()..isSelected = false);
+    test(
+      'given a flag SemanticsFlag.isSelected = false and a tap callback, '
+      'then [getMessage] can parse the value',
+      () {
+        final node = SemanticsNode();
+        final config = SemanticsConfiguration();
 
-    final msg = painter.getMessage(node);
-    expect(msg, 'unselected; disabled');
+        config.isSelected = false;
+        config.onTap = () {};
+        node.updateWith(config: config);
+
+        final message = painter.getMessage(node);
+        expect(message, 'unselected');
+      },
+    );
+
+    test(
+      'given a flag SemanticsFlag.isSelected = false without a tap callback, '
+      'then [getMessage] can parse the value',
+      () {
+        final node = SemanticsNode();
+        final config = SemanticsConfiguration();
+
+        config.isSelected = false;
+        node.updateWith(config: config);
+
+        final message = painter.getMessage(node);
+        expect(message, 'unselected; disabled');
+      },
+    );
   });
 }
