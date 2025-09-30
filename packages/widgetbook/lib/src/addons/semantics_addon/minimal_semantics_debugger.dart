@@ -119,7 +119,7 @@ class _MinimalSemanticsDebuggerState extends State<MinimalSemanticsDebugger>
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      foregroundPainter: _SemanticsDebuggerPainter(
+      foregroundPainter: SemanticsDebuggerPainter(
         _pipelineOwner!,
         _generation,
         View.of(context).devicePixelRatio,
@@ -133,8 +133,9 @@ class _MinimalSemanticsDebuggerState extends State<MinimalSemanticsDebugger>
   }
 }
 
-class _SemanticsDebuggerPainter extends CustomPainter {
-  const _SemanticsDebuggerPainter(
+@internal
+class SemanticsDebuggerPainter extends CustomPainter {
+  const SemanticsDebuggerPainter(
     this.owner,
     this.generation,
     this.devicePixelRatio,
@@ -174,7 +175,7 @@ class _SemanticsDebuggerPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_SemanticsDebuggerPainter oldDelegate) {
+  bool shouldRepaint(SemanticsDebuggerPainter oldDelegate) {
     return owner != oldDelegate.owner || generation != oldDelegate.generation;
   }
 
@@ -190,6 +191,15 @@ class _SemanticsDebuggerPainter extends CustomPainter {
       annotations.add(
         // ignore: deprecated_member_use flutter(<3.35.0)
         data.hasFlag(SemanticsFlag.isChecked) ? 'checked' : 'unchecked',
+      );
+      wantsTap = true;
+    }
+
+    // ignore: deprecated_member_use flutter(<3.35.0)
+    if (data.hasFlag(SemanticsFlag.hasSelectedState)) {
+      annotations.add(
+        // ignore: deprecated_member_use flutter(<3.35.0)
+        data.hasFlag(SemanticsFlag.isSelected) ? 'selected' : 'unselected',
       );
       wantsTap = true;
     }
