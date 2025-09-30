@@ -36,10 +36,16 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   final ArgsBuilder<TWidget, TArgs> argsBuilder;
   final List<Scenario<TWidget, TArgs>> scenarios;
 
-  // We cannot initialize the Story's component in the component's constructor
-  // because of generic types, as the component variable has `dynamic` types.
-  // So we provide a getter that casts the generated component to the correct type.
-  Component<TWidget, TArgs> get component;
+  /// A late back-reference to the component this story belongs to.
+  /// It is initialized in the [Component] constructor.
+  // No type params are specified due generic stories.
+  // Suppose that there are two stories in a component:
+  // - Story1<TWidget<T1>, TArgs>
+  // - Story2<TWidget<T2>, TArgs>
+  // Then they both should be able to reference the component of type
+  // `Component<TWidget, TArgs>` not `Component<TWidget<T1>, TArgs>` or
+  // `Component<TWidget<T2>, TArgs>`.
+  late final Component component;
 
   static Widget defaultSetup(
     BuildContext context,

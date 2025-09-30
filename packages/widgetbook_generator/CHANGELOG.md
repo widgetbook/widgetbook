@@ -1,7 +1,6 @@
 ## Unreleased
 
 - **FEAT**: Add `scenarios` parameter to `Story`. ([#1605](https://github.com/widgetbook/widgetbook/pull/1605))
-- **FEAT**: Generate `component` getter in `Story`. ([#1613](https://github.com/widgetbook/widgetbook/pull/1613))
 - **FEAT**: Generate `story` field in `Scenario`. ([#1615](https://github.com/widgetbook/widgetbook/pull/1615))
 - **FIX**: Add component's fallback name to metadata. ([#1593](https://github.com/widgetbook/widgetbook/pull/1593))
 
