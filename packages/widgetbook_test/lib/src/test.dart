@@ -44,8 +44,7 @@ void testScenario(
   testWidgets(
     scenario.name,
     (tester) async {
-      // Loosen constraints to make the image as small as the widget.
-      tester.view.physicalConstraints = const ViewConstraints();
+      tester.view.physicalConstraints = scenario.constraints;
 
       final key = UniqueKey();
       await tester.pumpWidget(
