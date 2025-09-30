@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'component.dart';
@@ -23,6 +25,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     required this.args,
     required this.argsBuilder,
     this.scenarios = const [],
+    this.scenariosConstraints = const ViewConstraints(),
   }) : $name = name {
     scenarios.forEach((scenario) {
       scenario.story = this;
@@ -35,6 +38,15 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   final SetupBuilder<TWidget, TArgs> setup;
   final ArgsBuilder<TWidget, TArgs> argsBuilder;
   final List<Scenario<TWidget, TArgs>> scenarios;
+
+  /// The default value for [Scenario.constraints] for all scenarios.
+  /// When not specified in a scenario, this value is used instead.
+  ///
+  /// Defaults to [ViewConstraints] to allow unconstrained widgets,
+  /// and render the [Story] as small as possible.
+  ///
+  /// [Scenario.constraints] has precedence over this value.
+  final ViewConstraints scenariosConstraints;
 
   /// A late back-reference to the component this story belongs to.
   /// It is initialized in the [Component] constructor.
