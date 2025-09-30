@@ -10,10 +10,14 @@ class ScenarioMetadata {
   const ScenarioMetadata({
     required this.scenario,
     required this.imageBytes,
+    required this.imageWidth,
+    required this.imageHeight,
   });
 
   final Scenario scenario;
   final Uint8List imageBytes;
+  final int imageWidth;
+  final int imageHeight;
 
   Component get component => scenario.story.component;
   Story get story => scenario.story;
@@ -53,6 +57,8 @@ class ScenarioMetadata {
       'image': {
         'path': imageFile.path,
         'hash': hash,
+        'width': imageWidth,
+        'height': imageHeight,
       },
     };
   }
