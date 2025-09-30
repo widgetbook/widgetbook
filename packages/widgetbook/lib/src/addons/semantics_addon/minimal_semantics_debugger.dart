@@ -166,7 +166,6 @@ class SemanticsDebuggerPainter extends CustomPainter {
     final rootNode = _rootSemanticsNode;
 
     canvas.save();
-    canvas.scale(1.0 / devicePixelRatio, 1.0 / devicePixelRatio);
 
     if (rootNode != null) {
       _paint(canvas, rootNode, _findDepth(rootNode), 0, 0);
