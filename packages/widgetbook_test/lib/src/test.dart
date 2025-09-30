@@ -4,8 +4,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:widgetbook/widgetbook.dart';
+
 import 'font_loader.dart';
 import 'scenario_metadata.dart';
 
@@ -75,6 +75,8 @@ void testScenario(
         final metadata = ScenarioMetadata(
           scenario: scenario,
           imageBytes: imageBytes,
+          imageWidth: image.width,
+          imageHeight: image.height,
         );
 
         await metadata.directory.create(recursive: true);
