@@ -18,4 +18,12 @@ final $BoolStory = GenericTextStory<bool>(
   args: GenericTextArgs.fixed(
     value: false,
   ),
+  scenarios: [
+    GenericTextScenario<bool>(
+      name: 'True',
+      args: GenericTextArgs.fixed(
+        value: true,
+      ),
+    ),
+  ],
 );

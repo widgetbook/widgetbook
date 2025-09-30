@@ -55,16 +55,6 @@ class StoryClassBuilder {
       isNullable: true,
     );
 
-    final componentClassRef = TypeReference(
-      (b) =>
-          b
-            ..symbol = 'Component'
-            ..types.addAll([
-              widgetClassRef,
-              argsClassRef,
-            ]),
-    );
-
     return Class(
       (b) =>
           b
@@ -200,22 +190,7 @@ class StoryClassBuilder {
                 },
               ),
             )
-            ..methods.addAll([
-              Method(
-                (b) =>
-                    b
-                      ..name = 'component'
-                      ..type = MethodType.getter
-                      ..returns = componentClassRef
-                      // Casting is needed for generic stories.
-                      // A Story<Widget<T>, Args<T>> has a Component<Widget<T>, Args<T>>
-                      // but the generated component variable is of type
-                      // Component<Widget<dynamic>, Args<dynamic>>
-                      ..body =
-                          refer(
-                            '${widgetType.nonGenericName}Component',
-                          ).asA(componentClassRef).code,
-              ),
+            ..methods.add(
               Method(
                 (b) =>
                     b
@@ -271,7 +246,7 @@ class StoryClassBuilder {
                             },
                           ).code,
               ),
-            ]),
+            ),
     );
   }
 
