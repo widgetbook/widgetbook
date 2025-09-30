@@ -22,25 +22,27 @@ Future<void> testWidgetbook(Config config) async {
 }
 
 void testComponent(Config config, Component component) {
-  for (final story in component.stories) {
-    testStory(config, component, story);
-  }
+  group('${component.name}', () {
+    for (final story in component.stories) {
+      testStory(config, story);
+    }
+  });
 }
 
-void testStory(Config config, Component component, Story story) {
-  for (final scenario in story.scenarios) {
-    testScenario(config, component, story, scenario);
-  }
+void testStory(Config config, Story story) {
+  group(story.name, () {
+    for (final scenario in story.scenarios) {
+      testScenario(config, scenario);
+    }
+  });
 }
 
 void testScenario(
   Config config,
-  Component component,
-  Story story,
   Scenario scenario,
 ) {
   testWidgets(
-    '${component.name}/${story.name}/${scenario.name}',
+    scenario.name,
     (tester) async {
       // Loosen constraints to make the image as small as the widget.
       tester.view.physicalConstraints = const ViewConstraints();
@@ -53,7 +55,7 @@ void testScenario(
             // Re-use app builder from config
             return config.appBuilder(
               context,
-              story.buildWithScenario(context, scenario),
+              scenario.build(context),
             );
           },
         ),
@@ -71,8 +73,6 @@ void testScenario(
         final imageBytes = byteData!.buffer.asUint8List();
 
         final metadata = ScenarioMetadata(
-          component: component,
-          story: story,
           scenario: scenario,
           imageBytes: imageBytes,
         );
