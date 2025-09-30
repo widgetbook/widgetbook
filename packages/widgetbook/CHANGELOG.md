@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FIX**: Clamp `NumSliderField` value to avoid exceptions when the boundaries change. ([#1590](https://github.com/widgetbook/widgetbook/pull/1590) - by [@EArminjon](https://github.com/EArminjon))
+- **FIX**: Upscale `SemanticsAddon` to make it fill the entire viewport. ([#1611](https://github.com/widgetbook/widgetbook/pull/1611) - by [@EArminjon](https://github.com/EArminjon))
 
 ## 3.17.0
 
