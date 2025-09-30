@@ -13,11 +13,11 @@ dependencies:
   widgetbook: ^4.0.0-alpha.2
 
 dev_dependencies:
-  alchemist: ^0.12.1
   build_runner: ^2.6.0
   flutter_test:
     sdk: flutter
   widgetbook_generator: ^4.0.0-alpha.2
+  widgetbook_test: ^4.0.0-alpha.2
 
 flutter:
   uses-material-design: true

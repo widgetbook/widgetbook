@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nested/nested.dart';
 
 import 'component.dart';
 import 'scenario.dart';
@@ -59,28 +58,6 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     final widget = argsBuilder(context, args);
     final story = setup(context, widget, args);
     return story;
-  }
-
-  Widget buildWithScenario(
-    BuildContext context,
-    Scenario<TWidget, TArgs> scenario,
-  ) {
-    final effectiveArgs = scenario.args ?? args;
-    final effectiveStory = buildWithArgs(context, effectiveArgs);
-
-    return scenario.modes == null || scenario.modes!.isEmpty
-        ? effectiveStory
-        : Nested(
-          children:
-              scenario.modes!
-                  .map(
-                    (mode) => SingleChildBuilder(
-                      builder: (context, child) => mode.build(context, child!),
-                    ),
-                  )
-                  .toList(),
-          child: effectiveStory,
-        );
   }
 
   String get name {

@@ -9,14 +9,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "88.0.0"
-  alchemist:
-    dependency: "direct dev"
-    description:
-      name: alchemist
-      sha256: "4c5f5146b7539eb9a53211d81489f09f08fc3821f754a370f493477a9ef9e390"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.12.1"
   analyzer:
     dependency: transitive
     description:
@@ -161,14 +153,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
-  equatable:
-    dependency: transitive
-    description:
-      name: equatable
-      sha256: "567c64b3cb4cf82397aac55f4f0cbd3ca20d77c6c03bedbc4ceaddc08904aef7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.7"
   fake_async:
     dependency: transitive
     description:
@@ -608,6 +592,13 @@ packages:
     dependency: "direct dev"
     description:
       path: "../packages/widgetbook_generator"
+      relative: true
+    source: path
+    version: "4.0.0-alpha.2"
+  widgetbook_test:
+    dependency: "direct dev"
+    description:
+      path: "../packages/widgetbook_test"
       relative: true
     source: path
     version: "4.0.0-alpha.2"

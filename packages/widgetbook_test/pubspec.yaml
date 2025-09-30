@@ -1,6 +1,6 @@
 name: widgetbook_test
-description: A placeholder for future use. The package will be used to support Golden Tests with Widgetbook.
-version: 0.0.0
+description: Package for golden testing all Widgetbook components.
+version: 4.0.0-alpha.2
 homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=widgetbook_test
 repository: https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_test
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
@@ -14,5 +14,35 @@ screenshots:
 environment:
   sdk: ">=3.7.0 <4.0.0"
 
+dependencies:
+  crypto: ^3.0.0
+  flutter:
+    sdk: flutter
+  flutter_test:
+    sdk: flutter
+  widgetbook: ^4.0.0-alpha.2
+
 dev_dependencies:
   test: ^1.24.0
+
+flutter:
+  uses-material-design: true
+  # Both Material and Cupertino default fonts are not loaded
+  # automatically in tests. To make them available, an app
+  # needs to include their own copies of them.
+  # Widgetbook supplies Roboto because it is free to use.
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto/Roboto-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Roboto/Roboto-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Roboto/Roboto-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Roboto/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Roboto/Roboto-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Roboto/Roboto-Black.ttf
+          weight: 900
