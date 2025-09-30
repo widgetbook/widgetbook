@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Clamp `NumSliderField` value to avoid exceptions when the boundaries change. ([#1590](https://github.com/widgetbook/widgetbook/pull/1590) - by [@EArminjon](https://github.com/EArminjon))
+
 ## 3.17.0
 
 - **FEAT**: Expose Widgetbook's own [scroll behavior](https://docs.widgetbook.io/configure/scroll-behavior) to allow customizing it. ([#1524](https://github.com/widgetbook/widgetbook/pull/1524) - by [@EArminjon](https://github.com/EArminjon))
