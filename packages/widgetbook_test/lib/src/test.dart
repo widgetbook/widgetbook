@@ -31,6 +31,11 @@ void testComponent(Config config, Component component) {
 
 void testStory(Config config, Story story) {
   group(story.name, () {
+    for (final definition in config.scenarios) {
+      final definedScenario = story.generateScenarioFrom(definition);
+      testScenario(config, definedScenario);
+    }
+
     for (final scenario in story.scenarios) {
       testScenario(config, scenario);
     }

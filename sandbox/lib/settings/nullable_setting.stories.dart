@@ -26,12 +26,12 @@ final $Default = NullableSettingStory(
       child: child,
     );
   },
+  scenariosConstraints: const ViewConstraints(
+    maxWidth: 800,
+  ),
   scenarios: [
     NullableSettingScenario(
       name: 'Long name',
-      constraints: const ViewConstraints(
-        maxWidth: 800,
-      ),
       args: NullableSettingArgs(
         name: const StringArg(
           'This is a very long name to test overflow behavior',

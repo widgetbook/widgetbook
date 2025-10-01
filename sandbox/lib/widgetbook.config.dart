@@ -34,4 +34,14 @@ final config = Config(
     ),
     SemanticsAddon(),
   ],
+  scenarios: [
+    ScenarioDefinition(
+      name: 'Dark',
+      modes: [MaterialThemeMode('Dark', ThemeData.dark())],
+    ),
+    ScenarioDefinition(
+      name: 'Light',
+      modes: [MaterialThemeMode('Light', ThemeData.light())],
+    ),
+  ],
 );
