@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'component.dart';
 import 'scenario.dart';
+import 'scenario_definition.dart';
 import 'story_args.dart';
 
 typedef SetupBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> =
@@ -76,6 +77,15 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     final widget = argsBuilder(context, args);
     final story = setup(context, widget, args);
     return story;
+  }
+
+  Scenario<TWidget, TArgs> generateScenarioFrom(
+    ScenarioDefinition definition,
+  ) {
+    return Scenario<TWidget, TArgs>(
+      name: definition.name,
+      modes: definition.modes,
+    )..story = this;
   }
 
   String get name {

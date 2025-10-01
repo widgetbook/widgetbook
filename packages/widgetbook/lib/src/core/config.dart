@@ -48,6 +48,7 @@ class Config {
     this.themeMode = ThemeMode.system,
     this.header,
     this.scrollBehavior = const MaterialScrollBehavior(),
+    this.scenarios = const [],
   });
 
   /// The initial route for that will be used on first startup.
@@ -55,6 +56,10 @@ class Config {
 
   /// The list of [Component]s that will be displayed in Widgetbook.
   final List<Component> components;
+
+  /// For each [ScenarioDefinition] a [Scenario] will be created for every
+  /// [Story] of every [Component].
+  final List<ScenarioDefinition> scenarios;
 
   /// A wrapper builder method for all [Component]s.
   final AppBuilder appBuilder;
