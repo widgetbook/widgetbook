@@ -21,6 +21,8 @@ dependencies:
   collection: ^1.15.0
   flutter:
     sdk: flutter
+  flutter_test:
+    sdk: flutter
   meta: ^1.8.0
   nested: ^1.0.0
   path: ^1.8.0
@@ -28,8 +30,6 @@ dependencies:
   url_launcher: ^6.3.0
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   mocktail: ^1.0.0
 
 flutter:

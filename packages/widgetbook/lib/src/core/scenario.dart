@@ -1,11 +1,19 @@
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:nested/nested.dart';
 
 import 'mode.dart';
 import 'story.dart';
 import 'story_args.dart';
+
+// ignore: strict_raw_type
+typedef ScenarioRunner<TArgs extends StoryArgs> =
+    Future<void> Function(
+      WidgetTester tester,
+      TArgs args,
+    );
 
 class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   Scenario({
@@ -13,6 +21,7 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     this.modes,
     TArgs? args,
     this.constraints,
+    this.run,
   }) : _args = args;
 
   final String name;
@@ -29,7 +38,20 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   /// It is initialized in the [Story] constructor.
   late final Story<TWidget, TArgs> story;
 
+  /// A function that is executed during the test after the widget is built
+  /// and before the screenshot is taken.
+  /// It can be used to interact with the widget, e.g. to open a dropdown
+  /// or to trigger an animation.
+  final Future<void> Function(WidgetTester tester, TArgs args)? run;
+
   TArgs get args => _args ?? story.args;
+
+  // Wrapper to handle generic type parameters and avoid subtype errors like:
+  // type `(WidgetTester, MyArgs) => Future<void>` is not a subtype
+  // of type `(WidgetTester, StoryArgs<Widget>) => Future<void>`
+  Future<void>? execute(WidgetTester tester) {
+    return run?.call(tester, args);
+  }
 
   Widget build(BuildContext context) {
     final effectiveStory = story.buildWithArgs(context, args);
@@ -55,12 +77,14 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     List<Mode>? modes,
     TArgs? args,
     ViewConstraints? constraints,
+    ScenarioRunner<TArgs>? run,
   }) {
     return Scenario<TWidget, TArgs>(
       name: name ?? this.name,
       modes: modes ?? this.modes,
       args: args ?? this.args,
       constraints: constraints ?? this.constraints,
+      run: run ?? this.run,
     );
   }
 }
