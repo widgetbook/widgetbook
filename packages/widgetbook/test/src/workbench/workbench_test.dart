@@ -45,7 +45,7 @@ void main() {
           when(() => story.build(any())).thenReturn(Text(story.name));
 
           final component = Component<Widget, MockStoryArgs>(
-            meta: const Meta<Widget>(name: 'component'),
+            name: 'component',
             stories: [story],
           );
 

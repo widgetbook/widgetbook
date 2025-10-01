@@ -8,7 +8,7 @@ class Tree {
     final root = TreeNode<Null>('');
 
     for (final component in components) {
-      final parts = p.split(component.meta.path ?? '');
+      final parts = p.split(component.path);
 
       // Start with root and keep adding parts down the path
       final lastNode = parts.fold<TreeNode>(
