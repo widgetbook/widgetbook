@@ -20,11 +20,14 @@ class Component<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
 
   String get name => meta.name;
   String? get path => meta.path;
+  String? get docs => meta.docs;
+
+  String get fullPath => p.join(path ?? '', name);
+  String get docsPath => p.join(fullPath, 'Docs');
 
   String pathOf(Story story) {
     return p.join(
-      path ?? '',
-      name,
+      fullPath,
       story.name.replaceAll(' ', '-'),
     );
   }

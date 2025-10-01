@@ -9,6 +9,10 @@ part 'nullable_setting.stories.book.dart';
 
 const meta = Meta<NullableSetting>(
   path: 'widgetbook/settings',
+  docs: '''
+1. Using a custom `path`
+2. Using `constraints` to limit the scenarios width
+''',
 );
 
 final $Default = NullableSettingStory(

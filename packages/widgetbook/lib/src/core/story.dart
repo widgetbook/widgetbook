@@ -27,7 +27,8 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     required this.argsBuilder,
     this.scenarios = const [],
     this.scenariosConstraints = const ViewConstraints(),
-  }) : $name = name {
+  }) : $name = name,
+       assert(name != 'Docs', 'Story name cannot be "Docs"') {
     scenarios.forEach((scenario) {
       scenario.story = this;
     });

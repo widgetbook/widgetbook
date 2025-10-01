@@ -19,6 +19,8 @@ class TreeNode<T> {
 
   bool get isRoot => parent == null;
   bool get isLeaf => children.isEmpty;
+
+  bool get isDocs => T == String && name == 'Docs';
   bool get isCategory {
     return T == String && name.startsWith('[') && name.endsWith(']');
   }
@@ -26,6 +28,7 @@ class TreeNode<T> {
   List<TreeNode> get children {
     return _children.values.sorted(
       (a, b) {
+        if (a.isDocs) return -1; // Docs always first
         if (a.isCategory == b.isCategory) {
           // Both categories or both folders
           return a.name.compareTo(b.name);
