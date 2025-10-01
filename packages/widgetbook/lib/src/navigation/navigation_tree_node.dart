@@ -12,12 +12,12 @@ class NavigationTreeNode extends StatefulWidget {
     super.key,
     required this.node,
     this.depth = 0,
-    this.onStoryTap,
+    this.onLeafNodeTap,
   });
 
   final TreeNode node;
   final int depth;
-  final ValueChanged<TreeNode<Story>>? onStoryTap;
+  final ValueChanged<TreeNode<dynamic>>? onLeafNodeTap;
 
   @override
   State<NavigationTreeNode> createState() => _NavigationTreeNodeState();
@@ -30,9 +30,10 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
   Widget build(BuildContext context) {
     final node = widget.node;
     final isCategory = node.isCategory;
-    final isTerminal = switch (node) {
+    final isLeaf = switch (node) {
       TreeNode<Story>() => true,
       TreeNode<Component>() => node.children.length == 1,
+      TreeNode<String>() => node.name == 'Docs',
       _ => false,
     };
 
@@ -50,26 +51,26 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
             FolderTreeTile(
               node: node,
               depth: widget.depth,
-              isTerminal: isTerminal,
+              isTerminal: isLeaf,
               isExpanded: isExpanded,
               isSelected: node.path == WidgetbookState.of(context).path,
               onTap: () {
-                if (!isTerminal) {
+                if (!isLeaf) {
                   setState(() => isExpanded = !isExpanded);
-                } else if (node is TreeNode<Story>) {
-                  widget.onStoryTap?.call(node);
+                } else if (node is TreeNode<Story> || node.name == 'Docs') {
+                  widget.onLeafNodeTap?.call(node);
                 } else {
                   // Redirect interactions to the story of the leaf component,
                   // so that when it's clicked, the route is updated to the story
                   // of the leaf component, and not the leaf component itself.
                   final componentNode = node as TreeNode<Component>;
-                  widget.onStoryTap?.call(
+                  widget.onLeafNodeTap?.call(
                     componentNode.children.first as TreeNode<Story>,
                   );
                 }
               },
             ),
-        if (!isTerminal)
+        if (!isLeaf)
           _SlideAnimator(
             forward: isExpanded,
             child: ListView.builder(
@@ -80,7 +81,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
                   (context, index) => NavigationTreeNode(
                     depth: isCategory ? widget.depth : widget.depth + 1,
                     node: node.children[index],
-                    onStoryTap: widget.onStoryTap,
+                    onLeafNodeTap: widget.onLeafNodeTap,
                   ),
             ),
           ),

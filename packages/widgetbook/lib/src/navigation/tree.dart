@@ -25,6 +25,17 @@ class Tree {
       );
 
       lastNode.add(componentNode);
+
+      if (component.docs != null) {
+        componentNode.add(
+          TreeNode<String>(
+            'Docs',
+            componentNode,
+            component.docs,
+          ),
+        );
+      }
+
       component.stories.forEach(
         (story) => componentNode.add(
           TreeNode<Story>(

@@ -5,7 +5,12 @@ import 'counter.dart';
 
 part 'counter.stories.book.dart';
 
-const meta = Meta<Counter>();
+const meta = Meta<Counter>(
+  docs: '''
+1. Defining a scenario with args
+2. Using the `run` callback to define interaction tests
+''',
+);
 
 final $Default = CounterStory(
   scenarios: [

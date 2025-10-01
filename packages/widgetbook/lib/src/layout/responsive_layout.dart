@@ -25,8 +25,8 @@ class ResponsiveLayout extends StatelessWidget {
       initialPath: state.path,
       root: state.root,
       header: state.header,
-      onStoryTap: (story) {
-        WidgetbookState.of(context).updatePath(story.path);
+      onLeafNodeTap: (node) {
+        WidgetbookState.of(context).updatePath(node.path);
 
         if (isMobile) {
           // Close navigation bottom sheet

@@ -6,7 +6,11 @@ import 'generic_num.dart';
 part 'generic_num.stories.book.dart';
 
 // ignore: strict_raw_type
-const meta = MetaWithArgs<GenericNum, GenericNumInput>();
+const meta = MetaWithArgs<GenericNum, GenericNumInput>(
+  docs: '''
+1. Creating a generic Story with custom args
+''',
+);
 
 class GenericNumInput<T extends num, R> {
   const GenericNumInput({

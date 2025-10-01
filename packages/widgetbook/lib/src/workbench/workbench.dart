@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import '../state/state.dart';
 import '../theme/theme.dart';
 import 'addons_builder.dart';
+import 'docs_preview.dart';
 import 'safe_boundaries.dart';
 
 /// The [Workbench] is the main widget that displays the current use case
@@ -16,8 +17,13 @@ class Workbench extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
-    final story = state.story;
 
+    final component = state.component;
+    if (state.path?.endsWith('/Docs') == true && component != null) {
+      return const DocsPreview();
+    }
+
+    final story = state.story;
     if (story == null) {
       return state.home;
     }

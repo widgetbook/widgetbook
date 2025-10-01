@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 // ignore: unnecessary_import flutter(<3.35.0)
 import 'package:meta/meta.dart';
 
-import '../core/core.dart';
 import '../state/state.dart';
 import 'navigation_tree_node.dart';
 import 'search_field.dart';
@@ -14,13 +13,13 @@ class NavigationPanel extends StatelessWidget {
   const NavigationPanel({
     super.key,
     this.initialPath,
-    this.onStoryTap,
+    this.onLeafNodeTap,
     required this.root,
     this.header,
   });
 
   final String? initialPath;
-  final ValueChanged<TreeNode<Story>>? onStoryTap;
+  final ValueChanged<TreeNode<dynamic>>? onLeafNodeTap;
   final TreeNode<Null> root;
   final Widget? header;
 
@@ -58,7 +57,7 @@ class NavigationPanel extends StatelessWidget {
           Expanded(
             child: NavigationTreeNode(
               node: filteredRoot ?? root,
-              onStoryTap: onStoryTap,
+              onLeafNodeTap: onLeafNodeTap,
             ),
           ),
           Padding(

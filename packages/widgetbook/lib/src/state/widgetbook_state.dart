@@ -1,7 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart'; // @docImport
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
+import 'package:path/path.dart' as p;
 
 import '../core/core.dart';
 import '../fields/fields.dart';
@@ -103,6 +105,18 @@ class WidgetbookState extends ChangeNotifier {
   /// An optional widget to display at the top of the navigation panel.
   /// This can be used for branding or additional information.
   final Widget? header;
+
+  /// The currently selected component, if any.
+  Component? get component {
+    if (path == null) return null;
+    final parentPath = p.dirname(path!);
+
+    final component = components.firstWhereOrNull(
+      (c) => c.fullPath == parentPath,
+    );
+
+    return component;
+  }
 
   /// The currently selected story, if any.
   Story? get story => path == null ? null : index[path!];

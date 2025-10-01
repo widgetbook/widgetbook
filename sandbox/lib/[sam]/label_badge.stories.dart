@@ -5,7 +5,13 @@ import 'label_badge.dart';
 
 part 'label_badge.stories.book.dart';
 
-const meta = MetaWithArgs<LabelBadge, NumericBadgeInput>();
+const meta = MetaWithArgs<LabelBadge, NumericBadgeInput>(
+  docs: '''
+1. Using custom args via `MetaWithArgs`
+2. Creating a default `setup` function
+3. Creating a default `argsBuilder` function
+''',
+);
 
 // This will be used as the default `setup`
 Widget $setup(

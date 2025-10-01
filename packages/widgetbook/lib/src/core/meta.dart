@@ -6,11 +6,13 @@ class Meta<TWidget extends Widget> {
   const Meta({
     String? name,
     String? path,
+    this.docs,
   }) : $name = name,
        $path = path;
 
   final String? $name;
   final String? $path;
+  final String? docs;
 
   String get name => $name!;
   String? get path => $path;
@@ -25,6 +27,7 @@ class Meta<TWidget extends Widget> {
     return Meta<TWidget>(
       name: $name ?? name,
       path: $path ?? path,
+      docs: docs,
     );
   }
 }
@@ -34,5 +37,6 @@ class MetaWithArgs<TWidget extends Widget, TArgs> extends Meta<TWidget> {
   const MetaWithArgs({
     super.name,
     super.path,
+    super.docs,
   });
 }
