@@ -35,13 +35,17 @@ class ComponentBuilder {
               ),
               [],
               {
-                'meta': refer('meta').property('init').call(
-                  [],
-                  {
-                    'name': literalString(widgetType.nonGenericName),
-                    'path': literalString(navPath),
-                  },
-                ),
+                'name': refer('meta')
+                    .property('name')
+                    .ifNullThen(
+                      literalString(widgetType.nonGenericName),
+                    ),
+                'path': refer('meta')
+                    .property('path')
+                    .ifNullThen(
+                      literalString(navPath),
+                    ),
+                'docs': refer('meta').property('docs'),
                 'stories': literalList(
                   stories
                       .map(

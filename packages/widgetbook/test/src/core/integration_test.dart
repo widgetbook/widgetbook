@@ -67,7 +67,7 @@ void main() {
             integrations: [integration],
             components: [
               Component(
-                meta: const Meta(name: 'Placeholder'),
+                name: 'Placeholder',
                 stories: [story],
               ),
             ],

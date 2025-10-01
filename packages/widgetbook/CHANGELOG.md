@@ -2,6 +2,7 @@
 
 - **BREAKING**: Add `valueToQueryGroup` to `Addon` and `Arg`; to allow serializing their values to URL query parameters. ([#1608](https://github.com/widgetbook/widgetbook/pull/1608))
 - **BREAKING**: Add `addon` field to `Mode` to use it for serialization. ([#1608](https://github.com/widgetbook/widgetbook/pull/1608))
+- **BREAKING**: Replace `Component.meta` with direct fields to each `Meta` property. ([#1624](https://github.com/widgetbook/widgetbook/pull/1624))
 - **FEAT**: Add text-based docs via `Meta` that is used to show component's documentation. ([#1623](https://github.com/widgetbook/widgetbook/pull/1623))
 - **FEAT**: Add `scenarios` parameter to `Story`. ([#1605](https://github.com/widgetbook/widgetbook/pull/1605))
 - **FEAT**: Add `constraints` field to `Scenario`; to allow specifying max width/height while capturing image. ([#1619](https://github.com/widgetbook/widgetbook/pull/1619))
