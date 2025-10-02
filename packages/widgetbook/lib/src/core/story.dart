@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../addons/viewport_addon/addon.dart';
 import 'component.dart';
+import 'mode.dart';
 import 'scenario.dart';
 import 'scenario_definition.dart';
 import 'story_args.dart';
@@ -22,10 +22,10 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     String? name,
     this.designLink,
     this.setup = defaultSetup,
+    this.modes,
     required this.args,
     required this.argsBuilder,
     this.scenarios = const [],
-    this.scenariosViewport = const NoneViewport(),
   }) : $name = name,
        assert(name != 'Docs', 'Story name cannot be "Docs"') {
     scenarios.forEach((scenario) {
@@ -40,15 +40,14 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   final ArgsBuilder<TWidget, TArgs> argsBuilder;
   final List<Scenario<TWidget, TArgs>> scenarios;
 
-  /// The default value for [Scenario.viewport] for all scenarios.
-  /// When a [ViewportMode] is not specified in a scenario,
-  /// this value is used instead.
+  /// These [Mode]s are only applied to [Scenario]s in this [Story] using
+  /// the [Scenario.mergeModes] function to combine them with [Scenario.modes].
+  /// They are not applied to the [Story] itself.
   ///
-  /// Defaults to [NoneViewport] to allow unconstrained widgets,
-  /// and render the [Story] as small as possible.
-  ///
-  /// [Scenario.viewport] has precedence over this value.
-  final ViewportData scenariosViewport;
+  /// This is useful to inject story-specific modes in addition to the
+  /// ones defined in [ScenarioDefinition]s.
+  // ignore: strict_raw_type
+  final List<Mode>? modes;
 
   /// A late back-reference to the component this story belongs to.
   /// It is initialized in the [Component] constructor.
@@ -86,6 +85,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     return Scenario<TWidget, TArgs>(
       name: definition.name,
       modes: definition.modes,
+      mergeModes: definition.mergeModes,
     )..story = this;
   }
 

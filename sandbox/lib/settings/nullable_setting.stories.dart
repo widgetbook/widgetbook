@@ -9,7 +9,7 @@ const meta = Meta<NullableSetting>(
   path: 'widgetbook/settings',
   docs: '''
 1. Using a custom `path`
-2. Using `constraints` to limit the scenarios width
+2. Using `Story.modes` to use `ViewportMode` and limit the scenarios width
 ''',
 );
 
@@ -28,12 +28,18 @@ final $Default = NullableSettingStory(
       child: child,
     );
   },
-  scenariosViewport: const ViewportData.constrained(
-    name: '800w',
-    maxWidth: 800,
-    pixelRatio: 2,
-    platform: TargetPlatform.iOS,
-  ),
+  modes: [
+    // The viewport mode is defined here and not in the `NullableSettingScenario`
+    // because we want to apply it to the `ScenarioDefinition`s as well.
+    ViewportMode(
+      const ViewportData.constrained(
+        name: '800w',
+        maxWidth: 800,
+        pixelRatio: 2,
+        platform: TargetPlatform.iOS,
+      ),
+    ),
+  ],
   scenarios: [
     NullableSettingScenario(
       name: 'Long name',

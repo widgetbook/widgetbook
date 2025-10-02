@@ -53,7 +53,7 @@ class ScenarioMetadata {
       },
       'scenario': {
         'name': scenario.name,
-        'modes': scenario.modes?.map((mode) => mode.toQueryGroup()).toList(),
+        'modes': scenario.modes.map((mode) => mode.toQueryGroup()).toList(),
         'args': scenario.args.list.map((arg) => arg?.toQueryGroup()).toList(),
       },
       'image': {

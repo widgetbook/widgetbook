@@ -1,7 +1,7 @@
 ## Unreleased
 
 - **FEAT**: Add `scenarios` parameter to `Story`. ([#1605](https://github.com/widgetbook/widgetbook/pull/1605))
-- **FEAT**: Add `scenariosViewport` parameter to `Story`. ([#1626](https://github.com/widgetbook/widgetbook/pull/1626))
+- **FEAT**: Add `modes` parameter to `Story`. ([#1627](https://github.com/widgetbook/widgetbook/pull/1627))
 - **FEAT**: Generate `story` field in `Scenario`. ([#1615](https://github.com/widgetbook/widgetbook/pull/1615))
 - **REFACTOR**: Pass `meta` fields to `Component` constructor. ([#1624](https://github.com/widgetbook/widgetbook/pull/1624))
 - **FIX**: Add component's fallback name to metadata. ([#1593](https://github.com/widgetbook/widgetbook/pull/1593))
