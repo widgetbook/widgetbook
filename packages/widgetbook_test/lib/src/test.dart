@@ -69,7 +69,7 @@ void testScenario(
       await scenario.execute(tester);
 
       final element = tester.element(find.byKey(key));
-      final imageFuture = captureImage(element, 2);
+      final imageFuture = captureImage(element, 1);
 
       // Run on separate isolate as async operations cannot be run inside
       // testWidgets directly.
@@ -84,6 +84,7 @@ void testScenario(
           imageBytes: imageBytes,
           imageWidth: image.width,
           imageHeight: image.height,
+          pixelRatio: tester.view.devicePixelRatio,
         );
 
         await metadata.directory.create(recursive: true);

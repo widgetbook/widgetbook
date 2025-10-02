@@ -12,12 +12,14 @@ class ScenarioMetadata {
     required this.imageBytes,
     required this.imageWidth,
     required this.imageHeight,
+    required this.pixelRatio,
   });
 
   final Scenario scenario;
   final Uint8List imageBytes;
   final int imageWidth;
   final int imageHeight;
+  final double pixelRatio;
 
   Component get component => scenario.story.component;
   Story get story => scenario.story;
@@ -59,6 +61,8 @@ class ScenarioMetadata {
         'hash': hash,
         'width': imageWidth,
         'height': imageHeight,
+        'pixelRatio': pixelRatio,
+        'size': imageBytes.length,
       },
     };
   }
