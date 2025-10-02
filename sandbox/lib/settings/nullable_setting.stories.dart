@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/src/settings/nullable_setting.dart';
 import 'package:widgetbook/src/theme/theme.dart';
@@ -30,8 +28,11 @@ final $Default = NullableSettingStory(
       child: child,
     );
   },
-  scenariosConstraints: const ViewConstraints(
+  scenariosViewport: const ViewportData.constrained(
+    name: '800w',
     maxWidth: 800,
+    pixelRatio: 2,
+    platform: TargetPlatform.iOS,
   ),
   scenarios: [
     NullableSettingScenario(

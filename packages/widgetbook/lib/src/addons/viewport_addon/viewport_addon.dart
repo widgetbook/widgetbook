@@ -2,20 +2,30 @@ import 'package:flutter/widgets.dart' hide Viewport;
 
 import '../../core/core.dart';
 import '../../fields/fields.dart';
-import '../../state/state.dart';
 import 'viewport.dart';
 import 'viewport_data.dart';
 import 'viewports/viewports.dart';
 
 class ViewportMode extends Mode<ViewportData> {
-  ViewportMode(ViewportData value) : super(value, ViewportAddon([value]));
+  ViewportMode(ViewportData value)
+    : super(
+        value,
+        ViewportAddon(
+          [value],
+          showFrame: false,
+        ),
+      );
 }
 
 /// An [Addon] that allows switching between different viewports.
 class ViewportAddon extends Addon<ViewportData> {
-  ViewportAddon(this.viewports) : super(name: 'Viewport');
+  ViewportAddon(
+    this.viewports, {
+    this.showFrame = true,
+  }) : super(name: 'Viewport');
 
   final List<ViewportData> viewports;
+  final bool showFrame;
 
   @override
   List<Field> get fields {
@@ -47,13 +57,10 @@ class ViewportAddon extends Addon<ViewportData> {
   ) {
     if (setting is NoneViewport) return child;
 
-    // Enable frameless mode if the preview mode is enabled
-    final frameless = WidgetbookState.of(context).previewMode;
-
     return Center(
       child: Viewport(
         data: setting,
-        frameless: frameless,
+        frameless: !showFrame,
         child: child,
       ),
     );

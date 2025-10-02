@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nested/nested.dart';
 
+import '../addons/addons.dart';
 import 'mode.dart';
 import 'story.dart';
 import 'story_args.dart';
@@ -20,7 +21,6 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     required this.name,
     this.modes,
     TArgs? args,
-    this.constraints,
     this.run,
   }) : _args = args;
 
@@ -28,11 +28,6 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   // ignore: strict_raw_type
   final List<Mode>? modes;
   final TArgs? _args;
-
-  /// The constraints is helpful to limit the size for widgets that expand
-  /// to the maximum size available.
-  /// If not specified, the value from [Story.scenariosConstraints] is used.
-  final ViewConstraints? constraints;
 
   /// A late back-reference to the story this scenario belongs to.
   /// It is initialized in the [Story] constructor.
@@ -45,6 +40,15 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   final Future<void> Function(WidgetTester tester, TArgs args)? run;
 
   TArgs get args => _args ?? story.args;
+
+  /// Gets the viewport from the modes if a [ViewportMode] is present.
+  /// Otherwise, returns null.
+  ///
+  /// During testing, if no viewport is defined here, the
+  /// [Story.scenariosViewport] is used instead.
+  ViewportData? get viewport {
+    return modes?.whereType<ViewportMode>().firstOrNull?.value;
+  }
 
   // Wrapper to handle generic type parameters and avoid subtype errors like:
   // type `(WidgetTester, MyArgs) => Future<void>` is not a subtype
@@ -83,7 +87,6 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
       name: name ?? this.name,
       modes: modes ?? this.modes,
       args: args ?? this.args,
-      constraints: constraints ?? this.constraints,
       run: run ?? this.run,
     );
   }

@@ -8,7 +8,16 @@ final config = Config(
   components: components,
   addons: [
     TimeDilationAddon(),
-    ViewportAddon(Viewports.all),
+    ViewportAddon([
+      Viewports.none,
+      IosViewports.iPhone13,
+      const ViewportData.constrained(
+        name: '800w',
+        pixelRatio: 2,
+        maxWidth: 800,
+        platform: TargetPlatform.iOS,
+      ),
+    ]),
     MaterialThemeAddon({
       'Dark': Themes.dark,
       'Light': Themes.light,
