@@ -25,7 +25,7 @@ class Viewport extends StatelessWidget {
       // the actual size of the viewport, as it will be as small as it can be
       // to fit the child. In this case, we set the size to zero, so that the
       // MediaQuery size does not affect the layout of the child.
-      size: data.viewConstraints.isTight ? data.maxSize : Size.zero,
+      size: data.boxConstraints.isTight ? data.maxSize : Size.zero,
       devicePixelRatio: data.pixelRatio,
       padding: data.safeAreas,
       viewPadding: data.safeAreas,

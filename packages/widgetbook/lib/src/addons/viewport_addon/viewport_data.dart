@@ -62,6 +62,7 @@ class ViewportData {
   Size get minSize => Size(minWidth, minHeight);
   Size get maxSize => Size(maxWidth, maxHeight);
 
+  /// Used with [ConstrainedBox] to set the constraints of the viewport.
   BoxConstraints get boxConstraints => BoxConstraints(
     minWidth: minWidth,
     maxWidth: maxWidth,
@@ -69,10 +70,12 @@ class ViewportData {
     maxHeight: maxHeight,
   );
 
+  /// Used with [WidgetTester.view.physicalConstraints] It needs to be scaled up
+  /// by the pixel ratio to get the correct physical size.
   ViewConstraints get viewConstraints => ViewConstraints(
-    minWidth: minWidth,
-    maxWidth: maxWidth,
-    minHeight: minHeight,
-    maxHeight: maxHeight,
+    minWidth: minWidth * pixelRatio,
+    maxWidth: maxWidth * pixelRatio,
+    minHeight: minHeight * pixelRatio,
+    maxHeight: maxHeight * pixelRatio,
   );
 }
