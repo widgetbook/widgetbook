@@ -14,11 +14,13 @@ import 'windows_viewports.dart';
 @internal
 class NoneViewport extends ViewportData {
   const NoneViewport()
-    : super(
+    : super.constrained(
         name: 'None',
-        width: 0,
-        height: 0,
-        pixelRatio: 0,
+        minWidth: 0,
+        maxWidth: double.infinity,
+        minHeight: 0,
+        maxHeight: double.infinity,
+        pixelRatio: 2,
         platform: TargetPlatform.fuchsia,
       );
 }

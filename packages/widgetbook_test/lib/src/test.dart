@@ -46,11 +46,13 @@ void testScenario(
   Config config,
   Scenario scenario,
 ) {
+  final targetViewport = scenario.viewport ?? scenario.story.scenariosViewport;
+
   testWidgets(
     scenario.name,
     (tester) async {
-      tester.view.physicalConstraints =
-          scenario.constraints ?? scenario.story.scenariosConstraints;
+      tester.view.physicalConstraints = targetViewport.viewConstraints;
+      tester.view.devicePixelRatio = targetViewport.pixelRatio;
 
       final key = UniqueKey();
       await tester.pumpWidget(
@@ -84,7 +86,7 @@ void testScenario(
           imageBytes: imageBytes,
           imageWidth: image.width,
           imageHeight: image.height,
-          pixelRatio: tester.view.devicePixelRatio,
+          pixelRatio: targetViewport.pixelRatio,
         );
 
         await metadata.directory.create(recursive: true);

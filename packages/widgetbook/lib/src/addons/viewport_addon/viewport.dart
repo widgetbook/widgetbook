@@ -21,7 +21,11 @@ class Viewport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).copyWith(
-      size: data.size,
+      // If the viewport has min/max constraints, then it's hard to determine
+      // the actual size of the viewport, as it will be as small as it can be
+      // to fit the child. In this case, we set the size to zero, so that the
+      // MediaQuery size does not affect the layout of the child.
+      size: data.boxConstraints.isTight ? data.maxSize : Size.zero,
       devicePixelRatio: data.pixelRatio,
       padding: data.safeAreas,
       viewPadding: data.safeAreas,
@@ -52,9 +56,8 @@ class Viewport extends StatelessWidget {
             },
           ),
         ],
-        child: SizedBox(
-          width: data.width,
-          height: data.height,
+        child: ConstrainedBox(
+          constraints: data.boxConstraints,
           child: Theme(
             data: theme,
             child: MediaQuery(
