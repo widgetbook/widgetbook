@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ThemeMode;
 import 'package:widgetbook/src/theme/theme.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -18,10 +18,13 @@ final config = Config(
         platform: TargetPlatform.iOS,
       ),
     ]),
-    MaterialThemeAddon({
-      'Dark': Themes.dark,
-      'Light': Themes.light,
-    }),
+    ThemeAddon<ThemeData>(
+      {
+        'Dark': Themes.dark,
+        'Light': Themes.light,
+      },
+      multiThemeBuilder,
+    ),
     GridAddon(),
     AlignmentAddon(),
     TextScaleAddon(),
@@ -46,11 +49,38 @@ final config = Config(
   scenarios: [
     ScenarioDefinition(
       name: 'Dark',
-      modes: [MaterialThemeMode('Dark', ThemeData.dark())],
+      modes: [
+        ThemeMode<ThemeData>('Dark', Themes.dark, multiThemeBuilder),
+      ],
     ),
     ScenarioDefinition(
       name: 'Light',
-      modes: [MaterialThemeMode('Light', ThemeData.light())],
+      modes: [
+        ThemeMode<ThemeData>('Light', Themes.light, multiThemeBuilder),
+      ],
     ),
   ],
 );
+
+// Sandbox needs two inherited theme widgets:
+// 1. `WidgetbookTheme` for Widgetbook's components (e.g. `NullableSetting`)
+// 2. `Theme` for material-based components (e.g. `LabelBadge`)
+Widget multiThemeBuilder(
+  BuildContext context,
+  ThemeData data,
+  Widget child,
+) {
+  return WidgetbookTheme(
+    data: data,
+    child: Theme(
+      data: data,
+      child: ColoredBox(
+        color: data.scaffoldBackgroundColor,
+        child: DefaultTextStyle(
+          style: data.textTheme.bodyMedium!,
+          child: child,
+        ),
+      ),
+    ),
+  );
+}
