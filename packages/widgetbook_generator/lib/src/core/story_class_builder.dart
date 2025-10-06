@@ -100,6 +100,13 @@ class StoryClassBuilder {
                     Parameter(
                       (b) =>
                           b
+                            ..name = 'modes'
+                            ..named = true
+                            ..toSuper = true,
+                    ),
+                    Parameter(
+                      (b) =>
+                          b
                             ..name = 'args'
                             ..named = true
                             ..toSuper = hasRequiredArgs
@@ -132,13 +139,6 @@ class StoryClassBuilder {
                       (b) =>
                           b
                             ..name = 'scenarios'
-                            ..named = true
-                            ..toSuper = true,
-                    ),
-                    Parameter(
-                      (b) =>
-                          b
-                            ..name = 'scenariosViewport'
                             ..named = true
                             ..toSuper = true,
                     ),
@@ -226,7 +226,7 @@ class StoryClassBuilder {
                               'setup': refer('setup'),
                               'args': refer('args'),
                               'argsBuilder': refer('argsBuilder'),
-                              'scenariosViewport': refer('scenariosViewport'),
+                              'modes': refer('modes'),
                               // We need to call `copyWith` on each scenario
                               // to ensure the back-reference gets uninitialized
                               // again in the scenarios instances, as it will

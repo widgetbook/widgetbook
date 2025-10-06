@@ -46,7 +46,8 @@ void testScenario(
   Config config,
   Scenario scenario,
 ) {
-  final targetViewport = scenario.viewport ?? scenario.story.scenariosViewport;
+  final defaultViewport = Viewports.none;
+  final targetViewport = scenario.viewport ?? defaultViewport;
 
   testWidgets(
     scenario.name,
