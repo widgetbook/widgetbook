@@ -59,13 +59,7 @@ void testScenario(
       await tester.pumpWidget(
         Builder(
           key: key,
-          builder: (context) {
-            // Re-use app builder from config
-            return config.appBuilder(
-              context,
-              scenario.build(context),
-            );
-          },
+          builder: (context) => scenario.buildWithConfig(context, config),
         ),
       );
 

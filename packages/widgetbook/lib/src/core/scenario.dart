@@ -2,9 +2,11 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:nested/nested.dart';
 
 import '../addons/addons.dart';
+import '../utils.dart';
+import 'addon.dart';
+import 'config.dart';
 import 'mode.dart';
 import 'scenario_definition.dart';
 import 'story.dart';
@@ -69,22 +71,46 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
     return run?.call(tester, args);
   }
 
-  Widget build(BuildContext context) {
-    final effectiveStory = story.buildWithArgs(context, args);
+  /// Merge [addons] with [modes], with [modes] taking precedence
+  /// For example if [addons] are [TextScaleAddon(1), ThemeAddon('dark')]
+  /// and [modes] are [TextScaleMode(3), LocaleMode('fr')] the result should be
+  /// [TextScaleAddon(3), ThemeAddon('dark'), LocaleAddon('fr')]
+  List<Addon> mergeAddonsWithModes(List<Addon> addons) {
+    final addonsCopy = List<Addon>.from(addons);
 
-    return modes.isEmpty
-        ? effectiveStory
-        : Nested(
-          children:
-              modes
-                  .map(
-                    (mode) => SingleChildBuilder(
-                      builder: (context, child) => mode.build(context, child!),
-                    ),
-                  )
-                  .toList(),
-          child: effectiveStory,
-        );
+    for (final mode in modes) {
+      final existingIndex = addonsCopy.indexWhere(
+        (addon) => addon.runtimeType == mode.addon.runtimeType,
+      );
+
+      if (existingIndex != -1) {
+        // if there's an addon for the given mode,
+        // we replace it with the mode's addon
+        addonsCopy[existingIndex] = mode.addon;
+      } else {
+        // Otherwise, we add the mode's addon
+        // to the end of the list
+        addonsCopy.add(mode.addon);
+      }
+    }
+
+    return addonsCopy;
+  }
+
+  /// Injects both [Config.appBuilder] and [Config.addons] into the
+  /// built story, which is built using the [args] of this scenario.
+  Widget buildWithConfig(BuildContext context, Config config) {
+    final effectiveStory = story.buildWithArgs(context, args);
+    final mergedAddons = mergeAddonsWithModes(config.addons ?? []);
+
+    return config.appBuilder(
+      context,
+      NestedBuilder(
+        items: mergedAddons,
+        builder: (context, addon, child) => addon.build(context, child),
+        child: effectiveStory,
+      ),
+    );
   }
 
   Scenario<TWidget, TArgs> copyWith({

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+import '../core/core.dart';
 import '../state/state.dart';
 import '../theme/theme.dart';
-import 'addons_builder.dart';
+import '../utils.dart';
 import 'docs_preview.dart';
 import 'safe_boundaries.dart';
 
@@ -39,8 +40,9 @@ class Workbench extends StatelessWidget {
             // Background color for the area behind device frame if
             // the [DeviceFrameAddon] is used.
             color: theme.scaffoldBackgroundColor,
-            child: AddonsBuilder(
-              addons: state.addons,
+            child: NestedBuilder<Addon>(
+              items: state.addons ?? [],
+              builder: (context, addon, child) => addon.build(context, child),
               child: Stack(
                 // The Stack is used to loosen the constraints of
                 // the UseCaseBuilder. Without the Stack, UseCaseBuilder
