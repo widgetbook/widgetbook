@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ThemeMode;
 import 'package:widgetbook/widgetbook.dart';
 
+import '../theme.dart';
 import 'label_badge.dart';
 
 part 'label_badge.stories.book.dart';
@@ -43,7 +44,9 @@ final $Primary = LabelBadgeStory(
   scenarios: [
     LabelBadgeScenario(
       name: 'Dark - 3',
-      modes: [MaterialThemeMode('Dark', ThemeData.dark())],
+      modes: [
+        ThemeMode<MultiThemeData>('Dark', multiDarkTheme, multiThemeBuilder),
+      ],
       args: NumericBadgeInputArgs(
         number: const IntArg(3),
       ),

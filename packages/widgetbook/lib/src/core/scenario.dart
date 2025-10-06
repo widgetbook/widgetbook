@@ -1,5 +1,6 @@
 // ignore_for_file: strict_raw_type
 
+import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -71,37 +72,39 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
     return run?.call(tester, args);
   }
 
-  /// Merge [addons] with [modes], with [modes] taking precedence
+  /// Merges [modes] into [addons].
   /// For example if [addons] are [TextScaleAddon(1), ThemeAddon('dark')]
-  /// and [modes] are [TextScaleMode(3), LocaleMode('fr')] the result should be
-  /// [TextScaleAddon(3), ThemeAddon('dark'), LocaleAddon('fr')]
-  List<Addon> mergeAddonsWithModes(List<Addon> addons) {
-    final addonsCopy = List<Addon>.from(addons);
+  /// and [modes] are [TextScaleMode(3)] the result should be
+  /// [TextScaleAddon(3), ThemeAddon('dark')].
+  ///
+  /// If [modes] are for an addon type that is not present in [addons],
+  /// an assertion error is thrown.
+  List<Addon> mergeModesIntoAddons(List<Addon> addons) {
+    final addonTypes = addons.map((addon) => addon.runtimeType).toSet();
+    final unmatchedModes = modes.where(
+      (mode) => !addonTypes.contains(mode.addon.runtimeType),
+    );
 
-    for (final mode in modes) {
-      final existingIndex = addonsCopy.indexWhere(
-        (addon) => addon.runtimeType == mode.addon.runtimeType,
+    assert(
+      unmatchedModes.isEmpty,
+      'Modes [${unmatchedModes.map((e) => e.runtimeType).join(', ')}] '
+      'do not have a corresponding addon in config.',
+    );
+
+    return addons.map((addon) {
+      final matchingMode = modes.firstWhereOrNull(
+        (mode) => mode.addon.runtimeType == addon.runtimeType,
       );
 
-      if (existingIndex != -1) {
-        // if there's an addon for the given mode,
-        // we replace it with the mode's addon
-        addonsCopy[existingIndex] = mode.addon;
-      } else {
-        // Otherwise, we add the mode's addon
-        // to the end of the list
-        addonsCopy.add(mode.addon);
-      }
-    }
-
-    return addonsCopy;
+      return matchingMode?.addon ?? addon;
+    }).toList();
   }
 
   /// Injects both [Config.appBuilder] and [Config.addons] into the
   /// built story, which is built using the [args] of this scenario.
   Widget buildWithConfig(BuildContext context, Config config) {
     final effectiveStory = story.buildWithArgs(context, args);
-    final mergedAddons = mergeAddonsWithModes(config.addons ?? []);
+    final mergedAddons = mergeModesIntoAddons(config.addons ?? []);
 
     return config.appBuilder(
       context,
