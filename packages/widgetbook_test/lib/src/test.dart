@@ -76,6 +76,7 @@ void testScenario(
         final byteData = await image.toByteData(format: ImageByteFormat.png);
         final imageBytes = byteData!.buffer.asUint8List();
 
+        final jsonEncoder = const JsonEncoder.withIndent('  ');
         final metadata = ScenarioMetadata(
           scenario: scenario,
           imageBytes: imageBytes,
@@ -88,7 +89,10 @@ void testScenario(
 
         await Future.wait([
           metadata.imageFile.writeAsBytes(imageBytes, flush: true),
-          metadata.jsonFile.writeAsString(jsonEncode(metadata), flush: true),
+          metadata.jsonFile.writeAsString(
+            jsonEncoder.convert(metadata),
+            flush: true,
+          ),
         ]);
 
         image.dispose();
