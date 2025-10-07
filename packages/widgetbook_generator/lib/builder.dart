@@ -7,8 +7,6 @@ import 'src/generators/app_generator.dart';
 import 'src/generators/json_builder.dart';
 import 'src/generators/use_case_generator.dart';
 import 'src/models/nav_path_mode.dart';
-import 'src/next/components_builder.dart';
-import 'src/next/story_generator.dart';
 import 'src/telemetry/telemetry_reporter.dart';
 import 'widgetbook_generator.dart';
 
@@ -71,15 +69,4 @@ Builder reportTelemetry(BuilderOptions options) {
   return TelemetryReporter(
     isDebug: options.config['debug'] as bool? ?? false,
   );
-}
-
-Builder storyBuilder(BuilderOptions options) {
-  return PartBuilder(
-    [StoryGenerator()],
-    '.book.dart',
-  );
-}
-
-Builder componentsBuilder(BuilderOptions options) {
-  return ComponentsBuilder();
 }

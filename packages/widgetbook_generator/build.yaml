@@ -37,21 +37,3 @@ builders:
     defaults:
       options:
         debug: false
-
-  experimental_story_builder:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["storyBuilder"]
-    runs_before: [":experimental_components_builder"]
-    build_extensions: { ".stories.dart": [".stories.book.dart"] }
-    auto_apply: none # Disabled by default
-    build_to: source
-    defaults:
-      generate_for:
-        - lib/**.stories.dart
-
-  experimental_components_builder:
-    import: "package:widgetbook_generator/builder.dart"
-    builder_factories: ["componentsBuilder"]
-    build_extensions: { ".stories.dart": [".dart"] }
-    auto_apply: none # Disabled by default
-    build_to: source

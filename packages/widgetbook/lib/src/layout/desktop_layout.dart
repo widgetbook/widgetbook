@@ -17,14 +17,12 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
     required this.navigationBuilder,
     required this.addonsBuilder,
     required this.knobsBuilder,
-    required this.argsBuilder,
     required this.workbench,
   });
 
   final Widget Function(BuildContext context) navigationBuilder;
   final List<Widget> Function(BuildContext context) addonsBuilder;
   final List<Widget> Function(BuildContext context) knobsBuilder;
-  final List<Widget> Function(BuildContext context) argsBuilder;
   final Widget workbench;
 
   @override
@@ -40,7 +38,6 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
         state.canShowPanel(LayoutPanel.knobs);
 
     return ColoredBox(
-      key: ValueKey(state.isNext), // Rebuild when switching to next
       color: WidgetbookTheme.of(context).colorScheme.surface,
       child: ResizableLayout(
         items: [
@@ -62,17 +59,10 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
                 child: SettingsPanel(
                   settings: [
                     if (state.canShowPanel(LayoutPanel.knobs)) ...{
-                      if (state.isNext) ...{
-                        SettingsPanelData(
-                          name: 'Args',
-                          builder: argsBuilder,
-                        ),
-                      } else ...{
-                        SettingsPanelData(
-                          name: 'Knobs',
-                          builder: knobsBuilder,
-                        ),
-                      },
+                      SettingsPanelData(
+                        name: 'Knobs',
+                        builder: knobsBuilder,
+                      ),
                     },
                     if (state.canShowPanel(LayoutPanel.addons) &&
                         state.addons != null) ...{

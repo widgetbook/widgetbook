@@ -1,3 +1,7 @@
+## Unreleased
+
+- **BREAKING**: Remove `next` library. ([#1634](https://github.com/widgetbook/widgetbook/pull/1634))
+
 ## 3.17.1
 
 - **FIX**: Clamp `NumSliderField` value to avoid exceptions when the boundaries change. ([#1590](https://github.com/widgetbook/widgetbook/pull/1590) - by [@EArminjon](https://github.com/EArminjon))
