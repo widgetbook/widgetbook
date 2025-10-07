@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/next.dart' as next;
 import 'package:widgetbook/src/themes.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-import 'components.book.dart';
 import 'widgetbook.directories.g.dart';
 
 void main() {
@@ -32,22 +30,27 @@ class WidgetbookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
-      directories: [...directories, ...components],
+      directories: directories,
       addons: [
         ViewportAddon(Viewports.all),
-        next.TimeDilationAddon(),
-        next.MaterialThemeAddon({'Dark': Themes.dark, 'Light': Themes.light}),
-        next.GridAddon(),
-        next.AlignmentAddon(),
-        next.TextScaleAddon(),
-        next.LocaleAddon(
-          [const Locale('en', 'US')],
-          [
+        TimeDilationAddon(),
+        MaterialThemeAddon(
+          themes: [
+            WidgetbookTheme(name: 'Dark', data: Themes.dark),
+            WidgetbookTheme(name: 'Light', data: Themes.light),
+          ],
+        ),
+        GridAddon(),
+        AlignmentAddon(),
+        TextScaleAddon(),
+        LocalizationAddon(
+          locales: [const Locale('en', 'US')],
+          localizationsDelegates: [
             DefaultWidgetsLocalizations.delegate,
             DefaultMaterialLocalizations.delegate,
           ],
         ),
-        next.BuilderAddon(
+        BuilderAddon(
           name: 'Bounds',
           builder: (context, child) => Container(
             decoration: BoxDecoration(

@@ -334,15 +334,6 @@
       ]
     },
     {
-      "group": "Next",
-      "pages": [
-        {
-          "title": "SAM Architecture",
-          "href": "/next/sam"
-        }
-      ]
-    },
-    {
       "tab": "docs",
       "group": "Misc",
       "pages": [

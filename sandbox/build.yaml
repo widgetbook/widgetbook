@@ -6,7 +6,3 @@ targets:
           nav_path_mode: use-case
       widgetbook_generator:telemetry:
         enabled: false
-      widgetbook_generator:experimental_story_builder:
-        enabled: true # Disabled by default
-      widgetbook_generator:experimental_components_builder:
-        enabled: true # Disabled by default

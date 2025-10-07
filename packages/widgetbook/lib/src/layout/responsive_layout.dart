@@ -55,18 +55,6 @@ class ResponsiveLayout extends StatelessWidget {
         .toList();
   }
 
-  List<Widget> buildArgs(BuildContext context) {
-    final state = WidgetbookState.of(context);
-    final story = state.story;
-
-    return story
-            ?.args
-            .safeList //
-            .map((e) => e.buildFields(context))
-            .toList() ??
-        [];
-  }
-
   @override
   Widget build(BuildContext context) {
     // Force desktop mode if `panels` query param is set.
@@ -85,14 +73,12 @@ class ResponsiveLayout extends StatelessWidget {
           navigationBuilder: (context) => buildNavigation(context, true),
           addonsBuilder: buildAddons,
           knobsBuilder: buildKnobs,
-          argsBuilder: buildArgs,
           workbench: child,
         )
         : DesktopLayout(
           navigationBuilder: (context) => buildNavigation(context, false),
           addonsBuilder: buildAddons,
           knobsBuilder: buildKnobs,
-          argsBuilder: buildArgs,
           workbench: child,
         );
   }
