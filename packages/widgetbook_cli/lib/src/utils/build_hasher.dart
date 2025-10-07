@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:collection/collection.dart';
 import 'package:crypto/crypto.dart';
 import 'package:file/file.dart';
 
@@ -47,28 +46,11 @@ class BuildHasher {
     );
 
     final encodedResources = utf8.encode(jsonEncode(resourcesJson));
-
-    // It is not guaranteed that the [CacheStore] reads the use-cases metadata
-    // in the same order each time, so we need to sort them to ensure
-    // that the hash is deterministic across runs.
-    final sortedUseCasesJson =
-        cache.useCases
-            .sortedBy((x) => '${x.navPath}/${x.componentName}${x.useCaseName}')
-            .map((x) => x.toCloudUseCase())
-            .toList();
-
-    final encodedUseCases = utf8.encode(
-      jsonEncode(sortedUseCasesJson),
-    );
-
-    final encodedAddonsConfigs = utf8.encode(
-      jsonEncode(cache.addonsConfigs ?? {}),
-    );
+    final encodedScenarios = utf8.encode(jsonEncode(cache.scenarios));
 
     return md5.convert([
       ...encodedResources,
-      ...encodedUseCases,
-      ...encodedAddonsConfigs,
+      ...encodedScenarios,
     ]).toString();
   }
 }

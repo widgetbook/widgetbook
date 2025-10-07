@@ -171,17 +171,16 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       cacheProgress.fail(
         'No cache files were found in ${absolutePath}\n\n'
         'Make sure you have done the following:\n'
-        ' 1. Ran `dart run build_runner build -d` to generate cache files.\n'
-        ' 2. Included at least one use-case in your project.\n'
-        ' 3. Ran the CLI from the directory that contains your `.dart_tool`',
+        ' 1. Included at least one story in your project.\n'
+        ' 2. Ran `flutter test --update-goldens` to generate snapshot files.\n'
+        ' 3. Ran the CLI from the directory that contains your `build` folder',
       );
 
       return 21;
     }
 
     cacheProgress.complete(
-      'Cache: ${cache.useCases.length} Use-case(s) '
-      '+ ${cache.addonsConfigs?.length ?? 0} AddonsConfig(s)',
+      'Cache: ${cache.scenarios.length} Snapshot(s)',
     );
 
     final filesProgress = logger.progress('Reading Files');
@@ -231,9 +230,8 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         branch: args.branch,
         sha: args.commit,
         mergedResultSha: args.mergedResultCommit,
-        useCases: cache.useCases,
-        addonsConfigs: cache.addonsConfigs,
-        size: dirSize,
+        scenarios: cache.scenarios,
+        size: dirSize + cache.totalSnapshotSize,
         hash: hash,
       ),
     );
@@ -252,7 +250,9 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     final draftResponse = createResponse.asDraft;
     final uploadProgress = logger.progress('Uploading build files');
-    final objects = files.map(
+
+    // Prepare web build files
+    final buildFiles = files.map(
       (file) {
         final key = p.relative(
           file.path,
@@ -284,6 +284,22 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         );
       },
     );
+
+    // Prepare snapshot image files
+    final snapshots = cache.scenarios.map(
+      (scenario) {
+        final imagePath = p.join(args.path, scenario.image.path);
+        final imageFile = fileSystem.file(imagePath);
+
+        return StorageObject(
+          key: '_snapshots/${scenario.image.hash}.png',
+          size: scenario.image.size,
+          reader: imageFile.openRead,
+        );
+      },
+    );
+
+    final objects = [...buildFiles, ...snapshots];
 
     await storageClient.uploadObjects(
       draftResponse.storage.url,
