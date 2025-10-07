@@ -20,6 +20,10 @@
 - **BREAKING**: Remove `experimental_` prefix from builders, and change them to be opt-out instead of opt-in. ([#1108](https://github.com/widgetbook/widgetbook/pull/1108))
 - **FEAT**: Generate `Story.name` based on the variable name. ([#1113](https://github.com/widgetbook/widgetbook/pull/1113))
 
+## 3.18.0
+
+- **BREAKING**: Remove `next` builders. ([#1634](https://github.com/widgetbook/widgetbook/pull/1634))
+
 ## 3.17.0
 
 - **BREAKING**: Require `analyzer` >=8.0.0, `build` >=4.0.0 and `source_gen` >=4.0.0. ([#1584](https://github.com/widgetbook/widgetbook/pull/1584))

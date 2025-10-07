@@ -1,5 +1,0 @@
-# https://github.com/dart-lang/dartdoc?tab=readme-ov-file#dartdoc_optionsyaml
-dartdoc:
-  # We exclude the `next` library from the docs as it's still under development,
-  # and adding comments will lead to a lot of conflicts when merging into the v4 branch.
-  nodoc: ['lib/src/next/*.dart']
