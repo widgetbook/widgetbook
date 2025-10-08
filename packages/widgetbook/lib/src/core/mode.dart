@@ -9,6 +9,8 @@ abstract class Mode<T> {
 
   final T value;
 
+  String get groupName => addon.groupName;
+
   /// The associated addon for this mode. Used to build the story, and
   /// to convert to/from query parameters.
   final Addon<T> addon;
