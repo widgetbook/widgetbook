@@ -10,19 +10,19 @@ class BoolArg extends Arg<bool> {
   @override
   List<Field> get fields => [
     BooleanField(
-      name: name,
+      name: 'value',
       initialValue: value,
     ),
   ];
 
   @override
   bool valueFromQueryGroup(Map<String, String> group) {
-    return valueOf(name, group)!;
+    return valueOf('value', group)!;
   }
 
   @override
   Map<String, String> valueToQueryGroup(bool value) {
-    return {name: paramOf(name, value)};
+    return {'value': paramOf('value', value)};
   }
 
   @override

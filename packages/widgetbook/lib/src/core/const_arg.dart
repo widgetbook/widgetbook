@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+
 import '../fields/fields.dart';
 import 'arg.dart';
 
@@ -15,4 +17,7 @@ class ConstArg<T> extends Arg<T> {
   T valueFromQueryGroup(Map<String, String> group) => value;
 
   Map<String, String> valueToQueryGroup(T value) => {};
+
+  @override
+  T resolve(BuildContext context) => value;
 }
