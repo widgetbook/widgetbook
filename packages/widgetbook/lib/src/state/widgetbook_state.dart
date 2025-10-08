@@ -227,12 +227,18 @@ class WidgetbookState extends ChangeNotifier {
   /// Resets the args during the update.
   @internal
   void updatePath(String newPath) {
-    path = newPath;
-    queryParams.remove('args'); // Reset args
+    // Reset args
+    final oldStory = story;
+    oldStory?.args.safeList.forEach(
+      (arg) => queryParams.remove(arg.groupName),
+    );
 
-    if (story != null) {
+    path = newPath; // Changes `story` to new one
+
+    final newStory = story;
+    if (newStory != null) {
       integrations?.forEach(
-        (integration) => integration.onStoryChange(story!),
+        (integration) => integration.onStoryChange(newStory),
       );
     }
 

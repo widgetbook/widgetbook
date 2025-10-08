@@ -10,19 +10,19 @@ class DoubleArg extends Arg<double> {
   @override
   List<Field> get fields => [
     DoubleInputField(
-      name: name,
+      name: 'value',
       initialValue: value,
     ),
   ];
 
   @override
   double valueFromQueryGroup(Map<String, String> group) {
-    return valueOf(name, group)!;
+    return valueOf('value', group)!;
   }
 
   @override
   Map<String, String> valueToQueryGroup(double value) {
-    return {name: paramOf(name, value)};
+    return {'value': paramOf('value', value)};
   }
 
   @override

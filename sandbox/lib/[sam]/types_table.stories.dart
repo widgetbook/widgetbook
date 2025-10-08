@@ -63,11 +63,11 @@ class PersonArg extends Arg<Person> {
   @override
   List<Field> get fields => [
     StringField(
-      name: '$name.name',
+      name: 'name',
       initialValue: value.name,
     ),
     IntInputField(
-      name: '$name.age',
+      name: 'age',
       initialValue: value.age,
     ),
   ];
@@ -75,16 +75,16 @@ class PersonArg extends Arg<Person> {
   @override
   Person valueFromQueryGroup(Map<String, String> group) {
     return Person(
-      name: valueOf('$name.name', group)!,
-      age: valueOf('$name.age', group)!,
+      name: valueOf('name', group)!,
+      age: valueOf('age', group)!,
     );
   }
 
   @override
   Map<String, String> valueToQueryGroup(Person value) {
     return {
-      '$name.name': paramOf('$name.name', value.name),
-      '$name.age': paramOf('$name.age', value.age),
+      'name': paramOf('name', value.name),
+      'age': paramOf('age', value.age),
     };
   }
 

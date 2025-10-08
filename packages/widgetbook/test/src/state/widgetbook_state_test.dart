@@ -1,6 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/routing/routing.dart';
 import 'package:widgetbook/widgetbook.dart';
+
+import '../../helper/mocks.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -88,13 +91,33 @@ void main() {
         'when the path is updated, '
         'then the args are removed from query params',
         () {
+          final args = [const IntArg(1, name: 'number')];
+          final previousStoryArgs = MockStoryArgs();
+          when(() => previousStoryArgs.safeList).thenReturn(args);
+
+          final previousStory = MockStory();
+          when(() => previousStory.name).thenReturn('previous');
+          when(() => previousStory.args).thenReturn(previousStoryArgs);
+
+          final nextStory = MockStory();
+          when(() => nextStory.name).thenReturn('next');
+
           final state = WidgetbookState(
-            queryParams: {'args': '{arg:value}'},
+            path: 'component/previous',
+            queryParams: {for (final arg in args) arg.groupName: '{}'},
+            components: [
+              Component(
+                name: 'component',
+                stories: [previousStory, nextStory],
+              ),
+            ],
           );
 
-          state.updatePath('component/use-case');
+          state.updatePath('component/next');
 
-          expect(state.queryParams['args'], isNull);
+          for (final arg in args) {
+            expect(state.queryParams.containsKey(arg.groupName), isFalse);
+          }
         },
       );
 

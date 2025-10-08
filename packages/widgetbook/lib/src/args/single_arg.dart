@@ -16,7 +16,7 @@ class SingleArg<T> extends Arg<T> {
   List<Field> get fields {
     return [
       ObjectDropdownField<T>(
-        name: name,
+        name: 'value',
         values: values,
         initialValue: value,
         labelBuilder: labelBuilder ?? ObjectDropdownField.defaultLabelBuilder,
@@ -26,12 +26,12 @@ class SingleArg<T> extends Arg<T> {
 
   @override
   T valueFromQueryGroup(Map<String, String> group) {
-    return valueOf(name, group)!;
+    return valueOf('value', group)!;
   }
 
   @override
   Map<String, String> valueToQueryGroup(T value) {
-    return {name: paramOf(name, value)};
+    return {'value': paramOf('value', value)};
   }
 
   @override

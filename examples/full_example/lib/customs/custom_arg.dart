@@ -10,11 +10,11 @@ class RangeArg extends Arg<RangeValues> {
   @override
   List<Field> get fields => [
     DoubleInputField(
-      name: 'min-$name',
+      name: 'min',
       initialValue: value.start,
     ),
     DoubleInputField(
-      name: 'max-$name',
+      name: 'max',
       initialValue: value.end,
     ),
   ];
@@ -22,16 +22,16 @@ class RangeArg extends Arg<RangeValues> {
   @override
   RangeValues valueFromQueryGroup(Map<String, String> group) {
     return RangeValues(
-      valueOf('min-$name', group)!,
-      valueOf('max-$name', group)!,
+      valueOf('min', group)!,
+      valueOf('max', group)!,
     );
   }
 
   @override
   Map<String, String> valueToQueryGroup(RangeValues value) {
     return {
-      'min-$name': paramOf('min-$name', value),
-      'max-$name': paramOf('max-$name', value),
+      'min': paramOf('min', value),
+      'max': paramOf('max', value),
     };
   }
 

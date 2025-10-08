@@ -10,19 +10,19 @@ class StringArg extends Arg<String> {
   @override
   List<Field> get fields => [
     StringField(
-      name: name,
+      name: 'value',
       initialValue: value,
     ),
   ];
 
   @override
   String valueFromQueryGroup(Map<String, String> group) {
-    return valueOf(name, group)!;
+    return valueOf('value', group)!;
   }
 
   @override
   Map<String, String> valueToQueryGroup(String value) {
-    return {name: paramOf(name, value)};
+    return {'value': paramOf('value', value)};
   }
 
   @override

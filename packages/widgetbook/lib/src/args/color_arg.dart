@@ -12,19 +12,19 @@ class ColorArg extends Arg<Color> {
   @override
   List<Field> get fields => [
     ColorField(
-      name: name,
+      name: 'value',
       initialValue: value,
     ),
   ];
 
   @override
   Color valueFromQueryGroup(Map<String, String> group) {
-    return valueOf(name, group)!;
+    return valueOf('value', group)!;
   }
 
   @override
   Map<String, String> valueToQueryGroup(Color value) {
-    return {name: paramOf(name, value)};
+    return {'value': paramOf('value', value)};
   }
 
   @override

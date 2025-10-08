@@ -31,6 +31,9 @@ abstract class Arg<T> extends FieldsComposable<T> {
     return $name!;
   }
 
+  @override
+  String get groupName => name;
+
   /// Creates a copy of this using the provided [name] for late initialization.
   /// If [$name] was already set, it should have precedence over [name].
   ///
@@ -43,9 +46,6 @@ abstract class Arg<T> extends FieldsComposable<T> {
 
   static ConstArg<T> fixed<T>(T value) => ConstArg<T>(value);
 
-  @override
-  String get groupName => 'args';
-
   /// Resolves the value of this argument based on the current context.
   /// If there is no [WidgetbookState] in the widget tree, it returns the
   /// default [value].
@@ -53,7 +53,10 @@ abstract class Arg<T> extends FieldsComposable<T> {
     final state = WidgetbookState.maybeOf(context);
     if (state == null) return value;
 
-    final queryGroup = FieldCodec.decodeQueryGroup(state.queryParams['args']);
+    final queryGroup = FieldCodec.decodeQueryGroup(
+      state.queryParams[groupName],
+    );
+
     return valueFromQueryGroup(queryGroup);
   }
 
