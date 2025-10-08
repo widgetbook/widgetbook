@@ -53,7 +53,14 @@ class ResponsiveLayout extends StatelessWidget {
     return story
             ?.args
             .safeList //
-            .map((e) => e.buildFields(context))
+            .map(
+              (arg) => KeyedSubtree(
+                // This key is needed to force rebuilds when switching stories.
+                // Otherwise, the args from previous story might persist.
+                key: ValueKey('${state.path}::${arg.name}'),
+                child: arg.buildFields(context),
+              ),
+            )
             .toList() ??
         [];
   }
