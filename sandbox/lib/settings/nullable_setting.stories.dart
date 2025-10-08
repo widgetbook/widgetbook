@@ -20,8 +20,8 @@ final $Default = NullableSettingStory(
     ),
   ),
   modes: [
-    // The viewport mode is defined here and not in the `NullableSettingScenario`
-    // because we want to apply it to the `ScenarioDefinition`s as well.
+    // These modes will be applied to all scenarios under this story
+    // including the ones that are coming from `ScenarioDefinition`s.
     ViewportMode(
       const ViewportData.constrained(
         name: '800w',
@@ -33,7 +33,19 @@ final $Default = NullableSettingStory(
   ],
   scenarios: [
     NullableSettingScenario(
-      name: 'Long name',
+      name: 'Long name (600w)',
+      modes: [
+        // These modes will get merged with the modes defined in the story
+        // and they have more precedence.
+        ViewportMode(
+          const ViewportData.constrained(
+            name: '600w',
+            maxWidth: 600,
+            pixelRatio: 2,
+            platform: TargetPlatform.iOS,
+          ),
+        ),
+      ],
       args: NullableSettingArgs(
         name: const StringArg(
           'This is a very long name to test overflow behavior',

@@ -9,20 +9,22 @@ typedef ModesMerger =
     );
 
 /// The default function to merge modes of a story and a scenario.
-/// It puts the modes of the story first, and then adds the modes of the
-/// scenario that are not already defined in the story.
+/// It puts the modes of the scenario first, and then adds the modes of the
+/// story that are not already defined in the scenario.
 List<Mode> defaultMergeModes(
   List<Mode> storyModes,
   List<Mode> scenarioModes,
 ) {
-  final storyModesTypes = storyModes.map((mode) => mode.runtimeType).toSet();
-  final filteredScenarioModes = scenarioModes.where(
-    (mode) => !storyModesTypes.contains(mode.runtimeType),
+  final scenarioModesTypes =
+      scenarioModes.map((mode) => mode.runtimeType).toSet();
+
+  final filteredStoryModes = storyModes.where(
+    (mode) => !scenarioModesTypes.contains(mode.runtimeType),
   );
 
   return [
-    ...storyModes,
-    ...filteredScenarioModes,
+    ...scenarioModes,
+    ...filteredStoryModes,
   ];
 }
 
