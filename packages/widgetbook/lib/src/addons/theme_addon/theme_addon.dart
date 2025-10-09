@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../core/core.dart';
-import '../fields/fields.dart';
+import '../../core/core.dart';
+import '../../fields/fields.dart';
 
 typedef ThemeBuilder<T> =
     Widget Function(
@@ -11,8 +11,14 @@ typedef ThemeBuilder<T> =
     );
 
 class ThemeMode<T> extends Mode<T> {
-  ThemeMode(String name, T value, ThemeBuilder<T> builder)
-    : super(value, ThemeAddon<T>({name: value}, builder));
+  ThemeMode(
+    String name,
+    T theme,
+    ThemeBuilder<T> builder,
+  ) : super(
+        theme,
+        ThemeAddon<T>({name: theme}, builder),
+      );
 }
 
 /// An [Addon] for changing the active custom theme. A [builder] must be

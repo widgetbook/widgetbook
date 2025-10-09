@@ -1,12 +1,10 @@
 export 'alignment_addon.dart';
 export 'builder_addon.dart';
-export 'cupertino_theme_addon.dart';
 export 'grid_addon.dart';
 export 'localization_addon.dart';
-export 'material_theme_addon.dart';
 export 'semantics_addon/addon.dart';
 export 'text_scale_addon.dart';
-export 'theme_addon.dart';
+export 'theme_addon/addon.dart';
 export 'time_dilation_addon.dart';
 export 'viewport_addon/addon.dart';
 export 'zoom_addon.dart';
