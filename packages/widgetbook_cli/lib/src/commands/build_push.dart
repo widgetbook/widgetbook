@@ -172,7 +172,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         'No cache files were found in ${absolutePath}\n\n'
         'Make sure you have done the following:\n'
         ' 1. Included at least one story in your project.\n'
-        ' 2. Ran `flutter test --update-goldens` to generate snapshot files.\n'
+        ' 2. Ran `flutter test` to generate snapshot files.\n'
         ' 3. Ran the CLI from the directory that contains your `build` folder',
       );
 
@@ -204,7 +204,6 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
             ? null
             : await buildHasher.convert(
               buildDir,
-              cache,
             );
 
     final files =

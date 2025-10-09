@@ -11,6 +11,12 @@ class ScenarioRecord {
     required this.image,
   });
 
+  final StoryMetadata story;
+  final ComponentMetadata component;
+  final ImageMetadata image;
+  final ScenarioMetadata scenario;
+
+  // ignore: sort_constructors_first
   factory ScenarioRecord.fromJson(Map<String, dynamic> json) {
     final component = ComponentMetadata.fromJson(
       json['component'] as Map<String, dynamic>,
@@ -32,11 +38,6 @@ class ScenarioRecord {
       image: image,
     );
   }
-
-  final StoryMetadata story;
-  final ComponentMetadata component;
-  final ImageMetadata image;
-  final ScenarioMetadata scenario;
 
   Map<String, dynamic> toJson() {
     return {

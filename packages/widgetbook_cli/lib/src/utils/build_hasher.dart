@@ -20,7 +20,7 @@ class BuildHasher {
   /// `main.dart.js` file, then we need to put them into account when
   /// calculating the hash. So when a user adds, removed or modifies
   /// a knobs/addons config, the hash will change.
-  Future<String?> convert(Directory buildDir, CacheStore cache) async {
+  Future<String?> convert(Directory buildDir) async {
     final serviceWorkerFile = buildDir.childFile('flutter_service_worker.js');
     if (!serviceWorkerFile.existsSync()) return null;
 
@@ -46,11 +46,7 @@ class BuildHasher {
     );
 
     final encodedResources = utf8.encode(jsonEncode(resourcesJson));
-    final encodedScenarios = utf8.encode(jsonEncode(cache.scenarios));
 
-    return md5.convert([
-      ...encodedResources,
-      ...encodedScenarios,
-    ]).toString();
+    return md5.convert(encodedResources).toString();
   }
 }

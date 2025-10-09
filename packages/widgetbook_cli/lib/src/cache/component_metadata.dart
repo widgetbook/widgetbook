@@ -7,7 +7,8 @@ class ComponentMetadata {
   final String name;
   final String path;
 
-  static ComponentMetadata fromJson(Map<String, dynamic> json) {
+  // ignore: sort_constructors_first
+  factory ComponentMetadata.fromJson(Map<String, dynamic> json) {
     return ComponentMetadata(
       name: json['name'] as String,
       path: json['path'] as String,

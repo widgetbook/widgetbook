@@ -31,7 +31,7 @@ class WidgetbookHttpClient {
   ) async {
     try {
       final response = await client.post<Map<String, dynamic>>(
-        'v3/builds',
+        'v4/builds',
         data: request.toJson(),
         options: Options(
           headers: versions?.toHeaders(),

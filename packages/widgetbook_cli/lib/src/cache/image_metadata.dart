@@ -15,7 +15,8 @@ class ImageMetadata {
   final int height;
   final double pixelRatio;
 
-  static ImageMetadata fromJson(Map<String, dynamic> json) {
+  // ignore: sort_constructors_first
+  factory ImageMetadata.fromJson(Map<String, dynamic> json) {
     return ImageMetadata(
       path: json['path'] as String,
       hash: json['hash'] as String,

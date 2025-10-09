@@ -6,4 +6,3 @@ export 'component_metadata.dart';
 export 'scenario_metadata.dart';
 export 'scenario_record.dart';
 export 'story_metadata.dart';
-export 'use_case_metadata.dart';

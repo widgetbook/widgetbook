@@ -7,7 +7,8 @@ class StoryMetadata {
   final String name;
   final String? designLink;
 
-  static StoryMetadata fromJson(Map<String, dynamic> json) {
+  // ignore: sort_constructors_first
+  factory StoryMetadata.fromJson(Map<String, dynamic> json) {
     return StoryMetadata(
       name: json['name'] as String,
       designLink: json['designLink'] as String?,

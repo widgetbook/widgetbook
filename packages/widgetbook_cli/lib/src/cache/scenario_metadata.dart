@@ -1,46 +1,5 @@
-class ArgMetadata {
-  ArgMetadata({
-    required this.name,
-    required this.value,
-  });
-
-  final String name;
-  final String value;
-
-  static ArgMetadata fromJson(Map<String, dynamic> json) {
-    return ArgMetadata(
-      name: json['name'] as String,
-      value: json['value'] as String,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'value': value,
-    };
-  }
-}
-
-class ModeMetadata {
-  ModeMetadata({
-    required this.value,
-  });
-
-  final String value;
-
-  static ModeMetadata fromJson(Map<String, dynamic> json) {
-    return ModeMetadata(
-      value: json['name'] as String,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'value': value,
-    };
-  }
-}
+typedef Name = String;
+typedef FieldValues = Map<Name, String>;
 
 class ScenarioMetadata {
   ScenarioMetadata({
@@ -48,23 +7,38 @@ class ScenarioMetadata {
     required this.modes,
     required this.args,
   });
-  final String name;
-  final List<ModeMetadata> modes;
-  final List<ArgMetadata> args;
 
-  static ScenarioMetadata fromJson(Map<String, dynamic> json) {
+  final String name;
+  final Map<Name, FieldValues> modes;
+  final Map<Name, FieldValues> args;
+
+  // ignore: sort_constructors_first
+  factory ScenarioMetadata.fromJson(Map<String, dynamic> json) {
+    Map<Name, FieldValues> parseQueryGroups(Map<Name, dynamic> queryGroups) {
+      return queryGroups.map(
+        (name, values) => MapEntry(
+          name,
+          (values as Map<Name, dynamic>).map(
+            (key, value) => MapEntry(key, value as String),
+          ),
+        ),
+      );
+    }
+
+    final modes = json['modes'] as Map<Name, dynamic>;
+    final args = json['args'] as Map<Name, dynamic>;
     return ScenarioMetadata(
       name: json['name'] as String,
-      modes: [],
-      args: [],
+      modes: parseQueryGroups(modes),
+      args: parseQueryGroups(args),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'modes': modes.map((mode) => mode.toJson()).toList(),
-      'args': args.map((arg) => arg.toJson()).toList(),
+      'modes': modes,
+      'args': args,
     };
   }
 }
