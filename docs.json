@@ -66,6 +66,10 @@
       "group": "Getting Started",
       "pages": [
         {
+          "title": "Introduction",
+          "href": "/sam"
+        },
+        {
           "title": "Why Widgetbook?",
           "href": "/index"
         },
