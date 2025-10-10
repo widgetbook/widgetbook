@@ -1,16 +1,16 @@
-## Unreleased
+## 4.0.0-alpha.3
 
 - **BREAKING**: Add `valueToQueryGroup` to `Addon` and `Arg`; to allow serializing their values to URL query parameters. ([#1608](https://github.com/widgetbook/widgetbook/pull/1608))
 - **BREAKING**: Add `addon` field to `Mode` to use it for serialization. ([#1608](https://github.com/widgetbook/widgetbook/pull/1608))
 - **BREAKING**: Replace `Component.meta` with direct fields to each `Meta` property. ([#1624](https://github.com/widgetbook/widgetbook/pull/1624))
+- **FEAT**: Introduce a new way to run Widgetbook via `runWidgetbook` that takes a `Config` object. ([#1597](https://github.com/widgetbook/widgetbook/pull/1597))
 - **FEAT**: Add text-based docs via `Meta` that is used to show component's documentation. ([#1623](https://github.com/widgetbook/widgetbook/pull/1623))
 - **FEAT**: Add `scenarios` parameter to `Story`. ([#1605](https://github.com/widgetbook/widgetbook/pull/1605))
-- **FEAT**: Add `run` field to `Scenario`; to allow specifying custom function to run after the scenario is built. ([#1622](https://github.com/widgetbook/widgetbook/pull/1622))
-- **FEAT**: Add `viewport` getter to `Scenario`; to use the current `ViewportMode`'s data in tester view. ([#1626](https://github.com/widgetbook/widgetbook/pull/1626))
-- **FEAT**: Add `story` field to `Scenario`. ([#1615](https://github.com/widgetbook/widgetbook/pull/1615))
 - **FEAT**: Add `component` field to `Story`. ([#1616](https://github.com/widgetbook/widgetbook/pull/1616))
 - **FEAT**: Add `modes` field to `Story` that can be merged into `Scenario.modes` using `Scenario.mergeModes`. ([#1627](https://github.com/widgetbook/widgetbook/pull/1627))
-- **FEAT**: Introduce a new way to run Widgetbook via `runWidgetbook` that takes a `Config` object. ([#1597](https://github.com/widgetbook/widgetbook/pull/1597))
+- **FEAT**: Add `story` field to `Scenario`. ([#1615](https://github.com/widgetbook/widgetbook/pull/1615))
+- **FEAT**: Add `run` field to `Scenario`; to allow specifying custom function to run after the scenario is built. ([#1622](https://github.com/widgetbook/widgetbook/pull/1622))
+- **FEAT**: Add `viewport` getter to `Scenario`; to use the current `ViewportMode`'s data in tester view. ([#1626](https://github.com/widgetbook/widgetbook/pull/1626))
 - **REFACTOR**: Remove deprecated `WidgetbookCloudIntegration`. ([#1598](https://github.com/widgetbook/widgetbook/pull/1598))
 - **REFACTOR**: Rename `WidgetbookIntegration` to `Integration`. ([#1599](https://github.com/widgetbook/widgetbook/pull/1599))
 - **REFACTOR**: Remove deprecated `AccessibilityAddon`. ([#1600](https://github.com/widgetbook/widgetbook/pull/1600))
