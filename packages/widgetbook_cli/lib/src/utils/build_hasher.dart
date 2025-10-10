@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:collection/collection.dart';
 import 'package:crypto/crypto.dart';
 import 'package:file/file.dart';
 
@@ -21,7 +20,7 @@ class BuildHasher {
   /// `main.dart.js` file, then we need to put them into account when
   /// calculating the hash. So when a user adds, removed or modifies
   /// a knobs/addons config, the hash will change.
-  Future<String?> convert(Directory buildDir, CacheStore cache) async {
+  Future<String?> convert(Directory buildDir) async {
     final serviceWorkerFile = buildDir.childFile('flutter_service_worker.js');
     if (!serviceWorkerFile.existsSync()) return null;
 
@@ -48,27 +47,6 @@ class BuildHasher {
 
     final encodedResources = utf8.encode(jsonEncode(resourcesJson));
 
-    // It is not guaranteed that the [CacheStore] reads the use-cases metadata
-    // in the same order each time, so we need to sort them to ensure
-    // that the hash is deterministic across runs.
-    final sortedUseCasesJson =
-        cache.useCases
-            .sortedBy((x) => '${x.navPath}/${x.componentName}${x.useCaseName}')
-            .map((x) => x.toCloudUseCase())
-            .toList();
-
-    final encodedUseCases = utf8.encode(
-      jsonEncode(sortedUseCasesJson),
-    );
-
-    final encodedAddonsConfigs = utf8.encode(
-      jsonEncode(cache.addonsConfigs ?? {}),
-    );
-
-    return md5.convert([
-      ...encodedResources,
-      ...encodedUseCases,
-      ...encodedAddonsConfigs,
-    ]).toString();
+    return md5.convert(encodedResources).toString();
   }
 }

@@ -9,8 +9,7 @@ class CreateBuildRequest {
     required this.branch,
     required this.sha,
     required this.mergedResultSha,
-    required this.useCases,
-    required this.addonsConfigs,
+    required this.scenarios,
     required this.size,
     required this.hash,
   });
@@ -22,8 +21,7 @@ class CreateBuildRequest {
   final String branch;
   final String sha;
   final String? mergedResultSha;
-  final List<UseCaseMetadata> useCases;
-  final AddonsConfigs? addonsConfigs;
+  final List<ScenarioRecord> scenarios;
   final int size;
   final String? hash;
 
@@ -36,8 +34,7 @@ class CreateBuildRequest {
       'branch': branch,
       'sha': sha,
       'mergedResultSha': mergedResultSha,
-      'useCases': useCases.map((x) => x.toCloudUseCase()).toList(),
-      'addonsConfigs': addonsConfigs,
+      'scenarios': scenarios.map((scenario) => scenario.toJson()).toList(),
       'size': size,
       'hash': hash,
     };
