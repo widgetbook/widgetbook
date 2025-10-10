@@ -587,7 +587,7 @@ packages:
       path: "../../packages/widgetbook"
       relative: true
     source: path
-    version: "4.0.0-alpha.2"
+    version: "4.0.0-alpha.3"
   widgetbook_generator:
     dependency: "direct dev"
     description:
