@@ -14,7 +14,6 @@ class ObjectSegmentedField<T> extends Field<T> {
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          defaultValue: values.first,
-         type: FieldType.objectSegmented,
          codec: FieldCodec(
            toParam: labelBuilder,
            toValue:

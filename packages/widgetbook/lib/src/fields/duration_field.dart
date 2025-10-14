@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'field.dart';
 import 'field_codec.dart';
-import 'field_type.dart';
 
 /// A [Field] that represents a [Duration] value.
 class DurationField extends Field<Duration> {
@@ -13,7 +12,6 @@ class DurationField extends Field<Duration> {
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          defaultValue: defaultDuration,
-         type: FieldType.duration,
          codec: FieldCodec(
            toParam: (value) => value.inMilliseconds.toString(),
            toValue: (param) {

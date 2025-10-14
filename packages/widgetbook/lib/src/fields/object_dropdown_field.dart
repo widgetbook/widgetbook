@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'field.dart';
 import 'field_codec.dart';
-import 'field_type.dart';
 
 /// @nodoc
 typedef LabelBuilder<T> = String Function(T value);
@@ -24,7 +23,6 @@ class ObjectDropdownField<T> extends Field<T> {
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          defaultValue: values.first,
-         type: FieldType.objectDropdown,
          codec: FieldCodec(
            toParam: labelBuilder,
            toValue:
