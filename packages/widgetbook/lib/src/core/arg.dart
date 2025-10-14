@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../fields/fields.dart';
+import '../routing/routing.dart';
 import '../state/state.dart';
 import 'const_arg.dart';
 
@@ -51,16 +52,14 @@ abstract class Arg<T> extends FieldsComposable<T> {
   /// default [value].
   T resolve(BuildContext context) {
     final state = WidgetbookState.maybeOf(context);
-    if (state == null) return value;
+    final group = state?.queryGroups[groupName];
 
-    final queryGroup = FieldCodec.decodeQueryGroup(
-      state.queryParams[groupName],
-    );
+    if (group == null) return value;
 
-    return valueFromQueryGroup(queryGroup);
+    return valueFromQueryGroup(group);
   }
 
-  Map<String, String> toQueryGroup() {
+  QueryGroup toQueryGroup() {
     return $value == null ? {} : valueToQueryGroup(value);
   }
 }

@@ -73,7 +73,7 @@ class PersonArg extends Arg<Person> {
   ];
 
   @override
-  Person valueFromQueryGroup(Map<String, String> group) {
+  Person valueFromQueryGroup(QueryGroup group) {
     return Person(
       name: valueOf('name', group)!,
       age: valueOf('age', group)!,
@@ -81,7 +81,7 @@ class PersonArg extends Arg<Person> {
   }
 
   @override
-  Map<String, String> valueToQueryGroup(Person value) {
+  QueryGroup valueToQueryGroup(Person value) {
     return {
       'name': paramOf('name', value.name),
       'age': paramOf('age', value.age),

@@ -1,5 +1,7 @@
 import 'package:meta/meta.dart';
 
+import 'query_group.dart';
+
 @internal
 class AppRouteConfig {
   AppRouteConfig({
@@ -21,11 +23,18 @@ class AppRouteConfig {
     return uri.queryParameters['panels']?.split(',').toSet();
   }
 
-  /// Returns a modifiable copy of the query parameters
-  /// without the reserved keys.
-  Map<String, String> get queryParams {
-    return Map<String, String>.from(uri.queryParameters)..removeWhere(
-      (key, _) => reservedKeys.contains(key),
+  Map<String, QueryGroup> get queryGroups {
+    return Map<String, QueryGroup>.fromEntries(
+      uri.queryParameters.entries
+          .where(
+            (entry) => entry.value.startsWith('{') && entry.value.endsWith('}'),
+          )
+          .map(
+            (entry) => MapEntry(
+              entry.key,
+              decodeQueryGroup(entry.value),
+            ),
+          ),
     );
   }
 }

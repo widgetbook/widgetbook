@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../core/core.dart';
 import '../../fields/fields.dart';
+import '../../routing/routing.dart';
 import 'minimal_semantics_debugger.dart';
 
 class SemanticsMode extends Mode<bool> {
@@ -23,12 +24,12 @@ class SemanticsAddon extends Addon<bool> {
   }
 
   @override
-  bool valueFromQueryGroup(Map<String, String> group) {
+  bool valueFromQueryGroup(QueryGroup group) {
     return valueOf('enabled', group) ?? false;
   }
 
   @override
-  Map<String, String> valueToQueryGroup(bool value) {
+  QueryGroup valueToQueryGroup(bool value) {
     return {'enabled': paramOf('enabled', value)};
   }
 

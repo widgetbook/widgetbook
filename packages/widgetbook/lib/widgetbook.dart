@@ -11,5 +11,6 @@ export 'src/addons/addons.dart' hide NoneViewport;
 export 'src/args/args.dart';
 export 'src/core/core.dart';
 export 'src/fields/fields.dart' hide DateTimeExtension;
+export 'src/routing/query_group.dart';
 export 'src/runner.dart';
 export 'src/state/state.dart' hide WidgetbookScope;

@@ -1,5 +1,6 @@
 import '../core/arg.dart';
 import '../fields/fields.dart';
+import '../routing/routing.dart';
 
 class DoubleArg extends Arg<double> {
   const DoubleArg(
@@ -16,12 +17,12 @@ class DoubleArg extends Arg<double> {
   ];
 
   @override
-  double valueFromQueryGroup(Map<String, String> group) {
+  double valueFromQueryGroup(QueryGroup group) {
     return valueOf('value', group)!;
   }
 
   @override
-  Map<String, String> valueToQueryGroup(double value) {
+  QueryGroup valueToQueryGroup(double value) {
     return {'value': paramOf('value', value)};
   }
 

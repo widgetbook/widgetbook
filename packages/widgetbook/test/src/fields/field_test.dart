@@ -19,14 +19,14 @@ class MockField extends Field<bool> {
   @override
   Widget toWidget(
     BuildContext context,
-    String group,
+    String groupName,
     bool? value,
   ) {
     when(
-      () => toWidgetMock.call(context, group, value),
+      () => toWidgetMock.call(context, groupName, value),
     ).thenReturn(Container());
 
-    return toWidgetMock.call(context, group, value);
+    return toWidgetMock.call(context, groupName, value);
   }
 }
 
@@ -83,9 +83,11 @@ void main() {
           const group = 'mock_group';
           const expected = false;
 
-          await tester.pumpWidgetWithQueryParams(
-            queryParams: {group: '{${field.name}:$expected}'},
+          await tester.pumpWidgetWithQueryGroups(
             builder: (context) => field.build(context, group),
+            queryGroups: {
+              group: {'${field.name}': '$expected'},
+            },
           );
 
           verify(
@@ -100,20 +102,18 @@ void main() {
         (tester) async {
           const group = 'mock_group';
 
-          final state = await tester.pumpWidgetWithQueryParams(
-            queryParams: {group: '{${field.name}:false}'},
+          final state = await tester.pumpWidgetWithQueryGroups(
             builder: (context) => Container(),
+            queryGroups: {
+              group: {field.name: 'false'},
+            },
           );
 
           final context = tester.element(find.byType(Container));
 
           field.updateField(context, group, true);
 
-          final result = field.valueFrom(
-            FieldCodec.decodeQueryGroup(
-              state.queryParams[group],
-            ),
-          );
+          final result = field.valueFrom(state.queryGroups[group]!);
 
           expect(result, equals(true));
         },
@@ -126,20 +126,18 @@ void main() {
         (tester) async {
           const group = 'mock_group';
 
-          final state = await tester.pumpWidgetWithQueryParams(
-            queryParams: {
-              group: '{${field.name}:${Field.nullabilitySymbol}false}',
-            },
+          final state = await tester.pumpWidgetWithQueryGroups(
             builder: (context) => Container(),
+            queryGroups: {
+              group: {field.name: '${Field.nullabilitySymbol}false'},
+            },
           );
 
           final context = tester.element(find.byType(Container));
 
           field.updateField(context, group, true);
 
-          final result = field.valueFrom(
-            FieldCodec.decodeQueryGroup(state.queryParams[group]),
-          );
+          final result = field.valueFrom(state.queryGroups[group]!);
 
           expect(result, equals(true));
         },

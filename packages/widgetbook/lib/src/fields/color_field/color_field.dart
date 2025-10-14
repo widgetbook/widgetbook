@@ -42,16 +42,12 @@ class ColorField extends Field<Color> {
   static const defaultColor = Colors.white;
 
   @override
-  Widget toWidget(BuildContext context, String group, Color? value) {
+  Widget toWidget(BuildContext context, String groupName, Color? value) {
     return ColorPicker(
       colorSpace: initialColorSpace,
       value: value ?? defaultColor,
       onChanged: (value) {
-        updateField(
-          context,
-          group,
-          value,
-        );
+        updateField(context, groupName, value);
       },
     );
   }

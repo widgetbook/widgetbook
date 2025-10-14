@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import '../core/arg.dart';
 import '../fields/fields.dart';
+import '../routing/routing.dart';
 
 class ColorArg extends Arg<Color> {
   const ColorArg(
@@ -18,12 +19,12 @@ class ColorArg extends Arg<Color> {
   ];
 
   @override
-  Color valueFromQueryGroup(Map<String, String> group) {
+  Color valueFromQueryGroup(QueryGroup group) {
     return valueOf('value', group)!;
   }
 
   @override
-  Map<String, String> valueToQueryGroup(Color value) {
+  QueryGroup valueToQueryGroup(Color value) {
     return {'value': paramOf('value', value)};
   }
 

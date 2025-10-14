@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import '../core/core.dart';
 import '../fields/fields.dart';
+import '../routing/routing.dart';
 
 /// An [Addon] for changing [timeDilation].
 class TimeDilationMode extends Mode<double> {
@@ -28,12 +29,12 @@ class TimeDilationAddon extends Addon<double> {
   }
 
   @override
-  double valueFromQueryGroup(Map<String, String> group) {
+  double valueFromQueryGroup(QueryGroup group) {
     return valueOf('value', group)!;
   }
 
   @override
-  Map<String, String> valueToQueryGroup(double value) {
+  QueryGroup valueToQueryGroup(double value) {
     return {'value': paramOf('value', value)};
   }
 

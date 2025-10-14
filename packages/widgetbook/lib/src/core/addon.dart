@@ -21,11 +21,9 @@ abstract class Addon<T> extends FieldsComposable<T> {
     // State can be null in Scenarios, in that case we fallback the default
     // the value when no query param is found.
     final state = WidgetbookState.maybeOf(context);
-    final groupMap = FieldCodec.decodeQueryGroup(
-      state?.queryParams[groupName],
-    );
+    final group = state?.queryGroups[groupName] ?? {};
 
-    final newSetting = valueFromQueryGroup(groupMap);
+    final newSetting = valueFromQueryGroup(group);
 
     return buildUseCase(
       context,

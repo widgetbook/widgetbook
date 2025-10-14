@@ -21,10 +21,10 @@ class BooleanField extends Field<bool> {
        );
 
   @override
-  Widget toWidget(BuildContext context, String group, bool? value) {
+  Widget toWidget(BuildContext context, String groupName, bool? value) {
     return Switch(
       value: value ?? initialValue ?? true,
-      onChanged: (value) => updateField(context, group, value),
+      onChanged: (value) => updateField(context, groupName, value),
     );
   }
 }

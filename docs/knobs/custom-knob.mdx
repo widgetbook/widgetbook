@@ -27,7 +27,7 @@ class RangeKnob extends Knob<RangeValues> {
   }
 
   @override
-  RangeValues valueFromQueryGroup(Map<String, String> group) {
+  RangeValues valueFromQueryGroup(QueryGroup group) {
     // TODO
   }
 }
@@ -67,7 +67,7 @@ This method is responsible for parsing the query parameters back to the knob val
 
 ```dart
 @override
-RangeValues valueFromQueryGroup(Map<String, String> group) {
+RangeValues valueFromQueryGroup(QueryGroup group) {
   final start = valueOf<double>('$label.min', group)!;
   final end = valueOf<double>('$label.max', group)!;
 

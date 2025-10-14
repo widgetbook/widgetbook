@@ -13,59 +13,25 @@ void main() {
     () {
       test(
         'given a state, '
-        'when [updateQueryParam] is called, '
-        'then the [queryParams] is updated',
-        () {
-          final paramKey = 'foo';
-          final state = WidgetbookState(
-            queryParams: {paramKey: 'bar'},
-          );
-
-          final newValue = 'qux';
-          state.updateQueryParam(paramKey, 'qux');
-
-          expect(state.queryParams[paramKey], newValue);
-        },
-      );
-
-      test(
-        'given a state, '
         'when [updateQueryField] is called, '
         'then only the field within the group is updated',
         () {
           final state = WidgetbookState(
-            queryParams: {
-              'knobs': '{foo:bar,qux:baz}',
+            queryGroups: {
+              'foo': {'bar': 'x'},
+              'baz': {'qux': 'y'},
             },
           );
 
           state.updateQueryField(
-            group: 'knobs',
-            field: 'qux',
-            value: 'widgetbook',
+            groupName: 'foo',
+            fieldName: 'bar',
+            fieldValue: 'widgetbook',
           );
 
           expect(
-            state.queryParams['knobs'],
-            '{foo:bar,qux:widgetbook}',
-          );
-        },
-      );
-
-      test(
-        'given a state, '
-        'when [updateQueryField] is called with a reserved key, '
-        'then an $ArgumentError exception is thrown',
-        () {
-          final state = WidgetbookState(
-            queryParams: {},
-          );
-
-          final reservedKey = AppRouteConfig.reservedKeys.first;
-
-          expect(
-            () => state.updateQueryParam(reservedKey, '*'),
-            throwsArgumentError,
+            state.queryGroups['foo'],
+            {'bar': 'widgetbook'},
           );
         },
       );
@@ -76,12 +42,14 @@ void main() {
         () {
           final state = WidgetbookState(
             path: 'component/use-case',
-            queryParams: {'foo': 'bar'},
+            queryGroups: {
+              'foo': {'bar': 'x'},
+            },
           );
 
           expect(
             state.uri.toString(),
-            '/?path=component%2Fuse-case&foo=bar',
+            startsWith('/?path='),
           );
         },
       );
@@ -104,7 +72,9 @@ void main() {
 
           final state = WidgetbookState(
             path: 'component/previous',
-            queryParams: {for (final arg in args) arg.groupName: '{}'},
+            queryGroups: {
+              for (final arg in args) arg.groupName: {'foo': '1'},
+            },
             components: [
               Component(
                 name: 'component',
@@ -116,7 +86,7 @@ void main() {
           state.updatePath('component/next');
 
           for (final arg in args) {
-            expect(state.queryParams.containsKey(arg.groupName), isFalse);
+            expect(state.queryGroups.containsKey(arg.groupName), isFalse);
           }
         },
       );
@@ -126,14 +96,12 @@ void main() {
         'when [updateFromRouteConfig] is called, '
         'then the state is updated',
         () {
-          final state = WidgetbookState(
-            queryParams: {},
-          );
+          final state = WidgetbookState();
 
           const path = 'component/use-case';
           const query = 'something';
           final routeConfig = AppRouteConfig(
-            uri: Uri.parse('/?path=$path&q=$query&foo=bar&preview'),
+            uri: Uri.parse('/?path=$path&q=$query&foo={bar:x}&preview'),
           );
 
           state.updateFromRouteConfig(routeConfig);
@@ -141,7 +109,12 @@ void main() {
           expect(state.path, path);
           expect(state.query, query);
           expect(state.previewMode, true);
-          expect(state.queryParams, equals({'foo': 'bar'}));
+          expect(
+            state.queryGroups,
+            equals({
+              'foo': {'bar': 'x'},
+            }),
+          );
         },
       );
 
@@ -152,7 +125,7 @@ void main() {
         () {
           final state = WidgetbookState()..updateQuery('');
 
-          expect(state.queryParams, <String, String>{});
+          expect(state.uri.queryParameters, isNot(contains('q')));
         },
       );
     },

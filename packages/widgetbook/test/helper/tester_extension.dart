@@ -70,12 +70,12 @@ extension TesterExtension on WidgetTester {
     return state;
   }
 
-  Future<WidgetbookState> pumpWidgetWithQueryParams({
-    required Map<String, String> queryParams,
+  Future<WidgetbookState> pumpWidgetWithQueryGroups({
+    required Map<String, QueryGroup> queryGroups,
     required WidgetBuilder builder,
   }) async {
     final state = WidgetbookState(
-      queryParams: queryParams,
+      queryGroups: queryGroups,
     );
 
     return pumpWidgetWithState(
@@ -90,14 +90,15 @@ extension TesterExtension on WidgetTester {
     Field<TValue> field,
     TValue? value,
   ) async {
-    const groupKey = 'group_name';
-    final groupValue = FieldCodec.encodeQueryGroup(
-      value != null ? {field.name: field.codec.toParam(value)} : {},
-    );
+    const groupName = 'group_name';
+    final group =
+        value != null
+            ? {field.name: field.codec.toParam(value)}
+            : <String, String>{};
 
-    await pumpWidgetWithQueryParams(
-      queryParams: value != null ? {groupKey: groupValue} : {},
-      builder: (context) => field.build(context, groupKey),
+    await pumpWidgetWithQueryGroups(
+      queryGroups: value != null ? {groupName: group} : {},
+      builder: (context) => field.build(context, groupName),
     );
 
     return widget<TWidget>(

@@ -63,7 +63,6 @@ void main() {
 
           final integration = MockIntegration();
           final state = WidgetbookState(
-            queryParams: {},
             integrations: [integration],
             components: [
               Component(

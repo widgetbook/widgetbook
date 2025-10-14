@@ -1,5 +1,6 @@
 import '../core/arg.dart';
 import '../fields/fields.dart';
+import '../routing/routing.dart';
 
 class SingleArg<T> extends Arg<T> {
   const SingleArg(
@@ -25,12 +26,12 @@ class SingleArg<T> extends Arg<T> {
   }
 
   @override
-  T valueFromQueryGroup(Map<String, String> group) {
+  T valueFromQueryGroup(QueryGroup group) {
     return valueOf('value', group)!;
   }
 
   @override
-  Map<String, String> valueToQueryGroup(T value) {
+  QueryGroup valueToQueryGroup(T value) {
     return {'value': paramOf('value', value)};
   }
 

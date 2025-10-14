@@ -6,7 +6,6 @@ import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 import '../core/core.dart';
-import '../fields/fields.dart';
 import '../navigation/navigation.dart';
 import '../routing/routing.dart';
 import '../utils.dart';
@@ -54,7 +53,7 @@ class WidgetbookState extends ChangeNotifier {
     this.path,
     this.query,
     this.previewMode = false,
-    this.queryParams = const {},
+    this.queryGroups = const {},
     this.appBuilder = widgetsAppBuilder,
     this.addons,
     this.integrations,
@@ -78,7 +77,7 @@ class WidgetbookState extends ChangeNotifier {
   bool previewMode;
 
   /// The query parameters that are used to filter the use-cases.
-  Map<String, String> queryParams;
+  Map<String, QueryGroup> queryGroups;
 
   final AppBuilder appBuilder;
   final List<Addon>? addons;
@@ -134,7 +133,8 @@ class WidgetbookState extends ChangeNotifier {
       if (query?.isNotEmpty ?? false) 'q': query,
       if (panels?.isNotEmpty ?? false)
         'panels': panels?.map((x) => x.name).join(','),
-      ...queryParams,
+      for (final group in queryGroups.entries)
+        group.key: encodeQueryGroup(group.value),
     };
 
     return Uri(
@@ -190,37 +190,29 @@ class WidgetbookState extends ChangeNotifier {
     );
   }
 
-  /// Update the [name] query parameter with the given [value].
-  @internal
-  void updateQueryParam(String name, String value) {
-    if (AppRouteConfig.reservedKeys.contains(name)) {
-      throw ArgumentError(
-        'The query parameter $name is reserved and cannot be updated.',
-      );
-    }
-
-    queryParams[name] = value;
-    notifyListeners();
-  }
-
-  /// Update the field within the query [group] with the given [value].
+  /// Update the field with the given [fieldName] within the query group with
+  /// the given [groupName] to the given [fieldValue].
   void updateQueryField({
-    required String group,
-    required String field,
-    required String value,
+    required String groupName,
+    required String fieldName,
+    required String fieldValue,
   }) {
-    final groupMap = FieldCodec.decodeQueryGroup(queryParams[group]);
+    final group = queryGroups[groupName];
 
-    final newGroupMap = Map<String, String>.from(groupMap)..update(
-      field,
-      (_) => value,
-      ifAbsent: () => value,
-    );
+    final updatedGroup =
+        group == null
+            ? QueryGroup.from({fieldName: fieldValue})
+            : group.copyWithField(
+              name: fieldName,
+              value: fieldValue,
+            );
 
-    updateQueryParam(
-      group,
-      FieldCodec.encodeQueryGroup(newGroupMap),
-    );
+    queryGroups = {
+      ...queryGroups,
+      groupName: updatedGroup,
+    };
+
+    notifyListeners();
   }
 
   /// Update the [path], causing a new [story] to bet returned.
@@ -230,7 +222,7 @@ class WidgetbookState extends ChangeNotifier {
     // Reset args
     final oldStory = story;
     oldStory?.args.safeList.forEach(
-      (arg) => queryParams.remove(arg.groupName),
+      (arg) => queryGroups.remove(arg.groupName),
     );
 
     path = newPath; // Changes `story` to new one
@@ -261,7 +253,7 @@ class WidgetbookState extends ChangeNotifier {
     path = routeConfig.path;
     query = routeConfig.query;
     previewMode = routeConfig.previewMode;
-    queryParams = routeConfig.queryParams;
+    queryGroups = routeConfig.queryGroups;
     panels =
         previewMode
             ? null // Panels are ignored in preview mode

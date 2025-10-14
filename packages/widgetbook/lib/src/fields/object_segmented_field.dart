@@ -36,13 +36,13 @@ class ObjectSegmentedField<T> extends Field<T> {
   }
 
   @override
-  Widget toWidget(BuildContext context, String group, T? value) {
+  Widget toWidget(BuildContext context, String groupName, T? value) {
     return SegmentedButton<T>(
       selected: value != null ? {value} : {},
       emptySelectionAllowed: value == null,
       onSelectionChanged: (newValue) {
         if (newValue.isNotEmpty) {
-          updateField(context, group, newValue.first);
+          updateField(context, groupName, newValue.first);
         }
       },
       segments:

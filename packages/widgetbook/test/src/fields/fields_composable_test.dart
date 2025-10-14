@@ -30,12 +30,12 @@ class MockFieldsComposable extends FieldsComposable<bool> {
   String get groupName => 'fields_group';
 
   @override
-  bool valueFromQueryGroup(Map<String, String> group) {
+  bool valueFromQueryGroup(QueryGroup group) {
     return valueOf('mock_field', group)!;
   }
 
   @override
-  Map<String, String> valueToQueryGroup(bool value) {
+  QueryGroup valueToQueryGroup(bool value) {
     return {'mock_field': paramOf('mock_field', value)};
   }
 }

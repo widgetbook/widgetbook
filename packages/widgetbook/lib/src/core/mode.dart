@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+import '../routing/routing.dart';
 import 'addon.dart';
 
 /// A [Mode] represents a specific configuration or state of an [Addon].
@@ -20,7 +21,7 @@ abstract class Mode<T> {
     return addon.buildUseCase(context, child, value);
   }
 
-  Map<String, String> toQueryGroup() {
+  QueryGroup toQueryGroup() {
     return addon.valueToQueryGroup(value);
   }
 }

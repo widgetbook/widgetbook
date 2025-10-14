@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../core/core.dart';
 import '../fields/fields.dart';
+import '../routing/routing.dart';
 
 typedef ChildBuilder = Widget Function(BuildContext context, Widget child);
 
@@ -18,10 +19,10 @@ class BuilderAddon extends Addon<void> {
   List<Field> get fields => [];
 
   @override
-  void valueFromQueryGroup(Map<String, String> group) {}
+  void valueFromQueryGroup(QueryGroup group) {}
 
   @override
-  Map<String, String> valueToQueryGroup(void value) => {};
+  QueryGroup valueToQueryGroup(void value) => {};
 
   @override
   Widget buildUseCase(

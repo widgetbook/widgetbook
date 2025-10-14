@@ -10,7 +10,7 @@ void main() {
   });
 
   group(
-    '$FieldCodec',
+    '$QueryGroup',
     () {
       const encodedGroup = '{first_field:false,second_field:2}';
       const decodedGroup = {
@@ -23,7 +23,7 @@ void main() {
         'when [encodeQueryGroup] is called, '
         'then it returns the encoded value',
         () {
-          final result = FieldCodec.encodeQueryGroup(decodedGroup);
+          final result = encodeQueryGroup(decodedGroup);
           expect(result, equals(encodedGroup));
         },
       );
@@ -33,7 +33,7 @@ void main() {
         'when [decodeQueryGroup] is called, '
         'then it returns the decoded value',
         () {
-          final result = FieldCodec.decodeQueryGroup(encodedGroup);
+          final result = decodeQueryGroup(encodedGroup);
           expect(result, equals(decodedGroup));
         },
       );
@@ -49,8 +49,8 @@ void main() {
             'Special:Key': 'Special%Value',
           };
 
-          final encodedGroup = FieldCodec.encodeQueryGroup(group);
-          final decodedGroup = FieldCodec.decodeQueryGroup(encodedGroup);
+          final encodedGroup = encodeQueryGroup(group);
+          final decodedGroup = decodeQueryGroup(encodedGroup);
 
           expect(decodedGroup, equals(group));
         },
@@ -63,7 +63,7 @@ void main() {
         () {
           final specialChars = ', : ()';
           final encodedSpecialChars = Uri.encodeComponent(specialChars);
-          final group = FieldCodec.decodeQueryGroup(
+          final group = decodeQueryGroup(
             '{foo:bar$encodedSpecialChars}',
           );
 
@@ -78,7 +78,7 @@ void main() {
         () {
           final key = 'Тест field';
           final value = 'значение';
-          final group = FieldCodec.decodeQueryGroup('{$key:$value}');
+          final group = decodeQueryGroup('{$key:$value}');
 
           expect(group.keys.first, equals(key));
           expect(group.values.first, equals(value));
@@ -95,7 +95,7 @@ void main() {
           final value = 'значение,,foo';
 
           expect(
-            () => FieldCodec.decodeQueryGroup('{$key:$value}'),
+            () => decodeQueryGroup('{$key:$value}'),
             throwsA(isA<RangeError>()),
           );
         },

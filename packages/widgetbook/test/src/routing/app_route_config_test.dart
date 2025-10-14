@@ -10,14 +10,14 @@ void main() {
         'then query parameters are parsed without reserved keys',
         () {
           final config = AppRouteConfig(
-            uri: Uri.parse('/?path=component-x&foo=bar&baz=qux'),
+            uri: Uri.parse('/?path=component-x&foo={bar:x}&baz={qux:y}'),
           );
 
           expect(
-            config.queryParams,
+            config.queryGroups,
             {
-              'foo': 'bar',
-              'baz': 'qux',
+              'foo': {'bar': 'x'},
+              'baz': {'qux': 'y'},
             },
           );
         },
