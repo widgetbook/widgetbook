@@ -1,5 +1,6 @@
 import '../core/arg.dart';
 import '../fields/fields.dart';
+import '../routing/routing.dart';
 
 class BoolArg extends Arg<bool> {
   const BoolArg(
@@ -16,12 +17,12 @@ class BoolArg extends Arg<bool> {
   ];
 
   @override
-  bool valueFromQueryGroup(Map<String, String> group) {
+  bool valueFromQueryGroup(QueryGroup group) {
     return valueOf('value', group)!;
   }
 
   @override
-  Map<String, String> valueToQueryGroup(bool value) {
+  QueryGroup valueToQueryGroup(bool value) {
     return {'value': paramOf('value', value)};
   }
 

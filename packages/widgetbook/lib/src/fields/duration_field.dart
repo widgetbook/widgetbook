@@ -30,11 +30,7 @@ class DurationField extends Field<Duration> {
   static const defaultDuration = Duration.zero;
 
   @override
-  Widget toWidget(
-    BuildContext context,
-    String group,
-    Duration? value,
-  ) {
+  Widget toWidget(BuildContext context, String groupName, Duration? value) {
     return TextFormField(
       initialValue: codec.toParam(value ?? initialValue ?? defaultDuration),
       keyboardType: TextInputType.number,
@@ -46,7 +42,7 @@ class DurationField extends Field<Duration> {
         final duration = codec.toValue(value);
         if (duration == null) return;
 
-        updateField(context, group, duration);
+        updateField(context, groupName, duration);
       },
     );
   }

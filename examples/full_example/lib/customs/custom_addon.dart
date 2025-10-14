@@ -39,12 +39,12 @@ class AlignAddon extends Addon<Alignment> {
   }
 
   @override
-  Alignment valueFromQueryGroup(Map<String, String> group) {
+  Alignment valueFromQueryGroup(QueryGroup group) {
     return valueOf('alignment', group)!;
   }
 
   @override
-  Map<String, String> valueToQueryGroup(Alignment value) {
+  QueryGroup valueToQueryGroup(Alignment value) {
     return {'alignment': paramOf('alignment', value)};
   }
 

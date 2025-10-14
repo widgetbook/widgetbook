@@ -45,13 +45,13 @@ class DateTimeField extends Field<DateTime> {
   final DateTime end;
 
   @override
-  Widget toWidget(BuildContext context, String group, DateTime? value) {
+  Widget toWidget(BuildContext context, String groupName, DateTime? value) {
     return TextFormField(
       // The "value" used in the key ensures that the TextFormField is rebuilt
       // when the value is changed via the DateTime picker. Without this
       // unique key, the TextFormField will only react to value changes
       // triggered by the user typing in the field.
-      key: ValueKey('$group-$name-$value'),
+      key: ValueKey('$groupName-$name-$value'),
       initialValue: (value ?? initialValue)?.toSimpleFormat(),
       keyboardType: TextInputType.datetime,
       decoration: InputDecoration(
@@ -66,7 +66,7 @@ class DateTimeField extends Field<DateTime> {
 
             if (dateTime == null) return;
 
-            updateField(context, group, dateTime);
+            updateField(context, groupName, dateTime);
           },
         ),
       ),
@@ -74,7 +74,7 @@ class DateTimeField extends Field<DateTime> {
         final dateTime = codec.toValue(value);
         if (dateTime == null) return;
 
-        updateField(context, group, dateTime);
+        updateField(context, groupName, dateTime);
       },
     );
   }

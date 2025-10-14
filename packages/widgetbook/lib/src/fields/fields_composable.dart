@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+import '../routing/routing.dart';
 import '../settings/settings.dart';
 import '../state/state.dart';
 import 'field.dart';
@@ -38,10 +39,10 @@ abstract class FieldsComposable<T> {
   }
 
   /// Converts a query group to a value of type [T].
-  T valueFromQueryGroup(Map<String, String> group);
+  T valueFromQueryGroup(QueryGroup group);
 
   /// Converts a value of type [T] to a query group.
-  Map<String, String> valueToQueryGroup(T value);
+  QueryGroup valueToQueryGroup(T value);
 
   /// Converts the [fields] into a [Widget] that will be rendered in the
   /// settings side panel.
@@ -82,7 +83,7 @@ abstract class FieldsComposable<T> {
 
   /// Decodes the value of the [Field] with [name] from the query [group]
   /// using the [FieldCodec.toValue] from [Field.codec].
-  TField? valueOf<TField>(String name, Map<String, String> group) {
+  TField? valueOf<TField>(String name, QueryGroup group) {
     final field =
         fields.firstWhere(
               (field) => field.name == name,
@@ -106,12 +107,10 @@ abstract class FieldsComposable<T> {
   /// Whether the group has been nullified by [toggleNullification].
   bool isNullified(BuildContext context) {
     final state = WidgetbookState.of(context);
-    final groupMap = FieldCodec.decodeQueryGroup(
-      state.queryParams[groupName],
-    );
+    final group = state.queryGroups[groupName];
 
     return fields.every(
-      (field) => field.valueFrom(groupMap) == null,
+      (field) => field.valueFrom(group ?? {}) == null,
     );
   }
 
@@ -138,36 +137,36 @@ abstract class FieldsComposable<T> {
     // We can revisit in future major releases.
 
     final state = WidgetbookState.of(context);
-    final groupMap = FieldCodec.decodeQueryGroup(
-      state.queryParams[groupName],
-    );
+    final group = state.queryGroups[groupName];
+
+    if (group == null) return;
 
     fields.forEach((field) {
       // If the field is not present in the `groupMap`, we set it to its
       // initial value or default value.
       //
       // This is used when user first interacts with a nullable field.
-      if (!groupMap.containsKey(field.name)) {
+      if (!group.containsKey(field.name)) {
         final value =
             field.initialValueStringified ?? field.defaultValueStringified;
         state.updateQueryField(
-          group: groupName,
-          field: field.name,
-          value: nullify ? '${Field.nullabilitySymbol}${value}' : value,
+          groupName: groupName,
+          fieldName: field.name,
+          fieldValue: nullify ? '${Field.nullabilitySymbol}${value}' : value,
         );
         return;
       }
 
-      final value = groupMap[field.name];
+      final value = group[field.name];
       if (value == null) return;
 
       final rawValue = value.replaceFirst(Field.nullabilitySymbol, '');
       final nullishValue = '${Field.nullabilitySymbol}$rawValue';
 
       state.updateQueryField(
-        group: groupName,
-        field: field.name,
-        value: nullify ? nullishValue : rawValue,
+        groupName: groupName,
+        fieldName: field.name,
+        fieldValue: nullify ? nullishValue : rawValue,
       );
     });
   }

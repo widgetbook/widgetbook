@@ -34,7 +34,7 @@ class BorderAddon extends WidgetbookAddon<BorderSetting> {
   }
 
   @override
-  BorderSetting valueFromQueryGroup(Map<String, String> group) {
+  BorderSetting valueFromQueryGroup(QueryGroup group) {
     // TODO
   }
 
@@ -87,7 +87,7 @@ This method is responsible for parsing the query parameters back to the addon se
 
 ```dart
 @override
-BorderSetting valueFromQueryGroup(Map<String, String> group) {
+BorderSetting valueFromQueryGroup(QueryGroup group) {
   final width = valueOf<int>('width', group)!;
   final color = valueOf<Color>('color', group)!;
 

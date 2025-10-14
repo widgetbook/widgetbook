@@ -20,7 +20,7 @@ class RangeArg extends Arg<RangeValues> {
   ];
 
   @override
-  RangeValues valueFromQueryGroup(Map<String, String> group) {
+  RangeValues valueFromQueryGroup(QueryGroup group) {
     return RangeValues(
       valueOf('min', group)!,
       valueOf('max', group)!,
@@ -28,7 +28,7 @@ class RangeArg extends Arg<RangeValues> {
   }
 
   @override
-  Map<String, String> valueToQueryGroup(RangeValues value) {
+  QueryGroup valueToQueryGroup(RangeValues value) {
     return {
       'min': paramOf('min', value),
       'max': paramOf('max', value),

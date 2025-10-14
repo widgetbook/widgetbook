@@ -29,7 +29,7 @@ class NumSliderField<T extends num> extends Field<T> {
   final int? divisions;
 
   @override
-  Widget toWidget(BuildContext context, String group, T? value) {
+  Widget toWidget(BuildContext context, String groupName, T? value) {
     final defaultValue = (T == int ? 0 : 0.0) as T;
 
     return Row(
@@ -49,7 +49,7 @@ class NumSliderField<T extends num> extends Field<T> {
             onChanged: (value) {
               return updateField(
                 context,
-                group,
+                groupName,
                 codec.toValue(value.toString())!,
               );
             },

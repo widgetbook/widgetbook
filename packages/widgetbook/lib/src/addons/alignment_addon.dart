@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../core/core.dart';
 import '../fields/fields.dart';
+import '../routing/routing.dart';
 
 class AlignmentMode extends Mode<Alignment> {
   AlignmentMode(Alignment value) : super(value, AlignmentAddon(value));
@@ -39,12 +40,12 @@ class AlignmentAddon extends Addon<Alignment> {
   }
 
   @override
-  Alignment valueFromQueryGroup(Map<String, String> group) {
+  Alignment valueFromQueryGroup(QueryGroup group) {
     return valueOf('alignment', group)!;
   }
 
   @override
-  Map<String, String> valueToQueryGroup(Alignment value) {
+  QueryGroup valueToQueryGroup(Alignment value) {
     return {'alignment': paramOf('alignment', value)};
   }
 

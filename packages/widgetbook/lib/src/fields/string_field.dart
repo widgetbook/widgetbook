@@ -25,14 +25,14 @@ class StringField extends Field<String> {
   final int? maxLines;
 
   @override
-  Widget toWidget(BuildContext context, String group, String? value) {
+  Widget toWidget(BuildContext context, String groupName, String? value) {
     return TextFormField(
       maxLines: maxLines,
       initialValue: value ?? initialValue,
       decoration: const InputDecoration(
         hintText: 'Enter a value',
       ),
-      onChanged: (value) => updateField(context, group, value),
+      onChanged: (value) => updateField(context, groupName, value),
     );
   }
 }

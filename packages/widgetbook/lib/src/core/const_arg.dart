@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../fields/fields.dart';
+import '../routing/routing.dart';
 import 'arg.dart';
 
 class ConstArg<T> extends Arg<T> {
@@ -14,9 +15,9 @@ class ConstArg<T> extends Arg<T> {
   ConstArg<T> init({required String name}) => this;
 
   @override
-  T valueFromQueryGroup(Map<String, String> group) => value;
+  T valueFromQueryGroup(QueryGroup group) => value;
 
-  Map<String, String> valueToQueryGroup(T value) => {};
+  QueryGroup valueToQueryGroup(T value) => {};
 
   @override
   T resolve(BuildContext context) => value;

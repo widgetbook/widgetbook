@@ -1,5 +1,6 @@
 import '../core/arg.dart';
 import '../fields/fields.dart';
+import '../routing/routing.dart';
 
 class DurationArg extends Arg<Duration> {
   const DurationArg(
@@ -16,12 +17,12 @@ class DurationArg extends Arg<Duration> {
   ];
 
   @override
-  Duration valueFromQueryGroup(Map<String, String> group) {
+  Duration valueFromQueryGroup(QueryGroup group) {
     return valueOf('value', group)!;
   }
 
   @override
-  Map<String, String> valueToQueryGroup(Duration value) {
+  QueryGroup valueToQueryGroup(Duration value) {
     return {'value': paramOf('value', value)};
   }
 

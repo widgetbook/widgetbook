@@ -1,3 +1,7 @@
+## Unreleased
+
+- **REFACTOR**: Use `QueryGroup` instead of query parameters and `Map<String, String>`. ([#1653](https://github.com/widgetbook/widgetbook/pull/1653))
+
 ## 4.0.0-alpha.3
 
 - **BREAKING**: Add `valueToQueryGroup` to `Addon` and `Arg`; to allow serializing their values to URL query parameters. ([#1608](https://github.com/widgetbook/widgetbook/pull/1608))

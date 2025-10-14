@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../routing/routing.dart';
 import '../state/state.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
@@ -74,43 +75,43 @@ abstract class Field<T> {
 
   /// A field is considered nullable if the param's value starts
   /// with [nullabilitySymbol].
-  bool isNull(Map<String, String> groupMap) {
-    final param = groupMap[name];
+  bool isNull(QueryGroup group) {
+    final param = group[name];
     return param?.startsWith(nullabilitySymbol) ?? false;
   }
 
-  /// Extracts the value from [groupMap],
+  /// Extracts the value from [group],
   /// fallback to [initialValue] if not found.
   /// If the field value starts with [nullabilitySymbol], it will be
   /// interpreted as null.
-  T? valueFrom(Map<String, String> groupMap) {
-    if (isNull(groupMap)) return null;
-    return codec.toValue(groupMap[name]) ?? initialValue;
+  T? valueFrom(QueryGroup group) {
+    if (isNull(group)) return null;
+    return codec.toValue(group[name]) ?? initialValue;
   }
 
   /// Builds the current field into a [Widget] using [toWidget].
-  Widget build(BuildContext context, String group) {
+  Widget build(BuildContext context, String groupName) {
     final state = WidgetbookState.of(context);
-    final groupMap = FieldCodec.decodeQueryGroup(state.queryParams[group]);
-    final value = valueFrom(groupMap);
+    final group = state.queryGroups[groupName];
+    final value = valueFrom(group ?? {});
 
-    return toWidget(context, group, value);
+    return toWidget(context, groupName, value);
   }
 
   /// Converts this field into a [Widget] that can be used in the
   /// settings panel.
-  Widget toWidget(BuildContext context, String group, T? value);
+  Widget toWidget(BuildContext context, String groupName, T? value);
 
   /// Updates the field value in the [WidgetbookState] and synchronizes it
   /// with the URL query parameters.
-  void updateField(BuildContext context, String group, T value) {
+  void updateField(BuildContext context, String groupName, T value) {
     final state = WidgetbookState.of(context);
     final stringifiedValue = codec.toParam(value);
 
     state.updateQueryField(
-      group: group,
-      field: name,
-      value: stringifiedValue,
+      groupName: groupName,
+      fieldName: name,
+      fieldValue: stringifiedValue,
     );
   }
 }

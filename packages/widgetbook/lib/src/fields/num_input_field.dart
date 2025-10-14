@@ -30,7 +30,7 @@ class NumInputField<T extends num> extends Field<T> {
   final List<TextInputFormatter> formatters;
 
   @override
-  Widget toWidget(BuildContext context, String group, T? value) {
+  Widget toWidget(BuildContext context, String groupName, T? value) {
     final defaultValue = (T == int ? 0 : 0.0) as T;
 
     return TextFormField(
@@ -44,7 +44,7 @@ class NumInputField<T extends num> extends Field<T> {
         final number = codec.toValue(value);
         if (number == null) return;
 
-        updateField(context, group, number);
+        updateField(context, groupName, number);
       },
     );
   }
