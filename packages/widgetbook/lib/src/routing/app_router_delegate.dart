@@ -3,7 +3,6 @@ import 'package:meta/meta.dart';
 
 import '../layout/responsive_layout.dart';
 import '../state/state.dart';
-import '../theme/theme.dart';
 import '../workbench/workbench.dart';
 import 'app_route_config.dart';
 
@@ -38,24 +37,20 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return WidgetbookTheme(
-      data: theme,
-      child: Navigator(
-        key: navigatorKey,
-        onDidRemovePage: (_) => {},
-        pages: [
-          MaterialPage(
-            child:
-                _configuration.previewMode
-                    ? const Workbench()
-                    : ResponsiveLayout(
-                      key: ValueKey(_configuration),
-                      child: const Workbench(),
-                    ),
-          ),
-        ],
-      ),
+    return Navigator(
+      key: navigatorKey,
+      onDidRemovePage: (_) => {},
+      pages: [
+        MaterialPage(
+          child:
+              _configuration.previewMode
+                  ? const Workbench()
+                  : ResponsiveLayout(
+                    key: ValueKey(_configuration),
+                    child: const Workbench(),
+                  ),
+        ),
+      ],
     );
   }
 }
