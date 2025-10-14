@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import '../core/core.dart';
 import '../fields/fields.dart';
-import '../routing/routing.dart';
 
 class AlignmentMode extends Mode<Alignment> {
   AlignmentMode(Alignment value) : super(value, AlignmentAddon(value));
@@ -31,22 +30,12 @@ class AlignmentAddon extends Addon<Alignment> {
   List<Field> get fields {
     return [
       ObjectDropdownField<Alignment>(
-        name: 'alignment',
+        name: 'value',
         initialValue: alignment,
         values: alignments.keys.toList(),
         labelBuilder: (value) => alignments[value]!,
       ),
     ];
-  }
-
-  @override
-  Alignment valueFromQueryGroup(QueryGroup group) {
-    return valueOf('alignment', group)!;
-  }
-
-  @override
-  QueryGroup valueToQueryGroup(Alignment value) {
-    return {'alignment': paramOf('alignment', value)};
   }
 
   @override

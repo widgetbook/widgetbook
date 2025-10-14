@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import '../core/core.dart';
 import '../fields/fields.dart';
-import '../routing/routing.dart';
 
 /// An [Addon] for changing the active [MediaQueryData.textScaler]
 /// via [MediaQuery].
@@ -24,16 +23,6 @@ class TextScaleAddon extends Addon<double> {
         divisions: 3 * 4 - 1,
       ),
     ];
-  }
-
-  @override
-  double valueFromQueryGroup(QueryGroup group) {
-    return valueOf('factor', group)!;
-  }
-
-  @override
-  QueryGroup valueToQueryGroup(double value) {
-    return {'factor': paramOf('factor', value)};
   }
 
   @override

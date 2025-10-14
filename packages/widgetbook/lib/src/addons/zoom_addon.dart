@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import '../core/core.dart';
 import '../fields/fields.dart';
-import '../routing/routing.dart';
 
 class ZoomMode extends Mode<double> {
   ZoomMode(double value) : super(value, ZoomAddon());
@@ -23,16 +22,6 @@ class ZoomAddon extends Addon<double> {
         divisions: 4 * 4 - 1,
       ),
     ];
-  }
-
-  @override
-  double valueFromQueryGroup(QueryGroup group) {
-    return valueOf('ratio', group)!;
-  }
-
-  @override
-  QueryGroup valueToQueryGroup(double value) {
-    return {'ratio': paramOf('ratio', value)};
   }
 
   @override

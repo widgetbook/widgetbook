@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart' hide Viewport;
 
 import '../../core/core.dart';
 import '../../fields/fields.dart';
-import '../../routing/routing.dart';
 import 'viewport.dart';
 import 'viewport_data.dart';
 import 'viewports/viewports.dart';
@@ -38,16 +37,6 @@ class ViewportAddon extends Addon<ViewportData> {
         labelBuilder: (viewport) => viewport.name,
       ),
     ];
-  }
-
-  @override
-  ViewportData valueFromQueryGroup(QueryGroup group) {
-    return valueOf<ViewportData>('name', group)!;
-  }
-
-  @override
-  QueryGroup valueToQueryGroup(ViewportData value) {
-    return {'name': paramOf('name', value)};
   }
 
   @override

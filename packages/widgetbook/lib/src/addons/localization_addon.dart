@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import '../core/core.dart';
 import '../fields/fields.dart';
-import '../routing/routing.dart';
 
 class LocaleMode extends Mode<Locale> {
   LocaleMode(
@@ -32,16 +31,6 @@ class LocaleAddon extends Addon<Locale> {
         labelBuilder: (locale) => locale.toLanguageTag(),
       ),
     ];
-  }
-
-  @override
-  Locale valueFromQueryGroup(QueryGroup group) {
-    return valueOf<Locale>('name', group)!;
-  }
-
-  @override
-  QueryGroup valueToQueryGroup(Locale value) {
-    return {'name': paramOf('name', value)};
   }
 
   @override
