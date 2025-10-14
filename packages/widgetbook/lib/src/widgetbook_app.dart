@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 import 'core/config.dart';
 import 'routing/routing.dart';
 import 'state/state.dart';
-import 'theme/themes.dart';
+import 'theme/theme.dart';
 
 @internal
 class WidgetbookApp extends StatefulWidget {
@@ -55,16 +55,34 @@ class _WidgetbookAppState extends State<WidgetbookApp> {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetbookScope(
-      state: state,
-      child: MaterialApp.router(
-        title: 'Widgetbook',
-        debugShowCheckedModeBanner: false,
-        themeMode: widget.config.themeMode,
-        theme: widget.config.lightTheme ?? Themes.light,
-        darkTheme: widget.config.darkTheme ?? Themes.dark,
-        scrollBehavior: widget.config.scrollBehavior,
-        routerConfig: router,
+    final brightness = MediaQuery.platformBrightnessOf(context);
+    final themeMode = widget.config.themeMode;
+    final lightTheme = widget.config.lightTheme ?? Themes.light;
+    final darkTheme = widget.config.darkTheme ?? Themes.dark;
+
+    final targetThemeData = switch (themeMode) {
+      ThemeMode.light => lightTheme,
+      ThemeMode.dark => darkTheme,
+      ThemeMode.system =>
+        brightness == Brightness.light ? lightTheme : darkTheme,
+    };
+
+    // The app has two themes currently:
+    // 1. The WidgetbookTheme - used to get Widgetbook theme below the MaterialThemeAddon
+    // 2. The MaterialApp Theme - used to style the Material widgets in the app
+    return WidgetbookTheme(
+      data: targetThemeData,
+      child: WidgetbookScope(
+        state: state,
+        child: MaterialApp.router(
+          title: 'Widgetbook',
+          debugShowCheckedModeBanner: false,
+          themeMode: themeMode,
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          scrollBehavior: widget.config.scrollBehavior,
+          routerConfig: router,
+        ),
       ),
     );
   }
