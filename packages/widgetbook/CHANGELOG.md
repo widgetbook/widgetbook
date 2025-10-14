@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **REFACTOR**: Use `QueryGroup` instead of query parameters and `Map<String, String>`. ([#1653](https://github.com/widgetbook/widgetbook/pull/1653))
+- **REFACTOR**: Provide default implementations for `valueFromQueryGroup` _(single-field only)_ and `valueToQueryGroup`. ([#657](https://github.com/widgetbook/widgetbook/pull/657))
 
 ## 4.0.0-alpha.3
 

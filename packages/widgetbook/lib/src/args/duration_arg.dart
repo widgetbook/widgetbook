@@ -1,6 +1,5 @@
 import '../core/arg.dart';
 import '../fields/fields.dart';
-import '../routing/routing.dart';
 
 class DurationArg extends Arg<Duration> {
   const DurationArg(
@@ -15,16 +14,6 @@ class DurationArg extends Arg<Duration> {
       initialValue: value,
     ),
   ];
-
-  @override
-  Duration valueFromQueryGroup(QueryGroup group) {
-    return valueOf('value', group)!;
-  }
-
-  @override
-  QueryGroup valueToQueryGroup(Duration value) {
-    return {'value': paramOf('value', value)};
-  }
 
   @override
   DurationArg init({

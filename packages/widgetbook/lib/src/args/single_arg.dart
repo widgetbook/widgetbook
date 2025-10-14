@@ -1,6 +1,5 @@
 import '../core/arg.dart';
 import '../fields/fields.dart';
-import '../routing/routing.dart';
 
 class SingleArg<T> extends Arg<T> {
   const SingleArg(
@@ -23,16 +22,6 @@ class SingleArg<T> extends Arg<T> {
         labelBuilder: labelBuilder ?? ObjectDropdownField.defaultLabelBuilder,
       ),
     ];
-  }
-
-  @override
-  T valueFromQueryGroup(QueryGroup group) {
-    return valueOf('value', group)!;
-  }
-
-  @override
-  QueryGroup valueToQueryGroup(T value) {
-    return {'value': paramOf('value', value)};
   }
 
   @override

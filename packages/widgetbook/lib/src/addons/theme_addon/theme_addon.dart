@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import '../../core/core.dart';
 import '../../fields/fields.dart';
-import '../../routing/routing.dart';
 
 typedef ThemeBuilder<T> =
     Widget Function(
@@ -46,16 +45,6 @@ class ThemeAddon<T> extends Addon<T> {
             ),
       ),
     ];
-  }
-
-  @override
-  T valueFromQueryGroup(QueryGroup group) {
-    return valueOf<T>('name', group)!;
-  }
-
-  @override
-  QueryGroup valueToQueryGroup(T value) {
-    return {'name': paramOf('name', value)};
   }
 
   @override

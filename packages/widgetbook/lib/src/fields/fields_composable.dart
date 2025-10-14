@@ -39,10 +39,25 @@ abstract class FieldsComposable<T> {
   }
 
   /// Converts a query group to a value of type [T].
-  T valueFromQueryGroup(QueryGroup group);
+  T valueFromQueryGroup(QueryGroup group) {
+    if (fields.length > 1) {
+      throw UnimplementedError(
+        '$runtimeType needs to implement `valueFromQueryGroup`. '
+        'The default implementation only only works '
+        'for composables with a single field.',
+      );
+    }
+
+    final field = fields.first;
+    return field.valueFrom(group) as T;
+  }
 
   /// Converts a value of type [T] to a query group.
-  QueryGroup valueToQueryGroup(T value);
+  QueryGroup valueToQueryGroup(T value) {
+    return {
+      for (final field in fields) field.name: paramOf(field.name, value),
+    };
+  }
 
   /// Converts the [fields] into a [Widget] that will be rendered in the
   /// settings side panel.
