@@ -8,7 +8,6 @@ import '../../helper/helper.dart';
 class MockField extends Field<bool> {
   MockField({
     required super.name,
-    required super.type,
     required super.initialValue,
     required super.defaultValue,
     required super.codec,
@@ -40,7 +39,6 @@ void main() {
     () {
       final field = MockField(
         name: 'mock_field',
-        type: FieldType.boolean,
         initialValue: true,
         defaultValue: true,
         codec: FieldCodec(

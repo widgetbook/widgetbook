@@ -16,7 +16,6 @@ class MockFieldsComposable extends FieldsComposable<bool> {
   List<Field> get fields => [
     MockField(
       name: 'mock_field',
-      type: FieldType.boolean,
       initialValue: true,
       defaultValue: true,
       codec: FieldCodec(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../field.dart';
 import '../field_codec.dart';
-import '../field_type.dart';
 import 'color_picker.dart';
 import 'color_space.dart';
 
@@ -19,7 +18,6 @@ class ColorField extends Field<Color> {
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          defaultValue: defaultColor,
-         type: FieldType.color,
          codec: FieldCodec(
            toParam: (color) => color.toARGB32().toRadixString(16),
            toValue: (param) {

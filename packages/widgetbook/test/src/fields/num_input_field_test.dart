@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/fields/num_input_field.dart';
-import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
 
@@ -13,7 +12,6 @@ void main() {
       final field = NumInputField(
         name: 'double_input_field',
         initialValue: 5.0,
-        type: FieldType.doubleInput,
         formatters: [],
       );
 
@@ -82,7 +80,6 @@ void main() {
     final field = NumInputField(
       name: 'int_field',
       initialValue: 5,
-      type: FieldType.intInput,
       formatters: [FilteringTextInputFormatter.digitsOnly],
     );
 

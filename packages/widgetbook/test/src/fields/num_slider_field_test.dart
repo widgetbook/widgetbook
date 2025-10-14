@@ -14,7 +14,6 @@ void main() {
         initialValue: 5.0,
         min: 0.0,
         max: 10.0,
-        type: FieldType.doubleSlider,
         codec: FieldCodec(
           toParam: (value) => value.toString(),
           toValue: (param) => double.tryParse(param ?? ''),
@@ -77,7 +76,6 @@ void main() {
         initialValue: 5,
         min: 0,
         max: 10,
-        type: FieldType.intSlider,
         codec: FieldCodec(
           toParam: (value) => value.toString(),
           toValue: (param) => int.tryParse(param ?? ''),

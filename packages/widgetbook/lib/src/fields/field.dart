@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../routing/routing.dart';
 import '../state/state.dart';
 import 'field_codec.dart';
-import 'field_type.dart';
 
 /// Base class for all input fields in Widgetbook.
 ///
@@ -29,7 +28,6 @@ abstract class Field<T> {
   /// Creates a [Field] with the specified configuration.
   const Field({
     required this.name,
-    required this.type,
     required this.initialValue,
     required this.defaultValue,
     required this.codec,
@@ -41,12 +39,6 @@ abstract class Field<T> {
 
   /// The unique identifier for this field within its group.
   final String name;
-
-  /// Metadata about the field type.
-  ///
-  /// This helps external tools (like Widgetbook Cloud) understand what kind
-  /// of input control to render for this field.
-  final FieldType type;
 
   /// The default value when no value is specified.
   ///

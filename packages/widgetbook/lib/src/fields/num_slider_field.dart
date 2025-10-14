@@ -13,7 +13,6 @@ class NumSliderField<T extends num> extends Field<T> {
     required this.min,
     required this.max,
     required super.codec,
-    required super.type,
   }) : assert(
          initialValue == null || (initialValue >= min && initialValue <= max),
        ),

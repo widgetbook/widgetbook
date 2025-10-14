@@ -11,7 +11,6 @@ class NumInputField<T extends num> extends Field<T> {
     required super.name,
     super.initialValue,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
-    required super.type,
     required this.formatters,
   }) : super(
          defaultValue: (T == int ? 0 : 0.0) as T,

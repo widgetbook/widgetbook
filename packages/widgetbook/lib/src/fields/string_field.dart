@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'field.dart';
 import 'field_codec.dart';
-import 'field_type.dart';
 
 /// A [Field] that builds [TextFormField] for [String] values.
 class StringField extends Field<String> {
@@ -14,7 +13,6 @@ class StringField extends Field<String> {
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          defaultValue: '',
-         type: FieldType.string,
          codec: FieldCodec(
            toParam: (value) => value,
            toValue: (param) => param,

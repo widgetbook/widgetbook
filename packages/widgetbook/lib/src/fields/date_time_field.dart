@@ -3,7 +3,6 @@ import 'package:meta/meta.dart';
 
 import 'field.dart';
 import 'field_codec.dart';
-import 'field_type.dart';
 
 @internal
 extension DateTimeExtension on DateTime {
@@ -29,7 +28,6 @@ class DateTimeField extends Field<DateTime> {
     required this.end,
   }) : super(
          defaultValue: start,
-         type: FieldType.dateTime,
          codec: FieldCodec<DateTime>(
            toParam: (value) => value.toSimpleFormat(),
            toValue: (param) {
