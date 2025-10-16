@@ -50,27 +50,23 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                IntrinsicWidth(
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      color: currentColor,
-                      border: Border.all(
-                        color: Colors.black.withValues(alpha: 0.15),
-                      ),
-                    ),
-                    child: Center(
-                      child: SelectableText(
-                        '#${currentColor.toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase()}',
-                        style: TextStyle(
-                          color:
-                              currentColor.computeLuminance() > 0.5
-                                  ? Colors.black
-                                  : Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: currentColor,
+                  ),
+                  child: SelectableText(
+                    '#${currentColor.toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase()}',
+                    style: TextStyle(
+                      color:
+                          currentColor.computeLuminance() > 0.5
+                              ? Colors.black
+                              : Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -155,10 +151,7 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                       child: const Text('Cancel'),
                     ),
                     const SizedBox(width: 8),
-                    ElevatedButton(
-                      onPressed: _onConfirm,
-                      child: const Text('Ok'),
-                    ),
+                    TextButton(onPressed: _onConfirm, child: const Text('Ok')),
                   ],
                 ),
               ],
@@ -207,26 +200,18 @@ class _SVPainter extends CustomPainter {
     final color = HSVColor.fromAHSV(1.0, hue, 1.0, 1.0).toColor();
     final paint =
         Paint()
-          ..shader = ui.Gradient.linear(
-            rect.topLeft,
-            rect.topRight,
-            [
-              Colors.white,
-              color,
-            ],
-          );
+          ..shader = ui.Gradient.linear(rect.topLeft, rect.topRight, [
+            Colors.white,
+            color,
+          ]);
     canvas.drawRect(rect, paint);
 
     final paint2 =
         Paint()
-          ..shader = ui.Gradient.linear(
-            rect.topLeft,
-            rect.bottomLeft,
-            [
-              Colors.transparent,
-              Colors.black,
-            ],
-          );
+          ..shader = ui.Gradient.linear(rect.topLeft, rect.bottomLeft, [
+            Colors.transparent,
+            Colors.black,
+          ]);
     canvas.drawRect(rect, paint2);
 
     final selX = saturation * size.width;
