@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 import 'field.dart';
-import 'field_codec.dart';
 
 @internal
 extension DateTimeExtension on DateTime {
@@ -27,10 +26,8 @@ class DateTimeField extends Field<DateTime> {
     required this.start,
     required this.end,
   }) : super(
-         codec: FieldCodec<DateTime>(
-           toParam: (value) => value.toSimpleFormat(),
-           toValue: DateTime.tryParse,
-         ),
+         toParam: (value) => value.toSimpleFormat(),
+         toValue: DateTime.tryParse,
        );
 
   /// The starting [DateTime] value used for the date and time pickers.
@@ -62,7 +59,7 @@ class DateTimeField extends Field<DateTime> {
         ),
       ),
       onChanged: (value) {
-        final dateTime = codec.toValue(value);
+        final dateTime = toValue(value);
         if (dateTime == null) return;
 
         updateField(context, groupName, dateTime);

@@ -24,20 +24,20 @@ void main() {
 
       test(
         'given a value, '
-        'when [codec.toParam] is called, '
+        'when [toParam] is called, '
         'then it returns the value as a string',
         () {
-          final result = field.codec.toParam(red);
+          final result = field.toParam(red);
           expect(result, equals(redHex));
         },
       );
 
       test(
         'given a string param, '
-        'when [codec.toValue] is called, '
+        'when [toValue] is called, '
         'then it returns the actual value',
         () {
-          final result = field.codec.toValue(redHex);
+          final result = field.toValue(redHex);
           expect(result, equals(red));
         },
       );

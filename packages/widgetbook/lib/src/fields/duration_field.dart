@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'field.dart';
-import 'field_codec.dart';
 
 /// A [Field] that represents a [Duration] value.
 class DurationField extends Field<Duration> {
@@ -11,14 +10,12 @@ class DurationField extends Field<Duration> {
     super.initialValue = defaultDuration,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-         codec: FieldCodec(
-           toParam: (value) => value.inMilliseconds.toString(),
-           toValue: (param) {
-             final ms = int.tryParse(param);
-             if (ms == null) return null;
-             return Duration(milliseconds: ms);
-           },
-         ),
+         toParam: (value) => value.inMilliseconds.toString(),
+         toValue: (param) {
+           final ms = int.tryParse(param);
+           if (ms == null) return null;
+           return Duration(milliseconds: ms);
+         },
        );
 
   /// The default duration value used when no initial value is provided.
@@ -27,14 +24,14 @@ class DurationField extends Field<Duration> {
   @override
   Widget toWidget(BuildContext context, String groupName, Duration value) {
     return TextFormField(
-      initialValue: codec.toParam(value),
+      initialValue: toParam(value),
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
         hintText: 'Enter a duration',
         suffix: Text('ms'),
       ),
       onChanged: (value) {
-        final duration = codec.toValue(value);
+        final duration = toValue(value);
         if (duration == null) return;
 
         updateField(context, groupName, duration);

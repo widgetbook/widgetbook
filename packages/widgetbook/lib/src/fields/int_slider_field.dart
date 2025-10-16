@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'field.dart';
-import 'field_codec.dart';
 import 'num_slider_field.dart';
 
 /// A [Field] that builds [Slider] for [int] values.
@@ -15,10 +14,8 @@ class IntSliderField extends NumSliderField<int> {
     required super.max,
     this.divisions,
   }) : super(
-         codec: FieldCodec<int>(
-           toParam: (value) => value.toString(),
-           toValue: (param) => double.tryParse(param)?.round(),
-         ),
+         toParam: (value) => value.toString(),
+         toValue: (param) => double.tryParse(param)?.round(),
        );
 
   final int? divisions;

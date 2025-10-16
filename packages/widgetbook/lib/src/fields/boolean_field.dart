@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'field.dart';
-import 'field_codec.dart';
 
 /// [Field] that builds [Switch] for [bool] values.
 class BooleanField extends Field<bool> {
@@ -11,10 +10,8 @@ class BooleanField extends Field<bool> {
     super.initialValue = true,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-         codec: FieldCodec(
-           toParam: (value) => value.toString(),
-           toValue: (param) => param == 'true',
-         ),
+         toParam: (value) => value.toString(),
+         toValue: (param) => param == 'true',
        );
 
   @override

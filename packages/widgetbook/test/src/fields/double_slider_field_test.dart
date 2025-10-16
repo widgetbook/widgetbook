@@ -17,20 +17,20 @@ void main() {
 
       test(
         'given a value, '
-        'when [codec.toParam] is called, '
+        'when [toParam] is called, '
         'then it returns the value as a string',
         () {
-          final result = field.codec.toParam(7.0);
+          final result = field.toParam(7.0);
           expect(result, equals('7.0'));
         },
       );
 
       test(
         'given a string param, '
-        'when [codec.toValue] is called, '
+        'when [toValue] is called, '
         'then it returns the actual value',
         () {
-          final result = field.codec.toValue('7.0');
+          final result = field.toValue('7.0');
           expect(result, equals(7.0));
         },
       );

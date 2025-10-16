@@ -17,20 +17,20 @@ void main() {
 
     test(
       'given a value, '
-      'when [codec.toParam] is called, '
+      'when [toParam] is called, '
       'then it returns the value as a string',
       () {
-        final result = field.codec.toParam(tenSeconds);
+        final result = field.toParam(tenSeconds);
         expect(result, equals(tenSecondsInMilliseconds));
       },
     );
 
     test(
       'given a string param, '
-      'when [codec.toValue] is called, '
+      'when [toValue] is called, '
       'then it returns the actual value',
       () {
-        final result = field.codec.toValue(tenSecondsInMilliseconds);
+        final result = field.toValue(tenSecondsInMilliseconds);
         expect(result, equals(tenSeconds));
       },
     );
@@ -60,28 +60,5 @@ void main() {
         expect(widget.decoration?.hintText, equals('Enter a duration'));
       },
     );
-  });
-
-  group('Duration Codec', () {
-    final codec = FieldCodec<Duration>(
-      toParam: (duration) => duration.inMilliseconds.toString(),
-      toValue: (param) {
-        final ms = int.tryParse(param);
-        if (ms == null) return null;
-        return Duration(milliseconds: ms);
-      },
-    );
-
-    test('correctly encodes Duration to string', () {
-      final duration = const Duration(milliseconds: 500);
-      final result = codec.toParam(duration);
-      expect(result, '500');
-    });
-
-    test('correctly decodes string to Duration', () {
-      final string = '500';
-      final result = codec.toValue(string);
-      expect(result, const Duration(milliseconds: 500));
-    });
   });
 }
