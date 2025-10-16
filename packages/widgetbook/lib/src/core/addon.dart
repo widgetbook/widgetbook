@@ -12,6 +12,7 @@ import 'story.dart';
 abstract class Addon<T> extends FieldsComposable<T> {
   Addon({
     required super.name,
+    required super.initialValue,
   });
 
   @override

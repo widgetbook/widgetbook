@@ -10,7 +10,11 @@ class TimeDilationMode extends Mode<double> {
 }
 
 class TimeDilationAddon extends Addon<double> {
-  TimeDilationAddon() : super(name: 'Time Dilation');
+  TimeDilationAddon()
+    : super(
+        name: 'Time Dilation',
+        initialValue: 1,
+      );
 
   /// Predefined time dilation values for animation speed control.
   static const values = <double>[0.25, 0.5, 1, 2, 4, 8, 16];
@@ -21,7 +25,7 @@ class TimeDilationAddon extends Addon<double> {
       ObjectDropdownField<double>(
         name: 'value',
         values: values,
-        initialValue: 1,
+        initialValue: initialValue,
         labelBuilder: (scale) => scale.toStringAsFixed(2),
       ),
     ];

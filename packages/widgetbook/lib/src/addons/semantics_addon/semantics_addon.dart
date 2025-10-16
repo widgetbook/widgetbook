@@ -10,14 +10,18 @@ class SemanticsMode extends Mode<bool> {
 
 /// An [Addon] for semantics.
 class SemanticsAddon extends Addon<bool> {
-  SemanticsAddon() : super(name: 'Semantics');
+  SemanticsAddon()
+    : super(
+        name: 'Semantics',
+        initialValue: false,
+      );
 
   @override
   List<Field> get fields {
     return [
       BooleanField(
         name: 'enabled',
-        initialValue: false,
+        initialValue: initialValue,
       ),
     ];
   }

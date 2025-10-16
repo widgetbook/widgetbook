@@ -27,6 +27,7 @@ class ThemeAddon<T> extends Addon<T> {
   ThemeAddon(this.themes, this.builder)
     : super(
         name: 'Theme',
+        initialValue: themes.values.first,
       );
 
   final Map<String, T> themes;
@@ -38,7 +39,7 @@ class ThemeAddon<T> extends Addon<T> {
       ObjectDropdownField<T>(
         name: 'name',
         values: themes.values.toList(),
-        initialValue: themes.values.first,
+        initialValue: initialValue,
         labelBuilder:
             (theme) => themes.keys.firstWhere(
               (key) => themes[key] == theme,

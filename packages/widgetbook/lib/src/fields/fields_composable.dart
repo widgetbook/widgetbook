@@ -13,6 +13,7 @@ abstract class FieldsComposable<T> {
   const FieldsComposable({
     required this.name,
     this.description,
+    required this.initialValue,
     this.isNullable = false,
   });
 
@@ -21,6 +22,9 @@ abstract class FieldsComposable<T> {
 
   /// The description of the composable group.
   final String? description;
+
+  /// The initial value of the composable group.
+  final T initialValue;
 
   /// Whether this composable group is nullable.
   final bool isNullable;

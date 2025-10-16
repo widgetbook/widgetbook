@@ -5,7 +5,11 @@ import 'package:widgetbook/widgetbook.dart';
 import 'field_test.dart';
 
 class MockFieldsComposable extends FieldsComposable<bool> {
-  MockFieldsComposable() : super(name: '$MockFieldsComposable');
+  MockFieldsComposable()
+    : super(
+        name: '$MockFieldsComposable',
+        initialValue: false,
+      );
 
   @override
   Widget buildFields(BuildContext context) {
@@ -26,16 +30,6 @@ class MockFieldsComposable extends FieldsComposable<bool> {
 
   @override
   String get groupName => 'fields_group';
-
-  @override
-  bool valueFromQueryGroup(QueryGroup group) {
-    return valueOf('mock_field', group)!;
-  }
-
-  @override
-  QueryGroup valueToQueryGroup(bool value) {
-    return {'mock_field': paramOf('mock_field', value)};
-  }
 }
 
 void main() {
