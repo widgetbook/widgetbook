@@ -20,7 +20,6 @@ class ColorField extends Field<Color> {
          codec: FieldCodec(
            toParam: (color) => color.toARGB32().toRadixString(16),
            toValue: (param) {
-             if (param == null) return null;
              if (param == '0') return Colors.transparent;
              return Color(
                int.parse(
@@ -39,10 +38,10 @@ class ColorField extends Field<Color> {
   static const defaultColor = Colors.white;
 
   @override
-  Widget toWidget(BuildContext context, String groupName, Color? value) {
+  Widget toWidget(BuildContext context, String groupName, Color value) {
     return ColorPicker(
       colorSpace: initialColorSpace,
-      value: value ?? defaultColor,
+      value: value,
       onChanged: (value) {
         updateField(context, groupName, value);
       },

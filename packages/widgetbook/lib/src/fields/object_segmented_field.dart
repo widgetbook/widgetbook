@@ -37,7 +37,7 @@ class ObjectSegmentedField<T> extends Field<T> {
   }
 
   @override
-  Widget toWidget(BuildContext context, String groupName, T? value) {
+  Widget toWidget(BuildContext context, String groupName, T value) {
     return SegmentedButton<T>(
       selected: value != null ? {value} : {},
       emptySelectionAllowed: value == null,

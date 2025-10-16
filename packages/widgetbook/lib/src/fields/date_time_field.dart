@@ -29,9 +29,7 @@ class DateTimeField extends Field<DateTime> {
   }) : super(
          codec: FieldCodec<DateTime>(
            toParam: (value) => value.toSimpleFormat(),
-           toValue: (param) {
-             return param == null ? null : DateTime.tryParse(param);
-           },
+           toValue: DateTime.tryParse,
          ),
        );
 
@@ -42,25 +40,21 @@ class DateTimeField extends Field<DateTime> {
   final DateTime end;
 
   @override
-  Widget toWidget(BuildContext context, String groupName, DateTime? value) {
+  Widget toWidget(BuildContext context, String groupName, DateTime value) {
     return TextFormField(
       // The "value" used in the key ensures that the TextFormField is rebuilt
       // when the value is changed via the DateTime picker. Without this
       // unique key, the TextFormField will only react to value changes
       // triggered by the user typing in the field.
       key: ValueKey('$groupName-$name-$value'),
-      initialValue: (value ?? initialValue).toSimpleFormat(),
+      initialValue: value.toSimpleFormat(),
       keyboardType: TextInputType.datetime,
       decoration: InputDecoration(
         hintText: 'Enter a DateTime',
         suffixIcon: IconButton(
           icon: const Icon(Icons.calendar_today_rounded),
           onPressed: () async {
-            final dateTime = await showDateTimePicker(
-              context,
-              value ?? initialValue,
-            );
-
+            final dateTime = await showDateTimePicker(context, value);
             if (dateTime == null) return;
 
             updateField(context, groupName, dateTime);

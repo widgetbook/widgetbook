@@ -44,7 +44,7 @@ class ObjectDropdownField<T> extends Field<T> {
   }
 
   @override
-  Widget toWidget(BuildContext context, String groupName, T? value) {
+  Widget toWidget(BuildContext context, String groupName, T value) {
     return DropdownMenu<T>(
       expandedInsets: EdgeInsets.zero,
       trailingIcon: const Icon(Icons.keyboard_arrow_down_rounded),

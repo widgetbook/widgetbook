@@ -17,7 +17,7 @@ class IntSliderField extends NumSliderField<int> {
   }) : super(
          codec: FieldCodec<int>(
            toParam: (value) => value.toString(),
-           toValue: (param) => double.tryParse(param ?? '')?.round(),
+           toValue: (param) => double.tryParse(param)?.round(),
          ),
        );
 

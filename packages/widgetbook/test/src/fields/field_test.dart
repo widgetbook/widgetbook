@@ -41,7 +41,7 @@ void main() {
         initialValue: true,
         codec: FieldCodec(
           toParam: (value) => value.toString(),
-          toValue: (param) => param == null ? null : param == 'true',
+          toValue: (param) => param == 'true',
         ),
       );
 

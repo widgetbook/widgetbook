@@ -104,30 +104,6 @@ void main() {
     );
 
     testWidgets(
-      'given a state that has no field value, '
-      'then [toWidget] builds the initial value',
-      (tester) async {
-        await tester.pumpWidget(
-          Builder(
-            builder: (context) {
-              return MaterialApp(
-                home: Material(
-                  child: field.toWidget(
-                    context,
-                    'int_field',
-                    null,
-                  ),
-                ),
-              );
-            },
-          ),
-        );
-
-        expect(find.text('5'), findsOneWidget);
-      },
-    );
-
-    testWidgets(
       'given a state that has a field value, '
       'then [toWidget] builds that value',
       (tester) async {

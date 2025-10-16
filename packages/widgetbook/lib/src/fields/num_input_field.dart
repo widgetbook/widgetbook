@@ -18,9 +18,7 @@ class NumInputField<T extends num> extends Field<T> {
            toParam: (value) => value.toString(),
            toValue:
                (param) =>
-                   (T == int
-                           ? int.tryParse(param ?? '')
-                           : double.tryParse(param ?? ''))
+                   (T == int ? int.tryParse(param) : double.tryParse(param))
                        as T?,
          ),
        );
@@ -29,9 +27,9 @@ class NumInputField<T extends num> extends Field<T> {
   final List<TextInputFormatter> formatters;
 
   @override
-  Widget toWidget(BuildContext context, String groupName, T? value) {
+  Widget toWidget(BuildContext context, String groupName, T value) {
     return TextFormField(
-      initialValue: codec.toParam(value ?? initialValue),
+      initialValue: codec.toParam(value),
       keyboardType: TextInputType.number,
       inputFormatters: formatters,
       decoration: const InputDecoration(
