@@ -18,11 +18,11 @@ class ObjectDropdownField<T> extends Field<T> {
   ObjectDropdownField({
     required super.name,
     required this.values,
-    required super.initialValue,
+    T? initialValue,
     this.labelBuilder = defaultLabelBuilder,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-         defaultValue: values.first,
+         initialValue: initialValue ?? values.first,
          codec: FieldCodec(
            toParam: labelBuilder,
            toValue:

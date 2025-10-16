@@ -11,7 +11,6 @@ class DurationField extends Field<Duration> {
     super.initialValue = defaultDuration,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-         defaultValue: defaultDuration,
          codec: FieldCodec(
            toParam: (value) => value.inMilliseconds.toString(),
            toValue: (param) {
@@ -30,7 +29,7 @@ class DurationField extends Field<Duration> {
   @override
   Widget toWidget(BuildContext context, String groupName, Duration? value) {
     return TextFormField(
-      initialValue: codec.toParam(value ?? initialValue ?? defaultDuration),
+      initialValue: codec.toParam(value ?? initialValue),
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
         hintText: 'Enter a duration',

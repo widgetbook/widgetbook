@@ -29,13 +29,9 @@ abstract class Field<T> {
   const Field({
     required this.name,
     required this.initialValue,
-    required this.defaultValue,
     required this.codec,
     @Deprecated('Fields should not be aware of their context') this.onChanged,
   });
-
-  /// Symbol used to represent nullable values in query parameters.
-  static const nullabilitySymbol = '??';
 
   /// The unique identifier for this field within its group.
   final String name;
@@ -44,40 +40,20 @@ abstract class Field<T> {
   ///
   /// This value is used when the field is first created or when the
   /// query parameters don't contain a value for this field.
-  final T? initialValue;
-
-  /// The default value when the field has a null initialValue.
-  ///
-  /// This is useful for fields that are nullable and are toggled to non-null.
-  final T defaultValue;
+  final T initialValue;
 
   /// Handles encoding and decoding field values to/from strings.
   final FieldCodec<T> codec;
 
-  /// Converts the [defaultValue] to a string using the [codec].
-  String get defaultValueStringified => codec.toParam(defaultValue);
-
-  /// Converts the [initialValue] to a string using the [codec].
-  String? get initialValueStringified =>
-      initialValue == null ? null : codec.toParam(initialValue! as T);
-
   /// @nodoc
   @Deprecated('Fields should not be aware of their context')
   final void Function(BuildContext context, T? value)? onChanged;
-
-  /// A field is considered nullable if the param's value starts
-  /// with [nullabilitySymbol].
-  bool isNull(QueryGroup group) {
-    final param = group[name];
-    return param?.startsWith(nullabilitySymbol) ?? false;
-  }
 
   /// Extracts the value from [group],
   /// fallback to [initialValue] if not found.
   /// If the field value starts with [nullabilitySymbol], it will be
   /// interpreted as null.
   T? valueFrom(QueryGroup group) {
-    if (isNull(group)) return null;
     return codec.toValue(group[name]) ?? initialValue;
   }
 

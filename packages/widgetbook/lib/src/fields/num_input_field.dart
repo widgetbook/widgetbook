@@ -9,11 +9,11 @@ class NumInputField<T extends num> extends Field<T> {
   /// Creates a new instance of [NumInputField].
   NumInputField({
     required super.name,
-    super.initialValue,
+    T? initialValue,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
     required this.formatters,
   }) : super(
-         defaultValue: (T == int ? 0 : 0.0) as T,
+         initialValue: initialValue ?? (T == int ? 0 as T : 0.0 as T),
          codec: FieldCodec<T>(
            toParam: (value) => value.toString(),
            toValue:
@@ -30,10 +30,8 @@ class NumInputField<T extends num> extends Field<T> {
 
   @override
   Widget toWidget(BuildContext context, String groupName, T? value) {
-    final defaultValue = (T == int ? 0 : 0.0) as T;
-
     return TextFormField(
-      initialValue: codec.toParam(value ?? initialValue ?? defaultValue),
+      initialValue: codec.toParam(value ?? initialValue),
       keyboardType: TextInputType.number,
       inputFormatters: formatters,
       decoration: const InputDecoration(

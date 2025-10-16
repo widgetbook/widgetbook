@@ -1,7 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgetbook.dart';
+import 'field.dart';
+import 'field_codec.dart';
+import 'object_dropdown_field.dart';
 
 /// A [Field] that builds [SegmentedButton]<[T]> for [Object] values.
 class ObjectSegmentedField<T> extends Field<T> {
@@ -9,11 +11,11 @@ class ObjectSegmentedField<T> extends Field<T> {
   ObjectSegmentedField({
     required super.name,
     required this.values,
-    required super.initialValue,
+    T? initialValue,
     this.labelBuilder = defaultLabelBuilder,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-         defaultValue: values.first,
+         initialValue: initialValue ?? values.first,
          codec: FieldCodec(
            toParam: labelBuilder,
            toValue:

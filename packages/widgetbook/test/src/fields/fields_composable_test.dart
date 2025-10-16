@@ -17,7 +17,6 @@ class MockFieldsComposable extends FieldsComposable<bool> {
     MockField(
       name: 'mock_field',
       initialValue: true,
-      defaultValue: true,
       codec: FieldCodec(
         toParam: (value) => value.toString(),
         toValue: (param) => param == null ? null : param == 'true',
