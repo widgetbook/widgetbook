@@ -20,7 +20,9 @@ class RangeArg extends Arg<RangeValues> {
   ];
 
   @override
-  RangeValues valueFromQueryGroup(QueryGroup group) {
+  RangeValues valueFromQueryGroup(QueryGroup? group) {
+    if (group == null || group.isNullified) return value;
+
     return RangeValues(
       valueOf('min', group)!,
       valueOf('max', group)!,

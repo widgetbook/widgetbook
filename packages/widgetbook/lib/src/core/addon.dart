@@ -19,11 +19,10 @@ abstract class Addon<T> extends FieldsComposable<T> {
   String get groupName => slugify(name);
 
   Widget build(BuildContext context, Widget child) {
-    // State can be null in Scenarios, in that case we fallback the default
-    // the value when no query param is found.
+    // State can be null in Scenarios, in that case group will be null,
+    // causing valueFromQueryGroup to return initialValue.
     final state = WidgetbookState.maybeOf(context);
-    final group = state?.queryGroups[groupName] ?? {};
-
+    final group = state?.queryGroups[groupName];
     final newSetting = valueFromQueryGroup(group);
 
     return buildUseCase(

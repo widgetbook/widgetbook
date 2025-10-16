@@ -18,8 +18,8 @@ void main() {
         () {
           final state = WidgetbookState(
             queryGroups: {
-              'foo': {'bar': 'x'},
-              'baz': {'qux': 'y'},
+              'foo': const QueryGroup({'bar': 'x'}),
+              'baz': const QueryGroup({'qux': 'y'}),
             },
           );
 
@@ -31,7 +31,7 @@ void main() {
 
           expect(
             state.queryGroups['foo'],
-            {'bar': 'widgetbook'},
+            const QueryGroup({'bar': 'widgetbook'}),
           );
         },
       );
@@ -43,7 +43,7 @@ void main() {
           final state = WidgetbookState(
             path: 'component/use-case',
             queryGroups: {
-              'foo': {'bar': 'x'},
+              'foo': const QueryGroup({'bar': 'x'}),
             },
           );
 
@@ -73,7 +73,8 @@ void main() {
           final state = WidgetbookState(
             path: 'component/previous',
             queryGroups: {
-              for (final arg in args) arg.groupName: {'foo': '1'},
+              for (final arg in args)
+                arg.groupName: const QueryGroup({'foo': '1'}),
             },
             components: [
               Component(
@@ -112,7 +113,7 @@ void main() {
           expect(
             state.queryGroups,
             equals({
-              'foo': {'bar': 'x'},
+              'foo': const QueryGroup({'bar': 'x'}),
             }),
           );
         },

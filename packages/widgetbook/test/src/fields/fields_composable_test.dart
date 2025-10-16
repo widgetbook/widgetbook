@@ -54,7 +54,7 @@ void main() {
         () {
           final result = composable.valueOf<bool>(
             'mock_field',
-            {'mock_field': 'true'},
+            const QueryGroup({'mock_field': 'true'}),
           );
           ;
           expect(result, equals(true));

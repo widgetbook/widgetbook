@@ -51,9 +51,11 @@ void main() {
         'then it returns the decoded field value',
         () {
           const expected = false;
-          final result = field.valueFrom({
-            field.name: '$expected',
-          });
+          final result = field.valueFrom(
+            QueryGroup({
+              field.name: '$expected',
+            }),
+          );
 
           expect(result, equals(expected));
         },
@@ -64,9 +66,9 @@ void main() {
         'when valueFrom is called, '
         'then it returns the initial field value',
         () {
-          final result = field.valueFrom({
-            'another_field': 'false',
-          });
+          final result = field.valueFrom(
+            const QueryGroup({'another_field': 'false'}),
+          );
 
           expect(result, equals(field.initialValue));
         },
@@ -82,7 +84,7 @@ void main() {
           await tester.pumpWidgetWithQueryGroups(
             builder: (context) => field.build(context, group),
             queryGroups: {
-              group: {'${field.name}': '$expected'},
+              group: QueryGroup({field.name: '$expected'}),
             },
           );
 
@@ -101,7 +103,7 @@ void main() {
           final state = await tester.pumpWidgetWithQueryGroups(
             builder: (context) => Container(),
             queryGroups: {
-              group: {field.name: 'false'},
+              group: QueryGroup({field.name: 'false'}),
             },
           );
 

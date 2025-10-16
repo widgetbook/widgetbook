@@ -51,8 +51,8 @@ abstract class Field<T> {
 
   /// Extracts the value from [group],
   /// fallback to [initialValue] if field is not found or cannot be decoded.
-  T valueFrom(QueryGroup group) {
-    final param = group[name];
+  T valueFrom(QueryGroup? group) {
+    final param = group?[name];
     if (param == null) return initialValue;
 
     return codec.toValue(param) ?? initialValue;
@@ -62,7 +62,7 @@ abstract class Field<T> {
   Widget build(BuildContext context, String groupName) {
     final state = WidgetbookState.of(context);
     final group = state.queryGroups[groupName];
-    final value = valueFrom(group ?? {});
+    final value = valueFrom(group);
 
     return toWidget(context, groupName, value);
   }

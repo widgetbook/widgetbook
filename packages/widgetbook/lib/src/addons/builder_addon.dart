@@ -22,7 +22,7 @@ class BuilderAddon extends Addon<void> {
   void valueFromQueryGroup(QueryGroup? group) {}
 
   @override
-  QueryGroup valueToQueryGroup(void value) => {};
+  QueryGroup valueToQueryGroup(void value) => QueryGroup.empty;
 
   @override
   Widget buildUseCase(

@@ -14,9 +14,9 @@ class ConstArg<T> extends Arg<T> {
   ConstArg<T> init({required String name}) => this;
 
   @override
-  T valueFromQueryGroup(QueryGroup group) => value;
+  T valueFromQueryGroup(QueryGroup? group) => value;
 
-  QueryGroup valueToQueryGroup(T value) => {};
+  QueryGroup valueToQueryGroup(T value) => QueryGroup.empty;
 
   @override
   T resolve(BuildContext context) => value;

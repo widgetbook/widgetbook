@@ -93,8 +93,8 @@ extension TesterExtension on WidgetTester {
     const groupName = 'group_name';
     final group =
         value != null
-            ? {field.name: field.codec.toParam(value)}
-            : <String, String>{};
+            ? QueryGroup({field.name: field.codec.toParam(value)})
+            : QueryGroup.empty;
 
     await pumpWidgetWithQueryGroups(
       queryGroups: value != null ? {groupName: group} : {},

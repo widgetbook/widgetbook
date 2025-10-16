@@ -26,13 +26,11 @@ class AppRouteConfig {
   Map<String, QueryGroup> get queryGroups {
     return Map<String, QueryGroup>.fromEntries(
       uri.queryParameters.entries
-          .where(
-            (entry) => entry.value.startsWith('{') && entry.value.endsWith('}'),
-          )
+          .where((entry) => QueryGroup.pattern.hasMatch(entry.value))
           .map(
             (entry) => MapEntry(
               entry.key,
-              decodeQueryGroup(entry.value),
+              QueryGroup.fromParam(entry.value),
             ),
           ),
     );
