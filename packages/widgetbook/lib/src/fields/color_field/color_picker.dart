@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+import 'color_picker_dialog.dart';
 import 'color_space.dart';
 import 'number_text_field.dart';
 import 'opaque_color.dart';
@@ -27,6 +28,9 @@ class _ColorPickerState extends State<ColorPicker> {
   late int alpha;
   late ColorSpace colorSpace;
   late OpaqueColor opaqueColor;
+
+  /// Key used to reset the state of the color space pickers when the color changes.
+  late Key pickerKey = ObjectKey(widget.value);
 
   @override
   void initState() {
@@ -57,15 +61,32 @@ class _ColorPickerState extends State<ColorPicker> {
           spacing: 8,
           runSpacing: 8,
           children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white.withAlpha(46),
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: Icon(
-                Icons.square,
-                color: opaqueColor.toColor(),
+            InkWell(
+              onTap: () async {
+                final color = await showDialog<Color>(
+                  context: context,
+                  builder: (context) {
+                    return ColorPickerDialog(
+                      initialColor: opaqueColor.toColor().withAlpha(alpha),
+                    );
+                  },
+                );
+                if (color == null) return;
+                opaqueColor = OpaqueColor.fromColor(color);
+                alpha = color.a * 255 ~/ 1;
+                pickerKey = ObjectKey(color);
+                onChange(alpha, opaqueColor);
+              },
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.white.withAlpha(46),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Icon(
+                  Icons.square,
+                  color: opaqueColor.toColor().withAlpha(alpha),
+                ),
               ),
             ),
             DropdownMenu<ColorSpace>(
@@ -87,7 +108,7 @@ class _ColorPickerState extends State<ColorPicker> {
             SizedBox(
               width: 80,
               child: NumberTextField.percentage(
-                value: alpha ~/ 255 * 100,
+                value: ((alpha / 255) * 100).toInt(),
                 onChanged: (value) {
                   final newValue = (value / 100 * 255).round();
                   setState(() => this.alpha = newValue);
@@ -103,6 +124,7 @@ class _ColorPickerState extends State<ColorPicker> {
         OpaqueColorPicker.fromColorSpace(
           colorSpace,
           value: opaqueColor,
+          key: pickerKey,
           onChanged: (value) {
             setState(() => this.opaqueColor = value);
             onChange(alpha, value);
