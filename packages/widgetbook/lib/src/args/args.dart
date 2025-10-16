@@ -1,5 +1,4 @@
 export 'bool_arg.dart';
-export 'builder_arg.dart';
 export 'color_arg.dart';
 export 'double_arg.dart';
 export 'duration_arg.dart';

@@ -11,10 +11,8 @@ const meta = Meta<CustomCard>();
 final $Default = CustomCardStory(
   name: 'Default',
   args: CustomCardArgs(
-    child: BuilderArg(
-      (context) => const Text(
-        'This is a custom card',
-      ),
+    child: Arg.fixed(
+      const Text('This is a custom card'),
     ),
   ),
 );
@@ -23,10 +21,8 @@ final $Background = CustomCardStory(
   name: 'Background',
   args: CustomCardArgs(
     backgroundColor: Arg.fixed(Colors.green.shade100),
-    child: BuilderArg(
-      (context) => const Text(
-        'This is a custom card with background color',
-      ),
+    child: Arg.fixed(
+      const Text('This is a custom card with background color'),
     ),
   ),
 );
