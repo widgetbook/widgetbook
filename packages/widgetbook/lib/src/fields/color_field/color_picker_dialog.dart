@@ -130,7 +130,7 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                   width: constraints.minWidth,
                   child: Row(
                     children: [
-                      const Text('Alpha'),
+                      const Text('Opacity'),
                       const SizedBox(width: 16),
                       Expanded(
                         child: Slider(
