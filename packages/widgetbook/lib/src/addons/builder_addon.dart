@@ -11,7 +11,7 @@ class BuilderAddon extends Addon<void> {
   BuilderAddon({
     required super.name,
     required this.builder,
-  });
+  }) : super(initialValue: null);
 
   final ChildBuilder builder;
 
@@ -19,7 +19,7 @@ class BuilderAddon extends Addon<void> {
   List<Field> get fields => [];
 
   @override
-  void valueFromQueryGroup(QueryGroup group) {}
+  void valueFromQueryGroup(QueryGroup? group) {}
 
   @override
   QueryGroup valueToQueryGroup(void value) => {};

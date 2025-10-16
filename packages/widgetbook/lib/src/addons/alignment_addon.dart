@@ -9,10 +9,11 @@ class AlignmentMode extends Mode<Alignment> {
 
 /// An [Addon] for wrapping use-cases with [Align] widget.
 class AlignmentAddon extends Addon<Alignment> {
-  AlignmentAddon([this.alignment = Alignment.center])
-    : super(name: 'Alignment');
-
-  final Alignment alignment;
+  AlignmentAddon([Alignment alignment = Alignment.center])
+    : super(
+        name: 'Alignment',
+        initialValue: alignment,
+      );
 
   static final alignments = {
     Alignment.topLeft: 'Top Left',
@@ -31,7 +32,7 @@ class AlignmentAddon extends Addon<Alignment> {
     return [
       ObjectDropdownField<Alignment>(
         name: 'value',
-        initialValue: alignment,
+        initialValue: initialValue,
         values: alignments.keys.toList(),
         labelBuilder: (value) => alignments[value]!,
       ),

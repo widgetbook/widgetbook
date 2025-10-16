@@ -7,12 +7,11 @@ class AlignMode extends Mode<Alignment> {
 
 /// An [Addon] for wrapping use-cases with [Align] widget.
 class AlignAddon extends Addon<Alignment> {
-  AlignAddon([this.alignment = Alignment.center])
+  AlignAddon([Alignment alignment = Alignment.center])
     : super(
         name: 'Alignment',
+        initialValue: alignment,
       );
-
-  final Alignment alignment;
 
   static final alignments = {
     Alignment.topLeft: 'Top Left',
@@ -31,21 +30,11 @@ class AlignAddon extends Addon<Alignment> {
     return [
       ObjectDropdownField<Alignment>(
         name: 'alignment',
-        initialValue: alignment,
+        initialValue: initialValue,
         values: alignments.keys.toList(),
         labelBuilder: (value) => alignments[value]!,
       ),
     ];
-  }
-
-  @override
-  Alignment valueFromQueryGroup(QueryGroup group) {
-    return valueOf('alignment', group)!;
-  }
-
-  @override
-  QueryGroup valueToQueryGroup(Alignment value) {
-    return {'alignment': paramOf('alignment', value)};
   }
 
   @override

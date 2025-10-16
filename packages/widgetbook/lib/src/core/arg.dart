@@ -11,7 +11,10 @@ abstract class Arg<T> extends FieldsComposable<T> {
     this.value, {
     String? name,
   }) : $name = name,
-       super(name: name ?? '');
+       super(
+         name: name ?? '',
+         initialValue: value,
+       );
 
   final T value;
   final String? $name;

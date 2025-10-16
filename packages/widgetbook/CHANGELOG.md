@@ -3,6 +3,7 @@
 - **BREAKING**: Remove `FieldType` enum. ([#1658](https://github.com/widgetbook/widgetbook/pull/1658))
 - **BREAKING**: Remove `Field` nullability; Fields can no longer hold a null value, only query groups can. ([#1659](https://github.com/widgetbook/widgetbook/pull/1659))
 - **BREAKING**: Remove `BuilderArg`. ([#1661](https://github.com/widgetbook/widgetbook/pull/1661))
+- **BREAKING**: Add `initialValue` to `FieldComposable`; which enforces `Addon` to have an initial value. ([#1662](https://github.com/widgetbook/widgetbook/pull/1662))
 - **REFACTOR**: Use `QueryGroup` instead of query parameters and `Map<String, String>`. ([#1653](https://github.com/widgetbook/widgetbook/pull/1653))
 - **REFACTOR**: Provide default implementations for `valueFromQueryGroup` _(single-field only)_ and `valueToQueryGroup`. ([#657](https://github.com/widgetbook/widgetbook/pull/657))
 

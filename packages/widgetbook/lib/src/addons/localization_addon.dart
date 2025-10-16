@@ -16,7 +16,10 @@ class LocaleAddon extends Addon<Locale> {
     this.locales, [
     this.delegates = const [],
   ]) : assert(locales.isNotEmpty, 'locales cannot be empty'),
-       super(name: 'Locale');
+       super(
+         name: 'Locale',
+         initialValue: locales.first,
+       );
 
   final List<Locale> locales;
   final List<LocalizationsDelegate<dynamic>> delegates;
@@ -27,7 +30,7 @@ class LocaleAddon extends Addon<Locale> {
       ObjectDropdownField<Locale>(
         name: 'name',
         values: locales,
-        initialValue: locales.first,
+        initialValue: initialValue,
         labelBuilder: (locale) => locale.toLanguageTag(),
       ),
     ];

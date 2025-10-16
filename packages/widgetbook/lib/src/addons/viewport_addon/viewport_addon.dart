@@ -22,7 +22,10 @@ class ViewportAddon extends Addon<ViewportData> {
   ViewportAddon(
     this.viewports, {
     this.showFrame = true,
-  }) : super(name: 'Viewport');
+  }) : super(
+         name: 'Viewport',
+         initialValue: viewports.first,
+       );
 
   final List<ViewportData> viewports;
   final bool showFrame;
@@ -32,7 +35,7 @@ class ViewportAddon extends Addon<ViewportData> {
     return [
       ObjectDropdownField<ViewportData>(
         name: 'name',
-        initialValue: viewports.first,
+        initialValue: initialValue,
         values: viewports,
         labelBuilder: (viewport) => viewport.name,
       ),
