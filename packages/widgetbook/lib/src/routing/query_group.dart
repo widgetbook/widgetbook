@@ -105,6 +105,12 @@ class QueryGroup {
   }
 
   @override
+  int get hashCode => Object.hash(
+    isNullified,
+    Object.hashAll(fields.entries),
+  );
+
+  @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other.runtimeType != runtimeType) return false;
