@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 
 import '../routing/routing.dart';
@@ -74,14 +75,18 @@ abstract class FieldsComposable<T> {
 
   /// Decodes the value of the [Field] with [name] from the query [group]
   /// using the [FieldCodec.toValue] from [Field.codec].
-  TField? valueOf<TField>(String name, QueryGroup group) {
-    final field =
-        fields.firstWhere(
-              (field) => field.name == name,
-            )
-            as Field<TField>;
+  TField valueOf<TField>(String name, QueryGroup group) {
+    final field = fields.firstWhereOrNull(
+      (field) => field.name == name,
+    );
 
-    return field.valueFrom(group);
+    if (field == null) {
+      throw ArgumentError(
+        'Field with name $name not found in $runtimeType.',
+      );
+    }
+
+    return field.valueFrom(group) as TField;
   }
 
   /// Encodes the value of the [Field] with [name] to a query parameter.

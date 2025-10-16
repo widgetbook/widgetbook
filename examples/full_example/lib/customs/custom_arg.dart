@@ -24,8 +24,8 @@ class RangeArg extends Arg<RangeValues> {
     if (group == null || group.isNullified) return value;
 
     return RangeValues(
-      valueOf('min', group)!,
-      valueOf('max', group)!,
+      valueOf('min', group),
+      valueOf('max', group),
     );
   }
 

@@ -77,8 +77,8 @@ class PersonArg extends Arg<Person> {
     if (group == null || group.isNullified) return value;
 
     return Person(
-      name: valueOf('name', group)!,
-      age: valueOf('age', group)!,
+      name: valueOf('name', group),
+      age: valueOf('age', group),
     );
   }
 
