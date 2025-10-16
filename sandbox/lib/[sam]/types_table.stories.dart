@@ -37,8 +37,8 @@ final $Default = TypesTableStory(
         age: 42,
       ),
     ),
-    child: BuilderArg(
-      (context) => const FlutterLogo(),
+    child: Arg.fixed(
+      const FlutterLogo(),
     ),
   ),
   scenarios: [
