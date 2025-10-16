@@ -133,8 +133,7 @@ class WidgetbookState extends ChangeNotifier {
       if (query?.isNotEmpty ?? false) 'q': query,
       if (panels?.isNotEmpty ?? false)
         'panels': panels?.map((x) => x.name).join(','),
-      for (final group in queryGroups.entries)
-        group.key: encodeQueryGroup(group.value),
+      for (final group in queryGroups.entries) group.key: group.value.toParam(),
     };
 
     return Uri(
@@ -201,15 +200,23 @@ class WidgetbookState extends ChangeNotifier {
 
     final updatedGroup =
         group == null
-            ? QueryGroup.from({fieldName: fieldValue})
-            : group.copyWithField(
-              name: fieldName,
-              value: fieldValue,
-            );
+            ? QueryGroup({fieldName: fieldValue})
+            : group.copyWithField(fieldName, fieldValue);
 
     queryGroups = {
       ...queryGroups,
       groupName: updatedGroup,
+    };
+
+    notifyListeners();
+  }
+
+  /// Update the entire query group with the given [groupName] to the given
+  /// [group].
+  void updateQueryGroup(String groupName, QueryGroup group) {
+    queryGroups = {
+      ...queryGroups,
+      groupName: group,
     };
 
     notifyListeners();

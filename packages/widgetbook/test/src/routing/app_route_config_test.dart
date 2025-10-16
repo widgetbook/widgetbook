@@ -16,8 +16,8 @@ void main() {
           expect(
             config.queryGroups,
             {
-              'foo': {'bar': 'x'},
-              'baz': {'qux': 'y'},
+              'foo': const QueryGroup({'bar': 'x'}),
+              'baz': const QueryGroup({'qux': 'y'}),
             },
           );
         },

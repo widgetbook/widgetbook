@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../routing/routing.dart';
 import '../settings/settings.dart';
+import '../state/state.dart';
 import 'field.dart';
 import 'field_codec.dart';
 
@@ -14,7 +15,6 @@ abstract class FieldsComposable<T> {
     required this.name,
     this.description,
     required this.initialValue,
-    this.isNullable = false,
   });
 
   /// The display name of the composable group.
@@ -26,14 +26,14 @@ abstract class FieldsComposable<T> {
   /// The initial value of the composable group.
   final T initialValue;
 
-  /// Whether this composable group is nullable.
-  final bool isNullable;
-
   /// The name of the query group param.
   String get groupName;
 
   /// A list of [Field]s that belong to this composable group.
   List<Field> get fields;
+
+  /// Whether this composable group is nullable.
+  bool get isNullable => null is T;
 
   /// Converts the [name] to a slugified version that can be used in query
   /// parameters.
@@ -42,7 +42,8 @@ abstract class FieldsComposable<T> {
   }
 
   /// Converts a query group to a value of type [T].
-  T valueFromQueryGroup(QueryGroup group) {
+  /// [group] can be null if there is no query parameter for this group.
+  T valueFromQueryGroup(QueryGroup? group) {
     if (fields.length > 1) {
       throw UnimplementedError(
         '$runtimeType needs to implement `valueFromQueryGroup`. '
@@ -51,40 +52,23 @@ abstract class FieldsComposable<T> {
       );
     }
 
+    if (group == null) return initialValue;
+
+    // T has to be a nullable type if the group is nullified
+    // to be able to return null.
+    if (isNullable && group.isNullified) return null as T;
+
     final field = fields.first;
     return field.valueFrom(group) as T;
   }
 
   /// Converts a value of type [T] to a query group.
   QueryGroup valueToQueryGroup(T value) {
-    return {
-      for (final field in fields) field.name: paramOf(field.name, value),
-    };
-  }
-
-  /// Converts the [fields] into a [Widget] that will be rendered in the
-  /// settings side panel.
-  Widget buildFields(BuildContext context) {
-    final child = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children:
-          fields
-              .map(
-                (field) => Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 4.0,
-                  ),
-                  child: field.build(context, groupName),
-                ),
-              )
-              .toList(),
-    );
-
-    // TODO: implement nullable composables
-    return Setting(
-      name: name,
-      description: description,
-      child: child,
+    return QueryGroup(
+      isNullified: isNullable && value == null,
+      {
+        for (final field in fields) field.name: paramOf(field.name, value),
+      },
     );
   }
 
@@ -109,5 +93,64 @@ abstract class FieldsComposable<T> {
             as Field<TField>;
 
     return field.codec.toParam(value);
+  }
+
+  /// Converts the [fields] into a [Widget] that will be rendered in the
+  /// settings side panel.
+  Widget buildFields(BuildContext context) {
+    final child = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children:
+          fields
+              .map(
+                (field) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 4.0,
+                  ),
+                  child: field.build(context, groupName),
+                ),
+              )
+              .toList(),
+    );
+
+    if (!isNullable) {
+      return Setting(
+        name: name,
+        description: description,
+        child: child,
+      );
+    }
+
+    final state = WidgetbookState.of(context);
+    final group = state.queryGroups[groupName];
+
+    // If the query group is not present, we delegate the check to
+    // valueFromQueryGroup, which can have custom implementation,
+    // to determine nullability based on the value.
+    // If the query group is present, we check its nullability.
+    final isNullified =
+        group == null ? valueFromQueryGroup(null) == null : group.isNullified;
+
+    return !isNullable
+        ? Setting(
+          name: name,
+          description: description,
+          child: child,
+        )
+        : NullableSetting(
+          name: name,
+          description: description,
+          isNullified: isNullified,
+          onNullified: (value) {
+            if (group == null) {
+              state.updateQueryGroup(groupName, QueryGroup.nullified);
+              return;
+            }
+
+            final newGroup = value ? group.nullify() : group.unnullify();
+            state.updateQueryGroup(groupName, newGroup);
+          },
+          child: child,
+        );
   }
 }
