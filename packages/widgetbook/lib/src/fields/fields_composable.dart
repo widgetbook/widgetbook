@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import '../routing/routing.dart';
 import '../settings/settings.dart';
-import '../state/state.dart';
 import 'field.dart';
 import 'field_codec.dart';
 
@@ -77,23 +76,12 @@ abstract class FieldsComposable<T> {
               .toList(),
     );
 
-    return !isNullable
-        ? Setting(
-          name: name,
-          description: description,
-          child: child,
-        )
-        : NullableSetting(
-          name: name,
-          description: description,
-          isNullified: isNullified(context),
-          onNullified:
-              (isNullified) => toggleNullification(
-                context,
-                nullify: isNullified,
-              ),
-          child: child,
-        );
+    // TODO: implement nullable composables
+    return Setting(
+      name: name,
+      description: description,
+      child: child,
+    );
   }
 
   /// Decodes the value of the [Field] with [name] from the query [group]
@@ -117,72 +105,5 @@ abstract class FieldsComposable<T> {
             as Field<TField>;
 
     return field.codec.toParam(value);
-  }
-
-  /// Whether the group has been nullified by [toggleNullification].
-  bool isNullified(BuildContext context) {
-    final state = WidgetbookState.of(context);
-    final group = state.queryGroups[groupName];
-
-    return fields.every(
-      (field) => field.valueFrom(group ?? {}) == null,
-    );
-  }
-
-  /// Adds/removes [Field.nullabilitySymbol] to/from all [fields] depending on
-  /// the [nullify] state.
-  /// If [nullify] is `true`, the [Field.nullabilitySymbol] is added.
-  /// If [nullify] is `false`, the [Field.nullabilitySymbol] is removed.
-  @protected
-  void toggleNullification(
-    BuildContext context, {
-    required bool nullify,
-  }) {
-    assert(
-      isNullable,
-      'toggleNullification is only available for nullable composables',
-    );
-
-    // NOTE:
-    // Currently, we are nullifying the [FieldsComposable] by nullifying all
-    // the fields in the group. A better approach would be by nullifying the
-    // group itself only (for example: `group={...}` > `group=?{...}).
-    // This approach is not currently feasible as all knobs are located under
-    // the same group. This is a limitation of the current implementation.
-    // We can revisit in future major releases.
-
-    final state = WidgetbookState.of(context);
-    final group = state.queryGroups[groupName];
-
-    if (group == null) return;
-
-    fields.forEach((field) {
-      // If the field is not present in the `groupMap`, we set it to its
-      // initial value or default value.
-      //
-      // This is used when user first interacts with a nullable field.
-      if (!group.containsKey(field.name)) {
-        final value =
-            field.initialValueStringified ?? field.defaultValueStringified;
-        state.updateQueryField(
-          groupName: groupName,
-          fieldName: field.name,
-          fieldValue: nullify ? '${Field.nullabilitySymbol}${value}' : value,
-        );
-        return;
-      }
-
-      final value = group[field.name];
-      if (value == null) return;
-
-      final rawValue = value.replaceFirst(Field.nullabilitySymbol, '');
-      final nullishValue = '${Field.nullabilitySymbol}$rawValue';
-
-      state.updateQueryField(
-        groupName: groupName,
-        fieldName: field.name,
-        fieldValue: nullify ? nullishValue : rawValue,
-      );
-    });
   }
 }

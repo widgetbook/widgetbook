@@ -27,7 +27,6 @@ class DateTimeField extends Field<DateTime> {
     required this.start,
     required this.end,
   }) : super(
-         defaultValue: start,
          codec: FieldCodec<DateTime>(
            toParam: (value) => value.toSimpleFormat(),
            toValue: (param) {
@@ -50,7 +49,7 @@ class DateTimeField extends Field<DateTime> {
       // unique key, the TextFormField will only react to value changes
       // triggered by the user typing in the field.
       key: ValueKey('$groupName-$name-$value'),
-      initialValue: (value ?? initialValue)?.toSimpleFormat(),
+      initialValue: (value ?? initialValue).toSimpleFormat(),
       keyboardType: TextInputType.datetime,
       decoration: InputDecoration(
         hintText: 'Enter a DateTime',

@@ -8,7 +8,7 @@ class NumSliderField<T extends num> extends Field<T> {
   NumSliderField({
     required super.name,
     this.divisions,
-    super.initialValue,
+    T? initialValue,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
     required this.min,
     required this.max,
@@ -16,7 +16,7 @@ class NumSliderField<T extends num> extends Field<T> {
   }) : assert(
          initialValue == null || (initialValue >= min && initialValue <= max),
        ),
-       super(defaultValue: min);
+       super(initialValue: initialValue ?? min);
 
   /// The minimum value of the slider.
   final T min;
@@ -29,21 +29,19 @@ class NumSliderField<T extends num> extends Field<T> {
 
   @override
   Widget toWidget(BuildContext context, String groupName, T? value) {
-    final defaultValue = (T == int ? 0 : 0.0) as T;
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
           flex: 8,
           child: Slider(
-            value: ((value ?? initialValue)?.toDouble() ?? 0).clamp(
+            value: ((value ?? initialValue).toDouble()).clamp(
               min.toDouble(),
               max.toDouble(),
             ),
             min: min.toDouble(),
             max: max.toDouble(),
-            label: codec.toParam(value ?? initialValue ?? defaultValue),
+            label: codec.toParam(value ?? initialValue),
             divisions: divisions,
             onChanged: (value) {
               return updateField(
@@ -56,7 +54,7 @@ class NumSliderField<T extends num> extends Field<T> {
         ),
         Expanded(
           child: Text(
-            codec.toParam(value ?? initialValue ?? defaultValue),
+            codec.toParam(value ?? initialValue),
             textAlign: TextAlign.end,
             maxLines: 1,
           ),
