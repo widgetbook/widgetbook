@@ -22,10 +22,10 @@ class StringField extends Field<String> {
   final int? maxLines;
 
   @override
-  Widget toWidget(BuildContext context, String groupName, String? value) {
+  Widget toWidget(BuildContext context, String groupName, String value) {
     return TextFormField(
       maxLines: maxLines,
-      initialValue: value ?? initialValue,
+      initialValue: value,
       decoration: const InputDecoration(
         hintText: 'Enter a value',
       ),

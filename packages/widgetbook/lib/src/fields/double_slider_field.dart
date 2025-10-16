@@ -17,7 +17,7 @@ class DoubleSliderField extends NumSliderField<double> {
   }) : super(
          codec: FieldCodec(
            toParam: (value) => value.toString(),
-           toValue: (param) => double.tryParse(param ?? ''),
+           toValue: double.tryParse,
          ),
        );
 

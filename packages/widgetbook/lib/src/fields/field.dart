@@ -50,11 +50,12 @@ abstract class Field<T> {
   final void Function(BuildContext context, T? value)? onChanged;
 
   /// Extracts the value from [group],
-  /// fallback to [initialValue] if not found.
-  /// If the field value starts with [nullabilitySymbol], it will be
-  /// interpreted as null.
-  T? valueFrom(QueryGroup group) {
-    return codec.toValue(group[name]) ?? initialValue;
+  /// fallback to [initialValue] if field is not found or cannot be decoded.
+  T valueFrom(QueryGroup group) {
+    final param = group[name];
+    if (param == null) return initialValue;
+
+    return codec.toValue(param) ?? initialValue;
   }
 
   /// Builds the current field into a [Widget] using [toWidget].
@@ -68,7 +69,11 @@ abstract class Field<T> {
 
   /// Converts this field into a [Widget] that can be used in the
   /// settings panel.
-  Widget toWidget(BuildContext context, String groupName, T? value);
+  ///
+  /// [value] is the current value of the field from the query group,
+  /// or [initialValue] in case the field is not found in the group or couldn't
+  /// be decoded.
+  Widget toWidget(BuildContext context, String groupName, T value);
 
   /// Updates the field value in the [WidgetbookState] and synchronizes it
   /// with the URL query parameters.

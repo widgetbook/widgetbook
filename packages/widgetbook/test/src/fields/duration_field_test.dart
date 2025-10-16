@@ -7,8 +7,6 @@ import '../../helper/helper.dart';
 void main() {
   group('$DurationField', () {
     const fiveSeconds = Duration(seconds: 5);
-    const fiveSecondsInMilliseconds = '5000';
-
     const tenSeconds = Duration(seconds: 10);
     const tenSecondsInMilliseconds = '10000';
 
@@ -34,30 +32,6 @@ void main() {
       () {
         final result = field.codec.toValue(tenSecondsInMilliseconds);
         expect(result, equals(tenSeconds));
-      },
-    );
-
-    testWidgets(
-      'given a state that has no field value, '
-      'then [toWidget] builds the initial value',
-      (tester) async {
-        await tester.pumpWidget(
-          Builder(
-            builder: (context) {
-              return MaterialApp(
-                home: Scaffold(
-                  body: field.toWidget(
-                    context,
-                    'duration_field',
-                    null,
-                  ),
-                ),
-              );
-            },
-          ),
-        );
-
-        expect(find.text(fiveSecondsInMilliseconds), findsOneWidget);
       },
     );
 
@@ -92,8 +66,9 @@ void main() {
     final codec = FieldCodec<Duration>(
       toParam: (duration) => duration.inMilliseconds.toString(),
       toValue: (param) {
-        if (param == null) return null;
-        return Duration(milliseconds: int.tryParse(param) ?? 0);
+        final ms = int.tryParse(param);
+        if (ms == null) return null;
+        return Duration(milliseconds: ms);
       },
     );
 

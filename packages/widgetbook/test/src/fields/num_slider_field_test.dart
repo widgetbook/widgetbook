@@ -16,7 +16,7 @@ void main() {
         max: 10.0,
         codec: FieldCodec(
           toParam: (value) => value.toString(),
-          toValue: (param) => double.tryParse(param ?? ''),
+          toValue: double.tryParse,
         ),
       );
 
@@ -78,7 +78,7 @@ void main() {
         max: 10,
         codec: FieldCodec(
           toParam: (value) => value.toString(),
-          toValue: (param) => int.tryParse(param ?? ''),
+          toValue: int.tryParse,
         ),
       );
 

@@ -10,5 +10,6 @@ class FieldCodec<T> {
   final String Function(T value) toParam;
 
   /// Decoders for converting a query parameter to a value of type [T].
-  final T? Function(String? param) toValue;
+  /// Can return `null` if the parameter is invalid.
+  final T? Function(String param) toValue;
 }
