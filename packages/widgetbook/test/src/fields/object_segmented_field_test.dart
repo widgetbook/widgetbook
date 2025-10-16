@@ -16,30 +16,30 @@ void main() {
 
       test(
         'given a value, '
-        'when [codec.toParam] is called, '
+        'when [toParam] is called, '
         'then it returns the value as a string',
         () {
-          final result = field.codec.toParam(1);
+          final result = field.toParam(1);
           expect(result, equals('1'));
         },
       );
 
       test(
         'given a string param, '
-        'when [codec.toValue] is called, '
+        'when [toValue] is called, '
         'then it returns the actual value',
         () {
-          final result = field.codec.toValue('1');
+          final result = field.toValue('1');
           expect(result, equals(1));
         },
       );
 
       test(
         'given a string param that does not exist in values, '
-        'when [codec.toValue] is called, '
+        'when [toValue] is called, '
         'then it returns null',
         () {
-          final result = field.codec.toValue('x');
+          final result = field.toValue('x');
           expect(result, equals(null));
         },
       );

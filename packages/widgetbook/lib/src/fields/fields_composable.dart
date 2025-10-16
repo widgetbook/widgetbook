@@ -5,7 +5,6 @@ import '../routing/routing.dart';
 import '../settings/settings.dart';
 import '../state/state.dart';
 import 'field.dart';
-import 'field_codec.dart';
 
 /// A [FieldsComposable] is a collection or a group of [Field]s that can be used
 /// to create a settings panel in Widgetbook. Each field in the group should have
@@ -74,7 +73,7 @@ abstract class FieldsComposable<T> {
   }
 
   /// Decodes the value of the [Field] with [name] from the query [group]
-  /// using the [FieldCodec.toValue] from [Field.codec].
+  /// using the [Field.toValue].
   TField valueOf<TField>(String name, QueryGroup group) {
     final field = fields.firstWhereOrNull(
       (field) => field.name == name,
@@ -89,15 +88,20 @@ abstract class FieldsComposable<T> {
     return field.valueFrom(group) as TField;
   }
 
-  /// Encodes the value of the [Field] with [name] to a query parameter.
+  /// Encodes the value of the [Field] with [name] to a query parameter
+  /// using the [Field.toParam].
   String paramOf<TField>(String name, TField value) {
-    final field =
-        fields.firstWhere(
-              (field) => field.name == name,
-            )
-            as Field<TField>;
+    final field = fields.firstWhereOrNull(
+      (field) => field.name == name,
+    );
 
-    return field.codec.toParam(value);
+    if (field == null) {
+      throw ArgumentError(
+        'Field with name $name not found in $runtimeType.',
+      );
+    }
+
+    return field.toParam(value);
   }
 
   /// Converts the [fields] into a [Widget] that will be rendered in the

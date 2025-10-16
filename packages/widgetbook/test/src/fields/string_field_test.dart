@@ -15,20 +15,20 @@ void main() {
 
       test(
         'given a value, '
-        'when [codec.toParam] is called, '
+        'when [toParam] is called, '
         'then it returns the value as a string',
         () {
-          final result = field.codec.toParam('doggo');
+          final result = field.toParam('doggo');
           expect(result, equals('doggo'));
         },
       );
 
       test(
         'given a string param, '
-        'when [codec.toValue] is called, '
+        'when [toValue] is called, '
         'then it returns the actual value',
         () {
-          final result = field.codec.toValue('doggo');
+          final result = field.toValue('doggo');
           expect(result, equals('doggo'));
         },
       );

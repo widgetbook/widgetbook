@@ -9,7 +9,8 @@ class MockField extends Field<bool> {
   MockField({
     required super.name,
     required super.initialValue,
-    required super.codec,
+    required super.toParam,
+    required super.toValue,
   });
 
   final Fn3Mock<Widget, BuildContext, String, bool?> toWidgetMock = Fn3Mock();
@@ -39,10 +40,8 @@ void main() {
       final field = MockField(
         name: 'mock_field',
         initialValue: true,
-        codec: FieldCodec(
-          toParam: (value) => value.toString(),
-          toValue: (param) => param == 'true',
-        ),
+        toParam: (value) => value.toString(),
+        toValue: (param) => param == 'true',
       );
 
       test(

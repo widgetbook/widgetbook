@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/fields/num_slider_field.dart';
-import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
 
@@ -14,28 +13,26 @@ void main() {
         initialValue: 5.0,
         min: 0.0,
         max: 10.0,
-        codec: FieldCodec(
-          toParam: (value) => value.toString(),
-          toValue: double.tryParse,
-        ),
+        toParam: (value) => value.toString(),
+        toValue: double.tryParse,
       );
 
       test(
         'given a value, '
-        'when [codec.toParam] is called, '
+        'when [toParam] is called, '
         'then it returns the value as a string',
         () {
-          final result = field.codec.toParam(7.0);
+          final result = field.toParam(7.0);
           expect(result, equals('7.0'));
         },
       );
 
       test(
         'given a string param, '
-        'when [codec.toValue] is called, '
+        'when [toValue] is called, '
         'then it returns the actual value',
         () {
-          final result = field.codec.toValue('7.0');
+          final result = field.toValue('7.0');
           expect(result, equals(7.0));
         },
       );
@@ -76,28 +73,26 @@ void main() {
         initialValue: 5,
         min: 0,
         max: 10,
-        codec: FieldCodec(
-          toParam: (value) => value.toString(),
-          toValue: int.tryParse,
-        ),
+        toParam: (value) => value.toString(),
+        toValue: int.tryParse,
       );
 
       test(
         'given a value, '
-        'when [codec.toParam] is called, '
+        'when [toParam] is called, '
         'then it returns the value as a string',
         () {
-          final result = field.codec.toParam(7);
+          final result = field.toParam(7);
           expect(result, equals('7'));
         },
       );
 
       test(
         'given a string param, '
-        'when [codec.toValue] is called, '
+        'when [toValue] is called, '
         'then it returns the actual value',
         () {
-          final result = field.codec.toValue('7');
+          final result = field.toValue('7');
           expect(result, equals(7));
         },
       );

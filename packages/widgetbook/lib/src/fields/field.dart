@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../routing/routing.dart';
 import '../state/state.dart';
-import 'field_codec.dart';
 
 /// Base class for all input fields in Widgetbook.
 ///
@@ -29,7 +28,8 @@ abstract class Field<T> {
   const Field({
     required this.name,
     required this.initialValue,
-    required this.codec,
+    required this.toParam,
+    required this.toValue,
     @Deprecated('Fields should not be aware of their context') this.onChanged,
   });
 
@@ -42,8 +42,12 @@ abstract class Field<T> {
   /// query parameters don't contain a value for this field.
   final T initialValue;
 
-  /// Handles encoding and decoding field values to/from strings.
-  final FieldCodec<T> codec;
+  /// Encoder for converting value of type [T] to a query parameter.
+  final String Function(T value) toParam;
+
+  /// Decoders for converting a query parameter to a value of type [T].
+  /// Can return `null` if the parameter is invalid.
+  final T? Function(String param) toValue;
 
   /// @nodoc
   @Deprecated('Fields should not be aware of their context')
@@ -55,7 +59,7 @@ abstract class Field<T> {
     final param = group?[name];
     if (param == null) return initialValue;
 
-    return codec.toValue(param) ?? initialValue;
+    return toValue(param) ?? initialValue;
   }
 
   /// Builds the current field into a [Widget] using [toWidget].
@@ -79,12 +83,12 @@ abstract class Field<T> {
   /// with the URL query parameters.
   void updateField(BuildContext context, String groupName, T value) {
     final state = WidgetbookState.of(context);
-    final stringifiedValue = codec.toParam(value);
+    final param = toParam(value);
 
     state.updateQueryField(
       groupName: groupName,
       fieldName: name,
-      fieldValue: stringifiedValue,
+      fieldValue: param,
     );
   }
 }

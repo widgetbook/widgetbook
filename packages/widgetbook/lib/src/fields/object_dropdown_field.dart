@@ -2,7 +2,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import 'field.dart';
-import 'field_codec.dart';
 
 /// @nodoc
 typedef LabelBuilder<T> = String Function(T value);
@@ -23,13 +22,11 @@ class ObjectDropdownField<T> extends Field<T> {
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          initialValue: initialValue ?? values.first,
-         codec: FieldCodec(
-           toParam: labelBuilder,
-           toValue:
-               (param) => values.firstWhereOrNull(
-                 (value) => labelBuilder(value) == param,
-               ),
-         ),
+         toParam: labelBuilder,
+         toValue:
+             (param) => values.firstWhereOrNull(
+               (value) => labelBuilder(value) == param,
+             ),
        );
 
   /// The list of values to display in the dropdown.

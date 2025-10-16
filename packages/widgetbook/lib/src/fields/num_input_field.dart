@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'field.dart';
-import 'field_codec.dart';
 
 /// A base class for [Field]s that represent [num] values using a [TextField].
 class NumInputField<T extends num> extends Field<T> {
@@ -14,13 +13,8 @@ class NumInputField<T extends num> extends Field<T> {
     required this.formatters,
   }) : super(
          initialValue: initialValue ?? (T == int ? 0 as T : 0.0 as T),
-         codec: FieldCodec<T>(
-           toParam: (value) => value.toString(),
-           toValue:
-               (param) =>
-                   (T == int ? int.tryParse(param) : double.tryParse(param))
-                       as T?,
-         ),
+         toParam: (value) => value.toString(),
+         toValue: (param) => num.tryParse(param) as T?,
        );
 
   /// The list of input formatters to apply to the text input.
@@ -29,14 +23,14 @@ class NumInputField<T extends num> extends Field<T> {
   @override
   Widget toWidget(BuildContext context, String groupName, T value) {
     return TextFormField(
-      initialValue: codec.toParam(value),
+      initialValue: toParam(value),
       keyboardType: TextInputType.number,
       inputFormatters: formatters,
       decoration: const InputDecoration(
         hintText: 'Enter a number',
       ),
       onChanged: (value) {
-        final number = codec.toValue(value);
+        final number = toValue(value);
         if (number == null) return;
 
         updateField(context, groupName, number);

@@ -12,7 +12,8 @@ class NumSliderField<T extends num> extends Field<T> {
     @Deprecated('Fields should not be aware of their context') super.onChanged,
     required this.min,
     required this.max,
-    required super.codec,
+    required super.toParam,
+    required super.toValue,
   }) : assert(
          initialValue == null || (initialValue >= min && initialValue <= max),
        ),
@@ -38,20 +39,20 @@ class NumSliderField<T extends num> extends Field<T> {
             value: value.toDouble().clamp(min.toDouble(), max.toDouble()),
             min: min.toDouble(),
             max: max.toDouble(),
-            label: codec.toParam(value),
+            label: toParam(value),
             divisions: divisions,
             onChanged: (value) {
               return updateField(
                 context,
                 groupName,
-                codec.toValue(value.toString())!,
+                toValue(value.toString())!,
               );
             },
           ),
         ),
         Expanded(
           child: Text(
-            codec.toParam(value),
+            toParam(value),
             textAlign: TextAlign.end,
             maxLines: 1,
           ),

@@ -5,7 +5,6 @@ export 'double_input_field.dart';
 export 'double_slider_field.dart';
 export 'duration_field.dart';
 export 'field.dart';
-export 'field_codec.dart';
 export 'fields_composable.dart';
 export 'int_input_field.dart';
 export 'int_slider_field.dart';
