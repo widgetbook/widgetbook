@@ -172,3 +172,16 @@ mixin SingleFieldOnly<T> on FieldsComposable<T> {
     );
   }
 }
+
+/// A mixin that provides an empty implementation for [FieldsComposable]s
+/// that do not have any fields.
+mixin NoFields<T> on FieldsComposable<T> {
+  @override
+  List<Field> get fields => [];
+
+  @override
+  T valueFromQueryGroup(QueryGroup? group) => initialValue;
+
+  @override
+  QueryGroup valueToQueryGroup(T value) => QueryGroup.empty;
+}
