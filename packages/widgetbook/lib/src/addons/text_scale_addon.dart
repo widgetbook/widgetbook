@@ -9,7 +9,7 @@ class TextScaleMode extends Mode<double> {
   TextScaleMode(double value) : super(value, TextScaleAddon());
 }
 
-class TextScaleAddon extends Addon<double> {
+class TextScaleAddon extends Addon<double> with SingleFieldOnly {
   TextScaleAddon()
     : super(
         name: 'Text Scale',
@@ -17,16 +17,14 @@ class TextScaleAddon extends Addon<double> {
       );
 
   @override
-  List<Field> get fields {
-    return [
-      DoubleSliderField(
-        name: 'factor',
-        initialValue: initialValue,
-        min: 0.25,
-        max: 3,
-        divisions: 3 * 4 - 1,
-      ),
-    ];
+  Field<double> get field {
+    return DoubleSliderField(
+      name: 'factor',
+      initialValue: initialValue,
+      min: 0.25,
+      max: 3,
+      divisions: 3 * 4 - 1,
+    );
   }
 
   @override

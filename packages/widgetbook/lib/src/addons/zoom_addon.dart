@@ -8,7 +8,7 @@ class ZoomMode extends Mode<double> {
 }
 
 /// An [Addon] for zoom/scaling.
-class ZoomAddon extends Addon<double> {
+class ZoomAddon extends Addon<double> with SingleFieldOnly {
   ZoomAddon()
     : super(
         name: 'Zoom',
@@ -16,16 +16,14 @@ class ZoomAddon extends Addon<double> {
       );
 
   @override
-  List<Field> get fields {
-    return [
-      DoubleSliderField(
-        name: 'ratio',
-        initialValue: initialValue,
-        min: 0.25,
-        max: 4,
-        divisions: 4 * 4 - 1,
-      ),
-    ];
+  Field<double> get field {
+    return DoubleSliderField(
+      name: 'ratio',
+      initialValue: initialValue,
+      min: 0.25,
+      max: 4,
+      divisions: 4 * 4 - 1,
+    );
   }
 
   @override

@@ -3,19 +3,19 @@ import 'dart:ui';
 import '../core/arg.dart';
 import '../fields/fields.dart';
 
-class ColorArg extends Arg<Color> {
+class ColorArg extends Arg<Color> with SingleFieldOnly {
   const ColorArg(
     super.value, {
     super.name,
   });
 
   @override
-  List<Field> get fields => [
-    ColorField(
+  Field<Color> get field {
+    return ColorField(
       name: 'value',
       initialValue: value,
-    ),
-  ];
+    );
+  }
 
   @override
   ColorArg init({

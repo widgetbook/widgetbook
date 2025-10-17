@@ -8,7 +8,7 @@ class AlignmentMode extends Mode<Alignment> {
 }
 
 /// An [Addon] for wrapping use-cases with [Align] widget.
-class AlignmentAddon extends Addon<Alignment> {
+class AlignmentAddon extends Addon<Alignment> with SingleFieldOnly {
   AlignmentAddon([Alignment alignment = Alignment.center])
     : super(
         name: 'Alignment',
@@ -28,15 +28,13 @@ class AlignmentAddon extends Addon<Alignment> {
   };
 
   @override
-  List<Field> get fields {
-    return [
-      ObjectDropdownField<Alignment>(
-        name: 'value',
-        initialValue: initialValue,
-        values: alignments.keys.toList(),
-        labelBuilder: (value) => alignments[value]!,
-      ),
-    ];
+  Field<Alignment> get field {
+    return ObjectDropdownField<Alignment>(
+      name: 'value',
+      initialValue: initialValue,
+      values: alignments.keys.toList(),
+      labelBuilder: (value) => alignments[value]!,
+    );
   }
 
   @override

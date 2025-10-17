@@ -1,19 +1,19 @@
 import '../core/arg.dart';
 import '../fields/fields.dart';
 
-class BoolArg extends Arg<bool> {
+class BoolArg extends Arg<bool> with SingleFieldOnly {
   const BoolArg(
     super.value, {
     super.name,
   });
 
   @override
-  List<Field> get fields => [
-    BooleanField(
+  Field<bool> get field {
+    return BooleanField(
       name: 'value',
       initialValue: value,
-    ),
-  ];
+    );
+  }
 
   @override
   BoolArg init({

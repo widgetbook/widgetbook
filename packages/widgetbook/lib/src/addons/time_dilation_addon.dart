@@ -9,7 +9,7 @@ class TimeDilationMode extends Mode<double> {
   TimeDilationMode(double value) : super(value, TimeDilationAddon());
 }
 
-class TimeDilationAddon extends Addon<double> {
+class TimeDilationAddon extends Addon<double> with SingleFieldOnly {
   TimeDilationAddon()
     : super(
         name: 'Time Dilation',
@@ -20,15 +20,13 @@ class TimeDilationAddon extends Addon<double> {
   static const values = <double>[0.25, 0.5, 1, 2, 4, 8, 16];
 
   @override
-  List<Field> get fields {
-    return [
-      ObjectDropdownField<double>(
-        name: 'value',
-        values: values,
-        initialValue: initialValue,
-        labelBuilder: (scale) => scale.toStringAsFixed(2),
-      ),
-    ];
+  Field<double> get field {
+    return ObjectDropdownField<double>(
+      name: 'value',
+      values: values,
+      initialValue: initialValue,
+      labelBuilder: (scale) => scale.toStringAsFixed(2),
+    );
   }
 
   @override

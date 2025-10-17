@@ -1,19 +1,19 @@
 import '../core/arg.dart';
 import '../fields/fields.dart';
 
-class DoubleArg extends Arg<double> {
+class DoubleArg extends Arg<double> with SingleFieldOnly {
   const DoubleArg(
     super.value, {
     super.name,
   });
 
   @override
-  List<Field> get fields => [
-    DoubleInputField(
+  Field<double> get field {
+    return DoubleInputField(
       name: 'value',
       initialValue: value,
-    ),
-  ];
+    );
+  }
 
   @override
   DoubleArg init({
