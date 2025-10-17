@@ -7,7 +7,7 @@
 - **BREAKING**: Remove `FieldCodec`. ([#1667](https://github.com/widgetbook/widgetbook/pull/1667))
 - **FEAT**: Support query groups nullification. ([#1664](https://github.com/widgetbook/widgetbook/pull/1664))
 - **REFACTOR**: Use `QueryGroup` instead of query parameters and `Map<String, String>`. ([#1653](https://github.com/widgetbook/widgetbook/pull/1653))
-- **REFACTOR**: Provide default implementations for `valueFromQueryGroup` _(single-field only)_ and `valueToQueryGroup`. ([#657](https://github.com/widgetbook/widgetbook/pull/657))
+- **REFACTOR**: Provide default implementations for `valueFromQueryGroup` and `valueToQueryGroup` in single-field `FieldComposable` only. ([#1657](https://github.com/widgetbook/widgetbook/pull/1657), [#1668](https://github.com/widgetbook/widgetbook/pull/1668))
 
 ## 4.0.0-alpha.3
 

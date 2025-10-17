@@ -41,14 +41,18 @@ abstract class FieldsComposable<T> {
     return name.trim().toLowerCase().replaceAll(RegExp(' '), '-');
   }
 
+  bool get isSingleField {
+    return fields.length == 1 && fields.first is Field<T>;
+  }
+
   /// Converts a query group to a value of type [T].
   /// [group] can be null if there is no query parameter for this group.
   T valueFromQueryGroup(QueryGroup? group) {
-    if (fields.length > 1) {
+    if (!isSingleField) {
       throw UnimplementedError(
         '$runtimeType needs to implement `valueFromQueryGroup`. '
         'The default implementation only only works '
-        'for composables with a single field.',
+        'for composables with a single field of type $T.',
       );
     }
 
@@ -58,17 +62,25 @@ abstract class FieldsComposable<T> {
     // to be able to return null.
     if (isNullable && group.isNullified) return null as T;
 
-    final field = fields.first;
-    return field.valueFrom(group) as T;
+    final field = fields.first as Field<T>;
+    return field.valueFrom(group);
   }
 
   /// Converts a value of type [T] to a query group.
   QueryGroup valueToQueryGroup(T value) {
+    if (!isSingleField) {
+      throw UnimplementedError(
+        '$runtimeType needs to implement `valueToQueryGroup`. '
+        'The default implementation only only works '
+        'for composables with a single field of type $T.',
+      );
+    }
+
+    final field = fields.first as Field<T>;
+
     return QueryGroup(
       isNullified: isNullable && value == null,
-      {
-        for (final field in fields) field.name: paramOf(field.name, value),
-      },
+      {field.name: field.toParam(value)},
     );
   }
 
@@ -101,7 +113,11 @@ abstract class FieldsComposable<T> {
       );
     }
 
-    return field.toParam(value);
+    // Need to cast the Field<dynamic> to Field<TField>
+    // to be able to safely call `toParam` without type issues.
+    final safeField = field as Field<TField>;
+
+    return safeField.toParam(value);
   }
 
   /// Converts the [fields] into a [Widget] that will be rendered in the
