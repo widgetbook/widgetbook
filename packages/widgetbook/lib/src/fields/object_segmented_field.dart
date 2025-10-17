@@ -1,11 +1,7 @@
-import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
-
-import 'field.dart';
-import 'object_dropdown_field.dart';
+part of 'field.dart';
 
 /// A [Field] that builds [SegmentedButton]<[T]> for [Object] values.
-class ObjectSegmentedField<T> extends Field<T> {
+final class ObjectSegmentedField<T> extends Field<T> {
   /// Creates a new instance of [ObjectSegmentedField].
   ObjectSegmentedField({
     required super.name,

@@ -1,18 +1,7 @@
-import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
-
-import 'field.dart';
-
-/// @nodoc
-typedef LabelBuilder<T> = String Function(T value);
-
-// For backward compatibility, a type alias is used to maintain the old name.
-/// @nodoc
-@Deprecated('ListField is deprecated, use ObjectDropdownField instead.')
-typedef ListField<T> = ObjectDropdownField<T>;
+part of 'field.dart';
 
 /// A [Field] that builds [DropdownMenu]<[T]> for [Object] values.
-class ObjectDropdownField<T> extends Field<T> {
+final class ObjectDropdownField<T> extends Field<T> {
   /// Creates a new instance of [ObjectDropdownField].
   ObjectDropdownField({
     required super.name,

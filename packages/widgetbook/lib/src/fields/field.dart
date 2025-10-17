@@ -1,7 +1,29 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../routing/routing.dart';
 import '../state/state.dart';
+import '../utils.dart';
+import 'color_field/color_picker.dart';
+import 'color_field/color_space.dart';
+
+part 'boolean_field.dart';
+part 'color_field/color_field.dart';
+part 'date_time_field.dart';
+part 'double_input_field.dart';
+part 'double_slider_field.dart';
+part 'duration_field.dart';
+part 'int_input_field.dart';
+part 'int_slider_field.dart';
+part 'num_input_field.dart';
+part 'num_slider_field.dart';
+part 'object_dropdown_field.dart';
+part 'object_segmented_field.dart';
+part 'string_field.dart';
+
+/// @nodoc
+typedef LabelBuilder<T> = String Function(T value);
 
 /// Base class for all input fields in Widgetbook.
 ///
@@ -23,7 +45,7 @@ import '../state/state.dart';
 /// | [name] | `bar` |
 /// | value  | `qux` |
 @optionalTypeArgs
-abstract class Field<T> {
+sealed class Field<T> {
   /// Creates a [Field] with the specified configuration.
   const Field({
     required this.name,

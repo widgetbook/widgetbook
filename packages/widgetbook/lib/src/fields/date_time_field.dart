@@ -1,23 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
-
-import 'field.dart';
-
-@internal
-extension DateTimeExtension on DateTime {
-  /// Converts the [DateTime] to a string object supported by the field
-  String toSimpleFormat() {
-    String pad(int value) {
-      return value.toString().padLeft(2, '0');
-    }
-
-    return '$year-${pad(month)}-${pad(day)} ${pad(hour)}:${pad(minute)}';
-  }
-}
+part of 'field.dart';
 
 /// A [Field] that builds a [TextFormField] for [DateTime] values,
 /// allowing users to select a date and time using a date and time picker.
-class DateTimeField extends Field<DateTime> {
+final class DateTimeField extends Field<DateTime> {
   /// Creates a new instance of [DateTimeField].
   DateTimeField({
     required super.name,

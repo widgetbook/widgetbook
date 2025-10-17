@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-import 'field.dart';
+part of 'field.dart';
 
 /// A base class for [Field]s that represent [num] values using a [TextField].
-class NumInputField<T extends num> extends Field<T> {
+sealed class NumInputField<T extends num> extends Field<T> {
   /// Creates a new instance of [NumInputField].
   NumInputField({
     required super.name,

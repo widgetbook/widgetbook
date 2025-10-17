@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
-
-import 'field.dart';
+part of 'field.dart';
 
 /// A base class for [Field]s that represent [num] values using a slider.
-class NumSliderField<T extends num> extends Field<T> {
+sealed class NumSliderField<T extends num> extends Field<T> {
   /// Creates a new instance of [NumSliderField].
   NumSliderField({
     required super.name,

@@ -1,10 +1,8 @@
 ## Unreleased
 
-- **BREAKING**: Remove `FieldType` enum. ([#1658](https://github.com/widgetbook/widgetbook/pull/1658))
-- **BREAKING**: Remove `Field` nullability; Fields can no longer hold a null value, only query groups can. ([#1659](https://github.com/widgetbook/widgetbook/pull/1659))
 - **BREAKING**: Remove `BuilderArg`. ([#1661](https://github.com/widgetbook/widgetbook/pull/1661))
 - **BREAKING**: Add `initialValue` to `FieldComposable`; which enforces `Addon` to have an initial value. ([#1662](https://github.com/widgetbook/widgetbook/pull/1662))
-- **BREAKING**: Remove `FieldCodec`. ([#1667](https://github.com/widgetbook/widgetbook/pull/1667))
+- **BREAKING**: Seal `Field`s to prevent inheritance and close the API. ([#1672](https://github.com/widgetbook/widgetbook/pull/1672))
 - **FEAT**: Support query groups nullification. ([#1664](https://github.com/widgetbook/widgetbook/pull/1664))
 - **FEAT**: Add `SingleFieldOnly` mixin that can be applied to single-field `FieldsComposable` (i.e. `Addon` or `Arg`) to provide default implementations for to/from `QueryGroup`. ([#1670](https://github.com/widgetbook/widgetbook/pull/1670))
 - **REFACTOR**: Use `QueryGroup` instead of query parameters and `Map<String, String>`. ([#1653](https://github.com/widgetbook/widgetbook/pull/1653))
