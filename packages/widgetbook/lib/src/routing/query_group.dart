@@ -118,6 +118,13 @@ class QueryGroup {
         other.isNullified == isNullified &&
         mapEquals(other.fields, fields);
   }
+
+  /// Encodes this [QueryGroup] into a JSON-like representation.
+  /// If the query group is nullified, returns null.
+  /// Otherwise, returns a map of its fields.
+  Map<String, dynamic>? toJson() {
+    return isNullified ? null : fields;
+  }
 }
 
 /// Decodes [component] using [Uri.decodeComponent],

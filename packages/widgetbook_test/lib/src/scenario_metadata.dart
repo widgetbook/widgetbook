@@ -55,11 +55,11 @@ class ScenarioMetadata {
         'name': scenario.name,
         'modes': {
           for (final mode in scenario.modes)
-            mode.groupName: mode.toQueryGroup(),
+            mode.groupName: mode.toQueryGroup().toJson(),
         },
         'args': {
           for (final arg in scenario.args.safeList)
-            arg.groupName: arg.toQueryGroup(),
+            arg.groupName: arg.toQueryGroup().toJson(),
         },
       },
       'image': {
