@@ -1,9 +1,5 @@
 name: Push Build to Widgetbook Cloud
-
-on:
-  push:
-    branches:
-      - main
+on: push
 
 jobs:
   push-build:
@@ -34,8 +30,14 @@ jobs:
       - name: Build Website
         run: flutter build web -t lib/widgetbook.dart
 
+      - name: Generate Scenarios
+        run: flutter test
+
       - name: Install Widgetbook CLI
         run: dart pub global activate --source path ../packages/widgetbook_cli
 
       - name: Push Build
-        run: widgetbook cloud build push --api-key ${{ secrets.WIDGETBOOK_CLOUD_API_KEY }} 
+        run: |
+          widgetbook cloud build push \
+            --api-key ${{ secrets.WIDGETBOOK_CLOUD_API_KEY_V4 }} \
+            --api-url ${{ secrets.WIDGETBOOK_CLOUD_API_URL_STAGING }}
