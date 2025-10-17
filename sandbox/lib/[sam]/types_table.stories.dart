@@ -83,6 +83,14 @@ class PersonArg extends Arg<Person> {
   }
 
   @override
+  QueryGroup valueToQueryGroup(Person value) {
+    return QueryGroup({
+      'name': paramOf('name', value.name),
+      'age': paramOf('age', value.age),
+    });
+  }
+
+  @override
   PersonArg init({
     required String name,
   }) {
