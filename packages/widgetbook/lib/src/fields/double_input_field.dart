@@ -1,11 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-import 'field.dart';
-import 'num_input_field.dart';
+part of 'field.dart';
 
 /// A [Field] that builds [TextFormField] for [double] values.
-class DoubleInputField extends NumInputField<double> {
+final class DoubleInputField extends NumInputField<double> {
   /// Creates a new instance of [DoubleInputField].
   DoubleInputField({
     required super.name,

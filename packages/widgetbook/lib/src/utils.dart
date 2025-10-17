@@ -3,6 +3,18 @@ import 'package:meta/meta.dart';
 import 'package:nested/nested.dart';
 
 @internal
+extension DateTimeExtension on DateTime {
+  /// Converts the [DateTime] to a string object supported by the field
+  String toSimpleFormat() {
+    String pad(int value) {
+      return value.toString().padLeft(2, '0');
+    }
+
+    return '$year-${pad(month)}-${pad(day)} ${pad(hour)}:${pad(minute)}';
+  }
+}
+
+@internal
 extension EnumByNameOrNull<T extends Enum> on Iterable<T> {
   /// Finds the enum value in this list with name [name].
   /// Returns `null` if no enum value with that name is found.

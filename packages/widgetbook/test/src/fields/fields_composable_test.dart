@@ -2,8 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-import 'field_test.dart';
-
 class MockFieldsComposable extends FieldsComposable<bool> with SingleFieldOnly {
   MockFieldsComposable()
     : super(
@@ -17,12 +15,7 @@ class MockFieldsComposable extends FieldsComposable<bool> with SingleFieldOnly {
   }
 
   @override
-  Field<bool> get field => MockField(
-    name: 'mock_field',
-    initialValue: true,
-    toParam: (value) => value.toString(),
-    toValue: (param) => param == 'true',
-  );
+  Field<bool> get field => BooleanField(name: 'mock_field');
 
   @override
   String get groupName => 'fields_group';

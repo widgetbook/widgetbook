@@ -1,11 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-import 'field.dart';
-import 'num_input_field.dart';
+part of 'field.dart';
 
 /// A [Field] that builds [TextFormField] for [int] values.
-class IntInputField extends NumInputField<int> {
+final class IntInputField extends NumInputField<int> {
   /// Creates a new instance of [IntInputField].
   IntInputField({
     required super.name,

@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
-
-import 'field.dart';
+part of 'field.dart';
 
 /// A [Field] that represents a [Duration] value.
-class DurationField extends Field<Duration> {
+final class DurationField extends Field<Duration> {
   /// Creates a new instance of [DurationField].
   DurationField({
     required super.name,

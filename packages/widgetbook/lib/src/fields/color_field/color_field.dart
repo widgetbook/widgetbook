@@ -1,14 +1,8 @@
-import 'package:flutter/material.dart';
-
-import '../field.dart';
-import 'color_picker.dart';
-import 'color_space.dart';
-
-export 'color_space.dart';
+part of '../field.dart';
 
 /// [Field] that builds [ColorPicker] for [Color] values using the [ColorSpace]
 /// to determine which format the [Color] is.
-class ColorField extends Field<Color> {
+final class ColorField extends Field<Color> {
   /// Creates a new instance of [ColorField].
   ColorField({
     required super.name,

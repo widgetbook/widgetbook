@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
-
-import 'field.dart';
+part of 'field.dart';
 
 /// [Field] that builds [Switch] for [bool] values.
-class BooleanField extends Field<bool> {
+final class BooleanField extends Field<bool> {
   /// Creates a new instance of [BooleanField].
   BooleanField({
     required super.name,

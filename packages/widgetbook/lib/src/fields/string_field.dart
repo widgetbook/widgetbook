@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
-
-import 'field.dart';
+part of 'field.dart';
 
 /// A [Field] that builds [TextFormField] for [String] values.
-class StringField extends Field<String> {
+final class StringField extends Field<String> {
   /// Creates a new instance of [StringField].
   StringField({
     required super.name,

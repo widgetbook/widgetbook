@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
-
-import 'field.dart';
-import 'num_slider_field.dart';
+part of 'field.dart';
 
 /// A [Field] that builds [Slider] for [double] values.
-class DoubleSliderField extends NumSliderField<double> {
+final class DoubleSliderField extends NumSliderField<double> {
   /// Creates a new instance of [DoubleSliderField].
   DoubleSliderField({
     required super.name,
