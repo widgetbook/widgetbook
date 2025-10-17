@@ -1,19 +1,19 @@
 import '../core/arg.dart';
 import '../fields/fields.dart';
 
-class IntArg extends Arg<int> {
+class IntArg extends Arg<int> with SingleFieldOnly {
   const IntArg(
     super.value, {
     super.name,
   });
 
   @override
-  List<Field> get fields => [
-    IntInputField(
+  Field<int> get field {
+    return IntInputField(
       name: 'value',
       initialValue: value,
-    ),
-  ];
+    );
+  }
 
   @override
   IntArg init({

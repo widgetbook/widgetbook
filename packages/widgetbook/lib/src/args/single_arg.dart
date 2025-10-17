@@ -1,7 +1,7 @@
 import '../core/arg.dart';
 import '../fields/fields.dart';
 
-class SingleArg<T> extends Arg<T> {
+class SingleArg<T> extends Arg<T> with SingleFieldOnly {
   const SingleArg(
     super.value, {
     super.name,
@@ -13,15 +13,13 @@ class SingleArg<T> extends Arg<T> {
   final LabelBuilder<T>? labelBuilder;
 
   @override
-  List<Field> get fields {
-    return [
-      ObjectDropdownField<T>(
-        name: 'value',
-        values: values,
-        initialValue: value,
-        labelBuilder: labelBuilder ?? ObjectDropdownField.defaultLabelBuilder,
-      ),
-    ];
+  Field<T> get field {
+    return ObjectDropdownField<T>(
+      name: 'value',
+      values: values,
+      initialValue: value,
+      labelBuilder: labelBuilder ?? ObjectDropdownField.defaultLabelBuilder,
+    );
   }
 
   @override

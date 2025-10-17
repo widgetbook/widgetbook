@@ -23,7 +23,7 @@ class ThemeMode<T> extends Mode<T> {
 
 /// An [Addon] for changing the active custom theme. A [builder] must be
 /// provided that returns an [InheritedWidget] or similar [Widget]s.
-class ThemeAddon<T> extends Addon<T> {
+class ThemeAddon<T> extends Addon<T> with SingleFieldOnly {
   ThemeAddon(this.themes, this.builder)
     : super(
         name: 'Theme',
@@ -34,18 +34,16 @@ class ThemeAddon<T> extends Addon<T> {
   final ThemeBuilder<T> builder;
 
   @override
-  List<Field> get fields {
-    return [
-      ObjectDropdownField<T>(
-        name: 'name',
-        values: themes.values.toList(),
-        initialValue: initialValue,
-        labelBuilder:
-            (theme) => themes.keys.firstWhere(
-              (key) => themes[key] == theme,
-            ),
-      ),
-    ];
+  Field<T> get field {
+    return ObjectDropdownField<T>(
+      name: 'name',
+      values: themes.values.toList(),
+      initialValue: initialValue,
+      labelBuilder:
+          (theme) => themes.keys.firstWhere(
+            (key) => themes[key] == theme,
+          ),
+    );
   }
 
   @override

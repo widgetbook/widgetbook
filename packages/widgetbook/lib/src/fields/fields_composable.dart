@@ -41,48 +41,12 @@ abstract class FieldsComposable<T> {
     return name.trim().toLowerCase().replaceAll(RegExp(' '), '-');
   }
 
-  bool get isSingleField {
-    return fields.length == 1 && fields.first is Field<T>;
-  }
-
   /// Converts a query group to a value of type [T].
   /// [group] can be null if there is no query parameter for this group.
-  T valueFromQueryGroup(QueryGroup? group) {
-    if (!isSingleField) {
-      throw UnimplementedError(
-        '$runtimeType needs to implement `valueFromQueryGroup`. '
-        'The default implementation only only works '
-        'for composables with a single field of type $T.',
-      );
-    }
-
-    if (group == null) return initialValue;
-
-    // T has to be a nullable type if the group is nullified
-    // to be able to return null.
-    if (isNullable && group.isNullified) return null as T;
-
-    final field = fields.first as Field<T>;
-    return field.valueFrom(group);
-  }
+  T valueFromQueryGroup(QueryGroup? group);
 
   /// Converts a value of type [T] to a query group.
-  QueryGroup valueToQueryGroup(T value) {
-    if (!isSingleField) {
-      throw UnimplementedError(
-        '$runtimeType needs to implement `valueToQueryGroup`. '
-        'The default implementation only only works '
-        'for composables with a single field of type $T.',
-      );
-    }
-
-    final field = fields.first as Field<T>;
-
-    return QueryGroup(
-      isNullified: isNullable && value == null,
-      {field.name: field.toParam(value)},
-    );
-  }
+  QueryGroup valueToQueryGroup(T value);
 
   /// Decodes the value of the [Field] with [name] from the query [group]
   /// using the [Field.toValue].
@@ -177,5 +141,34 @@ abstract class FieldsComposable<T> {
           },
           child: child,
         );
+  }
+}
+
+/// Provides a default implementation for [FieldsComposable]s that
+/// consist of a single [Field] only.
+mixin SingleFieldOnly<T> on FieldsComposable<T> {
+  Field<T> get field;
+
+  @override
+  List<Field> get fields => [field];
+
+  /// Converts a query group to a value of type [T].
+  /// [group] can be null if there is no query parameter for this group.
+  T valueFromQueryGroup(QueryGroup? group) {
+    if (group == null) return initialValue;
+
+    // T has to be a nullable type if the group is nullified
+    // to be able to return null.
+    if (isNullable && group.isNullified) return null as T;
+
+    return field.valueFrom(group);
+  }
+
+  /// Converts a value of type [T] to a query group.
+  QueryGroup valueToQueryGroup(T value) {
+    return QueryGroup(
+      isNullified: isNullable && value == null,
+      {field.name: field.toParam(value)},
+    );
   }
 }

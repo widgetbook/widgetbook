@@ -11,7 +11,7 @@ class LocaleMode extends Mode<Locale> {
 }
 
 /// An [Addon] for changing the active [Locale] via [Localizations].
-class LocaleAddon extends Addon<Locale> {
+class LocaleAddon extends Addon<Locale> with SingleFieldOnly {
   LocaleAddon(
     this.locales, [
     this.delegates = const [],
@@ -25,15 +25,13 @@ class LocaleAddon extends Addon<Locale> {
   final List<LocalizationsDelegate<dynamic>> delegates;
 
   @override
-  List<Field> get fields {
-    return [
-      ObjectDropdownField<Locale>(
-        name: 'name',
-        values: locales,
-        initialValue: initialValue,
-        labelBuilder: (locale) => locale.toLanguageTag(),
-      ),
-    ];
+  Field<Locale> get field {
+    return ObjectDropdownField<Locale>(
+      name: 'name',
+      values: locales,
+      initialValue: initialValue,
+      labelBuilder: (locale) => locale.toLanguageTag(),
+    );
   }
 
   @override

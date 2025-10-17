@@ -4,7 +4,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 import 'field_test.dart';
 
-class MockFieldsComposable extends FieldsComposable<bool> {
+class MockFieldsComposable extends FieldsComposable<bool> with SingleFieldOnly {
   MockFieldsComposable()
     : super(
         name: '$MockFieldsComposable',
@@ -17,14 +17,12 @@ class MockFieldsComposable extends FieldsComposable<bool> {
   }
 
   @override
-  List<Field> get fields => [
-    MockField(
-      name: 'mock_field',
-      initialValue: true,
-      toParam: (value) => value.toString(),
-      toValue: (param) => param == 'true',
-    ),
-  ];
+  Field<bool> get field => MockField(
+    name: 'mock_field',
+    initialValue: true,
+    toParam: (value) => value.toString(),
+    toValue: (param) => param == 'true',
+  );
 
   @override
   String get groupName => 'fields_group';

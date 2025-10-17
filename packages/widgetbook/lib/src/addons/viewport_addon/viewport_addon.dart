@@ -18,7 +18,7 @@ class ViewportMode extends Mode<ViewportData> {
 }
 
 /// An [Addon] that allows switching between different viewports.
-class ViewportAddon extends Addon<ViewportData> {
+class ViewportAddon extends Addon<ViewportData> with SingleFieldOnly {
   ViewportAddon(
     this.viewports, {
     this.showFrame = true,
@@ -31,15 +31,13 @@ class ViewportAddon extends Addon<ViewportData> {
   final bool showFrame;
 
   @override
-  List<Field> get fields {
-    return [
-      ObjectDropdownField<ViewportData>(
-        name: 'name',
-        initialValue: initialValue,
-        values: viewports,
-        labelBuilder: (viewport) => viewport.name,
-      ),
-    ];
+  Field<ViewportData> get field {
+    return ObjectDropdownField<ViewportData>(
+      name: 'name',
+      initialValue: initialValue,
+      values: viewports,
+      labelBuilder: (viewport) => viewport.name,
+    );
   }
 
   @override

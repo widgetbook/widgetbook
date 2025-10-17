@@ -1,19 +1,19 @@
 import '../core/arg.dart';
 import '../fields/fields.dart';
 
-class StringArg extends Arg<String> {
+class StringArg extends Arg<String> with SingleFieldOnly {
   const StringArg(
     super.value, {
     super.name,
   });
 
   @override
-  List<Field> get fields => [
-    StringField(
+  Field<String> get field {
+    return StringField(
       name: 'value',
       initialValue: value,
-    ),
-  ];
+    );
+  }
 
   @override
   StringArg init({

@@ -6,8 +6,8 @@
 - **BREAKING**: Add `initialValue` to `FieldComposable`; which enforces `Addon` to have an initial value. ([#1662](https://github.com/widgetbook/widgetbook/pull/1662))
 - **BREAKING**: Remove `FieldCodec`. ([#1667](https://github.com/widgetbook/widgetbook/pull/1667))
 - **FEAT**: Support query groups nullification. ([#1664](https://github.com/widgetbook/widgetbook/pull/1664))
+- **FEAT**: Add `SingleFieldOnly` mixin that can be applied to single-field `FieldsComposable` (i.e. `Addon` or `Arg`) to provide default implementations for to/from `QueryGroup`. ([#1670](https://github.com/widgetbook/widgetbook/pull/1670))
 - **REFACTOR**: Use `QueryGroup` instead of query parameters and `Map<String, String>`. ([#1653](https://github.com/widgetbook/widgetbook/pull/1653))
-- **REFACTOR**: Provide default implementations for `valueFromQueryGroup` and `valueToQueryGroup` in single-field `FieldComposable` only. ([#1657](https://github.com/widgetbook/widgetbook/pull/1657), [#1668](https://github.com/widgetbook/widgetbook/pull/1668))
 
 ## 4.0.0-alpha.3
 
