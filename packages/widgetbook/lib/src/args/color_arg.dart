@@ -27,3 +27,28 @@ class ColorArg extends Arg<Color> with SingleFieldOnly {
     );
   }
 }
+
+class NullableColorArg extends Arg<Color?> with SingleFieldOnly {
+  const NullableColorArg(
+    super.value, {
+    super.name,
+  });
+
+  @override
+  Field<Color> get field {
+    return ColorField(
+      name: 'value',
+      initialValue: value ?? ColorField.defaultColor,
+    );
+  }
+
+  @override
+  NullableColorArg init({
+    required String name,
+  }) {
+    return NullableColorArg(
+      value,
+      name: $name ?? name,
+    );
+  }
+}

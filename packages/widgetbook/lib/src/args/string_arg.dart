@@ -25,3 +25,28 @@ class StringArg extends Arg<String> with SingleFieldOnly {
     );
   }
 }
+
+class NullableStringArg extends Arg<String?> with SingleFieldOnly {
+  const NullableStringArg(
+    super.value, {
+    super.name,
+  });
+
+  @override
+  Field<String> get field {
+    return StringField(
+      name: 'value',
+      initialValue: value ?? '',
+    );
+  }
+
+  @override
+  NullableStringArg init({
+    required String name,
+  }) {
+    return NullableStringArg(
+      value,
+      name: $name ?? name,
+    );
+  }
+}

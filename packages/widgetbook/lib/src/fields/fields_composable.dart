@@ -166,9 +166,17 @@ mixin SingleFieldOnly<T> on FieldsComposable<T> {
 
   /// Converts a value of type [T] to a query group.
   QueryGroup valueToQueryGroup(T value) {
+    if (isNullable && value == null) {
+      return QueryGroup.nullified;
+    }
+
     return QueryGroup(
-      isNullified: isNullable && value == null,
-      {field.name: field.toParam(value)},
+      // We need to use the `unsafeToParam` method to avoid type issues
+      // since T can be nullable, and `toParam` expects a non-nullable type.
+      // This can cause issues like:
+      // type '(int) => String' is not a subtype of type '(int?) => String'
+      // even if the value is guaranteed to be non-null here.
+      {field.name: field.$unsafeToParam(value)},
     );
   }
 }

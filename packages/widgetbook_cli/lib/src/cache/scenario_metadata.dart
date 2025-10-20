@@ -9,18 +9,21 @@ class ScenarioMetadata {
   });
 
   final String name;
-  final Map<Name, FieldValues> modes;
-  final Map<Name, FieldValues> args;
+  final Map<Name, FieldValues?> modes;
+  final Map<Name, FieldValues?> args;
 
   // ignore: sort_constructors_first
   factory ScenarioMetadata.fromJson(Map<String, dynamic> json) {
-    Map<Name, FieldValues> parseQueryGroups(Map<Name, dynamic> queryGroups) {
+    Map<Name, FieldValues?> parseQueryGroups(Map<Name, dynamic> queryGroups) {
       return queryGroups.map(
         (name, values) => MapEntry(
           name,
-          (values as Map<Name, dynamic>).map(
-            (key, value) => MapEntry(key, value as String),
-          ),
+          // can be null in case of nullable arg
+          values == null
+              ? null
+              : (values as Map<Name, dynamic>).map(
+                (key, value) => MapEntry(key, value as String),
+              ),
         ),
       );
     }

@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
 
 import '../routing/routing.dart';
 import '../state/state.dart';
@@ -113,4 +114,8 @@ sealed class Field<T> {
       fieldValue: param,
     );
   }
+
+  /// Similar to [toParam] but without type safety.
+  @internal
+  String $unsafeToParam(dynamic value) => toParam(value as T);
 }

@@ -57,7 +57,10 @@ abstract class Arg<T> extends FieldsComposable<T> {
     return valueFromQueryGroup(group);
   }
 
-  QueryGroup toQueryGroup() {
-    return valueToQueryGroup(value);
+  QueryGroup? toQueryGroup() {
+    // Since this method is used only in `widgetbook_test` to serialize
+    // the args, we return null if the value is null to avoid unnecessary
+    // query groups.
+    return value == null ? null : valueToQueryGroup(value);
   }
 }
