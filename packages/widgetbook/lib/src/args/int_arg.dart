@@ -25,3 +25,28 @@ class IntArg extends Arg<int> with SingleFieldOnly {
     );
   }
 }
+
+class NullableIntArg extends Arg<int?> with SingleFieldOnly {
+  const NullableIntArg(
+    super.value, {
+    super.name,
+  });
+
+  @override
+  Field<int> get field {
+    return IntInputField(
+      name: 'value',
+      initialValue: value ?? 0,
+    );
+  }
+
+  @override
+  NullableIntArg init({
+    required String name,
+  }) {
+    return NullableIntArg(
+      value,
+      name: $name ?? name,
+    );
+  }
+}

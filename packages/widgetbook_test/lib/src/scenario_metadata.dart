@@ -59,7 +59,7 @@ class ScenarioMetadata {
         },
         'args': {
           for (final arg in scenario.args.safeList)
-            arg.groupName: arg.toQueryGroup().toJson(),
+            arg.groupName: arg.toQueryGroup()?.toJson(),
         },
       },
       'image': {

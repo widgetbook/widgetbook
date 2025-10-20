@@ -24,3 +24,28 @@ class EnumArg<T extends Enum> extends SingleArg<T> {
     );
   }
 }
+
+class NullableEnumArg<T extends Enum> extends NullableSingleArg<T> {
+  const NullableEnumArg(
+    super.value, {
+    super.name,
+    required super.values,
+    super.labelBuilder = enumLabelBuilder,
+  });
+
+  static String enumLabelBuilder(Enum value) {
+    return value.name;
+  }
+
+  @override
+  NullableEnumArg<T> init({
+    required String name,
+  }) {
+    return NullableEnumArg<T>(
+      value,
+      name: $name ?? name,
+      values: values,
+      labelBuilder: labelBuilder,
+    );
+  }
+}

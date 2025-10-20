@@ -20,22 +20,15 @@ extension FormalParameterElementX on FormalParameterElement {
 
 extension DartTypeX on DartType {
   static final typesMeta = {
-    'bool': TypeMeta(
-      'BoolArg',
-      literalFalse,
-    ),
-    'int': TypeMeta(
-      'IntArg',
-      literalNum(0),
-    ),
-    'double': TypeMeta(
-      'DoubleArg',
-      literalNum(0.0),
-    ),
-    'String': TypeMeta(
-      'StringArg',
-      literalString(''),
-    ),
+    'bool?': TypeMeta('NullableBoolArg', literalNull),
+    'bool': TypeMeta('BoolArg', literalFalse),
+    'int?': TypeMeta('NullableIntArg', literalNull),
+    'int': TypeMeta('IntArg', literalNum(0)),
+    'double?': TypeMeta('NullableDoubleArg', literalNull),
+    'double': TypeMeta('DoubleArg', literalNum(0.0)),
+    'String?': TypeMeta('NullableStringArg', literalNull),
+    'String': TypeMeta('StringArg', literalString('')),
+    'Color?': TypeMeta('NullableColorArg', literalNull),
     'Color': TypeMeta(
       'ColorArg',
       InvokeExpression.constOf(
@@ -43,6 +36,7 @@ extension DartTypeX on DartType {
         [literalNum(0xFF000000)],
       ),
     ),
+    'Duration?': TypeMeta('NullableDurationArg', literalNull),
     'Duration': TypeMeta(
       'DurationArg',
       refer('Duration').property('zero'),
@@ -126,14 +120,21 @@ extension DartTypeX on DartType {
   }
 
   TypeMeta get meta {
-    return isEnum
-        ? TypeMeta(
-          'EnumArg<$nonNullableName>',
-          refer(nonNullableName).property(
-            (element as EnumElement).fields.first.name!,
-          ),
-        )
-        : typesMeta[nonNullableName]!;
+    if (isEnum) {
+      return isNullable
+          ? TypeMeta(
+            'NullableEnumArg<${getDisplayString()}>',
+            literalNull,
+          )
+          : TypeMeta(
+            'EnumArg<${getDisplayString()}>',
+            refer(getDisplayString()).property(
+              (element as EnumElement).fields.first.name!,
+            ),
+          );
+    }
+
+    return typesMeta[getDisplayString()]!;
   }
 }
 

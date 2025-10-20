@@ -19,7 +19,7 @@ class ArgBuilder {
                   b
                     ..symbol = 'Arg'
                     ..isNullable = param.type.isNullable
-                    ..types.add(refer(param.type.nonNullableName)),
+                    ..types.add(refer(param.type.getDisplayString())),
             ),
     );
   }
@@ -35,7 +35,7 @@ class ArgBuilder {
                   b
                     ..symbol = 'Arg'
                     ..isNullable = param.type.isNullable
-                    ..types.add(refer(param.type.nonNullableName)),
+                    ..types.add(refer(param.type.getDisplayString())),
             )
             ..required = param.requiresArg
             ..defaultTo =

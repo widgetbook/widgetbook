@@ -3,6 +3,7 @@
 - **BREAKING**: Remove `BuilderArg`. ([#1661](https://github.com/widgetbook/widgetbook/pull/1661))
 - **BREAKING**: Add `initialValue` to `FieldComposable`; which enforces `Addon` to have an initial value. ([#1662](https://github.com/widgetbook/widgetbook/pull/1662))
 - **BREAKING**: Seal `Field`s to prevent inheritance and close the API. ([#1672](https://github.com/widgetbook/widgetbook/pull/1672))
+- **FEAT**: Support nullable args. ([#1675](https://github.com/widgetbook/widgetbook/pull/1675))
 - **FEAT**: Support query groups nullification. ([#1664](https://github.com/widgetbook/widgetbook/pull/1664))
 - **FEAT**: Add `SingleFieldOnly` mixin that can be applied to single-field `FieldsComposable` (i.e. `Addon` or `Arg`) to provide default implementations for to/from `QueryGroup`. ([#1670](https://github.com/widgetbook/widgetbook/pull/1670))
 - **FEAT**: Add `NoFields` mixin that can be applied to `FieldsComposable` (i.e. `Addon` or `Arg`) that do not need `Field`s. ([#1672](https://github.com/widgetbook/widgetbook/pull/1672))

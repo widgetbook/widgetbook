@@ -25,3 +25,28 @@ class BoolArg extends Arg<bool> with SingleFieldOnly {
     );
   }
 }
+
+class NullableBoolArg extends Arg<bool?> with SingleFieldOnly {
+  const NullableBoolArg(
+    super.value, {
+    super.name,
+  });
+
+  @override
+  Field<bool> get field {
+    return BooleanField(
+      name: 'value',
+      initialValue: value ?? false,
+    );
+  }
+
+  @override
+  NullableBoolArg init({
+    required String name,
+  }) {
+    return NullableBoolArg(
+      value,
+      name: $name ?? name,
+    );
+  }
+}

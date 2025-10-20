@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Support nullable args. ([#1675](https://github.com/widgetbook/widgetbook/pull/1675))
+
 ## 4.0.0-alpha.3
 
 - **FEAT**: Add `scenarios` parameter to `Story`. ([#1605](https://github.com/widgetbook/widgetbook/pull/1605))
