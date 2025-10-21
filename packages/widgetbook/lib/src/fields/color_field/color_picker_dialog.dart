@@ -8,9 +8,11 @@ class ColorPickerDialog extends StatefulWidget {
   const ColorPickerDialog({
     super.key,
     this.initialColor = const Color(0xFF2196F3),
+    this.onChanged,
   });
 
   final Color initialColor;
+  final void Function(Color)? onChanged;
 
   @override
   _ColorPickerDialogState createState() => _ColorPickerDialogState();
@@ -35,14 +37,11 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
   Color get currentColor =>
       HSVColor.fromAHSV(alpha, hue, saturation, value).toColor();
 
-  void _onConfirm() => Navigator.of(context).pop(currentColor);
-
-  void _onCancel() => Navigator.of(context).pop();
-
   @override
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: LayoutBuilder(
@@ -50,27 +49,6 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 6,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: currentColor,
-                  ),
-                  child: SelectableText(
-                    '#${currentColor.toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase()}',
-                    style: TextStyle(
-                      color:
-                          currentColor.computeLuminance() > 0.5
-                              ? Colors.black
-                              : Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
                 SizedBox.square(
                   dimension: constraints.minWidth,
                   child: Builder(
@@ -90,69 +68,66 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                 const SizedBox(height: 8),
                 SizedBox(
                   width: constraints.minWidth,
-                  child: Row(
-                    children: [
-                      const Text('Color'),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: SizedBox(
-                          height: 16,
-                          child: LayoutBuilder(
-                            builder: (context, constraints) {
-                              return GestureDetector(
-                                onPanDown:
-                                    (e) => _handleHueGesture(
-                                      e.localPosition,
-                                      constraints.minWidth,
-                                    ),
-                                onPanUpdate:
-                                    (e) => _handleHueGesture(
-                                      e.localPosition,
-                                      constraints.minWidth,
-                                    ),
-                                child: CustomPaint(
-                                  painter: _HuePainter(hue: hue),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
+                  child: SizedBox(
+                    height: 16,
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return GestureDetector(
+                          onPanDown:
+                              (e) => _handleHueGesture(
+                                e.localPosition,
+                                constraints.minWidth,
+                              ),
+                          onPanUpdate:
+                              (e) => _handleHueGesture(
+                                e.localPosition,
+                                constraints.minWidth,
+                              ),
+                          child: CustomPaint(painter: _HuePainter(hue: hue)),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
                 SizedBox(
                   width: constraints.minWidth,
-                  child: Row(
-                    children: [
-                      const Text('Opacity'),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Slider(
-                          value: alpha,
-                          onChanged: (v) => setState(() => alpha = v),
-                          padding: EdgeInsets.zero,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Text('${(alpha * 100).round()}%'),
-                    ],
+                  child: SizedBox(
+                    height: 16,
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return GestureDetector(
+                          onPanDown:
+                              (e) => _handleAlphaGesture(
+                                e.localPosition,
+                                constraints.minWidth,
+                              ),
+                          onPanUpdate:
+                              (e) => _handleAlphaGesture(
+                                e.localPosition,
+                                constraints.minWidth,
+                              ),
+                          child: CustomPaint(
+                            painter: _OpacityPainter(
+                              opacity: alpha,
+                              color: currentColor,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
-                const SizedBox(height: 24),
-                // Boutons
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: _onCancel,
-                      child: const Text('Cancel'),
+                const SizedBox(height: 16),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '#${currentColor.toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase()}',
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
                     ),
-                    const SizedBox(width: 8),
-                    TextButton(onPressed: _onConfirm, child: const Text('Ok')),
-                  ],
+                  ),
                 ),
               ],
             );
@@ -166,6 +141,14 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
     final x = localPos.dx.clamp(0.0, width);
     final newHue = (360 * (x / width)).clamp(0.0, 360.0);
     setState(() => hue = newHue);
+    widget.onChanged?.call(currentColor);
+  }
+
+  void _handleAlphaGesture(Offset localPos, double width) {
+    final x = localPos.dx.clamp(0.0, width);
+    final newOpacity = (x / width).clamp(0.0, 1.0);
+    setState(() => alpha = newOpacity);
+    widget.onChanged?.call(currentColor);
   }
 
   void _handleSVGesture(Offset localPos, BuildContext context) {
@@ -183,6 +166,7 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
       saturation = newS;
       value = newV;
     });
+    widget.onChanged?.call(currentColor);
   }
 }
 
@@ -196,6 +180,8 @@ class _SVPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
+    const radius = Radius.circular(8);
+    final rrect = RRect.fromRectAndRadius(rect, radius);
 
     final color = HSVColor.fromAHSV(1.0, hue, 1.0, 1.0).toColor();
     final paint =
@@ -204,7 +190,7 @@ class _SVPainter extends CustomPainter {
             Colors.white,
             color,
           ]);
-    canvas.drawRect(rect, paint);
+    canvas.drawRRect(rrect, paint);
 
     final paint2 =
         Paint()
@@ -212,25 +198,23 @@ class _SVPainter extends CustomPainter {
             Colors.transparent,
             Colors.black,
           ]);
-    canvas.drawRect(rect, paint2);
+    canvas.drawRRect(rrect, paint2);
 
     final selX = saturation * size.width;
     final selY = (1 - value) * size.height;
-    final selectorPaint =
-        Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 2
-          ..color =
-              (HSVColor.fromAHSV(
-                        1.0,
-                        hue,
-                        saturation,
-                        value,
-                      ).toColor().computeLuminance() >
-                      0.5)
-                  ? Colors.black
-                  : Colors.white;
-    canvas.drawCircle(Offset(selX, selY), 8, selectorPaint);
+    final selectedColor =
+        HSVColor.fromAHSV(1.0, hue, saturation, value).toColor();
+
+    canvas.drawCircle(Offset(selX, selY), 8, Paint()..color = selectedColor);
+
+    canvas.drawCircle(
+      Offset(selX, selY),
+      6,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 4
+        ..color = Colors.white,
+    );
   }
 
   @override
@@ -246,6 +230,8 @@ class _HuePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
+    const radius = Radius.circular(8);
+    final rrect = RRect.fromRectAndRadius(rect, radius);
 
     final colors = List<Color>.generate(
       361,
@@ -259,18 +245,85 @@ class _HuePainter extends CustomPainter {
             colors,
             List.generate(colors.length, (i) => i / (colors.length - 1)),
           );
-    canvas.drawRect(rect, paint);
+    canvas.drawRRect(rrect, paint);
 
     final selX = (hue / 360) * size.width;
     final selY = size.height / 2;
-    final selectorPaint =
-        Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 2
-          ..color = Colors.white;
-    canvas.drawCircle(Offset(selX, selY), 8, selectorPaint);
+    final selectedColor = HSVColor.fromAHSV(1.0, hue, 1.0, 1.0).toColor();
+
+    canvas.drawCircle(Offset(selX, selY), 6, Paint()..color = selectedColor);
+    canvas.drawCircle(
+      Offset(selX, selY),
+      6,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 4
+        ..color = Colors.white,
+    );
   }
 
   @override
   bool shouldRepaint(covariant _HuePainter old) => old.hue != hue;
+}
+
+class _OpacityPainter extends CustomPainter {
+  _OpacityPainter({required this.color, required this.opacity});
+
+  final Color color;
+  final double opacity;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rect = Offset.zero & size;
+    const radius = Radius.circular(8);
+    final rrect = RRect.fromRectAndRadius(rect, radius);
+
+    // Clip only for background
+    canvas.save();
+    canvas.clipRRect(rrect);
+
+    const checkerSize = 8.0;
+    final paintChecker = Paint()..color = Colors.grey.shade300;
+    final paintCheckerDark = Paint()..color = Colors.grey.shade400;
+
+    for (double y = 0; y < size.height; y += checkerSize) {
+      for (double x = 0; x < size.width; x += checkerSize) {
+        final isDark =
+            ((x / checkerSize).floor() + (y / checkerSize).floor()) % 2 == 0;
+        final cellRect = Rect.fromLTWH(x, y, checkerSize, checkerSize);
+        final cellRRect = RRect.fromRectAndRadius(
+          cellRect,
+          const Radius.circular(2),
+        );
+        canvas.drawRRect(cellRRect, isDark ? paintCheckerDark : paintChecker);
+      }
+    }
+
+    final gradient = LinearGradient(
+      colors: [color.withAlpha(0), color.withAlpha(255)],
+    );
+    final paintGradient = Paint()..shader = gradient.createShader(rect);
+    canvas.drawRRect(rrect, paintGradient);
+
+    canvas.restore(); // Remove the clip
+
+    // Draw selector on top without clipping
+    final selX = opacity * size.width;
+    final selY = size.height / 2;
+    final selectedColor = color.withValues(alpha: opacity);
+
+    canvas.drawCircle(Offset(selX, selY), 6, Paint()..color = selectedColor);
+    canvas.drawCircle(
+      Offset(selX, selY),
+      6,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 4
+        ..color = Colors.white,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _OpacityPainter old) =>
+      old.opacity != opacity || old.color != color;
 }

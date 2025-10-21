@@ -46,9 +46,7 @@ class _ColorPickerState extends State<ColorPicker> {
       opaqueColor = newColor;
     });
 
-    widget.onChanged.call(
-      newColor.toColor().withAlpha(newAlpha),
-    );
+    widget.onChanged.call(newColor.toColor().withAlpha(newAlpha));
   }
 
   @override
@@ -61,33 +59,51 @@ class _ColorPickerState extends State<ColorPicker> {
           spacing: 8,
           runSpacing: 8,
           children: [
-            InkWell(
-              onTap: () async {
-                final color = await showDialog<Color>(
-                  context: context,
-                  builder: (context) {
-                    return ColorPickerDialog(
-                      initialColor: opaqueColor.toColor().withAlpha(alpha),
+            Builder(
+              builder: (context) {
+                return InkWell(
+                  onTap: () {
+                    final box = context.findRenderObject() as RenderBox?;
+                    final position = box!.localToGlobal(Offset.zero) & box.size;
+
+                    showDialog<Color>(
+                      context: context,
+                      barrierColor: Colors.transparent,
+                      builder: (context) {
+                        return Stack(
+                          children: [
+                            PositionedPopUp(
+                              anchor: Offset(position.left - 28, position.top),
+                              child: ColorPickerDialog(
+                                initialColor: opaqueColor.toColor().withAlpha(
+                                  alpha,
+                                ),
+                                onChanged: (color) {
+                                  pickerKey = ObjectKey(color);
+                                  opaqueColor = OpaqueColor.fromColor(color);
+                                  alpha = color.a * 255 ~/ 1;
+                                  onChange(alpha, opaqueColor);
+                                },
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     );
                   },
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withAlpha(46),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Icon(
+                      Icons.square,
+                      color: opaqueColor.toColor().withAlpha(alpha),
+                    ),
+                  ),
                 );
-                if (color == null) return;
-                opaqueColor = OpaqueColor.fromColor(color);
-                alpha = color.a * 255 ~/ 1;
-                pickerKey = ObjectKey(color);
-                onChange(alpha, opaqueColor);
               },
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.white.withAlpha(46),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Icon(
-                  Icons.square,
-                  color: opaqueColor.toColor().withAlpha(alpha),
-                ),
-              ),
             ),
             DropdownMenu<ColorSpace>(
               width: 100,
@@ -108,6 +124,7 @@ class _ColorPickerState extends State<ColorPicker> {
             SizedBox(
               width: 80,
               child: NumberTextField.percentage(
+                key: pickerKey,
                 value: ((alpha / 255) * 100).toInt(),
                 onChanged: (value) {
                   final newValue = (value / 100 * 255).round();
@@ -118,9 +135,7 @@ class _ColorPickerState extends State<ColorPicker> {
             ),
           ],
         ),
-        const SizedBox(
-          height: 8,
-        ),
+        const SizedBox(height: 8),
         OpaqueColorPicker.fromColorSpace(
           colorSpace,
           value: opaqueColor,
@@ -132,5 +147,58 @@ class _ColorPickerState extends State<ColorPicker> {
         ),
       ],
     );
+  }
+}
+
+@internal
+class PositionedPopUp extends StatefulWidget {
+  const PositionedPopUp({super.key, required this.anchor, required this.child});
+
+  final Offset anchor;
+  final Widget child;
+
+  @override
+  State<PositionedPopUp> createState() => _PositionedPopUpState();
+}
+
+class _PositionedPopUpState extends State<PositionedPopUp> {
+  final key = GlobalKey();
+  Offset? offset;
+  Size? popupSize;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final renderBox = key.currentContext?.findRenderObject() as RenderBox?;
+      if (renderBox != null) {
+        final size = renderBox.size;
+        final screen = MediaQuery.sizeOf(context);
+
+        var dx = widget.anchor.dx - size.width;
+        if (dx < 0) dx = 0.0;
+
+        var dy = widget.anchor.dy;
+        if (dy + size.height > screen.height) {
+          dy = screen.height - size.height;
+        }
+
+        setState(() {
+          offset = Offset(dx, dy);
+          popupSize = size;
+        });
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (offset == null) {
+      // Initial offscreen position for measuring
+      return Positioned(left: -1000, top: -1000, key: key, child: widget.child);
+    }
+
+    return Positioned(left: offset!.dx, top: offset!.dy, child: widget.child);
   }
 }
