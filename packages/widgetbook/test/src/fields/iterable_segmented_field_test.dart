@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook/src/fields/iterable_segmented_field.dart';
 
 import '../../helper/helper.dart';
 
 void main() {
   group(
-    '$ObjectSegmentedField',
+    '$IterableSegmentedField',
     () {
-      final field = ObjectSegmentedField<int>(
+      final field = IterableSegmentedField<int>(
         name: 'object_segmented_field',
-        initialValue: 1,
-        values: [1, 2, 3],
+        initialValue: {1},
+        values: {1, 2, 3},
       );
 
       test(
@@ -19,8 +19,8 @@ void main() {
         'when [codec.toParam] is called, '
         'then it returns the value as a string',
         () {
-          final result = field.codec.toParam(1);
-          expect(result, equals('1'));
+          final result = field.codec.toParam({1});
+          expect(result, equals('["1"]'));
         },
       );
 
@@ -29,8 +29,8 @@ void main() {
         'when [codec.toValue] is called, '
         'then it returns the actual value',
         () {
-          final result = field.codec.toValue('1');
-          expect(result, equals(1));
+          final result = field.codec.toValue('["1"]');
+          expect(result, equals({1}));
         },
       );
 
@@ -48,10 +48,11 @@ void main() {
         'given a state that has no field value, '
         'then [toWidget] builds the initial value',
         (tester) async {
-          final widget = await tester.pumpField<int, SegmentedButton<int>>(
-            field,
-            null,
-          );
+          final widget = await tester
+              .pumpField<Iterable<int>, SegmentedButton<int>>(
+                field,
+                null,
+              );
 
           expect(widget.selected, equals({1}));
         },
@@ -61,10 +62,11 @@ void main() {
         'given a state that has a field value, '
         'then [toWidget] builds that value',
         (tester) async {
-          final widget = await tester.pumpField<int, SegmentedButton<int>>(
-            field,
-            2,
-          );
+          final widget = await tester
+              .pumpField<Iterable<int>, SegmentedButton<int>>(
+                field,
+                {2},
+              );
 
           expect(widget.selected, equals({2}));
         },

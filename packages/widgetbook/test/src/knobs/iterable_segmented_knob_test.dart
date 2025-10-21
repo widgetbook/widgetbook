@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/src/knobs/iterable_segmented_knob.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
 
 import '../../helper/helper.dart';
@@ -15,7 +16,7 @@ Finder findSegmentedWithSelected(Set<String> selected) {
 
 void main() {
   group(
-    '$ObjectSegmentedKnob',
+    '$IterableSegmentedKnob',
     () {
       testWidgets(
         'given no initial value, '
@@ -24,10 +25,10 @@ void main() {
         (tester) async {
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.objectOrNull
+              context.knobs.iterableOrNull
                   .segmented(
                     label: 'Knob',
-                    options: ['A', 'B', 'C'],
+                    options: {'A', 'B', 'C'},
                   )
                   .toString(),
             ),
@@ -35,10 +36,10 @@ void main() {
 
           expect(findSegmentedWithSelected({'A'}), findsNothing);
 
-          await tester.findAndTap(find.byType(Checkbox));
+          await tester.findAndTap(find.text('A'));
           expect(findSegmentedWithSelected({'A'}), findsOneWidget);
 
-          await tester.findAndTap(find.byType(Checkbox));
+          await tester.findAndTap(find.text('A'));
           expect(findSegmentedWithSelected({'A'}), findsNothing);
         },
       );
@@ -51,11 +52,13 @@ void main() {
 
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.object.segmented(
-                label: 'Knob',
-                options: ['A', 'B', 'C'],
-                initialOption: value,
-              ),
+              context.knobs.iterable
+                  .segmented(
+                    label: 'Knob',
+                    options: {'A', 'B', 'C'},
+                    initialOption: {value},
+                  )
+                  .toString(),
             ),
           );
 
@@ -70,30 +73,31 @@ void main() {
         'when field is updated, '
         'then the value should be updated',
         (tester) async {
+          const key = Key('test');
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.object.segmented(
-                label: 'Knob',
-                options: ['A', 'B', 'C'],
-              ),
+              key: key,
+              context.knobs.iterable
+                  .segmented<String>(
+                    label: 'Knob',
+                    options: {'A', 'B', 'C'},
+                    initialOption: {},
+                  )
+                  .toString(),
             ),
           );
 
-          const value = 'C';
-          await tester.findAndTap(find.byType(SegmentedButton<String>));
-          await tester.findAndTap(find.text(value).last);
+          await tester.findAndTap(find.text('C'));
+          final textWidget = tester.widget<Text>(find.byKey(key));
 
-          expect(
-            find.textWidget(value),
-            findsNWidgets(2), // Button and Text widget
-          );
+          expect(textWidget.data, equals('(C)'));
         },
       );
     },
   );
 
   group(
-    '$ObjectSegmentedKnob.nullable',
+    '$IterableSegmentedKnob.nullable',
     () {
       testWidgets(
         'when no initial value is provided, '
@@ -101,10 +105,10 @@ void main() {
         (tester) async {
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.objectOrNull
+              context.knobs.iterableOrNull
                   .segmented(
                     label: 'Knob',
-                    options: ['A', 'B', 'C'],
+                    options: {'A', 'B', 'C'},
                   )
                   .toString(),
             ),
@@ -126,26 +130,24 @@ void main() {
         'when field is updated, '
         'then the value should be updated',
         (tester) async {
+          const key = Key('test');
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.objectOrNull
+              key: key,
+              context.knobs.iterableOrNull
                   .segmented(
                     label: 'Knob',
-                    options: ['A', 'B', 'C'],
-                    initialOption: 'A',
+                    options: {'A', 'B', 'C'},
+                    initialOption: {'A'},
                   )
                   .toString(),
             ),
           );
 
-          const value = 'C';
-          await tester.findAndTap(find.byType(SegmentedButton<String>));
-          await tester.findAndTap(find.text(value).last);
+          await tester.findAndTap(find.text('C'));
+          final textWidget = tester.widget<Text>(find.byKey(key));
 
-          expect(
-            find.textWidget(value),
-            findsNWidgets(2), // Button and Text widget
-          );
+          expect(textWidget.data, equals('(A, C)'));
         },
       );
 
@@ -153,23 +155,23 @@ void main() {
         'when nullability is changed twice, '
         'then the value should remain the same as before',
         (tester) async {
+          const key = Key('test');
           await tester.pumpKnob(
             (context) => Text(
-              context.knobs.objectOrNull
+              key: key,
+              context.knobs.iterableOrNull
                   .segmented(
                     label: 'Knob',
-                    options: ['A', 'B', 'C'],
-                    initialOption: 'A',
+                    options: {'A', 'B', 'C'},
+                    initialOption: {'A'},
                   )
                   .toString(),
             ),
           );
 
-          const value = 'C';
-          await tester.findAndTap(find.byType(SegmentedButton<String>));
-          await tester.findAndTap(find.text(value).last);
+          await tester.findAndTap(find.text('C'));
           expect(
-            findSegmentedWithSelected({value}),
+            findSegmentedWithSelected({'A', 'C'}),
             findsOneWidget,
           );
 
@@ -180,9 +182,9 @@ void main() {
             findsOneWidget,
           );
 
-          await tester.findAndTap(find.byType(Checkbox));
+          await tester.findAndTap(find.text('C'));
           expect(
-            findSegmentedWithSelected({value}),
+            findSegmentedWithSelected({'C'}),
             findsOneWidget,
           );
         },

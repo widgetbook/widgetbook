@@ -13,26 +13,22 @@ class ObjectKnobsBuilder {
   final KnobAdded onKnobAdded;
 
   /// A [Knob] that holds an [T] value with a segmented control.
-  /// Learn more: https://docs.widgetbook.io/knobs/object/segmented
-  Set<T> segmented<T>({
+  /// Learn more: https://docs.widgetbook.io/knobs/iterable/segmented
+  T segmented<T>({
     required String label,
-    required Set<T> options,
-    Set<T>? initialOption,
+    required List<T> options,
+    T? initialOption,
     String? description,
     LabelBuilder<T>? labelBuilder,
-    bool multiSelectionEnabled = true,
-    bool emptySelectionAllowed = true,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return onKnobAdded(
       ObjectSegmentedKnob<T>(
         label: label,
-        initialValue: initialOption ?? {options.first},
+        initialValue: initialOption ?? options.first,
         description: description,
         options: options,
         labelBuilder: labelBuilder,
-        multiSelectionEnabled: multiSelectionEnabled,
-        emptySelectionAllowed: emptySelectionAllowed,
       ),
     )!;
   }
@@ -71,14 +67,12 @@ class ObjectOrNullKnobsBuilder {
 
   /// A [Knob] that holds an [T] value with a segmented control that can be null.
   /// Learn more: https://docs.widgetbook.io/knobs/object/segmented
-  Set<T>? segmented<T>({
+  T? segmented<T>({
     required String label,
-    required Set<T> options,
-    Set<T>? initialOption,
+    required List<T> options,
+    T? initialOption,
     String? description,
     LabelBuilder<T>? labelBuilder,
-    bool multiSelectionEnabled = true,
-    bool emptySelectionAllowed = true,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return onKnobAdded(
@@ -88,8 +82,6 @@ class ObjectOrNullKnobsBuilder {
         description: description,
         options: options,
         labelBuilder: labelBuilder,
-        multiSelectionEnabled: multiSelectionEnabled,
-        emptySelectionAllowed: emptySelectionAllowed,
       ),
     );
   }

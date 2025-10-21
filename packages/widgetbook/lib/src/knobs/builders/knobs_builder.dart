@@ -10,6 +10,7 @@ import '../object_dropdown_knob.dart';
 import '../string_knob.dart';
 import 'double_knobs_builder.dart';
 import 'int_knobs_builder.dart';
+import 'iterable_knobs_builder.dart';
 import 'object_knobs_builder.dart';
 
 /// @nodoc
@@ -31,7 +32,9 @@ class KnobsBuilder {
       this.int = IntKnobsBuilder(onKnobAdded),
       this.intOrNull = IntOrNullKnobsBuilder(onKnobAdded),
       this.object = ObjectKnobsBuilder(onKnobAdded),
-      this.objectOrNull = ObjectOrNullKnobsBuilder(onKnobAdded);
+      this.objectOrNull = ObjectOrNullKnobsBuilder(onKnobAdded),
+      this.iterable = IterableKnobsBuilder(onKnobAdded),
+      this.iterableOrNull = IterableOrNullKnobsBuilder(onKnobAdded);
 
   /// The callback that is used to add a knob.
   /// Used to register the knob in the use-case.
@@ -48,6 +51,12 @@ class KnobsBuilder {
 
   /// A builder for integer knobs that can hold a null value.
   final IntOrNullKnobsBuilder intOrNull;
+
+  /// A builder for generic iterable knobs.
+  final IterableKnobsBuilder iterable;
+
+  /// A builder for generic iterable knobs that can hold a null value.
+  final IterableOrNullKnobsBuilder iterableOrNull;
 
   /// A builder for generic object knobs.
   final ObjectKnobsBuilder object;

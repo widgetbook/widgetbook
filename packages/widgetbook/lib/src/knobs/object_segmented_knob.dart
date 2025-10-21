@@ -4,15 +4,13 @@ import '../fields/fields.dart';
 import 'knob.dart';
 
 @internal
-class ObjectSegmentedKnob<T> extends Knob<Set<T>?> {
+class ObjectSegmentedKnob<T> extends Knob<T?> {
   ObjectSegmentedKnob({
     required super.label,
     required super.initialValue,
     required this.options,
     super.description,
     this.labelBuilder,
-    this.multiSelectionEnabled = true,
-    this.emptySelectionAllowed = true,
   });
 
   ObjectSegmentedKnob.nullable({
@@ -21,14 +19,10 @@ class ObjectSegmentedKnob<T> extends Knob<Set<T>?> {
     required this.options,
     super.description,
     this.labelBuilder,
-    this.multiSelectionEnabled = true,
-    this.emptySelectionAllowed = true,
   }) : super(isNullable: true);
 
-  final Set<T> options;
+  final List<T> options;
   final LabelBuilder<T>? labelBuilder;
-  final bool multiSelectionEnabled;
-  final bool emptySelectionAllowed;
 
   @override
   List<Field> get fields {
@@ -38,14 +32,12 @@ class ObjectSegmentedKnob<T> extends Knob<Set<T>?> {
         values: options,
         initialValue: initialValue,
         labelBuilder: labelBuilder ?? ObjectSegmentedField.defaultLabelBuilder,
-        multiSelectionEnabled: multiSelectionEnabled,
-        emptySelectionAllowed: emptySelectionAllowed,
       ),
     ];
   }
 
   @override
-  Set<T>? valueFromQueryGroup(Map<String, String> group) {
+  T? valueFromQueryGroup(Map<String, String> group) {
     return valueOf(label, group);
   }
 }
