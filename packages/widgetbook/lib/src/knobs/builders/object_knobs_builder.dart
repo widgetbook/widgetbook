@@ -14,21 +14,25 @@ class ObjectKnobsBuilder {
 
   /// A [Knob] that holds an [T] value with a segmented control.
   /// Learn more: https://docs.widgetbook.io/knobs/object/segmented
-  T segmented<T>({
+  Set<T> segmented<T>({
     required String label,
-    required List<T> options,
-    T? initialOption,
+    required Set<T> options,
+    Set<T>? initialOption,
     String? description,
     LabelBuilder<T>? labelBuilder,
+    bool multiSelectionEnabled = true,
+    bool emptySelectionAllowed = true,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return onKnobAdded(
       ObjectSegmentedKnob<T>(
         label: label,
-        initialValue: initialOption ?? options.first,
+        initialValue: initialOption ?? {options.first},
         description: description,
         options: options,
         labelBuilder: labelBuilder,
+        multiSelectionEnabled: multiSelectionEnabled,
+        emptySelectionAllowed: emptySelectionAllowed,
       ),
     )!;
   }
@@ -67,12 +71,14 @@ class ObjectOrNullKnobsBuilder {
 
   /// A [Knob] that holds an [T] value with a segmented control that can be null.
   /// Learn more: https://docs.widgetbook.io/knobs/object/segmented
-  T? segmented<T>({
+  Set<T>? segmented<T>({
     required String label,
-    required List<T> options,
-    T? initialOption,
+    required Set<T> options,
+    Set<T>? initialOption,
     String? description,
     LabelBuilder<T>? labelBuilder,
+    bool multiSelectionEnabled = true,
+    bool emptySelectionAllowed = true,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return onKnobAdded(
@@ -82,6 +88,8 @@ class ObjectOrNullKnobsBuilder {
         description: description,
         options: options,
         labelBuilder: labelBuilder,
+        multiSelectionEnabled: multiSelectionEnabled,
+        emptySelectionAllowed: emptySelectionAllowed,
       ),
     );
   }

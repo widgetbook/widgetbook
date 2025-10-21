@@ -10,8 +10,8 @@ void main() {
     () {
       final field = ObjectSegmentedField<int>(
         name: 'object_segmented_field',
-        initialValue: 1,
-        values: [1, 2, 3],
+        initialValue: {1},
+        values: {1, 2, 3},
       );
 
       test(
@@ -19,8 +19,8 @@ void main() {
         'when [codec.toParam] is called, '
         'then it returns the value as a string',
         () {
-          final result = field.codec.toParam(1);
-          expect(result, equals('1'));
+          final result = field.codec.toParam({1});
+          expect(result, equals('["1"]'));
         },
       );
 
@@ -29,8 +29,8 @@ void main() {
         'when [codec.toValue] is called, '
         'then it returns the actual value',
         () {
-          final result = field.codec.toValue('1');
-          expect(result, equals(1));
+          final result = field.codec.toValue('["1"]');
+          expect(result, equals({1}));
         },
       );
 
@@ -48,7 +48,7 @@ void main() {
         'given a state that has no field value, '
         'then [toWidget] builds the initial value',
         (tester) async {
-          final widget = await tester.pumpField<int, SegmentedButton<int>>(
+          final widget = await tester.pumpField<Set<int>, SegmentedButton<int>>(
             field,
             null,
           );
@@ -61,9 +61,9 @@ void main() {
         'given a state that has a field value, '
         'then [toWidget] builds that value',
         (tester) async {
-          final widget = await tester.pumpField<int, SegmentedButton<int>>(
+          final widget = await tester.pumpField<Set<int>, SegmentedButton<int>>(
             field,
-            2,
+            {2},
           );
 
           expect(widget.selected, equals({2}));

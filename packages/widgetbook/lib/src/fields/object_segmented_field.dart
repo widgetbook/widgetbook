@@ -1,31 +1,45 @@
-import 'package:collection/collection.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import '../../widgetbook.dart';
 
 /// A [Field] that builds [SegmentedButton]<[T]> for [Object] values.
-class ObjectSegmentedField<T> extends Field<T> {
+class ObjectSegmentedField<T> extends Field<Set<T>> {
   /// Creates a new instance of [ObjectSegmentedField].
   ObjectSegmentedField({
     required super.name,
     required this.values,
     required super.initialValue,
     this.labelBuilder = defaultLabelBuilder,
+    this.multiSelectionEnabled = true,
+    this.emptySelectionAllowed = true,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
-         defaultValue: values.first,
+         defaultValue: values,
          type: FieldType.objectSegmented,
          codec: FieldCodec(
-           toParam: labelBuilder,
-           toValue:
-               (param) => values.firstWhereOrNull(
-                 (value) => labelBuilder(value) == param,
-               ),
+           toParam: (params) => jsonEncode(params.map(labelBuilder).toList()),
+           toValue: (param) {
+             if (param == null) return null;
+             final result =
+                 values.where((value) {
+                   try {
+                     return (jsonDecode(param) as List<dynamic>).contains(
+                       labelBuilder(value),
+                     );
+                   } catch (_) {
+                     return false;
+                   }
+                 }).toSet();
+             if (result.isEmpty) return null;
+             return result;
+           },
          ),
        );
 
   /// The list of values to display in the segmented button.
-  final List<T> values;
+  final Set<T> values;
 
   /// The function to build the label for each value in the segmented button.
   final LabelBuilder<T> labelBuilder;
@@ -35,15 +49,23 @@ class ObjectSegmentedField<T> extends Field<T> {
     return value.toString();
   }
 
+  /// Whether multiple selection is enabled.
+  final bool multiSelectionEnabled;
+
+  /// Whether empty selection is allowed. InitialOption must not be empty if this is false.
+  final bool emptySelectionAllowed;
+
   @override
-  Widget toWidget(BuildContext context, String group, T? value) {
+  Widget toWidget(BuildContext context, String group, Set<T>? value) {
     return SegmentedButton<T>(
-      selected: value != null ? {value} : {},
-      emptySelectionAllowed: value == null,
+      style:
+          Theme.of(context).segmentedButtonTheme.style ??
+          SegmentedButton.styleFrom(padding: EdgeInsets.zero),
+      selected: value ?? {},
+      multiSelectionEnabled: multiSelectionEnabled,
+      emptySelectionAllowed: emptySelectionAllowed,
       onSelectionChanged: (newValue) {
-        if (newValue.isNotEmpty) {
-          updateField(context, group, newValue.first);
-        }
+        updateField(context, group, newValue);
       },
       segments:
           values
@@ -60,7 +82,7 @@ class ObjectSegmentedField<T> extends Field<T> {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'values': values.map((codec.toParam)).toList(),
+      'values': codec.toParam(values),
     };
   }
 }

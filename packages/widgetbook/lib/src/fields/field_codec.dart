@@ -55,7 +55,9 @@ class FieldCodec<T> {
   static Map<String, String> decodeQueryGroup(String? group) {
     if (group == null || group == '{}') return {};
 
-    final params = group.substring(1, group.length - 1).split(',');
+    final params = group
+        .substring(1, group.length - 1)
+        .split(RegExp(r',(?![^\[]*\])'));
 
     return Map<String, String>.fromEntries(
       params.map(
