@@ -89,14 +89,4 @@ class PersonArg extends Arg<Person> {
       'age': paramOf('age', value.age),
     });
   }
-
-  @override
-  PersonArg init({
-    required String name,
-  }) {
-    return PersonArg(
-      value,
-      name: name,
-    );
-  }
 }

@@ -14,16 +14,6 @@ class BoolArg extends Arg<bool> with SingleFieldOnly {
       initialValue: value,
     );
   }
-
-  @override
-  BoolArg init({
-    required String name,
-  }) {
-    return BoolArg(
-      value,
-      name: $name ?? name,
-    );
-  }
 }
 
 class NullableBoolArg extends Arg<bool?> with SingleFieldOnly {
@@ -37,16 +27,6 @@ class NullableBoolArg extends Arg<bool?> with SingleFieldOnly {
     return BooleanField(
       name: 'value',
       initialValue: value ?? false,
-    );
-  }
-
-  @override
-  NullableBoolArg init({
-    required String name,
-  }) {
-    return NullableBoolArg(
-      value,
-      name: $name ?? name,
     );
   }
 }

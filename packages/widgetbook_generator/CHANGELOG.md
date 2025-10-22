@@ -2,6 +2,7 @@
 
 - **FEAT**: Support nullable args. ([#1675](https://github.com/widgetbook/widgetbook/pull/1675))
 - **REFACTOR**: Initialize default args in field initializers, instead of `StoryArgs` constructor. ([#1681](https://github.com/widgetbook/widgetbook/pull/1681))
+- **REFACTOR**: Use `Story.$generatedName` instead of `Story.init`. ([#1682](https://github.com/widgetbook/widgetbook/pull/1682))
 
 ## 4.0.0-alpha.3
 

@@ -14,16 +14,6 @@ class DurationArg extends Arg<Duration> with SingleFieldOnly {
       initialValue: value,
     );
   }
-
-  @override
-  DurationArg init({
-    required String name,
-  }) {
-    return DurationArg(
-      value,
-      name: $name ?? name,
-    );
-  }
 }
 
 class NullableDurationArg extends Arg<Duration?> with SingleFieldOnly {
@@ -37,16 +27,6 @@ class NullableDurationArg extends Arg<Duration?> with SingleFieldOnly {
     return DurationField(
       name: 'value',
       initialValue: value ?? DurationField.defaultDuration,
-    );
-  }
-
-  @override
-  NullableDurationArg init({
-    required String name,
-  }) {
-    return NullableDurationArg(
-      value,
-      name: $name ?? name,
     );
   }
 }

@@ -16,16 +16,6 @@ class ColorArg extends Arg<Color> with SingleFieldOnly {
       initialValue: value,
     );
   }
-
-  @override
-  ColorArg init({
-    required String name,
-  }) {
-    return ColorArg(
-      value,
-      name: $name ?? name,
-    );
-  }
 }
 
 class NullableColorArg extends Arg<Color?> with SingleFieldOnly {
@@ -39,16 +29,6 @@ class NullableColorArg extends Arg<Color?> with SingleFieldOnly {
     return ColorField(
       name: 'value',
       initialValue: value ?? ColorField.defaultColor,
-    );
-  }
-
-  @override
-  NullableColorArg init({
-    required String name,
-  }) {
-    return NullableColorArg(
-      value,
-      name: $name ?? name,
     );
   }
 }

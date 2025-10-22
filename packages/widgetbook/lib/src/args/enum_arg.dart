@@ -11,18 +11,6 @@ class EnumArg<T extends Enum> extends SingleArg<T> {
   static String enumLabelBuilder(Enum value) {
     return value.name;
   }
-
-  @override
-  EnumArg<T> init({
-    required String name,
-  }) {
-    return EnumArg<T>(
-      value,
-      name: $name ?? name,
-      values: values,
-      labelBuilder: labelBuilder,
-    );
-  }
 }
 
 class NullableEnumArg<T extends Enum> extends NullableSingleArg<T> {
@@ -35,17 +23,5 @@ class NullableEnumArg<T extends Enum> extends NullableSingleArg<T> {
 
   static String enumLabelBuilder(Enum value) {
     return value.name;
-  }
-
-  @override
-  NullableEnumArg<T> init({
-    required String name,
-  }) {
-    return NullableEnumArg<T>(
-      value,
-      name: $name ?? name,
-      values: values,
-      labelBuilder: labelBuilder,
-    );
   }
 }

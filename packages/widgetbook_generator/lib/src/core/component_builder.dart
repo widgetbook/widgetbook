@@ -49,14 +49,12 @@ class ComponentBuilder {
                 'stories': literalList(
                   stories
                       .map(
-                        (story) =>
-                            refer(story.displayName).property('init').call(
-                              [],
-                              {
-                                'name': literalString(
-                                  story.displayName.substring(1),
-                                ),
-                              },
+                        (story) => refer(story.displayName)
+                            .cascade(r'$generatedName')
+                            .assign(
+                              literalString(
+                                story.displayName.replaceFirst(r'$', ''),
+                              ),
                             ),
                       )
                       .toList(),
