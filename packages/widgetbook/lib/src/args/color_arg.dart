@@ -4,7 +4,7 @@ import '../core/arg.dart';
 import '../fields/fields.dart';
 
 class ColorArg extends Arg<Color> with SingleFieldOnly {
-  const ColorArg(
+  ColorArg(
     super.value, {
     super.name,
   });
@@ -29,7 +29,7 @@ class ColorArg extends Arg<Color> with SingleFieldOnly {
 }
 
 class NullableColorArg extends Arg<Color?> with SingleFieldOnly {
-  const NullableColorArg(
+  NullableColorArg(
     super.value, {
     super.name,
   });

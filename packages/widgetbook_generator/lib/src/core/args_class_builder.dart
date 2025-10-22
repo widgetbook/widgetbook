@@ -62,18 +62,7 @@ class ArgsClassBuilder {
                           (param) =>
                               refer('this')
                                   .property(param.displayName)
-                                  .assign(
-                                    refer(param.displayName)
-                                        .maybeProperty(
-                                          'init',
-                                          nullSafe: param.type.isNullable,
-                                        )
-                                        .call([], {
-                                          'name': literalString(
-                                            param.displayName,
-                                          ),
-                                        }),
-                                  )
+                                  .assign(ArgBuilder(param).buildInitializer())
                                   .code,
                         ),
                       ),

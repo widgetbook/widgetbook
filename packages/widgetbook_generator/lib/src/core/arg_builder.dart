@@ -24,40 +24,65 @@ class ArgBuilder {
     );
   }
 
+  Expression buildInitializer() {
+    final defaultValue = buildDefaultValue();
+    final caller = refer('\$initArg').call(
+      [
+        literalString(param.displayName),
+        refer(param.displayName),
+        defaultValue,
+      ],
+    );
+
+    final hasValue =
+        param.hasDefaultValue || param.type.isPrimitive || param.requiresArg;
+
+    return hasValue ? caller.nullChecked : caller;
+  }
+
+  Expression buildDefaultValue() {
+    // Non-primitive + no default
+    if (!param.type.isPrimitive && !param.hasDefaultValue) {
+      return literalNull;
+    }
+
+    // Non-primitive + default
+    if (!param.type.isPrimitive) {
+      return InvokeExpression.newOf(
+        refer('ConstArg'),
+        [refer(param.defaultValueCode!)],
+      );
+    }
+
+    // Primitive + default / no default
+    return InvokeExpression.newOf(
+      refer(param.type.meta.argName),
+      param.hasDefaultValue
+          ? [refer(param.defaultValueCode!)]
+          : [param.type.meta.defaultValue],
+      {
+        if (param.type.isEnum)
+          'values': refer(
+            param.type.nonNullableName,
+          ).property('values'),
+      },
+    );
+  }
+
   Parameter buildArgParam() {
     return Parameter(
       (b) =>
           b
             ..named = true
             ..name = param.displayName
+            ..required = param.requiresArg
             ..type = TypeReference(
               (b) =>
                   b
                     ..symbol = 'Arg'
-                    ..isNullable = param.type.isNullable
+                    ..isNullable = !param.requiresArg
                     ..types.add(refer(param.type.getDisplayString())),
-            )
-            ..required = param.requiresArg
-            ..defaultTo =
-                !param.type.isPrimitive
-                    ? param.hasDefaultValue
-                        ? InvokeExpression.constOf(
-                          refer('ConstArg'),
-                          [refer(param.defaultValueCode!)],
-                        ).code
-                        : null
-                    : InvokeExpression.constOf(
-                      refer(param.type.meta.argName),
-                      param.hasDefaultValue
-                          ? [refer(param.defaultValueCode!)]
-                          : [param.type.meta.defaultValue],
-                      {
-                        if (param.type.isEnum)
-                          'values': refer(
-                            param.type.nonNullableName,
-                          ).property('values'),
-                      },
-                    ).code,
+            ),
     );
   }
 

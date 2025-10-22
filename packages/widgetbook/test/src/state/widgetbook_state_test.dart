@@ -59,7 +59,7 @@ void main() {
         'when the path is updated, '
         'then the args are removed from query params',
         () {
-          final args = [const IntArg(1, name: 'number')];
+          final args = [IntArg(1, name: 'number')];
           final previousStoryArgs = MockStoryArgs();
           when(() => previousStoryArgs.safeList).thenReturn(args);
 

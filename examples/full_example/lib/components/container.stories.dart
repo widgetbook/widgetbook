@@ -9,13 +9,13 @@ const meta = Meta<Container>();
 final $Green = ContainerStory(
   name: 'Green',
   args: ContainerArgs(
-    color: const ColorArg(Colors.green),
+    color: ColorArg(Colors.green),
   ),
 );
 
 final $Red = ContainerStory(
   name: 'Red',
   args: ContainerArgs(
-    color: const ColorArg(Colors.red),
+    color: ColorArg(Colors.red),
   ),
 );

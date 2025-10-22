@@ -1,7 +1,7 @@
 import 'single_arg.dart';
 
 class EnumArg<T extends Enum> extends SingleArg<T> {
-  const EnumArg(
+  EnumArg(
     super.value, {
     super.name,
     required super.values,
@@ -26,7 +26,7 @@ class EnumArg<T extends Enum> extends SingleArg<T> {
 }
 
 class NullableEnumArg<T extends Enum> extends NullableSingleArg<T> {
-  const NullableEnumArg(
+  NullableEnumArg(
     super.value, {
     super.name,
     required super.values,

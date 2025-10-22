@@ -26,13 +26,13 @@ final $Default = TypesTableStory(
     );
   },
   args: TypesTableArgs(
-    string: const StringArg(
+    string: StringArg(
       'Hello World',
       name: 'Text',
     ),
     duration: Arg.fixed(Duration.zero),
-    person: const PersonArg(
-      Person(
+    person: PersonArg(
+      const Person(
         name: 'John Doe',
         age: 42,
       ),
@@ -55,7 +55,7 @@ final $Default = TypesTableStory(
 );
 
 class PersonArg extends Arg<Person> {
-  const PersonArg(
+  PersonArg(
     super.value, {
     super.name,
   });

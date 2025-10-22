@@ -14,7 +14,7 @@ const meta = Meta<NullableSetting>(
 
 final $Default = NullableSettingStory(
   args: NullableSettingArgs(
-    name: const StringArg('Knob'),
+    name: StringArg('Knob'),
     child: Arg.fixed(
       const Placeholder(),
     ),
@@ -47,7 +47,7 @@ final $Default = NullableSettingStory(
         ),
       ],
       args: NullableSettingArgs(
-        name: const StringArg(
+        name: StringArg(
           'This is a very long name to test overflow behavior',
         ),
         child: Arg.fixed(

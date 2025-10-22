@@ -17,7 +17,7 @@ final $Default = CounterStory(
     CounterScenario(
       name: '10++',
       args: CounterArgs(
-        initialValue: const IntArg(10),
+        initialValue: IntArg(10),
       ),
       run: (tester, args) async {
         await tester.tap(find.byIcon(Icons.add));
