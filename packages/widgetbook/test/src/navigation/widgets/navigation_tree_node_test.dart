@@ -10,14 +10,6 @@ void main() {
   group(
     '$NavigationTreeNode',
     () {
-      final leafComponentsCount =
-          treeRoot
-              .findAll(
-                (node) =>
-                    node is WidgetbookComponent && node.useCases.length == 1,
-              )
-              .length;
-
       testWidgets(
         'given a root node, '
         'then the correct number of list views are created',
@@ -31,8 +23,7 @@ void main() {
           expect(
             find.byType(ListView),
             findsNWidgets(
-              // Leaf components don't have a list view rendered for them
-              treeRoot.count - treeRoot.leaves.length - leafComponentsCount,
+              treeRoot.count - treeRoot.leaves.length,
             ),
           );
         },
@@ -41,7 +32,7 @@ void main() {
       testWidgets(
         'given a $WidgetbookComponent node with single use-case, '
         'when its use-case is selected, '
-        'then the node is selected',
+        'then the node is not selected',
         (tester) async {
           final leaf = WidgetbookComponent(
             name: 'Leaf',
@@ -60,14 +51,18 @@ void main() {
             ),
           );
 
+          final tiles = find.byType(NavigationTreeTile);
+
+          expect(tiles, findsNWidgets(2));
           final tile = await tester.widget<NavigationTreeTile>(
-            find.byType(NavigationTreeTile),
+            find.byType(NavigationTreeTile).first,
+          );
+          final tileChild = await tester.widget<NavigationTreeTile>(
+            find.byType(NavigationTreeTile).last,
           );
 
-          expect(
-            tile.isSelected,
-            equals(true),
-          );
+          expect(tile.isSelected, equals(false));
+          expect(tileChild.isSelected, equals(true));
         },
       );
 
@@ -116,7 +111,7 @@ void main() {
             ),
           );
 
-          await tester.tap(find.byType(NavigationTreeTile).first);
+          await tester.tap(find.byType(NavigationTreeTile).last);
 
           verify(() => onValueChanged.call(useCase)).called(1);
         },

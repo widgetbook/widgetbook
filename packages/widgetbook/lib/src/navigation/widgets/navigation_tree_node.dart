@@ -33,18 +33,12 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
 
   @override
   Widget build(BuildContext context) {
-    const animationDuration = Duration(
-      milliseconds: 200,
-    );
-
-    final isLeafComponent =
-        widget.node is WidgetbookComponent && widget.node.children?.length == 1;
+    const animationDuration = Duration(milliseconds: 200);
 
     // Redirect interactions to the use-case of the leaf component,
     // so that when it's clicked, the route is updated to the use-case
     // of the leaf component, and not the leaf component itself.
-    final targetNode =
-        isLeafComponent ? widget.node.children!.first : widget.node;
+    final targetNode = widget.node;
 
     return Column(
       children: [
@@ -57,7 +51,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
             widget.onNodeSelected?.call(targetNode);
           },
         ),
-        if (widget.node.children != null && !isLeafComponent)
+        if (widget.node.children != null)
           ClipRect(
             child: AnimatedSlide(
               duration: animationDuration,
