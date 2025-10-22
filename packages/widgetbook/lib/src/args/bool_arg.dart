@@ -2,7 +2,7 @@ import '../core/arg.dart';
 import '../fields/fields.dart';
 
 class BoolArg extends Arg<bool> with SingleFieldOnly {
-  const BoolArg(
+  BoolArg(
     super.value, {
     super.name,
   });
@@ -27,7 +27,7 @@ class BoolArg extends Arg<bool> with SingleFieldOnly {
 }
 
 class NullableBoolArg extends Arg<bool?> with SingleFieldOnly {
-  const NullableBoolArg(
+  NullableBoolArg(
     super.value, {
     super.name,
   });

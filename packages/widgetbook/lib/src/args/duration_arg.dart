@@ -2,7 +2,7 @@ import '../core/arg.dart';
 import '../fields/fields.dart';
 
 class DurationArg extends Arg<Duration> with SingleFieldOnly {
-  const DurationArg(
+  DurationArg(
     super.value, {
     super.name,
   });
@@ -27,7 +27,7 @@ class DurationArg extends Arg<Duration> with SingleFieldOnly {
 }
 
 class NullableDurationArg extends Arg<Duration?> with SingleFieldOnly {
-  const NullableDurationArg(
+  NullableDurationArg(
     super.value, {
     super.name,
   });

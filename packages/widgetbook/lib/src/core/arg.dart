@@ -5,9 +5,22 @@ import '../routing/routing.dart';
 import '../state/state.dart';
 import 'const_arg.dart';
 
+/// Used to initialize an [Arg] with either a default value or a user-provided
+/// value.
+/// If both [defaultArg] and [userArg] are null, it returns null.
+Arg<T>? $initArg<T>(
+  String name,
+  Arg<T>? userArg,
+  Arg<T>? defaultArg,
+) {
+  if (userArg == null && defaultArg == null) return null;
+
+  return (userArg ?? defaultArg)!.init(name: name);
+}
+
 @optionalTypeArgs
 abstract class Arg<T> extends FieldsComposable<T> {
-  const Arg(
+  Arg(
     this.value, {
     String? name,
   }) : $name = name,

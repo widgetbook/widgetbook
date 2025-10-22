@@ -18,6 +18,6 @@ final $WithHint = CustomTextFieldStory(
   name: 'With Hint',
   args: CustomTextFieldArgs(
     controller: Arg.fixed(TextEditingController()),
-    hintText: const StringArg('This is a hint'),
+    hintText: StringArg('This is a hint'),
   ),
 );

@@ -2,7 +2,7 @@ import '../core/arg.dart';
 import '../fields/fields.dart';
 
 class StringArg extends Arg<String> with SingleFieldOnly {
-  const StringArg(
+  StringArg(
     super.value, {
     super.name,
   });
@@ -27,7 +27,7 @@ class StringArg extends Arg<String> with SingleFieldOnly {
 }
 
 class NullableStringArg extends Arg<String?> with SingleFieldOnly {
-  const NullableStringArg(
+  NullableStringArg(
     super.value, {
     super.name,
   });

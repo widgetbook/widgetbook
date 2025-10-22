@@ -39,7 +39,7 @@ LabelBadge $argsBuilder(
 
 final $Primary = LabelBadgeStory(
   args: NumericBadgeInputArgs(
-    number: const IntArg(1),
+    number: IntArg(1),
   ),
   scenarios: [
     LabelBadgeScenario(
@@ -48,7 +48,7 @@ final $Primary = LabelBadgeStory(
         ThemeMode<MultiThemeData>('Dark', multiDarkTheme, multiThemeBuilder),
       ],
       args: NumericBadgeInputArgs(
-        number: const IntArg(3),
+        number: IntArg(3),
       ),
     ),
   ],
@@ -57,7 +57,7 @@ final $Primary = LabelBadgeStory(
 final $Secondary = LabelBadgeStory(
   name: 'Custom Name',
   args: NumericBadgeInputArgs(
-    number: const IntArg(2),
+    number: IntArg(2),
   ),
 );
 

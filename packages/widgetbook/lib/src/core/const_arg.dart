@@ -4,7 +4,7 @@ import '../fields/fields.dart';
 import 'arg.dart';
 
 class ConstArg<T> extends Arg<T> with NoFields {
-  const ConstArg(super.value);
+  ConstArg(super.value);
 
   @override
   ConstArg<T> init({required String name}) => this;
