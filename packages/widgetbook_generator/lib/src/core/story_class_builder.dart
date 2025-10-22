@@ -196,64 +196,6 @@ class StoryClassBuilder {
                   }
                 },
               ),
-            )
-            ..methods.add(
-              Method(
-                (b) =>
-                    b
-                      ..name = 'init'
-                      ..annotations.add(refer('override'))
-                      ..optionalParameters.add(
-                        Parameter(
-                          (b) =>
-                              b
-                                ..name = 'name'
-                                ..named = true
-                                ..required = true
-                                ..type = refer('String'),
-                        ),
-                      )
-                      ..returns = storyClassRef
-                      ..lambda = true
-                      ..body =
-                          InvokeExpression.newOf(
-                            storyClassRef,
-                            [],
-                            {
-                              'name': refer('\$name').ifNullThen(
-                                refer('name'),
-                              ),
-                              'setup': refer('setup'),
-                              'args': refer('args'),
-                              'argsBuilder': refer('argsBuilder'),
-                              'modes': refer('modes'),
-                              // We need to call `copyWith` on each scenario
-                              // to ensure the back-reference gets uninitialized
-                              // again in the scenarios instances, as it will
-                              // get re-initialized in the new story instance.
-                              'scenarios': refer('scenarios')
-                                  .property('map')
-                                  .call([
-                                    Method(
-                                      (b) =>
-                                          b
-                                            ..requiredParameters.add(
-                                              Parameter(
-                                                (b) => b.name = 'scenario',
-                                              ),
-                                            )
-                                            ..body =
-                                                refer('scenario')
-                                                    .property('copyWith')
-                                                    .call([])
-                                                    .code,
-                                    ).closure,
-                                  ])
-                                  .property('toList')
-                                  .call([]),
-                            },
-                          ).code,
-              ),
             ),
     );
   }

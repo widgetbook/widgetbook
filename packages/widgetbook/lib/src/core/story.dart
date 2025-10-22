@@ -26,14 +26,17 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     required this.args,
     required this.argsBuilder,
     this.scenarios = const [],
-  }) : $name = name,
+  }) : this._name = name,
        assert(name != 'Docs', 'Story name cannot be "Docs"') {
     scenarios.forEach((scenario) {
       scenario.story = this;
     });
   }
 
-  final String? $name;
+  final String? _name;
+  late final String $generatedName;
+  String get name => _name ?? $generatedName;
+
   final String? designLink;
   final TArgs args;
   final SetupBuilder<TWidget, TArgs> setup;
@@ -88,21 +91,4 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
       mergeModes: definition.mergeModes,
     )..story = this;
   }
-
-  String get name {
-    // A safe way to access [$name] in a non-nullable behavior for simplicity.
-    // The name should ne provided via constructor or init method.
-    assert(
-      $name != null,
-      'Name must be set via constructor or init method',
-    );
-
-    return $name!;
-  }
-
-  /// Creates a copy of this using the provided [name] for late initialization.
-  /// If [$name] was already set, it should have precedence over [name].
-  Story<TWidget, TArgs> init({
-    required String name,
-  });
 }

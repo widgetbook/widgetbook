@@ -14,16 +14,6 @@ class IntArg extends Arg<int> with SingleFieldOnly {
       initialValue: value,
     );
   }
-
-  @override
-  IntArg init({
-    required String name,
-  }) {
-    return IntArg(
-      value,
-      name: $name ?? name,
-    );
-  }
 }
 
 class NullableIntArg extends Arg<int?> with SingleFieldOnly {
@@ -37,16 +27,6 @@ class NullableIntArg extends Arg<int?> with SingleFieldOnly {
     return IntInputField(
       name: 'value',
       initialValue: value ?? 0,
-    );
-  }
-
-  @override
-  NullableIntArg init({
-    required String name,
-  }) {
-    return NullableIntArg(
-      value,
-      name: $name ?? name,
     );
   }
 }

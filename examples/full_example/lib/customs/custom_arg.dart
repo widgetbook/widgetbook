@@ -38,14 +38,4 @@ class RangeArg extends Arg<RangeValues> {
       },
     );
   }
-
-  @override
-  RangeArg init({
-    required String name,
-  }) {
-    return RangeArg(
-      value,
-      name: $name ?? name,
-    );
-  }
 }

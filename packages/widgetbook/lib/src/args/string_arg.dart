@@ -14,16 +14,6 @@ class StringArg extends Arg<String> with SingleFieldOnly {
       initialValue: value,
     );
   }
-
-  @override
-  StringArg init({
-    required String name,
-  }) {
-    return StringArg(
-      value,
-      name: $name ?? name,
-    );
-  }
 }
 
 class NullableStringArg extends Arg<String?> with SingleFieldOnly {
@@ -37,16 +27,6 @@ class NullableStringArg extends Arg<String?> with SingleFieldOnly {
     return StringField(
       name: 'value',
       initialValue: value ?? '',
-    );
-  }
-
-  @override
-  NullableStringArg init({
-    required String name,
-  }) {
-    return NullableStringArg(
-      value,
-      name: $name ?? name,
     );
   }
 }

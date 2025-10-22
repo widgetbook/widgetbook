@@ -115,20 +115,4 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
       ),
     );
   }
-
-  Scenario<TWidget, TArgs> copyWith({
-    String? name,
-    List<Mode>? modes,
-    TArgs? args,
-    ScenarioRunner<TArgs>? run,
-    ModesMerger? mergeModes,
-  }) {
-    return Scenario<TWidget, TArgs>(
-      name: name ?? this.name,
-      modes: modes ?? this.modes,
-      args: args ?? this.args,
-      run: run ?? this.run,
-      mergeModes: mergeModes ?? this.mergeModes,
-    );
-  }
 }

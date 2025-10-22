@@ -15,7 +15,8 @@ Arg<T>? $initArg<T>(
 ) {
   if (userArg == null && defaultArg == null) return null;
 
-  return (userArg ?? defaultArg)!.init(name: name);
+  final arg = userArg ?? defaultArg;
+  return arg!..$generatedName = name;
 }
 
 @optionalTypeArgs
@@ -23,38 +24,22 @@ abstract class Arg<T> extends FieldsComposable<T> {
   Arg(
     this.value, {
     String? name,
-  }) : $name = name,
+  }) : _name = name,
        super(
          name: name ?? '',
          initialValue: value,
        );
 
   final T value;
-  final String? $name;
 
-  String get name {
-    // A safe way to access [$name] in a non-nullable behavior for simplicity.
-    // The name should ne provided via constructor or init method.
-    assert(
-      $name != null,
-      'Name must be set via constructor or init method',
-    );
+  final String? _name;
+  late final String $generatedName;
 
-    return $name!;
-  }
+  @override
+  String get name => _name ?? $generatedName;
 
   @override
   String get groupName => name;
-
-  /// Creates a copy of this using the provided [name] for late initialization.
-  /// If [$name] was already set, it should have precedence over [name].
-  ///
-  /// Example:
-  /// Arg(0).init(name: 'integer') => Arg(0, name: 'integer')
-  /// Arg(0, name: 'int').init(name: 'integer') => Arg(0, name: 'int')
-  Arg<T> init({
-    required String name,
-  });
 
   static ConstArg<T> fixed<T>(T value) => ConstArg<T>(value);
 

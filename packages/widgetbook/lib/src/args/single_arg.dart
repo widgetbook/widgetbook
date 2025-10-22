@@ -21,18 +21,6 @@ class SingleArg<T> extends Arg<T> with SingleFieldOnly {
       labelBuilder: labelBuilder ?? ObjectDropdownField.defaultLabelBuilder,
     );
   }
-
-  @override
-  SingleArg<T> init({
-    required String name,
-  }) {
-    return SingleArg<T>(
-      value,
-      name: $name ?? name,
-      values: values,
-      labelBuilder: labelBuilder,
-    );
-  }
 }
 
 class NullableSingleArg<T> extends Arg<T?> with SingleFieldOnly {
@@ -53,18 +41,6 @@ class NullableSingleArg<T> extends Arg<T?> with SingleFieldOnly {
       values: values,
       initialValue: value ?? values.first,
       labelBuilder: labelBuilder ?? ObjectDropdownField.defaultLabelBuilder,
-    );
-  }
-
-  @override
-  NullableSingleArg<T> init({
-    required String name,
-  }) {
-    return NullableSingleArg<T>(
-      value,
-      name: $name ?? name,
-      values: values,
-      labelBuilder: labelBuilder,
     );
   }
 }
