@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -25,6 +27,7 @@ class ColorPicker extends StatefulWidget {
 }
 
 class _ColorPickerState extends State<ColorPicker> {
+  Timer? _debounce;
   late int alpha;
   late ColorSpace colorSpace;
   late OpaqueColor opaqueColor;
@@ -40,15 +43,25 @@ class _ColorPickerState extends State<ColorPicker> {
     opaqueColor = OpaqueColor.fromColor(widget.value);
   }
 
-  void onChange(int newAlpha, OpaqueColor newColor) {
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
+  }
+
+  void onChange(int newAlpha, OpaqueColor newColor, {bool debounce = false}) {
     setState(() {
       alpha = newAlpha;
       opaqueColor = newColor;
     });
 
-    widget.onChanged.call(
-      newColor.toColor().withAlpha(newAlpha),
-    );
+    _debounce?.cancel();
+    if (!debounce) {
+      widget.onChanged.call(newColor.toColor().withAlpha(newAlpha));
+    }
+    _debounce = Timer(const Duration(milliseconds: 100), () {
+      widget.onChanged.call(newColor.toColor().withAlpha(newAlpha));
+    });
   }
 
   @override
@@ -84,7 +97,7 @@ class _ColorPickerState extends State<ColorPicker> {
                                   pickerKey = ObjectKey(color);
                                   opaqueColor = OpaqueColor.fromColor(color);
                                   alpha = color.a * 255 ~/ 1;
-                                  onChange(alpha, opaqueColor);
+                                  onChange(alpha, opaqueColor, debounce: true);
                                 },
                               ),
                             ),
