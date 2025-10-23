@@ -3,11 +3,13 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+import '../../widgetbook_theme.dart';
+
 @internal
 class ColorPickerDialog extends StatefulWidget {
   const ColorPickerDialog({
     super.key,
-    this.initialColor = const Color(0xFF2196F3),
+    required this.initialColor,
     this.onChanged,
   });
 
@@ -34,8 +36,9 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
     alpha = widget.initialColor.a;
   }
 
-  Color get currentColor =>
-      HSVColor.fromAHSV(alpha, hue, saturation, value).toColor();
+  Color get currentColor {
+    return HSVColor.fromAHSV(alpha, hue, saturation, value).toColor();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +58,15 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                     builder: (context) {
                       return GestureDetector(
                         onPanDown:
-                            (e) => _handleSVGesture(e.localPosition, context),
+                            (e) => _handleSVGesture(
+                              e.localPosition,
+                              context,
+                            ),
                         onPanUpdate:
-                            (e) => _handleSVGesture(e.localPosition, context),
+                            (e) => _handleSVGesture(
+                              e.localPosition,
+                              context,
+                            ),
                         child: CustomPaint(
                           painter: _SVPainter(hue, saturation, value),
                         ),

@@ -46,7 +46,9 @@ class _ColorPickerState extends State<ColorPicker> {
       opaqueColor = newColor;
     });
 
-    widget.onChanged.call(newColor.toColor().withAlpha(newAlpha));
+    widget.onChanged.call(
+      newColor.toColor().withAlpha(newAlpha),
+    );
   }
 
   @override
@@ -138,8 +140,8 @@ class _ColorPickerState extends State<ColorPicker> {
         const SizedBox(height: 8),
         OpaqueColorPicker.fromColorSpace(
           colorSpace,
-          value: opaqueColor,
           key: pickerKey,
+          value: opaqueColor,
           onChanged: (value) {
             setState(() => this.opaqueColor = value);
             onChange(alpha, value);
@@ -152,7 +154,11 @@ class _ColorPickerState extends State<ColorPicker> {
 
 @internal
 class PositionedPopUp extends StatefulWidget {
-  const PositionedPopUp({super.key, required this.anchor, required this.child});
+  const PositionedPopUp({
+    super.key,
+    required this.anchor,
+    required this.child,
+  });
 
   final Offset anchor;
   final Widget child;
@@ -196,9 +202,18 @@ class _PositionedPopUpState extends State<PositionedPopUp> {
   Widget build(BuildContext context) {
     if (offset == null) {
       // Initial offscreen position for measuring
-      return Positioned(left: -1000, top: -1000, key: key, child: widget.child);
+      return Positioned(
+        key: key,
+        left: -1000,
+        top: -1000,
+        child: widget.child,
+      );
     }
 
-    return Positioned(left: offset!.dx, top: offset!.dy, child: widget.child);
+    return Positioned(
+      left: offset!.dx,
+      top: offset!.dy,
+      child: widget.child,
+    );
   }
 }

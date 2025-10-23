@@ -17,28 +17,28 @@ abstract class OpaqueColorPicker extends Widget {
 
   factory OpaqueColorPicker.fromColorSpace(
     ColorSpace colorSpace, {
+    Key? key,
     required OpaqueColor value,
     required ValueChanged<OpaqueColor> onChanged,
-    Key? key,
   }) {
     switch (colorSpace) {
       case ColorSpace.rgb:
         return RgbColorPicker(
+          key: key,
           value: value,
           onChanged: onChanged,
-          key: key,
         );
       case ColorSpace.hsl:
         return HslColorPicker(
+          key: key,
           value: value,
           onChanged: onChanged,
-          key: key,
         );
       case ColorSpace.hex:
         return HexColorPicker(
+          key: key,
           value: value,
           onChanged: onChanged,
-          key: key,
         );
     }
   }
