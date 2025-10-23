@@ -16,6 +16,7 @@ class UseCase {
     this.designLink,
     this.path,
     this.cloudKnobsConfigs,
+    this.exclude = false,
     this.cloudExclude = false,
   });
 
@@ -40,6 +41,13 @@ class UseCase {
 
   /// {@macro cloud_knobs_configs}
   final KnobsConfigs? cloudKnobsConfigs;
+
+  /// Whether to exclude this use-case from being processed.
+  /// All use-cases are included by default.
+  ///
+  /// This is useful to temporarily disable a use-case without removing it.
+  /// For example, when deploying to specific environments (dev vs prod).
+  final bool exclude;
 
   /// Whether to exclude this use-case from being processed by Widgetbook Cloud.
   /// All use-cases are included by default.

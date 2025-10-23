@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Allow excluding use-cases with `@UseCase.exclude`. ([#1676](https://github.com/widgetbook/widgetbook/pull/1676) - by [@EArminjon](https://github.com/EArminjon))
+
 ## 3.7.0
 
 - **BREAKING**: Set minimum SDK version to 3.7.0. ([#1541](https://github.com/widgetbook/widgetbook/pull/1541))
