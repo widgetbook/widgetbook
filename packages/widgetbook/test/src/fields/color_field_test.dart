@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/fields/color_field/color_picker.dart';
+import 'package:widgetbook/src/fields/color_field/color_picker_dialog.dart';
 import 'package:widgetbook/src/fields/color_field/hex_color_picker.dart';
 import 'package:widgetbook/src/fields/color_field/hsl_color_picker.dart';
 import 'package:widgetbook/src/fields/color_field/rgb_color_picker.dart';
@@ -205,6 +206,23 @@ void main() {
           );
 
           expect(widget.decoration?.hintText, equals('Enter a hex color'));
+        },
+      );
+
+      testWidgets(
+        'when user click on color picker square icon, '
+        'then [ColorPickerDialog] is displayed',
+        (tester) async {
+          await tester.pumpField<Color, ColorPicker>(
+            field,
+            null,
+          );
+
+          expect(find.byType(ColorPickerDialog), findsNothing);
+          await tester.findAndTap(find.byIcon(Icons.square));
+          await tester.pumpAndSettle();
+
+          expect(find.byType(ColorPickerDialog), findsOneWidget);
         },
       );
     },
