@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Support `@UseCase.exclude` to exclude use-cases from the generated Widgetbook. ([#1676](https://github.com/widgetbook/widgetbook/pull/1676) - by [@EArminjon](https://github.com/EArminjon))
+
 ## 3.18.0
 
 - **BREAKING**: Remove `next` builders. ([#1634](https://github.com/widgetbook/widgetbook/pull/1634))
