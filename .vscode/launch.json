@@ -55,6 +55,13 @@
       "type": "dart"
     },
     {
+      "name": "feature_preview",
+      "cwd": "examples/feature_preview",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "type": "dart"
+    },
+    {
       "name": "screen_util_example",
       "cwd": "examples/screen_util_example",
       "request": "launch",
