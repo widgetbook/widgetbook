@@ -34,26 +34,28 @@ class GenericTextStory<T> extends Story<GenericText<T>, GenericTextArgs<T>> {
   }) : super(
          argsBuilder:
              argsBuilder ??
-             (context, args) => GenericText<T>(
-               key: args.key?.resolve(context),
-               value: args.value.resolve(context),
-             ),
+             (context, args) =>
+                 GenericText<T>(key: args.key, value: args.value),
        );
 }
 
 class GenericTextArgs<T> extends StoryArgs<GenericText<T>> {
   GenericTextArgs({Arg<Key?>? key, required Arg<T> value})
-    : this.key = $initArg('key', key, null),
-      this.value = $initArg('value', value, null)!;
+    : this.keyArg = $initArg('key', key, null),
+      this.valueArg = $initArg('value', value, null)!;
 
   GenericTextArgs.fixed({Key? key, required T value})
-    : this.key = key == null ? null : Arg.fixed(key),
-      this.value = Arg.fixed(value);
+    : this.keyArg = key == null ? null : Arg.fixed(key),
+      this.valueArg = Arg.fixed(value);
 
-  final Arg<Key?>? key;
+  final Arg<Key?>? keyArg;
 
-  final Arg<T> value;
+  final Arg<T> valueArg;
+
+  Key? get key => keyArg?.value;
+
+  T get value => valueArg.value;
 
   @override
-  List<Arg?> get list => [key, value];
+  List<Arg?> get list => [keyArg, valueArg];
 }

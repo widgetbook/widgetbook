@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FEAT**: Support nullable args. ([#1675](https://github.com/widgetbook/widgetbook/pull/1675))
+- **FEAT**: Generate value getters for args, and use them instead of `Arg.resolve`. ([#1685](https://github.com/widgetbook/widgetbook/pull/1685))
 - **REFACTOR**: Initialize default args in field initializers, instead of `StoryArgs` constructor. ([#1681](https://github.com/widgetbook/widgetbook/pull/1681))
 - **REFACTOR**: Use `Story.$generatedName` instead of `Story.init`. ([#1682](https://github.com/widgetbook/widgetbook/pull/1682))
 

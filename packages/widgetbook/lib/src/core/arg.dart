@@ -1,8 +1,7 @@
-import 'package:flutter/widgets.dart';
+import 'package:meta/meta.dart';
 
 import '../fields/fields.dart';
 import '../routing/routing.dart';
-import '../state/state.dart';
 import 'const_arg.dart';
 
 /// Used to initialize an [Arg] with either a default value or a user-provided
@@ -30,7 +29,13 @@ abstract class Arg<T> extends FieldsComposable<T> {
          initialValue: value,
        );
 
-  final T value;
+  // TODO: Revisit the decision before stable release
+  // We had two option to make sure that the `value` is always in sync with
+  // the query parameters:
+  // 1. Immutable option with `copyWith` method: Decided against it because
+  //    it would require more boilerplate when implementing custom Args.
+  // 2. Mutable option with `syncValue` method.
+  T value;
 
   final String? _name;
   late final String $generatedName;
@@ -43,16 +48,14 @@ abstract class Arg<T> extends FieldsComposable<T> {
 
   static ConstArg<T> fixed<T>(T value) => ConstArg<T>(value);
 
-  /// Resolves the value of this argument based on the current context.
-  /// If there is no [WidgetbookState] in the widget tree, it returns the
-  /// default [value].
-  T resolve(BuildContext context) {
-    final state = WidgetbookState.maybeOf(context);
-    final group = state?.queryGroups[groupName];
+  @internal
+  void syncValue(QueryGroup? group) {
+    value = valueFromQueryGroup(group);
+  }
 
-    if (group == null) return value;
-
-    return valueFromQueryGroup(group);
+  @internal
+  void resetValue() {
+    value = initialValue;
   }
 
   QueryGroup? toQueryGroup() {

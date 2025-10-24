@@ -27,8 +27,8 @@ Widget $setup<T extends num, R>(
   Widget child,
   GenericNumInputArgs<T, R> args,
 ) {
-  return GenericNum<T>(
-    value: args.number.resolve(context),
+  return Container(
+    child: child,
   );
 }
 
@@ -37,7 +37,7 @@ GenericNum<T> $argsBuilder<T extends num, R>(
   GenericNumInputArgs<T, R> args,
 ) {
   return GenericNum<T>(
-    value: args.number.resolve(context),
+    value: args.number,
   );
 }
 

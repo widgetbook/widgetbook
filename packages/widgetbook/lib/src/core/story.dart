@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
+import '../state/state.dart';
 import 'component.dart';
 import 'mode.dart';
 import 'scenario.dart';
@@ -71,7 +73,21 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     return widget;
   }
 
+  @internal
+  void syncArgs(BuildContext context) {
+    final state = WidgetbookState.of(context);
+    args.safeList.forEach((arg) {
+      arg.syncValue(state.queryGroups[arg.groupName]);
+    });
+  }
+
+  @internal
+  void resetArgs() {
+    args.safeList.forEach((arg) => arg.resetValue());
+  }
+
   Widget build(BuildContext context) {
+    syncArgs(context);
     return buildWithArgs(context, args);
   }
 

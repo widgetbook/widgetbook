@@ -24,7 +24,7 @@ final $Default = CounterStory(
         await tester.pumpAndSettle();
 
         expect(
-          find.text('${args.initialValue.value + 1}'),
+          find.text('${args.initialValue + 1}'),
           findsOneWidget,
         );
       },

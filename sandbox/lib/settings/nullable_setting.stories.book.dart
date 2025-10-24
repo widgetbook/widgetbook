@@ -34,12 +34,12 @@ class NullableSettingStory extends Story<NullableSetting, NullableSettingArgs> {
          argsBuilder:
              argsBuilder ??
              (context, args) => NullableSetting(
-               key: args.key?.resolve(context),
-               name: args.name.resolve(context),
-               description: args.description?.resolve(context),
-               child: args.child.resolve(context),
-               isNullified: args.isNullified.resolve(context),
-               onNullified: args.onNullified?.resolve(context),
+               key: args.key,
+               name: args.name,
+               description: args.description,
+               child: args.child,
+               isNullified: args.isNullified,
+               onNullified: args.onNullified,
              ),
        );
 }
@@ -52,16 +52,20 @@ class NullableSettingArgs extends StoryArgs<NullableSetting> {
     required Arg<Widget> child,
     Arg<bool>? isNullified,
     Arg<void Function(bool)?>? onNullified,
-  }) : this.key = $initArg('key', key, null),
-       this.name = $initArg('name', name, StringArg(''))!,
-       this.description = $initArg(
+  }) : this.keyArg = $initArg('key', key, null),
+       this.nameArg = $initArg('name', name, StringArg(''))!,
+       this.descriptionArg = $initArg(
          'description',
          description,
          NullableStringArg(null),
        )!,
-       this.child = $initArg('child', child, null)!,
-       this.isNullified = $initArg('isNullified', isNullified, BoolArg(false))!,
-       this.onNullified = $initArg('onNullified', onNullified, null);
+       this.childArg = $initArg('child', child, null)!,
+       this.isNullifiedArg = $initArg(
+         'isNullified',
+         isNullified,
+         BoolArg(false),
+       )!,
+       this.onNullifiedArg = $initArg('onNullified', onNullified, null);
 
   NullableSettingArgs.fixed({
     Key? key,
@@ -70,32 +74,48 @@ class NullableSettingArgs extends StoryArgs<NullableSetting> {
     required Widget child,
     bool isNullified = false,
     void Function(bool)? onNullified,
-  }) : this.key = key == null ? null : Arg.fixed(key),
-       this.name = Arg.fixed(name),
-       this.description = description == null ? null : Arg.fixed(description),
-       this.child = Arg.fixed(child),
-       this.isNullified = Arg.fixed(isNullified),
-       this.onNullified = onNullified == null ? null : Arg.fixed(onNullified);
+  }) : this.keyArg = key == null ? null : Arg.fixed(key),
+       this.nameArg = Arg.fixed(name),
+       this.descriptionArg = description == null
+           ? null
+           : Arg.fixed(description),
+       this.childArg = Arg.fixed(child),
+       this.isNullifiedArg = Arg.fixed(isNullified),
+       this.onNullifiedArg = onNullified == null
+           ? null
+           : Arg.fixed(onNullified);
 
-  final Arg<Key?>? key;
+  final Arg<Key?>? keyArg;
 
-  final Arg<String> name;
+  final Arg<String> nameArg;
 
-  final Arg<String?>? description;
+  final Arg<String?>? descriptionArg;
 
-  final Arg<Widget> child;
+  final Arg<Widget> childArg;
 
-  final Arg<bool> isNullified;
+  final Arg<bool> isNullifiedArg;
 
-  final Arg<void Function(bool)?>? onNullified;
+  final Arg<void Function(bool)?>? onNullifiedArg;
+
+  Key? get key => keyArg?.value;
+
+  String get name => nameArg.value;
+
+  String? get description => descriptionArg?.value;
+
+  Widget get child => childArg.value;
+
+  bool get isNullified => isNullifiedArg.value;
+
+  void Function(bool)? get onNullified => onNullifiedArg?.value;
 
   @override
   List<Arg?> get list => [
-    key,
-    name,
-    description,
-    child,
-    isNullified,
-    onNullified,
+    keyArg,
+    nameArg,
+    descriptionArg,
+    childArg,
+    isNullifiedArg,
+    onNullifiedArg,
   ];
 }

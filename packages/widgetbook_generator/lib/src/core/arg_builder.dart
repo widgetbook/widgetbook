@@ -13,7 +13,7 @@ class ArgBuilder {
       (b) =>
           b
             ..modifier = FieldModifier.final$
-            ..name = param.displayName
+            ..name = '${param.displayName}Arg'
             ..type = TypeReference(
               (b) =>
                   b

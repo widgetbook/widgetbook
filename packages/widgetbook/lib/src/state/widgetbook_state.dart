@@ -228,6 +228,9 @@ class WidgetbookState extends ChangeNotifier {
   void updatePath(String newPath) {
     // Reset args
     final oldStory = story;
+
+    // Reset the old story args and remove their query groups
+    oldStory?.resetArgs();
     oldStory?.args.safeList.forEach(
       (arg) => queryGroups.remove(arg.groupName),
     );

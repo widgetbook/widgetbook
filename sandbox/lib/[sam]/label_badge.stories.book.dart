@@ -40,13 +40,15 @@ class LabelBadgeStory extends Story<LabelBadge, NumericBadgeInputArgs> {
 
 class NumericBadgeInputArgs extends StoryArgs<LabelBadge> {
   NumericBadgeInputArgs({Arg<int>? number})
-    : this.number = $initArg('number', number, IntArg(0))!;
+    : this.numberArg = $initArg('number', number, IntArg(0))!;
 
   NumericBadgeInputArgs.fixed({int number = 0})
-    : this.number = Arg.fixed(number);
+    : this.numberArg = Arg.fixed(number);
 
-  final Arg<int> number;
+  final Arg<int> numberArg;
+
+  int get number => numberArg.value;
 
   @override
-  List<Arg?> get list => [number];
+  List<Arg?> get list => [numberArg];
 }
