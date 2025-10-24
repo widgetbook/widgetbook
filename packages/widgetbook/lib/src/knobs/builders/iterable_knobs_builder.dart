@@ -5,7 +5,7 @@ import '../iterable_segmented_knob.dart';
 import '../knob.dart';
 import 'knobs_builder.dart';
 
-/// A [KnobsBuilder] for object knobs.
+/// A [KnobsBuilder] for iterable knobs.
 class IterableKnobsBuilder {
   /// Creates a [IterableKnobsBuilder] with the provided [onKnobAdded] callback.
   IterableKnobsBuilder(this.onKnobAdded);
@@ -14,14 +14,13 @@ class IterableKnobsBuilder {
   final KnobAdded onKnobAdded;
 
   /// A [Knob] that holds an [Iterable<T>] value with a segmented control.
-  /// Learn more: https://docs.widgetbook.io/knobs/object/segmented
+  /// Learn more: https://docs.widgetbook.io/knobs/iterable/segmented
   Iterable<T> segmented<T>({
     required String label,
     required Iterable<T> options,
     Iterable<T>? initialOption,
     String? description,
     LabelBuilder<T>? labelBuilder,
-    bool multiSelectionEnabled = true,
     bool emptySelectionAllowed = true,
     ButtonStyle? style,
   }) {
@@ -29,11 +28,11 @@ class IterableKnobsBuilder {
     return onKnobAdded(
       IterableSegmentedKnob<T>(
         label: label,
-        initialValue: initialOption ?? {options.first},
+        initialValue:
+            initialOption ?? {if (!emptySelectionAllowed) options.first},
         description: description,
         options: options,
         labelBuilder: labelBuilder,
-        multiSelectionEnabled: multiSelectionEnabled,
         emptySelectionAllowed: emptySelectionAllowed,
         style: style,
       ),
@@ -52,14 +51,13 @@ class IterableOrNullKnobsBuilder {
   final KnobAdded onKnobAdded;
 
   /// A [Knob] that holds an [Iterable<T>] value with a segmented control that can be null.
-  /// Learn more: https://docs.widgetbook.io/knobs/object/segmented
+  /// Learn more: https://docs.widgetbook.io/knobs/iterable/segmented
   Iterable<T>? segmented<T>({
     required String label,
     required Iterable<T> options,
     Iterable<T>? initialOption,
     String? description,
     LabelBuilder<T>? labelBuilder,
-    bool multiSelectionEnabled = true,
     bool emptySelectionAllowed = true,
     ButtonStyle? style,
   }) {
@@ -71,7 +69,6 @@ class IterableOrNullKnobsBuilder {
         description: description,
         options: options,
         labelBuilder: labelBuilder,
-        multiSelectionEnabled: multiSelectionEnabled,
         emptySelectionAllowed: emptySelectionAllowed,
         style: style,
       ),

@@ -24,19 +24,19 @@ For the usage please refer to the respective pages.
 Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons).
 
 <Info>
-  The blow information shows the `ObjectKnobConfig` for the [ObjectSegmentedKnob](/knobs/iterable/segmented).
+  The blow information shows the `IterableKnobConfig` for the [IterableSegmentedKnob](/knobs/iterable/segmented).
 </Info>
 
 ### Regular Iterable knob
 
-```dart title="Example: ObjectKnobConfig"
+```dart title="Example: IterableKnobConfig"
 @UseCase(
   type: MyWidget,
   name: 'Default',
   cloudKnobsConfigs: { // [!code highlight]
-    'online': [ObjectKnobConfig('status', 'online')], // [!code highlight]
-    'offline': [ObjectKnobConfig('status', 'offline')], // [!code highlight]
-    'busy': [ObjectKnobConfig('status', 'busy')], // [!code highlight]
+    'online': [IterableKnobConfig('status', 'online')], // [!code highlight]
+    'offline': [IterableKnobConfig('status', 'offline')], // [!code highlight]
+    'busy': [IterableKnobConfig('status', 'busy')], // [!code highlight]
   }, // [!code highlight]
 )
 Widget buildUseCase(BuildContext context) {
@@ -56,7 +56,7 @@ Widget buildUseCase(BuildContext context) {
 enum OnlineStatusType { online, offline, busy }
 ```
 
-### Nullable object Knob
+### Nullable iterable Knob
 
 ```dart title="Example: NullKnobConfig"
 @UseCase(
@@ -64,12 +64,12 @@ enum OnlineStatusType { online, offline, busy }
   name: 'Default',
   cloudKnobsConfigs: { // [!code highlight]
     'no status': [NullKnobConfig('status')], // [!code highlight]
-    'online': [ObjectKnobConfig('status', 'online')], // [!code highlight]
+    'online': [IterableKnobConfig('status', 'online')], // [!code highlight]
   }, // [!code highlight]
 )
 Widget buildUseCase(BuildContext context) {
   return MyWidget(
-    status: context.knobs.objectOrNull.segmented<OnlineStatusType>(
+    status: context.knobs.iterableOrNull.segmented<OnlineStatusType>(
       label: 'status',
       labelBuilder: (value) => value.name,
       options: [

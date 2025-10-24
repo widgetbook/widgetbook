@@ -9,7 +9,7 @@ void main() {
     '$IterableSegmentedField',
     () {
       final field = IterableSegmentedField<int>(
-        name: 'object_segmented_field',
+        name: 'iterable_segmented_field',
         initialValue: {1},
         values: {1, 2, 3},
       );

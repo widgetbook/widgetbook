@@ -13,7 +13,6 @@ class IterableSegmentedKnob<T> extends Knob<Iterable<T>?> {
     required this.options,
     super.description,
     this.labelBuilder,
-    this.multiSelectionEnabled = true,
     this.emptySelectionAllowed = true,
     this.style,
   });
@@ -24,14 +23,12 @@ class IterableSegmentedKnob<T> extends Knob<Iterable<T>?> {
     required this.options,
     super.description,
     this.labelBuilder,
-    this.multiSelectionEnabled = true,
     this.emptySelectionAllowed = true,
     this.style,
   }) : super(isNullable: true);
 
   final Iterable<T> options;
   final LabelBuilder<T>? labelBuilder;
-  final bool multiSelectionEnabled;
   final bool emptySelectionAllowed;
   final ButtonStyle? style;
 
@@ -43,7 +40,6 @@ class IterableSegmentedKnob<T> extends Knob<Iterable<T>?> {
         values: options,
         initialValue: initialValue,
         labelBuilder: labelBuilder ?? ObjectSegmentedField.defaultLabelBuilder,
-        multiSelectionEnabled: multiSelectionEnabled,
         emptySelectionAllowed: emptySelectionAllowed,
         style: style,
       ),

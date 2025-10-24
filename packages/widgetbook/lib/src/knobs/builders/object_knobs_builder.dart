@@ -13,7 +13,7 @@ class ObjectKnobsBuilder {
   final KnobAdded onKnobAdded;
 
   /// A [Knob] that holds an [T] value with a segmented control.
-  /// Learn more: https://docs.widgetbook.io/knobs/iterable/segmented
+  /// Learn more: https://docs.widgetbook.io/knobs/object/segmented
   T segmented<T>({
     required String label,
     required List<T> options,

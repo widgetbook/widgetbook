@@ -128,6 +128,19 @@ class WidgetbookApp extends StatelessWidget {
                         end: DateTime(initialDate.year + 1),
                       ),
                     ),
+                    KnobEntry<Iterable<User>>(
+                      name: 'Iterable (segmented)',
+                      regular: context.knobs.iterable.segmented(
+                        label: 'iterable.segmented',
+                        labelBuilder: (value) => value.name,
+                        options: List.generate(3, (x) => User('U$x')),
+                      ),
+                      nullable: context.knobs.iterableOrNull.segmented(
+                        label: 'iterableOrNull.segmented',
+                        labelBuilder: (value) => value.name,
+                        options: List.generate(3, (x) => User('U$x')),
+                      ),
+                    ),
                     KnobEntry<User>(
                       name: 'Object (dropdown)',
                       regular: context.knobs.object.dropdown(

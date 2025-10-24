@@ -123,6 +123,17 @@ class ListKnobConfig extends KnobConfig<String> {
   const ListKnobConfig(super.label, super.itemLabel);
 }
 
+class IterableKnobConfig extends KnobConfig<String> {
+  /// Creates a new [KnobConfig] for `knobs.iterable`.
+  /// The easiest way to get the [objectsLabels] is to check the
+  /// URL query string of a Widgetbook web build.
+  ///
+  /// ```dart
+  /// const IterableKnobConfig('label', 'item1,item2,item3');
+  /// ```
+  const IterableKnobConfig(super.label, super.objectsLabel);
+}
+
 class ObjectKnobConfig extends KnobConfig<String> {
   /// Creates a new [KnobConfig] for `knobs.object`.
   /// The easiest way to get the [objectLabel] is to check the

@@ -184,6 +184,28 @@ Widget buildObjectDropdownKnob(BuildContext context) {
   );
 }
 
+@UseCase(type: KnobPreview, name: 'Iterable Segmented Knob')
+Widget buildIterableSegmentedKnob(BuildContext context) {
+  return Wrap(
+    runSpacing: 8,
+    spacing: 8,
+    children: [
+      for (final type in context.knobs.iterable.segmented<OnlineStatusType>(
+        label: 'status',
+        labelBuilder: (value) => value.name,
+        options: [
+          OnlineStatusType.online,
+          OnlineStatusType.offline,
+          OnlineStatusType.busy,
+        ],
+      ))
+        OnlineStatusBadge(
+          status: type,
+        ),
+    ],
+  );
+}
+
 @UseCase(type: KnobPreview, name: 'Object Dropdown Nullable Knob')
 Widget buildObjectNullableDropdownKnob(BuildContext context) {
   return OnlineStatusBadge(

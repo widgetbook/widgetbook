@@ -12,7 +12,6 @@ class IterableSegmentedField<T> extends Field<Iterable<T>> {
     required this.values,
     required super.initialValue,
     this.labelBuilder = defaultLabelBuilder,
-    this.multiSelectionEnabled = true,
     this.emptySelectionAllowed = true,
     this.style,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
@@ -49,9 +48,6 @@ class IterableSegmentedField<T> extends Field<Iterable<T>> {
     return value.toString();
   }
 
-  /// Whether multiple selection is enabled.
-  final bool multiSelectionEnabled;
-
   /// Whether empty selection is allowed. InitialOption must not be empty if this is false.
   final bool emptySelectionAllowed;
 
@@ -63,7 +59,7 @@ class IterableSegmentedField<T> extends Field<Iterable<T>> {
     return SegmentedButton<T>(
       style: style,
       selected: value?.toSet() ?? {},
-      multiSelectionEnabled: multiSelectionEnabled,
+      multiSelectionEnabled: true,
       emptySelectionAllowed: emptySelectionAllowed,
       onSelectionChanged: (newValue) {
         updateField(context, group, newValue);
