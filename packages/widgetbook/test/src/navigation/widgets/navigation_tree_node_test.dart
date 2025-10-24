@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/navigation/navigation.dart';
-import 'package:widgetbook/widgetbook.dart';
 
 import '../../../helper/helper.dart';
 import '../tree_root.dart';
@@ -23,9 +22,8 @@ void main() {
         'given a root node, '
         'then the correct number of list views are created',
         (tester) async {
-          await tester.pumpWidgetWithMaterialAppAndState(
-            state: WidgetbookState(root: WidgetbookRoot(children: [])),
-            widget: NavigationTreeNode(
+          await tester.pumpWidgetWithMaterialApp(
+            NavigationTreeNode(
               node: treeRoot,
             ),
           );
@@ -44,13 +42,10 @@ void main() {
         'given a root node with enableLeafComponents = false , '
         'then the correct number of list views are created',
         (tester) async {
-          await tester.pumpWidgetWithMaterialAppAndState(
-            state: WidgetbookState(
-              enableLeafComponents: false,
-              root: WidgetbookRoot(children: []),
-            ),
-            widget: NavigationTreeNode(
+          await tester.pumpWidgetWithMaterialApp(
+            NavigationTreeNode(
               node: treeRoot,
+              enableLeafComponents: false,
             ),
           );
 
@@ -78,9 +73,8 @@ void main() {
             ],
           );
 
-          await tester.pumpWidgetWithMaterialAppAndState(
-            state: WidgetbookState(root: WidgetbookRoot(children: [])),
-            widget: NavigationTreeNode(
+          await tester.pumpWidgetWithMaterialApp(
+            NavigationTreeNode(
               selectedNode: leaf.useCases.first,
               node: leaf,
             ),
@@ -113,14 +107,11 @@ void main() {
             ],
           );
 
-          await tester.pumpWidgetWithMaterialAppAndState(
-            state: WidgetbookState(
-              enableLeafComponents: false,
-              root: WidgetbookRoot(children: []),
-            ),
-            widget: NavigationTreeNode(
+          await tester.pumpWidgetWithMaterialApp(
+            NavigationTreeNode(
               selectedNode: leaf.useCases.first,
               node: leaf,
+              enableLeafComponents: false,
             ),
           );
 
@@ -156,9 +147,8 @@ void main() {
 
           final onValueChanged = VoidFn1Mock<WidgetbookNode>();
 
-          await tester.pumpWidgetWithMaterialAppAndState(
-            state: WidgetbookState(root: WidgetbookRoot(children: [])),
-            widget: NavigationTreeNode(
+          await tester.pumpWidgetWithMaterialApp(
+            NavigationTreeNode(
               node: node,
               onNodeSelected: onValueChanged.call,
             ),
@@ -181,9 +171,8 @@ void main() {
 
           final onValueChanged = VoidFn1Mock<WidgetbookNode>();
 
-          await tester.pumpWidgetWithMaterialAppAndState(
-            state: WidgetbookState(root: WidgetbookRoot(children: [])),
-            widget: NavigationTreeNode(
+          await tester.pumpWidgetWithMaterialApp(
+            NavigationTreeNode(
               node: WidgetbookComponent(
                 name: 'Leaf',
                 useCases: [useCase],
@@ -210,17 +199,14 @@ void main() {
 
           final onValueChanged = VoidFn1Mock<WidgetbookNode>();
 
-          await tester.pumpWidgetWithMaterialAppAndState(
-            state: WidgetbookState(
-              enableLeafComponents: false,
-              root: WidgetbookRoot(children: []),
-            ),
-            widget: NavigationTreeNode(
+          await tester.pumpWidgetWithMaterialApp(
+            NavigationTreeNode(
               node: WidgetbookComponent(
                 name: 'Leaf',
                 useCases: [useCase],
               ),
               onNodeSelected: onValueChanged.call,
+              enableLeafComponents: false,
             ),
           );
 

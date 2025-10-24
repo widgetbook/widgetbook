@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-import '../../../widgetbook.dart';
+import '../nodes/nodes.dart';
 import 'navigation_tree_tile.dart';
 
 @internal
@@ -11,11 +11,13 @@ class NavigationTreeNode extends StatefulWidget {
     required this.node,
     this.selectedNode,
     this.onNodeSelected,
+    this.enableLeafComponents = true,
   });
 
   final WidgetbookNode node;
   final WidgetbookNode? selectedNode;
   final ValueChanged<WidgetbookNode>? onNodeSelected;
+  final bool enableLeafComponents;
 
   @override
   State<NavigationTreeNode> createState() => _NavigationTreeNodeState();
@@ -38,7 +40,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
     );
 
     final isLeafComponent =
-        WidgetbookState.of(context).enableLeafComponents &&
+        widget.enableLeafComponents &&
         widget.node is WidgetbookComponent &&
         widget.node.children?.length == 1;
 
@@ -79,6 +81,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
                         node: widget.node.children![index],
                         selectedNode: widget.selectedNode,
                         onNodeSelected: widget.onNodeSelected,
+                        enableLeafComponents: widget.enableLeafComponents,
                       ),
                 ),
               ),
