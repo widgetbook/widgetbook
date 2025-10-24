@@ -32,21 +32,21 @@ class TypesTableStory extends Story<TypesTable, TypesTableArgs> {
          argsBuilder:
              argsBuilder ??
              (context, args) => TypesTable(
-               key: args.key?.resolve(context),
-               boolean: args.boolean?.resolve(context),
-               integer: args.integer?.resolve(context),
-               decimal: args.decimal?.resolve(context),
-               string: args.string.resolve(context),
-               color: args.color.resolve(context),
-               duration: args.duration.resolve(context),
-               status: args.status.resolve(context),
-               person: args.person?.resolve(context),
-               margin: args.margin?.resolve(context),
-               padding: args.padding?.resolve(context),
-               child: args.child.resolve(context),
-               decoration: args.decoration.resolve(context),
-               future: args.future?.resolve(context),
-               onChanged: args.onChanged?.resolve(context),
+               key: args.key,
+               boolean: args.boolean,
+               integer: args.integer,
+               decimal: args.decimal,
+               string: args.string,
+               color: args.color,
+               duration: args.duration,
+               status: args.status,
+               person: args.person,
+               margin: args.margin,
+               padding: args.padding,
+               child: args.child,
+               decoration: args.decoration,
+               future: args.future,
+               onChanged: args.onChanged,
              ),
        );
 }
@@ -68,37 +68,37 @@ class TypesTableArgs extends StoryArgs<TypesTable> {
     Arg<Decoration>? decoration,
     Arg<Future<bool?>?>? future,
     Arg<void Function(bool?)?>? onChanged,
-  }) : this.key = $initArg('key', key, null),
-       this.boolean = $initArg('boolean', boolean, NullableBoolArg(null))!,
-       this.integer = $initArg('integer', integer, NullableIntArg(1))!,
-       this.decimal = $initArg('decimal', decimal, NullableDoubleArg(null))!,
-       this.string = $initArg('string', string, StringArg(''))!,
-       this.color = $initArg('color', color, ColorArg(Colors.red))!,
-       this.duration = $initArg(
+  }) : this.keyArg = $initArg('key', key, null),
+       this.booleanArg = $initArg('boolean', boolean, NullableBoolArg(null))!,
+       this.integerArg = $initArg('integer', integer, NullableIntArg(1))!,
+       this.decimalArg = $initArg('decimal', decimal, NullableDoubleArg(null))!,
+       this.stringArg = $initArg('string', string, StringArg(''))!,
+       this.colorArg = $initArg('color', color, ColorArg(Colors.red))!,
+       this.durationArg = $initArg(
          'duration',
          duration,
          DurationArg(Duration.zero),
        )!,
-       this.status = $initArg(
+       this.statusArg = $initArg(
          'status',
          status,
          EnumArg<Status>(Status.none, values: Status.values),
        )!,
-       this.person = $initArg('person', person, null),
-       this.margin = $initArg(
+       this.personArg = $initArg('person', person, null),
+       this.marginArg = $initArg(
          'margin',
          margin,
          ConstArg(const EdgeInsets.all(16)),
        )!,
-       this.padding = $initArg('padding', padding, null),
-       this.child = $initArg('child', child, null)!,
-       this.decoration = $initArg(
+       this.paddingArg = $initArg('padding', padding, null),
+       this.childArg = $initArg('child', child, null)!,
+       this.decorationArg = $initArg(
          'decoration',
          decoration,
          ConstArg(const BoxDecoration()),
        )!,
-       this.future = $initArg('future', future, null),
-       this.onChanged = $initArg('onChanged', onChanged, null);
+       this.futureArg = $initArg('future', future, null),
+       this.onChangedArg = $initArg('onChanged', onChanged, null);
 
   TypesTableArgs.fixed({
     Key? key,
@@ -116,68 +116,98 @@ class TypesTableArgs extends StoryArgs<TypesTable> {
     Decoration decoration = const BoxDecoration(),
     Future<bool?>? future,
     void Function(bool?)? onChanged,
-  }) : this.key = key == null ? null : Arg.fixed(key),
-       this.boolean = boolean == null ? null : Arg.fixed(boolean),
-       this.integer = integer == null ? null : Arg.fixed(integer),
-       this.decimal = decimal == null ? null : Arg.fixed(decimal),
-       this.string = Arg.fixed(string),
-       this.color = Arg.fixed(color),
-       this.duration = Arg.fixed(duration),
-       this.status = Arg.fixed(status),
-       this.person = person == null ? null : Arg.fixed(person),
-       this.margin = margin == null ? null : Arg.fixed(margin),
-       this.padding = padding == null ? null : Arg.fixed(padding),
-       this.child = Arg.fixed(child),
-       this.decoration = Arg.fixed(decoration),
-       this.future = future == null ? null : Arg.fixed(future),
-       this.onChanged = onChanged == null ? null : Arg.fixed(onChanged);
+  }) : this.keyArg = key == null ? null : Arg.fixed(key),
+       this.booleanArg = boolean == null ? null : Arg.fixed(boolean),
+       this.integerArg = integer == null ? null : Arg.fixed(integer),
+       this.decimalArg = decimal == null ? null : Arg.fixed(decimal),
+       this.stringArg = Arg.fixed(string),
+       this.colorArg = Arg.fixed(color),
+       this.durationArg = Arg.fixed(duration),
+       this.statusArg = Arg.fixed(status),
+       this.personArg = person == null ? null : Arg.fixed(person),
+       this.marginArg = margin == null ? null : Arg.fixed(margin),
+       this.paddingArg = padding == null ? null : Arg.fixed(padding),
+       this.childArg = Arg.fixed(child),
+       this.decorationArg = Arg.fixed(decoration),
+       this.futureArg = future == null ? null : Arg.fixed(future),
+       this.onChangedArg = onChanged == null ? null : Arg.fixed(onChanged);
 
-  final Arg<Key?>? key;
+  final Arg<Key?>? keyArg;
 
-  final Arg<bool?>? boolean;
+  final Arg<bool?>? booleanArg;
 
-  final Arg<int?>? integer;
+  final Arg<int?>? integerArg;
 
-  final Arg<double?>? decimal;
+  final Arg<double?>? decimalArg;
 
-  final Arg<String> string;
+  final Arg<String> stringArg;
 
-  final Arg<Color> color;
+  final Arg<Color> colorArg;
 
-  final Arg<Duration> duration;
+  final Arg<Duration> durationArg;
 
-  final Arg<Status> status;
+  final Arg<Status> statusArg;
 
-  final Arg<Person?>? person;
+  final Arg<Person?>? personArg;
 
-  final Arg<EdgeInsets?>? margin;
+  final Arg<EdgeInsets?>? marginArg;
 
-  final Arg<EdgeInsets?>? padding;
+  final Arg<EdgeInsets?>? paddingArg;
 
-  final Arg<Widget> child;
+  final Arg<Widget> childArg;
 
-  final Arg<Decoration> decoration;
+  final Arg<Decoration> decorationArg;
 
-  final Arg<Future<bool?>?>? future;
+  final Arg<Future<bool?>?>? futureArg;
 
-  final Arg<void Function(bool?)?>? onChanged;
+  final Arg<void Function(bool?)?>? onChangedArg;
+
+  Key? get key => keyArg?.value;
+
+  bool? get boolean => booleanArg?.value;
+
+  int? get integer => integerArg?.value;
+
+  double? get decimal => decimalArg?.value;
+
+  String get string => stringArg.value;
+
+  Color get color => colorArg.value;
+
+  Duration get duration => durationArg.value;
+
+  Status get status => statusArg.value;
+
+  Person? get person => personArg?.value;
+
+  EdgeInsets? get margin => marginArg?.value;
+
+  EdgeInsets? get padding => paddingArg?.value;
+
+  Widget get child => childArg.value;
+
+  Decoration get decoration => decorationArg.value;
+
+  Future<bool?>? get future => futureArg?.value;
+
+  void Function(bool?)? get onChanged => onChangedArg?.value;
 
   @override
   List<Arg?> get list => [
-    key,
-    boolean,
-    integer,
-    decimal,
-    string,
-    color,
-    duration,
-    status,
-    person,
-    margin,
-    padding,
-    child,
-    decoration,
-    future,
-    onChanged,
+    keyArg,
+    booleanArg,
+    integerArg,
+    decimalArg,
+    stringArg,
+    colorArg,
+    durationArg,
+    statusArg,
+    personArg,
+    marginArg,
+    paddingArg,
+    childArg,
+    decorationArg,
+    futureArg,
+    onChangedArg,
   ];
 }

@@ -164,13 +164,9 @@ class StoryClassBuilder {
                                 ])
                                 ..body =
                                     instantiate(
-                                      (param) => refer('args') //
-                                          .property(param.displayName)
-                                          .maybeProperty(
-                                            'resolve',
-                                            nullSafe: param.type.isNullable,
-                                          )
-                                          .call([refer('context')]),
+                                      (param) => refer(
+                                        'args',
+                                      ).property(param.displayName),
                                     ).code,
                         ).closure,
                       ),

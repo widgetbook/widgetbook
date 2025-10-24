@@ -32,26 +32,28 @@ class CounterStory extends Story<Counter, CounterArgs> {
          args: args ?? CounterArgs(),
          argsBuilder:
              argsBuilder ??
-             (context, args) => Counter(
-               key: args.key?.resolve(context),
-               initialValue: args.initialValue.resolve(context),
-             ),
+             (context, args) =>
+                 Counter(key: args.key, initialValue: args.initialValue),
        );
 }
 
 class CounterArgs extends StoryArgs<Counter> {
   CounterArgs({Arg<Key?>? key, Arg<int>? initialValue})
-    : this.key = $initArg('key', key, null),
-      this.initialValue = $initArg('initialValue', initialValue, IntArg(0))!;
+    : this.keyArg = $initArg('key', key, null),
+      this.initialValueArg = $initArg('initialValue', initialValue, IntArg(0))!;
 
   CounterArgs.fixed({Key? key, int initialValue = 0})
-    : this.key = key == null ? null : Arg.fixed(key),
-      this.initialValue = Arg.fixed(initialValue);
+    : this.keyArg = key == null ? null : Arg.fixed(key),
+      this.initialValueArg = Arg.fixed(initialValue);
 
-  final Arg<Key?>? key;
+  final Arg<Key?>? keyArg;
 
-  final Arg<int> initialValue;
+  final Arg<int> initialValueArg;
+
+  Key? get key => keyArg?.value;
+
+  int get initialValue => initialValueArg.value;
 
   @override
-  List<Arg?> get list => [key, initialValue];
+  List<Arg?> get list => [keyArg, initialValueArg];
 }

@@ -33,7 +33,7 @@ LabelBadge $argsBuilder(
   NumericBadgeInputArgs args,
 ) {
   return LabelBadge(
-    text: args.number.resolve(context).toString(),
+    text: args.number.toString(),
   );
 }
 

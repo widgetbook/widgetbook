@@ -38,17 +38,21 @@ class GenericNumStory<T extends num, R>
 
 class GenericNumInputArgs<T extends num, R> extends StoryArgs<GenericNum<T>> {
   GenericNumInputArgs({required Arg<T> number, required Arg<R> other})
-    : this.number = $initArg('number', number, null)!,
-      this.other = $initArg('other', other, null)!;
+    : this.numberArg = $initArg('number', number, null)!,
+      this.otherArg = $initArg('other', other, null)!;
 
   GenericNumInputArgs.fixed({required T number, required R other})
-    : this.number = Arg.fixed(number),
-      this.other = Arg.fixed(other);
+    : this.numberArg = Arg.fixed(number),
+      this.otherArg = Arg.fixed(other);
 
-  final Arg<T> number;
+  final Arg<T> numberArg;
 
-  final Arg<R> other;
+  final Arg<R> otherArg;
+
+  T get number => numberArg.value;
+
+  R get other => otherArg.value;
 
   @override
-  List<Arg?> get list => [number, other];
+  List<Arg?> get list => [numberArg, otherArg];
 }

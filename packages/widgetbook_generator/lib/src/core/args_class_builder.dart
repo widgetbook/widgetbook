@@ -61,7 +61,7 @@ class ArgsClassBuilder {
                         params.map(
                           (param) =>
                               refer('this')
-                                  .property(param.displayName)
+                                  .property('${param.displayName}Arg')
                                   .assign(ArgBuilder(param).buildInitializer())
                                   .code,
                         ),
@@ -80,7 +80,7 @@ class ArgsClassBuilder {
                         params.map(
                           (param) =>
                               refer('this')
-                                  .property(param.displayName)
+                                  .property('${param.displayName}Arg')
                                   .assign(
                                     param.type.isNullable
                                         ? refer(param.displayName)
@@ -102,7 +102,32 @@ class ArgsClassBuilder {
                       ),
               ),
             ])
-            ..methods.add(
+            ..methods.addAll([
+              ...params.map(
+                (param) => Method(
+                  (b) =>
+                      b
+                        ..name = param.displayName
+                        ..type = MethodType.getter
+                        ..returns = TypeReference(
+                          (b) =>
+                              b
+                                ..symbol = param.type.nonNullableName
+                                ..isNullable = param.type.isNullable,
+                        )
+                        ..lambda = true
+                        ..body =
+                            refer(
+                                  '${param.displayName}Arg',
+                                )
+                                .maybeProperty(
+                                  'value',
+                                  nullSafe: param.type.isNullable,
+                                )
+                                .code,
+                ),
+              ),
+
               Method(
                 (b) =>
                     b
@@ -126,11 +151,11 @@ class ArgsClassBuilder {
                       ..body =
                           literalList(
                             params.map(
-                              (param) => refer(param.displayName),
+                              (param) => refer('${param.displayName}Arg'),
                             ),
                           ).code,
               ),
-            ),
+            ]),
     );
   }
 }
