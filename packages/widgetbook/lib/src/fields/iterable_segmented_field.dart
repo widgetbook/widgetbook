@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
-import '../../widgetbook.dart';
+import 'fields.dart';
 
 /// A [Field] that builds [SegmentedButton]<[Iterable<T>]> for [Iterable] values.
 class IterableSegmentedField<T> extends Field<Iterable<T>> {
@@ -19,18 +17,16 @@ class IterableSegmentedField<T> extends Field<Iterable<T>> {
          defaultValue: values,
          type: FieldType.iterableSegmented,
          codec: FieldCodec(
-           toParam: (params) => jsonEncode(params.map(labelBuilder).toList()),
-           toValue: (param) {
-             if (param == null) return null;
-             final result = values.where((value) {
-               try {
-                 return (jsonDecode(param) as List<dynamic>).contains(
-                   labelBuilder(value),
-                 );
-               } catch (_) {
-                 return false;
-               }
-             });
+           toParam:
+               (params) => "[${params.map(labelBuilder).toList().join(',')}]",
+           toValue: (params) {
+             if (params == null) return null;
+             if (!params.startsWith('[') && !params.endsWith(']')) return null;
+             params = params.substring(1, params.length - 1);
+             final list = params.split(',');
+             final result = values.where(
+               (value) => list.contains(labelBuilder(value)),
+             );
              if (result.isEmpty) return null;
              return result;
            },
