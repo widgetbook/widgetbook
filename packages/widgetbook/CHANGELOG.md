@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FEAT**: Add color picker to `ColorField`. ([#1659](https://github.com/widgetbook/widgetbook/pull/1659) - by [@EArminjon](https://github.com/EArminjon))
+- **FEAT**: Add `enableLeafComponent` parameter to `Widgetbook` to allow enabling/disabling leaf components (i.e. components with a single use-case) behavior. ([#1680](https://github.com/widgetbook/widgetbook/pull/1680) - by [@EArminjon](https://github.com/EArminjon))
 
 ## 3.18.0
 
