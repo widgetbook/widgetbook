@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -30,6 +32,7 @@ class NavigationPanel extends StatefulWidget {
 }
 
 class _NavigationPanelState extends State<NavigationPanel> {
+  Timer? _debounce;
   WidgetbookNode? selectedNode;
 
   bool filterNode(WidgetbookNode node, String query) {
@@ -46,6 +49,12 @@ class _NavigationPanelState extends State<NavigationPanel> {
         widget.initialPath != null
             ? widget.root.find((child) => child.path == widget.initialPath)
             : null;
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
   }
 
   @override
@@ -69,7 +78,12 @@ class _NavigationPanelState extends State<NavigationPanel> {
           padding: const EdgeInsets.all(16),
           child: SearchField(
             value: query,
-            onChanged: WidgetbookState.of(context).updateQuery,
+            onChanged: (value) {
+              _debounce?.cancel();
+              _debounce = Timer(const Duration(milliseconds: 100), () {
+                WidgetbookState.of(context).updateQuery(value);
+              });
+            },
             onCleared: () => WidgetbookState.of(context).updateQuery(''),
           ),
         ),
