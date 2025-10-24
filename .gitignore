@@ -5,6 +5,8 @@
 *.freezed.dart
 *.g.dart
 *.book.dart
+# Include generated book files in sandbox for testing
+!sandbox/**/*.book.dart
 goldens/
 
 # Libraries should not include pubspec.lock,

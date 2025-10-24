@@ -5,7 +5,6 @@ analyzer:
     strict-raw-types: true
   exclude:
     - "**/*.g.dart"
-    - "**/*.book.dart"
 
 formatter:
   trailing_commas: preserve
