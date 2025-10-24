@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FEAT**: Allow excluding use-cases with `@UseCase.exclude`. ([#1676](https://github.com/widgetbook/widgetbook/pull/1676) - by [@EArminjon](https://github.com/EArminjon))
+- **FEAT**: Add `IterableKnobConfig` to support the new `iterable` knob. ([#1678](https://github.com/widgetbook/widgetbook/pull/1678) - by [@EArminjon](https://github.com/EArminjon))
 
 ## 3.7.0
 

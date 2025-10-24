@@ -5,19 +5,20 @@ data that can be manipulated within the Widgetbook environment, enabling users t
 settings and see their impact in real-time. Each field type corresponds to a different
 data input and is represented by a suitable user interface element.
 
-| Field                  | Type       | Widget                                                 |
-| ---------------------- | ---------- | ------------------------------------------------------ |
-| `BooleanField`         | `bool`     | `Switch`                                               |
-| `IntInputField`        | `int`      | `TextField`                                            |
-| `IntSliderField`       | `int`      | `Slider`                                               |
-| `DoubleInputField`     | `double`   | `TextField`                                            |
-| `DoubleSliderField`    | `double`   | `Slider`                                               |
-| `StringField`          | `String`   | `TextField`                                            |
-| `DurationField`        | `Duration` | `TextField`                                            |
-| `DateTimeField`        | `DateTime` | `TextField` (with `showDatePicker` & `showTimePicker`) |
-| `ColorField`           | `Color`    | `ColorPicker`                                          |
-| `ObjectDropdownField`  | `T`        | `DropdownMenu<T>`                                      |
-| `ObjectSegmentedField` | `T`        | `SegmentedButton<T>`                                   |
+| Field                    | Type          | Widget                                                 |
+| ------------------------ | ------------- | ------------------------------------------------------ |
+| `BooleanField`           | `bool`        | `Switch`                                               |
+| `IntInputField`          | `int`         | `TextField`                                            |
+| `IntSliderField`         | `int`         | `Slider`                                               |
+| `DoubleInputField`       | `double`      | `TextField`                                            |
+| `DoubleSliderField`      | `double`      | `Slider`                                               |
+| `StringField`            | `String`      | `TextField`                                            |
+| `DurationField`          | `Duration`    | `TextField`                                            |
+| `DateTimeField`          | `DateTime`    | `TextField` (with `showDatePicker` & `showTimePicker`) |
+| `ColorField`             | `Color`       | `ColorPicker`                                          |
+| `IterableSegmentedField` | `Iterable<T>` | `SegmentedButton<T>`                                   |
+| `ObjectDropdownField`    | `T`           | `DropdownMenu<T>`                                      |
+| `ObjectSegmentedField`   | `T`           | `SegmentedButton<T>`                                   |
 
 Each field type makes Widgetbook a flexible and powerful tool for Flutter developers. They
 allow for real-time changes and visualization of various widget properties, thus enabling

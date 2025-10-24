@@ -169,6 +169,54 @@ Widget buildNullableColorKnob(BuildContext context) {
   return ColoredTextBox(color: context.knobs.colorOrNull(label: 'color'));
 }
 
+@UseCase(type: KnobPreview, name: 'Iterable Segmented Knob')
+Widget buildIterableSegmentedKnob(BuildContext context) {
+  final statuses = context.knobs.iterable.segmented<OnlineStatusType>(
+    label: 'status',
+    labelBuilder: (value) => value.name,
+    options: [
+      OnlineStatusType.online,
+      OnlineStatusType.offline,
+      OnlineStatusType.busy,
+    ],
+  );
+
+  return Wrap(
+    runSpacing: 8,
+    spacing: 8,
+    children: statuses.map((type) {
+      return OnlineStatusBadge(
+        status: type,
+      );
+    }).toList(),
+  );
+}
+
+@UseCase(type: KnobPreview, name: 'Iterable Segmented Nullable Knob')
+Widget buildIterableSegmentedNullableKnob(BuildContext context) {
+  final statuses = context.knobs.iterableOrNull.segmented<OnlineStatusType>(
+    label: 'status',
+    labelBuilder: (value) => value.name,
+    options: [
+      OnlineStatusType.online,
+      OnlineStatusType.offline,
+      OnlineStatusType.busy,
+    ],
+  );
+
+  return Wrap(
+    runSpacing: 8,
+    spacing: 8,
+    children: statuses == null
+        ? [const Text('Nothing to show')]
+        : statuses.map((type) {
+            return OnlineStatusBadge(
+              status: type,
+            );
+          }).toList(),
+  );
+}
+
 @UseCase(type: KnobPreview, name: 'Object Dropdown Knob')
 Widget buildObjectDropdownKnob(BuildContext context) {
   return OnlineStatusBadge(

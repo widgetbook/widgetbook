@@ -137,6 +137,19 @@
               ]
             },
             {
+              "group": "Iterable",
+              "pages": [
+                {
+                  "title": "Overview",
+                  "href": "/knobs/iterable/overview"
+                },
+                {
+                  "title": "Segmented",
+                  "href": "/knobs/iterable/segmented"
+                }
+              ]
+            },
+            {
               "group": "Object",
               "pages": [
                 {
