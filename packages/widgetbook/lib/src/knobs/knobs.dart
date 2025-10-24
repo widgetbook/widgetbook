@@ -11,6 +11,7 @@ export 'double_slider_knob.dart';
 export 'duration_knob.dart';
 export 'int_input_knob.dart';
 export 'int_slider_knob.dart';
+export 'iterable_segmented_knob.dart';
 export 'knob.dart';
 export 'knobs_registry.dart';
 export 'object_dropdown_knob.dart';

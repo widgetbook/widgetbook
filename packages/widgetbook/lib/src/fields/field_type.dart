@@ -40,6 +40,6 @@ enum FieldType {
   /// For fields that have a [Object] value, represented as a segmented button.
   objectSegmented,
 
-  /// For fields that have a [Object] value, represented as a segmented button.
+  /// For fields that have a [Iterable] value, represented as a segmented button.
   iterableSegmented,
 }

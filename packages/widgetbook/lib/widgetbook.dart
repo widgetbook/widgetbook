@@ -21,6 +21,7 @@ export 'src/knobs/knobs.dart'
         DurationKnob,
         IntInputKnob,
         IntSliderKnob,
+        IterableSegmentedKnob,
         ObjectDropdownKnob,
         ObjectSegmentedKnob,
         StringKnob;

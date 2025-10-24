@@ -10,6 +10,7 @@ export 'field_type.dart';
 export 'fields_composable.dart';
 export 'int_input_field.dart';
 export 'int_slider_field.dart';
+export 'iterable_segmented_field.dart';
 export 'object_dropdown_field.dart';
 export 'object_segmented_field.dart';
 export 'string_field.dart';

@@ -125,13 +125,13 @@ class ListKnobConfig extends KnobConfig<String> {
 
 class IterableKnobConfig extends KnobConfig<String> {
   /// Creates a new [KnobConfig] for `knobs.iterable`.
-  /// The easiest way to get the [objectsLabels] is to check the
+  /// The easiest way to get the [labelsList] is to check the
   /// URL query string of a Widgetbook web build.
   ///
   /// ```dart
   /// const IterableKnobConfig('label', '[item1,item2,item3]');
   /// ```
-  const IterableKnobConfig(super.label, super.objectsLabel);
+  const IterableKnobConfig(super.label, super.labelsList);
 }
 
 class ObjectKnobConfig extends KnobConfig<String> {

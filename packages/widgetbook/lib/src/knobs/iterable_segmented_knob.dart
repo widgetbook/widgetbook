@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 
 import '../fields/fields.dart';
-import '../fields/iterable_segmented_field.dart';
 import 'knob.dart';
 
 @internal
@@ -35,8 +34,9 @@ class IterableSegmentedKnob<T> extends Knob<Iterable<T>?> {
         name: label,
         values: options,
         initialValue: initialValue,
-        labelBuilder: labelBuilder ?? ObjectSegmentedField.defaultLabelBuilder,
         emptySelectionAllowed: emptySelectionAllowed,
+        labelBuilder:
+            labelBuilder ?? IterableSegmentedField.defaultLabelBuilder,
       ),
     ];
   }
