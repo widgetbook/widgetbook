@@ -60,6 +60,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
             setState(() => isExpanded = !isExpanded);
             widget.onNodeSelected?.call(targetNode);
           },
+          enableLeafComponents: widget.enableLeafComponents,
         ),
         if (widget.node.children != null && !isLeafComponent)
           ClipRect(
