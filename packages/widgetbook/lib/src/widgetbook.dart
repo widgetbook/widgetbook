@@ -34,6 +34,7 @@ class Widgetbook extends StatefulWidget {
     this.home = const DefaultHomePage(),
     this.header,
     this.scrollBehavior,
+    this.enableLeafComponents = true,
   });
 
   /// A [Widgetbook] with [CupertinoApp] as an [appBuilder].
@@ -50,6 +51,7 @@ class Widgetbook extends StatefulWidget {
     this.home = const DefaultHomePage(),
     this.header,
     this.scrollBehavior,
+    this.enableLeafComponents = true,
   });
 
   /// A [Widgetbook] with [MaterialApp] as an [appBuilder].
@@ -66,6 +68,7 @@ class Widgetbook extends StatefulWidget {
     this.home = const DefaultHomePage(),
     this.header,
     this.scrollBehavior,
+    this.enableLeafComponents = true,
   });
 
   /// The initial route for that will be used on first startup.
@@ -127,6 +130,10 @@ class Widgetbook extends StatefulWidget {
   /// See also: https://docs.flutter.dev/release/breaking-changes/default-scroll-behavior-drag
   final ScrollBehavior? scrollBehavior;
 
+  /// Enables or disables the visibility of leaf components in the Widgetbook UI.
+  /// By default, this is set to true.
+  final bool enableLeafComponents;
+
   @override
   State<Widgetbook> createState() => _WidgetbookState();
 }
@@ -145,6 +152,7 @@ class _WidgetbookState extends State<Widgetbook> {
       header: widget.header,
       addons: widget.addons,
       integrations: widget.integrations,
+      enableLeafComponents: widget.enableLeafComponents,
       root: WidgetbookRoot(
         children: widget.directories,
       ),

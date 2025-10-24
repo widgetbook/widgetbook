@@ -25,7 +25,8 @@ This annotation is used to add a **use-case** for a **component**. The following
 | `name`       | ✅       | The name of the use-case.                                                                                                                                                                                                                                   |
 | `type`       | ✅       | The `type` property is used by the generator to create the component entry within the navigation. You should specify the type of the cataloged component (e.g. `CoolButton`) instead of the one that might be returned by the builder method (e.g.`Center`) |
 | `path`       | -        | A custom path for the use-case. Folders are delimited using slashes, path segments may be made into a category by enclosing it in square brackets. <br /> For example: `[Interactions]/buttons` will produce: `Interactions (category) -> buttons (folder)` |
-| `designLink` | -        | A link to the figma design of the use-case to be used with [Widgetbook Cloud Reviews](/cloud/reviews#figma-x-flutter-comparison).                                                                                                                                 |
+| `designLink` | -        | A link to the figma design of the use-case to be used with [Widgetbook Cloud Reviews](/cloud/reviews#figma-x-flutter-comparison).                                                                                                                           |
+| `exclude`    | -        | If set to `true`, the use-case will be excluded from the generated directories file. This can be useful for use-cases that are only used for certain environments (e.g. development or production).                                                         |
 
 ```dart
 import 'package:flutter/material.dart';

@@ -35,6 +35,10 @@ class UseCaseGenerator extends GeneratorForAnnotation<UseCase> {
     final type = annotation.read('type').typeValue;
     final designLink = annotation.readOrNull('designLink')?.stringValue;
     final path = annotation.readOrNull('path')?.stringValue;
+    final exclude = annotation.read('exclude').boolValue;
+
+    if (exclude) return '';
+
     final cloudExclude = annotation.read('cloudExclude').boolValue;
     final knobsConfigs = annotation //
         .readOrNull('cloudKnobsConfigs')
