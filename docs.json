@@ -314,6 +314,10 @@
           "href": "/configure/scroll-behavior"
         },
         {
+          "title": "Leaf Components",
+          "href": "/configure/leaf-components"
+        },
+        {
           "title": "Telemetry",
           "href": "/telemetry"
         }

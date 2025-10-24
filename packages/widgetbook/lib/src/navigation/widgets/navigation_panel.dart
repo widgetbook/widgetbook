@@ -92,6 +92,8 @@ class _NavigationPanelState extends State<NavigationPanel> {
                       setState(() => selectedNode = node);
                       widget.onNodeSelected?.call(node);
                     },
+                    enableLeafComponents:
+                        WidgetbookState.of(context).enableLeafComponents,
                   ),
             ),
           ),

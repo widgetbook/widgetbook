@@ -11,11 +11,13 @@ class NavigationTreeNode extends StatefulWidget {
     required this.node,
     this.selectedNode,
     this.onNodeSelected,
+    this.enableLeafComponents = true,
   });
 
   final WidgetbookNode node;
   final WidgetbookNode? selectedNode;
   final ValueChanged<WidgetbookNode>? onNodeSelected;
+  final bool enableLeafComponents;
 
   @override
   State<NavigationTreeNode> createState() => _NavigationTreeNodeState();
@@ -38,7 +40,9 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
     );
 
     final isLeafComponent =
-        widget.node is WidgetbookComponent && widget.node.children?.length == 1;
+        widget.enableLeafComponents &&
+        widget.node is WidgetbookComponent &&
+        widget.node.children?.length == 1;
 
     // Redirect interactions to the use-case of the leaf component,
     // so that when it's clicked, the route is updated to the use-case
@@ -77,6 +81,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
                         node: widget.node.children![index],
                         selectedNode: widget.selectedNode,
                         onNodeSelected: widget.onNodeSelected,
+                        enableLeafComponents: widget.enableLeafComponents,
                       ),
                 ),
               ),
