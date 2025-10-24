@@ -17,17 +17,17 @@ class IterableSegmentedField<T> extends Field<Iterable<T>> {
          defaultValue: values,
          type: FieldType.iterableSegmented,
          codec: FieldCodec(
-           toParam:
-               (params) => "[${params.map(labelBuilder).toList().join(',')}]",
-           toValue: (params) {
-             if (params == null) return null;
-             if (!params.startsWith('[') && !params.endsWith(']')) return null;
-             params = params.substring(1, params.length - 1);
-             final list = params.split(',');
-             final result = values.where(
-               (value) => list.contains(labelBuilder(value)),
-             );
-             if (result.isEmpty) return null;
+           toParam: (value) => "[${value.map(labelBuilder).join(',')}]",
+           toValue: (param) {
+             if (param == null) return null;
+             if (!param.startsWith('[') || !param.endsWith(']')) return [];
+
+             final list = param.substring(1, param.length - 1).split(',');
+             final result = [
+               for (final item in list)
+                 ...values.where((v) => labelBuilder(v) == item),
+             ];
+
              return result;
            },
          ),
