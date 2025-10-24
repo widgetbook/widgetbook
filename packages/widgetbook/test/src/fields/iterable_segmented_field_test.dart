@@ -37,10 +37,12 @@ void main() {
       test(
         'given a string param that does not exist in values, '
         'when [codec.toValue] is called, '
-        'then it returns null',
+        'then it throw an exception',
         () {
-          final result = field.codec.toValue('x');
-          expect(result, equals(null));
+          expect(() => field.codec.toValue('x'), throwsA(isA<Exception>()));
+          expect(() => field.codec.toValue('[x]'), throwsA(isA<Exception>()));
+          expect(() => field.codec.toValue('x]'), throwsA(isA<Exception>()));
+          expect(() => field.codec.toValue('[x'), throwsA(isA<Exception>()));
         },
       );
 

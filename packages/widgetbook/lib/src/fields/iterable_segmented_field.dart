@@ -19,15 +19,27 @@ class IterableSegmentedField<T> extends Field<Iterable<T>> {
            toParam: (value) => "[${value.map(labelBuilder).join(',')}]",
            toValue: (param) {
              if (param == null) return null;
-             if (!param.startsWith('[') || !param.endsWith(']')) return [];
+             if (!param.startsWith('[') || !param.endsWith(']')) {
+               throw Exception(
+                 'Invalid parameter format: $param. Expected format: [item1,item2,...]',
+               );
+             }
 
-             final list = param.substring(1, param.length - 1).split(',');
-             final result = [
-               for (final item in list)
-                 ...values.where((v) => labelBuilder(v) == item),
-             ];
+             final parsedParam = param.substring(1, param.length - 1);
+             if (parsedParam.isEmpty) return [];
 
-             return result;
+             return parsedParam
+                 .split(',')
+                 .map(
+                   (item) => values.firstWhere(
+                     (value) => labelBuilder(value) == item,
+                     orElse:
+                         () =>
+                             throw Exception(
+                               'Value with label "$item" not found in available values.',
+                             ),
+                   ),
+                 );
            },
          ),
        );
