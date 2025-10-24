@@ -8,6 +8,13 @@ import '../tree_root.dart';
 void main() {
   group('$NavigationPanel', () {
     const query = '1';
+    final leafComponentsCount =
+        treeRoot
+            .findAll(
+              (node) =>
+                  node is WidgetbookComponent && node.useCases.length == 1,
+            )
+            .length;
 
     testWidgets(
       'given a header is provided to NavigationPanel, '
@@ -66,7 +73,7 @@ void main() {
 
         expect(
           find.byType(NavigationTreeTile),
-          findsNWidgets(3),
+          findsNWidgets(2),
         );
       },
     );
@@ -95,8 +102,8 @@ void main() {
         expect(
           find.byType(NavigationTreeTile),
           findsNWidgets(
-            // exclude root node
-            treeRoot.count - 1,
+            // exclude root node and leaf components
+            treeRoot.count - 1 - leafComponentsCount,
           ),
         );
       },
@@ -122,8 +129,8 @@ void main() {
         expect(
           find.byType(NavigationTreeTile),
           findsNWidgets(
-            // exclude root node
-            treeRoot.count - 1,
+            // exclude root node and leaf components
+            treeRoot.count - 1 - leafComponentsCount,
           ),
         );
       },

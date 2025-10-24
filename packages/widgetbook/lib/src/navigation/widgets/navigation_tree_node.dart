@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-import '../nodes/nodes.dart';
+import '../../../widgetbook.dart';
 import 'navigation_tree_tile.dart';
 
 @internal
@@ -33,12 +33,20 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
 
   @override
   Widget build(BuildContext context) {
-    const animationDuration = Duration(milliseconds: 200);
+    const animationDuration = Duration(
+      milliseconds: 200,
+    );
+
+    final isLeafComponent =
+        WidgetbookState.of(context).enableLeafComponents &&
+        widget.node is WidgetbookComponent &&
+        widget.node.children?.length == 1;
 
     // Redirect interactions to the use-case of the leaf component,
     // so that when it's clicked, the route is updated to the use-case
     // of the leaf component, and not the leaf component itself.
-    final targetNode = widget.node;
+    final targetNode =
+        isLeafComponent ? widget.node.children!.first : widget.node;
 
     return Column(
       children: [
@@ -51,7 +59,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
             widget.onNodeSelected?.call(targetNode);
           },
         ),
-        if (widget.node.children != null)
+        if (widget.node.children != null && !isLeafComponent)
           ClipRect(
             child: AnimatedSlide(
               duration: animationDuration,

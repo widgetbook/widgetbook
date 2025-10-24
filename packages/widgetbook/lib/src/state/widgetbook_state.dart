@@ -77,6 +77,7 @@ class WidgetbookState extends ChangeNotifier {
     this.home = const DefaultHomePage(),
     this.panels = null,
     this.header,
+    this.enableLeafComponents = true,
   }) {
     this.knobs = KnobsRegistry(
       onLock: () {
@@ -138,6 +139,10 @@ class WidgetbookState extends ChangeNotifier {
   /// An optional widget to display at the top of the navigation panel.
   /// This can be used for branding or additional information.
   final Widget? header;
+
+  /// Whether leaf components are enabled in the navigation tree.
+  /// By default, this is set to true.
+  final bool enableLeafComponents;
 
   /// List of directories passed to the root node.
   List<WidgetbookNode> get directories => root.children!;

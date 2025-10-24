@@ -45,6 +45,31 @@ extension TesterExtension on WidgetTester {
     );
   }
 
+  /// Wraps [widget] with a [MaterialApp] predefined with [Themes]
+  Future<void> pumpWidgetWithMaterialAppAndState({
+    required WidgetbookState state,
+    required Widget widget,
+  }) async {
+    return pumpWidget(
+      WidgetbookScope(
+        state: state,
+        child: MaterialApp(
+          theme: Themes.dark,
+          home: Builder(
+            builder: (context) {
+              return WidgetbookTheme(
+                data: Theme.of(context),
+                child: Scaffold(
+                  body: widget,
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
   /// Same as [pumpWidgetWithMaterialApp] but with a [BuildContext].
   Future<void> pumpWidgetWithBuilder(WidgetBuilder builder) async {
     return pumpWidgetWithMaterialApp(
