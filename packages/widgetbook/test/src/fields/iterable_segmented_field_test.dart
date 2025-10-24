@@ -20,7 +20,7 @@ void main() {
         'then it returns the value as a string',
         () {
           final result = field.codec.toParam({1});
-          expect(result, equals('["1"]'));
+          expect(result, equals('[1]'));
         },
       );
 
@@ -29,7 +29,7 @@ void main() {
         'when [codec.toValue] is called, '
         'then it returns the actual value',
         () {
-          final result = field.codec.toValue('["1"]');
+          final result = field.codec.toValue('[1]');
           expect(result, equals({1}));
         },
       );

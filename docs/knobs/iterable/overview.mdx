@@ -34,9 +34,10 @@ Multi-snapshot support allows you to generate multiple screenshots of a single u
   type: MyWidget,
   name: 'Default',
   cloudKnobsConfigs: { // [!code highlight]
-    'online': [IterableKnobConfig('status', 'online')], // [!code highlight]
-    'offline': [IterableKnobConfig('status', 'offline')], // [!code highlight]
-    'busy': [IterableKnobConfig('status', 'busy')], // [!code highlight]
+    'online and busy': [IterableKnobConfig('status', '[online,busy]')], // [!code highlight]
+    'online': [IterableKnobConfig('status', '[online]')], // [!code highlight]
+    'offline': [IterableKnobConfig('status', '[offline]')], // [!code highlight]
+    'busy': [IterableKnobConfig('status', '[busy]')], // [!code highlight]
   }, // [!code highlight]
 )
 Widget buildUseCase(BuildContext context) {

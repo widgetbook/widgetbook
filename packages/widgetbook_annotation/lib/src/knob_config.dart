@@ -129,7 +129,7 @@ class IterableKnobConfig extends KnobConfig<String> {
   /// URL query string of a Widgetbook web build.
   ///
   /// ```dart
-  /// const IterableKnobConfig('label', 'item1,item2,item3');
+  /// const IterableKnobConfig('label', '[item1,item2,item3]');
   /// ```
   const IterableKnobConfig(super.label, super.objectsLabel);
 }
