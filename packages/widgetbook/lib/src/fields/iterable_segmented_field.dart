@@ -11,7 +11,6 @@ class IterableSegmentedField<T> extends Field<Iterable<T>> {
     required super.initialValue,
     this.labelBuilder = defaultLabelBuilder,
     this.emptySelectionAllowed = true,
-    this.style,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          defaultValue: values,
@@ -47,13 +46,9 @@ class IterableSegmentedField<T> extends Field<Iterable<T>> {
   /// Whether empty selection is allowed. InitialOption must not be empty if this is false.
   final bool emptySelectionAllowed;
 
-  /// The style of the segmented button.
-  final ButtonStyle? style;
-
   @override
   Widget toWidget(BuildContext context, String group, Iterable<T>? value) {
     return SegmentedButton<T>(
-      style: style,
       selected: value?.toSet() ?? {},
       multiSelectionEnabled: true,
       emptySelectionAllowed: emptySelectionAllowed,

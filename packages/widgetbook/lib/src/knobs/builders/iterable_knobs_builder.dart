@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../../fields/object_dropdown_field.dart';
 import '../iterable_segmented_knob.dart';
 import '../knob.dart';
@@ -22,7 +20,6 @@ class IterableKnobsBuilder {
     String? description,
     LabelBuilder<T>? labelBuilder,
     bool emptySelectionAllowed = true,
-    ButtonStyle? style,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return onKnobAdded(
@@ -34,7 +31,6 @@ class IterableKnobsBuilder {
         options: options,
         labelBuilder: labelBuilder,
         emptySelectionAllowed: emptySelectionAllowed,
-        style: style,
       ),
     )!;
   }
@@ -59,7 +55,6 @@ class IterableOrNullKnobsBuilder {
     String? description,
     LabelBuilder<T>? labelBuilder,
     bool emptySelectionAllowed = true,
-    ButtonStyle? style,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return onKnobAdded(
@@ -70,7 +65,6 @@ class IterableOrNullKnobsBuilder {
         options: options,
         labelBuilder: labelBuilder,
         emptySelectionAllowed: emptySelectionAllowed,
-        style: style,
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 import '../fields/fields.dart';
@@ -14,7 +13,6 @@ class IterableSegmentedKnob<T> extends Knob<Iterable<T>?> {
     super.description,
     this.labelBuilder,
     this.emptySelectionAllowed = true,
-    this.style,
   });
 
   IterableSegmentedKnob.nullable({
@@ -24,13 +22,11 @@ class IterableSegmentedKnob<T> extends Knob<Iterable<T>?> {
     super.description,
     this.labelBuilder,
     this.emptySelectionAllowed = true,
-    this.style,
   }) : super(isNullable: true);
 
   final Iterable<T> options;
   final LabelBuilder<T>? labelBuilder;
   final bool emptySelectionAllowed;
-  final ButtonStyle? style;
 
   @override
   List<Field> get fields {
@@ -41,7 +37,6 @@ class IterableSegmentedKnob<T> extends Knob<Iterable<T>?> {
         initialValue: initialValue,
         labelBuilder: labelBuilder ?? ObjectSegmentedField.defaultLabelBuilder,
         emptySelectionAllowed: emptySelectionAllowed,
-        style: style,
       ),
     ];
   }
