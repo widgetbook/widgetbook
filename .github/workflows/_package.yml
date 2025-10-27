@@ -124,6 +124,20 @@ jobs:
           PACKAGE_NAME=$(head -1 pubspec.yaml | cut -c7-)
           melos bootstrap --scope=$PACKAGE_NAME --include-dependencies
 
+      # Instead of installing the required libwebp tools
+      # https://chromium.googlesource.com/webm/libwebp
+      # which can take up to 1 minute, we create mock binaries
+      # that does nothing, since we are sure that the pub
+      # screenshots are already in the `webp` format.
+      # More info:
+      # https://github.com/dart-lang/pana/blob/393981b0d94192dad04fe1255e2a3959eca1e09c/lib/src/screenshots.dart#L206-L210
+      - name: Create mock libwebp tools
+        run: |
+          mkdir -p $HOME/bin
+          echo -e '#!/bin/sh\nexit 0' > $HOME/bin/webpinfo
+          chmod +x $HOME/bin/webpinfo
+          echo "$HOME/bin" >> $GITHUB_PATH
+
       - name: Install pana
         run: dart pub global activate pana
 
