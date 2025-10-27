@@ -125,10 +125,7 @@ jobs:
           melos bootstrap --scope=$PACKAGE_NAME --include-dependencies
 
       - name: Install pana
-        run: |
-          dart pub global activate pana
-          sudo apt-get update
-          sudo apt-get install webp # Needed for screenshots validation
+        run: dart pub global activate pana
 
       - name: Check Package Score
         run: pana . --no-warning --exit-code-threshold 0 --no-dartdoc
