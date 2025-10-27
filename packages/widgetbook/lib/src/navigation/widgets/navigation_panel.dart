@@ -97,6 +97,7 @@ class _NavigationPanelState extends State<NavigationPanel> {
               itemCount: filteredRoot.children!.length,
               itemBuilder:
                   (context, index) => NavigationTreeNode(
+                    key: ObjectKey(filteredRoot.children![index]),
                     node: filteredRoot.children![index],
                     selectedNode: selectedNode,
                     onNodeSelected: (node) {

@@ -16,6 +16,7 @@ class NavigationTreeTile extends StatelessWidget {
     this.onTap,
     this.isExpanded = false,
     this.isSelected = false,
+    this.enableLeafComponents = true,
   });
 
   static const indentation = 24.0;
@@ -24,12 +25,15 @@ class NavigationTreeTile extends StatelessWidget {
   final VoidCallback? onTap;
   final bool isExpanded;
   final bool isSelected;
+  final bool enableLeafComponents;
 
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(indentation);
     final isLeafComponent =
-        node is WidgetbookComponent && node.children?.length == 1;
+        enableLeafComponents &&
+        node is WidgetbookComponent &&
+        node.children?.length == 1;
 
     return Container(
       height: indentation,
