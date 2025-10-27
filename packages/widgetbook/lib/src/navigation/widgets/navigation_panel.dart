@@ -78,13 +78,14 @@ class _NavigationPanelState extends State<NavigationPanel> {
           padding: const EdgeInsets.all(16),
           child: SearchField(
             value: query,
+            onCleared: () => WidgetbookState.of(context).updateQuery(''),
             onChanged: (value) {
               _debounce?.cancel();
-              _debounce = Timer(const Duration(milliseconds: 100), () {
-                WidgetbookState.of(context).updateQuery(value);
-              });
+              _debounce = Timer(
+                const Duration(milliseconds: 100),
+                () => WidgetbookState.of(context).updateQuery(value),
+              );
             },
-            onCleared: () => WidgetbookState.of(context).updateQuery(''),
           ),
         ),
         if (filteredRoot.children != null)
