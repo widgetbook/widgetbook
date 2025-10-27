@@ -16,5 +16,5 @@ scripts:
     description: Run flutter test with coverage and generates coverage report
 
   generate:
-    run: melos exec -c 1 --depends-on="build_runner" -- "dart run build_runner build -d"
+    run: melos exec --depends-on="build_runner" -- "dart run build_runner build -d"
     description: Build all generated files.
