@@ -40,6 +40,9 @@ Follow our [Setup & Install Guide](https://docs.widgetbook.io/quick-start) in ou
 
 ## Support
 
+### Documentation
+Check our [Widgetbook Docs](https://docs.widgetbook.io/) for beginner guides but also advanced tips and tricks.
+
 ### Ask a question about Widgetbook
 Join our [Discord](https://discord.com/invite/zT4AMStAJA) community for any questions or feedback.
 
