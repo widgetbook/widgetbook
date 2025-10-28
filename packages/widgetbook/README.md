@@ -34,7 +34,7 @@ Widgetbook Cloud is a managed hosting solution for Widgetbook that allows you to
 🎥 Watch a [1-minute demo video](https://youtu.be/l3tj9VvkjLs).
 
 ### Getting started with Widgetbook Cloud
-Widgetbook Cloud has a free tier. [Sign up](https://app.widgetbook.io/sign-up) and and follow our [docs](https://docs.widgetbook.io/cloud) to get started.
+Widgetbook Cloud has a free tier. [Sign up](https://app.widgetbook.io/sign-up) and and follow our [docs](https://docs.widgetbook.io/cloud).
 
 ## Support
 ### Read our documentation
