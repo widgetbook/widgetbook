@@ -8,6 +8,8 @@ Widgetbook is a sandbox for building widgets and screens in isolation. It helps 
 
 [![Demo Widgetbook](https://github.com/widgetbook/widgetbook/blob/main/docs/assets/screenshots/WidgetbookOSS.png?raw=true)](https://demo.widgetbook.io/)
 
+## Open-Source Widgetbook
+
 - 🧱 **Build UI components and pages in isolation**. Implement components and pages without needing to fuss with data, APIs, or business logic.
 - 👀 **Mock hard-to-reach edge cases**. Render widgets in key states that are tricky to reproduce in an app. Then save those states as use-case to revisit during development, testing, and QA.
 - 📙 **Catalog all of your widgets**. Create your own widget library providing you with a great overview of what you have already built.
