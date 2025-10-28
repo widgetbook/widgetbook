@@ -1,4 +1,4 @@
-## Unreleased
+## 3.19.0
 
 - **FEAT**: Support `@UseCase.exclude` to exclude use-cases from the generated Widgetbook. ([#1676](https://github.com/widgetbook/widgetbook/pull/1676) - by [@EArminjon](https://github.com/EArminjon))
 
