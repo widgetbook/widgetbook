@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
   shared_ui:
     path: ../packages/shared_ui
-  widgetbook: ^3.18.0
+  widgetbook: ^3.19.0
   widgetbook_annotation: ^3.8.0
 
 dev_dependencies:
