@@ -54,10 +54,7 @@ class Tree {
     return Map.fromEntries(
       components.expand(
         (component) => component.stories.map(
-          (story) => MapEntry(
-            component.pathOf(story),
-            story,
-          ),
+          (story) => MapEntry(story.path, story),
         ),
       ),
     );

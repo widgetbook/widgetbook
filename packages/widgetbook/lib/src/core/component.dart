@@ -23,11 +23,4 @@ class Component<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
 
   String get fullPath => p.join(path, name);
   String get docsPath => p.join(fullPath, 'Docs');
-
-  String pathOf(Story story) {
-    return p.join(
-      fullPath,
-      story.name.replaceAll(' ', '-'),
-    );
-  }
 }
