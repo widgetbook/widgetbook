@@ -11,6 +11,7 @@ import 'package:sandbox/%5Bsam%5D/generic_text.stories.dart' as _i4;
 import 'package:sandbox/%5Bsam%5D/counter.stories.dart' as _i5;
 import 'package:sandbox/%5Bsam%5D/label_badge.stories.dart' as _i6;
 import 'package:sandbox/%5Bsam%5D/generic_num.stories.dart' as _i7;
+import 'package:sandbox/%5Bsam%5D/controls.stories.dart' as _i8;
 
 final components = <_i1.Component>[
   _i2.NullableSettingComponent,
@@ -19,4 +20,5 @@ final components = <_i1.Component>[
   _i5.CounterComponent,
   _i6.LabelBadgeComponent,
   _i7.GenericNumComponent,
+  _i8.ControlsComponent,
 ];
