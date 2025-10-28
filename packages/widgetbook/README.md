@@ -12,7 +12,7 @@ Widgetbook is a widget development and review environment that consists of these
 - [**Widgetbook Cloud:**](https://docs.widgetbook.io/cloud) Review platform for your Widgetbook that allows you to run golden tests to detect and review all UI changes in your pull-request.
 
 ## Open-Source Widgetbook
-[![Widgetbook Demo](https://github.com/widgetbook/widgetbook/blob/main/docs/assets/screenshots/widgetbook_with_code.png?raw=true)](https://demo.widgetbook.io/)
+[![Widgetbook Demo](https://github.com/widgetbook/widgetbook/blob/docs/landing-page/docs/assets/screenshots/widgetbook_with_code.png?raw=true)](https://demo.widgetbook.io/)
 
 - 🧱 **Build UI components and pages in isolation**. Implement components and pages without needing to fuss with data, APIs, or business logic.
 - 👀 **Mock hard-to-reach edge cases**. Render widgets in key states that are tricky to reproduce in an app. Then save those states as use-case to revisit during development, testing, and QA.
@@ -26,7 +26,7 @@ Follow our [Setup & Install Guide](https://docs.widgetbook.io/quick-start) in ou
 
 ## Widgetbook Cloud
 
-[![Widgetbook Cloud Demo](https://github.com/widgetbook/widgetbook/blob/main/docs/assets/screenshots/WidgetbookCloud.png?raw=true)](https://youtu.be/l3tj9VvkjLs)
+[![Widgetbook Cloud Demo](https://github.com/widgetbook/widgetbook/blob/docs/landing-page/docs/assets/screenshots/WidgetbookCloud.png?raw=true)](https://youtu.be/l3tj9VvkjLs)
 
 - 🌍 **Share your Widgetbook with your team**. Publish your Widgetbook build for other Developers, Designers, PMs or Clients to reference. Everyone can check that the UI looks right without touching code.
 - 🏅 **Golden Tests**. Run zero-configuration golden tests (visual regression tests) on your widgets across all states, devices, themes, text scale factors, etc. to detect all changes.
