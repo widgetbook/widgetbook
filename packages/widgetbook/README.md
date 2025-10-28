@@ -4,37 +4,33 @@
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis) 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/widgetbook/widgetbook/widgetbook.yaml?branch=main)
 
-A Flutter package that helps developers catalog their widgets, test them quickly on multiple devices and themes and share them easily with designers and clients. 
-Inspired by Storybook.js.
+Widgetbook is a sandbox for building widgets and screens in isolation. It helps you develop and share hard-to-reach states and edge cases without needing to run your whole app. Inspired by Storybook.js.
 
+[![Demo Widgetbook](https://github.com/widgetbook/widgetbook/blob/main/docs/assets/screenshots/widgetbook.png?raw=true)](https://demo.widgetbook.io/)
 
-[![Widgetbook Demo](https://github.com/widgetbook/widgetbook/blob/main/docs/assets/screenshots/widgetbook.png?raw=true)](https://demo.widgetbook.io/)
+- 🧱 **Build UI components and pages in isolation**. Implement components and pages without needing to fuss with data, APIs, or business logic.
+- 👀 **Mock hard-to-reach edge cases**. Render widgets in key states that are tricky to reproduce in an app. Then save those states as use-case to revisit during development, testing, and QA.
+- 📙 **Catalog all of your widgets**. Create your own widget library providing you with a great overview of what you have already built.
 
-## Features
-
-- 💙 **Made for Flutter**. Easy to use. 
-- 🦄 **Open source**.
-- 🍭 **Feature rich**. Test your Widgets on different devices, themes, locales, text scales, etc.
-- ⚙️ **Customize for your needs**. Easily add additional settings to your liking. 
-- 🔧 **Maintained** by a fast-growing Flutter startup from Germany.
-- 👩🏼‍💻 **Support** via our [Discord](https://discord.com/invite/zT4AMStAJA) community.
-
-Widgetbook can do much more!
-
-- 📙 **Catalogue existing Widgets**. Never develop Widgets twice. 
-- 📦 **Develop in isolation**. Don't think about business logic. 
-- 🎛 **Knobs**. Define how your team interacts with your Widgets by defining customizable knobs. 
-- ⚡️ **Hot reload**. Quickly find and fix bugs.
+🎥 Watch a [2-minute demo video](https://youtu.be/sGRetvJ-zZI) from Google's Flutter team.
 
 ## Widgetbook Cloud
 
-To simplify the review process of professional teams, we provide our collaboration platform Widgetbook Cloud
-- 🌍 **Share your Widgets** with designers, product owners, clients, etc.
-- 📃 **Simplified reviews** with our guided process. 
-- ⛓ **Figma Integration**. Connect your Widgets to their design counterpart in Figma. 
+Widgetbook Cloud is a managed hosting solution for Widgetbook that allows you to run golden tests to detect and review all UI changes in your pull-request.
 
-[Get access now! ➡️](https://widgetbook.io)
+- 🌍 **Share your Widgetbook with your team**. Publish your Widgetbook build for other Developers, Designers, PMs or Clients to reference. Everyone can check that the UI looks right without touching code.
+- 🏅 **Golden Tests**. Run zero-configuration golden tests (visual regression tests) on your widgets across all states, devices, themes, text scale factors, etc. to detect all changes.
+- 🧪 **Visual Pull Requests**. Detect and review all UI changes in your pull-request.
+- 🎨 **Figma Reviews**. Connect your your Figma designs to review your Flutter widget next to the original Figma design.
+
+🎥 Watch a [1-minute demo video](https://youtu.be/l3tj9VvkjLs).
+
+[Get access now! ➡️](https://app.widgetbook.io/sign-up)
 
 ## Documentation
 
 See [docs.widgetbook.io](https://docs.widgetbook.io) for docs & samples.
+
+## Support
+
+Join our [Discord](https://discord.com/invite/zT4AMStAJA) community for any questions or feedback.
