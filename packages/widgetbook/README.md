@@ -40,7 +40,7 @@ Follow our [Setup & Install Guide](https://docs.widgetbook.io/quick-start) in ou
 
 ## Support
 
-### Documentation
+### Read our documentation
 Check our [Widgetbook Docs](https://docs.widgetbook.io/) for beginner guides but also advanced tips and tricks.
 
 ### Ask a question about Widgetbook
