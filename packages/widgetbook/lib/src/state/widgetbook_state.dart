@@ -222,6 +222,12 @@ class WidgetbookState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Navigate to the given [story].
+  void goToStory(Story story) => updatePath(story.path);
+
+  /// Navigate to the docs page of the given [component].
+  void goToDocs(Component component) => updatePath(component.docsPath);
+
   /// Update the [path], causing a new [story] to bet returned.
   /// Resets the args during the update.
   @internal

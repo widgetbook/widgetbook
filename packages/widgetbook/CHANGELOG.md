@@ -11,6 +11,7 @@
 - **FEAT**: Add `SingleFieldOnly` mixin that can be applied to single-field `FieldsComposable` (i.e. `Addon` or `Arg`) to provide default implementations for to/from `QueryGroup`. ([#1670](https://github.com/widgetbook/widgetbook/pull/1670))
 - **FEAT**: Add `NoFields` mixin that can be applied to `FieldsComposable` (i.e. `Addon` or `Arg`) that do not need `Field`s. ([#1672](https://github.com/widgetbook/widgetbook/pull/1672))
 - **FEAT**: Add `path` getter to `Story`. ([#1692](https://github.com/widgetbook/widgetbook/pull/1692))
+- **FEAT**: Add `goToX` APIs to `WidgetbookState` that allows navigating to stories or docs programmatically. ([#1693](https://github.com/widgetbook/widgetbook/pull/1693))
 - **REFACTOR**: Use `QueryGroup` instead of query parameters and `Map<String, String>`. ([#1653](https://github.com/widgetbook/widgetbook/pull/1653))
 
 ## 4.0.0-alpha.3
