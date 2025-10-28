@@ -20,7 +20,7 @@ Follow our [Setup & Install Guide](https://docs.widgetbook.io/quick-start) in ou
 
 ## Widgetbook Cloud
 
-Widgetbook Cloud is a managed hosting solution for Widgetbook that allows you to run golden tests to detect and review all UI changes in your pull-request.
+Widgetbook Cloud is a managed hosting solution for Widgetbook that allows you to run golden tests to detect and review all UI changes in your pull-request. Inspired by Chromatic.
 
 [![Widgetbook Cloud Demo](https://github.com/widgetbook/widgetbook/blob/docs/landing-page/docs/assets/screenshots/WidgetbookCloud.png?raw=true)](https://youtu.be/l3tj9VvkjLs)
 
