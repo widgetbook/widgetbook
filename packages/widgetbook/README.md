@@ -4,14 +4,8 @@
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis) 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/widgetbook/widgetbook/widgetbook.yaml?branch=main)
 
-## What is Widgetbook?
+The open-source Widgetbook is a sandbox for building widgets and screens in isolation. It helps you develop and share hard-to-reach states and edge cases without needing to run your whole app. Inspired by Storybook.js.
 
-Widgetbook is a widget development and review environment that consists of these tools:
-
-- [**Open-Source Widgetbook:**](https://docs.widgetbook.io/) Sandbox for building widgets and screens in isolation. It helps you develop and share hard-to-reach states and edge cases without needing to run your whole app. Inspired by Storybook.js.
-- [**Widgetbook Cloud:**](https://docs.widgetbook.io/cloud) Review platform for your Widgetbook that allows you to run golden tests to detect and review all UI changes in your pull-request.
-
-## Open-Source Widgetbook
 [![Widgetbook Demo](https://github.com/widgetbook/widgetbook/blob/docs/landing-page/docs/assets/screenshots/widgetbook_with_code.jpeg?raw=true)](https://demo.widgetbook.io/)
 
 ### Features
@@ -25,6 +19,8 @@ Widgetbook is a widget development and review environment that consists of these
 Follow our [Setup & Install Guide](https://docs.widgetbook.io/quick-start) in our [docs](https://docs.widgetbook.io).
 
 ## Widgetbook Cloud
+
+Widgetbook Cloud is a managed hosting solution for Widgetbook that allows you to run golden tests to detect and review all UI changes in your pull-request.
 
 [![Widgetbook Cloud Demo](https://github.com/widgetbook/widgetbook/blob/docs/landing-page/docs/assets/screenshots/WidgetbookCloud.png?raw=true)](https://youtu.be/l3tj9VvkjLs)
 
