@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:path/path.dart' as p;
 
 import '../state/state.dart';
 import 'component.dart';
@@ -64,6 +65,13 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   // `Component<TWidget, TArgs>` not `Component<TWidget<T1>, TArgs>` or
   // `Component<TWidget<T2>, TArgs>`.
   late final Component component;
+
+  String get path {
+    return p.join(
+      component.fullPath,
+      name.replaceAll(' ', '-'),
+    );
+  }
 
   static Widget defaultSetup(
     BuildContext context,
