@@ -13,13 +13,13 @@ The open-source Widgetbook is a sandbox for building widgets and screens in isol
 - 👀 **Mock hard-to-reach edge cases**. Render widgets in key states that are tricky to reproduce in an app. Then save those states as use-case to revisit during development, testing, and QA.
 - 📙 **Catalog all of your widgets**. Create your own widget library providing you with a great overview of what you have already built.
 
+### Demo
 🎥 Watch a [2-minute demo video](https://youtu.be/sGRetvJ-zZI) from Google's Flutter team.
 
 ### Getting started with the Open-Source Widgetbook
 Follow our [Setup & Install Guide](https://docs.widgetbook.io/quick-start) in our [docs](https://docs.widgetbook.io).
 
 ## Widgetbook Cloud
-
 Widgetbook Cloud is a managed hosting solution for Widgetbook that allows you to run golden tests to detect and review all UI changes in your pull-request. Inspired by Chromatic.
 
 [![Widgetbook Cloud Demo](https://github.com/widgetbook/widgetbook/blob/docs/landing-page/docs/assets/screenshots/WidgetbookCloud.png?raw=true)](https://youtu.be/l3tj9VvkjLs)
@@ -30,12 +30,13 @@ Widgetbook Cloud is a managed hosting solution for Widgetbook that allows you to
 - 🧪 **Visual Pull Requests**. Detect and review all UI changes in your pull-request.
 - 🎨 **Figma Reviews**. Connect your your Figma designs to review your Flutter widget next to the original Figma design.
 
+### Demo
 🎥 Watch a [1-minute demo video](https://youtu.be/l3tj9VvkjLs).
 
-[Get access now! ➡️](https://app.widgetbook.io/sign-up)
+### Getting started with Widgetbook Cloud
+Widgetbook Cloud has a free tier. [Sign up](https://app.widgetbook.io/sign-up) and and follow our [docs](https://docs.widgetbook.io/cloud) to get started.
 
 ## Support
-
 ### Read our documentation
 Check our [Widgetbook Docs](https://docs.widgetbook.io/) for beginner guides but also advanced tips and tricks.
 
