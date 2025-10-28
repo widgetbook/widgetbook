@@ -6,7 +6,7 @@
 
 Widgetbook is a sandbox for building widgets and screens in isolation. It helps you develop and share hard-to-reach states and edge cases without needing to run your whole app. Inspired by Storybook.js.
 
-[![Demo Widgetbook](https://github.com/widgetbook/widgetbook/blob/main/docs/assets/screenshots/WidgetbookOSS.png?raw=true)](https://demo.widgetbook.io/)
+[![Widgetbook Demo](https://github.com/widgetbook/widgetbook/blob/main/docs/assets/screenshots/WidgetbookOSS.png?raw=true)](https://demo.widgetbook.io/)
 
 ## Open-Source Widgetbook
 
@@ -18,7 +18,7 @@ Widgetbook is a sandbox for building widgets and screens in isolation. It helps 
 
 ## Widgetbook Cloud
 
-[![Demo Widgetbook](https://github.com/widgetbook/widgetbook/blob/main/docs/assets/screenshots/WidgetbookCloud.png?raw=true)](https://youtu.be/l3tj9VvkjLs)
+[![Widgetbook Cloud Demo](https://github.com/widgetbook/widgetbook/blob/main/docs/assets/screenshots/WidgetbookCloud.png?raw=true)](https://youtu.be/l3tj9VvkjLs)
 
 Widgetbook Cloud is a managed hosting solution for Widgetbook that allows you to run golden tests to detect and review all UI changes in your pull-request.
 
