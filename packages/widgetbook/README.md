@@ -1,8 +1,30 @@
-<img height=40 src="https://raw.githubusercontent.com/widgetbook/widgetbook/2107e1afe2217e8ecde56c6ade1fd3706c3e6570/docs/assets/WidgetbookLogo.svg">
+<div align="center">
+  <img src="https://raw.githubusercontent.com/widgetbook/widgetbook/refs/heads/main/packages/widgetbook/assets/logo.webp" height="80" alt="Widgetbook Logo" />
+  <h1>Widgetbook</h1>
+  <a href="https://pub.dev/packages/widgetbook">
+    <img src="https://img.shields.io/pub/v/widgetbook" />
+  </a>
+  <a href="https://github.com/widgetbook/widgetbook/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue" />
+  </a>
+  <a href="https://discord.com/invite/zT4AMStAJA">
+    <img alt="Discord" src="https://img.shields.io/discord/879618555560218625?color=blue&logo=discord">
+  </a>
+  <br />
+  <p>Build Flutter widgets and screens in isolation</p>
+  <a href="https://www.widgetbook.io/">Website</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="https://docs.widgetbook.io/">Docs</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="https://demo.widgetbook.io/">Demo</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="https://x.com/widgetbook_io">X</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="https://www.youtube.com/channel/UCiOhf9g0J_0mG1YZG9u50rw">Youtube</a>
+  <br />
+  <br />
 
-[![Discord](https://img.shields.io/discord/879618555560218625?color=blue&style=flat-square&logo=discord)](https://discord.com/invite/zT4AMStAJA)
-[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg?style=flat-square)](https://pub.dev/packages/very_good_analysis) 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/widgetbook/widgetbook/widgetbook.yaml?branch=main)
+</div>
 
 The open-source Widgetbook is a sandbox for building widgets and screens in isolation. It helps you develop and share hard-to-reach states and edge cases without needing to run your whole app. Inspired by Storybook.js.
 
