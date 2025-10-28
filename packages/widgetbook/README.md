@@ -6,7 +6,7 @@
 
 Widgetbook is a sandbox for building widgets and screens in isolation. It helps you develop and share hard-to-reach states and edge cases without needing to run your whole app. Inspired by Storybook.js.
 
-[![Demo Widgetbook](https://github.com/widgetbook/widgetbook/blob/main/docs/assets/screenshots/WidgetbookOSS.png?raw=true)](https://demo.widgetbook.io/)
+[![Demo Widgetbook](https://github.com/widgetbook/widgetbook/blob/main/docs/assets/screenshots/widgetbookoss.png?raw=true)](https://demo.widgetbook.io/)
 
 ## Open-Source Widgetbook
 
