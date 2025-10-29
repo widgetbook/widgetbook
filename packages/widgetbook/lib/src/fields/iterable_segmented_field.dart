@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import 'fields.dart';
@@ -31,15 +32,11 @@ class IterableSegmentedField<T> extends Field<Iterable<T>> {
              return parsedParam
                  .split(',')
                  .map(
-                   (item) => values.firstWhere(
+                   (item) => values.firstWhereOrNull(
                      (value) => labelBuilder(value) == item,
-                     orElse:
-                         () =>
-                             throw Exception(
-                               'Value with label "$item" not found in available values.',
-                             ),
                    ),
-                 );
+                 )
+                 .whereType<T>();
            },
          ),
        );
