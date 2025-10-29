@@ -42,6 +42,7 @@ void main() {
         (tester) async {
           final story = MockStory();
           when(() => story.name).thenReturn('story');
+          when(() => story.path).thenReturn('component/story');
           when(() => story.build(any())).thenReturn(Text(story.name));
 
           final component = Component<Widget, MockStoryArgs>(
