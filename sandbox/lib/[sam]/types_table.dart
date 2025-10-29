@@ -19,6 +19,7 @@ class TypesTable extends StatelessWidget {
     this.color = Colors.red, // Default
     required this.duration,
     required this.status,
+    required this.dateTime,
     // Object Params
     required this.person, // Nullable-Required
     this.margin = const EdgeInsets.all(16), // Nullable-Default
@@ -37,6 +38,7 @@ class TypesTable extends StatelessWidget {
   final Color color;
   final Duration duration;
   final Status status;
+  final DateTime dateTime;
 
   final Person? person;
   final EdgeInsets? padding;
@@ -106,6 +108,12 @@ class TypesTable extends StatelessWidget {
                   children: [
                     Text('$Duration'),
                     Text('$duration'),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    Text('$DateTime'),
+                    Text(dateTime.toString()),
                   ],
                 ),
                 TableRow(

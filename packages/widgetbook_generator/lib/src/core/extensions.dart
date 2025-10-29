@@ -41,6 +41,12 @@ extension DartTypeX on DartType {
       'DurationArg',
       refer('Duration').property('zero'),
     ),
+    'DateTime?': TypeMeta('NullableDateTimeArg', literalNull),
+    'DateTime': TypeMeta(
+      'DateTimeArg',
+      refer('DateTime').property('now').call([]),
+      isConst: false,
+    ),
   };
 
   /// Gets class name without generic parameters
@@ -139,8 +145,15 @@ extension DartTypeX on DartType {
 }
 
 class TypeMeta {
-  TypeMeta(this.argName, this.defaultValue);
+  TypeMeta(
+    this.argName,
+    this.defaultValue, {
+    this.isConst = true,
+  });
 
   final String argName;
   final Expression defaultValue;
+
+  /// Whether the [defaultValue] is a const expression
+  final bool isConst;
 }

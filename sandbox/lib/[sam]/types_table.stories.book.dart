@@ -40,6 +40,7 @@ class TypesTableStory extends Story<TypesTable, TypesTableArgs> {
                color: args.color,
                duration: args.duration,
                status: args.status,
+               dateTime: args.dateTime,
                person: args.person,
                margin: args.margin,
                padding: args.padding,
@@ -61,6 +62,7 @@ class TypesTableArgs extends StoryArgs<TypesTable> {
     Arg<Color>? color,
     Arg<Duration>? duration,
     Arg<Status>? status,
+    Arg<DateTime>? dateTime,
     Arg<Person?>? person,
     Arg<EdgeInsets?>? margin,
     Arg<EdgeInsets?>? padding,
@@ -83,6 +85,11 @@ class TypesTableArgs extends StoryArgs<TypesTable> {
          'status',
          status,
          EnumArg<Status>(Status.none, values: Status.values),
+       )!,
+       this.dateTimeArg = $initArg(
+         'dateTime',
+         dateTime,
+         DateTimeArg(DateTime.now()),
        )!,
        this.personArg = $initArg('person', person, null),
        this.marginArg = $initArg(
@@ -109,6 +116,7 @@ class TypesTableArgs extends StoryArgs<TypesTable> {
     Color color = Colors.red,
     Duration duration = Duration.zero,
     Status status = Status.none,
+    DateTime? dateTime,
     Person? person,
     EdgeInsets? margin = const EdgeInsets.all(16),
     EdgeInsets? padding,
@@ -124,6 +132,7 @@ class TypesTableArgs extends StoryArgs<TypesTable> {
        this.colorArg = Arg.fixed(color),
        this.durationArg = Arg.fixed(duration),
        this.statusArg = Arg.fixed(status),
+       this.dateTimeArg = Arg.fixed(dateTime ?? DateTime.now()),
        this.personArg = person == null ? null : Arg.fixed(person),
        this.marginArg = margin == null ? null : Arg.fixed(margin),
        this.paddingArg = padding == null ? null : Arg.fixed(padding),
@@ -147,6 +156,8 @@ class TypesTableArgs extends StoryArgs<TypesTable> {
   final Arg<Duration> durationArg;
 
   final Arg<Status> statusArg;
+
+  final Arg<DateTime> dateTimeArg;
 
   final Arg<Person?>? personArg;
 
@@ -178,6 +189,8 @@ class TypesTableArgs extends StoryArgs<TypesTable> {
 
   Status get status => statusArg.value;
 
+  DateTime get dateTime => dateTimeArg.value;
+
   Person? get person => personArg?.value;
 
   EdgeInsets? get margin => marginArg?.value;
@@ -202,6 +215,7 @@ class TypesTableArgs extends StoryArgs<TypesTable> {
     colorArg,
     durationArg,
     statusArg,
+    dateTimeArg,
     personArg,
     marginArg,
     paddingArg,
