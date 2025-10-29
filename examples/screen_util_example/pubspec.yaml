@@ -17,7 +17,7 @@ dependencies:
   widgetbook: ^4.0.0-alpha.3
 
 dev_dependencies:
-  build_runner: ^2.4.7
+  build_runner: ^2.10.1
   widgetbook_generator: ^4.0.0-alpha.3
 
 flutter:

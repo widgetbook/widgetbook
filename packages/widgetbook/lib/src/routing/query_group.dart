@@ -56,7 +56,8 @@ class QueryGroup {
     final isNullified = value.startsWith(nullabilitySymbol);
     final params = value
         .substring(isNullified ? 3 : 1, value.length - 1)
-        .split(',');
+        .split(RegExp(r',(?![^\[]*\])')); // Split on commas not within brackets
+
     final fields = Map<String, String>.fromEntries(
       params.map(
         (param) {

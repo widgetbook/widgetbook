@@ -13,11 +13,13 @@ class NavigationTreeNode extends StatefulWidget {
     required this.node,
     this.depth = 0,
     this.onLeafNodeTap,
+    required this.enableLeafComponents,
   });
 
   final TreeNode node;
   final int depth;
   final ValueChanged<TreeNode<dynamic>>? onLeafNodeTap;
+  final bool enableLeafComponents;
 
   @override
   State<NavigationTreeNode> createState() => _NavigationTreeNodeState();
@@ -31,9 +33,10 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
     final node = widget.node;
     final isCategory = node.isCategory;
     final isLeaf = switch (node) {
-      TreeNode<Story>() => true,
-      TreeNode<Component>() => node.children.length == 1,
       TreeNode<String>() => node.name == 'Docs',
+      TreeNode<Story>() => true,
+      TreeNode<Component>() =>
+        widget.enableLeafComponents && node.children.length == 1,
       _ => false,
     };
 
@@ -82,6 +85,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
                     depth: isCategory ? widget.depth : widget.depth + 1,
                     node: node.children[index],
                     onLeafNodeTap: widget.onLeafNodeTap,
+                    enableLeafComponents: widget.enableLeafComponents,
                   ),
             ),
           ),

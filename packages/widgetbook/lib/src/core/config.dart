@@ -49,6 +49,7 @@ class Config {
     this.header,
     this.scrollBehavior = const MaterialScrollBehavior(),
     this.scenarios = const [],
+    this.enableLeafComponents = true,
   });
 
   /// The initial route for that will be used on first startup.
@@ -106,4 +107,8 @@ class Config {
   ///
   /// See also: https://docs.flutter.dev/release/breaking-changes/default-scroll-behavior-drag
   final ScrollBehavior? scrollBehavior;
+
+  /// Enables or disables the visibility of leaf components in the Widgetbook UI.
+  /// By default, this is set to true.
+  final bool enableLeafComponents;
 }

@@ -1,0 +1,80 @@
+# Iterable Knob
+
+The iterable knob renders a segmented button in the Widgetbook UI where you can dynamically select an iterable value for a widget property.
+This is particularly useful for properties that require an iterable input, such as a configuration iterable for a widget.
+
+## Variants and Usage
+
+The iterable knob has one variant with each a regular and a nullable type:
+
+- [Iterable Segmented Knob](/knobs/iterable/segmented)
+
+For the usage please refer to the respective pages.
+
+## Example Segmented
+
+<iframe
+  src="https://preview.widgetbook.io/#/?path=knobpreview/iterable-segmented-knob&panels=knobs"
+  width="100%"
+  height="240px"
+/>
+
+## Multi-snapshot Support
+
+Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons).
+
+### Regular iterable knob
+
+```dart title="Example: IterableKnobConfig"
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'online and busy': [IterableKnobConfig('status', '[online,busy]')], // [!code highlight]
+    'offline and busy': [IterableKnobConfig('status', '[offline,busy]')], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    status: context.knobs.iterable.segmented<OnlineStatusType>(
+      label: 'status',
+      labelBuilder: (value) => value.name,
+      options: [
+        OnlineStatusType.online,
+        OnlineStatusType.offline,
+        OnlineStatusType.busy,
+      ],
+    ),
+  );
+}
+
+enum OnlineStatusType { online, offline, busy }
+```
+
+### Nullable iterable Knob
+
+```dart title="Example: NullKnobConfig"
+@UseCase(
+  type: MyWidget,
+  name: 'Default',
+  cloudKnobsConfigs: { // [!code highlight]
+    'no status': [NullKnobConfig('status')], // [!code highlight]
+    'online and busy': [IterableKnobConfig('status', '[online,busy]')], // [!code highlight]
+  }, // [!code highlight]
+)
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    status: context.knobs.iterableOrNull.segmented<OnlineStatusType>(
+      label: 'status',
+      labelBuilder: (value) => value.name,
+      options: [
+        OnlineStatusType.online,
+        OnlineStatusType.offline,
+        OnlineStatusType.busy,
+      ],
+    ),
+  );
+}
+
+enum OnlineStatusType { online, offline, busy }
+```

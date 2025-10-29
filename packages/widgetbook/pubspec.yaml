@@ -11,7 +11,7 @@ topics: [widgetbook, storybook, ui, tool, test]
 
 screenshots:
   - description: Widgetbook Logo
-    path: assets/logo.png
+    path: assets/logo.webp
 
 environment:
   sdk: ">=3.7.0 <4.0.0"

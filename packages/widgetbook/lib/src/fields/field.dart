@@ -17,6 +17,7 @@ part 'double_slider_field.dart';
 part 'duration_field.dart';
 part 'int_input_field.dart';
 part 'int_slider_field.dart';
+part 'iterable_segmented_field.dart';
 part 'num_input_field.dart';
 part 'num_slider_field.dart';
 part 'object_dropdown_field.dart';

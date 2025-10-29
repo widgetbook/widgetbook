@@ -26,6 +26,10 @@
 - **BREAKING**: Remove `experimental_` prefix from builders, and change them to be opt-out instead of opt-in. ([#1108](https://github.com/widgetbook/widgetbook/pull/1108))
 - **FEAT**: Generate `Story.name` based on the variable name. ([#1113](https://github.com/widgetbook/widgetbook/pull/1113))
 
+## 3.19.0
+
+- **FEAT**: Support `@UseCase.exclude` to exclude use-cases from the generated Widgetbook. ([#1676](https://github.com/widgetbook/widgetbook/pull/1676) - by [@EArminjon](https://github.com/EArminjon))
+
 ## 3.18.0
 
 - **BREAKING**: Remove `next` builders. ([#1634](https://github.com/widgetbook/widgetbook/pull/1634))

@@ -35,6 +35,7 @@ class _WidgetbookAppState extends State<WidgetbookApp> {
       addons: widget.config.addons,
       integrations: widget.config.integrations,
       components: widget.config.components,
+      enableLeafComponents: widget.config.enableLeafComponents,
     );
 
     router = AppRouter(

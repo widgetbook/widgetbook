@@ -61,6 +61,7 @@ class WidgetbookState extends ChangeNotifier {
     this.panels = null,
     this.header,
     this.components = const [],
+    this.enableLeafComponents = true,
   }) : this.root = Tree.build(components),
        this.index = Tree.index(components);
 
@@ -82,6 +83,7 @@ class WidgetbookState extends ChangeNotifier {
   final AppBuilder appBuilder;
   final List<Addon>? addons;
   final List<Integration>? integrations;
+  final bool enableLeafComponents;
 
   final List<Component> components;
   final TreeNode<Null> root;

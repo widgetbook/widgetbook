@@ -1,0 +1,96 @@
+# Iterable Segmented Knob
+
+The iterable segmented knob allows you to dynamically enter an iterable value for a widget property in the Widgetbook UI.
+This is particularly useful for properties that require an iterable input, such as a `List` or `Set` of item.
+
+## Variants
+
+The iterable knob has two variants:
+
+- `context.knobs.iterable.segmented()`: This variant allows you to enter an iterable value via a segmented button. It does not accept `null` values.
+- `context.knobs.iterableOrNull.segmented()`: This variant allows you to enter an iterable value via a segmented button or set the value to `null`. It is useful when the property can be optional.
+
+## Properties
+
+In addition to the knob's [base properties](/knobs/overview#properties), the iterable segmented knob includes the following:
+
+<Accordion title="context.knobs.iterable.segmented()" defaultOpen>
+  <Property name="options" type="T" required>
+    The options shown in the segmented buttons. The type of the options must be the same as the type of the property.
+  </Property>
+
+  <Property name="labelBuilder" type="LabelBuilder<T>" optional>
+    A function to format the options for display in the segmented buttons.
+  </Property>
+</Accordion>
+
+## `context.knobs.iterable.segmented()`
+
+### Example
+
+<iframe
+  src="https://preview.widgetbook.io/#/?path=knobpreview/iterable-segmented-knob&panels=knobs"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use the iterable segmented knob, call the `context.knobs.iterable.segmented()` method.
+
+```dart title="Example: Iterable Segmented Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    status: context.knobs.iterable.segmented( // [!code highlight]
+      label: 'status', // [!code highlight]
+      labelBuilder: (value) => value!.name, // [!code highlight]
+      options: [ // [!code highlight]
+        OnlineStatusType.online, // [!code highlight]
+        OnlineStatusType.offline, // [!code highlight]
+        OnlineStatusType.busy, // [!code highlight]
+      ], // [!code highlight]
+    ), // [!code highlight]
+  );
+}
+
+enum OnlineStatusType { online, offline, busy }
+```
+
+## `context.knobs.iterableOrNull.segmented()`
+
+### Example
+
+<iframe
+  src="https://preview.widgetbook.io/#/?path=knobpreview/iterable-segmented-nullable-knob&panels=knobs"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+To use the nullable iterable segmented knob, call the `context.knobs.iterableOrNull.segmented()` method.
+
+```dart title="Example: Nullable Iterable Segmented Knob"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    status: context.knobs.iterableOrNull.segmented(
+      label: 'status',
+      labelBuilder: (value) => value!.name,
+      options: [
+        OnlineStatusType.online,
+        OnlineStatusType.offline,
+        OnlineStatusType.busy,
+      ],
+    ),
+  );
+}
+
+enum OnlineStatusType { online, offline, busy }
+```
+
+## Multi-snapshot Support
+
+Multi-snapshot support for Widgetbook Cloud allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons).
+Please refer to the [IterableKnobConfig page](/knobs/iterable/overview#multi-snapshot-support) for more information.
