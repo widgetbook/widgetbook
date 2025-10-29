@@ -96,16 +96,20 @@ class ArgBuilder {
               (b) =>
                   b
                     ..symbol = param.type.nonNullableName
-                    ..isNullable = param.type.isNullable,
+                    ..isNullable =
+                        param.type.isNullable ||
+                        // If the default value is not const, then we make it
+                        // nullable and initialize it in the constructor initializer
+                        (param.type.isPrimitive && !param.type.meta.isConst),
             )
             ..required = param.requiresArg
-            ..defaultTo =
-                param
-                        .hasDefaultValue //
-                    ? refer(param.defaultValueCode!).code
-                    : param.type.isPrimitive
-                    ? param.type.meta.defaultValue.code
-                    : null,
+            ..defaultTo = switch (param) {
+              _ when param.hasDefaultValue =>
+                refer(param.defaultValueCode!).code,
+              _ when param.type.isPrimitive && param.type.meta.isConst =>
+                param.type.meta.defaultValue.code,
+              _ => null,
+            },
     );
   }
 }

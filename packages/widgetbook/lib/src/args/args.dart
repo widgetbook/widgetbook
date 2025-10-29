@@ -1,5 +1,6 @@
 export 'bool_arg.dart';
 export 'color_arg.dart';
+export 'date_time_arg.dart';
 export 'double_arg.dart';
 export 'duration_arg.dart';
 export 'enum_arg.dart';

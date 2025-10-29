@@ -94,7 +94,22 @@ class ArgsClassBuilder {
                                             )
                                         : InvokeExpression.newOf(
                                           refer('Arg.fixed'),
-                                          [refer(param.displayName)],
+                                          switch (param) {
+                                            // For non-constant value, like DateTime.now()
+                                            // they are initialized here instead of the
+                                            // default value of the parameter
+                                            _
+                                                when param.type.isPrimitive &&
+                                                    !param.type.meta.isConst =>
+                                              [
+                                                refer(
+                                                  param.displayName,
+                                                ).ifNullThen(
+                                                  param.type.meta.defaultValue,
+                                                ),
+                                              ],
+                                            _ => [refer(param.displayName)],
+                                          },
                                         ),
                                   )
                                   .code,
