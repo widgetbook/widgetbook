@@ -60,6 +60,7 @@ void main() {
         () {
           final story = MockStory();
           when(() => story.name).thenReturn('Story');
+          when(() => story.path).thenReturn('Placeholder/Story');
 
           final integration = MockIntegration();
           final state = WidgetbookState(

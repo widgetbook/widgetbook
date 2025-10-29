@@ -66,9 +66,11 @@ void main() {
           final previousStory = MockStory();
           when(() => previousStory.name).thenReturn('previous');
           when(() => previousStory.args).thenReturn(previousStoryArgs);
+          when(() => previousStory.path).thenReturn('component/previous');
 
           final nextStory = MockStory();
           when(() => nextStory.name).thenReturn('next');
+          when(() => nextStory.path).thenReturn('component/next');
 
           final state = WidgetbookState(
             path: 'component/previous',
