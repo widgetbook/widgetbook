@@ -1,7 +1,9 @@
+import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
 import '../fields/fields.dart';
 import '../routing/routing.dart';
+import '../state/state.dart';
 import 'const_arg.dart';
 
 /// Used to initialize an [Arg] with either a default value or a user-provided
@@ -56,6 +58,14 @@ abstract class Arg<T> extends FieldsComposable<T> {
   @internal
   void resetValue() {
     value = initialValue;
+  }
+
+  void update(BuildContext context, T newValue) {
+    final newGroup = valueToQueryGroup(newValue);
+
+    // Avoid updates in tests where there is no WidgetbookState
+    final state = WidgetbookState.maybeOf(context);
+    state?.updateQueryGroup(groupName, newGroup);
   }
 
   QueryGroup? toQueryGroup() {

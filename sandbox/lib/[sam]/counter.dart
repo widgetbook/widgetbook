@@ -4,9 +4,11 @@ class Counter extends StatefulWidget {
   const Counter({
     super.key,
     this.initialValue = 0,
+    this.onChanged,
   });
 
   final int initialValue;
+  final void Function(int)? onChanged;
 
   @override
   State<Counter> createState() => _CounterState();
@@ -27,7 +29,10 @@ class _CounterState extends State<Counter> {
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
-          onPressed: () => setState(() => _count--),
+          onPressed: () {
+            setState(() => _count--);
+            widget.onChanged?.call(_count);
+          },
           icon: const Icon(Icons.remove),
         ),
         Padding(
@@ -35,7 +40,10 @@ class _CounterState extends State<Counter> {
           child: Text('$_count'),
         ),
         IconButton(
-          onPressed: () => setState(() => _count++),
+          onPressed: () {
+            setState(() => _count++);
+            widget.onChanged?.call(_count);
+          },
           icon: const Icon(Icons.add),
         ),
       ],

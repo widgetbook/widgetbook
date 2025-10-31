@@ -87,7 +87,13 @@ abstract class FieldsComposable<T> {
   /// Converts the [fields] into a [Widget] that will be rendered in the
   /// settings side panel.
   Widget buildFields(BuildContext context) {
+    final state = WidgetbookState.of(context);
+    final group = state.queryGroups[groupName];
+
     final child = Column(
+      // This key is needed to force rebuilds when the args are updated
+      // using `Arg.update`.
+      key: group != null ? ValueKey(group) : null,
       crossAxisAlignment: CrossAxisAlignment.start,
       children:
           fields
@@ -110,9 +116,6 @@ abstract class FieldsComposable<T> {
       );
     }
 
-    final state = WidgetbookState.of(context);
-    final group = state.queryGroups[groupName];
-
     // If the query group is not present, we delegate the check to
     // valueFromQueryGroup, which can have custom implementation,
     // to determine nullability based on the value.
@@ -120,27 +123,21 @@ abstract class FieldsComposable<T> {
     final isNullified =
         group == null ? valueFromQueryGroup(null) == null : group.isNullified;
 
-    return !isNullable
-        ? Setting(
-          name: name,
-          description: description,
-          child: child,
-        )
-        : NullableSetting(
-          name: name,
-          description: description,
-          isNullified: isNullified,
-          onNullified: (value) {
-            if (group == null) {
-              state.updateQueryGroup(groupName, QueryGroup.nullified);
-              return;
-            }
+    return NullableSetting(
+      name: name,
+      description: description,
+      isNullified: isNullified,
+      onNullified: (value) {
+        if (group == null) {
+          state.updateQueryGroup(groupName, QueryGroup.nullified);
+          return;
+        }
 
-            final newGroup = value ? group.nullify() : group.unnullify();
-            state.updateQueryGroup(groupName, newGroup);
-          },
-          child: child,
-        );
+        final newGroup = value ? group.nullify() : group.unnullify();
+        state.updateQueryGroup(groupName, newGroup);
+      },
+      child: child,
+    );
   }
 }
 
