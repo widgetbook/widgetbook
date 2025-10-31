@@ -36,7 +36,6 @@ class NumSliderField<T extends num> extends Field<T> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
-          flex: 8,
           child: Slider(
             value: ((value ?? initialValue)?.toDouble() ?? 0).clamp(
               min.toDouble(),
@@ -55,12 +54,10 @@ class NumSliderField<T extends num> extends Field<T> {
             },
           ),
         ),
-        Expanded(
-          child: Text(
-            codec.toParam(value ?? initialValue ?? defaultValue),
-            textAlign: TextAlign.end,
-            maxLines: 1,
-          ),
+        Text(
+          codec.toParam(value ?? initialValue ?? defaultValue),
+          textAlign: TextAlign.end,
+          maxLines: 1,
         ),
       ],
     );
