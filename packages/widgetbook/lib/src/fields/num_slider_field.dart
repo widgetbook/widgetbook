@@ -8,7 +8,6 @@ class NumSliderField<T extends num> extends Field<T> {
   NumSliderField({
     required super.name,
     this.divisions,
-    this.precision,
     super.initialValue,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
     required this.min,
@@ -29,9 +28,6 @@ class NumSliderField<T extends num> extends Field<T> {
   /// The number of discrete divisions in the slider.
   final int? divisions;
 
-  /// The number of decimal places to display and return.
-  final int? precision;
-
   Size _getTextSize(String text, TextStyle style) {
     final textPainter = TextPainter(
       text: TextSpan(text: text, style: style),
@@ -45,11 +41,14 @@ class NumSliderField<T extends num> extends Field<T> {
   Widget toWidget(BuildContext context, String group, T? value) {
     final defaultValue = (T == int ? 0 : 0.0) as T;
     final label = codec.toParam(value ?? initialValue ?? defaultValue);
-    final maxLabel =
-        precision == null ? max.toString() : max.toStringAsFixed(precision!);
+    final maxLabel = codec.toParam(max);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      spacing:
+          SliderTheme.of(context).thumbShape == SliderComponentShape.noThumb
+              ? 12
+              : 0,
       children: [
         Expanded(
           child: Slider(
