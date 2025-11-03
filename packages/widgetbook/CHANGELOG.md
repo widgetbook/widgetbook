@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX:** Allow `IterableSegmentedField` to parse unknown values. ([#1703](https://github.com/widgetbook/widgetbook/pull/1703) - by [@EArminjon](https://github.com/EArminjon))
+
 ## 3.19.0
 
 - **FEAT**: Add color picker to `ColorField`. ([#1659](https://github.com/widgetbook/widgetbook/pull/1659) - by [@EArminjon](https://github.com/EArminjon))
