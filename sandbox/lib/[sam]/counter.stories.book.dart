@@ -32,28 +32,47 @@ class CounterStory extends Story<Counter, CounterArgs> {
          args: args ?? CounterArgs(),
          argsBuilder:
              argsBuilder ??
-             (context, args) =>
-                 Counter(key: args.key, initialValue: args.initialValue),
+             (context, args) => Counter(
+               key: args.key,
+               initialValue: args.initialValue,
+               onChanged: args.onChanged,
+             ),
        );
 }
 
 class CounterArgs extends StoryArgs<Counter> {
-  CounterArgs({Arg<Key?>? key, Arg<int>? initialValue})
-    : this.keyArg = $initArg('key', key, null),
-      this.initialValueArg = $initArg('initialValue', initialValue, IntArg(0))!;
+  CounterArgs({
+    Arg<Key?>? key,
+    Arg<int>? initialValue,
+    Arg<void Function(int)?>? onChanged,
+  }) : this.keyArg = $initArg('key', key, null),
+       this.initialValueArg = $initArg(
+         'initialValue',
+         initialValue,
+         IntArg(0),
+       )!,
+       this.onChangedArg = $initArg('onChanged', onChanged, null);
 
-  CounterArgs.fixed({Key? key, int initialValue = 0})
-    : this.keyArg = key == null ? null : Arg.fixed(key),
-      this.initialValueArg = Arg.fixed(initialValue);
+  CounterArgs.fixed({
+    Key? key,
+    int initialValue = 0,
+    void Function(int)? onChanged,
+  }) : this.keyArg = key == null ? null : Arg.fixed(key),
+       this.initialValueArg = Arg.fixed(initialValue),
+       this.onChangedArg = onChanged == null ? null : Arg.fixed(onChanged);
 
   final Arg<Key?>? keyArg;
 
   final Arg<int> initialValueArg;
 
+  final Arg<void Function(int)?>? onChangedArg;
+
   Key? get key => keyArg?.value;
 
   int get initialValue => initialValueArg.value;
 
+  void Function(int)? get onChanged => onChangedArg?.value;
+
   @override
-  List<Arg?> get list => [keyArg, initialValueArg];
+  List<Arg?> get list => [keyArg, initialValueArg, onChangedArg];
 }
