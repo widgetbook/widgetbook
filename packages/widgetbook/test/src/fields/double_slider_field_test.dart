@@ -72,6 +72,7 @@ void main() {
               name: 'double_slider_field',
               min: 0.0,
               max: 10.0,
+              precision: 0,
             ).codec.toParam(1.23456789),
             equals('1'),
           );
@@ -80,7 +81,6 @@ void main() {
               name: 'double_slider_field',
               min: 0.0,
               max: 10.0,
-              precision: 1,
             ).codec.toParam(1.23456789),
             equals('1.2'),
           );

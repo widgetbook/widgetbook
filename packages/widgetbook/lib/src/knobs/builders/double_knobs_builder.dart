@@ -20,7 +20,7 @@ class DoubleKnobsBuilder {
     double min = 0,
     double max = 20,
     int? divisions,
-    int? precision = 0,
+    int? precision = 1,
   }) {
     return onKnobAdded(
       DoubleSliderKnob(
@@ -72,7 +72,7 @@ class DoubleOrNullKnobsBuilder {
     double min = 0,
     double max = 20,
     int? divisions,
-    int? precision = 0,
+    int? precision = 1,
   }) {
     return onKnobAdded(
       DoubleSliderKnob.nullable(

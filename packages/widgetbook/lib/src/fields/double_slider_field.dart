@@ -14,7 +14,7 @@ class DoubleSliderField extends NumSliderField<double> {
     required super.min,
     required super.max,
     this.divisions,
-    super.precision = 0,
+    super.precision = 1,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          type: FieldType.doubleSlider,

@@ -12,7 +12,7 @@ class DoubleSliderKnob extends Knob<double?> {
     this.max = 1,
     this.min = 0,
     this.divisions,
-    this.precision = 0,
+    this.precision = 1,
   });
 
   DoubleSliderKnob.nullable({
@@ -22,7 +22,7 @@ class DoubleSliderKnob extends Knob<double?> {
     this.max = 1,
     this.min = 0,
     this.divisions,
-    this.precision = 0,
+    this.precision = 1,
   }) : super(isNullable: true);
 
   final double max;
