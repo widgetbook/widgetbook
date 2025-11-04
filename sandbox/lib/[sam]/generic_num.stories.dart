@@ -42,14 +42,14 @@ GenericNum<T> $builder<T extends num, R>(
 }
 
 final $Integer = GenericNumStory<int, String>(
-  args: GenericNumInputArgs.fixed(
+  args: (_) => GenericNumInputArgs.fixed(
     number: 0,
     other: 'foo',
   ),
 );
 
 final $Double = GenericNumStory<double, Color>(
-  args: GenericNumInputArgs.fixed(
+  args: (_) => GenericNumInputArgs.fixed(
     number: 0.0,
     other: Colors.black,
   ),

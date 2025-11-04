@@ -51,7 +51,7 @@ class ResponsiveLayout extends StatelessWidget {
     final story = state.story;
 
     return story
-            ?.args
+            ?.args(context)
             .safeList //
             .map(
               (arg) => KeyedSubtree(

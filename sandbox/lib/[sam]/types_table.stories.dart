@@ -25,7 +25,7 @@ final $Default = TypesTableStory(
       child: child,
     );
   },
-  args: TypesTableArgs(
+  args: (_) => TypesTableArgs(
     string: StringArg(
       'Hello World',
       name: 'Text',
@@ -47,7 +47,7 @@ final $Default = TypesTableStory(
     ),
     TypesTableScenario(
       name: 'Placeholder Child',
-      args: TypesTableArgs.fixed(
+      args: (_) => TypesTableArgs.fixed(
         child: const Placeholder(),
       ),
     ),

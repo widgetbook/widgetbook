@@ -2,9 +2,15 @@ import 'dart:io';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import 'test.dart';
+
+class FakeContext implements BuildContext {
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
 
 class ScenarioMetadata {
   const ScenarioMetadata({
@@ -42,6 +48,9 @@ class ScenarioMetadata {
   }
 
   Map<String, dynamic> toJson() {
+    final fakeContext = FakeContext();
+    final args = scenario.args(fakeContext);
+
     return {
       'component': {
         'name': component.name,
@@ -58,7 +67,7 @@ class ScenarioMetadata {
             mode.groupName: mode.toQueryGroup().toJson(),
         },
         'args': {
-          for (final arg in scenario.args.safeList)
+          for (final arg in args.safeList)
             arg.groupName: arg.toQueryGroup()?.toJson(),
         },
       },

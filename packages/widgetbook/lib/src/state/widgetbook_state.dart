@@ -237,11 +237,12 @@ class WidgetbookState extends ChangeNotifier {
     // Reset args
     final oldStory = story;
 
+    // TODO
     // Reset the old story args and remove their query groups
-    oldStory?.resetArgs();
-    oldStory?.args.safeList.forEach(
-      (arg) => queryGroups.remove(arg.groupName),
-    );
+    // oldStory?.resetArgs();
+    // oldStory?.args.safeList.forEach(
+    //   (arg) => queryGroups.remove(arg.groupName),
+    // );
 
     path = newPath; // Changes `story` to new one
 

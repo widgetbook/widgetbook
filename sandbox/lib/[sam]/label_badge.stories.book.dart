@@ -28,11 +28,11 @@ class LabelBadgeStory extends Story<LabelBadge, NumericBadgeInputArgs> {
     super.name,
     SetupBuilder<LabelBadge, NumericBadgeInputArgs>? setup,
     super.modes,
-    NumericBadgeInputArgs? args,
+    ArgsBuilder<NumericBadgeInputArgs>? args,
     StoryWidgetBuilder<LabelBadge, NumericBadgeInputArgs>? builder,
     super.scenarios,
   }) : super(
-         args: args ?? NumericBadgeInputArgs(),
+         args: args ?? (context) => NumericBadgeInputArgs(),
          builder: builder ?? $builder,
          setup: setup ?? $setup,
        );

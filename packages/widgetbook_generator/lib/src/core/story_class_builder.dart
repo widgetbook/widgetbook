@@ -49,12 +49,6 @@ class StoryClassBuilder {
       types: unboundedTypeParams,
     );
 
-    final nullableArgsClassRef = argsType.getRef(
-      suffix: 'Args',
-      types: unboundedTypeParams,
-      isNullable: true,
-    );
-
     return Class(
       (b) =>
           b
@@ -112,7 +106,15 @@ class StoryClassBuilder {
                             ..toSuper = hasRequiredArgs
                             ..required = hasRequiredArgs
                             ..type =
-                                hasRequiredArgs ? null : nullableArgsClassRef,
+                                hasRequiredArgs
+                                    ? null
+                                    : TypeReference(
+                                      (b) =>
+                                          b
+                                            ..symbol = 'ArgsBuilder'
+                                            ..isNullable = true
+                                            ..types.addAll([argsClassRef]),
+                                    ),
                     ),
                     Parameter(
                       (b) =>
@@ -147,10 +149,19 @@ class StoryClassBuilder {
                   final superInitializers = {
                     if (!hasRequiredArgs)
                       'args': refer('args').ifNullThen(
-                        InvokeExpression.newOf(
-                          argsClassRef,
-                          [],
-                        ),
+                        Method(
+                          (b) =>
+                              b
+                                ..lambda = true
+                                ..requiredParameters.add(
+                                  Parameter((b) => b.name = 'context'),
+                                )
+                                ..body =
+                                    InvokeExpression.newOf(
+                                      argsClassRef,
+                                      [],
+                                    ).code,
+                        ).closure,
                       ),
                     if (!isCustomArgs && !hasBuilder)
                       'builder': refer('builder').ifNullThen(

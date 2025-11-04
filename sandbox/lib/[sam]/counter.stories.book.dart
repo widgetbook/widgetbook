@@ -25,11 +25,11 @@ class CounterStory extends Story<Counter, CounterArgs> {
     super.name,
     super.setup,
     super.modes,
-    CounterArgs? args,
+    ArgsBuilder<CounterArgs>? args,
     StoryWidgetBuilder<Counter, CounterArgs>? builder,
     super.scenarios,
   }) : super(
-         args: args ?? CounterArgs(),
+         args: args ?? (context) => CounterArgs(),
          builder:
              builder ??
              (context, args) => Counter(

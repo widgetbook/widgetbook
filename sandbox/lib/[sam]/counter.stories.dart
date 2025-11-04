@@ -13,20 +13,19 @@ const meta = Meta<Counter>(
 );
 
 final $Default = CounterStory(
-  builder: (context, args) {
-    return Counter(
-      initialValue: args.initialValue,
-      onChanged: (value) {
-        // Since there's no `BuilderArg` and the `.update` method requires
-        // a BuildContext, we pass it down from `builder` and not `args`.
-        args.initialValueArg.update(context, value);
-      },
+  args: (context) {
+    final initialValueArg = IntArg(0);
+    return CounterArgs(
+      initialValue: initialValueArg,
+      onChanged: Arg.fixed((value) {
+        initialValueArg.update(context, value);
+      }),
     );
   },
   scenarios: [
     CounterScenario(
       name: '10++',
-      args: CounterArgs(
+      args: (_) => CounterArgs(
         initialValue: IntArg(10),
       ),
       run: (tester, args) async {

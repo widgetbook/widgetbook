@@ -21,6 +21,8 @@ typedef StoryWidgetBuilder<
   TArgs extends StoryArgs<TWidget>
 > = TWidget Function(BuildContext context, TArgs args);
 
+typedef ArgsBuilder<TArgs> = TArgs Function(BuildContext context);
+
 @optionalTypeArgs
 abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   Story({
@@ -43,7 +45,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   String get name => _name ?? $generatedName;
 
   final String? designLink;
-  final TArgs args;
+  final ArgsBuilder<TArgs> args;
   final SetupBuilder<TWidget, TArgs> setup;
   final List<Scenario<TWidget, TArgs>> scenarios;
 
@@ -88,19 +90,19 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   @internal
   void syncArgs(BuildContext context) {
     final state = WidgetbookState.of(context);
-    args.safeList.forEach((arg) {
+    args(context).safeList.forEach((arg) {
       arg.syncValue(state.queryGroups[arg.groupName]);
     });
   }
 
   @internal
-  void resetArgs() {
-    args.safeList.forEach((arg) => arg.resetValue());
+  void resetArgs(BuildContext context) {
+    args(context).safeList.forEach((arg) => arg.resetValue());
   }
 
   Widget build(BuildContext context) {
     syncArgs(context);
-    return buildWithArgs(context, args);
+    return buildWithArgs(context, args(context));
   }
 
   /// Same as [build], but uses external [args] instead of [Story.args].

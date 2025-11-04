@@ -63,7 +63,10 @@ void testScenario(
         ),
       );
 
-      await scenario.execute(tester);
+      final context = tester.element(find.byKey(key));
+      final args = scenario.args(context);
+
+      await scenario.execute(tester, args);
 
       final element = tester.element(find.byKey(key));
       final imageFuture = captureImage(element, 1);

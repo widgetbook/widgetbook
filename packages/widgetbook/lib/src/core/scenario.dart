@@ -24,7 +24,7 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
   Scenario({
     required super.name,
     List<Mode>? modes,
-    TArgs? args,
+    ArgsBuilder<TArgs>? args,
     this.run,
     super.mergeModes,
   }) : _modes = modes,
@@ -32,7 +32,7 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
        super(modes: modes ?? []);
 
   final List<Mode>? _modes;
-  final TArgs? _args;
+  final ArgsBuilder<TArgs>? _args;
 
   /// A late back-reference to the story this scenario belongs to.
   /// It is initialized in the [Story] constructor.
@@ -44,7 +44,7 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
   /// or to trigger an animation.
   final Future<void> Function(WidgetTester tester, TArgs args)? run;
 
-  TArgs get args => _args ?? story.args;
+  ArgsBuilder<TArgs> get args => _args ?? story.args;
 
   /// Combines the [modes] defined in the [story] and the ones defined
   /// in this scenario. If both are null, returns null.
@@ -68,7 +68,7 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
   // Wrapper to handle generic type parameters and avoid subtype errors like:
   // type `(WidgetTester, MyArgs) => Future<void>` is not a subtype
   // of type `(WidgetTester, StoryArgs<Widget>) => Future<void>`
-  Future<void>? execute(WidgetTester tester) {
+  Future<void>? execute(WidgetTester tester, TArgs args) {
     return run?.call(tester, args);
   }
 
@@ -103,7 +103,7 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
   /// Injects both [Config.appBuilder] and [Config.addons] into the
   /// built story, which is built using the [args] of this scenario.
   Widget buildWithConfig(BuildContext context, Config config) {
-    final effectiveStory = story.buildWithArgs(context, args);
+    final effectiveStory = story.buildWithArgs(context, args(context));
     final mergedAddons = mergeModesIntoAddons(config.addons ?? []);
 
     return config.appBuilder(
