@@ -12,6 +12,7 @@ class DoubleSliderKnob extends Knob<double?> {
     this.max = 1,
     this.min = 0,
     this.divisions,
+    this.precision = 1,
   });
 
   DoubleSliderKnob.nullable({
@@ -21,11 +22,13 @@ class DoubleSliderKnob extends Knob<double?> {
     this.max = 1,
     this.min = 0,
     this.divisions,
+    this.precision = 1,
   }) : super(isNullable: true);
 
   final double max;
   final double min;
   final int? divisions;
+  final int? precision;
 
   @override
   List<Field> get fields {
@@ -36,6 +39,7 @@ class DoubleSliderKnob extends Knob<double?> {
         min: min,
         max: max,
         divisions: divisions,
+        precision: precision,
       ),
     ];
   }

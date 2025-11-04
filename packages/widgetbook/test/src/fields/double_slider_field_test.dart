@@ -13,6 +13,7 @@ void main() {
         initialValue: 5.0,
         min: 0.0,
         max: 10.0,
+        precision: null,
       );
 
       test(
@@ -58,6 +59,40 @@ void main() {
           );
 
           expect(widget.value, equals(7.0));
+        },
+      );
+
+      test(
+        'given a value, '
+        'when [codec.toParam] is called with a custom precision, '
+        'then it returns the value as a string with expected precision',
+        () {
+          expect(
+            DoubleSliderField(
+              name: 'double_slider_field',
+              min: 0.0,
+              max: 10.0,
+              precision: 0,
+            ).codec.toParam(1.23456789),
+            equals('1'),
+          );
+          expect(
+            DoubleSliderField(
+              name: 'double_slider_field',
+              min: 0.0,
+              max: 10.0,
+            ).codec.toParam(1.23456789),
+            equals('1.2'),
+          );
+          expect(
+            DoubleSliderField(
+              name: 'double_slider_field',
+              min: 0.0,
+              max: 10.0,
+              precision: 5,
+            ).codec.toParam(1.23456789),
+            equals('1.23457'),
+          );
         },
       );
     },

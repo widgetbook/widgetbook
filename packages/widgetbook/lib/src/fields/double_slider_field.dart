@@ -14,14 +14,21 @@ class DoubleSliderField extends NumSliderField<double> {
     required super.min,
     required super.max,
     this.divisions,
+    this.precision = 1,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          type: FieldType.doubleSlider,
          codec: FieldCodec(
-           toParam: (value) => value.toString(),
+           toParam: (value) {
+             if (precision != null) return value.toStringAsFixed(precision);
+             return value.toString();
+           },
            toValue: (param) => double.tryParse(param ?? ''),
          ),
        );
 
   final int? divisions;
+
+  /// The number of decimal places to display and return.
+  final int? precision;
 }

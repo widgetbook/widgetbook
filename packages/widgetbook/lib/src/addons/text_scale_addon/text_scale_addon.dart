@@ -86,6 +86,7 @@ class TextScaleAddon extends WidgetbookAddon<double> {
         min: min,
         max: max,
         divisions: divisions,
+        precision: 2,
       ),
     ];
   }
