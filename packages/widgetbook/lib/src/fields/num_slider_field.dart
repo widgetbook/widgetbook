@@ -46,7 +46,7 @@ class NumSliderField<T extends num> extends Field<T> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       spacing:
-          SliderTheme.of(context).thumbShape == SliderComponentShape.noThumb
+          SliderTheme.of(context).overlayShape == SliderComponentShape.noThumb
               ? 12
               : 0,
       children: [
