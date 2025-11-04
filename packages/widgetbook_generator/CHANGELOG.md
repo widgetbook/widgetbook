@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **BREAKING**: Rename `Story`'s `argsBuilder` to `builder`. ([#1711](https://github.com/widgetbook/widgetbook/pull/1711))
 - **FEAT**: Support nullable args. ([#1675](https://github.com/widgetbook/widgetbook/pull/1675))
 - **FEAT**: Generate value getters for args, and use them instead of `Arg.resolve`. ([#1685](https://github.com/widgetbook/widgetbook/pull/1685))
 - **FEAT**: Support `DateTimeArg`. ([#1704](https://github.com/widgetbook/widgetbook/pull/1704))

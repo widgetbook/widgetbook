@@ -26,11 +26,11 @@ class TypesTableStory extends Story<TypesTable, TypesTableArgs> {
     super.setup,
     super.modes,
     required super.args,
-    ArgsBuilder<TypesTable, TypesTableArgs>? argsBuilder,
+    StoryWidgetBuilder<TypesTable, TypesTableArgs>? builder,
     super.scenarios,
   }) : super(
-         argsBuilder:
-             argsBuilder ??
+         builder:
+             builder ??
              (context, args) => TypesTable(
                key: args.key,
                boolean: args.boolean,

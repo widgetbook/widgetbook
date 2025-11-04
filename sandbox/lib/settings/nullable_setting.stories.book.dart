@@ -28,11 +28,11 @@ class NullableSettingStory extends Story<NullableSetting, NullableSettingArgs> {
     super.setup,
     super.modes,
     required super.args,
-    ArgsBuilder<NullableSetting, NullableSettingArgs>? argsBuilder,
+    StoryWidgetBuilder<NullableSetting, NullableSettingArgs>? builder,
     super.scenarios,
   }) : super(
-         argsBuilder:
-             argsBuilder ??
+         builder:
+             builder ??
              (context, args) => NullableSetting(
                key: args.key,
                name: args.name,

@@ -13,12 +13,12 @@ const meta = Meta<Counter>(
 );
 
 final $Default = CounterStory(
-  argsBuilder: (context, args) {
+  builder: (context, args) {
     return Counter(
       initialValue: args.initialValue,
       onChanged: (value) {
         // Since there's no `BuilderArg` and the `.update` method requires
-        // a BuildContext, we pass it down from `argsBuilder` and not `args`.
+        // a BuildContext, we pass it down from `builder` and not `args`.
         args.initialValueArg.update(context, value);
       },
     );

@@ -26,11 +26,11 @@ class ControlsStory extends Story<Controls, ControlsArgs> {
     super.setup,
     super.modes,
     required super.args,
-    ArgsBuilder<Controls, ControlsArgs>? argsBuilder,
+    StoryWidgetBuilder<Controls, ControlsArgs>? builder,
     super.scenarios,
   }) : super(
-         argsBuilder:
-             argsBuilder ??
+         builder:
+             builder ??
              (context, args) => Controls(
                key: args.key,
                control1Label: args.control1Label,

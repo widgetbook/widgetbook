@@ -10,13 +10,13 @@ class StoryClassBuilder {
     this.widgetType,
     this.argsType,
     this.hasSetup,
-    this.hasArgsBuilder,
+    this.hasBuilder,
   );
 
   final DartType widgetType;
   final DartType argsType;
   final bool hasSetup;
-  final bool hasArgsBuilder;
+  final bool hasBuilder;
 
   Iterable<FormalParameterElement> get params {
     return (argsType.element as ClassElement)
@@ -82,9 +82,9 @@ class StoryClassBuilder {
                           b
                             ..name = 'setup'
                             ..named = true
-                            ..toSuper = !hasArgsBuilder
+                            ..toSuper = !hasBuilder
                             ..type =
-                                !hasArgsBuilder
+                                !hasBuilder
                                     ? null
                                     : TypeReference(
                                       (b) =>
@@ -117,17 +117,17 @@ class StoryClassBuilder {
                     Parameter(
                       (b) =>
                           b
-                            ..name = 'argsBuilder'
+                            ..name = 'builder'
                             ..named = true
-                            ..toSuper = isCustomArgs && !hasArgsBuilder
-                            ..required = isCustomArgs && !hasArgsBuilder
+                            ..toSuper = isCustomArgs && !hasBuilder
+                            ..required = isCustomArgs && !hasBuilder
                             ..type =
-                                isCustomArgs && !hasArgsBuilder
+                                isCustomArgs && !hasBuilder
                                     ? null
                                     : TypeReference(
                                       (b) =>
                                           b
-                                            ..symbol = 'ArgsBuilder'
+                                            ..symbol = 'StoryWidgetBuilder'
                                             ..isNullable = true
                                             ..types.addAll([
                                               widgetClassRef,
@@ -152,8 +152,8 @@ class StoryClassBuilder {
                           [],
                         ),
                       ),
-                    if (!isCustomArgs && !hasArgsBuilder)
-                      'argsBuilder': refer('argsBuilder').ifNullThen(
+                    if (!isCustomArgs && !hasBuilder)
+                      'builder': refer('builder').ifNullThen(
                         Method(
                           (b) =>
                               b
@@ -170,9 +170,9 @@ class StoryClassBuilder {
                                     ).code,
                         ).closure,
                       ),
-                    if (hasArgsBuilder)
-                      'argsBuilder': refer('argsBuilder').ifNullThen(
-                        refer('\$argsBuilder'),
+                    if (hasBuilder)
+                      'builder': refer('builder').ifNullThen(
+                        refer('\$builder'),
                       ),
                     if (hasSetup)
                       'setup': refer('setup').ifNullThen(

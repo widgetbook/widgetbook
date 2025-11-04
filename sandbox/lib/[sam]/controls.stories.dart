@@ -18,7 +18,7 @@ final $Default = ControlsStory(
     onControl1Pressed: () {},
     onControl2Pressed: () {},
   ),
-  argsBuilder: (context, args) => Controls(
+  builder: (context, args) => Controls(
     control1Label: args.control1Label,
     control2Label: args.control2Label,
     onControl1Pressed: () {

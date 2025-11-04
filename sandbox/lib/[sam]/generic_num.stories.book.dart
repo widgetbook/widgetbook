@@ -31,9 +31,9 @@ class GenericNumStory<T extends num, R>
     SetupBuilder<GenericNum<T>, GenericNumInputArgs<T, R>>? setup,
     super.modes,
     required super.args,
-    ArgsBuilder<GenericNum<T>, GenericNumInputArgs<T, R>>? argsBuilder,
+    StoryWidgetBuilder<GenericNum<T>, GenericNumInputArgs<T, R>>? builder,
     super.scenarios,
-  }) : super(argsBuilder: argsBuilder ?? $argsBuilder, setup: setup ?? $setup);
+  }) : super(builder: builder ?? $builder, setup: setup ?? $setup);
 }
 
 class GenericNumInputArgs<T extends num, R> extends StoryArgs<GenericNum<T>> {
