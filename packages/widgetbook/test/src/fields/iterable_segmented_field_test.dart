@@ -40,9 +40,18 @@ void main() {
         'then it throw an exception',
         () {
           expect(() => field.codec.toValue('x'), throwsA(isA<Exception>()));
-          expect(() => field.codec.toValue('[x]'), throwsA(isA<Exception>()));
           expect(() => field.codec.toValue('x]'), throwsA(isA<Exception>()));
           expect(() => field.codec.toValue('[x'), throwsA(isA<Exception>()));
+        },
+      );
+
+      test(
+        'given a string which contain params, '
+        'when [codec.toValue] is called, '
+        'then it should return valid values',
+        () {
+          expect(field.codec.toValue('[1,2,x,3,y]'), equals([1, 2, 3]));
+          expect(field.codec.toValue('[x]'), equals([]));
         },
       );
 
