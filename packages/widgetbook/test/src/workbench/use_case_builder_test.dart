@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/routing/app_router.dart';
+import 'package:widgetbook/src/workbench/use_case_builder.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 void main() {
-  group('$WidgetbookUseCase', () {
+  group('$UseCaseBuilder', () {
     testWidgets('given a home widget, '
         'then it is not displayed when a use case is selected', (tester) async {
       tester.view.physicalSize = const Size(1200, 800);

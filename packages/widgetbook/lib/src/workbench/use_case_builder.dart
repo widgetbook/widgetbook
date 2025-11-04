@@ -35,6 +35,10 @@ class _UseCaseBuilderState extends State<UseCaseBuilder> {
 
   @override
   Widget build(BuildContext context) {
+    // Clear all registered knobs before building the use case.
+    // When use case is rebuilt, knobs will be re-registered.
+    // This ensures that only the knobs used in the current use case are kept and ordered correctly.
+    WidgetbookState.of(context).knobs.clear();
     return widget.builder(context);
   }
 }
