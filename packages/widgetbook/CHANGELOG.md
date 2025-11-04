@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **BREAKING**: Rename `Story`'s `argsBuilder` to `builder`. ([#1711](https://github.com/widgetbook/widgetbook/pull/1711))
 - **BREAKING**: Remove `BuilderArg`. ([#1661](https://github.com/widgetbook/widgetbook/pull/1661))
 - **BREAKING**: Add `initialValue` to `FieldComposable`; which enforces `Addon` to have an initial value. ([#1662](https://github.com/widgetbook/widgetbook/pull/1662))
 - **BREAKING**: Seal `Field`s to prevent inheritance and close the API. ([#1672](https://github.com/widgetbook/widgetbook/pull/1672))

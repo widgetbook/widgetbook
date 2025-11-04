@@ -10,7 +10,7 @@ const meta = MetaWithArgs<LabelBadge, NumericBadgeInput>(
   docs: '''
 1. Using custom args via `MetaWithArgs`
 2. Creating a default `setup` function
-3. Creating a default `argsBuilder` function
+3. Creating a default `builder` function
 ''',
 );
 
@@ -27,8 +27,8 @@ Widget $setup(
   );
 }
 
-// This will be used as the default `argsBuilder`
-LabelBadge $argsBuilder(
+// This will be used as the default `builder`
+LabelBadge $builder(
   BuildContext context,
   NumericBadgeInputArgs args,
 ) {

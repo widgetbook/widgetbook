@@ -32,7 +32,7 @@ Widget $setup<T extends num, R>(
   );
 }
 
-GenericNum<T> $argsBuilder<T extends num, R>(
+GenericNum<T> $builder<T extends num, R>(
   BuildContext context,
   GenericNumInputArgs<T, R> args,
 ) {
@@ -42,7 +42,6 @@ GenericNum<T> $argsBuilder<T extends num, R>(
 }
 
 final $Integer = GenericNumStory<int, String>(
-  argsBuilder: $argsBuilder,
   args: GenericNumInputArgs.fixed(
     number: 0,
     other: 'foo',
@@ -50,7 +49,6 @@ final $Integer = GenericNumStory<int, String>(
 );
 
 final $Double = GenericNumStory<double, Color>(
-  argsBuilder: $argsBuilder,
   args: GenericNumInputArgs.fixed(
     number: 0.0,
     other: Colors.black,

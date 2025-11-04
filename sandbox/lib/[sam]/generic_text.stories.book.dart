@@ -29,11 +29,11 @@ class GenericTextStory<T> extends Story<GenericText<T>, GenericTextArgs<T>> {
     super.setup,
     super.modes,
     required super.args,
-    ArgsBuilder<GenericText<T>, GenericTextArgs<T>>? argsBuilder,
+    StoryWidgetBuilder<GenericText<T>, GenericTextArgs<T>>? builder,
     super.scenarios,
   }) : super(
-         argsBuilder:
-             argsBuilder ??
+         builder:
+             builder ??
              (context, args) =>
                  GenericText<T>(key: args.key, value: args.value),
        );

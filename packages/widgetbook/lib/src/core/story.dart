@@ -16,8 +16,10 @@ typedef SetupBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> =
       TArgs args,
     );
 
-typedef ArgsBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> =
-    TWidget Function(BuildContext context, TArgs args);
+typedef StoryWidgetBuilder<
+  TWidget extends Widget,
+  TArgs extends StoryArgs<TWidget>
+> = TWidget Function(BuildContext context, TArgs args);
 
 @optionalTypeArgs
 abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
@@ -27,7 +29,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     this.setup = defaultSetup,
     this.modes,
     required this.args,
-    required this.argsBuilder,
+    required this.builder,
     this.scenarios = const [],
   }) : this._name = name,
        assert(name != 'Docs', 'Story name cannot be "Docs"') {
@@ -43,8 +45,10 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   final String? designLink;
   final TArgs args;
   final SetupBuilder<TWidget, TArgs> setup;
-  final ArgsBuilder<TWidget, TArgs> argsBuilder;
   final List<Scenario<TWidget, TArgs>> scenarios;
+
+  /// Defines how the [TWidget] is built using the provided [TArgs].
+  final StoryWidgetBuilder<TWidget, TArgs> builder;
 
   /// These [Mode]s are only applied to [Scenario]s in this [Story] using
   /// the [Scenario.mergeModes] function to combine them with [Scenario.modes].
@@ -101,7 +105,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
 
   /// Same as [build], but uses external [args] instead of [Story.args].
   Widget buildWithArgs(BuildContext context, TArgs args) {
-    final widget = argsBuilder(context, args);
+    final widget = builder(context, args);
     final story = setup(context, widget, args);
     return story;
   }

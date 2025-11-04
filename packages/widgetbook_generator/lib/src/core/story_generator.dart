@@ -36,10 +36,10 @@ class StoryGenerator extends Generator {
           (element) => element.name == '\$setup',
         );
 
-    final hasArgsBuilder = library.allElements
+    final hasBuilder = library.allElements
         .whereType<TopLevelFunctionElement>()
         .any(
-          (element) => element.name == '\$argsBuilder',
+          (element) => element.name == '\$builder',
         );
 
     final genLib = Library(
@@ -58,7 +58,7 @@ class StoryGenerator extends Generator {
                   widgetType,
                   argsType,
                   hasSetup,
-                  hasArgsBuilder,
+                  hasBuilder,
                 ).build(),
                 ArgsClassBuilder(widgetType, argsType).build(),
               ],
