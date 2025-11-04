@@ -28,6 +28,7 @@ class ZoomAddon extends WidgetbookAddon<double> {
       min: 0.5,
       max: 3.0,
       divisions: 25,
+      precision: 2,
     ),
   ];
 
