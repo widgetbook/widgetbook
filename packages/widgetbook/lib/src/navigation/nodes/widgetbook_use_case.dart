@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../state/state.dart';
 import 'widgetbook_node.dart';
 
 /// A navigation node that represents a specific use case of a widget.
@@ -79,6 +80,7 @@ class WidgetbookUseCase extends WidgetbookNode {
 
   /// Builds the widget for this use case using the provided [context].
   Widget build(BuildContext context) {
+    WidgetbookState.of(context).knobs.clear();
     return builder(context);
   }
 
