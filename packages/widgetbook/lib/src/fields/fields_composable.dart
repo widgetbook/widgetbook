@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
+import 'package:meta/meta.dart';
 
 import '../routing/routing.dart';
 import '../settings/settings.dart';
@@ -11,11 +12,15 @@ import 'field.dart';
 /// a unique [name] and can be used to configure addons or knobs.
 abstract class FieldsComposable<T> {
   /// Creates a [FieldsComposable] with the specified configuration.
-  const FieldsComposable({
+  FieldsComposable({
     required this.name,
     this.description,
     required this.initialValue,
   });
+
+  // A workaround for the `empty` constructor in subclasses like Arg.
+  @internal
+  FieldsComposable.empty() : name = '', description = null;
 
   /// The display name of the composable group.
   final String name;
@@ -24,7 +29,7 @@ abstract class FieldsComposable<T> {
   final String? description;
 
   /// The initial value of the composable group.
-  final T initialValue;
+  late final T initialValue; // `late` is added to allow `empty` constructor
 
   /// The name of the query group param.
   String get groupName;

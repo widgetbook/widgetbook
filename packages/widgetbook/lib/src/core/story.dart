@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 import '../state/state.dart';
+import 'builder_arg.dart';
 import 'component.dart';
 import 'mode.dart';
 import 'scenario.dart';
@@ -98,6 +99,16 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     args.safeList.forEach((arg) => arg.resetValue());
   }
 
+  // Called separately from [syncArgs] to initialize BuilderArgs
+  // in [buildWithArgs] when building [Scenario]s with external args.
+  @internal
+  void initBuilderArgs(BuildContext context, TArgs args) {
+    // ignore: strict_raw_type
+    args.list.whereType<BuilderArg>().forEach((arg) {
+      arg.init(context);
+    });
+  }
+
   Widget build(BuildContext context) {
     syncArgs(context);
     return buildWithArgs(context, args);
@@ -105,6 +116,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
 
   /// Same as [build], but uses external [args] instead of [Story.args].
   Widget buildWithArgs(BuildContext context, TArgs args) {
+    initBuilderArgs(context, args);
     final widget = builder(context, args);
     final story = setup(context, widget, args);
     return story;

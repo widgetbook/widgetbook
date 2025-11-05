@@ -12,20 +12,18 @@ const meta = Meta<Controls>(
 
 final $Default = ControlsStory(
   name: 'Default',
-  args: ControlsArgs.fixed(
-    control1Label: 'Visit Counter Story',
-    control2Label: 'Visit Counter Docs',
-    onControl1Pressed: () {},
-    onControl2Pressed: () {},
-  ),
-  builder: (context, args) => Controls(
-    control1Label: args.control1Label,
-    control2Label: args.control2Label,
-    onControl1Pressed: () {
-      WidgetbookState.of(context).goToStory(counter.$Default);
-    },
-    onControl2Pressed: () {
-      WidgetbookState.of(context).goToDocs(counter.CounterComponent);
-    },
+  args: ControlsArgs(
+    control1Label: Arg.fixed('Visit Counter Story'),
+    onControl1Pressed: BuilderArg(
+      (context) => () {
+        WidgetbookState.of(context).goToStory(counter.$Default);
+      },
+    ),
+    control2Label: Arg.fixed('Visit Counter Docs'),
+    onControl2Pressed: BuilderArg(
+      (context) => () {
+        WidgetbookState.of(context).goToDocs(counter.CounterComponent);
+      },
+    ),
   ),
 );
