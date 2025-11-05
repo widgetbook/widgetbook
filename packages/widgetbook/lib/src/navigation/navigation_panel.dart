@@ -47,50 +47,56 @@ class _NavigationPanelState extends State<NavigationPanel> {
             ? widget.root
             : widget.root.filter((node) => filterNode(node, query));
 
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (widget.header != null)
-            Padding(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (widget.header != null) widget.header!,
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 16,
+            right: 16,
+            top: 16,
+          ),
+          child: SearchField(
+            value: query,
+            onCleared: () => WidgetbookState.of(context).updateQuery(''),
+            onChanged: (value) {
+              _debounce?.cancel();
+              _debounce = Timer(
+                const Duration(milliseconds: 100),
+                () => WidgetbookState.of(context).updateQuery(value),
+              );
+            },
+          ),
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Padding(
               padding: const EdgeInsets.all(16),
-              child: widget.header!,
-            ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: SearchField(
-              value: query,
-              onCleared: () => WidgetbookState.of(context).updateQuery(''),
-              onChanged: (value) {
-                _debounce?.cancel();
-                _debounce = Timer(
-                  const Duration(milliseconds: 100),
-                  () => WidgetbookState.of(context).updateQuery(value),
-                );
-              },
-            ),
-          ),
-          Expanded(
-            child: NavigationTreeNode(
-              node: filteredRoot ?? widget.root,
-              onLeafNodeTap: widget.onLeafNodeTap,
-              enableLeafComponents:
-                  WidgetbookState.of(context).enableLeafComponents,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: StatsBanner(
-              componentsCount: WidgetbookState.of(context).components.length,
-              storiesCount: WidgetbookState.of(context).components.fold(
-                0,
-                (sum, component) => sum + component.stories.length,
+              child: NavigationTreeNode(
+                node: filteredRoot ?? widget.root,
+                onLeafNodeTap: widget.onLeafNodeTap,
+                enableLeafComponents:
+                    WidgetbookState.of(context).enableLeafComponents,
               ),
             ),
           ),
-        ],
-      ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 8,
+            right: 8,
+            bottom: 8,
+          ),
+          child: StatsBanner(
+            componentsCount: WidgetbookState.of(context).components.length,
+            storiesCount: WidgetbookState.of(context).components.fold(
+              0,
+              (sum, component) => sum + component.stories.length,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
