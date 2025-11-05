@@ -31,13 +31,19 @@ abstract class Arg<T> extends FieldsComposable<T> {
          initialValue: value,
        );
 
+  // In order to make this constructor, we had to make [value] late.
+  // and FieldsComposable's initialValue late as well.
+  // This is needed for the [BuilderArg] which can be empty.
+  @internal
+  Arg.empty() : _name = null, super.empty();
+
   // TODO: Revisit the decision before stable release
   // We had two option to make sure that the `value` is always in sync with
   // the query parameters:
   // 1. Immutable option with `copyWith` method: Decided against it because
   //    it would require more boilerplate when implementing custom Args.
   // 2. Mutable option with `syncValue` method.
-  T value;
+  late T value; // `late` is added to allow `empty` constructor for BuilderArg
 
   final String? _name;
   late final String $generatedName;
@@ -51,7 +57,7 @@ abstract class Arg<T> extends FieldsComposable<T> {
   static ConstArg<T> fixed<T>(T value) => ConstArg<T>(value);
 
   @internal
-  void syncValue(QueryGroup? group) {
+  void syncValueWithQueryGroup(QueryGroup? group) {
     value = valueFromQueryGroup(group);
   }
 

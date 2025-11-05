@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 import '../state/state.dart';
+import 'builder_arg.dart';
 import 'component.dart';
 import 'mode.dart';
 import 'scenario.dart';
@@ -89,7 +90,12 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   void syncArgs(BuildContext context) {
     final state = WidgetbookState.of(context);
     args.safeList.forEach((arg) {
-      arg.syncValue(state.queryGroups[arg.groupName]);
+      arg.syncValueWithQueryGroup(state.queryGroups[arg.groupName]);
+    });
+
+    // ignore: strict_raw_type
+    args.list.whereType<BuilderArg>().forEach((arg) {
+      arg.syncValueWithContext(context);
     });
   }
 

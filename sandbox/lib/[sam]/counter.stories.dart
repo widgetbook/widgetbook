@@ -13,16 +13,14 @@ const meta = Meta<Counter>(
 );
 
 final $Default = CounterStory(
-  builder: (context, args) {
-    return Counter(
-      initialValue: args.initialValue,
-      onChanged: (value) {
-        // Since there's no `BuilderArg` and the `.update` method requires
-        // a BuildContext, we pass it down from `builder` and not `args`.
+  args: CounterArgs(
+    onChanged: BuilderArg(
+      (context) => (value) {
+        final args = WidgetbookState.of(context).story!.args as CounterArgs;
         args.initialValueArg.update(context, value);
       },
-    );
-  },
+    ),
+  ),
   scenarios: [
     CounterScenario(
       name: '10++',
