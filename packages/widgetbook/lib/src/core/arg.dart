@@ -57,7 +57,7 @@ abstract class Arg<T> extends FieldsComposable<T> {
   static ConstArg<T> fixed<T>(T value) => ConstArg<T>(value);
 
   @internal
-  void syncValueWithQueryGroup(QueryGroup? group) {
+  void syncValue(QueryGroup? group) {
     value = valueFromQueryGroup(group);
   }
 

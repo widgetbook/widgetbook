@@ -90,18 +90,23 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   void syncArgs(BuildContext context) {
     final state = WidgetbookState.of(context);
     args.safeList.forEach((arg) {
-      arg.syncValueWithQueryGroup(state.queryGroups[arg.groupName]);
-    });
-
-    // ignore: strict_raw_type
-    args.list.whereType<BuilderArg>().forEach((arg) {
-      arg.syncValueWithContext(context);
+      arg.syncValue(state.queryGroups[arg.groupName]);
     });
   }
 
   @internal
   void resetArgs() {
     args.safeList.forEach((arg) => arg.resetValue());
+  }
+
+  // Called separately from [syncArgs] to initialize BuilderArgs
+  // in [buildWithArgs] when building [Scenario]s with external args.
+  @internal
+  void initBuilderArgs(BuildContext context, TArgs args) {
+    // ignore: strict_raw_type
+    args.list.whereType<BuilderArg>().forEach((arg) {
+      arg.init(context);
+    });
   }
 
   Widget build(BuildContext context) {
@@ -111,6 +116,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
 
   /// Same as [build], but uses external [args] instead of [Story.args].
   Widget buildWithArgs(BuildContext context, TArgs args) {
+    initBuilderArgs(context, args);
     final widget = builder(context, args);
     final story = setup(context, widget, args);
     return story;

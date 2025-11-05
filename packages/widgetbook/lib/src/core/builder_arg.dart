@@ -12,12 +12,12 @@ class BuilderArg<T> extends ConstArg<T> {
 
   final ArgBuilder<T> builder;
 
-  void syncValueWithContext(BuildContext context) {
+  void init(BuildContext context) {
     value = builder(context);
   }
 
   @override
-  void syncValueWithQueryGroup(QueryGroup? group) {
+  void syncValue(QueryGroup? group) {
     // No-op: BuilderArg's value is determined by its builder.
   }
 
