@@ -10,9 +10,9 @@ const meta = Meta<Controls>(
   docs: 'Testing out the navigation to other stories and docs.',
 );
 
-final $Default = ControlsStory(
+final $Default = _Story(
   name: 'Default',
-  args: ControlsArgs(
+  args: _Args(
     control1Label: Arg.fixed('Visit Counter Story'),
     onControl1Pressed: BuilderArg(
       (context) => () {

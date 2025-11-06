@@ -7,16 +7,16 @@ part 'custom_text_field.stories.book.dart';
 
 const meta = Meta<CustomTextField>();
 
-final $Default = CustomTextFieldStory(
+final $Default = _Story(
   name: 'Default',
-  args: CustomTextFieldArgs(
+  args: _Args(
     controller: Arg.fixed(TextEditingController()),
   ),
 );
 
-final $WithHint = CustomTextFieldStory(
+final $WithHint = _Story(
   name: 'With Hint',
-  args: CustomTextFieldArgs(
+  args: _Args(
     controller: Arg.fixed(TextEditingController()),
     hintText: StringArg('This is a hint'),
   ),

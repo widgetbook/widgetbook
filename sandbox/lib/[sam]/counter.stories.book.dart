@@ -3,7 +3,7 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: unused_import, prefer_relative_imports, directives_ordering
+// ignore_for_file: unused_import, prefer_relative_imports, directives_ordering, unused_element, strict_raw_type
 
 part of 'counter.stories.dart';
 
@@ -11,7 +11,10 @@ part of 'counter.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-// ignore: strict_raw_type
+typedef _Component = Component<Counter, CounterArgs>;
+typedef _Scenario = CounterScenario;
+typedef _Story = CounterStory;
+typedef _Args = CounterArgs;
 final CounterComponent = Component<Counter, CounterArgs>(
   name: meta.name ?? 'Counter',
   path: meta.path ?? '[sam]',

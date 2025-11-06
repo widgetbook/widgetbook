@@ -9,6 +9,13 @@ class ScenarioTypedefBuilder {
   final DartType widgetType;
   final DartType argsType;
 
+  TypeReference get scenarioTypeRef {
+    return widgetType.getRef(
+      suffix: 'Scenario',
+      types: getTypeParams(withBounds: false),
+    );
+  }
+
   Set<Reference> getTypeParams({bool withBounds = true}) {
     return {
       ...widgetType.getTypeParams(withBounds: withBounds),
@@ -16,14 +23,25 @@ class ScenarioTypedefBuilder {
     };
   }
 
+  TypeDef buildUnderscoreType() {
+    final typeRef = scenarioTypeRef;
+    return TypeDef(
+      (b) =>
+          b
+            ..name = '_Scenario'
+            ..types.addAll(getTypeParams())
+            ..definition = TypeReference(
+              (b) =>
+                  b
+                    ..symbol = typeRef.symbol
+                    ..types.addAll(typeRef.types),
+            ),
+    );
+  }
+
   TypeDef build() {
     final unboundedTypeParams = getTypeParams(withBounds: false);
     final widgetTypeRef = widgetType.getRef();
-
-    final scenarioTypeRef = widgetType.getRef(
-      suffix: 'Scenario',
-      types: unboundedTypeParams,
-    );
 
     final argsTypeRef = argsType.getRef(
       suffix: 'Args',

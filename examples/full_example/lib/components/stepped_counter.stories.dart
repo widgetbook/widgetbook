@@ -9,9 +9,9 @@ const meta = Meta<SteppedCounter>();
 
 final _key = GlobalKey();
 
-final $Default = SteppedCounterStory(
+final $Default = _Story(
   name: 'Default',
-  args: SteppedCounterArgs(
+  args: _Args(
     key: Arg.fixed(_key), // To prevent losing state
   ),
 );

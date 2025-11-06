@@ -42,25 +42,44 @@ class StoryGenerator extends Generator {
           (element) => element.name == '\$builder',
         );
 
+    final componentBuilder = ComponentBuilder(
+      widgetType,
+      argsType,
+      storiesVariables,
+      path,
+    );
+
+    final scenarioBuilder = ScenarioTypedefBuilder(
+      widgetType,
+      argsType,
+    );
+
+    final storyBuilder = StoryClassBuilder(
+      widgetType,
+      argsType,
+      hasSetup,
+      hasBuilder,
+    );
+
+    final argsBuilder = ArgsClassBuilder(
+      widgetType,
+      argsType,
+    );
+
     final genLib = Library(
       (b) =>
           b
             ..body.addAll(
               [
-                ComponentBuilder(
-                  widgetType,
-                  argsType,
-                  storiesVariables,
-                  path,
-                ).build(),
-                ScenarioTypedefBuilder(widgetType, argsType).build(),
-                StoryClassBuilder(
-                  widgetType,
-                  argsType,
-                  hasSetup,
-                  hasBuilder,
-                ).build(),
-                ArgsClassBuilder(widgetType, argsType).build(),
+                componentBuilder.buildUnderscoreType(),
+                scenarioBuilder.buildUnderscoreType(),
+                storyBuilder.buildUnderscoreType(),
+                argsBuilder.buildUnderscoreType(),
+
+                componentBuilder.build(),
+                scenarioBuilder.build(),
+                storyBuilder.build(),
+                argsBuilder.build(),
               ],
             ),
     );

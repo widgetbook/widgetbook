@@ -6,16 +6,16 @@ part 'container.stories.book.dart';
 
 const meta = Meta<Container>();
 
-final $Green = ContainerStory(
+final $Green = _Story(
   name: 'Green',
-  args: ContainerArgs(
+  args: _Args(
     color: ColorArg(Colors.green),
   ),
 );
 
-final $Red = ContainerStory(
+final $Red = _Story(
   name: 'Red',
-  args: ContainerArgs(
+  args: _Args(
     color: ColorArg(Colors.red),
   ),
 );

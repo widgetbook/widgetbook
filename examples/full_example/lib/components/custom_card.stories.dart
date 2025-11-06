@@ -8,18 +8,18 @@ part 'custom_card.stories.book.dart';
 
 const meta = Meta<CustomCard>();
 
-final $Default = CustomCardStory(
+final $Default = _Story(
   name: 'Default',
-  args: CustomCardArgs(
+  args: _Args(
     child: Arg.fixed(
       const Text('This is a custom card'),
     ),
   ),
 );
 
-final $Background = CustomCardStory(
+final $Background = _Story(
   name: 'Background',
-  args: CustomCardArgs(
+  args: _Args(
     backgroundColor: Arg.fixed(Colors.green.shade100),
     child: Arg.fixed(
       const Text('This is a custom card with background color'),

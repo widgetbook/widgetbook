@@ -11,6 +11,13 @@ class ArgsClassBuilder {
   final DartType widgetType;
   final DartType argsType;
 
+  TypeReference get argsClassRef {
+    return argsType.getRef(
+      suffix: 'Args',
+      types: getTypeParams(withBounds: false),
+    );
+  }
+
   Iterable<FormalParameterElement> get params {
     return (argsType.element as ClassElement)
         .constructors
@@ -25,12 +32,24 @@ class ArgsClassBuilder {
     };
   }
 
+  TypeDef buildUnderscoreType() {
+    final classRef = argsClassRef;
+    return TypeDef(
+      (b) =>
+          b
+            ..name = '_Args'
+            ..types.addAll(getTypeParams())
+            ..definition = TypeReference(
+              (b) =>
+                  b
+                    ..symbol = classRef.symbol
+                    ..types.addAll(classRef.types),
+            ),
+    );
+  }
+
   Class build() {
     final widgetClassRef = widgetType.getRef();
-    final argsClassRef = argsType.getRef(
-      suffix: 'Args',
-      types: getTypeParams(withBounds: false),
-    );
 
     return Class(
       (b) =>
@@ -62,7 +81,9 @@ class ArgsClassBuilder {
                           (param) =>
                               refer('this')
                                   .property('${param.displayName}Arg')
-                                  .assign(ArgBuilder(param).buildInitializer())
+                                  .assign(
+                                    ArgBuilder(param).buildInitializer(),
+                                  )
                                   .code,
                         ),
                       ),

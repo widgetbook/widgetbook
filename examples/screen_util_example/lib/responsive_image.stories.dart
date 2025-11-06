@@ -7,9 +7,9 @@ part 'responsive_image.stories.book.dart';
 
 const meta = Meta<ResponsiveImage>();
 
-final $Default = ResponsiveImageStory(
+final $Default = _Story(
   name: 'Default',
-  args: ResponsiveImageArgs(
+  args: _Args(
     url: Arg.fixed(
       'https://images.nintendolife.com/bb503ef1f79ff/ash-and-pikachu.original.jpg',
     ),

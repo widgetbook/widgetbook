@@ -12,19 +12,19 @@ const meta = Meta<Counter>(
 ''',
 );
 
-final $Default = CounterStory(
-  args: CounterArgs(
+final $Default = _Story(
+  args: _Args(
     onChanged: BuilderArg(
       (context) => (value) {
-        final args = WidgetbookState.of(context).story!.args as CounterArgs;
+        final args = WidgetbookState.of(context).story!.args as _Args;
         args.initialValueArg.update(context, value);
       },
     ),
   ),
   scenarios: [
-    CounterScenario(
+    _Scenario(
       name: '10++',
-      args: CounterArgs(
+      args: _Args(
         initialValue: IntArg(10),
       ),
       run: (tester, args) async {

@@ -18,52 +18,66 @@ class ComponentBuilder {
   final List<TopLevelVariableElement> stories;
   final String path;
 
-  Code build() {
-    return Block.of([
-      const Code('// ignore: strict_raw_type'),
-      declareFinal('${widgetType.nonGenericName}Component')
-          .assign(
-            InvokeExpression.newOf(
-              TypeReference(
-                (b) =>
-                    b
-                      ..symbol = 'Component'
-                      ..types.addAll([
-                        refer(widgetType.nonGenericName),
-                        refer('${argsType.nonGenericName}Args'),
-                      ]),
-              ),
-              [],
-              {
-                'name': refer('meta')
-                    .property('name')
-                    .ifNullThen(
-                      literalString(widgetType.nonGenericName),
-                    ),
-                'path': refer('meta')
-                    .property('path')
-                    .ifNullThen(
-                      literalString(navPath),
-                    ),
-                'docs': refer('meta').property('docs'),
-                'stories': literalList(
-                  stories
-                      .map(
-                        (story) => refer(story.displayName)
-                            .cascade(r'$generatedName')
-                            .assign(
-                              literalString(
-                                story.displayName.replaceFirst(r'$', ''),
-                              ),
-                            ),
-                      )
-                      .toList(),
-                ),
-              },
+  TypeDef buildUnderscoreType() {
+    return TypeDef(
+      (b) =>
+          b
+            ..name = '_Component'
+            ..definition = TypeReference(
+              (b) =>
+                  b
+                    ..symbol = 'Component'
+                    ..types.addAll([
+                      refer(widgetType.nonGenericName),
+                      refer('${argsType.nonGenericName}Args'),
+                    ]),
             ),
-          )
-          .statement,
-    ]);
+    );
+  }
+
+  Code build() {
+    return declareFinal('${widgetType.nonGenericName}Component')
+        .assign(
+          InvokeExpression.newOf(
+            TypeReference(
+              (b) =>
+                  b
+                    ..symbol = 'Component'
+                    ..types.addAll([
+                      refer(widgetType.nonGenericName),
+                      refer('${argsType.nonGenericName}Args'),
+                    ]),
+            ),
+            [],
+            {
+              'name': refer('meta')
+                  .property('name')
+                  .ifNullThen(
+                    literalString(widgetType.nonGenericName),
+                  ),
+              'path': refer('meta')
+                  .property('path')
+                  .ifNullThen(
+                    literalString(navPath),
+                  ),
+              'docs': refer('meta').property('docs'),
+              'stories': literalList(
+                stories
+                    .map(
+                      (story) => refer(story.displayName)
+                          .cascade(r'$generatedName')
+                          .assign(
+                            literalString(
+                              story.displayName.replaceFirst(r'$', ''),
+                            ),
+                          ),
+                    )
+                    .toList(),
+              ),
+            },
+          ),
+        )
+        .statement;
   }
 
   /// Gets the navigation path based on [widgetType], skipping both

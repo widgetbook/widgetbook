@@ -13,7 +13,7 @@ const meta = Meta<TypesTable>(
 ''',
 );
 
-final $Default = TypesTableStory(
+final $Default = _Story(
   setup: (context, child, args) {
     return Container(
       decoration: BoxDecoration(
@@ -25,7 +25,7 @@ final $Default = TypesTableStory(
       child: child,
     );
   },
-  args: TypesTableArgs(
+  args: _Args(
     string: StringArg(
       'Hello World',
       name: 'Text',
@@ -42,12 +42,12 @@ final $Default = TypesTableStory(
     ),
   ),
   scenarios: [
-    TypesTableScenario(
+    _Scenario(
       name: 'Default',
     ),
-    TypesTableScenario(
+    _Scenario(
       name: 'Placeholder Child',
-      args: TypesTableArgs.fixed(
+      args: _Args.fixed(
         child: const Placeholder(),
       ),
     ),

@@ -3,7 +3,7 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: unused_import, prefer_relative_imports, directives_ordering
+// ignore_for_file: unused_import, prefer_relative_imports, directives_ordering, unused_element, strict_raw_type
 
 part of 'nullable_setting.stories.dart';
 
@@ -11,7 +11,10 @@ part of 'nullable_setting.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-// ignore: strict_raw_type
+typedef _Component = Component<NullableSetting, NullableSettingArgs>;
+typedef _Scenario = NullableSettingScenario;
+typedef _Story = NullableSettingStory;
+typedef _Args = NullableSettingArgs;
 final NullableSettingComponent =
     Component<NullableSetting, NullableSettingArgs>(
       name: meta.name ?? 'NullableSetting',

@@ -7,16 +7,16 @@ part 'custom_button.stories.book.dart';
 
 const meta = Meta<CustomButton>();
 
-final $Green = CustomButtonStory(
+final $Green = _Story(
   name: 'Default',
-  args: CustomButtonArgs(
+  args: _Args(
     color: Arg.fixed(Colors.green),
   ),
 );
 
-final $Red = CustomButtonStory(
+final $Red = _Story(
   name: 'Default',
-  args: CustomButtonArgs(
+  args: _Args(
     color: Arg.fixed(Colors.red),
   ),
 );

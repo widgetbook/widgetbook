@@ -158,7 +158,7 @@ part 'custom_button.stories.book.dart';
 
 const meta = Meta<CustomButton>();
 
-final $Default = CustomButtonStory();  // [!code highlight]
+final $Default = _Story();  // [!code highlight]
 ```
 
 ## Create your first Scenario
@@ -173,12 +173,12 @@ part 'custom_button.stories.book.dart';
 
 const meta = Meta<CustomButton>();
 
-final $Default = CustomButtonStory(
+final $Default = _Story(
   scenarios: [
-    CustomButtonScenario(
+    _Scenario(
       name: 'Long Label',
       modes: [MaterialThemeMode('Light', ThemeData.light())],
-      args: CustomButtonArgs.fixed(
+      args: _Args.fixed(
         label: 'This is a very long label',
         onPressed: () {},
       ),

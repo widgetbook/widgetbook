@@ -7,6 +7,6 @@ part 'screen_container.stories.book.dart';
 
 const meta = Meta<ScreenContainer>();
 
-final $Default = ScreenContainerStory(
+final $Default = _Story(
   name: 'Default',
 );

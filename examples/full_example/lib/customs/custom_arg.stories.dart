@@ -7,9 +7,9 @@ part 'custom_arg.stories.book.dart';
 
 const meta = Meta<RangeSlider>();
 
-final $Default = RangeSliderStory(
+final $Default = _Story(
   name: 'Default',
-  args: RangeSliderArgs(
+  args: _Args(
     values: RangeArg(
       const RangeValues(1, 10),
     ),

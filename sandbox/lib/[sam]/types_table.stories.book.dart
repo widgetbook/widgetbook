@@ -3,7 +3,7 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: unused_import, prefer_relative_imports, directives_ordering
+// ignore_for_file: unused_import, prefer_relative_imports, directives_ordering, unused_element, strict_raw_type
 
 part of 'types_table.stories.dart';
 
@@ -11,7 +11,10 @@ part of 'types_table.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-// ignore: strict_raw_type
+typedef _Component = Component<TypesTable, TypesTableArgs>;
+typedef _Scenario = TypesTableScenario;
+typedef _Story = TypesTableStory;
+typedef _Args = TypesTableArgs;
 final TypesTableComponent = Component<TypesTable, TypesTableArgs>(
   name: meta.name ?? 'TypesTable',
   path: meta.path ?? '[sam]',
