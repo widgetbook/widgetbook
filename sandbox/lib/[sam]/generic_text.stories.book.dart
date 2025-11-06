@@ -3,7 +3,7 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: unused_import, prefer_relative_imports, directives_ordering
+// ignore_for_file: unused_import, prefer_relative_imports, directives_ordering, unused_element, strict_raw_type
 
 part of 'generic_text.stories.dart';
 
@@ -11,7 +11,10 @@ part of 'generic_text.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-// ignore: strict_raw_type
+typedef _Component = Component<GenericText, GenericTextArgs>;
+typedef _Scenario<T> = GenericTextScenario<T>;
+typedef _Story<T> = GenericTextStory<T>;
+typedef _Args<T> = GenericTextArgs<T>;
 final GenericTextComponent = Component<GenericText, GenericTextArgs>(
   name: meta.name ?? 'GenericText',
   path: meta.path ?? '[sam]',

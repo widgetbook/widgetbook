@@ -12,8 +12,8 @@ const meta = Meta<NullableSetting>(
 ''',
 );
 
-final $Default = NullableSettingStory(
-  args: NullableSettingArgs(
+final $Default = _Story(
+  args: _Args(
     name: StringArg('Knob'),
     child: Arg.fixed(
       const Placeholder(),
@@ -32,7 +32,7 @@ final $Default = NullableSettingStory(
     ),
   ],
   scenarios: [
-    NullableSettingScenario(
+    _Scenario(
       name: 'Long name (600w)',
       modes: [
         // These modes will get merged with the modes defined in the story
@@ -46,7 +46,7 @@ final $Default = NullableSettingStory(
           ),
         ),
       ],
-      args: NullableSettingArgs(
+      args: _Args(
         name: StringArg(
           'This is a very long name to test overflow behavior',
         ),

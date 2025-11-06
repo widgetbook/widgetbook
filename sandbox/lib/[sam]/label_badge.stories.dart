@@ -18,7 +18,7 @@ const meta = MetaWithArgs<LabelBadge, NumericBadgeInput>(
 Widget $setup(
   BuildContext context,
   Widget child,
-  NumericBadgeInputArgs args,
+  _Args args,
 ) {
   return Container(
     padding: const EdgeInsets.all(8),
@@ -30,33 +30,33 @@ Widget $setup(
 // This will be used as the default `builder`
 LabelBadge $builder(
   BuildContext context,
-  NumericBadgeInputArgs args,
+  _Args args,
 ) {
   return LabelBadge(
     text: args.number.toString(),
   );
 }
 
-final $Primary = LabelBadgeStory(
-  args: NumericBadgeInputArgs(
+final $Primary = _Story(
+  args: _Args(
     number: IntArg(1),
   ),
   scenarios: [
-    LabelBadgeScenario(
+    _Scenario(
       name: 'Dark - 3',
       modes: [
         ThemeMode<MultiThemeData>('Dark', multiDarkTheme, multiThemeBuilder),
       ],
-      args: NumericBadgeInputArgs(
+      args: _Args(
         number: IntArg(3),
       ),
     ),
   ],
 );
 
-final $Secondary = LabelBadgeStory(
+final $Secondary = _Story(
   name: 'Custom Name',
-  args: NumericBadgeInputArgs(
+  args: _Args(
     number: IntArg(2),
   ),
 );

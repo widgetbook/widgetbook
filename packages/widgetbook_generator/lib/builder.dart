@@ -32,6 +32,8 @@ String get header {
     'unused_import',
     'prefer_relative_imports',
     'directives_ordering',
+    'unused_element',
+    'strict_raw_type',
   };
 
   final parts = [

@@ -18,6 +18,13 @@ class StoryClassBuilder {
   final bool hasSetup;
   final bool hasBuilder;
 
+  TypeReference get storyClassRef {
+    return widgetType.getRef(
+      suffix: 'Story',
+      types: getTypeParams(withBounds: false),
+    );
+  }
+
   Iterable<FormalParameterElement> get params {
     return (argsType.element as ClassElement)
         .constructors
@@ -32,18 +39,28 @@ class StoryClassBuilder {
     };
   }
 
+  TypeDef buildUnderscoreType() {
+    final classRef = storyClassRef;
+    return TypeDef(
+      (b) =>
+          b
+            ..name = '_Story'
+            ..types.addAll(getTypeParams())
+            ..definition = TypeReference(
+              (b) =>
+                  b
+                    ..symbol = classRef.symbol
+                    ..types.addAll(classRef.types),
+            ),
+    );
+  }
+
   Class build() {
     final isCustomArgs = widgetType != argsType;
     final hasRequiredArgs = params.any((param) => param.requiresArg);
     final unboundedTypeParams = getTypeParams(withBounds: false);
 
     final widgetClassRef = widgetType.getRef();
-
-    final storyClassRef = widgetType.getRef(
-      suffix: 'Story',
-      types: unboundedTypeParams,
-    );
-
     final argsClassRef = argsType.getRef(
       suffix: 'Args',
       types: unboundedTypeParams,

@@ -13,20 +13,20 @@ const meta = Meta<GenericText>(
 ''',
 );
 
-final $IntStory = GenericTextStory<int>(
-  args: GenericTextArgs.fixed(
+final $IntStory = _Story<int>(
+  args: _Args.fixed(
     value: 0,
   ),
 );
 
-final $BoolStory = GenericTextStory<bool>(
-  args: GenericTextArgs.fixed(
+final $BoolStory = _Story<bool>(
+  args: _Args.fixed(
     value: false,
   ),
   scenarios: [
-    GenericTextScenario<bool>(
+    _Scenario<bool>(
       name: 'True',
-      args: GenericTextArgs.fixed(
+      args: _Args.fixed(
         value: true,
       ),
     ),

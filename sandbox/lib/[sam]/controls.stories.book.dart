@@ -3,7 +3,7 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: unused_import, prefer_relative_imports, directives_ordering
+// ignore_for_file: unused_import, prefer_relative_imports, directives_ordering, unused_element, strict_raw_type
 
 part of 'controls.stories.dart';
 
@@ -11,7 +11,10 @@ part of 'controls.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-// ignore: strict_raw_type
+typedef _Component = Component<Controls, ControlsArgs>;
+typedef _Scenario = ControlsScenario;
+typedef _Story = ControlsStory;
+typedef _Args = ControlsArgs;
 final ControlsComponent = Component<Controls, ControlsArgs>(
   name: meta.name ?? 'Controls',
   path: meta.path ?? '[sam]',

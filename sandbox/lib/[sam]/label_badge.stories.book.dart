@@ -3,7 +3,7 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: unused_import, prefer_relative_imports, directives_ordering
+// ignore_for_file: unused_import, prefer_relative_imports, directives_ordering, unused_element, strict_raw_type
 
 part of 'label_badge.stories.dart';
 
@@ -11,7 +11,10 @@ part of 'label_badge.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-// ignore: strict_raw_type
+typedef _Component = Component<LabelBadge, NumericBadgeInputArgs>;
+typedef _Scenario = LabelBadgeScenario;
+typedef _Story = LabelBadgeStory;
+typedef _Args = NumericBadgeInputArgs;
 final LabelBadgeComponent = Component<LabelBadge, NumericBadgeInputArgs>(
   name: meta.name ?? 'LabelBadge',
   path: meta.path ?? '[sam]',

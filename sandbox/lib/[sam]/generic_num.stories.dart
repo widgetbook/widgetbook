@@ -25,7 +25,7 @@ class GenericNumInput<T extends num, R> {
 Widget $setup<T extends num, R>(
   BuildContext context,
   Widget child,
-  GenericNumInputArgs<T, R> args,
+  _Args<T, R> args,
 ) {
   return Container(
     child: child,
@@ -34,22 +34,22 @@ Widget $setup<T extends num, R>(
 
 GenericNum<T> $builder<T extends num, R>(
   BuildContext context,
-  GenericNumInputArgs<T, R> args,
+  _Args<T, R> args,
 ) {
   return GenericNum<T>(
     value: args.number,
   );
 }
 
-final $Integer = GenericNumStory<int, String>(
-  args: GenericNumInputArgs.fixed(
+final $Integer = _Story<int, String>(
+  args: _Args.fixed(
     number: 0,
     other: 'foo',
   ),
 );
 
-final $Double = GenericNumStory<double, Color>(
-  args: GenericNumInputArgs.fixed(
+final $Double = _Story<double, Color>(
+  args: _Args.fixed(
     number: 0.0,
     other: Colors.black,
   ),
