@@ -14,7 +14,7 @@ dependencies:
   # they are using `View.of` instead of `MediaQuery.of`
   # https://github.com/OpenFlutter/flutter_screenutil/commit/f7c551acd4cc82460c3a29ec5a7262d6ec678746
   flutter_screenutil: 5.9.1
-  widgetbook: ^3.19.0
+  widgetbook: ^3.20.0
 
 flutter:
   uses-material-design: true
