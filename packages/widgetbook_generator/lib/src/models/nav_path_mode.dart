@@ -13,7 +13,7 @@ NavPathMode parseNavPathMode(String value) {
 }
 
 enum NavPathMode {
-  /// Determines the navigation path based on where the [Widget] type
+  /// Determines the navigation path based on where the widget type
   /// is located. Used to reflect the folder structure of your app.
   /// This is the default mode.
   ///
@@ -29,7 +29,7 @@ enum NavPathMode {
   /// ```
   component,
 
-  /// Determines the navigation path based on where the [UseCase] annotation
+  /// Determines the navigation path based on where the use-case annotation
   /// is used. Used to reflect the folder structure of your widgetbook app.
   ///
   /// For example, the `navPath` for the following use-case

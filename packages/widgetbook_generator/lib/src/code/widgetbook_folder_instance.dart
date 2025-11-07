@@ -3,7 +3,7 @@ import 'package:code_builder/code_builder.dart';
 import '../tree/tree_node.dart';
 import 'widgetbook_instance.dart';
 
-/// [InvokeExpression] for [WidgetbookFolder]
+/// [InvokeExpression] for `WidgetbookFolder`
 class WidgetbookFolderInstance extends WidgetbookInstance {
   WidgetbookFolderInstance({
     required TreeNode<String> node,

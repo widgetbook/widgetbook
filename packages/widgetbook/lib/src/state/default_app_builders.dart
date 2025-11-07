@@ -1,7 +1,8 @@
+/// @docImport '../widgetbook.dart';
+library;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../widgetbook.dart'; // @docImport
 
 /// A [Widgetbook.appBuilder] that uses [WidgetsApp].
 Widget widgetsAppBuilder(BuildContext context, Widget child) {

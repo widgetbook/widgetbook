@@ -1,3 +1,6 @@
+/// @docImport '../../navigation/nodes/nodes.dart';
+library;
+
 import 'package:flutter/widgets.dart';
 
 import '../../fields/fields.dart';
