@@ -21,12 +21,12 @@ class UsageReport {
 
     heatMap = components.values.fold(
       {},
-      (map, length) =>
-          map..update(
-            length,
-            (occurrence) => occurrence + 1,
-            ifAbsent: () => 1,
-          ),
+      (map, length) => map
+        ..update(
+          length,
+          (occurrence) => occurrence + 1,
+          ifAbsent: () => 1,
+        ),
     );
   }
 

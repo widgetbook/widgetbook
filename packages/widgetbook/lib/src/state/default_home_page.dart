@@ -118,13 +118,14 @@ class _Card extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   description,
-                  style: WidgetbookTheme.of(
-                    context,
-                  ).textTheme.bodyMedium!.copyWith(
-                    color: WidgetbookTheme.of(
-                      context,
-                    ).colorScheme.onSurface.withAlpha(120),
-                  ),
+                  style:
+                      WidgetbookTheme.of(
+                        context,
+                      ).textTheme.bodyMedium!.copyWith(
+                        color: WidgetbookTheme.of(
+                          context,
+                        ).colorScheme.onSurface.withAlpha(120),
+                      ),
                 ),
               ],
             ),

@@ -80,10 +80,9 @@ class TelemetryReporter extends Builder {
       // Convert SSH to HTTPs, e.g. git@github.com:owner/repo.git
       // will be converted to https://github.com/owner/repo.git
       final isSSH = remoteUrl.startsWith('git@');
-      final httpUrl =
-          isSSH
-              ? remoteUrl.replaceAll(':', '/').replaceFirst('git@', 'https://')
-              : remoteUrl;
+      final httpUrl = isSSH
+          ? remoteUrl.replaceAll(':', '/').replaceFirst('git@', 'https://')
+          : remoteUrl;
 
       // Remove the repo name as it may contain sensitive information.
       final ownerUrl = httpUrl.substring(0, httpUrl.lastIndexOf('/'));

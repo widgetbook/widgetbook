@@ -70,10 +70,9 @@ void main() {
 
           await tester.pumpWidgetWithState(
             state: state,
-            builder:
-                (_) => MaterialApp.router(
-                  routerDelegate: delegate,
-                ),
+            builder: (_) => MaterialApp.router(
+              routerDelegate: delegate,
+            ),
           );
 
           expect(

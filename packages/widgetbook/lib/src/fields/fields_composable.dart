@@ -45,36 +45,34 @@ abstract class FieldsComposable<T> {
   Widget buildFields(BuildContext context) {
     final child = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children:
-          fields
-              .map(
-                (field) => Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 4.0,
-                  ),
-                  child: field.build(context, groupName),
-                ),
-              )
-              .toList(),
+      children: fields
+          .map(
+            (field) => Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 4.0,
+              ),
+              child: field.build(context, groupName),
+            ),
+          )
+          .toList(),
     );
 
     return !isNullable
         ? Setting(
-          name: name,
-          description: description,
-          child: child,
-        )
+            name: name,
+            description: description,
+            child: child,
+          )
         : NullableSetting(
-          name: name,
-          description: description,
-          isNullified: isNullified(context),
-          onNullified:
-              (isNullified) => toggleNullification(
-                context,
-                nullify: isNullified,
-              ),
-          child: child,
-        );
+            name: name,
+            description: description,
+            isNullified: isNullified(context),
+            onNullified: (isNullified) => toggleNullification(
+              context,
+              nullify: isNullified,
+            ),
+            child: child,
+          );
   }
 
   /// Decodes the value of the [Field] with [name] from the query [group]

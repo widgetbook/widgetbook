@@ -55,16 +55,14 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                   child: Builder(
                     builder: (context) {
                       return GestureDetector(
-                        onPanDown:
-                            (e) => _handleSVGesture(
-                              e.localPosition,
-                              context,
-                            ),
-                        onPanUpdate:
-                            (e) => _handleSVGesture(
-                              e.localPosition,
-                              context,
-                            ),
+                        onPanDown: (e) => _handleSVGesture(
+                          e.localPosition,
+                          context,
+                        ),
+                        onPanUpdate: (e) => _handleSVGesture(
+                          e.localPosition,
+                          context,
+                        ),
                         child: CustomPaint(
                           painter: _SVPainter(hue, saturation, value),
                         ),
@@ -80,16 +78,14 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                     child: LayoutBuilder(
                       builder: (context, constraints) {
                         return GestureDetector(
-                          onPanDown:
-                              (e) => _handleHueGesture(
-                                e.localPosition,
-                                constraints.minWidth,
-                              ),
-                          onPanUpdate:
-                              (e) => _handleHueGesture(
-                                e.localPosition,
-                                constraints.minWidth,
-                              ),
+                          onPanDown: (e) => _handleHueGesture(
+                            e.localPosition,
+                            constraints.minWidth,
+                          ),
+                          onPanUpdate: (e) => _handleHueGesture(
+                            e.localPosition,
+                            constraints.minWidth,
+                          ),
                           child: CustomPaint(painter: _HuePainter(hue: hue)),
                         );
                       },
@@ -104,16 +100,14 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                     child: LayoutBuilder(
                       builder: (context, constraints) {
                         return GestureDetector(
-                          onPanDown:
-                              (e) => _handleAlphaGesture(
-                                e.localPosition,
-                                constraints.minWidth,
-                              ),
-                          onPanUpdate:
-                              (e) => _handleAlphaGesture(
-                                e.localPosition,
-                                constraints.minWidth,
-                              ),
+                          onPanDown: (e) => _handleAlphaGesture(
+                            e.localPosition,
+                            constraints.minWidth,
+                          ),
+                          onPanUpdate: (e) => _handleAlphaGesture(
+                            e.localPosition,
+                            constraints.minWidth,
+                          ),
                           child: CustomPaint(
                             painter: _OpacityPainter(
                               opacity: alpha,
@@ -191,26 +185,28 @@ class _SVPainter extends CustomPainter {
     final rrect = RRect.fromRectAndRadius(rect, radius);
 
     final color = HSVColor.fromAHSV(1.0, hue, 1.0, 1.0).toColor();
-    final paint =
-        Paint()
-          ..shader = ui.Gradient.linear(rect.topLeft, rect.topRight, [
-            Colors.white,
-            color,
-          ]);
+    final paint = Paint()
+      ..shader = ui.Gradient.linear(rect.topLeft, rect.topRight, [
+        Colors.white,
+        color,
+      ]);
     canvas.drawRRect(rrect, paint);
 
-    final paint2 =
-        Paint()
-          ..shader = ui.Gradient.linear(rect.topLeft, rect.bottomLeft, [
-            Colors.transparent,
-            Colors.black,
-          ]);
+    final paint2 = Paint()
+      ..shader = ui.Gradient.linear(rect.topLeft, rect.bottomLeft, [
+        Colors.transparent,
+        Colors.black,
+      ]);
     canvas.drawRRect(rrect, paint2);
 
     final selX = saturation * size.width;
     final selY = (1 - value) * size.height;
-    final selectedColor =
-        HSVColor.fromAHSV(1.0, hue, saturation, value).toColor();
+    final selectedColor = HSVColor.fromAHSV(
+      1.0,
+      hue,
+      saturation,
+      value,
+    ).toColor();
 
     canvas.drawCircle(Offset(selX, selY), 8, Paint()..color = selectedColor);
 
@@ -244,14 +240,13 @@ class _HuePainter extends CustomPainter {
       361,
       (i) => HSVColor.fromAHSV(1.0, i.toDouble(), 1.0, 1.0).toColor(),
     );
-    final paint =
-        Paint()
-          ..shader = ui.Gradient.linear(
-            rect.centerLeft,
-            rect.centerRight,
-            colors,
-            List.generate(colors.length, (i) => i / (colors.length - 1)),
-          );
+    final paint = Paint()
+      ..shader = ui.Gradient.linear(
+        rect.centerLeft,
+        rect.centerRight,
+        colors,
+        List.generate(colors.length, (i) => i / (colors.length - 1)),
+      );
     canvas.drawRRect(rrect, paint);
 
     final selX = (hue / 360) * size.width;

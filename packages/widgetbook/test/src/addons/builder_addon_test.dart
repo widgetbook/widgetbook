@@ -11,11 +11,10 @@ void main() {
       final color = Colors.red;
       final addon = BuilderAddon(
         name: 'Red',
-        builder:
-            (context, child) => ColoredBox(
-              color: color,
-              child: child,
-            ),
+        builder: (context, child) => ColoredBox(
+          color: color,
+          child: child,
+        ),
       );
 
       testWidgets(
