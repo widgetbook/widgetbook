@@ -1,6 +1,6 @@
 name: widgetbook_generator
 description: A package to automate setup and maintenance of the widgetbook package by using code generation.
-version: 3.19.0
+version: 3.20.0
 homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=widgetbook_generator
 repository: https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_generator
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
@@ -24,7 +24,7 @@ dependencies:
   meta: ^1.7.0
   path: ^1.8.0
   source_gen: ^4.0.0
-  widgetbook_annotation: ^3.8.0
+  widgetbook_annotation: ^3.9.0
 
 dev_dependencies:
   dart_style: ^3.0.0
