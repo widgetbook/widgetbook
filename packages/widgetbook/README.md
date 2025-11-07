@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/widgetbook/widgetbook/blob/docs/landing-page/assets/logo.webp?raw=true" height="80" alt="Widgetbook Logo" />
+  <img src="https://github.com/widgetbook/widgetbook/blob/main/assets/logo.webp?raw=true" height="80" alt="Widgetbook Logo" />
   <h1>Widgetbook</h1>
   <a href="https://pub.dev/packages/widgetbook">
     <img src="https://img.shields.io/pub/v/widgetbook" />
@@ -28,7 +28,7 @@
 
 The open-source Widgetbook is a sandbox for building widgets and screens in isolation. It helps you develop and share hard-to-reach states and edge cases without needing to run your whole app. Inspired by Storybook.js.
 
-[![Widgetbook Demo](https://github.com/widgetbook/widgetbook/blob/docs/landing-page/assets/oss.png?raw=true)](https://demo.widgetbook.io/)
+[![Widgetbook Demo](https://github.com/widgetbook/widgetbook/blob/main/assets/oss.png?raw=true)](https://demo.widgetbook.io/)
 
 ### Features
 
@@ -48,7 +48,7 @@ Follow our [Setup & Install Guide](https://docs.widgetbook.io/quick-start) in ou
 
 Widgetbook Cloud is a managed hosting solution for Widgetbook that allows you to run golden tests to detect and review all UI changes in your pull-request. Inspired by Chromatic.
 
-[![Widgetbook Cloud Demo](https://github.com/widgetbook/widgetbook/blob/docs/landing-page/assets/cloud.png?raw=true)](https://youtu.be/l3tj9VvkjLs)
+[![Widgetbook Cloud Demo](https://github.com/widgetbook/widgetbook/blob/main/assets/cloud.png?raw=true)](https://youtu.be/l3tj9VvkjLs)
 
 ### Features
 

@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/widgetbook/widgetbook/blob/docs/landing-page/assets/logo.webp?raw=true" height="80" alt="Widgetbook Logo" />
+  <img src="https://github.com/widgetbook/widgetbook/blob/main/assets/logo.webp?raw=true" height="80" alt="Widgetbook Logo" />
   <h1>Widgetbook</h1>
   <a href="https://pub.dev/packages/widgetbook_annotation">
     <img src="https://img.shields.io/pub/v/widgetbook_annotation" />
