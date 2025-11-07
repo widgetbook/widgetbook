@@ -603,7 +603,7 @@ packages:
       path: "../../packages/widgetbook"
       relative: true
     source: path
-    version: "3.19.0"
+    version: "3.20.0"
   widgetbook_annotation:
     dependency: "direct main"
     description:

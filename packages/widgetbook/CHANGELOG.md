@@ -1,4 +1,4 @@
-## Unreleased
+## 3.20.0
 
 - **BREAKING**: Set minimum SDK version to 3.8.0 & minimum Flutter version to 3.32.0. ([#1719](https://github.com/widgetbook/widgetbook/pull/1719))
 - **FEAT:** Support dynamic knobs. ([#1709](https://github.com/widgetbook/widgetbook/pull/1709) - by [@EArminjon](https://github.com/EArminjon))
