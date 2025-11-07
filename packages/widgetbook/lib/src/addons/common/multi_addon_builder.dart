@@ -34,19 +34,17 @@ class MultiAddonBuilder extends StatelessWidget {
     }
 
     return Nested(
-      children:
-          addons!
-              .map(
-                (addon) => SingleChildBuilder(
-                  builder:
-                      (context, child) => builder(
-                        context,
-                        addon,
-                        child!,
-                      ),
-                ),
-              )
-              .toList(),
+      children: addons!
+          .map(
+            (addon) => SingleChildBuilder(
+              builder: (context, child) => builder(
+                context,
+                addon,
+                child!,
+              ),
+            ),
+          )
+          .toList(),
       child: child,
     );
   }

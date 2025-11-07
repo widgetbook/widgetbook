@@ -12,9 +12,8 @@ class AccessibilityAddon extends BuilderAddon {
   AccessibilityAddon()
     : super(
         name: 'Accessibility',
-        builder:
-            (context, child) => AccessibilityTools(
-              child: child,
-            ),
+        builder: (context, child) => AccessibilityTools(
+          child: child,
+        ),
       );
 }

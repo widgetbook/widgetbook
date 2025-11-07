@@ -20,8 +20,8 @@ class DurationField extends Field<Duration> {
              return param == null
                  ? null
                  : Duration(
-                   milliseconds: int.tryParse(param) ?? 0,
-                 );
+                     milliseconds: int.tryParse(param) ?? 0,
+                   );
            },
          ),
        );

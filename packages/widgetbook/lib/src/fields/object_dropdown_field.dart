@@ -27,10 +27,9 @@ class ObjectDropdownField<T> extends Field<T> {
          type: FieldType.objectDropdown,
          codec: FieldCodec(
            toParam: labelBuilder,
-           toValue:
-               (param) => values.firstWhereOrNull(
-                 (value) => labelBuilder(value) == param,
-               ),
+           toValue: (param) => values.firstWhereOrNull(
+             (value) => labelBuilder(value) == param,
+           ),
          ),
        );
 
@@ -57,15 +56,14 @@ class ObjectDropdownField<T> extends Field<T> {
           updateField(context, group, value);
         }
       },
-      dropdownMenuEntries:
-          values
-              .map(
-                (value) => DropdownMenuEntry(
-                  value: value,
-                  label: labelBuilder(value),
-                ),
-              )
-              .toList(),
+      dropdownMenuEntries: values
+          .map(
+            (value) => DropdownMenuEntry(
+              value: value,
+              label: labelBuilder(value),
+            ),
+          )
+          .toList(),
     );
   }
 

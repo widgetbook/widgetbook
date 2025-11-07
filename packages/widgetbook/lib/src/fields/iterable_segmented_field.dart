@@ -64,15 +64,14 @@ class IterableSegmentedField<T> extends Field<Iterable<T>> {
       onSelectionChanged: (newValue) {
         updateField(context, group, newValue);
       },
-      segments:
-          values
-              .map(
-                (value) => ButtonSegment<T>(
-                  value: value,
-                  label: Text(labelBuilder(value)),
-                ),
-              )
-              .toList(),
+      segments: values
+          .map(
+            (value) => ButtonSegment<T>(
+              value: value,
+              label: Text(labelBuilder(value)),
+            ),
+          )
+          .toList(),
     );
   }
 

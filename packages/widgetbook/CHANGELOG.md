@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **BREAKING**: Set minimum SDK version to 3.8.0 & minimum Flutter version to 3.32.0. ([#1719](https://github.com/widgetbook/widgetbook/pull/1719))
 - **FEAT:** Support dynamic knobs. ([#1709](https://github.com/widgetbook/widgetbook/pull/1709) - by [@EArminjon](https://github.com/EArminjon))
 - **FEAT:** Expose `precision` parameter in `DoubleSliderField` and `knobs.double.slider`. The default value is currently `1`, to get the old behavior, set it to `null`. ([#1706](https://github.com/widgetbook/widgetbook/pull/1706) - by [@EArminjon](https://github.com/EArminjon))
 - **FIX:** Allow `IterableSegmentedField` to parse unknown values. ([#1703](https://github.com/widgetbook/widgetbook/pull/1703) - by [@EArminjon](https://github.com/EArminjon))

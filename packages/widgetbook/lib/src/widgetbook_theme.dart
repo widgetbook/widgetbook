@@ -17,16 +17,16 @@ class WidgetbookTheme extends InheritedWidget {
   /// The data from the closest [WidgetbookTheme] instance that
   /// encloses the given context, if any.
   static ThemeData? maybeOf(BuildContext context) {
-    final widget =
-        context.dependOnInheritedWidgetOfExactType<WidgetbookTheme>();
+    final widget = context
+        .dependOnInheritedWidgetOfExactType<WidgetbookTheme>();
     return widget?.data;
   }
 
   /// The data from the closest [WidgetbookTheme] instance that
   /// encloses the given context.
   static ThemeData of(BuildContext context) {
-    final result =
-        context.dependOnInheritedWidgetOfExactType<WidgetbookTheme>();
+    final result = context
+        .dependOnInheritedWidgetOfExactType<WidgetbookTheme>();
     assert(result != null, 'No WidgetbookTheme found in context');
     return result!.data;
   }

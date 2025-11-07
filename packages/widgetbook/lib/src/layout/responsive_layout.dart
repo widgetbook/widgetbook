@@ -41,8 +41,8 @@ class ResponsiveLayout extends StatelessWidget {
     return state.addons == null
         ? []
         : state.effectiveAddons!
-            .map((addon) => addon.buildFields(context))
-            .toList();
+              .map((addon) => addon.buildFields(context))
+              .toList();
   }
 
   List<Widget> buildKnobs(BuildContext context) {
@@ -70,16 +70,16 @@ class ResponsiveLayout extends StatelessWidget {
 
     return isMobile && !isEmbedded
         ? MobileLayout(
-          navigationBuilder: (context) => buildNavigation(context, true),
-          addonsBuilder: buildAddons,
-          knobsBuilder: buildKnobs,
-          workbench: child,
-        )
+            navigationBuilder: (context) => buildNavigation(context, true),
+            addonsBuilder: buildAddons,
+            knobsBuilder: buildKnobs,
+            workbench: child,
+          )
         : DesktopLayout(
-          navigationBuilder: (context) => buildNavigation(context, false),
-          addonsBuilder: buildAddons,
-          knobsBuilder: buildKnobs,
-          workbench: child,
-        );
+            navigationBuilder: (context) => buildNavigation(context, false),
+            addonsBuilder: buildAddons,
+            knobsBuilder: buildKnobs,
+            workbench: child,
+          );
   }
 }

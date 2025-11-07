@@ -40,15 +40,15 @@ class Viewport extends StatelessWidget {
               return frameless
                   ? child!
                   : Padding(
-                    // Padding is needed to make sure that the frame's edge
-                    // is not on directly on the workbench's edge, but
-                    // we don't want that in the frameless mode
-                    padding: const EdgeInsets.all(16),
-                    child: _ViewportFrame(
-                      title: data.name,
-                      child: child!,
-                    ),
-                  );
+                      // Padding is needed to make sure that the frame's edge
+                      // is not on directly on the workbench's edge, but
+                      // we don't want that in the frameless mode
+                      padding: const EdgeInsets.all(16),
+                      child: _ViewportFrame(
+                        title: data.name,
+                        child: child!,
+                      ),
+                    );
             },
           ),
         ],
@@ -65,10 +65,9 @@ class Viewport extends StatelessWidget {
                 // the device frame, otherwise they would use the navigator from
                 // the app builder, causing these routes to fill the whole
                 // workbench and not just the device frame.
-                onGenerateRoute:
-                    (_) => PageRouteBuilder(
-                      pageBuilder: (context, _, __) => child,
-                    ),
+                onGenerateRoute: (_) => PageRouteBuilder(
+                  pageBuilder: (context, _, __) => child,
+                ),
               ),
             ),
           ),

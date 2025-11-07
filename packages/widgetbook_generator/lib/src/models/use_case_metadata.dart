@@ -45,12 +45,11 @@ class UseCaseMetadata extends ElementMetadata {
         name: json['componentName'] as String,
         importUri: json['componentImportStatement'] as String,
       ),
-      knobsConfigs:
-          json['knobsConfigs'] != null
-              ? Map<String, Map<String, dynamic>>.from(
-                json['knobsConfigs'] as Map,
-              )
-              : null,
+      knobsConfigs: json['knobsConfigs'] != null
+          ? Map<String, Map<String, dynamic>>.from(
+              json['knobsConfigs'] as Map,
+            )
+          : null,
     );
   }
 

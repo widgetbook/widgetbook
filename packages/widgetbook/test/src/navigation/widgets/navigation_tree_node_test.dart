@@ -10,13 +10,11 @@ void main() {
   group(
     '$NavigationTreeNode',
     () {
-      final leafComponentsCount =
-          treeRoot
-              .findAll(
-                (node) =>
-                    node is WidgetbookComponent && node.useCases.length == 1,
-              )
-              .length;
+      final leafComponentsCount = treeRoot
+          .findAll(
+            (node) => node is WidgetbookComponent && node.useCases.length == 1,
+          )
+          .length;
 
       testWidgets(
         'given a root node, '

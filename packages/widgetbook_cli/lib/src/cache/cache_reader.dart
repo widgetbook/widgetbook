@@ -30,24 +30,22 @@ class CacheReader {
       return const CacheStore.empty();
     }
 
-    final cacheFiles =
-        await fileSystem
-            .directory(generatedDir)
-            .list(recursive: true)
-            .where((entity) => entity.path.endsWith(baseExtension))
-            .cast<File>()
-            .toList();
+    final cacheFiles = await fileSystem
+        .directory(generatedDir)
+        .list(recursive: true)
+        .where((entity) => entity.path.endsWith(baseExtension))
+        .cast<File>()
+        .toList();
 
-    final useCases =
-        cacheFiles
-            .where((file) => file.path.endsWith(useCaseExtension))
-            .map((file) => file.readAsStringSync())
-            .map((json) => jsonDecode(json) as List)
-            .map((list) => list.cast<Map<String, dynamic>>())
-            .expand((list) => list) // Flatten JSON List
-            .map((item) => UseCaseMetadata.fromJson(item))
-            .whereNot((useCase) => useCase.cloudExclude) // Remove excluded
-            .toList();
+    final useCases = cacheFiles
+        .where((file) => file.path.endsWith(useCaseExtension))
+        .map((file) => file.readAsStringSync())
+        .map((json) => jsonDecode(json) as List)
+        .map((list) => list.cast<Map<String, dynamic>>())
+        .expand((list) => list) // Flatten JSON List
+        .map((item) => UseCaseMetadata.fromJson(item))
+        .whereNot((useCase) => useCase.cloudExclude) // Remove excluded
+        .toList();
 
     final addonsConfigs = await cacheFiles
         .firstWhereOrNull((file) => file.path.endsWith(configExtension))

@@ -46,13 +46,12 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
         onDidRemovePage: (_) => {},
         pages: [
           MaterialPage(
-            child:
-                _configuration.previewMode
-                    ? const Workbench()
-                    : ResponsiveLayout(
-                      key: ValueKey(_configuration),
-                      child: const Workbench(),
-                    ),
+            child: _configuration.previewMode
+                ? const Workbench()
+                : ResponsiveLayout(
+                    key: ValueKey(_configuration),
+                    child: const Workbench(),
+                  ),
           ),
         ],
       ),

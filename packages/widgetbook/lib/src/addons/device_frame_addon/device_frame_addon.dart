@@ -51,10 +51,9 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
         name: 'orientation',
         values: Orientation.values,
         initialValue: Orientation.portrait,
-        labelBuilder:
-            (orientation) =>
-                orientation.name.substring(0, 1).toUpperCase() +
-                orientation.name.substring(1),
+        labelBuilder: (orientation) =>
+            orientation.name.substring(0, 1).toUpperCase() +
+            orientation.name.substring(1),
       ),
       ObjectDropdownField<bool>(
         name: 'frame',
@@ -99,16 +98,13 @@ class DeviceFrameAddon extends WidgetbookAddon<DeviceFrameSetting> {
               // device frame, otherwise they would use the navigator from the
               // app builder, causing these routes to fill the whole workbench
               // and not just the device frame.
-              onGenerateRoute:
-                  (_) => PageRouteBuilder(
-                    pageBuilder:
-                        (context, _, __) =>
-                            setting.hasFrame
-                                ? child
-                                : SafeArea(
-                                  child: child,
-                                ),
-                  ),
+              onGenerateRoute: (_) => PageRouteBuilder(
+                pageBuilder: (context, _, __) => setting.hasFrame
+                    ? child
+                    : SafeArea(
+                        child: child,
+                      ),
+              ),
             ),
           ),
         ),

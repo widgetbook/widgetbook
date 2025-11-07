@@ -286,14 +286,12 @@ class SemanticsDebuggerPainter extends CustomPainter {
     final rect = node.rect;
     canvas.save();
     canvas.clipRect(rect);
-    final textPainter =
-        TextPainter()
-          ..text = TextSpan(style: labelStyle, text: message)
-          ..textDirection =
-              TextDirection
-                  .ltr // _getMessage always returns LTR text, even if node.label is RTL
-          ..textAlign = TextAlign.center
-          ..layout(maxWidth: rect.width);
+    final textPainter = TextPainter()
+      ..text = TextSpan(style: labelStyle, text: message)
+      ..textDirection = TextDirection
+          .ltr // _getMessage always returns LTR text, even if node.label is RTL
+      ..textAlign = TextAlign.center
+      ..layout(maxWidth: rect.width);
 
     textPainter.paint(
       canvas,
@@ -332,22 +330,19 @@ class SemanticsDebuggerPainter extends CustomPainter {
       final lineColor = _colorForNode(indexInParent, level);
       final innerRect = rect.deflate(rank * 1.0);
       if (innerRect.isEmpty) {
-        final fill =
-            Paint()
-              ..color = lineColor
-              ..style = PaintingStyle.fill;
+        final fill = Paint()
+          ..color = lineColor
+          ..style = PaintingStyle.fill;
         canvas.drawRect(rect, fill);
       } else {
-        final fill =
-            Paint()
-              ..color = const Color(0xFFFFFFFF)
-              ..style = PaintingStyle.fill;
+        final fill = Paint()
+          ..color = const Color(0xFFFFFFFF)
+          ..style = PaintingStyle.fill;
         canvas.drawRect(rect, fill);
-        final line =
-            Paint()
-              ..strokeWidth = rank * 2.0
-              ..color = lineColor
-              ..style = PaintingStyle.stroke;
+        final line = Paint()
+          ..strokeWidth = rank * 2.0
+          ..color = lineColor
+          ..style = PaintingStyle.stroke;
         canvas.drawRect(innerRect, line);
       }
       _paintMessage(canvas, node);

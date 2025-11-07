@@ -51,11 +51,10 @@ class BuildHasher {
     // It is not guaranteed that the [CacheStore] reads the use-cases metadata
     // in the same order each time, so we need to sort them to ensure
     // that the hash is deterministic across runs.
-    final sortedUseCasesJson =
-        cache.useCases
-            .sortedBy((x) => '${x.navPath}/${x.componentName}${x.useCaseName}')
-            .map((x) => x.toCloudUseCase())
-            .toList();
+    final sortedUseCasesJson = cache.useCases
+        .sortedBy((x) => '${x.navPath}/${x.componentName}${x.useCaseName}')
+        .map((x) => x.toCloudUseCase())
+        .toList();
 
     final encodedUseCases = utf8.encode(
       jsonEncode(sortedUseCasesJson),
