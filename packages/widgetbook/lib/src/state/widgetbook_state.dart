@@ -1,6 +1,9 @@
-import 'package:flutter/cupertino.dart'; // @docImport
-import 'package:flutter/material.dart';
+/// @docImport 'package:flutter/cupertino.dart';
+/// @docImport 'package:flutter/material.dart';
+library;
+
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
 import '../addons/addons.dart';

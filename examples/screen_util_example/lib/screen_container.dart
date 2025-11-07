@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// Displays the Screen's Width and Height using [flutter_screenutil]
+/// Displays the Screen's Width and Height using [ScreenUtil].
 class ScreenContainer extends StatelessWidget {
   const ScreenContainer({super.key});
 
