@@ -199,12 +199,11 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     // If `-no-turbo` is passed, we skip the hashing step
     // as it is not needed for non-turbo builds.
-    final hash =
-        args.noTurbo
-            ? null
-            : await buildHasher.convert(
-              buildDir,
-            );
+    final hash = args.noTurbo
+        ? null
+        : await buildHasher.convert(
+            buildDir,
+          );
 
     final files =
         buildDir //
@@ -276,10 +275,9 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         return StorageObject(
           key: key,
           size: modifiedContent.length,
-          reader:
-              () => Stream.value(
-                modifiedContent.codeUnits,
-              ),
+          reader: () => Stream.value(
+            modifiedContent.codeUnits,
+          ),
         );
       },
     );

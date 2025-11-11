@@ -22,8 +22,8 @@ class ScenarioMetadata {
           values == null
               ? null
               : (values as Map<Name, dynamic>).map(
-                (key, value) => MapEntry(key, value as String),
-              ),
+                  (key, value) => MapEntry(key, value as String),
+                ),
         ),
       );
     }

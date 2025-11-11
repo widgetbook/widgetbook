@@ -100,17 +100,16 @@ abstract class FieldsComposable<T> {
       // using `Arg.update`.
       key: group != null ? ValueKey(group) : null,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children:
-          fields
-              .map(
-                (field) => Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 4.0,
-                  ),
-                  child: field.build(context, groupName),
-                ),
-              )
-              .toList(),
+      children: fields
+          .map(
+            (field) => Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 4.0,
+              ),
+              child: field.build(context, groupName),
+            ),
+          )
+          .toList(),
     );
 
     if (!isNullable) {
@@ -125,8 +124,9 @@ abstract class FieldsComposable<T> {
     // valueFromQueryGroup, which can have custom implementation,
     // to determine nullability based on the value.
     // If the query group is present, we check its nullability.
-    final isNullified =
-        group == null ? valueFromQueryGroup(null) == null : group.isNullified;
+    final isNullified = group == null
+        ? valueFromQueryGroup(null) == null
+        : group.isNullified;
 
     return NullableSetting(
       name: name,

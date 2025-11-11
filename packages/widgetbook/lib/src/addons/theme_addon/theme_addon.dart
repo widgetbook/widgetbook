@@ -39,10 +39,9 @@ class ThemeAddon<T> extends Addon<T> with SingleFieldOnly {
       name: 'name',
       values: themes.values.toList(),
       initialValue: initialValue,
-      labelBuilder:
-          (theme) => themes.keys.firstWhere(
-            (key) => themes[key] == theme,
-          ),
+      labelBuilder: (theme) => themes.keys.firstWhere(
+        (key) => themes[key] == theme,
+      ),
     );
   }
 

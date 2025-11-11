@@ -12,10 +12,9 @@ final class ObjectDropdownField<T> extends Field<T> {
   }) : super(
          initialValue: initialValue ?? values.first,
          toParam: labelBuilder,
-         toValue:
-             (param) => values.firstWhereOrNull(
-               (value) => labelBuilder(value) == param,
-             ),
+         toValue: (param) => values.firstWhereOrNull(
+           (value) => labelBuilder(value) == param,
+         ),
        );
 
   /// The list of values to display in the dropdown.
@@ -41,15 +40,14 @@ final class ObjectDropdownField<T> extends Field<T> {
           updateField(context, groupName, value);
         }
       },
-      dropdownMenuEntries:
-          values
-              .map(
-                (value) => DropdownMenuEntry(
-                  value: value,
-                  label: labelBuilder(value),
-                ),
-              )
-              .toList(),
+      dropdownMenuEntries: values
+          .map(
+            (value) => DropdownMenuEntry(
+              value: value,
+              label: labelBuilder(value),
+            ),
+          )
+          .toList(),
     );
   }
 }

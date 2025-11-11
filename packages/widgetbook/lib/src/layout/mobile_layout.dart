@@ -45,19 +45,18 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
         onTap: (index) {
           showModalBottomSheet<void>(
             context: context,
-            builder:
-                (context) => switch (index) {
-                  0 => navigationBuilder(context),
-                  1 => SettingsList(
-                    name: 'Addons',
-                    builder: addonsBuilder,
-                  ),
-                  2 => SettingsList(
-                    name: 'Args',
-                    builder: argsBuilder,
-                  ),
-                  _ => Container(),
-                },
+            builder: (context) => switch (index) {
+              0 => navigationBuilder(context),
+              1 => SettingsList(
+                name: 'Addons',
+                builder: addonsBuilder,
+              ),
+              2 => SettingsList(
+                name: 'Args',
+                builder: argsBuilder,
+              ),
+              _ => Container(),
+            },
           );
         },
       ),

@@ -80,13 +80,12 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: node.children.length,
               shrinkWrap: true,
-              itemBuilder:
-                  (context, index) => NavigationTreeNode(
-                    depth: isCategory ? widget.depth : widget.depth + 1,
-                    node: node.children[index],
-                    onLeafNodeTap: widget.onLeafNodeTap,
-                    enableLeafComponents: widget.enableLeafComponents,
-                  ),
+              itemBuilder: (context, index) => NavigationTreeNode(
+                depth: isCategory ? widget.depth : widget.depth + 1,
+                node: node.children[index],
+                onLeafNodeTap: widget.onLeafNodeTap,
+                enableLeafComponents: widget.enableLeafComponents,
+              ),
             ),
           ),
       ],

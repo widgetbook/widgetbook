@@ -44,14 +44,13 @@ class NestedBuilder<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     if (items.isEmpty) return child;
 
-    final children =
-        items
-            .map(
-              (item) => SingleChildBuilder(
-                builder: (context, child) => builder(context, item, child!),
-              ),
-            )
-            .toList();
+    final children = items
+        .map(
+          (item) => SingleChildBuilder(
+            builder: (context, child) => builder(context, item, child!),
+          ),
+        )
+        .toList();
 
     return Nested(
       children: children,

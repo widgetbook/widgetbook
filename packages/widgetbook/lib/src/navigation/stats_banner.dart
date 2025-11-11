@@ -90,11 +90,12 @@ class _SummaryItem extends StatelessWidget {
             Expanded(
               child: Text(
                 text,
-                style: WidgetbookTheme.of(
-                  context,
-                ).textTheme.bodySmall!.copyWith(
-                  decoration: isClickable ? TextDecoration.underline : null,
-                ),
+                style:
+                    WidgetbookTheme.of(
+                      context,
+                    ).textTheme.bodySmall!.copyWith(
+                      decoration: isClickable ? TextDecoration.underline : null,
+                    ),
               ),
             ),
           ],

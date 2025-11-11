@@ -45,10 +45,9 @@ class FolderTreeTile extends StatelessWidget {
       height: indentation,
       decoration: BoxDecoration(
         borderRadius: borderRadius,
-        color:
-            isSelected
-                ? WidgetbookTheme.of(context).colorScheme.secondaryContainer
-                : null,
+        color: isSelected
+            ? WidgetbookTheme.of(context).colorScheme.secondaryContainer
+            : null,
       ),
       child: InkWell(
         onTap: onTap,
@@ -60,12 +59,11 @@ class FolderTreeTile extends StatelessWidget {
             ),
             SizedBox(
               width: indentation,
-              child:
-                  node.isLeaf || isLeafComponent
-                      ? null
-                      : ExpanderIcon(
-                        isExpanded: isExpanded,
-                      ),
+              child: node.isLeaf || isLeafComponent
+                  ? null
+                  : ExpanderIcon(
+                      isExpanded: isExpanded,
+                    ),
             ),
             SizedBox(
               width: indentation,

@@ -23,13 +23,12 @@ class CacheReader {
       return const CacheStore.empty();
     }
 
-    final cacheFiles =
-        await fileSystem
-            .directory(generatedDir)
-            .list(recursive: true)
-            .where((entity) => entity is File && entity.path.endsWith('.json'))
-            .cast<File>()
-            .toList();
+    final cacheFiles = await fileSystem
+        .directory(generatedDir)
+        .list(recursive: true)
+        .where((entity) => entity is File && entity.path.endsWith('.json'))
+        .cast<File>()
+        .toList();
 
     final scenarios = <ScenarioRecord>[];
 

@@ -91,10 +91,9 @@ extension TesterExtension on WidgetTester {
     TValue? value,
   ) async {
     const groupName = 'group_name';
-    final group =
-        value != null
-            ? QueryGroup({field.name: field.toParam(value)})
-            : QueryGroup.empty;
+    final group = value != null
+        ? QueryGroup({field.name: field.toParam(value)})
+        : QueryGroup.empty;
 
     await pumpWidgetWithQueryGroups(
       queryGroups: value != null ? {groupName: group} : {},

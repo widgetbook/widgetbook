@@ -42,16 +42,14 @@ class StoryClassBuilder {
   TypeDef buildUnderscoreType() {
     final classRef = storyClassRef;
     return TypeDef(
-      (b) =>
-          b
-            ..name = '_Story'
-            ..types.addAll(getTypeParams())
-            ..definition = TypeReference(
-              (b) =>
-                  b
-                    ..symbol = classRef.symbol
-                    ..types.addAll(classRef.types),
-            ),
+      (b) => b
+        ..name = '_Story'
+        ..types.addAll(getTypeParams())
+        ..definition = TypeReference(
+          (b) => b
+            ..symbol = classRef.symbol
+            ..types.addAll(classRef.types),
+        ),
     );
   }
 
@@ -73,143 +71,128 @@ class StoryClassBuilder {
     );
 
     return Class(
-      (b) =>
-          b
-            ..name = storyClassRef.symbol
-            ..types.addAll(getTypeParams())
-            ..extend = TypeReference(
-              (b) =>
-                  b
-                    ..symbol = 'Story'
-                    ..types.addAll([widgetClassRef, argsClassRef]),
-            )
-            ..constructors.add(
-              Constructor(
-                (b) {
-                  b.optionalParameters.addAll([
-                    Parameter(
-                      (b) =>
-                          b
-                            ..name = 'name'
-                            ..named = true
-                            ..toSuper = true,
-                    ),
-                    Parameter(
-                      (b) =>
-                          b
-                            ..name = 'setup'
-                            ..named = true
-                            ..toSuper = !hasBuilder
-                            ..type =
-                                !hasBuilder
-                                    ? null
-                                    : TypeReference(
-                                      (b) =>
-                                          b
-                                            ..symbol = 'SetupBuilder'
-                                            ..isNullable = true
-                                            ..types.addAll([
-                                              widgetClassRef,
-                                              argsClassRef,
-                                            ]),
-                                    ),
-                    ),
-                    Parameter(
-                      (b) =>
-                          b
-                            ..name = 'modes'
-                            ..named = true
-                            ..toSuper = true,
-                    ),
-                    Parameter(
-                      (b) =>
-                          b
-                            ..name = 'args'
-                            ..named = true
-                            ..toSuper = hasRequiredArgs
-                            ..required = hasRequiredArgs
-                            ..type =
-                                hasRequiredArgs ? null : nullableArgsClassRef,
-                    ),
-                    Parameter(
-                      (b) =>
-                          b
-                            ..name = 'builder'
-                            ..named = true
-                            ..toSuper = isCustomArgs && !hasBuilder
-                            ..required = isCustomArgs && !hasBuilder
-                            ..type =
-                                isCustomArgs && !hasBuilder
-                                    ? null
-                                    : TypeReference(
-                                      (b) =>
-                                          b
-                                            ..symbol = 'StoryWidgetBuilder'
-                                            ..isNullable = true
-                                            ..types.addAll([
-                                              widgetClassRef,
-                                              argsClassRef,
-                                            ]),
-                                    ),
-                    ),
-                    Parameter(
-                      (b) =>
-                          b
-                            ..name = 'scenarios'
-                            ..named = true
-                            ..toSuper = true,
-                    ),
-                  ]);
+      (b) => b
+        ..name = storyClassRef.symbol
+        ..types.addAll(getTypeParams())
+        ..extend = TypeReference(
+          (b) => b
+            ..symbol = 'Story'
+            ..types.addAll([widgetClassRef, argsClassRef]),
+        )
+        ..constructors.add(
+          Constructor(
+            (b) {
+              b.optionalParameters.addAll([
+                Parameter(
+                  (b) => b
+                    ..name = 'name'
+                    ..named = true
+                    ..toSuper = true,
+                ),
+                Parameter(
+                  (b) => b
+                    ..name = 'setup'
+                    ..named = true
+                    ..toSuper = !hasBuilder
+                    ..type = !hasBuilder
+                        ? null
+                        : TypeReference(
+                            (b) => b
+                              ..symbol = 'SetupBuilder'
+                              ..isNullable = true
+                              ..types.addAll([
+                                widgetClassRef,
+                                argsClassRef,
+                              ]),
+                          ),
+                ),
+                Parameter(
+                  (b) => b
+                    ..name = 'modes'
+                    ..named = true
+                    ..toSuper = true,
+                ),
+                Parameter(
+                  (b) => b
+                    ..name = 'args'
+                    ..named = true
+                    ..toSuper = hasRequiredArgs
+                    ..required = hasRequiredArgs
+                    ..type = hasRequiredArgs ? null : nullableArgsClassRef,
+                ),
+                Parameter(
+                  (b) => b
+                    ..name = 'builder'
+                    ..named = true
+                    ..toSuper = isCustomArgs && !hasBuilder
+                    ..required = isCustomArgs && !hasBuilder
+                    ..type = isCustomArgs && !hasBuilder
+                        ? null
+                        : TypeReference(
+                            (b) => b
+                              ..symbol = 'StoryWidgetBuilder'
+                              ..isNullable = true
+                              ..types.addAll([
+                                widgetClassRef,
+                                argsClassRef,
+                              ]),
+                          ),
+                ),
+                Parameter(
+                  (b) => b
+                    ..name = 'scenarios'
+                    ..named = true
+                    ..toSuper = true,
+                ),
+              ]);
 
-                  final superInitializers = {
-                    if (!hasRequiredArgs)
-                      'args': refer('args').ifNullThen(
-                        InvokeExpression.newOf(
-                          argsClassRef,
-                          [],
-                        ),
-                      ),
-                    if (!isCustomArgs && !hasBuilder)
-                      'builder': refer('builder').ifNullThen(
-                        Method(
-                          (b) =>
-                              b
-                                ..lambda = true
-                                ..requiredParameters.addAll([
-                                  Parameter((b) => b.name = 'context'),
-                                  Parameter((b) => b.name = 'args'),
-                                ])
-                                ..body =
-                                    instantiate(
-                                      (param) => refer(
-                                        'args',
-                                      ).property(param.displayName),
-                                    ).code,
-                        ).closure,
-                      ),
-                    if (hasBuilder)
-                      'builder': refer('builder').ifNullThen(
-                        refer('\$builder'),
-                      ),
-                    if (hasSetup)
-                      'setup': refer('setup').ifNullThen(
-                        refer('\$setup'),
-                      ),
-                  };
+              final superInitializers = {
+                if (!hasRequiredArgs)
+                  'args': refer('args').ifNullThen(
+                    InvokeExpression.newOf(
+                      argsClassRef,
+                      [],
+                    ),
+                  ),
+                if (!isCustomArgs && !hasBuilder)
+                  'builder': refer('builder').ifNullThen(
+                    Method(
+                      (b) => b
+                        ..lambda = true
+                        ..requiredParameters.addAll([
+                          Parameter((b) => b.name = 'context'),
+                          Parameter((b) => b.name = 'args'),
+                        ])
+                        ..body = instantiate(
+                          (param) => refer(
+                            'args',
+                          ).property(param.displayName),
+                        ).code,
+                    ).closure,
+                  ),
+                if (hasBuilder)
+                  'builder': refer('builder').ifNullThen(
+                    refer('\$builder'),
+                  ),
+                if (hasSetup)
+                  'setup': refer('setup').ifNullThen(
+                    refer('\$setup'),
+                  ),
+              };
 
-                  if (superInitializers.isNotEmpty) {
-                    b.initializers.add(
-                      refer('super')
-                          .call(
-                            [],
-                            superInitializers,
-                          )
-                          .code,
-                    );
-                  }
-                },
-              ),
-            ),
+              if (superInitializers.isNotEmpty) {
+                b.initializers.add(
+                  refer('super')
+                      .call(
+                        [],
+                        superInitializers,
+                      )
+                      .code,
+                );
+              }
+            },
+          ),
+        ),
     );
   }
 

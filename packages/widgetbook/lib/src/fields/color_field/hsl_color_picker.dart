@@ -50,13 +50,12 @@ class _HslColorPickerState extends State<HslColorPicker> {
       lightness = newLightness;
     });
 
-    final newColor =
-        HSLColor.fromAHSL(
-          1,
-          newHue.toDouble(),
-          newSaturation / 100,
-          newLightness / 100,
-        ).toColor();
+    final newColor = HSLColor.fromAHSL(
+      1,
+      newHue.toDouble(),
+      newSaturation / 100,
+      newLightness / 100,
+    ).toColor();
 
     widget.onChanged.call(
       OpaqueColor.fromColor(newColor),

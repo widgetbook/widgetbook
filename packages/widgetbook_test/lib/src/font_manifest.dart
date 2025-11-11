@@ -12,10 +12,9 @@ class FontManifest {
     final decodedJson = jsonDecode(json) as List<dynamic>;
 
     return FontManifest(
-      families:
-          decodedJson
-              .map((e) => _FontFamily.fromJson(e as Map<String, dynamic>))
-              .toList(),
+      families: decodedJson
+          .map((e) => _FontFamily.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
   }
 }
@@ -33,10 +32,9 @@ class _FontFamily {
   factory _FontFamily.fromJson(Map<String, dynamic> json) {
     return _FontFamily(
       name: json['family'] as String,
-      fonts:
-          (json['fonts'] as List<dynamic>)
-              .map((e) => _FontAsset.fromJson(e as Map<String, dynamic>))
-              .toList(),
+      fonts: (json['fonts'] as List<dynamic>)
+          .map((e) => _FontAsset.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
   }
 }

@@ -24,6 +24,7 @@ class TextScaleAddon extends Addon<double> with SingleFieldOnly {
       min: 0.25,
       max: 3,
       divisions: 3 * 4 - 1,
+      precision: 2,
     );
   }
 

@@ -28,12 +28,10 @@ class IterableSegmentedField<T> extends Field<Iterable<T>> {
                .map(
                  (item) => values.firstWhere(
                    (value) => labelBuilder(value) == item,
-                   orElse:
-                       () =>
-                           throw Exception(
-                             'Value with label "$item" not found '
-                             'in available values.',
-                           ),
+                   orElse: () => throw Exception(
+                     'Value with label "$item" not found '
+                     'in available values.',
+                   ),
                  ),
                );
          },
@@ -60,15 +58,14 @@ class IterableSegmentedField<T> extends Field<Iterable<T>> {
       multiSelectionEnabled: true,
       emptySelectionAllowed: emptySelectionAllowed,
       onSelectionChanged: (value) => updateField(context, groupName, value),
-      segments:
-          values
-              .map(
-                (value) => ButtonSegment<T>(
-                  value: value,
-                  label: Text(labelBuilder(value)),
-                ),
-              )
-              .toList(),
+      segments: values
+          .map(
+            (value) => ButtonSegment<T>(
+              value: value,
+              label: Text(labelBuilder(value)),
+            ),
+          )
+          .toList(),
     );
   }
 }

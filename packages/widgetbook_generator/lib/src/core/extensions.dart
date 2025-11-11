@@ -64,13 +64,11 @@ extension DartTypeX on DartType {
 
     return typeElement.typeParameters.map(
       (typeElement) => TypeReference(
-        (b) =>
-            b
-              ..symbol = typeElement.name
-              ..bound =
-                  withBounds && typeElement.bound != null
-                      ? refer(typeElement.bound!.nonGenericName)
-                      : null,
+        (b) => b
+          ..symbol = typeElement.name
+          ..bound = withBounds && typeElement.bound != null
+              ? refer(typeElement.bound!.nonGenericName)
+              : null,
       ),
     );
   }
@@ -81,14 +79,12 @@ extension DartTypeX on DartType {
     Set<Reference>? types,
   }) {
     return TypeReference(
-      (b) =>
-          b
-            ..isNullable = isNullable
-            ..symbol =
-                suffix == null ? nonGenericName : '$nonGenericName$suffix'
-            ..types.addAll(
-              types ?? getTypeParams(withBounds: false),
-            ),
+      (b) => b
+        ..isNullable = isNullable
+        ..symbol = suffix == null ? nonGenericName : '$nonGenericName$suffix'
+        ..types.addAll(
+          types ?? getTypeParams(withBounds: false),
+        ),
     );
   }
 
@@ -129,15 +125,15 @@ extension DartTypeX on DartType {
     if (isEnum) {
       return isNullable
           ? TypeMeta(
-            'NullableEnumArg<${getDisplayString()}>',
-            literalNull,
-          )
+              'NullableEnumArg<${getDisplayString()}>',
+              literalNull,
+            )
           : TypeMeta(
-            'EnumArg<${getDisplayString()}>',
-            refer(getDisplayString()).property(
-              (element as EnumElement).fields.first.name!,
-            ),
-          );
+              'EnumArg<${getDisplayString()}>',
+              refer(getDisplayString()).property(
+                (element as EnumElement).fields.first.name!,
+              ),
+            );
     }
 
     return typesMeta[getDisplayString()]!;

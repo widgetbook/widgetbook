@@ -23,6 +23,7 @@ class ZoomAddon extends Addon<double> with SingleFieldOnly {
       min: 0.25,
       max: 4,
       divisions: 4 * 4 - 1,
+      precision: 2,
     );
   }
 

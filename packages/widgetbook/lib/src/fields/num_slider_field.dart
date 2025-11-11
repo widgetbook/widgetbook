@@ -26,18 +26,33 @@ sealed class NumSliderField<T extends num> extends Field<T> {
   /// The number of discrete divisions in the slider.
   final int? divisions;
 
+  Size _getTextSize(String text, TextStyle style) {
+    final textPainter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      maxLines: 1,
+      textDirection: TextDirection.ltr,
+    )..layout();
+    return textPainter.size;
+  }
+
   @override
   Widget toWidget(BuildContext context, String groupName, T value) {
+    final label = toParam(value);
+    final maxLabel = toParam(max);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      spacing:
+          SliderTheme.of(context).overlayShape == SliderComponentShape.noThumb
+          ? 16
+          : 0,
       children: [
         Expanded(
-          flex: 8,
           child: Slider(
             value: value.toDouble().clamp(min.toDouble(), max.toDouble()),
             min: min.toDouble(),
             max: max.toDouble(),
-            label: toParam(value),
+            label: label,
             divisions: divisions,
             onChanged: (value) {
               return updateField(
@@ -48,9 +63,13 @@ sealed class NumSliderField<T extends num> extends Field<T> {
             },
           ),
         ),
-        Expanded(
+        SizedBox(
+          width: _getTextSize(
+            maxLabel,
+            DefaultTextStyle.of(context).style,
+          ).width,
           child: Text(
-            toParam(value),
+            label,
             textAlign: TextAlign.end,
             maxLines: 1,
           ),

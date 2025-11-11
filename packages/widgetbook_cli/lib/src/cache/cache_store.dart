@@ -16,6 +16,6 @@ class CacheStore {
     (sum, snapshot) => sum + snapshot.image.size,
   );
 
-  /// Returns `true` if the [CacheStore] doesn't have any [stories] or [scenarios].
+  /// Returns `true` if the [CacheStore] doesn't have any [scenarios].
   bool get isEmpty => scenarios.isEmpty;
 }

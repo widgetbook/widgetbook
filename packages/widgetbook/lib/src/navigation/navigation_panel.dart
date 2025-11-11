@@ -42,10 +42,9 @@ class _NavigationPanelState extends State<NavigationPanel> {
   @override
   Widget build(BuildContext context) {
     final query = WidgetbookState.of(context).query ?? '';
-    final filteredRoot =
-        query.isEmpty
-            ? widget.root
-            : widget.root.filter((node) => filterNode(node, query));
+    final filteredRoot = query.isEmpty
+        ? widget.root
+        : widget.root.filter((node) => filterNode(node, query));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -76,8 +75,9 @@ class _NavigationPanelState extends State<NavigationPanel> {
               child: NavigationTreeNode(
                 node: filteredRoot ?? widget.root,
                 onLeafNodeTap: widget.onLeafNodeTap,
-                enableLeafComponents:
-                    WidgetbookState.of(context).enableLeafComponents,
+                enableLeafComponents: WidgetbookState.of(
+                  context,
+                ).enableLeafComponents,
               ),
             ),
           ),

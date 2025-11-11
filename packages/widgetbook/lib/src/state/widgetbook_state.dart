@@ -1,7 +1,11 @@
+/// @docImport 'package:flutter/cupertino.dart';
+/// @docImport 'package:flutter/material.dart';
+library;
+
 import 'package:collection/collection.dart';
-import 'package:flutter/cupertino.dart'; // @docImport
-import 'package:flutter/material.dart';
+
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
@@ -200,10 +204,9 @@ class WidgetbookState extends ChangeNotifier {
   }) {
     final group = queryGroups[groupName];
 
-    final updatedGroup =
-        group == null
-            ? QueryGroup({fieldName: fieldValue})
-            : group.copyWithField(fieldName, fieldValue);
+    final updatedGroup = group == null
+        ? QueryGroup({fieldName: fieldValue})
+        : group.copyWithField(fieldName, fieldValue);
 
     queryGroups = {
       ...queryGroups,
@@ -263,7 +266,7 @@ class WidgetbookState extends ChangeNotifier {
   }
 
   /// Update the current state using [AppRouteConfig] to update
-  /// the [path], [previewMode] and [queryParams] fields. Since these fields
+  /// the [path], [previewMode] and [queryGroups] fields. Since these fields
   /// can be manipulated from the router's query parameters, as opposed to the
   /// rest of fields that stay unchanged during runtime.
   @internal
@@ -272,13 +275,12 @@ class WidgetbookState extends ChangeNotifier {
     query = routeConfig.query;
     previewMode = routeConfig.previewMode;
     queryGroups = routeConfig.queryGroups;
-    panels =
-        previewMode
-            ? null // Panels are ignored in preview mode
-            : routeConfig.panels
-                ?.map(LayoutPanel.values.byNameOrNull)
-                .nonNulls
-                .toSet();
+    panels = previewMode
+        ? null // Panels are ignored in preview mode
+        : routeConfig.panels
+              ?.map(LayoutPanel.values.byNameOrNull)
+              .nonNulls
+              .toSet();
 
     notifyListeners();
   }

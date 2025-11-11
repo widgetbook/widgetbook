@@ -38,11 +38,12 @@ class Setting extends StatelessWidget {
                   name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: WidgetbookTheme.of(
-                    context,
-                  ).textTheme.titleSmall!.copyWith(
-                    color: WidgetbookTheme.of(context).colorScheme.primary,
-                  ),
+                  style:
+                      WidgetbookTheme.of(
+                        context,
+                      ).textTheme.titleSmall!.copyWith(
+                        color: WidgetbookTheme.of(context).colorScheme.primary,
+                      ),
                 ),
               ),
               if (trailing != null) ...{

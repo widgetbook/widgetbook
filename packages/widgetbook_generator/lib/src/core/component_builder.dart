@@ -20,18 +20,16 @@ class ComponentBuilder {
 
   TypeDef buildUnderscoreType() {
     return TypeDef(
-      (b) =>
-          b
-            ..name = '_Component'
-            ..definition = TypeReference(
-              (b) =>
-                  b
-                    ..symbol = 'Component'
-                    ..types.addAll([
-                      refer(widgetType.nonGenericName),
-                      refer('${argsType.nonGenericName}Args'),
-                    ]),
-            ),
+      (b) => b
+        ..name = '_Component'
+        ..definition = TypeReference(
+          (b) => b
+            ..symbol = 'Component'
+            ..types.addAll([
+              refer(widgetType.nonGenericName),
+              refer('${argsType.nonGenericName}Args'),
+            ]),
+        ),
     );
   }
 
@@ -40,13 +38,12 @@ class ComponentBuilder {
         .assign(
           InvokeExpression.newOf(
             TypeReference(
-              (b) =>
-                  b
-                    ..symbol = 'Component'
-                    ..types.addAll([
-                      refer(widgetType.nonGenericName),
-                      refer('${argsType.nonGenericName}Args'),
-                    ]),
+              (b) => b
+                ..symbol = 'Component'
+                ..types.addAll([
+                  refer(widgetType.nonGenericName),
+                  refer('${argsType.nonGenericName}Args'),
+                ]),
             ),
             [],
             {

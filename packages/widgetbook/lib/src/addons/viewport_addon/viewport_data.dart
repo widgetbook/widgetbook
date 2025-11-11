@@ -1,3 +1,6 @@
+/// @docImport 'package:flutter_test/flutter_test.dart';
+library;
+
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
@@ -70,7 +73,7 @@ class ViewportData {
     maxHeight: maxHeight,
   );
 
-  /// Used with [WidgetTester.view.physicalConstraints] It needs to be scaled up
+  /// Used with [TestFlutterView.physicalConstraints] It needs to be scaled up
   /// by the pixel ratio to get the correct physical size.
   ViewConstraints get viewConstraints => ViewConstraints(
     minWidth: minWidth * pixelRatio,

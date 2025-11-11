@@ -1,5 +1,8 @@
 // ignore_for_file: strict_raw_type
 
+/// @docImport 'scenario.dart';
+library;
+
 import 'mode.dart';
 
 typedef ModesMerger =
@@ -15,8 +18,9 @@ List<Mode> defaultMergeModes(
   List<Mode> storyModes,
   List<Mode> scenarioModes,
 ) {
-  final scenarioModesTypes =
-      scenarioModes.map((mode) => mode.runtimeType).toSet();
+  final scenarioModesTypes = scenarioModes
+      .map((mode) => mode.runtimeType)
+      .toSet();
 
   final filteredStoryModes = storyModes.where(
     (mode) => !scenarioModesTypes.contains(mode.runtimeType),

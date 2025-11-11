@@ -16,7 +16,7 @@ void main() {
 
       test(
         'given a value, '
-        'when [codec.toParam] is called, '
+        'when [toParam] is called, '
         'then it returns the value as a string',
         () {
           final result = field.toParam({1});
@@ -26,7 +26,7 @@ void main() {
 
       test(
         'given a string param, '
-        'when [codec.toValue] is called, '
+        'when [toValue] is called, '
         'then it returns the actual value',
         () {
           final result = field.toValue('[1]');
@@ -36,13 +36,22 @@ void main() {
 
       test(
         'given a string param that does not exist in values, '
-        'when [codec.toValue] is called, '
+        'when [toValue] is called, '
         'then it throw an exception',
         () {
           expect(() => field.toValue('x'), throwsA(isA<Exception>()));
-          expect(() => field.toValue('[x]'), throwsA(isA<Exception>()));
           expect(() => field.toValue('x]'), throwsA(isA<Exception>()));
           expect(() => field.toValue('[x'), throwsA(isA<Exception>()));
+        },
+      );
+
+      test(
+        'given a string which contain params, '
+        'when [toValue] is called, '
+        'then it should return valid values',
+        () {
+          expect(field.toValue('[1,2,x,3,y]'), equals([1, 2, 3]));
+          expect(field.toValue('[x]'), equals([]));
         },
       );
 

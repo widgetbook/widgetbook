@@ -12,10 +12,9 @@ final class ObjectSegmentedField<T> extends Field<T> {
   }) : super(
          initialValue: initialValue ?? values.first,
          toParam: labelBuilder,
-         toValue:
-             (param) => values.firstWhereOrNull(
-               (value) => labelBuilder(value) == param,
-             ),
+         toValue: (param) => values.firstWhereOrNull(
+           (value) => labelBuilder(value) == param,
+         ),
        );
 
   /// The list of values to display in the segmented button.
@@ -39,15 +38,14 @@ final class ObjectSegmentedField<T> extends Field<T> {
           updateField(context, groupName, newValue.first);
         }
       },
-      segments:
-          values
-              .map(
-                (value) => ButtonSegment<T>(
-                  value: value,
-                  label: Text(labelBuilder(value)),
-                ),
-              )
-              .toList(),
+      segments: values
+          .map(
+            (value) => ButtonSegment<T>(
+              value: value,
+              label: Text(labelBuilder(value)),
+            ),
+          )
+          .toList(),
     );
   }
 }

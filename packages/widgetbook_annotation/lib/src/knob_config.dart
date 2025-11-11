@@ -148,7 +148,7 @@ class ObjectKnobConfig extends KnobConfig<String> {
 class MultiFieldKnobConfig extends KnobConfig<Map<String, dynamic>> {
   /// All first-class knobs provided by Widgetbook are single-field knobs.
   /// This means that they have only one field. For example, the `knobs.int`
-  /// knob has only one [IntField].
+  /// knob has only one `IntField`.
   ///
   /// But in other cases, you might want to create a custom knob that has more
   /// than one field. For example, if you want to create a custom knob that

@@ -26,16 +26,14 @@ class ScenarioTypedefBuilder {
   TypeDef buildUnderscoreType() {
     final typeRef = scenarioTypeRef;
     return TypeDef(
-      (b) =>
-          b
-            ..name = '_Scenario'
-            ..types.addAll(getTypeParams())
-            ..definition = TypeReference(
-              (b) =>
-                  b
-                    ..symbol = typeRef.symbol
-                    ..types.addAll(typeRef.types),
-            ),
+      (b) => b
+        ..name = '_Scenario'
+        ..types.addAll(getTypeParams())
+        ..definition = TypeReference(
+          (b) => b
+            ..symbol = typeRef.symbol
+            ..types.addAll(typeRef.types),
+        ),
     );
   }
 
@@ -49,19 +47,17 @@ class ScenarioTypedefBuilder {
     );
 
     return TypeDef(
-      (b) =>
-          b
-            ..name = scenarioTypeRef.symbol
-            ..types.addAll(getTypeParams())
-            ..definition = TypeReference(
-              (b) =>
-                  b
-                    ..symbol = 'Scenario'
-                    ..types.addAll([
-                      widgetTypeRef,
-                      argsTypeRef,
-                    ]),
-            ),
+      (b) => b
+        ..name = scenarioTypeRef.symbol
+        ..types.addAll(getTypeParams())
+        ..definition = TypeReference(
+          (b) => b
+            ..symbol = 'Scenario'
+            ..types.addAll([
+              widgetTypeRef,
+              argsTypeRef,
+            ]),
+        ),
     );
   }
 }

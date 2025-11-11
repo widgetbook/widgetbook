@@ -54,24 +54,23 @@ class _SearchFieldState extends State<SearchField> {
           padding: EdgeInsets.all(12),
           child: Icon(Icons.search),
         ),
-        suffixIcon:
-            widget.value.isNotEmpty
-                ? Padding(
-                  padding: const EdgeInsets.only(
-                    right: 6,
-                    left: 12,
-                  ),
-                  child: IconButton(
-                    onPressed: () {
-                      controller.clear();
-                      focusNode.unfocus();
-                      widget.onCleared?.call();
-                    },
-                    hoverColor: Colors.white.withAlpha(25),
-                    icon: const Icon(Icons.close),
-                  ),
-                )
-                : null,
+        suffixIcon: widget.value.isNotEmpty
+            ? Padding(
+                padding: const EdgeInsets.only(
+                  right: 6,
+                  left: 12,
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    controller.clear();
+                    focusNode.unfocus();
+                    widget.onCleared?.call();
+                  },
+                  hoverColor: Colors.white.withAlpha(25),
+                  icon: const Icon(Icons.close),
+                ),
+              )
+            : null,
       ),
     );
   }
