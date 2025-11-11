@@ -20,6 +20,7 @@ class TypesTable extends StatelessWidget {
     required this.duration,
     required this.status,
     required this.dateTime,
+    required this.iterable,
     // Object Params
     required this.person, // Nullable-Required
     this.margin = const EdgeInsets.all(16), // Nullable-Default
@@ -39,6 +40,7 @@ class TypesTable extends StatelessWidget {
   final Duration duration;
   final Status status;
   final DateTime dateTime;
+  final Iterable<int> iterable;
 
   final Person? person;
   final EdgeInsets? padding;
@@ -114,6 +116,12 @@ class TypesTable extends StatelessWidget {
                   children: [
                     Text('$DateTime'),
                     Text(dateTime.toString()),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    Text('$Iterable'),
+                    Text(iterable.join(', ')),
                   ],
                 ),
                 TableRow(

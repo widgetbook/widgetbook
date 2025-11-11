@@ -31,6 +31,7 @@ final $Default = _Story(
       name: 'Text',
     ),
     duration: Arg.fixed(Duration.zero),
+    iterable: IterableArg([1], values: [1, 2, 3]),
     person: PersonArg(
       const Person(
         name: 'John Doe',
@@ -48,6 +49,7 @@ final $Default = _Story(
     _Scenario(
       name: 'Placeholder Child',
       args: _Args.fixed(
+        iterable: [1],
         child: const Placeholder(),
       ),
     ),

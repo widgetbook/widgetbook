@@ -5,5 +5,6 @@ export 'double_arg.dart';
 export 'duration_arg.dart';
 export 'enum_arg.dart';
 export 'int_arg.dart';
+export 'iterable_arg.dart';
 export 'single_arg.dart';
 export 'string_arg.dart';
