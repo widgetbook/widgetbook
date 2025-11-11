@@ -44,6 +44,7 @@ class TypesTableStory extends Story<TypesTable, TypesTableArgs> {
                duration: args.duration,
                status: args.status,
                dateTime: args.dateTime,
+               iterable: args.iterable,
                person: args.person,
                margin: args.margin,
                padding: args.padding,
@@ -66,6 +67,7 @@ class TypesTableArgs extends StoryArgs<TypesTable> {
     Arg<Duration>? duration,
     Arg<Status>? status,
     Arg<DateTime>? dateTime,
+    required Arg<Iterable<int>> iterable,
     Arg<Person?>? person,
     Arg<EdgeInsets?>? margin,
     Arg<EdgeInsets?>? padding,
@@ -94,6 +96,7 @@ class TypesTableArgs extends StoryArgs<TypesTable> {
          dateTime,
          DateTimeArg(DateTime.now()),
        )!,
+       this.iterableArg = $initArg('iterable', iterable, null)!,
        this.personArg = $initArg('person', person, null),
        this.marginArg = $initArg(
          'margin',
@@ -120,6 +123,7 @@ class TypesTableArgs extends StoryArgs<TypesTable> {
     Duration duration = Duration.zero,
     Status status = Status.none,
     DateTime? dateTime,
+    required Iterable<int> iterable,
     Person? person,
     EdgeInsets? margin = const EdgeInsets.all(16),
     EdgeInsets? padding,
@@ -136,6 +140,7 @@ class TypesTableArgs extends StoryArgs<TypesTable> {
        this.durationArg = Arg.fixed(duration),
        this.statusArg = Arg.fixed(status),
        this.dateTimeArg = Arg.fixed(dateTime ?? DateTime.now()),
+       this.iterableArg = Arg.fixed(iterable),
        this.personArg = person == null ? null : Arg.fixed(person),
        this.marginArg = margin == null ? null : Arg.fixed(margin),
        this.paddingArg = padding == null ? null : Arg.fixed(padding),
@@ -161,6 +166,8 @@ class TypesTableArgs extends StoryArgs<TypesTable> {
   final Arg<Status> statusArg;
 
   final Arg<DateTime> dateTimeArg;
+
+  final Arg<Iterable<int>> iterableArg;
 
   final Arg<Person?>? personArg;
 
@@ -194,6 +201,8 @@ class TypesTableArgs extends StoryArgs<TypesTable> {
 
   DateTime get dateTime => dateTimeArg.value;
 
+  Iterable<int> get iterable => iterableArg.value;
+
   Person? get person => personArg?.value;
 
   EdgeInsets? get margin => marginArg?.value;
@@ -219,6 +228,7 @@ class TypesTableArgs extends StoryArgs<TypesTable> {
     durationArg,
     statusArg,
     dateTimeArg,
+    iterableArg,
     personArg,
     marginArg,
     paddingArg,
