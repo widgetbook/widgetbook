@@ -19,9 +19,9 @@ void main() {
         'then it is displayed when no use case is selected',
         (tester) async {
           final state = WidgetbookState(
-            appBuilder: materialAppBuilder,
-            home: const Placeholder(),
-            components: [],
+            config: const Config(
+              home: Placeholder(),
+            ),
           );
 
           await tester.pumpWidgetWithState(
@@ -51,10 +51,11 @@ void main() {
           );
 
           final state = WidgetbookState(
-            appBuilder: materialAppBuilder,
-            home: const Placeholder(),
             path: 'component/story',
-            components: [component],
+            config: Config(
+              home: const Placeholder(),
+              components: [component],
+            ),
           );
 
           await tester.pumpWidgetWithState(

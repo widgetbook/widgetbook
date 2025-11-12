@@ -56,9 +56,7 @@ void main() {
         'given a config with preview mode, '
         'then shell is hidden',
         (tester) async {
-          final state = WidgetbookState(
-            appBuilder: materialAppBuilder,
-          );
+          final state = WidgetbookState();
 
           final delegate = AppRouterDelegate(
             uri: Uri.parse('/?preview'),

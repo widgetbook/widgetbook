@@ -28,16 +28,7 @@ class _WidgetbookAppState extends State<WidgetbookApp> {
   void initState() {
     super.initState();
 
-    state = WidgetbookState(
-      appBuilder: widget.config.appBuilder,
-      home: widget.config.home,
-      header: widget.config.header,
-      addons: widget.config.addons,
-      integrations: widget.config.integrations,
-      components: widget.config.components,
-      enableLeafComponents: widget.config.enableLeafComponents,
-    );
-
+    state = WidgetbookState(config: widget.config);
     router = AppRouter(
       state: state,
       // Do not use the initial route if there is an existing URL fragment.

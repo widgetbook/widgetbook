@@ -42,7 +42,9 @@ void main() {
         () {
           final integration = MockIntegration();
           final state = WidgetbookState(
-            integrations: [integration],
+            config: Config(
+              integrations: [integration],
+            ),
           );
 
           state.notifyListeners();
@@ -64,13 +66,15 @@ void main() {
 
           final integration = MockIntegration();
           final state = WidgetbookState(
-            integrations: [integration],
-            components: [
-              Component(
-                name: 'Placeholder',
-                stories: [story],
-              ),
-            ],
+            config: Config(
+              integrations: [integration],
+              components: [
+                Component(
+                  name: 'Placeholder',
+                  stories: [story],
+                ),
+              ],
+            ),
           );
 
           state.updatePath('Placeholder/Story');

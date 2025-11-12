@@ -24,7 +24,7 @@ class ResponsiveLayout extends StatelessWidget {
     return NavigationPanel(
       initialPath: state.path,
       root: state.root,
-      header: state.header,
+      header: state.config.header,
       onLeafNodeTap: (node) {
         WidgetbookState.of(context).updatePath(node.path);
 
@@ -39,7 +39,7 @@ class ResponsiveLayout extends StatelessWidget {
   List<Widget> buildAddons(BuildContext context) {
     final state = WidgetbookState.of(context);
 
-    return state.addons == null
+    return state.config.addons == null
         ? []
         : state.effectiveAddons!
               .map((addon) => addon.buildFields(context))
