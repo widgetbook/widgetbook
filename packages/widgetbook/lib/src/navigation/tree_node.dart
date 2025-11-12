@@ -58,6 +58,23 @@ class TreeNode<T> {
     nodes.forEach(add);
   }
 
+  /// Finds a node by its [path]. Returns null if no node is found.
+  /// This is more efficient than using [filter] with a path equality check,
+  /// as it traverses the tree directly.
+  TreeNode? findByPath(String path) {
+    final parts = p.split(path);
+
+    TreeNode? currentNode = this;
+    for (final part in parts) {
+      currentNode = currentNode?._children[part];
+      if (currentNode == null) {
+        return null;
+      }
+    }
+
+    return currentNode;
+  }
+
   /// Filters the sub-tree of this node for any node that matches [predicate].
   /// If a node matches the predicate, it will be included, along with all its
   /// descendants, in the result.

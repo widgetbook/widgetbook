@@ -2,12 +2,9 @@
 /// @docImport 'package:flutter/material.dart';
 library;
 
-import 'package:collection/collection.dart';
-
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
-import 'package:path/path.dart' as p;
 
 import '../core/core.dart';
 import '../navigation/navigation.dart';
@@ -59,8 +56,7 @@ class WidgetbookState extends ChangeNotifier {
     this.previewMode = false,
     this.queryGroups = const {},
     this.panels = null,
-  }) : this.root = Tree.build(config.components),
-       this.index = Tree.index(config.components);
+  }) : this.root = Tree.build(config.components);
 
   /// The current path in the Widgetbook.
   String? path;
@@ -88,22 +84,29 @@ class WidgetbookState extends ChangeNotifier {
 
   final Config config;
   final TreeNode<Null> root;
-  final Map<String, Story> index;
+
+  TreeNode? get activeNode {
+    if (path == null) return null;
+    return root.findByPath(path!);
+  }
 
   /// The currently selected component, if any.
   Component? get component {
-    if (path == null) return null;
-    final parentPath = p.dirname(path!);
-
-    final component = config.components.firstWhereOrNull(
-      (c) => c.fullPath == parentPath,
-    );
-
-    return component;
+    final parentNode = activeNode?.parent;
+    return parentNode is TreeNode<Component> ? parentNode.data : null;
   }
 
   /// The currently selected story, if any.
-  Story? get story => path == null ? null : index[path!];
+  Story? get story {
+    final node = activeNode;
+    return node is TreeNode<Story> ? node.data : null;
+  }
+
+  /// The current selected docs, if any.
+  String? get docs {
+    final node = activeNode;
+    return node is TreeNode<String> && node.name == 'Docs' ? node.data : null;
+  }
 
   @internal
   List<Addon>? get effectiveAddons {

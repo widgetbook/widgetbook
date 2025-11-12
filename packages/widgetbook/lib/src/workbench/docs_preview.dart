@@ -8,11 +8,7 @@ class DocsPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
-    final component = state.component;
-
-    if (component == null || component.docs == null) {
-      return const SizedBox.shrink();
-    }
+    final component = state.component!;
 
     return Scaffold(
       appBar: AppBar(
@@ -21,9 +17,7 @@ class DocsPreview extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: SelectableText(
-          component.docs!,
-        ),
+        child: SelectableText(state.docs!),
       ),
     );
   }

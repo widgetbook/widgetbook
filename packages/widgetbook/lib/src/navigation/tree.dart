@@ -49,14 +49,4 @@ class Tree {
 
     return root;
   }
-
-  static Map<String, Story> index(List<Component> components) {
-    return Map.fromEntries(
-      components.expand(
-        (component) => component.stories.map(
-          (story) => MapEntry(story.path, story),
-        ),
-      ),
-    );
-  }
 }
