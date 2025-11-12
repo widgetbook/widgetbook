@@ -7,14 +7,14 @@ import 'package:path/path.dart' as p;
 @optionalTypeArgs
 class TreeNode<T> {
   TreeNode(
-    this.name, [
-    this.parent,
+    this.name,
     this.data,
-  ]) : _children = HashMap();
+    this.parent,
+  ) : _children = HashMap();
 
   final String name;
+  final T data;
   final TreeNode? parent;
-  final T? data;
   final Map<String, TreeNode> _children;
 
   bool get isRoot => parent == null;
@@ -22,7 +22,7 @@ class TreeNode<T> {
 
   bool get isDocs => T == String && name == 'Docs';
   bool get isCategory {
-    return T == String && name.startsWith('[') && name.endsWith(']');
+    return T == Null && name.startsWith('[') && name.endsWith(']');
   }
 
   List<TreeNode> get children {
@@ -88,8 +88,8 @@ class TreeNode<T> {
     } else {
       return TreeNode<T>(
         name,
-        parent,
         data,
+        parent,
       )..addAll(
         children.where(predicate),
       );

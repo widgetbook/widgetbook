@@ -9,7 +9,7 @@ class CategoryTreeTile extends StatelessWidget {
     this.onTap,
   });
 
-  final TreeNode<String> node;
+  final TreeNode<Null> node;
   final VoidCallback? onTap;
 
   @override

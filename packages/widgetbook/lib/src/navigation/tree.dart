@@ -5,7 +5,7 @@ import 'tree_node.dart';
 
 class Tree {
   static TreeNode<Null> build(List<Component> components) {
-    final root = TreeNode<Null>('');
+    final root = TreeNode<Null>('', null, null);
 
     for (final component in components) {
       final parts = p.split(component.path);
@@ -14,25 +14,22 @@ class Tree {
       final lastNode = parts.fold<TreeNode>(
         root,
         (currentNode, part) => currentNode.add(
-          TreeNode<String>(part, currentNode),
+          TreeNode<Null>(part, null, currentNode),
         ),
       );
 
       final componentNode = TreeNode<Component>(
         component.name,
-        lastNode,
         component,
+        lastNode,
       );
 
       lastNode.add(componentNode);
 
-      if (component.docs != null) {
+      final docs = component.docs;
+      if (docs != null) {
         componentNode.add(
-          TreeNode<String>(
-            'Docs',
-            componentNode,
-            component.docs,
-          ),
+          TreeNode<String>('Docs', docs, componentNode),
         );
       }
 
@@ -40,8 +37,8 @@ class Tree {
         (story) => componentNode.add(
           TreeNode<Story>(
             story.name,
-            componentNode,
             story,
+            componentNode,
           ),
         ),
       );

@@ -33,7 +33,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
     final node = widget.node;
     final isCategory = node.isCategory;
     final isLeaf = switch (node) {
-      TreeNode<String>() => node.name == 'Docs',
+      TreeNode<String>() => true, // docs
       TreeNode<Story>() => true,
       TreeNode<Component>() =>
         widget.enableLeafComponents && node.children.length == 1,
@@ -45,7 +45,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
         if (node.parent != null) // non-root
           if (isCategory)
             CategoryTreeTile(
-              node: node as TreeNode<String>,
+              node: node as TreeNode<Null>,
               onTap: () {
                 setState(() => isExpanded = !isExpanded);
               },
@@ -60,8 +60,9 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
               onTap: () {
                 if (!isLeaf) {
                   setState(() => isExpanded = !isExpanded);
-                } else if (node is TreeNode<Story> || node.name == 'Docs') {
-                  widget.onLeafNodeTap?.call(node);
+                } else if (node is TreeNode<Story> ||
+                    node is TreeNode<String>) {
+                  widget.onLeafNodeTap?.call(node); // story or docs
                 } else {
                   // Redirect interactions to the story of the leaf component,
                   // so that when it's clicked, the route is updated to the story
