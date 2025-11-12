@@ -19,8 +19,7 @@ class Workbench extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
 
-    final component = state.component;
-    if (state.path?.endsWith('/Docs') == true && component != null) {
+    if (state.docs != null) {
       return const DocsPreview();
     }
 
