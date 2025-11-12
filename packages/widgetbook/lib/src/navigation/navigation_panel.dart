@@ -41,7 +41,8 @@ class _NavigationPanelState extends State<NavigationPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final query = WidgetbookState.of(context).query ?? '';
+    final state = WidgetbookState.of(context);
+    final query = state.query ?? '';
     final filteredRoot = query.isEmpty
         ? widget.root
         : widget.root.filter((node) => filterNode(node, query));
@@ -58,12 +59,12 @@ class _NavigationPanelState extends State<NavigationPanel> {
           ),
           child: SearchField(
             value: query,
-            onCleared: () => WidgetbookState.of(context).updateQuery(''),
+            onCleared: () => state.updateQuery(''),
             onChanged: (value) {
               _debounce?.cancel();
               _debounce = Timer(
                 const Duration(milliseconds: 100),
-                () => WidgetbookState.of(context).updateQuery(value),
+                () => state.updateQuery(value),
               );
             },
           ),
@@ -75,9 +76,7 @@ class _NavigationPanelState extends State<NavigationPanel> {
               child: NavigationTreeNode(
                 node: filteredRoot ?? widget.root,
                 onLeafNodeTap: widget.onLeafNodeTap,
-                enableLeafComponents: WidgetbookState.of(
-                  context,
-                ).enableLeafComponents,
+                enableLeafComponents: state.config.enableLeafComponents,
               ),
             ),
           ),
@@ -89,8 +88,8 @@ class _NavigationPanelState extends State<NavigationPanel> {
             bottom: 8,
           ),
           child: StatsBanner(
-            componentsCount: WidgetbookState.of(context).components.length,
-            storiesCount: WidgetbookState.of(context).components.fold(
+            componentsCount: state.config.components.length,
+            storiesCount: state.config.components.fold(
               0,
               (sum, component) => sum + component.stories.length,
             ),

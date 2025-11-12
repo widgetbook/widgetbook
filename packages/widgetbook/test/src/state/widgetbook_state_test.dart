@@ -78,12 +78,14 @@ void main() {
               for (final arg in args)
                 arg.groupName: const QueryGroup({'foo': '1'}),
             },
-            components: [
-              Component(
-                name: 'component',
-                stories: [previousStory, nextStory],
-              ),
-            ],
+            config: Config(
+              components: [
+                Component(
+                  name: 'component',
+                  stories: [previousStory, nextStory],
+                ),
+              ],
+            ),
           );
 
           state.updatePath('component/next');

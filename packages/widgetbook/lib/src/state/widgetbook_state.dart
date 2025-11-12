@@ -13,7 +13,6 @@ import '../core/core.dart';
 import '../navigation/navigation.dart';
 import '../routing/routing.dart';
 import '../utils.dart';
-import 'default_home_page.dart';
 import 'widgetbook_scope.dart';
 
 /// Represents the main sections of the Widgetbook layout.
@@ -54,20 +53,14 @@ enum LayoutPanel {
 class WidgetbookState extends ChangeNotifier {
   /// Creates a new instance of [WidgetbookState].
   WidgetbookState({
+    this.config = const Config(),
     this.path,
     this.query,
     this.previewMode = false,
     this.queryGroups = const {},
-    this.appBuilder = widgetsAppBuilder,
-    this.addons,
-    this.integrations,
-    this.home = const DefaultHomePage(),
     this.panels = null,
-    this.header,
-    this.components = const [],
-    this.enableLeafComponents = true,
-  }) : this.root = Tree.build(components),
-       this.index = Tree.index(components);
+  }) : this.root = Tree.build(config.components),
+       this.index = Tree.index(config.components);
 
   /// The current path in the Widgetbook.
   String? path;
@@ -84,15 +77,6 @@ class WidgetbookState extends ChangeNotifier {
   /// The query parameters that are used to filter the use-cases.
   Map<String, QueryGroup> queryGroups;
 
-  final AppBuilder appBuilder;
-  final List<Addon>? addons;
-  final List<Integration>? integrations;
-  final bool enableLeafComponents;
-
-  final List<Component> components;
-  final TreeNode<Null> root;
-  final Map<String, Story> index;
-
   /// Determines which panels are shown.
   ///
   /// - If `null`, all panels are shown.
@@ -102,21 +86,16 @@ class WidgetbookState extends ChangeNotifier {
   /// NOTE: this forces the desktop mode, even if the screen size is small.
   Set<LayoutPanel>? panels;
 
-  /// The home widget is a widget that is shown on startup when no use-case is
-  /// selected. This widget does not inherit from the [appBuilder] or the
-  /// [addons]; meaning that if `Theme.of(context)` is called inside this
-  final Widget home;
-
-  /// An optional widget to display at the top of the navigation panel.
-  /// This can be used for branding or additional information.
-  final Widget? header;
+  final Config config;
+  final TreeNode<Null> root;
+  final Map<String, Story> index;
 
   /// The currently selected component, if any.
   Component? get component {
     if (path == null) return null;
     final parentPath = p.dirname(path!);
 
-    final component = components.firstWhereOrNull(
+    final component = config.components.firstWhereOrNull(
       (c) => c.fullPath == parentPath,
     );
 
@@ -126,10 +105,9 @@ class WidgetbookState extends ChangeNotifier {
   /// The currently selected story, if any.
   Story? get story => path == null ? null : index[path!];
 
-  /// Same as [addons] but without the ones that have no fields.
   @internal
   List<Addon>? get effectiveAddons {
-    return addons?.where((addon) => addon.fields.isNotEmpty).toList();
+    return config.addons?.where((addon) => addon.fields.isNotEmpty).toList();
   }
 
   /// A [Uri] representation of the current state.
@@ -176,7 +154,7 @@ class WidgetbookState extends ChangeNotifier {
       _syncRouteInformation();
     }
 
-    integrations?.forEach(
+    config.integrations?.forEach(
       (integration) => integration.onChange(this),
     );
   }
@@ -250,7 +228,7 @@ class WidgetbookState extends ChangeNotifier {
 
     final newStory = story;
     if (newStory != null) {
-      integrations?.forEach(
+      config.integrations?.forEach(
         (integration) => integration.onStoryChange(newStory),
       );
     }

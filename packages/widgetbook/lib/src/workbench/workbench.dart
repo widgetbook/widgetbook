@@ -26,7 +26,7 @@ class Workbench extends StatelessWidget {
 
     final story = state.story;
     if (story == null) {
-      return state.home;
+      return state.config.home;
     }
 
     final theme = WidgetbookTheme.of(context);
@@ -34,14 +34,14 @@ class Workbench extends StatelessWidget {
     return Scaffold(
       // Some addons require a Scaffold to work properly.
       body: SafeBoundaries(
-        child: state.appBuilder(
+        child: state.config.appBuilder(
           context,
           ColoredBox(
             // Background color for the area behind device frame if
             // the [DeviceFrameAddon] is used.
             color: theme.scaffoldBackgroundColor,
             child: NestedBuilder<Addon>(
-              items: state.addons ?? [],
+              items: state.config.addons ?? [],
               builder: (context, addon, child) => addon.build(context, child),
               child: Stack(
                 // The Stack is used to loosen the constraints of

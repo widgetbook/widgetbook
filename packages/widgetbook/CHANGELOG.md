@@ -16,6 +16,7 @@
 - **FEAT**: Add `Arg.update` API. ([#1707](https://github.com/widgetbook/widgetbook/pull/1707))
 - **FEAT**: Add `IterableArg`. ([#1727](https://github.com/widgetbook/widgetbook/pull/1727))
 - **REFACTOR**: Use `QueryGroup` instead of query parameters and `Map<String, String>`. ([#1653](https://github.com/widgetbook/widgetbook/pull/1653))
+- **REFACTOR**: Add `Config` to `WidgetbookState`. ([#1728](https://github.com/widgetbook/widgetbook/pull/1728))
 
 ## 4.0.0-alpha.3
 
