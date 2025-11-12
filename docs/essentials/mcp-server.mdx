@@ -23,10 +23,14 @@ Ensure you have Widgetbook installed in your Flutter project.
 
 ### Widgetbook Version
 
-MCP server requires Widgetbook 3.17.0-beta or later:
+MCP server requires widgetbook from a specific branch:
 
-```bash
-flutter pub add widgetbook 3.17.0-beta
+```yaml
+widgetbook:
+  git:
+    url: https://github.com/widgetbook/widgetbook.git
+    ref: feat/mcp-server
+    path: packages/widgetbook
 ```
 
 ### Platform-Specific Permissions
@@ -134,6 +138,7 @@ The MCP server provides tools for interacting with your Widgetbook:
 - **`search_use_cases`** - Search for use cases using patterns (supports glob patterns like `button*`, `*input*`, `forms/**`)
 - **`get_use_case_count`** - Get overview statistics (total use cases and components) without listing everything
 - **`list_use_cases`** - Get complete Widgetbook structure (⚠️ WARNING: For large projects, prefer search_use_cases to avoid context bloat)
+- **`list_use_cases`** - Get complete Widgetbook structure (components, use cases, hierarchy)
 - **`select_use_case`** - Navigate to a specific use case by path
 
 ### Visual Inspection
@@ -163,3 +168,12 @@ All tools return structured JSON responses and update your Widgetbook UI in real
 - **Server disconnections**: MCP servers may disconnect occasionally. Monitor server status in Claude's settings and manually re-enable if needed.
 - **UI lag**: When AI assistants change use cases, addon settings, or knob values, the Widgetbook UI may not update immediately. However, subsequent tool calls will return correct information reflecting the actual state.
 - **Manual restart required**: If an AI assistant automatically generates and adds new use cases to your codebase, you must perform a manual hot restart (even in debug mode) for the new use cases to appear in the UI and become accessible to AI assistants.
+
+## Best Practice Rules
+
+AI-first IDEs like Cursor allow developers to define [rules](https://docs.cursor.com/en/context/rules), which provide system-level instructions to Agent and Inline Edit. Think of them as persistent context, preferences, or workflows for your projects.
+
+You can find the recommended rules in these files: 
+- [`widgetbook.md`](https://github.com/widgetbook/widgetbook/tree/docs/mcp-server/docs/assets/guides/widgetbook.md)
+- [`components.md`](https://github.com/widgetbook/widgetbook/tree/docs/mcp-server/docs/assets/guides/components.md)
+- [`figma-mcp.md`](https://github.com/widgetbook/widgetbook/tree/docs/mcp-server/docs/assets/guides/figma-mcp.md)
