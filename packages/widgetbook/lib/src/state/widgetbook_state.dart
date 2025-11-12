@@ -105,7 +105,7 @@ class WidgetbookState extends ChangeNotifier {
   /// The current selected docs, if any.
   String? get docs {
     final node = activeNode;
-    return node is TreeNode<String> && node.name == 'Docs' ? node.data : null;
+    return node is TreeNode<String> ? node.data : null;
   }
 
   @internal
