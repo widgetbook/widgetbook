@@ -5,6 +5,7 @@ import 'package:path/path.dart' as p;
 import '../state/state.dart';
 import 'builder_arg.dart';
 import 'component.dart';
+import 'config.dart';
 import 'mode.dart';
 import 'scenario.dart';
 import 'scenario_definition.dart';
@@ -122,7 +123,17 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     return story;
   }
 
-  Scenario<TWidget, TArgs> generateScenarioFrom(
+  /// A list of all scenarios for this story. The list includes the local ones
+  /// defined in [scenarios] as well as the ones generated from the
+  /// [ScenarioDefinition]s defined in the [Config].
+  List<Scenario<TWidget, TArgs>> allScenarios(Config config) {
+    return [
+      ...config.scenarios.map(_generateScenarioFrom).toList(),
+      ...scenarios,
+    ];
+  }
+
+  Scenario<TWidget, TArgs> _generateScenarioFrom(
     ScenarioDefinition definition,
   ) {
     return Scenario<TWidget, TArgs>(
