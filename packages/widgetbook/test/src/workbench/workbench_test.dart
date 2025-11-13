@@ -45,7 +45,9 @@ void main() {
           when(() => story.name).thenReturn('story');
           when(() => story.path).thenReturn('component/story');
           when(() => story.allScenarios(any())).thenReturn([]);
-          when(() => story.build(any())).thenReturn(Text(story.name));
+          when(
+            () => story.buildWithConfig(any(), any()),
+          ).thenReturn(Text(story.name));
 
           final component = Component<Widget, MockStoryArgs>(
             name: 'component',

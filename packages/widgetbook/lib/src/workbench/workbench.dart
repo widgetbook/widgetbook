@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-import '../core/core.dart';
 import '../state/state.dart';
 import '../theme/theme.dart';
-import '../utils.dart';
 import 'docs_preview.dart';
 import 'safe_boundaries.dart';
 
@@ -18,7 +16,6 @@ class Workbench extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
-    final theme = WidgetbookTheme.of(context);
 
     if (state.docs != null) {
       return const DocsPreview();
@@ -26,54 +23,54 @@ class Workbench extends StatelessWidget {
 
     final scenario = state.scenario;
     if (scenario != null) {
-      return ColoredBox(
-        // Key is need to rebuild when switching scenarios
-        key: ValueKey(state.path),
-        color: theme.scaffoldBackgroundColor,
-        child: scenario.buildWithConfig(context, state.config),
+      return _WorkbenchWrapper(
+        child: KeyedSubtree(
+          key: ValueKey(state.uri),
+          child: scenario.buildWithConfig(
+            context,
+            state.config,
+          ),
+        ),
       );
     }
 
     final story = state.story;
     if (story != null) {
-      return Scaffold(
-        // Some addons require a Scaffold to work properly.
-        body: SafeBoundaries(
-          child: state.config.appBuilder(
+      return _WorkbenchWrapper(
+        child: KeyedSubtree(
+          key: ValueKey(state.uri),
+          child: story.buildWithConfig(
             context,
-            ColoredBox(
-              // Background color for the area behind device frame if
-              // the [DeviceFrameAddon] is used.
-              color: theme.scaffoldBackgroundColor,
-              child: NestedBuilder<Addon>(
-                items: state.config.addons ?? [],
-                builder: (context, addon, child) => addon.build(context, child),
-                child: Stack(
-                  // The Stack is used to loosen the constraints of
-                  // the UseCaseBuilder. Without the Stack, UseCaseBuilder
-                  // would expand to the whole size of the Workbench.
-                  children: [
-                    Builder(
-                      key: ValueKey(state.uri),
-                      builder: (context) {
-                        // Get a fresh state that has updated addons,
-                        // as the `state` variable from above might
-                        // be outdated.
-                        final state = WidgetbookState.of(context);
-
-                        return state.story?.build(context) ??
-                            const SizedBox.shrink();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            state.config,
           ),
         ),
       );
     }
 
     return state.config.home;
+  }
+}
+
+class _WorkbenchWrapper extends StatelessWidget {
+  const _WorkbenchWrapper({
+    required this.child,
+  });
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = WidgetbookTheme.of(context);
+
+    return SafeBoundaries(
+      child: ColoredBox(
+        // This color is the default one used behind the child when the child
+        // size doesn't fill the entire available space.
+        // For example, when a viewport is used to simulate smaller devices,
+        // this color will be used behind the viewport.
+        color: theme.scaffoldBackgroundColor,
+        child: child,
+      ),
+    );
   }
 }

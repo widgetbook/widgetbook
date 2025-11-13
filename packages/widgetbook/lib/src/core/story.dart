@@ -1,8 +1,13 @@
+// ignore_for_file: strict_raw_type
+
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 import '../state/state.dart';
+import '../utils.dart';
+import 'addon.dart';
 import 'builder_arg.dart';
 import 'component.dart';
 import 'config.dart';
@@ -58,7 +63,6 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   ///
   /// This is useful to inject story-specific modes in addition to the
   /// ones defined in [ScenarioDefinition]s.
-  // ignore: strict_raw_type
   final List<Mode>? modes;
 
   /// A late back-reference to the component this story belongs to.
@@ -89,7 +93,12 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
 
   @internal
   void syncArgs(BuildContext context) {
-    final state = WidgetbookState.of(context);
+    final state = WidgetbookState.maybeOf(context);
+
+    // State can be absent if no scope is found in the context.
+    // This happens when building a scenario.
+    if (state == null) return;
+
     args.safeList.forEach((arg) {
       arg.syncValue(state.queryGroups[arg.groupName]);
     });
@@ -104,23 +113,68 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   // in [buildWithArgs] when building [Scenario]s with external args.
   @internal
   void initBuilderArgs(BuildContext context, TArgs args) {
-    // ignore: strict_raw_type
     args.list.whereType<BuilderArg>().forEach((arg) {
       arg.init(context);
     });
   }
 
-  Widget build(BuildContext context) {
+  /// Builds the story widget wrapped with addons from the provided [config].
+  /// Optionally, [args] and [modes] can be provided to override
+  /// the story's default args and merge modes into the addons.
+  Widget buildWithConfig(
+    BuildContext context,
+    Config config, {
+    TArgs? args,
+    List<Mode>? modes,
+  }) {
+    final effectiveArgs = args ?? this.args;
+    final effectiveAddons = mergeModesIntoAddons(modes, config.addons ?? []);
+
     syncArgs(context);
-    return buildWithArgs(context, args);
+    initBuilderArgs(context, effectiveArgs);
+
+    final widget = builder(context, effectiveArgs);
+    final story = setup(context, widget, effectiveArgs);
+
+    return config.appBuilder(
+      context,
+      NestedBuilder(
+        items: effectiveAddons,
+        builder: (context, addon, child) => addon.build(context, child),
+        child: story,
+      ),
+    );
   }
 
-  /// Same as [build], but uses external [args] instead of [Story.args].
-  Widget buildWithArgs(BuildContext context, TArgs args) {
-    initBuilderArgs(context, args);
-    final widget = builder(context, args);
-    final story = setup(context, widget, args);
-    return story;
+  /// Merges [modes] into [addons].
+  /// For example if [addons] are [TextScaleAddon(1), ThemeAddon('dark')]
+  /// and [modes] are [TextScaleMode(3)] the result should be
+  /// [TextScaleAddon(3), ThemeAddon('dark')].
+  ///
+  /// If [modes] are for an addon type that is not present in [addons],
+  /// an assertion error is thrown.
+  List<Addon> mergeModesIntoAddons(List<Mode>? modes, List<Addon>? addons) {
+    if (addons == null) return [];
+    if (modes == null) return addons;
+
+    final addonTypes = addons.map((addon) => addon.runtimeType).toSet();
+    final unmatchedModes = modes.where(
+      (mode) => !addonTypes.contains(mode.addon.runtimeType),
+    );
+
+    assert(
+      unmatchedModes.isEmpty,
+      'Modes [${unmatchedModes.map((e) => e.runtimeType).join(', ')}] '
+      'do not have a corresponding addon in config.',
+    );
+
+    return addons.map((addon) {
+      final matchingMode = modes.firstWhereOrNull(
+        (mode) => mode.addon.runtimeType == addon.runtimeType,
+      );
+
+      return matchingMode?.addon ?? addon;
+    }).toList();
   }
 
   /// A list of all scenarios for this story. The list includes the local ones
