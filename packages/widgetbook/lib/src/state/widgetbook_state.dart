@@ -56,7 +56,7 @@ class WidgetbookState extends ChangeNotifier {
     this.previewMode = false,
     this.queryGroups = const {},
     this.panels = null,
-  }) : this.root = Tree.build(config.components);
+  }) : this.root = Tree.build(config);
 
   /// The current path in the Widgetbook.
   String? path;
@@ -100,6 +100,12 @@ class WidgetbookState extends ChangeNotifier {
   Story? get story {
     final node = activeNode;
     return node is TreeNode<Story> ? node.data : null;
+  }
+
+  /// The currently selected scenario, if any.
+  Scenario? get scenario {
+    final node = activeNode;
+    return node is TreeNode<Scenario> ? node.data : null;
   }
 
   /// The current selected docs, if any.

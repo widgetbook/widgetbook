@@ -7,6 +7,7 @@ import '../core/core.dart';
 import '../theme/theme.dart';
 import 'icons/component_icon.dart';
 import 'icons/expander_icon.dart';
+import 'icons/scenario_icon.dart';
 import 'icons/story_icon.dart';
 import 'tree_node.dart';
 
@@ -17,6 +18,7 @@ class FolderTreeTile extends StatelessWidget {
     required this.node,
     required this.depth,
     this.onTap,
+    this.onExpanderTap,
     this.isTerminal = false,
     this.isExpanded = false,
     this.isSelected = false,
@@ -28,6 +30,7 @@ class FolderTreeTile extends StatelessWidget {
   final TreeNode node;
   final int depth;
   final VoidCallback? onTap;
+  final VoidCallback? onExpanderTap;
   final bool isTerminal;
   final bool isExpanded;
   final bool isSelected;
@@ -36,10 +39,6 @@ class FolderTreeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(indentation);
-    final isLeafComponent =
-        enableLeafComponents &&
-        node is TreeNode<Component> &&
-        node.children.length == 1;
 
     return Container(
       height: indentation,
@@ -59,16 +58,25 @@ class FolderTreeTile extends StatelessWidget {
             ),
             SizedBox(
               width: indentation,
-              child: node.isLeaf || isLeafComponent
+              child: isTerminal
                   ? null
-                  : ExpanderIcon(
-                      isExpanded: isExpanded,
+                  : InkWell(
+                      onTap: onExpanderTap,
+                      borderRadius: BorderRadius.circular(indentation / 2),
+                      child: SizedBox(
+                        width: indentation,
+                        height: indentation,
+                        child: ExpanderIcon(
+                          isExpanded: isExpanded,
+                        ),
+                      ),
                     ),
             ),
             SizedBox(
               width: indentation,
               child: switch (node) {
                 TreeNode<Story>() => const StoryIcon(),
+                TreeNode<Scenario>() => const ScenarioIcon(),
                 TreeNode<Component>() => const ComponentIcon(),
                 TreeNode<String>() => const Icon(Icons.book, size: 16),
                 TreeNode<Null>() => const Icon(Icons.folder, size: 16),

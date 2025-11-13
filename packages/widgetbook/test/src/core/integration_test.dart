@@ -10,6 +10,7 @@ class MockIntegration extends Mock implements Integration {}
 void main() {
   setUpAll(() {
     registerFallbackValue(MockWidgetbookState());
+    registerFallbackValue(MockConfig());
   });
 
   group(
@@ -63,6 +64,7 @@ void main() {
           final story = MockStory();
           when(() => story.name).thenReturn('Story');
           when(() => story.path).thenReturn('Placeholder/Story');
+          when(() => story.allScenarios(any())).thenReturn([]);
 
           final integration = MockIntegration();
           final state = WidgetbookState(

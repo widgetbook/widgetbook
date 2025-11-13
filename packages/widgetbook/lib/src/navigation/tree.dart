@@ -4,10 +4,10 @@ import '../core/core.dart';
 import 'tree_node.dart';
 
 class Tree {
-  static TreeNode<Null> build(List<Component> components) {
+  static TreeNode<Null> build(Config config) {
     final root = TreeNode<Null>('', null, null);
 
-    for (final component in components) {
+    for (final component in config.components) {
       final parts = p.split(component.path);
 
       // Start with root and keep adding parts down the path
@@ -34,13 +34,26 @@ class Tree {
       }
 
       component.stories.forEach(
-        (story) => componentNode.add(
-          TreeNode<Story>(
-            story.name,
-            story,
-            componentNode,
-          ),
-        ),
+        (story) {
+          final storyNode = componentNode.add(
+            TreeNode<Story>(
+              story.name,
+              story,
+              componentNode,
+            ),
+          );
+
+          final allScenarios = story.allScenarios(config);
+          allScenarios.forEach(
+            (scenario) => storyNode.add(
+              TreeNode<Scenario>(
+                scenario.name,
+                scenario,
+                storyNode,
+              ),
+            ),
+          );
+        },
       );
     }
 

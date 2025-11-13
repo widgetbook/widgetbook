@@ -26,19 +26,50 @@ class NavigationTreeNode extends StatefulWidget {
 }
 
 class _NavigationTreeNodeState extends State<NavigationTreeNode> {
-  bool isExpanded = true;
+  late bool isExpanded;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Stories are always collapsed by default
+    isExpanded = widget.node is! TreeNode<Story>;
+  }
+
+  void toggleExpanded() {
+    setState(() {
+      isExpanded = !isExpanded;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final state = WidgetbookState.of(context);
     final node = widget.node;
     final isCategory = node.isCategory;
-    final isLeaf = switch (node) {
+
+    final isLeafComponent =
+        widget.enableLeafComponents &&
+        node is TreeNode<Component> &&
+        node.children.length == 1 && // a single story
+        node.children.first.children.isEmpty; // story without scenarios
+
+    final isClickable = switch (node) {
       TreeNode<String>() => true, // docs
+      TreeNode<Scenario>() => true,
       TreeNode<Story>() => true,
-      TreeNode<Component>() =>
-        widget.enableLeafComponents && node.children.length == 1,
+      TreeNode<Component>() => isLeafComponent,
       _ => false,
     };
+
+    final hasChildren = node.children.isNotEmpty && !isLeafComponent;
+
+    final targetNode = isLeafComponent
+        // Redirect interactions to the story of the leaf component,
+        // so that when it's clicked, the route is updated to the story
+        // of the leaf component, and not the leaf component itself.
+        ? node.children.first as TreeNode<Story>
+        : node; // story, scenario, or docs
 
     return Column(
       children: [
@@ -54,27 +85,20 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
             FolderTreeTile(
               node: node,
               depth: widget.depth,
-              isTerminal: isLeaf,
+              isTerminal: isClickable && !hasChildren,
               isExpanded: isExpanded,
-              isSelected: node.path == WidgetbookState.of(context).path,
+              isSelected: targetNode.path == state.path,
+              onExpanderTap: toggleExpanded,
               onTap: () {
-                if (!isLeaf) {
-                  setState(() => isExpanded = !isExpanded);
-                } else if (node is TreeNode<Story> ||
-                    node is TreeNode<String>) {
-                  widget.onLeafNodeTap?.call(node); // story or docs
-                } else {
-                  // Redirect interactions to the story of the leaf component,
-                  // so that when it's clicked, the route is updated to the story
-                  // of the leaf component, and not the leaf component itself.
-                  final componentNode = node as TreeNode<Component>;
-                  widget.onLeafNodeTap?.call(
-                    componentNode.children.first as TreeNode<Story>,
-                  );
+                if (!isClickable) {
+                  toggleExpanded();
+                  return;
                 }
+
+                widget.onLeafNodeTap?.call(targetNode);
               },
             ),
-        if (!isLeaf)
+        if (hasChildren)
           _SlideAnimator(
             forward: isExpanded,
             child: ListView.builder(
