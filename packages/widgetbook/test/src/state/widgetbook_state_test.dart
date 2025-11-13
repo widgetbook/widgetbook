@@ -7,6 +7,9 @@ import '../../helper/mocks.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  setUpAll(() {
+    registerFallbackValue(MockConfig());
+  });
 
   group(
     '$WidgetbookState',
@@ -65,12 +68,14 @@ void main() {
 
           final previousStory = MockStory();
           when(() => previousStory.name).thenReturn('previous');
-          when(() => previousStory.args).thenReturn(previousStoryArgs);
           when(() => previousStory.path).thenReturn('component/previous');
+          when(() => previousStory.args).thenReturn(previousStoryArgs);
+          when(() => previousStory.allScenarios(any())).thenReturn([]);
 
           final nextStory = MockStory();
           when(() => nextStory.name).thenReturn('next');
           when(() => nextStory.path).thenReturn('component/next');
+          when(() => nextStory.allScenarios(any())).thenReturn([]);
 
           final state = WidgetbookState(
             path: 'component/previous',

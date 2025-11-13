@@ -9,6 +9,7 @@ import '../../helper/helper.dart';
 void main() {
   setUpAll(() {
     registerFallbackValue(MockBuildContext());
+    registerFallbackValue(MockConfig());
   });
 
   group(
@@ -43,6 +44,7 @@ void main() {
           final story = MockStory();
           when(() => story.name).thenReturn('story');
           when(() => story.path).thenReturn('component/story');
+          when(() => story.allScenarios(any())).thenReturn([]);
           when(() => story.build(any())).thenReturn(Text(story.name));
 
           final component = Component<Widget, MockStoryArgs>(
