@@ -15,10 +15,10 @@ screenshots:
 
 environment:
   sdk: ">=3.8.0 <4.0.0"
-  flutter: ">=3.32.0"
+  flutter: ">=3.38.0"
 
 dependencies:
-  accessibility_tools: ^2.0.0
+  accessibility_tools: ^2.8.0
   collection: ^1.15.0
   device_frame_plus: ^1.5.0
   flutter:
