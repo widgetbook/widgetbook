@@ -8,10 +8,12 @@ void main() {
   group(
     '$BuilderAddon',
     () {
+      final colorBoxKey = const Key('testColoredBox');
       final color = Colors.red;
       final addon = BuilderAddon(
         name: 'Red',
         builder: (context, child) => ColoredBox(
+          key: colorBoxKey,
           color: color,
           child: child,
         ),
@@ -30,7 +32,7 @@ void main() {
           );
 
           final coloredBox = tester.widget<ColoredBox>(
-            find.byType(ColoredBox),
+            find.byKey(colorBoxKey),
           );
 
           expect(
