@@ -76,12 +76,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   // `Component<TWidget<T2>, TArgs>`.
   late final Component component;
 
-  String get path {
-    return p.join(
-      component.fullPath,
-      name.replaceAll(' ', '-'),
-    );
-  }
+  String get path => p.join(component.fullPath, name);
 
   static Widget defaultSetup(
     BuildContext context,
