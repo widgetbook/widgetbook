@@ -1,3 +1,7 @@
+## Unreleased
+
+- **REFACTOR**: Set minimum `accessibility_tools` version to 2.6.0. ([#1739](https://github.com/widgetbook/widgetbook/pull/1739))
+
 ## 3.20.0
 
 - **BREAKING**: Set minimum SDK version to 3.8.0 & minimum Flutter version to 3.32.0. ([#1719](https://github.com/widgetbook/widgetbook/pull/1719))
