@@ -245,10 +245,6 @@
               "href": "/addons/overview"
             },
             {
-              "title": "Accessibility Addon",
-              "href": "/addons/accessibility-addon"
-            },
-            {
               "title": "Alignment Addon",
               "href": "/addons/alignment-addon"
             },
@@ -257,16 +253,8 @@
               "href": "/addons/builder-addon"
             },
             {
-              "title": "Device Frame Addon",
-              "href": "/addons/device-frame-addon"
-            },
-            {
               "title": "Grid Addon",
               "href": "/addons/grid-addon"
-            },
-            {
-              "title": "Inspector Addon",
-              "href": "/addons/inspector-addon"
             },
             {
               "title": "Localization Addon",
