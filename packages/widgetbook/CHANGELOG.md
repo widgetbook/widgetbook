@@ -1,4 +1,4 @@
-## Unreleased
+## 3.20.1
 
 - **REFACTOR**: Set minimum `accessibility_tools` version to 2.6.0. ([#1739](https://github.com/widgetbook/widgetbook/pull/1739))
 
