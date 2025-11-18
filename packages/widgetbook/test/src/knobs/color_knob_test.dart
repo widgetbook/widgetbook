@@ -46,11 +46,11 @@ void main() {
         (tester) async {
           const blue = Color(0xFF0000FF);
           const red = Color(0xFFFF0000);
-          const testKey = Key('testColoredBox');
+          final key = UniqueKey();
 
           await tester.pumpKnob(
             (context) => ColoredBox(
-              key: testKey,
+              key: key,
               color: context.knobs.color(
                 label: 'Knob',
                 initialValue: blue,
@@ -63,7 +63,7 @@ void main() {
             'FF0000',
           );
 
-          final box = tester.widget<ColoredBox>(find.byKey(testKey));
+          final box = tester.widget<ColoredBox>(find.byKey(key));
 
           expect(box.color, equals(red));
         },
@@ -76,11 +76,11 @@ void main() {
         (tester) async {
           const blue = Color(0xFF0000FF);
           const purple = Color(0xFFFF00FF);
-          const testKey = Key('testColoredBox');
+          final key = UniqueKey();
 
           await tester.pumpKnob(
             (context) => ColoredBox(
-              key: testKey,
+              key: key,
               color: context.knobs.color(
                 label: 'Knob',
                 initialValue: blue,
@@ -101,7 +101,7 @@ void main() {
             '255',
           );
 
-          final box = tester.widget<ColoredBox>(find.byKey(testKey));
+          final box = tester.widget<ColoredBox>(find.byKey(key));
 
           expect(fields, findsAtLeastNWidgets(3));
           expect(box.color, equals(purple));
@@ -115,11 +115,11 @@ void main() {
         (tester) async {
           const blue = Color(0xFF0000FF);
           const greenBlue = Color(0xFF00FFFF);
-          const testKey = Key('testColoredBox');
+          final key = UniqueKey();
 
           await tester.pumpKnob(
             (context) => ColoredBox(
-              key: testKey,
+              key: key,
               color: context.knobs.color(
                 label: 'Knob',
                 initialValue: blue,
@@ -141,7 +141,7 @@ void main() {
             '255',
           );
 
-          final box = tester.widget<ColoredBox>(find.byKey(testKey));
+          final box = tester.widget<ColoredBox>(find.byKey(key));
 
           expect(fields, findsAtLeastNWidgets(3));
           expect(box.color, equals(greenBlue));
@@ -155,11 +155,11 @@ void main() {
         (tester) async {
           const blue = Color(0xFF0000FF);
           const darkerBlue = Color(0xFF000088);
-          const testKey = Key('testColoredBox');
+          final key = UniqueKey();
 
           await tester.pumpKnob(
             (context) => ColoredBox(
-              key: testKey,
+              key: key,
               color: context.knobs.color(
                 label: 'Knob',
                 initialValue: blue,
@@ -180,7 +180,7 @@ void main() {
             '136',
           );
 
-          final box = tester.widget<ColoredBox>(find.byKey(testKey));
+          final box = tester.widget<ColoredBox>(find.byKey(key));
 
           expect(fields, findsAtLeastNWidgets(3));
           expect(box.color, equals(darkerBlue));
@@ -194,11 +194,11 @@ void main() {
         (tester) async {
           const blue = Color(0xFF0000FF);
           const transparent = Color(0x000000FF);
-          const testKey = Key('testColoredBox');
+          final key = UniqueKey();
 
           await tester.pumpKnob(
             (context) => ColoredBox(
-              key: testKey,
+              key: key,
               color: context.knobs.color(
                 label: 'Knob',
                 initialValue: blue,
@@ -213,7 +213,7 @@ void main() {
           final opacityField = find.text('100');
           await tester.findAndEnter(opacityField, '0');
 
-          final box = tester.widget<ColoredBox>(find.byKey(testKey));
+          final box = tester.widget<ColoredBox>(find.byKey(key));
 
           expect(box.color, equals(transparent));
         },
@@ -226,11 +226,11 @@ void main() {
         (tester) async {
           const blue = Color(0xFF0000FF);
           const magenta = Color(0xFFFF00FF);
-          const testKey = Key('testColoredBox');
+          final key = UniqueKey();
 
           await tester.pumpKnob(
             (context) => ColoredBox(
-              key: testKey,
+              key: key,
               color: context.knobs.color(
                 label: 'Knob',
                 initialValue: blue,
@@ -251,7 +251,7 @@ void main() {
             '300',
           );
 
-          final box = tester.widget<ColoredBox>(find.byKey(testKey));
+          final box = tester.widget<ColoredBox>(find.byKey(key));
 
           expect(fields, findsAtLeastNWidgets(3));
           expect(box.color, equals(magenta));
@@ -268,11 +268,11 @@ void main() {
         (tester) async {
           const white = Color(0xFFFFFFFF);
           const blue = Color(0xFF0000FF);
-          const testKey = Key('testColoredBox');
+          final key = UniqueKey();
 
           await tester.pumpKnob(
             (context) => ColoredBox(
-              key: testKey,
+              key: key,
               color: context.knobs.color(
                 label: 'Knob',
               ),
@@ -297,7 +297,7 @@ void main() {
           );
           await tester.pumpAndSettle();
 
-          var box = tester.widget<ColoredBox>(find.byKey(testKey));
+          var box = tester.widget<ColoredBox>(find.byKey(key));
 
           expect(box.color, equals(white));
           await tester.findAndEnter(
@@ -309,7 +309,7 @@ void main() {
             '50',
           );
 
-          box = tester.widget<ColoredBox>(find.byKey(testKey));
+          box = tester.widget<ColoredBox>(find.byKey(key));
 
           expect(box.color, equals(blue));
         },
@@ -322,11 +322,11 @@ void main() {
         (tester) async {
           const blue = Color(0xFF0000FF);
           const unsaturatedBlue = Color(0xFF4040BF);
-          const testKey = Key('testColoredBox');
+          final key = UniqueKey();
 
           await tester.pumpKnob(
             (context) => ColoredBox(
-              key: testKey,
+              key: key,
               color: context.knobs.color(
                 label: 'Knob',
                 initialValue: blue,
@@ -347,7 +347,7 @@ void main() {
             '50',
           );
 
-          final box = tester.widget<ColoredBox>(find.byKey(testKey));
+          final box = tester.widget<ColoredBox>(find.byKey(key));
 
           expect(fields, findsAtLeastNWidgets(3));
           expect(box.color, equals(unsaturatedBlue));
@@ -361,11 +361,11 @@ void main() {
         (tester) async {
           const blue = Color(0xFF0000FF);
           const lightBlue = Color(0xFF8080ff);
-          const testKey = Key('testColoredBox');
+          final key = UniqueKey();
 
           await tester.pumpKnob(
             (context) => ColoredBox(
-              key: testKey,
+              key: key,
               color: context.knobs.color(
                 label: 'Knob',
                 initialValue: blue,
@@ -386,7 +386,7 @@ void main() {
             '75',
           );
 
-          final box = tester.widget<ColoredBox>(find.byKey(testKey));
+          final box = tester.widget<ColoredBox>(find.byKey(key));
 
           expect(fields, findsAtLeastNWidgets(3));
           expect(box.color, equals(lightBlue));
