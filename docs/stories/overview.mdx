@@ -1,0 +1,72 @@
+# What are Stories?
+
+A Story is a specific state or variant of a design component _(or a Flutter widget)_. It is a way to showcase a component in different scenarios.
+
+## Use-cases for Components
+
+Your design system will usually have multiple components, and each component will have multiple stories. For example, a button component might have stories for different states like `Primary`, `Secondary`, `Disabled` etc.
+
+```dart title="components/lib/button.dart"
+import 'package:flutter/material.dart';
+
+enum ButtonState {
+  primary,
+  secondary,
+  disabled,
+}
+
+class Button extends StatelessWidget {
+  final String text;
+  final ButtonState state;
+
+  const Button({
+    super.key,
+    required this.text,
+    required this.state,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // Implementation of the button based on state
+  }
+}
+```
+
+```dart title="widgetbook/lib/button.stories.dart"
+import 'package:flutter/material.dart';
+import 'package:components/button.dart';
+
+part 'button.stories.book.dart';
+
+final meta = Meta<Button>();
+
+final $Primary = _Story(
+  args: _Args(
+    text: StringArg('Primary'),
+    state: EnumArg<ButtonState>(ButtonState.primary, values: ButtonState.values),
+  ),
+)
+
+final $Secondary = _Story(
+  args: _Args(
+    text: StringArg('Secondary'),
+    state: EnumArg<ButtonState>(ButtonState.secondary, values: ButtonState.values),
+  ),
+)
+
+final $Disabled = _Story(
+  args: _Args(
+    text: StringArg('Disabled'),
+    state: EnumArg<ButtonState>(ButtonState.disabled, values: ButtonState.values),
+  ),
+)
+```
+
+## Stories for Screens
+
+A screen is a composition of multiple components but as you move up the component hierarchy toward the screen level, you deal with more complexity. That's why it is **recommended** to catalog your screens in Widgetbook to be able to test them in isolation.
+
+There are two common patterns for building screens:
+
+1. **Pure Screens**: Screens that are fully presentational and don't depend on external data or services. You can create a use-case for them like any other component.
+2. **Contained Screens**: Screens that depend on external data or services. Check out our [mocking guide](/stories/mocking) to know how to handle such screens.

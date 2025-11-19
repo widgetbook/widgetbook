@@ -84,16 +84,12 @@
       ]
     },
     {
-      "group": "Use-Cases",
+      "group": "Stories",
       "tab": "docs",
       "pages": [
         {
-          "title": "What are use-cases?",
-          "href": "/use-cases/overview"
-        },
-        {
-          "title": "Annotations",
-          "href": "/use-cases/annotations"
+          "title": "What are Stories?",
+          "href": "/stories/overview"
         },
         {
           "group": "Knobs",
@@ -194,18 +190,14 @@
         },
         {
           "title": "Mock Widgets & Screens",
-          "href": "/use-cases/mocking"
+          "href": "/stories/mocking"
         },
         {
           "group": "Use-case Generation",
           "pages": [
             {
-              "title": "Generate use-cases with LLMs",
-              "href": "/use-cases/generate-with-llm"
-            },
-            {
-              "title": "Entries Generator VSC Extension",
-              "href": "https://marketplace.visualstudio.com/items?itemName=LeanCode.widgetbook-generator"
+              "title": "Generate Stories with LLMs",
+              "href": "/stories/generate-with-llm"
             }
           ]
         }
