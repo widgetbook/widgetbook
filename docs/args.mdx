@@ -1,0 +1,174 @@
+# Args
+
+Args is a type-safe way to define and manage the properties of your widgets in Widgetbook. By using Args, you can create interactive stories that allow you to tweak widget properties in real-time, making it easier to visualize different states and configurations.
+
+Args are generated based on your widget's constructor parameters, ensuring type safety and consistency. You can define Args for various data types, including primitives, enums, and complex objects.
+
+```dart title="my_widget.stories.dart"
+import 'package:widgetbook/widgetbook.dart';
+import 'package:my_app/my_widget.dart';
+
+part 'my_widget.stories.book.dart';
+
+const meta = Meta<MyWidget>();
+```
+
+Run the following command to generate the `_Args` class for your widget:
+
+```bash
+dart run build_runner build
+```
+
+Now you can create an arg-story using the generated `_Args` class:
+
+```dart title="my_widget.stories.dart"
+final $Active = _Story(
+  args: _Args(
+    title: StringArg('Hello, Widgetbook!'),
+    isEnabled: BoolArg(true),
+    count: IntArg(5),
+    status: Arg.fixed(MyStatus.active), // Constant value, won't be changeable in the UI
+  ),
+);
+```
+
+## Custom Args Source
+
+The default source for args generation is the widget's constructor. However, you can customize this behavior by using the `MetaWithArgs` as follows
+
+```dart title="my_widget.stories.dart"
+import 'package:widgetbook/widgetbook.dart';
+import 'package:my_app/my_widget.dart';
+
+part 'my_widget.stories.book.dart';
+
+const meta = MetaWithArgs<MyWidget, MyArgs>();
+
+class MyArgs {
+  MyArgs({
+    required this.number,
+  });
+
+  final int number;
+}
+```
+
+After running the build runner, a custom `_Args` class will be generated based on your specified `MyArgs` class. But you will need to manually map the args in your story using the `builder` parameter:
+
+```dart title="my_widget.stories.dart"
+final $Custom = _Story(
+  args: _Args(
+    number: IntArg(10),
+  ),
+  builder: (context, args) {
+    return MyWidget(
+      title: 'Custom Title',
+      isEnabled: true,
+      count: args.number.value,
+      status: MyStatus.inactive,
+    );
+  },
+);
+```
+
+## Available Arg Types
+
+Widgetbook offers a first-class support for all primitive and common data types through various Arg classes:
+
+- `Arg.fixed<T>` (for constant values)
+- `StringArg` or `NullableStringArg`
+- `IntArg` or `NullableIntArg`
+- `DoubleArg` or `NullableDoubleArg`
+- `BoolArg` or `NullableBoolArg`
+- `EnumArg<T>` or `NullableEnumArg<T>`
+- `SingleArg<T>` or `NullableSingleArg<T>`
+- `IterableArg<T>` or `NullableIterableArg<T>`
+- `ColorArg` or `NullableColorArg`
+- `DateTimeArg` or `NullableDateTimeArg`
+- `DurationArg` or `NullableDurationArg`
+
+## Fixed Args
+
+In cases where you want to use a constant value that shouldn't be changeable in the Widgetbook UI, you can use the `Arg.fixed<T>` constructor. This is useful for parameters that are not relevant for interactive tweaking.
+
+```dart title="my_widget.stories.dart"
+final $FixedExample = _Story(
+  args: _Args(
+    title: Arg.fixed('Fixed Title'),
+    isEnabled: Arg.fixed(false),
+    count: Arg.fixed(42),
+  ),
+);
+```
+
+If all the args are fixed, you can use the `_Args.fixed` constructor for brevity:
+
+```dart title="my_widget.stories.dart"
+final $AllFixed = _Story(
+  args: _Args.fixed(
+    title: 'Fixed Title',
+    isEnabled: false,
+    count: 42,
+  ),
+);
+```
+
+## Param-Arg Resolution
+
+If you are wondering what type of arg you will have generated based on your constructor parameter, here is a mapping:
+
+| Primitive | Nullable | Required | Default | Arg                                                 |
+| --------- | -------- | -------- | ------- | --------------------------------------------------- |
+| ✅        | ✅       | ✅       | ❌      | `Arg<Primitive>? = PrimitiveArg(primitive.default)` |
+| ✅        | ✅       | ❌       | ✅      | `Arg<Primitive>? = PrimitiveArg(param.default)`     |
+| ✅        | ✅       | ❌       | ❌      | `Arg<Primitive>? = PrimitiveArg(primitive.default)` |
+| ✅        | ❌       | ✅       | ❌      | `Arg<Primitive> = PrimitiveArg(primitive.default)`  |
+| ✅        | ❌       | ❌       | ✅      | `Arg<Primitive> = PrimitiveArg(param.default)`      |
+| ❌        | ✅       | ✅       | ❌      | `Arg<Type>?`                                        |
+| ❌        | ✅       | ❌       | ✅      | `Arg<Type>? = Arg.fixed(param.default)`             |
+| ❌        | ✅       | ❌       | ❌      | `Arg<Type>?`                                        |
+| ❌        | ❌       | ✅       | ❌      | `required Arg<Type>`                                |
+| ❌        | ❌       | ❌       | ✅      | `Arg<Type> = Arg.fixed(param.default)`              |
+
+## Custom Args
+
+If your widget parameter doesn't have a first-class Arg support, you can create your own custom Arg by extending the `Arg<T>` class.
+
+```dart
+class PersonArg extends Arg<Person> {
+  PersonArg(
+    super.value, {
+    super.name,
+  });
+
+  @override
+  List<Field> get fields => [
+    StringField(
+      name: 'name',
+      initialValue: value.name,
+    ),
+    IntInputField(
+      name: 'age',
+      initialValue: value.age,
+    ),
+  ];
+
+  @override
+  Person valueFromQueryGroup(QueryGroup? group) {
+    if (group == null || group.isNullified) return value;
+
+    return Person(
+      name: valueOf('name', group),
+      age: valueOf('age', group),
+    );
+  }
+
+  @override
+  QueryGroup valueToQueryGroup(Person value) {
+    return QueryGroup({
+      'name': paramOf('name', value.name),
+      'age': paramOf('age', value.age),
+    });
+  }
+}
+```
