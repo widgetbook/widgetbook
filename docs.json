@@ -100,13 +100,8 @@
           "href": "/stories/mocking"
         },
         {
-          "group": "Use-case Generation",
-          "pages": [
-            {
-              "title": "Generate Stories with LLMs",
-              "href": "/stories/generate-with-llm"
-            }
-          ]
+          "title": "Generate with LLMs",
+          "href": "/stories/generate-with-llm"
         }
       ]
     },
