@@ -10,15 +10,6 @@
   changes can happen at any time. Use it at your own risk.
 </Warning>
 
-## What's different in v4?
-
-| Feature             | v3                                                  | v4                                                                                        |
-| ------------------- | --------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| Type-safety         | Knobs were not type-safe as they depend on the name | Args are type-safe and generated based on the Widget's constructor or a custom interface. |
-| Golden Tests        | Only via Widgetbook Cloud                           | Supported natively via `Scenario`s.                                                       |
-| Interaction Testing | Not supported in Widgetbook Cloud                   | Supported using `Scenario.run` method.                                                    |
-| Component-snapshot  | The default snapshot size was always iPhone SE      | The default snapshot size is as big as the component.                                     |
-
 ## Project Bootstrap
 
 1. Create a new Flutter project inside your app's directory:
