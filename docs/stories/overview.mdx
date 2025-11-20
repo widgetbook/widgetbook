@@ -70,3 +70,18 @@ There are two common patterns for building screens:
 
 1. **Pure Screens**: Screens that are fully presentational and don't depend on external data or services. You can create a story for them like any other component.
 2. **Contained Screens**: Screens that depend on external data or services. Check out our [mocking guide](/stories/mocking) to know how to handle such screens.
+
+## Component Path
+
+You can change the navigation path of your stories by using the `path` parameter in `Meta` as follows:
+
+<Info>
+  If you wrap a folder name in **square brackets**, it will be treated as a
+  **category** in the navigation path.
+</Info>
+
+```dart title="widgetbook/lib/button.stories.dart"
+final meta = Meta<Button>(
+  path: 'components/button',
+);
+```

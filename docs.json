@@ -193,10 +193,6 @@
           "href": "/configure/root-widget"
         },
         {
-          "title": "Use Case Navigation Path",
-          "href": "/configure/use-case-nav-path"
-        },
-        {
           "title": "Initial Route",
           "href": "/configure/initial-route"
         },
