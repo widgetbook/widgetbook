@@ -2,14 +2,11 @@
 
 When a component has a single story, it's called a leaf component. By default, Widgetbook hides the story of the leaf component and displays the component directly in the navigation tree. This helps to declutter the navigation tree and make it easier to navigate.
 
-To enable or disable the leaf component behavior, you can use the `enableLeafComponent` parameter in the `Widgetbook` constructor.
+To enable or disable the leaf component behavior, you can use the `enableLeafComponent` parameter in the `Config`.
 
-```dart
-@override
-Widget build(BuildContext context) {
-  return Widgetbook(
-    enableLeafComponent: false, // defaults to true
-    // ...
-  );
-}
+```dart title=widgetbook/lib/widgetbook.config.dart
+final config = Config(
+  // ...
+  enableLeafComponent: true, // Set to false to disable leaf components
+);
 ```
