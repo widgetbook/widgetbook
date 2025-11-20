@@ -2,19 +2,16 @@
 
 When running Widgetbook on web or desktop platforms, you might want to customize the scroll behavior to allow dragging with the mouse. This can be useful if you are building widgets that require drag interactions (e.g. [`DraggableScrollableSheet`](https://api.flutter.dev/flutter/material/DraggableScrollableSheet-class.html)).
 
-You can customize the scroll behavior by providing a `scrollBehavior` to the `Widgetbook` constructors.
+You can customize the scroll behavior by providing a `scrollBehavior` to the `Config`.
 
-```dart
-@override
-Widget build(BuildContext context) {
-  return Widgetbook(
-    // ...
-    scrollBehavior: const MaterialScrollBehavior().copyWith(
-      dragDevices: {
-        PointerDeviceKind.touch,
-        PointerDeviceKind.mouse,
-      },
-    ),
-  );
-}
+```dart title=widgetbook/lib/widgetbook.config.dart
+final config = Config(
+  // ...
+  scrollBehavior: const MaterialScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.touch,
+      PointerDeviceKind.mouse,
+    },
+  ),
+);
 ```

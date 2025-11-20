@@ -1,45 +1,42 @@
 # Root Widget
 
-All use-cases are wrapped in an root widget (i.e. an `App` widget) to provide a context for the use-cases to render in.
+All stories are wrapped in an root widget (i.e. an `App` widget) to provide a context for the stories to render in.
 
 ```tree
 RootWidget
 └── Addon 1
   └── Addon 2
-    └── UseCaseRenderer
-      └── UseCase
-        └── Widget
+    └── Story
 ```
 
-Here are the available constructors for the root widgets:
-
-| Constructor            | Root Widget    |
-| ---------------------- | -------------- |
-| `Widgetbook.material`  | `MaterialApp`  |
-| `Widgetbook.cupertino` | `CupertinoApp` |
-| `Widgetbook`           | Custom Widget  |
-
-You can use a custom root widget by providing an `appBuilder` function to the `Widgetbook` constructor.
-This is helpful if you need to wrap your app widget (i.e. `MaterialApp`, `CupertinoApp`) with a custom widget.
+You can use a custom root widget by providing an `appBuilder` function to the `Config`.
+This is helpful if you need to wrap your app widget (i.e. `MaterialApp`, `CupertinoApp`) with another custom widget.
 
 <Info>
-  If you want to wrap your use-case in a custom widget, you can also use the
+  If you want to wrap your story in a custom widget, you can also use the
   [Addons API](/addons/overview), which provides some more flexibility.
 </Info>
 
-```dart
-@override
-Widget build(BuildContext context) {
-  return Widgetbook(
-    // ...
-    appBuilder: (context, child) {
-      return AwesomePackage(
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: child,
-        )
-      );
-    }
-  );
-}
+```dart title=widgetbook/lib/widgetbook.config.dart
+// Material App (default)
+final config = Config(
+  // ...
+  appBuilder: materialAppBuilder,
+);
+
+// Cupertino App
+final config = Config(
+  // ...
+  appBuilder: cupertinoAppBuilder,
+);
+
+// Custom App
+final config = Config(
+  // ...
+  appBuilder: (context, child) {
+    return MyCustomAppWidget(
+      child: child,
+    );
+  },
+);
 ```

@@ -1,6 +1,6 @@
-# Localization Addon
+# Locale Addon
 
-The `LocalizationAddon` in Widgetbook lets developers preview how widgets behave under
+The `LocaleAddon` in Widgetbook lets developers preview how widgets behave under
 different localization settings. This becomes essential when developing applications for a
 global audience, accommodating differences in language, text direction, and regional
 conventions.
@@ -61,65 +61,37 @@ You need to export the `supportedLocales` and `localizationsDelegates` from your
 
 1. Add the addon to your Widgetbook app:
 
-   ```dart title=widgetbook/lib/main.dart
+   ```dart title=widgetbook/lib/widgetbook.config.dart
    import 'package:my_app/l10n/app_localizations.dart';  // [!code highlight]
-   import 'package:widgetbook/widgetbook.dart';
 
-   class WidgetbookApp extends StatelessWidget {
-     const WidgetbookApp({super.key});
-
-     @override
-     Widget build(BuildContext context) {
-       return Widgetbook(
-         // ...
-         addons: [
-           LocalizationAddon( // [!code highlight]
-             locales: AppLocalizations.supportedLocales, // [!code highlight]
-             localizationsDelegates: AppLocalizations.localizationsDelegates, // [!code highlight]
-           ), // [!code highlight]
-         ],
-       );
-     }
-   }
+   final config = Config(
+     // ...
+     addons: [
+       LocaleAddon( // [!code highlight]
+         locales: AppLocalizations.supportedLocales,
+         localizationsDelegates: AppLocalizations.localizationsDelegates,
+       ),
+     ],
+   );
    ```
 
 ## Order
 
 The order of this addon doesn't matter, you can place it anywhere in the list of addons.
 
-## Multi-snapshot Support
+## Mode
 
-The `LocalizationAddon` is supported in the [Multi Snapshot Reviews](/cloud/snapshots/multi-snapshot) via the `LocalizationAddonConfig`. Here's how to configure it:
+To use this addon for [testing](/testing), you can enable the `LocalizationMode` in your stories:
 
-```dart title=widgetbook/lib/main.dart
-import 'package:my_app/l10n/app_localizations.dart';  // [!code highlight]
-import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart';
-
-@App(
-  cloudAddonsConfigs: {
-    'German': [
-      LocalizationAddonConfig('de'), // [!code highlight]
-    ],
-    'English': [
-      LocalizationAddonConfig('en'), // [!code highlight]
-    ],
-  },
+```dart
+final $Default = _Story(
+  scenarios: [
+    _Scenario(
+      name: 'German',
+      modes: [
+        LocaleMode(Locale('de')), // [!code highlight]
+      ]
+    ),
+  ],
 )
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      // ...
-      addons: [
-        LocalizationAddon( // [!code highlight]
-          locales: AppLocalizations.supportedLocales, // [!code highlight]
-          localizationsDelegates: AppLocalizations.localizationsDelegates, // [!code highlight]
-        ), // [!code highlight]
-      ],
-    );
-  }
-}
 ```

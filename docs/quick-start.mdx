@@ -1,13 +1,6 @@
 # Quick Start
 
-## Bootstrap
-
-<Info>
-  If you are using Widgetbook in a monorepo, check the
-  [Monorepo](/essentials/monorepo) guide.
-</Info>
-
-The first step to start using Widgetbook is to create a new separate Flutter app for your widget catalog.
+## Project Bootstrap
 
 1. Create a new Flutter project inside your app's directory:
 
@@ -29,7 +22,7 @@ The first step to start using Widgetbook is to create a new separate Flutter app
 1. Add the following dependencies to your `widgetbook` project:
 
    ```bash
-   flutter pub add widgetbook widgetbook_annotation dev:widgetbook_generator dev:build_runner
+   flutter pub add widgetbook dev:build_runner dev:widgetbook_generator dev:widgetbook_test
    ```
 
 1. Add your app as a path dependency to the `widgetbook/pubspec.yaml` file:
@@ -40,108 +33,165 @@ The first step to start using Widgetbook is to create a new separate Flutter app
        path: ../
    ```
 
-After finishing the setup, the folder structure should look something like this:
-
-```tree
-your_app/
-├── pubspec.yaml
-├── lib/
-├── ...
-└── widgetbook/
-    ├── pubspec.yaml
-    ├── lib/
-    └── ...
-```
-
-And the `widgetbook/pubspec.yaml` file should look like this:
-
-```yaml
-name: widgetbook_workspace
-# ...
-
-dependencies:
-  widgetbook_annotation: ^{{ versions.annotation }}
-  widgetbook: ^{{ versions.widgetbook }}
-  your_app:
-    path: ../
-
-dev_dependencies:
-  build_runner:
-  widgetbook_generator: ^{{ versions.generator }}
-```
-
-## Your First Use-case
-
-In this section, you will create a simple use-case and show it inside your Widgetbook app.
-
-1. Choose a widget from `your_app` that you want to catalog. **For this example, we will use the imaginary `CoolButton` widget**.
-
-1. Create a file inside your `widgetbook` app at `widgetbook/lib/cool_button.dart`
-
-   <Info>
-     If your widget needs some parameters, you can pass some constants for now
-     for simplicity. Later you can check how to use [Knobs](/knobs/overview).
-   </Info>
-
-   ```dart
-   import 'package:flutter/material.dart';
-   import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
-
-   // Import the widget from your app
-   import 'package:your_app/cool_button.dart';
-
-   @widgetbook.UseCase(name: 'Default', type: CoolButton)
-   Widget buildCoolButtonUseCase(BuildContext context) {
-     return CoolButton();
-   }
-   ```
-
-1. Create a file inside your `widgetbook` app at `lib/main.dart`
+1. Create a `widgetbook/lib/widgetbook.config.dart` file:
 
    ```dart
    import 'package:flutter/material.dart';
    import 'package:widgetbook/widgetbook.dart';
-   import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-   // This file does not exist yet,
-   // it will be generated in the next step
-   import 'main.directories.g.dart';
+   import 'components.book.dart'; // Will be generated later
 
-   void main() {
-     runApp(const WidgetbookApp());
+   final config = Config(
+     components: components,
+     addons: [
+       ViewportAddon([
+         Viewports.none,
+         IosViewports.iPhone13,
+         const ViewportData.constrained(
+           name: '800w',
+           pixelRatio: 2,
+           maxWidth: 800,
+           platform: TargetPlatform.iOS,
+         ),
+       ]),
+       MaterialThemeAddon({
+         'Dark': ThemeData.dark(),
+         'Light': ThemeData.light(),
+       }),
+     ],
+   );
+   ```
+
+1. Replace `widgetbook/lib/main.dart` contents with:
+
+   ```dart
+   import 'package:widgetbook/widgetbook.dart';
+
+   import 'widgetbook.config.dart';
+
+   void main() => runWidgetbook(config);
+   ```
+
+1. Create `widgetbook/test/main_test.dart` file:
+
+   ```dart
+   import 'package:widgetbook_workspace/widgetbook.config.dart';
+   import 'package:widgetbook_test/widgetbook_test.dart';
+
+   Future<void> main() async {
+     await testWidgetbook(config);
    }
+   ```
 
-   @widgetbook.App()
-   class WidgetbookApp extends StatelessWidget {
-     const WidgetbookApp({super.key});
+## Create your first Component
+
+A `Component` is a representation of a Widget you want to showcase in Widgetbook. Each `Component` can have multiple stories.
+Let's start by cataloging a simple widget.
+
+1. Create a new widget in your app, e.g. `lib/widgets/custom_button.dart`:
+
+   ```dart
+   import 'package:flutter/material.dart';
+
+   class CustomButton extends StatelessWidget {
+     final String label;
+     final VoidCallback onPressed;
+
+     const CustomButton({
+       super.key,
+       required this.label,
+       required this.onPressed,
+     });
 
      @override
      Widget build(BuildContext context) {
-       return Widgetbook.material(
-         // The [directories] variable does not exist yet,
-         // it will be generated in the next step
-         directories: directories,
-       );
-     }
-   }
+       return ElevatedButton(
+          onPressed: onPressed,
+          child: Text(label),
+        );
+      }
+    }
    ```
 
-1. Run the following command to generate the `main.directories.g.dart` file that has the `directories` variable:
+1. Create a new file `widgetbook/lib/custom_button.stories.dart`:
 
-   ```bash
-   dart run build_runner build -d
+   ```dart
+   import 'package:widgetbook/widgetbook.dart';
+   import 'package:your_app/widgets/custom_button.dart';
+
+   part 'custom_button.stories.book.dart';
+
+   const meta = Meta<CustomButton>();
    ```
 
-1. Now you can run your Widgetbook app and see your use-case in action:
+1. Run `dart run build_runner build` to generate the boilerplate code.
 
-   ```bash
-   flutter run
-   ```
+## Create your first Story
 
-1. Add some [Addons](/addons/overview) to your Widgetbook app to customize the appearance of your use-case.
+A story is a variant of a `Component`. For example, if the component is a button, its stories can be "primary button", "secondary button", "disabled button", etc.
+Now you can start writing stories for the `CustomButton` component. A story must start with `$`.
 
-## Migrating Existing Widgets
+```dart
+import 'package:widgetbook/widgetbook.dart';
+import 'package:your_app/widgets/custom_button.dart';
 
-If you already have a number of widgets developed in your design system, it may be time consuming to create use-cases for all of them manually.
+part 'custom_button.stories.book.dart';
 
-Our friends at LeanCode developed a VS Code extension - [Widgetbook Entries Generator](https://marketplace.visualstudio.com/items?itemName=LeanCode.widgetbook-generator) - to help with the process, along with an article describing this case and its usage: [How We Boosted Moving Flutter Widgets to Widgetbook](https://leancode.co/blog/moving-flutter-widgets-to-widgetbook?utm_source=widgetbook&utm_medium=docspage).
+const meta = Meta<CustomButton>();
+
+final $Default = _Story();  // [!code highlight]
+```
+
+## Create your first Scenario
+
+A `Scenario` is like a golden test of your story with certain `args` and `mode`.
+
+```dart
+import 'package:widgetbook/widgetbook.dart';
+import 'package:your_app/widgets/custom_button.dart';
+
+part 'custom_button.stories.book.dart';
+
+const meta = Meta<CustomButton>();
+
+final $Default = _Story(
+  scenarios: [
+    _Scenario(
+      name: 'Long Label',
+      modes: [MaterialThemeMode('Light', ThemeData.light())],
+      args: _Args.fixed(
+        label: 'This is a very long label',
+        onPressed: () {},
+      ),
+      run: (tester, args) async {
+        // You can simulate interactions here
+        // For example, tap the button
+        // await tester.tap(find.text(args.label.value));
+
+        // Or you can also expect certain behaviors
+        // expect(...);
+      },
+    ),
+  ],
+);
+```
+
+To run these scenarios, you need to run `flutter test` then check your `widgetbook/build/.widgetbook` folder for the generated screenshots.
+
+If you want to define global scenarios for all stories in you widgetbook, you can define them in your `widgetbook.config.dart` file:
+
+```dart
+final config = Config(
+  // ...
+  scenarios: [
+    ScenarioDefinition(
+      name: 'Dark',
+      modes: [MaterialThemeMode('Dark', ThemeData.dark())],
+    ),
+    ScenarioDefinition(
+      name: 'Light',
+      modes: [MaterialThemeMode('Light', ThemeData.light())],
+    ),
+  ],
+);
+```

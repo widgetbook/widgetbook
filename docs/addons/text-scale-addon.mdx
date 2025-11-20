@@ -26,20 +26,13 @@ The `TextScaleAddon` allows developers to adjust the `MediaQuery.textScaler` val
 
 ## Usage
 
-```dart title=widgetbook/lib/main.dart
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      // ...
-      addons: [
-        TextScaleAddon(), // [!code highlight]
-      ],
-    );
-  }
-}
+```dart title=widgetbook/lib/widgetbook.config.dart
+final config = Config(
+  // ...
+  addons: [
+    TextScaleAddon(), // [!code highlight]
+  ],
+);
 ```
 
 ## Order
@@ -51,26 +44,21 @@ Addons that should come before the `TextScaleAddon`:
 - `ViewportAddon`
 - `DeviceFrameAddon`
 
-## Multi-snapshot Support
+## Mode
 
-The `TextScaleAddon` is supported in the [Multi Snapshot Reviews](/cloud/snapshots/multi-snapshot) via the `TextScaleAddonConfig`. Here's how to configure it:
+To use this addon for [testing](/testing), you can enable the `TextScaleMode` in your stories:
 
-```dart title=widgetbook/lib/main.dart
-import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart';
-
-@App(
-  cloudAddonsConfigs: {
-    'x1': [
-      TextScaleAddonConfig(1), // [!code highlight]
-    ],
-    'x1.5': [
-      TextScaleAddonConfig(1.5), // [!code highlight]
-    ],
-  },
+```dart
+final $Default = _Story(
+  scenarios: [
+    _Scenario(
+      name: 'Large Text',
+      modes: [
+        TextScaleMode(1.5), // [!code highlight]
+      ]
+    ),
+  ],
 )
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
 
   @override
   Widget build(BuildContext context) {

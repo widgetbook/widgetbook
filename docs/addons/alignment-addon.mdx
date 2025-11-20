@@ -1,8 +1,8 @@
 # Alignment Addon
 
-Wraps all use-cases with an [`Align`](https://api.flutter.dev/flutter/widgets/Align-class.html) widget. This is useful when you want to center all your use cases without having to wrap each one of them manually.
+Wraps all stories with an [`Align`](https://api.flutter.dev/flutter/widgets/Align-class.html) widget. This is useful when you want to center all your use cases without having to wrap each one of them manually.
 
-Without this addon, all your use-cases will be aligned in the top-left corner, unless you wrap them in a `Center` widget or similar.
+Without this addon, all your stories will be aligned in the top-left corner, unless you wrap them in a `Center` widget or similar.
 
 <Tabs
   values={[
@@ -28,20 +28,13 @@ Without this addon, all your use-cases will be aligned in the top-left corner, u
 
 ## Usage
 
-```dart title=widgetbook/lib/main.dart
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      // ...
-      addons: [
-        AlignmentAddon(), // [!code highlight]
-      ],
-    );
-  }
-}
+```dart title=widgetbook/lib/widgetbook.config.dart
+final config = Config(
+  // ...
+  addons: [
+    AlignmentAddon(), // [!code highlight]
+  ],
+);
 ```
 
 ## Order
@@ -62,35 +55,19 @@ Addons that should come after the `AlignmentAddon`:
 
 - `ZoomAddon`
 
-## Multi-snapshot Support
+## Mode
 
-The `AlignmentAddon` is supported in the [Multi Snapshot Reviews](/cloud/snapshots/multi-snapshot) via the `AlignmentAddonConfig`. Here's how to configure it:
+To use this addon for [testing](/testing), you can enable the `AlignmentMode` in your stories:
 
-```dart title=widgetbook/lib/main.dart
-import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart';
-
-@App(
-  cloudAddonsConfigs: {
-    'Center': [
-      AlignmentAddonConfig('Center'), // [!code highlight]
-    ],
-    'Bottom Center': [
-      AlignmentAddonConfig('Bottom Center'), // [!code highlight]
-    ],
-  },
+```dart
+final $Default = _Story(
+  scenarios: [
+    _Scenario(
+      name: 'Center',
+      modes: [
+        AlignmentMode(Alignment.center), // [!code highlight]
+      ]
+    ),
+  ],
 )
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      // ...
-      addons: [
-        AlignmentAddon(), // [!code highlight]
-      ],
-    );
-  }
-}
 ```

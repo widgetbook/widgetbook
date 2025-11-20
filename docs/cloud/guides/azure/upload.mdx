@@ -61,6 +61,7 @@ If you want to use Widgetbook Cloud with your existing Azure DevOps project, her
                     $(FlutterToolPath)/flutter pub get
                     $(DartToolPath)/dart run build_runner build -d
                     $(FlutterToolPath)/flutter build web -t lib/main.dart
+                    $(FlutterToolPath)/flutter test
 
               - task: Bash@3
                 displayName: "Install Widgetbook CLI"

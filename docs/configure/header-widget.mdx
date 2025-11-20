@@ -1,14 +1,11 @@
 # Header Widget
 
-You can add a custom header to the navigation panel by providing a `header` parameter to the `Widgetbook` constructor.
+You can add a custom header to the navigation panel by providing a `header` parameter to the `Config`.
 This can be used for branding or additional information.
 
-```dart
-@override
-Widget build(BuildContext context) {
-  return Widgetbook(
-    header: const MyCustomHeaderWidget(),
-    // ...
-  );
-}
+```dart title=widgetbook/lib/widgetbook.config.dart
+final config = Config(
+  // ...
+  header: const MyCustomHeaderWidget(),
+);
 ```

@@ -1,6 +1,6 @@
 # Mocking
 
-Adding a use-case for a widget that has external dependencies can be challenging.
+Adding a story for a widget that has external dependencies can be challenging.
 In this guide, we'll explore how to mock these dependencies to make cataloging the widget easier.
 
 ## Video tutorial
@@ -50,9 +50,7 @@ App
 If the `UserTile` is cataloged using the following code
 
 ```dart
-Widget userTileUseCase(BuildContext context) {
-  return UserTile();
-}
+final $Primary = _Story();
 ```
 
 Flutter throws an error indicating that a `UserProvider` is missing from the Widget tree, as the `Consumer` within the `UserTile` depends on the `UserProvider`.
@@ -89,12 +87,11 @@ class UserTile extends StatelessWidget {
 ```
 
 ```dart
-@widgetbook.UseCase(name: 'Primary', type: UserTile)
-Widget buildUserTile(BuildContext context) {
-  return UserTile(
-    user: 'John'
-  );
-}
+final $Primary = _Story(
+  args: _Args(
+    user: StringArg('John'),
+  ),
+);
 ```
 
 Extracting the dependency into a parameter will also change your Widget tree structure of your app
@@ -133,23 +130,22 @@ Not in all cases, you can extract the dependency. In some case you need to mock 
      mocktail: ^1.0.0
    ```
 
-2. Mock `UserProvider` in the use-case builder function as follows
+2. Mock `UserProvider` in the `setup` function as follows
 
    ```dart
    class MockUserProvider extends Mock implements UserProvider {}
 
-   @widgetbook.UseCase(name: 'Primary', type: UserTile)
-   Widget buildUserTile(BuildContext context) {
-    return ChangeNotifierProvider<UserProvider>(
-      create: (_) {
-        final provider = MockUserProvider();
-        when(() => provider.user).thenReturn('Mocked User');
+   final $Primary = _Story(
+     setup: (context, child, args) {
+       final mockProvider = MockUserProvider();
+       when(() => mockProvider.user).thenReturn('Mocked User');
 
-        return provider;
-      },
-      child: UserTile(),
-    );
-   }
+       return ChangeNotifierProvider<UserProvider>.value(
+         value: mockProvider,
+         child: UserTile(),
+       );
+     },
+   );
    ```
 
 In this approach, the Widget tree of your app stays the same

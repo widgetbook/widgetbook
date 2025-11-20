@@ -1,0 +1,119 @@
+# Testing
+
+In Widgetbook, you can test your widgets with ease using `Scenario`s. A scenario is a representation of a [Story](/stories/overview) with a specific [Args](/args) and Modes _(an [Addon] value)_.
+Widgetbook support both **Golden testing** (with [Widgetbook Cloud](/cloud/overview)) and **Interaction testing** (also known as widget testing).
+
+## Create Golden Tests
+
+To create a scenario, you can use `scenarios` parameter in your story as follows.
+Then run `flutter test` in your `widgetbook` folder to generate the golden files in `widgetbook/build/.widgetbook/`.
+The following example generates 3 golden files for the `Default`, `Hello`, and `Dark` scenarios.
+
+```dart
+final $Default = _Story(
+  scenarios: [
+    _Scenario(
+      name: 'Default',
+    ),
+    _Scenario(
+      name: 'Hello',
+      args: _Args.fixed(
+        text: 'Hello, Widgetbook!',
+      ),
+    ),
+    _Scenario(
+      name: 'Dark',
+      modes: [
+        MaterialThemeMode('Dark', ThemeData.dark()),
+      ],
+    ),
+  ]
+);
+```
+
+## Create Interaction Tests
+
+To create interaction tests, you can use the `run` parameter in your `Scenario` as follows:
+
+```dart
+final $Counter = _Story(
+  scenarios: [
+    _Scenario(
+      name: 'Incremented',
+      run: (tester, args) async {
+        // Interact with the story
+        await tester.tap(find.byIcon(Icons.add));
+        await tester.pumpAndSettle();
+
+        // Verify the expected outcome
+        expect(
+          find.text('${args.initialValue + 1}'),
+          findsOneWidget,
+        );
+      },
+    ),
+  ],
+);
+```
+
+## Global Scenarios
+
+You can also define global scenarios that apply to all stories in your Widgetbook by adding them to your `widgetbook.config.dart` file:
+
+```dart
+final config = Config(
+  // ...
+  scenarios: [
+    ScenarioDefinition(
+      name: 'Dark Mode',
+      modes: [MaterialThemeMode('Dark', ThemeData.dark())],
+    ),
+    ScenarioDefinition(
+      name: 'Light Mode',
+      modes: [MaterialThemeMode('Light', ThemeData.light())],
+    ),
+  ],
+);
+```
+
+## Constraining Layout
+
+When running golden tests, the default size is the as small as possible to fit the Widget. But for some Widgets that expand to fill the available space, you might want to constrain the size of the Widget to a specific width or height as follows:
+
+```dart
+final $Default = _Story(
+  modes: [
+    // These modes will be applied to all scenarios under this story
+    // including the ones that are coming from `ScenarioDefinition`s.
+    ViewportMode(
+      const ViewportData.constrained(
+        name: '800w',
+        maxWidth: 800,
+        pixelRatio: 2,
+        platform: TargetPlatform.iOS,
+      ),
+    ),
+  ],
+  scenarios: [
+    _Scenario(
+      // This will use the constrained viewport defined above
+      name: '800w',
+    ),
+    _Scenario(
+      name: '600w',
+      modes: [
+        // These modes will get merged with the modes defined in the story
+        // and they have more precedence.
+        ViewportMode(
+          const ViewportData.constrained(
+            name: '600w',
+            maxWidth: 600,
+            pixelRatio: 2,
+            platform: TargetPlatform.iOS,
+          ),
+        ),
+      ],
+    ),
+  ],
+);
+```

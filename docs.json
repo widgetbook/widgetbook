@@ -66,15 +66,15 @@
       "group": "Getting Started",
       "pages": [
         {
-          "title": "Introduction",
-          "href": "/sam"
-        },
-        {
           "title": "Why Widgetbook?",
           "href": "/index"
         },
         {
-          "title": "Setup & Install",
+          "title": "What's new in v4?",
+          "href": "/whats-new-in-v4"
+        },
+        {
+          "title": "Quick Start",
           "href": "/quick-start"
         },
         {
@@ -84,130 +84,28 @@
       ]
     },
     {
-      "group": "Use-Cases",
+      "group": "Stories",
       "tab": "docs",
       "pages": [
         {
-          "title": "What are use-cases?",
-          "href": "/use-cases/overview"
+          "title": "What are Stories?",
+          "href": "/stories/overview"
         },
         {
-          "title": "Annotations",
-          "href": "/use-cases/annotations"
-        },
-        {
-          "group": "Knobs",
-          "pages": [
-            {
-              "title": "Overview",
-              "href": "/knobs/overview"
-            },
-            {
-              "title": "Boolean",
-              "href": "/knobs/boolean"
-            },
-            {
-              "group": "Double",
-              "pages": [
-                {
-                  "title": "Overview",
-                  "href": "/knobs/double/overview"
-                },
-                {
-                  "title": "Input",
-                  "href": "/knobs/double/input"
-                },
-                {
-                  "title": "Slider",
-                  "href": "/knobs/double/slider"
-                }
-              ]
-            },
-            {
-              "group": "Integer",
-              "pages": [
-                {
-                  "title": "Overview",
-                  "href": "/knobs/integer/overview"
-                },
-                {
-                  "title": "Input",
-                  "href": "/knobs/integer/input"
-                },
-                {
-                  "title": "Slider",
-                  "href": "/knobs/integer/slider"
-                }
-              ]
-            },
-            {
-              "group": "Iterable",
-              "pages": [
-                {
-                  "title": "Overview",
-                  "href": "/knobs/iterable/overview"
-                },
-                {
-                  "title": "Segmented",
-                  "href": "/knobs/iterable/segmented"
-                }
-              ]
-            },
-            {
-              "group": "Object",
-              "pages": [
-                {
-                  "title": "Overview",
-                  "href": "/knobs/object/overview"
-                },
-                {
-                  "title": "Segmented",
-                  "href": "/knobs/object/segmented"
-                },
-                {
-                  "title": "Dropdown",
-                  "href": "/knobs/object/dropdown"
-                }
-              ]
-            },
-            {
-              "title": "String",
-              "href": "/knobs/string"
-            },
-            {
-              "title": "DateTime",
-              "href": "/knobs/datetime"
-            },
-            {
-              "title": "Duration",
-              "href": "/knobs/duration"
-            },
-            {
-              "title": "Color",
-              "href": "/knobs/color"
-            },
-            {
-              "title": "Custom Knob",
-              "href": "/knobs/custom-knob"
-            }
-          ]
+          "title": "Args",
+          "href": "/args"
         },
         {
           "title": "Mock Widgets & Screens",
-          "href": "/use-cases/mocking"
+          "href": "/stories/mocking"
         },
         {
-          "group": "Use-case Generation",
-          "pages": [
-            {
-              "title": "Generate use-cases with LLMs",
-              "href": "/use-cases/generate-with-llm"
-            },
-            {
-              "title": "Entries Generator VSC Extension",
-              "href": "https://marketplace.visualstudio.com/items?itemName=LeanCode.widgetbook-generator"
-            }
-          ]
+          "title": "Testing",
+          "href": "/testing"
+        },
+        {
+          "title": "Generate with LLMs",
+          "href": "/stories/generate-with-llm"
         }
       ]
     },
@@ -245,10 +143,6 @@
               "href": "/addons/overview"
             },
             {
-              "title": "Accessibility Addon",
-              "href": "/addons/accessibility-addon"
-            },
-            {
               "title": "Alignment Addon",
               "href": "/addons/alignment-addon"
             },
@@ -257,20 +151,12 @@
               "href": "/addons/builder-addon"
             },
             {
-              "title": "Device Frame Addon",
-              "href": "/addons/device-frame-addon"
-            },
-            {
               "title": "Grid Addon",
               "href": "/addons/grid-addon"
             },
             {
-              "title": "Inspector Addon",
-              "href": "/addons/inspector-addon"
-            },
-            {
-              "title": "Localization Addon",
-              "href": "/addons/localization-addon"
+              "title": "Locale Addon",
+              "href": "/addons/locale-addon"
             },
             {
               "title": "Text Scale Addon",
@@ -305,10 +191,6 @@
         {
           "title": "Root Widget",
           "href": "/configure/root-widget"
-        },
-        {
-          "title": "Use Case Navigation Path",
-          "href": "/configure/use-case-nav-path"
         },
         {
           "title": "Initial Route",
@@ -457,10 +339,6 @@
             {
               "title": "Overview",
               "href": "/cloud/snapshots/overview"
-            },
-            {
-              "title": "Multi Snapshot",
-              "href": "/cloud/snapshots/multi-snapshot"
             }
           ]
         },
@@ -491,10 +369,6 @@
             {
               "title": "Request a reviewer",
               "href": "/cloud/reviews/request-reviewer"
-            },
-            {
-              "title": "Limitations",
-              "href": "/cloud/reviews/limitations"
             }
           ]
         },

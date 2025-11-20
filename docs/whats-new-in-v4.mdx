@@ -1,0 +1,126 @@
+# What's new in v4?
+
+v4 of Widgetbook introduces several new features and improvements over v3. Here's a quick comparison of the key differences.
+
+<Warning>
+  This version is still in alpha stage, and it's highly unstable. Breaking
+  changes can happen at any time. Use it at your own risk.
+</Warning>
+
+## New Syntax
+
+In v3, stories were defined using annotations and functions. In v4, we introduced a new syntax that uses generated code to define stories, components, and addons. This new syntax provides better type-safety, autocompletion, and a more structured way to define your Widgetbook configuration.
+
+```dart
+import 'package:widgetbook/widgetbook.dart';
+
+part 'my_widget.stories.book.dart';
+
+const meta = Meta<MyWidget>();
+
+final $Default = _Story(
+  name: 'Default',
+);
+```
+
+## Type-safety with Args
+
+In v3, Knobs were used to modify widget properties at runtime, but they were not type-safe as they depended on string names. In v4, we introduced Args, which are type-safe and generated based on the Widget's constructor or a custom interface. This ensures that you get compile-time checks and autocompletion when working with widget properties.
+
+```dart
+class MyText extends StatelessWidget {
+  final String text;
+
+  const MyText({
+    super.key,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text);
+  }
+}
+
+// v3 with Knobs
+@UseCase(name: 'Default')
+Widget defaultMyText(BuildContext context) {
+  return MyText(
+    text: context.knobs.text(label: 'Text', initialValue: 'Hello World'),
+  );
+}
+
+// v4 with Args
+final $Default = _Story(
+  name: 'Default',
+  args: _Args(
+    text: StringArg('Hello World'),
+    // ^ Arg<String> is type-safe
+  ),
+);
+```
+
+## Component Documentation _(early support)_
+
+A lot of our users have requested a way to document their components directly within Widgetbook. This was hard to add in v3 due to missing of the "component" concept. In v4, we introduced built-in support for component documentation.
+
+```dart
+const meta = Meta<MyWidget>(
+  docs: '''
+You can write **Markdown** documentation for your component here.
+And it will be displayed in the Widgetbook UI.
+''',
+);
+```
+
+## Golden Testing
+
+With v4, we introduced the concept of `Scenarios`, which are like golden tests for your stories. A scenario allows you to define specific `args` and `mode` for a story, making it easier to test different configurations of your widgets.
+
+Scenarios are currently generated in `build/.widgetbook` by running `flutter test`.
+
+```dart
+final $Primary = _Story(
+  name: 'Primary',
+  scenarios: [
+    _Scenario(
+      name: 'Enabled',
+      args: _Args(
+        label: StringArg('Click Me'),
+        isEnabled: BoolArg(true),
+      ),
+    ),
+    _Scenario(
+      name: 'Disabled',
+      args: _Args(
+        label: StringArg('Click Me'),
+        isEnabled: BoolArg(false),
+      ),
+    ),
+  ],
+);
+```
+
+## Interaction Testing
+
+For Widgetbook Cloud users, we have added support for interaction testing. You can now define interactions for your stories, allowing you to simulate user actions and verify widget behavior.
+
+```dart
+final $Default = _Story(
+  name: 'Counter',
+  scenarios: [
+    _Scenario(
+      name: 'Incremented Counter',
+      run: (tester, args) async {
+        await tester.tap(find.byIcon(Icons.add));
+        await tester.pumpAndSettle();
+
+        expect(
+          find.text('${args.initialValue + 1}'),
+          findsOneWidget,
+        );
+      },
+    ),
+  ],
+);
+```
