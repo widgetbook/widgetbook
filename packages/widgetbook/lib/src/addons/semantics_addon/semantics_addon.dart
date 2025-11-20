@@ -25,7 +25,7 @@ class SemanticsAddon extends Addon<bool> with SingleFieldOnly {
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child, bool setting) {
+  Widget apply(BuildContext context, Widget child, bool setting) {
     if (!setting) return child;
 
     const identifier = 'SemanticsAddon.Root';

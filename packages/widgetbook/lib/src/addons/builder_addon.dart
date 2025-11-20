@@ -15,7 +15,7 @@ class BuilderAddon extends Addon<void> with NoFields {
   final ChildBuilder builder;
 
   @override
-  Widget buildUseCase(
+  Widget apply(
     BuildContext context,
     Widget child,
     void setting,
