@@ -373,10 +373,6 @@
             {
               "title": "Request a reviewer",
               "href": "/cloud/reviews/request-reviewer"
-            },
-            {
-              "title": "Limitations",
-              "href": "/cloud/reviews/limitations"
             }
           ]
         },
