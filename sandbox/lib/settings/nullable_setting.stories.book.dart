@@ -15,13 +15,14 @@ typedef _Component = Component<NullableSetting, NullableSettingArgs>;
 typedef _Scenario = NullableSettingScenario;
 typedef _Story = NullableSettingStory;
 typedef _Args = NullableSettingArgs;
-final NullableSettingComponent =
-    Component<NullableSetting, NullableSettingArgs>(
-      name: meta.name ?? 'NullableSetting',
-      path: meta.path ?? 'settings',
-      docs: meta.docs,
-      stories: [$Default..$generatedName = 'Default'],
-    );
+final NullableSettingComponent = Component<NullableSetting, NullableSettingArgs>(
+  name: meta.name ?? 'NullableSetting',
+  path: meta.path ?? 'settings',
+  docs:
+      meta.docs ??
+      'A widget that represents a nullable configuration option in Widgetbook.',
+  stories: [$Default..$generatedName = 'Default'],
+);
 typedef NullableSettingScenario =
     Scenario<NullableSetting, NullableSettingArgs>;
 
