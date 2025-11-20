@@ -12,29 +12,35 @@ In this guide, we will be creating a "border addon" that allows you to put a bor
 Start by creating a new file in your widgetbook project (e.g. `border_addon.dart`).
 
 ```dart title=widgetbook/lib/addons/border_addon.dart
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 class BorderSetting {
-  const BorderSetting({
-    required this.width,
-    required this.color,
-  });
+  const BorderSetting(this.width, this.color);
 
   final int width;
   final Color color;
 }
 
-class BorderAddon extends WidgetbookAddon<BorderSetting> {
-  BorderAddon() : super(name: 'Border');
+class BorderAddon extends Addon<BorderSetting> {
+  BorderAddon()
+    : super(
+        name: 'Border',
+        initialValue: const BorderSetting(1, Color(0xFF000000)),
+      );
 
   @override
-  List<Field> get fields {
+  List<Field<dynamic>> get fields => [
+    // ...
+  ]
+
+  @override
+  BorderSetting valueFromQueryGroup(QueryGroup? group) {
     // TODO
   }
 
   @override
-  BorderSetting valueFromQueryGroup(QueryGroup group) {
+  QueryGroup valueToQueryGroup(BorderSetting value) {
     // TODO
   }
 
@@ -69,17 +75,29 @@ List<Field> get fields {
   return [
     IntSliderField(
       name: 'width',
-      initialValue: 1,
+      initialValue: initialValue.width,
       min: 1,
       max: 10,
     ),
     ColorField(
       name: 'color',
-      initialValue: const Color(0xFF000000),
+      initialValue: initialValue.color,
     ),
   ];
 }
 ```
+
+<Info>
+  If your addon just has a single filed, you can use the `SingleFieldOnly` mixin to reduce boilerplate.
+  With that, you can skip steps 2 and 3 as a default `valueFromQueryGroup` and `valueToQueryGroup` implementations will be provided for you.
+
+    ```dart
+    class BorderAddon extends Addon<BorderSetting> with SingleFieldOnly {
+      // ...
+    }
+    ```
+
+</Info>
 
 ### 2. `valueFromQueryGroup` method
 
@@ -87,18 +105,31 @@ This method is responsible for parsing the query parameters back to the addon se
 
 ```dart
 @override
-BorderSetting valueFromQueryGroup(QueryGroup group) {
-  final width = valueOf<int>('width', group)!;
-  final color = valueOf<Color>('color', group)!;
+BorderSetting valueFromQueryGroup(QueryGroup? group) {
+  if (group == null) return initialValue;
 
   return BorderSetting(
-    width: width,
-    color: color,
+    valueOf('width', group)!,
+    valueOf('color', group)!,
   );
 }
 ```
 
-### 3. `buildUseCase` method
+### 3. `valueToQueryGroup` method
+
+This method is used to be able to convert `Modes` to a serializable `QueryGroup`, so that it can be stored in the URL. To use the same encoding technique used in the fields, you can use the `paramOf` helper method.
+
+```dart
+@override
+QueryGroup valueToQueryGroup(BorderSetting value) {
+  return QueryGroup({
+    'width': paramOf('width', value.width),
+    'color': paramOf('color', value.color),
+  });
+}
+```
+
+### 4. `buildUseCase` method
 
 This method is responsible for building the use-case widget with the addon applied. In this case, we will wrap the child widget with a `Container` that has a border with the given width and color.
 
@@ -121,82 +152,44 @@ Widget buildUseCase(
 }
 ```
 
-### 4. Using the Addon
+### 5. Using the Addon
 
 Now that we have implemented the `BorderAddon`, we can use it in our Widgetbook project. To do this, we need to add it to the `addons` list in the `Widgetbook` widget.
 
-```dart title=widgetbook/lib/main.dart
+```dart title=widgetbook/lib/widgetbook.config.dart
 import 'package:flutter/widgets.dart';
-import 'package:widgetbook/widgetbook.dart';
 
 import 'addons/border_addon.dart';  // [!code highlight]
 
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
+final config = Config(
+  // ...
+  addons: [BorderAddon()], // [!code highlight]
+);
+```
 
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      // ...
-      addons: [BorderAddon()], // [!code highlight]
+## Mode
+
+To use this addon for [testing](/testing), you can enable the `BorderMode` in your stories:
+
+```dart
+class BorderMode extends Mode<BorderSetting> {
+  BorderMode(double width, Color color)
+    : super(
+        BorderSetting(width, color),
+        BorderAddon(),
     );
-  }
 }
 ```
 
-## Multi-snapshot Support
-
-Custom addons can be used with [Multi Snapshot Reviews](/cloud/snapshots/multi-snapshot) by implementing the `AddonConfig` interface.
-
-<Info>
-  We are using `String colorHex` instead of `Color color` in the `AddonConfig`
-  because we cannot convert color to hex in a constant constructor. And the
-  constructor needs to be constant to be used in the `cloudAddonsConfigs` map.
-</Info>
-
-```dart title=widgetbook/lib/addons/border_addon.dart
-import 'package:widgetbook_annotation/widgetbook_annotation.dart';
-
-class BorderAddonConfig extends AddonConfig {
-  const BorderAddonConfig(this.width, this.colorHex)
-      : super(
-          'border', // addon's name in kebab-case
-          'width:$width,color:$colorHex', // comma-separated fields' names/values
-        );
-
-  final int width;
-  final String colorHex;
-}
-```
-
-```dart title=widgetbook/lib/main.dart
-import 'package:flutter/widgets.dart';
-import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart';
-
-import 'addons/border_addon.dart'; // [!code highlight]
-
-@App(
-  cloudAddonsConfigs: {
-    'border black (2)': [
-      BorderAddonConfig(2, 'ff000000'), // [!code highlight]
-    ],
-    'border white (4)': [
-      BorderAddonConfig(4, 'ffffffff'), // [!code highlight]
-    ],
-  },
+```dart
+final $Default = _Story(
+  scenarios: [
+    _Scenario(
+      name: 'Red Border',
+      modes: [
+        BorderMode(2, Colors.red), // [!code highlight]
+      ]
+    ),
+  ],
 )
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      // ...
-      addons: [
-        BorderAddon(), // [!code highlight]
-      ],
-    );
-  }
-}
 ```

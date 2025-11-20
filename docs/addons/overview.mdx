@@ -4,20 +4,13 @@ Addons in Widgetbook provide a flexible and customizable way to enhance your dev
 
 For example, if you want to center all your use cases using the [`Align`](https://api.flutter.dev/flutter/widgets/Align-class.html) widget, you can use the [`AlignmentAddon`](/addons/alignment-addon) instead of manually wrapping each use case.
 
-```dart title=widgetbook/lib/main.dart
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      // ...
-      addons: [
-        // Addons go here...
-      ],
-    );
-  }
-}
+```dart title=widgetbook/lib/widgetbook.config.dart
+final config = Config(
+  // ...
+  addons: [
+    AlignmentAddon(), // [!code highlight]
+  ],
+);
 ```
 
 ## Order of Addons
@@ -34,21 +27,14 @@ For example, if you are using both [`AlignmentAddon`](/addons/alignment-addon) a
 >
   <TabItem value="correct">
 
-    ```dart title=widgetbook/lib/main.dart
-    class WidgetbookApp extends StatelessWidget {
-      const WidgetbookApp({super.key});
-
-      @override
-      Widget build(BuildContext context) {
-        return Widgetbook(
-          // ...
-          addons: [
-            ViewportAddon(Viewports.all), // [!code highlight]
-            AlignmentAddon() // [!code highlight]
-          ],
-        );
-      }
-    }
+    ```dart title=widgetbook/lib/widgetbook.config.dart
+    final config = Config(
+      // ...
+      addons: [
+        ViewportAddon(Viewports.all), // [!code highlight]
+        AlignmentAddon() // [!code highlight]
+      ],
+    );
     ```
 
     ```text title="Rendered Widget Tree"
@@ -63,21 +49,14 @@ For example, if you are using both [`AlignmentAddon`](/addons/alignment-addon) a
   </TabItem>
   <TabItem value="wrong">
 
-    ```dart title=widgetbook/lib/main.dart
-    class WidgetbookApp extends StatelessWidget {
-      const WidgetbookApp({super.key});
-
-      @override
-      Widget build(BuildContext context) {
-        return Widgetbook(
-          // ...
-          addons: [
-            AlignmentAddon(), // [!code highlight]
-            ViewportAddon(Viewports.all), // [!code highlight]
-          ],
-        );
-      }
-    }
+    ```dart title=widgetbook/lib/widgetbook.config.dart
+    final config = Config(
+      // ...
+      addons: [
+        AlignmentAddon(), // [!code highlight]
+        ViewportAddon(Viewports.all), // [!code highlight]
+      ],
+    );
     ```
 
     ```text title="Rendered Widget Tree"

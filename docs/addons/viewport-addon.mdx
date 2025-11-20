@@ -9,27 +9,20 @@ The Viewport Addon is an invaluable tool that lets you preview your use-cases on
 
 ## Usage
 
-```dart title=widgetbook/lib/main.dart
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      // ...
-      addons: [
-        ViewportAddon([ // [!code highlight]
-          Viewports.none, // [!code highlight]
-          IosViewports.iPhone13, // [!code highlight]
-          AndroidViewports.samsungGalaxyNote20, // [!code highlight]
-          MacosViewports.macbookPro, // [!code highlight]
-          WindowsViewports.desktop, // [!code highlight]
-          LinuxViewports.desktop, // [!code highlight]
-        ]), // [!code highlight]
-      ],
-    );
-  }
-}
+```dart title=widgetbook/lib/widgetbook.config.dart
+final config = Config(
+  // ...
+  addons: [
+    ViewportAddon([ // [!code highlight]
+      Viewports.none, // [!code highlight]
+      IosViewports.iPhone13, // [!code highlight]
+      AndroidViewports.samsungGalaxyNote20, // [!code highlight]
+      MacosViewports.macbookPro, // [!code highlight]
+      WindowsViewports.desktop, // [!code highlight]
+      LinuxViewports.desktop, // [!code highlight]
+    ]), // [!code highlight]
+  ],
+);
 ```
 
 <Info>
@@ -46,38 +39,21 @@ class WidgetbookApp extends StatelessWidget {
 
 Since the [order of addons](/addons/overview#order-of-addons) matters. The `ViewportAddon` should be used **before all other addons**.
 
-## Multi-snapshot Support
+## Mode
 
-The `ViewportAddon` is supported in the [Multi Snapshot Reviews](/cloud/snapshots/multi-snapshot) via the `ViewportAddonConfig`. Here's how to configure it:
+To use this addon for [testing](/testing), you can enable the `ViewportMode` in your stories:
 
-<Info>
-  Unlike other `AddonConfig`s, the `ViewportAddonConfig` is defined in
-  `widgetbook` package, and not in `widgetbook_annotation` package.
-</Info>
-
-```dart title=widgetbook/lib/main.dart
-import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart';
-
-@App(
-  cloudAddonsConfigs: {
-    'iPhone 13': [
-      ViewportAddonConfig(IosViewports.iPhone13), // [!code highlight]
-    ],
-    'iPhone 12': [
-      ViewportAddonConfig(IosViewports.iPhone12), // [!code highlight]
-    ],
-  },
+```dart
+final $Default = _Story(
+  scenarios: [
+    _Scenario(
+      name: 'iPhone 13',
+      modes: [
+        ViewportMode(IosViewports.iPhone13), // [!code highlight]
+      ]
+    ),
+  ],
 )
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      // ...
-      addons: [
-        ViewportAddon([ // [!code highlight]
           IosViewports.iPhone13, // [!code highlight]
           IosViewports.iPhone12, // [!code highlight]
         ]), // [!code highlight]

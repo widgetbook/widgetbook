@@ -7,26 +7,19 @@ The `BuilderAddon` is utility that can help you:
 
 ## Usage
 
-```dart title=widgetbook/lib/main.dart
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      directories: directories,
-      addons: [
-        BuilderAddon( // [!code highlight]
-          name: 'Red', // [!code highlight]
-          builder: (context, child) => ColoredBox( // [!code highlight]
-            color: Colors.red, // [!code highlight]
-            child: child, // [!code highlight]
-          ), // [!code highlight]
-        ), // [!code highlight]
-      ],
-    );
-  }
-}
+```dart title=widgetbook/lib/widgetbook.config.dart
+final config = Config(
+  // ...
+  addons: [
+    BuilderAddon( // [!code highlight]
+      name: 'Red', // [!code highlight]
+      builder: (context, child) => ColoredBox( // [!code highlight]
+        color: Colors.red, // [!code highlight]
+        child: child, // [!code highlight]
+      ), // [!code highlight]
+    ), // [!code highlight]
+  ],
+);
 ```
 
 ## Third-party Examples
@@ -113,4 +106,27 @@ class WidgetbookApp extends StatelessWidget {
     );
   }
 }
+```
+
+## Mode
+
+To use this addon for [testing](/testing), you can enable the `BuilderMode` in your stories:
+
+```dart
+final $Default = _Story(
+  scenarios: [
+    _Scenario(
+      name: 'Red Background',
+      modes: [
+        BuilderMode(
+          name: 'Red',
+          builder: (context, child) => ColoredBox(
+            color: Colors.red,
+            child: child,
+          ),
+        ), // [!code highlight]
+      ]
+    ),
+  ],
+)
 ```

@@ -5,20 +5,13 @@ designers and developers to ensure that their components are aligned correctly a
 
 ## Usage
 
-```dart title=widgetbook/lib/main.dart
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      // ...
-      addons: [
-        GridAddon(10), // [!code highlight]
-      ],
-    );
-  }
-}
+```dart title=widgetbook/lib/widgetbook.config.dart
+final config = Config(
+  // ...
+  addons: [
+    GridAddon(10), // [!code highlight]
+  ],
+);
 ```
 
 ## Order
@@ -33,3 +26,20 @@ Addons that should come before the `GridAddon`:
 Addons that should come after the `GridAddon`:
 
 - `AlignmentAddon`
+
+## Mode
+
+To use this addon for [testing](/testing), you can enable the `GridMode` in your stories:
+
+```dart
+final $Default = _Story(
+  scenarios: [
+    _Scenario(
+      name: 'Grid Enabled',
+      modes: [
+        GridMode(10), // [!code highlight]
+      ]
+    ),
+  ],
+)
+```

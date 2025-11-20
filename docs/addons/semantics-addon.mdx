@@ -11,55 +11,32 @@ The addon is based on a minimal variant of Flutter's [`SemanticsDebugger`](https
 
 ## Usage
 
-```dart title=widgetbook/lib/main.dart
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      // ...
-      addons: [
-        SemanticsAddon(), // [!code highlight]
-      ],
-    );
-  }
-}
+```dart title=widgetbook/lib/widgetbook.config.dart
+final config = Config)
+  // ...
+  addons: [
+    SemanticsAddon(), // [!code highlight]
+  ],
+);
 ```
 
 ## Order
 
 Since the [order of addons](/addons/overview#order-of-addons) matters, the `SemanticsAddon` should be used **after all other addons**, as they might be adding some semantics nodes to the tree.
 
-## Multi-snapshot Support
+## Mode
 
-The `SemanticsAddon` is supported in the [Multi Snapshot Reviews](/cloud/snapshots/multi-snapshot) via the `SemanticsAddonConfig`. Here's how to configure it:
+To use this addon for [testing](/testing), you can enable the `SemanticsMode` in your stories:
 
-```dart title=widgetbook/lib/main.dart
-import 'package:widgetbook/widgetbook.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart';
-
-@App(
-  cloudAddonsConfigs: {
-    'Semantics Tree': [
-      SemanticsAddonConfig(true), // [!code highlight]
-    ],
-    'No Semantics Tree': [
-      SemanticsAddonConfig(false), // [!code highlight]
-    ],
-  },
+```dart
+final $Default = _Story(
+  scenarios: [
+    _Scenario(
+      name: 'Semantics',
+      modes: [
+        SemanticsMode(true), // [!code highlight]
+      ]
+    ),
+  ],
 )
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      // ...
-      addons: [
-        SemanticsAddon(), // [!code highlight]
-      ],
-    );
-  }
-}
 ```
