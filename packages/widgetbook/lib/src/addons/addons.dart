@@ -1,7 +1,7 @@
 export 'alignment_addon.dart';
 export 'builder_addon.dart';
 export 'grid_addon.dart';
-export 'localization_addon.dart';
+export 'locale_addon.dart';
 export 'semantics_addon/addon.dart';
 export 'text_scale_addon.dart';
 export 'theme_addon/addon.dart';
