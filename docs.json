@@ -100,6 +100,10 @@
           "href": "/stories/mocking"
         },
         {
+          "title": "Testing",
+          "href": "/testing"
+        },
+        {
           "title": "Generate with LLMs",
           "href": "/stories/generate-with-llm"
         }
