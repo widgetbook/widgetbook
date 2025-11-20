@@ -6,6 +6,7 @@
 - **BREAKING**: Remove `Arg`'s `const` constructor. ([#1681](https://github.com/widgetbook/widgetbook/pull/1681))
 - **BREAKING**: Remove `init` method from `Story` and `Arg`. ([#1682](https://github.com/widgetbook/widgetbook/pull/1682))
 - **BREAKING**: Remove `Arg.resolve`. ([#1685](https://github.com/widgetbook/widgetbook/pull/1685))
+- **BREAKING**: Rename `Addon.buildUseCase` to `Addon.apply`. ([#1743](https://github.com/widgetbook/widgetbook/pull/1743))
 - **FEAT**: Support nullable args. ([#1675](https://github.com/widgetbook/widgetbook/pull/1675))
 - **FEAT**: Support query groups nullification. ([#1664](https://github.com/widgetbook/widgetbook/pull/1664))
 - **FEAT**: Add `SingleFieldOnly` mixin that can be applied to single-field `FieldsComposable` (i.e. `Addon` or `Arg`) to provide default implementations for to/from `QueryGroup`. ([#1670](https://github.com/widgetbook/widgetbook/pull/1670))

@@ -28,7 +28,7 @@ class ZoomAddon extends Addon<double> with SingleFieldOnly {
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child, double setting) {
+  Widget apply(BuildContext context, Widget child, double setting) {
     return Transform.scale(
       scale: setting,
       child: child,

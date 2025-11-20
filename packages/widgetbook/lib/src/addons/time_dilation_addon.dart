@@ -30,7 +30,7 @@ class TimeDilationAddon extends Addon<double> with SingleFieldOnly {
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child, double setting) {
+  Widget apply(BuildContext context, Widget child, double setting) {
     timeDilation = setting;
     return child;
   }

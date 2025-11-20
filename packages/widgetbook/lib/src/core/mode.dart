@@ -18,7 +18,7 @@ abstract class Mode<T> {
 
   /// Builds the [Addon] with the mode's [value].
   Widget build(BuildContext context, Widget child) {
-    return addon.buildUseCase(context, child, value);
+    return addon.apply(context, child, value);
   }
 
   QueryGroup toQueryGroup() {

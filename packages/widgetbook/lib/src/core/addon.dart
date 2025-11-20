@@ -25,20 +25,18 @@ abstract class Addon<T> extends FieldsComposable<T> {
     final group = state?.queryGroups[groupName];
     final newSetting = valueFromQueryGroup(group);
 
-    return buildUseCase(
+    return apply(
       context,
       child,
       newSetting,
     );
   }
 
-  /// Wraps use cases with a custom widget depending on the addon [setting]
+  /// Applies this to [child] which is usually the story using the [setting]
   /// that is obtained from [valueFromQueryGroup].
-  Widget buildUseCase(
+  Widget apply(
     BuildContext context,
     Widget child,
     T setting,
-  ) {
-    return child;
-  }
+  );
 }

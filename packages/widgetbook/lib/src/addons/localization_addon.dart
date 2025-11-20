@@ -35,7 +35,7 @@ class LocaleAddon extends Addon<Locale> with SingleFieldOnly {
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child, Locale setting) {
+  Widget apply(BuildContext context, Widget child, Locale setting) {
     return Localizations(
       locale: setting,
       delegates: delegates,

@@ -46,7 +46,7 @@ class ThemeAddon<T> extends Addon<T> with SingleFieldOnly {
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child, T setting) {
+  Widget apply(BuildContext context, Widget child, T setting) {
     return builder(context, setting, child);
   }
 }

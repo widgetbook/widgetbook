@@ -45,7 +45,7 @@ class BorderAddon extends Addon<BorderSetting> {
   }
 
   @override
-  Widget buildUseCase(
+  Widget apply(
     BuildContext context,
     Widget child,
     BorderSetting setting,
@@ -129,13 +129,13 @@ QueryGroup valueToQueryGroup(BorderSetting value) {
 }
 ```
 
-### 4. `buildUseCase` method
+### 4. `apply` method
 
 This method is responsible for building the story widget with the addon applied. In this case, we will wrap the child widget with a `Container` that has a border with the given width and color.
 
 ```dart
 @override
-Widget buildUseCase(
+Widget apply(
   BuildContext context,
   Widget child,
   BorderSetting setting,

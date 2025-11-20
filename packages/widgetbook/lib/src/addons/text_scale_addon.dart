@@ -29,7 +29,7 @@ class TextScaleAddon extends Addon<double> with SingleFieldOnly {
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child, double setting) {
+  Widget apply(BuildContext context, Widget child, double setting) {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
         textScaler: TextScaler.linear(setting),

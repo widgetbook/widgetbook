@@ -41,7 +41,7 @@ class ViewportAddon extends Addon<ViewportData> with SingleFieldOnly {
   }
 
   @override
-  Widget buildUseCase(
+  Widget apply(
     BuildContext context,
     Widget child,
     ViewportData setting,

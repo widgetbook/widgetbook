@@ -38,7 +38,7 @@ class AlignmentAddon extends Addon<Alignment> with SingleFieldOnly {
   }
 
   @override
-  Widget buildUseCase(
+  Widget apply(
     BuildContext context,
     Widget child,
     Alignment setting,
