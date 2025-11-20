@@ -18,7 +18,7 @@ typedef _Args = ControlsArgs;
 final ControlsComponent = Component<Controls, ControlsArgs>(
   name: meta.name ?? 'Controls',
   path: meta.path ?? '[sam]',
-  docs: meta.docs,
+  docs: meta.docs ?? null,
   stories: [$Default..$generatedName = 'Default'],
 );
 typedef ControlsScenario = Scenario<Controls, ControlsArgs>;

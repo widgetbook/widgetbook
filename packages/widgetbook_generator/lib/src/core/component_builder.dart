@@ -57,7 +57,16 @@ class ComponentBuilder {
                   .ifNullThen(
                     literalString(navPath),
                   ),
-              'docs': refer('meta').property('docs'),
+              'docs': refer('meta')
+                  .property('docs')
+                  .ifNullThen(
+                    widgetType.element?.documentationComment != null
+                        ? literalString(
+                            widgetType.element!.documentationComment!
+                                .replaceAll('/// ', ''),
+                          )
+                        : literalNull,
+                  ),
               'stories': literalList(
                 stories
                     .map(

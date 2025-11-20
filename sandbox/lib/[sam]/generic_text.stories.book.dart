@@ -18,7 +18,7 @@ typedef _Args<T> = GenericTextArgs<T>;
 final GenericTextComponent = Component<GenericText, GenericTextArgs>(
   name: meta.name ?? 'GenericText',
   path: meta.path ?? '[sam]',
-  docs: meta.docs,
+  docs: meta.docs ?? null,
   stories: [
     $IntStory..$generatedName = 'IntStory',
     $BoolStory..$generatedName = 'BoolStory',
