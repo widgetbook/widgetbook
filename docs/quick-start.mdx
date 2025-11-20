@@ -195,14 +195,3 @@ final config = Config(
   ],
 );
 ```
-
-## More Examples
-
-You can find more examples in our [sandbox app](https://github.com/widgetbook/widgetbook/tree/v4/sandbox).
-
-- Instead of generating args based on the constructor, you can create a custom `Args` class to have more control over the args ([example](https://github.com/widgetbook/widgetbook/blob/v4/sandbox/lib/%5Bsam%5D/label_badge.stories.dart))
-- Change the generated component name/path from `meta`. ([example](https://github.com/widgetbook/widgetbook/blob/026a408401be42a8a5a9cb430e5bf6946445245d/sandbox/lib/settings/nullable_setting.stories.dart#L8))
-- Add text-based (markdown coming soon) docs to your component. ([example](https://github.com/widgetbook/widgetbook/blob/026a408401be42a8a5a9cb430e5bf6946445245d/sandbox/lib/%5Bsam%5D/generic_text.stories.dart#L10-L13))
-- Use `Scenario.run` to simulate interactions and verify behaviors. ([example](https://github.com/widgetbook/widgetbook/blob/026a408401be42a8a5a9cb430e5bf6946445245d/sandbox/lib/%5Bsam%5D/counter.stories.dart#L22-L29))
-- If your story is expanding in height/width, you need to provide a `ViewportMode` to constrain it. ([example](https://github.com/widgetbook/widgetbook/blob/026a408401be42a8a5a9cb430e5bf6946445245d/sandbox/lib/settings/nullable_setting.stories.dart#L22-L33))
-- If your widget has a non-primitive parameter, then you need to create a custom `Args` class. ([example](https://github.com/widgetbook/widgetbook/blob/026a408401be42a8a5a9cb430e5bf6946445245d/sandbox/lib/%5Bsam%5D/types_table.stories.dart#L57-L100))
