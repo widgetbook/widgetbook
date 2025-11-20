@@ -50,9 +50,7 @@ App
 If the `UserTile` is cataloged using the following code
 
 ```dart
-Widget userTileUseCase(BuildContext context) {
-  return UserTile();
-}
+final $Primary = _Story();
 ```
 
 Flutter throws an error indicating that a `UserProvider` is missing from the Widget tree, as the `Consumer` within the `UserTile` depends on the `UserProvider`.

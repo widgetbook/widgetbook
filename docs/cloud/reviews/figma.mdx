@@ -10,14 +10,12 @@ To display a "View in Figma" button in your reviews, add the Figma URL to your u
 
 1. In your Figma design file, navigate to the component that matches your widget.
 1. Copy the link to the component by right-clicking and selecting `Copy/Paste as` > `Copy Link`.
-1. Set the `designLink` property of the `@UseCase` annotation by pasting the copied link.
+1. Set the `designLink` property of the `Story` constructor by pasting the copied link.
 
    ```dart
-   // Example from https://github.com/widgetbook/groceries-demo/blob/main/widgetbook/lib/core/app_bar.dart
-   @UseCase(
+   final $Default = _Story(
+     // ...
      designLink: 'https://www.figma.com/file/EXuEpwiyksLAejYX1qr1v4/Fluttercon-Berlin-2023-Demo?type=design&node-id=277-3056&mode=design&t=nVL8hLmc1jlcilZL-4',
-     name: 'Default',
-     type: AppBar
    )
    ```
 
