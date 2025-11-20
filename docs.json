@@ -343,10 +343,6 @@
             {
               "title": "Overview",
               "href": "/cloud/snapshots/overview"
-            },
-            {
-              "title": "Multi Snapshot",
-              "href": "/cloud/snapshots/multi-snapshot"
             }
           ]
         },
