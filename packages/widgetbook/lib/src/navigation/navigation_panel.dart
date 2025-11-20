@@ -76,7 +76,6 @@ class _NavigationPanelState extends State<NavigationPanel> {
               child: NavigationTreeNode(
                 node: filteredRoot ?? widget.root,
                 onLeafNodeTap: widget.onLeafNodeTap,
-                enableLeafComponents: state.config.enableLeafComponents,
               ),
             ),
           ),

@@ -22,7 +22,6 @@ class FolderTreeTile extends StatelessWidget {
     this.isTerminal = false,
     this.isExpanded = false,
     this.isSelected = false,
-    this.enableLeafComponents = true,
   });
 
   static const indentation = 24.0;
@@ -34,7 +33,6 @@ class FolderTreeTile extends StatelessWidget {
   final bool isTerminal;
   final bool isExpanded;
   final bool isSelected;
-  final bool enableLeafComponents;
 
   @override
   Widget build(BuildContext context) {

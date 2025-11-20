@@ -13,13 +13,11 @@ class NavigationTreeNode extends StatefulWidget {
     required this.node,
     this.depth = 0,
     this.onLeafNodeTap,
-    required this.enableLeafComponents,
   });
 
   final TreeNode node;
   final int depth;
   final ValueChanged<TreeNode<dynamic>>? onLeafNodeTap;
-  final bool enableLeafComponents;
 
   @override
   State<NavigationTreeNode> createState() => _NavigationTreeNodeState();
@@ -48,28 +46,12 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
     final node = widget.node;
     final isCategory = node.isCategory;
 
-    final isLeafComponent =
-        widget.enableLeafComponents &&
-        node is TreeNode<Component> &&
-        node.children.length == 1 && // a single story
-        node.children.first.children.isEmpty; // story without scenarios
-
     final isClickable = switch (node) {
       TreeNode<String>() => true, // docs
       TreeNode<Scenario>() => true,
       TreeNode<Story>() => true,
-      TreeNode<Component>() => isLeafComponent,
       _ => false,
     };
-
-    final hasChildren = node.children.isNotEmpty && !isLeafComponent;
-
-    final targetNode = isLeafComponent
-        // Redirect interactions to the story of the leaf component,
-        // so that when it's clicked, the route is updated to the story
-        // of the leaf component, and not the leaf component itself.
-        ? node.children.first as TreeNode<Story>
-        : node; // story, scenario, or docs
 
     return Column(
       children: [
@@ -85,9 +67,9 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
             FolderTreeTile(
               node: node,
               depth: widget.depth,
-              isTerminal: isClickable && !hasChildren,
+              isTerminal: isClickable,
               isExpanded: isExpanded,
-              isSelected: targetNode.path == state.path,
+              isSelected: node.path == state.path,
               onExpanderTap: toggleExpanded,
               onTap: () {
                 if (!isClickable) {
@@ -95,10 +77,10 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
                   return;
                 }
 
-                widget.onLeafNodeTap?.call(targetNode);
+                widget.onLeafNodeTap?.call(node);
               },
             ),
-        if (hasChildren)
+        if (node.children.isNotEmpty)
           _SlideAnimator(
             forward: isExpanded,
             child: ListView.builder(
@@ -109,7 +91,6 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
                 depth: isCategory ? widget.depth : widget.depth + 1,
                 node: node.children[index],
                 onLeafNodeTap: widget.onLeafNodeTap,
-                enableLeafComponents: widget.enableLeafComponents,
               ),
             ),
           ),
