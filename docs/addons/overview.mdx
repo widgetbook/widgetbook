@@ -15,9 +15,9 @@ final config = Config(
 
 ## Order of Addons
 
-The order of addons matters and it will have effect on how the use-case is rendered. The first addon in the list will be the outermost widget, and the last addon will be the innermost widget.
+The order of addons matters and it will have effect on how the story is rendered. The first addon in the list will be the outermost widget, and the last addon will be the innermost widget.
 
-For example, if you are using both [`AlignmentAddon`](/addons/alignment-addon) and [`ViewportAddon`](/addons/viewport-addon), then the `ViewportAddon` should **always come first**, otherwise the `AlignmentAddon` will be aligning the "viewport" widget itself, and not the use-case inside of it.
+For example, if you are using both [`AlignmentAddon`](/addons/alignment-addon) and [`ViewportAddon`](/addons/viewport-addon), then the `ViewportAddon` should **always come first**, otherwise the `AlignmentAddon` will be aligning the "viewport" widget itself, and not the story inside of it.
 
 <Tabs
   values={[
