@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-alpha.4
 
 - **BREAKING**: Rename `Story`'s `argsBuilder` to `builder`. ([#1711](https://github.com/widgetbook/widgetbook/pull/1711))
 - **BREAKING**: Add `initialValue` to `FieldComposable`; which enforces `Addon` to have an initial value. ([#1662](https://github.com/widgetbook/widgetbook/pull/1662))
