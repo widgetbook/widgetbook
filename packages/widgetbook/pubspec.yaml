@@ -2,7 +2,7 @@ name: widgetbook
 description: >-
   Widgetbook is a sandbox for building widgets and screens in isolation.
   It helps you develop hard-to-reach states and edge cases without needing to run your app.
-version: 4.0.0-alpha.3
+version: 4.0.0-alpha.4
 homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=widgetbook
 repository: https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
