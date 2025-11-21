@@ -16,7 +16,7 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
          name: 'coverage',
          description:
              'Checks the percentage of package widgets that are covered '
-             'by at least one use-case in Widgetbook.',
+             'by a component in Widgetbook.',
        ) {
     argParser
       ..addOption(

@@ -19,7 +19,7 @@ const expectedUsage = [
       '\n'
       'Available commands:\n'
       '  cloud      Manage your Widgetbook Cloud projects.\n'
-      '  coverage   Checks the percentage of package widgets that are covered by at least one use-case in Widgetbook.\n'
+      '  coverage   Checks the percentage of package widgets that are covered by a component in Widgetbook.\n'
       '  upgrade    Upgrade Widgetbook CLI\n'
       '\n'
       'Run "widgetbook help <command>" for more information about a command.',
