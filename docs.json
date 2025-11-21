@@ -37,10 +37,10 @@
   },
   "variables": {
     "versions": {
-      "annotation": "3.9.0",
-      "cli": "3.11.0",
-      "generator": "3.20.0",
-      "widgetbook": "3.20.1"
+      "cli": "4.0.0-unreleased",
+      "generator": "4.0.0-alpha.3",
+      "test": "4.0.0-alpha.3",
+      "widgetbook": "4.0.0-alpha.3"
     }
   },
   "tabs": [

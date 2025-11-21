@@ -43,7 +43,7 @@ Codemagic is just a CI/CD platform, which means it needs to be accompanied by a 
               flutter test
 
           - name: Install Widgetbook CLI
-            script: dart pub global activate widgetbook_cli
+            script: dart pub global activate widgetbook_cli {{ versions.cli }}
 
           - name: Push Widgetbook Build
             working_directory: widgetbook
