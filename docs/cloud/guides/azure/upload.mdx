@@ -68,7 +68,7 @@ If you want to use Widgetbook Cloud with your existing Azure DevOps project, her
                 inputs:
                   targetType: "inline"
                   script: |
-                    $(DartToolPath)/dart pub global activate widgetbook_cli
+                    $(DartToolPath)/dart pub global activate widgetbook_cli {{ versions.cli }}
 
               - task: Bash@3
                 displayName: "Push Widgetbook Build"

@@ -41,7 +41,7 @@ If you want to use Widgetbook Cloud with your existing Bitbucket repository, her
         - step:
             name: Deploy Widgetbook
             script:
-              - dart pub global activate widgetbook_cli
+              - dart pub global activate widgetbook_cli {{ versions.cli }}
               - export PATH="$PATH":"$HOME/.pub-cache/bin"
               - cd widgetbook
               - widgetbook cloud build push --api-key "$WIDGETBOOK_API_KEY"

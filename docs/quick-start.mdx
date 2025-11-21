@@ -22,7 +22,10 @@
 1. Add the following dependencies to your `widgetbook` project:
 
    ```bash
-   flutter pub add widgetbook dev:build_runner dev:widgetbook_generator dev:widgetbook_test
+   flutter pub add widgetbook:{{ versions.widgetbook }} \
+         dev:widgetbook_generator:{{ versions.generator }} \
+         dev:widgetbook_test:{{ versions.test }} \
+         dev:build_runner
    ```
 
 1. Add your app as a path dependency to the `widgetbook/pubspec.yaml` file:

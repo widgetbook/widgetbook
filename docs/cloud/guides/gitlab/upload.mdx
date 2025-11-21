@@ -42,7 +42,7 @@ If you want to use Widgetbook Cloud with your existing GitLab repository, here's
         - flutter build web
         - flutter test
         # Upload to Widgetbook Cloud
-        - dart pub global activate widgetbook_cli
+        - dart pub global activate widgetbook_cli {{ versions.cli }}
         - export PATH="$PATH":"$HOME/.pub-cache/bin"
         - widgetbook cloud build push --api-key "$WIDGETBOOK_API_KEY"
     ```
