@@ -1,6 +1,7 @@
 # Unreleased
 
 - **BREAKING**: Support Widgetbook v4 in `cloud build push` command. ([#1638](https://github.com/widgetbook/widgetbook/pull/1638))
+- **BREAKING**: Support Widgetbook v4 in `coverage` command. ([#1749](https://github.com/widgetbook/widgetbook/pull/1749))
 
 ## 3.11.0
 
