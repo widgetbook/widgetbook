@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-alpha.4
 
 - **BREAKING**: Rename `Story`'s `argsBuilder` to `builder`. ([#1711](https://github.com/widgetbook/widgetbook/pull/1711))
 - **FEAT**: Generate underscore type aliases (i.e. `_Component`, `_Story`, `_Args`, `_Scenario`). ([#1711](https://github.com/widgetbook/widgetbook/pull/1717))
