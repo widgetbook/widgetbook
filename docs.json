@@ -39,7 +39,7 @@
     "versions": {
       "annotation": "3.9.0",
       "cli": "3.11.0",
-      "generator": "3.20.0",
+      "generator": "3.20.1",
       "widgetbook": "3.20.1"
     }
   },
