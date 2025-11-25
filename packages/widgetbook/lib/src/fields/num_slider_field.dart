@@ -48,8 +48,8 @@ class NumSliderField<T extends num> extends Field<T> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       spacing:
           SliderTheme.of(context).overlayShape == SliderComponentShape.noThumb
-              ? 16
-              : 0,
+          ? 16
+          : 0,
       children: [
         Expanded(
           child: Slider(
@@ -71,11 +71,11 @@ class NumSliderField<T extends num> extends Field<T> {
           ),
         ),
         SizedBox(
-          width:
-              _getTextSize(
-                maxLabel.length > minLabel.length ? maxLabel : minLabel,
-                DefaultTextStyle.of(context).style,
-              ).width,
+          width: _getTextSize(
+            // Min label can be larger than max in case of negative numbers
+            maxLabel.length > minLabel.length ? maxLabel : minLabel,
+            DefaultTextStyle.of(context).style,
+          ).width,
           child: Text(
             label,
             textAlign: TextAlign.end,
