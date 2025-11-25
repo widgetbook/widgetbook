@@ -1,4 +1,4 @@
-## Unreleased
+## 3.11.1
 
 - **REFACTOR**: Allow `analyzer` 9.x. ([#1765](https://github.com/widgetbook/widgetbook/pull/1765))
 
