@@ -1,4 +1,4 @@
-## Unreleased
+## 3.20.2
 
 - **FIX**: Consider `NumberSliderField`'s min label width when calculating the labels' max width. ([#1757](https://github.com/widgetbook/widgetbook/pull/1757) - by [@EArminjon](https://github.com/EArminjon))
 
