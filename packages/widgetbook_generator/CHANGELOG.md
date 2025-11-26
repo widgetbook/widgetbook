@@ -30,6 +30,10 @@
 - **BREAKING**: Remove `experimental_` prefix from builders, and change them to be opt-out instead of opt-in. ([#1108](https://github.com/widgetbook/widgetbook/pull/1108))
 - **FEAT**: Generate `Story.name` based on the variable name. ([#1113](https://github.com/widgetbook/widgetbook/pull/1113))
 
+## 3.20.1
+
+- **REFACTOR**: Allow `analyzer` 9.x. ([#1761](https://github.com/widgetbook/widgetbook/pull/1761))
+
 ## 3.20.0
 
 - **BREAKING**: Set minimum SDK version to 3.8.0. ([#1719](https://github.com/widgetbook/widgetbook/pull/1719))
