@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Add `Defaults` class for default `setup` and `builder`. ([#1768](https://github.com/widgetbook/widgetbook/pull/1768))
+
 ## 4.0.0-alpha.4
 
 - **BREAKING**: Rename `Story`'s `argsBuilder` to `builder`. ([#1711](https://github.com/widgetbook/widgetbook/pull/1711))

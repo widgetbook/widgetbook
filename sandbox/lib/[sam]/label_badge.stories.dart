@@ -9,33 +9,24 @@ part 'label_badge.stories.book.dart';
 const meta = MetaWithArgs<LabelBadge, NumericBadgeInput>(
   docs: '''
 1. Using custom args via `MetaWithArgs`
-2. Creating a default `setup` function
-3. Creating a default `builder` function
+2. Creating defaults for setup and builder
 ''',
 );
 
-// This will be used as the default `setup`
-Widget $setup(
-  BuildContext context,
-  Widget child,
-  _Args args,
-) {
-  return Container(
-    padding: const EdgeInsets.all(8),
-    color: Colors.grey[300],
-    child: child,
-  );
-}
-
-// This will be used as the default `builder`
-LabelBadge $builder(
-  BuildContext context,
-  _Args args,
-) {
-  return LabelBadge(
-    text: args.number.toString(),
-  );
-}
+final defaults = _Defaults(
+  setup: (context, child, args) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      color: Colors.grey[300],
+      child: child,
+    );
+  },
+  builder: (context, args) {
+    return LabelBadge(
+      text: args.number.toString(),
+    );
+  },
+);
 
 final $Primary = _Story(
   args: _Args(

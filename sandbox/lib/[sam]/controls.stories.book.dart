@@ -13,6 +13,7 @@ part of 'controls.stories.dart';
 
 typedef _Component = Component<Controls, ControlsArgs>;
 typedef _Scenario = ControlsScenario;
+typedef _Defaults = ControlsDefaults;
 typedef _Story = ControlsStory;
 typedef _Args = ControlsArgs;
 final ControlsComponent = Component<Controls, ControlsArgs>(
@@ -22,6 +23,7 @@ final ControlsComponent = Component<Controls, ControlsArgs>(
   stories: [$Default..$generatedName = 'Default'],
 );
 typedef ControlsScenario = Scenario<Controls, ControlsArgs>;
+typedef ControlsDefaults = Defaults<Controls, ControlsArgs>;
 
 class ControlsStory extends Story<Controls, ControlsArgs> {
   ControlsStory({

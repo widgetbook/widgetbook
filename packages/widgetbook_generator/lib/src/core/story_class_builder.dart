@@ -9,14 +9,14 @@ class StoryClassBuilder {
   StoryClassBuilder(
     this.widgetType,
     this.argsType,
-    this.hasSetup,
-    this.hasBuilder,
+    this.defaultSetup,
+    this.defaultBuilder,
   );
 
   final DartType widgetType;
   final DartType argsType;
-  final bool hasSetup;
-  final bool hasBuilder;
+  final Code? defaultSetup;
+  final Code? defaultBuilder;
 
   TypeReference get storyClassRef {
     return widgetType.getRef(
@@ -57,6 +57,10 @@ class StoryClassBuilder {
     final isCustomArgs = widgetType != argsType;
     final hasRequiredArgs = params.any((param) => param.requiresArg);
     final unboundedTypeParams = getTypeParams(withBounds: false);
+
+    final isGeneric = unboundedTypeParams.isNotEmpty;
+    final hasBuilder = defaultBuilder != null;
+    final hasSetup = defaultSetup != null;
 
     final widgetClassRef = widgetType.getRef();
     final argsClassRef = argsType.getRef(
@@ -170,13 +174,27 @@ class StoryClassBuilder {
                         ).code,
                     ).closure,
                   ),
+                // In case the Story has generic type parameters, we need to
+                // to copy the actual builder/setup functions from the defaults
+                // to preserve the type arguments.
+                // For a Story<int>, we cannot use Defaults<num>'s setup/builder
+                // as they expect num, not int. Casting a subtype to a supertype
+                // is not allowed in Dart.
+                // On the other hand, we just pipe the builder/setup from defaults
+                // to Story, in case the Story is not generic. This is a better
+                // DX since users do not to re-run the build_runner when changing
+                // the defaults.
                 if (hasBuilder)
                   'builder': refer('builder').ifNullThen(
-                    refer('\$builder'),
+                    isGeneric
+                        ? CodeExpression(defaultBuilder!)
+                        : refer('defaults').property('builder').nullChecked,
                   ),
                 if (hasSetup)
                   'setup': refer('setup').ifNullThen(
-                    refer('\$setup'),
+                    isGeneric
+                        ? CodeExpression(defaultSetup!)
+                        : refer('defaults').property('setup').nullChecked,
                   ),
               };
 

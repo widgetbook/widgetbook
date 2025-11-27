@@ -13,6 +13,7 @@ part of 'nullable_setting.stories.dart';
 
 typedef _Component = Component<NullableSetting, NullableSettingArgs>;
 typedef _Scenario = NullableSettingScenario;
+typedef _Defaults = NullableSettingDefaults;
 typedef _Story = NullableSettingStory;
 typedef _Args = NullableSettingArgs;
 final NullableSettingComponent = Component<NullableSetting, NullableSettingArgs>(
@@ -25,6 +26,8 @@ final NullableSettingComponent = Component<NullableSetting, NullableSettingArgs>
 );
 typedef NullableSettingScenario =
     Scenario<NullableSetting, NullableSettingArgs>;
+typedef NullableSettingDefaults =
+    Defaults<NullableSetting, NullableSettingArgs>;
 
 class NullableSettingStory extends Story<NullableSetting, NullableSettingArgs> {
   NullableSettingStory({
