@@ -13,6 +13,7 @@ part of 'generic_text.stories.dart';
 
 typedef _Component = Component<GenericText, GenericTextArgs>;
 typedef _Scenario<T> = GenericTextScenario<T>;
+typedef _Defaults = GenericTextDefaults;
 typedef _Story<T> = GenericTextStory<T>;
 typedef _Args<T> = GenericTextArgs<T>;
 final GenericTextComponent = Component<GenericText, GenericTextArgs>(
@@ -25,6 +26,7 @@ final GenericTextComponent = Component<GenericText, GenericTextArgs>(
   ],
 );
 typedef GenericTextScenario<T> = Scenario<GenericText<T>, GenericTextArgs<T>>;
+typedef GenericTextDefaults = Defaults<GenericText, GenericTextArgs>;
 
 class GenericTextStory<T> extends Story<GenericText<T>, GenericTextArgs<T>> {
   GenericTextStory({

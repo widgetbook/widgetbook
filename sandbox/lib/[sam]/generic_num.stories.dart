@@ -12,34 +12,22 @@ const meta = MetaWithArgs<GenericNum, GenericNumInput>(
 ''',
 );
 
-class GenericNumInput<T extends num, R> {
-  const GenericNumInput({
-    required this.number,
-    required this.other,
-  });
-
-  final T number;
-  final R other;
-}
-
-Widget $setup<T extends num, R>(
-  BuildContext context,
-  Widget child,
-  _Args<T, R> args,
-) {
-  return Container(
-    child: child,
-  );
-}
-
-GenericNum<T> $builder<T extends num, R>(
-  BuildContext context,
-  _Args<T, R> args,
-) {
-  return GenericNum<T>(
-    value: args.number,
-  );
-}
+final defaults = _Defaults(
+  setup: (context, child, args) {
+    return switch (args) {
+      GenericNumInputArgs<num, Color> x => Container(
+        color: x.other,
+        child: child,
+      ),
+      _ => child,
+    };
+  },
+  builder: (context, args) {
+    return GenericNum(
+      value: args.number,
+    );
+  },
+);
 
 final $Integer = _Story<int, String>(
   args: _Args.fixed(
@@ -51,6 +39,17 @@ final $Integer = _Story<int, String>(
 final $Double = _Story<double, Color>(
   args: _Args.fixed(
     number: 0.0,
-    other: Colors.black,
+    other: Colors.red,
   ),
 );
+
+// Custom args class instead of using widget's parameters
+class GenericNumInput<T extends num, R> {
+  const GenericNumInput({
+    required this.number,
+    required this.other,
+  });
+
+  final T number;
+  final R other;
+}

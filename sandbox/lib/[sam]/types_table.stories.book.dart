@@ -13,6 +13,7 @@ part of 'types_table.stories.dart';
 
 typedef _Component = Component<TypesTable, TypesTableArgs>;
 typedef _Scenario = TypesTableScenario;
+typedef _Defaults = TypesTableDefaults;
 typedef _Story = TypesTableStory;
 typedef _Args = TypesTableArgs;
 final TypesTableComponent = Component<TypesTable, TypesTableArgs>(
@@ -22,6 +23,7 @@ final TypesTableComponent = Component<TypesTable, TypesTableArgs>(
   stories: [$Default..$generatedName = 'Default'],
 );
 typedef TypesTableScenario = Scenario<TypesTable, TypesTableArgs>;
+typedef TypesTableDefaults = Defaults<TypesTable, TypesTableArgs>;
 
 class TypesTableStory extends Story<TypesTable, TypesTableArgs> {
   TypesTableStory({

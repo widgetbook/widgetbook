@@ -13,6 +13,7 @@ part of 'generic_num.stories.dart';
 
 typedef _Component = Component<GenericNum, GenericNumInputArgs>;
 typedef _Scenario<T extends num, R> = GenericNumScenario<T, R>;
+typedef _Defaults = GenericNumDefaults;
 typedef _Story<T extends num, R> = GenericNumStory<T, R>;
 typedef _Args<T extends num, R> = GenericNumInputArgs<T, R>;
 final GenericNumComponent = Component<GenericNum, GenericNumInputArgs>(
@@ -26,6 +27,7 @@ final GenericNumComponent = Component<GenericNum, GenericNumInputArgs>(
 );
 typedef GenericNumScenario<T extends num, R> =
     Scenario<GenericNum<T>, GenericNumInputArgs<T, R>>;
+typedef GenericNumDefaults = Defaults<GenericNum, GenericNumInputArgs>;
 
 class GenericNumStory<T extends num, R>
     extends Story<GenericNum<T>, GenericNumInputArgs<T, R>> {
@@ -36,7 +38,24 @@ class GenericNumStory<T extends num, R>
     required super.args,
     StoryWidgetBuilder<GenericNum<T>, GenericNumInputArgs<T, R>>? builder,
     super.scenarios,
-  }) : super(builder: builder ?? $builder, setup: setup ?? $setup);
+  }) : super(
+         builder:
+             builder ??
+             (context, args) {
+               return GenericNum(value: args.number);
+             },
+         setup:
+             setup ??
+             (context, child, args) {
+               return switch (args) {
+                 GenericNumInputArgs<num, Color> x => Container(
+                   color: x.other,
+                   child: child,
+                 ),
+                 _ => child,
+               };
+             },
+       );
 }
 
 class GenericNumInputArgs<T extends num, R> extends StoryArgs<GenericNum<T>> {

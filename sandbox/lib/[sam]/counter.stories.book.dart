@@ -13,6 +13,7 @@ part of 'counter.stories.dart';
 
 typedef _Component = Component<Counter, CounterArgs>;
 typedef _Scenario = CounterScenario;
+typedef _Defaults = CounterDefaults;
 typedef _Story = CounterStory;
 typedef _Args = CounterArgs;
 final CounterComponent = Component<Counter, CounterArgs>(
@@ -22,6 +23,7 @@ final CounterComponent = Component<Counter, CounterArgs>(
   stories: [$Default..$generatedName = 'Default'],
 );
 typedef CounterScenario = Scenario<Counter, CounterArgs>;
+typedef CounterDefaults = Defaults<Counter, CounterArgs>;
 
 class CounterStory extends Story<Counter, CounterArgs> {
   CounterStory({

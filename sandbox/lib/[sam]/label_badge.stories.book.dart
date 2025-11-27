@@ -13,6 +13,7 @@ part of 'label_badge.stories.dart';
 
 typedef _Component = Component<LabelBadge, NumericBadgeInputArgs>;
 typedef _Scenario = LabelBadgeScenario;
+typedef _Defaults = LabelBadgeDefaults;
 typedef _Story = LabelBadgeStory;
 typedef _Args = NumericBadgeInputArgs;
 final LabelBadgeComponent = Component<LabelBadge, NumericBadgeInputArgs>(
@@ -25,6 +26,7 @@ final LabelBadgeComponent = Component<LabelBadge, NumericBadgeInputArgs>(
   ],
 );
 typedef LabelBadgeScenario = Scenario<LabelBadge, NumericBadgeInputArgs>;
+typedef LabelBadgeDefaults = Defaults<LabelBadge, NumericBadgeInputArgs>;
 
 class LabelBadgeStory extends Story<LabelBadge, NumericBadgeInputArgs> {
   LabelBadgeStory({
@@ -36,8 +38,8 @@ class LabelBadgeStory extends Story<LabelBadge, NumericBadgeInputArgs> {
     super.scenarios,
   }) : super(
          args: args ?? NumericBadgeInputArgs(),
-         builder: builder ?? $builder,
-         setup: setup ?? $setup,
+         builder: builder ?? defaults.builder!,
+         setup: setup ?? defaults.setup!,
        );
 }
 
