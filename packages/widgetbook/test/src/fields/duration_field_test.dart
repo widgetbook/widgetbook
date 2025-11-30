@@ -57,7 +57,18 @@ void main() {
           ),
         );
 
-        expect(find.text(fiveSecondsInMilliseconds), findsOneWidget);
+        // The new picker has 3 separate fields (H:M:S)
+        final textFields = find.byType(TextFormField);
+        expect(textFields, findsNWidgets(3));
+
+        // Verify the initial values are displayed correctly (0:0:5)
+        final hoursField = tester.widget<TextFormField>(textFields.at(0));
+        final minutesField = tester.widget<TextFormField>(textFields.at(1));
+        final secondsField = tester.widget<TextFormField>(textFields.at(2));
+
+        expect(hoursField.initialValue, '0');
+        expect(minutesField.initialValue, '0');
+        expect(secondsField.initialValue, '5');
       },
     );
 
@@ -65,25 +76,60 @@ void main() {
       'given a state that has a field value, '
       'then [toWidget] builds that value',
       (tester) async {
-        final widget = await tester.pumpField<Duration, TextFormField>(
-          field,
-          tenSeconds,
+        await tester.pumpWidget(
+          Builder(
+            builder: (context) {
+              return MaterialApp(
+                home: Scaffold(
+                  body: field.toWidget(
+                    context,
+                    'duration_field',
+                    tenSeconds,
+                  ),
+                ),
+              );
+            },
+          ),
         );
 
-        expect(widget.initialValue, equals(tenSecondsInMilliseconds));
+        // The new picker has 3 separate fields (H:M:S)
+        final textFields = find.byType(TextFormField);
+        expect(textFields, findsNWidgets(3));
+
+        // Verify the field values are displayed correctly (0:0:10)
+        final hoursField = tester.widget<TextFormField>(textFields.at(0));
+        final minutesField = tester.widget<TextFormField>(textFields.at(1));
+        final secondsField = tester.widget<TextFormField>(textFields.at(2));
+
+        expect(hoursField.initialValue, '0');
+        expect(minutesField.initialValue, '0');
+        expect(secondsField.initialValue, '10');
       },
     );
 
     testWidgets(
       'given a field, '
-      'then [toWidget] builds the hintText value',
+      'then [toWidget] builds three input fields',
       (tester) async {
-        final widget = await tester.pumpField<Duration, TextField>(
-          field,
-          null,
+        await tester.pumpWidget(
+          Builder(
+            builder: (context) {
+              return MaterialApp(
+                home: Scaffold(
+                  body: field.toWidget(
+                    context,
+                    'duration_field',
+                    null,
+                  ),
+                ),
+              );
+            },
+          ),
         );
 
-        expect(widget.decoration?.hintText, equals('Enter a duration'));
+        // The new picker has 3 separate fields for H, M, S
+        final textFields = find.byType(TextFormField);
+        expect(textFields, findsNWidgets(3));
       },
     );
   });

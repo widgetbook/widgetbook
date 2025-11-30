@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'duration_field/duration_input.dart';
 import 'field.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
@@ -35,19 +36,9 @@ class DurationField extends Field<Duration> {
     String group,
     Duration? value,
   ) {
-    return TextFormField(
-      initialValue: codec.toParam(value ?? initialValue ?? defaultDuration),
-      keyboardType: TextInputType.number,
-      decoration: const InputDecoration(
-        hintText: 'Enter a duration',
-        suffix: Text('ms'),
-      ),
-      onChanged: (value) {
-        final duration = codec.toValue(value);
-        if (duration == null) return;
-
-        updateField(context, group, duration);
-      },
+    return DurationInput(
+      value: value ?? initialValue ?? defaultDuration,
+      onChanged: (duration) => updateField(context, group, duration),
     );
   }
 }
