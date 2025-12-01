@@ -11,11 +11,6 @@ updates:
       interval: "daily"
     versioning-strategy: increase
   - package-ecosystem: "pub"
-    directory: "/packages/widgetbook_annotation"
-    schedule:
-      interval: "daily"
-    versioning-strategy: increase
-  - package-ecosystem: "pub"
     directory: "/packages/widgetbook_cli"
     schedule:
       interval: "daily"
