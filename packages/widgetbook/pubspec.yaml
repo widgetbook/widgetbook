@@ -19,6 +19,7 @@ environment:
 
 dependencies:
   collection: ^1.15.0
+  crypto: ^3.0.0
   flutter:
     sdk: flutter
   flutter_test:
@@ -84,3 +85,21 @@ flutter:
         - asset: assets/fonts/Poppins/Poppins-BlackItalic.ttf
           weight: 900
           style: italic
+    # Both Material and Cupertino default fonts are not loaded
+    # automatically in tests. To make them available, an app
+    # needs to include their own copies of them.
+    # Widgetbook supplies Roboto because it is free to use.
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto/Roboto-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Roboto/Roboto-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Roboto/Roboto-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Roboto/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Roboto/Roboto-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Roboto/Roboto-Black.ttf
+          weight: 900

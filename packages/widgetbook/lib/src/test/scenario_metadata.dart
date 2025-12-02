@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
-import 'package:widgetbook/widgetbook.dart';
+import '../../widgetbook.dart';
 
 import 'test.dart';
 

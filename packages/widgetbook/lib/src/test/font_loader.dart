@@ -24,7 +24,7 @@ Future<void> loadFonts() async {
     final fontLoader = FontLoader(
       // Localize font names from this package,
       // so that any font included here (e.g. Roboto) works.
-      family.name.replaceAll('packages/widgetbook_test/', ''),
+      family.name.replaceAll('packages/widgetbook/', ''),
     );
 
     for (final font in family.fonts) {

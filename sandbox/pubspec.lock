@@ -587,13 +587,6 @@ packages:
       relative: true
     source: path
     version: "4.0.0-alpha.4"
-  widgetbook_test:
-    dependency: "direct dev"
-    description:
-      path: "../packages/widgetbook_test"
-      relative: true
-    source: path
-    version: "4.0.0-alpha.4"
   yaml:
     dependency: transitive
     description:
