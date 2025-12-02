@@ -1,5 +1,5 @@
-import '../core/arg.dart';
 import '../fields/fields.dart';
+import '../framework/arg.dart';
 
 class StringArg extends Arg<String> with SingleFieldOnly {
   StringArg(

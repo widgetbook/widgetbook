@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../core/core.dart';
 import '../fields/fields.dart';
+import '../framework/framework.dart';
 
 /// An [Addon] for changing the active [MediaQueryData.textScaler]
 /// via [MediaQuery].

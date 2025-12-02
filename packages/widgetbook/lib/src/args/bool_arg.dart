@@ -1,5 +1,5 @@
-import '../core/arg.dart';
 import '../fields/fields.dart';
+import '../framework/arg.dart';
 
 class BoolArg extends Arg<bool> with SingleFieldOnly {
   BoolArg(

@@ -1,5 +1,5 @@
-import '../core/arg.dart';
 import '../fields/fields.dart';
+import '../framework/arg.dart';
 
 class DurationArg extends Arg<Duration> with SingleFieldOnly {
   DurationArg(

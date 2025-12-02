@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart' hide Viewport;
 
-import '../../core/core.dart';
 import '../../fields/fields.dart';
+import '../../framework/framework.dart';
 import 'viewport.dart';
 import 'viewport_data.dart';
 import 'viewports/viewports.dart';

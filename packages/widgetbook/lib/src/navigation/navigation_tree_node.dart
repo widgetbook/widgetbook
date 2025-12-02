@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core/core.dart';
+import '../framework/framework.dart';
 import '../state/state.dart';
 
 import 'category_tree_tile.dart';

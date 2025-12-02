@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../../core/core.dart';
 import '../../fields/fields.dart';
+import '../../framework/framework.dart';
 import 'minimal_semantics_debugger.dart';
 
 class SemanticsMode extends Mode<bool> {

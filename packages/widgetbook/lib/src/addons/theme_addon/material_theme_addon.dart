@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/core.dart';
+import '../../framework/framework.dart';
 import 'theme_addon.dart';
 
 // We extend [Mode] not [ThemeMode] as the [Mode.addon] runtime type

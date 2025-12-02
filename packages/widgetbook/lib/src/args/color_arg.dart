@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import '../core/arg.dart';
 import '../fields/fields.dart';
+import '../framework/arg.dart';
 
 class ColorArg extends Arg<Color> with SingleFieldOnly {
   ColorArg(
