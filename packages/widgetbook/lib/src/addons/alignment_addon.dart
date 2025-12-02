@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../core/core.dart';
 import '../fields/fields.dart';
+import '../framework/framework.dart';
 
 class AlignmentMode extends Mode<Alignment> {
   AlignmentMode(Alignment value) : super(value, AlignmentAddon(value));

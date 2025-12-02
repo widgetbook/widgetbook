@@ -1,8 +1,8 @@
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 
-import '../core/core.dart';
 import '../fields/fields.dart';
+import '../framework/framework.dart';
 
 /// An [Addon] for changing [timeDilation].
 class TimeDilationMode extends Mode<double> {

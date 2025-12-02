@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
-import '../core/core.dart';
+import '../framework/framework.dart';
 import '../navigation/navigation.dart';
 import '../routing/routing.dart';
 import '../utils.dart';

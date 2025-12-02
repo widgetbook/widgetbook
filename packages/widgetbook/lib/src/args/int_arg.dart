@@ -1,5 +1,5 @@
-import '../core/arg.dart';
 import '../fields/fields.dart';
+import '../framework/arg.dart';
 
 class IntArg extends Arg<int> with SingleFieldOnly {
   IntArg(

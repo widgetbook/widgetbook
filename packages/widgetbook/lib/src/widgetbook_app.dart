@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 // ignore: unnecessary_import flutter(<3.35.0)
 import 'package:meta/meta.dart';
 
-import 'core/config.dart';
+import 'framework/config.dart';
 import 'routing/routing.dart';
 import 'state/state.dart';
 import 'theme/theme.dart';

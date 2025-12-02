@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../state/default_home_page.dart';
-import 'core.dart';
+import 'framework.dart';
 
 /// Function signature for building the app wrapper around use cases.
 ///

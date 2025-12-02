@@ -1,6 +1,6 @@
 import 'package:path/path.dart' as p;
 
-import '../core/core.dart';
+import '../framework/framework.dart';
 import 'tree_node.dart';
 
 class Tree {
