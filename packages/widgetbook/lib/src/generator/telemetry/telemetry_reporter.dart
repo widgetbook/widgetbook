@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:build/build.dart';
 import 'package:crypto/crypto.dart';
 
-import '../../metadata.dart';
+import '../../../metadata.dart';
 import 'ci_keys.dart';
 import 'usage_report.dart';
 
@@ -152,7 +152,7 @@ class TelemetryReporter extends Builder {
         trackingId: trackingId,
         projectId: projectId,
         project: buildStep.inputId.package,
-        version: packageVersion,
+        version: kWidgetbookVersion,
         ownerUrl: ownerUrl,
       );
 

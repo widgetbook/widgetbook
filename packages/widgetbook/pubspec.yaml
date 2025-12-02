@@ -18,16 +18,22 @@ environment:
   flutter: ">=3.32.0"
 
 dependencies:
+  analyzer: ">=8.0.0 <10.0.0"
+  build: ^4.0.0
+  code_builder: ^4.5.0
   collection: ^1.15.0
   crypto: ^3.0.0
+  dart_style: ^3.0.0
   flutter:
     sdk: flutter
   flutter_test:
     sdk: flutter
+  glob: ^2.0.2
   meta: ^1.8.0
   nested: ^1.0.0
   path: ^1.8.0
   resizable_widget: ^1.0.5
+  source_gen: ^4.0.0
   url_launcher: ^6.3.0
 
 dev_dependencies:

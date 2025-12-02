@@ -1,5 +1,5 @@
 targets:
   $default:
     builders:
-      widgetbook_generator:telemetry:
+      widgetbook:telemetry:
         enabled: false

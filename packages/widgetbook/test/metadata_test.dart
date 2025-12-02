@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:test/test.dart';
-import 'package:widgetbook_generator/metadata.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/metadata.dart';
 
 void main() {
   final file = File('pubspec.yaml');
@@ -17,7 +17,7 @@ void main() {
       final pubVersion = getYamlValue('version');
 
       expect(
-        packageVersion,
+        kWidgetbookVersion,
         equals(pubVersion),
       );
     });

@@ -14,7 +14,7 @@ class UsageReport {
 
   final DateTime timestamp = DateTime.now();
 
-  /// `widgetbook_generator` version
+  /// `widgetbook` version
   final String version;
 
   /// URL to the owner's git account

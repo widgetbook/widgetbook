@@ -1,6 +1,6 @@
 builders:
   story_builder:
-    import: "package:widgetbook_generator/builder.dart"
+    import: "package:widgetbook/src/generator/builder.dart"
     builder_factories: ["storyBuilder"]
     runs_before: [":components_builder"]
     build_extensions: { ".stories.dart": [".stories.book.dart"] }
@@ -11,7 +11,7 @@ builders:
         - lib/**.stories.dart
 
   components_builder:
-    import: "package:widgetbook_generator/builder.dart"
+    import: "package:widgetbook/src/generator/builder.dart"
     builder_factories: ["componentsBuilder"]
     build_extensions: { ".stories.dart": [".dart"] }
     runs_before: [":telemetry"]
@@ -19,7 +19,7 @@ builders:
     build_to: source
 
   telemetry:
-    import: "package:widgetbook_generator/builder.dart"
+    import: "package:widgetbook/src/generator/builder.dart"
     builder_factories: ["reportTelemetry"]
     build_extensions: { ".book.dart": [".track"] }
     required_inputs: [".book.dart"]
