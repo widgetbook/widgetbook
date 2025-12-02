@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/layout/desktop_layout.dart';
-import 'package:widgetbook/src/layout/mobile_layout.dart';
-import 'package:widgetbook/src/layout/responsive_layout.dart';
-import 'package:widgetbook/src/navigation/navigation.dart';
-import 'package:widgetbook/src/settings/settings.dart';
-import 'package:widgetbook/src/widgetbook_app.dart';
+import 'package:widgetbook/src/core/layout/desktop_layout.dart';
+import 'package:widgetbook/src/core/layout/mobile_layout.dart';
+import 'package:widgetbook/src/core/layout/responsive_layout.dart';
+import 'package:widgetbook/src/core/navigation/navigation.dart';
+import 'package:widgetbook/src/core/settings/settings.dart';
+import 'package:widgetbook/src/core/widgetbook_app.dart';
 
 void main() {
   group(

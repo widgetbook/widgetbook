@@ -7,10 +7,10 @@ export 'package:flutter_test/src/finders.dart';
 export 'package:flutter_test/src/matchers.dart';
 export 'package:flutter_test/src/widget_tester.dart';
 
-export 'src/addons/addons.dart' hide NoneViewport;
-export 'src/args/args.dart';
-export 'src/fields/fields.dart';
-export 'src/framework/framework.dart';
-export 'src/routing/query_group.dart';
-export 'src/runner.dart';
-export 'src/state/state.dart' hide WidgetbookScope;
+export 'src/core/addons/addons.dart' hide NoneViewport;
+export 'src/core/args/args.dart';
+export 'src/core/fields/fields.dart';
+export 'src/core/framework/framework.dart';
+export 'src/core/routing/query_group.dart';
+export 'src/core/runner.dart';
+export 'src/core/state/state.dart' hide WidgetbookScope;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/navigation/navigation.dart';
-import 'package:widgetbook/src/state/default_home_page.dart';
-import 'package:widgetbook/src/theme/theme.dart';
-import 'package:widgetbook/src/widgetbook_app.dart';
-import 'package:widgetbook/src/workbench/workbench.dart';
+import 'package:widgetbook/src/core/navigation/navigation.dart';
+import 'package:widgetbook/src/core/state/default_home_page.dart';
+import 'package:widgetbook/src/core/theme/theme.dart';
+import 'package:widgetbook/src/core/widgetbook_app.dart';
+import 'package:widgetbook/src/core/workbench/workbench.dart';
 
 void main() {
   group('$WidgetbookTheme', () {

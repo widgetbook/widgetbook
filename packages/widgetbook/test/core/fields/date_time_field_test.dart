@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/fields/fields.dart';
-import 'package:widgetbook/src/utils.dart';
+import 'package:widgetbook/src/core/fields/fields.dart';
+import 'package:widgetbook/src/core/utils.dart';
 
 import '../../helper/helper.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/settings/setting.dart';
+import 'package:widgetbook/src/core/settings/setting.dart';
 
 import '../../helper/helper.dart';
 

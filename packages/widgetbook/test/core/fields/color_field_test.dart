@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:widgetbook/src/fields/color_field/color_picker.dart';
-import 'package:widgetbook/src/fields/color_field/color_picker_dialog.dart';
-import 'package:widgetbook/src/fields/color_field/hex_color_picker.dart';
-import 'package:widgetbook/src/fields/color_field/hsl_color_picker.dart';
-import 'package:widgetbook/src/fields/color_field/rgb_color_picker.dart';
+import 'package:widgetbook/src/core/fields/color_field/color_picker.dart';
+import 'package:widgetbook/src/core/fields/color_field/color_picker_dialog.dart';
+import 'package:widgetbook/src/core/fields/color_field/hex_color_picker.dart';
+import 'package:widgetbook/src/core/fields/color_field/hsl_color_picker.dart';
+import 'package:widgetbook/src/core/fields/color_field/rgb_color_picker.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';

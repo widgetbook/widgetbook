@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widgetbook/src/theme/theme.dart';
+import 'package:widgetbook/src/core/theme/theme.dart';
 
 // Sandbox needs two inherited theme widgets:
 // 1. `WidgetbookTheme` for Widgetbook's components (e.g. `NullableSetting`)
