@@ -17,9 +17,21 @@ typedef ScenarioRunner<TArgs extends StoryArgs> =
       TArgs args,
     );
 
+enum ScenarioType {
+  // Defined by the user in the config
+  global,
+
+  // Defined by the user in the story
+  local,
+
+  // Generated when no scenarios are defined
+  $default,
+}
+
 class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
     extends ScenarioDefinition {
   Scenario({
+    this.type = ScenarioType.local,
     required super.name,
     List<Mode>? modes,
     TArgs? args,
@@ -29,6 +41,7 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
        _args = args,
        super(modes: modes ?? []);
 
+  final ScenarioType type;
   final List<Mode>? _modes;
   final TArgs? _args;
 

@@ -175,20 +175,25 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   /// A list of all scenarios for this story. The list includes the local ones
   /// defined in [scenarios] as well as the ones generated from the
   /// [ScenarioDefinition]s defined in the [Config].
+  /// If no scenarios are defined, a default scenario is returned.
   List<Scenario<TWidget, TArgs>> allScenarios(Config config) {
-    return [
-      ...config.scenarios.map(_generateScenarioFrom).toList(),
-      ...scenarios,
-    ];
-  }
+    final localScenarios = scenarios;
+    final globalScenarios = config.scenarios.map(
+      (definition) => Scenario<TWidget, TArgs>(
+        type: ScenarioType.global,
+        name: definition.name,
+        modes: definition.modes,
+        mergeModes: definition.mergeModes,
+      )..story = this,
+    );
 
-  Scenario<TWidget, TArgs> _generateScenarioFrom(
-    ScenarioDefinition definition,
-  ) {
-    return Scenario<TWidget, TArgs>(
-      name: definition.name,
-      modes: definition.modes,
-      mergeModes: definition.mergeModes,
+    final defaultScenario = Scenario<TWidget, TArgs>(
+      type: ScenarioType.$default,
+      name: 'Default',
     )..story = this;
+
+    return globalScenarios.isEmpty && localScenarios.isEmpty
+        ? [defaultScenario]
+        : [...globalScenarios, ...localScenarios];
   }
 }
