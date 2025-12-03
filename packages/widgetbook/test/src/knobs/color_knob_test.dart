@@ -3,8 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/fields/color_field/color_field.dart';
 import 'package:widgetbook/src/fields/color_field/hex_color_picker.dart';
 import 'package:widgetbook/src/fields/color_field/hsl_color_picker.dart';
-import 'package:widgetbook/src/fields/color_field/number_text_field.dart';
 import 'package:widgetbook/src/fields/color_field/rgb_color_picker.dart';
+import 'package:widgetbook/src/fields/common/number_text_field.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
 
 import '../../helper/helper.dart';
