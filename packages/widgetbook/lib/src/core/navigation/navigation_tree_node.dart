@@ -46,10 +46,19 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
     final node = widget.node;
     final isCategory = node.isCategory;
 
+    // Whether or not the node is clickable and clicks trigger navigation
     final isClickable = switch (node) {
       TreeNode<String>() => true, // docs
       TreeNode<Scenario>() => true,
       TreeNode<Story>() => true,
+      _ => false,
+    };
+
+    // Whether or not to show the expander icon
+    final isTerminal = switch (node) {
+      TreeNode<String>() => true, // docs
+      TreeNode<Scenario>() => true,
+      TreeNode<Story>() => node.children.isEmpty,
       _ => false,
     };
 
@@ -67,7 +76,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
             FolderTreeTile(
               node: node,
               depth: widget.depth,
-              isTerminal: isClickable,
+              isTerminal: isTerminal,
               isExpanded: isExpanded,
               isSelected: node.path == state.path,
               onExpanderTap: toggleExpanded,
