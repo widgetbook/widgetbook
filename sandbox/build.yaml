@@ -1,8 +1,5 @@
 targets:
   $default:
     builders:
-      widgetbook_generator:use_case_builder:
-        options:
-          nav_path_mode: use-case
-      widgetbook_generator:telemetry:
+      widgetbook:telemetry:
         enabled: false

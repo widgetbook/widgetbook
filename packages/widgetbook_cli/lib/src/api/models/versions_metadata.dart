@@ -8,13 +8,11 @@ class VersionsMetadata {
     required this.flutter,
     required this.widgetbook,
     required this.cli,
-    required this.generator,
   });
 
   final String? flutter;
   final String? widgetbook;
   final String cli;
-  final String? generator;
 
   /// Creates a [VersionsMetadata] instance from a [lockFile] and the output
   /// of `flutter --version`.
@@ -34,7 +32,6 @@ class VersionsMetadata {
         cli: packageVersion,
         flutter: flutterVersion,
         widgetbook: lockYaml.versionOf('widgetbook'),
-        generator: lockYaml.versionOf('widgetbook_generator'),
       );
     } catch (_) {
       return null;
