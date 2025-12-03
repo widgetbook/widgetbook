@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **BREAKING**: Merge `widgetbook_generator` and `widgetbook_test` packages into `widgetbook` package. ([#1772](https://github.com/widgetbook/widgetbook/pull/1772))
+- **REFACTOR**: Change default font to `Roboto`. ([#1773](https://github.com/widgetbook/widgetbook/pull/1773))
 - **FEAT**: Add `Defaults` class for default `setup` and `builder`. ([#1768](https://github.com/widgetbook/widgetbook/pull/1768))
 
 ## 4.0.0-alpha.4

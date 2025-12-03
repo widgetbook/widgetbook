@@ -16,11 +16,6 @@ Future<void> loadFonts() async {
   );
 
   for (final family in fontManifest.families) {
-    if (family.name == 'packages/widgetbook/Poppins') {
-      // Exclude Poppins font as it is only used in Widgetbook UI
-      continue;
-    }
-
     final fontLoader = FontLoader(
       // Localize font names from this package,
       // so that any font included here (e.g. Roboto) works.

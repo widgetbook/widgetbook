@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 /// Contains the style definition of Widgetbook.
 class Themes {
+  // To ensure consistent font usage across platforms
+  static const _fontFamily = 'Roboto';
+
   static const _darkColorScheme = ColorScheme(
     brightness: Brightness.dark,
     primary: Color(0xFFA1C9FF),
@@ -104,7 +107,7 @@ class Themes {
   static ThemeData dark = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    fontFamily: 'Poppins',
+    fontFamily: _fontFamily,
     colorScheme: _darkColorScheme,
     hoverColor: const Color(0xFFE3E2E6).withAlpha(20),
     sliderTheme: SliderThemeData(
@@ -125,7 +128,7 @@ class Themes {
   static ThemeData light = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    fontFamily: 'Poppins',
+    fontFamily: _fontFamily,
     colorScheme: _lightColorScheme,
     hoverColor: const Color(0xFF1A1C1E).withAlpha(20),
     sliderTheme: SliderThemeData(
