@@ -38,8 +38,6 @@
   "variables": {
     "versions": {
       "cli": "4.0.0-alpha.1",
-      "generator": "4.0.0-alpha.4",
-      "test": "4.0.0-alpha.3",
       "widgetbook": "4.0.0-alpha.3"
     }
   },

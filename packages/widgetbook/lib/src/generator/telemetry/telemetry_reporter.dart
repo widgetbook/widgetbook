@@ -19,7 +19,7 @@ class TelemetryReporter extends Builder {
   static const banner = '''\n
     ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
     ┃                                                            ┃
-    ┃   Widgetbook Generator now collects and reports anonymous  ┃
+    ┃   Widgetbook now collects and reports anonymous            ┃
     ┃   usage information that helps us improve our package.     ┃
     ┃                                                            ┃
     ┃   For more info visit:                                     ┃
