@@ -13,6 +13,7 @@ class ScenarioMetadata {
     required this.imageWidth,
     required this.imageHeight,
     required this.pixelRatio,
+    required this.semanticsData,
   });
 
   final Scenario scenario;
@@ -20,6 +21,7 @@ class ScenarioMetadata {
   final int imageWidth;
   final int imageHeight;
   final double pixelRatio;
+  final Map<String, dynamic> semanticsData;
 
   Component get component => scenario.story.component;
   Story get story => scenario.story;
@@ -71,6 +73,7 @@ class ScenarioMetadata {
         'pixelRatio': pixelRatio,
         'size': imageBytes.length,
       },
+      'semantics': semanticsData,
     };
   }
 }
