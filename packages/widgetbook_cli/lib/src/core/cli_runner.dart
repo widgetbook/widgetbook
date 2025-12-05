@@ -6,6 +6,7 @@ import 'package:pub_updater/pub_updater.dart';
 import '../../metadata.dart';
 import '../commands/cloud.dart';
 import '../commands/coverage.dart';
+import '../commands/init.dart';
 import '../commands/upgrade.dart';
 import 'cli_exception.dart';
 import 'context.dart';
@@ -22,6 +23,12 @@ class CliRunner extends CommandRunner<int> {
       'version',
       negatable: false,
       help: 'Print the current version.',
+    );
+
+    addCommand(
+      InitCommand(
+        context: context,
+      ),
     );
 
     addCommand(
