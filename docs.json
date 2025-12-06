@@ -489,6 +489,10 @@
               "href": "/cloud/reviews/request-reviewer"
             },
             {
+              "title": "Required reviewers",
+              "href": "/cloud/reviews/required-reviewer"
+            },
+            {
               "title": "Limitations",
               "href": "/cloud/reviews/limitations"
             }

@@ -1,0 +1,56 @@
+# Required reviewers 
+
+<Warning>
+  This feature is currently in **beta**.
+  Please report any issues you encounter and provide feedback regarding improvements.
+</Warning>
+
+Due to the hierarchical nature of some teams, Widgetbook Cloud allows you to designate certain reviewers as required for visual pull requests. 
+Therefore, this feature is great to ensure that specific team members, such as leads or designers, review and approve changes before they are merged.
+
+When one or multiple required reviewers are defined, the approval of **at least one** of them is mandatory before the visual pull request is considered approved and can be merged.
+
+## Enable required reviewers
+
+<Info>
+  Only workspace owners can access the Settings tab and configure required reviewers.
+</Info>
+
+<Image src="/assets/cloud/reviews/required-reviewer-setting.png" caption="Required reviewer setting" zoom />
+
+<Steps>
+  <Step title="Open project settings">
+    Navigate to your project on Widgetbook Cloud and click on the "Settings" tab.
+
+    Select the "General" section from the left sidebar.
+  </Step>
+  <Step title="Enable the feature">
+    Locate the "Require approval from selected reviewers" checkbox and enable it.
+
+    When enabled, at least one approval from the selected users is required to merge visual pull requests.
+  </Step>
+  <Step title="Select required reviewers">
+    Click the "Select required assignees" field to open the user selector.
+    Search by name and select one or more teammates who should be required reviewers.
+  </Step>
+  <Step title="Save changes">
+    Click the "Save Changes" button at the bottom of the page to apply your settings.
+  </Step>
+</Steps>
+
+## Pull request approval with required reviewers
+
+When required reviewers are configured for a project, the approval status of a visual pull request is determined by the combination of reviews from both required and non-required reviewers.
+
+### Review status logic
+
+The visual pull request will be marked as **Approved** only when **both** of the following conditions are met:
+
+1. At least one required reviewer has approved the visual pull request
+2. No reviewer (required or non-required) has requested changes
+
+This means that:
+
+- Approvals from non-required reviewers alone are not sufficient to approve the pull request. At least one required reviewer must approve.
+- A single "Request changes" review blocks approval, regardless of whether it comes from a required or non-required reviewer.
+- Multiple required reviewers can be configured, but only one of them needs to approve (unless someone requests changes).
