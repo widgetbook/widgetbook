@@ -578,6 +578,19 @@
           ]
         },
         {
+          "group": "Notifications",
+          "pages": [
+            {
+              "title": "Email",
+              "href": "/cloud/guides/notifications/email"
+            },
+            {
+              "title": "Slack",
+              "href": "/cloud/guides/notifications/slack"
+            }
+          ]
+        },
+        {
           "title": "Figma Reviews",
           "href": "/cloud/reviews/figma"
         },
