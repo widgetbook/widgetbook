@@ -3,6 +3,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:path/path.dart' as p;
 
 import '../addons/addons.dart';
 import 'config.dart';
@@ -48,6 +49,8 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
   /// A late back-reference to the story this scenario belongs to.
   /// It is initialized in the [Story] constructor.
   late final Story<TWidget, TArgs> story;
+
+  String get path => p.join(story.path, name);
 
   /// A function that is executed during the test after the widget is built
   /// and before the screenshot is taken.

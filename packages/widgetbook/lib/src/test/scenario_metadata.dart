@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
-import '../../widgetbook.dart';
 
+import '../../widgetbook.dart';
 import 'test.dart';
 
 class ScenarioMetadata {
@@ -53,6 +53,7 @@ class ScenarioMetadata {
       },
       'scenario': {
         'name': scenario.name,
+        'path': scenario.path,
         'modes': {
           for (final mode in scenario.modes)
             mode.groupName: mode.toQueryGroup().toJson(),

@@ -4,11 +4,13 @@ typedef FieldValues = Map<Name, String>;
 class ScenarioMetadata {
   ScenarioMetadata({
     required this.name,
+    required this.path,
     required this.modes,
     required this.args,
   });
 
   final String name;
+  final String path;
   final Map<Name, FieldValues?> modes;
   final Map<Name, FieldValues?> args;
 
@@ -32,6 +34,7 @@ class ScenarioMetadata {
     final args = json['args'] as Map<Name, dynamic>;
     return ScenarioMetadata(
       name: json['name'] as String,
+      path: json['path'] as String,
       modes: parseQueryGroups(modes),
       args: parseQueryGroups(args),
     );
@@ -40,6 +43,7 @@ class ScenarioMetadata {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
+      'path': path,
       'modes': modes,
       'args': args,
     };
