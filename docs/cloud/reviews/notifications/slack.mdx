@@ -1,0 +1,58 @@
+# Slack Notifications
+
+Widgetbook Cloud integrates with Slack to keep your team informed about visual pull requests that need review. 
+Notifications are sent automatically to your Slack workspace, ensuring that reviews don't go unnoticed.
+
+## What you'll receive
+
+Slack notifications are sent when a visual pull request requires review. Each notification includes:
+
+- Pull request number and title
+- Direct link to view changes in Widgetbook Cloud
+- Workspace and project name
+
+Notifications appear as Slack messages with a yellow accent to draw attention.
+
+<Info>
+  Notifications are only sent for pull requests with "pending review" status. 
+  Approved pull requests or those with "changes requested" do not trigger notifications.
+</Info>
+
+## Setup Slack integration
+
+<Info>
+  You need admin access to your Widgetbook Cloud workspace and permission to install apps in your Slack workspace.
+</Info>
+
+<Steps>
+  <Step title="Open workspace settings">
+    Navigate to your Widgetbook Cloud workspace and open the General Settings page.
+  </Step>
+  <Step title="Connect to Slack">
+    Find the Slack integration section and click "Connect to Slack".
+    
+    You'll be redirected to Slack's authorization page.
+  </Step>
+  <Step title="Authorize Widgetbook">
+    Select the Slack workspace you want to connect and grant Widgetbook permission to post messages via incoming webhooks.
+    
+    You'll be redirected back to Widgetbook Cloud once authorization is complete.
+  </Step>
+  <Step title="Verify configuration">
+    Confirm that the Slack integration shows as connected in your workspace settings.
+    
+    The integration is now active for all projects in your workspace.
+  </Step>
+</Steps>
+
+## Configuration scope
+
+The Slack integration is configured at the workspace level:
+
+- Set it up once per Widgetbook workspace
+- All projects within the workspace send notifications to the configured Slack channel
+- No per-project configuration needed
+
+## Manage notifications
+
+To stop receiving Slack notifications, go to your workspace General Settings and disconnect the Slack integration. This will disable all notifications for that workspace.

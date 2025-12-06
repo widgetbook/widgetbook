@@ -1,0 +1,52 @@
+# Email Notifications
+
+Widgetbook Cloud sends email notifications to keep reviewers informed about pull request assignments and review status changes.
+
+## What you'll receive
+
+Email notifications are sent in two events:
+
+### Reviewer assignment
+
+When a user is assigned as a reviewer to a pull request, they receive an email immediately with:
+
+- Pull request title
+- Direct link to view the pull request in Widgetbook Cloud
+
+This email is always sent when reviewers are assigned.
+
+### Review status updates
+
+When a pull request's review status changes, all assigned reviewers receive an email with:
+
+- Project name
+- Pull request title
+- Current review status (pending, approved, or changes requested)
+- Direct link to view the pull request
+
+<Info>
+  For "Pending" status: If reviewers have already been notified and no new reviews have been submitted, duplicate notifications won't be sent to avoid email spam.
+</Info>
+
+## Enable review status emails
+
+Review status update emails must be enabled in your project settings.
+
+<Steps>
+  <Step title="Open project settings">
+    Navigate to your project on Widgetbook Cloud and click on the "Settings" tab.
+
+    Select the "General" section from the left sidebar.
+  </Step>
+  <Step title="Enable the feature">
+    Locate the "Enable pull request review emails" checkbox and enable it.
+  </Step>
+  <Step title="Save changes">
+    Click the "Save Changes" button at the bottom of the page to apply your settings.
+  </Step>
+</Steps>
+
+<Info>
+  Review status emails are only sent to assigned reviewers on the pull request.
+  If no reviewers are assigned, no emails are sent.
+</Info>
