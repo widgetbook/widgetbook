@@ -489,6 +489,23 @@
               "href": "/cloud/reviews/request-reviewer"
             },
             {
+              "title": "Required reviewers",
+              "href": "/cloud/reviews/required-reviewer"
+            },
+            {
+              "group": "Notifications",
+              "pages": [
+                {
+                  "title": "Email",
+                  "href": "/cloud/reviews/notifications/email"
+                },
+                {
+                  "title": "Slack",
+                  "href": "/cloud/reviews/notifications/slack"
+                }
+              ]
+            },
+            {
               "title": "Limitations",
               "href": "/cloud/reviews/limitations"
             }
@@ -574,19 +591,6 @@
             {
               "title": "Upload builds",
               "href": "/cloud/guides/codemagic/upload"
-            }
-          ]
-        },
-        {
-          "group": "Notifications",
-          "pages": [
-            {
-              "title": "Email",
-              "href": "/cloud/guides/notifications/email"
-            },
-            {
-              "title": "Slack",
-              "href": "/cloud/guides/notifications/slack"
             }
           ]
         },
