@@ -19,6 +19,10 @@ The available statuses are:
 - **Comment**: The changes are neither approved nor rejected, but you want to leave feedback for the author. If integrated with a Git provider, Widgetbook Cloud sets the commit status to pending, unless overridden by another status.
 - **Changes requested**: The changes are not approved and must be revised before merging. If integrated with a Git provider, this sets the commit status to failed, preventing the pull request from being merged.
 
+<Info>
+  If your project has [required reviewers](/cloud/reviews/required-reviewer) configured, at least one required reviewer must approve before the visual pull request is considered approved.
+</Info>
+
 ## Mark Changes as Viewed
 
 <Image src="/assets/cloud/reviews/mark-as-viewed.png" zoom />
