@@ -19,7 +19,7 @@ class InitCommand extends CliCommand<InitArgs> {
     this.processManager = const LocalProcessManager(),
   }) : super(
          name: 'init',
-         description: 'Initializes the widgetbook directory structure.',
+         description: 'Initializes the widgetbook workspace.',
        ) {
     argParser
       ..addOption(
