@@ -506,6 +506,10 @@
           "group": "Commands",
           "pages": [
             {
+              "title": "init",
+              "href": "/cli/commands/init"
+            },
+            {
               "title": "cloud build push",
               "href": "/cli/commands/cloud-build-push"
             },

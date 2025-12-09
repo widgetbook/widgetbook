@@ -2,87 +2,13 @@
 
 ## Project Bootstrap
 
-1. Create a new Flutter project inside your app's directory:
+Widgetbook v4 introduced a new `init` command in the CLI to help you set up your Widgetbook workspace quickly.
+Run the following command inside your **app or design system package directory**:
 
-   ```bash
-   ## All platforms
-   flutter create widgetbook --empty
-
-   ## Certain platforms
-   flutter create widgetbook --empty --platforms=web,macos
-   ```
-
-1. To avoid naming conflict with the [Widgetbook pub package](https://pub.dev/packages/widgetbook), change the project `name` to `widgetbook_workspace` inside the `widgetbook/pubspec.yaml` file:
-
-   ```diff
-   - name: widgetbook
-   + name: widgetbook_workspace
-   ```
-
-1. Add the following dependencies to your `widgetbook` project:
-
-   ```
-   flutter pub add widgetbook:{{ versions.widgetbook }} \
-         dev:build_runner
-   ```
-
-1. Add your app as a path dependency to the `widgetbook/pubspec.yaml` file:
-
-   ```yaml
-   dependencies:
-     your_app:
-       path: ../
-   ```
-
-1. Create a `widgetbook/lib/widgetbook.config.dart` file:
-
-   ```dart
-   import 'package:flutter/material.dart';
-   import 'package:widgetbook/widgetbook.dart';
-
-   import 'components.book.dart'; // Will be generated later
-
-   final config = Config(
-     components: components,
-     addons: [
-       ViewportAddon([
-         Viewports.none,
-         IosViewports.iPhone13,
-         const ViewportData.constrained(
-           name: '800w',
-           pixelRatio: 2,
-           maxWidth: 800,
-           platform: TargetPlatform.iOS,
-         ),
-       ]),
-       MaterialThemeAddon({
-         'Dark': ThemeData.dark(),
-         'Light': ThemeData.light(),
-       }),
-     ],
-   );
-   ```
-
-1. Replace `widgetbook/lib/main.dart` contents with:
-
-   ```dart
-   import 'package:widgetbook/widgetbook.dart';
-
-   import 'widgetbook.config.dart';
-
-   void main() => runWidgetbook(config);
-   ```
-
-1. Create `widgetbook/test/main_test.dart` file:
-
-   ```dart
-   import 'package:widgetbook_workspace/widgetbook.config.dart';
-   import 'package:widgetbook_test/widgetbook_test.dart';
-
-   Future<void> main() async {
-     await testWidgetbook(config);
-   }
-   ```
+```
+dart pub global activate widgetbook_cli {{ versions.cli }}
+widgetbook init
+```
 
 ## Create your first Component
 
