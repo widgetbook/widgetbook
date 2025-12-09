@@ -4,9 +4,17 @@ import 'dart:io';
 import 'package:process/process.dart';
 
 extension ExecutableManager on ProcessManager {
-  /// Runs `flutter` with the given [args].
-  Future<String> runFlutter(List<String> args) {
-    return _exec('flutter', args);
+  /// Runs `flutter` with the given [args] inside the [workingDirectory].
+  /// If [workingDirectory] is `null` the current working directory is used.
+  Future<String> runFlutter(
+    List<String> args, {
+    String? workingDirectory,
+  }) {
+    return _exec(
+      'flutter',
+      args,
+      workingDirectory: workingDirectory,
+    );
   }
 
   /// Runs `git` with the given [args] inside the [workingDirectory].

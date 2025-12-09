@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Add `init` command. ([#1777](https://github.com/widgetbook/widgetbook/pull/1777))
+
 ## 4.0.0-alpha.1
 
 - **BREAKING**: Support Widgetbook v4 in `cloud build push` command. ([#1638](https://github.com/widgetbook/widgetbook/pull/1638))
