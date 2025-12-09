@@ -4,7 +4,8 @@ import 'package:analyzer/dart/element/element.dart';
 import 'collector_ast_visitor.dart';
 
 /// Collects widget classes' names from a Flutter project.
-class WidgetCollector extends CollectorAstVisitor<String, ClassDeclaration> {
+class WidgetNameCollector
+    extends CollectorAstVisitor<String, ClassDeclaration> {
   @override
   bool shouldCollect(ClassDeclaration node) {
     // Skip private classes

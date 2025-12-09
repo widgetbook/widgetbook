@@ -129,7 +129,7 @@ class CoverageCommand extends CliCommand<CoverageArgs> {
 
     final widgets = await Isolate.run(() async {
       final analyzer = DeepAnalyzer(packageDir);
-      return analyzer.collect(WidgetCollector());
+      return analyzer.collect(WidgetNameCollector());
     });
 
     progress.complete('Found ${widgets.length} widgets');

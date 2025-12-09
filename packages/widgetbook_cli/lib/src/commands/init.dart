@@ -1,16 +1,15 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:args/args.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
 import 'package:process/process.dart';
 
+import '../analyzer/analyzer.dart';
 import '../core/core.dart';
-import '../templates/config_template.dart';
-import '../templates/main_template.dart';
-import '../templates/placeholder_template.dart';
-import '../templates/test_template.dart';
+import '../templates/templates.dart';
 import '../utils/executable_manager.dart';
 import 'init_args.dart';
 
@@ -65,6 +64,8 @@ class InitCommand extends CliCommand<InitArgs> {
       'https://github.com/widgetbook/widgetbook/issues\n',
     );
 
+    final setupProgress = logger.progress('Setting up workspace');
+
     final packagePubspecFile = File('${args.packageDir}/pubspec.yaml');
     final packagePubspecContent = await packagePubspecFile.readAsString();
     final packageNameRegex = RegExp(r'name:\s+([a-zA-Z0-9_]+)');
@@ -83,13 +84,7 @@ class InitCommand extends CliCommand<InitArgs> {
       '--empty',
     ]);
 
-    final templates = [
-      ConfigTemplate(),
-      PlaceholderTemplate(),
-      MainTemplate(),
-      TestTemplate(),
-    ];
-
+    final templates = [ConfigTemplate(), MainTemplate(), TestTemplate()];
     await Future.wait(
       templates.map(
         (template) => template.create(widgetbookDir),
@@ -116,6 +111,21 @@ class InitCommand extends CliCommand<InitArgs> {
       ],
     );
 
+    setupProgress.complete('Workspace is set up at $widgetbookDir');
+
+    final widgets = await _getWidgets(args.packageDir);
+    final componentTemplates = widgets.map(
+      (widget) => ComponentTemplate(widget),
+    );
+
+    await Future.wait(
+      componentTemplates.map(
+        (template) => template.create(widgetbookDir),
+      ),
+    );
+
+    final buildProgress = logger.progress('Building stories');
+
     await processManager.runFlutter(
       workingDirectory: widgetbookDir,
       [
@@ -126,6 +136,21 @@ class InitCommand extends CliCommand<InitArgs> {
       ],
     );
 
+    buildProgress.complete('Stories are built successfully');
+
     return ExitCode.success.code;
+  }
+
+  Future<Set<WidgetInfo>> _getWidgets(String packageDir) async {
+    final progress = logger.progress('Resolving widgets');
+
+    final widgets = await Isolate.run(() async {
+      final analyzer = DeepAnalyzer(packageDir);
+      return analyzer.collect(WidgetInfoCollector());
+    });
+
+    progress.complete('Found ${widgets.length} widgets');
+
+    return widgets;
   }
 }
