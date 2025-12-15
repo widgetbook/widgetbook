@@ -1,0 +1,20 @@
+name: widgetbook_workspace
+description: "example's widgetbook workspace"
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ^3.10.1
+
+dependencies:
+  example:
+    path: ..
+  flutter:
+    sdk: flutter
+  widgetbook: ^4.0.0-alpha.5
+
+dev_dependencies:
+  build_runner: ^2.10.4
+
+flutter:
+  uses-material-design: true
