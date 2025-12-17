@@ -100,10 +100,10 @@ class TextScaleAddonConfig extends AddonConfig<String> {
 /// [AddonConfig] for the ZoomAddon.
 class ZoomAddonConfig extends AddonConfig<String> {
   const ZoomAddonConfig(
-    double zoom,
+    bool enabled,
   ) : super(
         'zoom',
-        'value:$zoom',
+        'enabled:$enabled',
       );
 }
 
