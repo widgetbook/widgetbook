@@ -66,6 +66,32 @@ void main() {
           expect(widget.value, equals(7.0));
         },
       );
+
+      testWidgets(
+        'given a state that exceed field higher limits, '
+        'then [toWidget] builds and use the maximum available value',
+        (tester) async {
+          final widget = await tester.pumpField<double, Slider>(
+            field,
+            15,
+          );
+
+          expect(widget.value, equals(10.0));
+        },
+      );
+
+      testWidgets(
+        'given a state that exceed field lower limits, '
+        'then [toWidget] builds and use the minimum available value',
+        (tester) async {
+          final widget = await tester.pumpField<double, Slider>(
+            field,
+            -15,
+          );
+
+          expect(widget.value, equals(0.0));
+        },
+      );
     },
   );
 
@@ -139,20 +165,20 @@ void main() {
             15,
           );
 
-          expect(widget.value, equals(10.0));
+          expect(widget.value, equals(10));
         },
       );
 
       testWidgets(
         'given a state that exceed field lower limits, '
-        'then [toWidget] builds and use the minmum available value',
+        'then [toWidget] builds and use the minimum available value',
         (tester) async {
           final widget = await tester.pumpField<int, Slider>(
             field,
             -15,
           );
 
-          expect(widget.value, equals(0.0));
+          expect(widget.value, equals(0));
         },
       );
     },

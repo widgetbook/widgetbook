@@ -41,6 +41,7 @@ class NumSliderField<T extends num> extends Field<T> {
   Widget toWidget(BuildContext context, String group, T? value) {
     final defaultValue = (T == int ? 0 : 0.0) as T;
     final label = codec.toParam(value ?? initialValue ?? defaultValue);
+    final minLabel = codec.toParam(min);
     final maxLabel = codec.toParam(max);
 
     return Row(
@@ -71,7 +72,8 @@ class NumSliderField<T extends num> extends Field<T> {
         ),
         SizedBox(
           width: _getTextSize(
-            maxLabel,
+            // Min label can be larger than max in case of negative numbers
+            maxLabel.length > minLabel.length ? maxLabel : minLabel,
             DefaultTextStyle.of(context).style,
           ).width,
           child: Text(
