@@ -1,4 +1,4 @@
-# Zoom Addon
+# Interactive Viewer Addon
 
 A utility addon designed for zooming in/out of the previewed use-case.
 
@@ -13,7 +13,7 @@ class WidgetbookApp extends StatelessWidget {
     return Widgetbook(
       // ...
       addons: [
-        ZoomAddon(), // [!code highlight]
+        InteractiveViewerAddon(), // [!code highlight]
       ],
     );
   }
@@ -22,9 +22,9 @@ class WidgetbookApp extends StatelessWidget {
 
 ## Order
 
-Since the [order of addons](/addons/overview#order-of-addons) matters, here are some guidelines to follow when using the `ZoomAddon`:
+Since the [order of addons](/addons/overview#order-of-addons) matters, here are some guidelines to follow when using the `InteractiveViewerAddon`:
 
-Addons that should come before the `ZoomAddon`:
+Addons that should come before the `InteractiveViewerAddon`:
 
 - `ViewportAddon`
 - `DeviceFrameAddon`
@@ -32,7 +32,7 @@ Addons that should come before the `ZoomAddon`:
 
 ## Multi-snapshot Support
 
-The `ZoomAddon` is supported in the [Multi Snapshot Reviews](/cloud/snapshots/multi-snapshot) via the `ZoomAddonConfig`. Here's how to configure it:
+The `InteractiveViewerAddon` is supported in the [Multi Snapshot Reviews](/cloud/snapshots/multi-snapshot) via the `InteractiveViewerAddonConfig`. Here's how to configure it:
 
 ```dart title=widgetbook/lib/main.dart
 import 'package:widgetbook/widgetbook.dart';
@@ -41,10 +41,10 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 @App(
   cloudAddonsConfigs: {
     'x1': [
-      ZoomAddonConfig(1), // [!code highlight]
+      InteractiveViewerAddon(true), // [!code highlight]
     ],
     'x2': [
-      ZoomAddonConfig(2), // [!code highlight]
+      InteractiveViewerAddon(false), // [!code highlight]
     ],
   },
 )
@@ -56,7 +56,7 @@ class WidgetbookApp extends StatelessWidget {
     return Widgetbook(
       // ...
       addons: [
-        ZoomAddon(), // [!code highlight]
+        InteractiveViewerAddon(), // [!code highlight]
       ],
     );
   }

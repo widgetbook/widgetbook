@@ -100,9 +100,19 @@ class TextScaleAddonConfig extends AddonConfig<String> {
 /// [AddonConfig] for the ZoomAddon.
 class ZoomAddonConfig extends AddonConfig<String> {
   const ZoomAddonConfig(
-    bool enabled,
+    double zoom,
   ) : super(
         'zoom',
+        'value:$zoom',
+      );
+}
+
+/// [AddonConfig] for the InteractiveViewerAddon.
+class InteractiveViewerAddonConfig extends AddonConfig<String> {
+  const InteractiveViewerAddonConfig(
+    bool enabled,
+  ) : super(
+        'interactive-viewer',
         'enabled:$enabled',
       );
 }
