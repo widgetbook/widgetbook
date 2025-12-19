@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-import '../../helper/helper.dart';
-
 void main() {
   group('$DurationField', () {
     const fiveSeconds = Duration(seconds: 5);
-    const fiveSecondsInMilliseconds = '5000';
-
     const tenSeconds = Duration(seconds: 10);
     const tenSecondsInMilliseconds = '10000';
 

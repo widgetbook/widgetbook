@@ -60,4 +60,3 @@ class NumberTextField extends StatelessWidget {
     );
   }
 }
-
