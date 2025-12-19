@@ -17,7 +17,7 @@ void main() {
       ThemeAddonConfig('Dark'),
       AlignmentAddonConfig('Center'),
       TextScaleAddonConfig(2),
-      ZoomAddonConfig(true),
+      ZoomAddonConfig(2),
       SemanticsAddonConfig(true),
       AddonConfig('custom-addon', 'name:value'),
     ],

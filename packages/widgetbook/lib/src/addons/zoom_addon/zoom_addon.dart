@@ -9,39 +9,42 @@ import '../common/common.dart';
 /// to test how components behave at different zoom levels.
 ///
 /// Learn more: https://docs.widgetbook.io/addons/zoom-addon
-class ZoomAddon extends WidgetbookAddon<bool> {
+class ZoomAddon extends WidgetbookAddon<double> {
   /// Creates a new instance of [ZoomAddon].
   ZoomAddon({
-    this.minScale = 1,
-    this.maxScale = 10,
+    this.initialZoom = 1.0,
   }) : super(
          name: 'Zoom',
        );
 
-  /// The minimum scale factor for zooming.
-  final double minScale;
-
-  /// The maximum scale factor for zooming.
-  final double maxScale;
+  /// Initial zoom level to display when the addon loads.
+  final double initialZoom;
 
   @override
   List<Field> get fields => [
-    BooleanField(
-      name: 'enabled',
+    DoubleSliderField(
+      name: 'zoom',
+      initialValue: initialZoom,
+      min: 0.5,
+      max: 3.0,
+      divisions: 25,
+      precision: 2,
     ),
   ];
 
   @override
-  bool valueFromQueryGroup(Map<String, String> group) {
-    return valueOf('enabled', group) as bool;
+  double valueFromQueryGroup(Map<String, String> group) {
+    return valueOf('zoom', group)!;
   }
 
   @override
-  Widget buildUseCase(BuildContext context, Widget child, bool setting) {
-    if (!setting) return child;
-    return InteractiveViewer(
-      minScale: minScale,
-      maxScale: maxScale,
+  Widget buildUseCase(
+    BuildContext context,
+    Widget child,
+    double setting,
+  ) {
+    return Transform.scale(
+      scale: setting,
       child: child,
     );
   }
