@@ -78,10 +78,11 @@ void main() {
             ),
           );
 
-          await tester.findAndEnter(
-            find.byType(TextField),
-            tenSeconds.inMilliseconds.toString(),
-          );
+          final textFields = find.byType(TextField);
+          expect(textFields, findsNWidgets(3));
+
+          await tester.enterText(textFields.at(2), '10');
+          await tester.pumpAndSettle();
 
           expect(
             find.textWidget('${tenSeconds.inMilliseconds}'),

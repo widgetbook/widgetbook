@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-import '../../helper/helper.dart';
-
 void main() {
   group('$DurationField', () {
     const fiveSeconds = Duration(seconds: 5);
-    const fiveSecondsInMilliseconds = '5000';
-
     const tenSeconds = Duration(seconds: 10);
     const tenSecondsInMilliseconds = '10000';
 
@@ -57,7 +53,16 @@ void main() {
           ),
         );
 
-        expect(find.text(fiveSecondsInMilliseconds), findsOneWidget);
+        final textFields = find.byType(TextFormField);
+        expect(textFields, findsNWidgets(3));
+
+        final hoursField = tester.widget<TextFormField>(textFields.at(0));
+        final minutesField = tester.widget<TextFormField>(textFields.at(1));
+        final secondsField = tester.widget<TextFormField>(textFields.at(2));
+
+        expect(hoursField.initialValue, '0');
+        expect(minutesField.initialValue, '0');
+        expect(secondsField.initialValue, '5');
       },
     );
 
@@ -65,25 +70,57 @@ void main() {
       'given a state that has a field value, '
       'then [toWidget] builds that value',
       (tester) async {
-        final widget = await tester.pumpField<Duration, TextFormField>(
-          field,
-          tenSeconds,
+        await tester.pumpWidget(
+          Builder(
+            builder: (context) {
+              return MaterialApp(
+                home: Scaffold(
+                  body: field.toWidget(
+                    context,
+                    'duration_field',
+                    tenSeconds,
+                  ),
+                ),
+              );
+            },
+          ),
         );
 
-        expect(widget.initialValue, equals(tenSecondsInMilliseconds));
+        final textFields = find.byType(TextFormField);
+        expect(textFields, findsNWidgets(3));
+
+        final hoursField = tester.widget<TextFormField>(textFields.at(0));
+        final minutesField = tester.widget<TextFormField>(textFields.at(1));
+        final secondsField = tester.widget<TextFormField>(textFields.at(2));
+
+        expect(hoursField.initialValue, '0');
+        expect(minutesField.initialValue, '0');
+        expect(secondsField.initialValue, '10');
       },
     );
 
     testWidgets(
       'given a field, '
-      'then [toWidget] builds the hintText value',
+      'then [toWidget] builds three input fields',
       (tester) async {
-        final widget = await tester.pumpField<Duration, TextField>(
-          field,
-          null,
+        await tester.pumpWidget(
+          Builder(
+            builder: (context) {
+              return MaterialApp(
+                home: Scaffold(
+                  body: field.toWidget(
+                    context,
+                    'duration_field',
+                    null,
+                  ),
+                ),
+              );
+            },
+          ),
         );
 
-        expect(widget.decoration?.hintText, equals('Enter a duration'));
+        final textFields = find.byType(TextFormField);
+        expect(textFields, findsNWidgets(3));
       },
     );
   });
