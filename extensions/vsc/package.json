@@ -1,18 +1,26 @@
 {
   "name": "widgetbook",
+  "publisher": "widgetbook",
   "displayName": "Widgetbook",
   "description": "Widgetbook's visual studio code extension",
   "version": "0.0.1",
+  "main": "./dist/extension.js",
+  "repository": "github:widgetbook/widgetbook",
+  "icon": "./images/logo.webp",
   "engines": {
     "vscode": "^1.100.0"
   },
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "dart",
+    "flutter",
+    "widgetbook"
+  ],
   "activationEvents": [
     "onLanguage:dart"
   ],
-  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
@@ -36,7 +44,7 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.107.0",
+    "@types/vscode": "^1.100.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
     "typescript-eslint": "^8.48.1",
