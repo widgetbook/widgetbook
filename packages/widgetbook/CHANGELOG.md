@@ -1,3 +1,16 @@
+## Unreleased
+
+- **FIX**: Hide navigation tree items when search query has no matches; instead of showing the full tree. ([#1786](https://github.com/widgetbook/widgetbook/pull/1786) - by [@EArminjon](https://github.com/EArminjon))
+- **REFACTOR**: Change `DurationField` to be 3 inputs with the format of `HH:MM:SS` instead of a single one for milliseconds. ([#1769](https://github.com/widgetbook/widgetbook/pull/1769) - by [@youpelegrace](https://github.com/youpelegrace))
+
+## 3.20.2
+
+- **FIX**: Consider `NumberSliderField`'s min label width when calculating the labels' max width. ([#1757](https://github.com/widgetbook/widgetbook/pull/1757) - by [@EArminjon](https://github.com/EArminjon))
+
+## 3.20.1
+
+- **REFACTOR**: Set minimum `accessibility_tools` version to 2.6.0. ([#1739](https://github.com/widgetbook/widgetbook/pull/1739))
+
 ## 3.20.0
 
 - **BREAKING**: Set minimum SDK version to 3.8.0 & minimum Flutter version to 3.32.0. ([#1719](https://github.com/widgetbook/widgetbook/pull/1719))

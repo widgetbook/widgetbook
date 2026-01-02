@@ -78,11 +78,9 @@ void main() {
             ),
           );
 
-          // The new picker has 3 fields (H:M:S), update the seconds field
           final textFields = find.byType(TextField);
           expect(textFields, findsNWidgets(3));
 
-          // Enter 10 in the seconds field (index 2)
           await tester.enterText(textFields.at(2), '10');
           await tester.pumpAndSettle();
 

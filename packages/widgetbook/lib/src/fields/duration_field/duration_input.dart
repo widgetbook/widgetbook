@@ -55,7 +55,7 @@ class _DurationInputState extends State<DurationInput> {
         Expanded(
           child: NumberTextField(
             value: hours,
-            maxLength: 6, // Allow large hour values
+            maxLength: 6,
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
             ],

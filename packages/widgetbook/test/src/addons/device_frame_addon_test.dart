@@ -195,7 +195,16 @@ void main() {
             ),
           );
 
-          expect(find.byType(ColoredBox), paints..rect(color: color));
+          // Flutter 3.38+ adds a transparent ColoredBox for page transitions
+          // (see PR #167032). Find the ColoredBox within DeviceFrame that
+          // matches the scaffoldBackgroundColor, not the transparent one.
+          expect(
+            find.descendant(
+              of: find.byType(DeviceFrame),
+              matching: find.byType(ColoredBox),
+            ),
+            paints..rect(color: color),
+          );
         },
       );
     },

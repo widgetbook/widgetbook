@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'duration_field/duration_input.dart';
-import 'field.dart';
-import 'field_codec.dart';
-import 'field_type.dart';
+import '../field.dart';
+import '../field_codec.dart';
+import '../field_type.dart';
+import 'duration_input.dart';
 
 /// A [Field] that represents a [Duration] value.
 class DurationField extends Field<Duration> {

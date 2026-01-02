@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-import '../../helper/helper.dart';
-
 void main() {
   group('$DurationField', () {
     const fiveSeconds = Duration(seconds: 5);
-    const fiveSecondsInMilliseconds = '5000';
-
     const tenSeconds = Duration(seconds: 10);
     const tenSecondsInMilliseconds = '10000';
 
@@ -57,11 +53,9 @@ void main() {
           ),
         );
 
-        // The new picker has 3 separate fields (H:M:S)
         final textFields = find.byType(TextFormField);
         expect(textFields, findsNWidgets(3));
 
-        // Verify the initial values are displayed correctly (0:0:5)
         final hoursField = tester.widget<TextFormField>(textFields.at(0));
         final minutesField = tester.widget<TextFormField>(textFields.at(1));
         final secondsField = tester.widget<TextFormField>(textFields.at(2));
@@ -92,11 +86,9 @@ void main() {
           ),
         );
 
-        // The new picker has 3 separate fields (H:M:S)
         final textFields = find.byType(TextFormField);
         expect(textFields, findsNWidgets(3));
 
-        // Verify the field values are displayed correctly (0:0:10)
         final hoursField = tester.widget<TextFormField>(textFields.at(0));
         final minutesField = tester.widget<TextFormField>(textFields.at(1));
         final secondsField = tester.widget<TextFormField>(textFields.at(2));
@@ -127,7 +119,6 @@ void main() {
           ),
         );
 
-        // The new picker has 3 separate fields for H, M, S
         final textFields = find.byType(TextFormField);
         expect(textFields, findsNWidgets(3));
       },
