@@ -19,6 +19,7 @@ class ColorKnob extends Knob<Color?> {
     required super.initialValue,
     super.description,
     this.initialColorSpace = ColorSpace.hex,
+    super.defaultToNull,
   }) : super(isNullable: true);
 
   final ColorSpace initialColorSpace;

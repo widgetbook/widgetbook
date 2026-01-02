@@ -21,6 +21,7 @@ class IntSliderKnob extends Knob<int?> {
     this.max = 1,
     this.min = 0,
     this.divisions,
+    super.defaultToNull,
   }) : super(isNullable: true);
 
   final int max;

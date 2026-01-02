@@ -73,6 +73,7 @@ class DoubleOrNullKnobsBuilder {
     double max = 20,
     int? divisions,
     int? precision = 1,
+    bool defaultToNull = false,
   }) {
     return onKnobAdded(
       DoubleSliderKnob.nullable(
@@ -83,6 +84,7 @@ class DoubleOrNullKnobsBuilder {
         max: max,
         divisions: divisions,
         precision: precision,
+        defaultToNull: defaultToNull,
       ),
     );
   }
@@ -93,12 +95,14 @@ class DoubleOrNullKnobsBuilder {
     required String label,
     String? description,
     double? initialValue,
+    bool defaultToNull = false,
   }) {
     return onKnobAdded(
       DoubleInputKnob.nullable(
         label: label,
         initialValue: initialValue,
         description: description,
+        defaultToNull: defaultToNull,
       ),
     );
   }
