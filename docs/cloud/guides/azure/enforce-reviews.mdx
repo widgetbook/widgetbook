@@ -1,0 +1,55 @@
+## Enforcing reviews
+
+Depending on your goals and workflow, you may want to enforce reviews for all changes in your project, requiring an accepted Widgetbook review for each pull request with changes.
+
+When Widgetbook Cloud reviews are enabled for your project, Widgetbook Cloud automatically creates a review and posts a pull request iteration status in Azure DevOps. 
+If changes are requested, the iteration status reflects the Widgetbook review status on your PR.
+However, Azure DevOps' default configuration allows PRs to be merged even if status checks are not passing or still pending.
+
+To enforce reviews for all changes in your project, you can set up a branch policy in your Azure DevOps repository. 
+This prevents PRs from being merged until the Widgetbook review is accepted.
+
+<Steps>
+  <Step title="Navigate to Project Settings">
+    Go to your Azure DevOps project.
+    Click on *Project Settings* in the bottom left corner (gear icon).
+  </Step>
+  <Step title="Open Repositories settings">
+    In the Project Settings menu, under the *Repos* section, select *Repositories*.
+  </Step>
+  <Step title="Select repository">
+    If you have a single repository per project, click the *Policies* tab.
+    If you have multiple repositories, first select the specific repository you want to apply this rule to, then click the *Policies* tab.
+  </Step>
+  <Step title="Create branch policy">
+    Next to *Branch Policies*, click the *+* button.
+    Select *Protect the default branch of each repository* and click *Create*.
+  </Step>
+  <Step title="Add status check">
+    Next to *Status Check*, click the *+* button.
+    
+    Enter the following information:
+    - **Genre**: `Widgetbook`
+    - **Name**: `Widgetbook Review (<widgetbook-project-name>)`
+    
+    Replace `<widgetbook-project-name>` with your actual Widgetbook project name. For example, if your project is named "Todo App", the name would be `Widgetbook Review (Todo App)`.
+    
+    You can find your project name in the navigation bar of Widgetbook Cloud when viewing your project or in the project's settings.
+    <Info>
+      Make sure to enter the genre and name separately in their respective fields.
+    </Info>
+  </Step>
+  <Step title="Configure advanced settings">
+    Expand the *Advanced* section.
+    Enable the option *Reset status whenever there are new changes*.
+    
+    This ensures that the Widgetbook review status is reset when new commits are pushed to the PR.
+  </Step>
+  <Step title="Save the policy">
+    Click *Save* to create the status check policy.
+  </Step>
+  <Step title="Verify policy">
+    Navigate to a PR to verify that the Widgetbook Review status check is now required to merge the PR.
+    The PR will be blocked from merging until the Widgetbook review is accepted.
+  </Step>
+</Steps>
