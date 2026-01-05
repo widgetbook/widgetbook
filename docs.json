@@ -563,6 +563,10 @@
               "href": "/cloud/guides/azure/upload"
             },
             {
+              "title": "Enforce reviews",
+              "href": "/cloud/guides/azure/enforce-reviews"
+            },
+            {
               "title": "Access builds from Azure",
               "href": "/cloud/guides/azure/access-from-commit"
             }
