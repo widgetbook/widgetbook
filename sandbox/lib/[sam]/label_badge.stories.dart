@@ -30,7 +30,14 @@ final defaults = _Defaults(
 
 final $Primary = _Story(
   args: _Args(
-    number: IntArg(1),
+    number: IntArg(
+      1,
+      style: const SliderIntArgStyle(
+        min: 0,
+        max: 10,
+        divisions: 10,
+      ),
+    ),
   ),
   scenarios: [
     _Scenario(
