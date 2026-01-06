@@ -9,7 +9,21 @@ class IntArg extends StyledArg<int, IntArgStyle> with SingleFieldOnly {
   });
 
   @override
-  Field<int> get field => style.toField(value);
+  Field<int> get field {
+    return switch (style) {
+      InputIntArgStyle() => IntInputField(
+        name: 'value',
+        initialValue: value,
+      ),
+      SliderIntArgStyle s => IntSliderField(
+        name: 'value',
+        initialValue: value,
+        min: s.min,
+        max: s.max,
+        divisions: s.divisions,
+      ),
+    };
+  }
 }
 
 class NullableIntArg extends StyledArg<int?, IntArgStyle> with SingleFieldOnly {
@@ -20,23 +34,29 @@ class NullableIntArg extends StyledArg<int?, IntArgStyle> with SingleFieldOnly {
   });
 
   @override
-  Field<int> get field => style.toField(value ?? 0);
+  Field<int> get field {
+    return switch (style) {
+      InputIntArgStyle() => IntInputField(
+        name: 'value',
+        initialValue: value ?? 0,
+      ),
+      SliderIntArgStyle s => IntSliderField(
+        name: 'value',
+        initialValue: value ?? 0,
+        min: s.min,
+        max: s.max,
+        divisions: s.divisions,
+      ),
+    };
+  }
 }
 
-sealed class IntArgStyle extends ArgStyle<int> {
+sealed class IntArgStyle {
   const IntArgStyle();
 }
 
 final class InputIntArgStyle extends IntArgStyle {
   const InputIntArgStyle();
-
-  @override
-  Field<int> toField(int value) {
-    return IntInputField(
-      name: 'value',
-      initialValue: value,
-    );
-  }
 }
 
 final class SliderIntArgStyle extends IntArgStyle {
@@ -49,15 +69,4 @@ final class SliderIntArgStyle extends IntArgStyle {
   final int min;
   final int max;
   final int divisions;
-
-  @override
-  Field<int> toField(int value) {
-    return IntSliderField(
-      name: 'value',
-      initialValue: value,
-      min: min,
-      max: max,
-      divisions: divisions,
-    );
-  }
 }

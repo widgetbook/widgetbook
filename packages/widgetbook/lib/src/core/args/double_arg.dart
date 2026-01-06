@@ -9,7 +9,21 @@ class DoubleArg extends StyledArg<double, DoubleArgStyle> with SingleFieldOnly {
   });
 
   @override
-  Field<double> get field => style.toField(value);
+  Field<double> get field {
+    return switch (style) {
+      InputDoubleArgStyle() => DoubleInputField(
+        name: 'value',
+        initialValue: value,
+      ),
+      SliderDoubleArgStyle s => DoubleSliderField(
+        name: 'value',
+        initialValue: value,
+        min: s.min,
+        max: s.max,
+        divisions: s.divisions,
+      ),
+    };
+  }
 }
 
 class NullableDoubleArg extends StyledArg<double?, DoubleArgStyle>
@@ -21,23 +35,29 @@ class NullableDoubleArg extends StyledArg<double?, DoubleArgStyle>
   });
 
   @override
-  Field<double> get field => style.toField(value ?? 0);
+  Field<double> get field {
+    return switch (style) {
+      InputDoubleArgStyle() => DoubleInputField(
+        name: 'value',
+        initialValue: value ?? 0.0,
+      ),
+      SliderDoubleArgStyle s => DoubleSliderField(
+        name: 'value',
+        initialValue: value ?? 0.0,
+        min: s.min,
+        max: s.max,
+        divisions: s.divisions,
+      ),
+    };
+  }
 }
 
-sealed class DoubleArgStyle extends ArgStyle<double> {
+sealed class DoubleArgStyle {
   const DoubleArgStyle();
 }
 
 final class InputDoubleArgStyle extends DoubleArgStyle {
   const InputDoubleArgStyle();
-
-  @override
-  Field<double> toField(double value) {
-    return DoubleInputField(
-      name: 'value',
-      initialValue: value,
-    );
-  }
 }
 
 final class SliderDoubleArgStyle extends DoubleArgStyle {
@@ -50,15 +70,4 @@ final class SliderDoubleArgStyle extends DoubleArgStyle {
   final double min;
   final double max;
   final int divisions;
-
-  @override
-  Field<double> toField(double value) {
-    return DoubleSliderField(
-      name: 'value',
-      initialValue: value,
-      min: min,
-      max: max,
-      divisions: divisions,
-    );
-  }
 }

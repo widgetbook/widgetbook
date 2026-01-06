@@ -82,15 +82,8 @@ abstract class Arg<T> extends FieldsComposable<T> {
   }
 }
 
-abstract class ArgStyle<T> {
-  const ArgStyle();
-
-  Field<T> toField(T value);
-}
-
-/// An [Arg] that is associated with an [ArgStyle] to define its
-/// UI representation.
-abstract class StyledArg<T, TStyle extends ArgStyle<T>> extends Arg<T> {
+/// An [Arg] that is associated with a style to define its UI representation.
+abstract class StyledArg<T, TStyle> extends Arg<T> {
   StyledArg(
     super.value, {
     super.name,

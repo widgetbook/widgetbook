@@ -6,6 +6,7 @@ class EnumArg<T extends Enum> extends SingleArg<T> {
     super.name,
     required super.values,
     super.labelBuilder = enumLabelBuilder,
+    super.style = const DropdownSingleArgStyle(),
   });
 
   static String enumLabelBuilder(Enum value) {
@@ -19,6 +20,7 @@ class NullableEnumArg<T extends Enum> extends NullableSingleArg<T> {
     super.name,
     required super.values,
     super.labelBuilder = enumLabelBuilder,
+    super.style = const DropdownSingleArgStyle(),
   });
 
   static String enumLabelBuilder(Enum value) {
