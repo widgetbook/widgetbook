@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Add `style` to `IntArg`, `DoubleArg`, `SingleArg` and `EnumArg` to support different input styles (e.g. sliders, input fields, dropdowns and segmented buttons). ([#1792](https://github.com/widgetbook/widgetbook/pull/1792))
+
 ## 4.0.0-alpha.5
 
 - **BREAKING**: Merge `widgetbook_generator` and `widgetbook_test` packages into `widgetbook` package. ([#1772](https://github.com/widgetbook/widgetbook/pull/1772))

@@ -81,3 +81,14 @@ abstract class Arg<T> extends FieldsComposable<T> {
     return value == null ? null : valueToQueryGroup(value);
   }
 }
+
+/// An [Arg] that is associated with a style to define its UI representation.
+abstract class StyledArg<T, TStyle> extends Arg<T> {
+  StyledArg(
+    super.value, {
+    super.name,
+    required this.style,
+  });
+
+  final TStyle style;
+}
