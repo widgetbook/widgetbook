@@ -3,8 +3,11 @@ on: push
 
 jobs:
   push-build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
 
+    runs-on: ${{ matrix.os }}
     defaults:
       run:
         working-directory: sandbox
@@ -34,11 +37,12 @@ jobs:
       - name: Generate Scenarios
         run: flutter test
 
-      - name: Install Widgetbook CLI
-        run: dart pub global activate --source path ../packages/widgetbook_cli
+      - name: Print files
+        run: ls -R build/.widgetbook/
 
-      - name: Push Build
-        run: |
-          widgetbook cloud build push \
-            --api-key ${{ secrets.WIDGETBOOK_CLOUD_API_KEY_V4 }} \
-            --api-url ${{ secrets.WIDGETBOOK_CLOUD_API_URL_STAGING }}
+      - name: Save output folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: widgetbook-build-${{ matrix.os }}
+          path: sandbox/build/.widgetbook/*
+          include-hidden-files: true
