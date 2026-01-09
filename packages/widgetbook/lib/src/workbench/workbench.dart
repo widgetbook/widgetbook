@@ -51,34 +51,42 @@ class Workbench extends StatelessWidget {
                   newSetting,
                 );
               },
-              child: Builder(
-                builder: (context) {
-                  // Get a fresh state that has updated addons,
-                  // as the `state` variable from above might
-                  // be outdated.
-                  final state = WidgetbookState.of(context);
-
-                  return Stack(
-                    // The Stack is used to loosen the constraints of
-                    // the UseCaseBuilder. Without the Stack, UseCaseBuilder
-                    // would expand to the whole size of the Workbench.
-                    children: [
-                      UseCaseBuilder(
-                        key: ValueKey(state.uri),
-                        builder: (context) {
-                          final useCase = state.useCase;
-                          return useCase?.build(context) ??
-                              const SizedBox.shrink();
-                        },
-                      ),
-                    ],
-                  );
-                },
-              ),
+              child: const WorkbenchBuilder(),
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+/// The [WorkbenchBuilder] is responsible for building
+/// the current use case inside the workbench.
+/// It has been isolated to avoid unnecessary UseCaseBuilder rebuilds.
+@internal
+class WorkbenchBuilder extends StatelessWidget {
+  const WorkbenchBuilder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Get a fresh state that has updated addons,
+    // as the `state` variable from above might
+    // be outdated.
+    final state = WidgetbookState.of(context);
+
+    return Stack(
+      // The Stack is used to loosen the constraints of
+      // the UseCaseBuilder. Without the Stack, UseCaseBuilder
+      // would expand to the whole size of the Workbench.
+      children: [
+        UseCaseBuilder(
+          key: ValueKey(state.uri),
+          builder: (context) {
+            final useCase = state.useCase;
+            return useCase?.build(context) ?? const SizedBox.shrink();
+          },
+        ),
+      ],
     );
   }
 }
