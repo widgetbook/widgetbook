@@ -110,9 +110,11 @@ class _ViewportFrame extends StatelessWidget {
             ),
             child: Text(
               title,
-              style: WidgetbookTheme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.black87,
-              ),
+              // WidgetbookTheme might not be available in tests
+              style: WidgetbookTheme.maybeOf(context)?.textTheme.bodyMedium
+                  ?.copyWith(
+                    color: Colors.black87,
+                  ),
             ),
           ),
         ),
