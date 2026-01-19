@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FEAT**: Add `style` to `IntArg`, `DoubleArg`, `SingleArg` and `EnumArg` to support different input styles (e.g. sliders, input fields, dropdowns and segmented buttons). ([#1792](https://github.com/widgetbook/widgetbook/pull/1792))
+- **FIX**: Prevent `ViewportAddon`'s frames from failing during tests that have no `ViewportMode`. ([#1800](https://github.com/widgetbook/widgetbook/pull/1800))
 
 ## 4.0.0-alpha.5
 
