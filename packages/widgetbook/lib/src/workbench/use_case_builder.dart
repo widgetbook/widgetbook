@@ -20,6 +20,8 @@ class UseCaseBuilder extends StatefulWidget {
 }
 
 class _UseCaseBuilderState extends State<UseCaseBuilder> {
+  final GlobalKey key = GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -39,6 +41,10 @@ class _UseCaseBuilderState extends State<UseCaseBuilder> {
     // When use case is rebuilt, knobs will be re-registered.
     // This ensures that only the knobs used in the current use case are kept and ordered correctly.
     WidgetbookState.of(context).knobs.clear();
-    return widget.builder(context);
+    return Container(
+      // Preserve builder state
+      key: key,
+      child: widget.builder(context),
+    );
   }
 }
