@@ -51,7 +51,7 @@ class Workbench extends StatelessWidget {
                   newSetting,
                 );
               },
-              child: const WorkbenchBuilder(),
+              child: const _WorkbenchBuilder(),
             ),
           ),
         ),
@@ -60,12 +60,11 @@ class Workbench extends StatelessWidget {
   }
 }
 
-/// The [WorkbenchBuilder] is responsible for building
+/// The [_WorkbenchBuilder] is responsible for building
 /// the current use case inside the workbench.
 /// It has been isolated to avoid unnecessary UseCaseBuilder rebuilds.
-@internal
-class WorkbenchBuilder extends StatelessWidget {
-  const WorkbenchBuilder({super.key});
+class _WorkbenchBuilder extends StatelessWidget {
+  const _WorkbenchBuilder();
 
   @override
   Widget build(BuildContext context) {
