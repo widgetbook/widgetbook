@@ -1,8 +1,6 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
-// ignore: unnecessary_import flutter(<3.35.0)
-import 'package:meta/meta.dart';
 
 import 'knob.dart';
 

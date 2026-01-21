@@ -1,11 +1,10 @@
 import 'dart:math' as math;
+import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
-// ignore: unnecessary_import flutter(<3.35.0)
-import 'package:meta/meta.dart';
 
 extension on SemanticsNode {
   /// Finds the first child [SemanticsNode] that matches the given [predicate].
@@ -185,27 +184,24 @@ class SemanticsDebuggerPainter extends CustomPainter {
     final annotations = <String>[];
 
     var wantsTap = false;
-
-    // ignore: deprecated_member_use flutter(<3.35.0)
-    if (data.hasFlag(SemanticsFlag.hasCheckedState)) {
+    if (data.flagsCollection.isChecked != CheckedState.none) {
       annotations.add(
-        // ignore: deprecated_member_use flutter(<3.35.0)
-        data.hasFlag(SemanticsFlag.isChecked) ? 'checked' : 'unchecked',
+        data.flagsCollection.isChecked == CheckedState.isTrue
+            ? 'checked'
+            : 'unchecked',
       );
       wantsTap = true;
     }
 
-    // ignore: deprecated_member_use flutter(<3.35.0)
-    if (data.hasFlag(SemanticsFlag.hasSelectedState)) {
+    if (data.flagsCollection.isSelected != Tristate.none) {
       annotations.add(
-        // ignore: deprecated_member_use flutter(<3.35.0)
-        data.hasFlag(SemanticsFlag.isSelected) ? 'selected' : 'unselected',
+        data.flagsCollection.isSelected == Tristate.isTrue
+            ? 'selected'
+            : 'unselected',
       );
-      wantsTap = true;
     }
 
-    // ignore: deprecated_member_use flutter(<3.35.0)
-    if (data.hasFlag(SemanticsFlag.isTextField)) {
+    if (data.flagsCollection.isTextField) {
       annotations.add('textfield');
       wantsTap = true;
     }
