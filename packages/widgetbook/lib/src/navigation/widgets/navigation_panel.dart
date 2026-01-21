@@ -61,7 +61,7 @@ class _NavigationPanelState extends State<NavigationPanel> {
     final query = WidgetbookState.of(context).query ?? '';
     final filteredRoot = query.isEmpty
         ? widget.root
-        : widget.root.filter((node) => filterNode(node, query)) ?? widget.root;
+        : widget.root.filter((node) => filterNode(node, query));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -85,31 +85,32 @@ class _NavigationPanelState extends State<NavigationPanel> {
             },
           ),
         ),
-        if (filteredRoot.children != null)
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              ),
-              itemCount: filteredRoot.children!.length,
-              itemBuilder: (context, index) => NavigationTreeNode(
-                key: ObjectKey(filteredRoot.children![index]),
-                node: filteredRoot.children![index],
-                selectedNode: selectedNode,
-                onNodeSelected: (node) {
-                  if (!node.isLeaf || node.path == selectedNode?.path) {
-                    return;
-                  }
+        Expanded(
+          child: filteredRoot != null && filteredRoot.children != null
+              ? ListView.builder(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ),
+                  itemCount: filteredRoot.children!.length,
+                  itemBuilder: (context, index) => NavigationTreeNode(
+                    key: ObjectKey(filteredRoot.children![index]),
+                    node: filteredRoot.children![index],
+                    selectedNode: selectedNode,
+                    onNodeSelected: (node) {
+                      if (!node.isLeaf || node.path == selectedNode?.path) {
+                        return;
+                      }
 
-                  setState(() => selectedNode = node);
-                  widget.onNodeSelected?.call(node);
-                },
-                enableLeafComponents: WidgetbookState.of(
-                  context,
-                ).enableLeafComponents,
-              ),
-            ),
-          ),
+                      setState(() => selectedNode = node);
+                      widget.onNodeSelected?.call(node);
+                    },
+                    enableLeafComponents: WidgetbookState.of(
+                      context,
+                    ).enableLeafComponents,
+                  ),
+                )
+              : const SizedBox(),
+        ),
         Padding(
           padding: const EdgeInsets.all(8),
           child: StatsBanner(

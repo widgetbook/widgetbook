@@ -116,7 +116,7 @@ void main() {
 
         await tester.findAndEnter(
           find.byType(TextFormField),
-          '[',
+          '-',
         );
 
         expect(
@@ -125,6 +125,29 @@ void main() {
             // exclude root node and leaf components
             treeRoot.count - 1 - leafComponentsCount,
           ),
+        );
+      },
+    );
+
+    testWidgets(
+      'when search for an unknown query, '
+      'then no matching nodes are shown',
+      (tester) async {
+        await tester.pumpWidgetWithQueryParams(
+          queryParams: {},
+          builder: (_) => NavigationPanel(
+            root: treeRoot,
+          ),
+        );
+
+        await tester.findAndEnter(
+          find.byType(TextFormField),
+          'unknown_query',
+        );
+
+        expect(
+          find.byType(NavigationTreeTile),
+          findsNothing,
         );
       },
     );

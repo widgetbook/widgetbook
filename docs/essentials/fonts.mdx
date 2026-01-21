@@ -1,0 +1,12 @@
+# Fonts
+
+If you are using [`google_fonts`](https://pub.dev/packages/google_fonts) package to load custom fonts in your app, you need to pre-load the fonts in Widgetbook, to avoid visual font swaps.
+
+```dart title=widgetbook/lib/main.dart
+Future<void> main() async {
+  // TODO: replace `lato` with your desired font
+  WidgetsFlutterBinding.ensureInitialized(); // [!code highlight]
+  await GoogleFonts.pendingFonts([GoogleFonts.lato()]); // [!code highlight]
+  runApp(const WidgetbookApp());
+}
+```

@@ -224,6 +224,10 @@
           "href": "/essentials/assets"
         },
         {
+          "title": "Fonts",
+          "href": "/essentials/fonts"
+        },
+        {
           "title": "Fields",
           "href": "/essentials/fields"
         }
@@ -561,6 +565,10 @@
             {
               "title": "Upload builds",
               "href": "/cloud/guides/azure/upload"
+            },
+            {
+              "title": "Enforce reviews",
+              "href": "/cloud/guides/azure/enforce-reviews"
             },
             {
               "title": "Access builds from Azure",
