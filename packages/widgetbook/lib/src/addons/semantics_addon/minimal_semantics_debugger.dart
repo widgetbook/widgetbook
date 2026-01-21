@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
@@ -184,24 +183,27 @@ class SemanticsDebuggerPainter extends CustomPainter {
     final annotations = <String>[];
 
     var wantsTap = false;
-    if (data.flagsCollection.isChecked != CheckedState.none) {
+
+    // ignore: deprecated_member_use flutter(<3.38.0)
+    if (data.hasFlag(SemanticsFlag.hasCheckedState)) {
       annotations.add(
-        data.flagsCollection.isChecked == CheckedState.isTrue
-            ? 'checked'
-            : 'unchecked',
+        // ignore: deprecated_member_use flutter(<3.38.0)
+        data.hasFlag(SemanticsFlag.isChecked) ? 'checked' : 'unchecked',
       );
       wantsTap = true;
     }
 
-    if (data.flagsCollection.isSelected != Tristate.none) {
+    // ignore: deprecated_member_use flutter(<3.38.0)
+    if (data.hasFlag(SemanticsFlag.hasSelectedState)) {
       annotations.add(
-        data.flagsCollection.isSelected == Tristate.isTrue
-            ? 'selected'
-            : 'unselected',
+        // ignore: deprecated_member_use flutter(<3.38.0)
+        data.hasFlag(SemanticsFlag.isSelected) ? 'selected' : 'unselected',
       );
+      wantsTap = true;
     }
 
-    if (data.flagsCollection.isTextField) {
+    // ignore: deprecated_member_use flutter(<3.38.0)
+    if (data.hasFlag(SemanticsFlag.isTextField)) {
       annotations.add('textfield');
       wantsTap = true;
     }
