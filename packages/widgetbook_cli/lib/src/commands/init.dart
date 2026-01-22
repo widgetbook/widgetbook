@@ -96,7 +96,7 @@ class InitCommand extends CliCommand<InitArgs> {
       [
         'pub',
         'add',
-        'widgetbook',
+        'widgetbook:"^4.0.0-alpha.0"', // installs latest alpha
         'dev:build_runner',
         '$packageName:{path: $relativePath}',
       ],
