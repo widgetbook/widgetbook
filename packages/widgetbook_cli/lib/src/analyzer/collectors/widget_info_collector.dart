@@ -26,6 +26,9 @@ class WidgetInfoCollector
     // Skip private classes
     if (node.name.toString().startsWith('_')) return false;
 
+    // Skip abstract classes
+    if (node.abstractKeyword != null) return false;
+
     // Skip classes that have the ignore comment
     final firstToken = node.firstTokenAfterCommentAndMetadata;
     final comment = firstToken.precedingComments?.lexeme;
