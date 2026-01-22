@@ -4,8 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
-// ignore: unnecessary_import flutter(<3.35.0)
-import 'package:meta/meta.dart';
 
 extension on SemanticsNode {
   /// Finds the first child [SemanticsNode] that matches the given [predicate].
@@ -186,25 +184,25 @@ class SemanticsDebuggerPainter extends CustomPainter {
 
     var wantsTap = false;
 
-    // ignore: deprecated_member_use flutter(<3.35.0)
+    // ignore: deprecated_member_use flutter(<3.38.0)
     if (data.hasFlag(SemanticsFlag.hasCheckedState)) {
       annotations.add(
-        // ignore: deprecated_member_use flutter(<3.35.0)
+        // ignore: deprecated_member_use flutter(<3.38.0)
         data.hasFlag(SemanticsFlag.isChecked) ? 'checked' : 'unchecked',
       );
       wantsTap = true;
     }
 
-    // ignore: deprecated_member_use flutter(<3.35.0)
+    // ignore: deprecated_member_use flutter(<3.38.0)
     if (data.hasFlag(SemanticsFlag.hasSelectedState)) {
       annotations.add(
-        // ignore: deprecated_member_use flutter(<3.35.0)
+        // ignore: deprecated_member_use flutter(<3.38.0)
         data.hasFlag(SemanticsFlag.isSelected) ? 'selected' : 'unselected',
       );
       wantsTap = true;
     }
 
-    // ignore: deprecated_member_use flutter(<3.35.0)
+    // ignore: deprecated_member_use flutter(<3.38.0)
     if (data.hasFlag(SemanticsFlag.isTextField)) {
       annotations.add('textfield');
       wantsTap = true;

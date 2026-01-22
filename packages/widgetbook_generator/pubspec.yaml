@@ -12,10 +12,10 @@ screenshots:
     path: assets/logo.webp
 
 environment:
-  sdk: ">=3.8.0 <4.0.0"
+  sdk: ">=3.9.0 <4.0.0"
 
 dependencies:
-  analyzer: ">=8.0.0 <10.0.0"
+  analyzer: ">=8.2.0 <11.0.0"
   build: ^4.0.0
   code_builder: ^4.5.0
   collection: ^1.15.0

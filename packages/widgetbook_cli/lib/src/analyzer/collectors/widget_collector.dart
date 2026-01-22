@@ -8,7 +8,7 @@ class WidgetCollector extends CollectorAstVisitor<String, ClassDeclaration> {
   @override
   bool shouldCollect(ClassDeclaration node) {
     // Skip private classes
-    if (node.name.toString().startsWith('_')) return false;
+    if (node.namePart.toString().startsWith('_')) return false;
 
     // Skip classes that have the ignore comment
     final firstToken = node.firstTokenAfterCommentAndMetadata;
@@ -20,7 +20,7 @@ class WidgetCollector extends CollectorAstVisitor<String, ClassDeclaration> {
 
   @override
   String mapNode(ClassDeclaration node) {
-    return node.name.toString();
+    return node.namePart.toString();
   }
 }
 
