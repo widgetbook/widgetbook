@@ -15,6 +15,7 @@ class DurationKnob extends Knob<Duration?> {
     required super.label,
     required super.initialValue,
     super.description,
+    super.defaultToNull,
   }) : super(isNullable: true);
 
   @override

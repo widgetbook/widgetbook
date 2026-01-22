@@ -19,6 +19,7 @@ class DateTimeKnob extends Knob<DateTime?> {
     super.description,
     required this.start,
     required this.end,
+    super.defaultToNull,
   }) : super(isNullable: true);
 
   /// The starting [DateTime] value used for the date and time pickers.

@@ -23,6 +23,7 @@ class DoubleSliderKnob extends Knob<double?> {
     this.min = 0,
     this.divisions,
     this.precision = 1,
+    super.defaultToNull,
   }) : super(isNullable: true);
 
   final double max;

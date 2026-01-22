@@ -73,6 +73,7 @@ class ObjectOrNullKnobsBuilder {
     T? initialOption,
     String? description,
     LabelBuilder<T>? labelBuilder,
+    bool defaultToNull = false,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return onKnobAdded(
@@ -82,6 +83,7 @@ class ObjectOrNullKnobsBuilder {
         description: description,
         options: options,
         labelBuilder: labelBuilder,
+        defaultToNull: defaultToNull,
       ),
     );
   }
@@ -94,6 +96,7 @@ class ObjectOrNullKnobsBuilder {
     T? initialOption,
     String? description,
     LabelBuilder<T>? labelBuilder,
+    bool defaultToNull = false,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return onKnobAdded(
@@ -103,6 +106,7 @@ class ObjectOrNullKnobsBuilder {
         options: options,
         description: description,
         labelBuilder: labelBuilder,
+        defaultToNull: defaultToNull,
       ),
     );
   }

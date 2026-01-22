@@ -15,6 +15,7 @@ class DoubleInputKnob extends Knob<double?> {
     required super.label,
     required super.initialValue,
     super.description,
+    super.defaultToNull,
   }) : super(isNullable: true);
 
   @override

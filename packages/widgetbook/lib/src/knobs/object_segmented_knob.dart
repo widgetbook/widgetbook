@@ -19,6 +19,7 @@ class ObjectSegmentedKnob<T> extends Knob<T?> {
     required this.options,
     super.description,
     this.labelBuilder,
+    super.defaultToNull,
   }) : super(isNullable: true);
 
   final List<T> options;

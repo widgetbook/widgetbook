@@ -15,6 +15,7 @@ class BooleanKnob extends Knob<bool?> {
     required super.label,
     required super.initialValue,
     super.description,
+    super.defaultToNull,
   }) : super(isNullable: true);
 
   @override

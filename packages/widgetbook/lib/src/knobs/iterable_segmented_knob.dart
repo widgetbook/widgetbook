@@ -21,6 +21,7 @@ class IterableSegmentedKnob<T> extends Knob<Iterable<T>?> {
     super.description,
     this.labelBuilder,
     this.emptySelectionAllowed = true,
+    super.defaultToNull,
   }) : super(isNullable: true);
 
   final Iterable<T> options;

@@ -105,6 +105,20 @@ Widget buildNullableStringKnob(BuildContext context) {
   );
 }
 
+@UseCase(
+  type: KnobPreview,
+  name: 'String Nullable Knob with defaultToNull',
+)
+Widget buildNullableStringKnobDefaultToNull(BuildContext context) {
+  return UserAvatar(
+    name: context.knobs.stringOrNull(
+      label: 'name',
+      initialValue: 'John Doe',
+      defaultToNull: true,
+    ),
+  );
+}
+
 @UseCase(type: KnobPreview, name: 'Bool Knob')
 Widget buildBoolKnob(BuildContext context) {
   return Checkbox(

@@ -15,6 +15,7 @@ class IntInputKnob extends Knob<int?> {
     required super.label,
     required super.initialValue,
     super.description,
+    super.defaultToNull,
   }) : super(isNullable: true);
 
   @override

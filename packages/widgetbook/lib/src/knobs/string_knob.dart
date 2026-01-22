@@ -17,6 +17,7 @@ class StringKnob extends Knob<String?> {
     required super.initialValue,
     super.description,
     this.maxLines,
+    super.defaultToNull,
   }) : super(isNullable: true);
 
   final int? maxLines;

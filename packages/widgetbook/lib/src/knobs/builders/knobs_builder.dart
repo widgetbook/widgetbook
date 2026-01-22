@@ -86,12 +86,14 @@ class KnobsBuilder {
     required String label,
     String? description,
     bool? initialValue,
+    bool defaultToNull = false,
   }) {
     return onKnobAdded(
       BooleanKnob.nullable(
         label: label,
         description: description,
         initialValue: initialValue,
+        defaultToNull: defaultToNull,
       ),
     );
   }
@@ -121,6 +123,7 @@ class KnobsBuilder {
     Color? initialValue,
     ColorSpace initialColorSpace = ColorSpace.hex,
     String? description,
+    bool defaultToNull = false,
   }) {
     return onKnobAdded(
       ColorKnob.nullable(
@@ -128,6 +131,7 @@ class KnobsBuilder {
         initialValue: initialValue,
         initialColorSpace: initialColorSpace,
         description: description,
+        defaultToNull: defaultToNull,
       ),
     );
   }
@@ -157,6 +161,7 @@ class KnobsBuilder {
     String? description,
     String? initialValue,
     $int? maxLines = 1,
+    bool defaultToNull = false,
   }) {
     return onKnobAdded(
       StringKnob.nullable(
@@ -164,6 +169,7 @@ class KnobsBuilder {
         initialValue: initialValue,
         description: description,
         maxLines: maxLines,
+        defaultToNull: defaultToNull,
       ),
     );
   }
@@ -231,12 +237,14 @@ class KnobsBuilder {
     required String label,
     Duration? initialValue,
     String? description,
+    bool defaultToNull = false,
   }) {
     return onKnobAdded(
       DurationKnob.nullable(
         label: label,
         initialValue: initialValue,
         description: description,
+        defaultToNull: defaultToNull,
       ),
     );
   }
@@ -269,6 +277,7 @@ class KnobsBuilder {
     String? description,
     required DateTime start,
     required DateTime end,
+    bool defaultToNull = false,
   }) {
     return onKnobAdded(
       DateTimeKnob.nullable(
@@ -277,6 +286,7 @@ class KnobsBuilder {
         description: description,
         start: start,
         end: end,
+        defaultToNull: defaultToNull,
       ),
     );
   }
