@@ -102,15 +102,6 @@ class InitCommand extends CliCommand<InitArgs> {
       ],
     );
 
-    await processManager.runFlutter(
-      workingDirectory: widgetbookDir,
-      [
-        'pub',
-        'remove',
-        'flutter_test',
-      ],
-    );
-
     setupProgress.complete('Workspace is set up at $widgetbookDir');
 
     final widgets = await _getWidgets(args.packageDir);
