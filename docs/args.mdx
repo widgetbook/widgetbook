@@ -8,7 +8,7 @@ Args are generated based on your widget's constructor parameters, ensuring type 
 import 'package:widgetbook/widgetbook.dart';
 import 'package:my_app/my_widget.dart';
 
-part 'my_widget.stories.book.dart';
+part 'my_widget.stories.g.dart';
 
 const meta = Meta<MyWidget>();
 ```
@@ -40,7 +40,7 @@ The default source for args generation is the widget's constructor. However, you
 import 'package:widgetbook/widgetbook.dart';
 import 'package:my_app/my_widget.dart';
 
-part 'my_widget.stories.book.dart';
+part 'my_widget.stories.g.dart';
 
 const meta = MetaWithArgs<MyWidget, MyArgs>();
 

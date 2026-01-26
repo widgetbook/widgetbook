@@ -3,7 +3,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 import 'stepped_counter.dart';
 
-part 'stepped_counter.stories.book.dart';
+part 'stepped_counter.stories.g.dart';
 
 const meta = Meta<SteppedCounter>();
 

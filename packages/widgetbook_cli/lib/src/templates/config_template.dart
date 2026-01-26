@@ -8,7 +8,7 @@ class ConfigTemplate extends Template {
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-import 'components.book.dart';
+import 'components.g.dart';
 
 final config = Config(
   components: components,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide ThemeMode;
 import 'package:widgetbook/widgetbook.dart';
 
-import 'components.book.dart';
+import 'components.g.dart';
 import 'theme.dart';
 
 final config = Config(

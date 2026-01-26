@@ -11,7 +11,7 @@ Each component must have a `Meta` declaration and stories defined as top-level v
 ```dart
 import 'package:widgetbook/widgetbook.dart';
 
-part 'component_name.stories.book.dart';
+part 'component_name.stories.g.dart';
 
 const meta = Meta<ComponentType>(
   docs: '''
@@ -353,7 +353,7 @@ final $Interactive = _Story(
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-part 'custom_slider.stories.book.dart';
+part 'custom_slider.stories.g.dart';
 
 const meta = Meta<CustomSlider>(
   docs: '''

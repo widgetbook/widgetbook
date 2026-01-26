@@ -8,7 +8,7 @@ import 'telemetry/telemetry_reporter.dart';
 Builder storyBuilder(BuilderOptions options) {
   return PartBuilder(
     [StoryGenerator()],
-    '.book.dart',
+    '.g.dart',
     header: header,
   );
 }

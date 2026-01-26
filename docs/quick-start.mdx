@@ -46,7 +46,7 @@ Let's start by cataloging a simple widget.
    import 'package:widgetbook/widgetbook.dart';
    import 'package:your_app/widgets/custom_button.dart';
 
-   part 'custom_button.stories.book.dart';
+   part 'custom_button.stories.g.dart';
 
    const meta = Meta<CustomButton>();
    ```
@@ -62,7 +62,7 @@ Now you can start writing stories for the `CustomButton` component. A story must
 import 'package:widgetbook/widgetbook.dart';
 import 'package:your_app/widgets/custom_button.dart';
 
-part 'custom_button.stories.book.dart';
+part 'custom_button.stories.g.dart';
 
 const meta = Meta<CustomButton>();
 
@@ -77,7 +77,7 @@ A `Scenario` is like a golden test of your story with certain `args` and `mode`.
 import 'package:widgetbook/widgetbook.dart';
 import 'package:your_app/widgets/custom_button.dart';
 
-part 'custom_button.stories.book.dart';
+part 'custom_button.stories.g.dart';
 
 const meta = Meta<CustomButton>();
 

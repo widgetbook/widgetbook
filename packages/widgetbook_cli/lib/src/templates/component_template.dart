@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import '${widgetInfo.importPath}';
 
-part '${widgetInfo.filename}.stories.book.dart';
+part '${widgetInfo.filename}.stories.g.dart';
 
 const meta = Meta<${widgetInfo.name}>();
 ''';

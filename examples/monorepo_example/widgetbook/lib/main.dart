@@ -1,6 +1,6 @@
 import 'package:widgetbook/widgetbook.dart';
 
-import 'components.book.dart';
+import 'components.g.dart';
 
 void main() {
   runWidgetbook(

@@ -3,7 +3,7 @@ import 'package:shared_ui/shared_ui.dart';
 
 import 'package:widgetbook/widgetbook.dart';
 
-part 'custom_button.stories.book.dart';
+part 'custom_button.stories.g.dart';
 
 const meta = Meta<CustomButton>();
 

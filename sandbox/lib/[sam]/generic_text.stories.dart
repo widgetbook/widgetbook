@@ -3,7 +3,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 import 'generic_text.dart';
 
-part 'generic_text.stories.book.dart';
+part 'generic_text.stories.g.dart';
 
 // ignore: strict_raw_type
 const meta = Meta<GenericText>(

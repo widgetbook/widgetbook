@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:widgetbook/src/core/settings/nullable_setting.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-part 'nullable_setting.stories.book.dart';
+part 'nullable_setting.stories.g.dart';
 
 const meta = Meta<NullableSetting>(
   path: 'widgetbook/settings',

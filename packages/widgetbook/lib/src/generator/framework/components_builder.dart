@@ -10,7 +10,7 @@ class ComponentsBuilder implements Builder {
     required this.header,
   });
 
-  static const outputFile = 'components.book.dart';
+  static const outputFile = 'components.g.dart';
   final String header;
 
   @override
@@ -41,7 +41,7 @@ class ComponentsBuilder implements Builder {
             (e) => refer(
               e.displayName,
               e.firstFragment.libraryFragment.source.uri.toString().replaceAll(
-                '.book.dart',
+                '.g.dart',
                 '.dart',
               ),
             ),
