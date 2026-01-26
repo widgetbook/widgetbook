@@ -54,10 +54,12 @@ class CreateDraftBuildResponse extends CreateBuildResponse {
     required super.buildId,
     required this.baseHref,
     required this.storage,
+    required this.snapshotStorage,
   });
 
   final String baseHref;
   final StorageInfo storage;
+  final StorageInfo snapshotStorage;
 
   // ignore: sort_constructors_first
   factory CreateDraftBuildResponse.fromJson(Map<String, dynamic> json) {
@@ -65,6 +67,9 @@ class CreateDraftBuildResponse extends CreateBuildResponse {
       buildId: json['buildId'] as String,
       baseHref: json['baseHref'] as String,
       storage: StorageInfo.fromJson(json['storage'] as Map<String, dynamic>),
+      snapshotStorage: StorageInfo.fromJson(
+        json['snapshotStorage'] as Map<String, dynamic>,
+      ),
     );
   }
 }

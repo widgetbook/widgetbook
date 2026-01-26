@@ -247,7 +247,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     createProgress.complete('Draft build [${createResponse.buildId}] created');
 
     final draftResponse = createResponse.asDraft;
-    final uploadProgress = logger.progress('Uploading build files');
+    final buildUploadProgress = logger.progress('Uploading build files');
 
     // Prepare web build files
     final buildFiles = files.map(
@@ -282,29 +282,40 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       },
     );
 
-    // Prepare snapshot image files
-    final snapshots = cache.scenarios.map(
-      (scenario) {
-        final imagePath = p.join(args.path, scenario.image.path);
-        final imageFile = fileSystem.file(imagePath);
-
-        return StorageObject(
-          key: '_snapshots/${scenario.image.hash}.png',
-          size: scenario.image.size,
-          reader: imageFile.openRead,
-        );
-      },
-    );
-
-    final objects = [...buildFiles, ...snapshots];
-
     await storageClient.uploadObjects(
       draftResponse.storage.url,
       draftResponse.storage.fields,
-      objects,
+      buildFiles,
     );
 
-    uploadProgress.complete('Build files uploaded');
+    buildUploadProgress.complete('Build files uploaded');
+
+    final snapshotUploadProgress = logger.progress('Uploading snapshots');
+
+    // Prepare snapshot image files and metadata files
+    final snapshotFiles = cache.scenarios.map((scenario) {
+      final imagePath = p.join(args.path, scenario.image.path);
+      final imageFile = fileSystem.file(imagePath);
+      final hash = scenario.image.hash;
+
+      // Use key sharding to distribute snapshots across multiple S3 prefixes
+      // This prevents hitting AWS S3 request rate limits on a single prefix
+      // Format: {first2chars}/{hash}.png (e.g., "a1/a1b2c3d4.png")
+      final shard = hash.substring(0, 2);
+      return StorageObject(
+        key: '$shard/$hash.png',
+        size: scenario.image.size,
+        reader: imageFile.openRead,
+      );
+    });
+
+    await storageClient.uploadObjects(
+      draftResponse.snapshotStorage.url,
+      draftResponse.snapshotStorage.fields,
+      snapshotFiles,
+    );
+
+    snapshotUploadProgress.complete('Snapshots uploaded');
 
     final submitProgress = logger.progress('Submitting build');
     final submitResponse = await cloudClient.submitBuild(
