@@ -58,7 +58,7 @@ void main() {
         () {
           const factor = false;
           final result = addon.valueFromQueryGroup({'enabled': '$factor'});
-          expect(result, equals(factor));
+          expect(result.enabled, equals(factor));
         },
       );
 
@@ -67,7 +67,7 @@ void main() {
         'valueFromQueryGroup should return the default value of 1.0',
         () {
           final result = addon.valueFromQueryGroup({});
-          expect(result, equals(true));
+          expect(result.enabled, equals(true));
         },
       );
 
@@ -81,7 +81,10 @@ void main() {
               home: addon.buildUseCase(
                 tester.element(find.byType(Text)),
                 child,
-                true,
+                const InteractiveViewerSetting(
+                  enabled: true,
+                  scale: 1,
+                ),
               ),
             ),
           );
@@ -106,7 +109,10 @@ void main() {
               home: addon.buildUseCase(
                 tester.element(find.byType(Text)),
                 child,
-                false,
+                const InteractiveViewerSetting(
+                  enabled: false,
+                  scale: 1,
+                ),
               ),
             ),
           );
