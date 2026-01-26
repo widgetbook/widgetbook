@@ -4,7 +4,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 import 'custom_card.dart';
 
-part 'custom_card.stories.book.dart';
+part 'custom_card.stories.g.dart';
 
 const meta = Meta<CustomCard>();
 

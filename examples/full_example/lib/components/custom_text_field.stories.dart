@@ -3,7 +3,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 import 'custom_text_field.dart';
 
-part 'custom_text_field.stories.book.dart';
+part 'custom_text_field.stories.g.dart';
 
 const meta = Meta<CustomTextField>();
 

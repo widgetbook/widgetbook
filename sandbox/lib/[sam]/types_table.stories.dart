@@ -3,7 +3,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 import 'types_table.dart';
 
-part 'types_table.stories.book.dart';
+part 'types_table.stories.g.dart';
 
 const meta = Meta<TypesTable>(
   docs: '''

@@ -4,7 +4,7 @@ import 'package:widgetbook/widgetbook.dart';
 import '../theme.dart';
 import 'label_badge.dart';
 
-part 'label_badge.stories.book.dart';
+part 'label_badge.stories.g.dart';
 
 const meta = MetaWithArgs<LabelBadge, NumericBadgeInput>(
   docs: '''

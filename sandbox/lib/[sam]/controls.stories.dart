@@ -4,7 +4,7 @@ import 'package:widgetbook/widgetbook.dart';
 import 'controls.dart';
 import 'counter.stories.dart' as counter;
 
-part 'controls.stories.book.dart';
+part 'controls.stories.g.dart';
 
 const meta = Meta<Controls>(
   docs: 'Testing out the navigation to other stories and docs.',

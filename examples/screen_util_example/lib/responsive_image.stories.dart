@@ -3,7 +3,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 import 'responsive_image.dart';
 
-part 'responsive_image.stories.book.dart';
+part 'responsive_image.stories.g.dart';
 
 const meta = Meta<ResponsiveImage>();
 

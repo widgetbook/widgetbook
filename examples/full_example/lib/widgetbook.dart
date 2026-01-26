@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-import 'components.book.dart';
+import 'components.g.dart';
 import 'customs/custom_addon.dart';
 import 'customs/custom_theme.dart';
 

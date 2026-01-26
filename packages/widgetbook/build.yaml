@@ -3,7 +3,7 @@ builders:
     import: "package:widgetbook/src/generator/builder.dart"
     builder_factories: ["storyBuilder"]
     runs_before: [":components_builder"]
-    build_extensions: { ".stories.dart": [".stories.book.dart"] }
+    build_extensions: { ".stories.dart": [".stories.g.dart"] }
     auto_apply: dependents
     build_to: source
     defaults:
@@ -21,12 +21,12 @@ builders:
   telemetry:
     import: "package:widgetbook/src/generator/builder.dart"
     builder_factories: ["reportTelemetry"]
-    build_extensions: { ".book.dart": [".track"] }
-    required_inputs: [".book.dart"]
+    build_extensions: { ".g.dart": [".track"] }
+    required_inputs: [".g.dart"]
     auto_apply: root_package
     build_to: cache
     defaults:
       options:
         debug: false
       generate_for:
-        - lib/components.book.dart
+        - lib/components.g.dart

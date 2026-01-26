@@ -30,7 +30,7 @@ class TelemetryReporter extends Builder {
 
   @override
   Map<String, List<String>> get buildExtensions => {
-    'components.book.dart': ['.track'],
+    'components.g.dart': ['.track'],
   };
 
   /// Get a tracking ID based on git's config.

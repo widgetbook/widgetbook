@@ -3,7 +3,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 import 'generic_num.dart';
 
-part 'generic_num.stories.book.dart';
+part 'generic_num.stories.g.dart';
 
 // ignore: strict_raw_type
 const meta = MetaWithArgs<GenericNum, GenericNumInput>(

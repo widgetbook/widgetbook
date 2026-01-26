@@ -3,7 +3,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 import 'counter.dart';
 
-part 'counter.stories.book.dart';
+part 'counter.stories.g.dart';
 
 const meta = Meta<Counter>(
   docs: '''

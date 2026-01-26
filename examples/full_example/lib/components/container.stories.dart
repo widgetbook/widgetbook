@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:widgetbook/widgetbook.dart';
 
-part 'container.stories.book.dart';
+part 'container.stories.g.dart';
 
 const meta = Meta<Container>();
 
