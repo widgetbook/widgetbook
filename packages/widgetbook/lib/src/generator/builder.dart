@@ -9,13 +9,13 @@ Builder storyBuilder(BuilderOptions options) {
   return PartBuilder(
     [StoryGenerator()],
     '.g.dart',
-    header: header,
+    header: getHeader(),
   );
 }
 
 Builder componentsBuilder(BuilderOptions options) {
   return ComponentsBuilder(
-    header: header,
+    header: getHeader(disableFormat: true),
   );
 }
 
@@ -27,7 +27,9 @@ Builder reportTelemetry(BuilderOptions options) {
   );
 }
 
-String get header {
+String getHeader({
+  bool disableFormat = false,
+}) {
   const ignoredLintRules = {
     'unused_import',
     'prefer_relative_imports',
@@ -39,6 +41,7 @@ String get header {
   final parts = [
     '$defaultFileHeader',
     '',
+    if (disableFormat) '// dart format off',
     '// coverage:ignore-file',
     '// ignore_for_file: type=lint',
     '// ignore_for_file: ${ignoredLintRules.join(", ")}',
