@@ -4,21 +4,21 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_import, prefer_relative_imports, directives_ordering, unused_element, strict_raw_type
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:widgetbook/widgetbook.dart' as _i1;
-import 'package:sandbox/%5Bsam%5D/controls.stories.dart' as _i2;
-import 'package:sandbox/%5Bsam%5D/counter.stories.dart' as _i3;
-import 'package:sandbox/%5Bsam%5D/generic_num.stories.dart' as _i4;
-import 'package:sandbox/%5Bsam%5D/generic_text.stories.dart' as _i5;
-import 'package:sandbox/%5Bsam%5D/label_badge.stories.dart' as _i6;
-import 'package:sandbox/%5Bsam%5D/types_table.stories.dart' as _i7;
-import 'package:sandbox/settings/nullable_setting.stories.dart' as _i8;
+import 'package:widgetbook/widgetbook.dart' as _widgetbook;
+import 'package:sandbox/[sam]/controls.stories.dart' as _sandbox__sam__controls_stories;
+import 'package:sandbox/[sam]/counter.stories.dart' as _sandbox__sam__counter_stories;
+import 'package:sandbox/[sam]/generic_num.stories.dart' as _sandbox__sam__generic_num_stories;
+import 'package:sandbox/[sam]/generic_text.stories.dart' as _sandbox__sam__generic_text_stories;
+import 'package:sandbox/[sam]/label_badge.stories.dart' as _sandbox__sam__label_badge_stories;
+import 'package:sandbox/[sam]/types_table.stories.dart' as _sandbox__sam__types_table_stories;
+import 'package:sandbox/settings/nullable_setting.stories.dart' as _sandbox_settings_nullable_setting_stories;
 
-final components = <_i1.Component>[
-  _i2.ControlsComponent,
-  _i3.CounterComponent,
-  _i4.GenericNumComponent,
-  _i5.GenericTextComponent,
-  _i6.LabelBadgeComponent,
-  _i7.TypesTableComponent,
-  _i8.NullableSettingComponent,
+final components = <_widgetbook.Component>[
+  _sandbox__sam__controls_stories.ControlsComponent,
+  _sandbox__sam__counter_stories.CounterComponent,
+  _sandbox__sam__generic_num_stories.GenericNumComponent,
+  _sandbox__sam__generic_text_stories.GenericTextComponent,
+  _sandbox__sam__label_badge_stories.LabelBadgeComponent,
+  _sandbox__sam__types_table_stories.TypesTableComponent,
+  _sandbox_settings_nullable_setting_stories.NullableSettingComponent,
 ];

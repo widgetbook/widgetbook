@@ -5,6 +5,8 @@ import 'package:dart_style/dart_style.dart';
 import 'package:glob/glob.dart';
 import 'package:source_gen/source_gen.dart';
 
+import '../code/named_allocator.dart';
+
 class ComponentsBuilder implements Builder {
   const ComponentsBuilder({
     required this.header,
@@ -59,11 +61,13 @@ class ComponentsBuilder implements Builder {
     );
 
     final emitter = DartEmitter(
-      allocator: Allocator.simplePrefixing(),
+      allocator: NamedAllocator(),
     );
 
     final formatter = DartFormatter(
       languageVersion: DartFormatter.latestShortStyleLanguageVersion,
+      // For better imports readability, since they have long named prefixes
+      pageWidth: 80 * 4,
     );
 
     final output = formatter.format(
