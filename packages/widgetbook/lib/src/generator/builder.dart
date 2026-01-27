@@ -39,6 +39,7 @@ String get header {
   final parts = [
     '$defaultFileHeader',
     '',
+    '// dart format off',
     '// coverage:ignore-file',
     '// ignore_for_file: type=lint',
     '// ignore_for_file: ${ignoredLintRules.join(", ")}',
