@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:path/path.dart' as p;
 
 import 'collector_ast_visitor.dart';
 
@@ -15,7 +16,8 @@ class WidgetInfo {
   final List<String> parameterTypes;
 
   String get filePath => importPath.split('/').sublist(1).join('/');
-  String get filename => importPath.split('/').last;
+  String get dirname => p.dirname(filePath);
+  String get filename => p.basenameWithoutExtension(filePath);
 }
 
 /// Collects [WidgetInfo] about widget classes from a Flutter project.
