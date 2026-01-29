@@ -19,7 +19,8 @@ typedef _Args = CounterArgs;
 final CounterComponent = Component<Counter, CounterArgs>(
   name: meta.name ?? 'Counter',
   path: meta.path ?? '[sam]',
-  docs: meta.docs ?? null,
+  docsBuilder: meta.docs,
+  docComments: null,
   stories: [$Default..$generatedName = 'Default'],
 );
 typedef CounterScenario = Scenario<Counter, CounterArgs>;

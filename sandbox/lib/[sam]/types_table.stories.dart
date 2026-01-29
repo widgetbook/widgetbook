@@ -5,12 +5,14 @@ import 'types_table.dart';
 
 part 'types_table.stories.g.dart';
 
-const meta = Meta<TypesTable>(
-  docs: '''
+final meta = Meta<TypesTable>(
+  docs: (docs) => docs.replaceFirst<DocCommentsBlock>(
+    const TextBlock('''
 1. All possible combinations of parameters (required, optional, with default values)
 2. Defining scenarios with different args
 3. Defining a custom Arg type `PersonArg`
-''',
+'''),
+  ),
 );
 
 final $Default = _Story(

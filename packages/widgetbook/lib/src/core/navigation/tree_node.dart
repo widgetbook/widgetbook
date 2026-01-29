@@ -4,6 +4,8 @@ import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
+import '../docs/docs.dart';
+
 @optionalTypeArgs
 class TreeNode<T> {
   TreeNode(
@@ -20,7 +22,7 @@ class TreeNode<T> {
   bool get isRoot => parent == null;
   bool get isLeaf => children.isEmpty;
 
-  bool get isDocs => T == String && name == 'Docs';
+  bool get isDocs => data is List<DocBlock> && name == 'Docs';
   bool get isCategory {
     return T == Null && name.startsWith('[') && name.endsWith(']');
   }

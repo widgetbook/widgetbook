@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+import '../docs/docs.dart';
 import 'story_args.dart';
 
 /// Metadata for generating code for a given [TWidget].
@@ -12,7 +13,7 @@ class Meta<TWidget extends Widget> {
 
   final String? name;
   final String? path;
-  final String? docs;
+  final DocsBuilderFunction? docs;
 }
 
 /// Same as [Meta] but for custom [StoryArgs].
