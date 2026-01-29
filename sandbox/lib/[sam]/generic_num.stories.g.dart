@@ -19,7 +19,8 @@ typedef _Args<T extends num, R> = GenericNumInputArgs<T, R>;
 final GenericNumComponent = Component<GenericNum, GenericNumInputArgs>(
   name: meta.name ?? 'GenericNum',
   path: meta.path ?? '[sam]',
-  docs: meta.docs ?? null,
+  docsBuilder: meta.docs,
+  docComments: null,
   stories: [
     $Integer..$generatedName = 'Integer',
     $Double..$generatedName = 'Double',
