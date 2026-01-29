@@ -1,0 +1,82 @@
+# Custom DocBlocks
+
+Custom DocBlocks allow you to extend Widgetbook's automatic documentation with your own specialized documentation components. 
+This powerful feature enables you to create tailored documentation experiences that match your team's specific needs.
+
+## Prerequisites
+
+To use custom DocBlocks, you need to customize the `docsBuilder` function either globally or at the component level. 
+See the [Customize](/docs/customize) guide for detailed instructions on how to configure the documentation builder.
+
+## Creating a Custom DocBlock
+
+Create a Flutter widget that extends the `DocBlock` class to get full access to the widget tree and Widgetbook's context, allowing you to create rich, interactive documentation blocks.
+
+### Basic Structure
+
+To create a custom DocBlock:
+
+1. Create a new class and extend the `DocBlock` class
+2. Implement the `build` method to return your documentation content
+3. If necessary, access Widgetbook state using `WidgetbookState.of(context)` for component info and stories
+
+```dart
+class MyCustomDocBlock extends DocBlock {
+  const MyCustomDocBlock({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final state = WidgetbookState.of(context);
+    // Access component data through state
+    // Return your custom widget tree
+    return Widget(/* Your custom content here */);
+  }
+}
+```
+
+### Example: Markdown DocBlock
+
+This example renders Dart doc comments as Markdown using the [flutter_markdown_plus](https://pub.dev/packages/flutter_markdown_plus) package.
+
+<Image src="/assets/docs/custom-markdown-block.png" zoom />
+
+```dart
+import 'package:flutter/widgets.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:widgetbook/widgetbook.dart';
+
+class MarkdownDocBlock extends DocBlock {
+  const MarkdownDocBlock({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final state = WidgetbookState.of(context);
+    final comment =
+        state.component!.docComment ?? 'No documentation available.';
+
+    return MarkdownBody(data: comment);
+  }
+}
+```
+
+This block:
+- Retrieves the component's doc comment
+- Falls back to a default message if none exists
+- Renders Markdown with support for **bold**, `code`, and other syntax
+
+### Using the Custom Block
+
+Configure your documentation builder to include the `MarkdownDocBlock`:
+
+```dart
+final config = Config(
+  components: components,
+  docsBuilder: () => [
+    const ComponentNameDocBlock(),
+    const MarkdownDocBlock(),
+  ],
+  addons: [
+    // Your addons here
+  ],
+);
+```

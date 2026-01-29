@@ -1,0 +1,46 @@
+# Automatic Documentation
+
+Widgetbook generates interactive documentation for your Flutter components directly from your code using a flexible `DocBlock` system.
+
+<Image src="/assets/docs/example.png" zoom />
+
+## Benefits
+
+- **🚀 Zero Configuration Required:** Works out of the box. Your components and stories are your documentation.
+- **📖 Interactive & Live:** Shows live examples of your components with all variations and configurations.
+- **🎨 Fully Customizable:** Add, remove, or replace blocks to match your team's needs.
+- **🔄 Always Up-to-Date:** Generated from your code, so it stays in sync with your implementation.
+- **📝 Rich Content Support:** Combine component names, doc comments, live stories, argument tables, and custom content.
+
+## Main Features
+
+### DocBlocks
+Documentation is built using composable `DocBlock` widgets. Each block renders a specific piece of documentation - from titles and text to live component previews and argument tables.
+
+### Component Documentation
+Every component gets a documentation page with:
+- Component name and description
+- Live story examples
+- Configurable arguments
+- All available variations
+
+### Hierarchical Customization
+Customize at two levels:
+- **Global Level**: Set defaults for all components using `Config`
+- **Component Level**: Override specific components using the `Meta` tag
+
+## Getting Started
+
+Widgetbook uses this default documentation structure:
+
+```dart
+List<DocBlock> defaultDocsBuilder() {
+  return [
+    const ComponentNameDocBlock(),
+    const DartCommentDocBlock(),
+    const StoriesDocBlock(),
+  ];
+}
+```
+
+This shows the component name, its documentation comments, and all available stories including a table of their default Args.
