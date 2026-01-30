@@ -46,7 +46,7 @@ class WidgetInfoCollector
     final comment = firstToken.precedingComments?.lexeme;
     if (comment == '// widgetbook: ignore') return false;
 
-    return node.declaredFragment?.element.isWidget == true;
+    return node.declaredFragment?.element.isUiWidget == true;
   }
 
   @override
@@ -76,12 +76,14 @@ class WidgetInfoCollector
 
 extension on ClassElement {
   /// Whether the class is extending a "Widget" class.
-  bool get isWidget {
+  /// `InheritedWidget` are ignored since they are not "UI" widgets.
+  bool get isUiWidget {
+    if (name == 'InheritedWidget') return false;
     if (name == 'Widget') return true;
 
     final superElement = this.supertype?.element;
     if (superElement is! ClassElement) return false;
 
-    return superElement.isWidget;
+    return superElement.isUiWidget;
   }
 }
