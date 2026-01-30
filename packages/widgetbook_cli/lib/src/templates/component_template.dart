@@ -2,20 +2,20 @@ import '../analyzer/collectors/widget_info_collector.dart';
 import 'template.dart';
 
 class ComponentTemplate extends Template {
-  ComponentTemplate(WidgetInfo widgetInfo)
+  ComponentTemplate(String filename, WidgetInfo widgetInfo)
     : super(
-        'lib/${widgetInfo.filePath}.stories.dart',
-        generateContent(widgetInfo),
+        'lib/${widgetInfo.dirname}/$filename.stories.dart',
+        generateContent(filename, widgetInfo),
       );
 
-  static String generateContent(WidgetInfo widgetInfo) {
+  static String generateContent(String filename, WidgetInfo widgetInfo) {
     final header =
         '''
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import '${widgetInfo.importPath}';
 
-part '${widgetInfo.filename}.stories.g.dart';
+part '${filename}.stories.g.dart';
 
 const meta = Meta<${widgetInfo.name}>();
 ''';

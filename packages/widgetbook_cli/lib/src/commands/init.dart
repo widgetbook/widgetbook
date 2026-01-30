@@ -105,9 +105,43 @@ class InitCommand extends CliCommand<InitArgs> {
     setupProgress.complete('Workspace is set up at $widgetbookDir');
 
     final widgets = await _getWidgets(args.packageDir);
-    final componentTemplates = widgets.map(
-      (widget) => ComponentTemplate(widget),
+    // One source file can contain multiple widgets.
+    // So we group them by their source file path, and add
+    // an index to the stories filename in case of conflicts.
+    final pathsMap = widgets.fold<Map<String, List<WidgetInfo>>>(
+      {},
+      (map, widget) {
+        map[widget.filePath] = [...?map[widget.filePath], widget];
+        return map;
+      },
     );
+
+    final componentTemplates = pathsMap.entries.expand<ComponentTemplate>(
+      (entry) {
+        final widgetsInPath = entry.value;
+
+        if (widgetsInPath.length == 1) {
+          final widgetInfo = widgetsInPath.first;
+          return [
+            ComponentTemplate(
+              widgetInfo.filename,
+              widgetInfo,
+            ),
+          ];
+        }
+
+        return List.generate(
+          widgetsInPath.length,
+          (index) {
+            final widgetInfo = widgetsInPath[index];
+            return ComponentTemplate(
+              '${widgetInfo.filename}_${index + 1}',
+              widgetInfo,
+            );
+          },
+        );
+      },
+    ).toList();
 
     await Future.wait(
       componentTemplates.map(
