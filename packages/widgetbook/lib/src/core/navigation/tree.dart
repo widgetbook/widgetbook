@@ -1,5 +1,6 @@
 import 'package:path/path.dart' as p;
 
+import '../docs/docs.dart';
 import '../framework/framework.dart';
 import 'tree_node.dart';
 
@@ -26,10 +27,11 @@ class Tree {
 
       lastNode.add(componentNode);
 
-      final docs = component.docs;
-      if (docs != null) {
+      final defaultDocs = config.docsBuilder?.call() ?? [];
+      final docs = component.docsBuilder?.call(defaultDocs) ?? defaultDocs;
+      if (docs.isNotEmpty) {
         componentNode.add(
-          TreeNode<String>('Docs', docs, componentNode),
+          TreeNode<List<DocBlock>>('Docs', docs, componentNode),
         );
       }
 

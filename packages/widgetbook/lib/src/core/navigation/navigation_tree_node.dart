@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../docs/docs.dart';
 import '../framework/framework.dart';
 import '../state/state.dart';
-
 import 'category_tree_tile.dart';
 import 'folder_tree_tile.dart';
 import 'tree_node.dart';
@@ -48,7 +48,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
 
     // Whether or not the node is clickable and clicks trigger navigation
     final isClickable = switch (node) {
-      TreeNode<String>() => true, // docs
+      TreeNode<List<DocBlock>>() => true,
       TreeNode<Scenario>() => true,
       TreeNode<Story>() => true,
       _ => false,
@@ -56,7 +56,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
 
     // Whether or not to show the expander icon
     final isTerminal = switch (node) {
-      TreeNode<String>() => true, // docs
+      TreeNode<List<DocBlock>>() => true,
       TreeNode<Scenario>() => true,
       TreeNode<Story>() => node.children.isEmpty,
       _ => false,

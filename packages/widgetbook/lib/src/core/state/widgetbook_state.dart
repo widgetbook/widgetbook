@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
+import '../docs/base.dart';
 import '../framework/framework.dart';
 import '../navigation/navigation.dart';
 import '../routing/routing.dart';
@@ -109,9 +110,9 @@ class WidgetbookState extends ChangeNotifier {
   }
 
   /// The current selected docs, if any.
-  String? get docs {
+  List<DocBlock>? get docs {
     final node = activeNode;
-    return node is TreeNode<String> ? node.data : null;
+    return node is TreeNode<List<DocBlock>> ? node.data : null;
   }
 
   @internal
