@@ -31,6 +31,16 @@ class WidgetInfoCollector
     // Skip abstract classes
     if (node.abstractKeyword != null) return false;
 
+    // Skip some annotated classes
+    const skippedAnnotations = {'internal', 'deprecated', 'visibleForTesting'};
+    final metadata = node.metadata;
+    for (final annotation in metadata) {
+      final name = annotation.name.name;
+      if (skippedAnnotations.contains(name)) {
+        return false;
+      }
+    }
+
     // Skip classes that have the ignore comment
     final firstToken = node.firstTokenAfterCommentAndMetadata;
     final comment = firstToken.precedingComments?.lexeme;
