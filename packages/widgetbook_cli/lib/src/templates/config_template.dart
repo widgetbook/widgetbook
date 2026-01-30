@@ -21,6 +21,7 @@ final config = Config(
       'Light': ThemeData.light(),
       'Dark': ThemeData.dark(),
     }),
+    AlignmentAddon(),
   ],
 );
 ''',
