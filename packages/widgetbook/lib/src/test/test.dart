@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../widgetbook.dart';
 import 'font_loader.dart';
 import 'scenario_metadata.dart';
+import 'semantics/semantics_tree_serializer.dart';
 
 /// The default location is already an ignored path by default.
 const outputDir = 'build/.widgetbook';
@@ -51,6 +52,8 @@ void testScenario(
       tester.view.physicalConstraints = targetViewport.viewConstraints;
       tester.view.devicePixelRatio = targetViewport.pixelRatio;
 
+      final semanticsHandle = tester.binding.ensureSemantics();
+
       final key = UniqueKey();
       await tester.pumpWidget(
         Builder(
@@ -64,6 +67,8 @@ void testScenario(
       final element = tester.element(find.byKey(key));
       final imageFuture = captureImage(element, 1);
 
+      final semanticsNode = tester.getSemantics(find.byKey(key));
+
       // Run on separate isolate as async operations cannot be run inside
       // testWidgets directly.
       final binding = TestWidgetsFlutterBinding.instance;
@@ -73,12 +78,18 @@ void testScenario(
         final imageBytes = byteData!.buffer.asUint8List();
 
         final jsonEncoder = const JsonEncoder.withIndent('  ');
+
+        final semanticsData = SemanticsTreeSerializer.toJson(
+          semanticsNode,
+        );
+
         final metadata = ScenarioMetadata(
           scenario: scenario,
           imageBytes: imageBytes,
           imageWidth: image.width,
           imageHeight: image.height,
           pixelRatio: targetViewport.pixelRatio,
+          semanticsData: semanticsData,
         );
 
         await metadata.directory.create(recursive: true);
@@ -94,6 +105,7 @@ void testScenario(
         image.dispose();
       });
 
+      semanticsHandle.dispose();
       addTearDown(tester.view.reset);
     },
   );
