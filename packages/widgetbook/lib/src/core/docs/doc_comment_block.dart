@@ -18,7 +18,7 @@ class DocCommentBlock extends DocBlock {
     final component = state.component;
 
     return TextDocBlock(
-      component!.docComments ?? 'No documentation available.',
+      component!.docComment ?? 'No documentation available.',
     );
   }
 }

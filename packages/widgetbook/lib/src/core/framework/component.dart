@@ -10,7 +10,7 @@ class Component<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     required this.name,
     this.path = '',
     this.docsBuilder,
-    this.docComments,
+    this.docComment,
     required this.stories,
   }) {
     stories.forEach((story) {
@@ -20,7 +20,7 @@ class Component<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
 
   final String name;
   final String path;
-  final String? docComments;
+  final String? docComment;
   final DocsBuilderFunction? docsBuilder;
   final List<Story<TWidget, TArgs>> stories;
 
