@@ -9,12 +9,14 @@ class ScenarioRecord {
     required this.story,
     required this.scenario,
     required this.image,
+    required this.semantics,
   });
 
   final StoryMetadata story;
   final ComponentMetadata component;
   final ImageMetadata image;
   final ScenarioMetadata scenario;
+  final Map<String, dynamic> semantics;
 
   // ignore: sort_constructors_first
   factory ScenarioRecord.fromJson(Map<String, dynamic> json) {
@@ -30,12 +32,14 @@ class ScenarioRecord {
     final image = ImageMetadata.fromJson(
       json['image'] as Map<String, dynamic>,
     );
+    final semantics = json['semantics'] as Map<String, dynamic>;
 
     return ScenarioRecord(
       component: component,
       story: story,
       scenario: scenario,
       image: image,
+      semantics: semantics,
     );
   }
 
@@ -45,6 +49,7 @@ class ScenarioRecord {
       'story': story.toJson(),
       'scenario': scenario.toJson(),
       'image': image.toJson(),
+      'semantics': semantics,
     };
   }
 }
