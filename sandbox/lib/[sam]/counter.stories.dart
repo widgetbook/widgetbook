@@ -6,7 +6,7 @@ import 'counter.dart';
 part 'counter.stories.g.dart';
 
 final meta = Meta<Counter>(
-  docs: (docs) => docs.replaceFirst<DocCommentBlock>(
+  docBuilder: (blocks) => blocks.replaceFirst<DocCommentBlock>(
     const TextDocBlock('''
 1. Defining a scenario with args
 2. Using the `run` callback to define interaction tests

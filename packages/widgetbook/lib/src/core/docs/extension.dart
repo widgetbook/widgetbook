@@ -2,7 +2,7 @@ import 'docs.dart';
 
 /// Extension methods for manipulating lists of [DocBlock]s.
 /// Provides utilities to insert or replace [DocBlock]s.
-extension DocsBlockListExtension on List<DocBlock> {
+extension DocBlockListExtension on List<DocBlock> {
   /// Inserts [block] after the first occurrence of a block of type [T].
   /// Returns the modified list for chaining.
   List<DocBlock> insertAfter<T extends DocBlock>(DocBlock block) {

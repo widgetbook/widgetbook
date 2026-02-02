@@ -6,7 +6,7 @@ part 'nullable_setting.stories.g.dart';
 
 final meta = Meta<NullableSetting>(
   path: 'widgetbook/settings',
-  docs: (docs) => docs.insertAfter<DocCommentBlock>(
+  docBuilder: (blocks) => blocks.insertAfter<DocCommentBlock>(
     const TextDocBlock('''
 1. Using a custom `path`
 2. Using `Story.modes` to use `ViewportMode` and limit the scenarios width

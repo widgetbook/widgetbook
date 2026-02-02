@@ -7,7 +7,7 @@ part 'generic_num.stories.g.dart';
 
 // ignore: strict_raw_type
 final meta = MetaWithArgs<GenericNum, GenericNumInput>(
-  docs: (docs) => docs.replaceFirst<DocCommentBlock>(
+  docBuilder: (blocks) => blocks.replaceFirst<DocCommentBlock>(
     const TextDocBlock('''
 1. Creating a generic Story with custom args
 '''),

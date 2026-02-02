@@ -7,7 +7,7 @@ import 'counter.stories.dart' as counter;
 part 'controls.stories.g.dart';
 
 final meta = Meta<Controls>(
-  docs: (docs) => docs.replaceFirst<DocCommentBlock>(
+  docBuilder: (blocks) => blocks.replaceFirst<DocCommentBlock>(
     const TextDocBlock(
       'Testing out the navigation to other stories and docs.',
     ),

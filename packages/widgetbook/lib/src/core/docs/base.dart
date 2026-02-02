@@ -8,9 +8,9 @@ import 'docs.dart';
 /// Used to customize or transform the documentation blocks shown for a
 /// component in Widgetbook.
 ///
-/// See [DocsBlockListExtension] for methods to help manipulate the [docs]
+/// See [DocBlockListExtension] for methods to help manipulate the [blocks]
 /// list.
-typedef DocsBuilderFunction = List<DocBlock> Function(List<DocBlock> docs);
+typedef DocBuilderFunction = List<DocBlock> Function(List<DocBlock> blocks);
 
 /// Abstract base class for all documentation blocks in Widgetbook.
 ///

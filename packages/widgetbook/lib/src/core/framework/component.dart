@@ -21,7 +21,7 @@ class Component<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   final String name;
   final String path;
   final String? docComment;
-  final DocsBuilderFunction? docsBuilder;
+  final DocBuilderFunction? docsBuilder;
   final List<Story<TWidget, TArgs>> stories;
 
   String get fullPath => p.join(path, name);
