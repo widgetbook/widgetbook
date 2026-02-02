@@ -18,9 +18,11 @@ class StoryDocBlock extends DocBlock {
     return ComposerDocBlock(
       children: [
         SubtitleDocBlock(title: story.name),
-        story.buildWithConfig(
-          context,
-          WidgetbookState.of(context).config,
+        WidgetDocBlock(
+          story.buildWithConfig(
+            context,
+            WidgetbookState.of(context).config,
+          ),
         ),
         if (args.isNotEmpty) ArgsDocBlock(args: args),
       ],

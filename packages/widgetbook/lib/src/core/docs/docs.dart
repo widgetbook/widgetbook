@@ -9,3 +9,4 @@ export 'story_block.dart';
 export 'subtitle_block.dart';
 export 'text_block.dart';
 export 'title_block.dart';
+export 'widget_block.dart';
