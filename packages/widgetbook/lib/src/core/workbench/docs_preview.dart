@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../widgetbook.dart';
+import '../docs/docs.dart';
+import '../state/state.dart';
 
 class DocsPreview extends StatelessWidget {
   const DocsPreview({super.key});

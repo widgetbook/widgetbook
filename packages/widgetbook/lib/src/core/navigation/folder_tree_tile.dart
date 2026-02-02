@@ -3,7 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-import '../../../widgetbook.dart';
+import '../docs/docs.dart';
+import '../framework/framework.dart';
 import '../theme/theme.dart';
 import 'icons/component_icon.dart';
 import 'icons/expander_icon.dart';
