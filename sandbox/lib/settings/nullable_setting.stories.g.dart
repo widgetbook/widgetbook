@@ -19,8 +19,8 @@ typedef _Args = NullableSettingArgs;
 final NullableSettingComponent = Component<NullableSetting, NullableSettingArgs>(
   name: meta.name ?? 'NullableSetting',
   path: meta.path ?? 'settings',
-  docsBuilder: meta.docs,
-  docComments:
+  docsBuilder: meta.docsBuilder,
+  docComment:
       'A widget that represents a nullable configuration option in Widgetbook.',
   stories: [$Default..$generatedName = 'Default'],
 );

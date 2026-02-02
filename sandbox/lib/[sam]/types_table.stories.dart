@@ -6,7 +6,7 @@ import 'types_table.dart';
 part 'types_table.stories.g.dart';
 
 final meta = Meta<TypesTable>(
-  docBuilder: (blocks) => blocks.replaceFirst<DocCommentBlock>(
+  docsBuilder: (blocks) => blocks.replaceFirst<DocCommentBlock>(
     const TextDocBlock('''
 1. All possible combinations of parameters (required, optional, with default values)
 2. Defining scenarios with different args

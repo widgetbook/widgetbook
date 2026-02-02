@@ -10,7 +10,7 @@ import 'docs.dart';
 ///
 /// See [DocBlockListExtension] for methods to help manipulate the [blocks]
 /// list.
-typedef DocBuilderFunction = List<DocBlock> Function(List<DocBlock> blocks);
+typedef DocsBuilderFunction = List<DocBlock> Function(List<DocBlock> blocks);
 
 /// Abstract base class for all documentation blocks in Widgetbook.
 ///

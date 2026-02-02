@@ -19,8 +19,8 @@ typedef _Args = NumericBadgeInputArgs;
 final LabelBadgeComponent = Component<LabelBadge, NumericBadgeInputArgs>(
   name: meta.name ?? 'LabelBadge',
   path: meta.path ?? '[sam]',
-  docsBuilder: meta.docs,
-  docComments: null,
+  docsBuilder: meta.docsBuilder,
+  docComment: null,
   stories: [
     $Primary..$generatedName = 'Primary',
     $Secondary..$generatedName = 'Secondary',

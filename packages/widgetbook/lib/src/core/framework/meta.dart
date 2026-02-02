@@ -8,12 +8,12 @@ class Meta<TWidget extends Widget> {
   const Meta({
     this.name,
     this.path,
-    this.docBuilder,
+    this.docsBuilder,
   });
 
   final String? name;
   final String? path;
-  final DocBuilderFunction? docBuilder;
+  final DocsBuilderFunction? docsBuilder;
 }
 
 /// Same as [Meta] but for custom [StoryArgs].
@@ -21,6 +21,6 @@ class MetaWithArgs<TWidget extends Widget, TArgs> extends Meta<TWidget> {
   const MetaWithArgs({
     super.name,
     super.path,
-    super.docBuilder,
+    super.docsBuilder,
   });
 }

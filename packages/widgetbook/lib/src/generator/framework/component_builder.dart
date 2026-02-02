@@ -59,8 +59,8 @@ class ComponentBuilder {
                   ),
               'docsBuilder': refer(
                 'meta',
-              ).property('docs'),
-              'docComments': widgetType.element?.documentationComment != null
+              ).property('docsBuilder'),
+              'docComment': widgetType.element?.documentationComment != null
                   ? literalString(
                       widgetType.element!.documentationComment!.replaceAll(
                         '/// ',
