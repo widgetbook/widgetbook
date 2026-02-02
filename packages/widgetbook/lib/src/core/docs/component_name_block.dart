@@ -8,12 +8,12 @@ import 'docs.dart';
 /// documentation panel.
 ///
 /// Used to provide a title for the documentation page.
-class ComponentNameBlock extends DocBlock {
-  const ComponentNameBlock({super.key});
+class ComponentNameDocBlock extends DocBlock {
+  const ComponentNameDocBlock({super.key});
 
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
-    return TitleBlock(title: state.component!.name);
+    return TitleDocBlock(title: state.component!.name);
   }
 }

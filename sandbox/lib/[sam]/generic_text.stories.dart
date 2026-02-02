@@ -7,8 +7,8 @@ part 'generic_text.stories.g.dart';
 
 // ignore: strict_raw_type
 final meta = Meta<GenericText>(
-  docs: (docs) => docs.replaceFirst<DocCommentsBlock>(
-    const TextBlock('''
+  docs: (docs) => docs.replaceFirst<DocCommentBlock>(
+    const TextDocBlock('''
 1. Creating a generic Story
 2. Using different types for the generic parameters
 '''),

@@ -6,8 +6,8 @@ import 'docs.dart';
 /// in the documentation panel.
 ///
 /// Used to group and layout other [DocBlock]s.
-class ComposerBlock extends DocBlock {
-  const ComposerBlock({super.key, required this.children});
+class ComposerDocBlock extends DocBlock {
+  const ComposerDocBlock({super.key, required this.children});
 
   final List<Widget> children;
 

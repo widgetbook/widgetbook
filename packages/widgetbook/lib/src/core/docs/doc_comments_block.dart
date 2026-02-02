@@ -9,15 +9,15 @@ import 'docs.dart';
 ///
 /// Documentation comments are extracted from the source code when running the
 /// build_runner.
-class DocCommentsBlock extends DocBlock {
-  const DocCommentsBlock({super.key});
+class DocCommentBlock extends DocBlock {
+  const DocCommentBlock({super.key});
 
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
     final component = state.component;
 
-    return TextBlock(
+    return TextDocBlock(
       component!.docComments ?? 'No documentation available.',
     );
   }

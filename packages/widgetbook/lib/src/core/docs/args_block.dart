@@ -7,8 +7,8 @@ import 'docs.dart';
 /// [Arg.name], [Arg.value], and [Arg.description].
 ///
 /// Used to document the configurable arguments of a story.
-class ArgsBlock extends DocBlock {
-  const ArgsBlock({super.key, required this.args});
+class ArgsDocBlock extends DocBlock {
+  const ArgsDocBlock({super.key, required this.args});
 
   final List<Arg<dynamic>> args;
 

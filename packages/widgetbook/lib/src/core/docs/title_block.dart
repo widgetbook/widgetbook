@@ -5,8 +5,8 @@ import 'docs.dart';
 /// A [DocBlock] that displays a title in the documentation panel.
 ///
 /// Used to provide a main heading for components or documentation sections.
-class TitleBlock extends DocBlock {
-  const TitleBlock({super.key, required this.title});
+class TitleDocBlock extends DocBlock {
+  const TitleDocBlock({super.key, required this.title});
 
   final String title;
 

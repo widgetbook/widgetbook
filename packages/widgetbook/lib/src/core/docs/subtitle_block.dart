@@ -6,8 +6,8 @@ import 'docs.dart';
 /// panel.
 ///
 /// Used to provide section headings for stories or other documentation blocks.
-class SubtitleBlock extends DocBlock {
-  const SubtitleBlock({super.key, required this.title});
+class SubtitleDocBlock extends DocBlock {
+  const SubtitleDocBlock({super.key, required this.title});
 
   final String title;
 

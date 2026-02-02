@@ -41,9 +41,9 @@ Widget cupertinoAppBuilder(BuildContext context, Widget child) {
 
 List<DocBlock> defaultDocsBuilder() {
   return [
-    const ComponentNameBlock(),
-    const DocCommentsBlock(),
-    const StoriesBlock(),
+    const ComponentNameDocBlock(),
+    const DocCommentBlock(),
+    const StoriesDocBlock(),
   ];
 }
 

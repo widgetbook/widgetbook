@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'docs.dart';
 
 /// A [DocBlock] that displays a block of text in the documentation panel.
-class TextBlock extends DocBlock {
-  const TextBlock(this.text, {super.key});
+class TextDocBlock extends DocBlock {
+  const TextDocBlock(this.text, {super.key});
 
   final String text;
 

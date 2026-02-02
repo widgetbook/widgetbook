@@ -13,7 +13,7 @@ class DocsPreview extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          child: ComposerBlock(children: state.docs!),
+          child: ComposerDocBlock(children: state.docs!),
         ),
       ),
     );
