@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../widgetbook.dart';
+import '../framework/framework.dart';
+import 'docs.dart';
 
 /// A [DocBlock] that displays a table of [Arg]s for a [Story], including
 /// [Arg.name], [Arg.value], and [Arg.description].

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../widgetbook.dart';
+import 'docs.dart';
 
 /// A [DocBlock] that displays a title in the documentation panel.
 ///

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../widgetbook.dart';
+import 'docs.dart';
 
 /// A [DocBlock] that displays text in subtitle styling in the documentation
 /// panel.

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../widgetbook.dart';
+import '../framework/framework.dart';
+import '../state/state.dart';
+import 'docs.dart';
 
 /// A [DocBlock] that displays a single [Story] and its [StoryArgs].
 ///

@@ -1,6 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-import '../../../widgetbook.dart';
+import '../framework/component.dart';
+import '../framework/story.dart';
+import '../state/state.dart';
+import 'docs.dart';
 
 /// A [DocBlock] that displays the [Story] defined first in the list of stories
 /// of the current [Component].

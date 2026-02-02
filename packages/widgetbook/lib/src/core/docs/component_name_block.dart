@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../widgetbook.dart';
+import '../framework/component.dart';
+import '../state/state.dart';
+import 'docs.dart';
 
 /// A [DocBlock] that displays the name of the current [Component] in the
 /// documentation panel.

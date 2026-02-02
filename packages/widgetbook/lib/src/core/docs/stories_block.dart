@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../../../widgetbook.dart';
+import '../state/state.dart';
+import 'docs.dart';
 
 /// A [DocBlock] that displays all stories for the current component.
 ///

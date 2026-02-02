@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../widgetbook.dart';
+import 'docs.dart';
 
 /// A [DocBlock] that displays a block of text in the documentation panel.
 class TextBlock extends DocBlock {

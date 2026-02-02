@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 
-import '../../../widgetbook.dart';
+import '../framework/component.dart';
+import '../state/state.dart';
+import 'docs.dart';
 
 /// A [DocBlock] that displays the documentation comments for the current
 /// [Component].
