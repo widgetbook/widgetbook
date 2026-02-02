@@ -27,7 +27,7 @@ class Tree {
 
       lastNode.add(componentNode);
 
-      final defaultDocs = config.docBuilder?.call() ?? [];
+      final defaultDocs = config.docsBuilder?.call() ?? [];
       final docs = component.docsBuilder?.call(defaultDocs) ?? defaultDocs;
       if (docs.isNotEmpty) {
         componentNode.add(

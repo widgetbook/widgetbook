@@ -39,7 +39,7 @@ Widget cupertinoAppBuilder(BuildContext context, Widget child) {
   );
 }
 
-List<DocBlock> defaultDocBuilder() {
+List<DocBlock> defaultDocsBuilder() {
   return [
     const ComponentNameDocBlock(),
     const DocCommentBlock(),
@@ -61,7 +61,7 @@ class Config {
     this.header,
     this.scrollBehavior = const MaterialScrollBehavior(),
     this.scenarios = const [],
-    this.docBuilder = defaultDocBuilder,
+    this.docsBuilder = defaultDocsBuilder,
   });
 
   /// The initial route for that will be used on first startup.
@@ -126,6 +126,6 @@ class Config {
   /// The list can be further customized at the [Component] level using
   /// the [Meta.docsBuilder] method.
   ///
-  /// If not provided, defaults to [defaultDocBuilder].
-  final List<DocBlock> Function()? docBuilder;
+  /// If not provided, defaults to [defaultDocsBuilder].
+  final List<DocBlock> Function()? docsBuilder;
 }
