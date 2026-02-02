@@ -7,7 +7,7 @@ import 'label_badge.dart';
 part 'label_badge.stories.g.dart';
 
 final meta = MetaWithArgs<LabelBadge, NumericBadgeInput>(
-  docsBuilder: (blocks) => blocks.replaceFirst<DocCommentBlock>(
+  docsBuilder: (blocks) => blocks.replaceFirst<DartCommentDocBlock>(
     const TextDocBlock('''
 1. Using custom args via `MetaWithArgs`
 2. Creating defaults for setup and builder

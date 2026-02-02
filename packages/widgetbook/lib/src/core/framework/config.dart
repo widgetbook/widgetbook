@@ -42,7 +42,7 @@ Widget cupertinoAppBuilder(BuildContext context, Widget child) {
 List<DocBlock> defaultDocsBuilder() {
   return [
     const ComponentNameDocBlock(),
-    const DocCommentBlock(),
+    const DartCommentDocBlock(),
     const StoriesDocBlock(),
   ];
 }

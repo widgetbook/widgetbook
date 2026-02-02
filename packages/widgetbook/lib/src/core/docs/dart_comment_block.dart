@@ -9,8 +9,8 @@ import 'docs.dart';
 ///
 /// Documentation comments are extracted from the source code when running the
 /// build_runner.
-class DocCommentBlock extends DocBlock {
-  const DocCommentBlock({super.key});
+class DartCommentDocBlock extends DocBlock {
+  const DartCommentDocBlock({super.key});
 
   @override
   Widget build(BuildContext context) {
