@@ -40,7 +40,10 @@ class ScenarioMetadata {
   }
 
   String baseFilename(String extension) {
-    return '${directory.path}${scenario.name}.$extension';
+    // Remove slash from scenario name to avoid creating subdirectories
+    // and to ensure valid file names.
+    final sanitizedName = scenario.name.replaceAll('/', '_');
+    return '${directory.path}${sanitizedName}.$extension';
   }
 
   Map<String, dynamic> toJson() {
