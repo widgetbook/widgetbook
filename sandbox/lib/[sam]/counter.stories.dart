@@ -5,11 +5,13 @@ import 'counter.dart';
 
 part 'counter.stories.g.dart';
 
-const meta = Meta<Counter>(
-  docs: '''
+final meta = Meta<Counter>(
+  docsBuilder: (blocks) => blocks.replaceFirst<DartCommentDocBlock>(
+    const TextDocBlock('''
 1. Defining a scenario with args
 2. Using the `run` callback to define interaction tests
-''',
+'''),
+  ),
 );
 
 final $Default = _Story(

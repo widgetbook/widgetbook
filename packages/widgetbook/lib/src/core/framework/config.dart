@@ -4,6 +4,7 @@ library;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../docs/docs.dart';
 import '../state/default_home_page.dart';
 import 'framework.dart';
 
@@ -38,6 +39,14 @@ Widget cupertinoAppBuilder(BuildContext context, Widget child) {
   );
 }
 
+List<DocBlock> defaultDocsBuilder() {
+  return [
+    const ComponentNameDocBlock(),
+    const DartCommentDocBlock(),
+    const StoriesDocBlock(),
+  ];
+}
+
 class Config {
   const Config({
     this.initialRoute = '/',
@@ -52,6 +61,7 @@ class Config {
     this.header,
     this.scrollBehavior = const MaterialScrollBehavior(),
     this.scenarios = const [],
+    this.docsBuilder = defaultDocsBuilder,
   });
 
   /// The initial route for that will be used on first startup.
@@ -109,4 +119,13 @@ class Config {
   ///
   /// See also: https://docs.flutter.dev/release/breaking-changes/default-scroll-behavior-drag
   final ScrollBehavior? scrollBehavior;
+
+  /// A builder function that returns the list of [DocBlock]s to be
+  /// displayed in the documentation panel.
+  ///
+  /// The list can be further customized at the [Component] level using
+  /// the [Meta.docsBuilder] method.
+  ///
+  /// If not provided, defaults to [defaultDocsBuilder].
+  final List<DocBlock> Function()? docsBuilder;
 }

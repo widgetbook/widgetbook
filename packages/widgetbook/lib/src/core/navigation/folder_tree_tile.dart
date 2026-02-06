@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+import '../docs/docs.dart';
 import '../framework/framework.dart';
 import '../theme/theme.dart';
 import 'icons/component_icon.dart';
@@ -76,7 +77,7 @@ class FolderTreeTile extends StatelessWidget {
                 TreeNode<Story>() => const StoryIcon(),
                 TreeNode<Scenario>() => const ScenarioIcon(),
                 TreeNode<Component>() => const ComponentIcon(),
-                TreeNode<String>() => const Icon(Icons.book, size: 16),
+                TreeNode<List<DocBlock>>() => const Icon(Icons.book, size: 16),
                 TreeNode<Null>() => const Icon(Icons.folder, size: 16),
                 _ => const SizedBox(),
               },

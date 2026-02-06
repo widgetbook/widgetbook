@@ -6,10 +6,12 @@ import 'generic_num.dart';
 part 'generic_num.stories.g.dart';
 
 // ignore: strict_raw_type
-const meta = MetaWithArgs<GenericNum, GenericNumInput>(
-  docs: '''
+final meta = MetaWithArgs<GenericNum, GenericNumInput>(
+  docsBuilder: (blocks) => blocks.replaceFirst<DartCommentDocBlock>(
+    const TextDocBlock('''
 1. Creating a generic Story with custom args
-''',
+'''),
+  ),
 );
 
 final defaults = _Defaults(

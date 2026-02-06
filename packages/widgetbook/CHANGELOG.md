@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FEAT**: Add `DocBlock` widget for improved documentation support. ([#1820](https://github.com/widgetbook/widgetbook/pull/1820))
 - **FEAT**: Support semantics testing. ([#1809](https://github.com/widgetbook/widgetbook/pull/1809))
 - **BREAKING**: Change generated file extension from `*.book.dart` to `*.g.dart`. ([#1811](https://github.com/widgetbook/widgetbook/pull/1811))
 - **FEAT**: Add `style` to `IntArg`, `DoubleArg`, `SingleArg` and `EnumArg` to support different input styles (e.g. sliders, input fields, dropdowns and segmented buttons). ([#1792](https://github.com/widgetbook/widgetbook/pull/1792))

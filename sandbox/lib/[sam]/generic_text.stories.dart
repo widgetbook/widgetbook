@@ -6,11 +6,13 @@ import 'generic_text.dart';
 part 'generic_text.stories.g.dart';
 
 // ignore: strict_raw_type
-const meta = Meta<GenericText>(
-  docs: '''
+final meta = Meta<GenericText>(
+  docsBuilder: (blocks) => blocks.replaceFirst<DartCommentDocBlock>(
+    const TextDocBlock('''
 1. Creating a generic Story
 2. Using different types for the generic parameters
-''',
+'''),
+  ),
 );
 
 final $IntStory = _Story<int>(

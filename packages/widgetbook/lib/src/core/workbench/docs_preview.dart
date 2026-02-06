@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../docs/docs.dart';
 import '../state/state.dart';
 
 class DocsPreview extends StatelessWidget {
@@ -8,16 +9,13 @@ class DocsPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
-    final component = state.component!;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(component.name),
-        centerTitle: false,
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: SelectableText(state.docs!),
+        child: SingleChildScrollView(
+          child: ComposerDocBlock(children: state.docs!),
+        ),
       ),
     );
   }

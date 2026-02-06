@@ -19,7 +19,8 @@ typedef _Args = TypesTableArgs;
 final TypesTableComponent = Component<TypesTable, TypesTableArgs>(
   name: meta.name ?? 'TypesTable',
   path: meta.path ?? '[sam]',
-  docs: meta.docs ?? null,
+  docsBuilder: meta.docsBuilder,
+  docComment: null,
   stories: [$Default..$generatedName = 'Default'],
 );
 typedef TypesTableScenario = Scenario<TypesTable, TypesTableArgs>;
