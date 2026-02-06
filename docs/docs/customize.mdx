@@ -1,0 +1,87 @@
+# Customize Documentation
+
+Widgetbook's documentation system is fully customizable through the `docsBuilder` function. 
+You can customize documentation at two levels: globally for all components, or individually for specific components.
+
+## Global Customization
+
+### Basic Example
+
+```dart
+import 'package:widgetbook/widgetbook.dart';
+
+final config = Config(
+  components: components,
+  docsBuilder: () => [
+    const ComponentNameDocBlock(),
+    const PrimaryStoryDocBlock(),
+  ],
+  addons: [
+    // Your addons here
+  ],
+);
+```
+
+## Component-Level Customization
+
+Override documentation for specific components via the `docsBuilder` parameter in the `Meta` tag.
+
+### Basic Override
+
+```dart
+import 'package:widgetbook/widgetbook.dart';
+
+final meta = Meta<MyButton>(
+  docsBuilder: (blocks) => [
+    const ComponentNameDocBlock(),
+    const TextDocBlock('A custom button component for our app.'),
+    const StoriesDocBlock(),
+  ],
+);
+```
+
+### Modifying Default Blocks
+
+The `docsBuilder` function receives the default blocks list, allowing you to modify it:
+
+```dart
+final meta = Meta<MyButton>(
+  docsBuilder: (blocks) => blocks.replaceFirst<DartCommentDocBlock>(
+    const TextDocBlock('Custom description for this specific component.'),
+  ),
+);
+```
+
+### Adding Blocks
+
+Add blocks before or after existing ones using extension methods:
+
+```dart
+final meta = Meta<MyButton>(
+  docsBuilder: (blocks) => blocks
+    ..insertAfter<ComponentNameDocBlock>(
+      const TextDocBlock('⭐ This is our most popular component!'),
+    ),
+);
+```
+
+### Complex Customization
+
+Combine multiple modifications:
+
+```dart
+final meta = Meta<MyComplexWidget>(
+  docsBuilder: (blocks) => blocks
+    ..insertBefore<DartCommentDocBlock>(
+      WidgetDocBlock(
+        Image.asset('assets/diagram.png'),
+      ),
+    )
+    ..replaceFirst<StoriesDocBlock>(
+      const PrimaryStoryDocBlock(), // Only show primary example
+    )
+    ..insertAfter<PrimaryStoryDocBlock>(
+      const TextDocBlock('For more examples, see our style guide.'),
+    ),
+);
+```

@@ -108,6 +108,28 @@
       ]
     },
     {
+      "group": "Docs",
+      "tab": "docs",
+      "pages": [
+        {
+          "title": "Overview",
+          "href": "/docs/overview"
+        },
+        {
+          "title": "DocBlocks",
+          "href": "/docs/doc-blocks"
+        },
+        {
+          "title": "Custom Blocks",
+          "href": "/docs/custom-blocks"
+        },
+        {
+          "title": "Customize",
+          "href": "/docs/customize"
+        }
+      ]
+    },
+    {
       "group": "Essentials",
       "tab": "docs",
       "pages": [

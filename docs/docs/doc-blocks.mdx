@@ -1,0 +1,108 @@
+# DocBlocks
+
+DocBlocks are composable widgets that render different parts of your component documentation. 
+Each block serves a specific purpose including displaying component names, doc comments, live story examples, argument tables, and more.
+
+## Core DocBlocks
+
+### ComponentNameDocBlock
+
+Displays the name of the current component as a title in the documentation panel.
+
+**Usage:**
+```dart
+const ComponentNameDocBlock()
+```
+
+### DartCommentDocBlock
+
+Displays the Dart documentation comments for the current component. 
+Documentation comments are automatically extracted from your source code by the build_runner.
+
+**Usage:**
+```dart
+const DartCommentDocBlock()
+```
+
+### StoriesDocBlock
+
+Displays all stories defined for the current component including their names, live previews, and a table displaying the default `Arg` values. 
+
+**Usage:**
+```dart
+const StoriesDocBlock()
+```
+
+### PrimaryStoryDocBlock
+
+Displays only the first story for the component. Useful for highlighting the main example.
+
+**Usage:**
+```dart
+const PrimaryStoryDocBlock()
+```
+
+## Text & Layout DocBlocks
+
+### TitleDocBlock
+
+Displays text as a large title using `headlineLarge` text style.
+
+**Usage:**
+```dart
+TitleDocBlock(title: 'My Component')
+```
+
+### SubtitleDocBlock
+
+Displays text as a medium-sized subtitle using `headlineMedium` text style.
+
+**Usage:**
+```dart
+SubtitleDocBlock(title: 'Examples')
+```
+
+### TextDocBlock
+
+Displays a block of text using the default body text style.
+
+**Usage:**
+```dart
+const TextDocBlock('This is a description of my component.')
+```
+
+## Composition
+
+### ComposerDocBlock
+
+Stacks multiple `DocBlock` widgets vertically with consistent spacing. 
+
+**Usage:**
+```dart
+ComposerDocBlock(
+  children: [
+    const TitleDocBlock(title: 'Button'),
+    const TextDocBlock('A customizable button component.'),
+    const PrimaryStoryDocBlock(),
+  ],
+)
+```
+
+### WidgetDocBlock
+
+Embeds any custom Flutter widget into your documentation.
+
+**Usage:**
+```dart
+WidgetDocBlock(
+  Container(
+    padding: const EdgeInsets.all(16),
+    color: Colors.blue.shade50,
+    child: const Text('Custom widget in docs'),
+  ),
+)
+```
+
+## Creating Custom DocBlocks
+
+You can create your own `DocBlock` by following the steps outlined in the [Custom Blocks](/docs/custom-blocks) guide.
