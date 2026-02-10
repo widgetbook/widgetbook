@@ -1,4 +1,4 @@
-## Unreleased
+## 3.21.0
 
 - **BREAKING**: Set minimum SDK version to 3.9.0 & minimum Flutter version to 3.35.0. ([#1803](https://github.com/widgetbook/widgetbook/pull/1803))
 - **FIX**: Hide navigation tree items when search query has no matches; instead of showing the full tree. ([#1786](https://github.com/widgetbook/widgetbook/pull/1786) - by [@EArminjon](https://github.com/EArminjon))
