@@ -1,4 +1,4 @@
-## Unreleased
+## 3.21.0
 
 - **BREAKING**: Set minimum SDK version to 3.9.0. ([#1803](https://github.com/widgetbook/widgetbook/pull/1803))
 - **REFACTOR**: Allow `analyzer` 10.x. ([#1805](https://github.com/widgetbook/widgetbook/pull/1805))
