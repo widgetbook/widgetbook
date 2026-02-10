@@ -31,7 +31,7 @@ dependencies:
   # To create custom AddonConfig(s) that use types from
   # the widgetbook package, we need to depend on the
   # annotation package.
-  widgetbook_annotation: ^3.9.0
+  widgetbook_annotation: ^3.10.0
 
 dev_dependencies:
   flutter_test:

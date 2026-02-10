@@ -24,7 +24,7 @@ dependencies:
   meta: ^1.7.0
   path: ^1.8.0
   source_gen: ^4.0.0
-  widgetbook_annotation: ^3.9.0
+  widgetbook_annotation: ^3.10.0
 
 dev_dependencies:
   dart_style: ^3.0.0
