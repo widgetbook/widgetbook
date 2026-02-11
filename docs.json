@@ -146,6 +146,10 @@
           "href": "/essentials/assets"
         },
         {
+          "title": "Fonts",
+          "href": "/essentials/fonts"
+        },
+        {
           "title": "Fields",
           "href": "/essentials/fields"
         }
@@ -385,6 +389,27 @@
             {
               "title": "Request a reviewer",
               "href": "/cloud/reviews/request-reviewer"
+            },
+            {
+              "title": "Required reviewers",
+              "href": "/cloud/reviews/required-reviewer"
+            },
+            {
+              "group": "Notifications",
+              "pages": [
+                {
+                  "title": "Email",
+                  "href": "/cloud/reviews/notifications/email"
+                },
+                {
+                  "title": "Slack",
+                  "href": "/cloud/reviews/notifications/slack"
+                }
+              ]
+            },
+            {
+              "title": "Limitations",
+              "href": "/cloud/reviews/limitations"
             }
           ]
         },
@@ -438,6 +463,10 @@
             {
               "title": "Upload builds",
               "href": "/cloud/guides/azure/upload"
+            },
+            {
+              "title": "Enforce reviews",
+              "href": "/cloud/guides/azure/enforce-reviews"
             },
             {
               "title": "Access builds from Azure",

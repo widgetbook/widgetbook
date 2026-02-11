@@ -8,6 +8,11 @@
 - **BREAKING**: Support Widgetbook v4 in `cloud build push` command. ([#1638](https://github.com/widgetbook/widgetbook/pull/1638))
 - **BREAKING**: Support Widgetbook v4 in `coverage` command. ([#1749](https://github.com/widgetbook/widgetbook/pull/1749))
 
+## 3.12.0
+
+- **BREAKING**: Set minimum SDK version to 3.9.0. ([#1803](https://github.com/widgetbook/widgetbook/pull/1803))
+- **REFACTOR**: Use `analyzer` 10.x. ([#1804](https://github.com/widgetbook/widgetbook/pull/1804))
+
 ## 3.11.1
 
 - **REFACTOR**: Allow `analyzer` 9.x. ([#1765](https://github.com/widgetbook/widgetbook/pull/1765))
