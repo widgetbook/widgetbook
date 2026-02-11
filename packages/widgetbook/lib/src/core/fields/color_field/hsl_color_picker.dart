@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
-import '../common/number_text_field.dart';
+import '../../../fields/common/number_text_field.dart';
 import 'opaque_color.dart';
 import 'opaque_color_picker.dart';
 

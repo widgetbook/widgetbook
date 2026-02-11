@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-import '../common/number_text_field.dart';
+import '../../../fields/common/number_text_field.dart';
 import 'color_picker_dialog.dart';
 import 'color_space.dart';
 import 'opaque_color.dart';
