@@ -89,6 +89,38 @@ void main() {
         // drop down text to be edited.
         variant: TargetPlatformVariant.only(TargetPlatform.macOS),
       );
+
+      testWidgets(
+        'given an arg with an initial value, '
+        'when [Arg.update] is called with a new value, '
+        'then the dropdown displays the updated value',
+        (tester) async {
+          final arg = SingleArg<int>(
+            1,
+            name: 'dropdown',
+            values: [1, 2, 3],
+          );
+
+          await tester.pumpWidgetWithState(
+            state: WidgetbookState(),
+            builder: (context) => arg.buildFields(context),
+          );
+
+          var widget = tester.widget<DropdownMenu<int>>(
+            find.byType(DropdownMenu<int>),
+          );
+          expect(widget.initialSelection, equals(1));
+
+          final context = tester.element(find.byType(DropdownMenu<int>));
+          arg.update(context, 3);
+          await tester.pumpAndSettle();
+
+          widget = tester.widget<DropdownMenu<int>>(
+            find.byType(DropdownMenu<int>),
+          );
+          expect(widget.initialSelection, equals(3));
+        },
+      );
     },
   );
 }
