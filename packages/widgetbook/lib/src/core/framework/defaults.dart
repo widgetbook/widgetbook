@@ -5,8 +5,8 @@ import 'story_args.dart';
 
 class Defaults<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   const Defaults({
-    required this.setup,
-    required this.builder,
+    this.setup,
+    this.builder,
   });
 
   final SetupBuilder<TWidget, TArgs>? setup;
