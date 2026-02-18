@@ -8,6 +8,10 @@
 - **BREAKING**: Support Widgetbook v4 in `cloud build push` command. ([#1638](https://github.com/widgetbook/widgetbook/pull/1638))
 - **BREAKING**: Support Widgetbook v4 in `coverage` command. ([#1749](https://github.com/widgetbook/widgetbook/pull/1749))
 
+## 3.13.0
+
+- **BREAKING**: Set minimum SDK version to 3.10.0. ([#1803](https://github.com/widgetbook/widgetbook/pull/1839))
+
 ## 3.12.0
 
 - **BREAKING**: Set minimum SDK version to 3.9.0. ([#1803](https://github.com/widgetbook/widgetbook/pull/1803))

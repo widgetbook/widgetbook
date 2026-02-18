@@ -41,6 +41,11 @@ sealed class NumSliderField<T extends num> extends Field<T> {
     final maxLabel = toParam(max);
     final minLabel = toParam(min);
 
+    final textStyle = DefaultTextStyle.of(context).style;
+    final minSize = _getTextSize(minLabel, textStyle);
+    final maxSize = _getTextSize(maxLabel, textStyle);
+    final widestSize = minSize.width > maxSize.width ? minSize : maxSize;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       spacing:
@@ -65,11 +70,7 @@ sealed class NumSliderField<T extends num> extends Field<T> {
           ),
         ),
         SizedBox(
-          width: _getTextSize(
-            // Min label can be larger than max in case of negative numbers
-            maxLabel.length > minLabel.length ? maxLabel : minLabel,
-            DefaultTextStyle.of(context).style,
-          ).width,
+          width: widestSize.width,
           child: Text(
             label,
             textAlign: TextAlign.end,
