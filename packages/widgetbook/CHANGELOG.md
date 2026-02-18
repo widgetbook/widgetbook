@@ -1,5 +1,6 @@
-## Unreleased
+## 3.22.0
 
+- **FIX**: Ensure slider label use max size ([#1823](https://github.com/widgetbook/widgetbook/pull/1823) - by [@EArminjon](https://github.com/EArminjon))
 - **BREAKING**: Set minimum SDK version to 3.10.0 & minimum Flutter version to 3.38.0. ([#1803](https://github.com/widgetbook/widgetbook/pull/1839))
 
 ## 3.21.0
