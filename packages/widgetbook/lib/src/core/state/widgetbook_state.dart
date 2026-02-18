@@ -2,7 +2,6 @@
 /// @docImport 'package:flutter/material.dart';
 library;
 
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
@@ -121,18 +120,24 @@ class WidgetbookState extends ChangeNotifier {
   }
 
   /// A [Uri] representation of the current state.
-  Uri get uri {
+  Uri get uri => toAppRouteConfig().uri;
+
+  @internal
+  AppRouteConfig toAppRouteConfig() {
     final queryParameters = {
-      if (path != null) 'path': path,
-      if (query?.isNotEmpty ?? false) 'q': query,
-      if (panels?.isNotEmpty ?? false)
-        'panels': panels?.map((x) => x.name).join(','),
+      if (path != null) 'path': path!,
+      if (query?.isNotEmpty ?? false) 'q': query!,
+      if (previewMode) 'preview': '',
+      if (!previewMode && (panels?.isNotEmpty ?? false))
+        'panels': panels!.map((panel) => panel.name).join(','),
       for (final group in queryGroups.entries) group.key: group.value.toParam(),
     };
 
-    return Uri(
-      path: '/',
-      queryParameters: queryParameters.isEmpty ? null : queryParameters,
+    return AppRouteConfig(
+      uri: Uri(
+        path: '/',
+        queryParameters: queryParameters.isEmpty ? null : queryParameters,
+      ),
     );
   }
 
@@ -156,14 +161,6 @@ class WidgetbookState extends ChangeNotifier {
   void notifyListeners() {
     super.notifyListeners();
 
-    // Do not sync route if the panels are not showing up,
-    // since the widget state is already controlled by using the URL.
-    if (canShowPanel(LayoutPanel.navigation) ||
-        canShowPanel(LayoutPanel.addons) ||
-        canShowPanel(LayoutPanel.args)) {
-      _syncRouteInformation();
-    }
-
     config.integrations?.forEach(
       (integration) => integration.onChange(this),
     );
@@ -174,13 +171,6 @@ class WidgetbookState extends ChangeNotifier {
     if (previewMode) return false;
     if (panels == null) return true;
     return panels!.contains(panel);
-  }
-
-  /// Syncs this with the router's location using [SystemNavigator].
-  void _syncRouteInformation() {
-    SystemNavigator.routeInformationUpdated(
-      uri: uri,
-    );
   }
 
   /// Update the field with the given [fieldName] within the query group with

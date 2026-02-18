@@ -16,14 +16,15 @@ void main() {
         'then the current configuration has the exact location',
         () {
           final uri = Uri.parse('/?path=use-case');
+          final state = WidgetbookState();
 
           final delegate = AppRouterDelegate(
             uri: uri,
-            state: MockWidgetbookState(),
+            state: state,
           );
 
           expect(
-            delegate.currentConfiguration!.uri,
+            delegate.currentConfiguration.uri,
             uri,
           );
         },

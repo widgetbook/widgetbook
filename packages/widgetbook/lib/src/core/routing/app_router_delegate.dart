@@ -10,29 +10,26 @@ import 'app_route_config.dart';
 class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRouteConfig> {
   AppRouterDelegate({
-    required this.uri,
+    required Uri uri,
     required this.state,
-  }) : _navigatorKey = GlobalKey<NavigatorState>(),
-       _configuration = AppRouteConfig(
-         uri: uri,
-       );
+  }) {
+    state.updateFromRouteConfig(
+      AppRouteConfig(uri: uri),
+    );
+    this.state.addListener(notifyListeners);
+  }
 
-  final Uri uri;
   final WidgetbookState state;
-  final GlobalKey<NavigatorState> _navigatorKey;
-  AppRouteConfig _configuration;
 
   @override
-  AppRouteConfig? get currentConfiguration => _configuration;
+  AppRouteConfig get currentConfiguration => state.toAppRouteConfig();
 
   @override
-  GlobalKey<NavigatorState>? get navigatorKey => _navigatorKey;
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Future<void> setNewRoutePath(AppRouteConfig configuration) async {
-    _configuration = configuration;
     state.updateFromRouteConfig(configuration);
-    notifyListeners();
   }
 
   @override
@@ -42,14 +39,19 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
       onDidRemovePage: (_) => {},
       pages: [
         MaterialPage(
-          child: _configuration.previewMode
+          child: currentConfiguration.previewMode
               ? const Workbench()
-              : ResponsiveLayout(
-                  key: ValueKey(_configuration),
-                  child: const Workbench(),
+              : const ResponsiveLayout(
+                  child: Workbench(),
                 ),
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    state.removeListener(notifyListeners);
+    super.dispose();
   }
 }
