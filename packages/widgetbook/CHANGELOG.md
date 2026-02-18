@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FIX**: resolve URL resetting on story change
+- **FIX**: Resolve URL resetting on story change
 - **FEAT**: Add `DocBlock` widget for improved documentation support. ([#1820](https://github.com/widgetbook/widgetbook/pull/1820))
 - **FEAT**: Support semantics testing. ([#1809](https://github.com/widgetbook/widgetbook/pull/1809))
 - **BREAKING**: Change generated file extension from `*.book.dart` to `*.g.dart`. ([#1811](https://github.com/widgetbook/widgetbook/pull/1811))
