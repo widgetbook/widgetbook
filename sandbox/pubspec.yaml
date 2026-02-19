@@ -4,21 +4,22 @@ publish_to: none
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.10.0
-  flutter: ^3.38.0
+  sdk: ^3.11.0
+  flutter: ^3.41.0
 
 dependencies:
   flutter:
     sdk: flutter
-  widgetbook: ^3.20.2
-  widgetbook_annotation: ^3.9.0
+
+  widgetbook: ^3.22.0
+  widgetbook_annotation: ^3.11.0
 
 dev_dependencies:
   alchemist: ^0.11.0
   build_runner: ^2.10.1
   flutter_test:
     sdk: flutter
-  widgetbook_generator: ^3.20.1
+  widgetbook_generator: ^3.22.0
 
 flutter:
   uses-material-design: true

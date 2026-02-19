@@ -1,6 +1,6 @@
 name: widgetbook_cli
 description: CLI that can publish Widgetbook builds and reviews to Widgetbook Cloud.
-version: 3.11.1
+version: 3.13.0
 homepage: https://www.widgetbook.io?utm_source=pub.dev&utm_medium=link&utm_campaign=widgetbook_cli
 repository: https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook_cli
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
@@ -12,7 +12,7 @@ screenshots:
     path: assets/logo.webp
 
 environment:
-  sdk: ">=3.9.0 <4.0.0"
+  sdk: ">=3.10.0 <4.0.0"
 
 dependencies:
   analyzer: ^10.0.0
