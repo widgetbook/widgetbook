@@ -90,38 +90,6 @@ void main() {
           );
         },
       );
-
-      testWidgets(
-        'given an initial value with defaultToNull=true, '
-        'then the value should initially be null with checkbox unchecked',
-        (tester) async {
-          const fiveSeconds = Duration(seconds: 5);
-
-          await tester.pumpKnob(
-            (context) {
-              final durationValue = context.knobs.durationOrNull(
-                label: 'DurationKnob',
-                initialValue: fiveSeconds,
-                defaultToNull: true,
-              );
-              return Text(
-                (durationValue?.inMilliseconds ?? -1).toString(),
-              );
-            },
-          );
-
-          expect(find.textWidget('-1'), findsOneWidget);
-
-          final checkbox = tester.widget<Checkbox>(find.byType(Checkbox));
-          expect(checkbox.value, false);
-
-          await tester.findAndTap(find.byType(Checkbox));
-          expect(
-            find.textWidget('${fiveSeconds.inMilliseconds}'),
-            findsOneWidget,
-          );
-        },
-      );
     },
   );
 
@@ -149,6 +117,38 @@ void main() {
       expect(knob.initialValue, null);
       expect(knob.description, 'A test duration knob with null value');
     });
+
+    testWidgets(
+      'given an initial value with defaultToNull=true, '
+      'then the value should initially be null with checkbox unchecked',
+      (tester) async {
+        const initialValue = Duration(seconds: 5);
+
+        await tester.pumpKnob(
+          (context) {
+            final durationValue = context.knobs.durationOrNull(
+              label: 'Knob',
+              initialValue: initialValue,
+              defaultToNull: true,
+            );
+            return Text(
+              (durationValue?.inMilliseconds ?? -1).toString(),
+            );
+          },
+        );
+
+        expect(find.textWidget('-1'), findsOneWidget);
+
+        final checkbox = tester.widget<Checkbox>(find.byType(Checkbox));
+        expect(checkbox.value, false);
+
+        await tester.findAndTap(find.byType(Checkbox));
+        expect(
+          find.textWidget('${initialValue.inMilliseconds}'),
+          findsOneWidget,
+        );
+      },
+    );
   });
 
   group('$KnobsBuilder', () {

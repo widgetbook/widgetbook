@@ -82,5 +82,37 @@ void main() {
       expect(knob.initialValue, null);
       expect(knob.description, 'A test double knob with null value');
     });
+
+    testWidgets(
+      'given an initial value with defaultToNull=true, '
+      'then the value should initially be null with checkbox unchecked',
+      (tester) async {
+        const initialValue = 5.0;
+
+        await tester.pumpKnob(
+          (context) {
+            final doubleValue = context.knobs.doubleOrNull.slider(
+              label: 'Knob',
+              initialValue: initialValue,
+              defaultToNull: true,
+            );
+            return Text(
+              (doubleValue ?? -1.0).toString(),
+            );
+          },
+        );
+
+        expect(find.textWidget('-1.0'), findsOneWidget);
+
+        final checkbox = tester.widget<Checkbox>(find.byType(Checkbox));
+        expect(checkbox.value, false);
+
+        await tester.findAndTap(find.byType(Checkbox));
+        expect(
+          find.textWidget('${initialValue}'),
+          findsWidgets,
+        );
+      },
+    );
   });
 }

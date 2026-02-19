@@ -135,17 +135,18 @@ void main() {
           const initialValue = 'Widgetbook';
 
           await tester.pumpKnob(
-            (context) {
-              final stringValue = context.knobs.stringOrNull(
-                label: 'Knob',
-                initialValue: initialValue,
-                defaultToNull: true,
-              );
-              return Text(stringValue ?? 'NULL');
-            },
+            (context) => Text(
+              context.knobs
+                  .stringOrNull(
+                    label: 'Knob',
+                    initialValue: initialValue,
+                    defaultToNull: true,
+                  )
+                  .toString(),
+            ),
           );
 
-          expect(find.textWidget('NULL'), findsOneWidget);
+          expect(find.textWidget('null'), findsOneWidget);
 
           final checkbox = tester.widget<Checkbox>(find.byType(Checkbox));
           expect(checkbox.value, false);

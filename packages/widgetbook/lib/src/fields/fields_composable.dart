@@ -27,12 +27,12 @@ abstract class FieldsComposable<T> {
   final bool isNullable;
 
   /// When true, the nullable composable will start with the checkbox unchecked
-  /// (resolving to null) even if a non-null [initialValue] is provided.
+  /// (resolving to null) even if a non-null initial value is provided.
   /// This allows setting a default value that is shown when the checkbox is
   /// checked, while starting in the unchecked/null state.
   ///
   /// This parameter is ignored when [isNullable] is false or when the
-  /// [initialValue] is null.
+  /// initial value is null.
   final bool defaultToNull;
 
   /// The name of the query group param.
@@ -105,25 +105,21 @@ abstract class FieldsComposable<T> {
 
   /// Whether the group has been nullified by [toggleNullification].
   bool isNullified(BuildContext context) {
-    // If defaultToNull is true and the field hasn't been interacted with yet,
-    // start in the nullified state
-    if (defaultToNull && isNullable) {
-      final state = WidgetbookState.of(context);
-      final groupMap = FieldCodec.decodeQueryGroup(
-        state.queryParams[groupName],
-      );
-
-      // If no field has been set in the query params, start nullified
-      if (groupMap.isEmpty ||
-          !fields.any((field) => groupMap.containsKey(field.name))) {
-        return true;
-      }
-    }
-
     final state = WidgetbookState.of(context);
     final groupMap = FieldCodec.decodeQueryGroup(
       state.queryParams[groupName],
     );
+
+    // If defaultToNull is true and the field hasn't been interacted with yet,
+    // start in the nullified state
+    if (defaultToNull && isNullable) {
+      final hasFieldInQuery = fields.any(
+        (field) => groupMap.containsKey(field.name),
+      );
+
+      // If no field has been set in the query params, start nullified
+      if (groupMap.isEmpty || !hasFieldInQuery) return true;
+    }
 
     return fields.every(
       (field) => field.valueFrom(groupMap) == null,
