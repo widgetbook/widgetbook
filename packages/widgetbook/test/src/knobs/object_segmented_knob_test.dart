@@ -187,6 +187,38 @@ void main() {
           );
         },
       );
+
+      testWidgets(
+        'given an initial value with defaultToNull=true, '
+        'then the value should initially be null with checkbox unchecked',
+        (tester) async {
+          const initialValue = 'B';
+
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs.objectOrNull
+                  .segmented(
+                    label: 'Knob',
+                    options: ['A', 'B', 'C'],
+                    initialOption: initialValue,
+                    defaultToNull: true,
+                  )
+                  .toString(),
+            ),
+          );
+
+          expect(find.textWidget('null'), findsOneWidget);
+
+          final checkbox = tester.widget<Checkbox>(find.byType(Checkbox));
+          expect(checkbox.value, false);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(
+            find.textWidget(initialValue),
+            findsNWidgets(2), // Button and Text widget
+          );
+        },
+      );
     },
   );
 }

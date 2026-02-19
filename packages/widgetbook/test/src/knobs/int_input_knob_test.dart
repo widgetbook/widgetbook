@@ -106,6 +106,38 @@ void main() {
       expect(knob.initialValue, null);
       expect(knob.description, 'A test int knob with null value');
     });
+
+    testWidgets(
+      'given an initial value with defaultToNull=true, '
+      'then the value should initially be null with checkbox unchecked',
+      (tester) async {
+        const initialValue = 5;
+
+        await tester.pumpKnob(
+          (context) {
+            final intValue = context.knobs.intOrNull.input(
+              label: 'IntKnob',
+              initialValue: initialValue,
+              defaultToNull: true,
+            );
+            return Text(
+              (intValue ?? -1).toString(),
+            );
+          },
+        );
+
+        expect(find.textWidget('-1'), findsOneWidget);
+
+        final checkbox = tester.widget<Checkbox>(find.byType(Checkbox));
+        expect(checkbox.value, false);
+
+        await tester.findAndTap(find.byType(Checkbox));
+        expect(
+          find.textWidget('${initialValue}'),
+          findsOneWidget,
+        );
+      },
+    );
   });
 
   group('$KnobsBuilder', () {

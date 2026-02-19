@@ -27,6 +27,7 @@ abstract class Knob<T> extends FieldsComposable<T> {
     @Deprecated('Use initialValue instead.') T? value,
     T? initialValue,
     super.isNullable,
+    super.defaultToNull,
     @Deprecated(
       'This parameter is not used anymore. '
       'It defaults to [value == null] instead of [false]',

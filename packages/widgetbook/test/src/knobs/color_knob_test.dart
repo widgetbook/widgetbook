@@ -394,4 +394,39 @@ void main() {
       );
     },
   );
+
+  group(
+    '${ColorKnob.nullable}',
+    () {
+      testWidgets(
+        'given an initial value with defaultToNull=true, '
+        'then the value should initially be null with checkbox unchecked',
+        (tester) async {
+          const initialValue = Color(0xFFFF0000);
+          const key = Key('testContainer');
+
+          await tester.pumpKnob(
+            (context) => Container(
+              key: key,
+              color: context.knobs.colorOrNull(
+                label: 'Knob',
+                initialValue: initialValue,
+                defaultToNull: true,
+              ),
+            ),
+          );
+
+          expect(tester.widget<Container>(find.byKey(key)).color, isNull);
+
+          final checkbox = tester.widget<Checkbox>(find.byType(Checkbox));
+          expect(checkbox.value, false);
+
+          await tester.findAndTap(find.byType(Checkbox));
+
+          final container = tester.widget<Container>(find.byKey(key));
+          expect(container.color, equals(initialValue));
+        },
+      );
+    },
+  );
 }

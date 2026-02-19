@@ -55,6 +55,7 @@ class IterableOrNullKnobsBuilder {
     String? description,
     LabelBuilder<T>? labelBuilder,
     bool emptySelectionAllowed = true,
+    bool defaultToNull = false,
   }) {
     assert(options.isNotEmpty, 'Must specify at least one option');
     return onKnobAdded(
@@ -65,6 +66,7 @@ class IterableOrNullKnobsBuilder {
         options: options,
         labelBuilder: labelBuilder,
         emptySelectionAllowed: emptySelectionAllowed,
+        defaultToNull: defaultToNull,
       ),
     );
   }

@@ -66,12 +66,14 @@ class IntOrNullKnobsBuilder {
     required String label,
     String? description,
     int? initialValue,
+    bool defaultToNull = false,
   }) {
     return onKnobAdded(
       IntInputKnob.nullable(
         label: label,
         initialValue: initialValue,
         description: description,
+        defaultToNull: defaultToNull,
       ),
     );
   }
@@ -85,6 +87,7 @@ class IntOrNullKnobsBuilder {
     int min = 0,
     int max = 20,
     int? divisions,
+    bool defaultToNull = false,
   }) {
     return onKnobAdded(
       IntSliderKnob.nullable(
@@ -94,6 +97,7 @@ class IntOrNullKnobsBuilder {
         min: min,
         max: max,
         divisions: divisions,
+        defaultToNull: defaultToNull,
       ),
     );
   }

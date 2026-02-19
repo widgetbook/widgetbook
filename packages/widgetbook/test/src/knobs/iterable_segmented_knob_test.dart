@@ -188,6 +188,39 @@ void main() {
           );
         },
       );
+
+      testWidgets(
+        'given an initial value with defaultToNull=true, '
+        'then the value should initially be null with checkbox unchecked',
+        (tester) async {
+          final key = UniqueKey();
+          const initialValue = {'B'};
+
+          await tester.pumpKnob(
+            (context) => Text(
+              key: key,
+              context.knobs.iterableOrNull
+                  .segmented(
+                    label: 'Knob',
+                    options: {'A', 'B', 'C'},
+                    initialOption: initialValue,
+                    defaultToNull: true,
+                  )
+                  .toString(),
+            ),
+          );
+
+          expect(find.textWidget('null'), findsOneWidget);
+
+          final checkbox = tester.widget<Checkbox>(find.byType(Checkbox));
+          expect(checkbox.value, false);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          final textWidget = tester.widget<Text>(find.byKey(key));
+
+          expect(textWidget.data, equals('(B)'));
+        },
+      );
     },
   );
 }

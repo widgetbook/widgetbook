@@ -170,6 +170,40 @@ void main() {
           );
         },
       );
+
+      testWidgets(
+        'given an initial value with defaultToNull=true, '
+        'then the value should initially be null with checkbox unchecked',
+        (tester) async {
+          final initialValue = DateTime(2021, 1, 1, 0, 0, 5);
+
+          await tester.pumpKnob(
+            (context) {
+              final dateTimeValue = context.knobs.dateTimeOrNull(
+                label: 'DateTimeKnob',
+                initialValue: initialValue,
+                start: DateTime(initialValue.year - 1),
+                end: DateTime(initialValue.year + 1),
+                defaultToNull: true,
+              );
+              return Text(
+                (dateTimeValue?.toSimpleFormat() ?? 'null'),
+              );
+            },
+          );
+
+          expect(find.textWidget('null'), findsOneWidget);
+
+          final checkbox = tester.widget<Checkbox>(find.byType(Checkbox));
+          expect(checkbox.value, false);
+
+          await tester.findAndTap(find.byType(Checkbox));
+          expect(
+            find.textWidget(initialValue.toSimpleFormat()),
+            findsOneWidget,
+          );
+        },
+      );
     },
   );
 }
