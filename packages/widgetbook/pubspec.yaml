@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   inspector: ">=2.1.0 <4.0.0"
+  mcp_dart: ^0.6.0
   meta: ^1.8.0
   nested: ^1.0.0
   resizable_widget: ^1.0.5
