@@ -213,7 +213,10 @@ void main() {
           expect(checkbox.value, false);
 
           await tester.findAndTap(find.byType(Checkbox));
-          expect(find.textWidget(initialValue), findsOneWidget);
+          expect(
+            find.textWidget(initialValue),
+            findsNWidgets(2), // Button and Text widget
+          );
         },
       );
     },

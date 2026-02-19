@@ -193,10 +193,12 @@ void main() {
         'given an initial value with defaultToNull=true, '
         'then the value should initially be null with checkbox unchecked',
         (tester) async {
+          final key = UniqueKey();
           const initialValue = {'B'};
 
           await tester.pumpKnob(
             (context) => Text(
+              key: key,
               context.knobs.iterableOrNull
                   .segmented(
                     label: 'Knob',
@@ -214,7 +216,9 @@ void main() {
           expect(checkbox.value, false);
 
           await tester.findAndTap(find.byType(Checkbox));
-          expect(find.textWidget(initialValue.toString()), findsOneWidget);
+          final textWidget = tester.widget<Text>(find.byKey(key));
+
+          expect(textWidget.data, equals('(B)'));
         },
       );
     },
