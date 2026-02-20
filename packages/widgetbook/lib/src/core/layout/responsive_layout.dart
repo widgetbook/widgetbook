@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 import '../navigation/navigation.dart';
+import '../settings/settings.dart';
 import '../state/state.dart';
 import 'desktop_layout.dart';
 import 'mobile_layout.dart';
@@ -65,6 +66,68 @@ class ResponsiveLayout extends StatelessWidget {
         [];
   }
 
+  Widget buildScenarioInfo(BuildContext context) {
+    final state = WidgetbookState.of(context);
+    final scenario = state.scenario;
+
+    if (scenario == null) {
+      return const SizedBox.shrink();
+    }
+
+    final args = scenario.args.list.nonNulls;
+    final modes = scenario.modes;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 8,
+      children: [
+        const Text('Metadata'),
+        Table(
+          children: [
+            TableRow(
+              children: [
+                const Text('Path'),
+                Text(scenario.path),
+              ],
+            ),
+            TableRow(
+              children: [
+                const Text('Name'),
+                Text(scenario.name),
+              ],
+            ),
+          ],
+        ),
+        const Text('Args'),
+        Table(
+          children: args
+              .map(
+                (arg) => TableRow(
+                  children: [
+                    Text(arg.name),
+                    Text(arg.value.toString()),
+                  ],
+                ),
+              )
+              .toList(),
+        ),
+        const Text('Modes'),
+        Table(
+          children: modes
+              .map(
+                (mode) => TableRow(
+                  children: [
+                    Text(mode.addon.name),
+                    // Text(mode.value.toString()),
+                  ],
+                ),
+              )
+              .toList(),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // Force desktop mode if `panels` query param is set.
@@ -83,12 +146,14 @@ class ResponsiveLayout extends StatelessWidget {
             navigationBuilder: (context) => buildNavigation(context, true),
             addonsBuilder: buildAddons,
             argsBuilder: buildArgs,
+            scenarioInfoBuilder: buildScenarioInfo,
             workbench: child,
           )
         : DesktopLayout(
             navigationBuilder: (context) => buildNavigation(context, false),
             addonsBuilder: buildAddons,
             argsBuilder: buildArgs,
+            scenarioInfoBuilder: buildScenarioInfo,
             workbench: child,
           );
   }

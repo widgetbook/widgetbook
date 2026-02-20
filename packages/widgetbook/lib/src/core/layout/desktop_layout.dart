@@ -17,12 +17,14 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
     required this.navigationBuilder,
     required this.addonsBuilder,
     required this.argsBuilder,
+    required this.scenarioInfoBuilder,
     required this.workbench,
   });
 
   final Widget Function(BuildContext context) navigationBuilder;
   final List<Widget> Function(BuildContext context) addonsBuilder;
   final List<Widget> Function(BuildContext context) argsBuilder;
+  final Widget Function(BuildContext context) scenarioInfoBuilder;
   final Widget workbench;
 
   @override
@@ -62,6 +64,7 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
                     children: [
                       TabBar(
                         tabs: [
+                          const Tab(text: 'Info'),
                           if (showArgsPanel) const Tab(text: 'Args'),
                           if (showAddonsPanel) const Tab(text: 'Addons'),
                         ],
@@ -69,6 +72,9 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
                       Expanded(
                         child: TabBarView(
                           children: [
+                            Builder(
+                              builder: scenarioInfoBuilder,
+                            ),
                             if (showArgsPanel) ...{
                               SettingsList(
                                 name: 'Args',

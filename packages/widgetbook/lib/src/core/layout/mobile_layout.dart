@@ -13,12 +13,14 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
     required this.navigationBuilder,
     required this.addonsBuilder,
     required this.argsBuilder,
+    required this.scenarioInfoBuilder,
     required this.workbench,
   });
 
   final Widget Function(BuildContext context) navigationBuilder;
   final List<Widget> Function(BuildContext context) addonsBuilder;
   final List<Widget> Function(BuildContext context) argsBuilder;
+  final Widget Function(BuildContext context) scenarioInfoBuilder;
   final Widget workbench;
 
   @override
@@ -41,6 +43,10 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
             label: 'Args',
             icon: Icon(Icons.tune_outlined),
           ),
+          const BottomNavigationBarItem(
+            label: 'Scenario Info',
+            icon: Icon(Icons.info_outline),
+          ),
         ],
         onTap: (index) {
           showModalBottomSheet<void>(
@@ -55,6 +61,7 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
                 name: 'Args',
                 builder: argsBuilder,
               ),
+              3 => scenarioInfoBuilder(context),
               _ => Container(),
             },
           );
