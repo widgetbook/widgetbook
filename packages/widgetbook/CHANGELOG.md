@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FIX**: Restore search functionality. ([#1846](https://github.com/widgetbook/widgetbook/pull/1846))
 - **FIX**: Prevent focus loss of TextField-based `Arg`s. ([#1836](https://github.com/widgetbook/widgetbook/pull/1836))
 - **FIX**: Resolve URL resetting on story change. ([#1840](https://github.com/widgetbook/widgetbook/pull/1840))
 - **FEAT**: Add `DocBlock` widget for improved documentation support. ([#1820](https://github.com/widgetbook/widgetbook/pull/1820))
