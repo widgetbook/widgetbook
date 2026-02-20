@@ -85,6 +85,29 @@ void main() {
           expect(widget.decoration?.hintText, equals('Enter a value'));
         },
       );
+
+      testWidgets(
+        'given an arg with an initial value, '
+        'when [Arg.update] is called with a new value, '
+        'then the field displays the updated value',
+        (tester) async {
+          final arg = StringArg('hello', name: 'message');
+
+          await tester.pumpWidgetWithState(
+            state: WidgetbookState(),
+            builder: (context) => arg.buildFields(context),
+          );
+
+          expect(find.text('hello'), findsOneWidget);
+
+          final context = tester.element(find.byType(TextFormField));
+          arg.update(context, 'world');
+          await tester.pumpAndSettle();
+
+          expect(find.text('world'), findsOneWidget);
+          expect(find.text('hello'), findsNothing);
+        },
+      );
     },
   );
 }

@@ -32,6 +32,34 @@ final $Active = _Story(
 );
 ```
 
+## Stateful Widgets and Arg Updates
+
+When an arg changes, Widgetbook rebuilds the story with a new key by default.
+This behavior is especially useful for `StatefulWidget`s because local state is
+reset to match the latest arg values.
+
+- `StatelessWidget`: updates reflect immediately through the new args.
+- `StatefulWidget`: local state is reset on arg change so the widget reflects
+  the updated args.
+
+This means you usually do **not** need a manual `KeyedSubtree` in your story.
+
+### Opt out of the default behavior
+
+If you need to preserve local state across arg updates, override `setup` and
+return the widget unchanged:
+
+```dart title="counter.stories.dart"
+final $Default = _Story(
+  setup: (context, widget, args) => widget,
+  args: _Args(
+    initialValue: IntArg(10),
+  ),
+);
+```
+
+Use this only when keeping local state is intentional.
+
 ## Custom Args Source
 
 The default source for args generation is the widget's constructor. However, you can customize this behavior by using the `MetaWithArgs` as follows

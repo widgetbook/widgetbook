@@ -8,6 +8,7 @@ import '../state/state.dart';
 import '../utils.dart';
 import 'color_field/color_picker.dart';
 import 'color_field/color_space.dart';
+import 'controlled_text_field.dart';
 
 part 'boolean_field.dart';
 part 'color_field/color_field.dart';

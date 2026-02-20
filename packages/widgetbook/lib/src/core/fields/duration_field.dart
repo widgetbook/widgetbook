@@ -21,7 +21,7 @@ final class DurationField extends Field<Duration> {
 
   @override
   Widget toWidget(BuildContext context, String groupName, Duration value) {
-    return TextFormField(
+    return ControlledTextField(
       initialValue: toParam(value),
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(

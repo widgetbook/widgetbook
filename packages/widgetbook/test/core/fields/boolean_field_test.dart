@@ -58,6 +58,30 @@ void main() {
           expect(widget.value, equals(true));
         },
       );
+
+      testWidgets(
+        'given an arg with an initial value, '
+        'when [Arg.update] is called with a new value, '
+        'then the switch displays the updated value',
+        (tester) async {
+          final arg = BoolArg(false, name: 'isEnabled');
+
+          await tester.pumpWidgetWithState(
+            state: WidgetbookState(),
+            builder: (context) => arg.buildFields(context),
+          );
+
+          final initialSwitch = tester.widget<Switch>(find.byType(Switch));
+          expect(initialSwitch.value, equals(false));
+
+          final context = tester.element(find.byType(Switch));
+          arg.update(context, true);
+          await tester.pumpAndSettle();
+
+          final updatedSwitch = tester.widget<Switch>(find.byType(Switch));
+          expect(updatedSwitch.value, equals(true));
+        },
+      );
     },
   );
 }

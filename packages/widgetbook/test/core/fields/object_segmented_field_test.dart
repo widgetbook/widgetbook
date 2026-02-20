@@ -69,6 +69,39 @@ void main() {
           expect(widget.selected, equals({2}));
         },
       );
+
+      testWidgets(
+        'given an arg with an initial value, '
+        'when [Arg.update] is called with a new value, '
+        'then the segmented button displays the updated value',
+        (tester) async {
+          final arg = SingleArg<int>(
+            1,
+            name: 'segmented',
+            values: [1, 2, 3],
+            style: const SegmentedSingleArgStyle(),
+          );
+
+          await tester.pumpWidgetWithState(
+            state: WidgetbookState(),
+            builder: (context) => arg.buildFields(context),
+          );
+
+          var widget = tester.widget<SegmentedButton<int>>(
+            find.byType(SegmentedButton<int>),
+          );
+          expect(widget.selected, equals({1}));
+
+          final context = tester.element(find.byType(SegmentedButton<int>));
+          arg.update(context, 3);
+          await tester.pumpAndSettle();
+
+          widget = tester.widget<SegmentedButton<int>>(
+            find.byType(SegmentedButton<int>),
+          );
+          expect(widget.selected, equals({3}));
+        },
+      );
     },
   );
 }

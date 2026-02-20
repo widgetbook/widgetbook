@@ -225,6 +225,34 @@ void main() {
           expect(find.byType(ColorPickerDialog), findsOneWidget);
         },
       );
+
+      testWidgets(
+        'given an arg with an initial value, '
+        'when [Arg.update] is called with a new value, '
+        'then the color picker displays the updated value',
+        (tester) async {
+          final arg = ColorArg(blue, name: 'color');
+
+          await tester.pumpWidgetWithState(
+            state: WidgetbookState(),
+            builder: (context) => arg.buildFields(context),
+          );
+
+          var widget = tester.widget<ColorPicker>(
+            find.byType(ColorPicker),
+          );
+          expect(widget.value, equals(blue));
+
+          final context = tester.element(find.byType(ColorPicker));
+          arg.update(context, red);
+          await tester.pumpAndSettle();
+
+          widget = tester.widget<ColorPicker>(
+            find.byType(ColorPicker),
+          );
+          expect(widget.value, equals(red));
+        },
+      );
     },
   );
 }
