@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FIX**: Restore search functionality. ([#1846](https://github.com/widgetbook/widgetbook/pull/1846))
 - **FIX**: Resolve URL resetting on story change
 - **FEAT**: Add `DocBlock` widget for improved documentation support. ([#1820](https://github.com/widgetbook/widgetbook/pull/1820))
 - **FEAT**: Support semantics testing. ([#1809](https://github.com/widgetbook/widgetbook/pull/1809))
