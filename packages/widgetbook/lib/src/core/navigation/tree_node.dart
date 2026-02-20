@@ -85,14 +85,20 @@ class TreeNode<T> {
   ) {
     if (predicate(this)) {
       return this;
-    } else {
-      return TreeNode<T>(
-        name,
-        data,
-        parent,
-      )..addAll(
-        children.where(predicate),
-      );
     }
+
+    final filteredChildren = children
+        .map((child) => child.filter(predicate))
+        .nonNulls;
+
+    if (filteredChildren.isEmpty) {
+      return null;
+    }
+
+    return TreeNode<T>(
+      name,
+      data,
+      parent,
+    )..addAll(filteredChildren);
   }
 }
