@@ -1,0 +1,64 @@
+# Interactive Viewer Addon
+
+A utility addon designed for zooming in/out of the previewed use-case.
+
+## Usage
+
+```dart title=widgetbook/lib/main.dart
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        InteractiveViewerAddon(), // [!code highlight]
+      ],
+    );
+  }
+}
+```
+
+## Order
+
+Since the [order of addons](/addons/overview#order-of-addons) matters, here are some guidelines to follow when using the `InteractiveViewerAddon`:
+
+Addons that should come before the `InteractiveViewerAddon`:
+
+- `ViewportAddon`
+- `DeviceFrameAddon`
+- `AlignmentAddon`
+
+## Multi-snapshot Support
+
+The `InteractiveViewerAddon` is supported in the [Multi Snapshot Reviews](/cloud/snapshots/multi-snapshot) via the `InteractiveViewerAddonConfig`. Here's how to configure it:
+
+```dart title=widgetbook/lib/main.dart
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+@App(
+  cloudAddonsConfigs: {
+    'x1': [
+      InteractiveViewerAddon(true), // [!code highlight]
+    ],
+    'x2': [
+      InteractiveViewerAddon(false), // [!code highlight]
+    ],
+  },
+)
+class WidgetbookApp extends StatelessWidget {
+  const WidgetbookApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Widgetbook(
+      // ...
+      addons: [
+        InteractiveViewerAddon(), // [!code highlight]
+      ],
+    );
+  }
+}
+```
