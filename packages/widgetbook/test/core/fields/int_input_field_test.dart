@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/widgetbook.dart';
 
+import '../../helper/helper.dart';
+
 void main() {
   group('$IntInputField', () {
     final field = IntInputField(
@@ -50,6 +52,29 @@ void main() {
         );
 
         expect(find.text('7'), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'given an arg with an initial value, '
+      'when [Arg.update] is called with a new value, '
+      'then the field displays the updated value',
+      (tester) async {
+        final arg = IntArg(5, name: 'count');
+
+        await tester.pumpWidgetWithState(
+          state: WidgetbookState(),
+          builder: (context) => arg.buildFields(context),
+        );
+
+        expect(find.text('5'), findsOneWidget);
+
+        final context = tester.element(find.byType(TextFormField));
+        arg.update(context, 10);
+        await tester.pumpAndSettle();
+
+        expect(find.text('10'), findsOneWidget);
+        expect(find.text('5'), findsNothing);
       },
     );
   });

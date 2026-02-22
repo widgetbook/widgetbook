@@ -24,12 +24,9 @@ class Workbench extends StatelessWidget {
     final scenario = state.scenario;
     if (scenario != null) {
       return _WorkbenchWrapper(
-        child: KeyedSubtree(
-          key: ValueKey(state.uri),
-          child: scenario.buildWithConfig(
-            context,
-            state.config,
-          ),
+        child: scenario.buildWithConfig(
+          context,
+          state.config,
         ),
       );
     }
@@ -37,12 +34,9 @@ class Workbench extends StatelessWidget {
     final story = state.story;
     if (story != null) {
       return _WorkbenchWrapper(
-        child: KeyedSubtree(
-          key: ValueKey(state.uri),
-          child: story.buildWithConfig(
-            context,
-            state.config,
-          ),
+        child: story.buildWithConfig(
+          context,
+          state.config,
         ),
       );
     }

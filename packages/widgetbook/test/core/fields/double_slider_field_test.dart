@@ -95,6 +95,38 @@ void main() {
           );
         },
       );
+
+      testWidgets(
+        'given an arg with an initial value, '
+        'when [Arg.update] is called with a new value, '
+        'then the slider displays the updated value',
+        (tester) async {
+          final arg = DoubleArg(
+            3.0,
+            name: 'opacity',
+            style: const SliderDoubleArgStyle(
+              min: 0.0,
+              max: 10.0,
+              divisions: 10,
+            ),
+          );
+
+          await tester.pumpWidgetWithState(
+            state: WidgetbookState(),
+            builder: (context) => arg.buildFields(context),
+          );
+
+          final initialSlider = tester.widget<Slider>(find.byType(Slider));
+          expect(initialSlider.value, equals(3.0));
+
+          final context = tester.element(find.byType(Slider));
+          arg.update(context, 7.5);
+          await tester.pumpAndSettle();
+
+          final updatedSlider = tester.widget<Slider>(find.byType(Slider));
+          expect(updatedSlider.value, equals(7.5));
+        },
+      );
     },
   );
 }

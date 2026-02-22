@@ -78,12 +78,26 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
 
   String get path => p.join(component.fullPath, name);
 
+  /// By default, Widgetbook forces a rebuild when args change as otherwise
+  /// StatefulWidgets might not reflect the latest arg values.
+  /// However, if a story has internal state that should be preserved across
+  /// arg changes, this can be achieved by overriding the [setup] function and
+  /// returning the widget unchanged.
   static Widget defaultSetup(
     BuildContext context,
     Widget widget,
-    dynamic args,
+    StoryArgs args,
   ) {
-    return widget;
+    final key = ValueKey(
+      Object.hashAll(
+        args.safeList.map((arg) => arg.toQueryGroup()),
+      ),
+    );
+
+    return KeyedSubtree(
+      key: key,
+      child: widget,
+    );
   }
 
   @internal

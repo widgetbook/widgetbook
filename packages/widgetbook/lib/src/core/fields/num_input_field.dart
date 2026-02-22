@@ -19,7 +19,7 @@ sealed class NumInputField<T extends num> extends Field<T> {
 
   @override
   Widget toWidget(BuildContext context, String groupName, T value) {
-    return TextFormField(
+    return ControlledTextField(
       initialValue: toParam(value),
       keyboardType: TextInputType.number,
       inputFormatters: formatters,
