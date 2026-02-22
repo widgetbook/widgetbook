@@ -5,6 +5,13 @@ import 'package:widgetbook/widgetbook.dart';
 import '../../helper/helper.dart';
 
 void main() {
+  List<String> durationInputValues(WidgetTester tester) {
+    final fields = tester.widgetList<TextFormField>(find.byType(TextFormField));
+    return fields
+        .map((field) => field.controller?.text ?? field.initialValue ?? '')
+        .toList();
+  }
+
   group('$DurationField', () {
     const fiveSeconds = Duration(seconds: 5);
     const tenSeconds = Duration(seconds: 10);
@@ -39,25 +46,23 @@ void main() {
       'given a state that has a field value, '
       'then [toWidget] builds that value',
       (tester) async {
-        final widget = await tester.pumpField<Duration, TextFormField>(
-          field,
-          tenSeconds,
-        );
+        await tester.pumpField<Duration, Row>(field, tenSeconds);
 
-        expect(widget.initialValue, equals(tenSecondsInMilliseconds));
+        expect(find.byType(TextFormField), findsNWidgets(4));
+        expect(durationInputValues(tester), equals(['0', '0', '10', '0']));
       },
     );
 
     testWidgets(
       'given a field, '
-      'then [toWidget] builds the hintText value',
+      'then [toWidget] builds duration unit labels',
       (tester) async {
-        final widget = await tester.pumpField<Duration, TextField>(
-          field,
-          null,
-        );
+        await tester.pumpField<Duration, Row>(field, null);
 
-        expect(widget.decoration?.hintText, equals('Enter a duration'));
+        expect(find.text('h'), findsOneWidget);
+        expect(find.text('m'), findsOneWidget);
+        expect(find.text('s'), findsOneWidget);
+        expect(find.text('ms'), findsOneWidget);
       },
     );
 
@@ -73,14 +78,29 @@ void main() {
           builder: (context) => arg.buildFields(context),
         );
 
-        expect(find.text('5000'), findsOneWidget);
+        expect(durationInputValues(tester), equals(['0', '0', '5', '0']));
 
-        final context = tester.element(find.byType(TextFormField));
+        final context = tester.element(find.byType(TextFormField).first);
         arg.update(context, tenSeconds);
         await tester.pumpAndSettle();
 
-        expect(find.text('10000'), findsOneWidget);
-        expect(find.text('5000'), findsNothing);
+        expect(durationInputValues(tester), equals(['0', '0', '10', '0']));
+      },
+    );
+
+    testWidgets(
+      'given the duration input, '
+      'when upper bound values are entered, '
+      'then it accepts 23:59:59.999',
+      (tester) async {
+        await tester.pumpField<Duration, Row>(field, Duration.zero);
+
+        await tester.findAndEnter(find.byType(TextFormField).at(0), '23');
+        await tester.findAndEnter(find.byType(TextFormField).at(1), '59');
+        await tester.findAndEnter(find.byType(TextFormField).at(2), '59');
+        await tester.findAndEnter(find.byType(TextFormField).at(3), '999');
+
+        expect(durationInputValues(tester), equals(['23', '59', '59', '999']));
       },
     );
   });
