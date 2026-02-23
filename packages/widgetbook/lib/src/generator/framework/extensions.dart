@@ -125,7 +125,7 @@ extension DartTypeX on DartType {
     if (isEnum) {
       return isNullable
           ? TypeMeta(
-              'NullableEnumArg<${getDisplayString()}>',
+              'NullableEnumArg<$nonNullableName>',
               literalNull,
             )
           : TypeMeta(
