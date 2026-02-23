@@ -81,48 +81,24 @@ class ResponsiveLayout extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 8,
       children: [
-        const Text('Metadata'),
-        Table(
-          children: [
-            TableRow(
-              children: [
-                const Text('Path'),
-                Text(scenario.path),
-              ],
-            ),
-            TableRow(
-              children: [
-                const Text('Name'),
-                Text(scenario.name),
-              ],
-            ),
-          ],
+        InfoTable(
+          title: 'Metadata',
+          data: {
+            'Name': scenario.name,
+            'Path': scenario.path,
+          },
         ),
-        const Text('Args'),
-        Table(
-          children: args
-              .map(
-                (arg) => TableRow(
-                  children: [
-                    Text(arg.name),
-                    Text(arg.value.toString()),
-                  ],
-                ),
-              )
-              .toList(),
+        InfoTable(
+          title: 'Args',
+          data: {
+            for (final arg in args) arg.name: arg.value.toString(),
+          },
         ),
-        const Text('Modes'),
-        Table(
-          children: modes
-              .map(
-                (mode) => TableRow(
-                  children: [
-                    Text(mode.addon.name),
-                    // Text(mode.value.toString()),
-                  ],
-                ),
-              )
-              .toList(),
+        InfoTable(
+          title: 'Modes',
+          data: {
+            for (final mode in modes) mode.addon.name: mode.value.toString(),
+          },
         ),
       ],
     );

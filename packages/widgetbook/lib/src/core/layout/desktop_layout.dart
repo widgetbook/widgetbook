@@ -30,6 +30,7 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
+    final isScenario = state.scenario != null;
 
     const kSidePanelPercentage = 0.2;
     const kWorkbenchPercentage = 1 - 2 * kSidePanelPercentage;
@@ -42,6 +43,8 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
     return ColoredBox(
       color: WidgetbookTheme.of(context).colorScheme.surface,
       child: ResizableLayout(
+        // Force rebuild when switching between scenario and non-scenario to show/hide scenario info panel.
+        key: ValueKey(isScenario),
         items: [
           if (showNavigationPanel)
             ResizableLayoutItem(
@@ -54,7 +57,16 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
             percentage: kWorkbenchPercentage,
             child: workbench,
           ),
-          if (showSettingsPanel)
+          if (isScenario)
+            ResizableLayoutItem(
+              percentage: kSidePanelPercentage,
+              child: Card(
+                child: Builder(
+                  builder: scenarioInfoBuilder,
+                ),
+              ),
+            )
+          else if (showSettingsPanel)
             ResizableLayoutItem(
               percentage: kSidePanelPercentage,
               child: Card(
@@ -64,7 +76,6 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
                     children: [
                       TabBar(
                         tabs: [
-                          const Tab(text: 'Info'),
                           if (showArgsPanel) const Tab(text: 'Args'),
                           if (showAddonsPanel) const Tab(text: 'Addons'),
                         ],
@@ -72,9 +83,6 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
                       Expanded(
                         child: TabBarView(
                           children: [
-                            Builder(
-                              builder: scenarioInfoBuilder,
-                            ),
                             if (showArgsPanel) ...{
                               SettingsList(
                                 name: 'Args',

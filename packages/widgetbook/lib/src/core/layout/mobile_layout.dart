@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 import '../settings/settings.dart';
+import '../state/widgetbook_state.dart';
 import 'base_layout.dart';
 
 /// The [MobileLayout] is a layout for mobile devices that allows
@@ -25,6 +26,8 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
 
   @override
   Widget build(BuildContext context) {
+    final isScenario = WidgetbookState.of(context).scenario != null;
+
     return Scaffold(
       body: SafeArea(
         child: workbench,
@@ -35,33 +38,36 @@ class MobileLayout extends StatelessWidget implements BaseLayout {
             label: 'Navigation',
             icon: Icon(Icons.list_outlined),
           ),
-          const BottomNavigationBarItem(
-            label: 'Addons',
-            icon: Icon(Icons.dashboard_customize_outlined),
-          ),
-          const BottomNavigationBarItem(
-            label: 'Args',
-            icon: Icon(Icons.tune_outlined),
-          ),
-          const BottomNavigationBarItem(
-            label: 'Scenario Info',
-            icon: Icon(Icons.info_outline),
-          ),
+          if (isScenario) ...{
+            const BottomNavigationBarItem(
+              label: 'Scenario Info',
+              icon: Icon(Icons.info_outline),
+            ),
+          } else ...{
+            const BottomNavigationBarItem(
+              label: 'Addons',
+              icon: Icon(Icons.dashboard_customize_outlined),
+            ),
+            const BottomNavigationBarItem(
+              label: 'Args',
+              icon: Icon(Icons.tune_outlined),
+            ),
+          },
         ],
         onTap: (index) {
           showModalBottomSheet<void>(
             context: context,
             builder: (context) => switch (index) {
               0 => navigationBuilder(context),
-              1 => SettingsList(
+              1 when isScenario => scenarioInfoBuilder(context),
+              1 when !isScenario => SettingsList(
                 name: 'Addons',
                 builder: addonsBuilder,
               ),
-              2 => SettingsList(
+              2 when !isScenario => SettingsList(
                 name: 'Args',
                 builder: argsBuilder,
               ),
-              3 => scenarioInfoBuilder(context),
               _ => Container(),
             },
           );
