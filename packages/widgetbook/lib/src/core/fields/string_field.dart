@@ -18,7 +18,7 @@ final class StringField extends Field<String> {
 
   @override
   Widget toWidget(BuildContext context, String groupName, String value) {
-    return TextFormField(
+    return ControlledTextField(
       maxLines: maxLines,
       initialValue: value,
       decoration: const InputDecoration(

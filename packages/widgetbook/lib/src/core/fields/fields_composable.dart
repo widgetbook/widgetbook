@@ -96,9 +96,6 @@ abstract class FieldsComposable<T> {
     final group = state.queryGroups[groupName];
 
     final child = Column(
-      // This key is needed to force rebuilds when the args are updated
-      // using `Arg.update`.
-      key: group != null ? ValueKey(group) : null,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: fields
           .map(

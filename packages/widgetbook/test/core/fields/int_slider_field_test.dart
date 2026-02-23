@@ -60,6 +60,38 @@ void main() {
           expect(widget.value, equals(7));
         },
       );
+
+      testWidgets(
+        'given an arg with an initial value, '
+        'when [Arg.update] is called with a new value, '
+        'then the slider displays the updated value',
+        (tester) async {
+          final arg = IntArg(
+            3,
+            name: 'volume',
+            style: const SliderIntArgStyle(
+              min: 0,
+              max: 10,
+              divisions: 10,
+            ),
+          );
+
+          await tester.pumpWidgetWithState(
+            state: WidgetbookState(),
+            builder: (context) => arg.buildFields(context),
+          );
+
+          final initialSlider = tester.widget<Slider>(find.byType(Slider));
+          expect(initialSlider.value, equals(3));
+
+          final context = tester.element(find.byType(Slider));
+          arg.update(context, 8);
+          await tester.pumpAndSettle();
+
+          final updatedSlider = tester.widget<Slider>(find.byType(Slider));
+          expect(updatedSlider.value, equals(8));
+        },
+      );
     },
   );
 }
