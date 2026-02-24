@@ -18,6 +18,7 @@ Update `pubspec.yaml`:
 ### 2.1 Entry Point
 
 **v3:**
+
 ```dart
 void main() {
   runApp(const WidgetbookApp());
@@ -25,6 +26,7 @@ void main() {
 ```
 
 **v4:**
+
 ```dart
 void main() => runWidgetbook(config);
 ```
@@ -32,7 +34,10 @@ void main() => runWidgetbook(config);
 ### 2.2 Config Structure
 
 **v3:**
+
 ```dart
+import 'main.directories.g.dart';
+
 @App(...)
 class WidgetbookApp extends StatelessWidget {
   @override
@@ -47,7 +52,10 @@ class WidgetbookApp extends StatelessWidget {
 ```
 
 **v4:**
+
 ```dart
+import 'components.g.dart';
+
 final config = Config(
   components: components,
   appBuilder: ...,
@@ -58,6 +66,7 @@ final config = Config(
 ### 2.3 Theme Addon
 
 **v3:**
+
 ```dart
 ThemeAddon(
   themes: [
@@ -69,6 +78,7 @@ ThemeAddon(
 ```
 
 **v4:**
+
 ```dart
 ThemeAddon<AppThemeData>(
   {
@@ -82,6 +92,7 @@ ThemeAddon<AppThemeData>(
 ### 2.4 Locale Addon
 
 **v3:**
+
 ```dart
 LocalizationAddon(
   locales: AppLocalizations.supportedLocales,
@@ -91,6 +102,7 @@ LocalizationAddon(
 ```
 
 **v4:**
+
 ```dart
 LocaleAddon(
   AppLocalizations.supportedLocales,
@@ -101,6 +113,7 @@ LocaleAddon(
 ### 2.5 Cloud Addons Config → Scenarios
 
 **v3:**
+
 ```dart
 @App(
   cloudAddonsConfigs: {
@@ -113,6 +126,7 @@ LocaleAddon(
 ```
 
 **v4:**
+
 ```dart
 final config = Config(
   scenarios: [
@@ -137,17 +151,18 @@ final config = Config(
 
 ### 3.1 Key Changes
 
-| v3 | v4 |
-|---|---|
-| "Use-case" | "Story" |
-| `*.dart` | `*.stories.dart` |
+| v3                    | v4                |
+| --------------------- | ----------------- |
+| "Use-case"            | "Story"           |
+| `*.dart`              | `*.stories.dart`  |
 | `@UseCase` annotation | `Meta` + `_Story` |
-| `context.knobs.*` | `*Arg` classes |
-| `cloudKnobsConfigs` | `scenarios` |
+| `context.knobs.*`     | `*Arg` classes    |
+| `cloudKnobsConfigs`   | `scenarios`       |
 
 ### 3.2 Simple Story
 
 **v3:**
+
 ```dart
 // button.dart
 @UseCase(
@@ -166,9 +181,10 @@ Widget buildButtonCase(BuildContext context) {
 ```
 
 **v4:**
+
 ```dart
 // button.stories.dart
-part 'button.stories.book.dart';
+part 'button.stories.g.dart';
 
 const meta = Meta<Button>();
 
@@ -185,6 +201,7 @@ final $Default = _Story(
 Use `MetaWithArgs` when knob names don't match widget parameters.
 
 **v3:**
+
 ```dart
 // card.dart
 @UseCase(name: 'Default', type: Card)
@@ -193,14 +210,16 @@ Widget buildCardCase(BuildContext context) {
     label: 'enabled',
     initialValue: true,
   );
+
   return Card(isElevated: enabled);
 }
 ```
 
 **v4:**
+
 ```dart
 // card.stories.dart
-part 'card.stories.book.dart';
+part 'card.stories.g.dart';
 
 const meta = MetaWithArgs<Card, CustomCardArgs>();
 
@@ -221,6 +240,7 @@ final $Default = _Story(
 ### 3.4 Story-Level Scenarios (replaces `cloudKnobsConfigs`)
 
 **v3:**
+
 ```dart
 @UseCase(
   name: 'Default',
@@ -241,15 +261,21 @@ Widget buildDividerUseCase(BuildContext context) {
 ```
 
 **v4:**
+
 ```dart
 // divider.stories.dart
 const meta = Meta<Divider>();
 
 final $Default = _Story(
-  args: _Args(stroke: DoubleArg(1)),
+  args: _Args(
+    stroke: DoubleArg(
+      1,
+      style: SliderDoubleArgStyle(min: 0.5, max: 10)
+    )
+  ),
   scenarios: [
-    _Scenario(name: 'Thick', args: _Args(stroke: DoubleArg(10))),
-    _Scenario(name: 'Thin', args: _Args(stroke: DoubleArg(0.5))),
+    _Scenario(name: 'Thick', args: _Args.fixed(stroke: 10)),
+    _Scenario(name: 'Thin', args: _Args.fixed(stroke: 0.5)),
   ],
 );
 ```
@@ -259,6 +285,7 @@ final $Default = _Story(
 Move wrapper logic from the use-case body to `setup`.
 
 **v3:**
+
 ```dart
 @UseCase(name: 'Primary', type: UserTile)
 Widget buildUserTile(BuildContext context) {
@@ -274,6 +301,7 @@ Widget buildUserTile(BuildContext context) {
 ```
 
 **v4:**
+
 ```dart
 // user_tile.stories.dart
 const meta = Meta<UserTile>();
@@ -296,13 +324,27 @@ const $Primary = _Story(
 
 ## 4. Knob to Arg Mapping
 
-| v3 Knob | v4 Arg |
-|---|---|
-| `context.knobs.string(label: 'x', initialValue: 'y')` | `StringArg('y')` |
-| `context.knobs.boolean(label: 'x', initialValue: y)` | `BooleanArg(y)` |
-| `context.knobs.int.slider(label: 'x', initialValue: y)` | `IntArg(y)` |
-| `context.knobs.double.slider(label: 'x', initialValue: y)` | `DoubleArg(y)` |
-| `context.knobs.list(label: 'x', options: [...])` | `ListArg([...])` |
+| v3 Knob                                                        | v4 Arg                                           |
+| -------------------------------------------------------------- | ------------------------------------------------ |
+| `context.knobs.int.input(label: 'x', initialValue: y)`         | `IntArg(y)`                                      |
+| `context.knobs.int.slider(label: 'x', initialValue: y)`        | `IntArg(y, style: SliderIntArgStyle(...))`       |
+| `context.knobs.double.input(label: 'x', initialValue: y)`      | `DoubleArg(y)`                                   |
+| `context.knobs.double.slider(label: 'x', initialValue: y)`     | `DoubleArg(y, style: SliderDoubleArgStyle(...))` |
+| `context.knobs.string(label: 'x', initialValue: 'y')`          | `StringArg('y')`                                 |
+| `context.knobs.boolean(label: 'x', initialValue: y)`           | `BooleanArg(y)`                                  |
+| `context.knobs.object.dropdown(label: 'x', options: [...])`    | `SingleArg([...])`                               |
+| `context.knobs.object.segmented(label: 'x', options: [...])`   | `SingleArg([...], style: SegmentedArgStyle())`   |
+| `context.knobs.iterable.segmented(label: 'x', options: [...])` | `IterableArg([...])`                             |
+
+For `orNull` variants, use nullable types:
+
+```dart
+// v3
+context.knobs.stringOrNull(label: 'x', initialValue: 'y')
+
+// v4
+NullableStringArg('y')
+```
 
 ---
 
