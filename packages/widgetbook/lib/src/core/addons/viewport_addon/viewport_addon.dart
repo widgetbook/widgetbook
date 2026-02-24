@@ -15,6 +15,9 @@ class ViewportMode extends Mode<ViewportData> {
           showFrame: false,
         ),
       );
+
+  @override
+  String toString() => value.name;
 }
 
 /// An [Addon] that allows switching between different viewports.

@@ -7,6 +7,9 @@ import '../framework/framework.dart';
 /// via [MediaQuery].
 class TextScaleMode extends Mode<double> {
   TextScaleMode(double value) : super(value, TextScaleAddon());
+
+  @override
+  String toString() => 'x$value';
 }
 
 class TextScaleAddon extends Addon<double> with SingleFieldOnly {

@@ -15,14 +15,18 @@ class InfoTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(4),
+      padding: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 8,
         children: [
           Text(
             title,
-            style: WidgetbookTheme.of(context).textTheme.headlineMedium,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: WidgetbookTheme.of(context).colorScheme.primary,
+            ),
           ),
           Table(
             children: data.entries.map((entry) {

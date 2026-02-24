@@ -77,30 +77,37 @@ class ResponsiveLayout extends StatelessWidget {
     final args = scenario.args.list.nonNulls;
     final modes = scenario.modes;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 8,
-      children: [
-        InfoTable(
-          title: 'Metadata',
-          data: {
-            'Name': scenario.name,
-            'Path': scenario.path,
-          },
-        ),
-        InfoTable(
-          title: 'Args',
-          data: {
-            for (final arg in args) arg.name: arg.value.toString(),
-          },
-        ),
-        InfoTable(
-          title: 'Modes',
-          data: {
-            for (final mode in modes) mode.addon.name: mode.value.toString(),
-          },
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 8,
+        children: [
+          InfoTable(
+            title: 'Metadata',
+            data: {
+              'Name': scenario.name,
+              'Path': scenario.path,
+            },
+          ),
+          InfoTable(
+            title: 'Args',
+            data: {
+              for (final arg in args)
+                // Don't show function args values,
+                // as they can be long and not useful to users.
+                arg.name: arg.value is Function
+                    ? arg.value.runtimeType.toString()
+                    : arg.value.toString(),
+            },
+          ),
+          InfoTable(
+            title: 'Modes',
+            data: {
+              for (final mode in modes) mode.name: mode.toString(),
+            },
+          ),
+        ],
+      ),
     );
   }
 

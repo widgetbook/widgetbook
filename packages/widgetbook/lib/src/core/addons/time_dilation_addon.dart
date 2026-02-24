@@ -7,6 +7,9 @@ import '../framework/framework.dart';
 /// An [Addon] for changing [timeDilation].
 class TimeDilationMode extends Mode<double> {
   TimeDilationMode(double value) : super(value, TimeDilationAddon());
+
+  @override
+  String toString() => 'x$value';
 }
 
 class TimeDilationAddon extends Addon<double> with SingleFieldOnly {

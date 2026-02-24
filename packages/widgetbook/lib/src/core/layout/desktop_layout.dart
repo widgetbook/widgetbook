@@ -30,79 +30,89 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
-    final isScenario = state.scenario != null;
 
     const kSidePanelPercentage = 0.2;
     const kWorkbenchPercentage = 1 - 2 * kSidePanelPercentage;
-
     final showNavigationPanel = state.canShowPanel(LayoutPanel.navigation);
-    final showArgsPanel = state.canShowPanel(LayoutPanel.args);
-    final showAddonsPanel = state.canShowPanel(LayoutPanel.addons);
-    final showSettingsPanel = showArgsPanel || showAddonsPanel;
 
     return ColoredBox(
       color: WidgetbookTheme.of(context).colorScheme.surface,
       child: ResizableLayout(
-        // Force rebuild when switching between scenario and non-scenario to show/hide scenario info panel.
-        key: ValueKey(isScenario),
         items: [
           if (showNavigationPanel)
             ResizableLayoutItem(
               percentage: kSidePanelPercentage,
-              child: Card(
+              builder: (context) => Card(
                 child: navigationBuilder(context),
               ),
             ),
           ResizableLayoutItem(
             percentage: kWorkbenchPercentage,
-            child: workbench,
+            builder: (context) => workbench,
           ),
-          if (isScenario)
-            ResizableLayoutItem(
-              percentage: kSidePanelPercentage,
-              child: Card(
-                child: Builder(
-                  builder: scenarioInfoBuilder,
-                ),
-              ),
-            )
-          else if (showSettingsPanel)
-            ResizableLayoutItem(
-              percentage: kSidePanelPercentage,
-              child: Card(
-                child: DefaultTabController(
-                  length: (showArgsPanel ? 1 : 0) + (showAddonsPanel ? 1 : 0),
-                  child: Column(
-                    children: [
-                      TabBar(
-                        tabs: [
-                          if (showArgsPanel) const Tab(text: 'Args'),
-                          if (showAddonsPanel) const Tab(text: 'Addons'),
-                        ],
-                      ),
-                      Expanded(
-                        child: TabBarView(
+          ResizableLayoutItem(
+            percentage: kSidePanelPercentage,
+            builder: (context) {
+              // React to changes when switching between scenarios and stories
+              // to update the side panel content.
+              return ListenableBuilder(
+                listenable: state,
+                builder: (context, child) {
+                  final isScenario = state.scenario != null;
+                  final showArgsPanel = state.canShowPanel(LayoutPanel.args);
+                  final showAddonsPanel = state.canShowPanel(
+                    LayoutPanel.addons,
+                  );
+                  final showSettingsPanel = showArgsPanel || showAddonsPanel;
+
+                  if (isScenario) {
+                    return Card(
+                      child: scenarioInfoBuilder(context),
+                    );
+                  }
+
+                  if (showSettingsPanel) {
+                    return Card(
+                      child: DefaultTabController(
+                        length:
+                            (showArgsPanel ? 1 : 0) + (showAddonsPanel ? 1 : 0),
+                        child: Column(
                           children: [
-                            if (showArgsPanel) ...{
-                              SettingsList(
-                                name: 'Args',
-                                builder: argsBuilder,
+                            TabBar(
+                              tabs: [
+                                if (showArgsPanel) const Tab(text: 'Args'),
+                                if (showAddonsPanel) const Tab(text: 'Addons'),
+                              ],
+                            ),
+                            Expanded(
+                              child: TabBarView(
+                                children: [
+                                  if (showArgsPanel) ...{
+                                    SettingsList(
+                                      name: 'Args',
+                                      builder: argsBuilder,
+                                    ),
+                                  },
+                                  if (showAddonsPanel) ...{
+                                    SettingsList(
+                                      name: 'Addons',
+                                      builder: addonsBuilder,
+                                    ),
+                                  },
+                                ],
                               ),
-                            },
-                            if (showAddonsPanel) ...{
-                              SettingsList(
-                                name: 'Addons',
-                                builder: addonsBuilder,
-                              ),
-                            },
+                            ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+                    );
+                  }
+
+                  return const SizedBox.shrink();
+                },
+              );
+            },
+          ),
         ],
       ),
     );
@@ -113,11 +123,11 @@ class DesktopLayout extends StatelessWidget implements BaseLayout {
 class ResizableLayoutItem {
   const ResizableLayoutItem({
     required this.percentage,
-    required this.child,
+    required this.builder,
   });
 
   final double percentage;
-  final Widget child;
+  final WidgetBuilder builder;
 }
 
 /// An improved API for [ResizableWidget] that allows passing both percentage
@@ -139,7 +149,7 @@ class ResizableLayout extends StatelessWidget {
       separatorSize: 2,
       separatorColor: Colors.white24,
       percentages: items.map((x) => x.percentage + extraPercentage).toList(),
-      children: items.map((x) => x.child).toList(),
+      children: items.map((x) => x.builder(context)).toList(),
     );
   }
 }
