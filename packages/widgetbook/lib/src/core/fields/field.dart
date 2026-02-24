@@ -9,13 +9,14 @@ import '../utils.dart';
 import 'color_field/color_picker.dart';
 import 'color_field/color_space.dart';
 import 'controlled_text_field.dart';
+import 'duration_field/duration_input.dart';
 
 part 'boolean_field.dart';
 part 'color_field/color_field.dart';
 part 'date_time_field.dart';
 part 'double_input_field.dart';
 part 'double_slider_field.dart';
-part 'duration_field.dart';
+part 'duration_field/duration_field.dart';
 part 'int_input_field.dart';
 part 'int_slider_field.dart';
 part 'iterable_segmented_field.dart';

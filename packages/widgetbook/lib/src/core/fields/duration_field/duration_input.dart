@@ -1,37 +1,13 @@
-part of 'field.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
 
-/// A [Field] that represents a [Duration] value.
-final class DurationField extends Field<Duration> {
-  /// Creates a new instance of [DurationField].
-  DurationField({
-    required super.name,
-    super.initialValue = defaultDuration,
-    @Deprecated('Fields should not be aware of their context') super.onChanged,
-  }) : super(
-         toParam: (value) => value.inMilliseconds.toString(),
-         toValue: (param) {
-           final ms = int.tryParse(param);
-           if (ms == null) return null;
-           return Duration(milliseconds: ms);
-         },
-       );
+import '../controlled_text_field.dart';
 
-  /// The default duration value used when no initial value is provided.
-  static const defaultDuration = Duration.zero;
-
-  @override
-  Widget toWidget(BuildContext context, String groupName, Duration value) {
-    return _DurationInput(
-      value: value,
-      onChanged: (duration) {
-        updateField(context, groupName, duration);
-      },
-    );
-  }
-}
-
-class _DurationInput extends StatefulWidget {
-  const _DurationInput({
+@internal
+class DurationInput extends StatefulWidget {
+  const DurationInput({
+    super.key,
     required this.value,
     required this.onChanged,
   });
@@ -40,10 +16,10 @@ class _DurationInput extends StatefulWidget {
   final ValueChanged<Duration> onChanged;
 
   @override
-  State<_DurationInput> createState() => _DurationInputState();
+  State<DurationInput> createState() => DurationInputState();
 }
 
-class _DurationInputState extends State<_DurationInput> {
+class DurationInputState extends State<DurationInput> {
   static final _hoursFormatter = FilteringTextInputFormatter.allow(
     RegExp(r'^([01]?[0-9]?|2[0-3]?)$'),
   );
@@ -66,7 +42,7 @@ class _DurationInputState extends State<_DurationInput> {
   }
 
   @override
-  void didUpdateWidget(covariant _DurationInput oldWidget) {
+  void didUpdateWidget(covariant DurationInput oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.value != widget.value) {
       _setFromDuration(widget.value);
