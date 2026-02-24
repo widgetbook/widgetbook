@@ -73,10 +73,14 @@ class _NavigationPanelState extends State<NavigationPanel> {
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: NavigationTreeNode(
-                node: filteredRoot ?? widget.root,
-                onLeafNodeTap: widget.onLeafNodeTap,
-              ),
+              child: filteredRoot != null
+                  ? NavigationTreeNode(
+                      node: filteredRoot,
+                      onLeafNodeTap: widget.onLeafNodeTap,
+                    )
+                  : const Center(
+                      child: Text('No matches found'),
+                    ),
             ),
           ),
         ),
