@@ -14,7 +14,7 @@ abstract class Mode<T> {
 
   String get name => addon.name;
 
-  /// The name of this [value] to be used for displaying purposes,
+  /// The name of this [value] to be used for displaying purposes.
   String get formattedValue;
 
   /// The associated addon for this mode. Used to build the story, and

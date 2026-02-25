@@ -1,6 +1,9 @@
-## 4.0.0-beta.1
+## Unreleased
 
 - **FEAT**: Show read-only info about scenarios in the right side panel. ([#1847](https://github.com/widgetbook/widgetbook/pull/1847))
+
+## 4.0.0-beta.1
+
 - **FIX**: Restore search functionality. ([#1846](https://github.com/widgetbook/widgetbook/pull/1846))
 - **FIX**: Prevent focus loss of TextField-based `Arg`s. ([#1836](https://github.com/widgetbook/widgetbook/pull/1836))
 - **FIX**: Resolve URL resetting on story change. ([#1840](https://github.com/widgetbook/widgetbook/pull/1840))
