@@ -31,7 +31,7 @@ Update `pubspec.yaml`:
 - Remove `widgetbook_generator`
 - Update `widgetbook` to `^4.0.0-alpha.5` or later
 
-Then run dependency resolution and code generation commands used by the project.
+Then run dependency resolution (e.g. `flutter pub get`) commands used by the project.
 
 ### Phase 2 — App Bootstrap and Config
 
@@ -200,6 +200,8 @@ Widget buildButtonCase(BuildContext context) {
 
 **v4**
 
+You need to run `dart run build_runner build` after this change to generate the `button.stories.g.dart`.
+
 ```dart
 // button.stories.dart
 part 'button.stories.g.dart';
@@ -279,6 +281,8 @@ Widget buildDividerUseCase(BuildContext context) {
 ```
 
 **v4**
+
+You need to run `flutter test` after this change to make sure that the scenarios' snapshots are generated in `build/.widgetbook` folder.
 
 ```dart
 // divider.stories.dart

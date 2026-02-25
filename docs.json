@@ -72,6 +72,10 @@
           "href": "/whats-new-in-v4"
         },
         {
+          "title": "Migrating from v3",
+          "href": "/v4-migration"
+        },
+        {
           "title": "Quick Start",
           "href": "/quick-start"
         },
