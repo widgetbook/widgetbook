@@ -7,7 +7,7 @@ class AlignmentMode extends Mode<Alignment> {
   AlignmentMode(Alignment value) : super(value, AlignmentAddon(value));
 
   @override
-  String get namedValue => AlignmentAddon.alignments[value]!;
+  String get formattedValue => AlignmentAddon.alignments[value]!;
 }
 
 /// An [Addon] for wrapping use-cases with [Align] widget.

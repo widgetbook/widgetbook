@@ -8,7 +8,7 @@ class SemanticsMode extends Mode<bool> {
   SemanticsMode(bool value) : super(value, SemanticsAddon());
 
   @override
-  String get namedValue => value ? 'Enabled' : 'Disabled';
+  String get formattedValue => value ? 'Enabled' : 'Disabled';
 }
 
 /// An [Addon] for semantics.

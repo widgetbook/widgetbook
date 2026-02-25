@@ -18,7 +18,7 @@ class CupertinoThemeMode extends Mode<CupertinoThemeData> {
   final String _themeName;
 
   @override
-  String get namedValue => _themeName;
+  String get formattedValue => _themeName;
 }
 
 /// An [Addon] for changing the active [CupertinoThemeData] via

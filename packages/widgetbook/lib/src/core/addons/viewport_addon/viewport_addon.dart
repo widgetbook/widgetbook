@@ -17,7 +17,7 @@ class ViewportMode extends Mode<ViewportData> {
       );
 
   @override
-  String get namedValue => value.name;
+  String get formattedValue => value.name;
 }
 
 /// An [Addon] that allows switching between different viewports.

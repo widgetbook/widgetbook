@@ -10,7 +10,7 @@ class LocaleMode extends Mode<Locale> {
   ]) : super(value, LocaleAddon([value], delegates));
 
   @override
-  String get namedValue => value.toLanguageTag();
+  String get formattedValue => value.toLanguageTag();
 }
 
 /// An [Addon] for changing the active [Locale] via [Localizations].

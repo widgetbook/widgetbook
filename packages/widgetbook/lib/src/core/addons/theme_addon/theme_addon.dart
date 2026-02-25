@@ -24,7 +24,7 @@ class ThemeMode<T> extends Mode<T> {
   final String _themeName;
 
   @override
-  String get namedValue => _themeName;
+  String get formattedValue => _themeName;
 }
 
 /// An [Addon] for changing the active custom theme. A [builder] must be

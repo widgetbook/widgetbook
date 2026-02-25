@@ -9,7 +9,7 @@ class TextScaleMode extends Mode<double> {
   TextScaleMode(double value) : super(value, TextScaleAddon());
 
   @override
-  String get namedValue => 'x$value';
+  String get formattedValue => 'x$value';
 }
 
 class TextScaleAddon extends Addon<double> with SingleFieldOnly {

@@ -103,7 +103,7 @@ class ResponsiveLayout extends StatelessWidget {
           InfoTable(
             title: 'Modes',
             data: {
-              for (final mode in modes) mode.name: mode.namedValue,
+              for (final mode in modes) mode.name: mode.formattedValue,
             },
           ),
         ],
