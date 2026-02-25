@@ -29,7 +29,7 @@ Update `pubspec.yaml`:
 
 - Remove `widgetbook_annotation`
 - Remove `widgetbook_generator`
-- Update `widgetbook` to `^4.0.0-alpha.5` or later
+- Update `widgetbook` to `^4.0.0-beta.1` or later
 
 Then run dependency resolution (e.g. `flutter pub get`) commands used by the project.
 
