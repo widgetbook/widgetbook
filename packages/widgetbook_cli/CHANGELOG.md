@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-beta.1
 
 - **FEAT**: Support semantics testing. ([#1809](https://github.com/widgetbook/widgetbook/pull/1809))
 - **FEAT**: Add `init` command. ([#1777](https://github.com/widgetbook/widgetbook/pull/1777))
