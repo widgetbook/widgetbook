@@ -1,4 +1,4 @@
-part of 'field.dart';
+part of '../field.dart';
 
 /// A [Field] that represents a [Duration] value.
 final class DurationField extends Field<Duration> {
@@ -21,17 +21,9 @@ final class DurationField extends Field<Duration> {
 
   @override
   Widget toWidget(BuildContext context, String groupName, Duration value) {
-    return ControlledTextField(
-      initialValue: toParam(value),
-      keyboardType: TextInputType.number,
-      decoration: const InputDecoration(
-        hintText: 'Enter a duration',
-        suffix: Text('ms'),
-      ),
-      onChanged: (value) {
-        final duration = toValue(value);
-        if (duration == null) return;
-
+    return DurationInput(
+      value: value,
+      onChanged: (duration) {
         updateField(context, groupName, duration);
       },
     );
