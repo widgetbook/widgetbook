@@ -15,10 +15,16 @@ class ThemeMode<T> extends Mode<T> {
     String name,
     T theme,
     ThemeBuilder<T> builder,
-  ) : super(
+  ) : _themeName = name,
+      super(
         theme,
         ThemeAddon<T>({name: theme}, builder),
       );
+
+  final String _themeName;
+
+  @override
+  String get formattedValue => _themeName;
 }
 
 /// An [Addon] for changing the active custom theme. A [builder] must be

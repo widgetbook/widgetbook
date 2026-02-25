@@ -9,10 +9,16 @@ class MaterialThemeMode extends Mode<ThemeData> {
   MaterialThemeMode(
     String name,
     ThemeData theme,
-  ) : super(
+  ) : _themeName = name,
+      super(
         theme,
         MaterialThemeAddon({name: theme}),
       );
+
+  final String _themeName;
+
+  @override
+  String get formattedValue => _themeName;
 }
 
 /// An [Addon] for changing the active [ThemeData] via [Theme].

@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Show read-only info about scenarios in the right side panel. ([#1847](https://github.com/widgetbook/widgetbook/pull/1847))
+
 ## 4.0.0-beta.1
 
 - **FIX**: Restore search functionality. ([#1846](https://github.com/widgetbook/widgetbook/pull/1846))

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 import '../navigation/navigation.dart';
+import '../settings/settings.dart';
 import '../state/state.dart';
 import 'desktop_layout.dart';
 import 'mobile_layout.dart';
@@ -65,6 +66,51 @@ class ResponsiveLayout extends StatelessWidget {
         [];
   }
 
+  Widget buildScenarioInfo(BuildContext context) {
+    final state = WidgetbookState.of(context);
+    final scenario = state.scenario;
+
+    if (scenario == null) {
+      return const SizedBox.shrink();
+    }
+
+    final args = scenario.args.list.nonNulls;
+    final modes = scenario.modes;
+
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 8,
+        children: [
+          InfoTable(
+            title: 'Metadata',
+            data: {
+              'Name': scenario.name,
+              'Path': scenario.path,
+            },
+          ),
+          InfoTable(
+            title: 'Args',
+            data: {
+              for (final arg in args)
+                // Don't show function args values,
+                // as they can be long and not useful to users.
+                arg.name: arg.value is Function
+                    ? arg.value.runtimeType.toString()
+                    : arg.value.toString(),
+            },
+          ),
+          InfoTable(
+            title: 'Modes',
+            data: {
+              for (final mode in modes) mode.name: mode.formattedValue,
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // Force desktop mode if `panels` query param is set.
@@ -83,12 +129,14 @@ class ResponsiveLayout extends StatelessWidget {
             navigationBuilder: (context) => buildNavigation(context, true),
             addonsBuilder: buildAddons,
             argsBuilder: buildArgs,
+            scenarioInfoBuilder: buildScenarioInfo,
             workbench: child,
           )
         : DesktopLayout(
             navigationBuilder: (context) => buildNavigation(context, false),
             addonsBuilder: buildAddons,
             argsBuilder: buildArgs,
+            scenarioInfoBuilder: buildScenarioInfo,
             workbench: child,
           );
   }

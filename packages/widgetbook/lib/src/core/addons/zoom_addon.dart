@@ -5,6 +5,9 @@ import '../framework/framework.dart';
 
 class ZoomMode extends Mode<double> {
   ZoomMode(double value) : super(value, ZoomAddon());
+
+  @override
+  String get formattedValue => 'x$value';
 }
 
 /// An [Addon] for zoom/scaling.

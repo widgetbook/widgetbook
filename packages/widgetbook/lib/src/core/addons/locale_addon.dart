@@ -8,6 +8,9 @@ class LocaleMode extends Mode<Locale> {
     Locale value, [
     List<LocalizationsDelegate<dynamic>> delegates = const [],
   ]) : super(value, LocaleAddon([value], delegates));
+
+  @override
+  String get formattedValue => value.toLanguageTag();
 }
 
 /// An [Addon] for changing the active [Locale] via [Localizations].
