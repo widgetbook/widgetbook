@@ -9,10 +9,16 @@ class CupertinoThemeMode extends Mode<CupertinoThemeData> {
   CupertinoThemeMode(
     String name,
     CupertinoThemeData theme,
-  ) : super(
+  ) : _themeName = name,
+      super(
         theme,
         CupertinoThemeAddon({name: theme}),
       );
+
+  final String _themeName;
+
+  @override
+  String get namedValue => _themeName;
 }
 
 /// An [Addon] for changing the active [CupertinoThemeData] via

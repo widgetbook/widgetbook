@@ -7,7 +7,7 @@ class ZoomMode extends Mode<double> {
   ZoomMode(double value) : super(value, ZoomAddon());
 
   @override
-  String toString() => 'x$value';
+  String get namedValue => 'x$value';
 }
 
 /// An [Addon] for zoom/scaling.

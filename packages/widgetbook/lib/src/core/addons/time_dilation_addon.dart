@@ -9,7 +9,7 @@ class TimeDilationMode extends Mode<double> {
   TimeDilationMode(double value) : super(value, TimeDilationAddon());
 
   @override
-  String toString() => 'x$value';
+  String get namedValue => 'x$value';
 }
 
 class TimeDilationAddon extends Addon<double> with SingleFieldOnly {
