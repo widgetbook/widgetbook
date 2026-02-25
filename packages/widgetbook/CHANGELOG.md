@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-beta.1
 
 - **FIX**: Restore search functionality. ([#1846](https://github.com/widgetbook/widgetbook/pull/1846))
 - **FIX**: Prevent focus loss of TextField-based `Arg`s. ([#1836](https://github.com/widgetbook/widgetbook/pull/1836))
