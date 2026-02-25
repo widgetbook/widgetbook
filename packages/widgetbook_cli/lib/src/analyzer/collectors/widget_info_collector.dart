@@ -26,7 +26,7 @@ class WidgetInfoCollector
   @override
   bool shouldCollect(ClassDeclaration node) {
     // Skip private classes
-    if (node.name.toString().startsWith('_')) return false;
+    if (node.namePart.toString().startsWith('_')) return false;
 
     // Skip abstract classes
     if (node.abstractKeyword != null) return false;
@@ -67,7 +67,7 @@ class WidgetInfoCollector
         <String>[];
 
     return WidgetInfo(
-      name: node.name.toString(),
+      name: node.namePart.toString(),
       importPath: element?.library.uri.toString() ?? '',
       parameterTypes: parameterTypes,
     );
