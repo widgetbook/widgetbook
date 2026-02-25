@@ -1,8 +1,3 @@
-/// Helper functions for serializing objects to JSON by including only non-default values.
-///
-/// These helpers ensure that the JSON output is minimal and contains only
-/// meaningful data, excluding default/empty values.
-
 /// Helper to add non-default string properties
 void addString(Map<String, dynamic> properties, String key, String value) {
   if (value.isNotEmpty) properties[key] = value;
