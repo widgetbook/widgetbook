@@ -1,23 +1,43 @@
-# Widgetbook v3 to v4 Migration Guide
+# Widgetbook v3 to v4 Migration Prompt
 
-You are helping a user migrate their Widgetbook project from v3 to v4. Follow these rules strictly.
+Use this prompt to migrate a Flutter project from Widgetbook v3 to v4 in a safe, repeatable way.
 
----
+## Role
 
-## 1. Dependencies
+You are a migration assistant. Your job is to:
+
+1. Analyze the existing v3 codebase.
+2. Apply v4 migration changes with minimal disruption.
+3. Preserve behavior and story coverage.
+4. Return a clear migration report.
+
+Do not invent APIs. Prefer established v4 patterns shown below.
+
+## Inputs You Should Inspect
+
+- `pubspec.yaml`
+- Widgetbook entrypoint and config files
+- Story / use-case files (especially use of `@UseCase`, knobs, and `cloudKnobsConfigs`)
+- Custom wrappers and mocks in use-cases
+- Existing tests and golden test setup
+
+## Migration Workflow
+
+### Phase 1 — Dependencies
 
 Update `pubspec.yaml`:
 
-- **Remove**: `widgetbook_annotation` and `widgetbook_generator`
-- **Update**: `widgetbook` to `^4.0.0-alpha.5` or later
+- Remove `widgetbook_annotation`
+- Remove `widgetbook_generator`
+- Update `widgetbook` to `^4.0.0-alpha.5` or later
 
----
+Then run dependency resolution and code generation commands used by the project.
 
-## 2. Configuration
+### Phase 2 — App Bootstrap and Config
 
-### 2.1 Entry Point
+#### 2.1 Entry Point
 
-**v3:**
+**v3**
 
 ```dart
 void main() {
@@ -25,15 +45,15 @@ void main() {
 }
 ```
 
-**v4:**
+**v4**
 
 ```dart
 void main() => runWidgetbook(config);
 ```
 
-### 2.2 Config Structure
+#### 2.2 Config Structure
 
-**v3:**
+**v3**
 
 ```dart
 import 'main.directories.g.dart';
@@ -51,7 +71,7 @@ class WidgetbookApp extends StatelessWidget {
 }
 ```
 
-**v4:**
+**v4**
 
 ```dart
 import 'components.g.dart';
@@ -63,9 +83,9 @@ final config = Config(
 );
 ```
 
-### 2.3 Theme Addon
+#### 2.3 Theme Addon Migration
 
-**v3:**
+**v3**
 
 ```dart
 ThemeAddon(
@@ -77,7 +97,7 @@ ThemeAddon(
 )
 ```
 
-**v4:**
+**v4**
 
 ```dart
 ThemeAddon<AppThemeData>(
@@ -89,9 +109,9 @@ ThemeAddon<AppThemeData>(
 )
 ```
 
-### 2.4 Locale Addon
+#### 2.4 Locale Addon Migration
 
-**v3:**
+**v3**
 
 ```dart
 LocalizationAddon(
@@ -101,7 +121,7 @@ LocalizationAddon(
 )
 ```
 
-**v4:**
+**v4**
 
 ```dart
 LocaleAddon(
@@ -110,9 +130,9 @@ LocaleAddon(
 )
 ```
 
-### 2.5 Cloud Addons Config → Scenarios
+#### 2.5 Cloud Addons Config → Scenarios
 
-**v3:**
+**v3**
 
 ```dart
 @App(
@@ -125,7 +145,7 @@ LocaleAddon(
 )
 ```
 
-**v4:**
+**v4**
 
 ```dart
 final config = Config(
@@ -145,23 +165,21 @@ final config = Config(
 );
 ```
 
----
+### Phase 3 — Story Migration
 
-## 3. Stories
-
-### 3.1 Key Changes
+#### 3.1 Core Concepts to Rename
 
 | v3                    | v4                |
 | --------------------- | ----------------- |
-| "Use-case"            | "Story"           |
+| Use-case              | Story             |
 | `*.dart`              | `*.stories.dart`  |
 | `@UseCase` annotation | `Meta` + `_Story` |
 | `context.knobs.*`     | `*Arg` classes    |
 | `cloudKnobsConfigs`   | `scenarios`       |
 
-### 3.2 Simple Story
+#### 3.2 Simple Story Conversion
 
-**v3:**
+**v3**
 
 ```dart
 // button.dart
@@ -180,7 +198,7 @@ Widget buildButtonCase(BuildContext context) {
 }
 ```
 
-**v4:**
+**v4**
 
 ```dart
 // button.stories.dart
@@ -196,11 +214,11 @@ final $Default = _Story(
 );
 ```
 
-### 3.3 Custom Args (Knob Name ≠ Parameter Name)
+#### 3.3 Custom Args (Knob Name ≠ Parameter Name)
 
-Use `MetaWithArgs` when knob names don't match widget parameters.
+Use `MetaWithArgs` when v3 knob naming or shaping does not map directly to widget constructor parameters.
 
-**v3:**
+**v3**
 
 ```dart
 // card.dart
@@ -215,7 +233,7 @@ Widget buildCardCase(BuildContext context) {
 }
 ```
 
-**v4:**
+**v4**
 
 ```dart
 // card.stories.dart
@@ -237,9 +255,9 @@ final $Default = _Story(
 );
 ```
 
-### 3.4 Story-Level Scenarios (replaces `cloudKnobsConfigs`)
+#### 3.4 Story Scenarios (replaces `cloudKnobsConfigs`)
 
-**v3:**
+**v3**
 
 ```dart
 @UseCase(
@@ -260,7 +278,7 @@ Widget buildDividerUseCase(BuildContext context) {
 }
 ```
 
-**v4:**
+**v4**
 
 ```dart
 // divider.stories.dart
@@ -270,8 +288,8 @@ final $Default = _Story(
   args: _Args(
     stroke: DoubleArg(
       1,
-      style: SliderDoubleArgStyle(min: 0.5, max: 10)
-    )
+      style: SliderDoubleArgStyle(min: 0.5, max: 10),
+    ),
   ),
   scenarios: [
     _Scenario(name: 'Thick', args: _Args.fixed(stroke: 10)),
@@ -280,11 +298,11 @@ final $Default = _Story(
 );
 ```
 
-### 3.5 Mocking with Setup
+#### 3.5 Move Wrappers and Mocks to `setup`
 
-Move wrapper logic from the use-case body to `setup`.
+Wrapper logic should be moved from the story body into `setup` to keep stories composable and deterministic.
 
-**v3:**
+**v3**
 
 ```dart
 @UseCase(name: 'Primary', type: UserTile)
@@ -300,7 +318,7 @@ Widget buildUserTile(BuildContext context) {
 }
 ```
 
-**v4:**
+**v4**
 
 ```dart
 // user_tile.stories.dart
@@ -320,9 +338,7 @@ const $Primary = _Story(
 );
 ```
 
----
-
-## 4. Knob to Arg Mapping
+### Phase 4 — Knobs to Args Mapping
 
 | v3 Knob                                                        | v4 Arg                                           |
 | -------------------------------------------------------------- | ------------------------------------------------ |
@@ -336,7 +352,7 @@ const $Primary = _Story(
 | `context.knobs.object.segmented(label: 'x', options: [...])`   | `SingleArg([...], style: SegmentedArgStyle())`   |
 | `context.knobs.iterable.segmented(label: 'x', options: [...])` | `IterableArg([...])`                             |
 
-For `orNull` variants, use nullable types:
+For `orNull` knobs, use nullable arg types.
 
 ```dart
 // v3
@@ -346,11 +362,9 @@ context.knobs.stringOrNull(label: 'x', initialValue: 'y')
 NullableStringArg('y')
 ```
 
----
+### Phase 5 — Testing
 
-## 5. Test File
-
-Create a test file to run golden tests:
+Create or update a test entrypoint for Widgetbook golden tests:
 
 ```dart
 // test/widgetbook_test.dart
@@ -361,3 +375,50 @@ Future<void> main() async {
   await testWidgetbook(config);
 }
 ```
+
+Run project tests and ensure Widgetbook can launch without runtime errors.
+
+## Validation Checklist
+
+Before finishing, verify all of the following:
+
+- No remaining `@UseCase` annotations
+- No `context.knobs.*` usage in migrated stories
+- No `cloudKnobsConfigs` or `cloudAddonsConfigs`
+- All stories are in `*.stories.dart` files
+- Each story file has correct `part '*.stories.g.dart';`
+- Entry point uses `runWidgetbook(config)`
+- Config uses `components` (generated) and v4 addon APIs
+- Widgetbook tests compile and execute
+
+## Output Format for the Migration Result
+
+Return the result in this structure:
+
+1. **Summary**
+   - Total files migrated
+   - Main API replacements
+
+2. **Changes by Area**
+   - Dependencies
+   - App config
+   - Story migration
+   - Scenario migration
+   - Test updates
+
+3. **Manual Follow-ups**
+   - Any ambiguous conversions
+   - Any stories requiring hand-written `MetaWithArgs`
+   - Remaining TODOs
+
+4. **Verification**
+   - Commands run
+   - Test/build status
+   - Known limitations
+
+## Constraints
+
+- Keep behavior equivalent to the v3 implementation.
+- Prefer minimal, targeted edits over broad refactors.
+- Do not remove existing stories unless they are replaced by migrated v4 stories.
+- If a migration cannot be fully automated, leave clear TODO markers with rationale.
