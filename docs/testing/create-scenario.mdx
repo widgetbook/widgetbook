@@ -1,0 +1,165 @@
+# Creating Scenarios
+
+This page focuses on implementing scenarios for widget tests. For concepts and motivation, see the [Testing Overview](/testing/overview).
+
+## Create Test Scenarios
+
+Define scenarios directly in a story's `scenarios` list. This is where you describe each state you want to test.
+In scenarios, values are fixed on purpose.
+Unlike adjustable story controls via Args, test scenarios should hard-code widget parameters so each run stays deterministic and reproducible.
+
+The following example defines three scenarios: `Default`, `Hello`, and `Dark`.
+
+```dart
+final $Default = _Story(
+  scenarios: [
+    _Scenario(
+      name: 'Default',
+    ),
+    _Scenario(
+      name: 'Hello',
+      args: _Args.fixed(
+        text: 'Hello, Widgetbook!',
+      ),
+    ),
+    _Scenario(
+      name: 'Dark',
+      modes: [
+        MaterialThemeMode('Dark', ThemeData.dark()),
+      ],
+    ),
+  ]
+);
+```
+
+## Create Interaction Scenarios
+
+Use the `run` callback in a `Scenario` to define the full test flow before snapshots are captured. This can include user interactions, pumping frames, waiting for UI updates, and assertions.
+
+```dart
+final $Counter = _Story(
+  scenarios: [
+    _Scenario(
+      name: 'Incremented',
+      run: (tester, args) async {
+        await tester.tap(find.byIcon(Icons.add));
+        await tester.pumpAndSettle();
+
+        expect(
+          find.text('${args.initialValue + 1}'),
+          findsOneWidget,
+        );
+      },
+    ),
+  ],
+);
+```
+
+For animated widgets, you can pump specific frame durations to verify intermediate states before the final frame:
+
+```dart
+final $AnimatedCard = _Story(
+  scenarios: [
+    _Scenario(
+      name: 'Mid Animation',
+      run: (tester, args) async {
+        await tester.tap(find.text('Expand'));
+
+        // Start the animation.
+        await tester.pump();
+
+        // Move to an intermediate frame.
+        await tester.pump(const Duration(milliseconds: 150));
+
+        expect(find.text('Animating...'), findsOneWidget);
+      },
+    ),
+    _Scenario(
+      name: 'Animation Completed',
+      run: (tester, args) async {
+        await tester.tap(find.text('Expand'));
+
+        // Wait for all animation frames to complete.
+        await tester.pumpAndSettle();
+
+        expect(find.text('Expanded Content'), findsOneWidget);
+      },
+    ),
+  ],
+);
+```
+
+## Define Global Scenario Definitions
+
+Use global scenario definitions when the same scenario setup should be available across many components.
+Configure them in `widgetbook.config.dart`.
+
+This works especially well for validating common cross-cutting setups, such as themes, locales, or viewports.
+
+```dart
+final config = Config(
+  // ...
+  scenarios: [
+    ScenarioDefinition(
+      name: 'Dark Mode',
+      modes: [MaterialThemeMode('Dark', ThemeData.dark())],
+    ),
+    ScenarioDefinition(
+      name: 'Light Mode',
+      modes: [MaterialThemeMode('Light', ThemeData.light())],
+    ),
+  ],
+);
+```
+
+### How Global Scenario Definitions Are Applied
+
+Global scenario definitions are applied to every story. During execution, Widgetbook builds the effective list as:
+
+- all global scenario definitions from `config.scenarios`
+- followed by local scenarios defined in the story
+
+Each global definition becomes its own scenario per story; global definitions are not merged into a single local scenario object.
+
+### How Modes Are Merged
+
+For each scenario (global or local), modes are resolved by merging:
+
+- story-level modes
+- scenario-level modes
+
+By default, scenario-level modes take precedence when both define the same mode type.
+
+### Example: Inheritance + Merge
+
+If your config defines a global scenario:
+
+```dart
+ScenarioDefinition(
+  name: 'Dark Mode',
+  modes: [MaterialThemeMode('Dark', ThemeData.dark())],
+)
+```
+
+and a story defines:
+
+```dart
+final $Button = _Story(
+  modes: [
+    ViewportMode(const ViewportData.constrained(name: '800w', maxWidth: 800)),
+  ],
+  scenarios: [
+    _Scenario(
+      name: 'Loading',
+      args: _Args.fixed(isLoading: true),
+    ),
+  ],
+);
+```
+
+then the story runs with two scenarios:
+
+- `Dark Mode` (inherited from global definitions)
+- `Loading` (local scenario)
+
+The inherited `Dark Mode` scenario also receives the story viewport mode (`800w`) because story and scenario modes are merged for each scenario.

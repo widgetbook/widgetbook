@@ -1,0 +1,36 @@
+# Overview
+
+Scenarios connect development and testing in one workflow. They let teams reuse the same setup for [Stories](/stories/overview), [Args](/args), and automated validation while keeping behavior reproducible.
+
+A `Scenario` defines a fixed, testable state of a widget for visual and automated testing. It combines inputs like Args, and optional interactions into one reproducible setup.
+
+Under the hood, Widgetbook uses Flutter's `flutter_test` runtime to execute scenarios. This keeps the workflow familiar and lets teams reuse existing widget-testing knowledge.
+
+## One Setup for Catalogs and Tests
+
+Teams often use Widgetbook to build components and use widget or golden tests to catch regressions. Across these workflows, the key step is the same: define a component state with fixed parameters so the widget renders in a predictable way.
+
+Scenarios unify this by letting you model a state once and reuse it for:
+
+- developing and manually testing the component
+- documenting and reviewing states in Widgetbook
+- running automated tests for assertions and regressions
+
+This reduces duplicate setup and keeps implementation and validation aligned.
+
+## Better Control for Screenshot-Based Testing
+
+Scenarios improve control over screenshot testing in Widgetbook Cloud. Developers can define interactions before capture by using the scenario `run` method.
+
+The `run` method exposes a `WidgetTester`, so developers can use standard `flutter_test` APIs for interactions and assertions.
+
+Developers can also control *when* a component is captured, which is important for animated states (for example: before, during, or after an animation).
+This removes a key limitation from Widgetbook Cloud 3, where timing control was limited.
+
+Screenshots are always captured after the `run` method has completed.
+
+## Transparent and Reproducible in the UI
+
+Each scenario is visible in the UI for detailed inspection and debugging. To keep scenarios deterministic, Modes and Args are locked to fixed test inputs.
+
+This makes scenario behavior stable across local development, collaboration, and cloud-based test execution.
