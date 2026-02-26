@@ -102,8 +102,29 @@
           "href": "/stories/mocking"
         },
         {
-          "title": "Testing",
-          "href": "/testing"
+          "group": "Testing",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/testing/overview"
+            },
+            {
+              "title": "Default Scenarios",
+              "href": "/testing/default-scenario"
+            },
+            {
+              "title": "Create Scenario",
+              "href": "/testing/create-scenario"
+            },
+            {
+              "title": "Run Scenarios",
+              "href": "/testing/run-scenarios"
+            },
+            {
+              "title": "Layout Constraining",
+              "href": "/testing/layout-constraining"
+            }
+          ]
         },
         {
           "title": "Generate with LLMs",

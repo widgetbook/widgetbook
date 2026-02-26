@@ -1,0 +1,43 @@
+# Default Scenario
+
+Widgetbook creates a built-in `Default` scenario when a story has no defined scenarios.
+
+## How Args Are Picked
+
+When Args are defined at the story level, they provide the initial values.
+The default scenario does not define its own args, so it inherits them from the story.
+
+So whatever args you set at story level are used by the default scenario.
+
+## How Modes Are Picked
+
+The default scenario does not define its own modes, so it inherits them from the story.
+
+## Practical Example
+
+```dart
+final $Button = _Story(
+  args: _Args.fixed(
+    label: 'Continue',
+  ),
+  modes: [
+    MaterialThemeMode('Dark', ThemeData.dark()),
+  ],
+  // No scenarios here.
+);
+```
+
+With no global scenario definitions in `config`, Widgetbook generates one scenario named `Default`.
+That scenario runs with these effective values:
+
+**Args**
+
+| Property | Value |
+| --- | --- |
+| label | `Continue` |
+
+**Modes**
+
+| Property | Value |
+| --- | --- |
+| theme | `ThemeData.dark()` |

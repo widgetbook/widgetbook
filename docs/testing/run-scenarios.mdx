@@ -1,0 +1,59 @@
+# Run Scenarios
+
+This page explains how scenarios are executed and which snapshot artifacts are created during tests.
+
+Widgetbook testing is built on top of Flutter's `flutter_test` package. Scenario execution runs in the same widget test environment you already use for regular Flutter tests.
+
+## Setup
+
+<Steps>
+  <Step title="Add the Test Entry Point">
+    Create `test/widgetbook_test.dart` and call `testWidgetbook(config)`:
+
+    ```dart
+    import 'package:design-system/widgetbook.config.dart';
+    import 'package:widgetbook/test.dart';
+
+    Future<void> main() async {
+      await testWidgetbook(config);
+    }
+    ```
+  </Step>
+
+  <Step title="Run the Test">
+    Run tests from your Widgetbook project:
+
+    ```bash
+    flutter test
+    ```
+
+    `testWidgetbook` automatically discovers all components, stories, and scenarios from your `config` and executes them.
+  </Step>
+</Steps>
+
+## What Happens During Execution
+
+For each scenario, the Widgetbook test runtime:
+
+- applies viewport constraints and pixel ratio
+- builds the scenario with your config
+- runs scenario interactions via `run` (if defined)
+- captures a screenshot after `run` completes
+- captures semantics data for accessibility inspection
+
+Because this flow uses `flutter_test`, your scenario `run` callback receives a `WidgetTester`. You can use familiar test APIs such as `tap`, `pump`, `pumpAndSettle`, and `expect` directly inside `run`.
+
+See [Creating Scenarios](/testing/create-scenario) for concrete `run` examples.
+
+## Generated Snapshot Artifacts
+
+By default, artifacts are written to:
+
+`build/.widgetbook`
+
+Each scenario produces:
+
+- a PNG snapshot image
+- a JSON metadata file
+
+The metadata includes scenario details, image size, pixel ratio, and semantics tree data.

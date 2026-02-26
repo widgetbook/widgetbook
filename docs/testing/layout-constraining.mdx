@@ -1,0 +1,101 @@
+# Layout Constraining
+
+When running golden tests, Widgetbook uses the smallest possible size that fits the widget.
+For components that expand to fill available space, constrain the layout with `ViewportMode`.
+
+## Choosing a Viewport Strategy
+
+- Use device-like width with flexible height for scrollable pages and full-screen content.
+- Use fully constrained width and height when you need strict layout bounds (for example, floating action buttons or bottom overlays).
+
+```dart
+final $Default = _Story(
+  modes: [
+    // Applied to all scenarios in this story,
+    ViewportMode(
+      const ViewportData.constrained(
+        name: '800w',
+        maxWidth: 800,
+        pixelRatio: 2,
+        platform: TargetPlatform.iOS,
+      ),
+    ),
+  ],
+  scenarios: [
+    _Scenario(
+      // Uses the constrained viewport defined above.
+      name: '800w',
+    ),
+    _Scenario(
+      name: '600w',
+      modes: [
+        // Merged with story-level modes.
+        // Scenario modes have higher precedence.
+        ViewportMode(
+          const ViewportData.constrained(
+            name: '600w',
+            maxWidth: 600,
+            pixelRatio: 2,
+            platform: TargetPlatform.iOS,
+          ),
+        ),
+      ],
+    ),
+  ],
+);
+```
+
+## Constrain Size Per Story
+
+Apply a constrained viewport at the story level to affect all scenarios in that story.
+
+```dart
+final $ProfileScreen = _Story(
+  modes: [
+    ViewportMode(
+      const ViewportData.constrained(
+        name: 'iPhone-Width',
+        maxWidth: 390,
+        pixelRatio: 3,
+        platform: TargetPlatform.iOS,
+      ),
+    ),
+  ],
+);
+```
+
+## Override Size Per Scenario
+
+If needed, define another viewport mode directly on a scenario.
+Scenario-level modes are merged with story-level modes and take precedence.
+
+```dart
+final $ProfileScreen = _Story(
+  modes: [
+    ViewportMode(
+      const ViewportData.constrained(
+        name: 'Tablet',
+        maxWidth: 1024,
+        pixelRatio: 2,
+        platform: TargetPlatform.iOS,
+      ),
+    ),
+  ],
+  scenarios: [
+    _Scenario(name: 'Default'),
+    _Scenario(
+      name: 'Compact',
+      modes: [
+        ViewportMode(
+          const ViewportData.constrained(
+            name: 'Phone',
+            maxWidth: 390,
+            pixelRatio: 3,
+            platform: TargetPlatform.iOS,
+          ),
+        ),
+      ],
+    ),
+  ],
+);
+```
