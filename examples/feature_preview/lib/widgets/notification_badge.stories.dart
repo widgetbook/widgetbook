@@ -32,7 +32,7 @@ final $IntSlider = _Story(
   args: _Args(
     count: IntArg(
       5,
-      style: const SliderIntArgStyle(min: 0, max: 99, divisions: 99),
+      style: const SliderIntArgStyle(min: 0, max: 200, divisions: 20),
     ),
   ),
 );
@@ -43,7 +43,7 @@ final $NullableIntSlider = _Story(
   args: _Args(
     count: NullableIntArg(
       null,
-      style: const SliderIntArgStyle(min: 0, max: 99, divisions: 99),
+      style: const SliderIntArgStyle(min: 0, max: 200, divisions: 20),
     ),
   ),
 );

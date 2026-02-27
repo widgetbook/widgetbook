@@ -1,0 +1,49 @@
+# Color Arg
+
+The color arg renders a combination of a color preview and input fields in the Widgetbook UI where you can dynamically pick a `Color` value for a widget property.
+
+## Variants
+
+The color arg has two variants:
+- `ColorArg`: Allows you to pick a `Color` value. Does not accept `null` values.
+- `NullableColorArg`: Allows you to pick a `Color` value or set it to `null`. Useful when the property is optional.
+
+## `ColorArg`
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/color/ColoredTextBox/color&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    color: ColorArg(Colors.blue), // [!code highlight]
+  ),
+);
+```
+
+## `NullableColorArg`
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/color/ColoredTextBox/colorOrNull&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    color: NullableColorArg(null), // [!code highlight]
+  ),
+);
+```

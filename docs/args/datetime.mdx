@@ -1,0 +1,49 @@
+# DateTime Arg
+
+The DateTime arg renders input fields in the Widgetbook UI where you can dynamically enter a `DateTime` value for a widget property.
+
+## Variants
+
+The DateTime arg has two variants:
+- `DateTimeArg`: Allows you to enter a `DateTime` value. Does not accept `null` values.
+- `NullableDateTimeArg`: Allows you to enter a `DateTime` value or set it to `null`. Useful when the property is optional.
+
+## `DateTimeArg`
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/datetime/DateTimeText/dateTime&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    dateTime: DateTimeArg(DateTime(2026)), // [!code highlight]
+  ),
+);
+```
+
+## `NullableDateTimeArg`
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/datetime/DateTimeText/dateTimeOrNull&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    dateTime: NullableDateTimeArg(null), // [!code highlight]
+  ),
+);
+```

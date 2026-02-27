@@ -1,0 +1,119 @@
+# Double Arg
+
+The double arg renders a text field or slider in the Widgetbook UI where you can dynamically enter a `double` value for a widget property.
+
+## Variants
+
+The double arg has two style variants, each with a regular and nullable type:
+- **Input**: A text field for entering double values.
+- **Slider**: A slider for selecting double values within a range.
+
+## `DoubleArg` (Input)
+
+By default, `DoubleArg` uses the input style.
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/double/ProgressPreview/double.input&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    progress: DoubleArg(0.5), // [!code highlight]
+  ),
+);
+```
+
+## `NullableDoubleArg` (Input)
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/double/ProgressPreview/doubleOrNull.input&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    progress: NullableDoubleArg(null), // [!code highlight]
+  ),
+);
+```
+
+## `DoubleArg` (Slider)
+
+To use the slider style, pass a `SliderDoubleArgStyle` to the `style` parameter.
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/double/ProgressPreview/double.slider&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    progress: DoubleArg( // [!code highlight]
+      0.5, // [!code highlight]
+      style: const SliderDoubleArgStyle(min: 0.0, max: 1.0, divisions: 10), // [!code highlight]
+    ), // [!code highlight]
+  ),
+);
+```
+
+### Properties
+
+<Accordion title="SliderDoubleArgStyle" defaultOpen>
+  <Property name="min" type="double" required>
+    The minimum value of the slider.
+  </Property>
+
+  ---
+
+  <Property name="max" type="double" required>
+    The maximum value of the slider.
+  </Property>
+
+  ---
+
+  <Property name="divisions" type="int" required>
+    The number of discrete divisions on the slider.
+  </Property>
+</Accordion>
+
+## `NullableDoubleArg` (Slider)
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/double/ProgressPreview/doubleOrNull.slider&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    progress: NullableDoubleArg( // [!code highlight]
+      null, // [!code highlight]
+      style: const SliderDoubleArgStyle(min: 0.0, max: 1.0, divisions: 10), // [!code highlight]
+    ), // [!code highlight]
+  ),
+);
+```

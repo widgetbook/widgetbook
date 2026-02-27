@@ -1,0 +1,49 @@
+# String Arg
+
+The string arg renders a text field in the Widgetbook UI where you can dynamically enter a `String` value for a widget property.
+
+## Variants
+
+The string arg has two variants:
+- `StringArg`: Allows you to enter a `String` value. Does not accept `null` values.
+- `NullableStringArg`: Allows you to enter a `String` value or set it to `null`. Useful when the property is optional.
+
+## `StringArg`
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/string/UserAvatar/string&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    name: StringArg('Jane Doe'), // [!code highlight]
+  ),
+);
+```
+
+## `NullableStringArg`
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/string/UserAvatar/stringOrNull&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    name: NullableStringArg(null), // [!code highlight]
+  ),
+);
+```

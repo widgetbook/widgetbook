@@ -1,0 +1,49 @@
+# Duration Arg
+
+The Duration arg renders an input field in the Widgetbook UI where you can dynamically enter a `Duration` value for a widget property.
+
+## Variants
+
+The Duration arg has two variants:
+- `DurationArg`: Allows you to enter a `Duration` value. Does not accept `null` values.
+- `NullableDurationArg`: Allows you to enter a `Duration` value or set it to `null`. Useful when the property is optional.
+
+## `DurationArg`
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/duration/DurationText/duration&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    duration: DurationArg(const Duration(seconds: 5)), // [!code highlight]
+  ),
+);
+```
+
+## `NullableDurationArg`
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/duration/DurationText/durationOrNull&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    duration: NullableDurationArg(null), // [!code highlight]
+  ),
+);
+```

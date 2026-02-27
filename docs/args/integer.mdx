@@ -1,0 +1,119 @@
+# Integer Arg
+
+The integer arg renders a text field or slider in the Widgetbook UI where you can dynamically enter an `int` value for a widget property.
+
+## Variants
+
+The integer arg has two style variants, each with a regular and nullable type:
+- **Input**: A text field for entering integer values.
+- **Slider**: A slider for selecting integer values within a range.
+
+## `IntArg` (Input)
+
+By default, `IntArg` uses the input style.
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/int/NotificationBadge/int.input&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    count: IntArg(5), // [!code highlight]
+  ),
+);
+```
+
+## `NullableIntArg` (Input)
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/int/NotificationBadge/intOrNull.input&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    count: NullableIntArg(null), // [!code highlight]
+  ),
+);
+```
+
+## `IntArg` (Slider)
+
+To use the slider style, pass a `SliderIntArgStyle` to the `style` parameter.
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/int/NotificationBadge/int.slider&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    count: IntArg( // [!code highlight]
+      5, // [!code highlight]
+      style: const SliderIntArgStyle(min: 0, max: 200, divisions: 20), // [!code highlight]
+    ), // [!code highlight]
+  ),
+);
+```
+
+### Properties
+
+<Accordion title="SliderIntArgStyle" defaultOpen>
+  <Property name="min" type="int" required>
+    The minimum value of the slider.
+  </Property>
+
+  ---
+
+  <Property name="max" type="int" required>
+    The maximum value of the slider.
+  </Property>
+
+  ---
+
+  <Property name="divisions" type="int" required>
+    The number of discrete divisions on the slider.
+  </Property>
+</Accordion>
+
+## `NullableIntArg` (Slider)
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/int/NotificationBadge/intOrNull.slider&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    count: NullableIntArg( // [!code highlight]
+      null, // [!code highlight]
+      style: const SliderIntArgStyle(min: 0, max: 200, divisions: 20), // [!code highlight]
+    ), // [!code highlight]
+  ),
+);
+```

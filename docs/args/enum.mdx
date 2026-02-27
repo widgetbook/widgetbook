@@ -1,0 +1,107 @@
+# Enum Arg
+
+The enum arg renders a dropdown or segmented control in the Widgetbook UI where you can dynamically select an enum value for a widget property. This is useful for properties that represent a fixed set of options, such as a status or alignment.
+
+## Variants
+
+The enum arg has two style variants, each with a regular and nullable type:
+- **Dropdown**: A dropdown menu for selecting a value from a list.
+- **Segmented**: A segmented control for selecting a value from a smaller set of options.
+
+## `EnumArg` (Dropdown)
+
+By default, `EnumArg` uses the dropdown style.
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/enum/OnlineStatusBadge/enum.dropdown&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    status: EnumArg<OnlineStatusType>( // [!code highlight]
+      OnlineStatusType.online, // [!code highlight]
+      values: OnlineStatusType.values, // [!code highlight]
+    ), // [!code highlight]
+  ),
+);
+```
+
+## `NullableEnumArg` (Dropdown)
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/enum/OnlineStatusBadge/enumOrNull.dropdown&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    status: NullableEnumArg<OnlineStatusType>( // [!code highlight]
+      null, // [!code highlight]
+      values: OnlineStatusType.values, // [!code highlight]
+    ), // [!code highlight]
+  ),
+);
+```
+
+## `EnumArg` (Segmented)
+
+To use the segmented style, pass a `SegmentedSingleArgStyle` to the `style` parameter.
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/enum/OnlineStatusBadge/enum.segmented&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    status: EnumArg<OnlineStatusType>( // [!code highlight]
+      OnlineStatusType.online, // [!code highlight]
+      values: OnlineStatusType.values, // [!code highlight]
+      style: const SegmentedSingleArgStyle(), // [!code highlight]
+    ), // [!code highlight]
+  ),
+);
+```
+
+## `NullableEnumArg` (Segmented)
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/enum/OnlineStatusBadge/enumOrNull.segmented&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    status: NullableEnumArg<OnlineStatusType>( // [!code highlight]
+      null, // [!code highlight]
+      values: OnlineStatusType.values, // [!code highlight]
+      style: const SegmentedSingleArgStyle(), // [!code highlight]
+    ), // [!code highlight]
+  ),
+);
+```
