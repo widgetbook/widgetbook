@@ -1,8 +1,10 @@
 # Args
 
-Args is a type-safe way to define and manage the properties of your widgets in Widgetbook. By using Args, you can create interactive stories that allow you to tweak widget properties in real-time, making it easier to visualize different states and configurations.
+Args is a type-safe way to define and manage the properties of your widgets in Widgetbook. 
+By using Args, you can create interactive stories that allow you to tweak widget properties in real-time, making it easier to visualize different states and configurations.
 
-Args are generated based on your widget's constructor parameters, ensuring type safety and consistency. You can define Args for various data types, including primitives, enums, and complex objects.
+Args are generated based on your widget's constructor parameters, ensuring type safety and consistency. 
+You can define Args for various data types, including primitives, enums, and complex objects.
 
 ```dart title="my_widget.stories.dart"
 import 'package:widgetbook/widgetbook.dart';
@@ -19,7 +21,7 @@ Run the following command to generate the `_Args` class for your widget:
 dart run build_runner build
 ```
 
-Now you can create an arg-story using the generated `_Args` class:
+Now you can create a story with interactive args using the generated `_Args` class:
 
 ```dart title="my_widget.stories.dart"
 final $Active = _Story(
@@ -35,8 +37,7 @@ final $Active = _Story(
 ## Stateful Widgets and Arg Updates
 
 When an arg changes, Widgetbook rebuilds the story with a new key by default.
-This behavior is especially useful for `StatefulWidget`s because local state is
-reset to match the latest arg values.
+This behavior is especially useful for `StatefulWidget`s because local state is reset to match the latest arg values.
 
 - `StatelessWidget`: updates reflect immediately through the new args.
 - `StatefulWidget`: local state is reset on arg change so the widget reflects
@@ -62,7 +63,7 @@ Use this only when keeping local state is intentional.
 
 ## Custom Args Source
 
-The default source for args generation is the widget's constructor. However, you can customize this behavior by using the `MetaWithArgs` as follows
+The default source for args generation is the widget's constructor. However, you can customize this behavior by using `MetaWithArgs` as follows:
 
 ```dart title="my_widget.stories.dart"
 import 'package:widgetbook/widgetbook.dart';
@@ -81,7 +82,7 @@ class MyArgs {
 }
 ```
 
-After running the build runner, a custom `_Args` class will be generated based on your specified `MyArgs` class. But you will need to manually map the args in your story using the `builder` parameter:
+After running the build runner, a custom `_Args` class will be generated based on your `MyArgs` class. However, you will need to manually map the args in your story using the `builder` parameter:
 
 ```dart title="my_widget.stories.dart"
 final $Custom = _Story(
@@ -101,19 +102,19 @@ final $Custom = _Story(
 
 ## Available Arg Types
 
-Widgetbook offers a first-class support for all primitive and common data types through various Arg classes:
+Widgetbook offers first-class support for all primitive and common data types through various Arg classes:
 
-- `Arg.fixed<T>` (for constant values)
-- `StringArg` or `NullableStringArg`
-- `IntArg` or `NullableIntArg`
-- `DoubleArg` or `NullableDoubleArg`
-- `BoolArg` or `NullableBoolArg`
-- `EnumArg<T>` or `NullableEnumArg<T>`
-- `SingleArg<T>` or `NullableSingleArg<T>`
-- `IterableArg<T>` or `NullableIterableArg<T>`
-- `ColorArg` or `NullableColorArg`
-- `DateTimeArg` or `NullableDateTimeArg`
-- `DurationArg` or `NullableDurationArg`
+| Type | Regular Arg | Nullable Arg |
+| ---- | ----------- | ------------ |
+| [bool](/args/boolean) | [BoolArg](/args/boolean#boolarg) | [NullableBoolArg](/args/boolean#nullableboolarg) |
+| [int](/args/integer) | [IntArg](/args/integer#intarg-input) | [NullableIntArg](/args/integer#nullableintarg-input) |
+| [double](/args/double) | [DoubleArg](/args/double#doublearg-input) | [NullableDoubleArg](/args/double#nullabledoublearg-input) |
+| [String](/args/string) | [StringArg](/args/string#stringarg) | [NullableStringArg](/args/string#nullablestringarg) |
+| [Duration](/args/duration) | [DurationArg](/args/duration#durationarg) | [NullableDurationArg](/args/duration#nullabledurationarg) |
+| [DateTime](/args/datetime) | [DateTimeArg](/args/datetime#datetimearg) | [NullableDateTimeArg](/args/datetime#nullabledatetimearg) |
+| [Color](/args/color) | [ColorArg](/args/color#colorarg) | [NullableColorArg](/args/color#nullablecolorarg) |
+| [Enum](/args/enum) | [EnumArg](/args/enum#enumarg-dropdown) | [NullableEnumArg](/args/enum#nullableenumarg-dropdown) |
+| [Custom](/args/custom) | Custom Arg | — |
 
 ## Fixed Args
 
@@ -143,7 +144,8 @@ final $AllFixed = _Story(
 
 ## Param-Arg Resolution
 
-If you are wondering what type of arg you will have generated based on your constructor parameter, here is a mapping:
+If you are wondering what type of arg will be generated based on your constructor parameter, here is a mapping.
+`primitive.default` refers to the type's natural default (e.g., `false` for `bool`, `0` for `int`), while `param.default` refers to the default value specified in the constructor.
 
 | Primitive | Nullable | Required | Default | Arg                                                 |
 | --------- | -------- | -------- | ------- | --------------------------------------------------- |
@@ -157,46 +159,3 @@ If you are wondering what type of arg you will have generated based on your cons
 | ❌        | ✅       | ❌       | ❌      | `Arg<Type>?`                                        |
 | ❌        | ❌       | ✅       | ❌      | `required Arg<Type>`                                |
 | ❌        | ❌       | ❌       | ✅      | `Arg<Type> = Arg.fixed(param.default)`              |
-
-## Custom Args
-
-If your widget parameter doesn't have a first-class Arg support, you can create your own custom Arg by extending the `Arg<T>` class.
-
-```dart
-class PersonArg extends Arg<Person> {
-  PersonArg(
-    super.value, {
-    super.name,
-  });
-
-  @override
-  List<Field> get fields => [
-    StringField(
-      name: 'name',
-      initialValue: value.name,
-    ),
-    IntInputField(
-      name: 'age',
-      initialValue: value.age,
-    ),
-  ];
-
-  @override
-  Person valueFromQueryGroup(QueryGroup? group) {
-    if (group == null || group.isNullified) return value;
-
-    return Person(
-      name: valueOf('name', group),
-      age: valueOf('age', group),
-    );
-  }
-
-  @override
-  QueryGroup valueToQueryGroup(Person value) {
-    return QueryGroup({
-      'name': paramOf('name', value.name),
-      'age': paramOf('age', value.age),
-    });
-  }
-}
-```

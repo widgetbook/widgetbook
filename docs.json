@@ -94,8 +94,49 @@
           "href": "/stories/overview"
         },
         {
-          "title": "Args",
-          "href": "/args"
+          "group": "Args",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/args/overview"
+            },
+            {
+              "title": "Boolean",
+              "href": "/args/boolean"
+            },
+            {
+              "title": "Integer",
+              "href": "/args/integer"
+            },
+            {
+              "title": "Double",
+              "href": "/args/double"
+            },
+            {
+              "title": "String",
+              "href": "/args/string"
+            },
+            {
+              "title": "Duration",
+              "href": "/args/duration"
+            },
+            {
+              "title": "DateTime",
+              "href": "/args/datetime"
+            },
+            {
+              "title": "Color",
+              "href": "/args/color"
+            },
+            {
+              "title": "Enum",
+              "href": "/args/enum"
+            },
+            {
+              "title": "Custom Arg",
+              "href": "/args/custom"
+            }
+          ]
         },
         {
           "title": "Mock Widgets & Screens",

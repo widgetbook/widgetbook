@@ -1,0 +1,49 @@
+# Boolean Arg
+
+The boolean arg renders a toggle switch in the Widgetbook UI where you can dynamically toggle a `bool` value for a widget property.
+
+## Variants
+
+The boolean arg has two variants:
+- `BoolArg`: Allows you to toggle a `bool` value. Does not accept `null` values.
+- `NullableBoolArg`: Allows you to toggle a `bool` value or set it to `null`. Useful when the property is optional.
+
+## `BoolArg`
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/bool/BoolPreview/boolean&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    isEnabled: BoolArg(true), // [!code highlight]
+  ),
+);
+```
+
+## `NullableBoolArg`
+
+### Example
+
+<iframe
+  src="https://preview.next.widgetbook.io/#/?path=args/bool/BoolPreview/booleanOrNull&panels=args"
+  width="100%"
+  height="240px"
+/>
+
+### Usage
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    isEnabled: NullableBoolArg(null), // [!code highlight]
+  ),
+);
+```

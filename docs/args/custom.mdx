@@ -1,0 +1,67 @@
+# Custom Arg
+
+If your widget parameter doesn't have first-class Arg support, you can create your own custom Arg by extending the `Arg<T>` class.
+
+## Creating a Custom Arg
+
+To create a custom Arg, you need to:
+
+1. Extend `Arg<T>` with your custom type.
+2. Override `fields` to define the UI controls.
+3. Override `valueFromQueryGroup` to deserialize from URL query parameters.
+4. Override `valueToQueryGroup` to serialize to URL query parameters.
+
+```dart title="person_arg.dart"
+class PersonArg extends Arg<Person> {
+  PersonArg(
+    super.value, {
+    super.name,
+  });
+
+  @override
+  List<Field> get fields => [
+    StringField(
+      name: 'name',
+      initialValue: value.name,
+    ),
+    IntInputField(
+      name: 'age',
+      initialValue: value.age,
+    ),
+  ];
+
+  @override
+  Person valueFromQueryGroup(QueryGroup? group) {
+    if (group == null || group.isNullified) return value;
+
+    return Person(
+      name: valueOf('name', group),
+      age: valueOf('age', group),
+    );
+  }
+
+  @override
+  QueryGroup valueToQueryGroup(Person value) {
+    return QueryGroup({
+      'name': paramOf('name', value.name),
+      'age': paramOf('age', value.age),
+    });
+  }
+}
+```
+
+## Using a Custom Arg
+
+Once defined, use your custom Arg in a story like any other Arg:
+
+```dart title="my_widget.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    person: PersonArg(Person(name: 'Jane', age: 30)),
+  ),
+);
+```
+
+<Info>
+Fields are the UI building blocks used inside Args. See the [Fields](/essentials/fields) documentation for a full list of available field types.
+</Info>
