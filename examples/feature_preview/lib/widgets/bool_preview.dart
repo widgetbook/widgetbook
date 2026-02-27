@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BoolPreview extends StatelessWidget {
-  const BoolPreview({super.key, required this.isEnabled});
+  const BoolPreview({super.key, this.isEnabled});
 
   final bool? isEnabled;
 
