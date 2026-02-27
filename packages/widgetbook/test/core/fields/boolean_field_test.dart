@@ -82,6 +82,42 @@ void main() {
           expect(updatedSwitch.value, equals(true));
         },
       );
+
+      testWidgets(
+        'given a nullable arg with null initial value, '
+        'when the checkbox is clicked once, '
+        'then the query group is un-nullified',
+        (tester) async {
+          final arg = NullableBoolArg(null, name: 'isEnabled');
+          final state = WidgetbookState();
+
+          await tester.pumpWidgetWithState(
+            state: state,
+            builder: (context) => arg.buildFields(context),
+          );
+
+          // Checkbox should be unchecked initially (value is null = nullified)
+          final initialCheckbox = tester.widget<Checkbox>(
+            find.byType(Checkbox),
+          );
+          expect(initialCheckbox.value, equals(false));
+
+          // Click the checkbox once to un-nullify
+          await tester.tap(find.byType(Checkbox));
+          await tester.pumpAndSettle();
+
+          // The query group should be un-nullified
+          final group = state.queryGroups[arg.groupName];
+          expect(group, isNotNull);
+          expect(group!.isNullified, equals(false));
+
+          // Checkbox should now be checked
+          final updatedCheckbox = tester.widget<Checkbox>(
+            find.byType(Checkbox),
+          );
+          expect(updatedCheckbox.value, equals(true));
+        },
+      );
     },
   );
 }

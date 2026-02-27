@@ -130,13 +130,13 @@ abstract class FieldsComposable<T> {
       description: description,
       isNullified: isNullified,
       onNullified: (value) {
-        if (group == null) {
-          state.updateQueryGroup(groupName, QueryGroup.nullified);
-          return;
+        if (value) {
+          final newGroup = group?.nullify() ?? QueryGroup.nullified;
+          state.updateQueryGroup(groupName, newGroup);
+        } else {
+          final newGroup = group?.unnullify() ?? QueryGroup.empty;
+          state.updateQueryGroup(groupName, newGroup);
         }
-
-        final newGroup = value ? group.nullify() : group.unnullify();
-        state.updateQueryGroup(groupName, newGroup);
       },
       child: child,
     );
