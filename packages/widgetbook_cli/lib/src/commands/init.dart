@@ -7,6 +7,7 @@ import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
 import 'package:process/process.dart';
 
+import '../../metadata.dart';
 import '../analyzer/analyzer.dart';
 import '../core/core.dart';
 import '../templates/templates.dart';
@@ -96,7 +97,7 @@ class InitCommand extends CliCommand<InitArgs> {
       [
         'pub',
         'add',
-        'widgetbook:"^4.0.0-alpha.0"', // installs latest alpha
+        'widgetbook:"^$widgetbookVersion"',
         'dev:build_runner',
         '$packageName:{path: $relativePath}',
       ],
