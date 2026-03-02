@@ -94,6 +94,10 @@
           "href": "/stories/overview"
         },
         {
+          "title": "Code Generation",
+          "href": "/stories/code-generation"
+        },
+        {
           "group": "Args",
           "pages": [
             {
