@@ -11,7 +11,7 @@ class ComponentTemplate extends Template {
   static String generateContent(String filename, WidgetInfo widgetInfo) {
     final header =
         '''
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 import '${widgetInfo.importPath}';
 
