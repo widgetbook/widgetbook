@@ -46,14 +46,14 @@ Follow our [Setup & Install Guide](https://docs.widgetbook.io/quick-start) in ou
 
 ## Widgetbook Cloud
 
-Widgetbook Cloud is a managed hosting solution for Widgetbook that allows you to run golden tests to detect and review all UI changes in your pull-request. Inspired by Chromatic.
+Widgetbook Cloud is a managed hosting solution for Widgetbook that allows you to run visual tests to detect and review all UI changes in your pull-request. Inspired by Chromatic.
 
 [![Widgetbook Cloud Demo](https://github.com/widgetbook/widgetbook/blob/main/assets/cloud.png?raw=true)](https://youtu.be/l3tj9VvkjLs)
 
 ### Features
 
 - 🌍 **Share your Widgetbook with your team**. Publish your Widgetbook build for other Developers, Designers, PMs or Clients to reference. Everyone can check that the UI looks right without touching code.
-- 🏅 **Golden Tests**. Run zero-configuration golden tests (visual regression tests) on your widgets across all states, devices, themes, text scale factors, etc. to detect all changes.
+- 🏅 **Visual Tests**. Run zero-configuration visual regression tests on your widgets across all states, devices, themes, text scale factors, etc. to detect all changes.
 - 🧪 **Visual Pull Requests**. Detect and review all UI changes in your pull-request.
 - 🎨 **Figma Reviews**. Connect your your Figma designs to review your Flutter widget next to the original Figma design.
 
