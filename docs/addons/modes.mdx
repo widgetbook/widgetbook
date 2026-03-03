@@ -1,0 +1,111 @@
+# Modes
+
+A Mode locks an [Addon](/addons/overview) to a fixed value for testing. While Addons provide interactive controls in the Widgetbook UI, Modes pin those controls to a specific value so scenarios are deterministic and reproducible.
+
+## Modes vs Args
+
+[Args](/args/overview) and Modes serve different purposes:
+
+- **Args** control widget properties (text, color, state) — the inputs your widget receives directly.
+- **Modes** control the environment and context (theme, locale, viewport) — the conditions your widget renders in.
+
+Both are used in [scenarios](/testing/create-scenario) to define a fixed widget state for testing.
+
+## Usage
+
+Pass modes in the `modes` list of a `_Scenario`:
+
+```dart
+final $Default = _Story(
+  scenarios: [
+    _Scenario(
+      name: 'Dark iPhone',
+      modes: [
+        MaterialThemeMode('Dark', ThemeData.dark()), // [!code highlight]
+        ViewportMode(IosViewports.iPhone13), // [!code highlight]
+      ],
+    ),
+  ],
+);
+```
+
+## Built-in Modes
+
+Every built-in Addon has a corresponding Mode class:
+
+| Mode class | Controls | Value type | Addon |
+| --- | --- | --- | --- |
+| `AlignmentMode` | Widget alignment | `Alignment` | [Alignment Addon](/addons/alignment-addon) |
+| `BuilderMode` | Custom wrapper widget | `name` + `builder` | [Builder Addon](/addons/builder-addon) |
+| `GridMode` | Grid overlay spacing | `int` | [Grid Addon](/addons/grid-addon) |
+| `LocaleMode` | App locale | `Locale` | [Locale Addon](/addons/locale-addon) |
+| `MaterialThemeMode` | Material theme | `name` + `ThemeData` | [Theme Addon](/addons/theme-addon) |
+| `CupertinoThemeMode` | Cupertino theme | `name` + `CupertinoThemeData` | [Theme Addon](/addons/theme-addon) |
+| `ThemeMode` | Custom theme | `name` + `data` + `builder` | [Theme Addon](/addons/theme-addon) |
+| `SemanticsMode` | Semantics debugger | `bool` | [Semantics Addon](/addons/semantics-addon) |
+| `TextScaleMode` | Text scale factor | `double` | [Text Scale Addon](/addons/text-scale-addon) |
+| `TimeDilationMode` | Animation speed | `double` | [Time Dilation Addon](/addons/time-dilation-addon) |
+| `ViewportMode` | Device viewport | `ViewportData` | [Viewport Addon](/addons/viewport-addon) |
+| `ZoomMode` | Zoom level | `double` | [Zoom Addon](/addons/zoom-addon) |
+
+## Story-level Modes
+
+Modes can be defined at the story level. These apply to all scenarios in that story:
+
+```dart
+final $Button = _Story(
+  modes: [
+    MaterialThemeMode('Dark', ThemeData.dark()), // [!code highlight]
+    ViewportMode(IosViewports.iPhone13), // [!code highlight]
+  ],
+  scenarios: [
+    _Scenario(name: 'Default'),
+    _Scenario(name: 'Loading', args: _Args.fixed(isLoading: true)),
+  ],
+);
+```
+
+Both scenarios inherit the `Dark` theme and `iPhone 13` viewport from the story.
+
+## Mode Merging
+
+When both a story and a scenario define modes, they are merged. Scenario-level modes take precedence when both define the same mode type:
+
+```dart
+final $Button = _Story(
+  modes: [
+    MaterialThemeMode('Dark', ThemeData.dark()),
+    ViewportMode(IosViewports.iPhone13),
+  ],
+  scenarios: [
+    _Scenario(
+      name: 'Light Override',
+      modes: [
+        MaterialThemeMode('Light', ThemeData.light()), // [!code highlight]
+      ],
+    ),
+  ],
+);
+```
+
+The `Light Override` scenario runs with:
+- **Theme**: `Light` (overridden by scenario)
+- **Viewport**: `iPhone 13` (inherited from story)
+
+For full details on merging behavior, see [How Modes Are Merged](/testing/create-scenario#how-modes-are-merged).
+
+## Custom Modes
+
+To create a Mode for a [custom addon](/addons/custom-addon), extend the `Mode` class with your addon's setting type:
+
+```dart
+class BorderMode extends Mode<BorderSetting> {
+  BorderMode(double width, Color color)
+    : super(
+        BorderSetting(width, color),
+        BorderAddon(),
+    );
+}
+```
+
+See the [Custom Addon](/addons/custom-addon#mode) page for a full example.
