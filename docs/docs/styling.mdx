@@ -1,0 +1,127 @@
+# Styling Documentation
+
+The built-in DocBlocks use Widgetbook's UI theme. If you want your documentation to match your app's design system instead, you can either override the Widgetbook theme or build custom DocBlocks with your own styling.
+
+## Widgetbook's UI Theme
+
+The built-in DocBlocks read their text styles and colors from `Theme.of(context)`. You can override these via `Config`:
+
+```dart
+final config = Config(
+  components: components,
+  lightTheme: ThemeData(
+    colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+    textTheme: const TextTheme(
+      headlineLarge: TextStyle(fontFamily: 'Poppins', fontSize: 32),
+      headlineMedium: TextStyle(fontFamily: 'Poppins', fontSize: 24),
+      bodyMedium: TextStyle(fontSize: 16, height: 1.6),
+    ),
+  ),
+);
+```
+
+`TitleDocBlock` uses `headlineLarge`, `SubtitleDocBlock` uses `headlineMedium`, and `TextDocBlock` uses `bodyMedium`. See [Widgetbook Theme](/configure/widgetbook-theme) for all available parameters.
+
+This is a quick way to adjust fonts and colors, but it only covers what `ThemeData` exposes. For full control, build custom DocBlocks instead.
+
+## Custom-Styled DocBlocks
+
+DocBlocks are Flutter widgets. Inside the `build` method, you have full access to the widget tree, so you can style them however you like.
+
+### Using Your App Theme
+
+If you use the [Theme Addon](/addons/theme-addon), you can access the currently active app theme through `WidgetbookState`. The addon and its current value are available via `state.config.addons`:
+
+With `MaterialThemeAddon`:
+
+```dart
+class BrandedTitleDocBlock extends DocBlock {
+  const BrandedTitleDocBlock({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final state = WidgetbookState.of(context);
+    final themeAddon = state.config.addons
+        ?.whereType<MaterialThemeAddon>()
+        .firstOrNull;
+    final appTheme = themeAddon?.valueFromQueryGroup(
+      state.queryGroups[themeAddon.groupName],
+    );
+
+    return Text(
+      state.component!.name,
+      style: appTheme?.textTheme.displayMedium,
+    );
+  }
+}
+```
+
+With a custom `ThemeAddon<AppThemeData>`:
+
+```dart
+class BrandedTitleDocBlock extends DocBlock {
+  const BrandedTitleDocBlock({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final state = WidgetbookState.of(context);
+    final themeAddon = state.config.addons
+        ?.whereType<ThemeAddon<AppThemeData>>()
+        .firstOrNull;
+    final appTheme = themeAddon?.valueFromQueryGroup(
+      state.queryGroups[themeAddon.groupName],
+    );
+
+    return Text(
+      state.component!.name,
+      style: TextStyle(
+        fontSize: 32,
+        color: appTheme?.primaryColor,
+      ),
+    );
+  }
+}
+```
+
+Since the DocBlocks read the active value from the addon, they stay in sync with the currently selected theme. When the user switches themes in the Widgetbook UI, the docs update automatically.
+
+### Wire It Up
+
+Use your custom blocks via `docsBuilder`, either globally or per component:
+
+```dart
+final config = Config(
+  components: components,
+  docsBuilder: () => [
+    const BrandedTitleDocBlock(),
+    const DartCommentDocBlock(),
+    const StoriesDocBlock(),
+  ],
+  addons: [
+    MaterialThemeAddon(themes: { /* ... */ }),
+  ],
+);
+```
+
+See [Customize](/docs/customize) for per-component overrides and list manipulation helpers like `insertAfter`, `insertBefore`, and `replaceFirst`.
+
+## Built-in DocBlocks as Reference
+
+The built-in DocBlocks are simple, most are under 20 lines. You can browse the source to see how they access component data and render content, then use them as a starting point for your own:
+
+[View DocBlock source on GitHub](https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbook/lib/src/core/docs)
+
+Patterns you'll find in the source:
+
+| Pattern | Description |
+| --- | --- |
+| `WidgetbookState.of(context)` | Access the current component, its stories, doc comments, and args |
+| `state.component!.name` | The component name (used by `ComponentNameDocBlock`) |
+| `state.component!.docComment` | The Dart doc comment extracted by build_runner (used by `DartCommentDocBlock`) |
+| `state.component!.stories` | The list of stories with their args (used by `StoriesDocBlock`) |
+
+## See Also
+
+- [Custom Blocks](/docs/custom-blocks) for creating a custom DocBlock from scratch.
+- [Customize](/docs/customize) for configuring `docsBuilder` globally and per component.
+- [Theme Addon](/addons/theme-addon) for injecting your app theme into Widgetbook.
