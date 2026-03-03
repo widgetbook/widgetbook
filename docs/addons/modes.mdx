@@ -1,17 +1,14 @@
 # Modes
 
-A Mode locks an [Addon](/addons/overview) to a fixed value for testing. While Addons provide interactive controls in the Widgetbook UI, Modes pin those controls to a specific value so scenarios are deterministic and reproducible.
+A Mode is a specific value for an [Addon](/addons/overview). Every addon accepts a range of values. The [Theme Addon](/addons/theme-addon), for example, accepts multiple themes. When you select "Light" or "Dark" in the Widgetbook UI, you are switching the theme mode, and the story re-renders with that theme applied.
+
+In [scenarios](/testing/create-scenario), modes are set explicitly so that each test run uses the same fixed configuration.
 
 ## Modes vs Args
 
-[Args](/args/overview) and Modes serve different purposes:
+[Args](/args/overview) control widget properties like text, color, or state. Modes control the environment the widget renders in, such as theme, locale, or viewport.
 
-- **Args** control widget properties (text, color, state) — the inputs your widget receives directly.
-- **Modes** control the environment and context (theme, locale, viewport) — the conditions your widget renders in.
-
-Both are used in [scenarios](/testing/create-scenario) to define a fixed widget state for testing.
-
-## Usage
+## Usage in Scenarios
 
 Pass modes in the `modes` list of a `_Scenario`:
 
@@ -29,28 +26,11 @@ final $Default = _Story(
 );
 ```
 
-## Built-in Modes
-
-Every built-in Addon has a corresponding Mode class:
-
-| Mode class | Controls | Value type | Addon |
-| --- | --- | --- | --- |
-| `AlignmentMode` | Widget alignment | `Alignment` | [Alignment Addon](/addons/alignment-addon) |
-| `BuilderMode` | Custom wrapper widget | `name` + `builder` | [Builder Addon](/addons/builder-addon) |
-| `GridMode` | Grid overlay spacing | `int` | [Grid Addon](/addons/grid-addon) |
-| `LocaleMode` | App locale | `Locale` | [Locale Addon](/addons/locale-addon) |
-| `MaterialThemeMode` | Material theme | `name` + `ThemeData` | [Theme Addon](/addons/theme-addon) |
-| `CupertinoThemeMode` | Cupertino theme | `name` + `CupertinoThemeData` | [Theme Addon](/addons/theme-addon) |
-| `ThemeMode` | Custom theme | `name` + `data` + `builder` | [Theme Addon](/addons/theme-addon) |
-| `SemanticsMode` | Semantics debugger | `bool` | [Semantics Addon](/addons/semantics-addon) |
-| `TextScaleMode` | Text scale factor | `double` | [Text Scale Addon](/addons/text-scale-addon) |
-| `TimeDilationMode` | Animation speed | `double` | [Time Dilation Addon](/addons/time-dilation-addon) |
-| `ViewportMode` | Device viewport | `ViewportData` | [Viewport Addon](/addons/viewport-addon) |
-| `ZoomMode` | Zoom level | `double` | [Zoom Addon](/addons/zoom-addon) |
+Each built-in addon has a corresponding Mode class. See the individual [addon pages](/addons/overview) for which Mode to use.
 
 ## Story-level Modes
 
-Modes can be defined at the story level. These apply to all scenarios in that story:
+Modes defined on a story apply to all its scenarios. In the following example, both scenarios inherit the `Dark` theme and `iPhone 13` viewport:
 
 ```dart
 final $Button = _Story(
@@ -65,11 +45,9 @@ final $Button = _Story(
 );
 ```
 
-Both scenarios inherit the `Dark` theme and `iPhone 13` viewport from the story.
-
 ## Mode Merging
 
-When both a story and a scenario define modes, they are merged. Scenario-level modes take precedence when both define the same mode type:
+When both a story and a scenario define modes, they are merged. Scenario-level modes take precedence for the same mode type:
 
 ```dart
 final $Button = _Story(
@@ -88,9 +66,7 @@ final $Button = _Story(
 );
 ```
 
-The `Light Override` scenario runs with:
-- **Theme**: `Light` (overridden by scenario)
-- **Viewport**: `iPhone 13` (inherited from story)
+The `Light Override` scenario runs with the `Light` theme (overridden by the scenario) and the `iPhone 13` viewport (inherited from the story).
 
 For full details on merging behavior, see [How Modes Are Merged](/testing/create-scenario#how-modes-are-merged).
 
