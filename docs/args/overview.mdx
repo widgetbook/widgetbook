@@ -61,6 +61,41 @@ final $Default = _Story(
 
 Use this only when keeping local state is intentional.
 
+## Programmatic Arg Updates
+
+You can programmatically update an arg's value from within a story using `arg.update(context, newValue)`. This syncs the new value with the arg panel UI and URL query parameters, creating a two-way binding between widget interactions and arg controls.
+
+A common use case is keeping the arg panel in sync when a user interacts with the widget itself, for example pressing a button that changes state.
+
+### `BuilderArg`
+
+Callback parameters (like `onChanged`, `onPressed`) need access to `BuildContext` to update args. Use `BuilderArg` for this. It takes a builder function that receives the context and returns the callback value:
+
+```dart title="counter.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    onChanged: BuilderArg(
+      (context) => (value) {
+        final args = WidgetbookState.of(context).story!.args as _Args;
+        args.initialValueArg.update(context, value);
+      },
+    ),
+  ),
+);
+```
+
+In this example, when the user taps the increment/decrement buttons in the `Counter` widget:
+
+1. The widget calls `onChanged` with the new count.
+2. The callback accesses the story's args via `WidgetbookState`.
+3. `args.initialValueArg.update(context, value)` updates the `initialValue` arg panel to reflect the new value.
+
+The result is that the arg panel stays in sync with widget interactions without any manual wiring.
+
+<Info>
+  `BuilderArg` values do not appear as interactive controls in the arg panel. They are context-dependent values that are resolved at build time.
+</Info>
+
 ## Custom Args Source
 
 The default source for args generation is the widget's constructor. However, you can customize this behavior by using `MetaWithArgs` as follows:
