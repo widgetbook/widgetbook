@@ -26,11 +26,11 @@ This is a quick way to adjust fonts and colors, but it only covers what `ThemeDa
 
 ## Custom-Styled DocBlocks
 
-DocBlocks are Flutter widgets. Inside `build(context)`, you have full access to the widget tree, so you can style them however you like.
+DocBlocks are Flutter widgets. Inside the `build` method, you have full access to the widget tree, so you can style them however you like.
 
 ### Using Your App Theme
 
-If you use the [Theme Addon](/addons/theme-addon), your app's theme is available in the widget tree. Custom DocBlocks can read it the same way your app widgets do.
+If you use the [Theme Addon](/addons/theme-addon), you can access the currently active app theme through `WidgetbookState`. The addon and its current value are available via `state.config.addons`:
 
 With `MaterialThemeAddon`:
 
@@ -41,11 +41,16 @@ class BrandedTitleDocBlock extends DocBlock {
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
-    final appTheme = Theme.of(context); // Your app's ThemeData
+    final themeAddon = state.config.addons
+        ?.whereType<MaterialThemeAddon>()
+        .firstOrNull;
+    final appTheme = themeAddon?.valueFromQueryGroup(
+      state.queryGroups[themeAddon.groupName],
+    );
 
     return Text(
       state.component!.name,
-      style: appTheme.textTheme.displayMedium,
+      style: appTheme?.textTheme.displayMedium,
     );
   }
 }
@@ -60,20 +65,25 @@ class BrandedTitleDocBlock extends DocBlock {
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
-    final appTheme = AppTheme.of(context); // Your custom theme
+    final themeAddon = state.config.addons
+        ?.whereType<ThemeAddon<AppThemeData>>()
+        .firstOrNull;
+    final appTheme = themeAddon?.valueFromQueryGroup(
+      state.queryGroups[themeAddon.groupName],
+    );
 
     return Text(
       state.component!.name,
       style: TextStyle(
         fontSize: 32,
-        color: appTheme.primaryColor,
+        color: appTheme?.primaryColor,
       ),
     );
   }
 }
 ```
 
-Since the DocBlocks read directly from your theme, they stay in sync with your app's design tokens. If you change a color or font in your theme, the docs update automatically.
+Since the DocBlocks read the active value from the addon, they stay in sync with the currently selected theme. When the user switches themes in the Widgetbook UI, the docs update automatically.
 
 ### Wire It Up
 
