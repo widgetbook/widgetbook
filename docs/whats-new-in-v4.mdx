@@ -17,7 +17,7 @@ The result is a more consistent API with better autocompletion and compile-time 
 | --- | --- | --- |
 | Use-cases (`@UseCase`) | Stories (`_Story`) | Use-cases are now stories. |
 | Knobs (`context.knobs`) | Args (`_Args`, `StringArg`, `BoolArg`, ...) | Knobs are now type-safe args. |
-| Addons only | Addons + Modes | Modes define concrete addon setups, for example a theme addon with light and dark modes. |
+| Addons only | [Addons](/addons/overview) + [Modes](/addons/modes) | Modes define concrete addon setups, for example a theme addon with light and dark modes. |
 | Annotation + function-heavy setup | Generated declarations (`Meta`, `_Story`, `_Args`, `_Scenario`) | Better type-safety, autocompletion, and structure. |
 
 The sections below explain each area in more detail.
@@ -56,9 +56,9 @@ Using `Meta` lets Widgetbook:
 - Generate typed args based on the component contract.
 - Resolve component-level documentation (for example through `docsBuilder` and doc comments).
 
-## Modes for Addons
+## [Modes](/addons/modes) for Addons
 
-Modes are reusable addon configurations for rendering a story.
+[Modes](/addons/modes) are reusable addon configurations for rendering a story.
 Addons define what can be configured (for example theme, locale, or viewport), while modes define the concrete configuration to apply.
 
 ```dart

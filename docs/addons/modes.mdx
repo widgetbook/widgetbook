@@ -1,0 +1,87 @@
+# Modes
+
+A Mode is a specific value for an [Addon](/addons/overview). Every addon accepts a range of values. The [Theme Addon](/addons/theme-addon), for example, accepts multiple themes. When you select "Light" or "Dark" in the Widgetbook UI, you are switching the theme mode, and the story re-renders with that theme applied.
+
+In [scenarios](/testing/create-scenario), modes are set explicitly so that each test run uses the same fixed configuration.
+
+## Modes vs Args
+
+[Args](/args/overview) control widget properties like text, color, or state. Modes control the environment the widget renders in, such as theme, locale, or viewport.
+
+## Usage in Scenarios
+
+Pass modes in the `modes` list of a `_Scenario`:
+
+```dart
+final $Default = _Story(
+  scenarios: [
+    _Scenario(
+      name: 'Dark iPhone',
+      modes: [
+        MaterialThemeMode('Dark', ThemeData.dark()), // [!code highlight]
+        ViewportMode(IosViewports.iPhone13), // [!code highlight]
+      ],
+    ),
+  ],
+);
+```
+
+Each built-in addon has a corresponding Mode class. See the individual [addon pages](/addons/overview) for which Mode to use.
+
+## Story-level Modes
+
+Modes defined on a story apply to all its scenarios. In the following example, both scenarios inherit the `Dark` theme and `iPhone 13` viewport:
+
+```dart
+final $Button = _Story(
+  modes: [
+    MaterialThemeMode('Dark', ThemeData.dark()), // [!code highlight]
+    ViewportMode(IosViewports.iPhone13), // [!code highlight]
+  ],
+  scenarios: [
+    _Scenario(name: 'Default'),
+    _Scenario(name: 'Loading', args: _Args.fixed(isLoading: true)),
+  ],
+);
+```
+
+## Mode Merging
+
+When both a story and a scenario define modes, they are merged. Scenario-level modes take precedence for the same mode type:
+
+```dart
+final $Button = _Story(
+  modes: [
+    MaterialThemeMode('Dark', ThemeData.dark()),
+    ViewportMode(IosViewports.iPhone13),
+  ],
+  scenarios: [
+    _Scenario(
+      name: 'Light Override',
+      modes: [
+        MaterialThemeMode('Light', ThemeData.light()), // [!code highlight]
+      ],
+    ),
+  ],
+);
+```
+
+The `Light Override` scenario runs with the `Light` theme (overridden by the scenario) and the `iPhone 13` viewport (inherited from the story).
+
+For full details on merging behavior, see [How Modes Are Merged](/testing/create-scenario#how-modes-are-merged).
+
+## Custom Modes
+
+To create a Mode for a [custom addon](/addons/custom-addon), extend the `Mode` class with your addon's setting type:
+
+```dart
+class BorderMode extends Mode<BorderSetting> {
+  BorderMode(double width, Color color)
+    : super(
+        BorderSetting(width, color),
+        BorderAddon(),
+    );
+}
+```
+
+See the [Custom Addon](/addons/custom-addon#mode) page for a full example.

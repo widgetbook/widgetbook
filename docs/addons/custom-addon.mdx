@@ -169,7 +169,7 @@ final config = Config(
 
 ## Mode
 
-To use this addon for [testing](/testing), you can enable the `BorderMode` in your stories:
+Each addon has a corresponding [Mode](/addons/modes) to lock its value in scenarios. For a custom addon, create your own Mode subclass:
 
 ```dart
 class BorderMode extends Mode<BorderSetting> {
