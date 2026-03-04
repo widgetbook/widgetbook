@@ -22,14 +22,14 @@ final _formatter = DartFormatter(
 );
 
 Future<PackageConfig> _loadPackageConfig() async {
-  return _cachedPackageConfig ??=
-      (await findPackageConfig(Directory.current))!;
+  return _cachedPackageConfig ??= (await findPackageConfig(Directory.current))!;
 }
 
 /// Builds the full `.g.dart` file content from the raw generator output,
 /// matching the format that `source_gen`'s `PartBuilder` produces.
 String _buildGoldenContent(String name, String generatorOutput) {
-  final raw = '''
+  final raw =
+      '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of '$name.stories.dart';
@@ -102,7 +102,8 @@ Future<void> testStoryGenerator(String name) async {
   expect(
     goldenFile.existsSync(),
     isTrue,
-    reason: 'Golden file not found: ${goldenFile.path}\n'
+    reason:
+        'Golden file not found: ${goldenFile.path}\n'
         'Run with UPDATE_GOLDENS=true to create it.',
   );
 

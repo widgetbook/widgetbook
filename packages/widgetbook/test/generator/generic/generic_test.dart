@@ -8,8 +8,10 @@ library;
 import '../helper.dart';
 
 void main() {
-  test('propagates generic type parameters through generated classes',
-      () async {
-    await testStoryGenerator('generic');
-  });
+  test(
+    'propagates generic type parameters through generated classes',
+    () async {
+      await testStoryGenerator('generic');
+    },
+  );
 }
