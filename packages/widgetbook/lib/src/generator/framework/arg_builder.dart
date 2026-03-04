@@ -8,6 +8,33 @@ class ArgBuilder {
 
   final FormalParameterElement param;
 
+  /// Resolves [FormalParameterElement.defaultValueCode] by qualifying static
+  /// member references with the enclosing class name.
+  ///
+  /// When a constructor parameter uses a static method or field of its own
+  /// class as a default (e.g. `this.builder = _defaultBuilder`), the analyzer
+  /// returns just `_defaultBuilder`. In the generated code (outside the class),
+  /// this must be qualified as `ClassName._defaultBuilder`.
+  String? get resolvedDefaultValueCode {
+    final code = param.defaultValueCode;
+    if (code == null) return null;
+
+    final constructor = param.enclosingElement;
+    if (constructor is! ConstructorElement) return code;
+
+    final classElement = constructor.enclosingElement;
+
+    final isStaticMember =
+        classElement.methods.any((m) => m.isStatic && m.name == code) ||
+        classElement.fields.any((f) => f.isStatic && f.name == code);
+
+    if (isStaticMember) {
+      return '${classElement.name}.$code';
+    }
+
+    return code;
+  }
+
   Field buildField() {
     return Field(
       (b) => b
@@ -48,7 +75,7 @@ class ArgBuilder {
     if (!param.type.isPrimitive) {
       return InvokeExpression.newOf(
         refer('ConstArg'),
-        [refer(param.defaultValueCode!)],
+        [refer(resolvedDefaultValueCode!)],
       );
     }
 
@@ -56,7 +83,7 @@ class ArgBuilder {
     return InvokeExpression.newOf(
       refer(param.type.meta.argName),
       param.hasDefaultValue
-          ? [refer(param.defaultValueCode!)]
+          ? [refer(resolvedDefaultValueCode!)]
           : [param.type.meta.defaultValue],
       {
         if (param.type.isEnum)
@@ -98,7 +125,7 @@ class ArgBuilder {
         )
         ..required = param.requiresArg
         ..defaultTo = switch (param) {
-          _ when param.hasDefaultValue => refer(param.defaultValueCode!).code,
+          _ when param.hasDefaultValue => refer(resolvedDefaultValueCode!).code,
           _ when param.type.isPrimitive && param.type.meta.isConst =>
             param.type.meta.defaultValue.code,
           _ => null,
