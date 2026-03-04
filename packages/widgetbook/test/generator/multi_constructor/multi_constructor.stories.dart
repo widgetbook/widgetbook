@@ -9,6 +9,7 @@ class MultiConstructorWidget extends StatelessWidget {
     required this.label,
   }) : count = 0;
 
+  // ignore: sort_unnamed_constructors_first
   const MultiConstructorWidget({
     super.key,
     required this.count,
