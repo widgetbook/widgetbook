@@ -19,10 +19,13 @@ class ArgsClassBuilder {
   }
 
   Iterable<FormalParameterElement> get params {
-    return (argsType.element as ClassElement)
-        .constructors
-        .first
-        .formalParameters;
+    final constructors = (argsType.element as ClassElement).constructors;
+    final constructor =
+        constructors
+            .where((c) => c.name == 'new' || c.name == null || c.name!.isEmpty)
+            .firstOrNull ??
+        constructors.first;
+    return constructor.formalParameters;
   }
 
   Set<Reference> getTypeParams({bool withBounds = true}) {
