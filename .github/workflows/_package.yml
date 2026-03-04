@@ -70,6 +70,12 @@ jobs:
             dart test
           fi
 
+      - name: Run Generator Tests
+        run: |
+          if [ -d "test/generator" ]; then
+            dart test test/generator/ --platform vm
+          fi
+
   lint:
     runs-on: ubuntu-latest
     defaults:
