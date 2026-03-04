@@ -18,3 +18,7 @@ scripts:
   generate:
     run: melos exec --depends-on="build_runner" -- "dart run build_runner build -d"
     description: Build all generated files.
+
+  update-goldens:
+    run: cd packages/widgetbook && UPDATE_GOLDENS=true dart test test/generator/ --platform vm
+    description: Regenerate golden .g.dart files for generator tests.
