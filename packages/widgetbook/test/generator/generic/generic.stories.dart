@@ -13,6 +13,6 @@ class GenericWidget<T extends num> extends StatelessWidget {
 }
 
 // ignore: strict_raw_type
-final meta = Meta<GenericWidget>();
+const meta = Meta<GenericWidget>();
 
 final $Default = Object();

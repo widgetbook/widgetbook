@@ -17,6 +17,6 @@ class EnumWidget extends StatelessWidget {
   Widget build(BuildContext context) => Text(priority.name);
 }
 
-final meta = Meta<EnumWidget>();
+const meta = Meta<EnumWidget>();
 
 final $Default = Object();

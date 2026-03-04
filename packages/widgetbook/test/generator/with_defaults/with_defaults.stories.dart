@@ -18,7 +18,7 @@ class DefaultsVarInput {
   final String label;
 }
 
-final meta = MetaWithArgs<DefaultsVarWidget, DefaultsVarInput>();
+const meta = MetaWithArgs<DefaultsVarWidget, DefaultsVarInput>();
 
 final defaults = _Defaults(
   setup: (context, child, args) => child,

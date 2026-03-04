@@ -21,6 +21,6 @@ class DefaultsWidget extends StatelessWidget {
   Widget build(BuildContext context) => Text(label);
 }
 
-final meta = Meta<DefaultsWidget>();
+const meta = Meta<DefaultsWidget>();
 
 final $Default = Object();

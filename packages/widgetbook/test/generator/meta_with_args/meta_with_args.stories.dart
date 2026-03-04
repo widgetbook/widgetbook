@@ -18,7 +18,7 @@ class NumericBadgeInput {
   final int number;
 }
 
-final meta = MetaWithArgs<LabelBadge, NumericBadgeInput>();
+const meta = MetaWithArgs<LabelBadge, NumericBadgeInput>();
 
 final defaults = _Defaults(
   builder: (context, args) => LabelBadge(text: args.number.toString()),
