@@ -61,10 +61,11 @@ class ComponentBuilder {
                 'meta',
               ).property('docsBuilder'),
               'docComment': widgetType.element?.documentationComment != null
-                  ? literalString(
-                      widgetType.element!.documentationComment!.replaceAll(
-                        RegExp(r'/// ?'),
-                        '',
+                  ? CodeExpression(
+                      Code(
+                        "r'''"
+                        "${widgetType.element!.documentationComment!.replaceAll(RegExp(r'/// ?'), '')}"
+                        "'''",
                       ),
                     )
                   : literalNull,

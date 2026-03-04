@@ -16,8 +16,9 @@ final DocCommentWidgetComponent =
       name: meta.name ?? 'DocCommentWidget',
       path: meta.path ?? '',
       docsBuilder: meta.docsBuilder,
-      docComment:
-          'A widget with documentation.\n\nThis has an empty line above.',
+      docComment: r'''A widget with documentation.
+
+This has an empty line above.''',
       stories: [$Default..$generatedName = 'Default'],
     );
 typedef DocCommentWidgetScenario =
