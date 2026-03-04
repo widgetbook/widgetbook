@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-part 'custom.stories.g.dart';
+part 'meta_with_args.stories.g.dart';
 
 class LabelBadge extends StatelessWidget {
   const LabelBadge({super.key, required this.text});

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'custom.stories.dart';
+part of 'meta_with_args.stories.dart';
 
 // **************************************************************************
 // StoryGenerator
