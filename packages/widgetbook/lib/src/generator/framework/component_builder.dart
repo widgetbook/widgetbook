@@ -62,8 +62,10 @@ class ComponentBuilder {
               ).property('docsBuilder'),
               'docComment': widgetType.element?.documentationComment != null
                   ? literalString(
-                      widgetType.element!.documentationComment!
-                          .replaceAll(RegExp(r'/// ?'), ''),
+                      widgetType.element!.documentationComment!.replaceAll(
+                        RegExp(r'/// ?'),
+                        '',
+                      ),
                     )
                   : literalNull,
               'stories': literalList(

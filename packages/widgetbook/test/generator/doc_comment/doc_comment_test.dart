@@ -7,8 +7,10 @@ library;
 import '../helper.dart';
 
 void main() {
-  test('generates correct docComment for doc comments with empty lines',
-      () async {
-    await testStoryGenerator('doc_comment');
-  });
+  test(
+    'generates correct docComment for doc comments with empty lines',
+    () async {
+      await testStoryGenerator('doc_comment');
+    },
+  );
 }
