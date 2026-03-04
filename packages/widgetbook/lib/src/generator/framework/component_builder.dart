@@ -63,7 +63,7 @@ class ComponentBuilder {
               'docComment': widgetType.element?.documentationComment != null
                   ? literalString(
                       widgetType.element!.documentationComment!.replaceAll(
-                        '/// ',
+                        RegExp(r'/// ?'),
                         '',
                       ),
                     )
