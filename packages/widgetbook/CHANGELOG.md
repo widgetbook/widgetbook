@@ -1,5 +1,11 @@
-## Unreleased
+## 4.0.0-beta.2
 
+- **FIX**: Improve default constructor handling. ([#1872](https://github.com/widgetbook/widgetbook/pull/1872))
+- **FIX**: Use raw multi-line string to prevent special character issues in generated code. ([#1871](https://github.com/widgetbook/widgetbook/pull/1871))
+- **FIX**: Improve doc comment handling for empty lines. ([#1869](https://github.com/widgetbook/widgetbook/pull/1869))
+- **FEAT**: Implement static method resolution for default parameter values. ([#1870](https://github.com/widgetbook/widgetbook/pull/1870))
+- **FEAT**: Add generator golden tests. ([#1868](https://github.com/widgetbook/widgetbook/pull/1868))
+- **FIX**: Resolve nullable `Arg` checkbox requiring two clicks to toggle. ([#1861](https://github.com/widgetbook/widgetbook/pull/1861))
 - **FEAT**: Show read-only info about scenarios in the right side panel. ([#1847](https://github.com/widgetbook/widgetbook/pull/1847))
 
 ## 4.0.0-beta.1
