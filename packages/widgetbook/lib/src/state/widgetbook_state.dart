@@ -81,6 +81,7 @@ class WidgetbookState extends ChangeNotifier {
     this.panels = null,
     this.header,
     this.enableLeafComponents = true,
+    this.preserveUseCaseState = false,
   }) {
     this.knobs = KnobsRegistry(
       onLock: () {
@@ -146,6 +147,10 @@ class WidgetbookState extends ChangeNotifier {
   /// Whether leaf components are enabled in the navigation tree.
   /// By default, this is set to true.
   final bool enableLeafComponents;
+
+  /// Whether to preserve the state of use cases across rebuilds.
+  /// By default, this is set to false.
+  final bool preserveUseCaseState;
 
   /// List of directories passed to the root node.
   List<WidgetbookNode> get directories => root.children!;

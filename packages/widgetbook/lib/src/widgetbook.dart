@@ -35,6 +35,7 @@ class Widgetbook extends StatefulWidget {
     this.header,
     this.scrollBehavior,
     this.enableLeafComponents = true,
+    this.preserveUseCaseState = false,
   });
 
   /// A [Widgetbook] with [CupertinoApp] as an [appBuilder].
@@ -52,6 +53,7 @@ class Widgetbook extends StatefulWidget {
     this.header,
     this.scrollBehavior,
     this.enableLeafComponents = true,
+    this.preserveUseCaseState = false,
   });
 
   /// A [Widgetbook] with [MaterialApp] as an [appBuilder].
@@ -69,6 +71,7 @@ class Widgetbook extends StatefulWidget {
     this.header,
     this.scrollBehavior,
     this.enableLeafComponents = true,
+    this.preserveUseCaseState = false,
   });
 
   /// The initial route for that will be used on first startup.
@@ -134,6 +137,10 @@ class Widgetbook extends StatefulWidget {
   /// By default, this is set to true.
   final bool enableLeafComponents;
 
+  /// Whether to preserve the state of use cases across rebuilds.
+  /// By default, this is set to false.
+  final bool preserveUseCaseState;
+
   @override
   State<Widgetbook> createState() => _WidgetbookState();
 }
@@ -153,6 +160,7 @@ class _WidgetbookState extends State<Widgetbook> {
       addons: widget.addons,
       integrations: widget.integrations,
       enableLeafComponents: widget.enableLeafComponents,
+      preserveUseCaseState: widget.preserveUseCaseState,
       root: WidgetbookRoot(
         children: widget.directories,
       ),
