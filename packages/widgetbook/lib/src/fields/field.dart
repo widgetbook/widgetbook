@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../state/state.dart';
+import 'field_builder.dart';
 import 'field_codec.dart';
 import 'field_type.dart';
 
@@ -95,7 +96,11 @@ abstract class Field<T> {
     final groupMap = FieldCodec.decodeQueryGroup(state.queryParams[group]);
     final value = valueFrom(groupMap);
 
-    return toWidget(context, group, value);
+    return FieldBuilder<T>(
+      group: group,
+      value: value,
+      builder: (context) => toWidget(context, group, value),
+    );
   }
 
   /// Converts this field into a [Widget] that can be used in the
