@@ -11,4 +11,4 @@ const packageName = 'widgetbook_cli';
 const packageVersion = '4.0.0-beta.1';
 
 /// The widgetbook package version to install via `widgetbook init`
-const widgetbookVersion = '4.0.0-beta.1';
+const widgetbookVersion = '4.0.0-beta.2';
