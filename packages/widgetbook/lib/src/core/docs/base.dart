@@ -12,6 +12,11 @@ import 'docs.dart';
 /// list.
 typedef DocsBuilderFunction = List<DocBlock> Function(List<DocBlock> blocks);
 
+/// The default height in logical pixels for story previews in documentation.
+///
+/// Used as the default height by the story-related doc blocks.
+const double defaultStoryHeight = 500;
+
 /// Abstract base class for all documentation blocks in Widgetbook.
 ///
 /// Extend this class to create custom blocks that can be rendered in the

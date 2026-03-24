@@ -26,11 +26,32 @@ const DartCommentDocBlock()
 
 ### StoriesDocBlock
 
-Displays all stories defined for the current component including their names, live previews, and a table displaying the default `Arg` values. 
+Displays all stories defined for the current component including their names, live previews, and a table displaying the default `Arg` values.
+
+By default, each story preview is rendered inside a fixed-height container (500px) to provide bounded constraints. This prevents layout errors for widgets that require finite height such as `Scaffold`, `Overlay`, or `Expanded`.
 
 **Usage:**
 ```dart
+// Default: fixed height of 500px per story
 const StoriesDocBlock()
+
+// Custom fixed height
+const StoriesDocBlock(height: 800)
+
+// Unconstrained: stories render at their natural size
+// Use this for simple widgets like buttons, cards, or badges
+const StoriesDocBlock.unconstrained()
+```
+
+### StoryDocBlock
+
+Displays a single story with its live preview and argument table. Used internally by `StoriesDocBlock` but can also be used directly for per-story control.
+
+**Usage:**
+```dart
+StoryDocBlock(story: myStory)                          // Fixed height (500px)
+StoryDocBlock(story: myStory, height: 800)             // Custom fixed height
+StoryDocBlock.unconstrained(story: myStory)            // Unconstrained
 ```
 
 ### PrimaryStoryDocBlock
@@ -39,7 +60,8 @@ Displays only the first story for the component. Useful for highlighting the mai
 
 **Usage:**
 ```dart
-const PrimaryStoryDocBlock()
+const PrimaryStoryDocBlock()                // Fixed height (500px)
+const PrimaryStoryDocBlock.unconstrained()  // Unconstrained
 ```
 
 ## Text & Layout DocBlocks

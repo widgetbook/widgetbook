@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Prevent story overflow in docs by wrapping previews in a fixed-height container. ([#1881](https://github.com/widgetbook/widgetbook/pull/1881))
+
 ## 4.0.0-beta.2
 
 - **FIX**: Improve default constructor handling. ([#1872](https://github.com/widgetbook/widgetbook/pull/1872))
