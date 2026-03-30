@@ -23,7 +23,7 @@ dependencies:
   device_frame_plus: ^1.5.0
   flutter:
     sdk: flutter
-  inspector: ">=2.1.0 <4.0.0"
+  inspector: ^4.0.0
   meta: ^1.8.0
   nested: ^1.0.0
   resizable_widget: ^1.0.5
