@@ -10,13 +10,25 @@ import 'docs.dart';
 ///
 /// Used to highlight the main example.
 class PrimaryStoryDocBlock extends DocBlock {
-  const PrimaryStoryDocBlock({super.key});
+  const PrimaryStoryDocBlock({super.key, this.height = defaultStoryHeight});
+
+  /// Creates a [PrimaryStoryDocBlock] without a height constraint.
+  const PrimaryStoryDocBlock.unconstrained({super.key}) : height = null;
+
+  /// The height in logical pixels for the story preview container.
+  ///
+  /// When non-null, the story is wrapped in a [SizedBox] with this height.
+  /// Defaults to 500.
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
     final primaryStory = state.component!.stories.first;
 
-    return StoryDocBlock(story: primaryStory);
+    if (height != null) {
+      return StoryDocBlock(story: primaryStory, height: height!);
+    }
+    return StoryDocBlock.unconstrained(story: primaryStory);
   }
 }

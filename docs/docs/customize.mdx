@@ -22,6 +22,43 @@ final config = Config(
 );
 ```
 
+## Story Preview Height
+
+By default, story previews in docs are rendered inside a fixed-height container (500px). This ensures widgets that require bounded constraints (e.g. `Scaffold`, `Overlay`, `Expanded`) render correctly.
+
+For simple widgets with a natural intrinsic height (e.g. buttons, cards), you can opt into unconstrained rendering using the `.unconstrained()` constructor:
+
+### Global Unconstrained Rendering
+
+```dart
+final config = Config(
+  components: components,
+  docsBuilder: () => [
+    const ComponentNameDocBlock(),
+    const DartCommentDocBlock(),
+    const StoriesDocBlock.unconstrained(),
+  ],
+);
+```
+
+### Per-Component Override
+
+```dart
+// Screen-level component: use a taller fixed height
+final meta = Meta<MyScreen>(
+  docsBuilder: (blocks) => blocks.replaceFirst<StoriesDocBlock>(
+    const StoriesDocBlock(height: 800),
+  ),
+);
+
+// Simple widget: use unconstrained rendering
+final meta = Meta<MyButton>(
+  docsBuilder: (blocks) => blocks.replaceFirst<StoriesDocBlock>(
+    const StoriesDocBlock.unconstrained(),
+  ),
+);
+```
+
 ## Component-Level Customization
 
 Override documentation for specific components via the `docsBuilder` parameter in the `Meta` tag.
