@@ -5,6 +5,8 @@ import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 import '../docs/docs.dart';
+import '../framework/scenario.dart';
+import '../framework/story.dart';
 
 @optionalTypeArgs
 class TreeNode<T> {
@@ -27,6 +29,20 @@ class TreeNode<T> {
     return T == Null && name.startsWith('[') && name.endsWith(']');
   }
 
+  bool get isClickable => switch (this) {
+    TreeNode<List<DocBlock>>() => true,
+    TreeNode<Scenario>() => true,
+    TreeNode<Story>() => true,
+    _ => false,
+  };
+
+  bool get isTerminal => switch (this) {
+    TreeNode<List<DocBlock>>() => true,
+    TreeNode<Scenario>() => true,
+    TreeNode<Story>() => children.isEmpty,
+    _ => false,
+  };
+
   List<TreeNode> get children {
     return _children.values.sorted(
       (a, b) {
@@ -40,6 +56,18 @@ class TreeNode<T> {
         }
       },
     );
+  }
+
+  /// The nesting depth of this node in the navigation tree.
+  /// Category nodes don't contribute to depth.
+  int get depth {
+    var count = 0;
+    var current = parent;
+    while (current != null) {
+      if (!current.isCategory) count++;
+      current = current.parent;
+    }
+    return count;
   }
 
   /// Gets the path from root to this node without leading slash
