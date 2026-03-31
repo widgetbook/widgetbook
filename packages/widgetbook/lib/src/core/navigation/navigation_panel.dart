@@ -109,8 +109,9 @@ class _NavigationPanelState extends State<NavigationPanel> {
         ? widget.root
         : widget.root.filter((node) => _filterNode(node, query));
 
-    final entries =
-        filteredRoot != null ? _flattenTree(filteredRoot) : <TreeNode>[];
+    final entries = filteredRoot != null
+        ? _flattenTree(filteredRoot)
+        : <TreeNode>[];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
