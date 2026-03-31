@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-beta.3
 
 - **FIX**: Virtualize navigation tree to only build visible items, improving performance for large catalogs. ([#1886](https://github.com/widgetbook/widgetbook/pull/1886))
 - **FIX**: Prevent story overflow in docs by wrapping previews in a fixed-height container. ([#1881](https://github.com/widgetbook/widgetbook/pull/1881))
