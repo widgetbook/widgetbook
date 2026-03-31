@@ -1,3 +1,7 @@
+## 4.0.0-beta.3
+
+- **FIX**: Update widgetbook version in `init` command to match metadata.
+
 ## 4.0.0-beta.2
 
 - **FIX**: Update import from `material` to `widgets` in component template. ([#1864](https://github.com/widgetbook/widgetbook/pull/1864))
