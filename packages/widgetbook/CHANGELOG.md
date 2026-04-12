@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FIX**: Make addon-provided `InheritedWidget`s accessible via `BuildContext` in story `builder` and `setup` functions. ([#1893](https://github.com/widgetbook/widgetbook/pull/1893))
+- **FIX**: Make addon-provided `InheritedWidget`s accessible via `BuildContext` in story `builder` and `setup` functions. ([#1894](https://github.com/widgetbook/widgetbook/pull/1894))
 
 ## 4.0.0-beta.3
 
