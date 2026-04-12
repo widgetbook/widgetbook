@@ -142,15 +142,17 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     syncArgs(context);
     initBuilderArgs(context, effectiveArgs);
 
-    final widget = builder(context, effectiveArgs);
-    final story = setup(context, widget, effectiveArgs);
-
     return config.appBuilder(
       context,
       NestedBuilder(
         items: effectiveAddons,
         builder: (context, addon, child) => addon.build(context, child),
-        child: story,
+        child: Builder(
+          builder: (context) {
+            final widget = this.builder(context, effectiveArgs);
+            return setup(context, widget, effectiveArgs);
+          },
+        ),
       ),
     );
   }
