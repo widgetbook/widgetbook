@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FIX**: Make addon-provided `InheritedWidget`s accessible via `BuildContext` in story `builder` and `setup` functions. ([#1894](https://github.com/widgetbook/widgetbook/pull/1894))
+- **FIX**: Preserve type arguments on generic type parameter bounds in generated code. ([#1895](https://github.com/widgetbook/widgetbook/pull/1895))
 
 ## 4.0.0-beta.3
 

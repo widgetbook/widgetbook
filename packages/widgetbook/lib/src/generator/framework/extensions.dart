@@ -49,10 +49,40 @@ extension DartTypeX on DartType {
     ),
   };
 
-  /// Gets class name without generic parameters
+  /// Gets class name without generic parameters.
   /// Can only be used on classes.
   String get nonGenericName {
     return element!.displayName;
+  }
+
+  /// Converts a type parameter bound to a [Reference], building a
+  /// [TypeReference] that preserves type arguments and nullability.
+  ///
+  /// Without this, [nonGenericName] would strip type arguments from the
+  /// bound. For example, `<D, T extends BaseItem<D>>` would lose the
+  /// `<D>` and emit `T extends BaseItem` (a raw type) instead of
+  /// `T extends BaseItem<D>`.
+  ///
+  /// Handles the following cases recursively:
+  /// - Parameterized bounds: `BaseItem<D>` → `TypeReference('BaseItem', [D])`
+  /// - Nullable type args: `Wrapper<D?>` → preserves the `?` on `D`
+  /// - `dynamic`/`void`/function types: these have no [element], so we
+  ///   fall back to [getDisplayString] (e.g. `Map<dynamic, D>`)
+  Reference get _boundRef {
+    final typeElement = element;
+    if (typeElement == null) return refer(getDisplayString());
+
+    final self = this;
+    return TypeReference(
+      (b) {
+        b
+          ..symbol = typeElement.displayName
+          ..isNullable = isNullable;
+        if (self is ParameterizedType && self.typeArguments.isNotEmpty) {
+          b.types.addAll(self.typeArguments.map((t) => t._boundRef));
+        }
+      },
+    );
   }
 
   Iterable<Reference> getTypeParams({
@@ -67,7 +97,7 @@ extension DartTypeX on DartType {
         (b) => b
           ..symbol = typeElement.name
           ..bound = withBounds && typeElement.bound != null
-              ? refer(typeElement.bound!.nonGenericName)
+              ? typeElement.bound!._boundRef
               : null,
       ),
     );
