@@ -49,10 +49,27 @@ extension DartTypeX on DartType {
     ),
   };
 
-  /// Gets class name without generic parameters
+  /// Gets class name without generic parameters.
   /// Can only be used on classes.
   String get nonGenericName {
     return element!.displayName;
+  }
+
+  /// Converts a type parameter bound to a [Reference] that preserves its
+  /// type arguments recursively.
+  ///
+  /// For `BoundWidget<D, T extends BaseItem<D>>`, the bound on `T` is
+  /// `BaseItem<D>`.
+  Reference get _boundRef {
+    final self = this;
+    if (self is ParameterizedType && self.typeArguments.isNotEmpty) {
+      return TypeReference(
+        (b) => b
+          ..symbol = self.element!.displayName
+          ..types.addAll(self.typeArguments.map((t) => t._boundRef)),
+      );
+    }
+    return refer(element!.displayName);
   }
 
   Iterable<Reference> getTypeParams({
@@ -67,7 +84,7 @@ extension DartTypeX on DartType {
         (b) => b
           ..symbol = typeElement.name
           ..bound = withBounds && typeElement.bound != null
-              ? refer(typeElement.bound!.nonGenericName)
+              ? typeElement.bound!._boundRef
               : null,
       ),
     );
