@@ -3,12 +3,12 @@ import 'package:widgetbook/widgetbook.dart';
 
 part 'generic_bound_nullable.stories.g.dart';
 
-class Wrapper<T> {
-  const Wrapper({required this.value});
+class BaseItem<T> {
+  const BaseItem({required this.value});
   final T value;
 }
 
-class NullableBoundWidget<D, T extends Wrapper<D?>> extends StatelessWidget {
+class NullableBoundWidget<D, T extends BaseItem<D?>> extends StatelessWidget {
   const NullableBoundWidget({super.key, required this.item});
 
   final T item;

@@ -7,10 +7,11 @@ part of 'generic_bound_nullable.stories.dart';
 // **************************************************************************
 
 typedef _Component = Component<NullableBoundWidget, NullableBoundWidgetArgs>;
-typedef _Scenario<D, T extends Wrapper<D?>> = NullableBoundWidgetScenario<D, T>;
+typedef _Scenario<D, T extends BaseItem<D?>> =
+    NullableBoundWidgetScenario<D, T>;
 typedef _Defaults = NullableBoundWidgetDefaults;
-typedef _Story<D, T extends Wrapper<D?>> = NullableBoundWidgetStory<D, T>;
-typedef _Args<D, T extends Wrapper<D?>> = NullableBoundWidgetArgs<D, T>;
+typedef _Story<D, T extends BaseItem<D?>> = NullableBoundWidgetStory<D, T>;
+typedef _Args<D, T extends BaseItem<D?>> = NullableBoundWidgetArgs<D, T>;
 final NullableBoundWidgetComponent =
     Component<NullableBoundWidget, NullableBoundWidgetArgs>(
       name: meta.name ?? 'NullableBoundWidget',
@@ -19,12 +20,12 @@ final NullableBoundWidgetComponent =
       docComment: null,
       stories: [$Default..$generatedName = 'Default'],
     );
-typedef NullableBoundWidgetScenario<D, T extends Wrapper<D?>> =
+typedef NullableBoundWidgetScenario<D, T extends BaseItem<D?>> =
     Scenario<NullableBoundWidget<D, T>, NullableBoundWidgetArgs<D, T>>;
 typedef NullableBoundWidgetDefaults =
     Defaults<NullableBoundWidget, NullableBoundWidgetArgs>;
 
-class NullableBoundWidgetStory<D, T extends Wrapper<D?>>
+class NullableBoundWidgetStory<D, T extends BaseItem<D?>>
     extends Story<NullableBoundWidget<D, T>, NullableBoundWidgetArgs<D, T>> {
   NullableBoundWidgetStory({
     super.name,
@@ -45,7 +46,7 @@ class NullableBoundWidgetStory<D, T extends Wrapper<D?>>
        );
 }
 
-class NullableBoundWidgetArgs<D, T extends Wrapper<D?>>
+class NullableBoundWidgetArgs<D, T extends BaseItem<D?>>
     extends StoryArgs<NullableBoundWidget<D, T>> {
   NullableBoundWidgetArgs({Arg<Key?>? key, required Arg<T> item})
     : this.keyArg = $initArg('key', key, null),
