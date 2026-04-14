@@ -19,7 +19,7 @@ import 'story_args.dart';
 typedef SetupBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> =
     Widget Function(
       BuildContext context,
-      TWidget widget,
+      Widget widget,
       TArgs args,
     );
 
@@ -149,8 +149,15 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
         builder: (context, addon, child) => addon.build(context, child),
         child: Builder(
           builder: (context) {
-            final widget = this.builder(context, effectiveArgs);
-            return setup(context, widget, effectiveArgs);
+            return setup(
+              context,
+              Builder(
+                builder: (innerContext) {
+                  return this.builder(innerContext, effectiveArgs);
+                },
+              ),
+              effectiveArgs,
+            );
           },
         ),
       ),

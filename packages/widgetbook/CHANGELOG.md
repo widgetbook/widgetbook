@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FIX**: Preserve story definition order in navigation panel instead of sorting alphabetically. ([#1897](https://github.com/widgetbook/widgetbook/pull/1897))
+- **BREAKING**: Change `SetupBuilder`'s `widget` parameter from `TWidget` to `Widget`, enabling `InheritedWidget`s injected by `setup` to be resolved in the story `builder`'s `BuildContext`. ([#1896](https://github.com/widgetbook/widgetbook/pull/1896))
 - **FIX**: Make addon-provided `InheritedWidget`s accessible via `BuildContext` in story `builder` and `setup` functions. ([#1894](https://github.com/widgetbook/widgetbook/pull/1894))
 - **FIX**: Preserve type arguments on generic type parameter bounds in generated code. ([#1895](https://github.com/widgetbook/widgetbook/pull/1895))
 

@@ -142,7 +142,7 @@ Not in all cases, you can extract the dependency. In some case you need to mock 
 
        return ChangeNotifierProvider<UserProvider>.value(
          value: mockProvider,
-         child: UserTile(),
+         child: child,
        );
      },
    );
