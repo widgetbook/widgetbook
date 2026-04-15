@@ -71,6 +71,35 @@ There are two common patterns for building screens:
 1. **Pure Screens**: Screens that are fully presentational and don't depend on external data or services. You can create a story for them like any other component.
 2. **Contained Screens**: Screens that depend on external data or services. Check out our [mocking guide](/stories/mocking) to know how to handle such screens.
 
+## Builder vs Setup
+
+Every story has two hooks that control how the widget is created and wrapped:
+
+| Hook | Signature | Purpose |
+| --- | --- | --- |
+| `builder` | `TWidget Function(BuildContext, TArgs)` | Creates the widget from args. Must return the exact widget type. |
+| `setup` | `Widget Function(BuildContext, Widget, TArgs)` | Wraps the built widget. Can return any `Widget`. |
+
+`builder` is called first to construct the widget, then `setup` receives that widget and wraps it.
+When using `Meta`, a default `builder` is generated automatically. `setup` defaults to passing the widget through.
+
+### When to use `setup`
+
+Use `setup` whenever your story needs a parent widget injected above it in the widget tree. This is common when your widget depends on something provided by an ancestor, e.g. a `ProviderScope` for Riverpod, a `BlocProvider` for Bloc, a custom `Theme`, or a mocked router.
+
+```dart title="widgetbook/lib/user_tile.stories.dart"
+final $Default = _Story(
+  setup: (context, child, args) => ProviderScope(
+    overrides: [userProvider.overrideWith((ref) => fakeUser)],
+    child: child,
+  ),
+);
+```
+
+You cannot do this in `builder` because it must return the exact widget type (`TWidget`), so wrapping it in another widget would cause a type error.
+
+This is especially useful when cataloging [screens](/stories/overview#stories-for-screens) that depend on external services. See the [Mocking guide](/stories/mocking) for more examples of using `setup` with mocked dependencies.
+
 ## Story Order
 
 Stories are displayed in the navigation panel in the order they are defined in the `.stories.dart` file. For example, the stories below will appear as `Primary`, `Secondary`, `Disabled` in the sidebar and are not alphabetically sorted.
