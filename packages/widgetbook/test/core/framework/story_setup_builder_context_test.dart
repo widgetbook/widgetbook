@@ -44,6 +44,20 @@ class _SimpleArgs<TWidget extends Widget> extends StoryArgs<TWidget> {
   List<Arg?> get list => [];
 }
 
+class _BuilderArgArgs extends StoryArgs<Text> {
+  _BuilderArgArgs()
+      : userNameArg = BuilderArg<String>(
+          (context) => _UserProvider.of(context).userName,
+        );
+
+  final BuilderArg<String> userNameArg;
+
+  String get userName => userNameArg.value;
+
+  @override
+  List<Arg?> get list => [userNameArg];
+}
+
 class _TestStory<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
     extends Story<TWidget, TArgs> {
   _TestStory({
@@ -61,15 +75,44 @@ void main() {
       'then the InheritedWidget should be resolvable',
       (tester) async {
         final story = _TestStory<_UserProfile, _SimpleArgs<_UserProfile>>(
-          setup: (context, widget, args) {
+          setup: (context, child, args) {
             return _UserProvider(
               userName: 'Alice',
-              child: widget,
+              child: child,
             );
           },
           args: _SimpleArgs<_UserProfile>(),
           builder: (context, args) {
             return const _UserProfile();
+          },
+        );
+
+        await tester.pumpWidgetWithState(
+          state: WidgetbookState(),
+          builder: (context) {
+            return story.buildWithConfig(context, const Config());
+          },
+        );
+
+        expect(find.text('Alice'), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'given a setup that injects an InheritedWidget, '
+      'when a BuilderArg resolves its value from context, '
+      'then the InheritedWidget should be resolvable',
+      (tester) async {
+        final story = _TestStory<Text, _BuilderArgArgs>(
+          setup: (context, child, args) {
+            return _UserProvider(
+              userName: 'Alice',
+              child: child,
+            );
+          },
+          args: _BuilderArgArgs(),
+          builder: (context, args) {
+            return Text(args.userName);
           },
         );
 
