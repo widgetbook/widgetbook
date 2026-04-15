@@ -19,7 +19,7 @@ import 'story_args.dart';
 typedef SetupBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> =
     Widget Function(
       BuildContext context,
-      Widget widget,
+      Widget child,
       TArgs args,
     );
 

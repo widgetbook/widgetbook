@@ -57,7 +57,7 @@ void main() {
   group('$Story setup/builder context', () {
     testWidgets(
       'given a setup that injects an InheritedWidget, '
-      'when the builder accesses it via its context parameter, '
+      'when the built widget accesses it via its BuildContext, '
       'then the InheritedWidget should be resolvable',
       (tester) async {
         final story = _TestStory<_UserProfile, _SimpleArgs<_UserProfile>>(
