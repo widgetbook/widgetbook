@@ -60,17 +60,16 @@ void main() {
       'when the builder accesses it via its context parameter, '
       'then the InheritedWidget should be resolvable',
       (tester) async {
-        final story = _TestStory<Text, _SimpleArgs<Text>>(
+        final story = _TestStory<_UserProfile, _SimpleArgs<_UserProfile>>(
           setup: (context, widget, args) {
             return _UserProvider(
               userName: 'Alice',
               child: widget,
             );
           },
-          args: _SimpleArgs<Text>(),
+          args: _SimpleArgs<_UserProfile>(),
           builder: (context, args) {
-            final provider = _UserProvider.of(context);
-            return Text(provider.userName);
+            return const _UserProfile();
           },
         );
 
