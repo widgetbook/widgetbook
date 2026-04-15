@@ -14,7 +14,7 @@ class TreeNode<T> {
     this.name,
     this.data,
     this.parent,
-  ) : _children = HashMap();
+  ) : _children = LinkedHashMap();
 
   final String name;
   final T data;
@@ -46,14 +46,12 @@ class TreeNode<T> {
   List<TreeNode> get children {
     return _children.values.sorted(
       (a, b) {
-        if (a.isDocs) return -1; // Docs always first
-        if (a.isCategory == b.isCategory) {
-          // Both categories or both folders
-          return a.name.compareTo(b.name);
-        } else {
-          // Sort categories after folders
+        if (a.isDocs) return -1;
+        if (b.isDocs) return 1;
+        if (a.isCategory != b.isCategory) {
           return a.isCategory ? 1 : -1;
         }
+        return 0; // preserve definition order
       },
     );
   }

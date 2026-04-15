@@ -71,6 +71,16 @@ There are two common patterns for building screens:
 1. **Pure Screens**: Screens that are fully presentational and don't depend on external data or services. You can create a story for them like any other component.
 2. **Contained Screens**: Screens that depend on external data or services. Check out our [mocking guide](/stories/mocking) to know how to handle such screens.
 
+## Story Order
+
+Stories are displayed in the navigation panel in the order they are defined in the `.stories.dart` file. For example, the stories below will appear as `Primary`, `Secondary`, `Disabled` in the sidebar and are not alphabetically sorted.
+
+```dart title="widgetbook/lib/button.stories.dart"
+final $Primary = _Story(...);
+final $Secondary = _Story(...);
+final $Disabled = _Story(...);
+```
+
 ## Component Path
 
 You can change the navigation path of your stories by using the `path` parameter in `Meta` as follows:
