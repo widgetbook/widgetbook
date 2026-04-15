@@ -15,7 +15,8 @@ class _UserProvider extends InheritedWidget {
   final String userName;
 
   static _UserProvider of(BuildContext context) {
-    final provider = context.dependOnInheritedWidgetOfExactType<_UserProvider>();
+    final provider = context
+        .dependOnInheritedWidgetOfExactType<_UserProvider>();
     assert(provider != null, 'No _UserProvider found in context');
     return provider!;
   }
