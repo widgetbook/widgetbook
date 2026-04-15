@@ -46,9 +46,9 @@ class _SimpleArgs<TWidget extends Widget> extends StoryArgs<TWidget> {
 
 class _BuilderArgArgs extends StoryArgs<Text> {
   _BuilderArgArgs()
-      : userNameArg = BuilderArg<String>(
-          (context) => _UserProvider.of(context).userName,
-        );
+    : userNameArg = BuilderArg<String>(
+        (context) => _UserProvider.of(context).userName,
+      );
 
   final BuilderArg<String> userNameArg;
 
