@@ -1,5 +1,40 @@
 # v4 Migration Guide
 
-Since migrating to Widgetbook v4 involves a lot of breaking changes, it's advised to use an AI agent to automate the migration. An llm-friendly prompt for the migration is available [here](https://raw.githubusercontent.com/widgetbook/widgetbook/refs/heads/v4/docs/assets/guides/v4-migration/prompt.md).
+Migrating to Widgetbook v4 involves breaking changes. The recommended approach is to use an AI agent for the migration but to get reliable results, **don't just throw the prompt at the agent cold**. Follow the workflow below.
 
-If you prefer manual migration, you can bootstrap your new v4 project using our [CLI's init command](/cli/commands/init).
+If you do not want to use AI agents, check out the Manual Migration workflow at the end of the page.
+
+## Recommended Migration Workflow
+
+### 1. Understand v4 first (~30 min)
+
+Before touching any agent, manually create **3–5 Stories** in v4 yourself. Pick simple, representative widgets from your project. This gives you a concrete feel for the new model and surfaces any project-specific conventions early.
+
+→ Not sure where to start? Use [`widgetbook init`](https://docs.widgetbook.io/~v4/cli/commands/init) to bootstrap a fresh v4 project.
+
+### 2. Prime the agent with your conventions (~5–10 min)
+
+Read through the [migration prompt](https://raw.githubusercontent.com/widgetbook/widgetbook/refs/heads/v4/docs/assets/guides/v4-migration/prompt.md) and **extend it with the Stories you just wrote**. This teaches the agent your project's specific patterns and conventions — the things no generic prompt can know.
+
+### 3. Let the agent migrate
+
+With a well-primed prompt, the agent should be able to one-shot most of your components. Run it and review the output.
+
+### 4. Fix edge cases by example
+
+When the agent gets something wrong (usually because of a custom convention), **fix that one case manually**. Then re-run the agent with the corrected example included. The agent now knows exactly what to do for the remaining cases.
+
+## Tips
+
+- **Don't skip step 1.** Starting with the prompt alone and skipping manual exploration is the most common reason migrations stall.
+- Each manual fix in step 4 is an investment: one example usually unblocks many similar components.
+- Widgetbook Cloud detects v4 uploads automatically when you use the v4 CLI — no config needed.
+
+## Manual Migration
+
+If you prefer to migrate without an AI agent, use the CLI's init command to set up your v4 project structure:
+```bash
+widgetbook init
+```
+
+See the [CLI docs](https://docs.widgetbook.io/~v4/cli/commands/init) for details.
