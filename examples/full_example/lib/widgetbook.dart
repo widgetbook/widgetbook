@@ -25,6 +25,7 @@ class WidgetbookApp extends StatelessWidget {
       addons: [
         ViewportAddon(Viewports.all),
         InspectorAddon(),
+        InteractiveViewerAddon(),
         GridAddon(100),
         AlignmentAddon(),
         ZoomAddon(),
