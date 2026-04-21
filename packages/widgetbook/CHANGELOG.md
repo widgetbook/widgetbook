@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FEAT**: Add `defaultToNull` parameter to nullable knobs to make them start in a `null` _(i.e. unchecked)_ state while having a non-null initial value. ([#1790](https://github.com/widgetbook/widgetbook/pull/1790) - by [@youpelegrace](https://github.com/youpelegrace))
+- **REFACTOR**: Allow `inspector` 4.x. ([#1901](https://github.com/widgetbook/widgetbook/pull/1901))
 
 ## 3.22.0
 
