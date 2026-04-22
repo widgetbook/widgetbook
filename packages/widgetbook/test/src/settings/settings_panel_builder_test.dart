@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/settings/settings_panel_builder.dart';
 
 void main() {
-  testWidgets('Garde le contenu en vie', (tester) async {
+  testWidgets('keeps content alive across page changes', (tester) async {
     final controller = PageController();
     await tester.pumpWidget(
       MaterialApp(
@@ -14,7 +14,7 @@ void main() {
               SettingsPanelBuilder(
                 builder: (context) => const _TestWidget(),
               ),
-              const Text('Autre Page'),
+              const Text('Other Page'),
             ],
           ),
         ),

@@ -24,25 +24,18 @@ class FieldBuilder<T> extends StatefulWidget {
 }
 
 class _FieldBuilderState<T> extends State<FieldBuilder<T>> {
-  late String _lastGroup = widget.group;
-  late T? _lastValue = widget.value;
   Widget? _cachedWidget;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _cachedWidget = null;
+  void didUpdateWidget(covariant FieldBuilder<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.value != oldWidget.value || widget.group != oldWidget.group) {
+      _cachedWidget = null;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_cachedWidget == null ||
-        widget.value != _lastValue ||
-        widget.group != _lastGroup) {
-      _lastValue = widget.value;
-      _lastGroup = widget.group;
-      _cachedWidget = widget.builder(context);
-    }
-    return _cachedWidget!;
+    return _cachedWidget ??= widget.builder(context);
   }
 }
