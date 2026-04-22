@@ -80,6 +80,7 @@ class WidgetbookState extends ChangeNotifier {
     this.home = const DefaultHomePage(),
     this.panels = null,
     this.header,
+    this.headerPadding,
     this.enableLeafComponents = true,
   }) {
     this.knobs = KnobsRegistry(
@@ -142,6 +143,9 @@ class WidgetbookState extends ChangeNotifier {
   /// An optional widget to display at the top of the navigation panel.
   /// This can be used for branding or additional information.
   final Widget? header;
+
+  /// An optional padding for the header widget in the navigation panel.
+  final EdgeInsetsGeometry? headerPadding;
 
   /// Whether leaf components are enabled in the navigation tree.
   /// By default, this is set to true.
