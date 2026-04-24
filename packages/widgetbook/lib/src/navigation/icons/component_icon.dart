@@ -21,14 +21,19 @@ class ComponentIcon extends StatelessWidget {
         height: size,
         child: Transform.rotate(
           angle: 45 * pi / 180,
-          child: GridView.count(
-            crossAxisCount: 2,
-            padding: EdgeInsets.zero,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: List.generate(
-              4,
-              (index) => Icon(
-                Icons.square_rounded,
-                size: size / 2,
+              2,
+              (_) => Row(
+                mainAxisSize: MainAxisSize.min,
+                children: List.generate(
+                  2,
+                  (_) => Icon(
+                    Icons.square_rounded,
+                    size: size / 2,
+                  ),
+                ),
               ),
             ),
           ),
