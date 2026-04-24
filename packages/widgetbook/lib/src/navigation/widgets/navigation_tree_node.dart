@@ -23,7 +23,8 @@ class NavigationTreeNode extends StatefulWidget {
   State<NavigationTreeNode> createState() => _NavigationTreeNodeState();
 }
 
-class _NavigationTreeNodeState extends State<NavigationTreeNode> {
+class _NavigationTreeNodeState extends State<NavigationTreeNode>
+    with AutomaticKeepAliveClientMixin {
   late bool isExpanded;
 
   @override
@@ -35,6 +36,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     const animationDuration = Duration(
       milliseconds: 200,
     );
@@ -74,16 +76,17 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
                 curve: Curves.easeInOut,
                 alignment: Alignment.topCenter,
                 heightFactor: isExpanded ? 1 : 0,
-                child: ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: widget.node.children!.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => NavigationTreeNode(
-                    node: widget.node.children![index],
-                    selectedNode: widget.selectedNode,
-                    onNodeSelected: widget.onNodeSelected,
-                    enableLeafComponents: widget.enableLeafComponents,
-                  ),
+                child: Column(
+                  children: widget.node.children!
+                      .map(
+                        (item) => NavigationTreeNode(
+                          node: item,
+                          selectedNode: widget.selectedNode,
+                          onNodeSelected: widget.onNodeSelected,
+                          enableLeafComponents: widget.enableLeafComponents,
+                        ),
+                      )
+                      .toList(),
                 ),
               ),
             ),
@@ -91,4 +94,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
