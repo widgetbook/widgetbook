@@ -11,12 +11,14 @@ class StoryClassBuilder {
     this.argsType,
     this.defaultSetup,
     this.defaultBuilder,
+    this.constructorName,
   );
 
   final DartType widgetType;
   final DartType argsType;
   final Code? defaultSetup;
   final Code? defaultBuilder;
+  final String? constructorName;
 
   TypeReference get storyClassRef {
     return widgetType.getRef(
@@ -27,6 +29,13 @@ class StoryClassBuilder {
 
   Iterable<FormalParameterElement> get params {
     final constructors = (argsType.element as ClassElement).constructors;
+
+    if (constructorName != null) {
+      final named =
+          constructors.firstWhereOrNull((c) => c.name == constructorName);
+      if (named != null) return named.formalParameters;
+    }
+
     final constructor =
         constructors
             .where((c) => c.name == 'new' || c.name == null || c.name!.isEmpty)
@@ -235,6 +244,8 @@ class StoryClassBuilder {
               assigner(param),
             ),
           ),
+      [],
+      constructorName,
     );
   }
 }

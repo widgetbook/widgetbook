@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FEAT**: Support named constructors in code generation via `Meta(constructor: Widget.named)`. ([#1903](https://github.com/widgetbook/widgetbook/pull/1903))
 - **FIX**: Preserve story definition order in navigation panel instead of sorting alphabetically. ([#1897](https://github.com/widgetbook/widgetbook/pull/1897))
 - **BREAKING**: Rename `SetupBuilder`'s second parameter from `TWidget widget` to `Widget child`, enabling `InheritedWidget`s injected by `setup` to be resolved in the story `builder`'s `BuildContext`. ([#1896](https://github.com/widgetbook/widgetbook/pull/1896))
 - **FIX**: Make addon-provided `InheritedWidget`s accessible via `BuildContext` in story `builder` and `setup` functions. ([#1894](https://github.com/widgetbook/widgetbook/pull/1894))

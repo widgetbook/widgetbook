@@ -9,15 +9,27 @@ class WidgetInfo {
     required this.name,
     required this.importPath,
     required this.parameterTypes,
+    this.constructorName,
   });
 
   final String name;
   final String importPath;
   final List<String> parameterTypes;
 
+  /// The named constructor, e.g. `'icon'` for `Button.icon`.
+  /// `null` for the unnamed (default) constructor.
+  final String? constructorName;
+
   String get filePath => importPath.split('/').sublist(1).join('/');
   String get dirname => p.dirname(filePath);
   String get filename => p.basenameWithoutExtension(filePath);
+
+  /// The filename to use for the generated `.stories.dart` file.
+  /// Includes the constructor name for named constructors.
+  String get storiesFilename {
+    if (constructorName == null) return filename;
+    return '${filename}_$constructorName';
+  }
 }
 
 /// Collects [WidgetInfo] about widget classes from a Flutter project.
@@ -65,6 +77,26 @@ class WidgetInfoCollector
             .map((param) => param.type.toString())
             .toList() ??
         <String>[];
+
+    // Also collect public named constructors
+    for (final constructor in constructors) {
+      final name = constructor.name;
+      if (name == null || name.isEmpty || name == 'new') continue;
+      if (constructor.isFactory) continue;
+      if (name.startsWith('_')) continue;
+
+      data.add(
+        WidgetInfo(
+          name: node.namePart.toString(),
+          importPath: element?.library.uri.toString() ?? '',
+          parameterTypes:
+              constructor.formalParameters
+                  .map((param) => param.type.toString())
+                  .toList(),
+          constructorName: name,
+        ),
+      );
+    }
 
     return WidgetInfo(
       name: node.namePart.toString(),

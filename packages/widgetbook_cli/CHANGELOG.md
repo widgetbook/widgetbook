@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Scaffold story files for named constructors in `init` command. ([#1903](https://github.com/widgetbook/widgetbook/pull/1903))
+
 ## 4.0.0-beta.3
 
 - **FIX**: Update widgetbook version in `init` command to match metadata.

@@ -8,6 +8,8 @@
 import 'package:widgetbook/widgetbook.dart' as _widgetbook;
 import 'package:sandbox/[sam]/controls.stories.dart' as _sandbox__sam__controls_stories;
 import 'package:sandbox/[sam]/counter.stories.dart' as _sandbox__sam__counter_stories;
+import 'package:sandbox/[sam]/custom_button.stories.dart' as _sandbox__sam__custom_button_stories;
+import 'package:sandbox/[sam]/custom_button_icon.stories.dart' as _sandbox__sam__custom_button_icon_stories;
 import 'package:sandbox/[sam]/generic_num.stories.dart' as _sandbox__sam__generic_num_stories;
 import 'package:sandbox/[sam]/generic_text.stories.dart' as _sandbox__sam__generic_text_stories;
 import 'package:sandbox/[sam]/label_badge.stories.dart' as _sandbox__sam__label_badge_stories;
@@ -17,6 +19,8 @@ import 'package:sandbox/settings/nullable_setting.stories.dart' as _sandbox_sett
 final components = <_widgetbook.Component>[
   _sandbox__sam__controls_stories.ControlsComponent,
   _sandbox__sam__counter_stories.CounterComponent,
+  _sandbox__sam__custom_button_stories.CustomButtonComponent,
+  _sandbox__sam__custom_button_icon_stories.CustomButtonIconComponent,
   _sandbox__sam__generic_num_stories.GenericNumComponent,
   _sandbox__sam__generic_text_stories.GenericTextComponent,
   _sandbox__sam__label_badge_stories.LabelBadgeComponent,
