@@ -125,10 +125,23 @@ class InitCommand extends CliCommand<InitArgs> {
           final widgetInfo = widgetsInPath.first;
           return [
             ComponentTemplate(
-              widgetInfo.filename,
+              widgetInfo.storiesFilename,
               widgetInfo,
             ),
           ];
+        }
+
+        // When multiple entries share a source file (multiple widgets and/or
+        // named constructors), use storiesFilename which already includes the
+        // constructor name. Fall back to indexing only when names still collide.
+        final filenames = widgetsInPath.map((w) => w.storiesFilename).toSet();
+        if (filenames.length == widgetsInPath.length) {
+          return widgetsInPath.map((widgetInfo) {
+            return ComponentTemplate(
+              widgetInfo.storiesFilename,
+              widgetInfo,
+            );
+          }).toList();
         }
 
         return List.generate(
@@ -136,7 +149,7 @@ class InitCommand extends CliCommand<InitArgs> {
           (index) {
             final widgetInfo = widgetsInPath[index];
             return ComponentTemplate(
-              '${widgetInfo.filename}_${index + 1}',
+              '${widgetInfo.storiesFilename}_${index + 1}',
               widgetInfo,
             );
           },

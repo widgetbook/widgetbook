@@ -45,11 +45,14 @@ class StoryGenerator extends Generator {
     final defaultSetup = defaultsArgs?['setup'];
     final defaultBuilder = defaultsArgs?['builder'];
 
+    final constructorName = getConstructorName(library.element);
+
     final componentBuilder = ComponentBuilder(
       widgetType,
       argsType,
       storiesVariables,
       path,
+      constructorName,
     );
 
     final scenarioBuilder = ScenarioTypedefBuilder(
@@ -67,11 +70,13 @@ class StoryGenerator extends Generator {
       argsType,
       defaultSetup,
       defaultBuilder,
+      constructorName,
     );
 
     final argsBuilder = ArgsClassBuilder(
       widgetType,
       argsType,
+      constructorName,
     );
 
     final genLib = Library(
@@ -98,6 +103,52 @@ class StoryGenerator extends Generator {
     );
 
     return genLib.accept(emitter).toString();
+  }
+
+  /// Parses the 'constructor' argument from the `meta` variable to extract
+  /// the name of the named constructor to use for code generation.
+  ///
+  /// The constructor is specified as a constructor tear-off, e.g.:
+  /// ```dart
+  /// const meta = Meta<Button>(constructor: Button.icon);
+  /// ```
+  String? getConstructorName(LibraryElement element) {
+    final result = element.session.getParsedLibraryByElement(element);
+    if (result is! ParsedLibraryResult) return null;
+
+    final initializer = result.units
+        .expand((u) => u.unit.declarations)
+        .whereType<TopLevelVariableDeclaration>()
+        .expand((d) => d.variables.variables)
+        .firstWhereOrNull((v) => v.name.lexeme == 'meta')
+        ?.initializer;
+
+    ArgumentList? argumentList;
+    if (initializer is MethodInvocation) {
+      argumentList = initializer.argumentList;
+    } else if (initializer is InstanceCreationExpression) {
+      argumentList = initializer.argumentList;
+    }
+    if (argumentList == null) return null;
+
+    final constructorArg = argumentList.arguments
+        .whereType<NamedExpression>()
+        .firstWhereOrNull((arg) => arg.name.label.name == 'constructor');
+    if (constructorArg == null) return null;
+
+    final expression = constructorArg.expression;
+
+    // Extract the constructor name from the tear-off expression.
+    // Button.icon → PrefixedIdentifier(Button, icon)
+    // w.Button.icon → PropertyAccess(PrefixedIdentifier(w, Button), icon)
+    final name = switch (expression) {
+      PrefixedIdentifier() => expression.identifier.name,
+      PropertyAccess() => expression.propertyName.name,
+      _ => null,
+    };
+
+    // 'new' refers to the unnamed constructor
+    return name == 'new' ? null : name;
   }
 
   /// Parses the 'defaults' variable to extract the names of the arguments that

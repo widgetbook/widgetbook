@@ -24,6 +24,7 @@ All parameters are optional:
 | `name` | `String` | Override the display name shown in the Widgetbook UI. Defaults to the widget class name. |
 | `path` | `String` | Set the navigation path in the Widgetbook UI. By default, the path is derived from the file's directory structure. Wrap folder names in square brackets to create categories (e.g. `[components]/counter`). |
 | `docsBuilder` | `DocsBuilderFunction` | Customize the [documentation blocks](/docs/overview) shown for this component. |
+| `constructor` | `Function` | A constructor tear-off that specifies which constructor to use for code generation. See [Named Constructors](#named-constructors). |
 
 ```dart title="counter.stories.dart"
 const meta = Meta<Counter>(
@@ -52,6 +53,50 @@ final $StartAtTen = _Story(
   ),
 );
 ```
+
+## Named Constructors
+
+Many Flutter widgets offer named constructors for alternate creation patterns. For example, a button might have `CustomButton()` for a text-only button and `CustomButton.icon()` for a button with an icon. By default, `Meta` generates args and the builder from the widget's unnamed (default) constructor. To target a named constructor instead, pass a constructor tear-off to the `constructor` parameter:
+
+```dart title="custom_button_icon.stories.dart"
+import 'package:widgetbook/widgetbook.dart';
+import 'package:my_app/custom_button.dart';
+
+part 'custom_button_icon.stories.g.dart';
+
+const meta = Meta<CustomButton>(
+  constructor: CustomButton.icon, // [!code highlight]
+);
+
+final $Default = _Story(
+  args: _Args(
+    icon: EnumArg(Icons.add, values: Icons.values),
+    label: StringArg('Add'),
+  ),
+);
+```
+
+The generator inspects the named constructor's parameters (not the default constructor's) and produces `_Args` with fields matching that constructor. The generated builder calls `CustomButton.icon(...)` automatically.
+
+### Why constructor tear-offs?
+
+Using a constructor tear-off (`CustomButton.icon`) instead of a string (`'icon'`) gives you:
+
+- **Compile-time safety** — a typo produces a compiler error, not a build_runner failure.
+- **IDE autocompletion** — typing `CustomButton.` shows all available constructors.
+- **Refactoring support** — renaming a constructor updates all references automatically.
+
+### One file per constructor
+
+Each `.stories.dart` file targets a single constructor via its `Meta`. To catalog both the default and a named constructor, create separate story files:
+
+```
+lib/
+├── custom_button.stories.dart        # Meta<CustomButton>()
+└── custom_button_icon.stories.dart   # Meta<CustomButton>(constructor: CustomButton.icon)
+```
+
+Both appear as separate components in the navigation tree. By default, the named constructor variant is labeled `CustomButton.icon`. You can override this with the `name` parameter.
 
 ## MetaWithArgs
 

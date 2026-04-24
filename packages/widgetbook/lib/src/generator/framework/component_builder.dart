@@ -11,12 +11,14 @@ class ComponentBuilder {
     this.argsType,
     this.stories,
     this.path,
+    this.constructorName,
   );
 
   final DartType widgetType;
   final DartType argsType;
   final List<TopLevelVariableElement> stories;
   final String path;
+  final String? constructorName;
 
   TypeDef buildUnderscoreType() {
     return TypeDef(
@@ -33,8 +35,21 @@ class ComponentBuilder {
     );
   }
 
+  String get _capitalizedConstructorName {
+    if (constructorName == null) return '';
+    return constructorName![0].toUpperCase() + constructorName!.substring(1);
+  }
+
+  String get _defaultComponentName {
+    final baseName = widgetType.nonGenericName;
+    if (constructorName == null) return baseName;
+    return '$baseName.$constructorName';
+  }
+
   Code build() {
-    return declareFinal('${widgetType.nonGenericName}Component')
+    return declareFinal(
+          '${widgetType.nonGenericName}${_capitalizedConstructorName}Component',
+        )
         .assign(
           InvokeExpression.newOf(
             TypeReference(
@@ -50,7 +65,7 @@ class ComponentBuilder {
               'name': refer('meta')
                   .property('name')
                   .ifNullThen(
-                    literalString(widgetType.nonGenericName),
+                    literalString(_defaultComponentName),
                   ),
               'path': refer('meta')
                   .property('path')

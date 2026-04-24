@@ -9,6 +9,10 @@ class ComponentTemplate extends Template {
       );
 
   static String generateContent(String filename, WidgetInfo widgetInfo) {
+    final metaArgs = widgetInfo.constructorName != null
+        ? '(\n  constructor: ${widgetInfo.name}.${widgetInfo.constructorName},\n)'
+        : '()';
+
     final header =
         '''
 import 'package:flutter/widgets.dart';
@@ -17,7 +21,7 @@ import '${widgetInfo.importPath}';
 
 part '${filename}.stories.g.dart';
 
-const meta = Meta<${widgetInfo.name}>();
+const meta = Meta<${widgetInfo.name}>$metaArgs;
 ''';
 
     final regularStory = '''

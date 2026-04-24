@@ -1,15 +1,17 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:collection/collection.dart';
 
 import 'arg_builder.dart';
 import 'extensions.dart';
 
 class ArgsClassBuilder {
-  ArgsClassBuilder(this.widgetType, this.argsType);
+  ArgsClassBuilder(this.widgetType, this.argsType, this.constructorName);
 
   final DartType widgetType;
   final DartType argsType;
+  final String? constructorName;
 
   TypeReference get argsClassRef {
     return argsType.getRef(
@@ -20,6 +22,13 @@ class ArgsClassBuilder {
 
   Iterable<FormalParameterElement> get params {
     final constructors = (argsType.element as ClassElement).constructors;
+
+    if (constructorName != null) {
+      final named =
+          constructors.firstWhereOrNull((c) => c.name == constructorName);
+      if (named != null) return named.formalParameters;
+    }
+
     final constructor =
         constructors
             .where((c) => c.name == 'new' || c.name == null || c.name!.isEmpty)
