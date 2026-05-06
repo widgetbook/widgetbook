@@ -80,6 +80,60 @@ void main() {
           );
         },
       );
+
+      testWidgets(
+        'rebuilds selected story when state notifies (e.g. knobs / query groups)',
+        (tester) async {
+          final story = MockStory();
+          var buildWithConfigCount = 0;
+          when(() => story.name).thenReturn('story');
+          when(() => story.path).thenReturn('component/story');
+          when(() => story.allScenarios(any())).thenReturn([]);
+          when(
+            () => story.buildWithConfig(any(), any()),
+          ).thenAnswer((_) {
+            buildWithConfigCount++;
+            return const Text('story');
+          });
+
+          final component = Component<Widget, MockStoryArgs>(
+            name: 'component',
+            stories: [story],
+          );
+
+          final state = WidgetbookState(
+            path: 'component/story',
+            config: Config(
+              home: const Placeholder(),
+              components: [component],
+            ),
+          );
+
+          await tester.pumpWidgetWithState(
+            state: state,
+            builder: (_) => const Workbench(),
+          );
+
+          await tester.pumpAndSettle();
+
+          final countAfterSettle = buildWithConfigCount;
+          expect(countAfterSettle, greaterThan(0));
+
+          state.updateQueryField(
+            groupName: 'knob',
+            fieldName: 'value',
+            fieldValue: 'next',
+          );
+
+          await tester.pump();
+
+          expect(
+            buildWithConfigCount,
+            greaterThan(countAfterSettle),
+            reason: 'Workbench should rebuild when query groups / knobs change',
+          );
+        },
+      );
     },
   );
 }
