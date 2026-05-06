@@ -80,6 +80,80 @@ void main() {
           );
         },
       );
+
+      testWidgets(
+        'rebuilds story preview when navigating between leaves via '
+        '`WidgetbookState.updatePath`',
+        (tester) async {
+          final storyButton = MockStory();
+          final storyCounter = MockStory();
+          final buttonArgs = MockStoryArgs();
+          final counterArgs = MockStoryArgs();
+
+          var counterCalls = 0;
+
+          when(() => storyButton.args).thenReturn(buttonArgs);
+          when(() => storyCounter.args).thenReturn(counterArgs);
+          when(() => buttonArgs.safeList).thenReturn([]);
+          when(() => counterArgs.safeList).thenReturn([]);
+
+          when(() => storyButton.name).thenReturn('Default');
+          when(() => storyButton.path).thenReturn('widgets/Button/Default');
+          when(() => storyButton.allScenarios(any())).thenReturn([]);
+          when(
+            () => storyButton.buildWithConfig(any(), any()),
+          ).thenReturn(const Text('StoryButton'));
+
+          when(() => storyCounter.name).thenReturn('Default');
+          when(() => storyCounter.path).thenReturn('widgets/Counter/Default');
+          when(() => storyCounter.allScenarios(any())).thenReturn([]);
+          when(() => storyCounter.buildWithConfig(any(), any())).thenAnswer((
+            _,
+          ) {
+            counterCalls++;
+            return const Text('StoryCounter');
+          });
+
+          final componentButton = Component<Widget, MockStoryArgs>(
+            path: 'widgets',
+            name: 'Button',
+            stories: [storyButton],
+          );
+          final componentCounter = Component<Widget, MockStoryArgs>(
+            path: 'widgets',
+            name: 'Counter',
+            stories: [storyCounter],
+          );
+
+          final state = WidgetbookState(
+            path: 'widgets/Button/Default',
+            config: Config(
+              home: const Placeholder(),
+              components: [componentButton, componentCounter],
+            ),
+          );
+
+          await tester.pumpWidgetWithState(
+            state: state,
+            builder: (_) => const Workbench(),
+          );
+
+          await tester.pumpAndSettle();
+
+          expect(find.text('StoryButton'), findsOneWidget);
+          expect(find.text('StoryCounter'), findsNothing);
+          expect(counterCalls, 0);
+
+          state.updatePath('widgets/Counter/Default');
+
+          await tester.pump();
+          await tester.pumpAndSettle();
+
+          expect(find.text('StoryCounter'), findsOneWidget);
+          expect(find.text('StoryButton'), findsNothing);
+          expect(counterCalls, greaterThan(0));
+        },
+      );
     },
   );
 }
