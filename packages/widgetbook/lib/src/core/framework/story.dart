@@ -139,8 +139,6 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     final effectiveArgs = args ?? this.args;
     final effectiveAddons = mergeModesIntoAddons(modes, config.addons ?? []);
 
-    syncArgs(context);
-
     return config.appBuilder(
       context,
       NestedBuilder(
@@ -148,10 +146,13 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
         builder: (context, addon, child) => addon.build(context, child),
         child: Builder(
           builder: (context) {
+            syncArgs(context);
+
             return setup(
               context,
               Builder(
                 builder: (innerContext) {
+                  syncArgs(innerContext);
                   initBuilderArgs(innerContext, effectiveArgs);
                   return this.builder(innerContext, effectiveArgs);
                 },

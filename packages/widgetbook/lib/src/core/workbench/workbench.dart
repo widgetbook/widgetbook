@@ -17,31 +17,42 @@ class Workbench extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
 
-    if (state.docs != null) {
-      return const DocsPreview();
-    }
+    // Rebuild the preview when [WidgetbookState] notifies (knobs/query groups,
+    // path, etc.). The Args panel already uses [ListenableBuilder]; without an
+    // explicit listenable here, knob-only updates could refresh the URL and
+    // side panel without rebuilding the center workbench.
+    return ListenableBuilder(
+      listenable: state,
+      builder: (context, _) {
+        final state = WidgetbookState.of(context);
 
-    final scenario = state.scenario;
-    if (scenario != null) {
-      return _WorkbenchWrapper(
-        child: scenario.buildWithConfig(
-          context,
-          state.config,
-        ),
-      );
-    }
+        if (state.docs != null) {
+          return const DocsPreview();
+        }
 
-    final story = state.story;
-    if (story != null) {
-      return _WorkbenchWrapper(
-        child: story.buildWithConfig(
-          context,
-          state.config,
-        ),
-      );
-    }
+        final scenario = state.scenario;
+        if (scenario != null) {
+          return _WorkbenchWrapper(
+            child: scenario.buildWithConfig(
+              context,
+              state.config,
+            ),
+          );
+        }
 
-    return state.config.home;
+        final story = state.story;
+        if (story != null) {
+          return _WorkbenchWrapper(
+            child: story.buildWithConfig(
+              context,
+              state.config,
+            ),
+          );
+        }
+
+        return state.config.home;
+      },
+    );
   }
 }
 
