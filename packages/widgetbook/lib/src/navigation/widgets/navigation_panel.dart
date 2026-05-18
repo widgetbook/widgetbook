@@ -17,6 +17,7 @@ class NavigationPanel extends StatefulWidget {
     this.onNodeSelected,
     required this.root,
     this.header,
+    this.headerPadding,
   });
 
   final String? initialPath;
@@ -26,6 +27,8 @@ class NavigationPanel extends StatefulWidget {
   /// An optional widget to display at the top of the navigation panel.
   /// This can be used for branding or additional information.
   final Widget? header;
+
+  final EdgeInsetsGeometry? headerPadding;
 
   @override
   State<NavigationPanel> createState() => _NavigationPanelState();
@@ -68,7 +71,7 @@ class _NavigationPanelState extends State<NavigationPanel> {
       children: [
         if (widget.header != null)
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: widget.headerPadding ?? const EdgeInsets.all(16),
             child: widget.header!,
           ),
         Padding(

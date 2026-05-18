@@ -25,6 +25,7 @@ class ResponsiveLayout extends StatelessWidget {
       initialPath: state.path,
       root: state.root,
       header: state.header,
+      headerPadding: state.headerPadding,
       onNodeSelected: (node) {
         WidgetbookState.of(context).updatePath(node.path); // Fresh context
 

@@ -33,6 +33,7 @@ class Widgetbook extends StatefulWidget {
     this.themeMode,
     this.home = const DefaultHomePage(),
     this.header,
+    this.headerPadding,
     this.scrollBehavior,
     this.enableLeafComponents = true,
     this.preserveUseCaseState = false,
@@ -51,6 +52,7 @@ class Widgetbook extends StatefulWidget {
     this.themeMode,
     this.home = const DefaultHomePage(),
     this.header,
+    this.headerPadding,
     this.scrollBehavior,
     this.enableLeafComponents = true,
     this.preserveUseCaseState = false,
@@ -69,6 +71,7 @@ class Widgetbook extends StatefulWidget {
     this.themeMode,
     this.home = const DefaultHomePage(),
     this.header,
+    this.headerPadding,
     this.scrollBehavior,
     this.enableLeafComponents = true,
     this.preserveUseCaseState = false,
@@ -123,6 +126,9 @@ class Widgetbook extends StatefulWidget {
   /// This can be used for branding or additional information.
   final Widget? header;
 
+  /// An optional padding for the header widget in the navigation panel.
+  final EdgeInsetsGeometry? headerPadding;
+
   /// The [ScrollBehavior] to be applied to the Widgetbook application itself.
   ///
   /// This allows users to override the behavior of scrolling on both desktop
@@ -157,6 +163,7 @@ class _WidgetbookState extends State<Widgetbook> {
       appBuilder: widget.appBuilder,
       home: widget.home,
       header: widget.header,
+      headerPadding: widget.headerPadding,
       addons: widget.addons,
       integrations: widget.integrations,
       enableLeafComponents: widget.enableLeafComponents,
