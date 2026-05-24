@@ -6,6 +6,7 @@ export 'src/addons/addons.dart'
     hide
         AddonBuilder,
         DeviceFrameSetting,
+        InteractiveViewerSetting,
         MultiAddonBuilder,
         NoneDevice,
         NoneViewport;
