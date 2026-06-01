@@ -6,16 +6,26 @@ At Widgetbook, security and privacy are at the core of our platform. We are comm
 
 ### Mocked Data Usage
 
-We strongly encourage developers to use [mocked data](/stories/mocking) instead of real user data when using Widgetbook. This ensures that **no sensitive or personal information is stored or displayed** in Widgetbook or Widgetbook Cloud, including builds, reviews, and snapshots.
+We strongly encourage developers to use [mocked data](/stories/mocking) instead of real user data when using Widgetbook. This ensures that **no sensitive or personal information is stored or displayed** in Widgetbook or Widgetbook Cloud — neither in the rendered snapshots nor in the accessibility semantics (labels, hints, tooltips) captured alongside them.
 
-### Source Code Protection
+### Data Shared with Widgetbook Cloud
 
-Widgetbook Cloud **does not store source code**. Builds are compiled on your local machine or CI/CD and uploaded as a **binary artifact** to our servers, ensuring that the original source code remains under your full control. 
+Widgetbook Cloud **does not store source code**. Builds are compiled on your local machine or CI/CD and uploaded as a **binary artifact** to our servers, ensuring that the original source code remains under your full control.
 
-We store only minimal Git metadata necessary for collaboration and traceability:
-- Git commit hash and message
-- Git branch name
-- Git pull request title and number
+The following is the complete set of data that leaves your machine when you push a build:
+
+- The compiled web build (no source code).
+- Minimal Git metadata for collaboration and traceability:
+  - Git commit hash and message
+  - Git branch name
+  - Git pull request title and number
+- Per-scenario snapshot PNGs.
+- Per-scenario metadata JSON (scenario name, image dimensions, pixel ratio).
+- A serialized Flutter **semantics tree** per scenario, used to power accessibility comparisons in Cloud Reviews. The exact set of serialized fields is defined in the OSS package (see [`semantics_data_extension.dart`](https://github.com/widgetbook/widgetbook/blob/v4/packages/widgetbook/lib/src/test/semantics/semantics_data_extension.dart)).
+
+### Telemetry
+
+The Widgetbook OSS package reports anonymous usage information to help us improve the product. Telemetry is **separate from Cloud uploads**, contains no personal data, and can be disabled. See [Telemetry](/telemetry) for the collected fields and opt-out instructions.
 
 ### Data Retention Policies
 
