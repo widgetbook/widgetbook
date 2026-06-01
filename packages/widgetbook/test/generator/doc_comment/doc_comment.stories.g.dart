@@ -6,13 +6,13 @@ part of 'doc_comment.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<DocCommentWidget, DocCommentWidgetArgs>;
+typedef _Component = Component<DocCommentWidget, StoryArgs<DocCommentWidget>>;
 typedef _Scenario = DocCommentWidgetScenario;
 typedef _Defaults = DocCommentWidgetDefaults;
 typedef _Story = DocCommentWidgetStory;
 typedef _Args = DocCommentWidgetArgs;
 final DocCommentWidgetComponent =
-    Component<DocCommentWidget, DocCommentWidgetArgs>(
+    Component<DocCommentWidget, StoryArgs<DocCommentWidget>>(
       name: meta.name ?? 'DocCommentWidget',
       path: meta.path ?? '',
       docsBuilder: meta.docsBuilder,

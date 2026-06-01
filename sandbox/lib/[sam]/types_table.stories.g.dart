@@ -11,12 +11,12 @@ part of 'types_table.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<TypesTable, TypesTableArgs>;
+typedef _Component = Component<TypesTable, StoryArgs<TypesTable>>;
 typedef _Scenario = TypesTableScenario;
 typedef _Defaults = TypesTableDefaults;
 typedef _Story = TypesTableStory;
 typedef _Args = TypesTableArgs;
-final TypesTableComponent = Component<TypesTable, TypesTableArgs>(
+final TypesTableComponent = Component<TypesTable, StoryArgs<TypesTable>>(
   name: meta.name ?? 'TypesTable',
   path: meta.path ?? '[sam]',
   docsBuilder: meta.docsBuilder,

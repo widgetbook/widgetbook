@@ -11,12 +11,12 @@ part of 'generic_num.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<GenericNum, GenericNumInputArgs>;
+typedef _Component = Component<GenericNum, StoryArgs<GenericNum>>;
 typedef _Scenario<T extends num, R> = GenericNumScenario<T, R>;
 typedef _Defaults = GenericNumDefaults;
 typedef _Story<T extends num, R> = GenericNumStory<T, R>;
 typedef _Args<T extends num, R> = GenericNumInputArgs<T, R>;
-final GenericNumComponent = Component<GenericNum, GenericNumInputArgs>(
+final GenericNumComponent = Component<GenericNum, StoryArgs<GenericNum>>(
   name: meta.name ?? 'GenericNum',
   path: meta.path ?? '[sam]',
   docsBuilder: meta.docsBuilder,

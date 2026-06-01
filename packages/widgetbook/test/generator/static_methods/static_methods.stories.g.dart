@@ -6,13 +6,14 @@ part of 'static_methods.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<StaticMethodWidget, StaticMethodWidgetArgs>;
+typedef _Component =
+    Component<StaticMethodWidget, StoryArgs<StaticMethodWidget>>;
 typedef _Scenario = StaticMethodWidgetScenario;
 typedef _Defaults = StaticMethodWidgetDefaults;
 typedef _Story = StaticMethodWidgetStory;
 typedef _Args = StaticMethodWidgetArgs;
 final StaticMethodWidgetComponent =
-    Component<StaticMethodWidget, StaticMethodWidgetArgs>(
+    Component<StaticMethodWidget, StoryArgs<StaticMethodWidget>>(
       name: meta.name ?? 'StaticMethodWidget',
       path: meta.path ?? '',
       docsBuilder: meta.docsBuilder,

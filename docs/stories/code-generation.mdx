@@ -226,9 +226,9 @@ For each `.stories.dart` file, a `.stories.g.dart` part file is generated contai
 | `_Story` | `{Widget}Story` | Extends `Story<TWidget, Args>`. When using `Meta`, includes a default `builder` that constructs the widget from args. Accepts `args`, `setup`, `modes`, `scenarios`, and `builder`. See [Stories](/stories/overview). |
 | `_Scenario` | `{Widget}Scenario` | Typedef for `Scenario<TWidget, Args>`. Used to define fixed, testable states. See [Scenarios](/testing/overview). |
 | `_Defaults` | `{Widget}Defaults` | Typedef for `Defaults<TWidget, Args>`. Used to share a `setup` and `builder` across all stories in the file. |
-| `_Component` | `Component<TWidget, Args>` | Typedef for the component registration type. |
+| `_Component` | `Component<TWidget, StoryArgs<TWidget>>` | Typedef for the component registration type. The args parameter is widened to `StoryArgs<TWidget>` so the component can hold stories whose args classes differ per constructor. |
 
-For a meta targeting a [named constructor](#named-constructors), every declaration above is prefixed with the constructor name in PascalCase: a `Meta<Widget>(constructor: Widget.icon)` produces `_IconArgs`, `_IconStory`, `_IconScenario`, `_IconDefaults`, and a `WidgetIconComponent`. When a file [groups multiple metas](#grouping-multiple-constructors), each non-default meta contributes its own prefixed `_{Constructor}Args` and `_{Constructor}Story` typedefs alongside the default `_Args` / `_Story`, and the shared `_Component` widens to `Component<TWidget, StoryArgs<TWidget>>` so a single component can hold stories with heterogeneous args.
+For a meta targeting a [named constructor](#named-constructors), the per-constructor declarations (`_Args`, `_Story`, `_Scenario`, `_Defaults`) are prefixed with the constructor name in PascalCase: a `Meta<Widget>(constructor: Widget.icon)` produces `_IconArgs`, `_IconStory`, `_IconScenario`, `_IconDefaults`. The component itself is always `{Widget}Component` regardless of which constructors are in the file; when a file [groups multiple metas](#grouping-multiple-constructors), every meta's stories land in that single component.
 
 #### Syntactic Sugar
 

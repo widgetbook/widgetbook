@@ -54,7 +54,6 @@ class StoryGenerator extends Generator {
     }
     final defaultMeta = _selectCanonical(metas);
 
-    final isMultiMeta = metas.length > 1;
     final path = buildStep.inputId.path;
 
     final defaultsVariable = library.allElements
@@ -71,11 +70,8 @@ class StoryGenerator extends Generator {
 
     final componentBuilder = ComponentBuilder(
       defaultMeta.widgetType,
-      defaultMeta.argsType,
       storiesVariables,
       path,
-      defaultMeta.constructorName,
-      isMultiMeta: isMultiMeta,
     );
 
     // Scenario and Defaults typedefs are file-scoped; they reference the

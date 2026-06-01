@@ -6,14 +6,15 @@ part of 'generic_bound_dynamic.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<DynamicBoundWidget, DynamicBoundWidgetArgs>;
+typedef _Component =
+    Component<DynamicBoundWidget, StoryArgs<DynamicBoundWidget>>;
 typedef _Scenario<D, T extends Map<dynamic, D>> =
     DynamicBoundWidgetScenario<D, T>;
 typedef _Defaults = DynamicBoundWidgetDefaults;
 typedef _Story<D, T extends Map<dynamic, D>> = DynamicBoundWidgetStory<D, T>;
 typedef _Args<D, T extends Map<dynamic, D>> = DynamicBoundWidgetArgs<D, T>;
 final DynamicBoundWidgetComponent =
-    Component<DynamicBoundWidget, DynamicBoundWidgetArgs>(
+    Component<DynamicBoundWidget, StoryArgs<DynamicBoundWidget>>(
       name: meta.name ?? 'DynamicBoundWidget',
       path: meta.path ?? '',
       docsBuilder: meta.docsBuilder,

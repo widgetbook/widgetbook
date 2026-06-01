@@ -7,13 +7,13 @@ part of 'multi_constructor.stories.dart';
 // **************************************************************************
 
 typedef _Component =
-    Component<MultiConstructorWidget, MultiConstructorWidgetArgs>;
+    Component<MultiConstructorWidget, StoryArgs<MultiConstructorWidget>>;
 typedef _Scenario = MultiConstructorWidgetScenario;
 typedef _Defaults = MultiConstructorWidgetDefaults;
 typedef _Story = MultiConstructorWidgetStory;
 typedef _Args = MultiConstructorWidgetArgs;
 final MultiConstructorWidgetComponent =
-    Component<MultiConstructorWidget, MultiConstructorWidgetArgs>(
+    Component<MultiConstructorWidget, StoryArgs<MultiConstructorWidget>>(
       name: meta.name ?? 'MultiConstructorWidget',
       path: meta.path ?? '',
       docsBuilder: meta.docsBuilder,

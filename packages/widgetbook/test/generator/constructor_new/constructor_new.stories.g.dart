@@ -6,13 +6,14 @@ part of 'constructor_new.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<ConstructorNewWidget, ConstructorNewWidgetArgs>;
+typedef _Component =
+    Component<ConstructorNewWidget, StoryArgs<ConstructorNewWidget>>;
 typedef _Scenario = ConstructorNewWidgetScenario;
 typedef _Defaults = ConstructorNewWidgetDefaults;
 typedef _Story = ConstructorNewWidgetStory;
 typedef _Args = ConstructorNewWidgetArgs;
 final ConstructorNewWidgetComponent =
-    Component<ConstructorNewWidget, ConstructorNewWidgetArgs>(
+    Component<ConstructorNewWidget, StoryArgs<ConstructorNewWidget>>(
       name: meta.name ?? 'ConstructorNewWidget',
       path: meta.path ?? '',
       docsBuilder: meta.docsBuilder,

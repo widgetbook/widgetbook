@@ -7,14 +7,14 @@ part of 'named_constructor.stories.dart';
 // **************************************************************************
 
 typedef _Component =
-    Component<NamedConstructorWidget, NamedConstructorWidgetOtherArgs>;
+    Component<NamedConstructorWidget, StoryArgs<NamedConstructorWidget>>;
 typedef _OtherScenario = NamedConstructorWidgetOtherScenario;
 typedef _OtherDefaults = NamedConstructorWidgetOtherDefaults;
 typedef _OtherStory = NamedConstructorWidgetOtherStory;
 typedef _OtherArgs = NamedConstructorWidgetOtherArgs;
-final NamedConstructorWidgetOtherComponent =
-    Component<NamedConstructorWidget, NamedConstructorWidgetOtherArgs>(
-      name: meta.name ?? 'NamedConstructorWidget.other',
+final NamedConstructorWidgetComponent =
+    Component<NamedConstructorWidget, StoryArgs<NamedConstructorWidget>>(
+      name: meta.name ?? 'NamedConstructorWidget',
       path: meta.path ?? '',
       docsBuilder: meta.docsBuilder,
       docComment: null,

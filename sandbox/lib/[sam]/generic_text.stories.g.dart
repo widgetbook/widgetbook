@@ -11,12 +11,12 @@ part of 'generic_text.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<GenericText, GenericTextArgs>;
+typedef _Component = Component<GenericText, StoryArgs<GenericText>>;
 typedef _Scenario<T> = GenericTextScenario<T>;
 typedef _Defaults = GenericTextDefaults;
 typedef _Story<T> = GenericTextStory<T>;
 typedef _Args<T> = GenericTextArgs<T>;
-final GenericTextComponent = Component<GenericText, GenericTextArgs>(
+final GenericTextComponent = Component<GenericText, StoryArgs<GenericText>>(
   name: meta.name ?? 'GenericText',
   path: meta.path ?? '[sam]',
   docsBuilder: meta.docsBuilder,

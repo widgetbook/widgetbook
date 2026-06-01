@@ -11,12 +11,12 @@ part of 'controls.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<Controls, ControlsArgs>;
+typedef _Component = Component<Controls, StoryArgs<Controls>>;
 typedef _Scenario = ControlsScenario;
 typedef _Defaults = ControlsDefaults;
 typedef _Story = ControlsStory;
 typedef _Args = ControlsArgs;
-final ControlsComponent = Component<Controls, ControlsArgs>(
+final ControlsComponent = Component<Controls, StoryArgs<Controls>>(
   name: meta.name ?? 'Controls',
   path: meta.path ?? '[sam]',
   docsBuilder: meta.docsBuilder,
