@@ -11,6 +11,12 @@ class DurationField extends Field<Duration> {
   DurationField({
     required super.name,
     super.initialValue = defaultDuration,
+    this.enableDays = false,
+    this.enableHours = true,
+    this.enableMinutes = true,
+    this.enableSeconds = true,
+    this.enableMilliseconds = false,
+    this.enableMicroseconds = false,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          defaultValue: defaultDuration,
@@ -27,6 +33,24 @@ class DurationField extends Field<Duration> {
          ),
        );
 
+  /// Whether to enable input for days in the duration.
+  final bool enableDays;
+
+  /// Whether to enable input for hours in the duration.
+  final bool enableHours;
+
+  /// Whether to enable input for minutes in the duration.
+  final bool enableMinutes;
+
+  /// Whether to enable input for seconds in the duration.
+  final bool enableSeconds;
+
+  /// Whether to enable input for milliseconds in the duration.
+  final bool enableMilliseconds;
+
+  /// Whether to enable input for microseconds in the duration.
+  final bool enableMicroseconds;
+
   /// The default duration value used when no initial value is provided.
   static const defaultDuration = Duration.zero;
 
@@ -38,6 +62,12 @@ class DurationField extends Field<Duration> {
   ) {
     return DurationInput(
       value: value ?? initialValue ?? defaultDuration,
+      enableDays: enableDays,
+      enableHours: enableHours,
+      enableMinutes: enableMinutes,
+      enableSeconds: enableSeconds,
+      enableMilliseconds: enableMilliseconds,
+      enableMicroseconds: enableMicroseconds,
       onChanged: (duration) => updateField(context, group, duration),
     );
   }

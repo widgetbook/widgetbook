@@ -1,16 +1,25 @@
 # Duration Knob
 
-The Duration knob renders a text field in the Widgetbook UI where you can dynamically enter a string value to specify a Duration is milliseconds for a widget property. 
+The Duration knob renders a set of text fields in the Widgetbook UI where you can dynamically enter a Duration value for a widget property. By default, it shows hours, minutes, and seconds inputs.
 
 ## Variants
 
-The String knob has two variants:
+The Duration knob has two variants:
 - `context.knobs.duration()`: This variant allows you to enter a Duration value. It does not accept `null` values.
 - `context.knobs.durationOrNull()`: This variant allows you to enter a Duration value or `null`. It is useful when the property can be optional.
 
 ## Properties
 
-Besides the knob's [base properties](/knobs/overview#properties), the Duration knob does not feature any additional properties.
+Besides the knob's [base properties](/knobs/overview#properties), the Duration knob supports the following additional properties to control which time units are displayed:
+
+| Property | Type | Default | Description |
+|---|---|---|---|
+| `enableDays` | `bool` | `false` | Show the days input field. |
+| `enableHours` | `bool` | `true` | Show the hours input field. |
+| `enableMinutes` | `bool` | `true` | Show the minutes input field. |
+| `enableSeconds` | `bool` | `true` | Show the seconds input field. |
+| `enableMilliseconds` | `bool` | `false` | Show the milliseconds input field. |
+| `enableMicroseconds` | `bool` | `false` | Show the microseconds input field. |
 
 ## `context.knobs.duration()`
 
@@ -35,7 +44,23 @@ Widget buildUseCase(BuildContext context) {
 }
 ```
 
-## `context.knobs.durationOrNull()` 
+To enable more granular time units:
+
+```dart title="Example: Duration Knob with all units"
+@UseCase(type: MyWidget, name: 'Default')
+Widget buildUseCase(BuildContext context) {
+  return MyWidget(
+    duration: context.knobs.duration( // [!code highlight]
+      label: 'duration', // [!code highlight]
+      enableDays: true, // [!code highlight]
+      enableMilliseconds: true, // [!code highlight]
+      enableMicroseconds: true, // [!code highlight]
+    ), // [!code highlight]
+  );
+}
+```
+
+## `context.knobs.durationOrNull()`
 
 ### Example
 
@@ -62,7 +87,7 @@ Widget buildUseCase(BuildContext context) {
 
 Multi-snapshot support allows you to generate multiple screenshots of a single use case with varying values using [KnobsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-knobs) and [AddonsConfigs](/cloud/snapshots/multi-snapshot#multi-snapshot-for-addons).
 
-### Regular String Knob
+### Regular Duration Knob
 
 ```dart title="Example: DurationKnobConfig"
 @UseCase(
