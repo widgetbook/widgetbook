@@ -88,7 +88,7 @@ Using a constructor tear-off (`CustomButton.icon`) instead of a string (`'icon'`
 
 ### Grouping Multiple Constructors
 
-To catalog several constructors of the same widget under a single component, declare more than one `Meta<TWidget>` in the same `.stories.dart` file. The variable named `meta` is the canonical one; it provides the component's `name`, `path`, and `docsBuilder`. Additional metas target other constructors:
+To catalog several constructors of the same widget under a single component, declare more than one `Meta<TWidget>` in the same `.stories.dart` file. One of the metas is selected as canonical and provides the component's `name`, `path`, and `docsBuilder` — by convention this is the variable named `meta`, but the generator falls back to whichever meta targets the default constructor, or the first meta declared, if no `meta` variable exists. Additional metas target other constructors:
 
 ```dart title="custom_button.stories.dart"
 import 'package:flutter/material.dart';

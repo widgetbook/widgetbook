@@ -17,8 +17,9 @@ import 'story_class_builder.dart';
 ///
 /// A file may declare more than one meta (one per constructor variant)
 /// to group multiple constructors of the same widget under a single
-/// generated `${Widget}Component`. The variable named `meta` is treated
-/// as canonical (provides `name`, `path`, `docsBuilder` for the component).
+/// generated `${Widget}Component`. One of the metas is selected as
+/// canonical and provides the component's `name`, `path`, and `docsBuilder`;
+/// see `_selectCanonical` for the resolution rules.
 class _MetaInfo {
   _MetaInfo({
     required this.variableName,
@@ -45,12 +46,13 @@ class StoryGenerator extends Generator {
         .toList();
 
     final metas = _collectMetas(library);
-    final defaultMeta = metas.firstWhere(
-      (m) => m.variableName == 'meta',
-      orElse: () => throw StateError(
-        'A .stories.dart file must declare a top-level `meta` variable.',
-      ),
-    );
+    if (metas.isEmpty) {
+      throw StateError(
+        'A .stories.dart file must declare at least one top-level '
+        '`Meta<TWidget>` variable.',
+      );
+    }
+    final defaultMeta = _selectCanonical(metas);
 
     final isMultiMeta = metas.length > 1;
     final path = buildStep.inputId.path;
@@ -142,6 +144,23 @@ class StoryGenerator extends Generator {
     );
 
     return genLib.accept(emitter).toString();
+  }
+
+  /// Picks the canonical meta whose `name`, `path`, `docsBuilder`, and args
+  /// type the file-level Component / Scenario / Defaults reference.
+  ///
+  /// Resolution order:
+  /// 1. A variable explicitly named `meta` (the documented convention).
+  /// 2. A meta targeting the default (unnamed) constructor.
+  /// 3. The first meta declared.
+  _MetaInfo _selectCanonical(List<_MetaInfo> metas) {
+    for (final m in metas) {
+      if (m.variableName == 'meta') return m;
+    }
+    for (final m in metas) {
+      if (m.constructorName == null) return m;
+    }
+    return metas.first;
   }
 
   /// Collects every top-level `Meta<TWidget>` (or `MetaWithArgs<...>`)
