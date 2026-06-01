@@ -11,8 +11,9 @@ class StoryClassBuilder {
     this.argsType,
     this.defaultSetup,
     this.defaultBuilder,
-    this.constructorName,
-  );
+    this.constructorName, {
+    this.classPrefix = '',
+  });
 
   final DartType widgetType;
   final DartType argsType;
@@ -20,9 +21,14 @@ class StoryClassBuilder {
   final Code? defaultBuilder;
   final String? constructorName;
 
+  /// A PascalCase prefix inserted between the widget name and the `Story`
+  /// suffix. Used when multiple constructor variants are generated in the
+  /// same library. Empty for the default constructor.
+  final String classPrefix;
+
   TypeReference get storyClassRef {
     return widgetType.getRef(
-      suffix: 'Story',
+      suffix: '${classPrefix}Story',
       types: getTypeParams(withBounds: false),
     );
   }
@@ -55,7 +61,7 @@ class StoryClassBuilder {
     final classRef = storyClassRef;
     return TypeDef(
       (b) => b
-        ..name = '_Story'
+        ..name = '_${classPrefix}Story'
         ..types.addAll(getTypeParams())
         ..definition = TypeReference(
           (b) => b
@@ -76,12 +82,12 @@ class StoryClassBuilder {
 
     final widgetClassRef = widgetType.getRef();
     final argsClassRef = argsType.getRef(
-      suffix: 'Args',
+      suffix: '${classPrefix}Args',
       types: unboundedTypeParams,
     );
 
     final nullableArgsClassRef = argsType.getRef(
-      suffix: 'Args',
+      suffix: '${classPrefix}Args',
       types: unboundedTypeParams,
       isNullable: true,
     );

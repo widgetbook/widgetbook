@@ -86,17 +86,39 @@ Using a constructor tear-off (`CustomButton.icon`) instead of a string (`'icon'`
 - **IDE autocompletion** — typing `CustomButton.` shows all available constructors.
 - **Refactoring support** — renaming a constructor updates all references automatically.
 
-### One file per constructor
+### Grouping Multiple Constructors
 
-Each `.stories.dart` file targets a single constructor via its `Meta`. To catalog both the default and a named constructor, create separate story files:
+To catalog several constructors of the same widget under a single component, declare more than one `Meta<TWidget>` in the same `.stories.dart` file. The variable named `meta` is the canonical one; it provides the component's `name`, `path`, and `docsBuilder`. Additional metas target other constructors:
 
+```dart title="custom_button.stories.dart"
+import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:my_app/custom_button.dart';
+
+part 'custom_button.stories.g.dart';
+
+const meta = Meta<CustomButton>();                                       // [!code highlight]
+const iconMeta = Meta<CustomButton>(constructor: CustomButton.icon);     // [!code highlight]
+
+final $Default = _Story(
+  args: _Args(
+    label: StringArg('Click me'),
+  ),
+);
+
+final $Add = _IconStory(                                                 // [!code highlight]
+  args: _IconArgs(                                                       // [!code highlight]
+    icon: Arg.fixed(Icons.add),
+    label: StringArg('Add'),
+  ),
+);
 ```
-lib/
-├── custom_button.stories.dart        # Meta<CustomButton>()
-└── custom_button_icon.stories.dart   # Meta<CustomButton>(constructor: CustomButton.icon)
-```
 
-Both appear as separate components in the navigation tree. By default, the named constructor variant is labeled `CustomButton.icon`. You can override this with the `name` parameter.
+A single `CustomButtonComponent` is generated. The navigation tree shows one `CustomButton` entry with `Default` and `Add` nested under it. Each story carries its own constructor-specific args, so the controls panel renders only the inputs relevant to whichever story is selected.
+
+The default constructor's args and story typedefs remain `_Args` and `_Story`. Each additional meta gets typedefs prefixed by its constructor name in PascalCase: `iconMeta` (constructor `icon`) → `_IconArgs` / `_IconStory`. The generator inspects each meta's `constructor:` tear-off to derive the prefix, so the variable name itself (`iconMeta` vs anything else) is convention rather than requirement.
+
+A file that declares only a single `Meta`, whether targeting the default constructor or a named one, keeps the original output shape: a single `_Args` / `_Story` pair and a component labeled `CustomButton.icon` by default (overridable via the `name` parameter).
 
 ## MetaWithArgs
 
@@ -199,6 +221,8 @@ For each `.stories.dart` file, a `.stories.g.dart` part file is generated contai
 | `_Scenario` | `{Widget}Scenario` | Typedef for `Scenario<TWidget, Args>`. Used to define fixed, testable states. See [Scenarios](/testing/overview). |
 | `_Defaults` | `{Widget}Defaults` | Typedef for `Defaults<TWidget, Args>`. Used to share a `setup` and `builder` across all stories in the file. |
 | `_Component` | `Component<TWidget, Args>` | Typedef for the component registration type. |
+
+When a file declares additional metas to [group multiple constructors](#grouping-multiple-constructors), each non-default meta generates its own `_{Constructor}Args` and `_{Constructor}Story` typedefs (and corresponding `{Widget}{Constructor}Args` / `{Widget}{Constructor}Story` classes) alongside the ones above. The `_Component` typedef widens to `Component<TWidget, StoryArgs<TWidget>>` so a single component can hold stories with heterogeneous args.
 
 #### Syntactic Sugar
 

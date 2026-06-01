@@ -7,15 +7,25 @@ import 'arg_builder.dart';
 import 'extensions.dart';
 
 class ArgsClassBuilder {
-  ArgsClassBuilder(this.widgetType, this.argsType, this.constructorName);
+  ArgsClassBuilder(
+    this.widgetType,
+    this.argsType,
+    this.constructorName, {
+    this.classPrefix = '',
+  });
 
   final DartType widgetType;
   final DartType argsType;
   final String? constructorName;
 
+  /// A PascalCase prefix inserted between the widget name and the `Args`
+  /// suffix when multiple constructor variants are generated in the same
+  /// library. Empty for the default constructor (preserves existing names).
+  final String classPrefix;
+
   TypeReference get argsClassRef {
     return argsType.getRef(
-      suffix: 'Args',
+      suffix: '${classPrefix}Args',
       types: getTypeParams(withBounds: false),
     );
   }
@@ -48,7 +58,7 @@ class ArgsClassBuilder {
     final classRef = argsClassRef;
     return TypeDef(
       (b) => b
-        ..name = '_Args'
+        ..name = '_${classPrefix}Args'
         ..types.addAll(getTypeParams())
         ..definition = TypeReference(
           (b) => b

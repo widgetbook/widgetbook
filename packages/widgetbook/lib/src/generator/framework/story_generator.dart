@@ -13,6 +13,33 @@ import 'defaults_typedef_builder.dart';
 import 'scenario_typedef_builder.dart';
 import 'story_class_builder.dart';
 
+/// A discovered `Meta<TWidget>` variable in a `.stories.dart` file.
+///
+/// A file may declare more than one meta (one per constructor variant)
+/// to group multiple constructors of the same widget under a single
+/// generated `${Widget}Component`. The variable named `meta` is treated
+/// as canonical (provides `name`, `path`, `docsBuilder` for the component).
+class _MetaInfo {
+  _MetaInfo({
+    required this.variableName,
+    required this.widgetType,
+    required this.argsType,
+    required this.constructorName,
+  });
+
+  final String variableName;
+  final DartType widgetType;
+  final DartType argsType;
+  final String? constructorName;
+
+  /// PascalCase form of [constructorName] used as a prefix on generated
+  /// class names. Empty for the default constructor.
+  String get classPrefix {
+    if (constructorName == null) return '';
+    return constructorName![0].toUpperCase() + constructorName!.substring(1);
+  }
+}
+
 class StoryGenerator extends Generator {
   @override
   Future<String> generate(
@@ -24,13 +51,15 @@ class StoryGenerator extends Generator {
         .where((element) => element.displayName.startsWith('\$'))
         .toList();
 
-    final metaVariable = library.allElements
-        .whereType<TopLevelVariableElement>()
-        .firstWhere((element) => element.displayName == 'meta');
+    final metas = _collectMetas(library);
+    final defaultMeta = metas.firstWhere(
+      (m) => m.variableName == 'meta',
+      orElse: () => throw StateError(
+        'A .stories.dart file must declare a top-level `meta` variable.',
+      ),
+    );
 
-    final metaType = metaVariable.type as InterfaceType;
-    final widgetType = metaType.typeArguments.first;
-    final argsType = metaType.typeArguments.last;
+    final isMultiMeta = metas.length > 1;
     final path = buildStep.inputId.path;
 
     final defaultsVariable = library.allElements
@@ -45,39 +74,55 @@ class StoryGenerator extends Generator {
     final defaultSetup = defaultsArgs?['setup'];
     final defaultBuilder = defaultsArgs?['builder'];
 
-    final constructorName = getConstructorName(library.element);
-
     final componentBuilder = ComponentBuilder(
-      widgetType,
-      argsType,
+      defaultMeta.widgetType,
+      defaultMeta.argsType,
       storiesVariables,
       path,
-      constructorName,
+      defaultMeta.constructorName,
+      isMultiMeta: isMultiMeta,
     );
 
     final scenarioBuilder = ScenarioTypedefBuilder(
-      widgetType,
-      argsType,
+      defaultMeta.widgetType,
+      defaultMeta.argsType,
     );
 
     final defaultsBuilder = DefaultsTypedefBuilder(
-      widgetType,
-      argsType,
+      defaultMeta.widgetType,
+      defaultMeta.argsType,
     );
 
-    final storyBuilder = StoryClassBuilder(
-      widgetType,
-      argsType,
-      defaultSetup,
-      defaultBuilder,
-      constructorName,
-    );
+    // One Args + Story class pair per meta. Only the default meta receives
+    // user-provided `defaults` (setup/builder); they don't apply to other
+    // constructor variants.
+    //
+    // The class-name prefix is only used when 2+ metas coexist in one file.
+    // Single-meta files (including ones targeting a single named constructor)
+    // keep the unprefixed class names for backward compatibility.
+    final argsBuilders = metas
+        .map(
+          (m) => ArgsClassBuilder(
+            m.widgetType,
+            m.argsType,
+            m.constructorName,
+            classPrefix: isMultiMeta ? m.classPrefix : '',
+          ),
+        )
+        .toList();
 
-    final argsBuilder = ArgsClassBuilder(
-      widgetType,
-      argsType,
-      constructorName,
-    );
+    final storyBuilders = metas
+        .map(
+          (m) => StoryClassBuilder(
+            m.widgetType,
+            m.argsType,
+            m.variableName == 'meta' ? defaultSetup : null,
+            m.variableName == 'meta' ? defaultBuilder : null,
+            m.constructorName,
+            classPrefix: isMultiMeta ? m.classPrefix : '',
+          ),
+        )
+        .toList();
 
     final genLib = Library(
       (b) => b
@@ -86,14 +131,14 @@ class StoryGenerator extends Generator {
             componentBuilder.buildUnderscoreType(),
             scenarioBuilder.buildUnderscoreType(),
             defaultsBuilder.buildUnderscoreType(),
-            storyBuilder.buildUnderscoreType(),
-            argsBuilder.buildUnderscoreType(),
+            for (final sb in storyBuilders) sb.buildUnderscoreType(),
+            for (final ab in argsBuilders) ab.buildUnderscoreType(),
 
             componentBuilder.build(),
             scenarioBuilder.build(),
             defaultsBuilder.build(),
-            storyBuilder.build(),
-            argsBuilder.build(),
+            for (final sb in storyBuilders) sb.build(),
+            for (final ab in argsBuilders) ab.build(),
           ],
         ),
     );
@@ -105,14 +150,41 @@ class StoryGenerator extends Generator {
     return genLib.accept(emitter).toString();
   }
 
-  /// Parses the 'constructor' argument from the `meta` variable to extract
-  /// the name of the named constructor to use for code generation.
+  /// Collects every top-level `Meta<TWidget>` (or `MetaWithArgs<...>`)
+  /// variable declared in [library].
+  List<_MetaInfo> _collectMetas(LibraryReader library) {
+    final metaVariables = library.allElements
+        .whereType<TopLevelVariableElement>()
+        .where((element) {
+          final type = element.type;
+          if (type is! InterfaceType) return false;
+          final name = type.element.name;
+          return name == 'Meta' || name == 'MetaWithArgs';
+        })
+        .toList();
+
+    return metaVariables.map((v) {
+      final metaType = v.type as InterfaceType;
+      return _MetaInfo(
+        variableName: v.displayName,
+        widgetType: metaType.typeArguments.first,
+        argsType: metaType.typeArguments.last,
+        constructorName: getConstructorName(
+          library.element,
+          variableName: v.displayName,
+        ),
+      );
+    }).toList();
+  }
+
+  /// Parses the `constructor:` argument from a [Meta] variable initializer
+  /// to extract the named constructor (e.g., `'icon'` from `Button.icon`).
   ///
-  /// The constructor is specified as a constructor tear-off, e.g.:
-  /// ```dart
-  /// const meta = Meta<Button>(constructor: Button.icon);
-  /// ```
-  String? getConstructorName(LibraryElement element) {
+  /// Returns `null` for the default (unnamed) constructor.
+  String? getConstructorName(
+    LibraryElement element, {
+    String variableName = 'meta',
+  }) {
     final result = element.session.getParsedLibraryByElement(element);
     if (result is! ParsedLibraryResult) return null;
 
@@ -120,7 +192,7 @@ class StoryGenerator extends Generator {
         .expand((u) => u.unit.declarations)
         .whereType<TopLevelVariableDeclaration>()
         .expand((d) => d.variables.variables)
-        .firstWhereOrNull((v) => v.name.lexeme == 'meta')
+        .firstWhereOrNull((v) => v.name.lexeme == variableName)
         ?.initializer;
 
     ArgumentList? argumentList;

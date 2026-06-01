@@ -11,17 +11,23 @@ part of 'custom_button.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<CustomButton, CustomButtonArgs>;
+typedef _Component = Component<CustomButton, StoryArgs<CustomButton>>;
 typedef _Scenario = CustomButtonScenario;
 typedef _Defaults = CustomButtonDefaults;
 typedef _Story = CustomButtonStory;
+typedef _IconStory = CustomButtonIconStory;
 typedef _Args = CustomButtonArgs;
-final CustomButtonComponent = Component<CustomButton, CustomButtonArgs>(
+typedef _IconArgs = CustomButtonIconArgs;
+final CustomButtonComponent = Component<CustomButton, StoryArgs<CustomButton>>(
   name: meta.name ?? 'CustomButton',
   path: meta.path ?? '[sam]',
   docsBuilder: meta.docsBuilder,
   docComment: null,
-  stories: [$Default..$generatedName = 'Default'],
+  stories: [
+    $Default..$generatedName = 'Default',
+    $Add..$generatedName = 'Add',
+    $Search..$generatedName = 'Search',
+  ],
 );
 typedef CustomButtonScenario = Scenario<CustomButton, CustomButtonArgs>;
 typedef CustomButtonDefaults = Defaults<CustomButton, CustomButtonArgs>;
@@ -40,6 +46,27 @@ class CustomButtonStory extends Story<CustomButton, CustomButtonArgs> {
              builder ??
              (context, args) => CustomButton(
                key: args.key,
+               label: args.label,
+               onPressed: args.onPressed,
+             ),
+       );
+}
+
+class CustomButtonIconStory extends Story<CustomButton, CustomButtonIconArgs> {
+  CustomButtonIconStory({
+    super.name,
+    super.setup,
+    super.modes,
+    CustomButtonIconArgs? args,
+    StoryWidgetBuilder<CustomButton, CustomButtonIconArgs>? builder,
+    super.scenarios,
+  }) : super(
+         args: args ?? CustomButtonIconArgs(),
+         builder:
+             builder ??
+             (context, args) => CustomButton.icon(
+               key: args.key,
+               icon: args.icon,
                label: args.label,
                onPressed: args.onPressed,
              ),
@@ -77,4 +104,45 @@ class CustomButtonArgs extends StoryArgs<CustomButton> {
 
   @override
   List<Arg?> get list => [keyArg, labelArg, onPressedArg];
+}
+
+class CustomButtonIconArgs extends StoryArgs<CustomButton> {
+  CustomButtonIconArgs({
+    Arg<Key?>? key,
+    Arg<IconData?>? icon,
+    Arg<String>? label,
+    Arg<void Function()?>? onPressed,
+  }) : this.keyArg = $initArg('key', key, null),
+       this.iconArg = $initArg('icon', icon, null),
+       this.labelArg = $initArg('label', label, StringArg(''))!,
+       this.onPressedArg = $initArg('onPressed', onPressed, null);
+
+  CustomButtonIconArgs.fixed({
+    Key? key,
+    IconData? icon,
+    String label = '',
+    void Function()? onPressed,
+  }) : this.keyArg = key == null ? null : Arg.fixed(key),
+       this.iconArg = icon == null ? null : Arg.fixed(icon),
+       this.labelArg = Arg.fixed(label),
+       this.onPressedArg = onPressed == null ? null : Arg.fixed(onPressed);
+
+  final Arg<Key?>? keyArg;
+
+  final Arg<IconData?>? iconArg;
+
+  final Arg<String> labelArg;
+
+  final Arg<void Function()?>? onPressedArg;
+
+  Key? get key => keyArg?.value;
+
+  IconData? get icon => iconArg?.value;
+
+  String get label => labelArg.value;
+
+  void Function()? get onPressed => onPressedArg?.value;
+
+  @override
+  List<Arg?> get list => [keyArg, iconArg, labelArg, onPressedArg];
 }

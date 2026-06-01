@@ -11,8 +11,9 @@ class ComponentBuilder {
     this.argsType,
     this.stories,
     this.path,
-    this.constructorName,
-  );
+    this.constructorName, {
+    this.isMultiMeta = false,
+  });
 
   final DartType widgetType;
   final DartType argsType;
@@ -20,18 +21,32 @@ class ComponentBuilder {
   final String path;
   final String? constructorName;
 
+  /// When `true`, the file declares more than one `Meta<TWidget>` variable
+  /// (one per constructor variant). The generated component aggregates all
+  /// stories under a single `${Widget}Component` typed as
+  /// `Component<TWidget, StoryArgs<TWidget>>` so it can hold heterogeneous
+  /// stories whose args classes differ per constructor.
+  final bool isMultiMeta;
+
+  TypeReference get _componentTypeRef {
+    return TypeReference(
+      (b) => b
+        ..symbol = 'Component'
+        ..types.addAll([
+          refer(widgetType.nonGenericName),
+          if (isMultiMeta)
+            refer('StoryArgs<${widgetType.nonGenericName}>')
+          else
+            refer('${argsType.nonGenericName}Args'),
+        ]),
+    );
+  }
+
   TypeDef buildUnderscoreType() {
     return TypeDef(
       (b) => b
         ..name = '_Component'
-        ..definition = TypeReference(
-          (b) => b
-            ..symbol = 'Component'
-            ..types.addAll([
-              refer(widgetType.nonGenericName),
-              refer('${argsType.nonGenericName}Args'),
-            ]),
-        ),
+        ..definition = _componentTypeRef,
     );
   }
 
@@ -40,26 +55,24 @@ class ComponentBuilder {
     return constructorName![0].toUpperCase() + constructorName!.substring(1);
   }
 
+  String get _componentVariableName {
+    // Multi-meta files emit a single component per widget; the constructor
+    // name is not part of the variable name.
+    final suffix = isMultiMeta ? '' : _capitalizedConstructorName;
+    return '${widgetType.nonGenericName}${suffix}Component';
+  }
+
   String get _defaultComponentName {
     final baseName = widgetType.nonGenericName;
-    if (constructorName == null) return baseName;
+    if (constructorName == null || isMultiMeta) return baseName;
     return '$baseName.$constructorName';
   }
 
   Code build() {
-    return declareFinal(
-          '${widgetType.nonGenericName}${_capitalizedConstructorName}Component',
-        )
+    return declareFinal(_componentVariableName)
         .assign(
           InvokeExpression.newOf(
-            TypeReference(
-              (b) => b
-                ..symbol = 'Component'
-                ..types.addAll([
-                  refer(widgetType.nonGenericName),
-                  refer('${argsType.nonGenericName}Args'),
-                ]),
-            ),
+            _componentTypeRef,
             [],
             {
               'name': refer('meta')
