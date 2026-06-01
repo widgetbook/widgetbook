@@ -37,7 +37,9 @@ class ComponentBuilder {
           if (isMultiMeta)
             refer('StoryArgs<${widgetType.nonGenericName}>')
           else
-            refer('${argsType.nonGenericName}Args'),
+            refer(
+              '${argsType.nonGenericName}${constructorName.classPrefix}Args',
+            ),
         ]),
     );
   }
@@ -50,15 +52,10 @@ class ComponentBuilder {
     );
   }
 
-  String get _capitalizedConstructorName {
-    if (constructorName == null) return '';
-    return constructorName![0].toUpperCase() + constructorName!.substring(1);
-  }
-
   String get _componentVariableName {
     // Multi-meta files emit a single component per widget; the constructor
     // name is not part of the variable name.
-    final suffix = isMultiMeta ? '' : _capitalizedConstructorName;
+    final suffix = isMultiMeta ? '' : constructorName.classPrefix;
     return '${widgetType.nonGenericName}${suffix}Component';
   }
 

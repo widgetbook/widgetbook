@@ -7,36 +7,36 @@ part of 'named_constructor.stories.dart';
 // **************************************************************************
 
 typedef _Component =
-    Component<NamedConstructorWidget, NamedConstructorWidgetArgs>;
-typedef _Scenario = NamedConstructorWidgetScenario;
-typedef _Defaults = NamedConstructorWidgetDefaults;
-typedef _Story = NamedConstructorWidgetStory;
-typedef _Args = NamedConstructorWidgetArgs;
+    Component<NamedConstructorWidget, NamedConstructorWidgetOtherArgs>;
+typedef _OtherScenario = NamedConstructorWidgetOtherScenario;
+typedef _OtherDefaults = NamedConstructorWidgetOtherDefaults;
+typedef _OtherStory = NamedConstructorWidgetOtherStory;
+typedef _OtherArgs = NamedConstructorWidgetOtherArgs;
 final NamedConstructorWidgetOtherComponent =
-    Component<NamedConstructorWidget, NamedConstructorWidgetArgs>(
+    Component<NamedConstructorWidget, NamedConstructorWidgetOtherArgs>(
       name: meta.name ?? 'NamedConstructorWidget.other',
       path: meta.path ?? '',
       docsBuilder: meta.docsBuilder,
       docComment: null,
       stories: [$Default..$generatedName = 'Default'],
     );
-typedef NamedConstructorWidgetScenario =
-    Scenario<NamedConstructorWidget, NamedConstructorWidgetArgs>;
-typedef NamedConstructorWidgetDefaults =
-    Defaults<NamedConstructorWidget, NamedConstructorWidgetArgs>;
+typedef NamedConstructorWidgetOtherScenario =
+    Scenario<NamedConstructorWidget, NamedConstructorWidgetOtherArgs>;
+typedef NamedConstructorWidgetOtherDefaults =
+    Defaults<NamedConstructorWidget, NamedConstructorWidgetOtherArgs>;
 
-class NamedConstructorWidgetStory
-    extends Story<NamedConstructorWidget, NamedConstructorWidgetArgs> {
-  NamedConstructorWidgetStory({
+class NamedConstructorWidgetOtherStory
+    extends Story<NamedConstructorWidget, NamedConstructorWidgetOtherArgs> {
+  NamedConstructorWidgetOtherStory({
     super.name,
     super.setup,
     super.modes,
-    NamedConstructorWidgetArgs? args,
-    StoryWidgetBuilder<NamedConstructorWidget, NamedConstructorWidgetArgs>?
+    NamedConstructorWidgetOtherArgs? args,
+    StoryWidgetBuilder<NamedConstructorWidget, NamedConstructorWidgetOtherArgs>?
     builder,
     super.scenarios,
   }) : super(
-         args: args ?? NamedConstructorWidgetArgs(),
+         args: args ?? NamedConstructorWidgetOtherArgs(),
          builder:
              builder ??
              (context, args) =>
@@ -44,12 +44,13 @@ class NamedConstructorWidgetStory
        );
 }
 
-class NamedConstructorWidgetArgs extends StoryArgs<NamedConstructorWidget> {
-  NamedConstructorWidgetArgs({Arg<Key?>? key, Arg<String>? label})
+class NamedConstructorWidgetOtherArgs
+    extends StoryArgs<NamedConstructorWidget> {
+  NamedConstructorWidgetOtherArgs({Arg<Key?>? key, Arg<String>? label})
     : this.keyArg = $initArg('key', key, null),
       this.labelArg = $initArg('label', label, StringArg(''))!;
 
-  NamedConstructorWidgetArgs.fixed({Key? key, String label = ''})
+  NamedConstructorWidgetOtherArgs.fixed({Key? key, String label = ''})
     : this.keyArg = key == null ? null : Arg.fixed(key),
       this.labelArg = Arg.fixed(label);
 

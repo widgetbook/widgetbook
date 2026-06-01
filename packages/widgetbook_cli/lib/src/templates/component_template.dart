@@ -9,45 +9,66 @@ class ComponentTemplate extends Template {
       );
 
   static String generateContent(String filename, WidgetInfo widgetInfo) {
-    final metaArgs = widgetInfo.constructorName != null
-        ? '(\n  constructor: ${widgetInfo.name}.${widgetInfo.constructorName},\n)'
-        : '()';
+    final widgetName = widgetInfo.name;
 
-    final header =
-        '''
+    // If the widget has no constructors picked up (e.g., all private), emit a
+    // single default meta as a starting point. Otherwise emit one meta per
+    // public constructor.
+    final constructors = widgetInfo.constructors.isEmpty
+        ? const [ConstructorInfo(name: null, parameterTypes: [])]
+        : widgetInfo.constructors;
+
+    final metaDeclarations = constructors
+        .map((c) => _renderMeta(widgetName, c))
+        .join('\n');
+
+    final storyDeclarations = constructors
+        .map((c) => _renderStoryStub(c))
+        .join('\n');
+
+    return '''
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 import '${widgetInfo.importPath}';
 
-part '${filename}.stories.g.dart';
+part '$filename.stories.g.dart';
 
-const meta = Meta<${widgetInfo.name}>$metaArgs;
-''';
+$metaDeclarations
 
-    final regularStory = '''
-final \$Default = _Story(
-  name: 'Default',
-);
-''';
-
-    final requiredArgsStory = '''
-// TODO: Pass required args here
-// final \$Default = _Story(
-//   name: 'Default',
-//   args: _Args(),
-// );
-''';
-
-    return '''
-$header
-${requiresArgs(widgetInfo) ? requiredArgsStory : regularStory}
+$storyDeclarations
 ''';
   }
 
-  /// A story requires `args` if it has at least one parameter that is not
-  /// first-class supported and not nullable.
-  static bool requiresArgs(WidgetInfo widgetInfo) {
-    final supportedTypes = [
+  static String _renderMeta(String widgetName, ConstructorInfo c) {
+    if (c.isDefault) {
+      return 'const meta = Meta<$widgetName>();';
+    }
+    return 'const ${c.name}Meta = Meta<$widgetName>(\n'
+        '  constructor: $widgetName.${c.name},\n'
+        ');';
+  }
+
+  static String _renderStoryStub(ConstructorInfo c) {
+    final storyName = c.isDefault ? 'Default' : c.classPrefix;
+    final storyType = '_${c.classPrefix}Story';
+    final argsType = '_${c.classPrefix}Args';
+
+    if (requiresArgs(c)) {
+      return '// TODO: Pass required args here\n'
+          '// final \$$storyName = $storyType(\n'
+          '//   name: \'$storyName\',\n'
+          '//   args: $argsType(),\n'
+          '// );';
+    }
+    return 'final \$$storyName = $storyType(\n'
+        '  name: \'$storyName\',\n'
+        ');';
+  }
+
+  /// A story requires `args` if its constructor has at least one parameter
+  /// that is neither first-class supported nor nullable.
+  static bool requiresArgs(ConstructorInfo constructor) {
+    const supportedTypes = [
       'int',
       'double',
       'String',
@@ -57,7 +78,7 @@ ${requiresArgs(widgetInfo) ? requiredArgsStory : regularStory}
       'DateTime',
     ];
 
-    return widgetInfo.parameterTypes.any(
+    return constructor.parameterTypes.any(
       (type) => !supportedTypes.contains(type) && !type.endsWith('?'),
     );
   }

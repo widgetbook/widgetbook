@@ -3,6 +3,17 @@ import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
 
+extension ConstructorNameX on String? {
+  /// PascalCase form of a constructor name, used as a prefix on generated
+  /// class names (e.g., `_IconArgs`, `WidgetIconStory`). Empty for `null`,
+  /// which represents the default (unnamed) constructor.
+  String get classPrefix {
+    final name = this;
+    if (name == null || name.isEmpty) return '';
+    return '${name[0].toUpperCase()}${name.substring(1)}';
+  }
+}
+
 extension ExpressionX on Expression {
   Expression maybeProperty(
     String name, {

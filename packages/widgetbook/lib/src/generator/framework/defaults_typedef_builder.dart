@@ -18,13 +18,18 @@ class DefaultsTypedefBuilder {
   DefaultsTypedefBuilder(
     this.widgetType,
     this.argsType,
+    this.constructorName,
   );
 
   final DartType widgetType;
   final DartType argsType;
 
+  /// The named constructor associated with the canonical meta in the file.
+  /// `null` for the default (unnamed) constructor.
+  final String? constructorName;
+
   TypeReference get defaultsTypeRef {
-    return widgetType.getRef(suffix: 'Defaults');
+    return widgetType.getRef(suffix: '${constructorName.classPrefix}Defaults');
   }
 
   TypeDef buildUnderscoreType() {
@@ -32,7 +37,7 @@ class DefaultsTypedefBuilder {
 
     return TypeDef(
       (b) => b
-        ..name = '_Defaults'
+        ..name = '_${constructorName.classPrefix}Defaults'
         ..definition = TypeReference((b) => b..symbol = typeRef.symbol),
     );
   }
@@ -46,7 +51,9 @@ class DefaultsTypedefBuilder {
             ..symbol = 'Defaults'
             ..types.addAll([
               refer(widgetType.nonGenericName),
-              refer('${argsType.nonGenericName}Args'),
+              refer(
+                '${argsType.nonGenericName}${constructorName.classPrefix}Args',
+              ),
             ]),
         ),
     );

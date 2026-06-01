@@ -68,15 +68,15 @@ const meta = Meta<CustomButton>(
   constructor: CustomButton.icon, // [!code highlight]
 );
 
-final $Default = _Story(
-  args: _Args(
+final $Default = _IconStory(
+  args: _IconArgs(
     icon: EnumArg(Icons.add, values: Icons.values),
     label: StringArg('Add'),
   ),
 );
 ```
 
-The generator inspects the named constructor's parameters (not the default constructor's) and produces `_Args` with fields matching that constructor. The generated builder calls `CustomButton.icon(...)` automatically.
+The generator inspects the named constructor's parameters (not the default constructor's) and produces a constructor-specific args/story pair. The generated symbols are prefixed with the constructor name in PascalCase: `_IconArgs` and `_IconStory` (and underlying `CustomButtonIconArgs` / `CustomButtonIconStory`). The generated builder calls `CustomButton.icon(...)` automatically.
 
 ### Why constructor tear-offs?
 
@@ -116,9 +116,15 @@ final $Add = _IconStory(                                                 // [!co
 
 A single `CustomButtonComponent` is generated. The navigation tree shows one `CustomButton` entry with `Default` and `Add` nested under it. Each story carries its own constructor-specific args, so the controls panel renders only the inputs relevant to whichever story is selected.
 
-The default constructor's args and story typedefs remain `_Args` and `_Story`. Each additional meta gets typedefs prefixed by its constructor name in PascalCase: `iconMeta` (constructor `icon`) → `_IconArgs` / `_IconStory`. The generator inspects each meta's `constructor:` tear-off to derive the prefix, so the variable name itself (`iconMeta` vs anything else) is convention rather than requirement.
+The default constructor's args and story typedefs are `_Args` and `_Story`. Named constructors are always prefixed with the constructor name in PascalCase, regardless of whether the file declares one meta or several. The naming rule is uniform:
 
-A file that declares only a single `Meta`, whether targeting the default constructor or a named one, keeps the original output shape: a single `_Args` / `_Story` pair and a component labeled `CustomButton.icon` by default (overridable via the `name` parameter).
+| Meta | Generated typedefs |
+| --- | --- |
+| `Meta<Widget>()` | `_Args`, `_Story`, `_Scenario`, `_Defaults` |
+| `Meta<Widget>(constructor: Widget.icon)` | `_IconArgs`, `_IconStory`, `_IconScenario`, `_IconDefaults` |
+| `Meta<Widget>(constructor: Widget.counter)` | `_CounterArgs`, `_CounterStory`, ... |
+
+The generator reads each meta's `constructor:` tear-off to derive the prefix, so the meta variable's own name (`iconMeta` vs `counterMeta` vs anything else) is convention, not requirement.
 
 ## MetaWithArgs
 
@@ -222,7 +228,7 @@ For each `.stories.dart` file, a `.stories.g.dart` part file is generated contai
 | `_Defaults` | `{Widget}Defaults` | Typedef for `Defaults<TWidget, Args>`. Used to share a `setup` and `builder` across all stories in the file. |
 | `_Component` | `Component<TWidget, Args>` | Typedef for the component registration type. |
 
-When a file declares additional metas to [group multiple constructors](#grouping-multiple-constructors), each non-default meta generates its own `_{Constructor}Args` and `_{Constructor}Story` typedefs (and corresponding `{Widget}{Constructor}Args` / `{Widget}{Constructor}Story` classes) alongside the ones above. The `_Component` typedef widens to `Component<TWidget, StoryArgs<TWidget>>` so a single component can hold stories with heterogeneous args.
+For a meta targeting a [named constructor](#named-constructors), every declaration above is prefixed with the constructor name in PascalCase: a `Meta<Widget>(constructor: Widget.icon)` produces `_IconArgs`, `_IconStory`, `_IconScenario`, `_IconDefaults`, and a `WidgetIconComponent`. When a file [groups multiple metas](#grouping-multiple-constructors), each non-default meta contributes its own prefixed `_{Constructor}Args` and `_{Constructor}Story` typedefs alongside the default `_Args` / `_Story`, and the shared `_Component` widens to `Component<TWidget, StoryArgs<TWidget>>` so a single component can hold stories with heterogeneous args.
 
 #### Syntactic Sugar
 

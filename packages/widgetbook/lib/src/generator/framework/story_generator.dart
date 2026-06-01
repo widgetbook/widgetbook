@@ -31,13 +31,6 @@ class _MetaInfo {
   final DartType widgetType;
   final DartType argsType;
   final String? constructorName;
-
-  /// PascalCase form of [constructorName] used as a prefix on generated
-  /// class names. Empty for the default constructor.
-  String get classPrefix {
-    if (constructorName == null) return '';
-    return constructorName![0].toUpperCase() + constructorName!.substring(1);
-  }
 }
 
 class StoryGenerator extends Generator {
@@ -83,30 +76,32 @@ class StoryGenerator extends Generator {
       isMultiMeta: isMultiMeta,
     );
 
+    // Scenario and Defaults typedefs are file-scoped; they reference the
+    // canonical meta's args (i.e., the meta named `meta`). The
+    // constructorName determines whether their class names and the args they
+    // reference get the constructor prefix.
     final scenarioBuilder = ScenarioTypedefBuilder(
       defaultMeta.widgetType,
       defaultMeta.argsType,
+      defaultMeta.constructorName,
     );
 
     final defaultsBuilder = DefaultsTypedefBuilder(
       defaultMeta.widgetType,
       defaultMeta.argsType,
+      defaultMeta.constructorName,
     );
 
-    // One Args + Story class pair per meta. Only the default meta receives
-    // user-provided `defaults` (setup/builder); they don't apply to other
-    // constructor variants.
-    //
-    // The class-name prefix is only used when 2+ metas coexist in one file.
-    // Single-meta files (including ones targeting a single named constructor)
-    // keep the unprefixed class names for backward compatibility.
+    // One Args + Story class pair per meta. Each builder derives its own
+    // class prefix from the meta's constructor name. Only the default meta
+    // receives user-provided `defaults` (setup/builder); they don't apply to
+    // other constructor variants.
     final argsBuilders = metas
         .map(
           (m) => ArgsClassBuilder(
             m.widgetType,
             m.argsType,
             m.constructorName,
-            classPrefix: isMultiMeta ? m.classPrefix : '',
           ),
         )
         .toList();
@@ -119,7 +114,6 @@ class StoryGenerator extends Generator {
             m.variableName == 'meta' ? defaultSetup : null,
             m.variableName == 'meta' ? defaultBuilder : null,
             m.constructorName,
-            classPrefix: isMultiMeta ? m.classPrefix : '',
           ),
         )
         .toList();
@@ -177,7 +171,7 @@ class StoryGenerator extends Generator {
     }).toList();
   }
 
-  /// Parses the `constructor:` argument from a [Meta] variable initializer
+  /// Parses the `constructor:` argument from a `Meta` variable initializer
   /// to extract the named constructor (e.g., `'icon'` from `Button.icon`).
   ///
   /// Returns `null` for the default (unnamed) constructor.

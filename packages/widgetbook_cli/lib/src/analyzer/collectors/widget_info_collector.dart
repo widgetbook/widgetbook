@@ -4,32 +4,51 @@ import 'package:path/path.dart' as p;
 
 import 'collector_ast_visitor.dart';
 
+/// A single public constructor of a widget class.
+class ConstructorInfo {
+  const ConstructorInfo({
+    required this.name,
+    required this.parameterTypes,
+  });
+
+  /// The named constructor, e.g. `'icon'` for `Button.icon`.
+  /// `null` for the unnamed (default) constructor.
+  final String? name;
+
+  final List<String> parameterTypes;
+
+  bool get isDefault => name == null;
+
+  /// PascalCase form of [name], used to prefix generated story symbols.
+  /// Empty for the default constructor.
+  String get classPrefix {
+    final n = name;
+    if (n == null || n.isEmpty) return '';
+    return '${n[0].toUpperCase()}${n.substring(1)}';
+  }
+}
+
 class WidgetInfo {
   const WidgetInfo({
     required this.name,
     required this.importPath,
-    required this.parameterTypes,
-    this.constructorName,
+    required this.constructors,
   });
 
   final String name;
   final String importPath;
-  final List<String> parameterTypes;
 
-  /// The named constructor, e.g. `'icon'` for `Button.icon`.
-  /// `null` for the unnamed (default) constructor.
-  final String? constructorName;
+  /// All public constructors of the widget, including the default one (if
+  /// present). The default constructor (if any) is placed first.
+  final List<ConstructorInfo> constructors;
 
   String get filePath => importPath.split('/').sublist(1).join('/');
   String get dirname => p.dirname(filePath);
   String get filename => p.basenameWithoutExtension(filePath);
 
-  /// The filename to use for the generated `.stories.dart` file.
-  /// Includes the constructor name for named constructors.
-  String get storiesFilename {
-    if (constructorName == null) return filename;
-    return '${filename}_$constructorName';
-  }
+  /// The filename to use for the generated `.stories.dart` file. One file
+  /// per widget, sharing the source file's basename.
+  String get storiesFilename => filename;
 }
 
 /// Collects [WidgetInfo] about widget classes from a Flutter project.
@@ -64,44 +83,37 @@ class WidgetInfoCollector
   @override
   WidgetInfo mapNode(ClassDeclaration node) {
     final element = node.declaredFragment?.element;
-    final constructors = element?.constructors ?? [];
-    final defaultConstructor = constructors
-        .cast<ConstructorElement?>()
-        .firstWhere(
-          (c) => c?.name == null || c!.name!.isEmpty,
-          orElse: () => constructors.isNotEmpty ? constructors.first : null,
-        );
+    final constructors = element?.constructors ?? const [];
 
-    final parameterTypes =
-        defaultConstructor?.formalParameters
-            .map((param) => param.type.toString())
-            .toList() ??
-        <String>[];
-
-    // Also collect public named constructors
+    final infos = <ConstructorInfo>[];
     for (final constructor in constructors) {
-      final name = constructor.name;
-      if (name == null || name.isEmpty || name == 'new') continue;
       if (constructor.isFactory) continue;
-      if (name.startsWith('_')) continue;
 
-      data.add(
-        WidgetInfo(
-          name: node.namePart.toString(),
-          importPath: element?.library.uri.toString() ?? '',
-          parameterTypes:
-              constructor.formalParameters
-                  .map((param) => param.type.toString())
-                  .toList(),
-          constructorName: name,
+      final name = constructor.name;
+      final isDefault = name == null || name.isEmpty || name == 'new';
+      if (!isDefault && name.startsWith('_')) continue;
+
+      infos.add(
+        ConstructorInfo(
+          name: isDefault ? null : name,
+          parameterTypes: constructor.formalParameters
+              .map((param) => param.type.toString())
+              .toList(),
         ),
       );
     }
 
+    // Default constructor first, named constructors after in source order.
+    infos.sort((a, b) {
+      if (a.isDefault && !b.isDefault) return -1;
+      if (!a.isDefault && b.isDefault) return 1;
+      return 0;
+    });
+
     return WidgetInfo(
       name: node.namePart.toString(),
       importPath: element?.library.uri.toString() ?? '',
-      parameterTypes: parameterTypes,
+      constructors: infos,
     );
   }
 }

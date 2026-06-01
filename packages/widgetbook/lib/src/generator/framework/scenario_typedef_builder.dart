@@ -4,14 +4,22 @@ import 'package:code_builder/code_builder.dart';
 import 'extensions.dart';
 
 class ScenarioTypedefBuilder {
-  ScenarioTypedefBuilder(this.widgetType, this.argsType);
+  ScenarioTypedefBuilder(
+    this.widgetType,
+    this.argsType,
+    this.constructorName,
+  );
 
   final DartType widgetType;
   final DartType argsType;
 
+  /// The named constructor associated with the canonical meta in the file.
+  /// `null` for the default (unnamed) constructor.
+  final String? constructorName;
+
   TypeReference get scenarioTypeRef {
     return widgetType.getRef(
-      suffix: 'Scenario',
+      suffix: '${constructorName.classPrefix}Scenario',
       types: getTypeParams(withBounds: false),
     );
   }
@@ -27,7 +35,7 @@ class ScenarioTypedefBuilder {
     final typeRef = scenarioTypeRef;
     return TypeDef(
       (b) => b
-        ..name = '_Scenario'
+        ..name = '_${constructorName.classPrefix}Scenario'
         ..types.addAll(getTypeParams())
         ..definition = TypeReference(
           (b) => b
@@ -42,7 +50,7 @@ class ScenarioTypedefBuilder {
     final widgetTypeRef = widgetType.getRef();
 
     final argsTypeRef = argsType.getRef(
-      suffix: 'Args',
+      suffix: '${constructorName.classPrefix}Args',
       types: unboundedTypeParams,
     );
 
