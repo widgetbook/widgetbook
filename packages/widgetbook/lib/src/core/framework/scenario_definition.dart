@@ -5,6 +5,15 @@ library;
 
 import 'mode.dart';
 
+/// Separator between a custom scenario name and a global definition name.
+///
+/// Uses `|` because `/` is reserved for [Scenario.path].
+const scenarioNameSeparator = ' | ';
+
+String mergedScenarioName(String scenarioName, String definitionName) {
+  return '$scenarioName$scenarioNameSeparator$definitionName';
+}
+
 typedef ModesMerger =
     List<Mode> Function(
       List<Mode> storyModes,
@@ -38,10 +47,23 @@ class ScenarioDefinition {
     required this.name,
     required this.modes,
     this.mergeModes = defaultMergeModes,
+    this.applyToStoryScenarios = false,
   });
 
   final String name;
   final List<Mode> modes;
+
+  /// When `true` and a story defines custom scenarios, additionally merges
+  /// this definition with each one as `Scenario Name | Mode Names`. Custom
+  /// scenarios are not included without merged modes. Standalone global
+  /// scenarios are still created for every definition and named
+  /// `Default | Mode Names` when custom scenarios exist.
+  ///
+  /// When a story has no custom scenarios, this flag has no additional effect.
+  ///
+  /// When `false`, this definition only creates a standalone global scenario
+  /// per story and does not merge its [modes] into local scenarios.
+  final bool applyToStoryScenarios;
 
   /// A function to merge the [modes] defined in the story and the ones
   /// defined in this [Scenario] or [ScenarioDefinition].

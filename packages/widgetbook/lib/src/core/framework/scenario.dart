@@ -95,4 +95,18 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
       modes: modes,
     );
   }
+
+  /// Creates a scenario that merges [definition] with this local scenario.
+  Scenario<TWidget, TArgs> withGlobalDefinition(
+    ScenarioDefinition definition,
+  ) {
+    return Scenario<TWidget, TArgs>(
+      type: ScenarioType.local,
+      name: mergedScenarioName(name, definition.name),
+      modes: mergeModes(definition.modes, _modes ?? []),
+      args: _args,
+      run: run,
+      mergeModes: mergeModes,
+    )..story = story;
+  }
 }
