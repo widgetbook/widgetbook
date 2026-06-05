@@ -204,7 +204,10 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   /// definition with each custom scenario as `Scenario Name | Mode Names`.
   /// Custom scenarios are not included without merged modes. Standalone global
   /// scenarios are still created for every definition and named
-  /// `Default | Mode Names` when custom scenarios exist.
+  /// `Default | Mode Names` when custom scenarios exist, except when a local
+  /// scenario is also named `Default` and the definition has
+  /// [ScenarioDefinition.applyToStoryScenarios] enabled (the merged local
+  /// scenario already covers that case).
   ///
   /// When no custom scenarios are defined, [applyToStoryScenarios] has no
   /// additional effect beyond standalone global scenarios.
@@ -222,16 +225,27 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
       name: 'Default',
     )..story = this;
 
-    final globalScenarios = config.scenarios.map(
-      (definition) => Scenario<TWidget, TArgs>(
-        type: ScenarioType.global,
-        name: hasCustomScenarios
-            ? mergedScenarioName(defaultScenario.name, definition.name)
-            : definition.name,
-        modes: definition.modes,
-        mergeModes: definition.mergeModes,
-      )..story = this,
+    final hasDefaultLocalScenario = localScenarios.any(
+      (scenario) => scenario.name == defaultScenario.name,
     );
+
+    final globalScenarios = config.scenarios
+        .where(
+          (definition) =>
+              !hasDefaultLocalScenario ||
+              !definition.applyToStoryScenarios ||
+              !hasCustomScenarios,
+        )
+        .map(
+          (definition) => Scenario<TWidget, TArgs>(
+            type: ScenarioType.global,
+            name: hasCustomScenarios
+                ? mergedScenarioName(defaultScenario.name, definition.name)
+                : definition.name,
+            modes: definition.modes,
+            mergeModes: definition.mergeModes,
+          )..story = this,
+        );
 
     final mergedScenarios = localScenarios.expand(
       (local) => applyingDefinitions.map(

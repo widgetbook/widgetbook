@@ -126,6 +126,39 @@ void main() {
     );
 
     test(
+      'skips duplicate global defaults when a local Default exists',
+      () {
+        final story = _TestStory(
+          scenarios: [
+            Scenario(name: 'Default'),
+            Scenario(name: 'Numeric'),
+          ],
+        );
+        final config = Config(
+          scenarios: [
+            ScenarioDefinition(
+              name: 'Light Theme, 1.0x Text Scale',
+              modes: [_textScaleMode(1)],
+              applyToStoryScenarios: true,
+            ),
+            ScenarioDefinition(
+              name: 'Dark Theme, 1.35x Text Scale',
+              modes: [_textScaleMode(1.35)],
+              applyToStoryScenarios: true,
+            ),
+          ],
+        );
+
+        expect(story.allScenarios(config).map((scenario) => scenario.name), [
+          'Default | Light Theme, 1.0x Text Scale',
+          'Default | Dark Theme, 1.35x Text Scale',
+          'Numeric | Light Theme, 1.0x Text Scale',
+          'Numeric | Dark Theme, 1.35x Text Scale',
+        ]);
+      },
+    );
+
+    test(
       'groups merged scenarios by local scenario name',
       () {
         final story = _TestStory(

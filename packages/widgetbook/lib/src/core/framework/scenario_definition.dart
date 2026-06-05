@@ -57,7 +57,8 @@ class ScenarioDefinition {
   /// this definition with each one as `Scenario Name | Mode Names`. Custom
   /// scenarios are not included without merged modes. Standalone global
   /// scenarios are still created for every definition and named
-  /// `Default | Mode Names` when custom scenarios exist.
+  /// `Default | Mode Names` when custom scenarios exist, unless a local
+  /// scenario named `Default` exists (then the merged local scenario is used).
   ///
   /// When a story has no custom scenarios, this flag has no additional effect.
   ///
