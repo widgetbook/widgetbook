@@ -18,8 +18,8 @@ typedef ScenarioCallback =
 
 Future<void> testWidgetbook(
   Config config, {
-  ScenarioCallback? beforeScenario,
-  ScenarioCallback? afterCapture,
+  ScenarioCallback? setUpScenario,
+  ScenarioCallback? tearDownScenario,
 }) async {
   TestWidgetsFlutterBinding.ensureInitialized();
   await loadFonts();
@@ -28,8 +28,8 @@ Future<void> testWidgetbook(
     testComponent(
       config,
       component,
-      beforeScenario: beforeScenario,
-      afterCapture: afterCapture,
+      setUpScenario: setUpScenario,
+      tearDownScenario: tearDownScenario,
     );
   }
 }
@@ -37,16 +37,16 @@ Future<void> testWidgetbook(
 void testComponent(
   Config config,
   Component component, {
-  ScenarioCallback? beforeScenario,
-  ScenarioCallback? afterCapture,
+  ScenarioCallback? setUpScenario,
+  ScenarioCallback? tearDownScenario,
 }) {
   group('${component.name}', () {
     for (final story in component.stories) {
       testStory(
         config,
         story,
-        beforeScenario: beforeScenario,
-        afterCapture: afterCapture,
+        setUpScenario: setUpScenario,
+        tearDownScenario: tearDownScenario,
       );
     }
   });
@@ -55,8 +55,8 @@ void testComponent(
 void testStory(
   Config config,
   Story story, {
-  ScenarioCallback? beforeScenario,
-  ScenarioCallback? afterCapture,
+  ScenarioCallback? setUpScenario,
+  ScenarioCallback? tearDownScenario,
 }) {
   group(story.name, () {
     final scenarios = story.allScenarios(config);
@@ -64,8 +64,8 @@ void testStory(
       testScenario(
         config,
         scenario,
-        beforeScenario: beforeScenario,
-        afterCapture: afterCapture,
+        setUpScenario: setUpScenario,
+        tearDownScenario: tearDownScenario,
       );
     }
   });
@@ -74,8 +74,8 @@ void testStory(
 void testScenario(
   Config config,
   Scenario scenario, {
-  ScenarioCallback? beforeScenario,
-  ScenarioCallback? afterCapture,
+  ScenarioCallback? setUpScenario,
+  ScenarioCallback? tearDownScenario,
 }) {
   final defaultViewport = Viewports.none;
   final targetViewport = scenario.viewport ?? defaultViewport;
@@ -96,7 +96,7 @@ void testScenario(
         ),
       );
 
-      await beforeScenario?.call(tester, scenario);
+      await setUpScenario?.call(tester, scenario);
 
       await scenario.execute(tester);
 
@@ -141,7 +141,7 @@ void testScenario(
         image.dispose();
       });
 
-      await afterCapture?.call(tester, scenario);
+      await tearDownScenario?.call(tester, scenario);
 
       semanticsHandle.dispose();
       addTearDown(tester.view.reset);
