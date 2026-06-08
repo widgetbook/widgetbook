@@ -1,4 +1,4 @@
-## Unreleased
+## 3.24.0
 
 - **REFACTOR**: Allow `analyzer` 13.x.
 
