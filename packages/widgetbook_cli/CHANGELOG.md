@@ -1,3 +1,9 @@
+## Unreleased
+
+- **BREAKING**: Set minimum SDK version to 3.11.0. ([#1924](https://github.com/widgetbook/widgetbook/pull/1924))
+- **REFACTOR**: Use `analyzer` 13.x. ([#1900](https://github.com/widgetbook/widgetbook/pull/1900), [#1923](https://github.com/widgetbook/widgetbook/pull/1923))
+- **REFACTOR**: Use `xml` 7.x. ([#1925](https://github.com/widgetbook/widgetbook/pull/1925))
+
 ## 4.0.0-beta.3
 
 - **FIX**: Update widgetbook version in `init` command to match metadata.
@@ -16,6 +22,16 @@
 
 - **BREAKING**: Support Widgetbook v4 in `cloud build push` command. ([#1638](https://github.com/widgetbook/widgetbook/pull/1638))
 - **BREAKING**: Support Widgetbook v4 in `coverage` command. ([#1749](https://github.com/widgetbook/widgetbook/pull/1749))
+
+## 3.15.0
+
+- **BREAKING**: Set minimum SDK version to 3.11.0. ([#1924](https://github.com/widgetbook/widgetbook/pull/1924))
+- **REFACTOR**: Use `analyzer` 13.x.
+- **REFACTOR**: Use `xml` 7.x.
+
+## 3.14.0
+
+- **REFACTOR**: Use `analyzer` 12.x. ([#1900](https://github.com/widgetbook/widgetbook/pull/1900))
 
 ## 3.13.0
 
