@@ -14,7 +14,7 @@ screenshots:
     path: assets/logo.webp
 
 environment:
-  sdk: ">=3.12.0 <4.0.0"
+  sdk: ">=3.10.0 <4.0.0"
   flutter: ">=3.44.0"
 
 dependencies:

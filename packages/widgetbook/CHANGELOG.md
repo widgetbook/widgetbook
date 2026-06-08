@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **BREAKING**: Set minimum SDK version to 3.12.0 & minimum Flutter version to 3.44.0. ([#1924](https://github.com/widgetbook/widgetbook/pull/1924))
+- **BREAKING**: Set minimum Flutter version to 3.44.0. ([#1924](https://github.com/widgetbook/widgetbook/pull/1924))
 
 ## 3.23.0
 
