@@ -1,4 +1,4 @@
-## Unreleased
+## 3.24.0
 
 - **BREAKING**: Set minimum Flutter version to 3.44.0. ([#1924](https://github.com/widgetbook/widgetbook/pull/1924))
 
