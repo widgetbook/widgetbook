@@ -1,3 +1,7 @@
+## Unreleased
+
+- **REFACTOR**: Allow `analyzer` 13.x.
+
 ## 3.23.0
 
 - **REFACTOR**: Allow `analyzer` 11.x and 12.x. ([#1900](https://github.com/widgetbook/widgetbook/pull/1900))
