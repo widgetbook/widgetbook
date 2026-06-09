@@ -201,7 +201,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   /// If no scenarios are defined, a default scenario is returned.
   List<Scenario<TWidget, TArgs>> allScenarios(Config config) {
     final localScenarios = scenarios;
-    final globalScenarios = config.scenarios.map(
+    final globalScenarios = config.scenarioConfig.definitions.map(
       (definition) => Scenario<TWidget, TArgs>(
         type: ScenarioType.global,
         name: definition.name,
