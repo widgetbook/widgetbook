@@ -6,17 +6,17 @@ import '../framework/framework.dart';
 /// An [Addon] for changing the active [MediaQueryData.textScaler]
 /// via [MediaQuery].
 class TextScaleMode extends Mode<double> {
-  TextScaleMode(double value) : super(value, TextScaleAddon());
+  TextScaleMode(double value) : super(value, TextScaleAddon(value));
 
   @override
   String get formattedValue => 'x$value';
 }
 
 class TextScaleAddon extends Addon<double> with SingleFieldOnly {
-  TextScaleAddon()
+  TextScaleAddon([double scale = 1])
     : super(
         name: 'Text Scale',
-        initialValue: 1,
+        initialValue: scale,
       );
 
   @override

@@ -5,7 +5,7 @@ import '../../framework/framework.dart';
 import 'minimal_semantics_debugger.dart';
 
 class SemanticsMode extends Mode<bool> {
-  SemanticsMode(bool value) : super(value, SemanticsAddon());
+  SemanticsMode(bool value) : super(value, SemanticsAddon(value));
 
   @override
   String get formattedValue => value ? 'Enabled' : 'Disabled';
@@ -13,10 +13,10 @@ class SemanticsMode extends Mode<bool> {
 
 /// An [Addon] for semantics.
 class SemanticsAddon extends Addon<bool> with SingleFieldOnly {
-  SemanticsAddon()
+  SemanticsAddon([bool enabled = false])
     : super(
         name: 'Semantics',
-        initialValue: false,
+        initialValue: enabled,
       );
 
   @override

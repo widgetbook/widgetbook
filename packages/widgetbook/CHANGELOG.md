@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FIX**: Propagate mode value to `SemanticsAddon`, `TextScaleAddon`, `TimeDilationAddon`, and `ZoomAddon`. ([#1916](https://github.com/widgetbook/widgetbook/pull/1916) - by [@ABausG](https://github.com/ABausG))
 - **BREAKING**: Replace `Config.scenarios` with `Config.scenarioConfig` of new type `ScenarioConfig`; see the [PR description](https://github.com/widgetbook/widgetbook/pull/1930) for migration steps. ([#1930](https://github.com/widgetbook/widgetbook/pull/1930))
 - **REFACTOR**: Allow `analyzer` 11.x and 12.x. ([#1900](https://github.com/widgetbook/widgetbook/pull/1900))
 - **FIX**: Preserve story definition order in navigation panel instead of sorting alphabetically. ([#1897](https://github.com/widgetbook/widgetbook/pull/1897))
