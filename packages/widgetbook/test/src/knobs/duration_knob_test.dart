@@ -90,6 +90,68 @@ void main() {
           );
         },
       );
+
+      testWidgets(
+        'given enableDays=true, '
+        'then four input fields should be displayed',
+        (tester) async {
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs
+                  .duration(
+                    label: 'DurationKnob',
+                    enableDays: true,
+                  )
+                  .inMilliseconds
+                  .toString(),
+            ),
+          );
+
+          expect(find.byType(TextField), findsNWidgets(4));
+        },
+      );
+
+      testWidgets(
+        'given enableMilliseconds=true and enableMicroseconds=true, '
+        'then five input fields should be displayed',
+        (tester) async {
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs
+                  .duration(
+                    label: 'DurationKnob',
+                    enableMilliseconds: true,
+                    enableMicroseconds: true,
+                  )
+                  .inMilliseconds
+                  .toString(),
+            ),
+          );
+
+          expect(find.byType(TextField), findsNWidgets(5));
+        },
+      );
+
+      testWidgets(
+        'given enableHours=false and enableMinutes=false, '
+        'then one input field (seconds) should be displayed',
+        (tester) async {
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs
+                  .duration(
+                    label: 'DurationKnob',
+                    enableHours: false,
+                    enableMinutes: false,
+                  )
+                  .inMilliseconds
+                  .toString(),
+            ),
+          );
+
+          expect(find.byType(TextField), findsNWidgets(1));
+        },
+      );
     },
   );
 
