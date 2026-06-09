@@ -46,26 +46,28 @@ final config = Config(
     ),
     SemanticsAddon(),
   ],
-  scenarios: [
-    ScenarioDefinition(
-      name: 'Dark',
-      modes: [
-        ThemeMode<MultiThemeData>(
-          'Dark',
-          multiDarkTheme,
-          multiThemeBuilder,
-        ),
-      ],
-    ),
-    ScenarioDefinition(
-      name: 'Light',
-      modes: [
-        ThemeMode<MultiThemeData>(
-          'Light',
-          multiLightTheme,
-          multiThemeBuilder,
-        ),
-      ],
-    ),
-  ],
+  scenarioConfig: ScenarioConfig(
+    definitions: [
+      ScenarioDefinition(
+        name: 'Dark',
+        modes: [
+          ThemeMode<MultiThemeData>(
+            'Dark',
+            multiDarkTheme,
+            multiThemeBuilder,
+          ),
+        ],
+      ),
+      ScenarioDefinition(
+        name: 'Light',
+        modes: [
+          ThemeMode<MultiThemeData>(
+            'Light',
+            multiLightTheme,
+            multiThemeBuilder,
+          ),
+        ],
+      ),
+    ],
+  ),
 );

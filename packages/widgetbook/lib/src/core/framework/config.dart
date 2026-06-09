@@ -60,7 +60,7 @@ class Config {
     this.themeMode = ThemeMode.system,
     this.header,
     this.scrollBehavior = const MaterialScrollBehavior(),
-    this.scenarios = const [],
+    this.scenarioConfig = const ScenarioConfig(),
     this.docsBuilder = defaultDocsBuilder,
   });
 
@@ -70,9 +70,11 @@ class Config {
   /// The list of [Component]s that will be displayed in Widgetbook.
   final List<Component> components;
 
-  /// For each [ScenarioDefinition] a [Scenario] will be created for every
-  /// [Story] of every [Component].
-  final List<ScenarioDefinition> scenarios;
+  /// Global [ScenarioConfig] applied to every [Story] of every [Component].
+  ///
+  /// Each [ScenarioDefinition] in [ScenarioConfig.definitions] becomes a
+  /// [Scenario] on every [Story].
+  final ScenarioConfig scenarioConfig;
 
   /// A wrapper builder method for all [Component]s.
   final AppBuilder appBuilder;

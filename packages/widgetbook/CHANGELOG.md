@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **BREAKING**: Replace `Config.scenarios` with `Config.scenarioConfig` of new type `ScenarioConfig`; see the [PR description](https://github.com/widgetbook/widgetbook/pull/1930) for migration steps. ([#1930](https://github.com/widgetbook/widgetbook/pull/1930))
 - **REFACTOR**: Allow `analyzer` 11.x and 12.x. ([#1900](https://github.com/widgetbook/widgetbook/pull/1900))
 - **FIX**: Preserve story definition order in navigation panel instead of sorting alphabetically. ([#1897](https://github.com/widgetbook/widgetbook/pull/1897))
 - **BREAKING**: Rename `SetupBuilder`'s second parameter from `TWidget widget` to `Widget child`, enabling `InheritedWidget`s injected by `setup` to be resolved in the story `builder`'s `BuildContext`. ([#1896](https://github.com/widgetbook/widgetbook/pull/1896))

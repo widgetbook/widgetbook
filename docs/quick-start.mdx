@@ -110,15 +110,17 @@ If you want to define global scenarios for all stories in you widgetbook, you ca
 ```dart
 final config = Config(
   // ...
-  scenarios: [
-    ScenarioDefinition(
-      name: 'Dark',
-      modes: [MaterialThemeMode('Dark', ThemeData.dark())],
-    ),
-    ScenarioDefinition(
-      name: 'Light',
-      modes: [MaterialThemeMode('Light', ThemeData.light())],
-    ),
-  ],
+  scenarioConfig: ScenarioConfig(
+    definitions: [
+      ScenarioDefinition(
+        name: 'Dark',
+        modes: [MaterialThemeMode('Dark', ThemeData.dark())],
+      ),
+      ScenarioDefinition(
+        name: 'Light',
+        modes: [MaterialThemeMode('Light', ThemeData.light())],
+      ),
+    ],
+  ),
 );
 ```
