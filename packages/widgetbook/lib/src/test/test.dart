@@ -13,70 +13,36 @@ import 'semantics/semantics_tree_serializer.dart';
 /// The default location is already an ignored path by default.
 const outputDir = 'build/.widgetbook';
 
-typedef ScenarioCallback =
-    Future<void> Function(WidgetTester tester, Scenario scenario);
-
-Future<void> testWidgetbook(
-  Config config, {
-  ScenarioCallback? setUpScenario,
-  ScenarioCallback? tearDownScenario,
-}) async {
+Future<void> testWidgetbook(Config config) async {
   TestWidgetsFlutterBinding.ensureInitialized();
   await loadFonts();
 
   for (final component in config.components) {
-    testComponent(
-      config,
-      component,
-      setUpScenario: setUpScenario,
-      tearDownScenario: tearDownScenario,
-    );
+    testComponent(config, component);
   }
 }
 
-void testComponent(
-  Config config,
-  Component component, {
-  ScenarioCallback? setUpScenario,
-  ScenarioCallback? tearDownScenario,
-}) {
+void testComponent(Config config, Component component) {
   group('${component.name}', () {
     for (final story in component.stories) {
-      testStory(
-        config,
-        story,
-        setUpScenario: setUpScenario,
-        tearDownScenario: tearDownScenario,
-      );
+      testStory(config, story);
     }
   });
 }
 
-void testStory(
-  Config config,
-  Story story, {
-  ScenarioCallback? setUpScenario,
-  ScenarioCallback? tearDownScenario,
-}) {
+void testStory(Config config, Story story) {
   group(story.name, () {
     final scenarios = story.allScenarios(config);
     for (final scenario in scenarios) {
-      testScenario(
-        config,
-        scenario,
-        setUpScenario: setUpScenario,
-        tearDownScenario: tearDownScenario,
-      );
+      testScenario(config, scenario);
     }
   });
 }
 
 void testScenario(
   Config config,
-  Scenario scenario, {
-  ScenarioCallback? setUpScenario,
-  ScenarioCallback? tearDownScenario,
-}) {
+  Scenario scenario,
+) {
   final defaultViewport = Viewports.none;
   final targetViewport = scenario.viewport ?? defaultViewport;
 
@@ -96,7 +62,7 @@ void testScenario(
         ),
       );
 
-      await setUpScenario?.call(tester, scenario);
+      await config.scenarioConfig.setUp?.call(tester, scenario);
 
       await scenario.execute(tester);
 
@@ -141,7 +107,7 @@ void testScenario(
         image.dispose();
       });
 
-      await tearDownScenario?.call(tester, scenario);
+      await config.scenarioConfig.tearDown?.call(tester, scenario);
 
       semanticsHandle.dispose();
       addTearDown(tester.view.reset);

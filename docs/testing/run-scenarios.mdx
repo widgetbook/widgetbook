@@ -45,6 +45,33 @@ Because this flow uses `flutter_test`, your scenario `run` callback receives a `
 
 See [Creating Scenarios](/testing/create-scenario) for concrete `run` examples.
 
+## Set Up and Tear Down Hooks
+
+`Config.scenarioConfig` accepts optional `setUp` and `tearDown` callbacks that run around every scenario. Both receive the active `WidgetTester` and the current `Scenario`, so they can pump frames, interact with the widget tree, or branch on scenario metadata.
+
+- `setUp` runs after the scenario has been pumped but before its `run` callback executes. Use it to seed shared state, prime caches, or stub dependencies.
+- `tearDown` runs after the screenshot and semantics data have been written. Use it to reset state mutated during the scenario.
+
+```dart
+import 'package:widgetbook/widgetbook.dart';
+
+import 'components.g.dart';
+
+final config = Config(
+  components: components,
+  scenarioConfig: ScenarioConfig(
+    setUp: (tester, scenario) async {
+      MyService.instance.reset();
+    },
+    tearDown: (tester, scenario) async {
+      MyService.instance.dispose();
+    },
+  ),
+);
+```
+
+The hooks fire for every scenario across every component and story when run via `testWidgetbook(config)`.
+
 ## Generated Snapshot Artifacts
 
 By default, artifacts are written to:
