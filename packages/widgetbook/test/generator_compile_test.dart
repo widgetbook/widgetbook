@@ -12,8 +12,8 @@
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'generator/default_values/default_values.stories.dart'
-    as default_values;
+import 'generator/custom_args/custom_args.stories.dart' as custom_args;
+import 'generator/default_values/default_values.stories.dart' as default_values;
 import 'generator/doc_comment/doc_comment.stories.dart' as doc_comment;
 import 'generator/doc_comment_code/doc_comment_code.stories.dart'
     as doc_comment_code;
@@ -24,13 +24,11 @@ import 'generator/generic_bound_dynamic/generic_bound_dynamic.stories.dart'
     as generic_bound_dynamic;
 import 'generator/generic_bound_nullable/generic_bound_nullable.stories.dart'
     as generic_bound_nullable;
-import 'generator/custom_args/custom_args.stories.dart' as custom_args;
 import 'generator/multi_constructor/multi_constructor.stories.dart'
     as multi_constructor;
 import 'generator/nullable/nullable.stories.dart' as nullable;
 import 'generator/primitive/primitive.stories.dart' as primitive;
-import 'generator/static_methods/static_methods.stories.dart'
-    as static_methods;
+import 'generator/static_methods/static_methods.stories.dart' as static_methods;
 import 'generator/variants/variants.stories.dart' as variants;
 import 'generator/with_defaults/with_defaults.stories.dart' as with_defaults;
 
