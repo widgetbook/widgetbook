@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **BREAKING**: Support multiple constructors per component by declaring one `Meta` variable per constructor tear-off (e.g. `Meta(MyButton.icon)`), with an optional component-level `ComponentMeta` for `name`/`path`/`docsBuilder` customization. `MetaWithArgs` is replaced by `Meta.argsType`; see the PR description for migration steps.
+- **BREAKING**: Support multiple constructors per component by declaring one `Meta` variable per constructor tear-off (e.g. `Meta(MyButton.icon)`), with an optional component-level `ComponentMeta` for `name`/`path`/`docsBuilder` customization. `MetaWithArgs` is replaced by `Meta.argsType`; see the [PR description](https://github.com/widgetbook/widgetbook/pull/1931) for migration steps. ([#1931](https://github.com/widgetbook/widgetbook/pull/1931))
 - **FIX**: Propagate mode value to `SemanticsAddon`, `TextScaleAddon`, `TimeDilationAddon`, and `ZoomAddon`. ([#1916](https://github.com/widgetbook/widgetbook/pull/1916) - by [@ABausG](https://github.com/ABausG))
 - **BREAKING**: Replace `Config.scenarios` with `Config.scenarioConfig` of new type `ScenarioConfig`; see the [PR description](https://github.com/widgetbook/widgetbook/pull/1930) for migration steps. ([#1930](https://github.com/widgetbook/widgetbook/pull/1930))
 - **REFACTOR**: Allow `analyzer` 11.x and 12.x. ([#1900](https://github.com/widgetbook/widgetbook/pull/1900))

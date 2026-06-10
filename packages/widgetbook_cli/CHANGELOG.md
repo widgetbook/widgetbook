@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FIX**: Update `init` scaffolding and `coverage` component collection to the new `ComponentMeta` + constructor tear-off `Meta` API.
+- **FIX**: Update `init` scaffolding and `coverage` component collection to the new constructor tear-off `Meta` API. ([#1931](https://github.com/widgetbook/widgetbook/pull/1931))
 - **BREAKING**: Set minimum SDK version to 3.11.0. ([#1924](https://github.com/widgetbook/widgetbook/pull/1924))
 - **REFACTOR**: Use `analyzer` 13.x. ([#1900](https://github.com/widgetbook/widgetbook/pull/1900), [#1923](https://github.com/widgetbook/widgetbook/pull/1923))
 - **REFACTOR**: Use `xml` 7.x. ([#1925](https://github.com/widgetbook/widgetbook/pull/1925))
