@@ -6,15 +6,14 @@ part of 'enums.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<EnumWidget, EnumWidgetArgs>;
+typedef _Component = Component<EnumWidget, StoryArgs<EnumWidget>>;
 typedef _Scenario = EnumWidgetScenario;
 typedef _Defaults = EnumWidgetDefaults;
 typedef _Story = EnumWidgetStory;
 typedef _Args = EnumWidgetArgs;
-final EnumWidgetComponent = Component<EnumWidget, EnumWidgetArgs>(
-  name: meta.name ?? 'EnumWidget',
-  path: meta.path ?? '',
-  docsBuilder: meta.docsBuilder,
+final EnumWidgetComponent = Component<EnumWidget, StoryArgs<EnumWidget>>(
+  name: 'EnumWidget',
+  path: '',
   docComment: null,
   stories: [$Default..$generatedName = 'Default'],
 );

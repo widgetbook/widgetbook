@@ -1,7 +1,7 @@
-import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
 
 import 'extensions.dart';
+import 'variant.dart';
 
 /// The `Defaults` should not have any generic parameters, as it is used across
 /// Stories with different type arguments (in case of generic Components).
@@ -15,16 +15,12 @@ import 'extensions.dart';
 /// If we constraint T to be anything (even the upper bound if found), it would
 /// will result in types errors.
 class DefaultsTypedefBuilder {
-  DefaultsTypedefBuilder(
-    this.widgetType,
-    this.argsType,
-  );
+  DefaultsTypedefBuilder(this.variant);
 
-  final DartType widgetType;
-  final DartType argsType;
+  final Variant variant;
 
   TypeReference get defaultsTypeRef {
-    return widgetType.getRef(suffix: 'Defaults');
+    return variant.widgetType.getRef(suffix: '${variant.prefix}Defaults');
   }
 
   TypeDef buildUnderscoreType() {
@@ -32,7 +28,7 @@ class DefaultsTypedefBuilder {
 
     return TypeDef(
       (b) => b
-        ..name = '_Defaults'
+        ..name = '_${variant.prefix}Defaults'
         ..definition = TypeReference((b) => b..symbol = typeRef.symbol),
     );
   }
@@ -45,8 +41,8 @@ class DefaultsTypedefBuilder {
           (b) => b
             ..symbol = 'Defaults'
             ..types.addAll([
-              refer(widgetType.nonGenericName),
-              refer('${argsType.nonGenericName}Args'),
+              refer(variant.widgetType.nonGenericName),
+              refer(variant.argsClassName),
             ]),
         ),
     );

@@ -5,10 +5,12 @@ import 'datetime_text.dart';
 
 part 'datetime_text.stories.g.dart';
 
-const meta = Meta<DateTimeText>(
+const component = ComponentMeta(
   name: 'DateTimeText',
   path: 'args/datetime',
 );
+
+const meta = Meta(DateTimeText.new);
 
 /// Demonstrates DateTimeArg.
 final $DateTime = _Story(

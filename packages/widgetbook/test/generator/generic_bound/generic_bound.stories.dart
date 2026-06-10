@@ -17,7 +17,8 @@ class BoundWidget<D, T extends BaseItem<D>> extends StatelessWidget {
   Widget build(BuildContext context) => Text(item.value.toString());
 }
 
-// ignore: strict_raw_type
-const meta = Meta<BoundWidget>();
+const meta = Meta(BoundWidget.new);
 
-final $Default = Object();
+final $Default = _Story<String, BaseItem<String>>(
+  args: _Args(item: Arg.fixed(const BaseItem(value: 'item'))),
+);

@@ -5,7 +5,7 @@ import 'responsive_image.dart';
 
 part 'responsive_image.stories.g.dart';
 
-const meta = Meta<ResponsiveImage>();
+const meta = Meta(ResponsiveImage.new);
 
 final $Default = _Story(
   name: 'Default',

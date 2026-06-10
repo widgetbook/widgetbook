@@ -11,15 +11,15 @@ part of 'counter.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<Counter, CounterArgs>;
+typedef _Component = Component<Counter, StoryArgs<Counter>>;
 typedef _Scenario = CounterScenario;
 typedef _Defaults = CounterDefaults;
 typedef _Story = CounterStory;
 typedef _Args = CounterArgs;
-final CounterComponent = Component<Counter, CounterArgs>(
-  name: meta.name ?? 'Counter',
-  path: meta.path ?? '[sam]',
-  docsBuilder: meta.docsBuilder,
+final CounterComponent = Component<Counter, StoryArgs<Counter>>(
+  name: component.name ?? 'Counter',
+  path: component.path ?? '[sam]',
+  docsBuilder: component.docsBuilder,
   docComment: null,
   stories: [$Default..$generatedName = 'Default'],
 );

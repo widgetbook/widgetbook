@@ -12,7 +12,6 @@ class GenericWidget<T extends num> extends StatelessWidget {
   Widget build(BuildContext context) => Text(value.toString());
 }
 
-// ignore: strict_raw_type
-const meta = Meta<GenericWidget>();
+const meta = Meta(GenericWidget.new);
 
-final $Default = Object();
+final $Default = _Story<int>(args: _Args(value: IntArg(1)));

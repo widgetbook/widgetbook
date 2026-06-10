@@ -6,15 +6,14 @@ part of 'generic_bound.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<BoundWidget, BoundWidgetArgs>;
+typedef _Component = Component<BoundWidget, StoryArgs<BoundWidget>>;
 typedef _Scenario<D, T extends BaseItem<D>> = BoundWidgetScenario<D, T>;
 typedef _Defaults = BoundWidgetDefaults;
 typedef _Story<D, T extends BaseItem<D>> = BoundWidgetStory<D, T>;
 typedef _Args<D, T extends BaseItem<D>> = BoundWidgetArgs<D, T>;
-final BoundWidgetComponent = Component<BoundWidget, BoundWidgetArgs>(
-  name: meta.name ?? 'BoundWidget',
-  path: meta.path ?? '',
-  docsBuilder: meta.docsBuilder,
+final BoundWidgetComponent = Component<BoundWidget, StoryArgs<BoundWidget>>(
+  name: 'BoundWidget',
+  path: '',
   docComment: null,
   stories: [$Default..$generatedName = 'Default'],
 );

@@ -169,13 +169,13 @@ final config = Config(
 
 #### 3.1 Core Concepts to Rename
 
-| v3                    | v4                |
-| --------------------- | ----------------- |
-| Use-case              | Story             |
-| `*.dart`              | `*.stories.dart`  |
-| `@UseCase` annotation | `Meta` + `_Story` |
-| `context.knobs.*`     | `*Arg` classes    |
-| `cloudKnobsConfigs`   | `scenarios`       |
+| v3                    | v4                                  |
+| --------------------- | ----------------------------------- |
+| Use-case              | Story                               |
+| `*.dart`              | `*.stories.dart`                    |
+| `@UseCase` annotation | `Meta` + `_Story`                   |
+| `context.knobs.*`     | `*Arg` classes                      |
+| `cloudKnobsConfigs`   | `scenarios`                         |
 
 #### 3.2 Simple Story Conversion
 
@@ -200,13 +200,15 @@ Widget buildButtonCase(BuildContext context) {
 
 **v4**
 
+Each stories file declares one `Meta` variable per constructor (conventionally named `meta`) that selects the constructor via a tear-off, e.g. `Meta(Button.new)`. The component widget is derived from the tear-off, so no further declaration is needed. Optionally, a stories file may declare at most one `ComponentMeta` variable (conventionally named `component`) — but only to customize component-level fields like `name`, `path`, or `docsBuilder`. Use `const` for these declarations, unless `ComponentMeta` contains a closure (e.g. `docsBuilder`) — then use `final` for it.
+
 You need to run `dart run build_runner build` after this change to generate the `button.stories.g.dart`.
 
 ```dart
 // button.stories.dart
 part 'button.stories.g.dart';
 
-const meta = Meta<Button>();
+const meta = Meta(Button.new);
 
 final $Default = _Story(
   designLink: 'https://www.figma.com/...',
@@ -218,7 +220,7 @@ final $Default = _Story(
 
 #### 3.3 Custom Args (Knob Name ≠ Parameter Name)
 
-Use `MetaWithArgs` when v3 knob naming or shaping does not map directly to widget constructor parameters.
+Provide `Meta.argsType` when v3 knob naming or shaping does not map directly to widget constructor parameters.
 
 **v3**
 
@@ -241,7 +243,7 @@ Widget buildCardCase(BuildContext context) {
 // card.stories.dart
 part 'card.stories.g.dart';
 
-const meta = MetaWithArgs<Card, CustomCardArgs>();
+const meta = Meta(Card.new, argsType: CustomCardArgs.new);
 
 class CustomCardArgs {
   final bool enabled;
@@ -286,7 +288,7 @@ You need to run `flutter test` after this change to make sure that the scenarios
 
 ```dart
 // divider.stories.dart
-const meta = Meta<Divider>();
+const meta = Meta(Divider.new);
 
 final $Default = _Story(
   args: _Args(
@@ -326,7 +328,7 @@ Widget buildUserTile(BuildContext context) {
 
 ```dart
 // user_tile.stories.dart
-const meta = Meta<UserTile>();
+const meta = Meta(UserTile.new);
 
 const $Primary = _Story(
   setup: (context, child) {
@@ -391,6 +393,8 @@ Before finishing, verify all of the following:
 - No `cloudKnobsConfigs` or `cloudAddonsConfigs`
 - All stories are in `*.stories.dart` files
 - Each story file has correct `part '*.stories.g.dart';`
+- Each story file declares a `Meta` variable per constructor, using constructor tear-offs (e.g. `Meta(Button.new)`)
+- At most one optional `ComponentMeta` variable (`component`) per file, present only when customizing component-level fields (`name`, `path`, `docsBuilder`)
 - Entry point uses `runWidgetbook(config)`
 - Config uses `components` (generated) and v4 addon APIs
 - Widgetbook tests compile and execute
@@ -412,7 +416,7 @@ Return the result in this structure:
 
 3. **Manual Follow-ups**
    - Any ambiguous conversions
-   - Any stories requiring hand-written `MetaWithArgs`
+   - Any stories requiring a custom args class via `Meta.argsType`
    - Remaining TODOs
 
 4. **Verification**

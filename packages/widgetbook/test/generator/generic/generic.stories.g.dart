@@ -6,18 +6,18 @@ part of 'generic.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<GenericWidget, GenericWidgetArgs>;
+typedef _Component = Component<GenericWidget, StoryArgs<GenericWidget>>;
 typedef _Scenario<T extends num> = GenericWidgetScenario<T>;
 typedef _Defaults = GenericWidgetDefaults;
 typedef _Story<T extends num> = GenericWidgetStory<T>;
 typedef _Args<T extends num> = GenericWidgetArgs<T>;
-final GenericWidgetComponent = Component<GenericWidget, GenericWidgetArgs>(
-  name: meta.name ?? 'GenericWidget',
-  path: meta.path ?? '',
-  docsBuilder: meta.docsBuilder,
-  docComment: null,
-  stories: [$Default..$generatedName = 'Default'],
-);
+final GenericWidgetComponent =
+    Component<GenericWidget, StoryArgs<GenericWidget>>(
+      name: 'GenericWidget',
+      path: '',
+      docComment: null,
+      stories: [$Default..$generatedName = 'Default'],
+    );
 typedef GenericWidgetScenario<T extends num> =
     Scenario<GenericWidget<T>, GenericWidgetArgs<T>>;
 typedef GenericWidgetDefaults = Defaults<GenericWidget, GenericWidgetArgs>;

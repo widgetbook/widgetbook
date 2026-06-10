@@ -12,7 +12,8 @@ class DynamicBoundWidget<D, T extends Map<dynamic, D>> extends StatelessWidget {
   Widget build(BuildContext context) => Text('$mapping');
 }
 
-// ignore: strict_raw_type
-const meta = Meta<DynamicBoundWidget>();
+const meta = Meta(DynamicBoundWidget.new);
 
-final $Default = Object();
+final $Default = _Story<int, Map<dynamic, int>>(
+  args: _Args(mapping: Arg.fixed(const <dynamic, int>{'value': 1})),
+);

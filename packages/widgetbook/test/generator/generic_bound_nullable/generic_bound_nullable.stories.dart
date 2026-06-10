@@ -17,7 +17,8 @@ class NullableBoundWidget<D, T extends BaseItem<D?>> extends StatelessWidget {
   Widget build(BuildContext context) => Text('${item.value}');
 }
 
-// ignore: strict_raw_type
-const meta = Meta<NullableBoundWidget>();
+const meta = Meta(NullableBoundWidget.new);
 
-final $Default = Object();
+final $Default = _Story<String, BaseItem<String?>>(
+  args: _Args(item: Arg.fixed(const BaseItem<String?>(value: null))),
+);

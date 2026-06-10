@@ -5,7 +5,7 @@ import 'custom_arg.dart';
 
 part 'custom_arg.stories.g.dart';
 
-const meta = Meta<RangeSlider>();
+const meta = Meta(RangeSlider.new);
 
 final $Default = _Story(
   name: 'Default',

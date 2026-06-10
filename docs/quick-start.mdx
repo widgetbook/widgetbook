@@ -48,7 +48,7 @@ Let's start by cataloging a simple widget.
 
    part 'custom_button.stories.g.dart';
 
-   const meta = Meta<CustomButton>();
+   const meta = Meta(CustomButton.new);
    ```
 
 1. Run `dart run build_runner build` to generate the boilerplate code.
@@ -64,7 +64,7 @@ import 'package:your_app/widgets/custom_button.dart';
 
 part 'custom_button.stories.g.dart';
 
-const meta = Meta<CustomButton>();
+const meta = Meta(CustomButton.new);
 
 final $Default = _Story();  // [!code highlight]
 ```
@@ -79,7 +79,7 @@ import 'package:your_app/widgets/custom_button.dart';
 
 part 'custom_button.stories.g.dart';
 
-const meta = Meta<CustomButton>();
+const meta = Meta(CustomButton.new);
 
 final $Default = _Story(
   scenarios: [

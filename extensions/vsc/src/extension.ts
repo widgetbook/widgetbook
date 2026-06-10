@@ -18,7 +18,7 @@ export function activate(context: vscode.ExtensionContext) {
           await openStoryFile(storyFile.uri, storyFile.match);
         } else {
           vscode.window.showErrorMessage(
-            `Could not find story file with Meta<${className}>`
+            `Could not find story file for ${className}`
           );
         }
       } catch (error) {
@@ -44,7 +44,7 @@ async function findStoryFile(
   className: string
 ): Promise<{ uri: vscode.Uri; match: RegExpExecArray | null } | undefined> {
   const files = await vscode.workspace.findFiles("**/*.stories.dart");
-  const metaRegex = new RegExp(`Meta<${className}>`);
+  const metaRegex = buildMetaRegex(className);
 
   for (const file of files) {
     const document = await vscode.workspace.openTextDocument(file);
@@ -52,7 +52,7 @@ async function findStoryFile(
 
     if (metaRegex.test(text)) {
       const metaPositionRegex = new RegExp(
-        `const\\s+meta\\s*=\\s*Meta<${className}>`,
+        `(?:const|final)\\s+\\w+\\s*=\\s*(?:${buildMetaRegex(className).source})`,
         "g"
       );
       return { uri: file, match: metaPositionRegex.exec(text) };
@@ -60,6 +60,12 @@ async function findStoryFile(
   }
 
   return undefined;
+}
+
+/// Matches the component markers of a stories file:
+/// a `Meta(X.new)`/`Meta(X.named)` constructor tear-off.
+export function buildMetaRegex(className: string): RegExp {
+  return new RegExp(`Meta\\(${className}\\.`);
 }
 
 async function openStoryFile(

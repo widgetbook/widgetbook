@@ -19,6 +19,6 @@ class PrimitiveWidget extends StatelessWidget {
   Widget build(BuildContext context) => Text(label);
 }
 
-const meta = Meta<PrimitiveWidget>();
+const meta = Meta(PrimitiveWidget.new);
 
-final $Default = Object();
+final $Default = _Story();

@@ -5,10 +5,12 @@ import 'user_avatar.dart';
 
 part 'user_avatar.stories.g.dart';
 
-const meta = Meta<UserAvatar>(
+const component = ComponentMeta(
   name: 'UserAvatar',
   path: 'args/string',
 );
+
+const meta = Meta(UserAvatar.new);
 
 /// Demonstrates StringArg.
 final $String = _Story(

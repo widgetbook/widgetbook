@@ -152,8 +152,5 @@ app.*.symbols
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 
-# Do not ignore generate files in full_example
-!**/full_example/**/*.g.dart
-
 **/CLAUDE.md
 .claude/
