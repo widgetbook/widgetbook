@@ -63,10 +63,9 @@ async function findStoryFile(
 }
 
 /// Matches the component markers of a stories file:
-/// a `Meta(X.new)`/`Meta(X.named)` constructor tear-off,
-/// or the legacy `Meta<X>` form.
+/// a `Meta(X.new)`/`Meta(X.named)` constructor tear-off.
 export function buildMetaRegex(className: string): RegExp {
-  return new RegExp(`Meta\\(${className}\\.|Meta<${className}>`);
+  return new RegExp(`Meta\\(${className}\\.`);
 }
 
 async function openStoryFile(
