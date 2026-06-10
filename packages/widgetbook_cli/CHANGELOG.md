@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FIX**: Update `init` scaffolding and `coverage` component collection to the new `ComponentMeta` + constructor tear-off `Meta` API.
+- **FIX**: Update `init` scaffolding and `coverage` component collection to the new constructor tear-off `Meta` API. ([#1931](https://github.com/widgetbook/widgetbook/pull/1931))
 
 ## 4.0.0-beta.6
 
