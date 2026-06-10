@@ -6,18 +6,18 @@ part of 'nullable.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<NullableWidget, NullableWidgetArgs>;
+typedef _Component = Component<NullableWidget, StoryArgs<NullableWidget>>;
 typedef _Scenario = NullableWidgetScenario;
 typedef _Defaults = NullableWidgetDefaults;
 typedef _Story = NullableWidgetStory;
 typedef _Args = NullableWidgetArgs;
-final NullableWidgetComponent = Component<NullableWidget, NullableWidgetArgs>(
-  name: meta.name ?? 'NullableWidget',
-  path: meta.path ?? '',
-  docsBuilder: meta.docsBuilder,
-  docComment: null,
-  stories: [$Default..$generatedName = 'Default'],
-);
+final NullableWidgetComponent =
+    Component<NullableWidget, StoryArgs<NullableWidget>>(
+      name: 'NullableWidget',
+      path: '',
+      docComment: null,
+      stories: [$Default..$generatedName = 'Default'],
+    );
 typedef NullableWidgetScenario = Scenario<NullableWidget, NullableWidgetArgs>;
 typedef NullableWidgetDefaults = Defaults<NullableWidget, NullableWidgetArgs>;
 

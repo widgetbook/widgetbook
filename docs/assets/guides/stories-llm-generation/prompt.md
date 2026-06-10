@@ -6,19 +6,23 @@ Generate comprehensive Widgetbook stories for Flutter components that showcase d
 
 ### Meta and Story Structure
 
-Each component must have a `Meta` declaration and stories defined as top-level variables:
+Each stories file needs a `Meta` declaration (conventionally named `meta`) selecting the constructor to generate stories for, and stories defined as top-level variables. The component widget is derived from the constructor tear-off passed to `Meta`:
 
 ```dart
 import 'package:widgetbook/widgetbook.dart';
 
 part 'component_name.stories.g.dart';
 
-const meta = Meta<ComponentType>(
-  docs: '''
-Optional **Markdown** documentation for your component here.
-''',
-);
+const meta = Meta(ComponentType.new);
 ```
+
+**Meta Rules:**
+
+- `ComponentMeta` (conventionally named `component`) is optional — declare it only to customize component-level fields (`name`, `path`, `docsBuilder`), at most one per stories file. Without it, the component widget is inferred from the `Meta` tear-off. Declare it `const` unless a field contains a closure (e.g. `docsBuilder`); then use `final`.
+- Markdown documentation for a component comes from the widget class's `///` doc comment.
+- `Meta` selects the constructor to generate stories for via a constructor tear-off (e.g. `Meta(YourWidget.new)`) — a single positional argument, no named parameters, no type argument. It must be `const`.
+- When using a custom Args class, provide `argsType` with a constructor tear-off of the args class: `Meta(YourWidget.new, argsType: YourArgs.new)`.
+- A stories file may declare multiple `Meta` variables, one per constructor (e.g. `Meta(MyButton.new)` and `Meta(MyButton.icon)`). For named constructors, the generated types get a PascalCase prefix: `_IconStory`, `_IconArgs`, `_IconDefaults`, `_IconScenario`. The unnamed constructor keeps the unprefixed `_Story`, `_Args`, etc.
 
 **Story Naming Rules:**
 
@@ -143,7 +147,10 @@ final $WithData = _Story(
 ### Complex Parameter Handling
 
 ```dart
-// For custom Args classes
+// For custom Args classes, pass a constructor tear-off
+// of the args class via argsType
+const meta = Meta(CustomButton.new, argsType: CustomButtonArgs.new);
+
 class CustomButtonArgs extends Args {
   final StringArg label;
   final BoolArg isEnabled;
@@ -355,12 +362,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 part 'custom_slider.stories.g.dart';
 
-const meta = Meta<CustomSlider>(
-  docs: '''
-A custom slider widget with enhanced functionality.
-Supports different themes, sizes, and interaction modes.
-''',
-);
+const meta = Meta(CustomSlider.new);
 
 final $Interactive = _Story(
   name: 'Interactive',
@@ -416,6 +418,7 @@ final $WithScenarios = _Story(
 Before generating stories, verify:
 
 - [ ] Component class name and import path
+- [ ] Constructors that need stories (one `Meta` tear-off per constructor)
 - [ ] Required vs optional parameters
 - [ ] Parameter types and constraints
 - [ ] Available enum values for EnumArg

@@ -17,6 +17,6 @@ class NullableWidget extends StatelessWidget {
   Widget build(BuildContext context) => Text(label ?? '');
 }
 
-const meta = Meta<NullableWidget>();
+const meta = Meta(NullableWidget.new);
 
-final $Default = Object();
+final $Default = _Story();

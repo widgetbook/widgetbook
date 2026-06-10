@@ -45,36 +45,44 @@ final config = Config(
 
 ```dart
 // Screen-level component: use a taller fixed height
-final meta = Meta<MyScreen>(
+final component = ComponentMeta(
   docsBuilder: (blocks) => blocks.replaceFirst<StoriesDocBlock>(
     const StoriesDocBlock(height: 800),
   ),
 );
 
+const meta = Meta(MyScreen.new);
+```
+
+```dart
 // Simple widget: use unconstrained rendering
-final meta = Meta<MyButton>(
+final component = ComponentMeta(
   docsBuilder: (blocks) => blocks.replaceFirst<StoriesDocBlock>(
     const StoriesDocBlock.unconstrained(),
   ),
 );
+
+const meta = Meta(MyButton.new);
 ```
 
 ## Component-Level Customization
 
-Override documentation for specific components via the `docsBuilder` parameter in the `Meta` tag.
+Override documentation for specific components via the `docsBuilder` parameter in the `ComponentMeta` tag.
 
 ### Basic Override
 
 ```dart
 import 'package:widgetbook/widgetbook.dart';
 
-final meta = Meta<MyButton>(
+final component = ComponentMeta(
   docsBuilder: (blocks) => [
     const ComponentNameDocBlock(),
     const TextDocBlock('A custom button component for our app.'),
     const StoriesDocBlock(),
   ],
 );
+
+const meta = Meta(MyButton.new);
 ```
 
 ### Modifying Default Blocks
@@ -82,11 +90,13 @@ final meta = Meta<MyButton>(
 The `docsBuilder` function receives the default blocks list, allowing you to modify it:
 
 ```dart
-final meta = Meta<MyButton>(
+final component = ComponentMeta(
   docsBuilder: (blocks) => blocks.replaceFirst<DartCommentDocBlock>(
     const TextDocBlock('Custom description for this specific component.'),
   ),
 );
+
+const meta = Meta(MyButton.new);
 ```
 
 ### Adding Blocks
@@ -94,12 +104,14 @@ final meta = Meta<MyButton>(
 Add blocks before or after existing ones using extension methods:
 
 ```dart
-final meta = Meta<MyButton>(
+final component = ComponentMeta(
   docsBuilder: (blocks) => blocks
     ..insertAfter<ComponentNameDocBlock>(
       const TextDocBlock('⭐ This is our most popular component!'),
     ),
 );
+
+const meta = Meta(MyButton.new);
 ```
 
 ### Complex Customization
@@ -107,7 +119,7 @@ final meta = Meta<MyButton>(
 Combine multiple modifications:
 
 ```dart
-final meta = Meta<MyComplexWidget>(
+final component = ComponentMeta(
   docsBuilder: (blocks) => blocks
     ..insertBefore<DartCommentDocBlock>(
       WidgetDocBlock(
@@ -121,4 +133,6 @@ final meta = Meta<MyComplexWidget>(
       const TextDocBlock('For more examples, see our style guide.'),
     ),
 );
+
+const meta = Meta(MyComplexWidget.new);
 ```

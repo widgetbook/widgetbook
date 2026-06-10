@@ -22,6 +22,10 @@ class MultiConstructorWidget extends StatelessWidget {
   Widget build(BuildContext context) => Text('$count');
 }
 
-const meta = Meta<MultiConstructorWidget>();
+const meta = Meta(MultiConstructorWidget.new);
 
-final $Default = Object();
+const otherMeta = Meta(MultiConstructorWidget.other);
+
+final $Default = _Story();
+
+final $Other = _OtherStory();

@@ -11,15 +11,15 @@ part of 'controls.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<Controls, ControlsArgs>;
+typedef _Component = Component<Controls, StoryArgs<Controls>>;
 typedef _Scenario = ControlsScenario;
 typedef _Defaults = ControlsDefaults;
 typedef _Story = ControlsStory;
 typedef _Args = ControlsArgs;
-final ControlsComponent = Component<Controls, ControlsArgs>(
-  name: meta.name ?? 'Controls',
-  path: meta.path ?? '[sam]',
-  docsBuilder: meta.docsBuilder,
+final ControlsComponent = Component<Controls, StoryArgs<Controls>>(
+  name: component.name ?? 'Controls',
+  path: component.path ?? '[sam]',
+  docsBuilder: component.docsBuilder,
   docComment: null,
   stories: [$Default..$generatedName = 'Default'],
 );

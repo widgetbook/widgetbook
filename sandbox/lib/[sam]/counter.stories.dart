@@ -5,7 +5,7 @@ import 'counter.dart';
 
 part 'counter.stories.g.dart';
 
-final meta = Meta<Counter>(
+final component = ComponentMeta(
   docsBuilder: (blocks) => blocks.replaceFirst<DartCommentDocBlock>(
     const TextDocBlock('''
 1. Defining a scenario with args
@@ -13,6 +13,8 @@ final meta = Meta<Counter>(
 '''),
   ),
 );
+
+const meta = Meta(Counter.new);
 
 final $Default = _Story(
   args: _Args(

@@ -5,7 +5,7 @@ import 'screen_container.dart';
 
 part 'screen_container.stories.g.dart';
 
-const meta = Meta<ScreenContainer>();
+const meta = Meta(ScreenContainer.new);
 
 final $Default = _Story(
   name: 'Default',

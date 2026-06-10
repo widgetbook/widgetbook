@@ -38,7 +38,7 @@ import 'package:components/button.dart';
 
 part 'button.stories.g.dart';
 
-final meta = Meta<Button>();
+const meta = Meta(Button.new);
 
 final $Primary = _Story(
   args: _Args(
@@ -112,7 +112,7 @@ final $Disabled = _Story(...);
 
 ## Component Path
 
-You can change the navigation path of your stories by using the `path` parameter in `Meta` as follows:
+You can change the navigation path of your stories by using the `path` parameter in `ComponentMeta` as follows:
 
 <Info>
   If you wrap a folder name in **square brackets**, it will be treated as a
@@ -120,7 +120,9 @@ You can change the navigation path of your stories by using the `path` parameter
 </Info>
 
 ```dart title="widgetbook/lib/button.stories.dart"
-final meta = Meta<Button>(
+const component = ComponentMeta(
   path: 'components/button',
 );
+
+const meta = Meta(Button.new);
 ```

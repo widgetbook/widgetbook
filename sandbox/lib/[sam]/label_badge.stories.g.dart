@@ -11,15 +11,15 @@ part of 'label_badge.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<LabelBadge, NumericBadgeInputArgs>;
+typedef _Component = Component<LabelBadge, StoryArgs<LabelBadge>>;
 typedef _Scenario = LabelBadgeScenario;
 typedef _Defaults = LabelBadgeDefaults;
 typedef _Story = LabelBadgeStory;
 typedef _Args = NumericBadgeInputArgs;
-final LabelBadgeComponent = Component<LabelBadge, NumericBadgeInputArgs>(
-  name: meta.name ?? 'LabelBadge',
-  path: meta.path ?? '[sam]',
-  docsBuilder: meta.docsBuilder,
+final LabelBadgeComponent = Component<LabelBadge, StoryArgs<LabelBadge>>(
+  name: component.name ?? 'LabelBadge',
+  path: component.path ?? '[sam]',
+  docsBuilder: component.docsBuilder,
   docComment: null,
   stories: [
     $Primary..$generatedName = 'Primary',

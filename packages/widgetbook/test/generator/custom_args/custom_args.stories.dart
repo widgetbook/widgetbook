@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-part 'meta_with_args.stories.g.dart';
+part 'custom_args.stories.g.dart';
 
 class LabelBadge extends StatelessWidget {
   const LabelBadge({super.key, required this.text});
@@ -18,10 +18,10 @@ class NumericBadgeInput {
   final int number;
 }
 
-const meta = MetaWithArgs<LabelBadge, NumericBadgeInput>();
+const meta = Meta(LabelBadge.new, argsType: NumericBadgeInput.new);
 
 final defaults = _Defaults(
   builder: (context, args) => LabelBadge(text: args.number.toString()),
 );
 
-final $Default = Object();
+final $Default = _Story();

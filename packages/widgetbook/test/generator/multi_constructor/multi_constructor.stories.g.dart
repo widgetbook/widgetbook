@@ -7,18 +7,24 @@ part of 'multi_constructor.stories.dart';
 // **************************************************************************
 
 typedef _Component =
-    Component<MultiConstructorWidget, MultiConstructorWidgetArgs>;
+    Component<MultiConstructorWidget, StoryArgs<MultiConstructorWidget>>;
 typedef _Scenario = MultiConstructorWidgetScenario;
 typedef _Defaults = MultiConstructorWidgetDefaults;
 typedef _Story = MultiConstructorWidgetStory;
 typedef _Args = MultiConstructorWidgetArgs;
+typedef _OtherScenario = MultiConstructorWidgetOtherScenario;
+typedef _OtherDefaults = MultiConstructorWidgetOtherDefaults;
+typedef _OtherStory = MultiConstructorWidgetOtherStory;
+typedef _OtherArgs = MultiConstructorWidgetOtherArgs;
 final MultiConstructorWidgetComponent =
-    Component<MultiConstructorWidget, MultiConstructorWidgetArgs>(
-      name: meta.name ?? 'MultiConstructorWidget',
-      path: meta.path ?? '',
-      docsBuilder: meta.docsBuilder,
+    Component<MultiConstructorWidget, StoryArgs<MultiConstructorWidget>>(
+      name: 'MultiConstructorWidget',
+      path: '',
       docComment: null,
-      stories: [$Default..$generatedName = 'Default'],
+      stories: [
+        $Default..$generatedName = 'Default',
+        $Other..$generatedName = 'Other',
+      ],
     );
 typedef MultiConstructorWidgetScenario =
     Scenario<MultiConstructorWidget, MultiConstructorWidgetArgs>;
@@ -63,4 +69,50 @@ class MultiConstructorWidgetArgs extends StoryArgs<MultiConstructorWidget> {
 
   @override
   List<Arg?> get list => [keyArg, countArg];
+}
+
+typedef MultiConstructorWidgetOtherScenario =
+    Scenario<MultiConstructorWidget, MultiConstructorWidgetOtherArgs>;
+typedef MultiConstructorWidgetOtherDefaults =
+    Defaults<MultiConstructorWidget, MultiConstructorWidgetOtherArgs>;
+
+class MultiConstructorWidgetOtherStory
+    extends Story<MultiConstructorWidget, MultiConstructorWidgetOtherArgs> {
+  MultiConstructorWidgetOtherStory({
+    super.name,
+    super.setup,
+    super.modes,
+    MultiConstructorWidgetOtherArgs? args,
+    StoryWidgetBuilder<MultiConstructorWidget, MultiConstructorWidgetOtherArgs>?
+    builder,
+    super.scenarios,
+  }) : super(
+         args: args ?? MultiConstructorWidgetOtherArgs(),
+         builder:
+             builder ??
+             (context, args) =>
+                 MultiConstructorWidget.other(key: args.key, label: args.label),
+       );
+}
+
+class MultiConstructorWidgetOtherArgs
+    extends StoryArgs<MultiConstructorWidget> {
+  MultiConstructorWidgetOtherArgs({Arg<Key?>? key, Arg<String>? label})
+    : this.keyArg = $initArg('key', key, null),
+      this.labelArg = $initArg('label', label, StringArg(''))!;
+
+  MultiConstructorWidgetOtherArgs.fixed({Key? key, String label = ''})
+    : this.keyArg = key == null ? null : Arg.fixed(key),
+      this.labelArg = Arg.fixed(label);
+
+  final Arg<Key?>? keyArg;
+
+  final Arg<String> labelArg;
+
+  Key? get key => keyArg?.value;
+
+  String get label => labelArg.value;
+
+  @override
+  List<Arg?> get list => [keyArg, labelArg];
 }

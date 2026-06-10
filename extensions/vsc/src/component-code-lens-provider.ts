@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import * as fs from "fs";
+import { buildMetaRegex } from "./extension";
 
 export const WIDGET_CLASS_PATTERN =
   /class\s+(\w+)\s+extends\s+(?:Stateless|Stateful|Consumer)Widget/g;
@@ -56,7 +57,7 @@ export class ComponentCodeLensProvider implements vscode.CodeLensProvider {
       return false;
     }
 
-    const metaRegex = new RegExp(`Meta<${className}>`);
+    const metaRegex = buildMetaRegex(className);
 
     for (const folder of workspaceFolders) {
       const storyFiles = this.findStoriesDartFiles(folder.uri.fsPath);

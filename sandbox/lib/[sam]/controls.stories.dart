@@ -6,13 +6,15 @@ import 'counter.stories.dart' as counter;
 
 part 'controls.stories.g.dart';
 
-final meta = Meta<Controls>(
+final component = ComponentMeta(
   docsBuilder: (blocks) => blocks.replaceFirst<DartCommentDocBlock>(
     const TextDocBlock(
       'Testing out the navigation to other stories and docs.',
     ),
   ),
 );
+
+const meta = Meta(Controls.new);
 
 final $Default = _Story(
   name: 'Default',

@@ -5,7 +5,7 @@ import 'stepped_counter.dart';
 
 part 'stepped_counter.stories.g.dart';
 
-const meta = Meta<SteppedCounter>();
+const meta = Meta(SteppedCounter.new);
 
 final _key = GlobalKey();
 

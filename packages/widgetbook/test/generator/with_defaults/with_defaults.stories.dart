@@ -18,11 +18,11 @@ class DefaultsVarInput {
   final String label;
 }
 
-const meta = MetaWithArgs<DefaultsVarWidget, DefaultsVarInput>();
+const meta = Meta(DefaultsVarWidget.new, argsType: DefaultsVarInput.new);
 
 final defaults = _Defaults(
   setup: (context, child, args) => child,
   builder: (context, args) => DefaultsVarWidget(label: args.label),
 );
 
-final $Default = Object();
+final $Default = _Story();
