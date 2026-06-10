@@ -5,10 +5,12 @@ import 'bool_preview.dart';
 
 part 'bool_preview.stories.g.dart';
 
-const meta = Meta<BoolPreview>(
+const component = ComponentMeta(
   name: 'BoolPreview',
   path: 'args/bool',
 );
+
+const meta = Meta(BoolPreview.new);
 
 /// Demonstrates BoolArg.
 final $Boolean = _Story(

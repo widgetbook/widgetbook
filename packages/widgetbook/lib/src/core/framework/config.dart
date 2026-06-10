@@ -126,7 +126,7 @@ class Config {
   /// displayed in the documentation panel.
   ///
   /// The list can be further customized at the [Component] level using
-  /// the [Meta.docsBuilder] method.
+  /// the [ComponentMeta.docsBuilder] field.
   ///
   /// If not provided, defaults to [defaultDocsBuilder].
   final List<DocBlock> Function()? docsBuilder;

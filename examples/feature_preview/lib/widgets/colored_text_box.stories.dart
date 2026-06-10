@@ -6,10 +6,12 @@ import 'colored_text_box.dart';
 
 part 'colored_text_box.stories.g.dart';
 
-const meta = Meta<ColoredTextBox>(
+const component = ComponentMeta(
   name: 'ColoredTextBox',
   path: 'args/color',
 );
+
+const meta = Meta(ColoredTextBox.new);
 
 /// Demonstrates ColorArg.
 final $Color = _Story(

@@ -6,17 +6,17 @@ part of 'generic_bound_nullable.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<NullableBoundWidget, NullableBoundWidgetArgs>;
+typedef _Component =
+    Component<NullableBoundWidget, StoryArgs<NullableBoundWidget>>;
 typedef _Scenario<D, T extends BaseItem<D?>> =
     NullableBoundWidgetScenario<D, T>;
 typedef _Defaults = NullableBoundWidgetDefaults;
 typedef _Story<D, T extends BaseItem<D?>> = NullableBoundWidgetStory<D, T>;
 typedef _Args<D, T extends BaseItem<D?>> = NullableBoundWidgetArgs<D, T>;
 final NullableBoundWidgetComponent =
-    Component<NullableBoundWidget, NullableBoundWidgetArgs>(
-      name: meta.name ?? 'NullableBoundWidget',
-      path: meta.path ?? '',
-      docsBuilder: meta.docsBuilder,
+    Component<NullableBoundWidget, StoryArgs<NullableBoundWidget>>(
+      name: 'NullableBoundWidget',
+      path: '',
       docComment: null,
       stories: [$Default..$generatedName = 'Default'],
     );

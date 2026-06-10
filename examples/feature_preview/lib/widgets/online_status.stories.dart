@@ -5,10 +5,12 @@ import 'online_status.dart';
 
 part 'online_status.stories.g.dart';
 
-const meta = Meta<OnlineStatusBadge>(
+const component = ComponentMeta(
   name: 'OnlineStatusBadge',
   path: 'args/enum',
 );
+
+const meta = Meta(OnlineStatusBadge.new);
 
 /// Demonstrates EnumArg with dropdown style.
 final $EnumDropdown = _Story(

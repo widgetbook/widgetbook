@@ -10,7 +10,7 @@ import 'docs.dart';
 ///
 /// Example — unconstrained sizing for simple widget components:
 /// ```dart
-/// final meta = Meta<MyButton>(
+/// final component = ComponentMeta(
 ///   docsBuilder: (blocks) => blocks.replaceFirst<StoriesDocBlock>(
 ///     const StoriesDocBlock.unconstrained(),
 ///   ),

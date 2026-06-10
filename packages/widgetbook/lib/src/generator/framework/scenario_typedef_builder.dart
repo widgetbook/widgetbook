@@ -1,34 +1,26 @@
-import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
 
 import 'extensions.dart';
+import 'variant.dart';
 
 class ScenarioTypedefBuilder {
-  ScenarioTypedefBuilder(this.widgetType, this.argsType);
+  ScenarioTypedefBuilder(this.variant);
 
-  final DartType widgetType;
-  final DartType argsType;
+  final Variant variant;
 
   TypeReference get scenarioTypeRef {
-    return widgetType.getRef(
-      suffix: 'Scenario',
-      types: getTypeParams(withBounds: false),
+    return variant.widgetType.getRef(
+      suffix: '${variant.prefix}Scenario',
+      types: variant.getTypeParams(withBounds: false),
     );
-  }
-
-  Set<Reference> getTypeParams({bool withBounds = true}) {
-    return {
-      ...widgetType.getTypeParams(withBounds: withBounds),
-      ...argsType.getTypeParams(withBounds: withBounds),
-    };
   }
 
   TypeDef buildUnderscoreType() {
     final typeRef = scenarioTypeRef;
     return TypeDef(
       (b) => b
-        ..name = '_Scenario'
-        ..types.addAll(getTypeParams())
+        ..name = '_${variant.prefix}Scenario'
+        ..types.addAll(variant.getTypeParams())
         ..definition = TypeReference(
           (b) => b
             ..symbol = typeRef.symbol
@@ -38,18 +30,18 @@ class ScenarioTypedefBuilder {
   }
 
   TypeDef build() {
-    final unboundedTypeParams = getTypeParams(withBounds: false);
-    final widgetTypeRef = widgetType.getRef();
+    final unboundedTypeParams = variant.getTypeParams(withBounds: false);
+    final widgetTypeRef = variant.widgetType.getRef();
 
-    final argsTypeRef = argsType.getRef(
-      suffix: 'Args',
+    final argsTypeRef = variant.argsType.getRef(
+      suffix: variant.argsSuffix,
       types: unboundedTypeParams,
     );
 
     return TypeDef(
       (b) => b
         ..name = scenarioTypeRef.symbol
-        ..types.addAll(getTypeParams())
+        ..types.addAll(variant.getTypeParams())
         ..definition = TypeReference(
           (b) => b
             ..symbol = 'Scenario'

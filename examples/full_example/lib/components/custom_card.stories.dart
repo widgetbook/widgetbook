@@ -6,7 +6,7 @@ import 'custom_card.dart';
 
 part 'custom_card.stories.g.dart';
 
-const meta = Meta<CustomCard>();
+const meta = Meta(CustomCard.new);
 
 final $Default = _Story(
   name: 'Default',

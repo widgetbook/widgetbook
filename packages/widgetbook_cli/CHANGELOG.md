@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Update `init` scaffolding and `coverage` component collection to the new `ComponentMeta` + constructor tear-off `Meta` API.
+
 ## 4.0.0-beta.6
 
 - **CHORE**: Align version with `widgetbook` so both packages share `4.0.0-beta.6`.

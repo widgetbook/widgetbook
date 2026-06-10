@@ -12,7 +12,7 @@ import 'package:my_app/my_widget.dart';
 
 part 'my_widget.stories.g.dart';
 
-const meta = Meta<MyWidget>();
+const meta = Meta(MyWidget.new);
 ```
 
 Run the following command to generate the `_Args` class for your widget:
@@ -98,7 +98,7 @@ The result is that the arg panel stays in sync with widget interactions without 
 
 ## Custom Args Source
 
-The default source for args generation is the widget's constructor. However, you can customize this behavior by using `MetaWithArgs` as follows:
+The default source for args generation is the widget's constructor. However, you can customize this behavior by providing a custom args class via `Meta.argsType` as follows:
 
 ```dart title="my_widget.stories.dart"
 import 'package:widgetbook/widgetbook.dart';
@@ -106,7 +106,7 @@ import 'package:my_app/my_widget.dart';
 
 part 'my_widget.stories.g.dart';
 
-const meta = MetaWithArgs<MyWidget, MyArgs>();
+const meta = Meta(MyWidget.new, argsType: MyArgs.new);
 
 class MyArgs {
   MyArgs({

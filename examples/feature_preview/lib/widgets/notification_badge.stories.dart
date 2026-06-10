@@ -5,10 +5,12 @@ import 'notification_badge.dart';
 
 part 'notification_badge.stories.g.dart';
 
-const meta = Meta<NotificationBadge>(
+const component = ComponentMeta(
   name: 'NotificationBadge',
   path: 'args/int',
 );
+
+const meta = Meta(NotificationBadge.new);
 
 /// Demonstrates IntArg with text input style.
 final $IntInput = _Story(

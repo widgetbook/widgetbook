@@ -11,19 +11,20 @@ part of 'nullable_setting.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<NullableSetting, NullableSettingArgs>;
+typedef _Component = Component<NullableSetting, StoryArgs<NullableSetting>>;
 typedef _Scenario = NullableSettingScenario;
 typedef _Defaults = NullableSettingDefaults;
 typedef _Story = NullableSettingStory;
 typedef _Args = NullableSettingArgs;
-final NullableSettingComponent = Component<NullableSetting, NullableSettingArgs>(
-  name: meta.name ?? 'NullableSetting',
-  path: meta.path ?? 'settings',
-  docsBuilder: meta.docsBuilder,
-  docComment:
-      'A widget that represents a nullable configuration option in Widgetbook.',
-  stories: [$Default..$generatedName = 'Default'],
-);
+final NullableSettingComponent =
+    Component<NullableSetting, StoryArgs<NullableSetting>>(
+      name: component.name ?? 'NullableSetting',
+      path: component.path ?? 'settings',
+      docsBuilder: component.docsBuilder,
+      docComment:
+          r'''A widget that represents a nullable configuration option in Widgetbook.''',
+      stories: [$Default..$generatedName = 'Default'],
+    );
 typedef NullableSettingScenario =
     Scenario<NullableSetting, NullableSettingArgs>;
 typedef NullableSettingDefaults =

@@ -6,16 +6,15 @@ part of 'primitive.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<PrimitiveWidget, PrimitiveWidgetArgs>;
+typedef _Component = Component<PrimitiveWidget, StoryArgs<PrimitiveWidget>>;
 typedef _Scenario = PrimitiveWidgetScenario;
 typedef _Defaults = PrimitiveWidgetDefaults;
 typedef _Story = PrimitiveWidgetStory;
 typedef _Args = PrimitiveWidgetArgs;
 final PrimitiveWidgetComponent =
-    Component<PrimitiveWidget, PrimitiveWidgetArgs>(
-      name: meta.name ?? 'PrimitiveWidget',
-      path: meta.path ?? '',
-      docsBuilder: meta.docsBuilder,
+    Component<PrimitiveWidget, StoryArgs<PrimitiveWidget>>(
+      name: 'PrimitiveWidget',
+      path: '',
       docComment: null,
       stories: [$Default..$generatedName = 'Default'],
     );

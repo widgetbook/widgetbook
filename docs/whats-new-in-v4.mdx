@@ -31,21 +31,23 @@ import 'package:widgetbook/widgetbook.dart';
 
 part 'my_widget.stories.g.dart';
 
-const meta = Meta<MyWidget>();
+const meta = Meta(MyWidget.new);
 
 final $Default = _Story(
   name: 'Default',
 );
 ```
 
-## The `Meta` Argument
+## The `ComponentMeta` and `Meta` Arguments
 
-`Meta<T>` declares which component your stories belong to.
-It acts as the anchor that connects stories, args, and documentation to one widget type.
+The `Meta` declaration selects the constructor your stories are generated for, via a constructor tear-off.
+The component widget is derived from this tear-off, so a single `Meta` declaration is all a stories file needs.
 
 ```dart
-const meta = Meta<MyWidget>();
+const meta = Meta(MyWidget.new);
 ```
+
+If you want to customize component-level fields (`name`, `path`, or `docsBuilder`), you can optionally add a `ComponentMeta` declaration — at most one per file.
 
 When you run `build_runner`, Widgetbook generates declarations such as `_Story`, `_Args`, and `_Scenario`.
 These generated APIs reduce boilerplate and make the framework easier to navigate.
@@ -112,7 +114,7 @@ final $Default = _Story(
 ## Component Documentation
 
 Widgetbook 4 introduces automatic component documentation powered by `DocBlock`s.
-Documentation is generated from your components and stories and can be customized globally in `Config` or per component via `Meta`.
+Documentation is generated from your components and stories and can be customized globally in `Config` or per component via `ComponentMeta`.
 
 ```dart
 // Global configuration
@@ -126,12 +128,14 @@ final config = Config(
 );
 
 // Component-level customization
-final meta = Meta<MyWidget>(
+final component = ComponentMeta(
   docsBuilder: (blocks) => blocks
     ..insertAfter<ComponentNameDocBlock>(
       const TextDocBlock('Additional context for this component.'),
     ),
 );
+
+const meta = Meta(MyWidget.new);
 ```
 
 ## Golden Testing

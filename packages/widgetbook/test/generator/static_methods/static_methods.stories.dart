@@ -21,6 +21,6 @@ class StaticMethodWidget extends StatelessWidget {
   Widget build(BuildContext context) => builder(context);
 }
 
-const meta = Meta<StaticMethodWidget>();
+const meta = Meta(StaticMethodWidget.new);
 
-final $Default = Object();
+final $Default = _Story();

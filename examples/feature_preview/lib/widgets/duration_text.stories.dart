@@ -5,10 +5,12 @@ import 'duration_text.dart';
 
 part 'duration_text.stories.g.dart';
 
-const meta = Meta<DurationText>(
+const component = ComponentMeta(
   name: 'DurationText',
   path: 'args/duration',
 );
+
+const meta = Meta(DurationText.new);
 
 /// Demonstrates DurationArg.
 final $Duration = _Story(

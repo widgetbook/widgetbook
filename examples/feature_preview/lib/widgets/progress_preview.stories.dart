@@ -5,10 +5,12 @@ import 'progress_preview.dart';
 
 part 'progress_preview.stories.g.dart';
 
-const meta = Meta<ProgressPreview>(
+const component = ComponentMeta(
   name: 'ProgressPreview',
   path: 'args/double',
 );
+
+const meta = Meta(ProgressPreview.new);
 
 /// Demonstrates DoubleArg with text input style.
 final $DoubleInput = _Story(
