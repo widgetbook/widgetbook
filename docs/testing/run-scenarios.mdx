@@ -72,6 +72,31 @@ final config = Config(
 
 The hooks fire for every scenario across every component and story when run via `testWidgetbook(config)`.
 
+## Wrapping Scenario Execution
+
+`Config.scenarioConfig` also accepts an optional `wrapper` callback that wraps the *entire* execution of every scenario — pumping the widget, `setUp`, the scenario's `run` callback, the snapshot capture, and `tearDown`. It receives the active `WidgetTester`, the current `Scenario`, and a `body` callback that performs all of the above; it must await `body` exactly once.
+
+Unlike `setUp`, which runs after the scenario's widget has already been pumped, the `wrapper` is on the call stack *before* the first frame is built. This makes it the right place for `Zone`-scoped configuration that must be visible inside your widgets' `build` methods — such as faking time with [`package:clock`](https://pub.dev/packages/clock), overriding `HttpOverrides`, or setting `Intl.defaultLocale`.
+
+For example, to render every scenario at a fixed point in time (so widgets calling `clock.now()` produce deterministic snapshots):
+
+```dart
+import 'package:clock/clock.dart';
+import 'package:widgetbook/widgetbook.dart';
+
+import 'components.g.dart';
+
+final config = Config(
+  components: components,
+  scenarioConfig: ScenarioConfig(
+    wrapper: (tester, scenario, body) =>
+        withClock(Clock.fixed(DateTime(2024, 6, 15)), body),
+  ),
+);
+```
+
+Note that wrapping `testWidgetbook(config)` itself in `withClock` does **not** work: the test framework executes each test body in its own `Zone`, which is not a child of the `Zone` that declared the tests. The `wrapper` hook exists precisely to re-apply your `Zone` setup inside each test body. For the same reason, addons cannot fake `clock.now()` — they inject widgets into the tree, while `package:clock` reads from the call stack.
+
 ## Generated Snapshot Artifacts
 
 By default, artifacts are written to:
