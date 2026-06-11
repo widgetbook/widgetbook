@@ -62,6 +62,8 @@ void testScenario(
         ),
       );
 
+      await config.scenarioConfig.setUp?.call(tester, scenario);
+
       await scenario.execute(tester);
 
       final element = tester.element(find.byKey(key));
@@ -104,6 +106,8 @@ void testScenario(
 
         image.dispose();
       });
+
+      await config.scenarioConfig.tearDown?.call(tester, scenario);
 
       semanticsHandle.dispose();
       addTearDown(tester.view.reset);
