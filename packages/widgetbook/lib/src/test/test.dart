@@ -54,60 +54,68 @@ void testScenario(
 
       final semanticsHandle = tester.binding.ensureSemantics();
 
-      final key = UniqueKey();
-      await tester.pumpWidget(
-        Builder(
-          key: key,
-          builder: (context) => scenario.buildWithConfig(context, config),
-        ),
-      );
-
-      await config.scenarioConfig.setUp?.call(tester, scenario);
-
-      await scenario.execute(tester);
-
-      final element = tester.element(find.byKey(key));
-      final imageFuture = captureImage(element, 1);
-
-      final semanticsNode = tester.getSemantics(find.byKey(key));
-
-      // Run on separate isolate as async operations cannot be run inside
-      // testWidgets directly.
-      final binding = TestWidgetsFlutterBinding.instance;
-      await binding.runAsync(() async {
-        final image = await imageFuture;
-        final byteData = await image.toByteData(format: ImageByteFormat.png);
-        final imageBytes = byteData!.buffer.asUint8List();
-
-        final jsonEncoder = const JsonEncoder.withIndent('  ');
-
-        final semanticsData = SemanticsTreeSerializer.toJson(
-          semanticsNode,
-        );
-
-        final metadata = ScenarioMetadata(
-          scenario: scenario,
-          imageBytes: imageBytes,
-          imageWidth: image.width,
-          imageHeight: image.height,
-          pixelRatio: targetViewport.pixelRatio,
-          semanticsData: semanticsData,
-        );
-
-        await metadata.directory.create(recursive: true);
-
-        await Future.wait([
-          metadata.imageFile.writeAsBytes(imageBytes, flush: true),
-          metadata.jsonFile.writeAsString(
-            jsonEncoder.convert(metadata),
-            flush: true,
+      Future<void> body() async {
+        final key = UniqueKey();
+        await tester.pumpWidget(
+          Builder(
+            key: key,
+            builder: (context) => scenario.buildWithConfig(context, config),
           ),
-        ]);
+        );
 
-        image.dispose();
-      });
+        await config.scenarioConfig.setUp?.call(tester, scenario);
 
-      await config.scenarioConfig.tearDown?.call(tester, scenario);
+        await scenario.execute(tester);
+
+        final element = tester.element(find.byKey(key));
+        final imageFuture = captureImage(element, 1);
+
+        final semanticsNode = tester.getSemantics(find.byKey(key));
+
+        // Run on separate isolate as async operations cannot be run inside
+        // testWidgets directly.
+        final binding = TestWidgetsFlutterBinding.instance;
+        await binding.runAsync(() async {
+          final image = await imageFuture;
+          final byteData = await image.toByteData(format: ImageByteFormat.png);
+          final imageBytes = byteData!.buffer.asUint8List();
+
+          final jsonEncoder = const JsonEncoder.withIndent('  ');
+
+          final semanticsData = SemanticsTreeSerializer.toJson(
+            semanticsNode,
+          );
+
+          final metadata = ScenarioMetadata(
+            scenario: scenario,
+            imageBytes: imageBytes,
+            imageWidth: image.width,
+            imageHeight: image.height,
+            pixelRatio: targetViewport.pixelRatio,
+            semanticsData: semanticsData,
+          );
+
+          await metadata.directory.create(recursive: true);
+
+          await Future.wait([
+            metadata.imageFile.writeAsBytes(imageBytes, flush: true),
+            metadata.jsonFile.writeAsString(
+              jsonEncoder.convert(metadata),
+              flush: true,
+            ),
+          ]);
+
+          image.dispose();
+        });
+
+        await config.scenarioConfig.tearDown?.call(tester, scenario);
+      }
+
+      // The wrapper must already be on the call stack when the widget is
+      // pumped, so that Zone values (e.g. package:clock's clock) are visible
+      // to the build methods of the scenario's widget tree.
+      final wrapper = config.scenarioConfig.wrapper;
+      await (wrapper == null ? body() : wrapper(tester, scenario, body));
 
       semanticsHandle.dispose();
       addTearDown(tester.view.reset);

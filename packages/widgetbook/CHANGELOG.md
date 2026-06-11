@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FEAT**: Add `wrapper` callback to `ScenarioConfig` that wraps each scenario's entire execution in `testWidgetbook`, enabling `Zone`-scoped setup such as faking time with `package:clock`. ([#1932](https://github.com/widgetbook/widgetbook/pull/1932))
 - **FEAT**: Add `setUp` and `tearDown` callbacks to `ScenarioConfig` for logic around each scenario in `testWidgetbook`. ([#1917](https://github.com/widgetbook/widgetbook/pull/1917) - by [@ABausG](https://github.com/ABausG))
 - **FIX**: Propagate mode value to `SemanticsAddon`, `TextScaleAddon`, `TimeDilationAddon`, and `ZoomAddon`. ([#1916](https://github.com/widgetbook/widgetbook/pull/1916) - by [@ABausG](https://github.com/ABausG))
 - **BREAKING**: Replace `Config.scenarios` with `Config.scenarioConfig` of new type `ScenarioConfig`; see the [PR description](https://github.com/widgetbook/widgetbook/pull/1930) for migration steps. ([#1930](https://github.com/widgetbook/widgetbook/pull/1930))

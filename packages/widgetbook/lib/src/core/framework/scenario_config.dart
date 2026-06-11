@@ -16,6 +16,17 @@ import 'story.dart';
 typedef ScenarioCallback =
     Future<void> Function(WidgetTester tester, Scenario scenario);
 
+/// Callback wrapping the entire execution of a [Scenario] during
+/// [testWidgetbook].
+///
+/// Implementations must await `body` exactly once.
+typedef ScenarioWrapper =
+    Future<void> Function(
+      WidgetTester tester,
+      Scenario scenario,
+      Future<void> Function() body,
+    );
+
 /// Configuration applied to every [Scenario] discovered from a [Config].
 ///
 /// Exposes [definitions] that are expanded into a [Scenario] for every
@@ -26,6 +37,7 @@ class ScenarioConfig {
     this.definitions = const [],
     this.setUp,
     this.tearDown,
+    this.wrapper,
   });
 
   /// [ScenarioDefinition]s applied to every [Story] of every [Component].
@@ -46,4 +58,19 @@ class ScenarioConfig {
   /// Use it to reset state mutated by [setUp] or the scenario itself. Only
   /// applied during [testWidgetbook].
   final ScenarioCallback? tearDown;
+
+  /// Wraps the entire execution of each [Scenario]. Only applied during
+  /// [testWidgetbook].
+  ///
+  /// Since the wrapper stays on the call stack while the scenario runs,
+  /// `Zone`-scoped configuration becomes visible to the widgets, e.g.
+  /// faking time with `package:clock`:
+  ///
+  /// ```dart
+  /// ScenarioConfig(
+  ///   wrapper: (tester, scenario, body) =>
+  ///     withClock(Clock.fixed(DateTime(2024, 6, 15)), body),
+  /// )
+  /// ```
+  final ScenarioWrapper? wrapper;
 }
