@@ -6,17 +6,17 @@ import '../framework/framework.dart';
 
 /// An [Addon] for changing [timeDilation].
 class TimeDilationMode extends Mode<double> {
-  TimeDilationMode(double value) : super(value, TimeDilationAddon());
+  TimeDilationMode(double value) : super(value, TimeDilationAddon(value));
 
   @override
   String get formattedValue => 'x$value';
 }
 
 class TimeDilationAddon extends Addon<double> with SingleFieldOnly {
-  TimeDilationAddon()
+  TimeDilationAddon([double value = 1])
     : super(
         name: 'Time Dilation',
-        initialValue: 1,
+        initialValue: value,
       );
 
   /// Predefined time dilation values for animation speed control.

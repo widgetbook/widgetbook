@@ -198,26 +198,16 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   /// A list of all scenarios for this story. The list includes the local ones
   /// defined in [scenarios] as well as the ones generated from the
   /// [ScenarioDefinition]s defined in the [Config].
-  ///
-  /// When a [ScenarioDefinition.applyToStoryScenarios] is `true` and the story
-  /// defines custom scenarios, additional scenarios are created by merging that
-  /// definition with each custom scenario as `Scenario Name | Mode Names`.
-  /// Custom scenarios are not included without merged modes. Standalone global
-  /// scenarios are still created for every definition and named
-  /// `Default | Mode Names` when custom scenarios exist, except when a local
-  /// scenario is also named `Default` and the definition has
-  /// [ScenarioDefinition.applyToStoryScenarios] enabled (the merged local
-  /// scenario already covers that case).
-  ///
-  /// When no custom scenarios are defined, [applyToStoryScenarios] has no
-  /// additional effect beyond standalone global scenarios.
   /// If no scenarios are defined, a default scenario is returned.
   List<Scenario<TWidget, TArgs>> allScenarios(Config config) {
     final localScenarios = scenarios;
-    final hasCustomScenarios = localScenarios.isNotEmpty;
-    final applyingDefinitions = config.scenarios.where(
-      (definition) =>
-          definition.applyToStoryScenarios && hasCustomScenarios,
+    final globalScenarios = config.scenarioConfig.definitions.map(
+      (definition) => Scenario<TWidget, TArgs>(
+        type: ScenarioType.global,
+        name: definition.name,
+        modes: definition.modes,
+        mergeModes: definition.mergeModes,
+      )..story = this,
     );
 
     final defaultScenario = Scenario<TWidget, TArgs>(
@@ -225,44 +215,8 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
       name: 'Default',
     )..story = this;
 
-    final hasDefaultLocalScenario = localScenarios.any(
-      (scenario) => scenario.name == defaultScenario.name,
-    );
-
-    final globalScenarios = config.scenarios
-        .where(
-          (definition) =>
-              !hasDefaultLocalScenario ||
-              !definition.applyToStoryScenarios ||
-              !hasCustomScenarios,
-        )
-        .map(
-          (definition) => Scenario<TWidget, TArgs>(
-            type: ScenarioType.global,
-            name: hasCustomScenarios
-                ? mergedScenarioName(defaultScenario.name, definition.name)
-                : definition.name,
-            modes: definition.modes,
-            mergeModes: definition.mergeModes,
-          )..story = this,
-        );
-
-    final mergedScenarios = localScenarios.expand(
-      (local) => applyingDefinitions.map(
-        (definition) => local.withGlobalDefinition(definition),
-      ),
-    );
-
-    final standaloneLocals = applyingDefinitions.isEmpty
-        ? localScenarios
-        : <Scenario<TWidget, TArgs>>[];
-
-    final effectiveScenarios = [
-      ...globalScenarios,
-      ...standaloneLocals,
-      ...mergedScenarios,
-    ];
-
-    return effectiveScenarios.isEmpty ? [defaultScenario] : effectiveScenarios;
+    return globalScenarios.isEmpty && localScenarios.isEmpty
+        ? [defaultScenario]
+        : [...globalScenarios, ...localScenarios];
   }
 }

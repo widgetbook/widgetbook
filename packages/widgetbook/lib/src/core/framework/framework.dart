@@ -9,6 +9,7 @@ export 'integration.dart';
 export 'meta.dart';
 export 'mode.dart';
 export 'scenario.dart';
+export 'scenario_config.dart';
 export 'scenario_definition.dart';
 export 'story.dart';
 export 'story_args.dart';

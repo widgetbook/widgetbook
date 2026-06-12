@@ -4,7 +4,7 @@ import '../fields/fields.dart';
 import '../framework/framework.dart';
 
 class ZoomMode extends Mode<double> {
-  ZoomMode(double value) : super(value, ZoomAddon());
+  ZoomMode(double value) : super(value, ZoomAddon(value));
 
   @override
   String get formattedValue => 'x$value';
@@ -12,10 +12,10 @@ class ZoomMode extends Mode<double> {
 
 /// An [Addon] for zoom/scaling.
 class ZoomAddon extends Addon<double> with SingleFieldOnly {
-  ZoomAddon()
+  ZoomAddon([double ratio = 1])
     : super(
         name: 'Zoom',
-        initialValue: 1,
+        initialValue: ratio,
       );
 
   @override

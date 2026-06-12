@@ -67,4 +67,4 @@ Widgetbook Cloud has a free tier. [Sign up](https://app.widgetbook.io/sign-up) a
 
 ## Contributing
 
-Contributions are very welcome!💙 Please check our [Contribution Docs](https://docs.widgetbook.io/contribution).
+Contributions are very welcome!💙 Please check our [Contribution Docs](https://docs.widgetbook.io/contribution/ways-to-contribute).

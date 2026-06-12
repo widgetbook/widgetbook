@@ -116,7 +116,7 @@ final config = Config(
 
 Global scenario definitions are applied to every story. During execution, Widgetbook builds the effective list as:
 
-- all global scenario definitions from `config.scenarios`
+- all global scenario definitions from `config.scenarioConfig.definitions`
 - followed by local scenarios defined in the story
 
 Each global definition becomes its own scenario per story; global definitions are not merged into a single local scenario object.
