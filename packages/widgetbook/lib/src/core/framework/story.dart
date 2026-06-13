@@ -195,28 +195,75 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     }).toList();
   }
 
-  /// A list of all scenarios for this story. The list includes the local ones
-  /// defined in [scenarios] as well as the ones generated from the
-  /// [ScenarioDefinition]s defined in the [Config].
-  /// If no scenarios are defined, a default scenario is returned.
+  /// A list of all scenarios for this story, assembled from the local ones
+  /// defined in [scenarios] and the ones generated from the
+  /// [ScenarioDefinition]s in the [Config], according to each definition's
+  /// [ScenarioStrategy].
+  ///
+  /// Standalone scenarios come first, followed by the crossed variants of
+  /// each local scenario. Crossed variants are named by the config's
+  /// `ScenarioConfig.nameBuilder`.
+  ///
+  /// If neither definitions nor local scenarios exist, a default scenario
+  /// is returned.
   List<Scenario<TWidget, TArgs>> allScenarios(Config config) {
-    final localScenarios = scenarios;
-    final globalScenarios = config.scenarioConfig.definitions.map(
-      (definition) => Scenario<TWidget, TArgs>(
-        type: ScenarioType.global,
-        name: definition.name,
-        modes: definition.modes,
-        mergeModes: definition.mergeModes,
-      )..story = this,
-    );
+    final scenarioConfig = config.scenarioConfig;
+    final definitions = scenarioConfig.definitions;
 
-    final defaultScenario = Scenario<TWidget, TArgs>(
+    Scenario<TWidget, TArgs> buildDefaultScenario() => Scenario<TWidget, TArgs>(
       type: ScenarioType.$default,
       name: 'Default',
     )..story = this;
 
-    return globalScenarios.isEmpty && localScenarios.isEmpty
-        ? [defaultScenario]
-        : [...globalScenarios, ...localScenarios];
+    if (definitions.isEmpty && scenarios.isEmpty) {
+      return [buildDefaultScenario()];
+    }
+
+    final standaloneScenarios = definitions
+        .where(
+          (definition) => definition.strategy != ScenarioStrategy.perScenario,
+        )
+        .map(
+          (definition) => Scenario<TWidget, TArgs>(
+            type: ScenarioType.global,
+            name: definition.name,
+            modes: definition.modes,
+            mergeModes: definition.mergeModes,
+          )..story = this,
+        );
+
+    final crossingDefinitions = definitions
+        .where(
+          (definition) => definition.strategy != ScenarioStrategy.perStory,
+        )
+        .toList();
+
+    if (crossingDefinitions.isEmpty) {
+      return [...standaloneScenarios, ...scenarios];
+    }
+
+    final crossedScenarios = scenarios.isNotEmpty
+        ? scenarios.expand(
+            (base) => crossingDefinitions.map(
+              (definition) => base.crossWith(
+                definition,
+                scenarioConfig.nameBuilder(definition, this, base),
+              ),
+            ),
+          )
+        : crossingDefinitions
+              .where(
+                (definition) =>
+                    definition.strategy == ScenarioStrategy.perScenario,
+              )
+              .map((definition) {
+                final base = buildDefaultScenario();
+                return base.crossWith(
+                  definition,
+                  scenarioConfig.nameBuilder(definition, this, base),
+                );
+              });
+
+    return [...standaloneScenarios, ...crossedScenarios];
   }
 }

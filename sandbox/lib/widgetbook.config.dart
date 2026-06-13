@@ -68,6 +68,13 @@ final config = Config(
           ),
         ],
       ),
+      ScenarioDefinition(
+        name: 'iPhone 13',
+        modes: [
+          ViewportMode(IosViewports.iPhone13),
+        ],
+        strategy: ScenarioStrategy.perStory,
+      ),
     ],
   ),
 );

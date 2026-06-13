@@ -1,6 +1,6 @@
 # Default Scenario
 
-Widgetbook creates a built-in `Default` scenario when a story has no defined scenarios.
+Widgetbook creates a built-in `Default` scenario when a story has no defined scenarios and the config has no global `ScenarioDefinition`s.
 
 ## How Args Are Picked
 
@@ -12,6 +12,15 @@ So whatever args you set at story level are used by the default scenario.
 ## How Modes Are Picked
 
 The default scenario does not define its own [modes](/addons/modes), so it inherits them from the story.
+
+## Interaction with Global Scenario Definitions
+
+When the config defines global `ScenarioDefinition`s, a story without local scenarios does not produce a bare `Default` scenario. Instead, the story's default state serves as the base for the definitions:
+
+- Definitions with `ScenarioStrategy.perScenario` (the default) are applied to the story's default state, producing one scenario per definition named after the definition, e.g. `Dark Mode`.
+- Definitions with `ScenarioStrategy.perStory` or `ScenarioStrategy.both` produce one standalone scenario per definition.
+
+In both cases the resulting scenarios inherit the story's args and modes, just like the `Default` scenario would.
 
 ## Practical Example
 

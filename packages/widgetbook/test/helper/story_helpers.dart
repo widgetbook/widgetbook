@@ -8,10 +8,16 @@ class TestStoryArgs extends StoryArgs<SizedBox> {
   List<Arg?> get list => const [];
 }
 
+typedef TestScenario = Scenario<SizedBox, TestStoryArgs>;
+
 class TestStory extends Story<SizedBox, TestStoryArgs> {
-  TestStory({required super.name})
-    : super(
-        args: const TestStoryArgs(),
-        builder: (_, __) => const SizedBox.shrink(),
-      );
+  TestStory({
+    required super.name,
+    super.modes,
+    super.scenarios = const [],
+    TestStoryArgs? args,
+  }) : super(
+         args: args ?? const TestStoryArgs(),
+         builder: (_, __) => const SizedBox.shrink(),
+       );
 }
