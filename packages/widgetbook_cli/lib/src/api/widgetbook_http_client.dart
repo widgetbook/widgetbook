@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 
 import 'cloud_exception.dart';
+import 'models/append_snapshots_request.dart';
+import 'models/append_snapshots_response.dart';
 import 'models/create_build_request.dart';
 import 'models/create_build_response.dart';
 import 'models/submit_build_request.dart';
@@ -39,6 +41,31 @@ class WidgetbookHttpClient {
       );
 
       return CreateBuildResponse.fromJson(response.data!);
+    } catch (e, stackTrace) {
+      throw CloudException.parse(e, stackTrace);
+    }
+  }
+
+  /// Appends a batch of snapshot metadata to an in-progress (draft) batched
+  /// build created by [createBuild]. The [buildId] is a path param.
+  ///
+  /// Sends the same version headers as [createBuild] because the server gates
+  /// the append endpoint behind a minimum CLI version.
+  Future<AppendSnapshotsResponse> appendSnapshots(
+    VersionsMetadata? versions,
+    String buildId,
+    AppendSnapshotsRequest request,
+  ) async {
+    try {
+      final response = await client.post<Map<String, dynamic>>(
+        'v4/builds/$buildId/snapshots',
+        data: request.toJson(),
+        options: Options(
+          headers: versions?.toHeaders(),
+        ),
+      );
+
+      return AppendSnapshotsResponse.fromJson(response.data!);
     } catch (e, stackTrace) {
       throw CloudException.parse(e, stackTrace);
     }
