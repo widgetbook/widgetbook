@@ -114,7 +114,7 @@ void main() {
     });
 
     test('crossed variants keep the args and run callback of their base', () {
-      final pinnedArgs = TestStoryArgs();
+      const pinnedArgs = TestStoryArgs();
       Future<void> run(WidgetTester tester, TestStoryArgs args) async {}
 
       final story = TestStory(
@@ -229,26 +229,29 @@ void main() {
       expect(scenarios[1].type, ScenarioType.crossed);
     });
 
-    test('both without local scenarios does not cross the implicit default', () {
-      final story = TestStory(name: 'Primary');
-      final config = Config(
-        scenarioConfig: ScenarioConfig(
-          definitions: [
-            ScenarioDefinition(
-              name: 'Dark',
-              modes: [TextScaleMode(2)],
-              strategy: ScenarioStrategy.both,
-            ),
-          ],
-        ),
-      );
+    test(
+      'both without local scenarios does not cross the implicit default',
+      () {
+        final story = TestStory(name: 'Primary');
+        final config = Config(
+          scenarioConfig: ScenarioConfig(
+            definitions: [
+              ScenarioDefinition(
+                name: 'Dark',
+                modes: [TextScaleMode(2)],
+                strategy: ScenarioStrategy.both,
+              ),
+            ],
+          ),
+        );
 
-      final scenarios = story.allScenarios(config);
+        final scenarios = story.allScenarios(config);
 
-      expect(scenarios, hasLength(1));
-      expect(scenarios.single.name, 'Dark');
-      expect(scenarios.single.type, ScenarioType.global);
-    });
+        expect(scenarios, hasLength(1));
+        expect(scenarios.single.name, 'Dark');
+        expect(scenarios.single.type, ScenarioType.global);
+      },
+    );
 
     test('orders standalone scenarios before crossed variants', () {
       final story = TestStory(
@@ -389,7 +392,10 @@ void main() {
 
     test('uses the mergeModes of its base for both merges', () {
       var mergerCalls = 0;
-      List<Mode> spyMerger(List<Mode> storyModes, List<Mode> scenarioModes) {
+      List<Mode<dynamic>> spyMerger(
+        List<Mode<dynamic>> storyModes,
+        List<Mode<dynamic>> scenarioModes,
+      ) {
         mergerCalls++;
         return defaultMergeModes(storyModes, scenarioModes);
       }
