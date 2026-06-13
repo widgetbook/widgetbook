@@ -8,7 +8,7 @@ const cliDescription = 'Widgetbook CLI';
 const packageName = 'widgetbook_cli';
 
 /// The version as in pubspec.yaml
-const packageVersion = '4.0.0-beta.3';
+const packageVersion = '4.0.0-beta.4';
 
 /// The widgetbook package version to install via `widgetbook init`
-const widgetbookVersion = '4.0.0-beta.3';
+const widgetbookVersion = '4.0.0-beta.4';
