@@ -1,17 +1,30 @@
 // ignore_for_file: strict_raw_type
 
 /// @docImport 'scenario.dart';
+/// @docImport 'scenario_config.dart';
+/// @docImport 'story.dart';
 library;
 
 import 'mode.dart';
 
-/// Separator between a custom scenario name and a global definition name.
-///
-/// Uses `|` because `/` is reserved for [Scenario.path].
-const scenarioNameSeparator = ' | ';
+/// Defines how a [ScenarioDefinition] from [ScenarioConfig.definitions]
+/// is expanded into [Scenario]s for each [Story].
+enum ScenarioStrategy {
+  /// One standalone [Scenario] per [Story], built with the story's
+  /// default args and without a `run` callback.
+  perStory,
 
-String mergedScenarioName(String scenarioName, String definitionName) {
-  return '$scenarioName$scenarioNameSeparator$definitionName';
+  /// One crossed [Scenario] per local scenario of each [Story], or per the
+  /// implicit `Default` scenario if the story defines none. Crossed variants
+  /// keep the local scenario's args and `run` callback and merge in the
+  /// definition's [ScenarioDefinition.modes] (local modes win). The bare
+  /// local scenarios are replaced by their variants.
+  perScenario,
+
+  /// The union of [perStory] and [perScenario]. The implicit `Default`
+  /// scenario is not crossed, as the standalone scenario already covers
+  /// that exact state.
+  both,
 }
 
 typedef ModesMerger =
@@ -46,30 +59,26 @@ class ScenarioDefinition {
   ScenarioDefinition({
     required this.name,
     required this.modes,
+    this.strategy = ScenarioStrategy.perScenario,
     this.mergeModes = defaultMergeModes,
-    this.applyToStoryScenarios = false,
   });
 
   final String name;
   final List<Mode> modes;
 
-  /// When `true` and a story defines custom scenarios, additionally merges
-  /// this definition with each one as `Scenario Name | Mode Names`. Custom
-  /// scenarios are not included without merged modes. Standalone global
-  /// scenarios are still created for every definition and named
-  /// `Default | Mode Names` when custom scenarios exist, unless a local
-  /// scenario named `Default` exists (then the merged local scenario is used).
+  /// How this definition is expanded into [Scenario]s for each [Story].
   ///
-  /// When a story has no custom scenarios, this flag has no additional effect.
-  ///
-  /// When `false`, this definition only creates a standalone global scenario
-  /// per story and does not merge its [modes] into local scenarios.
-  final bool applyToStoryScenarios;
+  /// Defaults to [ScenarioStrategy.perScenario].
+  final ScenarioStrategy strategy;
 
   /// A function to merge the [modes] defined in the story and the ones
   /// defined in this [Scenario] or [ScenarioDefinition].
   ///
   /// By default it puts the modes of the story first, and then adds
   /// the modes of the scenario that are not already defined in the story.
+  ///
+  /// Only used for standalone scenarios created via
+  /// [ScenarioStrategy.perStory]; crossed variants use the [mergeModes]
+  /// of the local scenario they are based on.
   final ModesMerger mergeModes;
 }

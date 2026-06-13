@@ -33,6 +33,12 @@ Widgetbook testing is built on top of Flutter's `flutter_test` package. Scenario
 
 ## What Happens During Execution
 
+`testWidgetbook` first expands the scenarios of every story: local scenarios
+are crossed with the global `ScenarioDefinition`s from your config according
+to each definition's `strategy` (see
+[How Global Scenario Definitions Are Applied](/testing/create-scenario#how-global-scenario-definitions-are-applied)).
+Crossed scenarios execute exactly like local ones — including their `run` callback.
+
 For each scenario, the Widgetbook test runtime:
 
 - applies viewport constraints and pixel ratio
@@ -83,4 +89,4 @@ Each scenario produces:
 - a PNG snapshot image
 - a JSON metadata file
 
-The metadata includes scenario details, image size, pixel ratio, and semantics tree data.
+For example, a `Loading` scenario crossed with a `Dark Mode` definition is written as `build/.widgetbook/Button/Default/Loading • Dark Mode.png`. The metadata includes scenario details, image size, pixel ratio, and semantics tree data.

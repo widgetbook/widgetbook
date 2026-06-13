@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart' hide Image;
@@ -34,16 +33,6 @@ void testComponent(Config config, Component component) {
 void testStory(Config config, Story story) {
   group(story.name, () {
     final scenarios = story.allScenarios(config);
-
-    setUpAll(() async {
-      final directory = Directory(
-        '$outputDir/${story.component.name}/${story.name}',
-      );
-      if (await directory.exists()) {
-        await directory.delete(recursive: true);
-      }
-    });
-
     for (final scenario in scenarios) {
       testScenario(config, scenario);
     }

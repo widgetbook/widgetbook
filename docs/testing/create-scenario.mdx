@@ -99,40 +99,91 @@ This works especially well for validating common cross-cutting setups, such as t
 ```dart
 final config = Config(
   // ...
-  scenarios: [
-    ScenarioDefinition(
-      name: 'Dark Mode',
-      modes: [MaterialThemeMode('Dark', ThemeData.dark())],
-    ),
-    ScenarioDefinition(
-      name: 'Light Mode',
-      modes: [MaterialThemeMode('Light', ThemeData.light())],
-    ),
-  ],
+  scenarioConfig: ScenarioConfig(
+    definitions: [
+      ScenarioDefinition(
+        name: 'Dark Mode',
+        modes: [MaterialThemeMode('Dark', ThemeData.dark())],
+      ),
+      ScenarioDefinition(
+        name: 'Light Mode',
+        modes: [MaterialThemeMode('Light', ThemeData.light())],
+      ),
+    ],
+  ),
 );
 ```
 
 ### How Global Scenario Definitions Are Applied
 
-Global scenario definitions are applied to every story. During execution, Widgetbook builds the effective list as:
+Each definition has a `strategy` that controls how it is expanded for every story:
 
-- all global scenario definitions from `config.scenarioConfig.definitions`
-- followed by local scenarios defined in the story
+- `ScenarioStrategy.perScenario` (default): the definition is crossed with each
+  of the story's local scenarios. Every local scenario gets one variant per
+  definition that keeps the local scenario's args and `run` callback and merges
+  in the definition's modes. The bare local scenarios are replaced by their
+  variants. For stories without local scenarios, the definition is applied to
+  the story's default state instead, producing one scenario named after the
+  definition.
+- `ScenarioStrategy.perStory`: one standalone scenario per story, built with
+  the story's default args and without a `run` callback. The definition's modes
+  are not applied to the story's local scenarios.
+- `ScenarioStrategy.both`: the union of the two. For stories without local
+  scenarios, only the standalone scenario is created.
 
-Each global definition becomes its own scenario per story; global definitions are not merged into a single local scenario object.
+With the config above, a story with local scenarios `Loading` and `Error` runs
+four scenarios: `Loading • Dark Mode`, `Loading • Light Mode`,
+`Error • Dark Mode`, and `Error • Light Mode`. A story without local scenarios
+runs two: `Dark Mode` and `Light Mode`.
+
+Use `perScenario` (the default) for dimensions that every state should be
+tested in, such as themes. Use `perStory` for setups where one snapshot per
+story is enough, such as viewports:
+
+```dart
+ScenarioDefinition(
+  name: 'iPhone 13',
+  modes: [ViewportMode(IosViewports.iPhone13)],
+  strategy: ScenarioStrategy.perStory,
+),
+```
+
+### How Scenario Names Are Built
+
+Crossed scenarios are named by the `nameBuilder` of your `ScenarioConfig`. The
+default combines the local scenario's name with the definition's name, e.g.
+`Loading • Dark Mode`. When a story has no local scenarios, the scenario is
+named after the definition only, e.g. `Dark Mode`. Standalone scenarios from
+`perStory` definitions are always named after the definition.
+
+Provide your own `nameBuilder` to customize the format:
+
+```dart
+scenarioConfig: ScenarioConfig(
+  definitions: [ /* ... */ ],
+  nameBuilder: (definition, story, scenario) =>
+      '${scenario.name} (${definition.name})',
+),
+```
+
+Scenario names must not contain `/`, which is reserved for scenario paths.
 
 ### How Modes Are Merged
 
-[Modes](/addons/modes) lock addon values to fixed settings for testing. For each scenario (global or local), modes are resolved by merging:
+[Modes](/addons/modes) lock addon values to fixed settings for testing. For
+each scenario, modes are resolved by merging:
 
-- story-level modes
-- scenario-level modes
+- local scenario modes (highest precedence)
+- definition modes (for crossed scenarios)
+- story-level modes (lowest precedence)
 
-By default, scenario-level modes take precedence when both define the same mode type.
+When two levels define the same mode type, the more specific level wins. For
+example, a local scenario that pins a `MaterialThemeMode` keeps it even when
+crossed with a `Dark Mode` definition.
 
 ### Example: Inheritance + Merge
 
-If your config defines a global scenario:
+If your config defines a global scenario definition:
 
 ```dart
 ScenarioDefinition(
@@ -157,9 +208,9 @@ final $Button = _Story(
 );
 ```
 
-then the story runs with two scenarios:
+then the story runs with one scenario, `Loading • Dark Mode`, which combines
+all three levels:
 
-- `Dark Mode` (inherited from global definitions)
-- `Loading` (local scenario)
-
-The inherited `Dark Mode` scenario also receives the story viewport mode (`800w`) because story and scenario modes are merged for each scenario.
+- the loading args from the local scenario
+- the dark theme mode from the definition
+- the `800w` viewport mode from the story
