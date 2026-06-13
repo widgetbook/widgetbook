@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-beta.4
 
 - **BREAKING**: `ScenarioDefinition`s now cross with each story's local scenarios by default (`ScenarioStrategy.perScenario`), replacing the bare local scenarios with crossed variants. Use `strategy: ScenarioStrategy.perStory` for the previous standalone behavior. ([#1918](https://github.com/widgetbook/widgetbook/pull/1918) - by [@ABausG](https://github.com/ABausG))
 - **FEAT**: Add `ScenarioStrategy` (`perStory`, `perScenario`, `both`) to `ScenarioDefinition` and `ScenarioConfig.nameBuilder` to customize the names of crossed scenarios. ([#1918](https://github.com/widgetbook/widgetbook/pull/1918) - by [@ABausG](https://github.com/ABausG))

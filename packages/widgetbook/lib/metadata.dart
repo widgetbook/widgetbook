@@ -1,2 +1,2 @@
 /// The version as in pubspec.yaml
-const kWidgetbookVersion = '4.0.0-beta.3';
+const kWidgetbookVersion = '4.0.0-beta.4';
