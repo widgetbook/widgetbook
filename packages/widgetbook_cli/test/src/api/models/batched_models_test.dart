@@ -13,8 +13,12 @@ void main() {
   final scenario = ScenarioMetadata(
     name: 'Default (light)',
     path: 'widgets/button/Default/light',
-    modes: const {'theme': {'brightness': 'light'}},
-    args: const {'group': {'label': 'Click'}},
+    modes: const {
+      'theme': {'brightness': 'light'},
+    },
+    args: const {
+      'group': {'label': 'Click'},
+    },
   );
   final image = const ImageMetadata(
     path: '.widgetbook/snapshots/abc.png',
@@ -31,16 +35,26 @@ void main() {
         component: component,
         story: story,
         navPath: 'widgets/button/Button/Default',
-        knobsConfigs: const {'group': {'label': 'Click'}},
+        knobsConfigs: const {
+          'group': {'label': 'Click'},
+        },
       );
 
       final json = record.toJson();
 
-      expect(json.keys, containsAll(<String>['component', 'story', 'navPath', 'knobsConfigs']));
+      expect(
+        json.keys,
+        containsAll(<String>['component', 'story', 'navPath', 'knobsConfigs']),
+      );
       expect(json['navPath'], equals('widgets/button/Button/Default'));
       expect(json['component'], equals(component.toJson()));
       expect(json['story'], equals(story.toJson()));
-      expect(json['knobsConfigs'], equals(const {'group': {'label': 'Click'}}));
+      expect(
+        json['knobsConfigs'],
+        equals(const {
+          'group': {'label': 'Click'},
+        }),
+      );
     });
 
     test('toJson sends null knobsConfigs when omitted', () {
@@ -65,7 +79,10 @@ void main() {
 
       final json = record.toJson();
 
-      expect(json.keys, containsAll(<String>['scenario', 'image', 'navPath', 'semantics']));
+      expect(
+        json.keys,
+        containsAll(<String>['scenario', 'image', 'navPath', 'semantics']),
+      );
       // navPath is the OWNING STORY navPath, NOT the scenario path.
       expect(json['navPath'], equals('widgets/button/Button/Default'));
       expect(json['navPath'], isNot(equals(scenario.path)));

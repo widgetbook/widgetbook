@@ -76,22 +76,25 @@ void main() {
       buildId: 'build-123',
       baseHref: '/builds/build-123/',
       storage: StorageInfo(url: 'https://s3/build', fields: {'key': 'k'}),
-      snapshotStorage: StorageInfo(url: 'https://s3/snap', fields: {'key': 'k'}),
+      snapshotStorage: StorageInfo(
+        url: 'https://s3/snap',
+        fields: {'key': 'k'},
+      ),
     );
 
     late List<ScenarioRecord> scenarios;
 
     BuildPushArgs makeArgs() => const BuildPushArgs(
-          apiKey: 'api-key',
-          path: '/project',
-          branch: 'main',
-          commit: 'sha-1',
-          mergedResultCommit: null,
-          vendor: 'github',
-          actor: 'jens',
-          repository: 'widgetbook/app',
-          noTurbo: true,
-        );
+      apiKey: 'api-key',
+      path: '/project',
+      branch: 'main',
+      commit: 'sha-1',
+      mergedResultCommit: null,
+      vendor: 'github',
+      actor: 'jens',
+      repository: 'widgetbook/app',
+      noTurbo: true,
+    );
 
     setUp(() {
       logger = MockLogger();
@@ -138,11 +141,13 @@ void main() {
       buildDir.childFile('main.dart.js').writeAsStringSync('console.log(1)');
 
       // pubspec.lock for VersionsMetadata.from (may parse or fall back to null).
-      fileSystem.file('/project/pubspec.lock').writeAsStringSync(
-        'packages:\n'
-        '  widgetbook:\n'
-        '    version: "4.0.0"\n',
-      );
+      fileSystem
+          .file('/project/pubspec.lock')
+          .writeAsStringSync(
+            'packages:\n'
+            '  widgetbook:\n'
+            '    version: "4.0.0"\n',
+          );
 
       // Image files referenced by the snapshots.
       for (final scenario in scenarios) {
@@ -151,11 +156,13 @@ void main() {
           ..writeAsStringSync('png-bytes');
       }
 
-      when(() => processManager.run(
-            any<List<String>>(),
-            workingDirectory: any(named: 'workingDirectory'),
-            runInShell: any(named: 'runInShell'),
-          )).thenAnswer(
+      when(
+        () => processManager.run(
+          any<List<String>>(),
+          workingDirectory: any(named: 'workingDirectory'),
+          runInShell: any(named: 'runInShell'),
+        ),
+      ).thenAnswer(
         (_) async => MockProcessResult.success('Flutter 3.24.0'),
       );
 
@@ -166,16 +173,18 @@ void main() {
       when(() => cloudClient.createBuild(any(), any())).thenAnswer(
         (_) async => draftResponse,
       );
-      when(() => cloudClient.appendSnapshots(any(), any<String>(), any()))
-          .thenAnswer((_) async => const AppendSnapshotsResponse(inserted: 1));
+      when(
+        () => cloudClient.appendSnapshots(any(), any<String>(), any()),
+      ).thenAnswer((_) async => const AppendSnapshotsResponse(inserted: 1));
       when(() => cloudClient.submitBuild(any())).thenAnswer(
         (_) async => const SubmitBuildResponse(
           buildId: 'build-123',
           buildUrl: 'https://widgetbook.io/builds/build-123',
         ),
       );
-      when(() => storageClient.uploadObjects(any(), any(), any()))
-          .thenAnswer((_) async {});
+      when(
+        () => storageClient.uploadObjects(any(), any(), any()),
+      ).thenAnswer((_) async {});
 
       command = BuildPushCommand(
         context: context,
@@ -193,9 +202,11 @@ void main() {
 
       expect(exitCode, equals(0));
 
-      final captured = verify(
-        () => cloudClient.createBuild(any(), captureAny()),
-      ).captured.single as CreateBuildRequest;
+      final captured =
+          verify(
+                () => cloudClient.createBuild(any(), captureAny()),
+              ).captured.single
+              as CreateBuildRequest;
 
       // 3 scenarios collapse into 2 unique stories.
       expect(captured.stories.length, equals(2));
@@ -211,43 +222,46 @@ void main() {
       );
     });
 
-    test('appendSnapshots receives all snapshots with OWNING-STORY navPath',
-        () async {
-      await command.runWith(context, makeArgs());
+    test(
+      'appendSnapshots receives all snapshots with OWNING-STORY navPath',
+      () async {
+        await command.runWith(context, makeArgs());
 
-      final batches = verify(
-        () => cloudClient.appendSnapshots(
-          any(),
-          'build-123',
-          captureAny(),
-        ),
-      ).captured.cast<AppendSnapshotsRequest>();
-
-      final allSnapshots =
-          batches.expand((batch) => batch.snapshots).toList();
-
-      // Every snapshot is appended.
-      expect(allSnapshots.length, equals(3));
-
-      // Snapshot navPath == owning story navPath (NOT scenario.path).
-      for (final snapshot in allSnapshots) {
-        expect(
-          snapshot.navPath,
-          anyOf(
-            'widgets/button/Button/Default',
-            'widgets/button/Button/Disabled',
+        final batches = verify(
+          () => cloudClient.appendSnapshots(
+            any(),
+            'build-123',
+            captureAny(),
           ),
-        );
-        expect(snapshot.navPath, isNot(contains('/light')));
-        expect(snapshot.navPath, isNot(contains('/dark')));
-      }
+        ).captured.cast<AppendSnapshotsRequest>();
 
-      // Two of the snapshots belong to the Default story, one to Disabled.
-      final defaultCount = allSnapshots
-          .where((s) => s.navPath == 'widgets/button/Button/Default')
-          .length;
-      expect(defaultCount, equals(2));
-    });
+        final allSnapshots = batches
+            .expand((batch) => batch.snapshots)
+            .toList();
+
+        // Every snapshot is appended.
+        expect(allSnapshots.length, equals(3));
+
+        // Snapshot navPath == owning story navPath (NOT scenario.path).
+        for (final snapshot in allSnapshots) {
+          expect(
+            snapshot.navPath,
+            anyOf(
+              'widgets/button/Button/Default',
+              'widgets/button/Button/Disabled',
+            ),
+          );
+          expect(snapshot.navPath, isNot(contains('/light')));
+          expect(snapshot.navPath, isNot(contains('/dark')));
+        }
+
+        // Two of the snapshots belong to the Default story, one to Disabled.
+        final defaultCount = allSnapshots
+            .where((s) => s.navPath == 'widgets/button/Button/Default')
+            .length;
+        expect(defaultCount, equals(2));
+      },
+    );
 
     test('submit is called after create + append', () async {
       await command.runWith(context, makeArgs());
@@ -296,11 +310,13 @@ void main() {
       when(() => cacheReader.read(any<String>())).thenAnswer(
         (_) async => CacheStore(scenarios: scenarios),
       );
-      when(() => processManager.run(
-            any<List<String>>(),
-            workingDirectory: any(named: 'workingDirectory'),
-            runInShell: any(named: 'runInShell'),
-          )).thenAnswer(
+      when(
+        () => processManager.run(
+          any<List<String>>(),
+          workingDirectory: any(named: 'workingDirectory'),
+          runInShell: any(named: 'runInShell'),
+        ),
+      ).thenAnswer(
         (_) async => MockProcessResult.success('Flutter 3.24.0'),
       );
       when(() => cloudClient.createBuild(any(), any())).thenAnswer(

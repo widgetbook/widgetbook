@@ -26,7 +26,8 @@ class ScenarioRecord {
   /// sends this on each story record, and every appended snapshot record sends
   /// the SAME string for its owning story so the server links the snapshot to
   /// the right story via its deterministic id.
-  String get storyNavPath => '${component.path}/${component.name}/${story.name}';
+  String get storyNavPath =>
+      '${component.path}/${component.name}/${story.name}';
 
   // ignore: sort_constructors_first
   factory ScenarioRecord.fromJson(Map<String, dynamic> json) {
