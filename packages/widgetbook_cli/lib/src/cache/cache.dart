@@ -3,6 +3,7 @@ export 'cache_exception.dart';
 export 'cache_reader.dart';
 export 'cache_store.dart';
 export 'component_metadata.dart';
+export 'image_metadata.dart';
 export 'scenario_metadata.dart';
 export 'scenario_record.dart';
 export 'story_metadata.dart';

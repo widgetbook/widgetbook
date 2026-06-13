@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:args/args.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
+import 'package:pool/pool.dart';
 import 'package:process/process.dart';
 
 import '../api/api.dart';
@@ -18,6 +20,7 @@ import 'build_push_args.dart';
 class BuildPushCommand extends CliCommand<BuildPushArgs> {
   BuildPushCommand({
     required super.context,
+    super.logger,
     this.processManager = const LocalProcessManager(),
     this.fileSystem = const LocalFileSystem(),
     this.cacheReader = const CacheReader(),
@@ -217,6 +220,25 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     filesProgress.complete('${files.length} File(s) read');
 
+    // Derive the unique stories from the scenarios. A "story" is a logical UI
+    // permutation; multiple scenarios (e.g. different modes/args) can share one
+    // story. We dedup by the owning story's navPath, which is
+    // `component.path + "/" + component.name + "/" + story.name` — the exact
+    // formula the server uses to compute the deterministic story id that links
+    // appended snapshots back to their story.
+    final storiesByNavPath = <String, StoryRecord>{};
+    for (final scenario in cache.scenarios) {
+      storiesByNavPath.putIfAbsent(
+        scenario.storyNavPath,
+        () => StoryRecord(
+          component: scenario.component,
+          story: scenario.story,
+          navPath: scenario.storyNavPath,
+        ),
+      );
+    }
+    final stories = storiesByNavPath.values.toList();
+
     final createProgress = logger.progress('Creating build');
     final createResponse = await cloudClient.createBuild(
       versions,
@@ -228,7 +250,8 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         branch: args.branch,
         sha: args.commit,
         mergedResultSha: args.mergedResultCommit,
-        scenarios: cache.scenarios,
+        stories: stories,
+        expectedSnapshotCount: cache.scenarios.length,
         size: dirSize + cache.totalSnapshotSize,
         hash: hash,
       ),
@@ -247,6 +270,20 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     createProgress.complete('Draft build [${createResponse.buildId}] created');
 
     final draftResponse = createResponse.asDraft;
+
+    // Stream the snapshot metadata to the build in byte-bounded batches. The
+    // image bytes themselves are uploaded separately, direct to S3 (below);
+    // here we only send the lightweight per-snapshot records so the create
+    // request stays tiny. Each snapshot's navPath is its OWNING STORY's
+    // navPath (the same string used in the StoryRecord above), NOT the
+    // scenario path — the server links the snapshot to its story by that.
+    await _appendSnapshots(
+      versions: versions,
+      apiKey: args.apiKey,
+      buildId: createResponse.buildId,
+      scenarios: cache.scenarios,
+    );
+
     final buildUploadProgress = logger.progress('Uploading build files');
 
     // Prepare web build files
@@ -331,4 +368,107 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     return 0;
   }
+
+  /// Builds a [SnapshotRecord] per cache scenario, packs them into
+  /// byte-bounded batches, and POSTs each batch to
+  /// `v4/builds/{buildId}/snapshots` with bounded parallelism.
+  Future<void> _appendSnapshots({
+    required VersionsMetadata? versions,
+    required String apiKey,
+    required String buildId,
+    required List<ScenarioRecord> scenarios,
+  }) async {
+    final appendProgress = logger.progress('Appending snapshots');
+
+    final records = scenarios.map((scenario) {
+      return SnapshotRecord(
+        scenario: scenario.scenario,
+        image: scenario.image,
+        // The OWNING STORY's navPath, NOT the scenario path. The server links
+        // the snapshot to its story via deterministicStoryId(buildId, navPath).
+        navPath: scenario.storyNavPath,
+        semantics: scenario.semantics,
+      );
+    }).toList();
+
+    final batches = _batchSnapshots(records);
+
+    // Bounded parallelism, mirroring how the snapshot image uploads are
+    // parallelized (see `StorageClient.uploadObjects`).
+    final pool = Pool(
+      _maxConcurrentAppendRequests,
+      timeout: const Duration(seconds: 30),
+    );
+
+    var completed = 0;
+    final promises = batches.map((batch) async {
+      await pool.withResource(
+        () => cloudClient.appendSnapshots(
+          versions,
+          buildId,
+          AppendSnapshotsRequest(
+            apiKey: apiKey,
+            snapshots: batch,
+          ),
+        ),
+      );
+
+      completed += batch.length;
+      appendProgress.update(
+        'Appending snapshots ($completed/${records.length})',
+      );
+    });
+
+    await Future.wait(promises, eagerError: true);
+
+    appendProgress.complete(
+      '${records.length} Snapshot(s) appended in ${batches.length} batch(es)',
+    );
+  }
+
+  /// Packs [records] into batches whose JSON-encoded size stays under
+  /// [_maxBatchSizeBytes], capping each batch at [_maxSnapshotsPerBatch]
+  /// records as a safety bound. A single record larger than the budget still
+  /// gets its own batch (we never drop a record).
+  List<List<SnapshotRecord>> _batchSnapshots(List<SnapshotRecord> records) {
+    final batches = <List<SnapshotRecord>>[];
+    var current = <SnapshotRecord>[];
+    var currentBytes = 0;
+
+    for (final record in records) {
+      final recordBytes = utf8.encode(jsonEncode(record.toJson())).length;
+
+      final wouldExceedBytes =
+          current.isNotEmpty && currentBytes + recordBytes > _maxBatchSizeBytes;
+      final wouldExceedCount = current.length >= _maxSnapshotsPerBatch;
+
+      if (wouldExceedBytes || wouldExceedCount) {
+        batches.add(current);
+        current = <SnapshotRecord>[];
+        currentBytes = 0;
+      }
+
+      current.add(record);
+      currentBytes += recordBytes;
+    }
+
+    if (current.isNotEmpty) {
+      batches.add(current);
+    }
+
+    return batches;
+  }
 }
+
+/// Target byte budget for a single append batch (~1 MB of JSON-encoded
+/// snapshot records). Keeps each append request small so the server task
+/// never has to parse one giant body.
+const _maxBatchSizeBytes = 1024 * 1024;
+
+/// Safety cap on the number of snapshot records per append batch, independent
+/// of the byte budget.
+const _maxSnapshotsPerBatch = 1000;
+
+/// Bounded parallelism for append requests, mirroring the snapshot image
+/// upload pool in `StorageClient`.
+const _maxConcurrentAppendRequests = 8;
