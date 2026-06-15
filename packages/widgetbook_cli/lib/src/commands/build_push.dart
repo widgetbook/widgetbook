@@ -17,9 +17,9 @@ import '../utils/build_hasher.dart';
 import '../utils/executable_manager.dart';
 import 'build_push_args.dart';
 
-/// Target byte budget for a single append batch (~0.5 MB of JSON-encoded
+/// Target byte budget for a single append batch (~1 MB of JSON-encoded
 /// snapshot records). Keeps each append request small.
-const _maxBatchSizeBytes = 512 * 1024;
+const _maxBatchSizeBytes = 1024 * 1024;
 
 /// Safety cap on the number of snapshot records per append batch, independent
 /// of the byte budget.
