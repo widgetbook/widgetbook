@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Stream snapshots to Widgetbook Cloud in batches during `cloud build push` to support large builds. ([#1935](https://github.com/widgetbook/widgetbook/pull/1935))
+
 ## 4.0.0-beta.4
 
 - **BREAKING**: Set minimum SDK version to 3.11.0. ([#1924](https://github.com/widgetbook/widgetbook/pull/1924))
