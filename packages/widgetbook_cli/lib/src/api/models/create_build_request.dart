@@ -1,4 +1,4 @@
-import '../../cache/cache.dart';
+import 'story_record.dart';
 
 class CreateBuildRequest {
   const CreateBuildRequest({
@@ -9,7 +9,8 @@ class CreateBuildRequest {
     required this.branch,
     required this.sha,
     required this.mergedResultSha,
-    required this.scenarios,
+    required this.stories,
+    required this.expectedSnapshotCount,
     required this.size,
     required this.hash,
   });
@@ -21,7 +22,8 @@ class CreateBuildRequest {
   final String branch;
   final String sha;
   final String? mergedResultSha;
-  final List<ScenarioRecord> scenarios;
+  final List<StoryRecord> stories;
+  final int expectedSnapshotCount;
   final int size;
   final String? hash;
 
@@ -34,7 +36,8 @@ class CreateBuildRequest {
       'branch': branch,
       'sha': sha,
       'mergedResultSha': mergedResultSha,
-      'scenarios': scenarios.map((scenario) => scenario.toJson()).toList(),
+      'stories': stories.map((story) => story.toJson()).toList(),
+      'expectedSnapshotCount': expectedSnapshotCount,
       'size': size,
       'hash': hash,
     };

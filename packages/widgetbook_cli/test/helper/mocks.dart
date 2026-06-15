@@ -8,6 +8,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:platform/platform.dart';
 import 'package:process/process.dart';
 import 'package:pub_updater/pub_updater.dart';
+import 'package:widgetbook_cli/src/storage/storage.dart';
 import 'package:widgetbook_cli/widgetbook_cli.dart';
 
 class MockLogger extends Mock implements Logger {}
@@ -23,6 +24,8 @@ class MockRepository extends Mock implements Repository {}
 class MockContext extends Mock implements Context {}
 
 class MockWidgetbookHttpClient extends Mock implements WidgetbookHttpClient {}
+
+class MockStorageClient extends Mock implements StorageClient {}
 
 class MockFileSystem extends Mock implements FileSystem {}
 

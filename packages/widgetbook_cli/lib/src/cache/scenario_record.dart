@@ -18,6 +18,9 @@ class ScenarioRecord {
   final ScenarioMetadata scenario;
   final Map<String, dynamic> semantics;
 
+  String get storyNavPath =>
+      '${component.path}/${component.name}/${story.name}';
+
   // ignore: sort_constructors_first
   factory ScenarioRecord.fromJson(Map<String, dynamic> json) {
     final component = ComponentMetadata.fromJson(
