@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-beta.5
 
 - **FEAT**: Stream snapshots to Widgetbook Cloud in batches during `cloud build push` to support large builds. ([#1935](https://github.com/widgetbook/widgetbook/pull/1935))
 
