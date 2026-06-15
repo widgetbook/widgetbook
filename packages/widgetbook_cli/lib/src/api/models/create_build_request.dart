@@ -1,11 +1,5 @@
 import 'story_record.dart';
 
-/// The v4 batched create request.
-///
-/// Replaces the legacy inline `scenarios[]` with story metadata only
-/// ([stories]) plus the promised total snapshot count
-/// ([expectedSnapshotCount]); the snapshots themselves are streamed later via
-/// the append endpoint.
 class CreateBuildRequest {
   const CreateBuildRequest({
     required this.apiKey,

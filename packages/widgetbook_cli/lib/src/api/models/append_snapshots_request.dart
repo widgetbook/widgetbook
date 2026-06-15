@@ -1,9 +1,5 @@
 import 'snapshot_record.dart';
 
-/// Body of `POST v4/builds/{buildId}/snapshots` — one batch of snapshot
-/// metadata for an in-progress batched build.
-///
-/// The build id is a path param, not part of this body.
 class AppendSnapshotsRequest {
   const AppendSnapshotsRequest({
     required this.apiKey,

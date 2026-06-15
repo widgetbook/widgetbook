@@ -17,6 +17,18 @@ import '../utils/build_hasher.dart';
 import '../utils/executable_manager.dart';
 import 'build_push_args.dart';
 
+/// Target byte budget for a single append batch (~0.5 MB of JSON-encoded
+/// snapshot records). Keeps each append request small.
+const _maxBatchSizeBytes = 512 * 1024;
+
+/// Safety cap on the number of snapshot records per append batch, independent
+/// of the byte budget.
+const _maxSnapshotsPerBatch = 1000;
+
+/// Bounded parallelism for append requests, mirroring the snapshot image
+/// upload pool in `StorageClient`.
+const _maxConcurrentAppendRequests = 3;
+
 class BuildPushCommand extends CliCommand<BuildPushArgs> {
   BuildPushCommand({
     required super.context,
@@ -220,11 +232,6 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     filesProgress.complete('${files.length} File(s) read');
 
-    // Derive the unique stories from the scenarios. A "story" is a logical UI
-    // permutation; multiple scenarios (e.g. different modes/args) can share one
-    // story. We dedup by the owning story's navPath
-    // (`component.path + "/" + component.name + "/" + story.name`); appended
-    // snapshots reuse this exact navPath so they link back to their story.
     final storiesByNavPath = <String, StoryRecord>{};
     for (final scenario in cache.scenarios) {
       storiesByNavPath.putIfAbsent(
@@ -270,12 +277,6 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     final draftResponse = createResponse.asDraft;
 
-    // Stream the snapshot metadata to the build in byte-bounded batches. The
-    // image bytes themselves are uploaded separately, direct to S3 (below);
-    // here we only send the lightweight per-snapshot records so each request
-    // stays small. Each snapshot's navPath is its OWNING STORY's navPath (the
-    // same string used in the StoryRecord above), NOT the scenario path, so it
-    // links to the right story.
     await _appendSnapshots(
       versions: versions,
       apiKey: args.apiKey,
@@ -383,8 +384,6 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       return SnapshotRecord(
         scenario: scenario.scenario,
         image: scenario.image,
-        // The OWNING STORY's navPath, NOT the scenario path, so the snapshot
-        // links to the right story.
         navPath: scenario.storyNavPath,
         semantics: scenario.semantics,
       );
@@ -428,7 +427,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
   /// Packs [records] into batches whose JSON-encoded size stays under
   /// [_maxBatchSizeBytes], capping each batch at [_maxSnapshotsPerBatch]
   /// records as a safety bound. A single record larger than the budget still
-  /// gets its own batch (we never drop a record).
+  /// gets its own batch.
   List<List<SnapshotRecord>> _batchSnapshots(List<SnapshotRecord> records) {
     final batches = <List<SnapshotRecord>>[];
     var current = <SnapshotRecord>[];
@@ -458,15 +457,3 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     return batches;
   }
 }
-
-/// Target byte budget for a single append batch (~1 MB of JSON-encoded
-/// snapshot records). Keeps each append request small.
-const _maxBatchSizeBytes = 1024 * 1024;
-
-/// Safety cap on the number of snapshot records per append batch, independent
-/// of the byte budget.
-const _maxSnapshotsPerBatch = 1000;
-
-/// Bounded parallelism for append requests, mirroring the snapshot image
-/// upload pool in `StorageClient`.
-const _maxConcurrentAppendRequests = 8;
