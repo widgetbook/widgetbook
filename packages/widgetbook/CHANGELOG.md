@@ -1,3 +1,11 @@
+## 4.0.0-beta.6
+
+- **FEAT**: Add `wrapper` callback to `ScenarioConfig` that wraps each scenario's entire execution in `testWidgetbook`, enabling `Zone`-scoped setup such as faking time with `package:clock`. ([#1932](https://github.com/widgetbook/widgetbook/pull/1932))
+
+## 4.0.0-beta.5
+
+Skipped to keep `widgetbook`'s version in sync with `widgetbook_cli`.
+
 ## 4.0.0-beta.4
 
 - **BREAKING**: `ScenarioDefinition`s now cross with each story's local scenarios by default (`ScenarioStrategy.perScenario`), replacing the bare local scenarios with crossed variants. Use `strategy: ScenarioStrategy.perStory` for the previous standalone behavior. ([#1918](https://github.com/widgetbook/widgetbook/pull/1918) - by [@ABausG](https://github.com/ABausG))
