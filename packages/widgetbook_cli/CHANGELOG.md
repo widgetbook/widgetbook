@@ -1,3 +1,8 @@
+## 4.0.0-beta.6
+
+- **CHORE**: Align version with `widgetbook` so both packages share `4.0.0-beta.6`.
+- **FIX**: Update the `widgetbook` version installed by `widgetbook init` to `4.0.0-beta.6`.
+
 ## 4.0.0-beta.5
 
 - **FEAT**: Stream snapshots to Widgetbook Cloud in batches during `cloud build push` to support large builds. ([#1935](https://github.com/widgetbook/widgetbook/pull/1935))
