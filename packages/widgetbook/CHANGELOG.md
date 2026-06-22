@@ -1,3 +1,7 @@
+## 4.0.0-beta.6
+
+- **CHORE**: Sync version with `widgetbook_cli`; `widgetbook` has no `4.0.0-beta.5` release, so it jumps from `4.0.0-beta.4` to `4.0.0-beta.6` to keep both packages on the same version.
+
 ## 4.0.0-beta.4
 
 - **BREAKING**: `ScenarioDefinition`s now cross with each story's local scenarios by default (`ScenarioStrategy.perScenario`), replacing the bare local scenarios with crossed variants. Use `strategy: ScenarioStrategy.perStory` for the previous standalone behavior. ([#1918](https://github.com/widgetbook/widgetbook/pull/1918) - by [@ABausG](https://github.com/ABausG))

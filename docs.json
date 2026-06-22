@@ -37,8 +37,8 @@
   },
   "variables": {
     "versions": {
-      "cli": "4.0.0-beta.5",
-      "widgetbook": "4.0.0-beta.4"
+      "cli": "4.0.0-beta.6",
+      "widgetbook": "4.0.0-beta.6"
     }
   },
   "tabs": [
