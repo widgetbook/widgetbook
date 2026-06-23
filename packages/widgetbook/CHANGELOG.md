@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-beta.7
 
 - **BREAKING**: Support multiple constructors per component via one `Meta` per constructor tear-off. See the [PR description](https://github.com/widgetbook/widgetbook/pull/1931) for migration steps. ([#1931](https://github.com/widgetbook/widgetbook/pull/1931))
 
