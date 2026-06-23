@@ -1,6 +1,7 @@
-## Unreleased
+## 4.0.0-beta.7
 
 - **FIX**: Update `init` scaffolding and `coverage` component collection to the new constructor tear-off `Meta` API. ([#1931](https://github.com/widgetbook/widgetbook/pull/1931))
+- **FIX**: Update the `widgetbook` version installed by `widgetbook init` to `4.0.0-beta.7`.
 
 ## 4.0.0-beta.6
 
