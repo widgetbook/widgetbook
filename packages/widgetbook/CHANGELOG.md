@@ -1,3 +1,7 @@
+## Unreleased
+
+- **BREAKING**: Support multiple constructors per component via one `Meta` per constructor tear-off. See the [PR description](https://github.com/widgetbook/widgetbook/pull/1931) for migration steps. ([#1931](https://github.com/widgetbook/widgetbook/pull/1931))
+
 ## 4.0.0-beta.6
 
 - **FEAT**: Add `wrapper` callback to `ScenarioConfig` that wraps each scenario's entire execution in `testWidgetbook`, enabling `Zone`-scoped setup such as faking time with `package:clock`. ([#1932](https://github.com/widgetbook/widgetbook/pull/1932))

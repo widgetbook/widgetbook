@@ -5,8 +5,7 @@ import 'generic_text.dart';
 
 part 'generic_text.stories.g.dart';
 
-// ignore: strict_raw_type
-final meta = Meta<GenericText>(
+final component = ComponentMeta(
   docsBuilder: (blocks) => blocks.replaceFirst<DartCommentDocBlock>(
     const TextDocBlock('''
 1. Creating a generic Story
@@ -14,6 +13,8 @@ final meta = Meta<GenericText>(
 '''),
   ),
 );
+
+const meta = Meta(GenericText.new);
 
 final $IntStory = _Story<int>(
   args: _Args.fixed(

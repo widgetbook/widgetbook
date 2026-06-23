@@ -4,7 +4,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 part 'nullable_setting.stories.g.dart';
 
-final meta = Meta<NullableSetting>(
+final component = ComponentMeta(
   path: 'widgetbook/settings',
   docsBuilder: (blocks) => blocks.insertAfter<DartCommentDocBlock>(
     const TextDocBlock('''
@@ -13,6 +13,8 @@ final meta = Meta<NullableSetting>(
 '''),
   ),
 );
+
+const meta = Meta(NullableSetting.new);
 
 final $Default = _Story(
   args: _Args(

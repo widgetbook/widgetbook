@@ -4,7 +4,7 @@ import 'package:widgetbook/widgetbook.dart';
 
 part 'container.stories.g.dart';
 
-const meta = Meta<Container>();
+const meta = Meta(Container.new);
 
 final $Green = _Story(
   name: 'Green',

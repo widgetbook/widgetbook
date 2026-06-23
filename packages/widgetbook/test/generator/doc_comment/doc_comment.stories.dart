@@ -18,6 +18,6 @@ class DocCommentWidget extends StatelessWidget {
   Widget build(BuildContext context) => Text(label);
 }
 
-const meta = Meta<DocCommentWidget>();
+const meta = Meta(DocCommentWidget.new);
 
-final $Default = Object();
+final $Default = _Story();

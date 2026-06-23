@@ -1,53 +1,39 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 
 import 'extensions.dart';
+import 'variant.dart';
 
 class StoryClassBuilder {
   StoryClassBuilder(
-    this.widgetType,
-    this.argsType,
+    this.variant,
     this.defaultSetup,
     this.defaultBuilder,
+    this.defaultsVariableName,
   );
 
-  final DartType widgetType;
-  final DartType argsType;
+  final Variant variant;
   final Code? defaultSetup;
   final Code? defaultBuilder;
 
+  /// The name of the top-level variable holding the variant's `Defaults`,
+  /// used to pipe its setup/builder into the generated story class.
+  final String? defaultsVariableName;
+
   TypeReference get storyClassRef {
-    return widgetType.getRef(
-      suffix: 'Story',
-      types: getTypeParams(withBounds: false),
+    return variant.widgetType.getRef(
+      suffix: '${variant.prefix}Story',
+      types: variant.getTypeParams(withBounds: false),
     );
-  }
-
-  Iterable<FormalParameterElement> get params {
-    final constructors = (argsType.element as ClassElement).constructors;
-    final constructor =
-        constructors
-            .where((c) => c.name == 'new' || c.name == null || c.name!.isEmpty)
-            .firstOrNull ??
-        constructors.first;
-    return constructor.formalParameters;
-  }
-
-  Set<Reference> getTypeParams({bool withBounds = true}) {
-    return {
-      ...widgetType.getTypeParams(withBounds: withBounds),
-      ...argsType.getTypeParams(withBounds: withBounds),
-    };
   }
 
   TypeDef buildUnderscoreType() {
     final classRef = storyClassRef;
     return TypeDef(
       (b) => b
-        ..name = '_Story'
-        ..types.addAll(getTypeParams())
+        ..name = '_${variant.prefix}Story'
+        ..types.addAll(variant.getTypeParams())
         ..definition = TypeReference(
           (b) => b
             ..symbol = classRef.symbol
@@ -57,22 +43,22 @@ class StoryClassBuilder {
   }
 
   Class build() {
-    final isCustomArgs = widgetType != argsType;
-    final hasRequiredArgs = params.any((param) => param.requiresArg);
-    final unboundedTypeParams = getTypeParams(withBounds: false);
+    final isCustomArgs = variant.isCustomArgs;
+    final hasRequiredArgs = variant.params.any((param) => param.requiresArg);
+    final unboundedTypeParams = variant.getTypeParams(withBounds: false);
 
     final isGeneric = unboundedTypeParams.isNotEmpty;
     final hasBuilder = defaultBuilder != null;
     final hasSetup = defaultSetup != null;
 
-    final widgetClassRef = widgetType.getRef();
-    final argsClassRef = argsType.getRef(
-      suffix: 'Args',
+    final widgetClassRef = variant.widgetType.getRef();
+    final argsClassRef = variant.argsType.getRef(
+      suffix: variant.argsSuffix,
       types: unboundedTypeParams,
     );
 
-    final nullableArgsClassRef = argsType.getRef(
-      suffix: 'Args',
+    final nullableArgsClassRef = variant.argsType.getRef(
+      suffix: variant.argsSuffix,
       types: unboundedTypeParams,
       isNullable: true,
     );
@@ -80,7 +66,7 @@ class StoryClassBuilder {
     return Class(
       (b) => b
         ..name = storyClassRef.symbol
-        ..types.addAll(getTypeParams())
+        ..types.addAll(variant.getTypeParams())
         ..extend = TypeReference(
           (b) => b
             ..symbol = 'Story'
@@ -100,8 +86,8 @@ class StoryClassBuilder {
                   (b) => b
                     ..name = 'setup'
                     ..named = true
-                    ..toSuper = !hasBuilder
-                    ..type = !hasBuilder
+                    ..toSuper = !hasSetup
+                    ..type = !hasSetup
                         ? null
                         : TypeReference(
                             (b) => b
@@ -191,13 +177,17 @@ class StoryClassBuilder {
                   'builder': refer('builder').ifNullThen(
                     isGeneric
                         ? CodeExpression(defaultBuilder!)
-                        : refer('defaults').property('builder').nullChecked,
+                        : refer(
+                            defaultsVariableName!,
+                          ).property('builder').nullChecked,
                   ),
                 if (hasSetup)
                   'setup': refer('setup').ifNullThen(
                     isGeneric
                         ? CodeExpression(defaultSetup!)
-                        : refer('defaults').property('setup').nullChecked,
+                        : refer(
+                            defaultsVariableName!,
+                          ).property('setup').nullChecked,
                   ),
               };
 
@@ -220,8 +210,10 @@ class StoryClassBuilder {
   InvokeExpression instantiate(
     Expression Function(FormalParameterElement) assigner,
   ) {
+    final params = variant.params;
+
     return InvokeExpression.newOf(
-      widgetType.getRef(),
+      variant.widgetType.getRef(),
       params //
           .where((param) => param.isPositional)
           .map(assigner)
@@ -235,6 +227,8 @@ class StoryClassBuilder {
               assigner(param),
             ),
           ),
+      const [],
+      variant.constructorName,
     );
   }
 }

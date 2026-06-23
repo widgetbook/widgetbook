@@ -17,7 +17,7 @@ import '${widgetInfo.importPath}';
 
 part '${filename}.stories.g.dart';
 
-const meta = Meta<${widgetInfo.name}>();
+const meta = Meta(${widgetInfo.name}.new);
 ''';
 
     final regularStory = '''

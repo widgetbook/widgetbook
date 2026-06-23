@@ -6,18 +6,18 @@ part of 'default_values.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<DefaultsWidget, DefaultsWidgetArgs>;
+typedef _Component = Component<DefaultsWidget, StoryArgs<DefaultsWidget>>;
 typedef _Scenario = DefaultsWidgetScenario;
 typedef _Defaults = DefaultsWidgetDefaults;
 typedef _Story = DefaultsWidgetStory;
 typedef _Args = DefaultsWidgetArgs;
-final DefaultsWidgetComponent = Component<DefaultsWidget, DefaultsWidgetArgs>(
-  name: meta.name ?? 'DefaultsWidget',
-  path: meta.path ?? '',
-  docsBuilder: meta.docsBuilder,
-  docComment: null,
-  stories: [$Default..$generatedName = 'Default'],
-);
+final DefaultsWidgetComponent =
+    Component<DefaultsWidget, StoryArgs<DefaultsWidget>>(
+      name: 'DefaultsWidget',
+      path: '',
+      docComment: null,
+      stories: [$Default..$generatedName = 'Default'],
+    );
 typedef DefaultsWidgetScenario = Scenario<DefaultsWidget, DefaultsWidgetArgs>;
 typedef DefaultsWidgetDefaults = Defaults<DefaultsWidget, DefaultsWidgetArgs>;
 

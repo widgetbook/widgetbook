@@ -2,6 +2,7 @@ export 'addon.dart';
 export 'arg.dart';
 export 'builder_arg.dart';
 export 'component.dart';
+export 'component_meta.dart';
 export 'config.dart';
 export 'const_arg.dart';
 export 'defaults.dart';

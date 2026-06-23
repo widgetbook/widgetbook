@@ -6,16 +6,16 @@ part of 'static_methods.stories.dart';
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<StaticMethodWidget, StaticMethodWidgetArgs>;
+typedef _Component =
+    Component<StaticMethodWidget, StoryArgs<StaticMethodWidget>>;
 typedef _Scenario = StaticMethodWidgetScenario;
 typedef _Defaults = StaticMethodWidgetDefaults;
 typedef _Story = StaticMethodWidgetStory;
 typedef _Args = StaticMethodWidgetArgs;
 final StaticMethodWidgetComponent =
-    Component<StaticMethodWidget, StaticMethodWidgetArgs>(
-      name: meta.name ?? 'StaticMethodWidget',
-      path: meta.path ?? '',
-      docsBuilder: meta.docsBuilder,
+    Component<StaticMethodWidget, StoryArgs<StaticMethodWidget>>(
+      name: 'StaticMethodWidget',
+      path: '',
       docComment: null,
       stories: [$Default..$generatedName = 'Default'],
     );

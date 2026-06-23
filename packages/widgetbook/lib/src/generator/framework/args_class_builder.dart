@@ -1,46 +1,27 @@
-import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
 
 import 'arg_builder.dart';
 import 'extensions.dart';
+import 'variant.dart';
 
 class ArgsClassBuilder {
-  ArgsClassBuilder(this.widgetType, this.argsType);
+  ArgsClassBuilder(this.variant);
 
-  final DartType widgetType;
-  final DartType argsType;
+  final Variant variant;
 
   TypeReference get argsClassRef {
-    return argsType.getRef(
-      suffix: 'Args',
-      types: getTypeParams(withBounds: false),
+    return variant.argsType.getRef(
+      suffix: variant.argsSuffix,
+      types: variant.getTypeParams(withBounds: false),
     );
-  }
-
-  Iterable<FormalParameterElement> get params {
-    final constructors = (argsType.element as ClassElement).constructors;
-    final constructor =
-        constructors
-            .where((c) => c.name == 'new' || c.name == null || c.name!.isEmpty)
-            .firstOrNull ??
-        constructors.first;
-    return constructor.formalParameters;
-  }
-
-  Set<Reference> getTypeParams({bool withBounds = true}) {
-    return {
-      ...widgetType.getTypeParams(withBounds: withBounds),
-      ...argsType.getTypeParams(withBounds: withBounds),
-    };
   }
 
   TypeDef buildUnderscoreType() {
     final classRef = argsClassRef;
     return TypeDef(
       (b) => b
-        ..name = '_Args'
-        ..types.addAll(getTypeParams())
+        ..name = '_${variant.prefix}Args'
+        ..types.addAll(variant.getTypeParams())
         ..definition = TypeReference(
           (b) => b
             ..symbol = classRef.symbol
@@ -50,12 +31,13 @@ class ArgsClassBuilder {
   }
 
   Class build() {
-    final widgetClassRef = widgetType.getRef();
+    final params = variant.params;
+    final widgetClassRef = variant.widgetType.getRef();
 
     return Class(
       (b) => b
         ..name = argsClassRef.symbol
-        ..types.addAll(getTypeParams())
+        ..types.addAll(variant.getTypeParams())
         ..extend = TypeReference(
           (b) => b
             ..symbol = 'StoryArgs'

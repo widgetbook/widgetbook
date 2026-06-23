@@ -1,20 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'meta_with_args.stories.dart';
+part of 'custom_args.stories.dart';
 
 // **************************************************************************
 // StoryGenerator
 // **************************************************************************
 
-typedef _Component = Component<LabelBadge, NumericBadgeInputArgs>;
+typedef _Component = Component<LabelBadge, StoryArgs<LabelBadge>>;
 typedef _Scenario = LabelBadgeScenario;
 typedef _Defaults = LabelBadgeDefaults;
 typedef _Story = LabelBadgeStory;
 typedef _Args = NumericBadgeInputArgs;
-final LabelBadgeComponent = Component<LabelBadge, NumericBadgeInputArgs>(
-  name: meta.name ?? 'LabelBadge',
-  path: meta.path ?? '',
-  docsBuilder: meta.docsBuilder,
+final LabelBadgeComponent = Component<LabelBadge, StoryArgs<LabelBadge>>(
+  name: 'LabelBadge',
+  path: '',
   docComment: null,
   stories: [$Default..$generatedName = 'Default'],
 );
@@ -24,7 +23,7 @@ typedef LabelBadgeDefaults = Defaults<LabelBadge, NumericBadgeInputArgs>;
 class LabelBadgeStory extends Story<LabelBadge, NumericBadgeInputArgs> {
   LabelBadgeStory({
     super.name,
-    SetupBuilder<LabelBadge, NumericBadgeInputArgs>? setup,
+    super.setup,
     super.modes,
     NumericBadgeInputArgs? args,
     StoryWidgetBuilder<LabelBadge, NumericBadgeInputArgs>? builder,
