@@ -1,6 +1,6 @@
 # Duration Knob
 
-The Duration knob renders a set of text fields in the Widgetbook UI where you can dynamically enter a `Duration` value for a widget property. By default, it shows inputs for hours, minutes, and seconds.
+The Duration knob renders a set of text fields in the Widgetbook UI where you can dynamically enter a `Duration` value for a widget property. By default, it shows inputs for seconds and milliseconds.
 
 ## Variants
 
@@ -14,9 +14,9 @@ Besides the knob's [base properties](/knobs/overview#properties), the Duration k
 
 | Property | Type | Default | Description |
 |---|---|---|---|
-| `units` | `Set<DurationUnit>` | `{DurationUnit.hours, DurationUnit.minutes, DurationUnit.seconds}` | The time units to show as separate inputs. |
+| `units` | `Set<DurationUnit>` | `{DurationUnit.seconds, DurationUnit.milliseconds}` | The time units to show as separate inputs. |
 
-`DurationUnit` provides `days`, `hours`, `minutes`, `seconds`, `milliseconds`, and `microseconds`. Inputs are always rendered from the largest unit to the smallest, regardless of their order in the set. The largest unit in the set absorbs any overflow, so no part of the value is ever hidden — for example, when only `seconds` is shown, a value of `Duration(seconds: 90)` displays `90`.
+`DurationUnit` has `days`, `hours`, `minutes`, `seconds`, `milliseconds`, and `microseconds`. Units render largest to smallest regardless of set order, and the largest absorbs any overflow so no value is hidden (e.g. with only `seconds`, `Duration(seconds: 90)` shows `90`).
 
 ## `context.knobs.duration()`
 

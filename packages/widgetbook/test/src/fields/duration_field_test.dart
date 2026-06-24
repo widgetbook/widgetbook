@@ -54,15 +54,13 @@ void main() {
         );
 
         final textFields = find.byType(TextFormField);
-        expect(textFields, findsNWidgets(3));
+        expect(textFields, findsNWidgets(2));
 
-        final hoursField = tester.widget<TextFormField>(textFields.at(0));
-        final minutesField = tester.widget<TextFormField>(textFields.at(1));
-        final secondsField = tester.widget<TextFormField>(textFields.at(2));
+        final secondsField = tester.widget<TextFormField>(textFields.at(0));
+        final millisecondsField = tester.widget<TextFormField>(textFields.at(1));
 
-        expect(hoursField.initialValue, '0');
-        expect(minutesField.initialValue, '0');
         expect(secondsField.initialValue, '5');
+        expect(millisecondsField.initialValue, '0');
       },
     );
 
@@ -87,21 +85,19 @@ void main() {
         );
 
         final textFields = find.byType(TextFormField);
-        expect(textFields, findsNWidgets(3));
+        expect(textFields, findsNWidgets(2));
 
-        final hoursField = tester.widget<TextFormField>(textFields.at(0));
-        final minutesField = tester.widget<TextFormField>(textFields.at(1));
-        final secondsField = tester.widget<TextFormField>(textFields.at(2));
+        final secondsField = tester.widget<TextFormField>(textFields.at(0));
+        final millisecondsField = tester.widget<TextFormField>(textFields.at(1));
 
-        expect(hoursField.initialValue, '0');
-        expect(minutesField.initialValue, '0');
         expect(secondsField.initialValue, '10');
+        expect(millisecondsField.initialValue, '0');
       },
     );
 
     testWidgets(
       'given a field, '
-      'then [toWidget] builds three input fields',
+      'then [toWidget] builds two input fields',
       (tester) async {
         await tester.pumpWidget(
           Builder(
@@ -120,7 +116,7 @@ void main() {
         );
 
         final textFields = find.byType(TextFormField);
-        expect(textFields, findsNWidgets(3));
+        expect(textFields, findsNWidgets(2));
       },
     );
 
@@ -300,7 +296,7 @@ void main() {
     );
 
     testWidgets(
-      'given the default units and a value larger than a day, '
+      'given the hours/minutes/seconds units and a value larger than a day, '
       'then the hours field shows the full hour count without dropping the '
       'overflow',
       (tester) async {
@@ -309,6 +305,11 @@ void main() {
         final field = DurationField(
           name: 'duration_field',
           initialValue: const Duration(hours: 50, minutes: 3, seconds: 4),
+          units: const {
+            DurationUnit.hours,
+            DurationUnit.minutes,
+            DurationUnit.seconds,
+          },
         );
 
         await tester.pumpWidget(
