@@ -76,42 +76,55 @@ class ArgsClassBuilder {
                 ),
               )
               ..initializers.addAll(
-                params.map(
-                  (param) => refer('this')
+                params.map((param) {
+                  final fixedValue = param.type.isNullable
+                      ? refer(param.displayName)
+                            .equalTo(literalNull)
+                            .conditional(
+                              literalNull,
+                              InvokeExpression.newOf(
+                                refer('Arg.fixed'),
+                                [refer(param.displayName)],
+                              ),
+                            )
+                      : InvokeExpression.newOf(
+                          refer('Arg.fixed'),
+                          switch (param) {
+                            // For non-constant value, like DateTime.now()
+                            // they are initialized here instead of the
+                            // default value of the parameter
+                            _
+                                when param.type.isPrimitive &&
+                                    !param.type.meta.isConst =>
+                              [
+                                refer(
+                                  param.displayName,
+                                ).ifNullThen(
+                                  param.type.meta.defaultValue,
+                                ),
+                              ],
+                            _ => [refer(param.displayName)],
+                          },
+                        );
+
+                  // Route through `$initArg` (like the default constructor) so
+                  // the arg's name is assigned; otherwise reading `Arg.name` on
+                  // a fixed arg throws a LateInitializationError.
+                  final initialized = refer('\$initArg').call([
+                    literalString(param.displayName),
+                    fixedValue,
+                    literalNull,
+                  ]);
+
+                  return refer('this')
                       .property('${param.displayName}Arg')
                       .assign(
                         param.type.isNullable
-                            ? refer(param.displayName)
-                                  .equalTo(literalNull)
-                                  .conditional(
-                                    literalNull,
-                                    InvokeExpression.newOf(
-                                      refer('Arg.fixed'),
-                                      [refer(param.displayName)],
-                                    ),
-                                  )
-                            : InvokeExpression.newOf(
-                                refer('Arg.fixed'),
-                                switch (param) {
-                                  // For non-constant value, like DateTime.now()
-                                  // they are initialized here instead of the
-                                  // default value of the parameter
-                                  _
-                                      when param.type.isPrimitive &&
-                                          !param.type.meta.isConst =>
-                                    [
-                                      refer(
-                                        param.displayName,
-                                      ).ifNullThen(
-                                        param.type.meta.defaultValue,
-                                      ),
-                                    ],
-                                  _ => [refer(param.displayName)],
-                                },
-                              ),
+                            ? initialized
+                            : initialized.nullChecked,
                       )
-                      .code,
-                ),
+                      .code;
+                }),
               ),
           ),
         ])

@@ -47,8 +47,8 @@ class EnumWidgetArgs extends StoryArgs<EnumWidget> {
       )!;
 
   EnumWidgetArgs.fixed({Key? key, Priority priority = Priority.low})
-    : this.keyArg = key == null ? null : Arg.fixed(key),
-      this.priorityArg = Arg.fixed(priority);
+    : this.keyArg = $initArg('key', key == null ? null : Arg.fixed(key), null),
+      this.priorityArg = $initArg('priority', Arg.fixed(priority), null)!;
 
   final Arg<Key?>? keyArg;
 

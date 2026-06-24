@@ -60,10 +60,10 @@ class PrimitiveWidgetArgs extends StoryArgs<PrimitiveWidget> {
     String label = '',
     int count = 0,
     bool isActive = false,
-  }) : this.keyArg = key == null ? null : Arg.fixed(key),
-       this.labelArg = Arg.fixed(label),
-       this.countArg = Arg.fixed(count),
-       this.isActiveArg = Arg.fixed(isActive);
+  }) : this.keyArg = $initArg('key', key == null ? null : Arg.fixed(key), null),
+       this.labelArg = $initArg('label', Arg.fixed(label), null)!,
+       this.countArg = $initArg('count', Arg.fixed(count), null)!,
+       this.isActiveArg = $initArg('isActive', Arg.fixed(isActive), null)!;
 
   final Arg<Key?>? keyArg;
 

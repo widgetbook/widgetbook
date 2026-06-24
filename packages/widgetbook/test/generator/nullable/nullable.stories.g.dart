@@ -48,9 +48,17 @@ class NullableWidgetArgs extends StoryArgs<NullableWidget> {
       this.countArg = $initArg('count', count, NullableIntArg(null))!;
 
   NullableWidgetArgs.fixed({Key? key, String? label = null, int? count = null})
-    : this.keyArg = key == null ? null : Arg.fixed(key),
-      this.labelArg = label == null ? null : Arg.fixed(label),
-      this.countArg = count == null ? null : Arg.fixed(count);
+    : this.keyArg = $initArg('key', key == null ? null : Arg.fixed(key), null),
+      this.labelArg = $initArg(
+        'label',
+        label == null ? null : Arg.fixed(label),
+        null,
+      ),
+      this.countArg = $initArg(
+        'count',
+        count == null ? null : Arg.fixed(count),
+        null,
+      );
 
   final Arg<Key?>? keyArg;
 

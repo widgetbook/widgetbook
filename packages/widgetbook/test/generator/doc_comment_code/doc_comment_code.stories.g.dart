@@ -52,8 +52,8 @@ class DocCommentCodeWidgetArgs extends StoryArgs<DocCommentCodeWidget> {
       this.labelArg = $initArg('label', label, StringArg(''))!;
 
   DocCommentCodeWidgetArgs.fixed({Key? key, String label = ''})
-    : this.keyArg = key == null ? null : Arg.fixed(key),
-      this.labelArg = Arg.fixed(label);
+    : this.keyArg = $initArg('key', key == null ? null : Arg.fixed(key), null),
+      this.labelArg = $initArg('label', Arg.fixed(label), null)!;
 
   final Arg<Key?>? keyArg;
 
