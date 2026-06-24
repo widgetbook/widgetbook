@@ -68,9 +68,14 @@ class Viewport extends StatelessWidget {
                 // the device frame, otherwise they would use the navigator from
                 // the app builder, causing these routes to fill the whole
                 // workbench and not just the device frame.
-                onGenerateRoute: (_) => PageRouteBuilder(
-                  pageBuilder: (context, _, __) => child,
-                ),
+                //
+                // Uses `pages` (not `onGenerateRoute`) so the route tracks
+                // [child] on rebuild instead of capturing it once, which left
+                // the preview stuck when switching stories or changing knobs.
+                onDidRemovePage: (_) {},
+                pages: [
+                  MaterialPage<void>(child: child),
+                ],
               ),
             ),
           ),
