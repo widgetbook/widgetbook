@@ -39,7 +39,7 @@ class NumericBadgeInputArgs extends StoryArgs<LabelBadge> {
     : this.numberArg = $initArg('number', number, IntArg(0))!;
 
   NumericBadgeInputArgs.fixed({int number = 0})
-    : this.numberArg = Arg.fixed(number);
+    : this.numberArg = $initArg('number', Arg.fixed(number), null)!;
 
   final Arg<int> numberArg;
 

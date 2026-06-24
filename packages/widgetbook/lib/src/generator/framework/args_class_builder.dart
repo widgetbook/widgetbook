@@ -76,42 +76,57 @@ class ArgsClassBuilder {
                 ),
               )
               ..initializers.addAll(
-                params.map(
-                  (param) => refer('this')
+                params.map((param) {
+                  final fixedValue = param.type.isNullable
+                      ? refer(param.displayName)
+                            .equalTo(literalNull)
+                            .conditional(
+                              literalNull,
+                              InvokeExpression.newOf(
+                                refer('Arg.fixed'),
+                                [refer(param.displayName)],
+                              ),
+                            )
+                      : InvokeExpression.newOf(
+                          refer('Arg.fixed'),
+                          switch (param) {
+                            // For non-constant value, like DateTime.now()
+                            // they are initialized here instead of the
+                            // default value of the parameter
+                            _
+                                when param.type.isPrimitive &&
+                                    !param.type.meta.isConst =>
+                              [
+                                refer(
+                                  param.displayName,
+                                ).ifNullThen(
+                                  param.type.meta.defaultValue,
+                                ),
+                              ],
+                            _ => [refer(param.displayName)],
+                          },
+                        );
+
+                  // Route the fixed value through `$initArg` so the Arg's
+                  // `$generatedName` is assigned, mirroring the default
+                  // constructor. Without this, reading `arg.name` on a fixed
+                  // arg throws a LateInitializationError (e.g. when the UI
+                  // renders a scenario's args table).
+                  final initialized = refer('\$initArg').call([
+                    literalString(param.displayName),
+                    fixedValue,
+                    literalNull,
+                  ]);
+
+                  return refer('this')
                       .property('${param.displayName}Arg')
                       .assign(
                         param.type.isNullable
-                            ? refer(param.displayName)
-                                  .equalTo(literalNull)
-                                  .conditional(
-                                    literalNull,
-                                    InvokeExpression.newOf(
-                                      refer('Arg.fixed'),
-                                      [refer(param.displayName)],
-                                    ),
-                                  )
-                            : InvokeExpression.newOf(
-                                refer('Arg.fixed'),
-                                switch (param) {
-                                  // For non-constant value, like DateTime.now()
-                                  // they are initialized here instead of the
-                                  // default value of the parameter
-                                  _
-                                      when param.type.isPrimitive &&
-                                          !param.type.meta.isConst =>
-                                    [
-                                      refer(
-                                        param.displayName,
-                                      ).ifNullThen(
-                                        param.type.meta.defaultValue,
-                                      ),
-                                    ],
-                                  _ => [refer(param.displayName)],
-                                },
-                              ),
+                            ? initialized
+                            : initialized.nullChecked,
                       )
-                      .code,
-                ),
+                      .code;
+                }),
               ),
           ),
         ])

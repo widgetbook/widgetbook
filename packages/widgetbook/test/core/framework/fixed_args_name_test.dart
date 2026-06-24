@@ -30,8 +30,7 @@ void main() {
     });
 
     test(
-      '`.fixed` constructor exposes parameter names too '
-      '(currently FAILS — reproduces #1)',
+      '`.fixed` constructor exposes parameter names too (regression for #1)',
       () {
         final args = PrimitiveWidgetArgs.fixed(
           label: 'Hello',
@@ -40,8 +39,9 @@ void main() {
         );
 
         // This is exactly what `ResponsiveLayout.buildScenarioInfo` does when
-        // it renders the "Args" table for a scenario/story. It throws today
-        // because `$generatedName` was never initialized for fixed args.
+        // it renders the "Args" table for a scenario/story. Before the fix it
+        // threw a LateInitializationError because `$generatedName` was never
+        // assigned for fixed args.
         final names =
             args.list.whereType<Arg>().map((arg) => arg.name).toList();
 

@@ -55,8 +55,8 @@ class VariantButtonArgs extends StoryArgs<VariantButton> {
       this.labelArg = $initArg('label', label, StringArg(''))!;
 
   VariantButtonArgs.fixed({Key? key, String label = ''})
-    : this.keyArg = key == null ? null : Arg.fixed(key),
-      this.labelArg = Arg.fixed(label);
+    : this.keyArg = $initArg('key', key == null ? null : Arg.fixed(key), null),
+      this.labelArg = $initArg('label', Arg.fixed(label), null)!;
 
   final Arg<Key?>? keyArg;
 
@@ -107,9 +107,13 @@ class VariantButtonIconArgs extends StoryArgs<VariantButton> {
        this.sizeArg = $initArg('size', size, DoubleArg(24))!;
 
   VariantButtonIconArgs.fixed({Key? key, IconData? icon, double size = 24})
-    : this.keyArg = key == null ? null : Arg.fixed(key),
-      this.iconArg = icon == null ? null : Arg.fixed(icon),
-      this.sizeArg = Arg.fixed(size);
+    : this.keyArg = $initArg('key', key == null ? null : Arg.fixed(key), null),
+      this.iconArg = $initArg(
+        'icon',
+        icon == null ? null : Arg.fixed(icon),
+        null,
+      ),
+      this.sizeArg = $initArg('size', Arg.fixed(size), null)!;
 
   final Arg<Key?>? keyArg;
 
@@ -153,8 +157,8 @@ class VariantButtonOutlinedArgs extends StoryArgs<VariantButton> {
       this.labelArg = $initArg('label', label, StringArg(''))!;
 
   VariantButtonOutlinedArgs.fixed({Key? key, String label = ''})
-    : this.keyArg = key == null ? null : Arg.fixed(key),
-      this.labelArg = Arg.fixed(label);
+    : this.keyArg = $initArg('key', key == null ? null : Arg.fixed(key), null),
+      this.labelArg = $initArg('label', Arg.fixed(label), null)!;
 
   final Arg<Key?>? keyArg;
 

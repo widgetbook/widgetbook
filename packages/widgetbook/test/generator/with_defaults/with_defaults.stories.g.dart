@@ -44,7 +44,7 @@ class DefaultsVarInputArgs extends StoryArgs<DefaultsVarWidget> {
     : this.labelArg = $initArg('label', label, StringArg(''))!;
 
   DefaultsVarInputArgs.fixed({String label = ''})
-    : this.labelArg = Arg.fixed(label);
+    : this.labelArg = $initArg('label', Arg.fixed(label), null)!;
 
   final Arg<String> labelArg;
 

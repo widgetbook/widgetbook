@@ -56,8 +56,8 @@ class MultiConstructorWidgetArgs extends StoryArgs<MultiConstructorWidget> {
       this.countArg = $initArg('count', count, IntArg(0))!;
 
   MultiConstructorWidgetArgs.fixed({Key? key, int count = 0})
-    : this.keyArg = key == null ? null : Arg.fixed(key),
-      this.countArg = Arg.fixed(count);
+    : this.keyArg = $initArg('key', key == null ? null : Arg.fixed(key), null),
+      this.countArg = $initArg('count', Arg.fixed(count), null)!;
 
   final Arg<Key?>? keyArg;
 
@@ -102,8 +102,8 @@ class MultiConstructorWidgetOtherArgs
       this.labelArg = $initArg('label', label, StringArg(''))!;
 
   MultiConstructorWidgetOtherArgs.fixed({Key? key, String label = ''})
-    : this.keyArg = key == null ? null : Arg.fixed(key),
-      this.labelArg = Arg.fixed(label);
+    : this.keyArg = $initArg('key', key == null ? null : Arg.fixed(key), null),
+      this.labelArg = $initArg('label', Arg.fixed(label), null)!;
 
   final Arg<Key?>? keyArg;
 

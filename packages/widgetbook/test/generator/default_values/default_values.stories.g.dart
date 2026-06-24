@@ -62,11 +62,11 @@ class DefaultsWidgetArgs extends StoryArgs<DefaultsWidget> {
     int count = 42,
     double ratio = 3.14,
     bool isEnabled = true,
-  }) : this.keyArg = key == null ? null : Arg.fixed(key),
-       this.labelArg = Arg.fixed(label),
-       this.countArg = Arg.fixed(count),
-       this.ratioArg = Arg.fixed(ratio),
-       this.isEnabledArg = Arg.fixed(isEnabled);
+  }) : this.keyArg = $initArg('key', key == null ? null : Arg.fixed(key), null),
+       this.labelArg = $initArg('label', Arg.fixed(label), null)!,
+       this.countArg = $initArg('count', Arg.fixed(count), null)!,
+       this.ratioArg = $initArg('ratio', Arg.fixed(ratio), null)!,
+       this.isEnabledArg = $initArg('isEnabled', Arg.fixed(isEnabled), null)!;
 
   final Arg<Key?>? keyArg;
 

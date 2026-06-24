@@ -45,8 +45,8 @@ class GenericWidgetArgs<T extends num> extends StoryArgs<GenericWidget<T>> {
       this.valueArg = $initArg('value', value, null)!;
 
   GenericWidgetArgs.fixed({Key? key, required T value})
-    : this.keyArg = key == null ? null : Arg.fixed(key),
-      this.valueArg = Arg.fixed(value);
+    : this.keyArg = $initArg('key', key == null ? null : Arg.fixed(key), null),
+      this.valueArg = $initArg('value', Arg.fixed(value), null)!;
 
   final Arg<Key?>? keyArg;
 

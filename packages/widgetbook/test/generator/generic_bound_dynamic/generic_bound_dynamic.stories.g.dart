@@ -50,8 +50,8 @@ class DynamicBoundWidgetArgs<D, T extends Map<dynamic, D>>
       this.mappingArg = $initArg('mapping', mapping, null)!;
 
   DynamicBoundWidgetArgs.fixed({Key? key, required T mapping})
-    : this.keyArg = key == null ? null : Arg.fixed(key),
-      this.mappingArg = Arg.fixed(mapping);
+    : this.keyArg = $initArg('key', key == null ? null : Arg.fixed(key), null),
+      this.mappingArg = $initArg('mapping', Arg.fixed(mapping), null)!;
 
   final Arg<Key?>? keyArg;
 

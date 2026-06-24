@@ -53,8 +53,8 @@ class NullableBoundWidgetArgs<D, T extends BaseItem<D?>>
       this.itemArg = $initArg('item', item, null)!;
 
   NullableBoundWidgetArgs.fixed({Key? key, required T item})
-    : this.keyArg = key == null ? null : Arg.fixed(key),
-      this.itemArg = Arg.fixed(item);
+    : this.keyArg = $initArg('key', key == null ? null : Arg.fixed(key), null),
+      this.itemArg = $initArg('item', Arg.fixed(item), null)!;
 
   final Arg<Key?>? keyArg;
 

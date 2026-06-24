@@ -56,8 +56,8 @@ class StaticMethodWidgetArgs extends StoryArgs<StaticMethodWidget> {
   StaticMethodWidgetArgs.fixed({
     Key? key,
     Widget Function(BuildContext) builder = StaticMethodWidget._defaultBuilder,
-  }) : this.keyArg = key == null ? null : Arg.fixed(key),
-       this.builderArg = Arg.fixed(builder);
+  }) : this.keyArg = $initArg('key', key == null ? null : Arg.fixed(key), null),
+       this.builderArg = $initArg('builder', Arg.fixed(builder), null)!;
 
   final Arg<Key?>? keyArg;
 
