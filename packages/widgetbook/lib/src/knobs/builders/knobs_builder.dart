@@ -221,24 +221,14 @@ class KnobsBuilder {
     required String label,
     Duration initialValue = Duration.zero,
     String? description,
-    bool enableDays = false,
-    bool enableHours = true,
-    bool enableMinutes = true,
-    bool enableSeconds = true,
-    bool enableMilliseconds = false,
-    bool enableMicroseconds = false,
+    Set<DurationUnit> units = DurationUnit.defaults,
   }) {
     return onKnobAdded(
       DurationKnob(
         label: label,
         initialValue: initialValue,
         description: description,
-        enableDays: enableDays,
-        enableHours: enableHours,
-        enableMinutes: enableMinutes,
-        enableSeconds: enableSeconds,
-        enableMilliseconds: enableMilliseconds,
-        enableMicroseconds: enableMicroseconds,
+        units: units,
       ),
     )!;
   }
@@ -250,12 +240,7 @@ class KnobsBuilder {
     Duration? initialValue,
     String? description,
     bool defaultToNull = false,
-    bool enableDays = false,
-    bool enableHours = true,
-    bool enableMinutes = true,
-    bool enableSeconds = true,
-    bool enableMilliseconds = false,
-    bool enableMicroseconds = false,
+    Set<DurationUnit> units = DurationUnit.defaults,
   }) {
     return onKnobAdded(
       DurationKnob.nullable(
@@ -263,12 +248,7 @@ class KnobsBuilder {
         initialValue: initialValue,
         description: description,
         defaultToNull: defaultToNull,
-        enableDays: enableDays,
-        enableHours: enableHours,
-        enableMinutes: enableMinutes,
-        enableSeconds: enableSeconds,
-        enableMilliseconds: enableMilliseconds,
-        enableMicroseconds: enableMicroseconds,
+        units: units,
       ),
     );
   }

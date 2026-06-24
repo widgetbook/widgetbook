@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/knobs/knobs.dart';
+import 'package:widgetbook/widgetbook.dart' show DurationUnit;
 
 import '../../helper/helper.dart';
 
@@ -92,7 +93,7 @@ void main() {
       );
 
       testWidgets(
-        'given enableDays=true, '
+        'given the days unit is enabled, '
         'then four input fields should be displayed',
         (tester) async {
           await tester.pumpKnob(
@@ -100,7 +101,12 @@ void main() {
               context.knobs
                   .duration(
                     label: 'DurationKnob',
-                    enableDays: true,
+                    units: const {
+                      DurationUnit.days,
+                      DurationUnit.hours,
+                      DurationUnit.minutes,
+                      DurationUnit.seconds,
+                    },
                   )
                   .inMilliseconds
                   .toString(),
@@ -112,7 +118,7 @@ void main() {
       );
 
       testWidgets(
-        'given enableMilliseconds=true and enableMicroseconds=true, '
+        'given the milliseconds and microseconds units are enabled, '
         'then five input fields should be displayed',
         (tester) async {
           await tester.pumpKnob(
@@ -120,8 +126,13 @@ void main() {
               context.knobs
                   .duration(
                     label: 'DurationKnob',
-                    enableMilliseconds: true,
-                    enableMicroseconds: true,
+                    units: const {
+                      DurationUnit.hours,
+                      DurationUnit.minutes,
+                      DurationUnit.seconds,
+                      DurationUnit.milliseconds,
+                      DurationUnit.microseconds,
+                    },
                   )
                   .inMilliseconds
                   .toString(),
@@ -133,7 +144,7 @@ void main() {
       );
 
       testWidgets(
-        'given enableHours=false and enableMinutes=false, '
+        'given only the seconds unit is enabled, '
         'then one input field (seconds) should be displayed',
         (tester) async {
           await tester.pumpKnob(
@@ -141,8 +152,7 @@ void main() {
               context.knobs
                   .duration(
                     label: 'DurationKnob',
-                    enableHours: false,
-                    enableMinutes: false,
+                    units: const {DurationUnit.seconds},
                   )
                   .inMilliseconds
                   .toString(),
@@ -150,6 +160,40 @@ void main() {
           );
 
           expect(find.byType(TextField), findsNWidgets(1));
+        },
+      );
+
+      testWidgets(
+        'given the days unit is enabled and the days field is edited, '
+        'then the emitted duration includes the days component',
+        (tester) async {
+          await tester.pumpKnob(
+            (context) => Text(
+              context.knobs
+                  .duration(
+                    label: 'DurationKnob',
+                    units: const {
+                      DurationUnit.days,
+                      DurationUnit.hours,
+                      DurationUnit.minutes,
+                      DurationUnit.seconds,
+                    },
+                  )
+                  .inMilliseconds
+                  .toString(),
+            ),
+          );
+
+          final textFields = find.byType(TextField);
+          expect(textFields, findsNWidgets(4));
+
+          await tester.enterText(textFields.first, '2');
+          await tester.pumpAndSettle();
+
+          expect(
+            find.textWidget('${const Duration(days: 2).inMilliseconds}'),
+            findsOneWidget,
+          );
         },
       );
     },

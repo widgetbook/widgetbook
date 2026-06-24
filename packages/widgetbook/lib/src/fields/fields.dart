@@ -4,6 +4,7 @@ export 'date_time_field.dart';
 export 'double_input_field.dart';
 export 'double_slider_field.dart';
 export 'duration_field/duration_field.dart';
+export 'duration_field/duration_unit.dart';
 export 'field.dart';
 export 'field_codec.dart';
 export 'field_type.dart';

@@ -10,16 +10,13 @@ The Duration knob has two variants:
 
 ## Properties
 
-Besides the knob's [base properties](/knobs/overview#properties), the Duration knob supports the following additional properties to control which time units are displayed:
+Besides the knob's [base properties](/knobs/overview#properties), the Duration knob supports one additional property to control which time units are displayed:
 
 | Property | Type | Default | Description |
 |---|---|---|---|
-| `enableDays` | `bool` | `false` | Show the days input field. |
-| `enableHours` | `bool` | `true` | Show the hours input field. |
-| `enableMinutes` | `bool` | `true` | Show the minutes input field. |
-| `enableSeconds` | `bool` | `true` | Show the seconds input field. |
-| `enableMilliseconds` | `bool` | `false` | Show the milliseconds input field. |
-| `enableMicroseconds` | `bool` | `false` | Show the microseconds input field. |
+| `units` | `Set<DurationUnit>` | `{DurationUnit.hours, DurationUnit.minutes, DurationUnit.seconds}` | The time units to show as separate inputs. |
+
+`DurationUnit` exposes `days`, `hours`, `minutes`, `seconds`, `milliseconds`, and `microseconds`. Inputs are always rendered from the largest unit to the smallest, regardless of the order in the set. The largest enabled unit absorbs any overflow, so no part of the value is ever hidden (e.g. with only `seconds` enabled, a value of `Duration(seconds: 90)` shows `90`).
 
 ## `context.knobs.duration()`
 
@@ -44,17 +41,22 @@ Widget buildUseCase(BuildContext context) {
 }
 ```
 
-To enable more granular time units:
+To choose which time units to show, pass a `units` set:
 
-```dart title="Example: Duration Knob with all units"
+```dart title="Example: Duration Knob with custom units"
 @UseCase(type: MyWidget, name: 'Default')
 Widget buildUseCase(BuildContext context) {
   return MyWidget(
     duration: context.knobs.duration( // [!code highlight]
       label: 'duration', // [!code highlight]
-      enableDays: true, // [!code highlight]
-      enableMilliseconds: true, // [!code highlight]
-      enableMicroseconds: true, // [!code highlight]
+      units: const { // [!code highlight]
+        DurationUnit.days, // [!code highlight]
+        DurationUnit.hours, // [!code highlight]
+        DurationUnit.minutes, // [!code highlight]
+        DurationUnit.seconds, // [!code highlight]
+        DurationUnit.milliseconds, // [!code highlight]
+        DurationUnit.microseconds, // [!code highlight]
+      }, // [!code highlight]
     ), // [!code highlight]
   );
 }

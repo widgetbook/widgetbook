@@ -4,6 +4,7 @@ import '../field.dart';
 import '../field_codec.dart';
 import '../field_type.dart';
 import 'duration_input.dart';
+import 'duration_unit.dart';
 
 /// A [Field] that represents a [Duration] value.
 class DurationField extends Field<Duration> {
@@ -11,14 +12,10 @@ class DurationField extends Field<Duration> {
   DurationField({
     required super.name,
     super.initialValue = defaultDuration,
-    this.enableDays = false,
-    this.enableHours = true,
-    this.enableMinutes = true,
-    this.enableSeconds = true,
-    this.enableMilliseconds = false,
-    this.enableMicroseconds = false,
+    this.units = DurationUnit.defaults,
     @Deprecated('Fields should not be aware of their context') super.onChanged,
-  }) : super(
+  }) : assert(units.isNotEmpty, 'At least one DurationUnit must be enabled.'),
+       super(
          defaultValue: defaultDuration,
          type: FieldType.duration,
          codec: FieldCodec(
@@ -33,23 +30,9 @@ class DurationField extends Field<Duration> {
          ),
        );
 
-  /// Whether to enable input for days in the duration.
-  final bool enableDays;
-
-  /// Whether to enable input for hours in the duration.
-  final bool enableHours;
-
-  /// Whether to enable input for minutes in the duration.
-  final bool enableMinutes;
-
-  /// Whether to enable input for seconds in the duration.
-  final bool enableSeconds;
-
-  /// Whether to enable input for milliseconds in the duration.
-  final bool enableMilliseconds;
-
-  /// Whether to enable input for microseconds in the duration.
-  final bool enableMicroseconds;
+  /// The time units displayed as separate inputs, rendered from largest to
+  /// smallest. Defaults to [DurationUnit.defaults] (hours, minutes, seconds).
+  final Set<DurationUnit> units;
 
   /// The default duration value used when no initial value is provided.
   static const defaultDuration = Duration.zero;
@@ -62,12 +45,7 @@ class DurationField extends Field<Duration> {
   ) {
     return DurationInput(
       value: value ?? initialValue ?? defaultDuration,
-      enableDays: enableDays,
-      enableHours: enableHours,
-      enableMinutes: enableMinutes,
-      enableSeconds: enableSeconds,
-      enableMilliseconds: enableMilliseconds,
-      enableMicroseconds: enableMicroseconds,
+      units: units,
       onChanged: (duration) => updateField(context, group, duration),
     );
   }
