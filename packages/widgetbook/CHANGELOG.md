@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FIX**: Rebuild the workbench preview when switching stories or changing knobs while a viewport is active. ([#1948](https://github.com/widgetbook/widgetbook/pull/1948))
 - **FIX**: Assign `$generatedName` to args created via the generated `_Args.fixed(...)` constructor, mirroring the default constructor. ([#1947](https://github.com/widgetbook/widgetbook/pull/1947))
 
 ## 4.0.0-beta.7
