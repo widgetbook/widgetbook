@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FEAT**: Add `units` parameter to the duration knob to choose which time units (days to microseconds) are shown; the default is now seconds and milliseconds. ([#1915](https://github.com/widgetbook/widgetbook/pull/1915) - by [@EArminjon](https://github.com/EArminjon))
+- **FEAT**: Add `units` parameter to the duration knob to choose which time units (days to microseconds) are shown. ([#1915](https://github.com/widgetbook/widgetbook/pull/1915) - by [@EArminjon](https://github.com/EArminjon))
 
 ## 3.24.0
 

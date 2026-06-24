@@ -21,7 +21,7 @@ class DurationKnob extends Knob<Duration?> {
   }) : super(isNullable: true);
 
   /// The time units displayed as separate inputs, rendered from largest to
-  /// smallest. Defaults to [DurationUnit.defaults] (seconds, milliseconds).
+  /// smallest. Defaults to [DurationUnit.defaults] (hours, minutes, seconds).
   final Set<DurationUnit> units;
 
   @override

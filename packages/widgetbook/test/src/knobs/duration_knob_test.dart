@@ -80,9 +80,9 @@ void main() {
           );
 
           final textFields = find.byType(TextField);
-          expect(textFields, findsNWidgets(2));
+          expect(textFields, findsNWidgets(3));
 
-          await tester.enterText(textFields.at(0), '10');
+          await tester.enterText(textFields.at(2), '10');
           await tester.pumpAndSettle();
 
           expect(

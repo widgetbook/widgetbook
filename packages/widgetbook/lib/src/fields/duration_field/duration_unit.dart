@@ -40,6 +40,6 @@ enum DurationUnit {
   /// not the largest enabled unit.
   final int maxLength;
 
-  /// The units shown by default: seconds and milliseconds.
-  static const Set<DurationUnit> defaults = {seconds, milliseconds};
+  /// The units shown by default: hours, minutes and seconds.
+  static const Set<DurationUnit> defaults = {hours, minutes, seconds};
 }
