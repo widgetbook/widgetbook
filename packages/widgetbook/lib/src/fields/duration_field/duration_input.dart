@@ -71,8 +71,7 @@ class _DurationInputState extends State<DurationInput> {
   List<TextInputFormatter> _formattersFor(DurationUnit unit) {
     final boundedPattern = switch (unit) {
       DurationUnit.minutes || DurationUnit.seconds => r'^[0-5]?[0-9]$',
-      DurationUnit.milliseconds ||
-      DurationUnit.microseconds => r'^[0-9]{0,3}$',
+      DurationUnit.milliseconds || DurationUnit.microseconds => r'^[0-9]{0,3}$',
       _ => null,
     };
 
