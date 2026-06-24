@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FIX**: Assign `$generatedName` to args created via the generated `_Args.fixed(...)` constructor, mirroring the default constructor. Reading `arg.name` on a fixed arg (e.g. when the UI renders a scenario's args table) no longer throws a `LateInitializationError`. ([#1947](https://github.com/widgetbook/widgetbook/pull/1947))
+- **FIX**: Assign `$generatedName` to args created via the generated `_Args.fixed(...)` constructor, mirroring the default constructor. ([#1947](https://github.com/widgetbook/widgetbook/pull/1947))
 
 ## 4.0.0-beta.7
 
