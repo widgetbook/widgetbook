@@ -107,11 +107,9 @@ class ArgsClassBuilder {
                           },
                         );
 
-                  // Route the fixed value through `$initArg` so the Arg's
-                  // `$generatedName` is assigned, mirroring the default
-                  // constructor. Without this, reading `arg.name` on a fixed
-                  // arg throws a LateInitializationError (e.g. when the UI
-                  // renders a scenario's args table).
+                  // Route through `$initArg` (like the default constructor) so
+                  // the arg's name is assigned; otherwise reading `Arg.name` on
+                  // a fixed arg throws a LateInitializationError.
                   final initialized = refer('\$initArg').call([
                     literalString(param.displayName),
                     fixedValue,
