@@ -2,6 +2,10 @@
 
 - **FEAT**: Add `units` parameter to the duration knob to choose which time units (days to microseconds) are shown; the default is now seconds and milliseconds. ([#1915](https://github.com/widgetbook/widgetbook/pull/1915) - by [@EArminjon](https://github.com/EArminjon))
 
+## 3.24.0
+
+- **BREAKING**: Set minimum Flutter version to 3.44.0. ([#1924](https://github.com/widgetbook/widgetbook/pull/1924))
+
 ## 3.23.0
 
 - **FEAT**: Add `defaultToNull` parameter to nullable knobs to make them start in a `null` _(i.e. unchecked)_ state while having a non-null initial value. ([#1790](https://github.com/widgetbook/widgetbook/pull/1790) - by [@youpelegrace](https://github.com/youpelegrace))

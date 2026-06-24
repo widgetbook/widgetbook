@@ -1,2 +1,2 @@
 /// The version as in pubspec.yaml
-const packageVersion = '3.23.0';
+const packageVersion = '3.24.0';

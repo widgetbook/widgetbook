@@ -14,9 +14,9 @@ class ComponentCollector extends CollectorAstVisitor<String, Annotation> {
   @override
   String mapNode(Annotation node) {
     final typeArg = node.arguments!.arguments
-        .whereType<NamedExpression>()
-        .firstWhere((arg) => arg.name.label.name == 'type');
+        .whereType<NamedArgument>()
+        .firstWhere((arg) => arg.name.lexeme == 'type');
 
-    return typeArg.expression.toString();
+    return typeArg.argumentExpression.toString();
   }
 }
