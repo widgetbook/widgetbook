@@ -1,12 +1,12 @@
 # Duration Knob
 
-The Duration knob renders a set of text fields in the Widgetbook UI where you can dynamically enter a Duration value for a widget property. By default, it shows hours, minutes, and seconds inputs.
+The Duration knob renders a set of text fields in the Widgetbook UI where you can dynamically enter a `Duration` value for a widget property. By default, it shows inputs for hours, minutes, and seconds.
 
 ## Variants
 
 The Duration knob has two variants:
-- `context.knobs.duration()`: This variant allows you to enter a Duration value. It does not accept `null` values.
-- `context.knobs.durationOrNull()`: This variant allows you to enter a Duration value or `null`. It is useful when the property can be optional.
+- `context.knobs.duration()`: Lets you enter a `Duration` value. It does not accept `null`.
+- `context.knobs.durationOrNull()`: Lets you enter a `Duration` value or `null`. This is useful when the property is optional.
 
 ## Properties
 
@@ -16,7 +16,7 @@ Besides the knob's [base properties](/knobs/overview#properties), the Duration k
 |---|---|---|---|
 | `units` | `Set<DurationUnit>` | `{DurationUnit.hours, DurationUnit.minutes, DurationUnit.seconds}` | The time units to show as separate inputs. |
 
-`DurationUnit` exposes `days`, `hours`, `minutes`, `seconds`, `milliseconds`, and `microseconds`. Inputs are always rendered from the largest unit to the smallest, regardless of the order in the set. The largest enabled unit absorbs any overflow, so no part of the value is ever hidden (e.g. with only `seconds` enabled, a value of `Duration(seconds: 90)` shows `90`).
+`DurationUnit` provides `days`, `hours`, `minutes`, `seconds`, `milliseconds`, and `microseconds`. Inputs are always rendered from the largest unit to the smallest, regardless of their order in the set. The largest unit in the set absorbs any overflow, so no part of the value is ever hidden — for example, when only `seconds` is shown, a value of `Duration(seconds: 90)` displays `90`.
 
 ## `context.knobs.duration()`
 
@@ -41,7 +41,7 @@ Widget buildUseCase(BuildContext context) {
 }
 ```
 
-To choose which time units to show, pass a `units` set:
+To customize which time units are shown, pass a `units` set:
 
 ```dart title="Example: Duration Knob with custom units"
 @UseCase(type: MyWidget, name: 'Default')
