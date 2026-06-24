@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FEAT**: Add `units` parameter to the duration knob (`knobs.duration`/`knobs.durationOrNull`) to configure which time units are shown, exposing all `Duration` units from days to microseconds. The default is now `{DurationUnit.seconds, DurationUnit.milliseconds}`; to restore the previous hours/minutes/seconds inputs, pass `units: {DurationUnit.hours, DurationUnit.minutes, DurationUnit.seconds}`. ([#1915](https://github.com/widgetbook/widgetbook/pull/1915) - by [@EArminjon](https://github.com/EArminjon))
+- **FEAT**: Add `units` parameter to the duration knob to choose which time units (days to microseconds) are shown; the default is now seconds and milliseconds. ([#1915](https://github.com/widgetbook/widgetbook/pull/1915) - by [@EArminjon](https://github.com/EArminjon))
 
 ## 3.23.0
 
