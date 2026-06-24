@@ -1,9 +1,12 @@
+## Unreleased
+
+- **FEAT**: Add `units` parameter to the duration knob (`knobs.duration`/`knobs.durationOrNull`) to configure which time units are shown, exposing all `Duration` units from days to microseconds. The default is now `{DurationUnit.seconds, DurationUnit.milliseconds}`; to restore the previous hours/minutes/seconds inputs, pass `units: {DurationUnit.hours, DurationUnit.minutes, DurationUnit.seconds}`. ([#1915](https://github.com/widgetbook/widgetbook/pull/1915) - by [@EArminjon](https://github.com/EArminjon))
+
 ## 3.23.0
 
 - **FEAT**: Add `defaultToNull` parameter to nullable knobs to make them start in a `null` _(i.e. unchecked)_ state while having a non-null initial value. ([#1790](https://github.com/widgetbook/widgetbook/pull/1790) - by [@youpelegrace](https://github.com/youpelegrace))
 - **REFACTOR**: Allow `inspector` 4.x. ([#1901](https://github.com/widgetbook/widgetbook/pull/1901))
 - **FEAT**: Add `headerPadding` parameter to customize the padding around the navigation panel header. ([#1882](https://github.com/widgetbook/widgetbook/pull/1882) - by [@EArminjon](https://github.com/EArminjon))
-- **FEAT**: Add `units` parameter to the duration knob (`knobs.duration`/`knobs.durationOrNull`) to configure which time units are shown, exposing all `Duration` units from days to microseconds. The default is now `{DurationUnit.seconds, DurationUnit.milliseconds}`; to restore the previous hours/minutes/seconds inputs, pass `units: {DurationUnit.hours, DurationUnit.minutes, DurationUnit.seconds}`. ([#1915](https://github.com/widgetbook/widgetbook/pull/1915) - by [@EArminjon](https://github.com/EArminjon))
 
 ## 3.22.0
 
