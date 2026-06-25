@@ -10,6 +10,7 @@ import 'color_field/color_picker.dart';
 import 'color_field/color_space.dart';
 import 'controlled_text_field.dart';
 import 'duration_field/duration_input.dart';
+import 'duration_field/duration_unit.dart';
 
 part 'boolean_field.dart';
 part 'color_field/color_field.dart';

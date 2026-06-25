@@ -103,5 +103,43 @@ void main() {
         expect(durationInputValues(tester), equals(['23', '59', '59', '999']));
       },
     );
+
+    testWidgets(
+      'given a field with custom units, '
+      'then [toWidget] renders one input per enabled unit in that order',
+      (tester) async {
+        final daysField = DurationField(
+          name: 'duration_field',
+          units: const {DurationUnit.days, DurationUnit.hours},
+        );
+
+        await tester.pumpField<Duration, Row>(daysField, Duration.zero);
+
+        expect(find.byType(TextFormField), findsNWidgets(2));
+        expect(find.text('d'), findsOneWidget);
+        expect(find.text('h'), findsOneWidget);
+        expect(find.text('m'), findsNothing);
+      },
+    );
+
+    testWidgets(
+      'given a field whose smallest enabled unit is seconds, '
+      'when a value larger than the largest unit is shown, '
+      'then the largest enabled unit absorbs the overflow',
+      (tester) async {
+        final secondsField = DurationField(
+          name: 'duration_field',
+          units: const {DurationUnit.seconds},
+        );
+
+        await tester.pumpField<Duration, Row>(
+          secondsField,
+          const Duration(seconds: 90),
+        );
+
+        expect(find.byType(TextFormField), findsOneWidget);
+        expect(durationInputValues(tester), equals(['90']));
+      },
+    );
   });
 }

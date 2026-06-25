@@ -3,16 +3,19 @@ import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
 import '../controlled_text_field.dart';
+import 'duration_unit.dart';
 
 @internal
 class DurationInput extends StatefulWidget {
   const DurationInput({
     super.key,
     required this.value,
+    required this.units,
     required this.onChanged,
   });
 
   final Duration value;
+  final Set<DurationUnit> units;
   final ValueChanged<Duration> onChanged;
 
   @override
@@ -20,51 +23,76 @@ class DurationInput extends StatefulWidget {
 }
 
 class DurationInputState extends State<DurationInput> {
-  static final _hoursFormatter = FilteringTextInputFormatter.allow(
-    RegExp(r'^([01]?[0-9]?|2[0-3]?)$'),
-  );
-  static final _minutesSecondsFormatter = FilteringTextInputFormatter.allow(
-    RegExp(r'^([0-5]?[0-9]?)$'),
-  );
-  static final _millisecondsFormatter = FilteringTextInputFormatter.allow(
-    RegExp(r'^([0-9]{0,3})$'),
-  );
-
-  late int hours;
-  late int minutes;
-  late int seconds;
-  late int milliseconds;
+  /// The current value of each enabled unit, keyed by unit.
+  late Map<DurationUnit, int> values;
 
   @override
   void initState() {
     super.initState();
-    _setFromDuration(widget.value);
+    values = _decompose(widget.value);
   }
 
   @override
   void didUpdateWidget(covariant DurationInput oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.value != widget.value) {
-      _setFromDuration(widget.value);
+      values = _decompose(widget.value);
     }
   }
 
-  void _setFromDuration(Duration value) {
-    hours = value.inHours.remainder(24);
-    minutes = value.inMinutes.remainder(60);
-    seconds = value.inSeconds.remainder(60);
-    milliseconds = value.inMilliseconds.remainder(1000);
+  /// The largest enabled unit; it absorbs everything above the next-smaller
+  /// enabled unit and therefore accepts arbitrarily large values.
+  DurationUnit get _largestUnit =>
+      DurationUnit.values.firstWhere(widget.units.contains);
+
+  /// Splits [value] into a count per enabled unit, walking from largest to
+  /// smallest so that the largest enabled unit holds the overflow and nothing
+  /// is silently dropped when high-order units are disabled.
+  Map<DurationUnit, int> _decompose(Duration value) {
+    final result = <DurationUnit, int>{};
+    var remaining = value.inMicroseconds;
+    for (final unit in DurationUnit.values) {
+      if (!widget.units.contains(unit)) continue;
+      final step = unit.step.inMicroseconds;
+      final count = remaining ~/ step;
+      result[unit] = count;
+      remaining -= count * step;
+    }
+    return result;
   }
 
-  void _emitDuration() {
-    widget.onChanged(
-      Duration(
-        hours: hours,
-        minutes: minutes,
-        seconds: seconds,
-        milliseconds: milliseconds,
+  void _onUnitChanged(DurationUnit unit, int newValue) {
+    setState(() {
+      values[unit] = newValue;
+    });
+
+    var total = Duration.zero;
+    values.forEach((unit, value) {
+      total += unit.step * value;
+    });
+    widget.onChanged(total);
+  }
+
+  /// Bounds smaller units to their natural range (e.g. 0-59, 0-999) so they
+  /// don't overflow into a unit that is shown separately. The largest enabled
+  /// unit is left unbounded so it can represent the full duration.
+  List<TextInputFormatter> _formattersFor(DurationUnit unit) {
+    final boundedPattern = switch (unit) {
+      DurationUnit.minutes || DurationUnit.seconds => r'^[0-5]?[0-9]$',
+      DurationUnit.milliseconds || DurationUnit.microseconds => r'^[0-9]{0,3}$',
+      _ => null,
+    };
+
+    if (unit == _largestUnit || boundedPattern == null) {
+      return const [];
+    }
+
+    return [
+      FilteringTextInputFormatter.allow(
+        RegExp(boundedPattern),
+        replacementString: '${values[unit] ?? 0}',
       ),
-    );
+    ];
   }
 
   @override
@@ -72,66 +100,17 @@ class DurationInputState extends State<DurationInput> {
     return Row(
       spacing: 4,
       children: [
-        Expanded(
-          flex: 2,
-          child: _DurationUnitField(
-            value: hours,
-            maxLength: 2,
-            labelText: 'h',
-            inputFormatters: [_hoursFormatter],
-            onChanged: (value) {
-              setState(() {
-                hours = value.clamp(0, 23);
-              });
-              _emitDuration();
-            },
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: _DurationUnitField(
-            value: minutes,
-            maxLength: 2,
-            labelText: 'm',
-            inputFormatters: [_minutesSecondsFormatter],
-            onChanged: (value) {
-              setState(() {
-                minutes = value.clamp(0, 59);
-              });
-              _emitDuration();
-            },
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: _DurationUnitField(
-            value: seconds,
-            maxLength: 2,
-            labelText: 's',
-            inputFormatters: [_minutesSecondsFormatter],
-            onChanged: (value) {
-              setState(() {
-                seconds = value.clamp(0, 59);
-              });
-              _emitDuration();
-            },
-          ),
-        ),
-        Expanded(
-          flex: 3,
-          child: _DurationUnitField(
-            value: milliseconds,
-            maxLength: 3,
-            labelText: 'ms',
-            inputFormatters: [_millisecondsFormatter],
-            onChanged: (value) {
-              setState(() {
-                milliseconds = value.clamp(0, 999);
-              });
-              _emitDuration();
-            },
-          ),
-        ),
+        for (final unit in DurationUnit.values)
+          if (widget.units.contains(unit))
+            Expanded(
+              child: _DurationUnitField(
+                value: values[unit] ?? 0,
+                maxLength: unit == _largestUnit ? 6 : unit.maxLength,
+                labelText: unit.label,
+                inputFormatters: _formattersFor(unit),
+                onChanged: (value) => _onUnitChanged(unit, value),
+              ),
+            ),
       ],
     );
   }
