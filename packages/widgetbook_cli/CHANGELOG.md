@@ -1,3 +1,7 @@
+## 4.0.0-beta.8
+
+- **CHORE**: Align version with `widgetbook` so both packages share `4.0.0-beta.8`.
+
 ## 4.0.0-beta.7
 
 - **FIX**: Update `init` scaffolding and `coverage` component collection to the new constructor tear-off `Meta` API. ([#1931](https://github.com/widgetbook/widgetbook/pull/1931))
