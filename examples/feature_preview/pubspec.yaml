@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  widgetbook: ^3.24.0
+  widgetbook: ^3.25.0
   widgetbook_annotation: ^3.11.0
 
 dev_dependencies: 

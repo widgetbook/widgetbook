@@ -1,4 +1,4 @@
-## Unreleased
+## 3.25.0
 
 - **FEAT**: Add `units` parameter to the duration knob to choose which time units (days to microseconds) are shown. ([#1915](https://github.com/widgetbook/widgetbook/pull/1915) - by [@EArminjon](https://github.com/EArminjon))
 
