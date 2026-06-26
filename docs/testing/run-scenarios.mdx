@@ -119,29 +119,44 @@ For example, a `Loading` scenario crossed with a `Dark Mode` definition is writt
 
 ## Accessibility Guideline Violations
 
-For every scenario, `testWidgetbook` evaluates a list of Flutter
-[`AccessibilityGuideline`](https://api.flutter.dev/flutter/flutter_test/AccessibilityGuideline-class.html)s
+For every scenario, `testWidgetbook` evaluates a list of `WidgetbookGuideline`s
 against the rendered widget tree and records the failures in the metadata's
-`violations` field:
+`violations` field. Native guidelines report each offending node individually,
+including its on-screen `rect` (physical pixels, matching the screenshot):
 
 ```jsonc
 "violations": [
   {
     "id": "tap-target-android",
-    "description": "Tappable objects should be at least Size(48.0, 48.0)",
-    "reason": "SemanticsNode#4(...): expected tap target size of at least Size(48.0, 48.0), but found Size(24.0, 24.0)\nSee also: ..."
+    "title": "Tap target too small",
+    "helpUrl": "https://support.google.com/accessibility/android/answer/7101858",
+    "nodes": [
+      {
+        "label": "Like",
+        "rect": [216.0, 126.0, 264.0, 174.0],
+        "message": "Expected at least 48×48, found 24×24"
+      }
+    ]
   }
 ]
 ```
 
-By default all of Flutter's built-in guidelines are evaluated: Android and iOS
-minimum tap-target size, labeled tappables, and text contrast. The contrast
-guideline samples the rendered image and is approximate — treat its results as
-advisory. Pass your own list (including custom `AccessibilityGuideline`
-subclasses) to override the defaults:
+### The default set
+
+When `guidelines` is omitted, `WidgetbookGuidelines.recommended` is used:
+native Android (48dp) and iOS (44dp) tap-target size, native labeled-tappable,
+and text contrast. Contrast is adapted from Flutter's built-in guideline — it
+samples the rendered image, is approximate, and reports a coarse text `reason`
+(no per-node `rect`), so treat it as advisory.
+
+### Custom guidelines
+
+Override the list to add your own. Implement `WidgetbookGuideline` for fully
+structured, per-node violations, or wrap any Flutter
+[`AccessibilityGuideline`](https://api.flutter.dev/flutter/flutter_test/AccessibilityGuideline-class.html)
+with `FlutterGuideline` (text-only):
 
 ```dart
-import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/test.dart';
 
 import 'package:design-system/widgetbook.config.dart';
@@ -149,16 +164,16 @@ import 'package:design-system/widgetbook.config.dart';
 Future<void> main() async {
   await testWidgetbook(
     config,
-    guidelines: const [
-      androidTapTargetGuideline,
-      labeledTapTargetGuideline,
+    guidelines: [
+      ...WidgetbookGuidelines.recommended,
+      MyBrandGuideline(), // implements WidgetbookGuideline
     ],
   );
 }
 ```
 
-A guideline that throws during evaluation is recorded as an `error` entry rather
-than failing the snapshot.
+A guideline that throws during evaluation is recorded as a violation with a
+`reason` rather than failing the snapshot.
 
 > The `violations` field is new. Builds captured by older Widgetbook versions
 > omit it; consumers should treat a missing `violations` field as "not

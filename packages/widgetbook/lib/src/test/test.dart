@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../widgetbook.dart';
 import 'font_loader.dart';
-import 'guidelines.dart';
+import 'guidelines/guidelines.dart';
 import 'scenario_metadata.dart';
 import 'semantics/semantics_tree_serializer.dart';
 
@@ -16,7 +16,7 @@ const outputDir = 'build/.widgetbook';
 
 Future<void> testWidgetbook(
   Config config, {
-  List<AccessibilityGuideline> guidelines = defaultGuidelines,
+  List<WidgetbookGuideline> guidelines = WidgetbookGuidelines.recommended,
 }) async {
   TestWidgetsFlutterBinding.ensureInitialized();
   await loadFonts();
@@ -29,7 +29,7 @@ Future<void> testWidgetbook(
 void testComponent(
   Config config,
   Component component,
-  List<AccessibilityGuideline> guidelines,
+  List<WidgetbookGuideline> guidelines,
 ) {
   group('${component.name}', () {
     for (final story in component.stories) {
@@ -41,7 +41,7 @@ void testComponent(
 void testStory(
   Config config,
   Story story,
-  List<AccessibilityGuideline> guidelines,
+  List<WidgetbookGuideline> guidelines,
 ) {
   group(story.name, () {
     final scenarios = story.allScenarios(config);
@@ -54,7 +54,7 @@ void testStory(
 void testScenario(
   Config config,
   Scenario scenario,
-  List<AccessibilityGuideline> guidelines,
+  List<WidgetbookGuideline> guidelines,
 ) {
   final defaultViewport = Viewports.none;
   final targetViewport = scenario.viewport ?? defaultViewport;

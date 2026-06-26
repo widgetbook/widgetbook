@@ -4,6 +4,7 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
 
 import '../../widgetbook.dart';
+import 'guidelines/guidelines.dart';
 import 'test.dart';
 
 class ScenarioMetadata {
@@ -23,7 +24,7 @@ class ScenarioMetadata {
   final int imageHeight;
   final double pixelRatio;
   final Map<String, dynamic> semanticsData;
-  final List<Map<String, dynamic>> violations;
+  final List<GuidelineViolation> violations;
 
   Component get component => scenario.story.component;
   Story get story => scenario.story;
@@ -79,7 +80,7 @@ class ScenarioMetadata {
         'size': imageBytes.length,
       },
       'semantics': semanticsData,
-      'violations': violations,
+      'violations': violations.map((violation) => violation.toJson()).toList(),
     };
   }
 }
