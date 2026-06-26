@@ -7,34 +7,46 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../widgetbook.dart';
 import 'font_loader.dart';
+import 'guidelines.dart';
 import 'scenario_metadata.dart';
 import 'semantics/semantics_tree_serializer.dart';
 
 /// The default location is already an ignored path by default.
 const outputDir = 'build/.widgetbook';
 
-Future<void> testWidgetbook(Config config) async {
+Future<void> testWidgetbook(
+  Config config, {
+  List<AccessibilityGuideline> guidelines = defaultGuidelines,
+}) async {
   TestWidgetsFlutterBinding.ensureInitialized();
   await loadFonts();
 
   for (final component in config.components) {
-    testComponent(config, component);
+    testComponent(config, component, guidelines);
   }
 }
 
-void testComponent(Config config, Component component) {
+void testComponent(
+  Config config,
+  Component component,
+  List<AccessibilityGuideline> guidelines,
+) {
   group('${component.name}', () {
     for (final story in component.stories) {
-      testStory(config, story);
+      testStory(config, story, guidelines);
     }
   });
 }
 
-void testStory(Config config, Story story) {
+void testStory(
+  Config config,
+  Story story,
+  List<AccessibilityGuideline> guidelines,
+) {
   group(story.name, () {
     final scenarios = story.allScenarios(config);
     for (final scenario in scenarios) {
-      testScenario(config, scenario);
+      testScenario(config, scenario, guidelines);
     }
   });
 }
@@ -42,6 +54,7 @@ void testStory(Config config, Story story) {
 void testScenario(
   Config config,
   Scenario scenario,
+  List<AccessibilityGuideline> guidelines,
 ) {
   final defaultViewport = Viewports.none;
   final targetViewport = scenario.viewport ?? defaultViewport;
@@ -66,6 +79,10 @@ void testScenario(
         await config.scenarioConfig.setUp?.call(tester, scenario);
 
         await scenario.execute(tester);
+
+        // Evaluate guidelines here (not inside the runAsync below): the contrast
+        // guideline uses runAsync internally, and runAsync cannot be nested.
+        final violations = await evaluateGuidelines(tester, guidelines);
 
         final element = tester.element(find.byKey(key));
         final imageFuture = captureImage(element, 1);
@@ -93,6 +110,7 @@ void testScenario(
             imageHeight: image.height,
             pixelRatio: targetViewport.pixelRatio,
             semanticsData: semanticsData,
+            violations: violations,
           );
 
           await metadata.directory.create(recursive: true);

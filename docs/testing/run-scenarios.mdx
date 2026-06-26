@@ -46,6 +46,7 @@ For each scenario, the Widgetbook test runtime:
 - runs scenario interactions via `run` (if defined)
 - captures a screenshot after `run` completes
 - captures semantics data for accessibility inspection
+- evaluates accessibility guidelines and records any violations
 
 Because this flow uses `flutter_test`, your scenario `run` callback receives a `WidgetTester`. You can use familiar test APIs such as `tap`, `pump`, `pumpAndSettle`, and `expect` directly inside `run`.
 
@@ -114,4 +115,51 @@ Each scenario produces:
 - a PNG snapshot image
 - a JSON metadata file
 
-For example, a `Loading` scenario crossed with a `Dark Mode` definition is written as `build/.widgetbook/Button/Default/Loading • Dark Mode.png`. The metadata includes scenario details, image size, pixel ratio, and semantics tree data.
+For example, a `Loading` scenario crossed with a `Dark Mode` definition is written as `build/.widgetbook/Button/Default/Loading • Dark Mode.png`. The metadata includes scenario details, image size, pixel ratio, semantics tree data, and accessibility guideline violations.
+
+## Accessibility Guideline Violations
+
+For every scenario, `testWidgetbook` evaluates a list of Flutter
+[`AccessibilityGuideline`](https://api.flutter.dev/flutter/flutter_test/AccessibilityGuideline-class.html)s
+against the rendered widget tree and records the failures in the metadata's
+`violations` field:
+
+```jsonc
+"violations": [
+  {
+    "id": "tap-target-android",
+    "description": "Tappable objects should be at least Size(48.0, 48.0)",
+    "reason": "SemanticsNode#4(...): expected tap target size of at least Size(48.0, 48.0), but found Size(24.0, 24.0)\nSee also: ..."
+  }
+]
+```
+
+By default all of Flutter's built-in guidelines are evaluated: Android and iOS
+minimum tap-target size, labeled tappables, and text contrast. The contrast
+guideline samples the rendered image and is approximate — treat its results as
+advisory. Pass your own list (including custom `AccessibilityGuideline`
+subclasses) to override the defaults:
+
+```dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/test.dart';
+
+import 'package:design-system/widgetbook.config.dart';
+
+Future<void> main() async {
+  await testWidgetbook(
+    config,
+    guidelines: const [
+      androidTapTargetGuideline,
+      labeledTapTargetGuideline,
+    ],
+  );
+}
+```
+
+A guideline that throws during evaluation is recorded as an `error` entry rather
+than failing the snapshot.
+
+> The `violations` field is new. Builds captured by older Widgetbook versions
+> omit it; consumers should treat a missing `violations` field as "not
+> evaluated" rather than "no violations".

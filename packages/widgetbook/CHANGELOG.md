@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Evaluate accessibility guidelines during `testWidgetbook` and record failures in each scenario's snapshot metadata under a new `violations` field. Defaults to Flutter's built-in guidelines (tap-target size, labeled tappables, text contrast); override via `testWidgetbook(config, guidelines: [...])`.
+
 ## 4.0.0-beta.8
 
 - **FIX**: Rebuild the workbench preview when switching stories or changing knobs while a viewport is active. ([#1948](https://github.com/widgetbook/widgetbook/pull/1948))
