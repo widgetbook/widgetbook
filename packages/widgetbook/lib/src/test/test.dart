@@ -22,7 +22,10 @@ Future<void> testWidgetbook(Config config) async {
   }
 }
 
-void testComponent(Config config, Component component) {
+void testComponent(
+  Config config,
+  Component component,
+) {
   group('${component.name}', () {
     for (final story in component.stories) {
       testStory(config, story);
@@ -30,7 +33,10 @@ void testComponent(Config config, Component component) {
   });
 }
 
-void testStory(Config config, Story story) {
+void testStory(
+  Config config,
+  Story story,
+) {
   group(story.name, () {
     final scenarios = story.allScenarios(config);
     for (final scenario in scenarios) {
@@ -39,7 +45,10 @@ void testStory(Config config, Story story) {
   });
 }
 
-void testScenario(Config config, Scenario scenario) {
+void testScenario(
+  Config config,
+  Scenario scenario,
+) {
   final defaultViewport = Viewports.none;
   final targetViewport = scenario.viewport ?? defaultViewport;
 

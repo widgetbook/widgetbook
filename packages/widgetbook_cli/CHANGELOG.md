@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FEAT**: Upload accessibility guideline violations captured per scenario to Widgetbook Cloud.
+- **FEAT**: Upload accessibility guideline violations captured per scenario to Widgetbook Cloud. ([#1954](https://github.com/widgetbook/widgetbook/pull/1954))
 
 ## 4.0.0-beta.8
 
