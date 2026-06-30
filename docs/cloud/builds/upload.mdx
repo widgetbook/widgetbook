@@ -35,10 +35,19 @@ To follow the CI/CD setup guide select your Git provider below
 
 To create a Widgetbook Build, follow these steps inside your Widgetbook project:
 
-1. Run `build_runner` to generate metadata about your stories and components
+1. Run `build_runner` to generate the components registry (`components.g.dart`)
 
    ```bash
    dart run build_runner build -d
+   ```
+
+1. Generate snapshots by running your Widgetbook tests
+
+   This writes the snapshot images and metadata to `build/.widgetbook`.
+   See [Run Scenarios](/testing/run-scenarios) for how to set up the test entry point.
+
+   ```bash
+   flutter test
    ```
 
 1. Build the Widgetbook for the web
@@ -66,9 +75,9 @@ To create a Widgetbook Build, follow these steps inside your Widgetbook project:
    ```
 
 <Info>
-The `cloud push` command uses the following directories:
+The `cloud build push` command uploads the following directories:
 
-1. `build/web/` to create a `.zip` archive that will be uploaded to Widgetbook Cloud.
-1. `.dart_tool/build/generated/[your_app_name]/` to send metadata, _about the generated stories_, that will be used for [Widgetbook Cloud Review](/cloud/reviews).
+1. `build/.widgetbook/` — the snapshot images and metadata used for [Widgetbook Cloud Reviews](/cloud/reviews).
+1. `build/web/` — the interactive Widgetbook build that you can browse online.
 
 </Info>
