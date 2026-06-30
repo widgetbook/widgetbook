@@ -64,6 +64,7 @@ class LabeledTappableGuideline extends WidgetbookGuideline {
     if (data.label.isEmpty && data.tooltip.isEmpty) {
       out.add(
         ViolationNode(
+          id: node.id,
           role: roleName(data),
           rect: rectToList(globalRect(node)),
           message: 'Tappable node has no semantic label or tooltip.',

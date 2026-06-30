@@ -88,6 +88,7 @@ class MinTapTargetGuideline extends WidgetbookGuideline {
 
     out.add(
       ViolationNode(
+        id: node.id,
         label: data.label.isEmpty ? null : data.label,
         role: roleName(data),
         rect: rectToList(bounds),
