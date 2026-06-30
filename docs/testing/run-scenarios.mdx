@@ -46,6 +46,7 @@ For each scenario, the Widgetbook test runtime:
 - runs scenario interactions via `run` (if defined)
 - captures a screenshot after `run` completes
 - captures semantics data for accessibility inspection
+- evaluates accessibility guidelines and records any violations
 
 Because this flow uses `flutter_test`, your scenario `run` callback receives a `WidgetTester`. You can use familiar test APIs such as `tap`, `pump`, `pumpAndSettle`, and `expect` directly inside `run`.
 
@@ -114,4 +115,66 @@ Each scenario produces:
 - a PNG snapshot image
 - a JSON metadata file
 
-For example, a `Loading` scenario crossed with a `Dark Mode` definition is written as `build/.widgetbook/Button/Default/Loading • Dark Mode.png`. The metadata includes scenario details, image size, pixel ratio, and semantics tree data.
+For example, a `Loading` scenario crossed with a `Dark Mode` definition is written as `build/.widgetbook/Button/Default/Loading • Dark Mode.png`. The metadata includes scenario details, image size, pixel ratio, semantics tree data, and accessibility guideline violations.
+
+## Accessibility Guideline Violations
+
+For every scenario, `testWidgetbook` evaluates a list of `WidgetbookGuideline`s
+against the rendered widget tree and records the failures in the metadata's
+`violations` field. Native guidelines report each offending node individually,
+including its on-screen `rect` (physical pixels, matching the screenshot):
+
+```jsonc
+"violations": [
+  {
+    "id": "tap-target-android",
+    "title": "Tap target too small",
+    "helpUrl": "https://support.google.com/accessibility/android/answer/7101858",
+    "nodes": [
+      {
+        "label": "Like",
+        "rect": [216.0, 126.0, 264.0, 174.0],
+        "message": "Expected at least 48×48, found 24×24"
+      }
+    ]
+  }
+]
+```
+
+### The default set
+
+When `guidelines` is omitted, `WidgetbookGuidelines.recommended` is used:
+native Android (48dp) and iOS (44dp) tap-target size, native labeled-tappable,
+and text contrast. Contrast is adapted from Flutter's built-in guideline — it
+samples the rendered image, is approximate, and reports a coarse text `reason`
+(no per-node `rect`), so treat it as advisory.
+
+### Custom guidelines
+
+Override the list to add your own. Implement `WidgetbookGuideline` for fully
+structured, per-node violations, or wrap any Flutter
+[`AccessibilityGuideline`](https://api.flutter.dev/flutter/flutter_test/AccessibilityGuideline-class.html)
+with `FlutterGuideline` (text-only):
+
+```dart
+import 'package:widgetbook/test.dart';
+
+import 'package:design-system/widgetbook.config.dart';
+
+Future<void> main() async {
+  await testWidgetbook(
+    config,
+    guidelines: [
+      ...WidgetbookGuidelines.recommended,
+      MyBrandGuideline(), // implements WidgetbookGuideline
+    ],
+  );
+}
+```
+
+A guideline that throws during evaluation is recorded as a violation with a
+`reason` rather than failing the snapshot.
+
+> The `violations` field is new. Builds captured by older Widgetbook versions
+> omit it; consumers should treat a missing `violations` field as "not
+> evaluated" rather than "no violations".

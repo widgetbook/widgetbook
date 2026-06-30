@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Upload accessibility guideline violations captured per scenario to Widgetbook Cloud. ([#1954](https://github.com/widgetbook/widgetbook/pull/1954))
+
 ## 4.0.0-beta.8
 
 - **CHORE**: Align version with `widgetbook` so both packages share `4.0.0-beta.8`.

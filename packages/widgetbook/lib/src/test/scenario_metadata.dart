@@ -14,6 +14,7 @@ class ScenarioMetadata {
     required this.imageHeight,
     required this.pixelRatio,
     required this.semanticsData,
+    this.violations = const [],
   });
 
   final Scenario scenario;
@@ -22,6 +23,7 @@ class ScenarioMetadata {
   final int imageHeight;
   final double pixelRatio;
   final Map<String, dynamic> semanticsData;
+  final List<Map<String, dynamic>> violations;
 
   Component get component => scenario.story.component;
   Story get story => scenario.story;
@@ -77,6 +79,7 @@ class ScenarioMetadata {
         'size': imageBytes.length,
       },
       'semantics': semanticsData,
+      'violations': violations,
     };
   }
 }

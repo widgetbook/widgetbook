@@ -22,7 +22,10 @@ Future<void> testWidgetbook(Config config) async {
   }
 }
 
-void testComponent(Config config, Component component) {
+void testComponent(
+  Config config,
+  Component component,
+) {
   group('${component.name}', () {
     for (final story in component.stories) {
       testStory(config, story);
@@ -30,7 +33,10 @@ void testComponent(Config config, Component component) {
   });
 }
 
-void testStory(Config config, Story story) {
+void testStory(
+  Config config,
+  Story story,
+) {
   group(story.name, () {
     final scenarios = story.allScenarios(config);
     for (final scenario in scenarios) {
@@ -67,6 +73,11 @@ void testScenario(
 
         await scenario.execute(tester);
 
+        final violations = (await evaluateGuidelines(
+          tester,
+          config.accessibilityConfig.guidelines,
+        )).map((violation) => violation.toJson()).toList();
+
         final element = tester.element(find.byKey(key));
         final imageFuture = captureImage(element, 1);
 
@@ -93,6 +104,7 @@ void testScenario(
             imageHeight: image.height,
             pixelRatio: targetViewport.pixelRatio,
             semanticsData: semanticsData,
+            violations: violations,
           );
 
           await metadata.directory.create(recursive: true);
