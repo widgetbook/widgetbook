@@ -35,44 +35,50 @@ To follow the CI/CD setup guide select your Git provider below
 
 To create a Widgetbook Build, follow these steps inside your Widgetbook project:
 
-1. Run `build_runner` to generate the components registry (`components.g.dart`)
+<Steps>
+  <Step title="Generate the components registry">
+    ```bash
+    dart run build_runner build -d
+    ```
+  </Step>
 
-   ```bash
-   dart run build_runner build -d
-   ```
+  <Step title="Generate snapshots">
+    Run your Widgetbook tests to write the snapshot images and metadata to `build/.widgetbook`.
+    See [Run Scenarios](/testing/run-scenarios) for how to set up the test entry point.
 
-1. Generate snapshots by running your Widgetbook tests
+    ```bash
+    flutter test
+    ```
+  </Step>
 
-   This writes the snapshot images and metadata to `build/.widgetbook`.
-   See [Run Scenarios](/testing/run-scenarios) for how to set up the test entry point.
+  <Step title="Build the Widgetbook for the web">
+    ```bash
+    # Default target (i.e. `lib/main.dart`)
+    flutter build web
 
-   ```bash
-   flutter test
-   ```
+    # Custom target
+    flutter build web -t lib/main.widgetbook.dart
+    ```
+  </Step>
 
-1. Build the Widgetbook for the web
+  <Step title="Install the Widgetbook CLI">
+    Install the [Widgetbook CLI](/cli):
 
-   ```bash
-   # Default target (i.e. `lib/main.dart`)
-   flutter build web
+    ```bash
+    dart pub global activate widgetbook_cli {{ versions.cli }}
+    ```
+  </Step>
 
-   # Custom target
-   flutter build web -t lib/main.widgetbook.dart
-   ```
+  <Step title="Get your API key">
+    Copy your **API key** from the Widgetbook Cloud **project settings page**.
+  </Step>
 
-1. Install the [Widgetbook CLI](/cli)
-
-   ```bash
-   dart pub global activate widgetbook_cli {{ versions.cli }}
-   ```
-
-1. Get your **API key** from the Widgetbook Cloud's **project settings page**.
-
-1. Push the build to Widgetbook Cloud
-
-   ```bash
-   widgetbook cloud build push --api-key PROJECT_API_KEY
-   ```
+  <Step title="Push the build to Widgetbook Cloud">
+    ```bash
+    widgetbook cloud build push --api-key PROJECT_API_KEY
+    ```
+  </Step>
+</Steps>
 
 <Info>
 The `cloud build push` command uploads the following directories:
