@@ -7,55 +7,39 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../widgetbook.dart';
 import 'font_loader.dart';
-import 'guidelines/guidelines.dart';
 import 'scenario_metadata.dart';
 import 'semantics/semantics_tree_serializer.dart';
 
 /// The default location is already an ignored path by default.
 const outputDir = 'build/.widgetbook';
 
-Future<void> testWidgetbook(
-  Config config, {
-  List<WidgetbookGuideline> guidelines = WidgetbookGuidelines.recommended,
-}) async {
+Future<void> testWidgetbook(Config config) async {
   TestWidgetsFlutterBinding.ensureInitialized();
   await loadFonts();
 
   for (final component in config.components) {
-    testComponent(config, component, guidelines);
+    testComponent(config, component);
   }
 }
 
-void testComponent(
-  Config config,
-  Component component,
-  List<WidgetbookGuideline> guidelines,
-) {
+void testComponent(Config config, Component component) {
   group('${component.name}', () {
     for (final story in component.stories) {
-      testStory(config, story, guidelines);
+      testStory(config, story);
     }
   });
 }
 
-void testStory(
-  Config config,
-  Story story,
-  List<WidgetbookGuideline> guidelines,
-) {
+void testStory(Config config, Story story) {
   group(story.name, () {
     final scenarios = story.allScenarios(config);
     for (final scenario in scenarios) {
-      testScenario(config, scenario, guidelines);
+      testScenario(config, scenario);
     }
   });
 }
 
-void testScenario(
-  Config config,
-  Scenario scenario,
-  List<WidgetbookGuideline> guidelines,
-) {
+void testScenario(Config config, Scenario scenario) {
   final defaultViewport = Viewports.none;
   final targetViewport = scenario.viewport ?? defaultViewport;
 
@@ -82,7 +66,10 @@ void testScenario(
 
         // Evaluate guidelines here (not inside the runAsync below): the contrast
         // guideline uses runAsync internally, and runAsync cannot be nested.
-        final violations = await evaluateGuidelines(tester, guidelines);
+        final violations = await evaluateGuidelines(
+          tester,
+          config.accessibilityConfig.guidelines,
+        );
 
         final element = tester.element(find.byKey(key));
         final imageFuture = captureImage(element, 1);

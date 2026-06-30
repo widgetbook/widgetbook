@@ -4,7 +4,6 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
 
 import '../../widgetbook.dart';
-import 'guidelines/guidelines.dart';
 import 'test.dart';
 
 class ScenarioMetadata {

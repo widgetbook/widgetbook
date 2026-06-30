@@ -1,9 +1,11 @@
+/// @docImport '../accessibility/guidelines.dart';
 /// @docImport '../addons/addons.dart';
 library;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../accessibility/accessibility_config.dart';
 import '../docs/docs.dart';
 import '../state/default_home_page.dart';
 import 'framework.dart';
@@ -61,6 +63,7 @@ class Config {
     this.header,
     this.scrollBehavior = const MaterialScrollBehavior(),
     this.scenarioConfig = const ScenarioConfig(),
+    this.accessibilityConfig = const AccessibilityConfig(),
     this.docsBuilder = defaultDocsBuilder,
   });
 
@@ -75,6 +78,14 @@ class Config {
   /// Each [ScenarioDefinition] in [ScenarioConfig.definitions] becomes a
   /// [Scenario] on every [Story].
   final ScenarioConfig scenarioConfig;
+
+  /// Accessibility configuration applied when capturing scenarios with
+  /// `testWidgetbook`.
+  ///
+  /// Defaults to [AccessibilityConfig] with
+  /// [WidgetbookGuidelines.recommended]. Only consulted during capture; the
+  /// interactive Widgetbook app ignores it.
+  final AccessibilityConfig accessibilityConfig;
 
   /// A wrapper builder method for all [Component]s.
   final AppBuilder appBuilder;
