@@ -1,61 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-/// A single node that violated a guideline.
-class ViolationNode {
-  const ViolationNode({
-    this.label,
-    this.role,
-    this.rect,
-    required this.message,
-  });
-
-  final String? label;
-  final String? role;
-
-  /// Global bounds in physical pixels as `[left, top, right, bottom]`, matching
-  /// the captured screenshot. Lets a consumer highlight the node on the image.
-  final List<double>? rect;
-
-  /// A concise, human-readable description of the failure.
-  final String message;
-
-  Map<String, dynamic> toJson() => {
-        if (label != null) 'label': label,
-        if (role != null) 'role': role,
-        if (rect != null) 'rect': rect,
-        'message': message,
-      };
-}
-
-/// A guideline failure, optionally pinned to one or more [nodes].
-class GuidelineViolation {
-  const GuidelineViolation({
-    required this.guidelineId,
-    required this.title,
-    this.helpUrl,
-    this.nodes = const [],
-    this.reason,
-  });
-
-  final String guidelineId;
-  final String title;
-  final String? helpUrl;
-
-  /// The offending nodes. Empty for adapted [AccessibilityGuideline]s, which
-  /// only report a coarse [reason].
-  final List<ViolationNode> nodes;
-
-  /// Raw text from an adapted guideline — for "details" only, not primary UI.
-  final String? reason;
-
-  Map<String, dynamic> toJson() => {
-        'id': guidelineId,
-        'title': title,
-        if (helpUrl != null) 'helpUrl': helpUrl,
-        if (nodes.isNotEmpty) 'nodes': nodes.map((node) => node.toJson()).toList(),
-        if (reason != null) 'reason': reason,
-      };
-}
+import 'guideline_violation.dart';
 
 /// Evaluates a pumped widget tree against an accessibility guideline and
 /// returns structured violations.
@@ -71,8 +16,8 @@ abstract class WidgetbookGuideline {
   Future<List<GuidelineViolation>> evaluate(WidgetTester tester);
 }
 
-/// Runs each of the [guidelines] against the currently pumped tree and collects all
-/// violations. A guideline that throws is recorded as a violation with a
+/// Runs each of the [guidelines] against the currently pumped tree and collects
+/// all violations. A guideline that throws is recorded as a violation with a
 /// `reason` instead of failing the capture, so one flaky check never blocks a
 /// snapshot.
 Future<List<GuidelineViolation>> evaluateGuidelines(

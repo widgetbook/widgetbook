@@ -7,8 +7,7 @@ export 'package:flutter_test/src/finders.dart';
 export 'package:flutter_test/src/matchers.dart';
 export 'package:flutter_test/src/widget_tester.dart';
 
-export 'src/core/accessibility/accessibility_config.dart';
-export 'src/core/accessibility/guidelines.dart';
+export 'src/core/accessibility/accessibility.dart';
 export 'src/core/addons/addons.dart' hide NoneViewport;
 export 'src/core/args/args.dart';
 export 'src/core/docs/docs.dart';

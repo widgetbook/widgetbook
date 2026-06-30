@@ -23,7 +23,7 @@ class ScenarioMetadata {
   final int imageHeight;
   final double pixelRatio;
   final Map<String, dynamic> semanticsData;
-  final List<GuidelineViolation> violations;
+  final List<Map<String, dynamic>> violations;
 
   Component get component => scenario.story.component;
   Story get story => scenario.story;
@@ -79,7 +79,7 @@ class ScenarioMetadata {
         'size': imageBytes.length,
       },
       'semantics': semanticsData,
-      'violations': violations.map((violation) => violation.toJson()).toList(),
+      'violations': violations,
     };
   }
 }

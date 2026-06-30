@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FEAT**: Evaluate accessibility guidelines during `testWidgetbook` and record failures in each scenario's snapshot metadata under a new `violations` field. Ships a `WidgetbookGuideline` interface with native, per-node implementations for tap-target size and labeled tappables, a `FlutterGuideline` adapter for any Flutter `AccessibilityGuideline` (text contrast by default), and `WidgetbookGuidelines.recommended`. Override or extend via `testWidgetbook(config, guidelines: [...])`.
+- **FEAT**: Evaluate accessibility guidelines during `testWidgetbook` and record violations in each scenario's snapshot metadata. Configure via `Config.accessibilityConfig`.
 
 ## 4.0.0-beta.8
 

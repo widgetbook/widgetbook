@@ -64,12 +64,10 @@ void testScenario(Config config, Scenario scenario) {
 
         await scenario.execute(tester);
 
-        // Evaluate guidelines here (not inside the runAsync below): the contrast
-        // guideline uses runAsync internally, and runAsync cannot be nested.
-        final violations = await evaluateGuidelines(
+        final violations = (await evaluateGuidelines(
           tester,
           config.accessibilityConfig.guidelines,
-        );
+        )).map((violation) => violation.toJson()).toList();
 
         final element = tester.element(find.byKey(key));
         final imageFuture = captureImage(element, 1);

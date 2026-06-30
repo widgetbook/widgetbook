@@ -3,11 +3,13 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'flutter_guideline.dart';
 import 'guideline.dart';
-import 'native_guidelines.dart';
+import 'native/native_guidelines.dart';
 
 export 'flutter_guideline.dart';
 export 'guideline.dart';
-export 'native_guidelines.dart';
+export 'guideline_violation.dart';
+export 'native/native_guidelines.dart';
+export 'violation_node.dart';
 
 /// Widgetbook's curated accessibility guideline set, evaluated by
 /// `testWidgetbook` unless overridden.

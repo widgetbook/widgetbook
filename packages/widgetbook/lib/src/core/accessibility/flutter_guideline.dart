@@ -1,6 +1,10 @@
+/// @docImport 'violation_node.dart';
+library;
+
 import 'package:flutter_test/flutter_test.dart';
 
 import 'guideline.dart';
+import 'guideline_violation.dart';
 
 /// Adapts a Flutter [AccessibilityGuideline] into a [WidgetbookGuideline].
 ///

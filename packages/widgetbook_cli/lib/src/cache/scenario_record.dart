@@ -38,9 +38,8 @@ class ScenarioRecord {
       json['image'] as Map<String, dynamic>,
     );
     final semantics = json['semantics'] as Map<String, dynamic>;
-    // Older builds (captured before guideline evaluation existed) omit this.
-    final violations = (json['violations'] as List<dynamic>?)
-            ?.cast<Map<String, dynamic>>() ??
+    final violations =
+        (json['violations'] as List<dynamic>?)?.cast<Map<String, dynamic>>() ??
         const [];
 
     return ScenarioRecord(
