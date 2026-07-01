@@ -29,17 +29,4 @@ Addons that should come after the `GridAddon`:
 
 ## Mode
 
-Each addon has a corresponding [Mode](/addons/modes) to lock its value in scenarios. For this addon, use `GridMode`:
-
-```dart
-final $Default = _Story(
-  scenarios: [
-    _Scenario(
-      name: 'Grid Enabled',
-      modes: [
-        GridMode(10), // [!code highlight]
-      ]
-    ),
-  ],
-)
-```
+The `GridAddon` has no adjustable value, so it has no corresponding [Mode](/addons/modes). The grid always renders behind every story and scenario.
