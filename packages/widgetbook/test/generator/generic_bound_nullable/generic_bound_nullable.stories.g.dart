@@ -29,6 +29,7 @@ class NullableBoundWidgetStory<D, T extends BaseItem<D?>>
     extends Story<NullableBoundWidget<D, T>, NullableBoundWidgetArgs<D, T>> {
   NullableBoundWidgetStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     required super.args,

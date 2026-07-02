@@ -23,6 +23,7 @@ typedef LabelBadgeDefaults = Defaults<LabelBadge, NumericBadgeInputArgs>;
 class LabelBadgeStory extends Story<LabelBadge, NumericBadgeInputArgs> {
   LabelBadgeStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     NumericBadgeInputArgs? args,

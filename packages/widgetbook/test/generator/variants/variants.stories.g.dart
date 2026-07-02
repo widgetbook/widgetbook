@@ -38,6 +38,7 @@ typedef VariantButtonDefaults = Defaults<VariantButton, VariantButtonArgs>;
 class VariantButtonStory extends Story<VariantButton, VariantButtonArgs> {
   VariantButtonStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     VariantButtonArgs? args,
@@ -79,6 +80,7 @@ class VariantButtonIconStory
     extends Story<VariantButton, VariantButtonIconArgs> {
   VariantButtonIconStory({
     super.name,
+    super.designLink,
     SetupBuilder<VariantButton, VariantButtonIconArgs>? setup,
     super.modes,
     VariantButtonIconArgs? args,
@@ -140,6 +142,7 @@ class VariantButtonOutlinedStory
     extends Story<VariantButton, VariantButtonOutlinedArgs> {
   VariantButtonOutlinedStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     VariantButtonOutlinedArgs? args,

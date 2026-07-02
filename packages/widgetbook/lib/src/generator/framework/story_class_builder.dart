@@ -84,6 +84,12 @@ class StoryClassBuilder {
                 ),
                 Parameter(
                   (b) => b
+                    ..name = 'designLink'
+                    ..named = true
+                    ..toSuper = true,
+                ),
+                Parameter(
+                  (b) => b
                     ..name = 'setup'
                     ..named = true
                     ..toSuper = !hasSetup

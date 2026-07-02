@@ -28,6 +28,7 @@ class StaticMethodWidgetStory
     extends Story<StaticMethodWidget, StaticMethodWidgetArgs> {
   StaticMethodWidgetStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     StaticMethodWidgetArgs? args,
