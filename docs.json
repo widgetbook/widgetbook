@@ -166,6 +166,10 @@
               "href": "/testing/run-scenarios"
             },
             {
+              "title": "Continuous Integration",
+              "href": "/testing/ci"
+            },
+            {
               "title": "Layout Constraining",
               "href": "/testing/layout-constraining"
             }

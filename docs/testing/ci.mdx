@@ -1,0 +1,156 @@
+# Continuous Integration
+
+This page explains how to run scenario tests on CI at scale: how execution cost grows with your catalog, how to shorten the `flutter test` step, and how to troubleshoot resource-related job failures like `exit code 143`.
+
+If you are setting up the upload step, see the CI provider guides (e.g. [GitHub](/cloud/guides/github/upload)) instead. This page focuses on the test run itself.
+
+## How Execution Scales
+
+Each scenario snapshot goes through the same pipeline: build and lay out the widget, rasterize it, encode the image as PNG, and write it to `build/.widgetbook`. Two factors dominate the total runtime:
+
+- **Scenario count** — every story is crossed with your global [`ScenarioDefinition`s](/testing/create-scenario#how-global-scenario-definitions-are-applied), so the number of snapshots is roughly `stories × definitions`. Definitions multiply quickly.
+- **Snapshot resolution** — PNG encoding is the single most expensive phase, and it scales with the *physical* pixel count of the viewport. A device viewport like iPhone 13 (390×844 with a 3x pixel ratio) produces a ~3 megapixel image that costs several times more than the same widget at its natural size.
+
+There is one more important property: all scenarios started from a single `testWidgetbook(config)` call run inside **one test suite**, and `flutter test` executes each suite in its own process, one test at a time. Parallelism only happens *across test files* — a single `test/widgetbook_test.dart` therefore uses one CPU core, no matter how many your machine has.
+
+## Speeding Up the Test Run
+
+### Split Scenarios Across Test Files
+
+Since `flutter test` parallelizes per file, splitting your components into multiple test files lets the run scale with the machine's core count. Create a small helper that builds a `Config` for a subset of your components:
+
+```dart
+// test/widgetbook/shard.dart
+import 'package:widgetbook/test.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:your_app/widgetbook.config.dart' as widgetbook;
+
+/// Runs every [shardCount]-th component, starting at [shardIndex] (1-based).
+Future<void> testShard(int shardIndex, int shardCount) {
+  final components = widgetbook.config.components;
+
+  return testWidgetbook(
+    Config(
+      components: [
+        for (var i = 0; i < components.length; i++)
+          if (i % shardCount == shardIndex - 1) components[i],
+      ],
+      addons: widgetbook.config.addons,
+      appBuilder: widgetbook.config.appBuilder,
+      scenarioConfig: widgetbook.config.scenarioConfig,
+    ),
+  );
+}
+```
+
+Then add one file per shard:
+
+```dart
+// test/widgetbook/shard_1_of_4_test.dart
+import 'shard.dart';
+
+Future<void> main() => testShard(1, 4);
+```
+
+```dart
+// test/widgetbook/shard_2_of_4_test.dart
+import 'shard.dart';
+
+Future<void> main() => testShard(2, 4);
+```
+
+Running `flutter test test/widgetbook` now executes the shards concurrently. In our benchmarks, splitting ~600 snapshots into four files reduced the wall-clock time roughly in proportion to the available cores.
+
+<Info>
+  All snapshots still end up in the same `build/.widgetbook` directory, so the
+  upload step is unchanged — `widgetbook cloud build push` picks up the
+  snapshots of all shards.
+</Info>
+
+<Warning>
+  More parallel suites means more CPU and memory usage. On small CI runners,
+  cap the number of concurrent suites explicitly, e.g. `flutter test
+  test/widgetbook --concurrency=2`, and pick a shard count close to the
+  runner's core count. See
+  [Resource-Related Failures](#resource-related-failures-exit-code-143) below.
+</Warning>
+
+### Keep Individual Scenarios Cheap
+
+- **Avoid open-ended `pumpAndSettle` calls** in scenario `run` callbacks. Long or repeating animations make `pumpAndSettle` burn seconds per scenario (or time out entirely). Prefer `pump` with explicit durations.
+- **Use device viewports deliberately.** Only cross stories with device-sized viewports where the layout actually depends on screen size. Every full-device snapshot costs a multiple of a natural-size snapshot because of its pixel count.
+- **Prune your definition cross-product.** Check whether every `ScenarioDefinition` needs to apply to every story, or whether some states are already covered by story-local scenarios.
+
+### Cache Dependencies
+
+The first `flutter test` invocation also compiles your widgetbook target, which can take minutes on a cold CI machine. Cache the Flutter SDK and pub dependencies (e.g. `subosito/flutter-action@v2` with `cache: true`) so the compile step starts warm.
+
+## Splitting Across Multiple Machines
+
+For very large widgetbooks you can run shards on separate CI machines and merge the results before uploading. Snapshot artifacts are self-contained files under `build/.widgetbook/<Component>/<Story>/`, so the outputs of multiple machines can be merged by copying the directories together — there are no shared index files that could conflict.
+
+On GitHub Actions this looks like:
+
+```yaml
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                shard: [shard_1_of_4, shard_2_of_4, shard_3_of_4, shard_4_of_4]
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v3
+
+          - name: Setup flutter
+            uses: subosito/flutter-action@v2
+            with:
+                channel: stable
+                cache: true
+
+          - name: Run shard
+            working-directory: widgetbook
+            run: |
+                flutter pub get
+                flutter test test/widgetbook/${{ matrix.shard }}_test.dart
+
+          - name: Upload snapshots
+            uses: actions/upload-artifact@v4
+            with:
+                name: snapshots-${{ matrix.shard }}
+                path: widgetbook/build/.widgetbook
+
+    push:
+        needs: test
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v3
+
+          - name: Download all snapshots
+            uses: actions/download-artifact@v4
+            with:
+                pattern: snapshots-*
+                merge-multiple: true
+                path: widgetbook/build/.widgetbook
+
+          - name: Install Widgetbook CLI
+            run: dart pub global activate widgetbook_cli {{ versions.cli }}
+
+          - name: Push Widgetbook Build
+            working-directory: widgetbook
+            run: widgetbook cloud build push --api-key ${{ secrets.WIDGETBOOK_API_KEY }}
+```
+
+## Resource-Related Failures (Exit Code 143)
+
+If your test step dies with `Error: Process completed with exit code 143.`, the test process received a `SIGTERM` — it was killed from the outside, not by a test failure. On GitHub-hosted runners this typically means the runner VM was starved of CPU or memory for so long that GitHub terminated the job; the failed step is often marked with a hexagon-shaped icon instead of a red cross.
+
+Snapshot tests are CPU-intensive by nature (rendering and PNG-encoding hundreds of images), so long runs on small runners can hit this. The per-process memory footprint stays roughly constant over a run — the pressure comes from how many processes run concurrently and how loaded the machine is overall.
+
+What helps, in order of preference:
+
+1. **Leave the runner headroom.** Cap suite parallelism with `flutter test --concurrency=N`, where `N` is below the runner's core count, and avoid running other heavy steps in the same job at the same time.
+2. **Use a larger runner.** Standard GitHub-hosted runners for private repositories have 2 cores and 7 GB of RAM. Larger runners (e.g. `ubuntu-24.04-16core`) remove the bottleneck for big widgetbooks.
+3. **Split the run across machines** as shown above, so each job stays well below the limits.
+4. **Set an explicit `timeout-minutes`** on the job. This doesn't prevent the failure, but it turns silent terminations into legible timeouts and stops runaway jobs from billing minutes.
