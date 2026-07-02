@@ -35,6 +35,7 @@ class MultiConstructorWidgetStory
     extends Story<MultiConstructorWidget, MultiConstructorWidgetArgs> {
   MultiConstructorWidgetStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     MultiConstructorWidgetArgs? args,
@@ -80,6 +81,7 @@ class MultiConstructorWidgetOtherStory
     extends Story<MultiConstructorWidget, MultiConstructorWidgetOtherArgs> {
   MultiConstructorWidgetOtherStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     MultiConstructorWidgetOtherArgs? args,

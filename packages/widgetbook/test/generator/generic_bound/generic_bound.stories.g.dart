@@ -25,6 +25,7 @@ class BoundWidgetStory<D, T extends BaseItem<D>>
     extends Story<BoundWidget<D, T>, BoundWidgetArgs<D, T>> {
   BoundWidgetStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     required super.args,

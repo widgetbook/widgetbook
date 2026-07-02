@@ -27,6 +27,7 @@ class DefaultsVarWidgetStory
     extends Story<DefaultsVarWidget, DefaultsVarInputArgs> {
   DefaultsVarWidgetStory({
     super.name,
+    super.designLink,
     SetupBuilder<DefaultsVarWidget, DefaultsVarInputArgs>? setup,
     super.modes,
     DefaultsVarInputArgs? args,

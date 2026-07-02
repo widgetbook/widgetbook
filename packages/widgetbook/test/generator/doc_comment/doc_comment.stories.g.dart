@@ -29,6 +29,7 @@ class DocCommentWidgetStory
     extends Story<DocCommentWidget, DocCommentWidgetArgs> {
   DocCommentWidgetStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     DocCommentWidgetArgs? args,

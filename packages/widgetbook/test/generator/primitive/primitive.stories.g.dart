@@ -26,6 +26,7 @@ typedef PrimitiveWidgetDefaults =
 class PrimitiveWidgetStory extends Story<PrimitiveWidget, PrimitiveWidgetArgs> {
   PrimitiveWidgetStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     PrimitiveWidgetArgs? args,
