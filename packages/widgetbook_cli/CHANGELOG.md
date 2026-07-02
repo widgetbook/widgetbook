@@ -1,6 +1,7 @@
-## Unreleased
+## 4.0.0-beta.9
 
 - **FEAT**: Upload accessibility guideline violations captured per scenario to Widgetbook Cloud. ([#1954](https://github.com/widgetbook/widgetbook/pull/1954))
+- **CHORE**: Update the `widgetbook` version installed by `widgetbook init` to `4.0.0-beta.9`.
 
 ## 4.0.0-beta.8
 
