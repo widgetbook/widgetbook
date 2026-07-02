@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-beta.9
 
 - **FIX**: Accept `designLink` in generated story constructors, so stories can link their Figma design for Cloud reviews. ([#1971](https://github.com/widgetbook/widgetbook/pull/1971))
 - **FEAT**: Evaluate accessibility guidelines during `testWidgetbook` and record violations in each scenario's snapshot metadata. Configure via `Config.accessibilityConfig`. ([#1954](https://github.com/widgetbook/widgetbook/pull/1954))
