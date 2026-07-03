@@ -1,0 +1,59 @@
+# Using Widgetbook with Coding Agents
+
+Widgetbook v4 generates a typed, readable story API and runs your scenarios under `flutter test`. That combination is what makes coding agents (Claude Code, Cursor, Copilot) effective on a design system: an agent can read your existing stories, mirror a widget change into a new story, run the snapshot tests, and iterate until they pass — a real feedback loop instead of guesswork.
+
+This page gives you two drop-in pieces:
+
+1. A **Claude Code skill** that teaches the agent the full v4 story API and workflow.
+2. A short **CLAUDE.md** section that points the agent at the skill and the non-negotiable rules.
+
+## 1. Install the skill (Claude Code)
+
+Claude Code auto-loads skills from `.claude/skills/` in your repo. Copy the `widgetbook-v4` skill into place:
+
+```
+your_app/
+└── .claude/
+    └── skills/
+        └── widgetbook-v4/
+            ├── SKILL.md
+            └── reference/
+                ├── api-reference.md
+                ├── component-stories.md
+                ├── figma-loop.md
+                ├── migration.md
+                └── cloud-and-ci.md
+```
+
+Grab the files from the Widgetbook repo: [skills/widgetbook-v4](https://github.com/widgetbook/widgetbook/tree/main/skills/widgetbook-v4). Commit them to your repo so your whole team's agents share the same instructions.
+
+Once the folder is in place, the skill activates automatically whenever you mention Widgetbook, stories, visual regression, or accessibility testing — no extra configuration.
+
+## 2. Add the Widgetbook section to CLAUDE.md
+
+`CLAUDE.md` at your repo root is loaded into every Claude Code session. Append this section — don't overwrite an existing `CLAUDE.md`, just add these lines:
+
+```markdown title="CLAUDE.md"
+## Widgetbook
+
+When you add or change a widget in `lib/`, reflect it in Widgetbook — don't leave a widget without a story or a story stale. Use the **widgetbook-v4** skill (in `.claude/skills/widgetbook-v4/`) for the full API and workflow. In short:
+
+- Add or update the widget's `*.stories.dart` in `widgetbook/lib/` (never in `lib/`), mirroring the widget's path.
+- Write a `_Scenario` for every meaningful state, plus a `meetsGuideline` accessibility scenario for interactive widgets.
+- Regenerate and test from inside `widgetbook/`: `dart run build_runner build -d` then `flutter test`.
+- Use your design-system widgets, not raw Material (e.g. an `AppButton` wrapper, not `ElevatedButton` directly).
+- Use design tokens (colors, spacing, radius), not hardcoded literals.
+```
+
+## What the agent will do
+
+With both pieces in place, when you ask the agent to add or change a widget it will:
+
+1. Mirror the change into a `*.stories.dart` in `widgetbook/lib/`, one story per meaningful state.
+2. Run `dart run build_runner build -d` and `flutter test` from `widgetbook/`, reading snapshot and layout failures (including `RenderFlex` overflows) and fixing them.
+3. If you provide a Figma node, compare the widget's design tokens against the design and flag mismatches.
+4. Iterate until the tests are green before opening a PR.
+
+## Other agents (Cursor, Copilot, …)
+
+The skill folder is a Claude Code convention, but the CLAUDE.md section above is plain guidance. Drop the same content into your agent's instructions file — `.cursor/rules` for Cursor, `.github/copilot-instructions.md` for GitHub Copilot — to get the same rules. The `SKILL.md` reference files are readable as plain Markdown context for any agent.
