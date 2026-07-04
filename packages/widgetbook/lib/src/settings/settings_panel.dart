@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+import 'settings_panel_builder.dart';
+
 @internal
 class SettingsPanelData {
   SettingsPanelData({
@@ -54,19 +56,23 @@ class SettingsPanel extends StatelessWidget {
                 (setting) {
                   final children = setting.builder(context);
 
-                  return children.isEmpty
-                      ? Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Text('No ${setting.name} available'),
-                          ),
-                        )
-                      : SingleChildScrollView(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Column(
-                            children: children,
-                          ),
-                        );
+                  if (children.isEmpty) {
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Text('No ${setting.name} available'),
+                      ),
+                    );
+                  } else {
+                    return SettingsPanelBuilder(
+                      builder: (context) => SingleChildScrollView(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: Column(
+                          children: children,
+                        ),
+                      ),
+                    );
+                  }
                 },
               ).toList(),
             ),
