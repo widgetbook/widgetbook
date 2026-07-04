@@ -24,6 +24,40 @@ void main() {
       when(() => context.repository).thenReturn(repository);
     });
 
+    group('api-url', () {
+      test('appends missing trailing slash to baseUrl', () {
+        final command = BuildPushCommand(context: context);
+
+        command.argParser.parse([
+          '--api-key',
+          'key',
+          '--api-url',
+          'https://staging.api.widgetbook.io',
+        ]);
+
+        expect(
+          command.cloudClient.client.options.baseUrl,
+          equals('https://staging.api.widgetbook.io/'),
+        );
+      });
+
+      test('keeps existing trailing slash in baseUrl', () {
+        final command = BuildPushCommand(context: context);
+
+        command.argParser.parse([
+          '--api-key',
+          'key',
+          '--api-url',
+          'https://staging.api.widgetbook.io/',
+        ]);
+
+        expect(
+          command.cloudClient.client.options.baseUrl,
+          equals('https://staging.api.widgetbook.io/'),
+        );
+      });
+    });
+
     group('parseResults', () {
       late ArgResults results;
       late BuildPushCommand command;
