@@ -48,6 +48,18 @@ When you add or change a widget, run this loop until it converges. Do not stop e
 
 1. **Reflect the change.** Add or update the widget's `*.stories.dart` in `widgetbook/lib/`. Add **one `$Story` per meaningful state** (each is browsable in the app; scenarios are test-only and don't show there), plus a `meetsGuideline` scenario if the widget is interactive. Register the component in BOTH the app config and the golden test. See `reference/component-stories.md`.
 
+  **Cover every mode the design defines.** If the Figma tokens come from a multi-mode collection — the Figma file might have **Light and Dark** mode — then every mode is part of the spec, and a mode you don't snapshot is a mode nothing tests. The golden `appBuilder` renders one theme (Light), so add a scenario per extra mode with a `MaterialThemeMode` so it is actually rendered and snapshotted under `flutter test`:
+
+   ```dart
+   _Scenario(
+     name: 'dark',
+     modes: [MaterialThemeMode('Dark', AppTheme.dark)],
+     args: _Args.fixed(/* the same meaningful state */),
+   ),
+   ```
+
+   The `MaterialThemeMode` only applies if a `MaterialThemeAddon` is registered in the golden `Config` (mirroring `widgetbook.config.dart`), or it throws `Modes [MaterialThemeMode] do not have a corresponding addon in config`. To guarantee the coverage across *all* components at once — so no author can forget it — register a global `ScenarioDefinition(name: 'Dark', modes: [MaterialThemeMode('Dark', AppTheme.dark)])` on `Config.scenarios` instead of a per-story scenario.
+
 2. **Run `flutter test`** from `widgetbook/`. It renders each scenario, writes a snapshot to `widgetbook/build/.widgetbook`, and fails on assertion errors and on layout errors including `RenderFlex` overflows. Read the named failure, fix it, and re-run until green.
 
 3. **Map the widget to its Figma node.** Code Connect does not support Flutter, so there is no automatic widget-to-node mapping. Get the node from the user: the `fileKey` and `nodeId` parsed from a Figma link they provide, or the current selection when they are in the Figma desktop app. If you have a link to the frame but not the exact node, call `get_metadata` to list the document's nodes and match by layer name, then confirm with the user. If no node is available, skip steps 4 and 5 and note in the PR that the design comparison was skipped.
@@ -104,6 +116,7 @@ Everything else in the feedback loop is the same: regenerate, run `flutter test`
 
 - **Encoding browsable states as `scenarios`.** Scenarios only render under `flutter test`; the running app shows one render per `$Story`. Use one `$Story` per state. See `reference/component-stories.md`.
 - **Registering a component in only one place.** It must be in both the app `config` and the golden test's `components`, or its stories silently don't run (no error — the test count just doesn't rise).
+- **Snapshotting only one theme mode.** The golden `appBuilder` renders Light, so a Light-only suite passes while Dark is broken — exactly how a status surface that reads a fixed primitive (correct in Light) instead of a `context.colors` token (which follows the theme) ships unnoticed. When the design defines Light **and** Dark, snapshot both (per-story `MaterialThemeMode` scenario, or a global `ScenarioDefinition`). The mirror trap: a color on a surface that does *not* theme (e.g. a pill on an always-dark gradient card) should keep the fixed primitive — using a theming token there breaks it in Dark. Decide by whether the surface behind the color themes.
 - **A device `ViewportMode` on a leaf-component story.** It frames a lone button in a phone canvas. Use `Viewports.none` (natural size) and bound the golden test's own root with a `SizedBox`. (Screens are the exception — they *require* a device `ViewportMode`; see "Screens are widgets too".)
 - **Leaving a full screen uncatalogued because it's "just a composition."** A screen is a widget in `lib/` — give it a story (`path: 'Screens'`, a device `ViewportMode`, a widget smoke test). If you built a screen and only catalogued its sub-components, you're not done.
 - **Snapshotting a screen at only one comfortable width.** Overflow hides at 390px and bites at 375px (iPhone SE). Give every screen a narrowest-device story and put it in the golden test — a single-width smoke test that only asserts text presence sails past an 11px `RenderFlex` overflow.
