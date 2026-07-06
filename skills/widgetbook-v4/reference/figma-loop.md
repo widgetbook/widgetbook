@@ -21,6 +21,8 @@ Call `get_variable_defs` for the node. It returns the variables and styles the d
 
 Use `get_design_context` when you also need structure: the auto-layout direction, alignment, hierarchy, and nesting. It returns a React and Tailwind representation by default, so read it for structure and token references, not as code to port. If the response is large or truncated, narrow to the specific child node and re-fetch.
 
+**Resolve per-mode tokens through the theme, not a primitive.** `get_variable_defs` reports one value per variable — the value for the mode the node is currently in (usually Light). A variable that belongs to a multi-mode collection (the Figma file might have a mode for Light **and** Dark) has a *different* value in the other mode, so binding to a fixed primitive is correct in one mode and wrong in the other. Such a token must be read through the theme (`context.colors.x`), never `AppColors.x`. The one exception is a color whose surface does not itself theme — e.g. a pill on an always-dark gradient card stays legible in both modes only if it keeps the fixed light primitive; a theming token would darken it wrongly. Decide by whether the surface behind the color themes, and confirm the choice by snapshotting both modes (see `SKILL.md` step 1).
+
 Parity passes when every token reported by `get_variable_defs` maps to the same token in the widget. This is the gate because it is deterministic and environment-independent, unlike pixels.
 
 ## Step 5: visual comparison (sanity check)
@@ -33,8 +35,8 @@ Do not treat this as a pixel diff. The two images come from different rendering 
 
 Converge only when all three hold at once:
 
-1. `flutter test` is green with no failing assertions and no overflow or layout errors.
-2. Every token from `get_variable_defs` resolves to the same token in the widget.
+1. `flutter test` is green with no failing assertions and no overflow or layout errors — including the snapshot of every mode the design defines (e.g. a Dark `MaterialThemeMode` scenario), not Light alone.
+2. Every token from `get_variable_defs` resolves to the same token in the widget, resolved correctly for every mode in the collection.
 3. The `get_screenshot` image shows no structural difference from the Widgetbook snapshot.
 
 ## Practical notes
