@@ -35,6 +35,7 @@ class DocCommentWidgetStory
     DocCommentWidgetArgs? args,
     StoryWidgetBuilder<DocCommentWidget, DocCommentWidgetArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? DocCommentWidgetArgs(),
          builder:

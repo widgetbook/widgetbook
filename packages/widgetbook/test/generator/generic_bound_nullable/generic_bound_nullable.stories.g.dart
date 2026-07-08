@@ -39,6 +39,7 @@ class NullableBoundWidgetStory<D, T extends BaseItem<D?>>
     >?
     builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          builder:
              builder ??

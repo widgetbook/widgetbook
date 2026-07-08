@@ -36,6 +36,7 @@ class DynamicBoundWidgetStory<D, T extends Map<dynamic, D>>
     StoryWidgetBuilder<DynamicBoundWidget<D, T>, DynamicBoundWidgetArgs<D, T>>?
     builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          builder:
              builder ??

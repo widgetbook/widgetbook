@@ -34,6 +34,7 @@ class StaticMethodWidgetStory
     StaticMethodWidgetArgs? args,
     StoryWidgetBuilder<StaticMethodWidget, StaticMethodWidgetArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? StaticMethodWidgetArgs(),
          builder:

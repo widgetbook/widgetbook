@@ -37,12 +37,16 @@ void testStory(
   Config config,
   Story story,
 ) {
-  group(story.name, () {
-    final scenarios = story.allScenarios(config);
-    for (final scenario in scenarios) {
-      testScenario(config, scenario);
-    }
-  });
+  group(
+    story.name,
+    () {
+      final scenarios = story.allScenarios(config);
+      for (final scenario in scenarios) {
+        testScenario(config, scenario);
+      }
+    },
+    skip: story.excludeFromTests ? 'Excluded from snapshots' : null,
+  );
 }
 
 void testScenario(
@@ -139,6 +143,9 @@ void testScenario(
       semanticsHandle.dispose();
       addTearDown(tester.view.reset);
     },
+    // `null` (not `false`) so a non-excluded scenario inside an excluded story
+    // still inherits the story group's `skip`.
+    skip: scenario.excludeFromTests ? true : null,
   );
 }
 

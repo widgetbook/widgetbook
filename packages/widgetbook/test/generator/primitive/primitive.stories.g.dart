@@ -32,6 +32,7 @@ class PrimitiveWidgetStory extends Story<PrimitiveWidget, PrimitiveWidgetArgs> {
     PrimitiveWidgetArgs? args,
     StoryWidgetBuilder<PrimitiveWidget, PrimitiveWidgetArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? PrimitiveWidgetArgs(),
          builder:

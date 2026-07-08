@@ -31,6 +31,7 @@ class BoundWidgetStory<D, T extends BaseItem<D>>
     required super.args,
     StoryWidgetBuilder<BoundWidget<D, T>, BoundWidgetArgs<D, T>>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          builder:
              builder ??

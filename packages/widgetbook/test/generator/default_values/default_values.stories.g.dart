@@ -30,6 +30,7 @@ class DefaultsWidgetStory extends Story<DefaultsWidget, DefaultsWidgetArgs> {
     DefaultsWidgetArgs? args,
     StoryWidgetBuilder<DefaultsWidget, DefaultsWidgetArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? DefaultsWidgetArgs(),
          builder:

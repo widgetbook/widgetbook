@@ -29,6 +29,7 @@ class LabelBadgeStory extends Story<LabelBadge, NumericBadgeInputArgs> {
     NumericBadgeInputArgs? args,
     StoryWidgetBuilder<LabelBadge, NumericBadgeInputArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? NumericBadgeInputArgs(),
          builder: builder ?? defaults.builder!,

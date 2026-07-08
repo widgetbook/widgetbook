@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Add `excludeFromTests` to `Story` and `Scenario` to skip a story or scenario during `testWidgetbook` snapshot generation while keeping it browsable in the app. Excluded items are reported as skipped by `flutter test`. ([#1978](https://github.com/widgetbook/widgetbook/pull/1978))
+
 ## 4.0.0-beta.9
 
 - **FIX**: Accept `designLink` in generated story constructors, so stories can link their Figma design for Cloud reviews. ([#1971](https://github.com/widgetbook/widgetbook/pull/1971))

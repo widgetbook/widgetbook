@@ -33,6 +33,7 @@ class DefaultsVarWidgetStory
     DefaultsVarInputArgs? args,
     StoryWidgetBuilder<DefaultsVarWidget, DefaultsVarInputArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? DefaultsVarInputArgs(),
          builder: builder ?? defaults.builder!,
