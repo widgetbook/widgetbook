@@ -1,4 +1,3 @@
-import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/test.dart';
@@ -74,7 +73,8 @@ Future<void> main() async {
     expect(
       pendingSeenBySecondScenario,
       [0],
-      reason: 'the pending image leaked from the first scenario into the second',
+      reason:
+          'the pending image leaked from the first scenario into the second',
     );
   });
 }
