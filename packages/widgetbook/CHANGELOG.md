@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-beta.10
 
 - **FEAT**: Add `excludeFromTests` to `Story` and `Scenario` to skip a story or scenario during `testWidgetbook` snapshot generation while keeping it browsable in the app. Excluded items are reported as skipped by `flutter test`. ([#1978](https://github.com/widgetbook/widgetbook/pull/1978))
 - **FIX**: Reset the image cache between scenarios in `testWidgetbook` so a failed or still-pending image load in one story no longer leaks into and fails a later, unrelated one. ([#1977](https://github.com/widgetbook/widgetbook/pull/1977))
