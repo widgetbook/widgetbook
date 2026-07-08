@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FEAT**: Add `excludeFromTests` to `Story` and `Scenario` to skip a story or scenario during `testWidgetbook` snapshot generation while keeping it browsable in the app. Excluded items are reported as skipped by `flutter test`. ([#1978](https://github.com/widgetbook/widgetbook/pull/1978))
+- **FIX**: Reset the image cache between scenarios in `testWidgetbook` so a failed or still-pending image load in one story no longer leaks into and fails a later, unrelated one. ([#1977](https://github.com/widgetbook/widgetbook/pull/1977))
 
 ## 4.0.0-beta.9
 
@@ -9,7 +10,6 @@
 
 ## 4.0.0-beta.8
 
-- **FIX**: Reset the image cache between scenarios in `testWidgetbook` so a failed or still-pending image load in one story no longer leaks into and fails a later, unrelated one. ([#1977](https://github.com/widgetbook/widgetbook/pull/1977))
 - **FIX**: Rebuild the workbench preview when switching stories or changing knobs while a viewport is active. ([#1948](https://github.com/widgetbook/widgetbook/pull/1948))
 - **FIX**: Assign `$generatedName` to args created via the generated `_Args.fixed(...)` constructor, mirroring the default constructor. ([#1947](https://github.com/widgetbook/widgetbook/pull/1947))
 
