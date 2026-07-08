@@ -29,6 +29,7 @@ class EnumWidgetStory extends Story<EnumWidget, EnumWidgetArgs> {
     EnumWidgetArgs? args,
     StoryWidgetBuilder<EnumWidget, EnumWidgetArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? EnumWidgetArgs(),
          builder:

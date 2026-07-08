@@ -44,6 +44,7 @@ class VariantButtonStory extends Story<VariantButton, VariantButtonArgs> {
     VariantButtonArgs? args,
     StoryWidgetBuilder<VariantButton, VariantButtonArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? VariantButtonArgs(),
          builder: builder ?? defaults.builder!,
@@ -86,6 +87,7 @@ class VariantButtonIconStory
     VariantButtonIconArgs? args,
     StoryWidgetBuilder<VariantButton, VariantButtonIconArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? VariantButtonIconArgs(),
          builder:
@@ -148,6 +150,7 @@ class VariantButtonOutlinedStory
     VariantButtonOutlinedArgs? args,
     StoryWidgetBuilder<VariantButton, VariantButtonOutlinedArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? VariantButtonOutlinedArgs(),
          builder: builder ?? outlinedDefaults.builder!,

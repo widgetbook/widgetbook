@@ -42,6 +42,7 @@ class MultiConstructorWidgetStory
     StoryWidgetBuilder<MultiConstructorWidget, MultiConstructorWidgetArgs>?
     builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? MultiConstructorWidgetArgs(),
          builder:
@@ -88,6 +89,7 @@ class MultiConstructorWidgetOtherStory
     StoryWidgetBuilder<MultiConstructorWidget, MultiConstructorWidgetOtherArgs>?
     builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? MultiConstructorWidgetOtherArgs(),
          builder:

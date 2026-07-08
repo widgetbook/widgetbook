@@ -32,6 +32,7 @@ class GenericWidgetStory<T extends num>
     required super.args,
     StoryWidgetBuilder<GenericWidget<T>, GenericWidgetArgs<T>>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          builder:
              builder ??

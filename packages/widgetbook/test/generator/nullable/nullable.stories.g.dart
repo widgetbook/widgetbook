@@ -30,6 +30,7 @@ class NullableWidgetStory extends Story<NullableWidget, NullableWidgetArgs> {
     NullableWidgetArgs? args,
     StoryWidgetBuilder<NullableWidget, NullableWidgetArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? NullableWidgetArgs(),
          builder:

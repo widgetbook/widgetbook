@@ -42,6 +42,7 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
     List<Mode>? modes,
     TArgs? args,
     this.run,
+    this.excludeFromTests = false,
     super.mergeModes,
   }) : _modes = modes,
        _args = args,
@@ -62,6 +63,15 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
   /// It can be used to interact with the widget, e.g. to open a dropdown
   /// or to trigger an animation.
   final Future<void> Function(WidgetTester tester, TArgs args)? run;
+
+  /// Whether to exclude this scenario from snapshot generation in
+  /// `testWidgetbook`.
+  ///
+  /// Excluded scenarios still appear in the running Widgetbook app; they are
+  /// only skipped during testing, so no snapshot is produced and Widgetbook
+  /// Cloud never receives one. Crossed variants inherit this value from the
+  /// local scenario they are based on. Defaults to `false`.
+  final bool excludeFromTests;
 
   TArgs get args => _args ?? story.args;
 
@@ -118,6 +128,7 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
           : mergeModes(definition.modes, _modes),
       args: _args,
       run: run,
+      excludeFromTests: excludeFromTests,
       mergeModes: mergeModes,
     )..story = story;
   }

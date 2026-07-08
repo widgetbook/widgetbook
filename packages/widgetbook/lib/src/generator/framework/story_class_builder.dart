@@ -143,6 +143,12 @@ class StoryClassBuilder {
                     ..named = true
                     ..toSuper = true,
                 ),
+                Parameter(
+                  (b) => b
+                    ..name = 'excludeFromTests'
+                    ..named = true
+                    ..toSuper = true,
+                ),
               ]);
 
               final superInitializers = {
