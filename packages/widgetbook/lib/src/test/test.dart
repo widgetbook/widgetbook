@@ -49,6 +49,16 @@ void testScenario(
   testWidgets(
     scenario.name,
     (tester) async {
+      // `imageCache` is a process-wide singleton shared by every scenario in
+      // the run. Evict it after each scenario — registered first so it runs
+      // even if the scenario below throws — so that a failed or still-pending
+      // image load in one story cannot surface in, and fail, a later one.
+      addTearDown(() {
+        final imageCache = PaintingBinding.instance.imageCache;
+        imageCache.clear();
+        imageCache.clearLiveImages();
+      });
+
       tester.view.physicalConstraints = targetViewport.viewConstraints;
       tester.view.devicePixelRatio = targetViewport.pixelRatio;
 

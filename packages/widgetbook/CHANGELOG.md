@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FIX**: Reset the image cache between scenarios in `testWidgetbook` so a failed or still-pending image load in one story no longer leaks into and fails a later, unrelated one.
 - **FIX**: Rebuild the workbench preview when switching stories or changing knobs while a viewport is active. ([#1948](https://github.com/widgetbook/widgetbook/pull/1948))
 - **FIX**: Assign `$generatedName` to args created via the generated `_Args.fixed(...)` constructor, mirroring the default constructor. ([#1947](https://github.com/widgetbook/widgetbook/pull/1947))
 
