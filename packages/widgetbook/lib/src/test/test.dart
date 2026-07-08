@@ -55,6 +55,13 @@ void testScenario(
   testWidgets(
     scenario.name,
     (tester) async {
+      // Reset the shared image cache so it doesn't leak between scenarios.
+      addTearDown(() {
+        final imageCache = PaintingBinding.instance.imageCache;
+        imageCache.clear();
+        imageCache.clearLiveImages();
+      });
+
       tester.view.physicalConstraints = targetViewport.viewConstraints;
       tester.view.devicePixelRatio = targetViewport.pixelRatio;
 
