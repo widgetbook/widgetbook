@@ -1,0 +1,29 @@
+name: integration_test_example
+description: "Prototype: capturing native-plugin (video_player, pdfrx) Widgetbook snapshots via integration_test."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  video_player: ^2.13.0
+  pdfrx: ^2.4.7
+  widgetbook: ^4.0.0-beta.7
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  build_runner: ^2.10.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/sample.mp4
+    - assets/sample.pdf

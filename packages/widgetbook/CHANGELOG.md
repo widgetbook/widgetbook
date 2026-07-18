@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FEAT**: Add `testWidgetbookOnDevice` (`package:widgetbook/integration_test.dart`) to capture scenario snapshots on a real device or simulator via `integration_test`, so widgets backed by platform textures/views (e.g. `video_player`, `pdfrx`) render in snapshots instead of appearing blank under `flutter test`. See `examples/integration_test_example`.
 - **FIX**: Rebuild the workbench preview when switching stories or changing knobs while a viewport is active. ([#1948](https://github.com/widgetbook/widgetbook/pull/1948))
 - **FIX**: Assign `$generatedName` to args created via the generated `_Args.fixed(...)` constructor, mirroring the default constructor. ([#1947](https://github.com/widgetbook/widgetbook/pull/1947))
 
