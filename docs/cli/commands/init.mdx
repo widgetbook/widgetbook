@@ -17,7 +17,16 @@ widgetbook init
 
 The CLI accepts the following arguments.
 
-| Argument    | Mandatory | Default\* | Description                                              |
-| ----------- | --------- | --------- | -------------------------------------------------------- |
-| `--package` | ➖        | `./`      | Directory of the app or the design system package        |
-| `--output`  | ➖        | `./`      | Directory where the widgetbook workspace will be created |
+| Argument    | Mandatory | Default\* | Description                                                          |
+| ----------- | --------- | --------- | ------------------------------------------------------------------- |
+| `--package` | ➖        | `./`      | Directory of the app or the design system package                   |
+| `--output`  | ➖        | `./`      | Directory where the widgetbook workspace will be created            |
+| `--empty`   | ➖        | `false`   | Create the workspace without generating stories for existing widgets |
+
+Use `--empty` to scaffold a Widgetbook workspace without any generated stories,
+for example when you want to write your first stories manually or with a coding
+agent.
+
+```bash
+widgetbook init --empty
+```

@@ -32,6 +32,12 @@ class InitCommand extends CliCommand<InitArgs> {
         'output',
         help: 'Directory where the widgetbook workspace will be created',
         defaultsTo: './',
+      )
+      ..addFlag(
+        'empty',
+        help: 'Create the workspace without generating stories for the '
+            'existing widgets',
+        negatable: false,
       );
   }
 
@@ -49,10 +55,12 @@ class InitCommand extends CliCommand<InitArgs> {
     }
 
     final outputDir = results['output'] as String;
+    final empty = results['empty'] as bool;
 
     return InitArgs(
       packageDir: packageDir,
       outputDir: outputDir,
+      empty: empty,
     );
   }
 
@@ -105,7 +113,29 @@ class InitCommand extends CliCommand<InitArgs> {
 
     setupProgress.complete('Workspace is set up at $widgetbookDir');
 
-    final widgets = await _getWidgets(args.packageDir);
+    if (!args.empty) {
+      await _generateStories(args.packageDir, widgetbookDir);
+    }
+
+    final buildProgress = logger.progress('Building stories');
+
+    await processManager.runFlutter(
+      workingDirectory: widgetbookDir,
+      [
+        'pub',
+        'run',
+        'build_runner',
+        'build',
+      ],
+    );
+
+    buildProgress.complete('Stories are built successfully');
+
+    return ExitCode.success.code;
+  }
+
+  Future<void> _generateStories(String packageDir, String widgetbookDir) async {
+    final widgets = await _getWidgets(packageDir);
     // One source file can contain multiple widgets.
     // So we group them by their source file path, and add
     // an index to the stories filename in case of conflicts.
@@ -149,22 +179,6 @@ class InitCommand extends CliCommand<InitArgs> {
         (template) => template.create(widgetbookDir),
       ),
     );
-
-    final buildProgress = logger.progress('Building stories');
-
-    await processManager.runFlutter(
-      workingDirectory: widgetbookDir,
-      [
-        'pub',
-        'run',
-        'build_runner',
-        'build',
-      ],
-    );
-
-    buildProgress.complete('Stories are built successfully');
-
-    return ExitCode.success.code;
   }
 
   Future<Set<WidgetInfo>> _getWidgets(String packageDir) async {
