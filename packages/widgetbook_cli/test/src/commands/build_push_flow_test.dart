@@ -2,6 +2,7 @@ import 'package:file/file.dart';
 import 'package:file/memory.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
+import 'package:widgetbook_cli/src/api/cloud_exception.dart';
 import 'package:widgetbook_cli/widgetbook_cli.dart';
 
 import '../../helper/mocks.dart';
@@ -94,6 +95,7 @@ void main() {
       actor: 'jens',
       repository: 'widgetbook/app',
       noTurbo: true,
+      allowExisting: false,
     );
 
     setUp(() {
@@ -268,6 +270,49 @@ void main() {
 
       verify(() => cloudClient.submitBuild(any())).called(1);
     });
+
+    test(
+      'allow-existing tolerates a 409 on create and skips the upload',
+      () async {
+        when(() => cloudClient.createBuild(any(), any())).thenThrow(
+          CloudException('Build already exists', statusCode: 409),
+        );
+
+        final exitCode = await command.runWith(
+          context,
+          const BuildPushArgs(
+            apiKey: 'api-key',
+            path: '/project',
+            branch: 'main',
+            commit: 'sha-1',
+            mergedResultCommit: null,
+            vendor: 'github',
+            actor: 'jens',
+            repository: 'widgetbook/app',
+            noTurbo: true,
+            allowExisting: true,
+          ),
+        );
+
+        expect(exitCode, equals(0));
+        verifyNever(
+          () => cloudClient.appendSnapshots(any(), any<String>(), any()),
+        );
+        verifyNever(() => storageClient.uploadObjects(any(), any(), any()));
+        verifyNever(() => cloudClient.submitBuild(any()));
+      },
+    );
+
+    test('without allow-existing a 409 on create is rethrown', () async {
+      when(() => cloudClient.createBuild(any(), any())).thenThrow(
+        CloudException('Build already exists', statusCode: 409),
+      );
+
+      await expectLater(
+        command.runWith(context, makeArgs()),
+        throwsA(isA<CloudException>()),
+      );
+    });
   });
 
   group('$BuildPushCommand runWith (turbo flow)', () {
@@ -350,6 +395,7 @@ void main() {
           actor: 'jens',
           repository: 'widgetbook/app',
           noTurbo: true,
+          allowExisting: false,
         ),
       );
 

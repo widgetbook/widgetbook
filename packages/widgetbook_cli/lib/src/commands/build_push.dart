@@ -10,6 +10,7 @@ import 'package:pool/pool.dart';
 import 'package:process/process.dart';
 
 import '../api/api.dart';
+import '../api/cloud_exception.dart';
 import '../cache/cache.dart';
 import '../core/core.dart';
 import '../storage/storage.dart';
@@ -77,6 +78,13 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       ..addOption(
         'actor',
         help: 'Author of the commit',
+      )
+      ..addFlag(
+        'allow-existing',
+        help:
+            'Exit successfully instead of failing when a build for this '
+            'commit already exists on Widgetbook Cloud.',
+        negatable: false,
       )
       ..addOption(
         'api-url',
@@ -157,6 +165,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     }
 
     final noTurbo = results['no-turbo'] as bool;
+    final allowExisting = results['allow-existing'] as bool;
 
     return BuildPushArgs(
       apiKey: apiKey,
@@ -168,6 +177,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       actor: actor,
       repository: repoName,
       noTurbo: noTurbo,
+      allowExisting: allowExisting,
     );
   }
 
@@ -248,22 +258,39 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     final stories = storiesByNavPath.values.toList();
 
     final createProgress = logger.progress('Creating build');
-    final createResponse = await cloudClient.createBuild(
-      versions,
-      CreateBuildRequest(
-        apiKey: args.apiKey,
-        versionControlProvider: args.vendor,
-        repository: args.repository,
-        actor: args.actor,
-        branch: args.branch,
-        sha: args.commit,
-        mergedResultSha: args.mergedResultCommit,
-        stories: stories,
-        expectedSnapshotCount: cache.scenarios.length,
-        size: dirSize + cache.totalSnapshotSize,
-        hash: hash,
-      ),
-    );
+
+    final CreateBuildResponse createResponse;
+    try {
+      createResponse = await cloudClient.createBuild(
+        versions,
+        CreateBuildRequest(
+          apiKey: args.apiKey,
+          versionControlProvider: args.vendor,
+          repository: args.repository,
+          actor: args.actor,
+          branch: args.branch,
+          sha: args.commit,
+          mergedResultSha: args.mergedResultCommit,
+          stories: stories,
+          expectedSnapshotCount: cache.scenarios.length,
+          size: dirSize + cache.totalSnapshotSize,
+          hash: hash,
+        ),
+      );
+    } on CloudException catch (e) {
+      // A 409 means a build for this commit already exists. When
+      // `--allow-existing` is set (e.g. when a CI workflow re-uploads the base
+      // build of a pull request), treat that as success instead of failing.
+      if (args.allowExisting && e.statusCode == 409) {
+        createProgress.complete(
+          'Build already exists for commit ${args.commit}, skipping upload',
+        );
+
+        return 0;
+      }
+
+      rethrow;
+    }
 
     if (createResponse.isTurbo) {
       final turboResponse = createResponse.asTurbo;
