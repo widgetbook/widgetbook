@@ -35,7 +35,8 @@ class InitCommand extends CliCommand<InitArgs> {
       )
       ..addFlag(
         'empty',
-        help: 'Create the workspace without generating stories for the '
+        help:
+            'Create the workspace without generating stories for the '
             'existing widgets',
         negatable: false,
       );
