@@ -12,21 +12,19 @@ const _reportKey = 'widgetbook';
 ///   - per-scenario metadata (via `reportData`) to the sibling `.json` path.
 Future<void> main() async {
   await integrationDriver(
-    onScreenshot: (
-      String name,
-      List<int> bytes, [
-      Map<String, Object?>? args,
-    ]) async {
-      // widgetbook scenarios pass their target PNG path as the screenshot
-      // name; the m0 smoke test passes a bare label.
-      final path =
-          name.endsWith('.png') ? name : 'build/m0_screenshots/$name.png';
-      final file = File(path);
-      await file.parent.create(recursive: true);
-      await file.writeAsBytes(bytes);
-      stderr.writeln('PNG  $path (${bytes.length} bytes)');
-      return true;
-    },
+    onScreenshot:
+        (String name, List<int> bytes, [Map<String, Object?>? args]) async {
+          // widgetbook scenarios pass their target PNG path as the screenshot
+          // name; the m0 smoke test passes a bare label.
+          final path = name.endsWith('.png')
+              ? name
+              : 'build/m0_screenshots/$name.png';
+          final file = File(path);
+          await file.parent.create(recursive: true);
+          await file.writeAsBytes(bytes);
+          stderr.writeln('PNG  $path (${bytes.length} bytes)');
+          return true;
+        },
     responseDataCallback: (data) async {
       final store = (data?[_reportKey] as Map<String, dynamic>?) ?? const {};
       const encoder = JsonEncoder.withIndent('  ');

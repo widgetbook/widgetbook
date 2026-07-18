@@ -19,7 +19,8 @@ final $Default = _Story(
     ),
     _Scenario(
       name: 'Midpoint',
-      run: (tester, args) => _seekTo(tester, const Duration(milliseconds: 1500)),
+      run: (tester, args) =>
+          _seekTo(tester, const Duration(milliseconds: 1500)),
     ),
   ],
 );
@@ -33,8 +34,9 @@ Future<void> _seekTo(WidgetTester tester, Duration position) async {
     if (find.byType(VideoPlayer).evaluate().isNotEmpty) break;
   }
 
-  final controller =
-      tester.widget<VideoPlayer>(find.byType(VideoPlayer)).controller;
+  final controller = tester
+      .widget<VideoPlayer>(find.byType(VideoPlayer))
+      .controller;
   await controller.seekTo(position);
   // While paused, iOS keeps the display link idle, so a seeked frame is not
   // pushed to the Flutter texture. Nudge playback to force the frame through,

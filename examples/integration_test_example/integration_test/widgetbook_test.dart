@@ -1,5 +1,6 @@
 import 'package:integration_test_example/widgetbook.config.dart';
-import 'package:widgetbook/integration_test.dart';
+
+import 'on_device.dart';
 
 /// On-device Widgetbook snapshot run. Drive it with:
 ///

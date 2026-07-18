@@ -3,14 +3,11 @@ import 'dart:typed_data';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-
-import '../../widgetbook.dart';
-import 'font_loader.dart';
-import 'scenario_metadata.dart';
-import 'semantics/semantics_tree_serializer.dart';
+import 'package:widgetbook/snapshot.dart';
+import 'package:widgetbook/widgetbook.dart';
 
 /// The [IntegrationTestWidgetsFlutterBinding.reportData] key under which
-/// [testWidgetbookOnDevice] delivers per-scenario metadata to the host driver.
+/// per-scenario metadata is delivered to the host driver.
 const widgetbookReportKey = 'widgetbook';
 
 /// On-device counterpart of `testWidgetbook`.
@@ -25,17 +22,13 @@ const widgetbookReportKey = 'widgetbook';
 /// are handed back through the integration-test driver rather than written
 /// directly: screenshot bytes via `takeScreenshot`/`onScreenshot`, and the
 /// per-scenario [ScenarioMetadata] JSON via the binding's `reportData` under
-/// [widgetbookReportKey], keyed by the target PNG path. Drive it with
-/// `flutter drive` and a driver that writes those two streams to
-/// `build/.widgetbook`, matching the layout the Widgetbook CLI reads.
+/// [widgetbookReportKey], keyed by the target PNG path.
+///
+/// Tests are declared synchronously — the integration-test runner begins
+/// before an async `main` resumes, so an `await` before `group()` throws
+/// "Can't call group() once tests have begun running".
 void testWidgetbookOnDevice(Config config) {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-
-  // Tests must be declared synchronously: the integration-test runner begins
-  // before an async `main` resumes, so any `await` before `group()` throws
-  // "Can't call group() once tests have begun running". Font loading is
-  // therefore deferred into a setUp callback instead of awaited up front.
-  setUpAll(loadFonts);
 
   for (final component in config.components) {
     group(component.name, () {
@@ -99,8 +92,9 @@ void _testScenarioOnDevice(
       );
 
       binding.reportData ??= <String, dynamic>{};
-      final store = (binding.reportData![widgetbookReportKey] ??=
-          <String, dynamic>{}) as Map<String, dynamic>;
+      final store =
+          (binding.reportData![widgetbookReportKey] ??= <String, dynamic>{})
+              as Map<String, dynamic>;
       store[metadata.imageFile.path] = metadata.toJson();
 
       await config.scenarioConfig.tearDown?.call(tester, scenario);

@@ -12,10 +12,7 @@ const meta = Meta(PdfDemo.new);
 final $Default = _Story(
   args: _Args(),
   scenarios: [
-    _Scenario(
-      name: 'Page 1',
-      run: (tester, args) => _waitForRender(tester),
-    ),
+    _Scenario(name: 'Page 1', run: (tester, args) => _waitForRender(tester)),
   ],
 );
 

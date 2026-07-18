@@ -27,8 +27,11 @@ into the same `build/.widgetbook` cache the Widgetbook CLI uploads.
   `WidgetTester` and seek to a deterministic frame before the snapshot — the
   interaction you lose with a pure device-farm screenshot.
 - `assets/sample.mp4`, `assets/sample.pdf` — deterministic fixtures.
-- `integration_test/widgetbook_test.dart` — entrypoint:
-  `testWidgetbookOnDevice(config)` from `package:widgetbook/integration_test.dart`.
+- `integration_test/on_device.dart` — `testWidgetbookOnDevice`, the on-device
+  counterpart of `testWidgetbook`. It reuses `ScenarioMetadata` /
+  `SemanticsTreeSerializer` from `package:widgetbook/snapshot.dart`, so the core
+  library needs no `integration_test` dependency of its own.
+- `integration_test/widgetbook_test.dart` — entrypoint: `testWidgetbookOnDevice(config)`.
 - `test_driver/integration_test.dart` — host side; writes screenshot bytes and
   per-scenario metadata into `build/.widgetbook/<Component>/<Story>/<Scenario>.{png,json}`.
 - `integration_test/m0_capture_test.dart` — a minimal smoke test proving raw
