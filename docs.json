@@ -37,8 +37,8 @@
   },
   "variables": {
     "versions": {
-      "cli": "4.0.0-beta.7",
-      "widgetbook": "4.0.0-beta.7"
+      "cli": "4.0.0-beta.10",
+      "widgetbook": "4.0.0-beta.10"
     }
   },
   "tabs": [
@@ -170,10 +170,6 @@
               "href": "/testing/layout-constraining"
             }
           ]
-        },
-        {
-          "title": "Generate with LLMs",
-          "href": "/stories/generate-with-llm"
         }
       ]
     },
@@ -484,10 +480,6 @@
                   "href": "/cloud/reviews/notifications/slack"
                 }
               ]
-            },
-            {
-              "title": "Limitations",
-              "href": "/cloud/reviews/limitations"
             }
           ]
         },

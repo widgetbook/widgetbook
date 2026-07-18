@@ -386,6 +386,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         image: scenario.image,
         navPath: scenario.storyNavPath,
         semantics: scenario.semantics,
+        violations: scenario.violations,
       );
     }).toList();
 

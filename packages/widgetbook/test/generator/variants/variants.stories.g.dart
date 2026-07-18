@@ -38,11 +38,13 @@ typedef VariantButtonDefaults = Defaults<VariantButton, VariantButtonArgs>;
 class VariantButtonStory extends Story<VariantButton, VariantButtonArgs> {
   VariantButtonStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     VariantButtonArgs? args,
     StoryWidgetBuilder<VariantButton, VariantButtonArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? VariantButtonArgs(),
          builder: builder ?? defaults.builder!,
@@ -79,11 +81,13 @@ class VariantButtonIconStory
     extends Story<VariantButton, VariantButtonIconArgs> {
   VariantButtonIconStory({
     super.name,
+    super.designLink,
     SetupBuilder<VariantButton, VariantButtonIconArgs>? setup,
     super.modes,
     VariantButtonIconArgs? args,
     StoryWidgetBuilder<VariantButton, VariantButtonIconArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? VariantButtonIconArgs(),
          builder:
@@ -140,11 +144,13 @@ class VariantButtonOutlinedStory
     extends Story<VariantButton, VariantButtonOutlinedArgs> {
   VariantButtonOutlinedStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     VariantButtonOutlinedArgs? args,
     StoryWidgetBuilder<VariantButton, VariantButtonOutlinedArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? VariantButtonOutlinedArgs(),
          builder: builder ?? outlinedDefaults.builder!,

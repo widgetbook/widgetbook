@@ -26,11 +26,13 @@ class GenericWidgetStory<T extends num>
     extends Story<GenericWidget<T>, GenericWidgetArgs<T>> {
   GenericWidgetStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     required super.args,
     StoryWidgetBuilder<GenericWidget<T>, GenericWidgetArgs<T>>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          builder:
              builder ??

@@ -29,12 +29,14 @@ class DynamicBoundWidgetStory<D, T extends Map<dynamic, D>>
     extends Story<DynamicBoundWidget<D, T>, DynamicBoundWidgetArgs<D, T>> {
   DynamicBoundWidgetStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     required super.args,
     StoryWidgetBuilder<DynamicBoundWidget<D, T>, DynamicBoundWidgetArgs<D, T>>?
     builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          builder:
              builder ??

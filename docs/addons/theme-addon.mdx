@@ -43,18 +43,10 @@ import 'package:my_app/themes.dart'; // For AppThemes
 final config = Config(
   // ...
   addons: [
-    MaterialThemeAddon( // [!code highlight]
-      themes: [ // [!code highlight]
-        WidgetbookTheme( // [!code highlight]
-          name: 'Light', // [!code highlight]
-          data: AppThemes.light(), // [!code highlight]
-        ), // [!code highlight]
-        WidgetbookTheme( // [!code highlight]
-          name: 'Dark', // [!code highlight]
-          data: AppThemes.dark(), // [!code highlight]
-        ), // [!code highlight]
-      ], // [!code highlight]
-    ), // [!code highlight]
+    MaterialThemeAddon({ // [!code highlight]
+      'Light': AppThemes.light(), // [!code highlight]
+      'Dark': AppThemes.dark(), // [!code highlight]
+    }), // [!code highlight]
   ],
 );
 ```
@@ -69,18 +61,10 @@ import 'package:my_app/themes.dart'; // For AppThemes
 final config = Config(
   // ...
   addons: [
-    CupertinoThemeAddon( // [!code highlight]
-      themes: [ // [!code highlight]
-        WidgetbookTheme( // [!code highlight]
-          name: 'Light', // [!code highlight]
-          data: AppThemes.light(), // [!code highlight]
-        ), // [!code highlight]
-        WidgetbookTheme( // [!code highlight]
-          name: 'Dark', // [!code highlight]
-          data: AppThemes.dark(), // [!code highlight]
-        ), // [!code highlight]
-      ], // [!code highlight]
-    ), // [!code highlight]
+    CupertinoThemeAddon({ // [!code highlight]
+      'Light': AppThemes.light(), // [!code highlight]
+      'Dark': AppThemes.dark(), // [!code highlight]
+    }), // [!code highlight]
   ],
 );
 ```
@@ -135,18 +119,12 @@ final config = Config(
   // ...
   addons: [
     ThemeAddon<AppThemeData>( // [!code highlight]
-      themes: [ // [!code highlight]
-        WidgetbookTheme( // [!code highlight]
-          name: 'Light', // [!code highlight]
-          data: AppThemes.light(), // [!code highlight]
-        ), // [!code highlight]
-        WidgetbookTheme( // [!code highlight]
-          name: 'Dark', // [!code highlight]
-          data: AppThemes.dark(), // [!code highlight]
-        ), // [!code highlight]
-      ], // [!code highlight]
-      themeBuilder: (context, theme, child) { // [!code highlight]
-        // Wrap use cases with the custom theme's InheritedWidget // [!code highlight]
+      { // [!code highlight]
+        'Light': AppThemes.light(), // [!code highlight]
+        'Dark': AppThemes.dark(), // [!code highlight]
+      }, // [!code highlight]
+      (context, theme, child) { // [!code highlight]
+        // Wrap stories with the custom theme's InheritedWidget // [!code highlight]
         return AppTheme( // [!code highlight]
           data: theme, // [!code highlight]
           child: child, // [!code highlight]
@@ -164,7 +142,6 @@ Since the [order of addons](/addons/overview#order-of-addons) matters, here are 
 Addons that should come before the `ThemeAddon`:
 
 - `ViewportAddon`
-- `DeviceFrameAddon`
 
 ## Mode
 

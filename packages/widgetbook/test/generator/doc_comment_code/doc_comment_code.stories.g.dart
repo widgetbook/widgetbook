@@ -32,11 +32,13 @@ class DocCommentCodeWidgetStory
     extends Story<DocCommentCodeWidget, DocCommentCodeWidgetArgs> {
   DocCommentCodeWidgetStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     DocCommentCodeWidgetArgs? args,
     StoryWidgetBuilder<DocCommentCodeWidget, DocCommentCodeWidgetArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? DocCommentCodeWidgetArgs(),
          builder:

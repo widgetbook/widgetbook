@@ -35,40 +35,55 @@ To follow the CI/CD setup guide select your Git provider below
 
 To create a Widgetbook Build, follow these steps inside your Widgetbook project:
 
-1. Run `build_runner` to generate metadata about your stories and components
+<Steps>
+  <Step title="Generate the components registry">
+    ```bash
+    dart run build_runner build -d
+    ```
+  </Step>
 
-   ```bash
-   dart run build_runner build -d
-   ```
+  <Step title="Generate snapshots">
+    Run your Widgetbook tests to write the snapshot images and metadata to `build/.widgetbook`.
+    See [Run Scenarios](/testing/run-scenarios) for how to set up the test entry point.
 
-1. Build the Widgetbook for the web
+    ```bash
+    flutter test
+    ```
+  </Step>
 
-   ```bash
-   # Default target (i.e. `lib/main.dart`)
-   flutter build web
+  <Step title="Build the Widgetbook for the web">
+    ```bash
+    # Default target (i.e. `lib/main.dart`)
+    flutter build web
 
-   # Custom target
-   flutter build web -t lib/main.widgetbook.dart
-   ```
+    # Custom target
+    flutter build web -t lib/main.widgetbook.dart
+    ```
+  </Step>
 
-1. Install the [Widgetbook CLI](/cli)
+  <Step title="Install the Widgetbook CLI">
+    Install the [Widgetbook CLI](/cli):
 
-   ```bash
-   dart pub global activate widgetbook_cli {{ versions.cli }}
-   ```
+    ```bash
+    dart pub global activate widgetbook_cli {{ versions.cli }}
+    ```
+  </Step>
 
-1. Get your **API key** from the Widgetbook Cloud's **project settings page**.
+  <Step title="Get your API key">
+    Copy your **API key** from the Widgetbook Cloud **project settings page**.
+  </Step>
 
-1. Push the build to Widgetbook Cloud
-
-   ```bash
-   widgetbook cloud build push --api-key PROJECT_API_KEY
-   ```
+  <Step title="Push the build to Widgetbook Cloud">
+    ```bash
+    widgetbook cloud build push --api-key PROJECT_API_KEY
+    ```
+  </Step>
+</Steps>
 
 <Info>
-The `cloud push` command uses the following directories:
+The `cloud build push` command uploads the following directories:
 
-1. `build/web/` to create a `.zip` archive that will be uploaded to Widgetbook Cloud.
-1. `.dart_tool/build/generated/[your_app_name]/` to send metadata, _about the generated stories_, that will be used for [Widgetbook Cloud Review](/cloud/reviews).
+1. `build/.widgetbook/` — the snapshot images and metadata used for [Widgetbook Cloud Reviews](/cloud/reviews).
+1. `build/web/` — the interactive Widgetbook build that you can browse online.
 
 </Info>

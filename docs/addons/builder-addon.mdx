@@ -45,13 +45,12 @@ dependencies:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
+import 'components.g.dart';
 
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      directories: directories,
+void main() {
+  runWidgetbook(
+    Config(
+      components: components,
       addons: [
         BuilderAddon(
           name: 'ScreenUtil',
@@ -60,16 +59,15 @@ class WidgetbookApp extends StatelessWidget {
               designSize: const Size(375, 812),
               minTextAdapt: true,
               splitScreenMode: true,
-              // This is needed to use the workbench [MediaQuery]
               useInheritedMediaQuery: true,
               builder: (context, child) => child!,
               child: child,
             );
           },
-        )
+        ),
       ],
-    );
-  }
+    ),
+  );
 }
 ```
 
@@ -88,13 +86,12 @@ dependencies:
 import 'package:accessibility_tools/accessibility_tools.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-class WidgetbookApp extends StatelessWidget {
-  const WidgetbookApp({super.key});
+import 'components.g.dart';
 
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      directories: directories,
+void main() {
+  runWidgetbook(
+    Config(
+      components: components,
       addons: [
         BuilderAddon(
           name: 'Accessibility',
@@ -103,30 +100,11 @@ class WidgetbookApp extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
+    ),
+  );
 }
 ```
 
 ## Mode
 
-Each addon has a corresponding [Mode](/addons/modes) to lock its value in scenarios. For this addon, use `BuilderMode`:
-
-```dart
-final $Default = _Story(
-  scenarios: [
-    _Scenario(
-      name: 'Red Background',
-      modes: [
-        BuilderMode(
-          name: 'Red',
-          builder: (context, child) => ColoredBox(
-            color: Colors.red,
-            child: child,
-          ),
-        ), // [!code highlight]
-      ]
-    ),
-  ],
-)
-```
+The `BuilderAddon` has no adjustable value, so it has no corresponding [Mode](/addons/modes). Its `builder` always wraps every story and scenario.

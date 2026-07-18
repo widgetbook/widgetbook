@@ -27,11 +27,13 @@ class DefaultsVarWidgetStory
     extends Story<DefaultsVarWidget, DefaultsVarInputArgs> {
   DefaultsVarWidgetStory({
     super.name,
+    super.designLink,
     SetupBuilder<DefaultsVarWidget, DefaultsVarInputArgs>? setup,
     super.modes,
     DefaultsVarInputArgs? args,
     StoryWidgetBuilder<DefaultsVarWidget, DefaultsVarInputArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? DefaultsVarInputArgs(),
          builder: builder ?? defaults.builder!,

@@ -23,11 +23,13 @@ typedef EnumWidgetDefaults = Defaults<EnumWidget, EnumWidgetArgs>;
 class EnumWidgetStory extends Story<EnumWidget, EnumWidgetArgs> {
   EnumWidgetStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     EnumWidgetArgs? args,
     StoryWidgetBuilder<EnumWidget, EnumWidgetArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? EnumWidgetArgs(),
          builder:

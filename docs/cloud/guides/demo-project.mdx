@@ -154,7 +154,7 @@ Before starting this guide, make sure you have:
         1. Go to your GitHub repository
         2. Navigate to **Settings** → **Secrets and variables** → **Actions**
         3. Click **New repository secret**
-        4. Set the name to `WIDGETBOOK_CLOUD_API_KEY`
+        4. Set the name to `WIDGETBOOK_API_KEY`
         5. Set the value to your API key from Widgetbook Cloud
         6. Click **Add secret**
       </TabItem>
@@ -164,9 +164,9 @@ Before starting this guide, make sure you have:
         2. Navigate to **Settings** → **CI/CD**
         3. Expand the **Variables** section
         4. Click **Add variable**
-        5. Set the key to `WIDGETBOOK_CLOUD_API_KEY`
+        5. Set the key to `WIDGETBOOK_API_KEY`
         6. Set the value to your API key from Widgetbook Cloud
-        7. Make sure **Protect variable** is checked if you want to restrict it to protected branches
+        7. **Uncheck** the **Protect variable** checkbox so the variable is available on feature branches
         8. Click **Add variable**
       </TabItem>
       
@@ -174,7 +174,7 @@ Before starting this guide, make sure you have:
         1. Go to your Bitbucket repository
         2. Navigate to **Repository settings** → **Pipelines** → **Repository variables**
         3. Click **Add**
-        4. Set the name to `WIDGETBOOK_CLOUD_API_KEY`
+        4. Set the name to `WIDGETBOOK_API_KEY`
         5. Set the value to your API key from Widgetbook Cloud
         6. Make sure **Secured** is checked
         7. Click **Add**

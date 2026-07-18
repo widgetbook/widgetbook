@@ -24,11 +24,13 @@ typedef DefaultsWidgetDefaults = Defaults<DefaultsWidget, DefaultsWidgetArgs>;
 class DefaultsWidgetStory extends Story<DefaultsWidget, DefaultsWidgetArgs> {
   DefaultsWidgetStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     DefaultsWidgetArgs? args,
     StoryWidgetBuilder<DefaultsWidget, DefaultsWidgetArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? DefaultsWidgetArgs(),
          builder:

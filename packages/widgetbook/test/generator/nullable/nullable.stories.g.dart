@@ -24,11 +24,13 @@ typedef NullableWidgetDefaults = Defaults<NullableWidget, NullableWidgetArgs>;
 class NullableWidgetStory extends Story<NullableWidget, NullableWidgetArgs> {
   NullableWidgetStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     NullableWidgetArgs? args,
     StoryWidgetBuilder<NullableWidget, NullableWidgetArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? NullableWidgetArgs(),
          builder:

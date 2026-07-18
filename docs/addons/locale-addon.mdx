@@ -68,8 +68,8 @@ You need to export the `supportedLocales` and `localizationsDelegates` from your
      // ...
      addons: [
        LocaleAddon( // [!code highlight]
-         locales: AppLocalizations.supportedLocales,
-         localizationsDelegates: AppLocalizations.localizationsDelegates,
+         AppLocalizations.supportedLocales,
+         AppLocalizations.localizationsDelegates,
        ),
      ],
    );

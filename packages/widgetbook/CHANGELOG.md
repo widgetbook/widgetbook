@@ -1,4 +1,14 @@
-## Unreleased
+## 4.0.0-beta.10
+
+- **FEAT**: Add `excludeFromTests` to `Story` and `Scenario` to skip a story or scenario during `testWidgetbook` snapshot generation while keeping it browsable in the app. Excluded items are reported as skipped by `flutter test`. ([#1978](https://github.com/widgetbook/widgetbook/pull/1978))
+- **FIX**: Reset the image cache between scenarios in `testWidgetbook` so a failed or still-pending image load in one story no longer leaks into and fails a later, unrelated one. ([#1977](https://github.com/widgetbook/widgetbook/pull/1977))
+
+## 4.0.0-beta.9
+
+- **FIX**: Accept `designLink` in generated story constructors, so stories can link their Figma design for Cloud reviews. ([#1971](https://github.com/widgetbook/widgetbook/pull/1971))
+- **FEAT**: Evaluate accessibility guidelines during `testWidgetbook` and record violations in each scenario's snapshot metadata. Configure via `Config.accessibilityConfig`. ([#1954](https://github.com/widgetbook/widgetbook/pull/1954))
+
+## 4.0.0-beta.8
 
 - **FEAT**: Expose `ScenarioMetadata` and `SemanticsTreeSerializer` via `package:widgetbook/snapshot.dart` so custom snapshot drivers can produce the `build/.widgetbook` cache. `examples/integration_test_example` uses this to capture scenarios on a real device/simulator via `integration_test`, where platform-backed widgets (`video_player`, `pdfrx`) render instead of appearing blank under `flutter test`.
 - **FIX**: Rebuild the workbench preview when switching stories or changing knobs while a viewport is active. ([#1948](https://github.com/widgetbook/widgetbook/pull/1948))

@@ -84,6 +84,12 @@ class StoryClassBuilder {
                 ),
                 Parameter(
                   (b) => b
+                    ..name = 'designLink'
+                    ..named = true
+                    ..toSuper = true,
+                ),
+                Parameter(
+                  (b) => b
                     ..name = 'setup'
                     ..named = true
                     ..toSuper = !hasSetup
@@ -134,6 +140,12 @@ class StoryClassBuilder {
                 Parameter(
                   (b) => b
                     ..name = 'scenarios'
+                    ..named = true
+                    ..toSuper = true,
+                ),
+                Parameter(
+                  (b) => b
+                    ..name = 'excludeFromTests'
                     ..named = true
                     ..toSuper = true,
                 ),

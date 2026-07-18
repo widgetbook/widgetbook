@@ -29,11 +29,13 @@ class DocCommentWidgetStory
     extends Story<DocCommentWidget, DocCommentWidgetArgs> {
   DocCommentWidgetStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     DocCommentWidgetArgs? args,
     StoryWidgetBuilder<DocCommentWidget, DocCommentWidgetArgs>? builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? DocCommentWidgetArgs(),
          builder:

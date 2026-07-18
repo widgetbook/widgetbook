@@ -38,6 +38,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     required this.args,
     required this.builder,
     this.scenarios = const [],
+    this.excludeFromTests = false,
   }) : this._name = name,
        assert(name != 'Docs', 'Story name cannot be "Docs"') {
     scenarios.forEach((scenario) {
@@ -53,6 +54,17 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   final TArgs args;
   final SetupBuilder<TWidget, TArgs> setup;
   final List<Scenario<TWidget, TArgs>> scenarios;
+
+  /// Whether to exclude this story from snapshot generation in `testWidgetbook`.
+  ///
+  /// Excluded stories still appear in the running Widgetbook app; they are only
+  /// skipped during testing, so no snapshot is produced and Widgetbook Cloud
+  /// never receives one. Defaults to `false`.
+  ///
+  /// Use this for stories that cannot render under `flutter test` (e.g. native
+  /// plugins or network-dependent widgets). Individual scenarios can be
+  /// excluded via [Scenario.excludeFromTests].
+  final bool excludeFromTests;
 
   /// Defines how the [TWidget] is built using the provided [TArgs].
   final StoryWidgetBuilder<TWidget, TArgs> builder;

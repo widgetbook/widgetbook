@@ -35,12 +35,14 @@ class MultiConstructorWidgetStory
     extends Story<MultiConstructorWidget, MultiConstructorWidgetArgs> {
   MultiConstructorWidgetStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     MultiConstructorWidgetArgs? args,
     StoryWidgetBuilder<MultiConstructorWidget, MultiConstructorWidgetArgs>?
     builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? MultiConstructorWidgetArgs(),
          builder:
@@ -80,12 +82,14 @@ class MultiConstructorWidgetOtherStory
     extends Story<MultiConstructorWidget, MultiConstructorWidgetOtherArgs> {
   MultiConstructorWidgetOtherStory({
     super.name,
+    super.designLink,
     super.setup,
     super.modes,
     MultiConstructorWidgetOtherArgs? args,
     StoryWidgetBuilder<MultiConstructorWidget, MultiConstructorWidgetOtherArgs>?
     builder,
     super.scenarios,
+    super.excludeFromTests,
   }) : super(
          args: args ?? MultiConstructorWidgetOtherArgs(),
          builder:

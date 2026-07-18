@@ -42,7 +42,6 @@ Since the [order of addons](/addons/overview#order-of-addons) matters, here are 
 Addons that should come before the `TextScaleAddon`:
 
 - `ViewportAddon`
-- `DeviceFrameAddon`
 
 ## Mode
 
@@ -59,15 +58,4 @@ final $Default = _Story(
     ),
   ],
 )
-
-  @override
-  Widget build(BuildContext context) {
-    return Widgetbook(
-      // ...
-      addons: [
-        TextScaleAddon(), // [!code highlight]
-      ],
-    );
-  }
-}
 ```

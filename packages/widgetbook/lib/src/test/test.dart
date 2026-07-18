@@ -22,7 +22,10 @@ Future<void> testWidgetbook(Config config) async {
   }
 }
 
-void testComponent(Config config, Component component) {
+void testComponent(
+  Config config,
+  Component component,
+) {
   group('${component.name}', () {
     for (final story in component.stories) {
       testStory(config, story);
@@ -30,13 +33,20 @@ void testComponent(Config config, Component component) {
   });
 }
 
-void testStory(Config config, Story story) {
-  group(story.name, () {
-    final scenarios = story.allScenarios(config);
-    for (final scenario in scenarios) {
-      testScenario(config, scenario);
-    }
-  });
+void testStory(
+  Config config,
+  Story story,
+) {
+  group(
+    story.name,
+    () {
+      final scenarios = story.allScenarios(config);
+      for (final scenario in scenarios) {
+        testScenario(config, scenario);
+      }
+    },
+    skip: story.excludeFromTests ? 'Excluded from snapshots' : null,
+  );
 }
 
 void testScenario(
@@ -49,6 +59,13 @@ void testScenario(
   testWidgets(
     scenario.name,
     (tester) async {
+      // Reset the shared image cache so it doesn't leak between scenarios.
+      addTearDown(() {
+        final imageCache = PaintingBinding.instance.imageCache;
+        imageCache.clear();
+        imageCache.clearLiveImages();
+      });
+
       tester.view.physicalConstraints = targetViewport.viewConstraints;
       tester.view.devicePixelRatio = targetViewport.pixelRatio;
 
@@ -66,6 +83,11 @@ void testScenario(
         await config.scenarioConfig.setUp?.call(tester, scenario);
 
         await scenario.execute(tester);
+
+        final violations = (await evaluateGuidelines(
+          tester,
+          config.accessibilityConfig.guidelines,
+        )).map((violation) => violation.toJson()).toList();
 
         final element = tester.element(find.byKey(key));
         final imageFuture = captureImage(element, 1);
@@ -93,6 +115,7 @@ void testScenario(
             imageHeight: image.height,
             pixelRatio: targetViewport.pixelRatio,
             semanticsData: semanticsData,
+            violations: violations,
           );
 
           await metadata.directory.create(recursive: true);
@@ -120,6 +143,9 @@ void testScenario(
       semanticsHandle.dispose();
       addTearDown(tester.view.reset);
     },
+    // `null` (not `false`) so a non-excluded scenario inside an excluded story
+    // still inherits the story group's `skip`.
+    skip: scenario.excludeFromTests ? true : null,
   );
 }
 
